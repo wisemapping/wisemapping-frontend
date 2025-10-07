@@ -11,6 +11,12 @@
       "value": "Löschen"
     }
   ],
+  "app-bar-title": [
+    {
+      "type": 0,
+      "value": "Mindmap-Editor"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -23,10 +29,34 @@
       "value": "Anmelden"
     }
   ],
+  "appbar.error-saving-title": [
+    {
+      "type": 0,
+      "value": "Fehler beim Speichern"
+    }
+  ],
+  "appbar.logo-aria-label": [
+    {
+      "type": 0,
+      "value": "WiseMapping Logo"
+    }
+  ],
   "appbar.shared-button": [
     {
       "type": 0,
       "value": "Teilen"
+    }
+  ],
+  "appbar.theme-title": [
+    {
+      "type": 0,
+      "value": "Thema"
+    }
+  ],
+  "appbar.title-renamed": [
+    {
+      "type": 0,
+      "value": "Mindmap umbenannt"
     }
   ],
   "appbar.tooltip-export": [
@@ -65,6 +95,12 @@
       "value": "Wiederholen"
     }
   ],
+  "appbar.tooltip-rename": [
+    {
+      "type": 0,
+      "value": "Umbenennen"
+    }
+  ],
   "appbar.tooltip-save": [
     {
       "type": 0,
@@ -87,6 +123,12 @@
     {
       "type": 0,
       "value": "Favoriten"
+    }
+  ],
+  "appbar.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Thema"
     }
   ],
   "appbar.tooltip-undo": [
@@ -203,6 +245,12 @@
       "value": "Hintergrund"
     }
   ],
+  "classic": [
+    {
+      "type": 0,
+      "value": "Klassisch"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -219,6 +267,18 @@
     {
       "type": 0,
       "value": "Beschreibung"
+    }
+  ],
+  "demo-simple-select": [
+    {
+      "type": 0,
+      "value": "Auswählen"
+    }
+  ],
+  "divider": [
+    {
+      "type": 0,
+      "value": "Trennlinie"
     }
   ],
   "editor-panel.canvas-style-title": [
@@ -293,6 +353,12 @@
       "value": "Thema hinzufügen"
     }
   ],
+  "editor-panel.tooltip-add-topic-image": [
+    {
+      "type": 0,
+      "value": "Themenbild hinzufügen"
+    }
+  ],
   "editor-panel.tooltip-canvas-style": [
     {
       "type": 0,
@@ -315,6 +381,12 @@
     {
       "type": 0,
       "value": "Verbindungsstil"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "Bogen"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thick": [
@@ -345,6 +417,54 @@
     {
       "type": 0,
       "value": "Thema löschen"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-end": [
+    {
+      "type": 0,
+      "value": "Endpfeil"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-start": [
+    {
+      "type": 0,
+      "value": "Startpfeil"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color": [
+    {
+      "type": 0,
+      "value": "Farbe"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color-default": [
+    {
+      "type": 0,
+      "value": "Standardfarbe"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dashed": [
+    {
+      "type": 0,
+      "value": "Gestrichelte Linie"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dotted": [
+    {
+      "type": 0,
+      "value": "Gepunktete Linie"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-solid": [
+    {
+      "type": 0,
+      "value": "Durchgezogene Linie"
+    }
+  ],
+  "editor-panel.tooltip-relationship-style": [
+    {
+      "type": 0,
+      "value": "Beziehungsstil"
     }
   ],
   "editor-panel.tooltip-theme": [
@@ -431,6 +551,12 @@
       "value": "Linienform"
     }
   ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "Keine Form"
+    }
+  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
@@ -447,6 +573,12 @@
     {
       "type": 0,
       "value": "Themenstil"
+    }
+  ],
+  "editor-panel.topic-image-title": [
+    {
+      "type": 0,
+      "value": "Themenbild"
     }
   ],
   "editor.edit-description-mobile": [
@@ -485,6 +617,24 @@
       "value": "Emojis suchen..."
     }
   ],
+  "headerNotifier": [
+    {
+      "type": 0,
+      "value": "Header-Benachrichtigung"
+    }
+  ],
+  "icon-picker.emojis": [
+    {
+      "type": 0,
+      "value": "Emojis"
+    }
+  ],
+  "icon-picker.icons": [
+    {
+      "type": 0,
+      "value": "Symbol-Galerie"
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
@@ -519,6 +669,46 @@
     {
       "type": 0,
       "value": "https://www.beispiel.de"
+    }
+  ],
+  "mindmap-comp": [
+    {
+      "type": 0,
+      "value": "Mindmap-Komponente"
+    }
+  ],
+  "note.character.count": [
+    {
+      "type": 1,
+      "value": "remaining"
+    },
+    {
+      "type": 0,
+      "value": " übrig"
+    }
+  ],
+  "note.character.limit.warning": [
+    {
+      "type": 0,
+      "value": "(Grenze erreicht)"
+    }
+  ],
+  "ocean": [
+    {
+      "type": 0,
+      "value": "Ozean"
+    }
+  ],
+  "popover": [
+    {
+      "type": 0,
+      "value": "Popover"
+    }
+  ],
+  "prism": [
+    {
+      "type": 0,
+      "value": "Prisma"
     }
   ],
   "rich-text-editor.bold": [
@@ -567,6 +757,12 @@
     {
       "type": 0,
       "value": "Unterstrichen"
+    }
+  ],
+  "robot": [
+    {
+      "type": 0,
+      "value": "Roboter"
     }
   ],
   "shortcut-help-pane.action": [
@@ -725,6 +921,48 @@
       "value": "Änderung rückgängig machen"
     }
   ],
+  "sunrise": [
+    {
+      "type": 0,
+      "value": "Sonnenaufgang"
+    }
+  ],
+  "theme-editor.accept": [
+    {
+      "type": 0,
+      "value": "Thema anwenden"
+    }
+  ],
+  "theme-editor.cancel": [
+    {
+      "type": 0,
+      "value": "Abbrechen"
+    }
+  ],
+  "theme-editor.description": [
+    {
+      "type": 0,
+      "value": "Ein Thema definiert den visuellen Stil Ihrer Mindmap, einschließlich Farben, Schriftarten und Gesamterscheinung. Wählen Sie ein Thema, das am besten zu Ihrem Inhalt und Publikum passt."
+    }
+  ],
+  "theme-editor.title": [
+    {
+      "type": 0,
+      "value": "Thema wählen"
+    }
+  ],
+  "theme.classic.description": [
+    {
+      "type": 0,
+      "value": "Klassisches Thema mit traditionellen Farben"
+    }
+  ],
+  "theme.classic.name": [
+    {
+      "type": 0,
+      "value": "Klassisch"
+    }
+  ],
   "theme.dark": [
     {
       "type": 0,
@@ -737,10 +975,76 @@
       "value": "Hell"
     }
   ],
+  "theme.ocean.description": [
+    {
+      "type": 0,
+      "value": "Ozean-Thema mit blauen Tönen"
+    }
+  ],
+  "theme.ocean.name": [
+    {
+      "type": 0,
+      "value": "Ozean"
+    }
+  ],
+  "theme.robot.description": [
+    {
+      "type": 0,
+      "value": "Roboter-Thema mit futuristischen Farben"
+    }
+  ],
+  "theme.robot.name": [
+    {
+      "type": 0,
+      "value": "Roboter"
+    }
+  ],
+  "theme.summer.description": [
+    {
+      "type": 0,
+      "value": "Sommer-Thema mit warmen Farben"
+    }
+  ],
+  "theme.summer.name": [
+    {
+      "type": 0,
+      "value": "Sommer"
+    }
+  ],
+  "theme.sunrise.description": [
+    {
+      "type": 0,
+      "value": "Sonnenaufgang-Thema mit orange und gelben Tönen"
+    }
+  ],
+  "theme.sunrise.name": [
+    {
+      "type": 0,
+      "value": "Sonnenaufgang"
+    }
+  ],
+  "theme.switch-to-dark": [
+    {
+      "type": 0,
+      "value": "Zu dunklem Modus wechseln"
+    }
+  ],
+  "theme.switch-to-light": [
+    {
+      "type": 0,
+      "value": "Zu hellem Modus wechseln"
+    }
+  ],
   "theme.toggle": [
     {
       "type": 0,
       "value": "Design Wechseln"
+    }
+  ],
+  "title-input": [
+    {
+      "type": 0,
+      "value": "Titel-Eingabe"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

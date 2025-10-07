@@ -388,5 +388,155 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "सभी नोड्स को विस्तृत करें"
+  },
+  "editor-panel.tooltip-add-topic-image": {
+    "defaultMessage": "विषय छवि जोड़ें"
+  },
+  "editor-panel.topic-image-title": {
+    "defaultMessage": "विषय छवि"
+  },
+  "app-bar-title": {
+    "defaultMessage": "माइंडमैप संपादक"
+  },
+  "appbar.error-saving-title": {
+    "defaultMessage": "सहेजने में त्रुटि"
+  },
+  "appbar.logo-aria-label": {
+    "defaultMessage": "WiseMapping लोगो"
+  },
+  "appbar.theme-title": {
+    "defaultMessage": "थीम"
+  },
+  "appbar.title-renamed": {
+    "defaultMessage": "माइंडमैप का नाम बदला गया"
+  },
+  "appbar.tooltip-rename": {
+    "defaultMessage": "नाम बदलें"
+  },
+  "appbar.tooltip-theme": {
+    "defaultMessage": "थीम"
+  },
+  "classic": {
+    "defaultMessage": "क्लासिक"
+  },
+  "demo-simple-select": {
+    "defaultMessage": "चुनें"
+  },
+  "divider": {
+    "defaultMessage": "विभाजक"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "चाप"
+  },
+  "editor-panel.tooltip-relationship-arrow-end": {
+    "defaultMessage": "अंत तीर"
+  },
+  "editor-panel.tooltip-relationship-arrow-start": {
+    "defaultMessage": "प्रारंभ तीर"
+  },
+  "editor-panel.tooltip-relationship-color": {
+    "defaultMessage": "रंग"
+  },
+  "editor-panel.tooltip-relationship-color-default": {
+    "defaultMessage": "डिफ़ॉल्ट रंग"
+  },
+  "editor-panel.tooltip-relationship-stroke-dashed": {
+    "defaultMessage": "धराशायी रेखा"
+  },
+  "editor-panel.tooltip-relationship-stroke-dotted": {
+    "defaultMessage": "बिंदीदार रेखा"
+  },
+  "editor-panel.tooltip-relationship-stroke-solid": {
+    "defaultMessage": "ठोस रेखा"
+  },
+  "editor-panel.tooltip-relationship-style": {
+    "defaultMessage": "संबंध शैली"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "कोई आकार नहीं"
+  },
+  "headerNotifier": {
+    "defaultMessage": "हेडर सूचक"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "इमोजी"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "आइकन गैलरी"
+  },
+  "mindmap-comp": {
+    "defaultMessage": "माइंडमैप घटक"
+  },
+  "note.character.count": {
+    "defaultMessage": "{remaining} बचे"
+  },
+  "note.character.limit.warning": {
+    "defaultMessage": "(सीमा के करीब)"
+  },
+  "ocean": {
+    "defaultMessage": "महासागर"
+  },
+  "popover": {
+    "defaultMessage": "पॉपओवर"
+  },
+  "prism": {
+    "defaultMessage": "प्रिज्म"
+  },
+  "robot": {
+    "defaultMessage": "रोबोट"
+  },
+  "sunrise": {
+    "defaultMessage": "सूर्योदय"
+  },
+  "theme-editor.accept": {
+    "defaultMessage": "थीम लागू करें"
+  },
+  "theme-editor.cancel": {
+    "defaultMessage": "रद्द करें"
+  },
+  "theme-editor.description": {
+    "defaultMessage": "एक थीम आपके माइंडमैप की दृश्य शैली को परिभाषित करती है, जिसमें रंग, फॉन्ट और समग्र उपस्थिति शामिल है। एक थीम चुनें जो आपकी सामग्री और दर्शकों के लिए सबसे अच्छी हो।"
+  },
+  "theme-editor.title": {
+    "defaultMessage": "थीम चुनें"
+  },
+  "theme.classic.description": {
+    "defaultMessage": "पारंपरिक रंगों के साथ क्लासिक थीम"
+  },
+  "theme.classic.name": {
+    "defaultMessage": "क्लासिक"
+  },
+  "theme.ocean.description": {
+    "defaultMessage": "नीले रंगों के साथ महासागर थीम"
+  },
+  "theme.ocean.name": {
+    "defaultMessage": "महासागर"
+  },
+  "theme.robot.description": {
+    "defaultMessage": "भविष्यवादी रंगों के साथ रोबोट थीम"
+  },
+  "theme.robot.name": {
+    "defaultMessage": "रोबोट"
+  },
+  "theme.summer.description": {
+    "defaultMessage": "गर्म रंगों के साथ गर्मी थीम"
+  },
+  "theme.summer.name": {
+    "defaultMessage": "गर्मी"
+  },
+  "theme.sunrise.description": {
+    "defaultMessage": "नारंगी और पीले रंगों के साथ सूर्योदय थीम"
+  },
+  "theme.sunrise.name": {
+    "defaultMessage": "सूर्योदय"
+  },
+  "theme.switch-to-dark": {
+    "defaultMessage": "डार्क मोड पर स्विच करें"
+  },
+  "theme.switch-to-light": {
+    "defaultMessage": "लाइट मोड पर स्विच करें"
+  },
+  "title-input": {
+    "defaultMessage": "शीर्षक इनपुट"
   }
 }

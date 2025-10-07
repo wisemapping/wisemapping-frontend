@@ -11,6 +11,12 @@
       "value": "Borrar"
     }
   ],
+  "app-bar-title": [
+    {
+      "type": 0,
+      "value": "Editor de Mapas Mentales"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -23,10 +29,34 @@
       "value": "Registrarse"
     }
   ],
+  "appbar.error-saving-title": [
+    {
+      "type": 0,
+      "value": "Error al guardar"
+    }
+  ],
+  "appbar.logo-aria-label": [
+    {
+      "type": 0,
+      "value": "Logo de WiseMapping"
+    }
+  ],
   "appbar.shared-button": [
     {
       "type": 0,
       "value": "Compartir"
+    }
+  ],
+  "appbar.theme-title": [
+    {
+      "type": 0,
+      "value": "Tema"
+    }
+  ],
+  "appbar.title-renamed": [
+    {
+      "type": 0,
+      "value": "Mapa mental renombrado"
     }
   ],
   "appbar.tooltip-export": [
@@ -65,6 +95,12 @@
       "value": "Rehacer"
     }
   ],
+  "appbar.tooltip-rename": [
+    {
+      "type": 0,
+      "value": "Renombrar"
+    }
+  ],
   "appbar.tooltip-save": [
     {
       "type": 0,
@@ -87,6 +123,12 @@
     {
       "type": 0,
       "value": "Destacado"
+    }
+  ],
+  "appbar.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Tema"
     }
   ],
   "appbar.tooltip-undo": [
@@ -203,6 +245,12 @@
       "value": "Fondo"
     }
   ],
+  "classic": [
+    {
+      "type": 0,
+      "value": "Clásico"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -219,6 +267,18 @@
     {
       "type": 0,
       "value": "Descripción"
+    }
+  ],
+  "demo-simple-select": [
+    {
+      "type": 0,
+      "value": "Seleccionar"
+    }
+  ],
+  "divider": [
+    {
+      "type": 0,
+      "value": "Divisor"
     }
   ],
   "editor-panel.canvas-style-title": [
@@ -293,6 +353,12 @@
       "value": "Agregar tópico"
     }
   ],
+  "editor-panel.tooltip-add-topic-image": [
+    {
+      "type": 0,
+      "value": "Agregar imagen de tema"
+    }
+  ],
   "editor-panel.tooltip-canvas-style": [
     {
       "type": 0,
@@ -315,6 +381,12 @@
     {
       "type": 0,
       "value": "Estilo de conexión"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "Arco"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thick": [
@@ -345,6 +417,54 @@
     {
       "type": 0,
       "value": "Borrar tópico"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-end": [
+    {
+      "type": 0,
+      "value": "Flecha final"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-start": [
+    {
+      "type": 0,
+      "value": "Flecha inicial"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color": [
+    {
+      "type": 0,
+      "value": "Color"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color-default": [
+    {
+      "type": 0,
+      "value": "Color por defecto"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dashed": [
+    {
+      "type": 0,
+      "value": "Línea discontinua"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dotted": [
+    {
+      "type": 0,
+      "value": "Línea punteada"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-solid": [
+    {
+      "type": 0,
+      "value": "Línea sólida"
+    }
+  ],
+  "editor-panel.tooltip-relationship-style": [
+    {
+      "type": 0,
+      "value": "Estilo de relación"
     }
   ],
   "editor-panel.tooltip-theme": [
@@ -431,6 +551,12 @@
       "value": "Forma de linea"
     }
   ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "Sin forma"
+    }
+  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
@@ -447,6 +573,12 @@
     {
       "type": 0,
       "value": "Estilo de tópico"
+    }
+  ],
+  "editor-panel.topic-image-title": [
+    {
+      "type": 0,
+      "value": "Imagen de tema"
     }
   ],
   "editor.edit-description-mobile": [
@@ -485,6 +617,24 @@
       "value": "Buscar emojis..."
     }
   ],
+  "headerNotifier": [
+    {
+      "type": 0,
+      "value": "Notificador de encabezado"
+    }
+  ],
+  "icon-picker.emojis": [
+    {
+      "type": 0,
+      "value": "Emojis"
+    }
+  ],
+  "icon-picker.icons": [
+    {
+      "type": 0,
+      "value": "Galería de iconos"
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
@@ -519,6 +669,46 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "mindmap-comp": [
+    {
+      "type": 0,
+      "value": "Componente de mapa mental"
+    }
+  ],
+  "note.character.count": [
+    {
+      "type": 1,
+      "value": "remaining"
+    },
+    {
+      "type": 0,
+      "value": " restantes"
+    }
+  ],
+  "note.character.limit.warning": [
+    {
+      "type": 0,
+      "value": "(Acercándose al límite)"
+    }
+  ],
+  "ocean": [
+    {
+      "type": 0,
+      "value": "Océano"
+    }
+  ],
+  "popover": [
+    {
+      "type": 0,
+      "value": "Popover"
+    }
+  ],
+  "prism": [
+    {
+      "type": 0,
+      "value": "Prisma"
     }
   ],
   "rich-text-editor.bold": [
@@ -567,6 +757,12 @@
     {
       "type": 0,
       "value": "Subrayado"
+    }
+  ],
+  "robot": [
+    {
+      "type": 0,
+      "value": "Robot"
     }
   ],
   "shortcut-help-pane.action": [
@@ -725,6 +921,48 @@
       "value": "Deshacer cambios"
     }
   ],
+  "sunrise": [
+    {
+      "type": 0,
+      "value": "Amanecer"
+    }
+  ],
+  "theme-editor.accept": [
+    {
+      "type": 0,
+      "value": "Aplicar tema"
+    }
+  ],
+  "theme-editor.cancel": [
+    {
+      "type": 0,
+      "value": "Cancelar"
+    }
+  ],
+  "theme-editor.description": [
+    {
+      "type": 0,
+      "value": "Un tema define el estilo visual de tu mapa mental, incluyendo colores, fuentes y apariencia general. Elige un tema que se adapte mejor a tu contenido y audiencia."
+    }
+  ],
+  "theme-editor.title": [
+    {
+      "type": 0,
+      "value": "Elegir tema"
+    }
+  ],
+  "theme.classic.description": [
+    {
+      "type": 0,
+      "value": "Tema clásico con colores tradicionales"
+    }
+  ],
+  "theme.classic.name": [
+    {
+      "type": 0,
+      "value": "Clásico"
+    }
+  ],
   "theme.dark": [
     {
       "type": 0,
@@ -737,10 +975,76 @@
       "value": "Claro"
     }
   ],
+  "theme.ocean.description": [
+    {
+      "type": 0,
+      "value": "Tema océano con tonos azules"
+    }
+  ],
+  "theme.ocean.name": [
+    {
+      "type": 0,
+      "value": "Océano"
+    }
+  ],
+  "theme.robot.description": [
+    {
+      "type": 0,
+      "value": "Tema robot con colores futuristas"
+    }
+  ],
+  "theme.robot.name": [
+    {
+      "type": 0,
+      "value": "Robot"
+    }
+  ],
+  "theme.summer.description": [
+    {
+      "type": 0,
+      "value": "Tema verano con colores cálidos"
+    }
+  ],
+  "theme.summer.name": [
+    {
+      "type": 0,
+      "value": "Verano"
+    }
+  ],
+  "theme.sunrise.description": [
+    {
+      "type": 0,
+      "value": "Tema amanecer con tonos naranjas y amarillos"
+    }
+  ],
+  "theme.sunrise.name": [
+    {
+      "type": 0,
+      "value": "Amanecer"
+    }
+  ],
+  "theme.switch-to-dark": [
+    {
+      "type": 0,
+      "value": "Cambiar a modo oscuro"
+    }
+  ],
+  "theme.switch-to-light": [
+    {
+      "type": 0,
+      "value": "Cambiar a modo claro"
+    }
+  ],
   "theme.toggle": [
     {
       "type": 0,
       "value": "Cambiar Tema"
+    }
+  ],
+  "title-input": [
+    {
+      "type": 0,
+      "value": "Entrada de título"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

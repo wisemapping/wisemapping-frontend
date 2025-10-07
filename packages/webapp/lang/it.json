@@ -553,14 +553,119 @@
   },
   "share.message": {
     "defaultMessage": "Messaggio"
-	},
-	"theme.dark": {
-		"defaultMessage": "Scuro"
-	},
-	"theme.light": {
-		"defaultMessage": "Chiaro"
-	},
-	"theme.toggle": {
-		"defaultMessage": "Cambia Tema"
-	}
+  },
+  "theme.dark": {
+    "defaultMessage": "Scuro"
+  },
+  "theme.light": {
+    "defaultMessage": "Chiaro"
+  },
+  "theme.toggle": {
+    "defaultMessage": "Cambia Tema"
+  },
+  "admin.delete-user": {
+    "defaultMessage": "[IT] admin.delete-user"
+  },
+  "common.maps-list": {
+    "defaultMessage": "[IT] common.maps-list"
+  },
+  "admin.status-clean": {
+    "defaultMessage": "[IT] admin.status-clean"
+  },
+  "common.allow-email-notifications": {
+    "defaultMessage": "[IT] common.allow-email-notifications"
+  },
+  "admin.public": {
+    "defaultMessage": "[IT] admin.public"
+  },
+  "common.others": {
+    "defaultMessage": "[IT] common.others"
+  },
+  "admin.view-xml": {
+    "defaultMessage": "[IT] admin.view-xml"
+  },
+  "registration.facebook.button": {
+    "defaultMessage": "[IT] registration.facebook.button"
+  },
+  "common.registration-form": {
+    "defaultMessage": "[IT] common.registration-form"
+  },
+  "common.first-name": {
+    "defaultMessage": "[IT] common.first-name"
+  },
+  "admin.auth-type": {
+    "defaultMessage": "[IT] admin.auth-type"
+  },
+  "common.delete": {
+    "defaultMessage": "[IT] common.delete"
+  },
+  "admin.status": {
+    "defaultMessage": "[IT] admin.status"
+  },
+  "admin.suspend-user": {
+    "defaultMessage": "[IT] admin.suspend-user"
+  },
+  "admin.suspension-status": {
+    "defaultMessage": "[IT] admin.suspension-status"
+  },
+  "admin.edit-user": {
+    "defaultMessage": "[IT] admin.edit-user"
+  },
+  "admin.refresh": {
+    "defaultMessage": "[IT] admin.refresh"
+  },
+  "common.login-form": {
+    "defaultMessage": "[IT] common.login-form"
+  },
+  "admin.lock-status": {
+    "defaultMessage": "[IT] admin.lock-status"
+  },
+  "common.emails": {
+    "defaultMessage": "[IT] common.emails"
+  },
+  "admin.suspension-reason": {
+    "defaultMessage": "[IT] admin.suspension-reason"
+  },
+  "admin.status-suspended": {
+    "defaultMessage": "[IT] admin.status-suspended"
+  },
+  "admin.delete": {
+    "defaultMessage": "[IT] admin.delete"
+  },
+  "common.last-name": {
+    "defaultMessage": "[IT] common.last-name"
+  },
+  "admin.public-access": {
+    "defaultMessage": "[IT] admin.public-access"
+  },
+  "admin.status-active": {
+    "defaultMessage": "[IT] admin.status-active"
+  },
+  "common.locale": {
+    "defaultMessage": "[IT] common.locale"
+  },
+  "login.facebook.button": {
+    "defaultMessage": "[IT] login.facebook.button"
+  },
+  "common.email": {
+    "defaultMessage": "[IT] common.email"
+  },
+  "admin.unsuspend-user": {
+    "defaultMessage": "[IT] admin.unsuspend-user"
+  },
+  "common.delete-tag": {
+    "defaultMessage": "[IT] common.delete-tag"
+  },
+  "admin.edit": {
+    "defaultMessage": "[IT] admin.edit"
+  },
+  "common.open-drawer": {
+    "defaultMessage": "[IT] common.open-drawer"
+  },
+  "admin.locked": {
+    "defaultMessage": "[IT] admin.locked"
+  },
+  "common.settings": {
+    "defaultMessage": "[IT] common.settings"
+  }
 }

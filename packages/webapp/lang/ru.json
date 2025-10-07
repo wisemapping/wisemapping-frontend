@@ -1,537 +1,671 @@
 {
-	"account.delete-warning": {
-		"defaultMessage": "Помните, что вы не сможете восстановить созданные вами майнд-карты. Вся информация будет удалена безвозвратно."
-	},
-	"accountinfo.button": {
-		"defaultMessage": "Сохранить"
-	},
-	"accountinfo.email": {
-		"defaultMessage": "Email"
-	},
-	"accountinfo.firstname": {
-		"defaultMessage": "Имя"
-	},
-	"accountinfo.lastname": {
-		"defaultMessage": "Фамилия"
-	},
-	"accountinfo.title": {
-		"defaultMessage": "Информация"
-	},
-	"action.cancel-button": {
-		"defaultMessage": "Отмена"
-	},
-	"action.close-button": {
-		"defaultMessage": "Закрыть"
-	},
-	"action.delete": {
-		"defaultMessage": "Удалить"
-	},
-	"action.delete-description": {
-		"defaultMessage": "Удаление майндкарты - необратимый процесс без возможности восстановления. Точно удалить майндкарту?."
-	},
-	"action.delete-title": {
-		"defaultMessage": "Удалить"
-	},
-	"action.duplicate": {
-		"defaultMessage": "Клонировать"
-	},
-	"action.export": {
-		"defaultMessage": "Экспорт"
-	},
-	"action.history": {
-		"defaultMessage": "История"
-	},
-	"action.history-description": {
-		"defaultMessage": "Список изменений за последние 90 дней."
-	},
-	"action.history-title": {
-		"defaultMessage": "История версий"
-	},
-	"action.import": {
-		"defaultMessage": "Импорт"
-	},
-	"action.info": {
-		"defaultMessage": "Инфо"
-	},
-	"action.label": {
-		"defaultMessage": "Добавить метку"
-	},
-	"action.new": {
-		"defaultMessage": "Новая майнд-карта"
-	},
-	"action.open": {
-		"defaultMessage": "Открыть"
-	},
-	"action.print": {
-		"defaultMessage": "Печать"
-	},
-	"action.publish": {
-		"defaultMessage": "Опубликовать"
-	},
-	"action.rename": {
-		"defaultMessage": "Переименовать"
-	},
-	"action.rename-description-placeholder": {
-		"defaultMessage": "Описание"
-	},
-	"action.rename-name-placeholder": {
-		"defaultMessage": "Имя"
-	},
-	"action.share": {
-		"defaultMessage": "Открыть доступ"
-	},
-	"changepwd.button": {
-		"defaultMessage": "Изменить"
-	},
-	"changepwd.confirm-password": {
-		"defaultMessage": "Подтвердить пароль"
-	},
-	"changepwd.description": {
-		"defaultMessage": "Укажите новый пароль вашей учетной записи."
-	},
-	"changepwd.password": {
-		"defaultMessage": "Пароль"
-	},
-	"changepwd.password-match": {
-		"defaultMessage": "Пароли не совпадают. Пожалуйста, попробуйте еще раз."
-	},
-	"changepwd.title": {
-		"defaultMessage": "Изменить пароль"
-	},
-	"common.wait": {
-		"defaultMessage": "Подождите..."
-	},
-	"create.button": {
-		"defaultMessage": "Создать"
-	},
-	"create.description": {
-		"defaultMessage": "Пожалуйста, укажите имя и описание."
-	},
-	"create.title": {
-		"defaultMessage": "Создание новой майнд-карты."
-	},
-	"deletem.title": {
-		"defaultMessage": "Все выбранные карты будут удалены"
-	},
-	"duplicate.title": {
-		"defaultMessage": "Клонировать"
-	},
-	"expired.description": {
-		"defaultMessage": "Время вашей сессии истекло. Пожалуйста, авторизуйтесь и попробуйте снова."
-	},
-	"expired.title": {
-		"defaultMessage": "Время вашей сессии истекло"
-	},
-	"export.desc": {
-		"defaultMessage": "Выгрузите эту карту в формате, который нужен - вставка в презентацию, отправка по почте, оффлайн работа."
-	},
-	"export.document": {
-		"defaultMessage": "Майнд-карта: Экспорт в различных форматах редакторов майнд-карт"
-	},
-	"export.document-label": {
-		"defaultMessage": "Документ: Экспорт в формате документа"
-	},
-	"export.image": {
-		"defaultMessage": "Рисунок: Экспорт рисунка вашей карты с учетом всех цветов и форм."
-	},
-	"export.title": {
-		"defaultMessage": "Экспорт"
-	},
-	"export.warning": {
-		"defaultMessage": "Экспорт рисунком (SVG,PNG,JPEG,PDF) доступен только из панели редактирования."
-	},
-	"footer.aboutus": {
-		"defaultMessage": "О Нас"
-	},
-	"footer.contactus": {
-		"defaultMessage": "Контакты"
-	},
-	"footer.faq": {
-		"defaultMessage": "F.A.Q."
-	},
-	"footer.faqandhelp": {
-		"defaultMessage": "Помощь & FAQ"
-	},
-	"footer.feedback": {
-		"defaultMessage": "Обратная связь"
-	},
-	"footer.opensource": {
-		"defaultMessage": "Open Source"
-	},
-	"footer.others": {
-		"defaultMessage": "Прочее"
-	},
-	"footer.termsandconditions": {
-		"defaultMessage": "Общие Правила"
-	},
-	"forgot.desc": {
-		"defaultMessage": "Мы отправим Вам e-mail для восстановления пароля."
-	},
-	"forgot.email": {
-		"defaultMessage": "Email"
-	},
-	"forgot.page-title": {
-		"defaultMessage": "Забыл пароль | WiseMapping"
-	},
-	"forgot.register": {
-		"defaultMessage": "Отправить"
-	},
-	"forgot.success.desc": {
-		"defaultMessage": "Мы отправили e-mail с инструкциями по восстановлению пароля. Вы должны получить его в течение пары минут."
-	},
-	"forgot.success.title": {
-		"defaultMessage": "Ваш временный пароль отправлен."
-	},
-	"forgot.title": {
-		"defaultMessage": "Установить новый пароль"
-	},
-	"forgotsuccess.page-title": {
-		"defaultMessage": "Пароль восстановлен | WiseMapping"
-	},
-	"header.donthaveaccount": {
-		"defaultMessage": "Нет аккаунта?"
-	},
-	"header.haveaccount": {
-		"defaultMessage": "Уже есть аккаунт?"
-	},
-	"help.support": {
-		"defaultMessage": "Поддержка"
-	},
-	"history.no-changes": {
-		"defaultMessage": "Нет доступных изменений"
-	},
-	"import.button": {
-		"defaultMessage": "Создать"
-	},
-	"import.description": {
-		"defaultMessage": "Можно импортировать файлы WiseMapping, FreeMind, Freeplane, XMind, MindManager и OPML. Выберите файл, который хотите импортировать."
-	},
-	"import.title": {
-		"defaultMessage": "Загрузить майнд-карту с компьютера"
-	},
-	"import.error-file": {
-		"defaultMessage": "Ошибка импорта: {error}"
-	},
-	"info.basic-info": {
-		"defaultMessage": "Основная информация"
-	},
-	"info.button": {
-		"defaultMessage": "Принять"
-	},
-	"info.creation-time": {
-		"defaultMessage": "Дата создания"
-	},
-	"info.creator": {
-		"defaultMessage": "Автор"
-	},
-	"info.description": {
-		"defaultMessage": "Описание"
-	},
-	"info.description-msg": {
-		"defaultMessage": "После публикация карта станет видима для любого, у кого есть ссылка."
-	},
-	"info.modified-time": {
-		"defaultMessage": "Последние изменения"
-	},
-	"info.modified-tny": {
-		"defaultMessage": "Последний редактировал"
-	},
-	"info.name": {
-		"defaultMessage": "Имя"
-	},
-	"info.public-visibility": {
-		"defaultMessage": "Доступ по ссылке"
-	},
-	"info.sharing": {
-		"defaultMessage": "Видимость"
-	},
-	"info.starred": {
-		"defaultMessage": "Важная"
-	},
-	"info.title": {
-		"defaultMessage": "Инфо"
-	},
-	"language.change": {
-		"defaultMessage": "Сменить язык"
-	},
-	"language.help": {
-		"defaultMessage": "Помочь переводить"
-	},
-	"login.desc": {
-		"defaultMessage": "Войдите в свой аккаунт"
-	},
-	"login.email": {
-		"defaultMessage": "Email"
-	},
-	"login.error": {
-		"defaultMessage": "Некорректный email или пароль."
-	},
-	"login.forgotpwd": {
-		"defaultMessage": "Забыли пароль?"
-	},
-	"login.hsqldbcofig": {
-		"defaultMessage": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL",
-		"description": "Missing production database configured"
-	},
-	"login.page-title": {
-		"defaultMessage": "Вход | WiseMapping"
-	},
-	"login.password": {
-		"defaultMessage": "Пароль"
-	},
-	"login.remberme": {
-		"defaultMessage": "Запомнить меня"
-	},
-	"login.signin": {
-		"defaultMessage": "Вход"
-	},
-	"login.signup": {
-		"defaultMessage": "Регистрация"
-	},
-	"login.title": {
-		"defaultMessage": "Добро пожаловать!"
-	},
-	"login.userinactive": {
-		"defaultMessage": "Ваш аккаунт еще не активирован. Вам на почту придет сообщение о его активации. На связи!."
-	},
-	"map.creator": {
-		"defaultMessage": "Создатель"
-	},
-	"map.delete-selected": {
-		"defaultMessage": "Удалить выбранные"
-	},
-	"map.last-update": {
-		"defaultMessage": "Последнее изменение"
-	},
-	"map.more-actions": {
-		"defaultMessage": "Больше... "
-	},
-	"map.name": {
-		"defaultMessage": "Имя"
-	},
-	"map.tooltip-add": {
-		"defaultMessage": "Добавить метку выбранным"
-	},
-	"maps.choose-file": {
-		"defaultMessage": "Выберите файл"
-	},
-	"maps.create-tooltip": {
-		"defaultMessage": "Создать новую майнд-карту"
-	},
-	"maps.empty-result": {
-		"defaultMessage": "Нет карт, подходящих под условия фильтра."
-	},
-	"maps.import-desc": {
-		"defaultMessage": "Загрузить из других редакторов"
-	},
-	"maps.modified": {
-		"defaultMessage": "Изменена"
-	},
-	"maps.modified-by": {
-		"defaultMessage": "Редактор"
-	},
-	"maps.modified-by-desc": {
-		"defaultMessage": "Изменена {by} в {on}"
-	},
-	"maps.nav-all": {
-		"defaultMessage": "Все"
-	},
-	"maps.nav-onwned": {
-		"defaultMessage": "Созданные мной"
-	},
-	"maps.nav-public": {
-		"defaultMessage": "Публичные"
-	},
-	"maps.nav-shared": {
-		"defaultMessage": "В общем доступе"
-	},
-	"maps.nav-starred": {
-		"defaultMessage": "Отмеченные"
-	},
-	"maps.page-title": {
-		"defaultMessage": "Мои карты | WiseMapping"
-	},
-	"maps.revert": {
-		"defaultMessage": "Отменить"
-	},
-	"maps.search-action": {
-		"defaultMessage": "Поиск ..."
-	},
-	"maps.tooltip-open": {
-		"defaultMessage": "Открыть для редактирования"
-	},
-	"maps.tooltip-starred": {
-		"defaultMessage": "Отмеченные"
-	},
-	"maps.view": {
-		"defaultMessage": "Просмотр"
-	},
-	"menu.account": {
-		"defaultMessage": "Профиль"
-	},
-	"menu.change-password": {
-		"defaultMessage": "Сменить пароль"
-	},
-	"menu.signout": {
-		"defaultMessage": "Выход"
-	},
-	"publish.button": {
-		"defaultMessage": "Применить"
-	},
-	"publish.checkbox": {
-		"defaultMessage": "Включить общий доступ"
-	},
-	"publish.description": {
-		"defaultMessage": "После публикация карта станет видима для любого, у кого есть ссылка."
-	},
-	"publish.embedded": {
-		"defaultMessage": "Встроить"
-	},
-	"publish.embedded-msg": {
-		"defaultMessage": "Скопируйте этот код, чтобы встроить майнд-карту в ваш сайт:"
-	},
-	"publish.public-url": {
-		"defaultMessage": "Публичный URL"
-	},
-	"publish.public-url-msg": {
-		"defaultMessage": "Скопируйте ссылку, чтобы поделиться с коллегами доступом к карте:"
-	},
-	"publish.title": {
-		"defaultMessage": "Опубликовать"
-	},
-	"registation.success-title": {
-		"defaultMessage": "Успешная регистрация | WiseMapping"
-	},
-	"registration.desc": {
-		"defaultMessage": "Регистрация бесплатна и займет всего минуту"
-	},
-	"registration.email": {
-		"defaultMessage": "Email"
-	},
-	"registration.firstname": {
-		"defaultMessage": "Имя"
-	},
-	"registration.lastname": {
-		"defaultMessage": "Фамилия"
-	},
-	"registration.password": {
-		"defaultMessage": "Пароль"
-	},
-	"registration.register": {
-		"defaultMessage": "Регистрация"
-	},
-	"registration.success.desc": {
-		"defaultMessage": "Нажмите на кнопку 'Войти' и приступите к созданию майнд-карт."
-	},
-	"registration.termandconditions": {
-		"defaultMessage": "Правила: Пожалуйста, проверьте информацию учетной записи WiseMapping, которую вы указали, и ознакомьтесь с Правилами. По нажатию на кнопку 'Регистрация' вы соглашаетесь с Правилами и Политикой Конфиденциальности"
-	},
-	"registration.title": {
-		"defaultMessage": "Стать участником"
-	},
-	"rename.description": {
-		"defaultMessage": "Пожалуйста, укажите новое имя и описание."
-	},
-	"rename.title": {
-		"defaultMessage": "Переименовать"
-	},
-	"resetpassword.success.title": {
-		"defaultMessage": "Аккаунт был успешно создан!"
-	},
-	"role.editor": {
-		"defaultMessage": "Редактор"
-	},
-	"role.owner": {
-		"defaultMessage": "Владелец"
-	},
-	"role.viewer": {
-		"defaultMessage": "Читатель"
-	},
-	"share.add-button": {
-		"defaultMessage": "Добавить"
-	},
-	"share.add-message": {
-		"defaultMessage": "Добавить сообщение"
-	},
-	"share.can-edit": {
-		"defaultMessage": "Редактирование"
-	},
-	"share.can-view": {
-		"defaultMessage": "Просмотр"
-	},
-	"share.delete": {
-		"defaultMessage": "Отозвать доступ"
-	},
-	"share.delete-description": {
-		"defaultMessage": "Пригласите людей для совместной работы над картой. Они получат письмо с приглашением."
-	},
-	"share.delete-title": {
-		"defaultMessage": "Общий доступ"
-	},
-	"share.message": {
-		"defaultMessage": "Сообщение"
-	},
-	"editor.try-welcome": {
-		"defaultMessage": "Здесь можно ознакомиться с возможностями нашего редактора майнд-карт на примерах и практике!"
-	},
-	"editor.try-welcome-description": {
-		"defaultMessage": "Зарегистрируйтесь, чтобы создавать, делиться и публиковать майнд-карты бесплатно и без ограничений!"
-	},
-	"footer.donations": {
-		"defaultMessage": "Пожертвования"
-	},
-	"footer.support": {
-		"defaultMessage": "Услуги"
-	},
-	"footer.team": {
-		"defaultMessage": "команда"
-	},
-	"registration.google.button": {
-		"defaultMessage": "Зарегистрируйтесь в Google"
-	},
-	"login.google.button": {
-		"defaultMessage": "Войти через Google"
-	},
-	"registration.division": {
-		"defaultMessage": "или же"
-	},
-	"login.division": {
-		"defaultMessage": "или же"
-	},
-	"registration.callback.confirm.title": {
-	  "defaultMessage": "Подтверждать"
-	},
-	"registration.callback.waiting.title": {
-	  "defaultMessage": "Отделка ..."
-	},
-	"registration.callback.confirm.description": {
-	  "defaultMessage": "Учетная запись c таким же адресом электронной почты была ранее зарегистрирована. Вы хотите связать свою учетную запись Google с этой учетной записью WiseMapping?"
-	},
-	"registration.callback.waiting.description": {
-	  "defaultMessage": "Подождите, пока мы подтвердим вашу личность"
-	},
-	"registation.callback.error.message": {
-	  "defaultMessage": "Произошла ошибка при подтверждении вашей личности в Google. Повторите попытку со страницы входа."
-	},
-	"registration.callback.back": {
-	  "defaultMessage": "Вернуться на страницу авторизации"
-	},
-	"registration.callback.sync": {
-	  "defaultMessage": "Синхронизировать учетную запись"
-	},
-	"forgot.oauth.message": {
-	  "defaultMessage": "Вам не нужен пароль, пожалуйста, войдите с помощью Google"
-	},
-	"forgot.oauth.back": {
-	  "defaultMessage": "Вернуться на страницу авторизации"
-	},
-	"theme.dark": {
-		"defaultMessage": "Темная"
-	},
-	"theme.light": {
-		"defaultMessage": "Светлая"
-	},
-	"theme.toggle": {
-		"defaultMessage": "Переключить Тему"
-	}
+  "account.delete-warning": {
+    "defaultMessage": "Помните, что вы не сможете восстановить созданные вами майнд-карты. Вся информация будет удалена безвозвратно."
+  },
+  "accountinfo.button": {
+    "defaultMessage": "Сохранить"
+  },
+  "accountinfo.email": {
+    "defaultMessage": "Email"
+  },
+  "accountinfo.firstname": {
+    "defaultMessage": "Имя"
+  },
+  "accountinfo.lastname": {
+    "defaultMessage": "Фамилия"
+  },
+  "accountinfo.title": {
+    "defaultMessage": "Информация"
+  },
+  "action.cancel-button": {
+    "defaultMessage": "Отмена"
+  },
+  "action.close-button": {
+    "defaultMessage": "Закрыть"
+  },
+  "action.delete": {
+    "defaultMessage": "Удалить"
+  },
+  "action.delete-description": {
+    "defaultMessage": "Удаление майндкарты - необратимый процесс без возможности восстановления. Точно удалить майндкарту?."
+  },
+  "action.delete-title": {
+    "defaultMessage": "Удалить"
+  },
+  "action.duplicate": {
+    "defaultMessage": "Клонировать"
+  },
+  "action.export": {
+    "defaultMessage": "Экспорт"
+  },
+  "action.history": {
+    "defaultMessage": "История"
+  },
+  "action.history-description": {
+    "defaultMessage": "Список изменений за последние 90 дней."
+  },
+  "action.history-title": {
+    "defaultMessage": "История версий"
+  },
+  "action.import": {
+    "defaultMessage": "Импорт"
+  },
+  "action.info": {
+    "defaultMessage": "Инфо"
+  },
+  "action.label": {
+    "defaultMessage": "Добавить метку"
+  },
+  "action.new": {
+    "defaultMessage": "Новая майнд-карта"
+  },
+  "action.open": {
+    "defaultMessage": "Открыть"
+  },
+  "action.print": {
+    "defaultMessage": "Печать"
+  },
+  "action.publish": {
+    "defaultMessage": "Опубликовать"
+  },
+  "action.rename": {
+    "defaultMessage": "Переименовать"
+  },
+  "action.rename-description-placeholder": {
+    "defaultMessage": "Описание"
+  },
+  "action.rename-name-placeholder": {
+    "defaultMessage": "Имя"
+  },
+  "action.share": {
+    "defaultMessage": "Открыть доступ"
+  },
+  "changepwd.button": {
+    "defaultMessage": "Изменить"
+  },
+  "changepwd.confirm-password": {
+    "defaultMessage": "Подтвердить пароль"
+  },
+  "changepwd.description": {
+    "defaultMessage": "Укажите новый пароль вашей учетной записи."
+  },
+  "changepwd.password": {
+    "defaultMessage": "Пароль"
+  },
+  "changepwd.password-match": {
+    "defaultMessage": "Пароли не совпадают. Пожалуйста, попробуйте еще раз."
+  },
+  "changepwd.title": {
+    "defaultMessage": "Изменить пароль"
+  },
+  "common.wait": {
+    "defaultMessage": "Подождите..."
+  },
+  "create.button": {
+    "defaultMessage": "Создать"
+  },
+  "create.description": {
+    "defaultMessage": "Пожалуйста, укажите имя и описание."
+  },
+  "create.title": {
+    "defaultMessage": "Создание новой майнд-карты."
+  },
+  "deletem.title": {
+    "defaultMessage": "Все выбранные карты будут удалены"
+  },
+  "duplicate.title": {
+    "defaultMessage": "Клонировать"
+  },
+  "expired.description": {
+    "defaultMessage": "Время вашей сессии истекло. Пожалуйста, авторизуйтесь и попробуйте снова."
+  },
+  "expired.title": {
+    "defaultMessage": "Время вашей сессии истекло"
+  },
+  "export.desc": {
+    "defaultMessage": "Выгрузите эту карту в формате, который нужен - вставка в презентацию, отправка по почте, оффлайн работа."
+  },
+  "export.document": {
+    "defaultMessage": "Майнд-карта: Экспорт в различных форматах редакторов майнд-карт"
+  },
+  "export.document-label": {
+    "defaultMessage": "Документ: Экспорт в формате документа"
+  },
+  "export.image": {
+    "defaultMessage": "Рисунок: Экспорт рисунка вашей карты с учетом всех цветов и форм."
+  },
+  "export.title": {
+    "defaultMessage": "Экспорт"
+  },
+  "export.warning": {
+    "defaultMessage": "Экспорт рисунком (SVG,PNG,JPEG,PDF) доступен только из панели редактирования."
+  },
+  "footer.aboutus": {
+    "defaultMessage": "О Нас"
+  },
+  "footer.contactus": {
+    "defaultMessage": "Контакты"
+  },
+  "footer.faq": {
+    "defaultMessage": "F.A.Q."
+  },
+  "footer.faqandhelp": {
+    "defaultMessage": "Помощь & FAQ"
+  },
+  "footer.feedback": {
+    "defaultMessage": "Обратная связь"
+  },
+  "footer.opensource": {
+    "defaultMessage": "Open Source"
+  },
+  "footer.others": {
+    "defaultMessage": "Прочее"
+  },
+  "footer.termsandconditions": {
+    "defaultMessage": "Общие Правила"
+  },
+  "forgot.desc": {
+    "defaultMessage": "Мы отправим Вам e-mail для восстановления пароля."
+  },
+  "forgot.email": {
+    "defaultMessage": "Email"
+  },
+  "forgot.page-title": {
+    "defaultMessage": "Забыл пароль | WiseMapping"
+  },
+  "forgot.register": {
+    "defaultMessage": "Отправить"
+  },
+  "forgot.success.desc": {
+    "defaultMessage": "Мы отправили e-mail с инструкциями по восстановлению пароля. Вы должны получить его в течение пары минут."
+  },
+  "forgot.success.title": {
+    "defaultMessage": "Ваш временный пароль отправлен."
+  },
+  "forgot.title": {
+    "defaultMessage": "Установить новый пароль"
+  },
+  "forgotsuccess.page-title": {
+    "defaultMessage": "Пароль восстановлен | WiseMapping"
+  },
+  "header.donthaveaccount": {
+    "defaultMessage": "Нет аккаунта?"
+  },
+  "header.haveaccount": {
+    "defaultMessage": "Уже есть аккаунт?"
+  },
+  "help.support": {
+    "defaultMessage": "Поддержка"
+  },
+  "history.no-changes": {
+    "defaultMessage": "Нет доступных изменений"
+  },
+  "import.button": {
+    "defaultMessage": "Создать"
+  },
+  "import.description": {
+    "defaultMessage": "Можно импортировать файлы WiseMapping, FreeMind, Freeplane, XMind, MindManager и OPML. Выберите файл, который хотите импортировать."
+  },
+  "import.title": {
+    "defaultMessage": "Загрузить майнд-карту с компьютера"
+  },
+  "import.error-file": {
+    "defaultMessage": "Ошибка импорта: {error}"
+  },
+  "info.basic-info": {
+    "defaultMessage": "Основная информация"
+  },
+  "info.button": {
+    "defaultMessage": "Принять"
+  },
+  "info.creation-time": {
+    "defaultMessage": "Дата создания"
+  },
+  "info.creator": {
+    "defaultMessage": "Автор"
+  },
+  "info.description": {
+    "defaultMessage": "Описание"
+  },
+  "info.description-msg": {
+    "defaultMessage": "После публикация карта станет видима для любого, у кого есть ссылка."
+  },
+  "info.modified-time": {
+    "defaultMessage": "Последние изменения"
+  },
+  "info.modified-tny": {
+    "defaultMessage": "Последний редактировал"
+  },
+  "info.name": {
+    "defaultMessage": "Имя"
+  },
+  "info.public-visibility": {
+    "defaultMessage": "Доступ по ссылке"
+  },
+  "info.sharing": {
+    "defaultMessage": "Видимость"
+  },
+  "info.starred": {
+    "defaultMessage": "Важная"
+  },
+  "info.title": {
+    "defaultMessage": "Инфо"
+  },
+  "language.change": {
+    "defaultMessage": "Сменить язык"
+  },
+  "language.help": {
+    "defaultMessage": "Помочь переводить"
+  },
+  "login.desc": {
+    "defaultMessage": "Войдите в свой аккаунт"
+  },
+  "login.email": {
+    "defaultMessage": "Email"
+  },
+  "login.error": {
+    "defaultMessage": "Некорректный email или пароль."
+  },
+  "login.forgotpwd": {
+    "defaultMessage": "Забыли пароль?"
+  },
+  "login.page-title": {
+    "defaultMessage": "Вход | WiseMapping"
+  },
+  "login.password": {
+    "defaultMessage": "Пароль"
+  },
+  "login.remberme": {
+    "defaultMessage": "Запомнить меня"
+  },
+  "login.signin": {
+    "defaultMessage": "Вход"
+  },
+  "login.signup": {
+    "defaultMessage": "Регистрация"
+  },
+  "login.title": {
+    "defaultMessage": "Добро пожаловать!"
+  },
+  "login.userinactive": {
+    "defaultMessage": "Ваш аккаунт еще не активирован. Вам на почту придет сообщение о его активации. На связи!."
+  },
+  "map.creator": {
+    "defaultMessage": "Создатель"
+  },
+  "map.delete-selected": {
+    "defaultMessage": "Удалить выбранные"
+  },
+  "map.last-update": {
+    "defaultMessage": "Последнее изменение"
+  },
+  "map.more-actions": {
+    "defaultMessage": "Больше... "
+  },
+  "map.name": {
+    "defaultMessage": "Имя"
+  },
+  "map.tooltip-add": {
+    "defaultMessage": "Добавить метку выбранным"
+  },
+  "maps.choose-file": {
+    "defaultMessage": "Выберите файл"
+  },
+  "maps.create-tooltip": {
+    "defaultMessage": "Создать новую майнд-карту"
+  },
+  "maps.empty-result": {
+    "defaultMessage": "Нет карт, подходящих под условия фильтра."
+  },
+  "maps.import-desc": {
+    "defaultMessage": "Загрузить из других редакторов"
+  },
+  "maps.modified": {
+    "defaultMessage": "Изменена"
+  },
+  "maps.modified-by": {
+    "defaultMessage": "Редактор"
+  },
+  "maps.modified-by-desc": {
+    "defaultMessage": "Изменена {by} в {on}"
+  },
+  "maps.nav-all": {
+    "defaultMessage": "Все"
+  },
+  "maps.nav-onwned": {
+    "defaultMessage": "Созданные мной"
+  },
+  "maps.nav-public": {
+    "defaultMessage": "Публичные"
+  },
+  "maps.nav-shared": {
+    "defaultMessage": "В общем доступе"
+  },
+  "maps.nav-starred": {
+    "defaultMessage": "Отмеченные"
+  },
+  "maps.page-title": {
+    "defaultMessage": "Мои карты | WiseMapping"
+  },
+  "maps.revert": {
+    "defaultMessage": "Отменить"
+  },
+  "maps.search-action": {
+    "defaultMessage": "Поиск ..."
+  },
+  "maps.tooltip-open": {
+    "defaultMessage": "Открыть для редактирования"
+  },
+  "maps.tooltip-starred": {
+    "defaultMessage": "Отмеченные"
+  },
+  "maps.view": {
+    "defaultMessage": "Просмотр"
+  },
+  "menu.account": {
+    "defaultMessage": "Профиль"
+  },
+  "menu.change-password": {
+    "defaultMessage": "Сменить пароль"
+  },
+  "menu.signout": {
+    "defaultMessage": "Выход"
+  },
+  "publish.button": {
+    "defaultMessage": "Применить"
+  },
+  "publish.checkbox": {
+    "defaultMessage": "Включить общий доступ"
+  },
+  "publish.description": {
+    "defaultMessage": "После публикация карта станет видима для любого, у кого есть ссылка."
+  },
+  "publish.embedded": {
+    "defaultMessage": "Встроить"
+  },
+  "publish.embedded-msg": {
+    "defaultMessage": "Скопируйте этот код, чтобы встроить майнд-карту в ваш сайт:"
+  },
+  "publish.public-url": {
+    "defaultMessage": "Публичный URL"
+  },
+  "publish.public-url-msg": {
+    "defaultMessage": "Скопируйте ссылку, чтобы поделиться с коллегами доступом к карте:"
+  },
+  "publish.title": {
+    "defaultMessage": "Опубликовать"
+  },
+  "registation.success-title": {
+    "defaultMessage": "Успешная регистрация | WiseMapping"
+  },
+  "registration.desc": {
+    "defaultMessage": "Регистрация бесплатна и займет всего минуту"
+  },
+  "registration.email": {
+    "defaultMessage": "Email"
+  },
+  "registration.firstname": {
+    "defaultMessage": "Имя"
+  },
+  "registration.lastname": {
+    "defaultMessage": "Фамилия"
+  },
+  "registration.password": {
+    "defaultMessage": "Пароль"
+  },
+  "registration.register": {
+    "defaultMessage": "Регистрация"
+  },
+  "registration.success.desc": {
+    "defaultMessage": "Нажмите на кнопку 'Войти' и приступите к созданию майнд-карт."
+  },
+  "registration.termandconditions": {
+    "defaultMessage": "Правила: Пожалуйста, проверьте информацию учетной записи WiseMapping, которую вы указали, и ознакомьтесь с Правилами. По нажатию на кнопку 'Регистрация' вы соглашаетесь с Правилами и Политикой Конфиденциальности"
+  },
+  "registration.title": {
+    "defaultMessage": "Стать участником"
+  },
+  "rename.description": {
+    "defaultMessage": "Пожалуйста, укажите новое имя и описание."
+  },
+  "rename.title": {
+    "defaultMessage": "Переименовать"
+  },
+  "resetpassword.success.title": {
+    "defaultMessage": "Аккаунт был успешно создан!"
+  },
+  "role.editor": {
+    "defaultMessage": "Редактор"
+  },
+  "role.owner": {
+    "defaultMessage": "Владелец"
+  },
+  "role.viewer": {
+    "defaultMessage": "Читатель"
+  },
+  "share.add-button": {
+    "defaultMessage": "Добавить"
+  },
+  "share.add-message": {
+    "defaultMessage": "Добавить сообщение"
+  },
+  "share.can-edit": {
+    "defaultMessage": "Редактирование"
+  },
+  "share.can-view": {
+    "defaultMessage": "Просмотр"
+  },
+  "share.delete": {
+    "defaultMessage": "Отозвать доступ"
+  },
+  "share.delete-description": {
+    "defaultMessage": "Пригласите людей для совместной работы над картой. Они получат письмо с приглашением."
+  },
+  "share.delete-title": {
+    "defaultMessage": "Общий доступ"
+  },
+  "share.message": {
+    "defaultMessage": "Сообщение"
+  },
+  "footer.donations": {
+    "defaultMessage": "Пожертвования"
+  },
+  "footer.support": {
+    "defaultMessage": "Услуги"
+  },
+  "footer.team": {
+    "defaultMessage": "команда"
+  },
+  "registration.google.button": {
+    "defaultMessage": "Зарегистрируйтесь в Google"
+  },
+  "login.google.button": {
+    "defaultMessage": "Войти через Google"
+  },
+  "registration.division": {
+    "defaultMessage": "или же"
+  },
+  "login.division": {
+    "defaultMessage": "или же"
+  },
+  "registration.callback.confirm.title": {
+    "defaultMessage": "Подтверждать"
+  },
+  "registration.callback.waiting.title": {
+    "defaultMessage": "Отделка ..."
+  },
+  "registration.callback.confirm.description": {
+    "defaultMessage": "Учетная запись c таким же адресом электронной почты была ранее зарегистрирована. Вы хотите связать свою учетную запись Google с этой учетной записью WiseMapping?"
+  },
+  "registration.callback.waiting.description": {
+    "defaultMessage": "Подождите, пока мы подтвердим вашу личность"
+  },
+  "registation.callback.error.message": {
+    "defaultMessage": "Произошла ошибка при подтверждении вашей личности в Google. Повторите попытку со страницы входа."
+  },
+  "registration.callback.back": {
+    "defaultMessage": "Вернуться на страницу авторизации"
+  },
+  "registration.callback.sync": {
+    "defaultMessage": "Синхронизировать учетную запись"
+  },
+  "forgot.oauth.message": {
+    "defaultMessage": "Вам не нужен пароль, пожалуйста, войдите с помощью Google"
+  },
+  "forgot.oauth.back": {
+    "defaultMessage": "Вернуться на страницу авторизации"
+  },
+  "theme.dark": {
+    "defaultMessage": "Темная"
+  },
+  "theme.light": {
+    "defaultMessage": "Светлая"
+  },
+  "theme.toggle": {
+    "defaultMessage": "Переключить Тему"
+  },
+  "admin.delete-user": {
+    "defaultMessage": "[RU] admin.delete-user"
+  },
+  "label.add-placeholder": {
+    "defaultMessage": "[RU] label.add-placeholder"
+  },
+  "common.maps-list": {
+    "defaultMessage": "[RU] common.maps-list"
+  },
+  "admin.status-clean": {
+    "defaultMessage": "[RU] admin.status-clean"
+  },
+  "common.allow-email-notifications": {
+    "defaultMessage": "[RU] common.allow-email-notifications"
+  },
+  "admin.public": {
+    "defaultMessage": "[RU] admin.public"
+  },
+  "common.others": {
+    "defaultMessage": "[RU] common.others"
+  },
+  "admin.view-xml": {
+    "defaultMessage": "[RU] admin.view-xml"
+  },
+  "export.img-center": {
+    "defaultMessage": "[RU] export.img-center"
+  },
+  "registration.facebook.button": {
+    "defaultMessage": "[RU] registration.facebook.button"
+  },
+  "common.registration-form": {
+    "defaultMessage": "[RU] common.registration-form"
+  },
+  "common.first-name": {
+    "defaultMessage": "[RU] common.first-name"
+  },
+  "admin.auth-type": {
+    "defaultMessage": "[RU] admin.auth-type"
+  },
+  "label.delete-description": {
+    "defaultMessage": "[RU] label.delete-description"
+  },
+  "registration.page-title": {
+    "defaultMessage": "[RU] registration.page-title"
+  },
+  "common.delete": {
+    "defaultMessage": "[RU] common.delete"
+  },
+  "admin.status": {
+    "defaultMessage": "[RU] admin.status"
+  },
+  "admin.suspend-user": {
+    "defaultMessage": "[RU] admin.suspend-user"
+  },
+  "admin.suspension-status": {
+    "defaultMessage": "[RU] admin.suspension-status"
+  },
+  "admin.edit-user": {
+    "defaultMessage": "[RU] admin.edit-user"
+  },
+  "label.description": {
+    "defaultMessage": "[RU] label.description"
+  },
+  "admin.refresh": {
+    "defaultMessage": "[RU] admin.refresh"
+  },
+  "common.login-form": {
+    "defaultMessage": "[RU] common.login-form"
+  },
+  "accountinfo.deleteaccount": {
+    "defaultMessage": "[RU] accountinfo.deleteaccount"
+  },
+  "admin.lock-status": {
+    "defaultMessage": "[RU] admin.lock-status"
+  },
+  "common.emails": {
+    "defaultMessage": "[RU] common.emails"
+  },
+  "label.change-color": {
+    "defaultMessage": "[RU] label.change-color"
+  },
+  "label.title": {
+    "defaultMessage": "[RU] label.title"
+  },
+  "admin.suspension-reason": {
+    "defaultMessage": "[RU] admin.suspension-reason"
+  },
+  "admin.status-suspended": {
+    "defaultMessage": "[RU] admin.status-suspended"
+  },
+  "label.maps-count": {
+    "defaultMessage": "[RU] label.maps-count"
+  },
+  "admin.delete": {
+    "defaultMessage": "[RU] admin.delete"
+  },
+  "dialog.loading": {
+    "defaultMessage": "[RU] dialog.loading"
+  },
+  "label.add-for": {
+    "defaultMessage": "[RU] label.add-for"
+  },
+  "common.last-name": {
+    "defaultMessage": "[RU] common.last-name"
+  },
+  "admin.public-access": {
+    "defaultMessage": "[RU] admin.public-access"
+  },
+  "admin.status-active": {
+    "defaultMessage": "[RU] admin.status-active"
+  },
+  "common.locale": {
+    "defaultMessage": "[RU] common.locale"
+  },
+  "login.facebook.button": {
+    "defaultMessage": "[RU] login.facebook.button"
+  },
+  "label.add-button": {
+    "defaultMessage": "[RU] label.add-button"
+  },
+  "label.delete-title": {
+    "defaultMessage": "[RU] label.delete-title"
+  },
+  "common.email": {
+    "defaultMessage": "[RU] common.email"
+  },
+  "admin.unsuspend-user": {
+    "defaultMessage": "[RU] admin.unsuspend-user"
+  },
+  "common.delete-tag": {
+    "defaultMessage": "[RU] common.delete-tag"
+  },
+  "admin.edit": {
+    "defaultMessage": "[RU] admin.edit"
+  },
+  "common.open-drawer": {
+    "defaultMessage": "[RU] common.open-drawer"
+  },
+  "admin.locked": {
+    "defaultMessage": "[RU] admin.locked"
+  },
+  "common.settings": {
+    "defaultMessage": "[RU] common.settings"
+  }
 }

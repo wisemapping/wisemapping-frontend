@@ -11,10 +11,10 @@
       "value": "Видалити"
     }
   ],
-  "action.reset": [
+  "app-bar-title": [
     {
       "type": 0,
-      "value": "Скинути"
+      "value": "Редактор карт розуму"
     }
   ],
   "appbar.back-to-map-list": [
@@ -29,10 +29,34 @@
       "value": "Зареєструватися"
     }
   ],
+  "appbar.error-saving-title": [
+    {
+      "type": 0,
+      "value": "Помилка збереження"
+    }
+  ],
+  "appbar.logo-aria-label": [
+    {
+      "type": 0,
+      "value": "Логотип WiseMapping"
+    }
+  ],
   "appbar.shared-button": [
     {
       "type": 0,
       "value": "Поділитися"
+    }
+  ],
+  "appbar.theme-title": [
+    {
+      "type": 0,
+      "value": "Тема"
+    }
+  ],
+  "appbar.title-renamed": [
+    {
+      "type": 0,
+      "value": "Карту розуму перейменовано"
     }
   ],
   "appbar.tooltip-export": [
@@ -71,6 +95,12 @@
       "value": "Повторити"
     }
   ],
+  "appbar.tooltip-rename": [
+    {
+      "type": 0,
+      "value": "Перейменувати"
+    }
+  ],
   "appbar.tooltip-save": [
     {
       "type": 0,
@@ -93,6 +123,12 @@
     {
       "type": 0,
       "value": "Відмічені"
+    }
+  ],
+  "appbar.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Тема"
     }
   ],
   "appbar.tooltip-undo": [
@@ -209,6 +245,12 @@
       "value": "Фон"
     }
   ],
+  "classic": [
+    {
+      "type": 0,
+      "value": "Класичний"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -225,6 +267,18 @@
     {
       "type": 0,
       "value": "Опис"
+    }
+  ],
+  "demo-simple-select": [
+    {
+      "type": 0,
+      "value": "Вибрати"
+    }
+  ],
+  "divider": [
+    {
+      "type": 0,
+      "value": "Розділювач"
     }
   ],
   "editor-panel.canvas-style-title": [
@@ -299,6 +353,12 @@
       "value": "Додати тему"
     }
   ],
+  "editor-panel.tooltip-add-topic-image": [
+    {
+      "type": 0,
+      "value": "Додати зображення теми"
+    }
+  ],
   "editor-panel.tooltip-canvas-style": [
     {
       "type": 0,
@@ -321,6 +381,12 @@
     {
       "type": 0,
       "value": "Стиль з'єднання"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "Дуга"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thick": [
@@ -351,6 +417,54 @@
     {
       "type": 0,
       "value": "Видалити тему"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-end": [
+    {
+      "type": 0,
+      "value": "Кінцева стрілка"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-start": [
+    {
+      "type": 0,
+      "value": "Початкова стрілка"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color": [
+    {
+      "type": 0,
+      "value": "Колір"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color-default": [
+    {
+      "type": 0,
+      "value": "Колір за замовчуванням"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dashed": [
+    {
+      "type": 0,
+      "value": "Пунктирна лінія"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dotted": [
+    {
+      "type": 0,
+      "value": "Точкова лінія"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-solid": [
+    {
+      "type": 0,
+      "value": "Суцільна лінія"
+    }
+  ],
+  "editor-panel.tooltip-relationship-style": [
+    {
+      "type": 0,
+      "value": "Стиль зв'язку"
     }
   ],
   "editor-panel.tooltip-theme": [
@@ -437,6 +551,12 @@
       "value": "Форма лінії"
     }
   ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "Без форми"
+    }
+  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
@@ -453,6 +573,12 @@
     {
       "type": 0,
       "value": "Стиль теми"
+    }
+  ],
+  "editor-panel.topic-image-title": [
+    {
+      "type": 0,
+      "value": "Зображення теми"
     }
   ],
   "editor.edit-description-mobile": [
@@ -491,6 +617,24 @@
       "value": "Пошук емодзі..."
     }
   ],
+  "headerNotifier": [
+    {
+      "type": 0,
+      "value": "Сповіщення заголовка"
+    }
+  ],
+  "icon-picker.emojis": [
+    {
+      "type": 0,
+      "value": "Емодзі"
+    }
+  ],
+  "icon-picker.icons": [
+    {
+      "type": 0,
+      "value": "Галерея іконок"
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
@@ -525,6 +669,46 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "mindmap-comp": [
+    {
+      "type": 0,
+      "value": "Компонент карти розуму"
+    }
+  ],
+  "note.character.count": [
+    {
+      "type": 1,
+      "value": "remaining"
+    },
+    {
+      "type": 0,
+      "value": " залишилося"
+    }
+  ],
+  "note.character.limit.warning": [
+    {
+      "type": 0,
+      "value": "(Наближається до ліміту)"
+    }
+  ],
+  "ocean": [
+    {
+      "type": 0,
+      "value": "Океан"
+    }
+  ],
+  "popover": [
+    {
+      "type": 0,
+      "value": "Спливаюче вікно"
+    }
+  ],
+  "prism": [
+    {
+      "type": 0,
+      "value": "Призма"
     }
   ],
   "rich-text-editor.bold": [
@@ -573,6 +757,12 @@
     {
       "type": 0,
       "value": "Підкреслений"
+    }
+  ],
+  "robot": [
+    {
+      "type": 0,
+      "value": "Робот"
     }
   ],
   "shortcut-help-pane.action": [
@@ -731,6 +921,48 @@
       "value": "Скасувати редагування"
     }
   ],
+  "sunrise": [
+    {
+      "type": 0,
+      "value": "Схід сонця"
+    }
+  ],
+  "theme-editor.accept": [
+    {
+      "type": 0,
+      "value": "Застосувати тему"
+    }
+  ],
+  "theme-editor.cancel": [
+    {
+      "type": 0,
+      "value": "Скасувати"
+    }
+  ],
+  "theme-editor.description": [
+    {
+      "type": 0,
+      "value": "Тема визначає візуальний стиль вашої карти розуму, включаючи кольори, шрифти та загальний вигляд. Виберіть тему, яка найкраще підходить вашому контенту та аудиторії."
+    }
+  ],
+  "theme-editor.title": [
+    {
+      "type": 0,
+      "value": "Вибрати тему"
+    }
+  ],
+  "theme.classic.description": [
+    {
+      "type": 0,
+      "value": "Класична тема з традиційними кольорами"
+    }
+  ],
+  "theme.classic.name": [
+    {
+      "type": 0,
+      "value": "Класичний"
+    }
+  ],
   "theme.dark": [
     {
       "type": 0,
@@ -743,10 +975,76 @@
       "value": "Світла"
     }
   ],
+  "theme.ocean.description": [
+    {
+      "type": 0,
+      "value": "Океанська тема з синіми тонами"
+    }
+  ],
+  "theme.ocean.name": [
+    {
+      "type": 0,
+      "value": "Океан"
+    }
+  ],
+  "theme.robot.description": [
+    {
+      "type": 0,
+      "value": "Роботична тема з футуристичними кольорами"
+    }
+  ],
+  "theme.robot.name": [
+    {
+      "type": 0,
+      "value": "Робот"
+    }
+  ],
+  "theme.summer.description": [
+    {
+      "type": 0,
+      "value": "Літня тема з теплими кольорами"
+    }
+  ],
+  "theme.summer.name": [
+    {
+      "type": 0,
+      "value": "Літо"
+    }
+  ],
+  "theme.sunrise.description": [
+    {
+      "type": 0,
+      "value": "Тема сходу сонця з помаранчевими та жовтими тонами"
+    }
+  ],
+  "theme.sunrise.name": [
+    {
+      "type": 0,
+      "value": "Схід сонця"
+    }
+  ],
+  "theme.switch-to-dark": [
+    {
+      "type": 0,
+      "value": "Перемкнути на темний режим"
+    }
+  ],
+  "theme.switch-to-light": [
+    {
+      "type": 0,
+      "value": "Перемкнути на світлий режим"
+    }
+  ],
   "theme.toggle": [
     {
       "type": 0,
       "value": "Перемкнути тему"
+    }
+  ],
+  "title-input": [
+    {
+      "type": 0,
+      "value": "Введення заголовка"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

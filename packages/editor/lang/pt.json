@@ -5,9 +5,6 @@
   "action.delete": {
     "defaultMessage": "Excluir"
   },
-  "action.reset": {
-    "defaultMessage": "Redefinir"
-  },
   "appbar.back-to-map-list": {
     "defaultMessage": "Voltar à lista de mapas"
   },
@@ -391,5 +388,155 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Expandir todos os nós"
+  },
+  "editor-panel.tooltip-add-topic-image": {
+    "defaultMessage": "Adicionar imagem do tópico"
+  },
+  "editor-panel.topic-image-title": {
+    "defaultMessage": "Imagem do tópico"
+  },
+  "app-bar-title": {
+    "defaultMessage": "Editor de Mapas Mentais"
+  },
+  "appbar.error-saving-title": {
+    "defaultMessage": "Erro ao salvar"
+  },
+  "appbar.logo-aria-label": {
+    "defaultMessage": "Logo WiseMapping"
+  },
+  "appbar.theme-title": {
+    "defaultMessage": "Tema"
+  },
+  "appbar.title-renamed": {
+    "defaultMessage": "Mapa mental renomeado"
+  },
+  "appbar.tooltip-rename": {
+    "defaultMessage": "Renomear"
+  },
+  "appbar.tooltip-theme": {
+    "defaultMessage": "Tema"
+  },
+  "classic": {
+    "defaultMessage": "Clássico"
+  },
+  "demo-simple-select": {
+    "defaultMessage": "Selecionar"
+  },
+  "divider": {
+    "defaultMessage": "Divisor"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "Arco"
+  },
+  "editor-panel.tooltip-relationship-arrow-end": {
+    "defaultMessage": "Seta final"
+  },
+  "editor-panel.tooltip-relationship-arrow-start": {
+    "defaultMessage": "Seta inicial"
+  },
+  "editor-panel.tooltip-relationship-color": {
+    "defaultMessage": "Cor"
+  },
+  "editor-panel.tooltip-relationship-color-default": {
+    "defaultMessage": "Cor padrão"
+  },
+  "editor-panel.tooltip-relationship-stroke-dashed": {
+    "defaultMessage": "Linha tracejada"
+  },
+  "editor-panel.tooltip-relationship-stroke-dotted": {
+    "defaultMessage": "Linha pontilhada"
+  },
+  "editor-panel.tooltip-relationship-stroke-solid": {
+    "defaultMessage": "Linha sólida"
+  },
+  "editor-panel.tooltip-relationship-style": {
+    "defaultMessage": "Estilo de relacionamento"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "Sem forma"
+  },
+  "headerNotifier": {
+    "defaultMessage": "Notificador de cabeçalho"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "Emojis"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Galeria de ícones"
+  },
+  "mindmap-comp": {
+    "defaultMessage": "Componente de mapa mental"
+  },
+  "note.character.count": {
+    "defaultMessage": "{remaining} restantes"
+  },
+  "note.character.limit.warning": {
+    "defaultMessage": "(Aproximando-se do limite)"
+  },
+  "ocean": {
+    "defaultMessage": "Oceano"
+  },
+  "popover": {
+    "defaultMessage": "Popover"
+  },
+  "prism": {
+    "defaultMessage": "Prisma"
+  },
+  "robot": {
+    "defaultMessage": "Robô"
+  },
+  "sunrise": {
+    "defaultMessage": "Nascer do sol"
+  },
+  "theme-editor.accept": {
+    "defaultMessage": "Aplicar tema"
+  },
+  "theme-editor.cancel": {
+    "defaultMessage": "Cancelar"
+  },
+  "theme-editor.description": {
+    "defaultMessage": "Um tema define o estilo visual do seu mapa mental, incluindo cores, fontes e aparência geral. Escolha um tema que melhor se adapte ao seu conteúdo e audiência."
+  },
+  "theme-editor.title": {
+    "defaultMessage": "Escolher tema"
+  },
+  "theme.classic.description": {
+    "defaultMessage": "Tema clássico com cores tradicionais"
+  },
+  "theme.classic.name": {
+    "defaultMessage": "Clássico"
+  },
+  "theme.ocean.description": {
+    "defaultMessage": "Tema oceano com tons azuis"
+  },
+  "theme.ocean.name": {
+    "defaultMessage": "Oceano"
+  },
+  "theme.robot.description": {
+    "defaultMessage": "Tema robô com cores futuristas"
+  },
+  "theme.robot.name": {
+    "defaultMessage": "Robô"
+  },
+  "theme.summer.description": {
+    "defaultMessage": "Tema verão com cores quentes"
+  },
+  "theme.summer.name": {
+    "defaultMessage": "Verão"
+  },
+  "theme.sunrise.description": {
+    "defaultMessage": "Tema nascer do sol com tons laranja e amarelo"
+  },
+  "theme.sunrise.name": {
+    "defaultMessage": "Nascer do sol"
+  },
+  "theme.switch-to-dark": {
+    "defaultMessage": "Mudar para modo escuro"
+  },
+  "theme.switch-to-light": {
+    "defaultMessage": "Mudar para modo claro"
+  },
+  "title-input": {
+    "defaultMessage": "Entrada de título"
   }
 }

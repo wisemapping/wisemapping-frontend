@@ -11,6 +11,12 @@
       "value": "Удалить"
     }
   ],
+  "app-bar-title": [
+    {
+      "type": 0,
+      "value": "Редактор карт разума"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -23,10 +29,34 @@
       "value": "Регистрация"
     }
   ],
+  "appbar.error-saving-title": [
+    {
+      "type": 0,
+      "value": "Ошибка сохранения"
+    }
+  ],
+  "appbar.logo-aria-label": [
+    {
+      "type": 0,
+      "value": "Логотип WiseMapping"
+    }
+  ],
   "appbar.shared-button": [
     {
       "type": 0,
       "value": "Поделиться"
+    }
+  ],
+  "appbar.theme-title": [
+    {
+      "type": 0,
+      "value": "Тема"
+    }
+  ],
+  "appbar.title-renamed": [
+    {
+      "type": 0,
+      "value": "Карта разума переименована"
     }
   ],
   "appbar.tooltip-export": [
@@ -65,6 +95,12 @@
       "value": "Повторить"
     }
   ],
+  "appbar.tooltip-rename": [
+    {
+      "type": 0,
+      "value": "Переименовать"
+    }
+  ],
   "appbar.tooltip-save": [
     {
       "type": 0,
@@ -87,6 +123,12 @@
     {
       "type": 0,
       "value": "Избранное"
+    }
+  ],
+  "appbar.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Тема"
     }
   ],
   "appbar.tooltip-undo": [
@@ -203,6 +245,12 @@
       "value": "Фон"
     }
   ],
+  "classic": [
+    {
+      "type": 0,
+      "value": "Классический"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -219,6 +267,18 @@
     {
       "type": 0,
       "value": "Описание"
+    }
+  ],
+  "demo-simple-select": [
+    {
+      "type": 0,
+      "value": "Выбрать"
+    }
+  ],
+  "divider": [
+    {
+      "type": 0,
+      "value": "Разделитель"
     }
   ],
   "editor-panel.canvas-style-title": [
@@ -293,6 +353,12 @@
       "value": "Добавить тему"
     }
   ],
+  "editor-panel.tooltip-add-topic-image": [
+    {
+      "type": 0,
+      "value": "Добавить изображение темы"
+    }
+  ],
   "editor-panel.tooltip-canvas-style": [
     {
       "type": 0,
@@ -315,6 +381,12 @@
     {
       "type": 0,
       "value": "Стиль подключения"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "Дуга"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thick": [
@@ -345,6 +417,54 @@
     {
       "type": 0,
       "value": "Удалить тему"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-end": [
+    {
+      "type": 0,
+      "value": "Конечная стрелка"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-start": [
+    {
+      "type": 0,
+      "value": "Начальная стрелка"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color": [
+    {
+      "type": 0,
+      "value": "Цвет"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color-default": [
+    {
+      "type": 0,
+      "value": "Цвет по умолчанию"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dashed": [
+    {
+      "type": 0,
+      "value": "Пунктирная линия"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dotted": [
+    {
+      "type": 0,
+      "value": "Точечная линия"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-solid": [
+    {
+      "type": 0,
+      "value": "Сплошная линия"
+    }
+  ],
+  "editor-panel.tooltip-relationship-style": [
+    {
+      "type": 0,
+      "value": "Стиль связи"
     }
   ],
   "editor-panel.tooltip-theme": [
@@ -431,6 +551,12 @@
       "value": "Форма линии"
     }
   ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "Без формы"
+    }
+  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
@@ -447,6 +573,12 @@
     {
       "type": 0,
       "value": "Стиль темы"
+    }
+  ],
+  "editor-panel.topic-image-title": [
+    {
+      "type": 0,
+      "value": "Изображение темы"
     }
   ],
   "editor.edit-description-mobile": [
@@ -485,6 +617,24 @@
       "value": "Поиск эмодзи..."
     }
   ],
+  "headerNotifier": [
+    {
+      "type": 0,
+      "value": "Уведомление заголовка"
+    }
+  ],
+  "icon-picker.emojis": [
+    {
+      "type": 0,
+      "value": "Эмодзи"
+    }
+  ],
+  "icon-picker.icons": [
+    {
+      "type": 0,
+      "value": "Галерея иконок"
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
@@ -519,6 +669,46 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "mindmap-comp": [
+    {
+      "type": 0,
+      "value": "Компонент карты разума"
+    }
+  ],
+  "note.character.count": [
+    {
+      "type": 1,
+      "value": "remaining"
+    },
+    {
+      "type": 0,
+      "value": " осталось"
+    }
+  ],
+  "note.character.limit.warning": [
+    {
+      "type": 0,
+      "value": "(Приближается к лимиту)"
+    }
+  ],
+  "ocean": [
+    {
+      "type": 0,
+      "value": "Океан"
+    }
+  ],
+  "popover": [
+    {
+      "type": 0,
+      "value": "Всплывающее окно"
+    }
+  ],
+  "prism": [
+    {
+      "type": 0,
+      "value": "Призма"
     }
   ],
   "rich-text-editor.bold": [
@@ -567,6 +757,12 @@
     {
       "type": 0,
       "value": "Подчеркнутый"
+    }
+  ],
+  "robot": [
+    {
+      "type": 0,
+      "value": "Робот"
     }
   ],
   "shortcut-help-pane.action": [
@@ -725,6 +921,48 @@
       "value": "Отменить редактирование"
     }
   ],
+  "sunrise": [
+    {
+      "type": 0,
+      "value": "Рассвет"
+    }
+  ],
+  "theme-editor.accept": [
+    {
+      "type": 0,
+      "value": "Применить тему"
+    }
+  ],
+  "theme-editor.cancel": [
+    {
+      "type": 0,
+      "value": "Отмена"
+    }
+  ],
+  "theme-editor.description": [
+    {
+      "type": 0,
+      "value": "Тема определяет визуальный стиль вашей карты разума, включая цвета, шрифты и общий внешний вид. Выберите тему, которая лучше всего подходит вашему контенту и аудитории."
+    }
+  ],
+  "theme-editor.title": [
+    {
+      "type": 0,
+      "value": "Выбрать тему"
+    }
+  ],
+  "theme.classic.description": [
+    {
+      "type": 0,
+      "value": "Классическая тема с традиционными цветами"
+    }
+  ],
+  "theme.classic.name": [
+    {
+      "type": 0,
+      "value": "Классический"
+    }
+  ],
   "theme.dark": [
     {
       "type": 0,
@@ -737,10 +975,76 @@
       "value": "Светлая"
     }
   ],
+  "theme.ocean.description": [
+    {
+      "type": 0,
+      "value": "Океанская тема с синими тонами"
+    }
+  ],
+  "theme.ocean.name": [
+    {
+      "type": 0,
+      "value": "Океан"
+    }
+  ],
+  "theme.robot.description": [
+    {
+      "type": 0,
+      "value": "Роботическая тема с футуристическими цветами"
+    }
+  ],
+  "theme.robot.name": [
+    {
+      "type": 0,
+      "value": "Робот"
+    }
+  ],
+  "theme.summer.description": [
+    {
+      "type": 0,
+      "value": "Летняя тема с теплыми цветами"
+    }
+  ],
+  "theme.summer.name": [
+    {
+      "type": 0,
+      "value": "Лето"
+    }
+  ],
+  "theme.sunrise.description": [
+    {
+      "type": 0,
+      "value": "Тема рассвета с оранжевыми и желтыми тонами"
+    }
+  ],
+  "theme.sunrise.name": [
+    {
+      "type": 0,
+      "value": "Рассвет"
+    }
+  ],
+  "theme.switch-to-dark": [
+    {
+      "type": 0,
+      "value": "Переключить на темный режим"
+    }
+  ],
+  "theme.switch-to-light": [
+    {
+      "type": 0,
+      "value": "Переключить на светлый режим"
+    }
+  ],
   "theme.toggle": [
     {
       "type": 0,
       "value": "Переключить Тему"
+    }
+  ],
+  "title-input": [
+    {
+      "type": 0,
+      "value": "Ввод заголовка"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

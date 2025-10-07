@@ -1,564 +1,671 @@
 {
-	"account.delete-warning": {
-		"defaultMessage": "请记住，您将无法访问您添加的任何思维导图。您的所有信息都将被删除，并且无法恢复。"
-	},
-	"accountinfo.button": {
-		"defaultMessage": "接受"
-	},
-	"accountinfo.deleteaccount": {
-		"defaultMessage": "删除账号"
-	},
-	"accountinfo.email": {
-		"defaultMessage": "电子邮件"
-	},
-	"accountinfo.firstname": {
-		"defaultMessage": "名字"
-	},
-	"accountinfo.lastname": {
-		"defaultMessage": "姓氏"
-	},
-	"accountinfo.title": {
-		"defaultMessage": "账户信息"
-	},
-	"action.cancel-button": {
-		"defaultMessage": "取消"
-	},
-	"action.close-button": {
-		"defaultMessage": "关闭"
-	},
-	"action.delete": {
-		"defaultMessage": "删除"
-	},
-	"action.delete-description": {
-		"defaultMessage": "已删除的思维导图无法恢复。您想继续吗？"
-	},
-	"action.delete-title": {
-		"defaultMessage": "删除"
-	},
-	"action.duplicate": {
-		"defaultMessage": "复制"
-	},
-	"action.export": {
-		"defaultMessage": "导出"
-	},
-	"action.history": {
-		"defaultMessage": "历史"
-	},
-	"action.history-description": {
-		"defaultMessage": "过去90天内引入的更改列表。"
-	},
-	"action.history-title": {
-		"defaultMessage": "历史版本"
-	},
-	"action.import": {
-		"defaultMessage": "导入"
-	},
-	"action.info": {
-		"defaultMessage": "信息"
-	},
-	"action.label": {
-		"defaultMessage": "添加标签"
-	},
-	"action.new": {
-		"defaultMessage": "新建脑图"
-	},
-	"action.open": {
-		"defaultMessage": "打开"
-	},
-	"action.print": {
-		"defaultMessage": "打印"
-	},
-	"action.publish": {
-		"defaultMessage": "发布"
-	},
-	"action.rename": {
-		"defaultMessage": "重命名"
-	},
-	"action.rename-description-placeholder": {
-		"defaultMessage": "描述"
-	},
-	"action.rename-name-placeholder": {
-		"defaultMessage": "名称"
-	},
-	"action.share": {
-		"defaultMessage": "分享"
-	},
-	"changepwd.button": {
-		"defaultMessage": "更改"
-	},
-	"changepwd.confirm-password": {
-		"defaultMessage": "确认密码"
-	},
-	"changepwd.description": {
-		"defaultMessage": "请为您的账户提供新密码"
-	},
-	"changepwd.password": {
-		"defaultMessage": "密码"
-	},
-	"changepwd.password-match": {
-		"defaultMessage": "密码不一致，请再试一次"
-	},
-	"changepwd.title": {
-		"defaultMessage": "更改密码"
-	},
-	"common.wait": {
-		"defaultMessage": "请等待。。。"
-	},
-	"create.button": {
-		"defaultMessage": "创建"
-	},
-	"create.description": {
-		"defaultMessage": "请填写新的脑图名称和描述"
-	},
-	"create.title": {
-		"defaultMessage": "创建一个新的思维导图"
-	},
-	"deletem.title": {
-		"defaultMessage": "所有选中的脑图将被删除"
-	},
-	"duplicate.title": {
-		"defaultMessage": "复制"
-	},
-	"expired.description": {
-		"defaultMessage": "您的当前会话已过期。请登录后重试。"
-	},
-	"expired.title": {
-		"defaultMessage": "您的会话已过期"
-	},
-	"export.desc": {
-		"defaultMessage": "以您需要的格式导出此脑图，并在演示文稿中使用或通过电子邮件分享"
-	},
-	"export.document": {
-		"defaultMessage": "思维导图工具：以第三方思维导图格式导出您的思维导图"
-	},
-	"export.document-label": {
-		"defaultMessage": "文档：将你的思维导图导出到一个独立的文档中来分享"
-	},
-	"export.image": {
-		"defaultMessage": "图像：以图片形式获取包含所有颜色和形状的脑图"
-	},
-	"export.img-center": {
-		"defaultMessage": "居中并缩放合适大小"
-	},
-	"export.title": {
-		"defaultMessage": "导出"
-	},
-	"export.warning": {
-		"defaultMessage": "导出到图像（SVG，PNG，JPEG，PDF）仅在编辑器工具栏中可用。"
-	},
-	"footer.aboutus": {
-		"defaultMessage": "关于我们"
-	},
-	"footer.contactus": {
-		"defaultMessage": "联系我们"
-	},
-	"footer.faq": {
-		"defaultMessage": "常见问题"
-	},
-	"footer.faqandhelp": {
-		"defaultMessage": "帮助和常见问题"
-	},
-	"footer.feedback": {
-		"defaultMessage": "反馈"
-	},
-	"footer.opensource": {
-		"defaultMessage": "开源"
-	},
-	"footer.others": {
-		"defaultMessage": "其它"
-	},
-	"footer.termsandconditions": {
-		"defaultMessage": "条款和条件"
-	},
-	"forgot.desc": {
-		"defaultMessage": "我们将向您发送电子邮件以重置您的密码。"
-	},
-	"forgot.email": {
-		"defaultMessage": "电子邮件"
-	},
-	"forgot.page-title": {
-		"defaultMessage": "忘记密码|WiseMapping"
-	},
-	"forgot.register": {
-		"defaultMessage": "发送恢复链接"
-	},
-	"forgot.success.desc": {
-		"defaultMessage": "我们已经向您发送了一封电子邮件，允许您重置密码。您应该会在几分钟内收到"
-	},
-	"forgot.success.title": {
-		"defaultMessage": "您的临时密码已发送。"
-	},
-	"forgot.title": {
-		"defaultMessage": "重置密码"
-	},
-	"forgotsuccess.page-title": {
-		"defaultMessage": "密码已恢复|WiseMapping"
-	},
-	"header.donthaveaccount": {
-		"defaultMessage": "没有账号？"
-	},
-	"header.haveaccount": {
-		"defaultMessage": "已经有一个账号？"
-	},
-	"help.support": {
-		"defaultMessage": "支持"
-	},
-	"history.no-changes": {
-		"defaultMessage": "没有可用的更改"
-	},
-	"import.button": {
-		"defaultMessage": "创建"
-	},
-	"import.description": {
-		"defaultMessage": "您可以将脑图从 WiseMapping、FreeMind、Freeplane、XMind、MindManager 和 OPML 导入到您的脑图列表中。选择要导入的文件。"
-	},
-	"import.title": {
-		"defaultMessage": "导入现有的思维导图"
-	},
-	"import.error-file": {
-		"defaultMessage": "导入失败：{error}"
-	},
-	"info.basic-info": {
-		"defaultMessage": "基本信息"
-	},
-	"info.button": {
-		"defaultMessage": "接受"
-	},
-	"info.creation-time": {
-		"defaultMessage": "创建日期"
-	},
-	"info.creator": {
-		"defaultMessage": "创建人"
-	},
-	"info.description": {
-		"defaultMessage": "描述"
-	},
-	"info.description-msg": {
-		"defaultMessage": "通过发布脑图，你让互联网上的每个人都能看到它。"
-	},
-	"info.modified-time": {
-		"defaultMessage": "最后修改日期"
-	},
-	"info.modified-tny": {
-		"defaultMessage": "最后修改人"
-	},
-	"info.name": {
-		"defaultMessage": "名称"
-	},
-	"info.public-visibility": {
-		"defaultMessage": "公开可见"
-	},
-	"info.sharing": {
-		"defaultMessage": "分享"
-	},
-	"info.starred": {
-		"defaultMessage": "收藏"
-	},
-	"info.title": {
-		"defaultMessage": "信息"
-	},
-	"label.add-button": {
-		"defaultMessage": "添加标签"
-	},
-	"label.add-for": {
-		"defaultMessage": "编辑脑图标签："
-	},
-	"label.add-placeholder": {
-		"defaultMessage": "标签标题"
-	},
-	"label.change-color": {
-		"defaultMessage": "更改标签颜色"
-	},
-	"label.delete-description": {
-		"defaultMessage": "将被删除，包括它与所有现有脑图的关联。是否继续？"
-	},
-	"label.delete-title": {
-		"defaultMessage": "确认标签删除"
-	},
-	"label.description": {
-		"defaultMessage": "使用标签来组织你的脑图。"
-	},
-	"label.title": {
-		"defaultMessage": "添加标签"
-	},
-	"language.change": {
-		"defaultMessage": "更改语言"
-	},
-	"language.help": {
-		"defaultMessage": "帮助翻译"
-	},
-	"login.desc": {
-		"defaultMessage": "登录您的账号"
-	},
-	"login.email": {
-		"defaultMessage": "电子邮件"
-	},
-	"login.error": {
-		"defaultMessage": "您输入的电子邮件地址或密码无效。"
-	},
-	"login.forgotpwd": {
-		"defaultMessage": "忘记密码？"
-	},
-	"login.hsqldbcofig": {
-		"defaultMessage": "虽然HSQLDB在安装过程中默认与WiseMapping捆绑在一起，但我们不建议将此数据库用于生产用途。请考虑使用MySQL 5.7代替。您可以找到更多关于如何配置MySQL的信息",
-		"description": "缺少已配置的生产数据库"
-	},
-	"login.page-title": {
-		"defaultMessage": "登录|WiseMapping"
-	},
-	"login.password": {
-		"defaultMessage": "密码"
-	},
-	"login.remberme": {
-		"defaultMessage": "记住我的登录"
-	},
-	"login.signin": {
-		"defaultMessage": "登录"
-	},
-	"login.signup": {
-		"defaultMessage": "注册"
-	},
-	"login.title": {
-		"defaultMessage": "欢迎"
-	},
-	"login.userinactive": {
-		"defaultMessage": "对不起，您的账号尚未激活。当它激活时，您将收到一封通知电子邮件。敬请关注！"
-	},
-	"map.creator": {
-		"defaultMessage": "创建人"
-	},
-	"map.delete-selected": {
-		"defaultMessage": "删除选中项"
-	},
-	"map.last-update": {
-		"defaultMessage": "最后更新"
-	},
-	"map.more-actions": {
-		"defaultMessage": "更多操作"
-	},
-	"map.name": {
-		"defaultMessage": "名称"
-	},
-	"map.tooltip-add": {
-		"defaultMessage": "将标签添加到选定项"
-	},
-	"maps.choose-file": {
-		"defaultMessage": "选择一个文件"
-	},
-	"maps.create-tooltip": {
-		"defaultMessage": "创建一个新的思维导图"
-	},
-	"maps.empty-result": {
-		"defaultMessage": "没有找到与当前筛选条件匹配的思维导图。"
-	},
-	"maps.import-desc": {
-		"defaultMessage": "从其它工具导入"
-	},
-	"maps.modified": {
-		"defaultMessage": "修改"
-	},
-	"maps.modified-by": {
-		"defaultMessage": "修改人"
-	},
-	"maps.modified-by-desc": {
-		"defaultMessage": "{on}由{by}修改"
-	},
-	"maps.nav-all": {
-		"defaultMessage": "所有"
-	},
-	"maps.nav-onwned": {
-		"defaultMessage": "我的"
-	},
-	"maps.nav-public": {
-		"defaultMessage": "公开"
-	},
-	"maps.nav-shared": {
-		"defaultMessage": "与我分享"
-	},
-	"maps.nav-starred": {
-		"defaultMessage": "收藏"
-	},
-	"maps.page-title": {
-		"defaultMessage": "我的脑图|WiseMapping"
-	},
-	"maps.revert": {
-		"defaultMessage": "恢复"
-	},
-	"maps.search-action": {
-		"defaultMessage": "搜索。。。"
-	},
-	"maps.tooltip-open": {
-		"defaultMessage": "打开编辑"
-	},
-	"maps.tooltip-starred": {
-		"defaultMessage": "收藏"
-	},
-	"maps.view": {
-		"defaultMessage": "查看"
-	},
-	"menu.account": {
-		"defaultMessage": "账号"
-	},
-	"menu.change-password": {
-		"defaultMessage": "更改密码"
-	},
-	"menu.signout": {
-		"defaultMessage": "注销"
-	},
-	"publish.button": {
-		"defaultMessage": "接受"
-	},
-	"publish.checkbox": {
-		"defaultMessage": "开启公共分享"
-	},
-	"publish.description": {
-		"defaultMessage": "通过发布脑图，你让互联网上的每个人都能看到它。"
-	},
-	"publish.embedded": {
-		"defaultMessage": "嵌入"
-	},
-	"publish.embedded-msg": {
-		"defaultMessage": "复制这段代码以嵌入到您的博客或页面中："
-	},
-	"publish.public-url": {
-		"defaultMessage": "公共URL"
-	},
-	"publish.public-url-msg": {
-		"defaultMessage": "复制并粘贴下面的链接，与同事分享您的脑图："
-	},
-	"publish.title": {
-		"defaultMessage": "发布"
-	},
-	"registation.success-title": {
-		"defaultMessage": "注册成功|WiseMapping"
-	},
-	"registration.desc": {
-		"defaultMessage": "注册免费，分分钟就好"
-	},
-	"registration.email": {
-		"defaultMessage": "电子邮件"
-	},
-	"registration.firstname": {
-		"defaultMessage": "名字"
-	},
-	"registration.lastname": {
-		"defaultMessage": "姓氏"
-	},
-	"registration.page-title": {
-		"defaultMessage": "注册|WiseMapping"
-	},
-	"registration.password": {
-		"defaultMessage": "密码"
-	},
-	"registration.register": {
-		"defaultMessage": "注册"
-	},
-	"registration.success.desc": {
-		"defaultMessage": "点击下面的登录按钮，开始创建思维导图。"
-	},
-	"registration.termandconditions": {
-		"defaultMessage": "客户条款：请检查您在上面输入的WiseMapping账号信息，并在此处查看客户条款。点击下面的'注册'即表示您同意上面的客户条款和隐私政策"
-	},
-	"registration.title": {
-		"defaultMessage": "成为成员"
-	},
-	"rename.description": {
-		"defaultMessage": "请填写新的脑图名称和描述。"
-	},
-	"rename.title": {
-		"defaultMessage": "重命名"
-	},
-	"resetpassword.success.title": {
-		"defaultMessage": "您的账号已成功创建"
-	},
-	"role.editor": {
-		"defaultMessage": "编辑人"
-	},
-	"role.owner": {
-		"defaultMessage": "所有人"
-	},
-	"role.viewer": {
-		"defaultMessage": "查看人"
-	},
-	"share.add-button": {
-		"defaultMessage": "添加"
-	},
-	"share.add-message": {
-		"defaultMessage": "添加消息"
-	},
-	"share.can-edit": {
-		"defaultMessage": "可编辑"
-	},
-	"share.can-view": {
-		"defaultMessage": "可查看"
-	},
-	"share.delete": {
-		"defaultMessage": "删除协作人"
-	},
-	"share.delete-description": {
-		"defaultMessage": "邀请人们与你合作创建你的思维导图。他们将通过电子邮件得到通知。"
-	},
-	"share.delete-title": {
-		"defaultMessage": "与人分享"
-	},
-	"share.message": {
-		"defaultMessage": "消息"
-	},
-	"footer.support": {
-		"defaultMessage": "支持"
-	},
-	"footer.team": {
-		"defaultMessage": "团队"
-	},
-	"footer.donations": {
-		"defaultMessage": "捐款"
-	},
-	"registration.google.button": {
-		"defaultMessage": "使用谷歌注册"
-	},
-	"login.google.button": {
-		"defaultMessage": "使用 Google 登录"
-	},
-	"registration.division": {
-		"defaultMessage": "或者"
-	},
-	"login.division": {
-		"defaultMessage": "或者"
-	},
-	"registration.callback.confirm.title": {
-	  "defaultMessage": "确认"
-	},
-	"registration.callback.waiting.title": {
-	  "defaultMessage": "整理 ..."
-	},
-	"registration.callback.confirm.description": {
-	  "defaultMessage": "之前注册了一个具有相同电子邮件地址的帐户。你想将你的谷歌账户链接到那个 WiseMapping 账户吗？"
-	},
-	"registration.callback.waiting.description": {
-	  "defaultMessage": "我们正在验证您的身份，请稍候"
-	},
-	"registation.callback.error.message": {
-	  "defaultMessage": "使用 Google 验证您的身份时出错，您可以从登录页面重试"
-	},
-	"registration.callback.back": {
-	  "defaultMessage": "回到登录"
-	},
-	"registration.callback.sync": {
-	  "defaultMessage": "同步账户"
-	},
-	"forgot.oauth.message": {
-	  "defaultMessage": "您不需要密码，请使用谷歌登录"
-	},
-	"forgot.oauth.back": {
-	  "defaultMessage": "回到登录"
-	},
-	"theme.dark": {
-		"defaultMessage": "深色"
-	},
-	"theme.light": {
-		"defaultMessage": "浅色"
-	},
-	"theme.toggle": {
-		"defaultMessage": "切换主题"
-	}
+  "account.delete-warning": {
+    "defaultMessage": "请记住，您将无法访问您添加的任何思维导图。您的所有信息都将被删除，并且无法恢复。"
+  },
+  "accountinfo.button": {
+    "defaultMessage": "接受"
+  },
+  "accountinfo.deleteaccount": {
+    "defaultMessage": "删除账号"
+  },
+  "accountinfo.email": {
+    "defaultMessage": "电子邮件"
+  },
+  "accountinfo.firstname": {
+    "defaultMessage": "名字"
+  },
+  "accountinfo.lastname": {
+    "defaultMessage": "姓氏"
+  },
+  "accountinfo.title": {
+    "defaultMessage": "账户信息"
+  },
+  "action.cancel-button": {
+    "defaultMessage": "取消"
+  },
+  "action.close-button": {
+    "defaultMessage": "关闭"
+  },
+  "action.delete": {
+    "defaultMessage": "删除"
+  },
+  "action.delete-description": {
+    "defaultMessage": "已删除的思维导图无法恢复。您想继续吗？"
+  },
+  "action.delete-title": {
+    "defaultMessage": "删除"
+  },
+  "action.duplicate": {
+    "defaultMessage": "复制"
+  },
+  "action.export": {
+    "defaultMessage": "导出"
+  },
+  "action.history": {
+    "defaultMessage": "历史"
+  },
+  "action.history-description": {
+    "defaultMessage": "过去90天内引入的更改列表。"
+  },
+  "action.history-title": {
+    "defaultMessage": "历史版本"
+  },
+  "action.import": {
+    "defaultMessage": "导入"
+  },
+  "action.info": {
+    "defaultMessage": "信息"
+  },
+  "action.label": {
+    "defaultMessage": "添加标签"
+  },
+  "action.new": {
+    "defaultMessage": "新建脑图"
+  },
+  "action.open": {
+    "defaultMessage": "打开"
+  },
+  "action.print": {
+    "defaultMessage": "打印"
+  },
+  "action.publish": {
+    "defaultMessage": "发布"
+  },
+  "action.rename": {
+    "defaultMessage": "重命名"
+  },
+  "action.rename-description-placeholder": {
+    "defaultMessage": "描述"
+  },
+  "action.rename-name-placeholder": {
+    "defaultMessage": "名称"
+  },
+  "action.share": {
+    "defaultMessage": "分享"
+  },
+  "changepwd.button": {
+    "defaultMessage": "更改"
+  },
+  "changepwd.confirm-password": {
+    "defaultMessage": "确认密码"
+  },
+  "changepwd.description": {
+    "defaultMessage": "请为您的账户提供新密码"
+  },
+  "changepwd.password": {
+    "defaultMessage": "密码"
+  },
+  "changepwd.password-match": {
+    "defaultMessage": "密码不一致，请再试一次"
+  },
+  "changepwd.title": {
+    "defaultMessage": "更改密码"
+  },
+  "common.wait": {
+    "defaultMessage": "请等待。。。"
+  },
+  "create.button": {
+    "defaultMessage": "创建"
+  },
+  "create.description": {
+    "defaultMessage": "请填写新的脑图名称和描述"
+  },
+  "create.title": {
+    "defaultMessage": "创建一个新的思维导图"
+  },
+  "deletem.title": {
+    "defaultMessage": "所有选中的脑图将被删除"
+  },
+  "duplicate.title": {
+    "defaultMessage": "复制"
+  },
+  "expired.description": {
+    "defaultMessage": "您的当前会话已过期。请登录后重试。"
+  },
+  "expired.title": {
+    "defaultMessage": "您的会话已过期"
+  },
+  "export.desc": {
+    "defaultMessage": "以您需要的格式导出此脑图，并在演示文稿中使用或通过电子邮件分享"
+  },
+  "export.document": {
+    "defaultMessage": "思维导图工具：以第三方思维导图格式导出您的思维导图"
+  },
+  "export.document-label": {
+    "defaultMessage": "文档：将你的思维导图导出到一个独立的文档中来分享"
+  },
+  "export.image": {
+    "defaultMessage": "图像：以图片形式获取包含所有颜色和形状的脑图"
+  },
+  "export.img-center": {
+    "defaultMessage": "居中并缩放合适大小"
+  },
+  "export.title": {
+    "defaultMessage": "导出"
+  },
+  "export.warning": {
+    "defaultMessage": "导出到图像（SVG，PNG，JPEG，PDF）仅在编辑器工具栏中可用。"
+  },
+  "footer.aboutus": {
+    "defaultMessage": "关于我们"
+  },
+  "footer.contactus": {
+    "defaultMessage": "联系我们"
+  },
+  "footer.faq": {
+    "defaultMessage": "常见问题"
+  },
+  "footer.faqandhelp": {
+    "defaultMessage": "帮助和常见问题"
+  },
+  "footer.feedback": {
+    "defaultMessage": "反馈"
+  },
+  "footer.opensource": {
+    "defaultMessage": "开源"
+  },
+  "footer.others": {
+    "defaultMessage": "其它"
+  },
+  "footer.termsandconditions": {
+    "defaultMessage": "条款和条件"
+  },
+  "forgot.desc": {
+    "defaultMessage": "我们将向您发送电子邮件以重置您的密码。"
+  },
+  "forgot.email": {
+    "defaultMessage": "电子邮件"
+  },
+  "forgot.page-title": {
+    "defaultMessage": "忘记密码|WiseMapping"
+  },
+  "forgot.register": {
+    "defaultMessage": "发送恢复链接"
+  },
+  "forgot.success.desc": {
+    "defaultMessage": "我们已经向您发送了一封电子邮件，允许您重置密码。您应该会在几分钟内收到"
+  },
+  "forgot.success.title": {
+    "defaultMessage": "您的临时密码已发送。"
+  },
+  "forgot.title": {
+    "defaultMessage": "重置密码"
+  },
+  "forgotsuccess.page-title": {
+    "defaultMessage": "密码已恢复|WiseMapping"
+  },
+  "header.donthaveaccount": {
+    "defaultMessage": "没有账号？"
+  },
+  "header.haveaccount": {
+    "defaultMessage": "已经有一个账号？"
+  },
+  "help.support": {
+    "defaultMessage": "支持"
+  },
+  "history.no-changes": {
+    "defaultMessage": "没有可用的更改"
+  },
+  "import.button": {
+    "defaultMessage": "创建"
+  },
+  "import.description": {
+    "defaultMessage": "您可以将脑图从 WiseMapping、FreeMind、Freeplane、XMind、MindManager 和 OPML 导入到您的脑图列表中。选择要导入的文件。"
+  },
+  "import.title": {
+    "defaultMessage": "导入现有的思维导图"
+  },
+  "import.error-file": {
+    "defaultMessage": "导入失败：{error}"
+  },
+  "info.basic-info": {
+    "defaultMessage": "基本信息"
+  },
+  "info.button": {
+    "defaultMessage": "接受"
+  },
+  "info.creation-time": {
+    "defaultMessage": "创建日期"
+  },
+  "info.creator": {
+    "defaultMessage": "创建人"
+  },
+  "info.description": {
+    "defaultMessage": "描述"
+  },
+  "info.description-msg": {
+    "defaultMessage": "通过发布脑图，你让互联网上的每个人都能看到它。"
+  },
+  "info.modified-time": {
+    "defaultMessage": "最后修改日期"
+  },
+  "info.modified-tny": {
+    "defaultMessage": "最后修改人"
+  },
+  "info.name": {
+    "defaultMessage": "名称"
+  },
+  "info.public-visibility": {
+    "defaultMessage": "公开可见"
+  },
+  "info.sharing": {
+    "defaultMessage": "分享"
+  },
+  "info.starred": {
+    "defaultMessage": "收藏"
+  },
+  "info.title": {
+    "defaultMessage": "信息"
+  },
+  "label.add-button": {
+    "defaultMessage": "添加标签"
+  },
+  "label.add-for": {
+    "defaultMessage": "编辑脑图标签："
+  },
+  "label.add-placeholder": {
+    "defaultMessage": "标签标题"
+  },
+  "label.change-color": {
+    "defaultMessage": "更改标签颜色"
+  },
+  "label.delete-description": {
+    "defaultMessage": "将被删除，包括它与所有现有脑图的关联。是否继续？"
+  },
+  "label.delete-title": {
+    "defaultMessage": "确认标签删除"
+  },
+  "label.description": {
+    "defaultMessage": "使用标签来组织你的脑图。"
+  },
+  "label.title": {
+    "defaultMessage": "添加标签"
+  },
+  "language.change": {
+    "defaultMessage": "更改语言"
+  },
+  "language.help": {
+    "defaultMessage": "帮助翻译"
+  },
+  "login.desc": {
+    "defaultMessage": "登录您的账号"
+  },
+  "login.email": {
+    "defaultMessage": "电子邮件"
+  },
+  "login.error": {
+    "defaultMessage": "您输入的电子邮件地址或密码无效。"
+  },
+  "login.forgotpwd": {
+    "defaultMessage": "忘记密码？"
+  },
+  "login.page-title": {
+    "defaultMessage": "登录|WiseMapping"
+  },
+  "login.password": {
+    "defaultMessage": "密码"
+  },
+  "login.remberme": {
+    "defaultMessage": "记住我的登录"
+  },
+  "login.signin": {
+    "defaultMessage": "登录"
+  },
+  "login.signup": {
+    "defaultMessage": "注册"
+  },
+  "login.title": {
+    "defaultMessage": "欢迎"
+  },
+  "login.userinactive": {
+    "defaultMessage": "对不起，您的账号尚未激活。当它激活时，您将收到一封通知电子邮件。敬请关注！"
+  },
+  "map.creator": {
+    "defaultMessage": "创建人"
+  },
+  "map.delete-selected": {
+    "defaultMessage": "删除选中项"
+  },
+  "map.last-update": {
+    "defaultMessage": "最后更新"
+  },
+  "map.more-actions": {
+    "defaultMessage": "更多操作"
+  },
+  "map.name": {
+    "defaultMessage": "名称"
+  },
+  "map.tooltip-add": {
+    "defaultMessage": "将标签添加到选定项"
+  },
+  "maps.choose-file": {
+    "defaultMessage": "选择一个文件"
+  },
+  "maps.create-tooltip": {
+    "defaultMessage": "创建一个新的思维导图"
+  },
+  "maps.empty-result": {
+    "defaultMessage": "没有找到与当前筛选条件匹配的思维导图。"
+  },
+  "maps.import-desc": {
+    "defaultMessage": "从其它工具导入"
+  },
+  "maps.modified": {
+    "defaultMessage": "修改"
+  },
+  "maps.modified-by": {
+    "defaultMessage": "修改人"
+  },
+  "maps.modified-by-desc": {
+    "defaultMessage": "{on}由{by}修改"
+  },
+  "maps.nav-all": {
+    "defaultMessage": "所有"
+  },
+  "maps.nav-onwned": {
+    "defaultMessage": "我的"
+  },
+  "maps.nav-public": {
+    "defaultMessage": "公开"
+  },
+  "maps.nav-shared": {
+    "defaultMessage": "与我分享"
+  },
+  "maps.nav-starred": {
+    "defaultMessage": "收藏"
+  },
+  "maps.page-title": {
+    "defaultMessage": "我的脑图|WiseMapping"
+  },
+  "maps.revert": {
+    "defaultMessage": "恢复"
+  },
+  "maps.search-action": {
+    "defaultMessage": "搜索。。。"
+  },
+  "maps.tooltip-open": {
+    "defaultMessage": "打开编辑"
+  },
+  "maps.tooltip-starred": {
+    "defaultMessage": "收藏"
+  },
+  "maps.view": {
+    "defaultMessage": "查看"
+  },
+  "menu.account": {
+    "defaultMessage": "账号"
+  },
+  "menu.change-password": {
+    "defaultMessage": "更改密码"
+  },
+  "menu.signout": {
+    "defaultMessage": "注销"
+  },
+  "publish.button": {
+    "defaultMessage": "接受"
+  },
+  "publish.checkbox": {
+    "defaultMessage": "开启公共分享"
+  },
+  "publish.description": {
+    "defaultMessage": "通过发布脑图，你让互联网上的每个人都能看到它。"
+  },
+  "publish.embedded": {
+    "defaultMessage": "嵌入"
+  },
+  "publish.embedded-msg": {
+    "defaultMessage": "复制这段代码以嵌入到您的博客或页面中："
+  },
+  "publish.public-url": {
+    "defaultMessage": "公共URL"
+  },
+  "publish.public-url-msg": {
+    "defaultMessage": "复制并粘贴下面的链接，与同事分享您的脑图："
+  },
+  "publish.title": {
+    "defaultMessage": "发布"
+  },
+  "registation.success-title": {
+    "defaultMessage": "注册成功|WiseMapping"
+  },
+  "registration.desc": {
+    "defaultMessage": "注册免费，分分钟就好"
+  },
+  "registration.email": {
+    "defaultMessage": "电子邮件"
+  },
+  "registration.firstname": {
+    "defaultMessage": "名字"
+  },
+  "registration.lastname": {
+    "defaultMessage": "姓氏"
+  },
+  "registration.page-title": {
+    "defaultMessage": "注册|WiseMapping"
+  },
+  "registration.password": {
+    "defaultMessage": "密码"
+  },
+  "registration.register": {
+    "defaultMessage": "注册"
+  },
+  "registration.success.desc": {
+    "defaultMessage": "点击下面的登录按钮，开始创建思维导图。"
+  },
+  "registration.termandconditions": {
+    "defaultMessage": "客户条款：请检查您在上面输入的WiseMapping账号信息，并在此处查看客户条款。点击下面的'注册'即表示您同意上面的客户条款和隐私政策"
+  },
+  "registration.title": {
+    "defaultMessage": "成为成员"
+  },
+  "rename.description": {
+    "defaultMessage": "请填写新的脑图名称和描述。"
+  },
+  "rename.title": {
+    "defaultMessage": "重命名"
+  },
+  "resetpassword.success.title": {
+    "defaultMessage": "您的账号已成功创建"
+  },
+  "role.editor": {
+    "defaultMessage": "编辑人"
+  },
+  "role.owner": {
+    "defaultMessage": "所有人"
+  },
+  "role.viewer": {
+    "defaultMessage": "查看人"
+  },
+  "share.add-button": {
+    "defaultMessage": "添加"
+  },
+  "share.add-message": {
+    "defaultMessage": "添加消息"
+  },
+  "share.can-edit": {
+    "defaultMessage": "可编辑"
+  },
+  "share.can-view": {
+    "defaultMessage": "可查看"
+  },
+  "share.delete": {
+    "defaultMessage": "删除协作人"
+  },
+  "share.delete-description": {
+    "defaultMessage": "邀请人们与你合作创建你的思维导图。他们将通过电子邮件得到通知。"
+  },
+  "share.delete-title": {
+    "defaultMessage": "与人分享"
+  },
+  "share.message": {
+    "defaultMessage": "消息"
+  },
+  "footer.support": {
+    "defaultMessage": "支持"
+  },
+  "footer.team": {
+    "defaultMessage": "团队"
+  },
+  "footer.donations": {
+    "defaultMessage": "捐款"
+  },
+  "registration.google.button": {
+    "defaultMessage": "使用谷歌注册"
+  },
+  "login.google.button": {
+    "defaultMessage": "使用 Google 登录"
+  },
+  "registration.division": {
+    "defaultMessage": "或者"
+  },
+  "login.division": {
+    "defaultMessage": "或者"
+  },
+  "registration.callback.confirm.title": {
+    "defaultMessage": "确认"
+  },
+  "registration.callback.waiting.title": {
+    "defaultMessage": "整理 ..."
+  },
+  "registration.callback.confirm.description": {
+    "defaultMessage": "之前注册了一个具有相同电子邮件地址的帐户。你想将你的谷歌账户链接到那个 WiseMapping 账户吗？"
+  },
+  "registration.callback.waiting.description": {
+    "defaultMessage": "我们正在验证您的身份，请稍候"
+  },
+  "registation.callback.error.message": {
+    "defaultMessage": "使用 Google 验证您的身份时出错，您可以从登录页面重试"
+  },
+  "registration.callback.back": {
+    "defaultMessage": "回到登录"
+  },
+  "registration.callback.sync": {
+    "defaultMessage": "同步账户"
+  },
+  "forgot.oauth.message": {
+    "defaultMessage": "您不需要密码，请使用谷歌登录"
+  },
+  "forgot.oauth.back": {
+    "defaultMessage": "回到登录"
+  },
+  "theme.dark": {
+    "defaultMessage": "深色"
+  },
+  "theme.light": {
+    "defaultMessage": "浅色"
+  },
+  "theme.toggle": {
+    "defaultMessage": "切换主题"
+  },
+  "admin.delete-user": {
+    "defaultMessage": "[ZH] admin.delete-user"
+  },
+  "common.maps-list": {
+    "defaultMessage": "[ZH] common.maps-list"
+  },
+  "admin.status-clean": {
+    "defaultMessage": "[ZH] admin.status-clean"
+  },
+  "common.allow-email-notifications": {
+    "defaultMessage": "[ZH] common.allow-email-notifications"
+  },
+  "admin.public": {
+    "defaultMessage": "[ZH] admin.public"
+  },
+  "common.others": {
+    "defaultMessage": "[ZH] common.others"
+  },
+  "admin.view-xml": {
+    "defaultMessage": "[ZH] admin.view-xml"
+  },
+  "registration.facebook.button": {
+    "defaultMessage": "[ZH] registration.facebook.button"
+  },
+  "common.registration-form": {
+    "defaultMessage": "[ZH] common.registration-form"
+  },
+  "common.first-name": {
+    "defaultMessage": "[ZH] common.first-name"
+  },
+  "admin.auth-type": {
+    "defaultMessage": "[ZH] admin.auth-type"
+  },
+  "common.delete": {
+    "defaultMessage": "[ZH] common.delete"
+  },
+  "admin.status": {
+    "defaultMessage": "[ZH] admin.status"
+  },
+  "admin.suspend-user": {
+    "defaultMessage": "[ZH] admin.suspend-user"
+  },
+  "admin.suspension-status": {
+    "defaultMessage": "[ZH] admin.suspension-status"
+  },
+  "admin.edit-user": {
+    "defaultMessage": "[ZH] admin.edit-user"
+  },
+  "admin.refresh": {
+    "defaultMessage": "[ZH] admin.refresh"
+  },
+  "common.login-form": {
+    "defaultMessage": "[ZH] common.login-form"
+  },
+  "admin.lock-status": {
+    "defaultMessage": "[ZH] admin.lock-status"
+  },
+  "common.emails": {
+    "defaultMessage": "[ZH] common.emails"
+  },
+  "admin.suspension-reason": {
+    "defaultMessage": "[ZH] admin.suspension-reason"
+  },
+  "admin.status-suspended": {
+    "defaultMessage": "[ZH] admin.status-suspended"
+  },
+  "label.maps-count": {
+    "defaultMessage": "[ZH] label.maps-count"
+  },
+  "admin.delete": {
+    "defaultMessage": "[ZH] admin.delete"
+  },
+  "dialog.loading": {
+    "defaultMessage": "[ZH] dialog.loading"
+  },
+  "common.last-name": {
+    "defaultMessage": "[ZH] common.last-name"
+  },
+  "admin.public-access": {
+    "defaultMessage": "[ZH] admin.public-access"
+  },
+  "admin.status-active": {
+    "defaultMessage": "[ZH] admin.status-active"
+  },
+  "common.locale": {
+    "defaultMessage": "[ZH] common.locale"
+  },
+  "login.facebook.button": {
+    "defaultMessage": "[ZH] login.facebook.button"
+  },
+  "common.email": {
+    "defaultMessage": "[ZH] common.email"
+  },
+  "admin.unsuspend-user": {
+    "defaultMessage": "[ZH] admin.unsuspend-user"
+  },
+  "common.delete-tag": {
+    "defaultMessage": "[ZH] common.delete-tag"
+  },
+  "admin.edit": {
+    "defaultMessage": "[ZH] admin.edit"
+  },
+  "common.open-drawer": {
+    "defaultMessage": "[ZH] common.open-drawer"
+  },
+  "admin.locked": {
+    "defaultMessage": "[ZH] admin.locked"
+  },
+  "common.settings": {
+    "defaultMessage": "[ZH] common.settings"
+  }
 }

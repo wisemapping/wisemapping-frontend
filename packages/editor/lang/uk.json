@@ -5,9 +5,6 @@
   "action.delete": {
     "defaultMessage": "Видалити"
   },
-  "action.reset": {
-    "defaultMessage": "Скинути"
-  },
   "appbar.back-to-map-list": {
     "defaultMessage": "Повернутися до списку карт"
   },
@@ -391,5 +388,155 @@
   },
   "common.close": {
     "defaultMessage": "Закрити"
+  },
+  "editor-panel.tooltip-add-topic-image": {
+    "defaultMessage": "Додати зображення теми"
+  },
+  "editor-panel.topic-image-title": {
+    "defaultMessage": "Зображення теми"
+  },
+  "app-bar-title": {
+    "defaultMessage": "Редактор карт розуму"
+  },
+  "appbar.error-saving-title": {
+    "defaultMessage": "Помилка збереження"
+  },
+  "appbar.logo-aria-label": {
+    "defaultMessage": "Логотип WiseMapping"
+  },
+  "appbar.theme-title": {
+    "defaultMessage": "Тема"
+  },
+  "appbar.title-renamed": {
+    "defaultMessage": "Карту розуму перейменовано"
+  },
+  "appbar.tooltip-rename": {
+    "defaultMessage": "Перейменувати"
+  },
+  "appbar.tooltip-theme": {
+    "defaultMessage": "Тема"
+  },
+  "classic": {
+    "defaultMessage": "Класичний"
+  },
+  "demo-simple-select": {
+    "defaultMessage": "Вибрати"
+  },
+  "divider": {
+    "defaultMessage": "Розділювач"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "Дуга"
+  },
+  "editor-panel.tooltip-relationship-arrow-end": {
+    "defaultMessage": "Кінцева стрілка"
+  },
+  "editor-panel.tooltip-relationship-arrow-start": {
+    "defaultMessage": "Початкова стрілка"
+  },
+  "editor-panel.tooltip-relationship-color": {
+    "defaultMessage": "Колір"
+  },
+  "editor-panel.tooltip-relationship-color-default": {
+    "defaultMessage": "Колір за замовчуванням"
+  },
+  "editor-panel.tooltip-relationship-stroke-dashed": {
+    "defaultMessage": "Пунктирна лінія"
+  },
+  "editor-panel.tooltip-relationship-stroke-dotted": {
+    "defaultMessage": "Точкова лінія"
+  },
+  "editor-panel.tooltip-relationship-stroke-solid": {
+    "defaultMessage": "Суцільна лінія"
+  },
+  "editor-panel.tooltip-relationship-style": {
+    "defaultMessage": "Стиль зв'язку"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "Без форми"
+  },
+  "headerNotifier": {
+    "defaultMessage": "Сповіщення заголовка"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "Емодзі"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Галерея іконок"
+  },
+  "mindmap-comp": {
+    "defaultMessage": "Компонент карти розуму"
+  },
+  "note.character.count": {
+    "defaultMessage": "{remaining} залишилося"
+  },
+  "note.character.limit.warning": {
+    "defaultMessage": "(Наближається до ліміту)"
+  },
+  "ocean": {
+    "defaultMessage": "Океан"
+  },
+  "popover": {
+    "defaultMessage": "Спливаюче вікно"
+  },
+  "prism": {
+    "defaultMessage": "Призма"
+  },
+  "robot": {
+    "defaultMessage": "Робот"
+  },
+  "sunrise": {
+    "defaultMessage": "Схід сонця"
+  },
+  "theme-editor.accept": {
+    "defaultMessage": "Застосувати тему"
+  },
+  "theme-editor.cancel": {
+    "defaultMessage": "Скасувати"
+  },
+  "theme-editor.description": {
+    "defaultMessage": "Тема визначає візуальний стиль вашої карти розуму, включаючи кольори, шрифти та загальний вигляд. Виберіть тему, яка найкраще підходить вашому контенту та аудиторії."
+  },
+  "theme-editor.title": {
+    "defaultMessage": "Вибрати тему"
+  },
+  "theme.classic.description": {
+    "defaultMessage": "Класична тема з традиційними кольорами"
+  },
+  "theme.classic.name": {
+    "defaultMessage": "Класичний"
+  },
+  "theme.ocean.description": {
+    "defaultMessage": "Океанська тема з синіми тонами"
+  },
+  "theme.ocean.name": {
+    "defaultMessage": "Океан"
+  },
+  "theme.robot.description": {
+    "defaultMessage": "Роботична тема з футуристичними кольорами"
+  },
+  "theme.robot.name": {
+    "defaultMessage": "Робот"
+  },
+  "theme.summer.description": {
+    "defaultMessage": "Літня тема з теплими кольорами"
+  },
+  "theme.summer.name": {
+    "defaultMessage": "Літо"
+  },
+  "theme.sunrise.description": {
+    "defaultMessage": "Тема сходу сонця з помаранчевими та жовтими тонами"
+  },
+  "theme.sunrise.name": {
+    "defaultMessage": "Схід сонця"
+  },
+  "theme.switch-to-dark": {
+    "defaultMessage": "Перемкнути на темний режим"
+  },
+  "theme.switch-to-light": {
+    "defaultMessage": "Перемкнути на світлий режим"
+  },
+  "title-input": {
+    "defaultMessage": "Введення заголовка"
   }
 }

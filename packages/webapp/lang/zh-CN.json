@@ -553,14 +553,119 @@
   },
   "share.message": {
     "defaultMessage": "消息"
-	},
-	"theme.dark": {
-		"defaultMessage": "深色"
-	},
-	"theme.light": {
-		"defaultMessage": "浅色"
-	},
-	"theme.toggle": {
-		"defaultMessage": "切换主题"
-	}
+  },
+  "theme.dark": {
+    "defaultMessage": "深色"
+  },
+  "theme.light": {
+    "defaultMessage": "浅色"
+  },
+  "theme.toggle": {
+    "defaultMessage": "切换主题"
+  },
+  "admin.delete-user": {
+    "defaultMessage": "[ZH-CN] admin.delete-user"
+  },
+  "common.maps-list": {
+    "defaultMessage": "[ZH-CN] common.maps-list"
+  },
+  "admin.status-clean": {
+    "defaultMessage": "[ZH-CN] admin.status-clean"
+  },
+  "common.allow-email-notifications": {
+    "defaultMessage": "[ZH-CN] common.allow-email-notifications"
+  },
+  "admin.public": {
+    "defaultMessage": "[ZH-CN] admin.public"
+  },
+  "common.others": {
+    "defaultMessage": "[ZH-CN] common.others"
+  },
+  "admin.view-xml": {
+    "defaultMessage": "[ZH-CN] admin.view-xml"
+  },
+  "registration.facebook.button": {
+    "defaultMessage": "[ZH-CN] registration.facebook.button"
+  },
+  "common.registration-form": {
+    "defaultMessage": "[ZH-CN] common.registration-form"
+  },
+  "common.first-name": {
+    "defaultMessage": "[ZH-CN] common.first-name"
+  },
+  "admin.auth-type": {
+    "defaultMessage": "[ZH-CN] admin.auth-type"
+  },
+  "common.delete": {
+    "defaultMessage": "[ZH-CN] common.delete"
+  },
+  "admin.status": {
+    "defaultMessage": "[ZH-CN] admin.status"
+  },
+  "admin.suspend-user": {
+    "defaultMessage": "[ZH-CN] admin.suspend-user"
+  },
+  "admin.suspension-status": {
+    "defaultMessage": "[ZH-CN] admin.suspension-status"
+  },
+  "admin.edit-user": {
+    "defaultMessage": "[ZH-CN] admin.edit-user"
+  },
+  "admin.refresh": {
+    "defaultMessage": "[ZH-CN] admin.refresh"
+  },
+  "common.login-form": {
+    "defaultMessage": "[ZH-CN] common.login-form"
+  },
+  "admin.lock-status": {
+    "defaultMessage": "[ZH-CN] admin.lock-status"
+  },
+  "common.emails": {
+    "defaultMessage": "[ZH-CN] common.emails"
+  },
+  "admin.suspension-reason": {
+    "defaultMessage": "[ZH-CN] admin.suspension-reason"
+  },
+  "admin.status-suspended": {
+    "defaultMessage": "[ZH-CN] admin.status-suspended"
+  },
+  "admin.delete": {
+    "defaultMessage": "[ZH-CN] admin.delete"
+  },
+  "common.last-name": {
+    "defaultMessage": "[ZH-CN] common.last-name"
+  },
+  "admin.public-access": {
+    "defaultMessage": "[ZH-CN] admin.public-access"
+  },
+  "admin.status-active": {
+    "defaultMessage": "[ZH-CN] admin.status-active"
+  },
+  "common.locale": {
+    "defaultMessage": "[ZH-CN] common.locale"
+  },
+  "login.facebook.button": {
+    "defaultMessage": "[ZH-CN] login.facebook.button"
+  },
+  "common.email": {
+    "defaultMessage": "[ZH-CN] common.email"
+  },
+  "admin.unsuspend-user": {
+    "defaultMessage": "[ZH-CN] admin.unsuspend-user"
+  },
+  "common.delete-tag": {
+    "defaultMessage": "[ZH-CN] common.delete-tag"
+  },
+  "admin.edit": {
+    "defaultMessage": "[ZH-CN] admin.edit"
+  },
+  "common.open-drawer": {
+    "defaultMessage": "[ZH-CN] common.open-drawer"
+  },
+  "admin.locked": {
+    "defaultMessage": "[ZH-CN] admin.locked"
+  },
+  "common.settings": {
+    "defaultMessage": "[ZH-CN] common.settings"
+  }
 }

@@ -388,5 +388,155 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Развернуть все узлы"
+  },
+  "editor-panel.tooltip-add-topic-image": {
+    "defaultMessage": "Добавить изображение темы"
+  },
+  "editor-panel.topic-image-title": {
+    "defaultMessage": "Изображение темы"
+  },
+  "app-bar-title": {
+    "defaultMessage": "Редактор карт разума"
+  },
+  "appbar.error-saving-title": {
+    "defaultMessage": "Ошибка сохранения"
+  },
+  "appbar.logo-aria-label": {
+    "defaultMessage": "Логотип WiseMapping"
+  },
+  "appbar.theme-title": {
+    "defaultMessage": "Тема"
+  },
+  "appbar.title-renamed": {
+    "defaultMessage": "Карта разума переименована"
+  },
+  "appbar.tooltip-rename": {
+    "defaultMessage": "Переименовать"
+  },
+  "appbar.tooltip-theme": {
+    "defaultMessage": "Тема"
+  },
+  "classic": {
+    "defaultMessage": "Классический"
+  },
+  "demo-simple-select": {
+    "defaultMessage": "Выбрать"
+  },
+  "divider": {
+    "defaultMessage": "Разделитель"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "Дуга"
+  },
+  "editor-panel.tooltip-relationship-arrow-end": {
+    "defaultMessage": "Конечная стрелка"
+  },
+  "editor-panel.tooltip-relationship-arrow-start": {
+    "defaultMessage": "Начальная стрелка"
+  },
+  "editor-panel.tooltip-relationship-color": {
+    "defaultMessage": "Цвет"
+  },
+  "editor-panel.tooltip-relationship-color-default": {
+    "defaultMessage": "Цвет по умолчанию"
+  },
+  "editor-panel.tooltip-relationship-stroke-dashed": {
+    "defaultMessage": "Пунктирная линия"
+  },
+  "editor-panel.tooltip-relationship-stroke-dotted": {
+    "defaultMessage": "Точечная линия"
+  },
+  "editor-panel.tooltip-relationship-stroke-solid": {
+    "defaultMessage": "Сплошная линия"
+  },
+  "editor-panel.tooltip-relationship-style": {
+    "defaultMessage": "Стиль связи"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "Без формы"
+  },
+  "headerNotifier": {
+    "defaultMessage": "Уведомление заголовка"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "Эмодзи"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Галерея иконок"
+  },
+  "mindmap-comp": {
+    "defaultMessage": "Компонент карты разума"
+  },
+  "note.character.count": {
+    "defaultMessage": "{remaining} осталось"
+  },
+  "note.character.limit.warning": {
+    "defaultMessage": "(Приближается к лимиту)"
+  },
+  "ocean": {
+    "defaultMessage": "Океан"
+  },
+  "popover": {
+    "defaultMessage": "Всплывающее окно"
+  },
+  "prism": {
+    "defaultMessage": "Призма"
+  },
+  "robot": {
+    "defaultMessage": "Робот"
+  },
+  "sunrise": {
+    "defaultMessage": "Рассвет"
+  },
+  "theme-editor.accept": {
+    "defaultMessage": "Применить тему"
+  },
+  "theme-editor.cancel": {
+    "defaultMessage": "Отмена"
+  },
+  "theme-editor.description": {
+    "defaultMessage": "Тема определяет визуальный стиль вашей карты разума, включая цвета, шрифты и общий внешний вид. Выберите тему, которая лучше всего подходит вашему контенту и аудитории."
+  },
+  "theme-editor.title": {
+    "defaultMessage": "Выбрать тему"
+  },
+  "theme.classic.description": {
+    "defaultMessage": "Классическая тема с традиционными цветами"
+  },
+  "theme.classic.name": {
+    "defaultMessage": "Классический"
+  },
+  "theme.ocean.description": {
+    "defaultMessage": "Океанская тема с синими тонами"
+  },
+  "theme.ocean.name": {
+    "defaultMessage": "Океан"
+  },
+  "theme.robot.description": {
+    "defaultMessage": "Роботическая тема с футуристическими цветами"
+  },
+  "theme.robot.name": {
+    "defaultMessage": "Робот"
+  },
+  "theme.summer.description": {
+    "defaultMessage": "Летняя тема с теплыми цветами"
+  },
+  "theme.summer.name": {
+    "defaultMessage": "Лето"
+  },
+  "theme.sunrise.description": {
+    "defaultMessage": "Тема рассвета с оранжевыми и желтыми тонами"
+  },
+  "theme.sunrise.name": {
+    "defaultMessage": "Рассвет"
+  },
+  "theme.switch-to-dark": {
+    "defaultMessage": "Переключить на темный режим"
+  },
+  "theme.switch-to-light": {
+    "defaultMessage": "Переключить на светлый режим"
+  },
+  "title-input": {
+    "defaultMessage": "Ввод заголовка"
   }
 }

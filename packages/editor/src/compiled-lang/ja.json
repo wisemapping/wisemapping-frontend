@@ -11,10 +11,10 @@
       "value": "削除"
     }
   ],
-  "action.reset": [
+  "app-bar-title": [
     {
       "type": 0,
-      "value": "リセット"
+      "value": "マインドマップエディター"
     }
   ],
   "appbar.back-to-map-list": [
@@ -29,10 +29,34 @@
       "value": "サインアップ"
     }
   ],
+  "appbar.error-saving-title": [
+    {
+      "type": 0,
+      "value": "保存エラー"
+    }
+  ],
+  "appbar.logo-aria-label": [
+    {
+      "type": 0,
+      "value": "WiseMappingロゴ"
+    }
+  ],
   "appbar.shared-button": [
     {
       "type": 0,
       "value": "共有"
+    }
+  ],
+  "appbar.theme-title": [
+    {
+      "type": 0,
+      "value": "テーマ"
+    }
+  ],
+  "appbar.title-renamed": [
+    {
+      "type": 0,
+      "value": "マインドマップがリネームされました"
     }
   ],
   "appbar.tooltip-export": [
@@ -71,6 +95,12 @@
       "value": "やり直し"
     }
   ],
+  "appbar.tooltip-rename": [
+    {
+      "type": 0,
+      "value": "リネーム"
+    }
+  ],
   "appbar.tooltip-save": [
     {
       "type": 0,
@@ -93,6 +123,12 @@
     {
       "type": 0,
       "value": "お気に入り"
+    }
+  ],
+  "appbar.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "テーマ"
     }
   ],
   "appbar.tooltip-undo": [
@@ -209,6 +245,12 @@
       "value": "背景"
     }
   ],
+  "classic": [
+    {
+      "type": 0,
+      "value": "クラシック"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -225,6 +267,18 @@
     {
       "type": 0,
       "value": "説明"
+    }
+  ],
+  "demo-simple-select": [
+    {
+      "type": 0,
+      "value": "選択"
+    }
+  ],
+  "divider": [
+    {
+      "type": 0,
+      "value": "区切り"
     }
   ],
   "editor-panel.canvas-style-title": [
@@ -299,6 +353,12 @@
       "value": "トピックを追加"
     }
   ],
+  "editor-panel.tooltip-add-topic-image": [
+    {
+      "type": 0,
+      "value": "トピック画像を追加"
+    }
+  ],
   "editor-panel.tooltip-canvas-style": [
     {
       "type": 0,
@@ -321,6 +381,12 @@
     {
       "type": 0,
       "value": "接続スタイル"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "アーク"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thick": [
@@ -351,6 +417,54 @@
     {
       "type": 0,
       "value": "トピックを削除"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-end": [
+    {
+      "type": 0,
+      "value": "終了矢印"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-start": [
+    {
+      "type": 0,
+      "value": "開始矢印"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color": [
+    {
+      "type": 0,
+      "value": "色"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color-default": [
+    {
+      "type": 0,
+      "value": "デフォルト色"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dashed": [
+    {
+      "type": 0,
+      "value": "破線"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dotted": [
+    {
+      "type": 0,
+      "value": "点線"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-solid": [
+    {
+      "type": 0,
+      "value": "実線"
+    }
+  ],
+  "editor-panel.tooltip-relationship-style": [
+    {
+      "type": 0,
+      "value": "関係スタイル"
     }
   ],
   "editor-panel.tooltip-theme": [
@@ -437,6 +551,12 @@
       "value": "線形"
     }
   ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "形状なし"
+    }
+  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
@@ -453,6 +573,12 @@
     {
       "type": 0,
       "value": "トピックスタイル"
+    }
+  ],
+  "editor-panel.topic-image-title": [
+    {
+      "type": 0,
+      "value": "トピック画像"
     }
   ],
   "editor.edit-description-mobile": [
@@ -491,6 +617,24 @@
       "value": "絵文字を検索..."
     }
   ],
+  "headerNotifier": [
+    {
+      "type": 0,
+      "value": "ヘッダー通知"
+    }
+  ],
+  "icon-picker.emojis": [
+    {
+      "type": 0,
+      "value": "絵文字"
+    }
+  ],
+  "icon-picker.icons": [
+    {
+      "type": 0,
+      "value": "アイコンギャラリー"
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
@@ -525,6 +669,46 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "mindmap-comp": [
+    {
+      "type": 0,
+      "value": "マインドマップコンポーネント"
+    }
+  ],
+  "note.character.count": [
+    {
+      "type": 1,
+      "value": "remaining"
+    },
+    {
+      "type": 0,
+      "value": " 残り"
+    }
+  ],
+  "note.character.limit.warning": [
+    {
+      "type": 0,
+      "value": "(制限に近づいています)"
+    }
+  ],
+  "ocean": [
+    {
+      "type": 0,
+      "value": "オーシャン"
+    }
+  ],
+  "popover": [
+    {
+      "type": 0,
+      "value": "ポップオーバー"
+    }
+  ],
+  "prism": [
+    {
+      "type": 0,
+      "value": "プリズム"
     }
   ],
   "rich-text-editor.bold": [
@@ -573,6 +757,12 @@
     {
       "type": 0,
       "value": "下線"
+    }
+  ],
+  "robot": [
+    {
+      "type": 0,
+      "value": "ロボット"
     }
   ],
   "shortcut-help-pane.action": [
@@ -731,6 +921,48 @@
       "value": "編集を元に戻す"
     }
   ],
+  "sunrise": [
+    {
+      "type": 0,
+      "value": "日の出"
+    }
+  ],
+  "theme-editor.accept": [
+    {
+      "type": 0,
+      "value": "テーマを適用"
+    }
+  ],
+  "theme-editor.cancel": [
+    {
+      "type": 0,
+      "value": "キャンセル"
+    }
+  ],
+  "theme-editor.description": [
+    {
+      "type": 0,
+      "value": "テーマは、色、フォント、全体的な外観を含むマインドマップの視覚的スタイルを定義します。コンテンツとオーディエンスに最適なテーマを選択してください。"
+    }
+  ],
+  "theme-editor.title": [
+    {
+      "type": 0,
+      "value": "テーマを選択"
+    }
+  ],
+  "theme.classic.description": [
+    {
+      "type": 0,
+      "value": "伝統的な色のクラシックテーマ"
+    }
+  ],
+  "theme.classic.name": [
+    {
+      "type": 0,
+      "value": "クラシック"
+    }
+  ],
   "theme.dark": [
     {
       "type": 0,
@@ -743,10 +975,76 @@
       "value": "ライト"
     }
   ],
+  "theme.ocean.description": [
+    {
+      "type": 0,
+      "value": "青いトーンのオーシャンテーマ"
+    }
+  ],
+  "theme.ocean.name": [
+    {
+      "type": 0,
+      "value": "オーシャン"
+    }
+  ],
+  "theme.robot.description": [
+    {
+      "type": 0,
+      "value": "未来的な色のロボットテーマ"
+    }
+  ],
+  "theme.robot.name": [
+    {
+      "type": 0,
+      "value": "ロボット"
+    }
+  ],
+  "theme.summer.description": [
+    {
+      "type": 0,
+      "value": "暖かい色のサマーテーマ"
+    }
+  ],
+  "theme.summer.name": [
+    {
+      "type": 0,
+      "value": "サマー"
+    }
+  ],
+  "theme.sunrise.description": [
+    {
+      "type": 0,
+      "value": "オレンジと黄色のトーンの日の出テーマ"
+    }
+  ],
+  "theme.sunrise.name": [
+    {
+      "type": 0,
+      "value": "日の出"
+    }
+  ],
+  "theme.switch-to-dark": [
+    {
+      "type": 0,
+      "value": "ダークモードに切り替え"
+    }
+  ],
+  "theme.switch-to-light": [
+    {
+      "type": 0,
+      "value": "ライトモードに切り替え"
+    }
+  ],
   "theme.toggle": [
     {
       "type": 0,
       "value": "テーマ切り替え"
+    }
+  ],
+  "title-input": [
+    {
+      "type": 0,
+      "value": "タイトル入力"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

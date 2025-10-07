@@ -323,10 +323,6 @@
   "login.google.button": {
     "defaultMessage": "Googleでサインイン"
   },
-  "login.hsqldbcofig": {
-    "defaultMessage": "HSQLDBはインストール時にデフォルトでWiseMappingにバンドルされていますが、本番環境での使用は推奨しません。代わりにMySQL 5.7の使用を検討してください。MySQLの設定方法の詳細はこちら",
-    "description": "本番データベースが設定されていません"
-  },
   "login.page-title": {
     "defaultMessage": "ログイン | WiseMapping"
   },
@@ -558,19 +554,118 @@
   "dialog.loading": {
     "defaultMessage": "読み込み中..."
   },
-  "editor.try-welcome": {
-    "defaultMessage": "この編集スペースでは、マインドマップエディターの機能の一部をご紹介しています！"
+  "theme.dark": {
+    "defaultMessage": "ダーク"
   },
-  "editor.try-welcome-description": {
-    "defaultMessage": "無料で無制限のマインドマップを作成、共有、公開するためにサインアップしてください。"
-	},
-	"theme.dark": {
-		"defaultMessage": "ダーク"
-	},
-	"theme.light": {
-		"defaultMessage": "ライト"
-	},
-	"theme.toggle": {
-		"defaultMessage": "テーマ切り替え"
-	}
+  "theme.light": {
+    "defaultMessage": "ライト"
+  },
+  "theme.toggle": {
+    "defaultMessage": "テーマ切り替え"
+  },
+  "admin.delete-user": {
+    "defaultMessage": "[JA] admin.delete-user"
+  },
+  "common.maps-list": {
+    "defaultMessage": "[JA] common.maps-list"
+  },
+  "admin.status-clean": {
+    "defaultMessage": "[JA] admin.status-clean"
+  },
+  "common.allow-email-notifications": {
+    "defaultMessage": "[JA] common.allow-email-notifications"
+  },
+  "admin.public": {
+    "defaultMessage": "[JA] admin.public"
+  },
+  "common.others": {
+    "defaultMessage": "[JA] common.others"
+  },
+  "admin.view-xml": {
+    "defaultMessage": "[JA] admin.view-xml"
+  },
+  "registration.facebook.button": {
+    "defaultMessage": "[JA] registration.facebook.button"
+  },
+  "common.registration-form": {
+    "defaultMessage": "[JA] common.registration-form"
+  },
+  "common.first-name": {
+    "defaultMessage": "[JA] common.first-name"
+  },
+  "admin.auth-type": {
+    "defaultMessage": "[JA] admin.auth-type"
+  },
+  "common.delete": {
+    "defaultMessage": "[JA] common.delete"
+  },
+  "admin.status": {
+    "defaultMessage": "[JA] admin.status"
+  },
+  "admin.suspend-user": {
+    "defaultMessage": "[JA] admin.suspend-user"
+  },
+  "admin.suspension-status": {
+    "defaultMessage": "[JA] admin.suspension-status"
+  },
+  "admin.edit-user": {
+    "defaultMessage": "[JA] admin.edit-user"
+  },
+  "admin.refresh": {
+    "defaultMessage": "[JA] admin.refresh"
+  },
+  "common.login-form": {
+    "defaultMessage": "[JA] common.login-form"
+  },
+  "admin.lock-status": {
+    "defaultMessage": "[JA] admin.lock-status"
+  },
+  "common.emails": {
+    "defaultMessage": "[JA] common.emails"
+  },
+  "admin.suspension-reason": {
+    "defaultMessage": "[JA] admin.suspension-reason"
+  },
+  "admin.status-suspended": {
+    "defaultMessage": "[JA] admin.status-suspended"
+  },
+  "admin.delete": {
+    "defaultMessage": "[JA] admin.delete"
+  },
+  "common.last-name": {
+    "defaultMessage": "[JA] common.last-name"
+  },
+  "admin.public-access": {
+    "defaultMessage": "[JA] admin.public-access"
+  },
+  "admin.status-active": {
+    "defaultMessage": "[JA] admin.status-active"
+  },
+  "common.locale": {
+    "defaultMessage": "[JA] common.locale"
+  },
+  "login.facebook.button": {
+    "defaultMessage": "[JA] login.facebook.button"
+  },
+  "common.email": {
+    "defaultMessage": "[JA] common.email"
+  },
+  "admin.unsuspend-user": {
+    "defaultMessage": "[JA] admin.unsuspend-user"
+  },
+  "common.delete-tag": {
+    "defaultMessage": "[JA] common.delete-tag"
+  },
+  "admin.edit": {
+    "defaultMessage": "[JA] admin.edit"
+  },
+  "common.open-drawer": {
+    "defaultMessage": "[JA] common.open-drawer"
+  },
+  "admin.locked": {
+    "defaultMessage": "[JA] admin.locked"
+  },
+  "common.settings": {
+    "defaultMessage": "[JA] common.settings"
+  }
 }

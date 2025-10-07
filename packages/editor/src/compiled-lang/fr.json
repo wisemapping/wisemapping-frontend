@@ -11,10 +11,10 @@
       "value": "Supprimer"
     }
   ],
-  "action.reset": [
+  "app-bar-title": [
     {
       "type": 0,
-      "value": "Réinitialiser"
+      "value": "Éditeur de Cartes Mentales"
     }
   ],
   "appbar.back-to-map-list": [
@@ -29,10 +29,34 @@
       "value": "S'inscrire"
     }
   ],
+  "appbar.error-saving-title": [
+    {
+      "type": 0,
+      "value": "Erreur lors de la sauvegarde"
+    }
+  ],
+  "appbar.logo-aria-label": [
+    {
+      "type": 0,
+      "value": "Logo WiseMapping"
+    }
+  ],
   "appbar.shared-button": [
     {
       "type": 0,
       "value": "Partager"
+    }
+  ],
+  "appbar.theme-title": [
+    {
+      "type": 0,
+      "value": "Thème"
+    }
+  ],
+  "appbar.title-renamed": [
+    {
+      "type": 0,
+      "value": "Carte mentale renommée"
     }
   ],
   "appbar.tooltip-export": [
@@ -71,6 +95,12 @@
       "value": "Rétablir"
     }
   ],
+  "appbar.tooltip-rename": [
+    {
+      "type": 0,
+      "value": "Renommer"
+    }
+  ],
   "appbar.tooltip-save": [
     {
       "type": 0,
@@ -93,6 +123,12 @@
     {
       "type": 0,
       "value": "Favoris"
+    }
+  ],
+  "appbar.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Thème"
     }
   ],
   "appbar.tooltip-undo": [
@@ -209,6 +245,12 @@
       "value": "Arrière-plan"
     }
   ],
+  "classic": [
+    {
+      "type": 0,
+      "value": "Classique"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -225,6 +267,18 @@
     {
       "type": 0,
       "value": "Description"
+    }
+  ],
+  "demo-simple-select": [
+    {
+      "type": 0,
+      "value": "Sélectionner"
+    }
+  ],
+  "divider": [
+    {
+      "type": 0,
+      "value": "Séparateur"
     }
   ],
   "editor-panel.canvas-style-title": [
@@ -299,6 +353,12 @@
       "value": "Ajouter un noeud"
     }
   ],
+  "editor-panel.tooltip-add-topic-image": [
+    {
+      "type": 0,
+      "value": "Ajouter une image de sujet"
+    }
+  ],
   "editor-panel.tooltip-canvas-style": [
     {
       "type": 0,
@@ -321,6 +381,12 @@
     {
       "type": 0,
       "value": "Style de connexion"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "Arc"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thick": [
@@ -351,6 +417,54 @@
     {
       "type": 0,
       "value": "Supprimer un noeud"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-end": [
+    {
+      "type": 0,
+      "value": "Flèche de fin"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-start": [
+    {
+      "type": 0,
+      "value": "Flèche de début"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color": [
+    {
+      "type": 0,
+      "value": "Couleur"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color-default": [
+    {
+      "type": 0,
+      "value": "Couleur par défaut"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dashed": [
+    {
+      "type": 0,
+      "value": "Ligne en pointillés"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dotted": [
+    {
+      "type": 0,
+      "value": "Ligne pointillée"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-solid": [
+    {
+      "type": 0,
+      "value": "Ligne pleine"
+    }
+  ],
+  "editor-panel.tooltip-relationship-style": [
+    {
+      "type": 0,
+      "value": "Style de relation"
     }
   ],
   "editor-panel.tooltip-theme": [
@@ -437,6 +551,12 @@
       "value": "Ligne"
     }
   ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "Aucune forme"
+    }
+  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
@@ -453,6 +573,12 @@
     {
       "type": 0,
       "value": "Style de noeud"
+    }
+  ],
+  "editor-panel.topic-image-title": [
+    {
+      "type": 0,
+      "value": "Image de sujet"
     }
   ],
   "editor.edit-description-mobile": [
@@ -491,6 +617,24 @@
       "value": "Rechercher des emojis..."
     }
   ],
+  "headerNotifier": [
+    {
+      "type": 0,
+      "value": "Notification d'en-tête"
+    }
+  ],
+  "icon-picker.emojis": [
+    {
+      "type": 0,
+      "value": "Emojis"
+    }
+  ],
+  "icon-picker.icons": [
+    {
+      "type": 0,
+      "value": "Galerie d'icônes"
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
@@ -525,6 +669,46 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "mindmap-comp": [
+    {
+      "type": 0,
+      "value": "Composant de carte mentale"
+    }
+  ],
+  "note.character.count": [
+    {
+      "type": 1,
+      "value": "remaining"
+    },
+    {
+      "type": 0,
+      "value": " restants"
+    }
+  ],
+  "note.character.limit.warning": [
+    {
+      "type": 0,
+      "value": "(Limite approchée)"
+    }
+  ],
+  "ocean": [
+    {
+      "type": 0,
+      "value": "Océan"
+    }
+  ],
+  "popover": [
+    {
+      "type": 0,
+      "value": "Popover"
+    }
+  ],
+  "prism": [
+    {
+      "type": 0,
+      "value": "Prisme"
     }
   ],
   "rich-text-editor.bold": [
@@ -573,6 +757,12 @@
     {
       "type": 0,
       "value": "Souligné"
+    }
+  ],
+  "robot": [
+    {
+      "type": 0,
+      "value": "Robot"
     }
   ],
   "shortcut-help-pane.action": [
@@ -731,6 +921,48 @@
       "value": "Annuler l'édition"
     }
   ],
+  "sunrise": [
+    {
+      "type": 0,
+      "value": "Lever de soleil"
+    }
+  ],
+  "theme-editor.accept": [
+    {
+      "type": 0,
+      "value": "Appliquer le thème"
+    }
+  ],
+  "theme-editor.cancel": [
+    {
+      "type": 0,
+      "value": "Annuler"
+    }
+  ],
+  "theme-editor.description": [
+    {
+      "type": 0,
+      "value": "Un thème définit le style visuel de votre carte mentale, y compris les couleurs, les polices et l'apparence générale. Choisissez un thème qui correspond le mieux à votre contenu et à votre public."
+    }
+  ],
+  "theme-editor.title": [
+    {
+      "type": 0,
+      "value": "Choisir un thème"
+    }
+  ],
+  "theme.classic.description": [
+    {
+      "type": 0,
+      "value": "Thème classique avec des couleurs traditionnelles"
+    }
+  ],
+  "theme.classic.name": [
+    {
+      "type": 0,
+      "value": "Classique"
+    }
+  ],
   "theme.dark": [
     {
       "type": 0,
@@ -743,22 +975,76 @@
       "value": "Clair"
     }
   ],
+  "theme.ocean.description": [
+    {
+      "type": 0,
+      "value": "Thème océan avec des tons bleus"
+    }
+  ],
+  "theme.ocean.name": [
+    {
+      "type": 0,
+      "value": "Océan"
+    }
+  ],
+  "theme.robot.description": [
+    {
+      "type": 0,
+      "value": "Thème robot avec des couleurs futuristes"
+    }
+  ],
+  "theme.robot.name": [
+    {
+      "type": 0,
+      "value": "Robot"
+    }
+  ],
+  "theme.summer.description": [
+    {
+      "type": 0,
+      "value": "Thème été avec des couleurs chaudes"
+    }
+  ],
+  "theme.summer.name": [
+    {
+      "type": 0,
+      "value": "Été"
+    }
+  ],
+  "theme.sunrise.description": [
+    {
+      "type": 0,
+      "value": "Thème lever de soleil avec des tons orange et jaune"
+    }
+  ],
+  "theme.sunrise.name": [
+    {
+      "type": 0,
+      "value": "Lever de soleil"
+    }
+  ],
+  "theme.switch-to-dark": [
+    {
+      "type": 0,
+      "value": "Passer en mode sombre"
+    }
+  ],
+  "theme.switch-to-light": [
+    {
+      "type": 0,
+      "value": "Passer en mode clair"
+    }
+  ],
   "theme.toggle": [
     {
       "type": 0,
       "value": "Changer le Thème"
     }
   ],
-  "zoom-panel.tooltip-collapse-all": [
+  "title-input": [
     {
       "type": 0,
-      "value": "Réduire tous les nœuds"
-    }
-  ],
-  "zoom-panel.tooltip-expand-all": [
-    {
-      "type": 0,
-      "value": "Développer tous les nœuds"
+      "value": "Saisie de titre"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

@@ -388,5 +388,155 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Développer tous les nœuds"
+  },
+  "editor-panel.tooltip-add-topic-image": {
+    "defaultMessage": "Ajouter une image de sujet"
+  },
+  "editor-panel.topic-image-title": {
+    "defaultMessage": "Image de sujet"
+  },
+  "app-bar-title": {
+    "defaultMessage": "Éditeur de Cartes Mentales"
+  },
+  "appbar.error-saving-title": {
+    "defaultMessage": "Erreur lors de la sauvegarde"
+  },
+  "appbar.logo-aria-label": {
+    "defaultMessage": "Logo WiseMapping"
+  },
+  "appbar.theme-title": {
+    "defaultMessage": "Thème"
+  },
+  "appbar.title-renamed": {
+    "defaultMessage": "Carte mentale renommée"
+  },
+  "appbar.tooltip-rename": {
+    "defaultMessage": "Renommer"
+  },
+  "appbar.tooltip-theme": {
+    "defaultMessage": "Thème"
+  },
+  "classic": {
+    "defaultMessage": "Classique"
+  },
+  "demo-simple-select": {
+    "defaultMessage": "Sélectionner"
+  },
+  "divider": {
+    "defaultMessage": "Séparateur"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "Arc"
+  },
+  "editor-panel.tooltip-relationship-arrow-end": {
+    "defaultMessage": "Flèche de fin"
+  },
+  "editor-panel.tooltip-relationship-arrow-start": {
+    "defaultMessage": "Flèche de début"
+  },
+  "editor-panel.tooltip-relationship-color": {
+    "defaultMessage": "Couleur"
+  },
+  "editor-panel.tooltip-relationship-color-default": {
+    "defaultMessage": "Couleur par défaut"
+  },
+  "editor-panel.tooltip-relationship-stroke-dashed": {
+    "defaultMessage": "Ligne en pointillés"
+  },
+  "editor-panel.tooltip-relationship-stroke-dotted": {
+    "defaultMessage": "Ligne pointillée"
+  },
+  "editor-panel.tooltip-relationship-stroke-solid": {
+    "defaultMessage": "Ligne pleine"
+  },
+  "editor-panel.tooltip-relationship-style": {
+    "defaultMessage": "Style de relation"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "Aucune forme"
+  },
+  "headerNotifier": {
+    "defaultMessage": "Notification d'en-tête"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "Emojis"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Galerie d'icônes"
+  },
+  "mindmap-comp": {
+    "defaultMessage": "Composant de carte mentale"
+  },
+  "note.character.count": {
+    "defaultMessage": "{remaining} restants"
+  },
+  "note.character.limit.warning": {
+    "defaultMessage": "(Limite approchée)"
+  },
+  "ocean": {
+    "defaultMessage": "Océan"
+  },
+  "popover": {
+    "defaultMessage": "Popover"
+  },
+  "prism": {
+    "defaultMessage": "Prisme"
+  },
+  "robot": {
+    "defaultMessage": "Robot"
+  },
+  "sunrise": {
+    "defaultMessage": "Lever de soleil"
+  },
+  "theme-editor.accept": {
+    "defaultMessage": "Appliquer le thème"
+  },
+  "theme-editor.cancel": {
+    "defaultMessage": "Annuler"
+  },
+  "theme-editor.description": {
+    "defaultMessage": "Un thème définit le style visuel de votre carte mentale, y compris les couleurs, les polices et l'apparence générale. Choisissez un thème qui correspond le mieux à votre contenu et à votre public."
+  },
+  "theme-editor.title": {
+    "defaultMessage": "Choisir un thème"
+  },
+  "theme.classic.description": {
+    "defaultMessage": "Thème classique avec des couleurs traditionnelles"
+  },
+  "theme.classic.name": {
+    "defaultMessage": "Classique"
+  },
+  "theme.ocean.description": {
+    "defaultMessage": "Thème océan avec des tons bleus"
+  },
+  "theme.ocean.name": {
+    "defaultMessage": "Océan"
+  },
+  "theme.robot.description": {
+    "defaultMessage": "Thème robot avec des couleurs futuristes"
+  },
+  "theme.robot.name": {
+    "defaultMessage": "Robot"
+  },
+  "theme.summer.description": {
+    "defaultMessage": "Thème été avec des couleurs chaudes"
+  },
+  "theme.summer.name": {
+    "defaultMessage": "Été"
+  },
+  "theme.sunrise.description": {
+    "defaultMessage": "Thème lever de soleil avec des tons orange et jaune"
+  },
+  "theme.sunrise.name": {
+    "defaultMessage": "Lever de soleil"
+  },
+  "theme.switch-to-dark": {
+    "defaultMessage": "Passer en mode sombre"
+  },
+  "theme.switch-to-light": {
+    "defaultMessage": "Passer en mode clair"
+  },
+  "title-input": {
+    "defaultMessage": "Saisie de titre"
   }
 }

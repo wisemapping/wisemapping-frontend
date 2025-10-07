@@ -11,6 +11,12 @@
       "value": "Delete"
     }
   ],
+  "app-bar-title": [
+    {
+      "type": 0,
+      "value": "Mindmap Editor"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -23,10 +29,34 @@
       "value": "Sign Up"
     }
   ],
+  "appbar.error-saving-title": [
+    {
+      "type": 0,
+      "value": "Error saving"
+    }
+  ],
+  "appbar.logo-aria-label": [
+    {
+      "type": 0,
+      "value": "WiseMapping Logo"
+    }
+  ],
   "appbar.shared-button": [
     {
       "type": 0,
       "value": "Share"
+    }
+  ],
+  "appbar.theme-title": [
+    {
+      "type": 0,
+      "value": "Theme"
+    }
+  ],
+  "appbar.title-renamed": [
+    {
+      "type": 0,
+      "value": "Mindmap renamed"
     }
   ],
   "appbar.tooltip-export": [
@@ -65,6 +95,12 @@
       "value": "Redo"
     }
   ],
+  "appbar.tooltip-rename": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
   "appbar.tooltip-save": [
     {
       "type": 0,
@@ -87,6 +123,12 @@
     {
       "type": 0,
       "value": "Starred"
+    }
+  ],
+  "appbar.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Theme"
     }
   ],
   "appbar.tooltip-undo": [
@@ -203,6 +245,12 @@
       "value": "Background"
     }
   ],
+  "classic": [
+    {
+      "type": 0,
+      "value": "Classic"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -219,6 +267,18 @@
     {
       "type": 0,
       "value": "Description"
+    }
+  ],
+  "demo-simple-select": [
+    {
+      "type": 0,
+      "value": "Select"
+    }
+  ],
+  "divider": [
+    {
+      "type": 0,
+      "value": "Divider"
     }
   ],
   "editor-panel.canvas-style-title": [
@@ -293,6 +353,12 @@
       "value": "Add Topic"
     }
   ],
+  "editor-panel.tooltip-add-topic-image": [
+    {
+      "type": 0,
+      "value": "Add Topic Image"
+    }
+  ],
   "editor-panel.tooltip-canvas-style": [
     {
       "type": 0,
@@ -315,6 +381,12 @@
     {
       "type": 0,
       "value": "Connection Style"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "Arc"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thick": [
@@ -345,6 +417,54 @@
     {
       "type": 0,
       "value": "Delete Topic"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-end": [
+    {
+      "type": 0,
+      "value": "End Arrow"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-start": [
+    {
+      "type": 0,
+      "value": "Start Arrow"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color": [
+    {
+      "type": 0,
+      "value": "Color"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color-default": [
+    {
+      "type": 0,
+      "value": "Default color"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dashed": [
+    {
+      "type": 0,
+      "value": "Dashed Line"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dotted": [
+    {
+      "type": 0,
+      "value": "Dotted Line"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-solid": [
+    {
+      "type": 0,
+      "value": "Solid Line"
+    }
+  ],
+  "editor-panel.tooltip-relationship-style": [
+    {
+      "type": 0,
+      "value": "Relationship Style"
     }
   ],
   "editor-panel.tooltip-theme": [
@@ -431,6 +551,12 @@
       "value": "Line shape"
     }
   ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "None shape"
+    }
+  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
@@ -447,6 +573,12 @@
     {
       "type": 0,
       "value": "Topic Style"
+    }
+  ],
+  "editor-panel.topic-image-title": [
+    {
+      "type": 0,
+      "value": "Topic Image"
     }
   ],
   "editor.edit-description-mobile": [
@@ -485,6 +617,24 @@
       "value": "Search emojis..."
     }
   ],
+  "headerNotifier": [
+    {
+      "type": 0,
+      "value": "Header Notifier"
+    }
+  ],
+  "icon-picker.emojis": [
+    {
+      "type": 0,
+      "value": "Emojis"
+    }
+  ],
+  "icon-picker.icons": [
+    {
+      "type": 0,
+      "value": "Icons Gallery"
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
@@ -519,6 +669,46 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "mindmap-comp": [
+    {
+      "type": 0,
+      "value": "Mindmap Component"
+    }
+  ],
+  "note.character.count": [
+    {
+      "type": 1,
+      "value": "remaining"
+    },
+    {
+      "type": 0,
+      "value": " left"
+    }
+  ],
+  "note.character.limit.warning": [
+    {
+      "type": 0,
+      "value": "(Approaching limit)"
+    }
+  ],
+  "ocean": [
+    {
+      "type": 0,
+      "value": "Ocean"
+    }
+  ],
+  "popover": [
+    {
+      "type": 0,
+      "value": "Popover"
+    }
+  ],
+  "prism": [
+    {
+      "type": 0,
+      "value": "Prism"
     }
   ],
   "rich-text-editor.bold": [
@@ -567,6 +757,12 @@
     {
       "type": 0,
       "value": "Underline"
+    }
+  ],
+  "robot": [
+    {
+      "type": 0,
+      "value": "Robot"
     }
   ],
   "shortcut-help-pane.action": [
@@ -725,6 +921,48 @@
       "value": "Undo edition"
     }
   ],
+  "sunrise": [
+    {
+      "type": 0,
+      "value": "Sunrise"
+    }
+  ],
+  "theme-editor.accept": [
+    {
+      "type": 0,
+      "value": "Apply Theme"
+    }
+  ],
+  "theme-editor.cancel": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "theme-editor.description": [
+    {
+      "type": 0,
+      "value": "A theme defines the visual style of your mind map, including colors, fonts, and overall appearance. Choose a theme that best fits your content and audience."
+    }
+  ],
+  "theme-editor.title": [
+    {
+      "type": 0,
+      "value": "Choose Theme"
+    }
+  ],
+  "theme.classic.description": [
+    {
+      "type": 0,
+      "value": "Classic theme with traditional colors"
+    }
+  ],
+  "theme.classic.name": [
+    {
+      "type": 0,
+      "value": "Classic"
+    }
+  ],
   "theme.dark": [
     {
       "type": 0,
@@ -737,10 +975,76 @@
       "value": "Light"
     }
   ],
+  "theme.ocean.description": [
+    {
+      "type": 0,
+      "value": "Ocean theme with blue tones"
+    }
+  ],
+  "theme.ocean.name": [
+    {
+      "type": 0,
+      "value": "Ocean"
+    }
+  ],
+  "theme.robot.description": [
+    {
+      "type": 0,
+      "value": "Robot theme with futuristic colors"
+    }
+  ],
+  "theme.robot.name": [
+    {
+      "type": 0,
+      "value": "Robot"
+    }
+  ],
+  "theme.summer.description": [
+    {
+      "type": 0,
+      "value": "Summer theme with warm colors"
+    }
+  ],
+  "theme.summer.name": [
+    {
+      "type": 0,
+      "value": "Summer"
+    }
+  ],
+  "theme.sunrise.description": [
+    {
+      "type": 0,
+      "value": "Sunrise theme with orange and yellow tones"
+    }
+  ],
+  "theme.sunrise.name": [
+    {
+      "type": 0,
+      "value": "Sunrise"
+    }
+  ],
+  "theme.switch-to-dark": [
+    {
+      "type": 0,
+      "value": "Switch to dark mode"
+    }
+  ],
+  "theme.switch-to-light": [
+    {
+      "type": 0,
+      "value": "Switch to light mode"
+    }
+  ],
   "theme.toggle": [
     {
       "type": 0,
       "value": "Toggle Theme"
+    }
+  ],
+  "title-input": [
+    {
+      "type": 0,
+      "value": "Title Input"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

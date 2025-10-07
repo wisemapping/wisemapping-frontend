@@ -568,5 +568,104 @@
   },
   "theme.toggle": {
     "defaultMessage": "Перемкнути тему"
+  },
+  "admin.delete-user": {
+    "defaultMessage": "[UK] admin.delete-user"
+  },
+  "common.maps-list": {
+    "defaultMessage": "[UK] common.maps-list"
+  },
+  "admin.status-clean": {
+    "defaultMessage": "[UK] admin.status-clean"
+  },
+  "common.allow-email-notifications": {
+    "defaultMessage": "[UK] common.allow-email-notifications"
+  },
+  "admin.public": {
+    "defaultMessage": "[UK] admin.public"
+  },
+  "common.others": {
+    "defaultMessage": "[UK] common.others"
+  },
+  "admin.view-xml": {
+    "defaultMessage": "[UK] admin.view-xml"
+  },
+  "common.registration-form": {
+    "defaultMessage": "[UK] common.registration-form"
+  },
+  "common.first-name": {
+    "defaultMessage": "[UK] common.first-name"
+  },
+  "admin.auth-type": {
+    "defaultMessage": "[UK] admin.auth-type"
+  },
+  "common.delete": {
+    "defaultMessage": "[UK] common.delete"
+  },
+  "admin.status": {
+    "defaultMessage": "[UK] admin.status"
+  },
+  "admin.suspend-user": {
+    "defaultMessage": "[UK] admin.suspend-user"
+  },
+  "admin.suspension-status": {
+    "defaultMessage": "[UK] admin.suspension-status"
+  },
+  "admin.edit-user": {
+    "defaultMessage": "[UK] admin.edit-user"
+  },
+  "admin.refresh": {
+    "defaultMessage": "[UK] admin.refresh"
+  },
+  "common.login-form": {
+    "defaultMessage": "[UK] common.login-form"
+  },
+  "admin.lock-status": {
+    "defaultMessage": "[UK] admin.lock-status"
+  },
+  "common.emails": {
+    "defaultMessage": "[UK] common.emails"
+  },
+  "admin.suspension-reason": {
+    "defaultMessage": "[UK] admin.suspension-reason"
+  },
+  "admin.status-suspended": {
+    "defaultMessage": "[UK] admin.status-suspended"
+  },
+  "admin.delete": {
+    "defaultMessage": "[UK] admin.delete"
+  },
+  "common.last-name": {
+    "defaultMessage": "[UK] common.last-name"
+  },
+  "admin.public-access": {
+    "defaultMessage": "[UK] admin.public-access"
+  },
+  "admin.status-active": {
+    "defaultMessage": "[UK] admin.status-active"
+  },
+  "common.locale": {
+    "defaultMessage": "[UK] common.locale"
+  },
+  "common.email": {
+    "defaultMessage": "[UK] common.email"
+  },
+  "admin.unsuspend-user": {
+    "defaultMessage": "[UK] admin.unsuspend-user"
+  },
+  "common.delete-tag": {
+    "defaultMessage": "[UK] common.delete-tag"
+  },
+  "admin.edit": {
+    "defaultMessage": "[UK] admin.edit"
+  },
+  "common.open-drawer": {
+    "defaultMessage": "[UK] common.open-drawer"
+  },
+  "admin.locked": {
+    "defaultMessage": "[UK] admin.locked"
+  },
+  "common.settings": {
+    "defaultMessage": "[UK] common.settings"
   }
 }

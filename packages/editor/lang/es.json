@@ -388,5 +388,155 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Expandir todos los nodos"
+  },
+  "editor-panel.tooltip-add-topic-image": {
+    "defaultMessage": "Agregar imagen de tema"
+  },
+  "editor-panel.topic-image-title": {
+    "defaultMessage": "Imagen de tema"
+  },
+  "app-bar-title": {
+    "defaultMessage": "Editor de Mapas Mentales"
+  },
+  "appbar.error-saving-title": {
+    "defaultMessage": "Error al guardar"
+  },
+  "appbar.logo-aria-label": {
+    "defaultMessage": "Logo de WiseMapping"
+  },
+  "appbar.theme-title": {
+    "defaultMessage": "Tema"
+  },
+  "appbar.title-renamed": {
+    "defaultMessage": "Mapa mental renombrado"
+  },
+  "appbar.tooltip-rename": {
+    "defaultMessage": "Renombrar"
+  },
+  "appbar.tooltip-theme": {
+    "defaultMessage": "Tema"
+  },
+  "classic": {
+    "defaultMessage": "Clásico"
+  },
+  "demo-simple-select": {
+    "defaultMessage": "Seleccionar"
+  },
+  "divider": {
+    "defaultMessage": "Divisor"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "Arco"
+  },
+  "editor-panel.tooltip-relationship-arrow-end": {
+    "defaultMessage": "Flecha final"
+  },
+  "editor-panel.tooltip-relationship-arrow-start": {
+    "defaultMessage": "Flecha inicial"
+  },
+  "editor-panel.tooltip-relationship-color": {
+    "defaultMessage": "Color"
+  },
+  "editor-panel.tooltip-relationship-color-default": {
+    "defaultMessage": "Color por defecto"
+  },
+  "editor-panel.tooltip-relationship-stroke-dashed": {
+    "defaultMessage": "Línea discontinua"
+  },
+  "editor-panel.tooltip-relationship-stroke-dotted": {
+    "defaultMessage": "Línea punteada"
+  },
+  "editor-panel.tooltip-relationship-stroke-solid": {
+    "defaultMessage": "Línea sólida"
+  },
+  "editor-panel.tooltip-relationship-style": {
+    "defaultMessage": "Estilo de relación"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "Sin forma"
+  },
+  "headerNotifier": {
+    "defaultMessage": "Notificador de encabezado"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "Emojis"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Galería de iconos"
+  },
+  "mindmap-comp": {
+    "defaultMessage": "Componente de mapa mental"
+  },
+  "note.character.count": {
+    "defaultMessage": "{remaining} restantes"
+  },
+  "note.character.limit.warning": {
+    "defaultMessage": "(Acercándose al límite)"
+  },
+  "ocean": {
+    "defaultMessage": "Océano"
+  },
+  "popover": {
+    "defaultMessage": "Popover"
+  },
+  "prism": {
+    "defaultMessage": "Prisma"
+  },
+  "robot": {
+    "defaultMessage": "Robot"
+  },
+  "sunrise": {
+    "defaultMessage": "Amanecer"
+  },
+  "theme-editor.accept": {
+    "defaultMessage": "Aplicar tema"
+  },
+  "theme-editor.cancel": {
+    "defaultMessage": "Cancelar"
+  },
+  "theme-editor.description": {
+    "defaultMessage": "Un tema define el estilo visual de tu mapa mental, incluyendo colores, fuentes y apariencia general. Elige un tema que se adapte mejor a tu contenido y audiencia."
+  },
+  "theme-editor.title": {
+    "defaultMessage": "Elegir tema"
+  },
+  "theme.classic.description": {
+    "defaultMessage": "Tema clásico con colores tradicionales"
+  },
+  "theme.classic.name": {
+    "defaultMessage": "Clásico"
+  },
+  "theme.ocean.description": {
+    "defaultMessage": "Tema océano con tonos azules"
+  },
+  "theme.ocean.name": {
+    "defaultMessage": "Océano"
+  },
+  "theme.robot.description": {
+    "defaultMessage": "Tema robot con colores futuristas"
+  },
+  "theme.robot.name": {
+    "defaultMessage": "Robot"
+  },
+  "theme.summer.description": {
+    "defaultMessage": "Tema verano con colores cálidos"
+  },
+  "theme.summer.name": {
+    "defaultMessage": "Verano"
+  },
+  "theme.sunrise.description": {
+    "defaultMessage": "Tema amanecer con tonos naranjas y amarillos"
+  },
+  "theme.sunrise.name": {
+    "defaultMessage": "Amanecer"
+  },
+  "theme.switch-to-dark": {
+    "defaultMessage": "Cambiar a modo oscuro"
+  },
+  "theme.switch-to-light": {
+    "defaultMessage": "Cambiar a modo claro"
+  },
+  "title-input": {
+    "defaultMessage": "Entrada de título"
   }
 }

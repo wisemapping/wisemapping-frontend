@@ -5,9 +5,6 @@
   "action.delete": {
     "defaultMessage": "Elimina"
   },
-  "action.reset": {
-    "defaultMessage": "Reimposta"
-  },
   "appbar.back-to-map-list": {
     "defaultMessage": "Torna alla lista delle mappe"
   },
@@ -391,5 +388,155 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Espandi tutti i nodi"
+  },
+  "editor-panel.tooltip-add-topic-image": {
+    "defaultMessage": "Aggiungi immagine argomento"
+  },
+  "editor-panel.topic-image-title": {
+    "defaultMessage": "Immagine argomento"
+  },
+  "app-bar-title": {
+    "defaultMessage": "Editor Mappe Mentali"
+  },
+  "appbar.error-saving-title": {
+    "defaultMessage": "Errore nel salvataggio"
+  },
+  "appbar.logo-aria-label": {
+    "defaultMessage": "Logo WiseMapping"
+  },
+  "appbar.theme-title": {
+    "defaultMessage": "Tema"
+  },
+  "appbar.title-renamed": {
+    "defaultMessage": "Mappa mentale rinominata"
+  },
+  "appbar.tooltip-rename": {
+    "defaultMessage": "Rinomina"
+  },
+  "appbar.tooltip-theme": {
+    "defaultMessage": "Tema"
+  },
+  "classic": {
+    "defaultMessage": "Classico"
+  },
+  "demo-simple-select": {
+    "defaultMessage": "Seleziona"
+  },
+  "divider": {
+    "defaultMessage": "Divisore"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "Arco"
+  },
+  "editor-panel.tooltip-relationship-arrow-end": {
+    "defaultMessage": "Freccia finale"
+  },
+  "editor-panel.tooltip-relationship-arrow-start": {
+    "defaultMessage": "Freccia iniziale"
+  },
+  "editor-panel.tooltip-relationship-color": {
+    "defaultMessage": "Colore"
+  },
+  "editor-panel.tooltip-relationship-color-default": {
+    "defaultMessage": "Colore predefinito"
+  },
+  "editor-panel.tooltip-relationship-stroke-dashed": {
+    "defaultMessage": "Linea tratteggiata"
+  },
+  "editor-panel.tooltip-relationship-stroke-dotted": {
+    "defaultMessage": "Linea punteggiata"
+  },
+  "editor-panel.tooltip-relationship-stroke-solid": {
+    "defaultMessage": "Linea solida"
+  },
+  "editor-panel.tooltip-relationship-style": {
+    "defaultMessage": "Stile relazione"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "Nessuna forma"
+  },
+  "headerNotifier": {
+    "defaultMessage": "Notificatore intestazione"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "Emoji"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Galleria icone"
+  },
+  "mindmap-comp": {
+    "defaultMessage": "Componente mappa mentale"
+  },
+  "note.character.count": {
+    "defaultMessage": "{remaining} rimanenti"
+  },
+  "note.character.limit.warning": {
+    "defaultMessage": "(Limite vicino)"
+  },
+  "ocean": {
+    "defaultMessage": "Oceano"
+  },
+  "popover": {
+    "defaultMessage": "Popover"
+  },
+  "prism": {
+    "defaultMessage": "Prisma"
+  },
+  "robot": {
+    "defaultMessage": "Robot"
+  },
+  "sunrise": {
+    "defaultMessage": "Alba"
+  },
+  "theme-editor.accept": {
+    "defaultMessage": "Applica tema"
+  },
+  "theme-editor.cancel": {
+    "defaultMessage": "Annulla"
+  },
+  "theme-editor.description": {
+    "defaultMessage": "Un tema definisce lo stile visivo della tua mappa mentale, inclusi colori, font e aspetto generale. Scegli un tema che si adatti meglio al tuo contenuto e pubblico."
+  },
+  "theme-editor.title": {
+    "defaultMessage": "Scegli tema"
+  },
+  "theme.classic.description": {
+    "defaultMessage": "Tema classico con colori tradizionali"
+  },
+  "theme.classic.name": {
+    "defaultMessage": "Classico"
+  },
+  "theme.ocean.description": {
+    "defaultMessage": "Tema oceano con toni blu"
+  },
+  "theme.ocean.name": {
+    "defaultMessage": "Oceano"
+  },
+  "theme.robot.description": {
+    "defaultMessage": "Tema robot con colori futuristici"
+  },
+  "theme.robot.name": {
+    "defaultMessage": "Robot"
+  },
+  "theme.summer.description": {
+    "defaultMessage": "Tema estate con colori caldi"
+  },
+  "theme.summer.name": {
+    "defaultMessage": "Estate"
+  },
+  "theme.sunrise.description": {
+    "defaultMessage": "Tema alba con toni arancioni e gialli"
+  },
+  "theme.sunrise.name": {
+    "defaultMessage": "Alba"
+  },
+  "theme.switch-to-dark": {
+    "defaultMessage": "Passa alla modalità scura"
+  },
+  "theme.switch-to-light": {
+    "defaultMessage": "Passa alla modalità chiara"
+  },
+  "title-input": {
+    "defaultMessage": "Input titolo"
   }
 }

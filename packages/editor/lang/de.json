@@ -388,5 +388,155 @@
   },
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Emojis suchen..."
+  },
+  "editor-panel.tooltip-add-topic-image": {
+    "defaultMessage": "Themenbild hinzufügen"
+  },
+  "editor-panel.topic-image-title": {
+    "defaultMessage": "Themenbild"
+  },
+  "app-bar-title": {
+    "defaultMessage": "Mindmap-Editor"
+  },
+  "appbar.error-saving-title": {
+    "defaultMessage": "Fehler beim Speichern"
+  },
+  "appbar.logo-aria-label": {
+    "defaultMessage": "WiseMapping Logo"
+  },
+  "appbar.theme-title": {
+    "defaultMessage": "Thema"
+  },
+  "appbar.title-renamed": {
+    "defaultMessage": "Mindmap umbenannt"
+  },
+  "appbar.tooltip-rename": {
+    "defaultMessage": "Umbenennen"
+  },
+  "appbar.tooltip-theme": {
+    "defaultMessage": "Thema"
+  },
+  "classic": {
+    "defaultMessage": "Klassisch"
+  },
+  "demo-simple-select": {
+    "defaultMessage": "Auswählen"
+  },
+  "divider": {
+    "defaultMessage": "Trennlinie"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "Bogen"
+  },
+  "editor-panel.tooltip-relationship-arrow-end": {
+    "defaultMessage": "Endpfeil"
+  },
+  "editor-panel.tooltip-relationship-arrow-start": {
+    "defaultMessage": "Startpfeil"
+  },
+  "editor-panel.tooltip-relationship-color": {
+    "defaultMessage": "Farbe"
+  },
+  "editor-panel.tooltip-relationship-color-default": {
+    "defaultMessage": "Standardfarbe"
+  },
+  "editor-panel.tooltip-relationship-stroke-dashed": {
+    "defaultMessage": "Gestrichelte Linie"
+  },
+  "editor-panel.tooltip-relationship-stroke-dotted": {
+    "defaultMessage": "Gepunktete Linie"
+  },
+  "editor-panel.tooltip-relationship-stroke-solid": {
+    "defaultMessage": "Durchgezogene Linie"
+  },
+  "editor-panel.tooltip-relationship-style": {
+    "defaultMessage": "Beziehungsstil"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "Keine Form"
+  },
+  "headerNotifier": {
+    "defaultMessage": "Header-Benachrichtigung"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "Emojis"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Symbol-Galerie"
+  },
+  "mindmap-comp": {
+    "defaultMessage": "Mindmap-Komponente"
+  },
+  "note.character.count": {
+    "defaultMessage": "{remaining} übrig"
+  },
+  "note.character.limit.warning": {
+    "defaultMessage": "(Grenze erreicht)"
+  },
+  "ocean": {
+    "defaultMessage": "Ozean"
+  },
+  "popover": {
+    "defaultMessage": "Popover"
+  },
+  "prism": {
+    "defaultMessage": "Prisma"
+  },
+  "robot": {
+    "defaultMessage": "Roboter"
+  },
+  "sunrise": {
+    "defaultMessage": "Sonnenaufgang"
+  },
+  "theme-editor.accept": {
+    "defaultMessage": "Thema anwenden"
+  },
+  "theme-editor.cancel": {
+    "defaultMessage": "Abbrechen"
+  },
+  "theme-editor.description": {
+    "defaultMessage": "Ein Thema definiert den visuellen Stil Ihrer Mindmap, einschließlich Farben, Schriftarten und Gesamterscheinung. Wählen Sie ein Thema, das am besten zu Ihrem Inhalt und Publikum passt."
+  },
+  "theme-editor.title": {
+    "defaultMessage": "Thema wählen"
+  },
+  "theme.classic.description": {
+    "defaultMessage": "Klassisches Thema mit traditionellen Farben"
+  },
+  "theme.classic.name": {
+    "defaultMessage": "Klassisch"
+  },
+  "theme.ocean.description": {
+    "defaultMessage": "Ozean-Thema mit blauen Tönen"
+  },
+  "theme.ocean.name": {
+    "defaultMessage": "Ozean"
+  },
+  "theme.robot.description": {
+    "defaultMessage": "Roboter-Thema mit futuristischen Farben"
+  },
+  "theme.robot.name": {
+    "defaultMessage": "Roboter"
+  },
+  "theme.summer.description": {
+    "defaultMessage": "Sommer-Thema mit warmen Farben"
+  },
+  "theme.summer.name": {
+    "defaultMessage": "Sommer"
+  },
+  "theme.sunrise.description": {
+    "defaultMessage": "Sonnenaufgang-Thema mit orange und gelben Tönen"
+  },
+  "theme.sunrise.name": {
+    "defaultMessage": "Sonnenaufgang"
+  },
+  "theme.switch-to-dark": {
+    "defaultMessage": "Zu dunklem Modus wechseln"
+  },
+  "theme.switch-to-light": {
+    "defaultMessage": "Zu hellem Modus wechseln"
+  },
+  "title-input": {
+    "defaultMessage": "Titel-Eingabe"
   }
 }

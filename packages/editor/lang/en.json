@@ -388,5 +388,155 @@
   },
   "common.close": {
     "defaultMessage": "Close"
+  },
+  "editor-panel.tooltip-add-topic-image": {
+    "defaultMessage": "Add Topic Image"
+  },
+  "editor-panel.topic-image-title": {
+    "defaultMessage": "Topic Image"
+  },
+  "app-bar-title": {
+    "defaultMessage": "Mindmap Editor"
+  },
+  "appbar.error-saving-title": {
+    "defaultMessage": "Error saving"
+  },
+  "appbar.logo-aria-label": {
+    "defaultMessage": "WiseMapping Logo"
+  },
+  "appbar.theme-title": {
+    "defaultMessage": "Theme"
+  },
+  "appbar.title-renamed": {
+    "defaultMessage": "Mindmap renamed"
+  },
+  "appbar.tooltip-rename": {
+    "defaultMessage": "Rename"
+  },
+  "appbar.tooltip-theme": {
+    "defaultMessage": "Theme"
+  },
+  "classic": {
+    "defaultMessage": "Classic"
+  },
+  "demo-simple-select": {
+    "defaultMessage": "Select"
+  },
+  "divider": {
+    "defaultMessage": "Divider"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "Arc"
+  },
+  "editor-panel.tooltip-relationship-arrow-end": {
+    "defaultMessage": "End Arrow"
+  },
+  "editor-panel.tooltip-relationship-arrow-start": {
+    "defaultMessage": "Start Arrow"
+  },
+  "editor-panel.tooltip-relationship-color": {
+    "defaultMessage": "Color"
+  },
+  "editor-panel.tooltip-relationship-color-default": {
+    "defaultMessage": "Default color"
+  },
+  "editor-panel.tooltip-relationship-stroke-dashed": {
+    "defaultMessage": "Dashed Line"
+  },
+  "editor-panel.tooltip-relationship-stroke-dotted": {
+    "defaultMessage": "Dotted Line"
+  },
+  "editor-panel.tooltip-relationship-stroke-solid": {
+    "defaultMessage": "Solid Line"
+  },
+  "editor-panel.tooltip-relationship-style": {
+    "defaultMessage": "Relationship Style"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "None shape"
+  },
+  "headerNotifier": {
+    "defaultMessage": "Header Notifier"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "Emojis"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "Icons Gallery"
+  },
+  "mindmap-comp": {
+    "defaultMessage": "Mindmap Component"
+  },
+  "note.character.count": {
+    "defaultMessage": "{remaining} left"
+  },
+  "note.character.limit.warning": {
+    "defaultMessage": "(Approaching limit)"
+  },
+  "ocean": {
+    "defaultMessage": "Ocean"
+  },
+  "popover": {
+    "defaultMessage": "Popover"
+  },
+  "prism": {
+    "defaultMessage": "Prism"
+  },
+  "robot": {
+    "defaultMessage": "Robot"
+  },
+  "sunrise": {
+    "defaultMessage": "Sunrise"
+  },
+  "theme-editor.accept": {
+    "defaultMessage": "Apply Theme"
+  },
+  "theme-editor.cancel": {
+    "defaultMessage": "Cancel"
+  },
+  "theme-editor.description": {
+    "defaultMessage": "A theme defines the visual style of your mind map, including colors, fonts, and overall appearance. Choose a theme that best fits your content and audience."
+  },
+  "theme-editor.title": {
+    "defaultMessage": "Choose Theme"
+  },
+  "theme.classic.description": {
+    "defaultMessage": "Classic theme with traditional colors"
+  },
+  "theme.classic.name": {
+    "defaultMessage": "Classic"
+  },
+  "theme.ocean.description": {
+    "defaultMessage": "Ocean theme with blue tones"
+  },
+  "theme.ocean.name": {
+    "defaultMessage": "Ocean"
+  },
+  "theme.robot.description": {
+    "defaultMessage": "Robot theme with futuristic colors"
+  },
+  "theme.robot.name": {
+    "defaultMessage": "Robot"
+  },
+  "theme.summer.description": {
+    "defaultMessage": "Summer theme with warm colors"
+  },
+  "theme.summer.name": {
+    "defaultMessage": "Summer"
+  },
+  "theme.sunrise.description": {
+    "defaultMessage": "Sunrise theme with orange and yellow tones"
+  },
+  "theme.sunrise.name": {
+    "defaultMessage": "Sunrise"
+  },
+  "theme.switch-to-dark": {
+    "defaultMessage": "Switch to dark mode"
+  },
+  "theme.switch-to-light": {
+    "defaultMessage": "Switch to light mode"
+  },
+  "title-input": {
+    "defaultMessage": "Title Input"
   }
 }

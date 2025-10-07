@@ -553,14 +553,119 @@
   },
   "share.message": {
     "defaultMessage": "संदेश"
-	},
-	"theme.dark": {
-		"defaultMessage": "डार्क"
-	},
-	"theme.light": {
-		"defaultMessage": "लाइट"
-	},
-	"theme.toggle": {
-		"defaultMessage": "थीम बदलें"
-	}
+  },
+  "theme.dark": {
+    "defaultMessage": "डार्क"
+  },
+  "theme.light": {
+    "defaultMessage": "लाइट"
+  },
+  "theme.toggle": {
+    "defaultMessage": "थीम बदलें"
+  },
+  "admin.delete-user": {
+    "defaultMessage": "[HI] admin.delete-user"
+  },
+  "common.maps-list": {
+    "defaultMessage": "[HI] common.maps-list"
+  },
+  "admin.status-clean": {
+    "defaultMessage": "[HI] admin.status-clean"
+  },
+  "common.allow-email-notifications": {
+    "defaultMessage": "[HI] common.allow-email-notifications"
+  },
+  "admin.public": {
+    "defaultMessage": "[HI] admin.public"
+  },
+  "common.others": {
+    "defaultMessage": "[HI] common.others"
+  },
+  "admin.view-xml": {
+    "defaultMessage": "[HI] admin.view-xml"
+  },
+  "registration.facebook.button": {
+    "defaultMessage": "[HI] registration.facebook.button"
+  },
+  "common.registration-form": {
+    "defaultMessage": "[HI] common.registration-form"
+  },
+  "common.first-name": {
+    "defaultMessage": "[HI] common.first-name"
+  },
+  "admin.auth-type": {
+    "defaultMessage": "[HI] admin.auth-type"
+  },
+  "common.delete": {
+    "defaultMessage": "[HI] common.delete"
+  },
+  "admin.status": {
+    "defaultMessage": "[HI] admin.status"
+  },
+  "admin.suspend-user": {
+    "defaultMessage": "[HI] admin.suspend-user"
+  },
+  "admin.suspension-status": {
+    "defaultMessage": "[HI] admin.suspension-status"
+  },
+  "admin.edit-user": {
+    "defaultMessage": "[HI] admin.edit-user"
+  },
+  "admin.refresh": {
+    "defaultMessage": "[HI] admin.refresh"
+  },
+  "common.login-form": {
+    "defaultMessage": "[HI] common.login-form"
+  },
+  "admin.lock-status": {
+    "defaultMessage": "[HI] admin.lock-status"
+  },
+  "common.emails": {
+    "defaultMessage": "[HI] common.emails"
+  },
+  "admin.suspension-reason": {
+    "defaultMessage": "[HI] admin.suspension-reason"
+  },
+  "admin.status-suspended": {
+    "defaultMessage": "[HI] admin.status-suspended"
+  },
+  "admin.delete": {
+    "defaultMessage": "[HI] admin.delete"
+  },
+  "common.last-name": {
+    "defaultMessage": "[HI] common.last-name"
+  },
+  "admin.public-access": {
+    "defaultMessage": "[HI] admin.public-access"
+  },
+  "admin.status-active": {
+    "defaultMessage": "[HI] admin.status-active"
+  },
+  "common.locale": {
+    "defaultMessage": "[HI] common.locale"
+  },
+  "login.facebook.button": {
+    "defaultMessage": "[HI] login.facebook.button"
+  },
+  "common.email": {
+    "defaultMessage": "[HI] common.email"
+  },
+  "admin.unsuspend-user": {
+    "defaultMessage": "[HI] admin.unsuspend-user"
+  },
+  "common.delete-tag": {
+    "defaultMessage": "[HI] common.delete-tag"
+  },
+  "admin.edit": {
+    "defaultMessage": "[HI] admin.edit"
+  },
+  "common.open-drawer": {
+    "defaultMessage": "[HI] common.open-drawer"
+  },
+  "admin.locked": {
+    "defaultMessage": "[HI] admin.locked"
+  },
+  "common.settings": {
+    "defaultMessage": "[HI] common.settings"
+  }
 }

@@ -5,9 +5,6 @@
   "action.delete": {
     "defaultMessage": "削除"
   },
-  "action.reset": {
-    "defaultMessage": "リセット"
-  },
   "appbar.back-to-map-list": {
     "defaultMessage": "マップリストに戻る"
   },
@@ -391,5 +388,155 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "すべてのノードを展開"
+  },
+  "editor-panel.tooltip-add-topic-image": {
+    "defaultMessage": "トピック画像を追加"
+  },
+  "editor-panel.topic-image-title": {
+    "defaultMessage": "トピック画像"
+  },
+  "app-bar-title": {
+    "defaultMessage": "マインドマップエディター"
+  },
+  "appbar.error-saving-title": {
+    "defaultMessage": "保存エラー"
+  },
+  "appbar.logo-aria-label": {
+    "defaultMessage": "WiseMappingロゴ"
+  },
+  "appbar.theme-title": {
+    "defaultMessage": "テーマ"
+  },
+  "appbar.title-renamed": {
+    "defaultMessage": "マインドマップがリネームされました"
+  },
+  "appbar.tooltip-rename": {
+    "defaultMessage": "リネーム"
+  },
+  "appbar.tooltip-theme": {
+    "defaultMessage": "テーマ"
+  },
+  "classic": {
+    "defaultMessage": "クラシック"
+  },
+  "demo-simple-select": {
+    "defaultMessage": "選択"
+  },
+  "divider": {
+    "defaultMessage": "区切り"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "アーク"
+  },
+  "editor-panel.tooltip-relationship-arrow-end": {
+    "defaultMessage": "終了矢印"
+  },
+  "editor-panel.tooltip-relationship-arrow-start": {
+    "defaultMessage": "開始矢印"
+  },
+  "editor-panel.tooltip-relationship-color": {
+    "defaultMessage": "色"
+  },
+  "editor-panel.tooltip-relationship-color-default": {
+    "defaultMessage": "デフォルト色"
+  },
+  "editor-panel.tooltip-relationship-stroke-dashed": {
+    "defaultMessage": "破線"
+  },
+  "editor-panel.tooltip-relationship-stroke-dotted": {
+    "defaultMessage": "点線"
+  },
+  "editor-panel.tooltip-relationship-stroke-solid": {
+    "defaultMessage": "実線"
+  },
+  "editor-panel.tooltip-relationship-style": {
+    "defaultMessage": "関係スタイル"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "形状なし"
+  },
+  "headerNotifier": {
+    "defaultMessage": "ヘッダー通知"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "絵文字"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "アイコンギャラリー"
+  },
+  "mindmap-comp": {
+    "defaultMessage": "マインドマップコンポーネント"
+  },
+  "note.character.count": {
+    "defaultMessage": "{remaining} 残り"
+  },
+  "note.character.limit.warning": {
+    "defaultMessage": "(制限に近づいています)"
+  },
+  "ocean": {
+    "defaultMessage": "オーシャン"
+  },
+  "popover": {
+    "defaultMessage": "ポップオーバー"
+  },
+  "prism": {
+    "defaultMessage": "プリズム"
+  },
+  "robot": {
+    "defaultMessage": "ロボット"
+  },
+  "sunrise": {
+    "defaultMessage": "日の出"
+  },
+  "theme-editor.accept": {
+    "defaultMessage": "テーマを適用"
+  },
+  "theme-editor.cancel": {
+    "defaultMessage": "キャンセル"
+  },
+  "theme-editor.description": {
+    "defaultMessage": "テーマは、色、フォント、全体的な外観を含むマインドマップの視覚的スタイルを定義します。コンテンツとオーディエンスに最適なテーマを選択してください。"
+  },
+  "theme-editor.title": {
+    "defaultMessage": "テーマを選択"
+  },
+  "theme.classic.description": {
+    "defaultMessage": "伝統的な色のクラシックテーマ"
+  },
+  "theme.classic.name": {
+    "defaultMessage": "クラシック"
+  },
+  "theme.ocean.description": {
+    "defaultMessage": "青いトーンのオーシャンテーマ"
+  },
+  "theme.ocean.name": {
+    "defaultMessage": "オーシャン"
+  },
+  "theme.robot.description": {
+    "defaultMessage": "未来的な色のロボットテーマ"
+  },
+  "theme.robot.name": {
+    "defaultMessage": "ロボット"
+  },
+  "theme.summer.description": {
+    "defaultMessage": "暖かい色のサマーテーマ"
+  },
+  "theme.summer.name": {
+    "defaultMessage": "サマー"
+  },
+  "theme.sunrise.description": {
+    "defaultMessage": "オレンジと黄色のトーンの日の出テーマ"
+  },
+  "theme.sunrise.name": {
+    "defaultMessage": "日の出"
+  },
+  "theme.switch-to-dark": {
+    "defaultMessage": "ダークモードに切り替え"
+  },
+  "theme.switch-to-light": {
+    "defaultMessage": "ライトモードに切り替え"
+  },
+  "title-input": {
+    "defaultMessage": "タイトル入力"
   }
 }

@@ -11,10 +11,10 @@
       "value": "हटाएं"
     }
   ],
-  "action.reset": [
+  "app-bar-title": [
     {
       "type": 0,
-      "value": "रीसेट करें"
+      "value": "माइंडमैप संपादक"
     }
   ],
   "appbar.back-to-map-list": [
@@ -29,10 +29,34 @@
       "value": "साइन अप"
     }
   ],
+  "appbar.error-saving-title": [
+    {
+      "type": 0,
+      "value": "सहेजने में त्रुटि"
+    }
+  ],
+  "appbar.logo-aria-label": [
+    {
+      "type": 0,
+      "value": "WiseMapping लोगो"
+    }
+  ],
   "appbar.shared-button": [
     {
       "type": 0,
       "value": "साझा करें"
+    }
+  ],
+  "appbar.theme-title": [
+    {
+      "type": 0,
+      "value": "थीम"
+    }
+  ],
+  "appbar.title-renamed": [
+    {
+      "type": 0,
+      "value": "माइंडमैप का नाम बदला गया"
     }
   ],
   "appbar.tooltip-export": [
@@ -71,6 +95,12 @@
       "value": "फिर से करें"
     }
   ],
+  "appbar.tooltip-rename": [
+    {
+      "type": 0,
+      "value": "नाम बदलें"
+    }
+  ],
   "appbar.tooltip-save": [
     {
       "type": 0,
@@ -93,6 +123,12 @@
     {
       "type": 0,
       "value": "पसंदीदा"
+    }
+  ],
+  "appbar.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "थीम"
     }
   ],
   "appbar.tooltip-undo": [
@@ -209,6 +245,12 @@
       "value": "पृष्ठभूमि"
     }
   ],
+  "classic": [
+    {
+      "type": 0,
+      "value": "क्लासिक"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -225,6 +267,18 @@
     {
       "type": 0,
       "value": "विवरण"
+    }
+  ],
+  "demo-simple-select": [
+    {
+      "type": 0,
+      "value": "चुनें"
+    }
+  ],
+  "divider": [
+    {
+      "type": 0,
+      "value": "विभाजक"
     }
   ],
   "editor-panel.canvas-style-title": [
@@ -299,6 +353,12 @@
       "value": "विषय जोड़ें"
     }
   ],
+  "editor-panel.tooltip-add-topic-image": [
+    {
+      "type": 0,
+      "value": "विषय छवि जोड़ें"
+    }
+  ],
   "editor-panel.tooltip-canvas-style": [
     {
       "type": 0,
@@ -321,6 +381,12 @@
     {
       "type": 0,
       "value": "कनेक्शन शैली"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "चाप"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thick": [
@@ -351,6 +417,54 @@
     {
       "type": 0,
       "value": "विषय हटाएं"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-end": [
+    {
+      "type": 0,
+      "value": "अंत तीर"
+    }
+  ],
+  "editor-panel.tooltip-relationship-arrow-start": [
+    {
+      "type": 0,
+      "value": "प्रारंभ तीर"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color": [
+    {
+      "type": 0,
+      "value": "रंग"
+    }
+  ],
+  "editor-panel.tooltip-relationship-color-default": [
+    {
+      "type": 0,
+      "value": "डिफ़ॉल्ट रंग"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dashed": [
+    {
+      "type": 0,
+      "value": "धराशायी रेखा"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-dotted": [
+    {
+      "type": 0,
+      "value": "बिंदीदार रेखा"
+    }
+  ],
+  "editor-panel.tooltip-relationship-stroke-solid": [
+    {
+      "type": 0,
+      "value": "ठोस रेखा"
+    }
+  ],
+  "editor-panel.tooltip-relationship-style": [
+    {
+      "type": 0,
+      "value": "संबंध शैली"
     }
   ],
   "editor-panel.tooltip-theme": [
@@ -437,6 +551,12 @@
       "value": "रेखा आकार"
     }
   ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "कोई आकार नहीं"
+    }
+  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
@@ -453,6 +573,12 @@
     {
       "type": 0,
       "value": "विषय शैली"
+    }
+  ],
+  "editor-panel.topic-image-title": [
+    {
+      "type": 0,
+      "value": "विषय छवि"
     }
   ],
   "editor.edit-description-mobile": [
@@ -491,6 +617,24 @@
       "value": "इमोजी खोजें..."
     }
   ],
+  "headerNotifier": [
+    {
+      "type": 0,
+      "value": "हेडर सूचक"
+    }
+  ],
+  "icon-picker.emojis": [
+    {
+      "type": 0,
+      "value": "इमोजी"
+    }
+  ],
+  "icon-picker.icons": [
+    {
+      "type": 0,
+      "value": "आइकन गैलरी"
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
@@ -525,6 +669,46 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "mindmap-comp": [
+    {
+      "type": 0,
+      "value": "माइंडमैप घटक"
+    }
+  ],
+  "note.character.count": [
+    {
+      "type": 1,
+      "value": "remaining"
+    },
+    {
+      "type": 0,
+      "value": " बचे"
+    }
+  ],
+  "note.character.limit.warning": [
+    {
+      "type": 0,
+      "value": "(सीमा के करीब)"
+    }
+  ],
+  "ocean": [
+    {
+      "type": 0,
+      "value": "महासागर"
+    }
+  ],
+  "popover": [
+    {
+      "type": 0,
+      "value": "पॉपओवर"
+    }
+  ],
+  "prism": [
+    {
+      "type": 0,
+      "value": "प्रिज्म"
     }
   ],
   "rich-text-editor.bold": [
@@ -573,6 +757,12 @@
     {
       "type": 0,
       "value": "रेखांकित"
+    }
+  ],
+  "robot": [
+    {
+      "type": 0,
+      "value": "रोबोट"
     }
   ],
   "shortcut-help-pane.action": [
@@ -731,6 +921,48 @@
       "value": "पूर्ववत संपादन"
     }
   ],
+  "sunrise": [
+    {
+      "type": 0,
+      "value": "सूर्योदय"
+    }
+  ],
+  "theme-editor.accept": [
+    {
+      "type": 0,
+      "value": "थीम लागू करें"
+    }
+  ],
+  "theme-editor.cancel": [
+    {
+      "type": 0,
+      "value": "रद्द करें"
+    }
+  ],
+  "theme-editor.description": [
+    {
+      "type": 0,
+      "value": "एक थीम आपके माइंडमैप की दृश्य शैली को परिभाषित करती है, जिसमें रंग, फॉन्ट और समग्र उपस्थिति शामिल है। एक थीम चुनें जो आपकी सामग्री और दर्शकों के लिए सबसे अच्छी हो।"
+    }
+  ],
+  "theme-editor.title": [
+    {
+      "type": 0,
+      "value": "थीम चुनें"
+    }
+  ],
+  "theme.classic.description": [
+    {
+      "type": 0,
+      "value": "पारंपरिक रंगों के साथ क्लासिक थीम"
+    }
+  ],
+  "theme.classic.name": [
+    {
+      "type": 0,
+      "value": "क्लासिक"
+    }
+  ],
   "theme.dark": [
     {
       "type": 0,
@@ -743,10 +975,76 @@
       "value": "लाइट"
     }
   ],
+  "theme.ocean.description": [
+    {
+      "type": 0,
+      "value": "नीले रंगों के साथ महासागर थीम"
+    }
+  ],
+  "theme.ocean.name": [
+    {
+      "type": 0,
+      "value": "महासागर"
+    }
+  ],
+  "theme.robot.description": [
+    {
+      "type": 0,
+      "value": "भविष्यवादी रंगों के साथ रोबोट थीम"
+    }
+  ],
+  "theme.robot.name": [
+    {
+      "type": 0,
+      "value": "रोबोट"
+    }
+  ],
+  "theme.summer.description": [
+    {
+      "type": 0,
+      "value": "गर्म रंगों के साथ गर्मी थीम"
+    }
+  ],
+  "theme.summer.name": [
+    {
+      "type": 0,
+      "value": "गर्मी"
+    }
+  ],
+  "theme.sunrise.description": [
+    {
+      "type": 0,
+      "value": "नारंगी और पीले रंगों के साथ सूर्योदय थीम"
+    }
+  ],
+  "theme.sunrise.name": [
+    {
+      "type": 0,
+      "value": "सूर्योदय"
+    }
+  ],
+  "theme.switch-to-dark": [
+    {
+      "type": 0,
+      "value": "डार्क मोड पर स्विच करें"
+    }
+  ],
+  "theme.switch-to-light": [
+    {
+      "type": 0,
+      "value": "लाइट मोड पर स्विच करें"
+    }
+  ],
   "theme.toggle": [
     {
       "type": 0,
       "value": "थीम बदलें"
+    }
+  ],
+  "title-input": [
+    {
+      "type": 0,
+      "value": "शीर्षक इनपुट"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

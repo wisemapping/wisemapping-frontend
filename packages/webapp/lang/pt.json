@@ -323,10 +323,6 @@
   "login.google.button": {
     "defaultMessage": "Entrar com Google"
   },
-  "login.hsqldbcofig": {
-    "defaultMessage": "Embora o HSQLDB seja incluído com o WiseMapping por padrão durante a instalação, não recomendamos este banco de dados para uso em produção. Considere usar o MySQL 5.7. Você pode encontrar mais informações sobre como configurar o MySQL",
-    "description": "Banco de dados de produção não configurado"
-  },
   "login.page-title": {
     "defaultMessage": "Login | WiseMapping"
   },
@@ -558,12 +554,6 @@
   "dialog.loading": {
     "defaultMessage": "Carregando..."
   },
-  "editor.try-welcome": {
-    "defaultMessage": "Este espaço de edição mostra algumas das capacidades do editor de mapas mentais!"
-  },
-  "editor.try-welcome-description": {
-    "defaultMessage": "Cadastre-se para começar a criar, compartilhar e publicar um número ilimitado de mapas mentais gratuitamente."
-  },
   "theme.dark": {
     "defaultMessage": "Escuro"
   },
@@ -572,5 +562,110 @@
   },
   "theme.toggle": {
     "defaultMessage": "Alternar Tema"
+  },
+  "admin.delete-user": {
+    "defaultMessage": "[PT] admin.delete-user"
+  },
+  "common.maps-list": {
+    "defaultMessage": "[PT] common.maps-list"
+  },
+  "admin.status-clean": {
+    "defaultMessage": "[PT] admin.status-clean"
+  },
+  "common.allow-email-notifications": {
+    "defaultMessage": "[PT] common.allow-email-notifications"
+  },
+  "admin.public": {
+    "defaultMessage": "[PT] admin.public"
+  },
+  "common.others": {
+    "defaultMessage": "[PT] common.others"
+  },
+  "admin.view-xml": {
+    "defaultMessage": "[PT] admin.view-xml"
+  },
+  "registration.facebook.button": {
+    "defaultMessage": "[PT] registration.facebook.button"
+  },
+  "common.registration-form": {
+    "defaultMessage": "[PT] common.registration-form"
+  },
+  "common.first-name": {
+    "defaultMessage": "[PT] common.first-name"
+  },
+  "admin.auth-type": {
+    "defaultMessage": "[PT] admin.auth-type"
+  },
+  "common.delete": {
+    "defaultMessage": "[PT] common.delete"
+  },
+  "admin.status": {
+    "defaultMessage": "[PT] admin.status"
+  },
+  "admin.suspend-user": {
+    "defaultMessage": "[PT] admin.suspend-user"
+  },
+  "admin.suspension-status": {
+    "defaultMessage": "[PT] admin.suspension-status"
+  },
+  "admin.edit-user": {
+    "defaultMessage": "[PT] admin.edit-user"
+  },
+  "admin.refresh": {
+    "defaultMessage": "[PT] admin.refresh"
+  },
+  "common.login-form": {
+    "defaultMessage": "[PT] common.login-form"
+  },
+  "admin.lock-status": {
+    "defaultMessage": "[PT] admin.lock-status"
+  },
+  "common.emails": {
+    "defaultMessage": "[PT] common.emails"
+  },
+  "admin.suspension-reason": {
+    "defaultMessage": "[PT] admin.suspension-reason"
+  },
+  "admin.status-suspended": {
+    "defaultMessage": "[PT] admin.status-suspended"
+  },
+  "admin.delete": {
+    "defaultMessage": "[PT] admin.delete"
+  },
+  "common.last-name": {
+    "defaultMessage": "[PT] common.last-name"
+  },
+  "admin.public-access": {
+    "defaultMessage": "[PT] admin.public-access"
+  },
+  "admin.status-active": {
+    "defaultMessage": "[PT] admin.status-active"
+  },
+  "common.locale": {
+    "defaultMessage": "[PT] common.locale"
+  },
+  "login.facebook.button": {
+    "defaultMessage": "[PT] login.facebook.button"
+  },
+  "common.email": {
+    "defaultMessage": "[PT] common.email"
+  },
+  "admin.unsuspend-user": {
+    "defaultMessage": "[PT] admin.unsuspend-user"
+  },
+  "common.delete-tag": {
+    "defaultMessage": "[PT] common.delete-tag"
+  },
+  "admin.edit": {
+    "defaultMessage": "[PT] admin.edit"
+  },
+  "common.open-drawer": {
+    "defaultMessage": "[PT] common.open-drawer"
+  },
+  "admin.locked": {
+    "defaultMessage": "[PT] admin.locked"
+  },
+  "common.settings": {
+    "defaultMessage": "[PT] common.settings"
   }
 }

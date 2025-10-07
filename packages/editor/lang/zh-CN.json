@@ -5,9 +5,6 @@
   "action.delete": {
     "defaultMessage": "删除"
   },
-  "action.reset": {
-    "defaultMessage": "重置"
-  },
   "appbar.back-to-map-list": {
     "defaultMessage": "返回地图列表"
   },
@@ -391,5 +388,155 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "展开所有节点"
+  },
+  "editor-panel.tooltip-add-topic-image": {
+    "defaultMessage": "添加主题图像"
+  },
+  "editor-panel.topic-image-title": {
+    "defaultMessage": "主题图像"
+  },
+  "app-bar-title": {
+    "defaultMessage": "思维导图编辑器"
+  },
+  "appbar.error-saving-title": {
+    "defaultMessage": "保存错误"
+  },
+  "appbar.logo-aria-label": {
+    "defaultMessage": "WiseMapping 标志"
+  },
+  "appbar.theme-title": {
+    "defaultMessage": "主题"
+  },
+  "appbar.title-renamed": {
+    "defaultMessage": "思维导图已重命名"
+  },
+  "appbar.tooltip-rename": {
+    "defaultMessage": "重命名"
+  },
+  "appbar.tooltip-theme": {
+    "defaultMessage": "主题"
+  },
+  "classic": {
+    "defaultMessage": "经典"
+  },
+  "demo-simple-select": {
+    "defaultMessage": "选择"
+  },
+  "divider": {
+    "defaultMessage": "分隔符"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "弧线"
+  },
+  "editor-panel.tooltip-relationship-arrow-end": {
+    "defaultMessage": "结束箭头"
+  },
+  "editor-panel.tooltip-relationship-arrow-start": {
+    "defaultMessage": "开始箭头"
+  },
+  "editor-panel.tooltip-relationship-color": {
+    "defaultMessage": "颜色"
+  },
+  "editor-panel.tooltip-relationship-color-default": {
+    "defaultMessage": "默认颜色"
+  },
+  "editor-panel.tooltip-relationship-stroke-dashed": {
+    "defaultMessage": "虚线"
+  },
+  "editor-panel.tooltip-relationship-stroke-dotted": {
+    "defaultMessage": "点线"
+  },
+  "editor-panel.tooltip-relationship-stroke-solid": {
+    "defaultMessage": "实线"
+  },
+  "editor-panel.tooltip-relationship-style": {
+    "defaultMessage": "关系样式"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "无形状"
+  },
+  "headerNotifier": {
+    "defaultMessage": "标题通知"
+  },
+  "icon-picker.emojis": {
+    "defaultMessage": "表情符号"
+  },
+  "icon-picker.icons": {
+    "defaultMessage": "图标库"
+  },
+  "mindmap-comp": {
+    "defaultMessage": "思维导图组件"
+  },
+  "note.character.count": {
+    "defaultMessage": "剩余 {remaining}"
+  },
+  "note.character.limit.warning": {
+    "defaultMessage": "(接近限制)"
+  },
+  "ocean": {
+    "defaultMessage": "海洋"
+  },
+  "popover": {
+    "defaultMessage": "弹出框"
+  },
+  "prism": {
+    "defaultMessage": "棱镜"
+  },
+  "robot": {
+    "defaultMessage": "机器人"
+  },
+  "sunrise": {
+    "defaultMessage": "日出"
+  },
+  "theme-editor.accept": {
+    "defaultMessage": "应用主题"
+  },
+  "theme-editor.cancel": {
+    "defaultMessage": "取消"
+  },
+  "theme-editor.description": {
+    "defaultMessage": "主题定义了思维导图的视觉样式，包括颜色、字体和整体外观。选择最适合您内容和受众的主题。"
+  },
+  "theme-editor.title": {
+    "defaultMessage": "选择主题"
+  },
+  "theme.classic.description": {
+    "defaultMessage": "具有传统颜色的经典主题"
+  },
+  "theme.classic.name": {
+    "defaultMessage": "经典"
+  },
+  "theme.ocean.description": {
+    "defaultMessage": "具有蓝色调的海洋主题"
+  },
+  "theme.ocean.name": {
+    "defaultMessage": "海洋"
+  },
+  "theme.robot.description": {
+    "defaultMessage": "具有未来主义色彩的机器人主题"
+  },
+  "theme.robot.name": {
+    "defaultMessage": "机器人"
+  },
+  "theme.summer.description": {
+    "defaultMessage": "具有暖色调的夏季主题"
+  },
+  "theme.summer.name": {
+    "defaultMessage": "夏季"
+  },
+  "theme.sunrise.description": {
+    "defaultMessage": "具有橙色和黄色调的日出主题"
+  },
+  "theme.sunrise.name": {
+    "defaultMessage": "日出"
+  },
+  "theme.switch-to-dark": {
+    "defaultMessage": "切换到深色模式"
+  },
+  "theme.switch-to-light": {
+    "defaultMessage": "切换到浅色模式"
+  },
+  "title-input": {
+    "defaultMessage": "标题输入"
   }
 }
