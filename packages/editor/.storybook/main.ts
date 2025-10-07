@@ -6,8 +6,8 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(js|jsx|ts|tsx)",
   ],
   addons: [
+    "@storybook/addon-essentials", // includes actions, controls, docs, etc.
     "@storybook/addon-links",
-    "@storybook/addon-docs",
   ],
   framework: {
     name: "@storybook/react-webpack5",
@@ -22,12 +22,29 @@ const config: StorybookConfig = {
       ...((config.resolve as any).alias || {}),
       '@wisemapping/mindplot/src/components/DesignerKeyboard':
         '/Users/pveiga/repos/wiseapp/wisemapping-frontend/packages/editor/.storybook/mocks/DesignerKeyboard.ts',
-      '@wisemapping/mindplot/src/components/theme/ThemeStyle.ts':
+      '@wisemapping/mindplot/src/components/theme/ThemeStyle':
         '/Users/pveiga/repos/wiseapp/wisemapping-frontend/packages/editor/.storybook/mocks/ThemeStyle.ts',
     };
     (config.resolve as any).extensions = Array.from(
       new Set([...(config.resolve?.extensions || []), '.ts', '.tsx', '.js', '.jsx'])
     );
+    
+    // Add ts-loader for TypeScript files
+    config.module = config.module || {};
+    config.module.rules = config.module.rules || [];
+    config.module.rules.push({
+      test: /\.tsx?$/,
+      use: [
+        {
+          loader: require.resolve('ts-loader'),
+          options: {
+            transpileOnly: true,
+          },
+        },
+      ],
+      exclude: /node_modules/,
+    });
+    
     return config;
   },
 };

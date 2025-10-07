@@ -18,26 +18,29 @@
 
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import TopicFontEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
-import { SwitchValueDirection } from '../../../toolbar/ToolbarValueModelBuilder';
 
-// Mock NodeProperty implementation
+// Mock NodeProperty implementation with actions
 class MockNodeProperty<T> implements NodeProperty<T> {
   private value: T;
+
   constructor(value: T) {
     this.value = value;
   }
+
   getValue(): T {
     return this.value;
   }
-  setValue = (v: T) => {
+
+  setValue = fn((v: T) => {
     this.value = v;
-    console.log('setValue called with:', v);
-  };
-  switchValue = (direction?: SwitchValueDirection) => {
-    console.log('switchValue called with direction:', direction);
-  };
+  });
+
+  switchValue = fn(() => {
+    // Switch value logic
+  });
 }
 
 const meta: Meta = {
@@ -59,7 +62,7 @@ export const Default: Story = {
 
     return (
       <TopicFontEditor
-        closeModal={() => console.log('Close modal')}
+        closeModal={fn()}
         fontFamilyModel={fontFamilyModel}
         fontSizeModel={fontSizeModel}
         fontWeightModel={fontWeightModel}

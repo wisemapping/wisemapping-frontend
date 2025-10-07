@@ -16,22 +16,27 @@
  *   limitations under the License.
  */
 
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import KeyboardShorcutsHelp from './index';
+import { ThemeVariantStorage } from '../../src/types/ThemeVariantStorage';
+import { PaletteMode } from '@mui/material';
 
-const meta: Meta = {
-  title: 'Editor/KeyboardShortcutHelp',
-  component: KeyboardShorcutsHelp as React.ComponentType,
-  parameters: { layout: 'centered' },
-};
+export class MockThemeVariantStorage implements ThemeVariantStorage {
+  private variant: PaletteMode = 'light';
+  private listeners: ((variant: PaletteMode) => void)[] = [];
 
-export default meta;
-type Story = StoryObj<typeof KeyboardShorcutsHelp>;
+  getThemeVariant(): PaletteMode {
+    return this.variant;
+  }
 
-export const Default: Story = {
-  render: () => {
-    return <KeyboardShorcutsHelp closeModal={fn()} />;
-  },
-};
+  setThemeVariant(variant: PaletteMode): void {
+    this.variant = variant;
+    this.listeners.forEach(listener => listener(variant));
+  }
+
+  subscribe(listener: (variant: PaletteMode) => void): () => void {
+    this.listeners.push(listener);
+    return () => {
+      this.listeners = this.listeners.filter(l => l !== listener);
+    };
+  }
+}
+

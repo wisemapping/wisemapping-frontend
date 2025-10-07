@@ -18,22 +18,25 @@
 
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import TopicLinkEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
 
-// Mock NodeProperty implementation
+// Mock NodeProperty implementation with actions
 class MockNodeProperty<T> implements NodeProperty<T> {
   private value: T;
+
   constructor(value: T) {
     this.value = value;
   }
+
   getValue(): T {
     return this.value;
   }
-  setValue = (v: T) => {
+
+  setValue = fn((v: T) => {
     this.value = v;
-    console.log('setValue called with:', v);
-  };
+  });
 }
 
 const meta: Meta = {
@@ -49,7 +52,7 @@ export const Default: Story = {
   render: () => {
     const urlModel = new MockNodeProperty<string>('');
 
-    return <TopicLinkEditor closeModal={() => console.log('Close modal')} urlModel={urlModel} />;
+    return <TopicLinkEditor closeModal={fn()} urlModel={urlModel} />;
   },
 };
 
@@ -57,6 +60,6 @@ export const WithExistingURL: Story = {
   render: () => {
     const urlModel = new MockNodeProperty<string>('https://www.wisemapping.com');
 
-    return <TopicLinkEditor closeModal={() => console.log('Close modal')} urlModel={urlModel} />;
+    return <TopicLinkEditor closeModal={fn()} urlModel={urlModel} />;
   },
 };

@@ -18,23 +18,26 @@
 
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import RelationshipStyleEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
 import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
 
-// Mock NodeProperty implementation
+// Mock NodeProperty implementation with actions
 class MockNodeProperty<T> implements NodeProperty<T> {
   private value: T;
+
   constructor(value: T) {
     this.value = value;
   }
+
   getValue(): T {
     return this.value;
   }
-  setValue = (v: T) => {
+
+  setValue = fn((v: T) => {
     this.value = v;
-    console.log('setValue called with:', v);
-  };
+  });
 }
 
 const meta: Meta = {
@@ -55,7 +58,7 @@ export const Default: Story = {
 
     return (
       <RelationshipStyleEditor
-        closeModal={() => console.log('Close modal')}
+        closeModal={fn()}
         strokeStyleModel={strokeStyleModel}
         startArrowModel={startArrowModel}
         endArrowModel={endArrowModel}

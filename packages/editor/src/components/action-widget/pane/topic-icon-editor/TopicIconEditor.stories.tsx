@@ -18,22 +18,25 @@
 
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import TopicIconEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
 
-// Mock NodeProperty implementation
+// Mock NodeProperty implementation with actions
 class MockNodeProperty<T> implements NodeProperty<T> {
   private value: T;
+
   constructor(value: T) {
     this.value = value;
   }
+
   getValue(): T {
     return this.value;
   }
-  setValue = (v: T) => {
+
+  setValue = fn((v: T) => {
     this.value = v;
-    console.log('setValue called with:', v);
-  };
+  });
 }
 
 const meta: Meta = {
@@ -49,6 +52,6 @@ export const Default: Story = {
   render: () => {
     const iconModel = new MockNodeProperty<string | undefined>(undefined);
 
-    return <TopicIconEditor closeModal={() => console.log('Close modal')} iconModel={iconModel} />;
+    return <TopicIconEditor closeModal={fn()} iconModel={iconModel} />;
   },
 };

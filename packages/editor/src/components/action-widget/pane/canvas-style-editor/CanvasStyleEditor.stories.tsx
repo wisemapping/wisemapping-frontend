@@ -18,6 +18,7 @@
 
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import CanvasStyleEditor, { CanvasStyle } from './index';
 
 const meta: Meta = {
@@ -38,13 +39,7 @@ export const Default: Story = {
       gridColor: '#ebe9e7',
     };
 
-    return (
-      <CanvasStyleEditor
-        closeModal={() => console.log('Close modal')}
-        initialStyle={initialStyle}
-        onStyleChange={(style) => console.log('Style changed:', style)}
-      />
-    );
+    return <CanvasStyleEditor closeModal={fn()} initialStyle={initialStyle} onStyleChange={fn()} />;
   },
 };
 
@@ -57,13 +52,7 @@ export const WithSolidBackground: Story = {
       gridColor: '#cccccc',
     };
 
-    return (
-      <CanvasStyleEditor
-        closeModal={() => console.log('Close modal')}
-        initialStyle={initialStyle}
-        onStyleChange={(style) => console.log('Style changed:', style)}
-      />
-    );
+    return <CanvasStyleEditor closeModal={fn()} initialStyle={initialStyle} onStyleChange={fn()} />;
   },
 };
 
@@ -76,12 +65,6 @@ export const WithDots: Story = {
       gridColor: '#aaaaaa',
     };
 
-    return (
-      <CanvasStyleEditor
-        closeModal={() => console.log('Close modal')}
-        initialStyle={initialStyle}
-        onStyleChange={(style) => console.log('Style changed:', style)}
-      />
-    );
+    return <CanvasStyleEditor closeModal={fn()} initialStyle={initialStyle} onStyleChange={fn()} />;
   },
 };

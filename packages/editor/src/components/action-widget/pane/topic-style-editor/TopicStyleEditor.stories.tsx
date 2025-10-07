@@ -16,60 +16,69 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import TopicStyleEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
 import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
 import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
 import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
 
-// Mock NodeProperty implementation
+// Mock NodeProperty implementation with actions
 class MockNodeProperty<T> implements NodeProperty<T> {
   private value: T;
-  constructor(value: T) {
+  public setValue: (v: T) => void;
+  public switchValue: () => void;
+
+  constructor(value: T, name: string) {
     this.value = value;
+    this.setValue = fn((v: T) => {
+      this.value = v;
+    }).mockName(`${name}.setValue`);
+    this.switchValue = fn(() => {
+      // Switch value logic
+    }).mockName(`${name}.switchValue`);
   }
+
   getValue(): T {
     return this.value;
   }
-  setValue = (v: T) => {
-    this.value = v;
-    console.log('setValue called with:', v);
-  };
-  switchValue = () => {
-    console.log('switchValue called');
-  };
 }
 
-const meta: Meta = {
+// Create shared mock instances outside render to ensure actions are tracked
+const shapeModel = new MockNodeProperty<TopicShapeType>('rounded rectangle', 'shapeModel');
+const fillColorModel = new MockNodeProperty<string | undefined>('#00ff00', 'fillColorModel');
+const borderColorModel = new MockNodeProperty<string | undefined>('#0000ff', 'borderColorModel');
+const borderStyleModel = new MockNodeProperty<StrokeStyle>(StrokeStyle.SOLID, 'borderStyleModel');
+const connectionStyleModel = new MockNodeProperty<LineType>(
+  LineType.THICK_CURVED,
+  'connectionStyleModel',
+);
+const connectionColorModel = new MockNodeProperty<string | undefined>(
+  '#ff0000',
+  'connectionColorModel',
+);
+const closeModalAction = fn().mockName('closeModal');
+
+const meta: Meta<typeof TopicStyleEditor> = {
   title: 'Editor/TopicStyleEditor',
-  component: TopicStyleEditor as React.ComponentType,
-  parameters: { layout: 'centered' },
+  component: TopicStyleEditor,
+  parameters: {
+    layout: 'centered',
+    actions: { disable: false }, // Ensure actions are enabled
+  },
+  args: {
+    closeModal: closeModalAction,
+    shapeModel,
+    fillColorModel,
+    borderColorModel,
+    borderStyleModel,
+    connectionStyleModel,
+    connectionColorModel,
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof TopicStyleEditor>;
 
-export const Default: Story = {
-  render: () => {
-    const shapeModel = new MockNodeProperty<TopicShapeType>('rounded rectangle');
-    const fillColorModel = new MockNodeProperty<string | undefined>('#00ff00');
-    const borderColorModel = new MockNodeProperty<string | undefined>('#0000ff');
-    const borderStyleModel = new MockNodeProperty<StrokeStyle>(StrokeStyle.SOLID);
-    const connectionStyleModel = new MockNodeProperty<LineType>(LineType.THICK_CURVED);
-    const connectionColorModel = new MockNodeProperty<string | undefined>('#ff0000');
-
-    return (
-      <TopicStyleEditor
-        closeModal={() => console.log('Close modal')}
-        shapeModel={shapeModel}
-        fillColorModel={fillColorModel}
-        borderColorModel={borderColorModel}
-        borderStyleModel={borderStyleModel}
-        connectionStyleModel={connectionStyleModel}
-        connectionColorModel={connectionColorModel}
-      />
-    );
-  },
-};
+export const Default: Story = {};
