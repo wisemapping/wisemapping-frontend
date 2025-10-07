@@ -33,11 +33,8 @@ const TopicIconEditorWithActions = (props: {
     () => ({
       getValue: () => icon,
       setValue: (v: string | undefined) => {
-        console.log('TopicIconEditor iconModel.setValue called with:', v);
         setIcon(v);
-        if (props.onIconChange) {
-          props.onIconChange(v);
-        }
+        props.onIconChange?.(v);
       },
     }),
     [icon, props.onIconChange],

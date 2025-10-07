@@ -38,11 +38,8 @@ const TopicImagePickerWithActions = (props: {
     () => ({
       getValue: () => emoji,
       setValue: (v: string | undefined) => {
-        console.log('TopicImagePicker emojiModel.setValue called with:', v);
         setEmoji(v);
-        if (props.onEmojiChange) {
-          props.onEmojiChange(v);
-        }
+        props.onEmojiChange?.(v);
       },
     }),
     [emoji, props.onEmojiChange],
@@ -52,11 +49,8 @@ const TopicImagePickerWithActions = (props: {
     () => ({
       getValue: () => iconsGallery,
       setValue: (v: string | undefined) => {
-        console.log('TopicImagePicker iconsGalleryModel.setValue called with:', v);
         setIconsGallery(v);
-        if (props.onIconsGalleryChange) {
-          props.onIconsGalleryChange(v);
-        }
+        props.onIconsGalleryChange?.(v);
       },
     }),
     [iconsGallery, props.onIconsGalleryChange],

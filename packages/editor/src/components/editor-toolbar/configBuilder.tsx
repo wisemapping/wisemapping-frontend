@@ -59,6 +59,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     options: [
       {
         render: (closeModal) => {
+          trackEditorPanelAction('open_topic_style_editor');
           return (
             <TopicStyleEditor
               closeModal={closeModal}
@@ -85,6 +86,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     options: [
       {
         render: (closeModal) => {
+          trackEditorPanelAction('open_relationship_style_editor');
           return (
             <RelationshipStyleEditor
               closeModal={closeModal}
@@ -115,6 +117,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     options: [
       {
         render: (closeModal) => {
+          trackEditorPanelAction('open_font_style_editor');
           return (
             <TopicFontEditor
               closeModal={closeModal}
@@ -160,9 +163,10 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     ),
     options: [
       {
-        render: (closeModal) => (
-          <TopicLinkEditor closeModal={closeModal} urlModel={modelBuilder.getLinkModel()} />
-        ),
+        render: (closeModal) => {
+          trackEditorPanelAction('open_link_editor');
+          return <TopicLinkEditor closeModal={closeModal} urlModel={modelBuilder.getLinkModel()} />;
+        },
       },
     ],
     disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
@@ -179,17 +183,20 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     }),
     options: [
       {
-        render: (closeModal) => (
-          <CanvasStyleEditor
-            closeModal={closeModal}
-            initialStyle={
-              model.getDesigner().getMindmap()?.getCanvasStyle() as Partial<CanvasStyle>
-            }
-            onStyleChange={(style: Partial<CanvasStyle>) => {
-              model.getDesigner().setCanvasStyle(style);
-            }}
-          />
-        ),
+        render: (closeModal) => {
+          trackEditorPanelAction('open_canvas_style_editor');
+          return (
+            <CanvasStyleEditor
+              closeModal={closeModal}
+              initialStyle={
+                model.getDesigner().getMindmap()?.getCanvasStyle() as Partial<CanvasStyle>
+              }
+              onStyleChange={(style: Partial<CanvasStyle>) => {
+                model.getDesigner().setCanvasStyle(style);
+              }}
+            />
+          );
+        },
       },
     ],
   };
@@ -209,9 +216,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.note-panel-title',
           defaultMessage: 'Note',
         }),
-        render: (closeModal) => (
-          <RichTextNoteEditor closeModal={closeModal} noteModel={modelBuilder.getNoteModel()} />
-        ),
+        render: (closeModal) => {
+          trackEditorPanelAction('open_note_editor');
+          return (
+            <RichTextNoteEditor closeModal={closeModal} noteModel={modelBuilder.getNoteModel()} />
+          );
+        },
       },
     ],
     disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
@@ -228,9 +238,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     }),
     options: [
       {
-        render: (closeModal) => (
-          <TopicIconEditor closeModal={closeModal} iconModel={modelBuilder.getTopicIconModel()} />
-        ),
+        render: (closeModal) => {
+          trackEditorPanelAction('open_icon_editor');
+          return (
+            <TopicIconEditor closeModal={closeModal} iconModel={modelBuilder.getTopicIconModel()} />
+          );
+        },
       },
     ],
     disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
@@ -251,13 +264,16 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-add-topic-image',
           defaultMessage: 'Add Topic Image',
         }),
-        render: (closeModal) => (
-          <TopicImagePicker
-            triggerClose={closeModal}
-            emojiModel={modelBuilder.getImageEmojiCharModel()}
-            iconsGalleryModel={modelBuilder.getImageGalleryIconNameModel()}
-          />
-        ),
+        render: (closeModal) => {
+          trackEditorPanelAction('open_topic_image_editor');
+          return (
+            <TopicImagePicker
+              triggerClose={closeModal}
+              emojiModel={modelBuilder.getImageEmojiCharModel()}
+              iconsGalleryModel={modelBuilder.getImageGalleryIconNameModel()}
+            />
+          );
+        },
       },
     ],
     disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
