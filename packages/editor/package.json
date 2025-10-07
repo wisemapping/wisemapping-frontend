@@ -26,7 +26,7 @@
     "lint:fix": "eslint src --ext js,ts,tsx --fix",
     "playground": "webpack serve --config webpack.playground.js",
     "test": "yarn test:unit && yarn test:integration",
-    "test:integration": "yarn test:integration:playground",
+    "test:integration": "yarn test:integration:playground && yarn test:integration:storybook",
     "test:integration:playground": "npx start-server-and-test 'yarn playground' http-get://localhost:8081 'yarn cy:run'",
     "test:integration:storybook": "npx start-server-and-test 'yarn storybook' http-get://localhost:6008 'yarn cy:storybook:run'",
     "test:unit": "jest ./test/unit/* --detectOpenHandles"

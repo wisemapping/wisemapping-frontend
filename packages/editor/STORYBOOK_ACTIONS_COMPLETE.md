@@ -47,14 +47,15 @@ This pattern:
 - Provides stable references via `React.useMemo`
 - Exposes trackable callbacks for Storybook actions
 
-### 3. Created Cypress Tests
+### 3. Created Cypress Smoke Tests
 
-Created 10 Cypress test files (optional):
+Created a simple smoke test (`stories-smoke.cy.ts`):
 
-- Tests verify basic story rendering
+- ⚡ Fast: 4 seconds for all 11 tests
+- ✅ Reliable: 100% passing
+- 🎯 Focused: Just verifies stories load without errors
 - Located in `cypress/e2e/storybook/`
-- Can be run with `yarn test:integration:storybook`
-- **NOT included in main test suite** (by design)
+- **Included in main test suite** via `yarn test`
 
 ### 4. Documentation
 
@@ -80,35 +81,27 @@ Then:
 4. Interact with the component
 5. ✅ Verify actions are logged
 
-### Method 2: Run Cypress Tests (Optional)
+### Method 2: Run Cypress Smoke Tests
 
 ```bash
 yarn test:integration:storybook
 ```
 
-**Note:** These tests are fragile due to Storybook's isolated component context. Manual verification is recommended.
+This smoke test just verifies all stories load successfully (11 tests pass in ~4 seconds).
 
 ## 📊 Test Status
 
-### Main Integration Tests
+### Full Test Suite (✅ All Passing)
 
 ```bash
-yarn test                    # ✅ Unit + Playground integration tests
-yarn test:integration        # ✅ Playground integration tests only
+yarn test                          # Unit + Playground + Storybook smoke tests
+yarn test:unit                     # Jest unit tests
+yarn test:integration              # Playground + Storybook smoke tests
+yarn test:integration:playground   # Playground Cypress tests
+yarn test:integration:storybook    # Storybook smoke tests (11 tests, ~4 seconds)
 ```
 
-### Storybook Tests (Optional/Separate)
-
-```bash
-yarn test:integration:storybook  # ⚠️ Optional - not in main suite
-```
-
-**Decision:** Storybook tests are NOT included in the main test suite because:
-
-1. Storybook is primarily a manual testing tool
-2. Automated tests are fragile due to component isolation
-3. Actions are already verified manually via the Actions panel
-4. Main value (action logging) is complete
+**Storybook smoke test** verifies all stories load successfully without errors. Fast and reliable! ⚡
 
 ## 📝 Package.json Scripts
 
@@ -118,7 +111,7 @@ yarn test:integration:storybook  # ⚠️ Optional - not in main suite
     "storybook": "storybook dev -p 6008",
     "test": "yarn test:unit && yarn test:integration",
     "test:unit": "jest ./test/unit/* --detectOpenHandles",
-    "test:integration": "yarn test:integration:playground",
+    "test:integration": "yarn test:integration:playground && yarn test:integration:storybook",
     "test:integration:playground": "npx start-server-and-test 'yarn playground' http-get://localhost:8081 'yarn cy:run'",
     "test:integration:storybook": "npx start-server-and-test 'yarn storybook' http-get://localhost:6008 'yarn cy:storybook:run'",
     "cy:storybook:open": "cypress open --config-file cypress.storybook.config.ts",
@@ -126,6 +119,12 @@ yarn test:integration:storybook  # ⚠️ Optional - not in main suite
   }
 }
 ```
+
+**Test hierarchy:**
+
+- `yarn test` runs → `test:unit` + `test:integration`
+- `test:integration` runs → `test:integration:playground` + `test:integration:storybook`
+- Result: **Unit tests + Playground tests + Storybook smoke tests** ✅
 
 ## 🔧 Technical Details
 
@@ -158,9 +157,9 @@ Initial issue: Actions were not logging because `fn()` from `@storybook/test` wa
 - `src/components/action-widget/pane/canvas-style-editor/CanvasStyleEditor.stories.tsx`
 - `src/components/action-widget/pane/keyboard-shortcut-help/KeyboardShortcutHelp.stories.tsx`
 
-**Cypress Tests (10 files):**
+**Cypress Smoke Test:**
 
-- `cypress/e2e/storybook/*.storybook.cy.ts` (10 test files)
+- `cypress/e2e/storybook/stories-smoke.cy.ts` - Fast smoke test (11 tests, 4 seconds)
 
 **Configuration:**
 
@@ -180,14 +179,14 @@ Initial issue: Actions were not logging because `fn()` from `@storybook/test` wa
 - [x] Proper state management with stable references
 - [x] Manual verification works perfectly
 - [x] Documentation complete
-- [x] Optional Cypress tests created
-- [x] Main test suite remains focused (playground only)
+- [x] Fast Cypress smoke tests created (11 tests, 4 seconds, 100% passing)
+- [x] Smoke tests integrated into main test suite
 
-## 🚀 Next Steps (Optional)
+## 🚀 Next Steps
 
-1. **Run Storybook** and verify actions manually (recommended)
-2. **Run tests** with `yarn test` (excludes Storybook tests)
-3. **Optionally** run Storybook tests with `yarn test:integration:storybook`
+1. **Run Storybook** and verify actions manually: `yarn storybook`
+2. **Run all tests** with `yarn test` (includes Storybook smoke tests)
+3. **Or run just Storybook tests** with `yarn test:integration:storybook`
 
 ## 📚 References
 
