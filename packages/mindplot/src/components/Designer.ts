@@ -1180,6 +1180,15 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
+  changeBorderStyle(style: string | undefined) {
+    const validateFunc = (topic: Topic) => topic.getShapeType() !== 'line';
+    const validateError = 'Border style can not be set to line topics.';
+    const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
+    if (topicsIds.length > 0) {
+      this._actionDispatcher.changeBorderStyleToTopic(topicsIds, style);
+    }
+  }
+
   changeFontSize(size: number) {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {

@@ -38,6 +38,7 @@ class NodePropertyBuilder {
   private fontFamilyModel: NodeProperty<string | undefined> | undefined;
   private fontStyleModel: NodeProperty<string> | undefined;
   private borderColorModel: NodeProperty<string | undefined> | undefined;
+  private borderStyleModel: NodeProperty<StrokeStyle> | undefined;
   private fontColorModel: NodeProperty<string | undefined> | undefined;
   private topicShapeModel: NodeProperty<TopicShapeType> | undefined;
   private topicIconModel: NodeProperty<string | undefined> | undefined;
@@ -201,6 +202,26 @@ class NodePropertyBuilder {
       this.borderColorModel = result;
     }
     return result;
+  }
+
+  /**
+   *
+   * @returns model to get and set topic border style
+   */
+  getBorderStyleModel(): NodeProperty<StrokeStyle> {
+    if (!this.borderStyleModel) {
+      this.borderStyleModel = {
+        getValue: () => {
+          const styleString = this.uniqueOrUndefined((node) => node.getBorderStyle());
+          // Convert string to StrokeStyle enum, defaulting to SOLID if invalid
+          if (styleString === 'dashed') return StrokeStyle.DASHED;
+          if (styleString === 'dotted') return StrokeStyle.DOTTED;
+          return StrokeStyle.SOLID;
+        },
+        setValue: (style: StrokeStyle) => this.designer.changeBorderStyle(style),
+      };
+    }
+    return this.borderStyleModel;
   }
 
   /**

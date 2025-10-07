@@ -92,6 +92,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       id: 'editor-panel.tooltip-unified-styling',
       defaultMessage: 'Style Topic & Connections',
     }),
+    useClickToClose: true,
     options: [
       {
         render: (closeModal) => {
@@ -101,6 +102,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
               topicShapeModel={modelBuilder.getTopicShapeModel()}
               topicFillColorModel={modelBuilder.getSelectedTopicColorModel()}
               topicBorderColorModel={modelBuilder.getColorBorderModel()}
+              topicBorderStyleModel={modelBuilder.getBorderStyleModel()}
               connectionStyleModel={modelBuilder.getConnectionStyleModel()}
               connectionColorModel={modelBuilder.getConnectionColorModel()}
             />

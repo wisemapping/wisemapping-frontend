@@ -519,6 +519,18 @@ abstract class Topic extends NodeGraph {
     return theme.getBorderColor(this);
   }
 
+  setBorderStyle(style: string | undefined): void {
+    const model = this.getModel();
+    model.setBorderStyle(style);
+
+    this.redraw(this.getThemeVariant(), true);
+  }
+
+  getBorderStyle(): string | undefined {
+    const model = this.getModel();
+    return model.getBorderStyle();
+  }
+
   private buildTopicShape(): void {
     const groupAttributes = {
       width: 100,
@@ -1332,7 +1344,9 @@ abstract class Topic extends NodeGraph {
       // Update topic color ...
       const innerShape = this.getInnerShape();
       const borderColor = this.getBorderColor(variant);
-      innerShape.setStroke(null, 'solid', borderColor);
+      const borderStyle = this.getBorderStyle() || 'solid';
+      const strokeStyle = this.getStrokeStyle(borderStyle);
+      innerShape.setStroke(null, strokeStyle, borderColor);
 
       const bgColor = this.getBackgroundColor(variant);
       innerShape.setFill(bgColor);
@@ -1376,6 +1390,21 @@ abstract class Topic extends NodeGraph {
       }
     }
     return result;
+  }
+
+  private getStrokeStyle(borderStyle: string | null): string | null {
+    if (!borderStyle) return null;
+
+    switch (borderStyle) {
+      case 'solid':
+        return 'solid';
+      case 'dashed':
+        return 'dash';
+      case 'dotted':
+        return 'dot';
+      default:
+        return 'solid';
+    }
   }
 
   abstract workoutOutgoingConnectionPoint(position: PositionType): PositionType;

@@ -193,6 +193,19 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
+  changeBorderStyleToTopic(topicsIds: number[], style: string | undefined): void {
+    const commandFunc = (topic: Topic, commandStyle: string | undefined) => {
+      const result = topic.getBorderStyle();
+      topic.setBorderStyle(commandStyle);
+      return result;
+    };
+
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, style);
+    command.setDiscardDuplicated('borderStyleCommandId');
+    this.execute(command);
+  }
+
+  /** */
   changeFontSizeToTopic(topicsIds: number[], size: number) {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(size, 'size can not be null');

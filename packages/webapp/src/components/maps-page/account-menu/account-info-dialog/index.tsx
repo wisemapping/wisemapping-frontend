@@ -355,13 +355,10 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                 <Box>
                   <Alert severity="error" sx={{ mb: 3 }}>
                     <AlertTitle>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <WarningIcon />
-                        <FormattedMessage
-                          id="account.delete-warning-title"
-                          defaultMessage="Delete Account"
-                        />
-                      </Box>
+                      <FormattedMessage
+                        id="account.delete-warning-title"
+                        defaultMessage="Delete Account"
+                      />
                     </AlertTitle>
                     <Typography variant="body2" sx={{ mb: 2 }}>
                       <FormattedMessage

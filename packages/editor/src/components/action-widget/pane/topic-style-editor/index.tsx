@@ -17,7 +17,8 @@
  */
 
 import React, { ReactElement, useState } from 'react';
-import { Tabs, Tab, Box, Typography, ButtonGroup, Button, IconButton } from '@mui/material';
+import { Tabs, Tab, Box, Typography, Button, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { styled } from '@mui/material/styles';
 
@@ -26,31 +27,34 @@ import SquareOutlinedIcon from '@mui/icons-material/SquareOutlined';
 import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
 import HorizontalRuleOutlinedIcon from '@mui/icons-material/HorizontalRuleOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
-import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
-import BorderColorIcon from '@mui/icons-material/BorderColor';
-import ColorLensIcon from '@mui/icons-material/ColorLens';
+import MoreHorizOutlined from '@mui/icons-material/MoreHorizOutlined';
+import MoreVertOutlined from '@mui/icons-material/MoreVertOutlined';
 import GestureOutlined from '@mui/icons-material/GestureOutlined';
 import ShortcutIconOutlined from '@mui/icons-material/ShortcutOutlined';
 import SwapCallsOutlined from '@mui/icons-material/SwapCallsOutlined';
 import PolylineOutlined from '@mui/icons-material/PolylineOutlined';
 import TimelineOutined from '@mui/icons-material/TimelineOutlined';
-import ShareOutlined from '@mui/icons-material/ShareOutlined';
 
 import NodeProperty from '../../../../classes/model/node-property';
 import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
 import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
-import colors from '../color-picker/colors.json';
+import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
+import ColorPicker from '../color-picker';
+import IconCollection from './IconCollection';
 
 // Styled components
 
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   borderBottom: '1px solid #e0e0e0',
+  minHeight: '34px',
   '& .MuiTab-root': {
     textTransform: 'none',
     fontWeight: 500,
-    minHeight: '32px',
-    fontSize: '0.8rem',
+    minHeight: '5px',
+    fontSize: '0.75rem',
+    padding: '6px 0px',
+    margin: '0px',
     '&.Mui-selected': {
       color: theme.palette.primary.main,
     },
@@ -61,41 +65,10 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   },
 }));
 
-const ColorGrid = styled(Box)({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(5, 1fr)',
-  gap: '2px',
-  marginBottom: '8px',
-});
-
-const ColorSwatch = styled(Box)<{ color?: string; selected?: boolean }>(
-  ({ color, selected, theme }) => ({
-    width: '16px',
-    height: '16px',
-    borderRadius: '50%',
-    backgroundColor: color,
-    border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid transparent',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    '&:hover': {
-      transform: 'scale(1.1)',
-      transition: 'transform 0.2s ease',
-    },
-  }),
-);
-
-const ShapeGrid = styled(Box)({
-  display: 'flex',
-  gap: '6px',
-  marginTop: '8px',
-});
-
 const ShapeButton = styled(IconButton)<{ selected?: boolean }>(({ selected, theme }) => ({
   width: '24px',
   height: '24px',
+  padding: '0px',
   border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid #e0e0e0',
   borderRadius: '4px',
   '&:hover': {
@@ -103,13 +76,7 @@ const ShapeButton = styled(IconButton)<{ selected?: boolean }>(({ selected, them
   },
 }));
 
-const ConnectionGrid = styled(Box)({
-  display: 'flex',
-  gap: '6px',
-});
-
 const ConnectionButton = styled(Button)<{ selected?: boolean }>(({ selected, theme }) => ({
-  justifyContent: 'flex-start',
   padding: '6px 8px',
   border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid #e0e0e0',
   borderRadius: '4px',
@@ -127,6 +94,7 @@ interface TopicStyleEditorProps {
   topicShapeModel: NodeProperty<TopicShapeType>;
   topicFillColorModel: NodeProperty<string | undefined>;
   topicBorderColorModel: NodeProperty<string | undefined>;
+  topicBorderStyleModel: NodeProperty<StrokeStyle>;
   // Connection styling models
   connectionStyleModel: NodeProperty<LineType>;
   connectionColorModel: NodeProperty<string | undefined>;
@@ -149,97 +117,133 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`styling-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 1 }}>{children}</Box>}
+      {value === index && (
+        <Box
+          sx={{
+            pt: 1,
+            pb: 1,
+            pl: 0,
+            pr: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
+          }}
+        >
+          {children}
+        </Box>
+      )}
     </div>
   );
 }
+
+const borderStyles = [
+  {
+    type: StrokeStyle.SOLID,
+    icon: <HorizontalRuleOutlinedIcon />,
+    label: 'Solid',
+  },
+  {
+    type: StrokeStyle.DASHED,
+    icon: <MoreHorizOutlined />,
+    label: 'Dashed',
+  },
+  {
+    type: StrokeStyle.DOTTED,
+    icon: <MoreVertOutlined />,
+    label: 'Dotted',
+  },
+];
+
+const connectionStyles = [
+  {
+    type: LineType.THICK_CURVED,
+    icon: <GestureOutlined />,
+    label: 'Thick Curved',
+  },
+  {
+    type: LineType.ARC,
+    icon: <ShortcutIconOutlined />,
+    label: 'Arc',
+  },
+  {
+    type: LineType.THIN_CURVED,
+    icon: <SwapCallsOutlined />,
+    label: 'Thin Curved',
+  },
+  {
+    type: LineType.POLYLINE_MIDDLE,
+    icon: <PolylineOutlined />,
+    label: 'Simple Polyline',
+  },
+  {
+    type: LineType.POLYLINE_CURVED,
+    icon: <TimelineOutined />,
+    label: 'Curved Polyline',
+  },
+];
 
 const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
   const [activeTab, setActiveTab] = useState(0);
 
   const intl = useIntl();
 
-  // Using the existing color palette from the color picker component
-  const themeColors = colors;
-
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
 
-  const handleShapeChange = (shapeType: TopicShapeType) => {
+  const handleShapeChange = (shapeType: TopicShapeType | StrokeStyle | LineType) => {
     const setValue = props.topicShapeModel.setValue;
     if (setValue) {
-      setValue(shapeType);
+      setValue(shapeType as TopicShapeType);
     }
   };
 
-  const handleFillColorChange = (color: string | undefined) => {
-    const setValue = props.topicFillColorModel.setValue;
+  const handleBorderStyleChange = (style: TopicShapeType | StrokeStyle | LineType) => {
+    const setValue = props.topicBorderStyleModel.setValue;
     if (setValue) {
-      setValue(color);
+      setValue(style as StrokeStyle);
     }
   };
 
-  const handleBorderColorChange = (color: string | undefined) => {
-    const setValue = props.topicBorderColorModel.setValue;
-    if (setValue) {
-      setValue(color);
-    }
-  };
-
-  const handleConnectionStyleChange = (lineType: LineType) => {
+  const handleConnectionStyleChange = (lineType: TopicShapeType | StrokeStyle | LineType) => {
     const setValue = props.connectionStyleModel.setValue;
     if (setValue) {
-      setValue(lineType);
+      setValue(lineType as LineType);
     }
   };
-
-  const handleConnectionColorChange = (color: string | undefined) => {
-    const setValue = props.connectionColorModel.setValue;
-    if (setValue) {
-      setValue(color);
-    }
-  };
-
-  const connectionStyles = [
-    {
-      type: LineType.THICK_CURVED,
-      icon: <GestureOutlined />,
-      label: 'Thick Curved',
-    },
-    {
-      type: LineType.ARC,
-      icon: <ShortcutIconOutlined />,
-      label: 'Arc',
-    },
-    {
-      type: LineType.THIN_CURVED,
-      icon: <SwapCallsOutlined />,
-      label: 'Thin Curved',
-    },
-    {
-      type: LineType.POLYLINE_MIDDLE,
-      icon: <PolylineOutlined />,
-      label: 'Simple Polyline',
-    },
-    {
-      type: LineType.POLYLINE_CURVED,
-      icon: <TimelineOutined />,
-      label: 'Curved Polyline',
-    },
-  ];
 
   return (
-    <Box sx={{ p: 1, minWidth: '150px', maxWidth: '180px', maxHeight: '400px', overflow: 'auto' }}>
-      <Typography
-        variant="subtitle1"
-        gutterBottom
-        sx={{ fontSize: '0.8rem', fontWeight: 600, mb: 1 }}
+    <Box
+      sx={{
+        p: 1,
+        minWidth: '250px',
+        maxWidth: '280px',
+        maxHeight: '400px',
+        overflow: 'auto',
+        backgroundColor: 'background.paper',
+        borderRadius: '8px',
+        border: '1px solid',
+        borderColor: 'divider',
+        position: 'relative',
+      }}
+    >
+      <IconButton
+        onClick={props.closeModal}
+        sx={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          zIndex: 1,
+          width: 24,
+          height: 24,
+          '& .MuiSvgIcon-root': {
+            fontSize: '16px',
+          },
+        }}
       >
-        <FormattedMessage id="unified-styling.title" defaultMessage="Style Topic & Connections" />
-      </Typography>
-
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <CloseIcon />
+      </IconButton>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', p: 0 }}>
         <StyledTabs value={activeTab} onChange={handleTabChange} aria-label="styling tabs">
           <Tab
             label={<FormattedMessage id="unified-styling.tab.shape" defaultMessage="Shape" />}
@@ -263,212 +267,89 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
 
       <TabPanel value={activeTab} index={0}>
         {/* Shape Tab */}
-        <Box>
-          <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 0.5 }}>
-            <FormattedMessage id="unified-styling.theme-colors" defaultMessage="Theme Colors" />
+        <Box sx={{ p: 0 }}>
+          <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+            <FormattedMessage id="unified-styling.style-topic" defaultMessage="Style Topic" />
           </Typography>
-          <ColorGrid>
-            {/* No color option */}
-            <ColorSwatch
-              color="#ffffff"
-              selected={props.topicFillColorModel.getValue() === undefined}
-              onClick={() => handleFillColorChange(undefined)}
-              sx={{
-                border: '2px solid #e0e0e0',
-                position: 'relative',
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  width: '14px',
-                  height: '2px',
-                  backgroundColor: '#ff4444',
-                  transform: 'translate(-50%, -50%) rotate(45deg)',
-                },
-                '&::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  width: '14px',
-                  height: '2px',
-                  backgroundColor: '#ff4444',
-                  transform: 'translate(-50%, -50%) rotate(-45deg)',
-                },
-              }}
-            />
-            {themeColors.map((color, index) => (
-              <ColorSwatch
-                key={index}
-                color={color}
-                selected={props.topicFillColorModel.getValue() === color}
-                onClick={() => handleFillColorChange(color)}
-              />
-            ))}
-          </ColorGrid>
+          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+            <ColorPicker closeModal={() => {}} colorModel={props.topicFillColorModel} />
+          </Box>
 
-          <Typography variant="subtitle2" gutterBottom sx={{ mt: 1, fontSize: '0.75rem', mb: 0.5 }}>
+          <Typography variant="subtitle2" gutterBottom sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}>
             <FormattedMessage
               id="unified-styling.shape-selection"
               defaultMessage="Shape Selection"
             />
           </Typography>
-          <ShapeGrid>
-            <ShapeButton
-              selected={props.topicShapeModel.getValue() === 'none'}
-              onClick={() => handleShapeChange('none')}
-            >
-              <NotInterestedOutlined />
-            </ShapeButton>
-            <ShapeButton
-              selected={props.topicShapeModel.getValue() === 'line'}
-              onClick={() => handleShapeChange('line')}
-            >
-              <HorizontalRuleOutlinedIcon />
-            </ShapeButton>
-            <ShapeButton
-              selected={props.topicShapeModel.getValue() === 'rectangle'}
-              onClick={() => handleShapeChange('rectangle')}
-            >
-              <SquareOutlinedIcon />
-            </ShapeButton>
-            <ShapeButton
-              selected={props.topicShapeModel.getValue() === 'rounded rectangle'}
-              onClick={() => handleShapeChange('rounded rectangle')}
-            >
-              <CheckBoxOutlineBlankOutlinedIcon />
-            </ShapeButton>
-            <ShapeButton
-              selected={props.topicShapeModel.getValue() === 'elipse'}
-              onClick={() => handleShapeChange('elipse')}
-            >
-              <RadioButtonUncheckedOutlinedIcon />
-            </ShapeButton>
-          </ShapeGrid>
+          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+            <IconCollection
+              styles={[
+                { type: 'none', icon: <NotInterestedOutlined />, label: 'None' },
+                { type: 'line', icon: <HorizontalRuleOutlinedIcon />, label: 'Line' },
+                { type: 'rectangle', icon: <SquareOutlinedIcon />, label: 'Rectangle' },
+                {
+                  type: 'rounded rectangle',
+                  icon: <CheckBoxOutlineBlankOutlinedIcon />,
+                  label: 'Rounded Rectangle',
+                },
+                { type: 'elipse', icon: <RadioButtonUncheckedOutlinedIcon />, label: 'Ellipse' },
+              ]}
+              selectedValue={props.topicShapeModel.getValue()}
+              onSelect={handleShapeChange}
+            />
+          </Box>
         </Box>
       </TabPanel>
 
       <TabPanel value={activeTab} index={1}>
         {/* Border Tab */}
-        <Box>
-          <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 0.5 }}>
+        <Box sx={{ p: 0 }}>
+          <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
             <FormattedMessage id="unified-styling.border-color" defaultMessage="Border Color" />
           </Typography>
-          <ColorGrid>
-            {/* No color option */}
-            <ColorSwatch
-              color="#ffffff"
-              selected={props.topicBorderColorModel.getValue() === undefined}
-              onClick={() => handleBorderColorChange(undefined)}
-              sx={{
-                border: '2px solid #e0e0e0',
-                position: 'relative',
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  width: '14px',
-                  height: '2px',
-                  backgroundColor: '#ff4444',
-                  transform: 'translate(-50%, -50%) rotate(45deg)',
-                },
-                '&::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  width: '14px',
-                  height: '2px',
-                  backgroundColor: '#ff4444',
-                  transform: 'translate(-50%, -50%) rotate(-45deg)',
-                },
-              }}
+          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+            <ColorPicker closeModal={() => {}} colorModel={props.topicBorderColorModel} />
+          </Box>
+
+          <Typography variant="subtitle2" gutterBottom sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}>
+            <FormattedMessage id="unified-styling.border-style" defaultMessage="Border Style" />
+          </Typography>
+          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+            <IconCollection
+              styles={borderStyles}
+              selectedValue={props.topicBorderStyleModel.getValue()}
+              onSelect={handleBorderStyleChange}
             />
-            {themeColors.map((color, index) => (
-              <ColorSwatch
-                key={index}
-                color={color}
-                selected={props.topicBorderColorModel.getValue() === color}
-                onClick={() => handleBorderColorChange(color)}
-              />
-            ))}
-          </ColorGrid>
+          </Box>
         </Box>
       </TabPanel>
 
       <TabPanel value={activeTab} index={2}>
         {/* Connector Tab */}
-        <Box>
-          <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 0.5 }}>
+        <Box sx={{ p: 0 }}>
+          <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
             <FormattedMessage
-              id="unified-styling.connector-color"
-              defaultMessage="Connector Color"
+              id="unified-styling.connection-style"
+              defaultMessage="Connection Style"
             />
           </Typography>
-          <ColorGrid>
-            {/* No color option */}
-            <ColorSwatch
-              color="#ffffff"
-              selected={props.connectionColorModel.getValue() === undefined}
-              onClick={() => handleConnectionColorChange(undefined)}
-              sx={{
-                border: '2px solid #e0e0e0',
-                position: 'relative',
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  width: '14px',
-                  height: '2px',
-                  backgroundColor: '#ff4444',
-                  transform: 'translate(-50%, -50%) rotate(45deg)',
-                },
-                '&::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  width: '14px',
-                  height: '2px',
-                  backgroundColor: '#ff4444',
-                  transform: 'translate(-50%, -50%) rotate(-45deg)',
-                },
-              }}
-            />
-            {themeColors.map((color, index) => (
-              <ColorSwatch
-                key={index}
-                color={color}
-                selected={props.connectionColorModel.getValue() === color}
-                onClick={() => handleConnectionColorChange(color)}
-              />
-            ))}
-          </ColorGrid>
+          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+            <ColorPicker closeModal={() => {}} colorModel={props.connectionColorModel} />
+          </Box>
 
-          <Typography
-            variant="subtitle2"
-            gutterBottom
-            sx={{ mt: 1.5, fontSize: '0.75rem', mb: 0.5 }}
-          >
+          <Typography variant="subtitle2" gutterBottom sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}>
             <FormattedMessage
               id="unified-styling.connector-style"
               defaultMessage="Connector Style"
             />
           </Typography>
-          <ConnectionGrid>
-            {connectionStyles.map((style) => (
-              <ShapeButton
-                key={style.type}
-                selected={props.connectionStyleModel.getValue() === style.type}
-                onClick={() => handleConnectionStyleChange(style.type)}
-              >
-                {style.icon}
-              </ShapeButton>
-            ))}
-          </ConnectionGrid>
+          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+            <IconCollection
+              styles={connectionStyles}
+              selectedValue={props.connectionStyleModel.getValue()}
+              onSelect={handleConnectionStyleChange}
+            />
+          </Box>
         </Box>
       </TabPanel>
     </Box>

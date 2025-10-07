@@ -41,6 +41,7 @@ import oceanDark from './styles/ocean-dark.json';
 
 export type TopicStyleType = {
   borderColor: string | string[];
+  borderStyle: string;
   backgroundColor: string | string[];
   connectionColor: string | string[];
   connectionStyle: LineType;
@@ -64,6 +65,7 @@ export type CanvasStyleType = {
 
 type JsonTopicStyleType = {
   borderColor?: string | string[];
+  borderStyle?: string;
   backgroundColor?: string | string[];
   connectionColor?: string | string[];
   connectionStyle?: string;
@@ -330,6 +332,7 @@ export class ThemeStyle {
     const result: Partial<TopicStyleType> = {};
 
     if (jsonStyle.borderColor !== undefined) result.borderColor = jsonStyle.borderColor;
+    if (jsonStyle.borderStyle !== undefined) result.borderStyle = jsonStyle.borderStyle;
     if (jsonStyle.backgroundColor !== undefined) result.backgroundColor = jsonStyle.backgroundColor;
     if (jsonStyle.connectionColor !== undefined) result.connectionColor = jsonStyle.connectionColor;
     if (jsonStyle.connectionStyle !== undefined) {

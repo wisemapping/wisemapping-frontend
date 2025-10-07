@@ -233,6 +233,14 @@ abstract class INodeModel {
     this.putProperty('borderColor', color);
   }
 
+  getBorderStyle(): string | undefined {
+    return this.getProperty('borderStyle') as string;
+  }
+
+  setBorderStyle(style: string | undefined): void {
+    this.putProperty('borderStyle', style);
+  }
+
   getBackgroundColor(): string | undefined {
     return this.getProperty('backgroundColor') as string;
   }

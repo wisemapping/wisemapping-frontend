@@ -84,6 +84,8 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
 
   abstract changeBorderColorToTopic(topicsIds: number[], color: string): void;
 
+  abstract changeBorderStyleToTopic(topicsIds: number[], style: string): void;
+
   abstract changeShapeTypeToTopic(topicsIds: number[], shapeType: string): void;
 
   abstract changeCanvasStyle(

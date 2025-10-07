@@ -18,8 +18,30 @@
 import Box from '@mui/material/Box';
 import React, { ReactElement } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
-import { CirclePicker as ReactColorPicker } from 'react-color';
 import colors from './colors.json';
+import { styled } from '@mui/material/styles';
+import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
+
+const NoneColorCircle = styled(Box)<{ selected?: boolean }>(({ selected, theme }) => ({
+  width: '18px',
+  height: '18px',
+  borderRadius: '50%',
+  backgroundColor: '#ffffff',
+  border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid #e0e0e0',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'relative',
+  '&:hover': {
+    transform: 'scale(1.1)',
+    transition: 'transform 0.2s ease',
+  },
+  '& svg': {
+    fontSize: '12px',
+    color: '#ff4444',
+  },
+}));
 
 /**
  * Color picker for toolbar
@@ -28,22 +50,50 @@ const ColorPicker = (props: {
   closeModal: () => void;
   colorModel: NodeProperty<string | undefined>;
 }): ReactElement => {
+  const currentValue = props.colorModel.getValue();
+  const isNoneSelected = currentValue === undefined;
+
+  const handleNoneClick = () => {
+    const setValue = props.colorModel.setValue;
+    if (setValue) {
+      setValue(undefined);
+    }
+    props.closeModal();
+  };
+
+  const handleColorChange = (color: { hex: string }) => {
+    const setValue = props.colorModel.setValue;
+    if (setValue) {
+      setValue(color.hex);
+    }
+    props.closeModal();
+  };
+
   return (
-    <Box component="div" sx={{ m: 2 }}>
-      <ReactColorPicker
-        color={props.colorModel.getValue() || '#fff'}
-        onChangeComplete={(color: { hex: string }) => {
-          const setValue = props.colorModel.setValue;
-          if (setValue) {
-            setValue(color.hex);
-          }
-          props.closeModal();
-        }}
-        colors={colors}
-        width={216}
-        circleSpacing={9}
-        circleSize={18}
-      />
+    <Box component="div">
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '216px', gap: '9px' }}>
+        <NoneColorCircle selected={isNoneSelected} onClick={handleNoneClick}>
+          <NotInterestedOutlined />
+        </NoneColorCircle>
+        {colors.slice(1).map((color, index) => (
+          <Box
+            key={index}
+            sx={{
+              width: '18px',
+              height: '18px',
+              borderRadius: '50%',
+              backgroundColor: color,
+              border: currentValue === color ? '2px solid #ffa800' : '2px solid transparent',
+              cursor: 'pointer',
+              '&:hover': {
+                transform: 'scale(1.1)',
+                transition: 'transform 0.2s ease',
+              },
+            }}
+            onClick={() => handleColorChange({ hex: color })}
+          />
+        ))}
+      </Box>
     </Box>
   );
 };
