@@ -53,8 +53,9 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
     fontWeight: 500,
     minHeight: '5px',
     fontSize: '0.75rem',
-    padding: '6px 0px',
+    padding: '6px 5px',
     margin: '0px',
+    minWidth: '60px',
     '&.Mui-selected': {
       color: theme.palette.primary.main,
     },
@@ -140,17 +141,17 @@ const borderStyles = [
   {
     type: StrokeStyle.SOLID,
     icon: <HorizontalRuleOutlinedIcon />,
-    label: 'Solid',
+    label: <FormattedMessage id="icon-collection.border.solid" defaultMessage="Solid" />,
   },
   {
     type: StrokeStyle.DASHED,
     icon: <MoreHorizOutlined />,
-    label: 'Dashed',
+    label: <FormattedMessage id="icon-collection.border.dashed" defaultMessage="Dashed" />,
   },
   {
     type: StrokeStyle.DOTTED,
     icon: <MoreVertOutlined />,
-    label: 'Dotted',
+    label: <FormattedMessage id="icon-collection.border.dotted" defaultMessage="Dotted" />,
   },
 ];
 
@@ -158,27 +159,44 @@ const connectionStyles = [
   {
     type: LineType.THICK_CURVED,
     icon: <GestureOutlined />,
-    label: 'Thick Curved',
+    label: (
+      <FormattedMessage
+        id="icon-collection.connection.thick-curved"
+        defaultMessage="Thick Curved"
+      />
+    ),
   },
   {
     type: LineType.ARC,
     icon: <ShortcutIconOutlined />,
-    label: 'Arc',
+    label: <FormattedMessage id="icon-collection.connection.arc" defaultMessage="Arc" />,
   },
   {
     type: LineType.THIN_CURVED,
     icon: <SwapCallsOutlined />,
-    label: 'Thin Curved',
+    label: (
+      <FormattedMessage id="icon-collection.connection.thin-curved" defaultMessage="Thin Curved" />
+    ),
   },
   {
     type: LineType.POLYLINE_MIDDLE,
     icon: <PolylineOutlined />,
-    label: 'Simple Polyline',
+    label: (
+      <FormattedMessage
+        id="icon-collection.connection.simple-polyline"
+        defaultMessage="Simple Polyline"
+      />
+    ),
   },
   {
     type: LineType.POLYLINE_CURVED,
     icon: <TimelineOutined />,
-    label: 'Curved Polyline',
+    label: (
+      <FormattedMessage
+        id="icon-collection.connection.curved-polyline"
+        defaultMessage="Curved Polyline"
+      />
+    ),
   },
 ];
 
@@ -244,7 +262,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
         <CloseIcon />
       </IconButton>
       <Box sx={{ borderBottom: 1, borderColor: 'divider', p: 0 }}>
-        <StyledTabs value={activeTab} onChange={handleTabChange} aria-label="styling tabs">
+        <StyledTabs value={activeTab} onChange={handleTabChange} aria-label="styling tabs" centered>
           <Tab
             label={<FormattedMessage id="unified-styling.tab.shape" defaultMessage="Shape" />}
             id="styling-tab-0"
@@ -284,15 +302,43 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
           <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
             <IconCollection
               styles={[
-                { type: 'none', icon: <NotInterestedOutlined />, label: 'None' },
-                { type: 'line', icon: <HorizontalRuleOutlinedIcon />, label: 'Line' },
-                { type: 'rectangle', icon: <SquareOutlinedIcon />, label: 'Rectangle' },
+                {
+                  type: 'none',
+                  icon: <NotInterestedOutlined />,
+                  label: <FormattedMessage id="icon-collection.shape.none" defaultMessage="None" />,
+                },
+                {
+                  type: 'line',
+                  icon: <HorizontalRuleOutlinedIcon />,
+                  label: <FormattedMessage id="icon-collection.shape.line" defaultMessage="Line" />,
+                },
+                {
+                  type: 'rectangle',
+                  icon: <SquareOutlinedIcon />,
+                  label: (
+                    <FormattedMessage
+                      id="icon-collection.shape.rectangle"
+                      defaultMessage="Rectangle"
+                    />
+                  ),
+                },
                 {
                   type: 'rounded rectangle',
                   icon: <CheckBoxOutlineBlankOutlinedIcon />,
-                  label: 'Rounded Rectangle',
+                  label: (
+                    <FormattedMessage
+                      id="icon-collection.shape.rounded-rectangle"
+                      defaultMessage="Rounded Rectangle"
+                    />
+                  ),
                 },
-                { type: 'elipse', icon: <RadioButtonUncheckedOutlinedIcon />, label: 'Ellipse' },
+                {
+                  type: 'elipse',
+                  icon: <RadioButtonUncheckedOutlinedIcon />,
+                  label: (
+                    <FormattedMessage id="icon-collection.shape.ellipse" defaultMessage="Ellipse" />
+                  ),
+                },
               ]}
               selectedValue={props.topicShapeModel.getValue()}
               onSelect={handleShapeChange}

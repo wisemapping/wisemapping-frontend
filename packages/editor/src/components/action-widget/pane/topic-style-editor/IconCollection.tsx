@@ -28,7 +28,7 @@ interface IconCollectionProps {
   styles: Array<{
     type: TopicShapeType | StrokeStyle | LineType;
     icon: ReactElement;
-    label: string;
+    label: string | ReactElement;
   }>;
   selectedValue: TopicShapeType | StrokeStyle | LineType;
   onSelect: (value: TopicShapeType | StrokeStyle | LineType) => void;
