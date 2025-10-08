@@ -434,6 +434,9 @@
   "publish.checkbox": {
     "defaultMessage": "सार्वजनिक साझाकरण सक्षम करें"
   },
+  "publish.copied": {
+    "defaultMessage": "Copied to clipboard!"
+  },
   "publish.description": {
     "defaultMessage": "मानचित्र प्रकाशित करके आप इसे इंटरनेट पर सभी के लिए दृश्यमान बनाते हैं।"
   },
@@ -533,6 +536,9 @@
   "share.add-button": {
     "defaultMessage": "साझा करें"
   },
+  "share.adding-button": {
+    "defaultMessage": "Sharing..."
+  },
   "share.add-message": {
     "defaultMessage": "संदेश जोड़ें"
   },
@@ -564,127 +570,127 @@
     "defaultMessage": "थीम बदलें"
   },
   "admin.delete-user": {
-    "defaultMessage": "[HI] admin.delete-user"
+    "defaultMessage": "उपयोगकर्ता हटाएं"
   },
   "common.maps-list": {
-    "defaultMessage": "[HI] common.maps-list"
+    "defaultMessage": "मानचित्र सूची"
   },
   "admin.status-clean": {
-    "defaultMessage": "[HI] admin.status-clean"
+    "defaultMessage": "साफ"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "[HI] common.allow-email-notifications"
+    "defaultMessage": "ईमेल सूचनाएं की अनुमति दें"
   },
   "admin.public": {
-    "defaultMessage": "[HI] admin.public"
+    "defaultMessage": "सार्वजनिक"
   },
   "common.others": {
-    "defaultMessage": "[HI] common.others"
+    "defaultMessage": "अन्य"
   },
   "admin.view-xml": {
-    "defaultMessage": "[HI] admin.view-xml"
+    "defaultMessage": "XML देखें"
   },
   "registration.facebook.button": {
-    "defaultMessage": "[HI] registration.facebook.button"
+    "defaultMessage": "Facebook से साइन अप करें"
   },
   "common.registration-form": {
-    "defaultMessage": "[HI] common.registration-form"
+    "defaultMessage": "पंजीकरण फॉर्म"
   },
   "common.first-name": {
-    "defaultMessage": "[HI] common.first-name"
+    "defaultMessage": "पहला नाम"
   },
   "admin.auth-type": {
-    "defaultMessage": "[HI] admin.auth-type"
+    "defaultMessage": "प्रमाणीकरण प्रकार"
   },
   "common.delete": {
-    "defaultMessage": "[HI] common.delete"
+    "defaultMessage": "हटाएं"
   },
   "admin.status": {
-    "defaultMessage": "[HI] admin.status"
+    "defaultMessage": "स्थिति"
   },
   "admin.suspend-user": {
-    "defaultMessage": "[HI] admin.suspend-user"
+    "defaultMessage": "उपयोगकर्ता निलंबित करें"
   },
   "admin.suspension-status": {
-    "defaultMessage": "[HI] admin.suspension-status"
+    "defaultMessage": "निलंबन स्थिति"
   },
   "admin.edit-user": {
-    "defaultMessage": "[HI] admin.edit-user"
+    "defaultMessage": "उपयोगकर्ता संपादित करें"
   },
   "admin.refresh": {
-    "defaultMessage": "[HI] admin.refresh"
+    "defaultMessage": "ताज़ा करें"
   },
   "common.login-form": {
-    "defaultMessage": "[HI] common.login-form"
+    "defaultMessage": "लॉगिन फॉर्म"
   },
   "admin.lock-status": {
-    "defaultMessage": "[HI] admin.lock-status"
+    "defaultMessage": "लॉक स्थिति"
   },
   "common.emails": {
-    "defaultMessage": "[HI] common.emails"
+    "defaultMessage": "ईमेल"
   },
   "admin.suspension-reason": {
-    "defaultMessage": "[HI] admin.suspension-reason"
+    "defaultMessage": "निलंबन कारण"
   },
   "admin.status-suspended": {
-    "defaultMessage": "[HI] admin.status-suspended"
+    "defaultMessage": "निलंबित"
   },
   "admin.delete": {
-    "defaultMessage": "[HI] admin.delete"
+    "defaultMessage": "हटाएं"
   },
   "common.last-name": {
-    "defaultMessage": "[HI] common.last-name"
+    "defaultMessage": "अंतिम नाम"
   },
   "admin.public-access": {
-    "defaultMessage": "[HI] admin.public-access"
+    "defaultMessage": "सार्वजनिक पहुंच"
   },
   "admin.status-active": {
-    "defaultMessage": "[HI] admin.status-active"
+    "defaultMessage": "सक्रिय"
   },
   "common.locale": {
-    "defaultMessage": "[HI] common.locale"
+    "defaultMessage": "भाषा"
   },
   "login.facebook.button": {
-    "defaultMessage": "[HI] login.facebook.button"
+    "defaultMessage": "Facebook से साइन इन करें"
   },
   "common.email": {
-    "defaultMessage": "[HI] common.email"
+    "defaultMessage": "ईमेल"
   },
   "admin.unsuspend-user": {
-    "defaultMessage": "[HI] admin.unsuspend-user"
+    "defaultMessage": "उपयोगकर्ता को पुनः सक्रिय करें"
   },
   "common.delete-tag": {
-    "defaultMessage": "[HI] common.delete-tag"
+    "defaultMessage": "टैग हटाएं"
   },
   "admin.edit": {
-    "defaultMessage": "[HI] admin.edit"
+    "defaultMessage": "संपादित करें"
   },
   "common.open-drawer": {
-    "defaultMessage": "[HI] common.open-drawer"
+    "defaultMessage": "मेनू खोलें"
   },
   "admin.locked": {
-    "defaultMessage": "[HI] admin.locked"
+    "defaultMessage": "लॉक"
   },
   "common.settings": {
-    "defaultMessage": "[HI] common.settings"
+    "defaultMessage": "सेटिंग्स"
   },
   "common.loading": {
-    "defaultMessage": "Loading..."
+    "defaultMessage": "लोड हो रहा है..."
   },
   "common.retry": {
-    "defaultMessage": "Retry"
+    "defaultMessage": "पुनः प्रयास करें"
   },
   "admin.system.title": {
-    "defaultMessage": "System Information"
+    "defaultMessage": "सिस्टम जानकारी"
   },
   "admin.system.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "ताज़ा करें"
   },
   "common.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "ताज़ा करें"
   },
   "admin.system.memory": {
-    "defaultMessage": "Memory"
+    "defaultMessage": "मेमोरी"
   },
   "admin.system.db.url": {
     "defaultMessage": "URL"

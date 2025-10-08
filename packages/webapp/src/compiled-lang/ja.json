@@ -242,103 +242,103 @@
   "admin.auth-type": [
     {
       "type": 0,
-      "value": "[JA] admin.auth-type"
+      "value": "認証タイプ"
     }
   ],
   "admin.delete": [
     {
       "type": 0,
-      "value": "[JA] admin.delete"
+      "value": "削除"
     }
   ],
   "admin.delete-user": [
     {
       "type": 0,
-      "value": "[JA] admin.delete-user"
+      "value": "ユーザーを削除"
     }
   ],
   "admin.edit": [
     {
       "type": 0,
-      "value": "[JA] admin.edit"
+      "value": "編集"
     }
   ],
   "admin.edit-user": [
     {
       "type": 0,
-      "value": "[JA] admin.edit-user"
+      "value": "ユーザーを編集"
     }
   ],
   "admin.lock-status": [
     {
       "type": 0,
-      "value": "[JA] admin.lock-status"
+      "value": "ロック状態"
     }
   ],
   "admin.locked": [
     {
       "type": 0,
-      "value": "[JA] admin.locked"
+      "value": "ロック"
     }
   ],
   "admin.public": [
     {
       "type": 0,
-      "value": "[JA] admin.public"
+      "value": "公開"
     }
   ],
   "admin.public-access": [
     {
       "type": 0,
-      "value": "[JA] admin.public-access"
+      "value": "公開アクセス"
     }
   ],
   "admin.refresh": [
     {
       "type": 0,
-      "value": "[JA] admin.refresh"
+      "value": "更新"
     }
   ],
   "admin.status": [
     {
       "type": 0,
-      "value": "[JA] admin.status"
+      "value": "ステータス"
     }
   ],
   "admin.status-active": [
     {
       "type": 0,
-      "value": "[JA] admin.status-active"
+      "value": "アクティブ"
     }
   ],
   "admin.status-clean": [
     {
       "type": 0,
-      "value": "[JA] admin.status-clean"
+      "value": "クリーン"
     }
   ],
   "admin.status-suspended": [
     {
       "type": 0,
-      "value": "[JA] admin.status-suspended"
+      "value": "停止中"
     }
   ],
   "admin.suspend-user": [
     {
       "type": 0,
-      "value": "[JA] admin.suspend-user"
+      "value": "ユーザーを停止"
     }
   ],
   "admin.suspension-reason": [
     {
       "type": 0,
-      "value": "[JA] admin.suspension-reason"
+      "value": "停止理由"
     }
   ],
   "admin.suspension-status": [
     {
       "type": 0,
-      "value": "[JA] admin.suspension-status"
+      "value": "停止状態"
     }
   ],
   "admin.system.db.url": [
@@ -356,31 +356,31 @@
   "admin.system.memory": [
     {
       "type": 0,
-      "value": "Memory"
+      "value": "メモリ"
     }
   ],
   "admin.system.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "更新"
     }
   ],
   "admin.system.title": [
     {
       "type": 0,
-      "value": "System Information"
+      "value": "システム情報"
     }
   ],
   "admin.unsuspend-user": [
     {
       "type": 0,
-      "value": "[JA] admin.unsuspend-user"
+      "value": "ユーザーの停止を解除"
     }
   ],
   "admin.view-xml": [
     {
       "type": 0,
-      "value": "[JA] admin.view-xml"
+      "value": "XMLを表示"
     }
   ],
   "changepwd.button": [
@@ -422,103 +422,103 @@
   "common.allow-email-notifications": [
     {
       "type": 0,
-      "value": "[JA] common.allow-email-notifications"
+      "value": "メール通知を許可"
     }
   ],
   "common.delete": [
     {
       "type": 0,
-      "value": "[JA] common.delete"
+      "value": "削除"
     }
   ],
   "common.delete-tag": [
     {
       "type": 0,
-      "value": "[JA] common.delete-tag"
+      "value": "タグを削除"
     }
   ],
   "common.email": [
     {
       "type": 0,
-      "value": "[JA] common.email"
+      "value": "メール"
     }
   ],
   "common.emails": [
     {
       "type": 0,
-      "value": "[JA] common.emails"
+      "value": "メール"
     }
   ],
   "common.first-name": [
     {
       "type": 0,
-      "value": "[JA] common.first-name"
+      "value": "名"
     }
   ],
   "common.last-name": [
     {
       "type": 0,
-      "value": "[JA] common.last-name"
+      "value": "姓"
     }
   ],
   "common.loading": [
     {
       "type": 0,
-      "value": "Loading..."
+      "value": "読み込み中..."
     }
   ],
   "common.locale": [
     {
       "type": 0,
-      "value": "[JA] common.locale"
+      "value": "言語"
     }
   ],
   "common.login-form": [
     {
       "type": 0,
-      "value": "[JA] common.login-form"
+      "value": "ログインフォーム"
     }
   ],
   "common.maps-list": [
     {
       "type": 0,
-      "value": "[JA] common.maps-list"
+      "value": "マップ一覧"
     }
   ],
   "common.open-drawer": [
     {
       "type": 0,
-      "value": "[JA] common.open-drawer"
+      "value": "メニューを開く"
     }
   ],
   "common.others": [
     {
       "type": 0,
-      "value": "[JA] common.others"
+      "value": "その他"
     }
   ],
   "common.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "更新"
     }
   ],
   "common.registration-form": [
     {
       "type": 0,
-      "value": "[JA] common.registration-form"
+      "value": "登録フォーム"
     }
   ],
   "common.retry": [
     {
       "type": 0,
-      "value": "Retry"
+      "value": "再試行"
     }
   ],
   "common.settings": [
     {
       "type": 0,
-      "value": "[JA] common.settings"
+      "value": "設定"
     }
   ],
   "common.wait": [
@@ -988,7 +988,7 @@
   "login.facebook.button": [
     {
       "type": 0,
-      "value": "[JA] login.facebook.button"
+      "value": "Facebookでサインイン"
     }
   ],
   "login.forgotpwd": [
@@ -1237,6 +1237,12 @@
       "value": "公開共有を有効にする"
     }
   ],
+  "publish.copied": [
+    {
+      "type": 0,
+      "value": "Copied to clipboard!"
+    }
+  ],
   "publish.description": [
     {
       "type": 0,
@@ -1342,7 +1348,7 @@
   "registration.facebook.button": [
     {
       "type": 0,
-      "value": "[JA] registration.facebook.button"
+      "value": "Facebookで登録"
     }
   ],
   "registration.firstname": [
@@ -1451,6 +1457,12 @@
     {
       "type": 0,
       "value": "メッセージを追加"
+    }
+  ],
+  "share.adding-button": [
+    {
+      "type": 0,
+      "value": "Sharing..."
     }
   ],
   "share.can-edit": [

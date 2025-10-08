@@ -434,6 +434,9 @@
   "publish.checkbox": {
     "defaultMessage": "启用公开分享"
   },
+  "publish.copied": {
+    "defaultMessage": "Copied to clipboard!"
+  },
   "publish.description": {
     "defaultMessage": "通过发布地图，您使其对互联网上的每个人都可见。"
   },
@@ -533,6 +536,9 @@
   "share.add-button": {
     "defaultMessage": "分享"
   },
+  "share.adding-button": {
+    "defaultMessage": "Sharing..."
+  },
   "share.add-message": {
     "defaultMessage": "添加消息"
   },
@@ -564,127 +570,127 @@
     "defaultMessage": "切换主题"
   },
   "admin.delete-user": {
-    "defaultMessage": "[ZH-CN] admin.delete-user"
+    "defaultMessage": "删除用户"
   },
   "common.maps-list": {
-    "defaultMessage": "[ZH-CN] common.maps-list"
+    "defaultMessage": "地图列表"
   },
   "admin.status-clean": {
-    "defaultMessage": "[ZH-CN] admin.status-clean"
+    "defaultMessage": "清除"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "[ZH-CN] common.allow-email-notifications"
+    "defaultMessage": "允许邮件通知"
   },
   "admin.public": {
-    "defaultMessage": "[ZH-CN] admin.public"
+    "defaultMessage": "公开"
   },
   "common.others": {
-    "defaultMessage": "[ZH-CN] common.others"
+    "defaultMessage": "其他"
   },
   "admin.view-xml": {
-    "defaultMessage": "[ZH-CN] admin.view-xml"
+    "defaultMessage": "查看 XML"
   },
   "registration.facebook.button": {
-    "defaultMessage": "[ZH-CN] registration.facebook.button"
+    "defaultMessage": "使用 Facebook 注册"
   },
   "common.registration-form": {
-    "defaultMessage": "[ZH-CN] common.registration-form"
+    "defaultMessage": "注册表单"
   },
   "common.first-name": {
-    "defaultMessage": "[ZH-CN] common.first-name"
+    "defaultMessage": "名"
   },
   "admin.auth-type": {
-    "defaultMessage": "[ZH-CN] admin.auth-type"
+    "defaultMessage": "认证类型"
   },
   "common.delete": {
-    "defaultMessage": "[ZH-CN] common.delete"
+    "defaultMessage": "删除"
   },
   "admin.status": {
-    "defaultMessage": "[ZH-CN] admin.status"
+    "defaultMessage": "状态"
   },
   "admin.suspend-user": {
-    "defaultMessage": "[ZH-CN] admin.suspend-user"
+    "defaultMessage": "暂停用户"
   },
   "admin.suspension-status": {
-    "defaultMessage": "[ZH-CN] admin.suspension-status"
+    "defaultMessage": "暂停状态"
   },
   "admin.edit-user": {
-    "defaultMessage": "[ZH-CN] admin.edit-user"
+    "defaultMessage": "编辑用户"
   },
   "admin.refresh": {
-    "defaultMessage": "[ZH-CN] admin.refresh"
+    "defaultMessage": "刷新"
   },
   "common.login-form": {
-    "defaultMessage": "[ZH-CN] common.login-form"
+    "defaultMessage": "登录表单"
   },
   "admin.lock-status": {
-    "defaultMessage": "[ZH-CN] admin.lock-status"
+    "defaultMessage": "锁定状态"
   },
   "common.emails": {
-    "defaultMessage": "[ZH-CN] common.emails"
+    "defaultMessage": "电子邮件"
   },
   "admin.suspension-reason": {
-    "defaultMessage": "[ZH-CN] admin.suspension-reason"
+    "defaultMessage": "暂停原因"
   },
   "admin.status-suspended": {
-    "defaultMessage": "[ZH-CN] admin.status-suspended"
+    "defaultMessage": "已暂停"
   },
   "admin.delete": {
-    "defaultMessage": "[ZH-CN] admin.delete"
+    "defaultMessage": "删除"
   },
   "common.last-name": {
-    "defaultMessage": "[ZH-CN] common.last-name"
+    "defaultMessage": "姓"
   },
   "admin.public-access": {
-    "defaultMessage": "[ZH-CN] admin.public-access"
+    "defaultMessage": "公开访问"
   },
   "admin.status-active": {
-    "defaultMessage": "[ZH-CN] admin.status-active"
+    "defaultMessage": "活跃"
   },
   "common.locale": {
-    "defaultMessage": "[ZH-CN] common.locale"
+    "defaultMessage": "语言"
   },
   "login.facebook.button": {
-    "defaultMessage": "[ZH-CN] login.facebook.button"
+    "defaultMessage": "使用 Facebook 登录"
   },
   "common.email": {
-    "defaultMessage": "[ZH-CN] common.email"
+    "defaultMessage": "电子邮件"
   },
   "admin.unsuspend-user": {
-    "defaultMessage": "[ZH-CN] admin.unsuspend-user"
+    "defaultMessage": "恢复用户"
   },
   "common.delete-tag": {
-    "defaultMessage": "[ZH-CN] common.delete-tag"
+    "defaultMessage": "删除标签"
   },
   "admin.edit": {
-    "defaultMessage": "[ZH-CN] admin.edit"
+    "defaultMessage": "编辑"
   },
   "common.open-drawer": {
-    "defaultMessage": "[ZH-CN] common.open-drawer"
+    "defaultMessage": "打开菜单"
   },
   "admin.locked": {
-    "defaultMessage": "[ZH-CN] admin.locked"
+    "defaultMessage": "已锁定"
   },
   "common.settings": {
-    "defaultMessage": "[ZH-CN] common.settings"
+    "defaultMessage": "设置"
   },
   "common.loading": {
-    "defaultMessage": "Loading..."
+    "defaultMessage": "加载中..."
   },
   "common.retry": {
-    "defaultMessage": "Retry"
+    "defaultMessage": "重试"
   },
   "admin.system.title": {
-    "defaultMessage": "System Information"
+    "defaultMessage": "系统信息"
   },
   "admin.system.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "刷新"
   },
   "common.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "刷新"
   },
   "admin.system.memory": {
-    "defaultMessage": "Memory"
+    "defaultMessage": "内存"
   },
   "admin.system.db.url": {
     "defaultMessage": "URL"

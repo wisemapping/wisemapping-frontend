@@ -434,6 +434,9 @@
   "publish.checkbox": {
     "defaultMessage": "Abilita condivisione pubblica"
   },
+  "publish.copied": {
+    "defaultMessage": "Copied to clipboard!"
+  },
   "publish.description": {
     "defaultMessage": "Pubblicando la mappa la rendi visibile a tutti su Internet."
   },
@@ -533,6 +536,9 @@
   "share.add-button": {
     "defaultMessage": "Condividi"
   },
+  "share.adding-button": {
+    "defaultMessage": "Sharing..."
+  },
   "share.add-message": {
     "defaultMessage": "Aggiungi messaggio"
   },
@@ -564,127 +570,127 @@
     "defaultMessage": "Cambia Tema"
   },
   "admin.delete-user": {
-    "defaultMessage": "[IT] admin.delete-user"
+    "defaultMessage": "Elimina utente"
   },
   "common.maps-list": {
-    "defaultMessage": "[IT] common.maps-list"
+    "defaultMessage": "Elenco mappe"
   },
   "admin.status-clean": {
-    "defaultMessage": "[IT] admin.status-clean"
+    "defaultMessage": "Pulisci"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "[IT] common.allow-email-notifications"
+    "defaultMessage": "Consenti notifiche email"
   },
   "admin.public": {
-    "defaultMessage": "[IT] admin.public"
+    "defaultMessage": "Pubblico"
   },
   "common.others": {
-    "defaultMessage": "[IT] common.others"
+    "defaultMessage": "Altri"
   },
   "admin.view-xml": {
-    "defaultMessage": "[IT] admin.view-xml"
+    "defaultMessage": "Visualizza XML"
   },
   "registration.facebook.button": {
-    "defaultMessage": "[IT] registration.facebook.button"
+    "defaultMessage": "Registrati con Facebook"
   },
   "common.registration-form": {
-    "defaultMessage": "[IT] common.registration-form"
+    "defaultMessage": "Modulo di registrazione"
   },
   "common.first-name": {
-    "defaultMessage": "[IT] common.first-name"
+    "defaultMessage": "Nome"
   },
   "admin.auth-type": {
-    "defaultMessage": "[IT] admin.auth-type"
+    "defaultMessage": "Tipo di autenticazione"
   },
   "common.delete": {
-    "defaultMessage": "[IT] common.delete"
+    "defaultMessage": "Elimina"
   },
   "admin.status": {
-    "defaultMessage": "[IT] admin.status"
+    "defaultMessage": "Stato"
   },
   "admin.suspend-user": {
-    "defaultMessage": "[IT] admin.suspend-user"
+    "defaultMessage": "Sospendi utente"
   },
   "admin.suspension-status": {
-    "defaultMessage": "[IT] admin.suspension-status"
+    "defaultMessage": "Stato sospensione"
   },
   "admin.edit-user": {
-    "defaultMessage": "[IT] admin.edit-user"
+    "defaultMessage": "Modifica utente"
   },
   "admin.refresh": {
-    "defaultMessage": "[IT] admin.refresh"
+    "defaultMessage": "Aggiorna"
   },
   "common.login-form": {
-    "defaultMessage": "[IT] common.login-form"
+    "defaultMessage": "Modulo di accesso"
   },
   "admin.lock-status": {
-    "defaultMessage": "[IT] admin.lock-status"
+    "defaultMessage": "Stato blocco"
   },
   "common.emails": {
-    "defaultMessage": "[IT] common.emails"
+    "defaultMessage": "Email"
   },
   "admin.suspension-reason": {
-    "defaultMessage": "[IT] admin.suspension-reason"
+    "defaultMessage": "Motivo sospensione"
   },
   "admin.status-suspended": {
-    "defaultMessage": "[IT] admin.status-suspended"
+    "defaultMessage": "Sospeso"
   },
   "admin.delete": {
-    "defaultMessage": "[IT] admin.delete"
+    "defaultMessage": "Elimina"
   },
   "common.last-name": {
-    "defaultMessage": "[IT] common.last-name"
+    "defaultMessage": "Cognome"
   },
   "admin.public-access": {
-    "defaultMessage": "[IT] admin.public-access"
+    "defaultMessage": "Accesso pubblico"
   },
   "admin.status-active": {
-    "defaultMessage": "[IT] admin.status-active"
+    "defaultMessage": "Attivo"
   },
   "common.locale": {
-    "defaultMessage": "[IT] common.locale"
+    "defaultMessage": "Lingua"
   },
   "login.facebook.button": {
-    "defaultMessage": "[IT] login.facebook.button"
+    "defaultMessage": "Accedi con Facebook"
   },
   "common.email": {
-    "defaultMessage": "[IT] common.email"
+    "defaultMessage": "Email"
   },
   "admin.unsuspend-user": {
-    "defaultMessage": "[IT] admin.unsuspend-user"
+    "defaultMessage": "Ripristina utente"
   },
   "common.delete-tag": {
-    "defaultMessage": "[IT] common.delete-tag"
+    "defaultMessage": "Elimina tag"
   },
   "admin.edit": {
-    "defaultMessage": "[IT] admin.edit"
+    "defaultMessage": "Modifica"
   },
   "common.open-drawer": {
-    "defaultMessage": "[IT] common.open-drawer"
+    "defaultMessage": "Apri menu"
   },
   "admin.locked": {
-    "defaultMessage": "[IT] admin.locked"
+    "defaultMessage": "Bloccato"
   },
   "common.settings": {
-    "defaultMessage": "[IT] common.settings"
+    "defaultMessage": "Impostazioni"
   },
   "common.loading": {
-    "defaultMessage": "Loading..."
+    "defaultMessage": "Caricamento..."
   },
   "common.retry": {
-    "defaultMessage": "Retry"
+    "defaultMessage": "Riprova"
   },
   "admin.system.title": {
-    "defaultMessage": "System Information"
+    "defaultMessage": "Informazioni di sistema"
   },
   "admin.system.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "Aggiorna"
   },
   "common.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "Aggiorna"
   },
   "admin.system.memory": {
-    "defaultMessage": "Memory"
+    "defaultMessage": "Memoria"
   },
   "admin.system.db.url": {
     "defaultMessage": "URL"

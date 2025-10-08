@@ -242,103 +242,103 @@
   "admin.auth-type": [
     {
       "type": 0,
-      "value": "[HI] admin.auth-type"
+      "value": "प्रमाणीकरण प्रकार"
     }
   ],
   "admin.delete": [
     {
       "type": 0,
-      "value": "[HI] admin.delete"
+      "value": "हटाएं"
     }
   ],
   "admin.delete-user": [
     {
       "type": 0,
-      "value": "[HI] admin.delete-user"
+      "value": "उपयोगकर्ता हटाएं"
     }
   ],
   "admin.edit": [
     {
       "type": 0,
-      "value": "[HI] admin.edit"
+      "value": "संपादित करें"
     }
   ],
   "admin.edit-user": [
     {
       "type": 0,
-      "value": "[HI] admin.edit-user"
+      "value": "उपयोगकर्ता संपादित करें"
     }
   ],
   "admin.lock-status": [
     {
       "type": 0,
-      "value": "[HI] admin.lock-status"
+      "value": "लॉक स्थिति"
     }
   ],
   "admin.locked": [
     {
       "type": 0,
-      "value": "[HI] admin.locked"
+      "value": "लॉक"
     }
   ],
   "admin.public": [
     {
       "type": 0,
-      "value": "[HI] admin.public"
+      "value": "सार्वजनिक"
     }
   ],
   "admin.public-access": [
     {
       "type": 0,
-      "value": "[HI] admin.public-access"
+      "value": "सार्वजनिक पहुंच"
     }
   ],
   "admin.refresh": [
     {
       "type": 0,
-      "value": "[HI] admin.refresh"
+      "value": "ताज़ा करें"
     }
   ],
   "admin.status": [
     {
       "type": 0,
-      "value": "[HI] admin.status"
+      "value": "स्थिति"
     }
   ],
   "admin.status-active": [
     {
       "type": 0,
-      "value": "[HI] admin.status-active"
+      "value": "सक्रिय"
     }
   ],
   "admin.status-clean": [
     {
       "type": 0,
-      "value": "[HI] admin.status-clean"
+      "value": "साफ"
     }
   ],
   "admin.status-suspended": [
     {
       "type": 0,
-      "value": "[HI] admin.status-suspended"
+      "value": "निलंबित"
     }
   ],
   "admin.suspend-user": [
     {
       "type": 0,
-      "value": "[HI] admin.suspend-user"
+      "value": "उपयोगकर्ता निलंबित करें"
     }
   ],
   "admin.suspension-reason": [
     {
       "type": 0,
-      "value": "[HI] admin.suspension-reason"
+      "value": "निलंबन कारण"
     }
   ],
   "admin.suspension-status": [
     {
       "type": 0,
-      "value": "[HI] admin.suspension-status"
+      "value": "निलंबन स्थिति"
     }
   ],
   "admin.system.db.url": [
@@ -356,31 +356,31 @@
   "admin.system.memory": [
     {
       "type": 0,
-      "value": "Memory"
+      "value": "मेमोरी"
     }
   ],
   "admin.system.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "ताज़ा करें"
     }
   ],
   "admin.system.title": [
     {
       "type": 0,
-      "value": "System Information"
+      "value": "सिस्टम जानकारी"
     }
   ],
   "admin.unsuspend-user": [
     {
       "type": 0,
-      "value": "[HI] admin.unsuspend-user"
+      "value": "उपयोगकर्ता को पुनः सक्रिय करें"
     }
   ],
   "admin.view-xml": [
     {
       "type": 0,
-      "value": "[HI] admin.view-xml"
+      "value": "XML देखें"
     }
   ],
   "changepwd.button": [
@@ -422,103 +422,103 @@
   "common.allow-email-notifications": [
     {
       "type": 0,
-      "value": "[HI] common.allow-email-notifications"
+      "value": "ईमेल सूचनाएं की अनुमति दें"
     }
   ],
   "common.delete": [
     {
       "type": 0,
-      "value": "[HI] common.delete"
+      "value": "हटाएं"
     }
   ],
   "common.delete-tag": [
     {
       "type": 0,
-      "value": "[HI] common.delete-tag"
+      "value": "टैग हटाएं"
     }
   ],
   "common.email": [
     {
       "type": 0,
-      "value": "[HI] common.email"
+      "value": "ईमेल"
     }
   ],
   "common.emails": [
     {
       "type": 0,
-      "value": "[HI] common.emails"
+      "value": "ईमेल"
     }
   ],
   "common.first-name": [
     {
       "type": 0,
-      "value": "[HI] common.first-name"
+      "value": "पहला नाम"
     }
   ],
   "common.last-name": [
     {
       "type": 0,
-      "value": "[HI] common.last-name"
+      "value": "अंतिम नाम"
     }
   ],
   "common.loading": [
     {
       "type": 0,
-      "value": "Loading..."
+      "value": "लोड हो रहा है..."
     }
   ],
   "common.locale": [
     {
       "type": 0,
-      "value": "[HI] common.locale"
+      "value": "भाषा"
     }
   ],
   "common.login-form": [
     {
       "type": 0,
-      "value": "[HI] common.login-form"
+      "value": "लॉगिन फॉर्म"
     }
   ],
   "common.maps-list": [
     {
       "type": 0,
-      "value": "[HI] common.maps-list"
+      "value": "मानचित्र सूची"
     }
   ],
   "common.open-drawer": [
     {
       "type": 0,
-      "value": "[HI] common.open-drawer"
+      "value": "मेनू खोलें"
     }
   ],
   "common.others": [
     {
       "type": 0,
-      "value": "[HI] common.others"
+      "value": "अन्य"
     }
   ],
   "common.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "ताज़ा करें"
     }
   ],
   "common.registration-form": [
     {
       "type": 0,
-      "value": "[HI] common.registration-form"
+      "value": "पंजीकरण फॉर्म"
     }
   ],
   "common.retry": [
     {
       "type": 0,
-      "value": "Retry"
+      "value": "पुनः प्रयास करें"
     }
   ],
   "common.settings": [
     {
       "type": 0,
-      "value": "[HI] common.settings"
+      "value": "सेटिंग्स"
     }
   ],
   "common.wait": [
@@ -988,7 +988,7 @@
   "login.facebook.button": [
     {
       "type": 0,
-      "value": "[HI] login.facebook.button"
+      "value": "Facebook से साइन इन करें"
     }
   ],
   "login.forgotpwd": [
@@ -1237,6 +1237,12 @@
       "value": "सार्वजनिक साझाकरण सक्षम करें"
     }
   ],
+  "publish.copied": [
+    {
+      "type": 0,
+      "value": "Copied to clipboard!"
+    }
+  ],
   "publish.description": [
     {
       "type": 0,
@@ -1342,7 +1348,7 @@
   "registration.facebook.button": [
     {
       "type": 0,
-      "value": "[HI] registration.facebook.button"
+      "value": "Facebook से साइन अप करें"
     }
   ],
   "registration.firstname": [
@@ -1451,6 +1457,12 @@
     {
       "type": 0,
       "value": "संदेश जोड़ें"
+    }
+  ],
+  "share.adding-button": [
+    {
+      "type": 0,
+      "value": "Sharing..."
     }
   ],
   "share.can-edit": [

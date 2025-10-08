@@ -242,103 +242,103 @@
   "admin.auth-type": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.auth-type"
+      "value": "认证类型"
     }
   ],
   "admin.delete": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.delete"
+      "value": "删除"
     }
   ],
   "admin.delete-user": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.delete-user"
+      "value": "删除用户"
     }
   ],
   "admin.edit": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.edit"
+      "value": "编辑"
     }
   ],
   "admin.edit-user": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.edit-user"
+      "value": "编辑用户"
     }
   ],
   "admin.lock-status": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.lock-status"
+      "value": "锁定状态"
     }
   ],
   "admin.locked": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.locked"
+      "value": "已锁定"
     }
   ],
   "admin.public": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.public"
+      "value": "公开"
     }
   ],
   "admin.public-access": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.public-access"
+      "value": "公开访问"
     }
   ],
   "admin.refresh": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.refresh"
+      "value": "刷新"
     }
   ],
   "admin.status": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.status"
+      "value": "状态"
     }
   ],
   "admin.status-active": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.status-active"
+      "value": "活跃"
     }
   ],
   "admin.status-clean": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.status-clean"
+      "value": "清除"
     }
   ],
   "admin.status-suspended": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.status-suspended"
+      "value": "已暂停"
     }
   ],
   "admin.suspend-user": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.suspend-user"
+      "value": "暂停用户"
     }
   ],
   "admin.suspension-reason": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.suspension-reason"
+      "value": "暂停原因"
     }
   ],
   "admin.suspension-status": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.suspension-status"
+      "value": "暂停状态"
     }
   ],
   "admin.system.db.url": [
@@ -356,31 +356,31 @@
   "admin.system.memory": [
     {
       "type": 0,
-      "value": "Memory"
+      "value": "内存"
     }
   ],
   "admin.system.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "刷新"
     }
   ],
   "admin.system.title": [
     {
       "type": 0,
-      "value": "System Information"
+      "value": "系统信息"
     }
   ],
   "admin.unsuspend-user": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.unsuspend-user"
+      "value": "恢复用户"
     }
   ],
   "admin.view-xml": [
     {
       "type": 0,
-      "value": "[ZH-CN] admin.view-xml"
+      "value": "查看 XML"
     }
   ],
   "changepwd.button": [
@@ -422,103 +422,103 @@
   "common.allow-email-notifications": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.allow-email-notifications"
+      "value": "允许邮件通知"
     }
   ],
   "common.delete": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.delete"
+      "value": "删除"
     }
   ],
   "common.delete-tag": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.delete-tag"
+      "value": "删除标签"
     }
   ],
   "common.email": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.email"
+      "value": "电子邮件"
     }
   ],
   "common.emails": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.emails"
+      "value": "电子邮件"
     }
   ],
   "common.first-name": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.first-name"
+      "value": "名"
     }
   ],
   "common.last-name": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.last-name"
+      "value": "姓"
     }
   ],
   "common.loading": [
     {
       "type": 0,
-      "value": "Loading..."
+      "value": "加载中..."
     }
   ],
   "common.locale": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.locale"
+      "value": "语言"
     }
   ],
   "common.login-form": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.login-form"
+      "value": "登录表单"
     }
   ],
   "common.maps-list": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.maps-list"
+      "value": "地图列表"
     }
   ],
   "common.open-drawer": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.open-drawer"
+      "value": "打开菜单"
     }
   ],
   "common.others": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.others"
+      "value": "其他"
     }
   ],
   "common.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "刷新"
     }
   ],
   "common.registration-form": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.registration-form"
+      "value": "注册表单"
     }
   ],
   "common.retry": [
     {
       "type": 0,
-      "value": "Retry"
+      "value": "重试"
     }
   ],
   "common.settings": [
     {
       "type": 0,
-      "value": "[ZH-CN] common.settings"
+      "value": "设置"
     }
   ],
   "common.wait": [
@@ -988,7 +988,7 @@
   "login.facebook.button": [
     {
       "type": 0,
-      "value": "[ZH-CN] login.facebook.button"
+      "value": "使用 Facebook 登录"
     }
   ],
   "login.forgotpwd": [
@@ -1237,6 +1237,12 @@
       "value": "启用公开分享"
     }
   ],
+  "publish.copied": [
+    {
+      "type": 0,
+      "value": "Copied to clipboard!"
+    }
+  ],
   "publish.description": [
     {
       "type": 0,
@@ -1342,7 +1348,7 @@
   "registration.facebook.button": [
     {
       "type": 0,
-      "value": "[ZH-CN] registration.facebook.button"
+      "value": "使用 Facebook 注册"
     }
   ],
   "registration.firstname": [
@@ -1451,6 +1457,12 @@
     {
       "type": 0,
       "value": "添加消息"
+    }
+  ],
+  "share.adding-button": [
+    {
+      "type": 0,
+      "value": "Sharing..."
     }
   ],
   "share.can-edit": [

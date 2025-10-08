@@ -564,115 +564,115 @@
     "defaultMessage": "Cambiar Tema"
   },
   "admin.delete-user": {
-    "defaultMessage": "[ES] admin.delete-user"
+    "defaultMessage": "Eliminar usuario"
   },
   "common.maps-list": {
-    "defaultMessage": "[ES] common.maps-list"
+    "defaultMessage": "Lista de mapas"
   },
   "admin.status-clean": {
-    "defaultMessage": "[ES] admin.status-clean"
+    "defaultMessage": "Limpiar"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "[ES] common.allow-email-notifications"
+    "defaultMessage": "Permitir notificaciones por correo"
   },
   "admin.public": {
-    "defaultMessage": "[ES] admin.public"
+    "defaultMessage": "Público"
   },
   "common.others": {
-    "defaultMessage": "[ES] common.others"
+    "defaultMessage": "Otros"
   },
   "admin.view-xml": {
-    "defaultMessage": "[ES] admin.view-xml"
+    "defaultMessage": "Ver XML"
   },
   "export.img-center": {
-    "defaultMessage": "[ES] export.img-center"
+    "defaultMessage": "Centrar y ajustar zoom"
   },
   "registration.facebook.button": {
-    "defaultMessage": "[ES] registration.facebook.button"
+    "defaultMessage": "Registrarse con Facebook"
   },
   "common.registration-form": {
-    "defaultMessage": "[ES] common.registration-form"
+    "defaultMessage": "Formulario de registro"
   },
   "common.first-name": {
-    "defaultMessage": "[ES] common.first-name"
+    "defaultMessage": "Nombre"
   },
   "admin.auth-type": {
-    "defaultMessage": "[ES] admin.auth-type"
+    "defaultMessage": "Tipo de autenticación"
   },
   "common.delete": {
-    "defaultMessage": "[ES] common.delete"
+    "defaultMessage": "Eliminar"
   },
   "admin.status": {
-    "defaultMessage": "[ES] admin.status"
+    "defaultMessage": "Estado"
   },
   "admin.suspend-user": {
-    "defaultMessage": "[ES] admin.suspend-user"
+    "defaultMessage": "Suspender usuario"
   },
   "admin.suspension-status": {
-    "defaultMessage": "[ES] admin.suspension-status"
+    "defaultMessage": "Estado de suspensión"
   },
   "admin.edit-user": {
-    "defaultMessage": "[ES] admin.edit-user"
+    "defaultMessage": "Editar usuario"
   },
   "admin.refresh": {
-    "defaultMessage": "[ES] admin.refresh"
+    "defaultMessage": "Actualizar"
   },
   "common.login-form": {
-    "defaultMessage": "[ES] common.login-form"
+    "defaultMessage": "Formulario de inicio de sesión"
   },
   "accountinfo.deleteaccount": {
-    "defaultMessage": "[ES] accountinfo.deleteaccount"
+    "defaultMessage": "Eliminar cuenta"
   },
   "admin.lock-status": {
-    "defaultMessage": "[ES] admin.lock-status"
+    "defaultMessage": "Estado de bloqueo"
   },
   "common.emails": {
-    "defaultMessage": "[ES] common.emails"
+    "defaultMessage": "Correos electrónicos"
   },
   "admin.suspension-reason": {
-    "defaultMessage": "[ES] admin.suspension-reason"
+    "defaultMessage": "Razón de suspensión"
   },
   "admin.status-suspended": {
-    "defaultMessage": "[ES] admin.status-suspended"
+    "defaultMessage": "Suspendido"
   },
   "admin.delete": {
-    "defaultMessage": "[ES] admin.delete"
+    "defaultMessage": "Eliminar"
   },
   "common.last-name": {
-    "defaultMessage": "[ES] common.last-name"
+    "defaultMessage": "Apellido"
   },
   "admin.public-access": {
-    "defaultMessage": "[ES] admin.public-access"
+    "defaultMessage": "Acceso público"
   },
   "admin.status-active": {
-    "defaultMessage": "[ES] admin.status-active"
+    "defaultMessage": "Activo"
   },
   "common.locale": {
-    "defaultMessage": "[ES] common.locale"
+    "defaultMessage": "Idioma"
   },
   "login.facebook.button": {
-    "defaultMessage": "[ES] login.facebook.button"
+    "defaultMessage": "Iniciar sesión con Facebook"
   },
   "common.email": {
-    "defaultMessage": "[ES] common.email"
+    "defaultMessage": "Correo electrónico"
   },
   "admin.unsuspend-user": {
-    "defaultMessage": "[ES] admin.unsuspend-user"
+    "defaultMessage": "Reactivar usuario"
   },
   "common.delete-tag": {
-    "defaultMessage": "[ES] common.delete-tag"
+    "defaultMessage": "Eliminar etiqueta"
   },
   "admin.edit": {
-    "defaultMessage": "[ES] admin.edit"
+    "defaultMessage": "Editar"
   },
   "common.open-drawer": {
-    "defaultMessage": "[ES] common.open-drawer"
+    "defaultMessage": "Abrir menú"
   },
   "admin.locked": {
-    "defaultMessage": "[ES] admin.locked"
+    "defaultMessage": "Bloqueado"
   },
   "common.settings": {
-    "defaultMessage": "[ES] common.settings"
+    "defaultMessage": "Configuración"
   },
   "common.loading": {
     "defaultMessage": "Cargando..."

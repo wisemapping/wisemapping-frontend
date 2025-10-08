@@ -407,6 +407,9 @@
   "publish.checkbox": {
     "defaultMessage": "开启公共分享"
   },
+  "publish.copied": {
+    "defaultMessage": "Copied to clipboard!"
+  },
   "publish.description": {
     "defaultMessage": "通过发布脑图，你让互联网上的每个人都能看到它。"
   },
@@ -478,6 +481,9 @@
   },
   "share.add-button": {
     "defaultMessage": "添加"
+  },
+  "share.adding-button": {
+    "defaultMessage": "Sharing..."
   },
   "share.add-message": {
     "defaultMessage": "添加消息"
@@ -558,133 +564,133 @@
     "defaultMessage": "切换主题"
   },
   "admin.delete-user": {
-    "defaultMessage": "[ZH] admin.delete-user"
+    "defaultMessage": "刪除用戶"
   },
   "common.maps-list": {
-    "defaultMessage": "[ZH] common.maps-list"
+    "defaultMessage": "地圖列表"
   },
   "admin.status-clean": {
-    "defaultMessage": "[ZH] admin.status-clean"
+    "defaultMessage": "清除"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "[ZH] common.allow-email-notifications"
+    "defaultMessage": "允許郵件通知"
   },
   "admin.public": {
-    "defaultMessage": "[ZH] admin.public"
+    "defaultMessage": "公開"
   },
   "common.others": {
-    "defaultMessage": "[ZH] common.others"
+    "defaultMessage": "其他"
   },
   "admin.view-xml": {
-    "defaultMessage": "[ZH] admin.view-xml"
+    "defaultMessage": "查看 XML"
   },
   "registration.facebook.button": {
-    "defaultMessage": "[ZH] registration.facebook.button"
+    "defaultMessage": "使用 Facebook 註冊"
   },
   "common.registration-form": {
-    "defaultMessage": "[ZH] common.registration-form"
+    "defaultMessage": "註冊表單"
   },
   "common.first-name": {
-    "defaultMessage": "[ZH] common.first-name"
+    "defaultMessage": "名"
   },
   "admin.auth-type": {
-    "defaultMessage": "[ZH] admin.auth-type"
+    "defaultMessage": "認證類型"
   },
   "common.delete": {
-    "defaultMessage": "[ZH] common.delete"
+    "defaultMessage": "刪除"
   },
   "admin.status": {
-    "defaultMessage": "[ZH] admin.status"
+    "defaultMessage": "狀態"
   },
   "admin.suspend-user": {
-    "defaultMessage": "[ZH] admin.suspend-user"
+    "defaultMessage": "暫停用戶"
   },
   "admin.suspension-status": {
-    "defaultMessage": "[ZH] admin.suspension-status"
+    "defaultMessage": "暫停狀態"
   },
   "admin.edit-user": {
-    "defaultMessage": "[ZH] admin.edit-user"
+    "defaultMessage": "編輯用戶"
   },
   "admin.refresh": {
-    "defaultMessage": "[ZH] admin.refresh"
+    "defaultMessage": "刷新"
   },
   "common.login-form": {
-    "defaultMessage": "[ZH] common.login-form"
+    "defaultMessage": "登錄表單"
   },
   "admin.lock-status": {
-    "defaultMessage": "[ZH] admin.lock-status"
+    "defaultMessage": "鎖定狀態"
   },
   "common.emails": {
-    "defaultMessage": "[ZH] common.emails"
+    "defaultMessage": "電子郵件"
   },
   "admin.suspension-reason": {
-    "defaultMessage": "[ZH] admin.suspension-reason"
+    "defaultMessage": "暫停原因"
   },
   "admin.status-suspended": {
-    "defaultMessage": "[ZH] admin.status-suspended"
+    "defaultMessage": "已暫停"
   },
   "label.maps-count": {
-    "defaultMessage": "[ZH] label.maps-count"
+    "defaultMessage": "{count} 個地圖"
   },
   "admin.delete": {
-    "defaultMessage": "[ZH] admin.delete"
+    "defaultMessage": "刪除"
   },
   "dialog.loading": {
-    "defaultMessage": "[ZH] dialog.loading"
+    "defaultMessage": "加載中..."
   },
   "common.last-name": {
-    "defaultMessage": "[ZH] common.last-name"
+    "defaultMessage": "姓"
   },
   "admin.public-access": {
-    "defaultMessage": "[ZH] admin.public-access"
+    "defaultMessage": "公開訪問"
   },
   "admin.status-active": {
-    "defaultMessage": "[ZH] admin.status-active"
+    "defaultMessage": "活躍"
   },
   "common.locale": {
-    "defaultMessage": "[ZH] common.locale"
+    "defaultMessage": "語言"
   },
   "login.facebook.button": {
-    "defaultMessage": "[ZH] login.facebook.button"
+    "defaultMessage": "使用 Facebook 登錄"
   },
   "common.email": {
-    "defaultMessage": "[ZH] common.email"
+    "defaultMessage": "電子郵件"
   },
   "admin.unsuspend-user": {
-    "defaultMessage": "[ZH] admin.unsuspend-user"
+    "defaultMessage": "恢復用戶"
   },
   "common.delete-tag": {
-    "defaultMessage": "[ZH] common.delete-tag"
+    "defaultMessage": "刪除標籤"
   },
   "admin.edit": {
-    "defaultMessage": "[ZH] admin.edit"
+    "defaultMessage": "編輯"
   },
   "common.open-drawer": {
-    "defaultMessage": "[ZH] common.open-drawer"
+    "defaultMessage": "打開菜單"
   },
   "admin.locked": {
-    "defaultMessage": "[ZH] admin.locked"
+    "defaultMessage": "已鎖定"
   },
   "common.settings": {
-    "defaultMessage": "[ZH] common.settings"
+    "defaultMessage": "設置"
   },
   "common.loading": {
-    "defaultMessage": "Loading..."
+    "defaultMessage": "加載中..."
   },
   "common.retry": {
-    "defaultMessage": "Retry"
+    "defaultMessage": "重試"
   },
   "admin.system.title": {
-    "defaultMessage": "System Information"
+    "defaultMessage": "系統信息"
   },
   "admin.system.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "刷新"
   },
   "common.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "刷新"
   },
   "admin.system.memory": {
-    "defaultMessage": "Memory"
+    "defaultMessage": "內存"
   },
   "admin.system.db.url": {
     "defaultMessage": "URL"

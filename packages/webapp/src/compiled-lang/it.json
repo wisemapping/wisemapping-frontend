@@ -242,103 +242,103 @@
   "admin.auth-type": [
     {
       "type": 0,
-      "value": "[IT] admin.auth-type"
+      "value": "Tipo di autenticazione"
     }
   ],
   "admin.delete": [
     {
       "type": 0,
-      "value": "[IT] admin.delete"
+      "value": "Elimina"
     }
   ],
   "admin.delete-user": [
     {
       "type": 0,
-      "value": "[IT] admin.delete-user"
+      "value": "Elimina utente"
     }
   ],
   "admin.edit": [
     {
       "type": 0,
-      "value": "[IT] admin.edit"
+      "value": "Modifica"
     }
   ],
   "admin.edit-user": [
     {
       "type": 0,
-      "value": "[IT] admin.edit-user"
+      "value": "Modifica utente"
     }
   ],
   "admin.lock-status": [
     {
       "type": 0,
-      "value": "[IT] admin.lock-status"
+      "value": "Stato blocco"
     }
   ],
   "admin.locked": [
     {
       "type": 0,
-      "value": "[IT] admin.locked"
+      "value": "Bloccato"
     }
   ],
   "admin.public": [
     {
       "type": 0,
-      "value": "[IT] admin.public"
+      "value": "Pubblico"
     }
   ],
   "admin.public-access": [
     {
       "type": 0,
-      "value": "[IT] admin.public-access"
+      "value": "Accesso pubblico"
     }
   ],
   "admin.refresh": [
     {
       "type": 0,
-      "value": "[IT] admin.refresh"
+      "value": "Aggiorna"
     }
   ],
   "admin.status": [
     {
       "type": 0,
-      "value": "[IT] admin.status"
+      "value": "Stato"
     }
   ],
   "admin.status-active": [
     {
       "type": 0,
-      "value": "[IT] admin.status-active"
+      "value": "Attivo"
     }
   ],
   "admin.status-clean": [
     {
       "type": 0,
-      "value": "[IT] admin.status-clean"
+      "value": "Pulisci"
     }
   ],
   "admin.status-suspended": [
     {
       "type": 0,
-      "value": "[IT] admin.status-suspended"
+      "value": "Sospeso"
     }
   ],
   "admin.suspend-user": [
     {
       "type": 0,
-      "value": "[IT] admin.suspend-user"
+      "value": "Sospendi utente"
     }
   ],
   "admin.suspension-reason": [
     {
       "type": 0,
-      "value": "[IT] admin.suspension-reason"
+      "value": "Motivo sospensione"
     }
   ],
   "admin.suspension-status": [
     {
       "type": 0,
-      "value": "[IT] admin.suspension-status"
+      "value": "Stato sospensione"
     }
   ],
   "admin.system.db.url": [
@@ -356,31 +356,31 @@
   "admin.system.memory": [
     {
       "type": 0,
-      "value": "Memory"
+      "value": "Memoria"
     }
   ],
   "admin.system.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "Aggiorna"
     }
   ],
   "admin.system.title": [
     {
       "type": 0,
-      "value": "System Information"
+      "value": "Informazioni di sistema"
     }
   ],
   "admin.unsuspend-user": [
     {
       "type": 0,
-      "value": "[IT] admin.unsuspend-user"
+      "value": "Ripristina utente"
     }
   ],
   "admin.view-xml": [
     {
       "type": 0,
-      "value": "[IT] admin.view-xml"
+      "value": "Visualizza XML"
     }
   ],
   "changepwd.button": [
@@ -422,103 +422,103 @@
   "common.allow-email-notifications": [
     {
       "type": 0,
-      "value": "[IT] common.allow-email-notifications"
+      "value": "Consenti notifiche email"
     }
   ],
   "common.delete": [
     {
       "type": 0,
-      "value": "[IT] common.delete"
+      "value": "Elimina"
     }
   ],
   "common.delete-tag": [
     {
       "type": 0,
-      "value": "[IT] common.delete-tag"
+      "value": "Elimina tag"
     }
   ],
   "common.email": [
     {
       "type": 0,
-      "value": "[IT] common.email"
+      "value": "Email"
     }
   ],
   "common.emails": [
     {
       "type": 0,
-      "value": "[IT] common.emails"
+      "value": "Email"
     }
   ],
   "common.first-name": [
     {
       "type": 0,
-      "value": "[IT] common.first-name"
+      "value": "Nome"
     }
   ],
   "common.last-name": [
     {
       "type": 0,
-      "value": "[IT] common.last-name"
+      "value": "Cognome"
     }
   ],
   "common.loading": [
     {
       "type": 0,
-      "value": "Loading..."
+      "value": "Caricamento..."
     }
   ],
   "common.locale": [
     {
       "type": 0,
-      "value": "[IT] common.locale"
+      "value": "Lingua"
     }
   ],
   "common.login-form": [
     {
       "type": 0,
-      "value": "[IT] common.login-form"
+      "value": "Modulo di accesso"
     }
   ],
   "common.maps-list": [
     {
       "type": 0,
-      "value": "[IT] common.maps-list"
+      "value": "Elenco mappe"
     }
   ],
   "common.open-drawer": [
     {
       "type": 0,
-      "value": "[IT] common.open-drawer"
+      "value": "Apri menu"
     }
   ],
   "common.others": [
     {
       "type": 0,
-      "value": "[IT] common.others"
+      "value": "Altri"
     }
   ],
   "common.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "Aggiorna"
     }
   ],
   "common.registration-form": [
     {
       "type": 0,
-      "value": "[IT] common.registration-form"
+      "value": "Modulo di registrazione"
     }
   ],
   "common.retry": [
     {
       "type": 0,
-      "value": "Retry"
+      "value": "Riprova"
     }
   ],
   "common.settings": [
     {
       "type": 0,
-      "value": "[IT] common.settings"
+      "value": "Impostazioni"
     }
   ],
   "common.wait": [
@@ -988,7 +988,7 @@
   "login.facebook.button": [
     {
       "type": 0,
-      "value": "[IT] login.facebook.button"
+      "value": "Accedi con Facebook"
     }
   ],
   "login.forgotpwd": [
@@ -1237,6 +1237,12 @@
       "value": "Abilita condivisione pubblica"
     }
   ],
+  "publish.copied": [
+    {
+      "type": 0,
+      "value": "Copied to clipboard!"
+    }
+  ],
   "publish.description": [
     {
       "type": 0,
@@ -1342,7 +1348,7 @@
   "registration.facebook.button": [
     {
       "type": 0,
-      "value": "[IT] registration.facebook.button"
+      "value": "Registrati con Facebook"
     }
   ],
   "registration.firstname": [
@@ -1451,6 +1457,12 @@
     {
       "type": 0,
       "value": "Aggiungi messaggio"
+    }
+  ],
+  "share.adding-button": [
+    {
+      "type": 0,
+      "value": "Sharing..."
     }
   ],
   "share.can-edit": [

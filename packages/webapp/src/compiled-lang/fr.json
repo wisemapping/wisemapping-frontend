@@ -242,103 +242,103 @@
   "admin.auth-type": [
     {
       "type": 0,
-      "value": "[FR] admin.auth-type"
+      "value": "Type d'authentification"
     }
   ],
   "admin.delete": [
     {
       "type": 0,
-      "value": "[FR] admin.delete"
+      "value": "Supprimer"
     }
   ],
   "admin.delete-user": [
     {
       "type": 0,
-      "value": "[FR] admin.delete-user"
+      "value": "Supprimer l'utilisateur"
     }
   ],
   "admin.edit": [
     {
       "type": 0,
-      "value": "[FR] admin.edit"
+      "value": "Modifier"
     }
   ],
   "admin.edit-user": [
     {
       "type": 0,
-      "value": "[FR] admin.edit-user"
+      "value": "Modifier l'utilisateur"
     }
   ],
   "admin.lock-status": [
     {
       "type": 0,
-      "value": "[FR] admin.lock-status"
+      "value": "Statut de verrouillage"
     }
   ],
   "admin.locked": [
     {
       "type": 0,
-      "value": "[FR] admin.locked"
+      "value": "Verrouillé"
     }
   ],
   "admin.public": [
     {
       "type": 0,
-      "value": "[FR] admin.public"
+      "value": "Public"
     }
   ],
   "admin.public-access": [
     {
       "type": 0,
-      "value": "[FR] admin.public-access"
+      "value": "Accès public"
     }
   ],
   "admin.refresh": [
     {
       "type": 0,
-      "value": "[FR] admin.refresh"
+      "value": "Actualiser"
     }
   ],
   "admin.status": [
     {
       "type": 0,
-      "value": "[FR] admin.status"
+      "value": "Statut"
     }
   ],
   "admin.status-active": [
     {
       "type": 0,
-      "value": "[FR] admin.status-active"
+      "value": "Actif"
     }
   ],
   "admin.status-clean": [
     {
       "type": 0,
-      "value": "[FR] admin.status-clean"
+      "value": "Nettoyer"
     }
   ],
   "admin.status-suspended": [
     {
       "type": 0,
-      "value": "[FR] admin.status-suspended"
+      "value": "Suspendu"
     }
   ],
   "admin.suspend-user": [
     {
       "type": 0,
-      "value": "[FR] admin.suspend-user"
+      "value": "Suspendre l'utilisateur"
     }
   ],
   "admin.suspension-reason": [
     {
       "type": 0,
-      "value": "[FR] admin.suspension-reason"
+      "value": "Raison de la suspension"
     }
   ],
   "admin.suspension-status": [
     {
       "type": 0,
-      "value": "[FR] admin.suspension-status"
+      "value": "Statut de suspension"
     }
   ],
   "admin.system.db.url": [
@@ -374,13 +374,13 @@
   "admin.unsuspend-user": [
     {
       "type": 0,
-      "value": "[FR] admin.unsuspend-user"
+      "value": "Réactiver l'utilisateur"
     }
   ],
   "admin.view-xml": [
     {
       "type": 0,
-      "value": "[FR] admin.view-xml"
+      "value": "Afficher XML"
     }
   ],
   "changepwd.button": [
@@ -422,43 +422,43 @@
   "common.allow-email-notifications": [
     {
       "type": 0,
-      "value": "[FR] common.allow-email-notifications"
+      "value": "Autoriser les notifications par email"
     }
   ],
   "common.delete": [
     {
       "type": 0,
-      "value": "[FR] common.delete"
+      "value": "Supprimer"
     }
   ],
   "common.delete-tag": [
     {
       "type": 0,
-      "value": "[FR] common.delete-tag"
+      "value": "Supprimer le tag"
     }
   ],
   "common.email": [
     {
       "type": 0,
-      "value": "[FR] common.email"
+      "value": "E-mail"
     }
   ],
   "common.emails": [
     {
       "type": 0,
-      "value": "[FR] common.emails"
+      "value": "E-mails"
     }
   ],
   "common.first-name": [
     {
       "type": 0,
-      "value": "[FR] common.first-name"
+      "value": "Prénom"
     }
   ],
   "common.last-name": [
     {
       "type": 0,
-      "value": "[FR] common.last-name"
+      "value": "Nom"
     }
   ],
   "common.loading": [
@@ -470,31 +470,31 @@
   "common.locale": [
     {
       "type": 0,
-      "value": "[FR] common.locale"
+      "value": "Langue"
     }
   ],
   "common.login-form": [
     {
       "type": 0,
-      "value": "[FR] common.login-form"
+      "value": "Formulaire de connexion"
     }
   ],
   "common.maps-list": [
     {
       "type": 0,
-      "value": "[FR] common.maps-list"
+      "value": "Liste des cartes"
     }
   ],
   "common.open-drawer": [
     {
       "type": 0,
-      "value": "[FR] common.open-drawer"
+      "value": "Ouvrir le menu"
     }
   ],
   "common.others": [
     {
       "type": 0,
-      "value": "[FR] common.others"
+      "value": "Autres"
     }
   ],
   "common.refresh": [
@@ -506,7 +506,7 @@
   "common.registration-form": [
     {
       "type": 0,
-      "value": "[FR] common.registration-form"
+      "value": "Formulaire d'inscription"
     }
   ],
   "common.retry": [
@@ -518,7 +518,7 @@
   "common.settings": [
     {
       "type": 0,
-      "value": "[FR] common.settings"
+      "value": "Paramètres"
     }
   ],
   "common.wait": [
@@ -620,7 +620,7 @@
   "export.img-center": [
     {
       "type": 0,
-      "value": "[FR] export.img-center"
+      "value": "Centrer et ajuster le zoom"
     }
   ],
   "export.title": [
@@ -935,8 +935,12 @@
   ],
   "label.maps-count": [
     {
+      "type": 1,
+      "value": "count"
+    },
+    {
       "type": 0,
-      "value": "[FR] label.maps-count"
+      "value": " cartes"
     }
   ],
   "label.title": [
@@ -984,7 +988,7 @@
   "login.facebook.button": [
     {
       "type": 0,
-      "value": "[FR] login.facebook.button"
+      "value": "Se connecter avec Facebook"
     }
   ],
   "login.forgotpwd": [
@@ -1344,7 +1348,7 @@
   "registration.facebook.button": [
     {
       "type": 0,
-      "value": "[FR] registration.facebook.button"
+      "value": "S'inscrire avec Facebook"
     }
   ],
   "registration.firstname": [

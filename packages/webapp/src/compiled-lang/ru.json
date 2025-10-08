@@ -80,7 +80,7 @@
   "accountinfo.deleteaccount": [
     {
       "type": 0,
-      "value": "[RU] accountinfo.deleteaccount"
+      "value": "Удалить аккаунт"
     }
   ],
   "accountinfo.email": [
@@ -242,103 +242,103 @@
   "admin.auth-type": [
     {
       "type": 0,
-      "value": "[RU] admin.auth-type"
+      "value": "Тип авторизации"
     }
   ],
   "admin.delete": [
     {
       "type": 0,
-      "value": "[RU] admin.delete"
+      "value": "Удалить"
     }
   ],
   "admin.delete-user": [
     {
       "type": 0,
-      "value": "[RU] admin.delete-user"
+      "value": "Удалить пользователя"
     }
   ],
   "admin.edit": [
     {
       "type": 0,
-      "value": "[RU] admin.edit"
+      "value": "Редактировать"
     }
   ],
   "admin.edit-user": [
     {
       "type": 0,
-      "value": "[RU] admin.edit-user"
+      "value": "Редактировать пользователя"
     }
   ],
   "admin.lock-status": [
     {
       "type": 0,
-      "value": "[RU] admin.lock-status"
+      "value": "Статус блокировки"
     }
   ],
   "admin.locked": [
     {
       "type": 0,
-      "value": "[RU] admin.locked"
+      "value": "Заблокирован"
     }
   ],
   "admin.public": [
     {
       "type": 0,
-      "value": "[RU] admin.public"
+      "value": "Публичный"
     }
   ],
   "admin.public-access": [
     {
       "type": 0,
-      "value": "[RU] admin.public-access"
+      "value": "Публичный доступ"
     }
   ],
   "admin.refresh": [
     {
       "type": 0,
-      "value": "[RU] admin.refresh"
+      "value": "Обновить"
     }
   ],
   "admin.status": [
     {
       "type": 0,
-      "value": "[RU] admin.status"
+      "value": "Статус"
     }
   ],
   "admin.status-active": [
     {
       "type": 0,
-      "value": "[RU] admin.status-active"
+      "value": "Активный"
     }
   ],
   "admin.status-clean": [
     {
       "type": 0,
-      "value": "[RU] admin.status-clean"
+      "value": "Очистить"
     }
   ],
   "admin.status-suspended": [
     {
       "type": 0,
-      "value": "[RU] admin.status-suspended"
+      "value": "Приостановлен"
     }
   ],
   "admin.suspend-user": [
     {
       "type": 0,
-      "value": "[RU] admin.suspend-user"
+      "value": "Приостановить пользователя"
     }
   ],
   "admin.suspension-reason": [
     {
       "type": 0,
-      "value": "[RU] admin.suspension-reason"
+      "value": "Причина приостановки"
     }
   ],
   "admin.suspension-status": [
     {
       "type": 0,
-      "value": "[RU] admin.suspension-status"
+      "value": "Статус приостановки"
     }
   ],
   "admin.system.db.url": [
@@ -356,31 +356,31 @@
   "admin.system.memory": [
     {
       "type": 0,
-      "value": "Memory"
+      "value": "Память"
     }
   ],
   "admin.system.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "Обновить"
     }
   ],
   "admin.system.title": [
     {
       "type": 0,
-      "value": "System Information"
+      "value": "Системная информация"
     }
   ],
   "admin.unsuspend-user": [
     {
       "type": 0,
-      "value": "[RU] admin.unsuspend-user"
+      "value": "Возобновить пользователя"
     }
   ],
   "admin.view-xml": [
     {
       "type": 0,
-      "value": "[RU] admin.view-xml"
+      "value": "Просмотр XML"
     }
   ],
   "changepwd.button": [
@@ -422,103 +422,103 @@
   "common.allow-email-notifications": [
     {
       "type": 0,
-      "value": "[RU] common.allow-email-notifications"
+      "value": "Разрешить уведомления по email"
     }
   ],
   "common.delete": [
     {
       "type": 0,
-      "value": "[RU] common.delete"
+      "value": "Удалить"
     }
   ],
   "common.delete-tag": [
     {
       "type": 0,
-      "value": "[RU] common.delete-tag"
+      "value": "Удалить тег"
     }
   ],
   "common.email": [
     {
       "type": 0,
-      "value": "[RU] common.email"
+      "value": "Email"
     }
   ],
   "common.emails": [
     {
       "type": 0,
-      "value": "[RU] common.emails"
+      "value": "Электронные письма"
     }
   ],
   "common.first-name": [
     {
       "type": 0,
-      "value": "[RU] common.first-name"
+      "value": "Имя"
     }
   ],
   "common.last-name": [
     {
       "type": 0,
-      "value": "[RU] common.last-name"
+      "value": "Фамилия"
     }
   ],
   "common.loading": [
     {
       "type": 0,
-      "value": "Loading..."
+      "value": "Загрузка..."
     }
   ],
   "common.locale": [
     {
       "type": 0,
-      "value": "[RU] common.locale"
+      "value": "Язык"
     }
   ],
   "common.login-form": [
     {
       "type": 0,
-      "value": "[RU] common.login-form"
+      "value": "Форма входа"
     }
   ],
   "common.maps-list": [
     {
       "type": 0,
-      "value": "[RU] common.maps-list"
+      "value": "Список карт"
     }
   ],
   "common.open-drawer": [
     {
       "type": 0,
-      "value": "[RU] common.open-drawer"
+      "value": "Открыть меню"
     }
   ],
   "common.others": [
     {
       "type": 0,
-      "value": "[RU] common.others"
+      "value": "Другие"
     }
   ],
   "common.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "Обновить"
     }
   ],
   "common.registration-form": [
     {
       "type": 0,
-      "value": "[RU] common.registration-form"
+      "value": "Форма регистрации"
     }
   ],
   "common.retry": [
     {
       "type": 0,
-      "value": "Retry"
+      "value": "Повторить"
     }
   ],
   "common.settings": [
     {
       "type": 0,
-      "value": "[RU] common.settings"
+      "value": "Настройки"
     }
   ],
   "common.wait": [
@@ -554,7 +554,7 @@
   "dialog.loading": [
     {
       "type": 0,
-      "value": "[RU] dialog.loading"
+      "value": "Загрузка..."
     }
   ],
   "duplicate.title": [
@@ -620,7 +620,7 @@
   "export.img-center": [
     {
       "type": 0,
-      "value": "[RU] export.img-center"
+      "value": "Центрировать и масштабировать"
     }
   ],
   "export.title": [
@@ -894,55 +894,59 @@
   "label.add-button": [
     {
       "type": 0,
-      "value": "[RU] label.add-button"
+      "value": "Добавить метку"
     }
   ],
   "label.add-for": [
     {
       "type": 0,
-      "value": "[RU] label.add-for"
+      "value": "Редактирование меток для"
     }
   ],
   "label.add-placeholder": [
     {
       "type": 0,
-      "value": "[RU] label.add-placeholder"
+      "value": "Название метки"
     }
   ],
   "label.change-color": [
     {
       "type": 0,
-      "value": "[RU] label.change-color"
+      "value": "Изменить цвет метки"
     }
   ],
   "label.delete-description": [
     {
       "type": 0,
-      "value": "[RU] label.delete-description"
+      "value": "будет удалена, включая все связи с существующими картами. Вы хотите продолжить?"
     }
   ],
   "label.delete-title": [
     {
       "type": 0,
-      "value": "[RU] label.delete-title"
+      "value": "Подтвердить удаление метки"
     }
   ],
   "label.description": [
     {
       "type": 0,
-      "value": "[RU] label.description"
+      "value": "Используйте метки для организации ваших карт."
     }
   ],
   "label.maps-count": [
     {
+      "type": 1,
+      "value": "count"
+    },
+    {
       "type": 0,
-      "value": "[RU] label.maps-count"
+      "value": " карт"
     }
   ],
   "label.title": [
     {
       "type": 0,
-      "value": "[RU] label.title"
+      "value": "Добавить метку"
     }
   ],
   "language.change": [
@@ -984,7 +988,7 @@
   "login.facebook.button": [
     {
       "type": 0,
-      "value": "[RU] login.facebook.button"
+      "value": "Войти через Facebook"
     }
   ],
   "login.forgotpwd": [
@@ -1233,6 +1237,12 @@
       "value": "Включить общий доступ"
     }
   ],
+  "publish.copied": [
+    {
+      "type": 0,
+      "value": "Copied to clipboard!"
+    }
+  ],
   "publish.description": [
     {
       "type": 0,
@@ -1338,7 +1348,7 @@
   "registration.facebook.button": [
     {
       "type": 0,
-      "value": "[RU] registration.facebook.button"
+      "value": "Зарегистрироваться через Facebook"
     }
   ],
   "registration.firstname": [
@@ -1368,7 +1378,7 @@
   "registration.page-title": [
     {
       "type": 0,
-      "value": "[RU] registration.page-title"
+      "value": "Регистрация | WiseMapping"
     }
   ],
   "registration.password": [

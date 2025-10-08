@@ -242,103 +242,103 @@
   "admin.auth-type": [
     {
       "type": 0,
-      "value": "[UK] admin.auth-type"
+      "value": "Тип авторизації"
     }
   ],
   "admin.delete": [
     {
       "type": 0,
-      "value": "[UK] admin.delete"
+      "value": "Видалити"
     }
   ],
   "admin.delete-user": [
     {
       "type": 0,
-      "value": "[UK] admin.delete-user"
+      "value": "Видалити користувача"
     }
   ],
   "admin.edit": [
     {
       "type": 0,
-      "value": "[UK] admin.edit"
+      "value": "Редагувати"
     }
   ],
   "admin.edit-user": [
     {
       "type": 0,
-      "value": "[UK] admin.edit-user"
+      "value": "Редагувати користувача"
     }
   ],
   "admin.lock-status": [
     {
       "type": 0,
-      "value": "[UK] admin.lock-status"
+      "value": "Статус блокування"
     }
   ],
   "admin.locked": [
     {
       "type": 0,
-      "value": "[UK] admin.locked"
+      "value": "Заблоковано"
     }
   ],
   "admin.public": [
     {
       "type": 0,
-      "value": "[UK] admin.public"
+      "value": "Публічний"
     }
   ],
   "admin.public-access": [
     {
       "type": 0,
-      "value": "[UK] admin.public-access"
+      "value": "Публічний доступ"
     }
   ],
   "admin.refresh": [
     {
       "type": 0,
-      "value": "[UK] admin.refresh"
+      "value": "Оновити"
     }
   ],
   "admin.status": [
     {
       "type": 0,
-      "value": "[UK] admin.status"
+      "value": "Статус"
     }
   ],
   "admin.status-active": [
     {
       "type": 0,
-      "value": "[UK] admin.status-active"
+      "value": "Активний"
     }
   ],
   "admin.status-clean": [
     {
       "type": 0,
-      "value": "[UK] admin.status-clean"
+      "value": "Очистити"
     }
   ],
   "admin.status-suspended": [
     {
       "type": 0,
-      "value": "[UK] admin.status-suspended"
+      "value": "Призупинено"
     }
   ],
   "admin.suspend-user": [
     {
       "type": 0,
-      "value": "[UK] admin.suspend-user"
+      "value": "Призупинити користувача"
     }
   ],
   "admin.suspension-reason": [
     {
       "type": 0,
-      "value": "[UK] admin.suspension-reason"
+      "value": "Причина призупинення"
     }
   ],
   "admin.suspension-status": [
     {
       "type": 0,
-      "value": "[UK] admin.suspension-status"
+      "value": "Статус призупинення"
     }
   ],
   "admin.system.db.url": [
@@ -356,31 +356,31 @@
   "admin.system.memory": [
     {
       "type": 0,
-      "value": "Memory"
+      "value": "Пам'ять"
     }
   ],
   "admin.system.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "Оновити"
     }
   ],
   "admin.system.title": [
     {
       "type": 0,
-      "value": "System Information"
+      "value": "Системна інформація"
     }
   ],
   "admin.unsuspend-user": [
     {
       "type": 0,
-      "value": "[UK] admin.unsuspend-user"
+      "value": "Відновити користувача"
     }
   ],
   "admin.view-xml": [
     {
       "type": 0,
-      "value": "[UK] admin.view-xml"
+      "value": "Переглянути XML"
     }
   ],
   "changepwd.button": [
@@ -422,103 +422,103 @@
   "common.allow-email-notifications": [
     {
       "type": 0,
-      "value": "[UK] common.allow-email-notifications"
+      "value": "Дозволити сповіщення email"
     }
   ],
   "common.delete": [
     {
       "type": 0,
-      "value": "[UK] common.delete"
+      "value": "Видалити"
     }
   ],
   "common.delete-tag": [
     {
       "type": 0,
-      "value": "[UK] common.delete-tag"
+      "value": "Видалити тег"
     }
   ],
   "common.email": [
     {
       "type": 0,
-      "value": "[UK] common.email"
+      "value": "Email"
     }
   ],
   "common.emails": [
     {
       "type": 0,
-      "value": "[UK] common.emails"
+      "value": "Електронні листи"
     }
   ],
   "common.first-name": [
     {
       "type": 0,
-      "value": "[UK] common.first-name"
+      "value": "Ім'я"
     }
   ],
   "common.last-name": [
     {
       "type": 0,
-      "value": "[UK] common.last-name"
+      "value": "Прізвище"
     }
   ],
   "common.loading": [
     {
       "type": 0,
-      "value": "Loading..."
+      "value": "Завантаження..."
     }
   ],
   "common.locale": [
     {
       "type": 0,
-      "value": "[UK] common.locale"
+      "value": "Мова"
     }
   ],
   "common.login-form": [
     {
       "type": 0,
-      "value": "[UK] common.login-form"
+      "value": "Форма входу"
     }
   ],
   "common.maps-list": [
     {
       "type": 0,
-      "value": "[UK] common.maps-list"
+      "value": "Список карт"
     }
   ],
   "common.open-drawer": [
     {
       "type": 0,
-      "value": "[UK] common.open-drawer"
+      "value": "Відкрити меню"
     }
   ],
   "common.others": [
     {
       "type": 0,
-      "value": "[UK] common.others"
+      "value": "Інші"
     }
   ],
   "common.refresh": [
     {
       "type": 0,
-      "value": "Refresh"
+      "value": "Оновити"
     }
   ],
   "common.registration-form": [
     {
       "type": 0,
-      "value": "[UK] common.registration-form"
+      "value": "Форма реєстрації"
     }
   ],
   "common.retry": [
     {
       "type": 0,
-      "value": "Retry"
+      "value": "Повторити"
     }
   ],
   "common.settings": [
     {
       "type": 0,
-      "value": "[UK] common.settings"
+      "value": "Налаштування"
     }
   ],
   "common.wait": [
@@ -1237,6 +1237,12 @@
       "value": "Увімкнути публічне спільне використання"
     }
   ],
+  "publish.copied": [
+    {
+      "type": 0,
+      "value": "Copied to clipboard!"
+    }
+  ],
   "publish.description": [
     {
       "type": 0,
@@ -1451,6 +1457,12 @@
     {
       "type": 0,
       "value": "Додати повідомлення"
+    }
+  ],
+  "share.adding-button": [
+    {
+      "type": 0,
+      "value": "Sharing..."
     }
   ],
   "share.can-edit": [

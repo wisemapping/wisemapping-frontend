@@ -377,6 +377,9 @@
   "publish.checkbox": {
     "defaultMessage": "Включить общий доступ"
   },
+  "publish.copied": {
+    "defaultMessage": "Copied to clipboard!"
+  },
   "publish.description": {
     "defaultMessage": "После публикация карта станет видима для любого, у кого есть ссылка."
   },
@@ -528,166 +531,166 @@
     "defaultMessage": "Переключить Тему"
   },
   "admin.delete-user": {
-    "defaultMessage": "[RU] admin.delete-user"
+    "defaultMessage": "Удалить пользователя"
   },
   "label.add-placeholder": {
-    "defaultMessage": "[RU] label.add-placeholder"
+    "defaultMessage": "Название метки"
   },
   "common.maps-list": {
-    "defaultMessage": "[RU] common.maps-list"
+    "defaultMessage": "Список карт"
   },
   "admin.status-clean": {
-    "defaultMessage": "[RU] admin.status-clean"
+    "defaultMessage": "Очистить"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "[RU] common.allow-email-notifications"
+    "defaultMessage": "Разрешить уведомления по email"
   },
   "admin.public": {
-    "defaultMessage": "[RU] admin.public"
+    "defaultMessage": "Публичный"
   },
   "common.others": {
-    "defaultMessage": "[RU] common.others"
+    "defaultMessage": "Другие"
   },
   "admin.view-xml": {
-    "defaultMessage": "[RU] admin.view-xml"
+    "defaultMessage": "Просмотр XML"
   },
   "export.img-center": {
-    "defaultMessage": "[RU] export.img-center"
+    "defaultMessage": "Центрировать и масштабировать"
   },
   "registration.facebook.button": {
-    "defaultMessage": "[RU] registration.facebook.button"
+    "defaultMessage": "Зарегистрироваться через Facebook"
   },
   "common.registration-form": {
-    "defaultMessage": "[RU] common.registration-form"
+    "defaultMessage": "Форма регистрации"
   },
   "common.first-name": {
-    "defaultMessage": "[RU] common.first-name"
+    "defaultMessage": "Имя"
   },
   "admin.auth-type": {
-    "defaultMessage": "[RU] admin.auth-type"
+    "defaultMessage": "Тип авторизации"
   },
   "label.delete-description": {
-    "defaultMessage": "[RU] label.delete-description"
+    "defaultMessage": "будет удалена, включая все связи с существующими картами. Вы хотите продолжить?"
   },
   "registration.page-title": {
-    "defaultMessage": "[RU] registration.page-title"
+    "defaultMessage": "Регистрация | WiseMapping"
   },
   "common.delete": {
-    "defaultMessage": "[RU] common.delete"
+    "defaultMessage": "Удалить"
   },
   "admin.status": {
-    "defaultMessage": "[RU] admin.status"
+    "defaultMessage": "Статус"
   },
   "admin.suspend-user": {
-    "defaultMessage": "[RU] admin.suspend-user"
+    "defaultMessage": "Приостановить пользователя"
   },
   "admin.suspension-status": {
-    "defaultMessage": "[RU] admin.suspension-status"
+    "defaultMessage": "Статус приостановки"
   },
   "admin.edit-user": {
-    "defaultMessage": "[RU] admin.edit-user"
+    "defaultMessage": "Редактировать пользователя"
   },
   "label.description": {
-    "defaultMessage": "[RU] label.description"
+    "defaultMessage": "Используйте метки для организации ваших карт."
   },
   "admin.refresh": {
-    "defaultMessage": "[RU] admin.refresh"
+    "defaultMessage": "Обновить"
   },
   "common.login-form": {
-    "defaultMessage": "[RU] common.login-form"
+    "defaultMessage": "Форма входа"
   },
   "accountinfo.deleteaccount": {
-    "defaultMessage": "[RU] accountinfo.deleteaccount"
+    "defaultMessage": "Удалить аккаунт"
   },
   "admin.lock-status": {
-    "defaultMessage": "[RU] admin.lock-status"
+    "defaultMessage": "Статус блокировки"
   },
   "common.emails": {
-    "defaultMessage": "[RU] common.emails"
+    "defaultMessage": "Электронные письма"
   },
   "label.change-color": {
-    "defaultMessage": "[RU] label.change-color"
+    "defaultMessage": "Изменить цвет метки"
   },
   "label.title": {
-    "defaultMessage": "[RU] label.title"
+    "defaultMessage": "Добавить метку"
   },
   "admin.suspension-reason": {
-    "defaultMessage": "[RU] admin.suspension-reason"
+    "defaultMessage": "Причина приостановки"
   },
   "admin.status-suspended": {
-    "defaultMessage": "[RU] admin.status-suspended"
+    "defaultMessage": "Приостановлен"
   },
   "label.maps-count": {
-    "defaultMessage": "[RU] label.maps-count"
+    "defaultMessage": "{count} карт"
   },
   "admin.delete": {
-    "defaultMessage": "[RU] admin.delete"
+    "defaultMessage": "Удалить"
   },
   "dialog.loading": {
-    "defaultMessage": "[RU] dialog.loading"
+    "defaultMessage": "Загрузка..."
   },
   "label.add-for": {
-    "defaultMessage": "[RU] label.add-for"
+    "defaultMessage": "Редактирование меток для"
   },
   "common.last-name": {
-    "defaultMessage": "[RU] common.last-name"
+    "defaultMessage": "Фамилия"
   },
   "admin.public-access": {
-    "defaultMessage": "[RU] admin.public-access"
+    "defaultMessage": "Публичный доступ"
   },
   "admin.status-active": {
-    "defaultMessage": "[RU] admin.status-active"
+    "defaultMessage": "Активный"
   },
   "common.locale": {
-    "defaultMessage": "[RU] common.locale"
+    "defaultMessage": "Язык"
   },
   "login.facebook.button": {
-    "defaultMessage": "[RU] login.facebook.button"
+    "defaultMessage": "Войти через Facebook"
   },
   "label.add-button": {
-    "defaultMessage": "[RU] label.add-button"
+    "defaultMessage": "Добавить метку"
   },
   "label.delete-title": {
-    "defaultMessage": "[RU] label.delete-title"
+    "defaultMessage": "Подтвердить удаление метки"
   },
   "common.email": {
-    "defaultMessage": "[RU] common.email"
+    "defaultMessage": "Email"
   },
   "admin.unsuspend-user": {
-    "defaultMessage": "[RU] admin.unsuspend-user"
+    "defaultMessage": "Возобновить пользователя"
   },
   "common.delete-tag": {
-    "defaultMessage": "[RU] common.delete-tag"
+    "defaultMessage": "Удалить тег"
   },
   "admin.edit": {
-    "defaultMessage": "[RU] admin.edit"
+    "defaultMessage": "Редактировать"
   },
   "common.open-drawer": {
-    "defaultMessage": "[RU] common.open-drawer"
+    "defaultMessage": "Открыть меню"
   },
   "admin.locked": {
-    "defaultMessage": "[RU] admin.locked"
+    "defaultMessage": "Заблокирован"
   },
   "common.settings": {
-    "defaultMessage": "[RU] common.settings"
+    "defaultMessage": "Настройки"
   },
   "common.loading": {
-    "defaultMessage": "Loading..."
+    "defaultMessage": "Загрузка..."
   },
   "common.retry": {
-    "defaultMessage": "Retry"
+    "defaultMessage": "Повторить"
   },
   "admin.system.title": {
-    "defaultMessage": "System Information"
+    "defaultMessage": "Системная информация"
   },
   "admin.system.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "Обновить"
   },
   "common.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "Обновить"
   },
   "admin.system.memory": {
-    "defaultMessage": "Memory"
+    "defaultMessage": "Память"
   },
   "admin.system.db.url": {
     "defaultMessage": "URL"

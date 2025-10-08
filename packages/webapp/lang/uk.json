@@ -437,6 +437,9 @@
   "publish.checkbox": {
     "defaultMessage": "Увімкнути публічне спільне використання"
   },
+  "publish.copied": {
+    "defaultMessage": "Copied to clipboard!"
+  },
   "publish.description": {
     "defaultMessage": "Опублікувавши карту, ви робите її видимою для всіх в Інтернеті."
   },
@@ -539,6 +542,9 @@
   "share.add-button": {
     "defaultMessage": "Поділитися"
   },
+  "share.adding-button": {
+    "defaultMessage": "Sharing..."
+  },
   "share.add-message": {
     "defaultMessage": "Додати повідомлення"
   },
@@ -570,121 +576,121 @@
     "defaultMessage": "Перемкнути тему"
   },
   "admin.delete-user": {
-    "defaultMessage": "[UK] admin.delete-user"
+    "defaultMessage": "Видалити користувача"
   },
   "common.maps-list": {
-    "defaultMessage": "[UK] common.maps-list"
+    "defaultMessage": "Список карт"
   },
   "admin.status-clean": {
-    "defaultMessage": "[UK] admin.status-clean"
+    "defaultMessage": "Очистити"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "[UK] common.allow-email-notifications"
+    "defaultMessage": "Дозволити сповіщення email"
   },
   "admin.public": {
-    "defaultMessage": "[UK] admin.public"
+    "defaultMessage": "Публічний"
   },
   "common.others": {
-    "defaultMessage": "[UK] common.others"
+    "defaultMessage": "Інші"
   },
   "admin.view-xml": {
-    "defaultMessage": "[UK] admin.view-xml"
+    "defaultMessage": "Переглянути XML"
   },
   "common.registration-form": {
-    "defaultMessage": "[UK] common.registration-form"
+    "defaultMessage": "Форма реєстрації"
   },
   "common.first-name": {
-    "defaultMessage": "[UK] common.first-name"
+    "defaultMessage": "Ім'я"
   },
   "admin.auth-type": {
-    "defaultMessage": "[UK] admin.auth-type"
+    "defaultMessage": "Тип авторизації"
   },
   "common.delete": {
-    "defaultMessage": "[UK] common.delete"
+    "defaultMessage": "Видалити"
   },
   "admin.status": {
-    "defaultMessage": "[UK] admin.status"
+    "defaultMessage": "Статус"
   },
   "admin.suspend-user": {
-    "defaultMessage": "[UK] admin.suspend-user"
+    "defaultMessage": "Призупинити користувача"
   },
   "admin.suspension-status": {
-    "defaultMessage": "[UK] admin.suspension-status"
+    "defaultMessage": "Статус призупинення"
   },
   "admin.edit-user": {
-    "defaultMessage": "[UK] admin.edit-user"
+    "defaultMessage": "Редагувати користувача"
   },
   "admin.refresh": {
-    "defaultMessage": "[UK] admin.refresh"
+    "defaultMessage": "Оновити"
   },
   "common.login-form": {
-    "defaultMessage": "[UK] common.login-form"
+    "defaultMessage": "Форма входу"
   },
   "admin.lock-status": {
-    "defaultMessage": "[UK] admin.lock-status"
+    "defaultMessage": "Статус блокування"
   },
   "common.emails": {
-    "defaultMessage": "[UK] common.emails"
+    "defaultMessage": "Електронні листи"
   },
   "admin.suspension-reason": {
-    "defaultMessage": "[UK] admin.suspension-reason"
+    "defaultMessage": "Причина призупинення"
   },
   "admin.status-suspended": {
-    "defaultMessage": "[UK] admin.status-suspended"
+    "defaultMessage": "Призупинено"
   },
   "admin.delete": {
-    "defaultMessage": "[UK] admin.delete"
+    "defaultMessage": "Видалити"
   },
   "common.last-name": {
-    "defaultMessage": "[UK] common.last-name"
+    "defaultMessage": "Прізвище"
   },
   "admin.public-access": {
-    "defaultMessage": "[UK] admin.public-access"
+    "defaultMessage": "Публічний доступ"
   },
   "admin.status-active": {
-    "defaultMessage": "[UK] admin.status-active"
+    "defaultMessage": "Активний"
   },
   "common.locale": {
-    "defaultMessage": "[UK] common.locale"
+    "defaultMessage": "Мова"
   },
   "common.email": {
-    "defaultMessage": "[UK] common.email"
+    "defaultMessage": "Email"
   },
   "admin.unsuspend-user": {
-    "defaultMessage": "[UK] admin.unsuspend-user"
+    "defaultMessage": "Відновити користувача"
   },
   "common.delete-tag": {
-    "defaultMessage": "[UK] common.delete-tag"
+    "defaultMessage": "Видалити тег"
   },
   "admin.edit": {
-    "defaultMessage": "[UK] admin.edit"
+    "defaultMessage": "Редагувати"
   },
   "common.open-drawer": {
-    "defaultMessage": "[UK] common.open-drawer"
+    "defaultMessage": "Відкрити меню"
   },
   "admin.locked": {
-    "defaultMessage": "[UK] admin.locked"
+    "defaultMessage": "Заблоковано"
   },
   "common.settings": {
-    "defaultMessage": "[UK] common.settings"
+    "defaultMessage": "Налаштування"
   },
   "common.loading": {
-    "defaultMessage": "Loading..."
+    "defaultMessage": "Завантаження..."
   },
   "common.retry": {
-    "defaultMessage": "Retry"
+    "defaultMessage": "Повторити"
   },
   "admin.system.title": {
-    "defaultMessage": "System Information"
+    "defaultMessage": "Системна інформація"
   },
   "admin.system.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "Оновити"
   },
   "common.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "Оновити"
   },
   "admin.system.memory": {
-    "defaultMessage": "Memory"
+    "defaultMessage": "Пам'ять"
   },
   "admin.system.db.url": {
     "defaultMessage": "URL"

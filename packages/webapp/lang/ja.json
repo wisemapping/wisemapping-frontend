@@ -431,6 +431,9 @@
   "publish.checkbox": {
     "defaultMessage": "公開共有を有効にする"
   },
+  "publish.copied": {
+    "defaultMessage": "Copied to clipboard!"
+  },
   "publish.description": {
     "defaultMessage": "マップを公開することで、インターネット上のすべての人に表示されます。"
   },
@@ -530,6 +533,9 @@
   "share.add-button": {
     "defaultMessage": "共有"
   },
+  "share.adding-button": {
+    "defaultMessage": "Sharing..."
+  },
   "share.add-message": {
     "defaultMessage": "メッセージを追加"
   },
@@ -564,127 +570,127 @@
     "defaultMessage": "テーマ切り替え"
   },
   "admin.delete-user": {
-    "defaultMessage": "[JA] admin.delete-user"
+    "defaultMessage": "ユーザーを削除"
   },
   "common.maps-list": {
-    "defaultMessage": "[JA] common.maps-list"
+    "defaultMessage": "マップ一覧"
   },
   "admin.status-clean": {
-    "defaultMessage": "[JA] admin.status-clean"
+    "defaultMessage": "クリーン"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "[JA] common.allow-email-notifications"
+    "defaultMessage": "メール通知を許可"
   },
   "admin.public": {
-    "defaultMessage": "[JA] admin.public"
+    "defaultMessage": "公開"
   },
   "common.others": {
-    "defaultMessage": "[JA] common.others"
+    "defaultMessage": "その他"
   },
   "admin.view-xml": {
-    "defaultMessage": "[JA] admin.view-xml"
+    "defaultMessage": "XMLを表示"
   },
   "registration.facebook.button": {
-    "defaultMessage": "[JA] registration.facebook.button"
+    "defaultMessage": "Facebookで登録"
   },
   "common.registration-form": {
-    "defaultMessage": "[JA] common.registration-form"
+    "defaultMessage": "登録フォーム"
   },
   "common.first-name": {
-    "defaultMessage": "[JA] common.first-name"
+    "defaultMessage": "名"
   },
   "admin.auth-type": {
-    "defaultMessage": "[JA] admin.auth-type"
+    "defaultMessage": "認証タイプ"
   },
   "common.delete": {
-    "defaultMessage": "[JA] common.delete"
+    "defaultMessage": "削除"
   },
   "admin.status": {
-    "defaultMessage": "[JA] admin.status"
+    "defaultMessage": "ステータス"
   },
   "admin.suspend-user": {
-    "defaultMessage": "[JA] admin.suspend-user"
+    "defaultMessage": "ユーザーを停止"
   },
   "admin.suspension-status": {
-    "defaultMessage": "[JA] admin.suspension-status"
+    "defaultMessage": "停止状態"
   },
   "admin.edit-user": {
-    "defaultMessage": "[JA] admin.edit-user"
+    "defaultMessage": "ユーザーを編集"
   },
   "admin.refresh": {
-    "defaultMessage": "[JA] admin.refresh"
+    "defaultMessage": "更新"
   },
   "common.login-form": {
-    "defaultMessage": "[JA] common.login-form"
+    "defaultMessage": "ログインフォーム"
   },
   "admin.lock-status": {
-    "defaultMessage": "[JA] admin.lock-status"
+    "defaultMessage": "ロック状態"
   },
   "common.emails": {
-    "defaultMessage": "[JA] common.emails"
+    "defaultMessage": "メール"
   },
   "admin.suspension-reason": {
-    "defaultMessage": "[JA] admin.suspension-reason"
+    "defaultMessage": "停止理由"
   },
   "admin.status-suspended": {
-    "defaultMessage": "[JA] admin.status-suspended"
+    "defaultMessage": "停止中"
   },
   "admin.delete": {
-    "defaultMessage": "[JA] admin.delete"
+    "defaultMessage": "削除"
   },
   "common.last-name": {
-    "defaultMessage": "[JA] common.last-name"
+    "defaultMessage": "姓"
   },
   "admin.public-access": {
-    "defaultMessage": "[JA] admin.public-access"
+    "defaultMessage": "公開アクセス"
   },
   "admin.status-active": {
-    "defaultMessage": "[JA] admin.status-active"
+    "defaultMessage": "アクティブ"
   },
   "common.locale": {
-    "defaultMessage": "[JA] common.locale"
+    "defaultMessage": "言語"
   },
   "login.facebook.button": {
-    "defaultMessage": "[JA] login.facebook.button"
+    "defaultMessage": "Facebookでサインイン"
   },
   "common.email": {
-    "defaultMessage": "[JA] common.email"
+    "defaultMessage": "メール"
   },
   "admin.unsuspend-user": {
-    "defaultMessage": "[JA] admin.unsuspend-user"
+    "defaultMessage": "ユーザーの停止を解除"
   },
   "common.delete-tag": {
-    "defaultMessage": "[JA] common.delete-tag"
+    "defaultMessage": "タグを削除"
   },
   "admin.edit": {
-    "defaultMessage": "[JA] admin.edit"
+    "defaultMessage": "編集"
   },
   "common.open-drawer": {
-    "defaultMessage": "[JA] common.open-drawer"
+    "defaultMessage": "メニューを開く"
   },
   "admin.locked": {
-    "defaultMessage": "[JA] admin.locked"
+    "defaultMessage": "ロック"
   },
   "common.settings": {
-    "defaultMessage": "[JA] common.settings"
+    "defaultMessage": "設定"
   },
   "common.loading": {
-    "defaultMessage": "Loading..."
+    "defaultMessage": "読み込み中..."
   },
   "common.retry": {
-    "defaultMessage": "Retry"
+    "defaultMessage": "再試行"
   },
   "admin.system.title": {
-    "defaultMessage": "System Information"
+    "defaultMessage": "システム情報"
   },
   "admin.system.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "更新"
   },
   "common.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "更新"
   },
   "admin.system.memory": {
-    "defaultMessage": "Memory"
+    "defaultMessage": "メモリ"
   },
   "admin.system.db.url": {
     "defaultMessage": "URL"

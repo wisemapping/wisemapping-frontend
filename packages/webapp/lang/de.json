@@ -561,118 +561,118 @@
     "defaultMessage": "Design Wechseln"
   },
   "admin.delete-user": {
-    "defaultMessage": "[DE] admin.delete-user"
+    "defaultMessage": "Benutzer löschen"
   },
   "common.maps-list": {
-    "defaultMessage": "[DE] common.maps-list"
+    "defaultMessage": "Kartenliste"
   },
   "admin.status-clean": {
-    "defaultMessage": "[DE] admin.status-clean"
+    "defaultMessage": "Sauber"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "[DE] common.allow-email-notifications"
+    "defaultMessage": "E-Mail-Benachrichtigungen zulassen"
   },
   "admin.public": {
-    "defaultMessage": "[DE] admin.public"
+    "defaultMessage": "Öffentlich"
   },
   "common.others": {
-    "defaultMessage": "[DE] common.others"
+    "defaultMessage": "Andere"
   },
   "admin.view-xml": {
-    "defaultMessage": "[DE] admin.view-xml"
+    "defaultMessage": "XML anzeigen"
   },
   "export.img-center": {
-    "defaultMessage": "[DE] export.img-center"
+    "defaultMessage": "Zentrieren und zoomen um anzupassen"
   },
   "registration.facebook.button": {
-    "defaultMessage": "[DE] registration.facebook.button"
+    "defaultMessage": "Mit Facebook registrieren"
   },
   "common.registration-form": {
-    "defaultMessage": "[DE] common.registration-form"
+    "defaultMessage": "Registrierungsformular"
   },
   "common.first-name": {
-    "defaultMessage": "[DE] common.first-name"
+    "defaultMessage": "Vorname"
   },
   "admin.auth-type": {
-    "defaultMessage": "[DE] admin.auth-type"
+    "defaultMessage": "Authentifizierungstyp"
   },
   "registration.page-title": {
-    "defaultMessage": "[DE] registration.page-title"
+    "defaultMessage": "Registrierung | WiseMapping"
   },
   "common.delete": {
-    "defaultMessage": "[DE] common.delete"
+    "defaultMessage": "Löschen"
   },
   "admin.status": {
-    "defaultMessage": "[DE] admin.status"
+    "defaultMessage": "Status"
   },
   "admin.suspend-user": {
-    "defaultMessage": "[DE] admin.suspend-user"
+    "defaultMessage": "Benutzer sperren"
   },
   "admin.suspension-status": {
-    "defaultMessage": "[DE] admin.suspension-status"
+    "defaultMessage": "Sperrstatus"
   },
   "admin.edit-user": {
-    "defaultMessage": "[DE] admin.edit-user"
+    "defaultMessage": "Benutzer bearbeiten"
   },
   "admin.refresh": {
-    "defaultMessage": "[DE] admin.refresh"
+    "defaultMessage": "Aktualisieren"
   },
   "common.login-form": {
-    "defaultMessage": "[DE] common.login-form"
+    "defaultMessage": "Anmeldeformular"
   },
   "admin.lock-status": {
-    "defaultMessage": "[DE] admin.lock-status"
+    "defaultMessage": "Sperrstatus"
   },
   "common.emails": {
-    "defaultMessage": "[DE] common.emails"
+    "defaultMessage": "E-Mails"
   },
   "admin.suspension-reason": {
-    "defaultMessage": "[DE] admin.suspension-reason"
+    "defaultMessage": "Sperrgrund"
   },
   "admin.status-suspended": {
-    "defaultMessage": "[DE] admin.status-suspended"
+    "defaultMessage": "Gesperrt"
   },
   "label.maps-count": {
-    "defaultMessage": "[DE] label.maps-count"
+    "defaultMessage": "{count} Karten"
   },
   "admin.delete": {
-    "defaultMessage": "[DE] admin.delete"
+    "defaultMessage": "Löschen"
   },
   "common.last-name": {
-    "defaultMessage": "[DE] common.last-name"
+    "defaultMessage": "Nachname"
   },
   "admin.public-access": {
-    "defaultMessage": "[DE] admin.public-access"
+    "defaultMessage": "Öffentlicher Zugriff"
   },
   "admin.status-active": {
-    "defaultMessage": "[DE] admin.status-active"
+    "defaultMessage": "Aktiv"
   },
   "common.locale": {
-    "defaultMessage": "[DE] common.locale"
+    "defaultMessage": "Sprache"
   },
   "login.facebook.button": {
-    "defaultMessage": "[DE] login.facebook.button"
+    "defaultMessage": "Mit Facebook anmelden"
   },
   "common.email": {
-    "defaultMessage": "[DE] common.email"
+    "defaultMessage": "E-Mail"
   },
   "admin.unsuspend-user": {
-    "defaultMessage": "[DE] admin.unsuspend-user"
+    "defaultMessage": "Benutzer entsperren"
   },
   "common.delete-tag": {
-    "defaultMessage": "[DE] common.delete-tag"
+    "defaultMessage": "Tag löschen"
   },
   "admin.edit": {
-    "defaultMessage": "[DE] admin.edit"
+    "defaultMessage": "Bearbeiten"
   },
   "common.open-drawer": {
-    "defaultMessage": "[DE] common.open-drawer"
+    "defaultMessage": "Menü öffnen"
   },
   "admin.locked": {
-    "defaultMessage": "[DE] admin.locked"
+    "defaultMessage": "Gesperrt"
   },
   "common.settings": {
-    "defaultMessage": "[DE] common.settings"
+    "defaultMessage": "Einstellungen"
   },
   "common.loading": {
     "defaultMessage": "Laden..."
