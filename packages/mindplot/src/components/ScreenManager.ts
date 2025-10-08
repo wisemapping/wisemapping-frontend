@@ -33,6 +33,10 @@ class ScreenManager {
     this._divContainer = divElement as HTMLDivElement;
     this._padding = { x: 0, y: 0 };
 
+    // Prevent pull-to-refresh and other touch gestures on the container
+    this._divContainer.style.touchAction = 'none';
+    this._divContainer.style.overscrollBehavior = 'none';
+
     // Ignore default click event propagation. Prevent 'click' event on drag.
     this._clickEvents = [];
     EventManager.bind(this._divContainer, 'click', (event: Event) => {
@@ -64,7 +68,10 @@ class ScreenManager {
     if (eventType === 'click') {
       this._clickEvents.push(listener);
     } else {
-      EventManager.bind(this._divContainer, eventType, listener);
+      // Use non-passive listeners for touch events to allow preventDefault()
+      const isTouchEvent = ['touchstart', 'touchmove', 'touchend'].includes(eventType);
+      const options = isTouchEvent ? { passive: false } : undefined;
+      EventManager.bind(this._divContainer, eventType, listener, options);
     }
   }
 
@@ -75,7 +82,10 @@ class ScreenManager {
         this._clickEvents.splice(index, 1);
       }
     } else {
-      EventManager.unbind(this._divContainer, event, listener);
+      // Use non-passive listeners for touch events to match addEvent
+      const isTouchEvent = ['touchstart', 'touchmove', 'touchend'].includes(event);
+      const options = isTouchEvent ? { passive: false } : undefined;
+      EventManager.unbind(this._divContainer, event, listener, options);
     }
   }
 

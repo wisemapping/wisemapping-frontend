@@ -273,6 +273,11 @@ class Canvas {
         if (mWorkspace.isWorkspaceEventsEnabled()) {
           mWorkspace.enableWorkspaceEvents(false);
 
+          // Prevent pull-to-refresh on mobile when dragging
+          if (event.type === 'touchstart') {
+            event.preventDefault();
+          }
+
           const originalEvent = event;
           const mouseDownPosition = screenManager.getWorkspaceMousePosition(
             originalEvent as MouseEvent,
@@ -296,11 +301,10 @@ class Canvas {
 
             // Change cursor.
             window.document.body.style.cursor = 'move';
-            // If I dont ignore touchmove events, browser console shows a lot of errors:
-            // Unable to preventDefault inside passive event listener invocation.
-            if (mouseMoveEvent.type !== 'touchmove') {
-              mouseMoveEvent.preventDefault();
-            }
+
+            // Prevent default behavior for both mouse and touch events
+            // This prevents pull-to-refresh and text selection during drag
+            mouseMoveEvent.preventDefault();
 
             // Fire drag event ...
             screenManager.fireEvent('update');

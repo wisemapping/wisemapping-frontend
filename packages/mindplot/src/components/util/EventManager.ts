@@ -28,8 +28,9 @@ class EventManager {
     element: HTMLElement | Document | Window,
     event: string,
     handler: EventListener,
+    options?: AddEventListenerOptions,
   ): void {
-    element.addEventListener(event, handler);
+    element.addEventListener(event, handler, options);
   }
 
   /**
@@ -40,8 +41,9 @@ class EventManager {
     element: HTMLElement | Document | Window,
     event: string,
     handler: EventListener,
+    options?: AddEventListenerOptions,
   ): void {
-    element.removeEventListener(event, handler);
+    element.removeEventListener(event, handler, options);
   }
 
   /**
