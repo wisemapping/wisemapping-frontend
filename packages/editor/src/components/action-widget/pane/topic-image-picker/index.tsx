@@ -175,11 +175,7 @@ const TopicImagePicker = ({
               backgroundColor: 'background.paper',
             }}
           >
-            <TopicImageTab
-              iconModel={iconsGalleryModel}
-              emojiModel={emojiModel}
-              triggerClose={triggerClose}
-            />
+            <TopicImageTab iconModel={iconsGalleryModel} emojiModel={emojiModel} />
           </Box>
         )}
         {tabValue === 1 && (
