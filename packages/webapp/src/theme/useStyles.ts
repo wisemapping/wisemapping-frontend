@@ -16,9 +16,10 @@
  *   limitations under the License.
  */
 
-import { css, SerializedStyles, Theme } from '@emotion/react';
-import { useTheme } from '@emotion/react';
+import { css, SerializedStyles } from '@emotion/react';
+import { useTheme } from '@mui/material/styles';
 import { useMemo } from 'react';
+import { Theme } from '@mui/material/styles';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type StyleValue = Record<string, any>;
