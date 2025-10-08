@@ -256,7 +256,13 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               {permissions &&
                 permissions.map((permission) => {
                   return (
-                    <ListItem key={permission.email} role={undefined} dense component="button">
+                    <ListItem
+                      key={permission.email}
+                      role={undefined}
+                      dense
+                      component="button"
+                      css={classes.listItem as Interpolation<Theme>}
+                    >
                       <ListItemText
                         css={classes.listItemText as Interpolation<Theme>}
                         id={permission.email}
@@ -279,7 +285,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
                             onClick={(e) => handleOnDeleteClick(e, permission.email)}
                             size="large"
                           >
-                            <DeleteIcon />
+                            <DeleteIcon color="action" />
                           </IconButton>
                         </Tooltip>
                       </ListItemSecondaryAction>

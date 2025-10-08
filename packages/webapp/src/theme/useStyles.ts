@@ -18,21 +18,26 @@
 
 import { css } from '@emotion/react';
 import { useTheme } from '@emotion/react';
+import { useMemo } from 'react';
 
 const getStyle = (value) => {
   return css(value);
 };
 
-function useClasses<T>(stylesElement: T): T {
+function useClasses<T>(stylesElement: T | ((theme: any) => T)): T {
   const theme = useTheme();
-  const rawClasses = typeof stylesElement === 'function' ? stylesElement(theme) : stylesElement;
-  const prepared = {};
 
-  Object.entries(rawClasses).forEach(([key, value]) => {
-    prepared[key] = getStyle(value);
-  });
+  // Memoize the result based on the theme to avoid recalculating on every render
+  return useMemo(() => {
+    const rawClasses = typeof stylesElement === 'function' ? stylesElement(theme) : stylesElement;
+    const prepared = {};
 
-  return prepared as T;
+    Object.entries(rawClasses).forEach(([key, value]) => {
+      prepared[key] = getStyle(value);
+    });
+
+    return prepared as T;
+  }, [theme, stylesElement]);
 }
 
 export default useClasses;

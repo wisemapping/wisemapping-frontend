@@ -17,11 +17,10 @@
  */
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { useTheme } from '@mui/material/styles';
 import useClasses from '../../../../theme/useStyles';
 
 export const useStyles = () =>
-  useClasses({
+  useClasses((theme) => ({
     textarea: {
       width: '100%',
       padding: '12px 16px',
@@ -41,12 +40,12 @@ export const useStyles = () =>
       transition: 'all 0.2s ease',
       '&:focus': {
         outline: 'none',
-        borderColor: useTheme().palette.primary.main,
+        borderColor: theme.palette.primary.main,
         backgroundColor: '#fff',
         boxShadow: '0 0 0 2px rgba(25, 118, 210, 0.1)',
       },
       '&:hover': {
-        borderColor: useTheme().palette.primary.main,
+        borderColor: theme.palette.primary.main,
         backgroundColor: '#fff',
         boxShadow: '0 0 0 1px rgba(25, 118, 210, 0.2)',
       },
@@ -55,11 +54,11 @@ export const useStyles = () =>
       maxWidth: '600px',
       minWidth: '500px',
       margin: 'auto',
-      [useTheme().breakpoints.down('md')]: {
+      [theme.breakpoints.down('md')]: {
         maxWidth: '90vw',
         minWidth: 'auto',
       },
-      [useTheme().breakpoints.down('sm')]: {
+      [theme.breakpoints.down('sm')]: {
         maxWidth: '100%',
         minWidth: 'auto',
       },
@@ -97,13 +96,13 @@ export const useStyles = () =>
         '&:hover': {
           backgroundColor: '#e3f2fd',
           '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: useTheme().palette.primary.main,
+            borderColor: theme.palette.primary.main,
           },
         },
         '&.Mui-focused': {
           backgroundColor: '#fff',
           '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: useTheme().palette.primary.main,
+            borderColor: theme.palette.primary.main,
             borderWidth: '2px',
           },
         },
@@ -113,4 +112,4 @@ export const useStyles = () =>
         userSelect: 'all' as const,
       },
     },
-  });
+  }));

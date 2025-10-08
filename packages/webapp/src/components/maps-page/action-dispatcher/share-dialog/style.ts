@@ -17,11 +17,10 @@
  */
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { useTheme } from '@mui/material/styles';
 import useClasses from '../../../../theme/useStyles';
 
 export const useStyles = () =>
-  useClasses({
+  useClasses((theme) => ({
     actionContainer: {
       padding: '10px',
       border: '1px solid rgba(0, 0, 0, 0.12)',
@@ -31,14 +30,14 @@ export const useStyles = () =>
       alignItems: 'center',
       gap: '8px',
       flexWrap: 'nowrap',
-      [useTheme().breakpoints.down('sm')]: {
+      [theme.breakpoints.down('sm')]: {
         flexDirection: 'column',
         alignItems: 'stretch',
         flexWrap: 'wrap',
       },
     },
     fullWidthInMobile: {
-      [useTheme().breakpoints.down('sm')]: {
+      [theme.breakpoints.down('sm')]: {
         minWidth: '99%',
         marginBottom: 5,
       },
@@ -47,14 +46,14 @@ export const useStyles = () =>
       flex: '1 1 200px',
       minWidth: '180px',
       maxWidth: '300px',
-      [useTheme().breakpoints.down('sm')]: {
+      [theme.breakpoints.down('sm')]: {
         flex: '1 1 100%',
       },
     },
     role: {
       flexShrink: 0,
       whiteSpace: 'nowrap',
-      [useTheme().breakpoints.down('sm')]: {
+      [theme.breakpoints.down('sm')]: {
         width: '100%',
         marginBottom: '5px',
       },
@@ -62,7 +61,7 @@ export const useStyles = () =>
     checkbox: {
       flexShrink: 0,
       whiteSpace: 'nowrap',
-      [useTheme().breakpoints.down('sm')]: {
+      [theme.breakpoints.down('sm')]: {
         width: '100%',
         marginBottom: '5px',
       },
@@ -70,12 +69,12 @@ export const useStyles = () =>
     shareButton: {
       flexShrink: 0,
       minWidth: '80px',
-      [useTheme().breakpoints.down('sm')]: {
+      [theme.breakpoints.down('sm')]: {
         width: '100%',
       },
     },
     textArea: {
-      [useTheme().breakpoints.up('sm')]: {
+      [theme.breakpoints.up('sm')]: {
         width: '730px',
         margin: '5px 0px',
         padding: '10px',
@@ -89,11 +88,11 @@ export const useStyles = () =>
       maxWidth: '450px',
       minWidth: '380px',
       margin: 'auto',
-      [useTheme().breakpoints.down('md')]: {
+      [theme.breakpoints.down('md')]: {
         maxWidth: '90vw',
         minWidth: 'auto',
       },
-      [useTheme().breakpoints.down('sm')]: {
+      [theme.breakpoints.down('sm')]: {
         maxWidth: '100%',
         minWidth: 'auto',
       },
@@ -106,4 +105,11 @@ export const useStyles = () =>
         display: 'inline',
       },
     },
-  });
+    listItem: {
+      backgroundColor: theme.palette.background.paper,
+      '&:hover': {
+        backgroundColor:
+          theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)',
+      },
+    },
+  }));

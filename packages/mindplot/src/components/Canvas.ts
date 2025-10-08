@@ -273,9 +273,15 @@ class Canvas {
         if (mWorkspace.isWorkspaceEventsEnabled()) {
           mWorkspace.enableWorkspaceEvents(false);
 
-          // Prevent pull-to-refresh on mobile when dragging
+          // Only prevent default for single-touch (panning), not multi-touch (pinch-zoom)
           if (event.type === 'touchstart') {
-            event.preventDefault();
+            const touchEvent = event as TouchEvent;
+            if (touchEvent.touches.length === 1) {
+              event.preventDefault();
+            } else {
+              // Multi-touch detected (pinch), don't handle it - let browser handle zoom
+              return;
+            }
           }
 
           const originalEvent = event;
@@ -302,9 +308,16 @@ class Canvas {
             // Change cursor.
             window.document.body.style.cursor = 'move';
 
-            // Prevent default behavior for both mouse and touch events
+            // Prevent default behavior for mouse and single-touch events
             // This prevents pull-to-refresh and text selection during drag
-            mouseMoveEvent.preventDefault();
+            if (mouseMoveEvent.type !== 'touchmove') {
+              mouseMoveEvent.preventDefault();
+            } else {
+              const touchEvent = mouseMoveEvent as TouchEvent;
+              if (touchEvent.touches.length === 1) {
+                mouseMoveEvent.preventDefault();
+              }
+            }
 
             // Fire drag event ...
             screenManager.fireEvent('update');

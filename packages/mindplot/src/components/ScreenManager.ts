@@ -33,9 +33,10 @@ class ScreenManager {
     this._divContainer = divElement as HTMLDivElement;
     this._padding = { x: 0, y: 0 };
 
-    // Prevent pull-to-refresh while allowing pinch-zoom
-    // pan-x pan-y allows custom panning, pinch-zoom allows pinch gestures
-    this._divContainer.style.touchAction = 'pan-x pan-y pinch-zoom';
+    // Prevent pull-to-refresh while allowing all zoom gestures
+    // We rely on preventDefault() in touch event handlers to block pull-to-refresh
+    // while keeping pinch-zoom and double-tap zoom enabled
+    this._divContainer.style.touchAction = 'auto';
     this._divContainer.style.overscrollBehavior = 'none';
 
     // Ignore default click event propagation. Prevent 'click' event on drag.
