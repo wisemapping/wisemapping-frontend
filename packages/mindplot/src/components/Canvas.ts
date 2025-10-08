@@ -273,12 +273,11 @@ class Canvas {
         if (mWorkspace.isWorkspaceEventsEnabled()) {
           mWorkspace.enableWorkspaceEvents(false);
 
-          // Only prevent default for single-touch (panning), not multi-touch (pinch-zoom)
+          // Don't prevent default on touchstart to allow node selection
+          // Multi-touch (pinch-zoom) should not trigger panning
           if (event.type === 'touchstart') {
             const touchEvent = event as TouchEvent;
-            if (touchEvent.touches.length === 1) {
-              event.preventDefault();
-            } else {
+            if (touchEvent.touches.length > 1) {
               // Multi-touch detected (pinch), don't handle it - let browser handle zoom
               return;
             }
