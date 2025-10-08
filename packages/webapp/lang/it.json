@@ -669,22 +669,22 @@
     "defaultMessage": "[IT] common.settings"
   },
   "common.loading": {
-    "defaultMessage": "Loading..."
+    "defaultMessage": "Caricamento..."
   },
   "common.retry": {
-    "defaultMessage": "Retry"
+    "defaultMessage": "Riprova"
   },
   "admin.system.title": {
-    "defaultMessage": "System Information"
+    "defaultMessage": "Informazioni di sistema"
   },
   "admin.system.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "Aggiorna"
   },
   "common.refresh": {
-    "defaultMessage": "Refresh"
+    "defaultMessage": "Aggiorna"
   },
   "admin.system.memory": {
-    "defaultMessage": "Memory"
+    "defaultMessage": "Memoria"
   },
   "admin.system.db.url": {
     "defaultMessage": "URL"
@@ -696,51 +696,51 @@
     "defaultMessage": "Errore Imprevisto | WiseMapping"
   },
   "error.security-error": {
-    "defaultMessage": "Mindmap cannot be opened."
+    "defaultMessage": "La mappa mentale non può essere aperta."
   },
   "error.undexpected-error-msg": {
-    "defaultMessage": "Unexpected error opening mindmap. Please, try latter."
+    "defaultMessage": "Errore imprevisto durante l'apertura della mappa mentale. Riprova più tardi."
   },
   "accountinfo.personal-details": {
-    "defaultMessage": "Personal Details"
+    "defaultMessage": "Dettagli personali"
   },
   "account.delete-warning-title": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Elimina Account"
   },
   "account.delete-warning-description": {
-    "defaultMessage": "Once you delete your account, there is no going back. Please be certain."
+    "defaultMessage": "Una volta eliminato il tuo account, non potrai più tornare indietro.Si prega di essere certi."
   },
   "account.delete-warning-consequences": {
-    "defaultMessage": "This will permanently delete:"
+    "defaultMessage": "Questo eliminerà definitivamente:"
   },
   "account.delete-warning-mindmaps": {
-    "defaultMessage": "All your mindmaps and their content"
+    "defaultMessage": "Tutte le tue mappe mentali e il loro contenuto"
   },
   "account.delete-warning-data": {
-    "defaultMessage": "All your personal data and account information"
+    "defaultMessage": "Tutti i tuoi dati personali e le informazioni del tuo account"
   },
   "account.delete-warning-collaborations": {
-    "defaultMessage": "All shared mindmaps and collaborations"
+    "defaultMessage": "Tutte le mappe mentali e le collaborazioni condivise"
   },
   "account.delete-warning-history": {
-    "defaultMessage": "All account history and activity logs"
+    "defaultMessage": "Tutta la cronologia dell'account e i log delle attività"
   },
   "account.delete-confirmation-title": {
-    "defaultMessage": "Are you absolutely sure?"
+    "defaultMessage": "Sei assolutamente sicuro?"
   },
   "account.delete-confirmation-warning": {
-    "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+    "defaultMessage": "Questa azione non può essere annullata. Ciò eliminerà definitivamente il tuo account e rimuoverà tutti i dati dai nostri server.."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+    "defaultMessage": "Digita ELIMINA IL MIO ACCOUNT per confermare:"
   },
   "account.delete-confirm": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Elimina account"
   },
   "menu.admin-console": {
-    "defaultMessage": "Admin Console"
+    "defaultMessage": "Console di amministrazione"
   },
   "registration.form-legend": {
-    "defaultMessage": "Account Information"
+    "defaultMessage": "Informazioni sull'account"
   }
 }
