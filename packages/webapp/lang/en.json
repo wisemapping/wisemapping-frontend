@@ -437,20 +437,23 @@
   "publish.checkbox": {
     "defaultMessage": "Enable public sharing"
   },
+  "publish.copied": {
+    "defaultMessage": "Copied to clipboard!"
+  },
   "publish.description": {
-    "defaultMessage": "By publishing the map you make it visible to everyone on the Internet."
+    "defaultMessage": "Make your map public. Anyone with the link can view it."
   },
   "publish.embedded": {
     "defaultMessage": "Embedded"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "Copy this snippet of code to embed in your blog or page:"
+    "defaultMessage": "Click the code below to copy it to your clipboard:"
   },
   "publish.public-url": {
     "defaultMessage": "Public URL"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "Copy and paste the link below to share your map with colleagues:"
+    "defaultMessage": "Click the link below to copy it to your clipboard:"
   },
   "publish.title": {
     "defaultMessage": "Publish"
@@ -539,6 +542,9 @@
   "share.add-button": {
     "defaultMessage": "Share"
   },
+  "share.adding-button": {
+    "defaultMessage": "Sharing..."
+  },
   "share.add-message": {
     "defaultMessage": "Add message"
   },
@@ -552,7 +558,7 @@
     "defaultMessage": "Delete collaborator"
   },
   "share.delete-description": {
-    "defaultMessage": "Invite people to collaborate with you in the creation of your mindmap. They will be notified by email."
+    "defaultMessage": "Add collaborators. They'll get instant email access to edit together."
   },
   "share.delete-title": {
     "defaultMessage": "Share with people"
@@ -691,6 +697,9 @@
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "error.page-title": {
+    "defaultMessage": "Unexpected Error | WiseMapping"
   },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."

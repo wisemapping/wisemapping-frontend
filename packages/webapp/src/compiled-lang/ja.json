@@ -563,6 +563,12 @@
       "value": "複製"
     }
   ],
+  "error.page-title": [
+    {
+      "type": 0,
+      "value": "予期しないエラー | WiseMapping"
+    }
+  ],
   "error.security-error": [
     {
       "type": 0,
@@ -1468,7 +1474,7 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "マインドマップの作成に協力する人を招待します。メールで通知されます。"
+      "value": "共同編集者を追加。即座にメールでアクセスが送信され、一緒に編集できます。"
     }
   ],
   "share.delete-title": [

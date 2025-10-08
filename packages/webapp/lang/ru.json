@@ -446,6 +446,9 @@
   "share.add-button": {
     "defaultMessage": "Добавить"
   },
+  "share.adding-button": {
+    "defaultMessage": "Отправка..."
+  },
   "share.add-message": {
     "defaultMessage": "Добавить сообщение"
   },
@@ -459,7 +462,7 @@
     "defaultMessage": "Отозвать доступ"
   },
   "share.delete-description": {
-    "defaultMessage": "Пригласите людей для совместной работы над картой. Они получат письмо с приглашением."
+    "defaultMessage": "Добавьте соавторов. Они получат мгновенный доступ по email для совместного редактирования."
   },
   "share.delete-title": {
     "defaultMessage": "Общий доступ"
@@ -691,6 +694,9 @@
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "error.page-title": {
+    "defaultMessage": "Неожиданная Ошибка | WiseMapping"
   },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."

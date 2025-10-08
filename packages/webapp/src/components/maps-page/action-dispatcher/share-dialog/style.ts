@@ -23,10 +23,19 @@ import useClasses from '../../../../theme/useStyles';
 export const useStyles = () =>
   useClasses({
     actionContainer: {
-      padding: '10px 0px',
+      padding: '10px',
       border: '1px solid rgba(0, 0, 0, 0.12)',
       borderRadius: '8px 8px 0px 0px',
-      textAlign: 'center',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '8px',
+      flexWrap: 'nowrap',
+      [useTheme().breakpoints.down('sm')]: {
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        flexWrap: 'wrap',
+      },
     },
     fullWidthInMobile: {
       [useTheme().breakpoints.down('sm')]: {
@@ -35,13 +44,34 @@ export const useStyles = () =>
       },
     },
     email: {
-      [useTheme().breakpoints.up('sm')]: {
-        width: '300px',
+      flex: '1 1 200px',
+      minWidth: '180px',
+      maxWidth: '300px',
+      [useTheme().breakpoints.down('sm')]: {
+        flex: '1 1 100%',
       },
     },
     role: {
-      [useTheme().breakpoints.up('sm')]: {
-        margin: '0px 10px',
+      flexShrink: 0,
+      whiteSpace: 'nowrap',
+      [useTheme().breakpoints.down('sm')]: {
+        width: '100%',
+        marginBottom: '5px',
+      },
+    },
+    checkbox: {
+      flexShrink: 0,
+      whiteSpace: 'nowrap',
+      [useTheme().breakpoints.down('sm')]: {
+        width: '100%',
+        marginBottom: '5px',
+      },
+    },
+    shareButton: {
+      flexShrink: 0,
+      minWidth: '80px',
+      [useTheme().breakpoints.down('sm')]: {
+        width: '100%',
       },
     },
     textArea: {
@@ -56,10 +86,16 @@ export const useStyles = () =>
       overflowY: 'scroll',
     },
     paper: {
-      width: '850px',
-      minWidth: '850px',
+      maxWidth: '450px',
+      minWidth: '380px',
+      margin: 'auto',
+      [useTheme().breakpoints.down('md')]: {
+        maxWidth: '90vw',
+        minWidth: 'auto',
+      },
       [useTheme().breakpoints.down('sm')]: {
-        minWidth: '100%',
+        maxWidth: '100%',
+        minWidth: 'auto',
       },
     },
     listItemText: {

@@ -563,6 +563,12 @@
       "value": "Duplicate"
     }
   ],
+  "error.page-title": [
+    {
+      "type": 0,
+      "value": "Unexpected Error | WiseMapping"
+    }
+  ],
   "error.security-error": [
     {
       "type": 0,
@@ -1231,10 +1237,16 @@
       "value": "Enable public sharing"
     }
   ],
+  "publish.copied": [
+    {
+      "type": 0,
+      "value": "Copied to clipboard!"
+    }
+  ],
   "publish.description": [
     {
       "type": 0,
-      "value": "By publishing the map you make it visible to everyone on the Internet."
+      "value": "Make your map public. Anyone with the link can view it."
     }
   ],
   "publish.embedded": [
@@ -1246,7 +1258,7 @@
   "publish.embedded-msg": [
     {
       "type": 0,
-      "value": "Copy this snippet of code to embed in your blog or page:"
+      "value": "Click the code below to copy it to your clipboard:"
     }
   ],
   "publish.public-url": [
@@ -1258,7 +1270,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "Copy and paste the link below to share your map with colleagues:"
+      "value": "Click the link below to copy it to your clipboard:"
     }
   ],
   "publish.title": [
@@ -1447,6 +1459,12 @@
       "value": "Add message"
     }
   ],
+  "share.adding-button": [
+    {
+      "type": 0,
+      "value": "Sharing..."
+    }
+  ],
   "share.can-edit": [
     {
       "type": 0,
@@ -1468,7 +1486,7 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Invite people to collaborate with you in the creation of your mindmap. They will be notified by email."
+      "value": "Add collaborators. They'll get instant email access to edit together."
     }
   ],
   "share.delete-title": [

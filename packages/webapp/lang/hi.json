@@ -546,7 +546,7 @@
     "defaultMessage": "सहयोगी हटाएं"
   },
   "share.delete-description": {
-    "defaultMessage": "अपने माइंडमैप के निर्माण में आपके साथ सहयोग करने के लिए लोगों को आमंत्रित करें। उन्हें ईमेल द्वारा सूचित किया जाएगा।"
+    "defaultMessage": "सहयोगी जोड़ें। उन्हें एक साथ संपादन के लिए तुरंत ईमेल एक्सेस मिलेगा।"
   },
   "share.delete-title": {
     "defaultMessage": "लोगों के साथ साझा करें"
@@ -691,6 +691,9 @@
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "error.page-title": {
+    "defaultMessage": "अप्रत्याशित त्रुटि | WiseMapping"
   },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."

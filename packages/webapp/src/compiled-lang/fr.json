@@ -563,6 +563,12 @@
       "value": "Dupliquer"
     }
   ],
+  "error.page-title": [
+    {
+      "type": 0,
+      "value": "Erreur Inattendue | WiseMapping"
+    }
+  ],
   "error.security-error": [
     {
       "type": 0,
@@ -1227,10 +1233,16 @@
       "value": "Activer le partage public"
     }
   ],
+  "publish.copied": [
+    {
+      "type": 0,
+      "value": "Copié dans le presse-papiers !"
+    }
+  ],
   "publish.description": [
     {
       "type": 0,
-      "value": "En publiant la carte, vous la rendez visible par tous sur Internet."
+      "value": "Rendez votre carte publique. Toute personne ayant le lien peut la voir."
     }
   ],
   "publish.embedded": [
@@ -1242,7 +1254,7 @@
   "publish.embedded-msg": [
     {
       "type": 0,
-      "value": "Copiez cet extrait de code pour l'intégrer dans votre blog ou votre page :"
+      "value": "Cliquez sur le code pour le copier dans le presse-papiers :"
     }
   ],
   "publish.public-url": [
@@ -1254,7 +1266,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "Copiez et collez le lien ci-dessous pour partager votre carte avec vos collègues :"
+      "value": "Cliquez sur le lien pour le copier dans le presse-papiers :"
     }
   ],
   "publish.title": [
@@ -1443,6 +1455,12 @@
       "value": "Ajouter un message"
     }
   ],
+  "share.adding-button": [
+    {
+      "type": 0,
+      "value": "Partage en cours..."
+    }
+  ],
   "share.can-edit": [
     {
       "type": 0,
@@ -1464,7 +1482,7 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Invitez des personnes à collaborer avec vous dans la création de votre carte mentale. Ils seront prévenus par email."
+      "value": "Ajoutez des collaborateurs. Ils recevront un accès instantané par email pour éditer ensemble."
     }
   ],
   "share.delete-title": [

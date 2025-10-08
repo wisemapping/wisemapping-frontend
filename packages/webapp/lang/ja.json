@@ -543,7 +543,7 @@
     "defaultMessage": "共同編集者を削除"
   },
   "share.delete-description": {
-    "defaultMessage": "マインドマップの作成に協力する人を招待します。メールで通知されます。"
+    "defaultMessage": "共同編集者を追加。即座にメールでアクセスが送信され、一緒に編集できます。"
   },
   "share.delete-title": {
     "defaultMessage": "人と共有"
@@ -691,6 +691,9 @@
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "error.page-title": {
+    "defaultMessage": "予期しないエラー | WiseMapping"
   },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."

@@ -546,7 +546,7 @@
     "defaultMessage": "Elimina collaboratore"
   },
   "share.delete-description": {
-    "defaultMessage": "Invita persone a collaborare con te nella creazione della tua mappa mentale. Verranno notificate via email."
+    "defaultMessage": "Aggiungi collaboratori. Riceveranno accesso istantaneo via email per modificare insieme."
   },
   "share.delete-title": {
     "defaultMessage": "Condividi con persone"
@@ -691,6 +691,9 @@
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "error.page-title": {
+    "defaultMessage": "Errore Imprevisto | WiseMapping"
   },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."

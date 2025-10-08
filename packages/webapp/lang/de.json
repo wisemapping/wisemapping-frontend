@@ -377,20 +377,23 @@
   "publish.checkbox": {
     "defaultMessage": "Aktiviere die öffentliche Freigabe"
   },
+  "publish.copied": {
+    "defaultMessage": "In die Zwischenablage kopiert!"
+  },
   "publish.description": {
-    "defaultMessage": "Indem du die Mindmap veröffentlichst, machst du sie für jeden im Internet sichtbar."
+    "defaultMessage": "Mache deine Map öffentlich. Jeder mit dem Link kann sie ansehen."
   },
   "publish.embedded": {
     "defaultMessage": "Eingebettet"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "Kopiere dieses Code-Snippet, um es in deinem Blog oder deiner Webseite einzubetten:"
+    "defaultMessage": "Klicke auf den Code, um ihn in die Zwischenablage zu kopieren:"
   },
   "publish.public-url": {
     "defaultMessage": "Öffentliche URL"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "Kopiere die folgende Verknüpfung und gebe sie weiter, um deine Mindmap mit Kollegen zu teilen:"
+    "defaultMessage": "Klicke auf den Link, um ihn in die Zwischenablage zu kopieren:"
   },
   "publish.title": {
     "defaultMessage": "Veröffentlichen"
@@ -446,6 +449,9 @@
   "share.add-button": {
     "defaultMessage": "Geteilt"
   },
+  "share.adding-button": {
+    "defaultMessage": "Wird geteilt..."
+  },
   "share.add-message": {
     "defaultMessage": "Nachricht hinzufügen"
   },
@@ -459,7 +465,7 @@
     "defaultMessage": "Bearbeiter entfernen"
   },
   "share.delete-description": {
-    "defaultMessage": "Lade Personen ein, die bei der Erstellung deiner Mindmap mitarbeiten. Sie werden per E-Mail benachrichtigt."
+    "defaultMessage": "Füge Mitarbeiter hinzu. Sie erhalten sofortigen E-Mail-Zugriff zum gemeinsamen Bearbeiten."
   },
   "share.delete-title": {
     "defaultMessage": "Teile deine Mindmap"
@@ -691,6 +697,9 @@
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "error.page-title": {
+    "defaultMessage": "Unerwarteter Fehler | WiseMapping"
   },
   "error.security-error": {
     "defaultMessage": "Mindmap kann nicht geöffnet werden."

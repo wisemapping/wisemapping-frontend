@@ -552,7 +552,7 @@
     "defaultMessage": "Видалити співробітника"
   },
   "share.delete-description": {
-    "defaultMessage": "Запросіть людей співпрацювати з вами у створенні вашої карти розуму. Вони отримають сповіщення електронною поштою."
+    "defaultMessage": "Додайте співавторів. Вони отримають миттєвий доступ по email для спільного редагування."
   },
   "share.delete-title": {
     "defaultMessage": "Поділитися з людьми"
@@ -691,6 +691,9 @@
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "error.page-title": {
+    "defaultMessage": "Неочікувана Помилка | WiseMapping"
   },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."

@@ -33,8 +33,10 @@ import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import TextField from '@mui/material/TextField';
 import AppConfig from '../../../../classes/app-config';
 import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 import { useFetchMapById } from '../../../../classes/middleware';
 import { ClientContext } from '../../../../classes/provider/client-context';
 
@@ -45,6 +47,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
   const [model, setModel] = React.useState<boolean>(map ? map.public : false);
   const [error, setError] = React.useState<ErrorInfo>();
   const [activeTab, setActiveTab] = React.useState('1');
+  const [copied, setCopied] = React.useState<boolean>(false);
   const queryClient = useQueryClient();
   const intl = useIntl();
   const classes = useStyles();
@@ -84,7 +87,34 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     setActiveTab(newValue);
   };
 
+  const handleCopyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(
+      () => {
+        setCopied(true);
+      },
+      () => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        setCopied(true);
+      },
+    );
+  };
+
+  const handleCloseTooltip = () => {
+    setCopied(false);
+  };
+
   const baseUrl = AppConfig.getUiBaseUrl();
+  const embedCode = `<iframe 
+  style="width:600px;height:400px;border:1px solid #ccc" 
+  src="${baseUrl}/c/maps/${mapId}/embed?zoom=1.0">
+</iframe>`;
+  const publicUrl = `${baseUrl}/c/maps/${mapId}/public`;
   return (
     <div>
       <BaseDialog
@@ -100,20 +130,28 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
           id: 'publish.button',
           defaultMessage: 'Accept',
         })}
+        maxWidth="md"
+        papercss={classes.paper}
       >
-        <FormControl fullWidth={true}>
-          <FormControlLabel
-            control={
-              <Checkbox checked={model} onChange={handleOnChange} name="public" color="primary" />
-            }
-            label={intl.formatMessage({
-              id: 'publish.checkbox',
-              defaultMessage: 'Enable public sharing',
-            })}
-          />
-        </FormControl>
+        <Box css={classes.checkboxContainer}>
+          <FormControl fullWidth={true}>
+            <FormControlLabel
+              control={
+                <Checkbox checked={model} onChange={handleOnChange} name="public" color="primary" />
+              }
+              label={
+                <Typography variant="body1" fontWeight={500}>
+                  {intl.formatMessage({
+                    id: 'publish.checkbox',
+                    defaultMessage: 'Enable public sharing',
+                  })}
+                </Typography>
+              }
+            />
+          </FormControl>
+        </Box>
 
-        <div style={!model ? { visibility: 'hidden' } : {}}>
+        <div style={!model ? { display: 'none' } : {}}>
           <TabContext value={activeTab}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <TabList onChange={handleTabChange}>
@@ -123,6 +161,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                     defaultMessage: 'Public URL',
                   })}
                   value="1"
+                  css={classes.tab}
                 />
                 <Tab
                   label={intl.formatMessage({
@@ -130,38 +169,67 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                     defaultMessage: 'Embedded',
                   })}
                   value="2"
+                  css={classes.tab}
                 />
               </TabList>
             </Box>
-            <TabPanel value="2">
-              <Typography variant="subtitle2">
+            <TabPanel value="2" css={classes.tabPanel}>
+              <Typography variant="subtitle2" css={classes.label}>
                 <FormattedMessage
                   id="publish.embedded-msg"
                   defaultMessage="Copy this snippet of code to embed in your blog or page:"
                 />
               </Typography>
-              <TextareaAutosize
-                css={classes.textarea}
-                readOnly={true}
-                spellCheck={false}
-                maxRows={6}
-                defaultValue={`<iframe style="width:600px;height:400px;border:1px solid black" src="${baseUrl}/c/maps/${mapId}/embed?zoom=1.0"></iframe>`}
-              />
+              <Tooltip
+                title={intl.formatMessage({
+                  id: 'publish.copied',
+                  defaultMessage: 'Copied to clipboard!',
+                })}
+                open={copied && activeTab === '2'}
+                onClose={handleCloseTooltip}
+                leaveDelay={1500}
+                arrow
+              >
+                <TextareaAutosize
+                  css={classes.textarea}
+                  readOnly={true}
+                  spellCheck={false}
+                  minRows={4}
+                  maxRows={6}
+                  value={embedCode}
+                  onClick={() => handleCopyToClipboard(embedCode)}
+                />
+              </Tooltip>
             </TabPanel>
-            <TabPanel value="1">
-              <Typography variant="subtitle2">
+            <TabPanel value="1" css={classes.tabPanel}>
+              <Typography variant="subtitle2" css={classes.label}>
                 <FormattedMessage
                   id="publish.public-url-msg"
                   defaultMessage="Copy and paste the link below to share your map with colleagues:"
                 />
               </Typography>
-              <TextareaAutosize
-                css={classes.textarea}
-                readOnly={true}
-                spellCheck={false}
-                maxRows={1}
-                defaultValue={`${baseUrl}/c/maps/${mapId}/public`}
-              />
+              <Tooltip
+                title={intl.formatMessage({
+                  id: 'publish.copied',
+                  defaultMessage: 'Copied to clipboard!',
+                })}
+                open={copied && activeTab === '1'}
+                onClose={handleCloseTooltip}
+                leaveDelay={1500}
+                arrow
+              >
+                <TextField
+                  fullWidth
+                  value={publicUrl}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  onClick={() => handleCopyToClipboard(publicUrl)}
+                  css={classes.urlInput}
+                  variant="outlined"
+                  size="small"
+                />
+              </Tooltip>
             </TabPanel>
           </TabContext>
         </div>

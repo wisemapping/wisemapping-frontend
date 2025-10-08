@@ -68,8 +68,8 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
         open={true}
         onClose={onClose}
         maxWidth={maxWidth}
-        papercss={papercss}
-        fullWidth={true}
+        fullWidth={!papercss}
+        PaperProps={papercss ? { css: papercss } : undefined}
       >
         <form autoComplete="off" onSubmit={handleOnSubmit}>
           <StyledDialogTitle>{props.title}</StyledDialogTitle>

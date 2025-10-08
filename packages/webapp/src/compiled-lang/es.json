@@ -563,6 +563,12 @@
       "value": "Duplicar"
     }
   ],
+  "error.page-title": [
+    {
+      "type": 0,
+      "value": "Error Inesperado | WiseMapping"
+    }
+  ],
   "error.security-error": [
     {
       "type": 0,
@@ -1231,10 +1237,16 @@
       "value": "Habilitar el uso compartido público"
     }
   ],
+  "publish.copied": [
+    {
+      "type": 0,
+      "value": "¡Copiado al portapapeles!"
+    }
+  ],
   "publish.description": [
     {
       "type": 0,
-      "value": "Al publicar el mapa, lo haces visible para todos en Internet."
+      "value": "Haz tu mapa público. Cualquiera con el enlace puede verlo."
     }
   ],
   "publish.embedded": [
@@ -1246,7 +1258,7 @@
   "publish.embedded-msg": [
     {
       "type": 0,
-      "value": "Copie este fragmento de código para insertarlo en su blog o página:"
+      "value": "Haz clic en el código para copiarlo al portapapeles:"
     }
   ],
   "publish.public-url": [
@@ -1258,7 +1270,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "Copie y pegue el siguiente enlace para compartir su mapa con sus colegas:"
+      "value": "Haz clic en el enlace para copiarlo al portapapeles:"
     }
   ],
   "publish.title": [
@@ -1447,6 +1459,12 @@
       "value": "Agregar mensaje"
     }
   ],
+  "share.adding-button": [
+    {
+      "type": 0,
+      "value": "Compartiendo..."
+    }
+  ],
   "share.can-edit": [
     {
       "type": 0,
@@ -1468,7 +1486,7 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Invita a personas a colaborar contigo en la creación de tu mapa mental. Serán notificados por correo electrónico."
+      "value": "Añade colaboradores. Recibirán acceso instantáneo por email para editar juntos."
     }
   ],
   "share.delete-title": [

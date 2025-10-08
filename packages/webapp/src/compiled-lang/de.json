@@ -563,6 +563,12 @@
       "value": "Kopie"
     }
   ],
+  "error.page-title": [
+    {
+      "type": 0,
+      "value": "Unerwarteter Fehler | WiseMapping"
+    }
+  ],
   "error.security-error": [
     {
       "type": 0,
@@ -1227,10 +1233,16 @@
       "value": "Aktiviere die öffentliche Freigabe"
     }
   ],
+  "publish.copied": [
+    {
+      "type": 0,
+      "value": "In die Zwischenablage kopiert!"
+    }
+  ],
   "publish.description": [
     {
       "type": 0,
-      "value": "Indem du die Mindmap veröffentlichst, machst du sie für jeden im Internet sichtbar."
+      "value": "Mache deine Map öffentlich. Jeder mit dem Link kann sie ansehen."
     }
   ],
   "publish.embedded": [
@@ -1242,7 +1254,7 @@
   "publish.embedded-msg": [
     {
       "type": 0,
-      "value": "Kopiere dieses Code-Snippet, um es in deinem Blog oder deiner Webseite einzubetten:"
+      "value": "Klicke auf den Code, um ihn in die Zwischenablage zu kopieren:"
     }
   ],
   "publish.public-url": [
@@ -1254,7 +1266,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "Kopiere die folgende Verknüpfung und gebe sie weiter, um deine Mindmap mit Kollegen zu teilen:"
+      "value": "Klicke auf den Link, um ihn in die Zwischenablage zu kopieren:"
     }
   ],
   "publish.title": [
@@ -1443,6 +1455,12 @@
       "value": "Nachricht hinzufügen"
     }
   ],
+  "share.adding-button": [
+    {
+      "type": 0,
+      "value": "Wird geteilt..."
+    }
+  ],
   "share.can-edit": [
     {
       "type": 0,
@@ -1464,7 +1482,7 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Lade Personen ein, die bei der Erstellung deiner Mindmap mitarbeiten. Sie werden per E-Mail benachrichtigt."
+      "value": "Füge Mitarbeiter hinzu. Sie erhalten sofortigen E-Mail-Zugriff zum gemeinsamen Bearbeiten."
     }
   ],
   "share.delete-title": [

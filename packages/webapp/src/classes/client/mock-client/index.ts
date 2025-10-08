@@ -101,6 +101,19 @@ class MockClient implements Client {
         'owner',
       ),
       createMapInfo(
+        2,
+        false,
+        'My New Project',
+        [label1],
+        'Paulo',
+        '2025-01-15T10:30:00Z',
+        'Paulo',
+        '2025-01-15T14:20:00Z',
+        'A new mindmap project for testing',
+        false,
+        'owner',
+      ),
+      createMapInfo(
         11,
         false,
         'El Mapa3',
@@ -116,25 +129,26 @@ class MockClient implements Client {
       createMapInfo(
         12,
         false,
-        'El Mapa3',
+        'Team Roadmap (View Only)',
         [label2, label3],
-        'Paulo3',
-        '2008-06-02T00:00:00Z',
-        'Berna',
-        '2008-06-02T00:00:00Z',
-        '',
+        'Maria',
+        '2024-11-20T08:15:00Z',
+        'Maria',
+        '2025-01-10T16:45:00Z',
+        'Shared by Maria - view only access',
         false,
-        'editor',
+        'viewer',
       ),
     ];
 
     this.labels = [label1, label2, label3];
   }
   fetchMapInfo(id: number): Promise<MapInfo> {
-    if (id > 2) {
+    const map = this.maps.find((m) => m.id === id);
+    if (!map) {
       throw new Error(`Map could not be found ${id}`);
     }
-    return Promise.resolve(this.maps[id]);
+    return Promise.resolve(map);
   }
 
   fetchMapMetadata(id: number): Promise<MapMetadata> {

@@ -380,20 +380,23 @@
   "publish.checkbox": {
     "defaultMessage": "Activer le partage public"
   },
+  "publish.copied": {
+    "defaultMessage": "Copié dans le presse-papiers !"
+  },
   "publish.description": {
-    "defaultMessage": "En publiant la carte, vous la rendez visible par tous sur Internet."
+    "defaultMessage": "Rendez votre carte publique. Toute personne ayant le lien peut la voir."
   },
   "publish.embedded": {
     "defaultMessage": "Embarqué"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "Copiez cet extrait de code pour l'intégrer dans votre blog ou votre page :"
+    "defaultMessage": "Cliquez sur le code pour le copier dans le presse-papiers :"
   },
   "publish.public-url": {
     "defaultMessage": "URL publique"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "Copiez et collez le lien ci-dessous pour partager votre carte avec vos collègues :"
+    "defaultMessage": "Cliquez sur le lien pour le copier dans le presse-papiers :"
   },
   "publish.title": {
     "defaultMessage": "Publier"
@@ -449,6 +452,9 @@
   "share.add-button": {
     "defaultMessage": "Partager"
   },
+  "share.adding-button": {
+    "defaultMessage": "Partage en cours..."
+  },
   "share.add-message": {
     "defaultMessage": "Ajouter un message"
   },
@@ -462,7 +468,7 @@
     "defaultMessage": "Supprimer un collaborateur"
   },
   "share.delete-description": {
-    "defaultMessage": "Invitez des personnes à collaborer avec vous dans la création de votre carte mentale. Ils seront prévenus par email."
+    "defaultMessage": "Ajoutez des collaborateurs. Ils recevront un accès instantané par email pour éditer ensemble."
   },
   "share.delete-title": {
     "defaultMessage": "Partager avec les gens"
@@ -691,6 +697,9 @@
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "error.page-title": {
+    "defaultMessage": "Erreur Inattendue | WiseMapping"
   },
   "error.security-error": {
     "defaultMessage": "La carte mentale ne peut pas être ouverte."

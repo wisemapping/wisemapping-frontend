@@ -37,6 +37,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useStyles } from './style';
 import RoleIcon from '../../role-icon';
 import Tooltip from '@mui/material/Tooltip';
@@ -45,11 +46,11 @@ import { ClientContext } from '../../../../classes/provider/client-context';
 
 type ShareModel = {
   emails: string;
-  role: 'editor' | 'viewer';
+  canEdit: boolean;
   message: string;
 };
 
-const defaultModel: ShareModel = { emails: '', role: 'editor', message: '' };
+const defaultModel: ShareModel = { emails: '', canEdit: true, message: '' };
 const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const intl = useIntl();
   const client = useContext(ClientContext);
@@ -85,7 +86,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     (model: ShareModel) => {
       const emails = splitEmail(model.emails);
       const permissions = emails.map((email: string) => {
-        return { email: email, role: model.role };
+        return { email: email, role: model.canEdit ? ('editor' as const) : ('viewer' as const) };
       });
       return client.addMapPermissions(mapId, model.message, permissions);
     },
@@ -110,7 +111,10 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     event.preventDefault();
 
     const name = event.target.name;
-    const value = event.target.value;
+    const value =
+      event.target.type === 'checkbox'
+        ? (event.target as HTMLInputElement).checked
+        : event.target.value;
     setModel({ ...model, [name as keyof ShareModel]: value });
     event.stopPropagation();
   };
@@ -156,6 +160,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
           defaultMessage:
             'Invite people to collaborate with you in the creation of your mindmap. They will be notified by email. ',
         })}
+        maxWidth="md"
         papercss={classes.paper}
         error={error}
       >
@@ -171,23 +176,27 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             label={intl.formatMessage({ id: 'common.emails', defaultMessage: 'Emails' })}
             onChange={handleOnChange}
             value={model.emails}
+            disabled={addMutation.isLoading}
             css={[classes.fullWidthInMobile, classes.email]}
           />
 
-          <Select
-            variant="outlined"
-            onChange={handleOnChange}
-            value={model.role}
-            name="role"
-            css={[classes.fullWidthInMobile, classes.role]}
-          >
-            <MenuItem value="editor">
-              <FormattedMessage id="share.can-edit" defaultMessage="Can edit" />
-            </MenuItem>
-            <MenuItem value="viewer">
-              <FormattedMessage id="share.can-view" defaultMessage="Can view" />
-            </MenuItem>
-          </Select>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={model.canEdit}
+                onChange={handleOnChange}
+                name="canEdit"
+                color="primary"
+                disabled={addMutation.isLoading}
+              />
+            }
+            label={
+              <Typography variant="subtitle2">
+                <FormattedMessage id="share.can-edit" defaultMessage="Can edit" />
+              </Typography>
+            }
+            css={classes.role}
+          />
 
           <FormControlLabel
             value="start"
@@ -195,13 +204,14 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               setShowMessage(value);
             }}
             style={{ fontSize: '5px' }}
-            control={<Checkbox color="primary" />}
+            control={<Checkbox color="primary" disabled={addMutation.isLoading} />}
             label={
               <Typography variant="subtitle2">
                 <FormattedMessage id="share.add-message" defaultMessage="Customize share message" />
               </Typography>
             }
             labelPlacement="end"
+            css={classes.checkbox}
           />
 
           <Button
@@ -210,9 +220,17 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             variant="contained"
             disableElevation={true}
             onClick={handleOnAddClick}
-            disabled={!isValid}
+            disabled={!isValid || addMutation.isLoading}
+            css={classes.shareButton}
+            startIcon={
+              addMutation.isLoading ? <CircularProgress size={16} color="inherit" /> : null
+            }
           >
-            <FormattedMessage id="share.add-button" defaultMessage="Share" />
+            {addMutation.isLoading ? (
+              <FormattedMessage id="share.adding-button" defaultMessage="Sharing..." />
+            ) : (
+              <FormattedMessage id="share.add-button" defaultMessage="Share" />
+            )}
           </Button>
 
           {showMessage && (
@@ -225,6 +243,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               name="message"
               onChange={handleOnChange}
               value={model.message}
+              disabled={addMutation.isLoading}
               label={intl.formatMessage({
                 id: 'share.message',
                 defaultMessage: 'Message',

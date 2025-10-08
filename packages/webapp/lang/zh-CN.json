@@ -546,7 +546,7 @@
     "defaultMessage": "删除协作者"
   },
   "share.delete-description": {
-    "defaultMessage": "邀请人们与您合作创建您的思维导图。他们将通过电子邮件收到通知。"
+    "defaultMessage": "添加协作者。他们将立即通过电子邮件获得编辑权限。"
   },
   "share.delete-title": {
     "defaultMessage": "与人们分享"
@@ -691,6 +691,9 @@
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "error.page-title": {
+    "defaultMessage": "意外错误 | WiseMapping"
   },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."

@@ -431,6 +431,9 @@
   "publish.checkbox": {
     "defaultMessage": "Habilitar compartilhamento público"
   },
+  "publish.copied": {
+    "defaultMessage": "Copiado para a área de transferência!"
+  },
   "publish.description": {
     "defaultMessage": "Ao publicar o mapa, você o torna visível para todos na Internet."
   },
@@ -438,13 +441,13 @@
     "defaultMessage": "Incorporado"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "Copie este trecho de código para incorporar em seu blog ou página:"
+    "defaultMessage": "Clique no código para copiá-lo para a área de transferência:"
   },
   "publish.public-url": {
     "defaultMessage": "URL pública"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "Copie e cole o link abaixo para compartilhar seu mapa com colegas:"
+    "defaultMessage": "Clique no link para copiá-lo para a área de transferência:"
   },
   "publish.title": {
     "defaultMessage": "Publicar"
@@ -530,6 +533,9 @@
   "share.add-button": {
     "defaultMessage": "Compartilhar"
   },
+  "share.adding-button": {
+    "defaultMessage": "Compartilhando..."
+  },
   "share.add-message": {
     "defaultMessage": "Adicionar mensagem"
   },
@@ -543,7 +549,7 @@
     "defaultMessage": "Excluir colaborador"
   },
   "share.delete-description": {
-    "defaultMessage": "Convide pessoas para colaborar com você na criação do seu mapa mental. Elas serão notificadas por e-mail."
+    "defaultMessage": "Adicione colaboradores. Eles receberão acesso instantâneo por e-mail para editar juntos."
   },
   "share.delete-title": {
     "defaultMessage": "Compartilhar com pessoas"
@@ -691,6 +697,9 @@
   },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "error.page-title": {
+    "defaultMessage": "Erro Inesperado | WiseMapping"
   },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."

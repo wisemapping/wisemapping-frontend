@@ -563,6 +563,12 @@
       "value": "Duplica"
     }
   ],
+  "error.page-title": [
+    {
+      "type": 0,
+      "value": "Errore Imprevisto | WiseMapping"
+    }
+  ],
   "error.security-error": [
     {
       "type": 0,
@@ -1468,7 +1474,7 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Invita persone a collaborare con te nella creazione della tua mappa mentale. Verranno notificate via email."
+      "value": "Aggiungi collaboratori. Riceveranno accesso istantaneo via email per modificare insieme."
     }
   ],
   "share.delete-title": [
