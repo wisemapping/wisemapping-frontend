@@ -17,7 +17,7 @@
  */
 
 import React, { ReactElement, useEffect } from 'react';
-import { Box, Tabs, Tab, IconButton } from '@mui/material';
+import { Box, Tab, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import ImageIcon from '@mui/icons-material/Image';
@@ -27,6 +27,8 @@ import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeybo
 import { useTheme } from '../../../../contexts/ThemeContext';
 import NodeProperty from '../../../../classes/model/node-property';
 import IconImageTab from '../icon-picker/image-icon-tab';
+import { StyledEditorsTabs } from '../shared/StyledTabs';
+import { StyledEditorContainer } from '../shared/StyledEditorContainer';
 
 type TopicIconEditorProps = {
   closeModal: () => void;
@@ -57,37 +59,18 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '400px',
-        height: '500px',
-        minHeight: '500px',
-        maxHeight: '500px',
-        backgroundColor: 'background.paper',
-        borderRadius: '8px',
-        overflow: 'hidden',
-        border: '1px solid',
-        borderColor: 'divider',
-        position: 'relative',
-      }}
-    >
+    <StyledEditorContainer>
       <IconButton
         onClick={closeModal}
         sx={{
           position: 'absolute',
-          top: 8,
-          right: 8,
+          top: 0,
+          right: 0,
           zIndex: 10,
-          width: 32,
-          height: 32,
-          backgroundColor: 'background.paper',
-          '&:hover': {
-            backgroundColor: 'action.hover',
-          },
+          width: 24,
+          height: 24,
           '& .MuiSvgIcon-root': {
-            fontSize: '20px',
+            fontSize: '16px',
           },
         }}
       >
@@ -99,32 +82,15 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
         sx={{
           borderBottom: 1,
           borderColor: 'divider',
-          backgroundColor: 'background.default',
+          p: 0,
         }}
       >
-        <Tabs
+        <StyledEditorsTabs
           value={tabValue}
           onChange={handleTabChange}
           variant="fullWidth"
-          sx={{
-            minHeight: '48px',
-            '& .MuiTab-root': {
-              minHeight: '48px',
-              textTransform: 'none',
-              fontSize: '14px',
-              fontWeight: 500,
-              color: 'text.secondary',
-              '&:hover': {
-                color: 'primary.main',
-              },
-            },
-            '& .Mui-selected': {
-              color: 'primary.main !important',
-            },
-            '& .MuiTabs-indicator': {
-              backgroundColor: 'primary.main',
-            },
-          }}
+          centered
+          aria-label="icon editor tabs"
         >
           <Tab
             icon={<SentimentSatisfiedAltIcon />}
@@ -136,13 +102,12 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
             label={<FormattedMessage id="icon-picker.icons" defaultMessage="Icons Gallery" />}
             iconPosition="start"
           />
-        </Tabs>
+        </StyledEditorsTabs>
       </Box>
 
       {/* Content area */}
       <Box
         sx={{
-          flex: 1,
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
@@ -152,8 +117,8 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
         {tabValue === 0 && (
           <Box
             sx={{
-              width: '400px',
-              height: '452px', // 500px - 48px (tab height)
+              width: 'clamp(240px, 85vw, 320px)',
+              height: 'clamp(280px, 50vh, 350px)',
               overflow: 'hidden',
               backgroundColor: 'background.paper',
             }}
@@ -174,8 +139,8 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
         {tabValue === 1 && (
           <Box
             sx={{
-              width: '400px',
-              height: '452px', // 500px - 48px (tab height)
+              width: 'clamp(240px, 85vw, 320px)',
+              height: 'clamp(280px, 50vh, 350px)',
               overflow: 'hidden',
               backgroundColor: 'background.paper',
             }}
@@ -184,7 +149,7 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
           </Box>
         )}
       </Box>
-    </Box>
+    </StyledEditorContainer>
   );
 };
 

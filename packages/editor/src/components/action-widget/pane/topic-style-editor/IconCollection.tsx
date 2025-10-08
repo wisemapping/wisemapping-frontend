@@ -9,18 +9,27 @@ const StyledGrid = styled(Box)({
   display: 'flex',
   gap: '6px',
   marginTop: '8px',
-  justifyContent: 'space-between',
-  width: '100%',
+  justifyContent: 'space-evenly',
+  width: '216px',
+  flexWrap: 'wrap',
 });
 
 const StyledButton = styled(IconButton)<{ selected?: boolean }>(({ selected, theme }) => ({
   width: '24px',
   height: '24px',
   padding: '0px',
-  border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid #e0e0e0',
+  border: selected
+    ? `2px solid ${theme.palette.primary.main}`
+    : `2px solid ${theme.palette.divider}`,
   borderRadius: '4px',
+  backgroundColor: selected
+    ? theme.palette.mode === 'dark'
+      ? 'rgba(144, 202, 249, 0.08)'
+      : 'rgba(25, 118, 210, 0.08)'
+    : 'transparent',
   '&:hover': {
     borderColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.action.hover,
   },
 }));
 

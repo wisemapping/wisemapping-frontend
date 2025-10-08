@@ -59,21 +59,31 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
   };
 
   return (
-    <Box style={{ padding: '5px' }}>
+    <Box style={{ padding: '5px', maxWidth: '100%' }}>
       {checked && (
-        <EmojiPicker
-          onEmojiClick={handleEmojiSelect}
-          lazyLoadEmojis={true}
-          autoFocusSearch={true}
-          previewConfig={{ showPreview: false }}
-          emojiStyle={EmojiStyle.NATIVE}
-          skinTonesDisabled
-          theme={Theme.AUTO}
-          searchPlaceholder={intl.formatMessage({
-            id: 'emoji-picker.search-placeholder',
-            defaultMessage: 'Search emojis...',
-          })}
-        />
+        <Box
+          sx={{
+            width: 'clamp(240px, 85vw, 320px)',
+            height: 'clamp(280px, 50vh, 350px)',
+            overflow: 'hidden',
+          }}
+        >
+          <EmojiPicker
+            onEmojiClick={handleEmojiSelect}
+            lazyLoadEmojis={true}
+            autoFocusSearch={true}
+            previewConfig={{ showPreview: false }}
+            emojiStyle={EmojiStyle.NATIVE}
+            skinTonesDisabled
+            theme={Theme.AUTO}
+            width="100%"
+            height="100%"
+            searchPlaceholder={intl.formatMessage({
+              id: 'emoji-picker.search-placeholder',
+              defaultMessage: 'Search emojis...',
+            })}
+          />
+        </Box>
       )}
       {!checked && <IconImageTab iconModel={iconModel} />}
       <FormGroup sx={{ float: 'right' }}>

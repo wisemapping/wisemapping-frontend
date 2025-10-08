@@ -16,11 +16,16 @@
  *   limitations under the License.
  */
 
-import { css } from '@emotion/react';
+import { css, SerializedStyles, Theme } from '@emotion/react';
 import { useTheme } from '@emotion/react';
 import { useMemo } from 'react';
 
-function useClasses<T extends Record<string, any>>(stylesElement: T | ((theme: any) => T)): T {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type StyleValue = Record<string, any>;
+
+function useClasses<T extends Record<string, StyleValue>>(
+  stylesElement: T | ((theme: Theme) => T),
+): Record<string, SerializedStyles> {
   const theme = useTheme();
 
   return useMemo(() => {
@@ -28,12 +33,12 @@ function useClasses<T extends Record<string, any>>(stylesElement: T | ((theme: a
     const rawClasses = typeof stylesElement === 'function' ? stylesElement(theme) : stylesElement;
 
     // Wrap each value with css()
-    const prepared: Record<string, any> = {};
+    const prepared: Record<string, SerializedStyles> = {};
     for (const [key, value] of Object.entries(rawClasses)) {
       prepared[key] = css(value);
     }
 
-    return prepared as T;
+    return prepared;
   }, [theme, stylesElement]);
 }
 

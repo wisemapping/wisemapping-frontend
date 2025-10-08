@@ -623,19 +623,29 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           horizontal: 'left',
         }}
       >
-        <EmojiPicker
-          onEmojiClick={handleEmojiSelect}
-          lazyLoadEmojis={true}
-          autoFocusSearch={true}
-          previewConfig={{ showPreview: false }}
-          emojiStyle={EmojiStyle.NATIVE}
-          skinTonesDisabled
-          theme={theme.palette.mode === 'dark' ? Theme.DARK : Theme.LIGHT}
-          searchPlaceholder={intl.formatMessage({
-            id: 'emoji-picker.search-placeholder',
-            defaultMessage: 'Search emojis...',
-          })}
-        />
+        <Box
+          sx={{
+            width: 'clamp(240px, 85vw, 320px)',
+            height: 'clamp(280px, 50vh, 350px)',
+            overflow: 'hidden',
+          }}
+        >
+          <EmojiPicker
+            onEmojiClick={handleEmojiSelect}
+            lazyLoadEmojis={true}
+            autoFocusSearch={true}
+            previewConfig={{ showPreview: false }}
+            emojiStyle={EmojiStyle.NATIVE}
+            skinTonesDisabled
+            theme={theme.palette.mode === 'dark' ? Theme.DARK : Theme.LIGHT}
+            width="100%"
+            height="100%"
+            searchPlaceholder={intl.formatMessage({
+              id: 'emoji-picker.search-placeholder',
+              defaultMessage: 'Search emojis...',
+            })}
+          />
+        </Box>
       </Popover>
     </Box>
   );

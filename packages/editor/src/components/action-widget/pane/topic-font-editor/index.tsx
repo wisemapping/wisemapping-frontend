@@ -32,15 +32,24 @@ import { SwitchValueDirection } from '../../../toolbar/ToolbarValueModelBuilder'
 import ColorPicker from '../color-picker';
 import Editor from '../../../../classes/model/editor';
 import { trackFontFormatAction } from '../../../../utils/analytics';
+import { StyledEditorContainer } from '../shared/StyledEditorContainer';
 
 const ActionButton = styled(IconButton)<{ selected?: boolean }>(({ selected, theme }) => ({
   padding: '8px',
   width: '32px',
   height: '32px',
-  border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid #e0e0e0',
+  border: selected
+    ? `2px solid ${theme.palette.primary.main}`
+    : `2px solid ${theme.palette.divider}`,
   borderRadius: '4px',
+  backgroundColor: selected
+    ? theme.palette.mode === 'dark'
+      ? 'rgba(144, 202, 249, 0.08)'
+      : 'rgba(25, 118, 210, 0.08)'
+    : 'transparent',
   '&:hover': {
     borderColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.action.hover,
   },
 }));
 
@@ -129,18 +138,11 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
   };
 
   return (
-    <Box
+    <StyledEditorContainer
       sx={{
         pt: 2,
         px: 2,
         pb: 1,
-        minWidth: '280px',
-        maxWidth: '320px',
-        backgroundColor: 'background.paper',
-        borderRadius: '8px',
-        border: '1px solid',
-        borderColor: 'divider',
-        position: 'relative',
       }}
     >
       <IconButton
@@ -165,16 +167,43 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
         <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
           <FormattedMessage id="topic-font-editor.font-family" defaultMessage="Font Family" />
         </Typography>
-        <FormControl variant="standard" fullWidth size="small">
+        <FormControl variant="outlined" fullWidth size="small">
           <Select
             value={currentFont || ''}
             onChange={handleFontFamilyChange}
             displayEmpty
-            sx={{ fontSize: '0.875rem' }}
+            sx={{
+              fontSize: '0.656rem',
+              fontFamily: currentFont || 'inherit',
+              '& .MuiSelect-select': {
+                py: 1.25,
+                px: 1.5,
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'divider',
+              },
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'text.secondary',
+              },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'primary.main',
+              },
+            }}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  maxHeight: 300,
+                  '& .MuiMenuItem-root': {
+                    py: 1,
+                    px: 2,
+                  },
+                },
+              },
+            }}
           >
             <MenuItem value="">
               <Typography
-                sx={{ fontStyle: 'italic', color: 'text.secondary', fontSize: '0.875rem' }}
+                sx={{ fontStyle: 'italic', color: 'text.secondary', fontSize: '0.656rem' }}
               >
                 {currentFont === undefined
                   ? intl.formatMessage({
@@ -213,7 +242,7 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
               .sort()
               .map((f) => (
                 <MenuItem value={f} key={f}>
-                  <Typography fontFamily={f} sx={{ fontSize: '0.875rem' }}>
+                  <Typography fontFamily={f} sx={{ fontSize: '0.656rem' }}>
                     {f}
                   </Typography>
                 </MenuItem>
@@ -320,7 +349,7 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
           </ActionButton>
         </Box>
       </Box>
-    </Box>
+    </StyledEditorContainer>
   );
 };
 

@@ -22,12 +22,13 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ErrorInfo, Permission } from '../../../../classes/client';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
-
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -250,50 +251,69 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
           )}
         </div>
 
-        {!isLoading && (
-          <Paper elevation={1} css={classes.listPaper as Interpolation<Theme>} variant="outlined">
-            <List>
-              {permissions &&
-                permissions.map((permission) => {
-                  return (
-                    <ListItem
-                      key={permission.email}
-                      role={undefined}
-                      dense
-                      component="button"
-                      css={classes.listItem as Interpolation<Theme>}
+        {!isLoading && permissions && permissions.length > 0 && (
+          <TableContainer
+            component={Paper}
+            elevation={1}
+            variant="outlined"
+            css={classes.tableContainer as Interpolation<Theme>}
+          >
+            <Table size="small" aria-label="collaborators table">
+              <TableHead css={classes.tableHead as Interpolation<Theme>}>
+                <TableRow>
+                  <TableCell>
+                    <FormattedMessage id="share.table.collaborator" defaultMessage="Collaborator" />
+                  </TableCell>
+                  <TableCell align="center">
+                    <FormattedMessage id="share.table.role" defaultMessage="Role" />
+                  </TableCell>
+                  <TableCell align="center">
+                    <FormattedMessage id="share.table.actions" defaultMessage="Actions" />
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {permissions.map((permission) => (
+                  <TableRow
+                    key={permission.email}
+                    hover
+                    css={classes.tableRow as Interpolation<Theme>}
+                  >
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      css={classes.emailCell as Interpolation<Theme>}
                     >
-                      <ListItemText
-                        css={classes.listItemText as Interpolation<Theme>}
-                        id={permission.email}
-                        primary={formatName(permission)}
-                      />
-
+                      {formatName(permission)}
+                    </TableCell>
+                    <TableCell align="center">
                       <RoleIcon role={permission.role} />
-                      <ListItemSecondaryAction>
-                        <Tooltip
-                          title={
-                            <FormattedMessage
-                              id="share.delete"
-                              defaultMessage="Delete collaborator"
-                            />
-                          }
-                        >
+                    </TableCell>
+                    <TableCell align="center">
+                      <Tooltip
+                        title={
+                          <FormattedMessage
+                            id="share.delete"
+                            defaultMessage="Delete collaborator"
+                          />
+                        }
+                      >
+                        <span>
                           <IconButton
-                            edge="end"
-                            disabled={permission.role == 'owner'}
+                            disabled={permission.role === 'owner'}
                             onClick={(e) => handleOnDeleteClick(e, permission.email)}
-                            size="large"
+                            size="small"
                           >
-                            <DeleteIcon color="action" />
+                            <DeleteIcon fontSize="small" color="action" />
                           </IconButton>
-                        </Tooltip>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                  );
-                })}
-            </List>
-          </Paper>
+                        </span>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         )}
       </BaseDialog>
     </div>

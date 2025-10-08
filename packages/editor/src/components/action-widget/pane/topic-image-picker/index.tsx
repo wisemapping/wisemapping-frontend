@@ -16,18 +16,18 @@
  *   limitations under the License.
  */
 import React, { ReactElement, useEffect } from 'react';
-import NodeProperty from '../../../../classes/model/node-property';
-import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
-import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
-import TopicImageTab from './image-icon-tab';
-import { FormattedMessage, useIntl } from 'react-intl';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import IconButton from '@mui/material/IconButton';
+import { Box, Tab, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import ImageIcon from '@mui/icons-material/Image';
+import { FormattedMessage, useIntl } from 'react-intl';
+import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
+
+import NodeProperty from '../../../../classes/model/node-property';
+import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
+import TopicImageTab from './image-icon-tab';
+import { StyledEditorsTabs } from '../shared/StyledTabs';
+import { StyledEditorContainer } from '../shared/StyledEditorContainer';
 import { useTheme } from '../../../../contexts/ThemeContext';
 
 type TopicImagePickerProp = {
@@ -76,37 +76,18 @@ const TopicImagePicker = ({
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '400px',
-        height: '500px',
-        minHeight: '500px',
-        maxHeight: '500px',
-        backgroundColor: 'background.paper',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        border: 1,
-        borderColor: 'divider',
-        position: 'relative',
-      }}
-    >
+    <StyledEditorContainer>
       <IconButton
         onClick={triggerClose}
         sx={{
           position: 'absolute',
-          top: 8,
-          right: 8,
+          top: 0,
+          right: 0,
           zIndex: 10,
-          width: 32,
-          height: 32,
-          backgroundColor: 'background.paper',
-          '&:hover': {
-            backgroundColor: 'action.hover',
-          },
+          width: 24,
+          height: 24,
           '& .MuiSvgIcon-root': {
-            fontSize: '20px',
+            fontSize: '16px',
           },
         }}
       >
@@ -117,32 +98,15 @@ const TopicImagePicker = ({
         sx={{
           borderBottom: 1,
           borderColor: 'divider',
-          backgroundColor: 'background.default',
+          p: 0,
         }}
       >
-        <Tabs
+        <StyledEditorsTabs
           value={tabValue}
           onChange={handleTabChange}
           variant="fullWidth"
-          sx={{
-            minHeight: '48px',
-            '& .MuiTab-root': {
-              minHeight: '48px',
-              textTransform: 'none',
-              fontSize: '14px',
-              fontWeight: 500,
-              color: 'text.secondary',
-              '&:hover': {
-                color: 'primary.main',
-              },
-            },
-            '& .Mui-selected': {
-              color: 'primary.main !important',
-            },
-            '& .MuiTabs-indicator': {
-              backgroundColor: 'primary.main',
-            },
-          }}
+          centered
+          aria-label="icon picker tabs"
         >
           <Tab
             icon={<ImageIcon />}
@@ -154,13 +118,12 @@ const TopicImagePicker = ({
             label={<FormattedMessage id="icon-picker.emojis" defaultMessage="Emojis" />}
             iconPosition="start"
           />
-        </Tabs>
+        </StyledEditorsTabs>
       </Box>
 
       {/* Content area */}
       <Box
         sx={{
-          flex: 1,
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
@@ -170,8 +133,8 @@ const TopicImagePicker = ({
         {tabValue === 0 && (
           <Box
             sx={{
-              width: '400px',
-              height: '452px', // 500px - 48px (tab height)
+              width: 'clamp(240px, 85vw, 320px)',
+              height: 'clamp(280px, 50vh, 350px)',
               overflow: 'hidden',
               backgroundColor: 'background.paper',
             }}
@@ -182,8 +145,8 @@ const TopicImagePicker = ({
         {tabValue === 1 && (
           <Box
             sx={{
-              width: '400px',
-              height: '452px', // 500px - 48px (tab height)
+              width: 'clamp(240px, 85vw, 320px)',
+              height: 'clamp(280px, 50vh, 350px)',
               overflow: 'hidden',
               backgroundColor: 'background.paper',
             }}
@@ -206,7 +169,7 @@ const TopicImagePicker = ({
           </Box>
         )}
       </Box>
-    </Box>
+    </StyledEditorContainer>
   );
 };
 export default TopicImagePicker;

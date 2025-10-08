@@ -70,6 +70,21 @@
    - Official docs: https://mui.com/
    - Check MUI documentation for component APIs and examples before implementation
 
+## 3. Code Quality and Linting
+
+**MANDATORY**: All code changes must conform to the project's linting configuration.
+
+1. **Lint Compliance**:
+   - All code edits MUST follow the format and rules declared in the project's ESLint configuration (`eslint.config.mjs`)
+   - After making any code changes, check for linter errors using `read_lints` tool
+   - Fix all linter errors before considering the task complete
+   - Never commit code with linting errors
+
+2. **Code Style**:
+   - Follow the established patterns and conventions in the codebase
+   - Maintain consistent formatting with existing code
+   - Respect the project's indentation, spacing, and naming conventions
+
 ## Additional Guidelines
 
 (Add more project-specific guidelines here as needed)

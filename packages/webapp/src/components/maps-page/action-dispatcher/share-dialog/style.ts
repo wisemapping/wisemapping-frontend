@@ -23,7 +23,7 @@ export const useStyles = () =>
   useClasses((theme) => ({
     actionContainer: {
       padding: '10px',
-      border: '1px solid rgba(0, 0, 0, 0.12)',
+      border: `1px solid ${theme.palette.divider}`,
       borderRadius: '8px 8px 0px 0px',
       display: 'flex',
       flexDirection: 'row',
@@ -80,9 +80,9 @@ export const useStyles = () =>
         padding: '10px',
       },
     },
-    listPaper: {
-      maxHeight: 200,
-      overflowY: 'scroll',
+    tableContainer: {
+      maxHeight: 300,
+      marginTop: '8px',
     },
     paper: {
       maxWidth: '450px',
@@ -97,19 +97,24 @@ export const useStyles = () =>
         minWidth: 'auto',
       },
     },
-    listItemText: {
+    tableHead: {
+      backgroundColor:
+        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.04)',
+      '& th': {
+        fontWeight: 600,
+        fontSize: '0.875rem',
+        color: theme.palette.text.primary,
+      },
+    },
+    tableRow: {
+      '&:last-child td, &:last-child th': {
+        border: 0,
+      },
+    },
+    emailCell: {
       overflow: 'hidden',
       whiteSpace: 'nowrap',
       textOverflow: 'ellipsis',
-      '& span': {
-        display: 'inline',
-      },
-    },
-    listItem: {
-      backgroundColor: theme.palette.background.paper,
-      '&:hover': {
-        backgroundColor:
-          theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)',
-      },
+      maxWidth: '250px',
     },
   }));

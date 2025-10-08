@@ -17,10 +17,11 @@
  */
 
 import React, { ReactElement, useState } from 'react';
-import { Tabs, Tab, Box, Typography, IconButton } from '@mui/material';
+import { Tab, Box, Typography, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { FormattedMessage } from 'react-intl';
-import { styled } from '@mui/material/styles';
+import { StyledEditorsTabs } from '../shared/StyledTabs';
+import { StyledEditorContainer } from '../shared/StyledEditorContainer';
 
 // Icons
 import SquareOutlinedIcon from '@mui/icons-material/SquareOutlined';
@@ -42,29 +43,6 @@ import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
 import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
 import ColorPicker from '../color-picker';
 import IconCollection from './IconCollection';
-
-// Styled components
-
-const StyledTabs = styled(Tabs)(({ theme }) => ({
-  borderBottom: '1px solid #e0e0e0',
-  minHeight: '34px',
-  '& .MuiTab-root': {
-    textTransform: 'none',
-    fontWeight: 500,
-    minHeight: '5px',
-    fontSize: '0.75rem',
-    padding: '6px 5px',
-    margin: '0px',
-    minWidth: '60px',
-    '&.Mui-selected': {
-      color: theme.palette.primary.main,
-    },
-  },
-  '& .MuiTabs-indicator': {
-    height: '2px',
-    borderRadius: '1px',
-  },
-}));
 
 interface TopicStyleEditorProps {
   closeModal: () => void;
@@ -100,10 +78,7 @@ function TabPanel(props: TabPanelProps) {
           sx={{
             pt: 1,
             pb: 1,
-            pl: 0,
-            pr: 0,
-            display: 'flex',
-            justifyContent: 'center',
+            px: 0,
             width: '100%',
           }}
         >
@@ -206,20 +181,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
   };
 
   return (
-    <Box
-      sx={{
-        p: 1,
-        minWidth: '250px',
-        maxWidth: '280px',
-        maxHeight: '400px',
-        overflow: 'auto',
-        backgroundColor: 'background.paper',
-        borderRadius: '8px',
-        border: '1px solid',
-        borderColor: 'divider',
-        position: 'relative',
-      }}
-    >
+    <StyledEditorContainer>
       <IconButton
         onClick={props.closeModal}
         sx={{
@@ -237,7 +199,12 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
         <CloseIcon />
       </IconButton>
       <Box sx={{ borderBottom: 1, borderColor: 'divider', p: 0 }}>
-        <StyledTabs value={activeTab} onChange={handleTabChange} aria-label="styling tabs" centered>
+        <StyledEditorsTabs
+          value={activeTab}
+          onChange={handleTabChange}
+          aria-label="styling tabs"
+          centered
+        >
           <Tab
             label={<FormattedMessage id="unified-styling.tab.shape" defaultMessage="Shape" />}
             id="styling-tab-0"
@@ -255,16 +222,16 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
             id="styling-tab-2"
             aria-controls="styling-tabpanel-2"
           />
-        </StyledTabs>
+        </StyledEditorsTabs>
       </Box>
 
       <TabPanel value={activeTab} index={0}>
         {/* Shape Tab */}
-        <Box sx={{ p: 0 }}>
+        <Box sx={{ px: 1, py: 0, width: '100%' }}>
           <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
             <FormattedMessage id="unified-styling.style-topic" defaultMessage="Style Topic" />
           </Typography>
-          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
             <ColorPicker closeModal={() => {}} colorModel={props.fillColorModel} />
           </Box>
 
@@ -274,7 +241,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
               defaultMessage="Shape Selection"
             />
           </Typography>
-          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
             <IconCollection
               styles={[
                 {
@@ -322,18 +289,18 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
 
       <TabPanel value={activeTab} index={1}>
         {/* Border Tab */}
-        <Box sx={{ p: 0 }}>
+        <Box sx={{ px: 1, py: 0, width: '100%' }}>
           <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
             <FormattedMessage id="unified-styling.border-color" defaultMessage="Border Color" />
           </Typography>
-          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
             <ColorPicker closeModal={() => {}} colorModel={props.borderColorModel} />
           </Box>
 
           <Typography variant="subtitle2" gutterBottom sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}>
             <FormattedMessage id="unified-styling.border-style" defaultMessage="Border Style" />
           </Typography>
-          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
             <IconCollection
               styles={borderStyles}
               selectedValue={props.borderStyleModel.getValue()}
@@ -346,14 +313,14 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
 
       <TabPanel value={activeTab} index={2}>
         {/* Connector Tab */}
-        <Box sx={{ p: 0 }}>
+        <Box sx={{ px: 1, py: 0, width: '100%' }}>
           <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
             <FormattedMessage
               id="unified-styling.connection-style"
               defaultMessage="Connection Style"
             />
           </Typography>
-          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
             <ColorPicker closeModal={() => {}} colorModel={props.connectionColorModel} />
           </Box>
 
@@ -363,7 +330,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
               defaultMessage="Connector Style"
             />
           </Typography>
-          <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
+          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
             <IconCollection
               styles={connectionStyles}
               selectedValue={props.connectionStyleModel.getValue()}
@@ -372,7 +339,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
           </Box>
         </Box>
       </TabPanel>
-    </Box>
+    </StyledEditorContainer>
   );
 };
 
