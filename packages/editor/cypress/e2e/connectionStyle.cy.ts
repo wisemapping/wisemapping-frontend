@@ -27,12 +27,19 @@ describe('Connection Style Suite', () => {
   });
 
   it('Open connection style panel', () => {
-    cy.onClickToolbarButton('Connection Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    
+    // Click on the Connector tab to show connection styling options
+    cy.contains('Connector').click({ force: true });
+    
     cy.matchImageSnapshot('connection-style-panel');
   });
 
   it('Change to thick curved connection', () => {
-    cy.onMouseOverToolbarButton('Connection Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    
+    // Click on the Connector tab
+    cy.contains('Connector').click({ force: true });
 
     // Click on thick curved option
     cy.get('[aria-label="Thick Curved"]').first().click({ force: true });
@@ -44,7 +51,10 @@ describe('Connection Style Suite', () => {
   });
 
   it('Change to arc connection', () => {
-    cy.onMouseOverToolbarButton('Connection Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    
+    // Click on the Connector tab
+    cy.contains('Connector').click({ force: true });
 
     // Click on arc option
     cy.get('[aria-label="Arc"]').first().click({ force: true });
@@ -53,7 +63,10 @@ describe('Connection Style Suite', () => {
   });
 
   it('Change to thin curved connection', () => {
-    cy.onMouseOverToolbarButton('Connection Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    
+    // Click on the Connector tab
+    cy.contains('Connector').click({ force: true });
 
     // Click on thin curved option
     cy.get('[aria-label="Thin Curved"]').first().click({ force: true });
@@ -62,7 +75,10 @@ describe('Connection Style Suite', () => {
   });
 
   it('Change to simple polyline connection', () => {
-    cy.onMouseOverToolbarButton('Connection Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    
+    // Click on the Connector tab
+    cy.contains('Connector').click({ force: true });
 
     // Click on simple polyline option
     cy.get('[aria-label="Simple Polyline"]').first().click({ force: true });
@@ -71,7 +87,10 @@ describe('Connection Style Suite', () => {
   });
 
   it('Change to curved polyline connection', () => {
-    cy.onMouseOverToolbarButton('Connection Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    
+    // Click on the Connector tab
+    cy.contains('Connector').click({ force: true });
 
     // Click on curved polyline option
     cy.get('[aria-label="Curved Polyline"]').first().click({ force: true });
@@ -80,7 +99,10 @@ describe('Connection Style Suite', () => {
   });
 
   it('Change connection color', () => {
-    cy.onMouseOverToolbarButton('Connection Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    
+    // Click on the Connector tab
+    cy.contains('Connector').click({ force: true });
 
     // Click on color option
     cy.get('[aria-label="Color"]').last().click({ force: true });
@@ -97,7 +119,11 @@ describe('Connection Style Suite', () => {
 
   it('Reset connection color to default', () => {
     // First change the color
-    cy.onMouseOverToolbarButton('Connection Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    
+    // Click on the Connector tab
+    cy.contains('Connector').click({ force: true });
+    
     cy.get('[aria-label="Color"]').last().click({ force: true });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -107,7 +133,11 @@ describe('Connection Style Suite', () => {
     cy.get('[title="#ff0000"]').click({ force: true });
 
     // Now reset to default
-    cy.onMouseOverToolbarButton('Connection Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    
+    // Click on the Connector tab again
+    cy.contains('Connector').click({ force: true });
+    
     cy.get('[aria-label="Default color"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-connection-color');

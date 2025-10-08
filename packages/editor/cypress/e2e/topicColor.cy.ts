@@ -31,82 +31,42 @@ describe('Topic Color Suite', () => {
     cy.matchImageSnapshot('topic-style-panel');
   });
 
-  it.skip('Change topic fill color', () => {
+  it('Change topic fill color', () => {
     cy.onMouseOverToolbarButton('Style Topic & Connections');
 
+    // The Shape tab should be open by default, which contains the fill color picker
+    // Wait for panel to appear
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
+
     // Click on fill color button
-    cy.get('[aria-label="Fill color"]').first().click();
+    cy.get('[aria-label="Color"]').first().click({ force: true });
 
     // Wait for color picker to load
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
 
-    // Get the current color before changing
-    cy.get('[test-id="3"] > rect').invoke('attr', 'fill').as('originalColor');
-
-    // Select a color - try multiple approaches for color selection
-    cy.get('body').then(($body) => {
-      if ($body.find('[title="#ff0000"]').length > 0) {
-        cy.get('[title="#ff0000"]').click({ force: true });
-      } else if ($body.find('[title="#FF0000"]').length > 0) {
-        cy.get('[title="#FF0000"]').click({ force: true });
-      } else if ($body.find('[style*="background: rgb(255, 0, 0)"]').length > 0) {
-        cy.get('[style*="background: rgb(255, 0, 0)"]').first().click({ force: true });
-      } else {
-        // Fallback: click any color that's not the current one
-        cy.get('[title^="#"], [style*="background: rgb"]').first().click({ force: true });
-      }
-    });
-
-    // Wait a bit for the color change to take effect
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(500);
-
-    // Verify the topic color changed (not equal to original)
-    cy.get('@originalColor').then((originalColor) => {
-      cy.get('[test-id="3"] > rect').should('have.attr', 'fill').and('not.equal', originalColor);
-    });
+    // Select a color (red)
+    cy.get('[title="#ff0000"]').click({ force: true });
 
     cy.matchImageSnapshot('change-topic-fill-color');
   });
 
-  it.skip('Change topic border color', () => {
+  it('Change topic border color', () => {
     cy.onMouseOverToolbarButton('Style Topic & Connections');
 
+    // Click on Border tab
+    cy.contains('Border').click({ force: true });
+
     // Click on border color button
-    cy.get('[aria-label="Border color"]').first().click();
+    cy.get('[aria-label="Color"]').first().click({ force: true });
 
     // Wait for color picker to load
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
 
-    // Get the current border color before changing
-    cy.get('[test-id="3"] > rect').invoke('attr', 'stroke').as('originalBorderColor');
-
-    // Select a color - try multiple approaches for color selection
-    cy.get('body').then(($body) => {
-      if ($body.find('[title="#0000ff"]').length > 0) {
-        cy.get('[title="#0000ff"]').click({ force: true });
-      } else if ($body.find('[title="#0000FF"]').length > 0) {
-        cy.get('[title="#0000FF"]').click({ force: true });
-      } else if ($body.find('[style*="background: rgb(0, 0, 255)"]').length > 0) {
-        cy.get('[style*="background: rgb(0, 0, 255)"]').first().click({ force: true });
-      } else {
-        // Fallback: click any color that's not the current one
-        cy.get('[title^="#"], [style*="background: rgb"]').first().click({ force: true });
-      }
-    });
-
-    // Wait a bit for the color change to take effect
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(500);
-
-    // Verify the topic border color changed (not equal to original)
-    cy.get('@originalBorderColor').then((originalBorderColor) => {
-      cy.get('[test-id="3"] > rect')
-        .should('have.attr', 'stroke')
-        .and('not.equal', originalBorderColor);
-    });
+    // Select a color (blue)
+    cy.get('[title="#0000ff"]').click({ force: true });
 
     cy.matchImageSnapshot('change-topic-border-color');
   });
@@ -114,7 +74,9 @@ describe('Topic Color Suite', () => {
   it('Reset topic fill color to default', () => {
     // First change the color
     cy.onMouseOverToolbarButton('Style Topic & Connections');
-    cy.get('[aria-label="Fill color"]').first().click({ force: true });
+    
+    // The Shape tab should be open by default
+    cy.get('[aria-label="Color"]').first().click({ force: true });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
@@ -123,7 +85,9 @@ describe('Topic Color Suite', () => {
 
     // Now reset to default
     cy.onMouseOverToolbarButton('Style Topic & Connections');
-    cy.get('[aria-label="Default fill color"]').first().click({ force: true });
+    
+    // Click the default/reset button in the color picker
+    cy.get('[aria-label="Default color"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-topic-fill-color');
   });
@@ -131,7 +95,11 @@ describe('Topic Color Suite', () => {
   it('Reset topic border color to default', () => {
     // First change the border color
     cy.onMouseOverToolbarButton('Style Topic & Connections');
-    cy.get('[aria-label="Border color"]').first().click({ force: true });
+    
+    // Click on Border tab
+    cy.contains('Border').click({ force: true });
+    
+    cy.get('[aria-label="Color"]').first().click({ force: true });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
@@ -140,7 +108,11 @@ describe('Topic Color Suite', () => {
 
     // Now reset to default
     cy.onMouseOverToolbarButton('Style Topic & Connections');
-    cy.get('[aria-label="Default border color"]').first().click({ force: true });
+    
+    // Click on Border tab again
+    cy.contains('Border').click({ force: true });
+    
+    cy.get('[aria-label="Default color"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-topic-border-color');
   });

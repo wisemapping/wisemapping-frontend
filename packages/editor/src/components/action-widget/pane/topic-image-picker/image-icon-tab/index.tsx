@@ -350,10 +350,9 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 interface ImageIconTabProps {
   iconModel: NodeProperty<string | undefined>;
   emojiModel: NodeProperty<string | undefined>;
-  triggerClose: () => void;
 }
 
-const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, triggerClose }) => {
+const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -711,8 +710,8 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
     if (iconModel && iconModel.setValue) {
       iconModel.setValue(iconName.toLowerCase());
     }
-    // Close the picker
-    triggerClose();
+    // Don't close the picker - allow multiple icon selections
+    // triggerClose();
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {

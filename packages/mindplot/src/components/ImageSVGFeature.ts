@@ -229,8 +229,8 @@ class ImageSVGFeature {
       palette: '\ue40a',
       brush: '\ue3ae',
       lightbulb: '\ue0f0',
-      'flash-on': '\ue3e1',
-      flash: '\ue3e1', // Same as flash-on
+      'flash-on': '\ue3e7',
+      flash: '\ue3e7', // Same as flash-on
       security: '\ue32a',
       lock: '\ue897',
       'menu-book': '\ue421',
@@ -536,7 +536,7 @@ class ImageSVGFeature {
       visibility: '\ue8f4',
       'visibility-off': '\ue8f5',
       compare: '\ue3ba',
-      flip: '\ue3e7',
+      flip: '\ue3e1',
       'rotate-left': '\ue419',
 
       // Status & Indicators (15 icons)
