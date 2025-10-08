@@ -26,7 +26,7 @@ const IconPickerWithActions = (props: {
   triggerClose: () => void;
   initialIcon?: string;
   onIconChange?: (icon: string | undefined) => void;
-}) => {
+}): React.ReactElement => {
   const [icon, setIcon] = React.useState<string | undefined>(props.initialIcon);
 
   const iconModel: NodeProperty<string | undefined> = React.useMemo(

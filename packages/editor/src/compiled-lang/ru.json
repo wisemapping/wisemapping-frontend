@@ -170,31 +170,31 @@
   "canvas-style.grid-size-l": [
     {
       "type": 0,
-      "value": "L"
+      "value": "Большой"
     }
   ],
   "canvas-style.grid-size-m": [
     {
       "type": 0,
-      "value": "M"
+      "value": "Средний"
     }
   ],
   "canvas-style.grid-size-s": [
     {
       "type": 0,
-      "value": "S"
+      "value": "Маленький"
     }
   ],
   "canvas-style.grid-size-xl": [
     {
       "type": 0,
-      "value": "XL"
+      "value": "Очень большой"
     }
   ],
   "canvas-style.grid-size-xs": [
     {
       "type": 0,
-      "value": "XS"
+      "value": "Очень маленький"
     }
   ],
   "canvas-style.grid-style": [
@@ -575,6 +575,12 @@
       "value": "Стиль темы"
     }
   ],
+  "editor-panel.tooltip-unified-styling": [
+    {
+      "type": 0,
+      "value": "Стиль темы и соединений"
+    }
+  ],
   "editor-panel.topic-image-title": [
     {
       "type": 0,
@@ -709,6 +715,18 @@
     {
       "type": 0,
       "value": "Призма"
+    }
+  ],
+  "relationship-style-editor.color": [
+    {
+      "type": 0,
+      "value": "Цвет связи"
+    }
+  ],
+  "relationship-style-editor.line-arrows": [
+    {
+      "type": 0,
+      "value": "Стиль линии и стрелки"
     }
   ],
   "rich-text-editor.bold": [
@@ -1045,6 +1063,24 @@
     {
       "type": 0,
       "value": "Ввод заголовка"
+    }
+  ],
+  "topic-font-editor.font-color": [
+    {
+      "type": 0,
+      "value": "Цвет шрифта"
+    }
+  ],
+  "topic-font-editor.font-family": [
+    {
+      "type": 0,
+      "value": "Семейство шрифтов"
+    }
+  ],
+  "topic-font-editor.font-size-style": [
+    {
+      "type": 0,
+      "value": "Размер и стиль шрифта"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

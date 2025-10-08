@@ -160,16 +160,6 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
         <CloseIcon />
       </IconButton>
 
-      {/* Font Color */}
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
-          <FormattedMessage id="topic-font-editor.font-color" defaultMessage="Font Color" />
-        </Typography>
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-          <ColorPicker closeModal={() => {}} colorModel={props.fontColorModel} />
-        </Box>
-      </Box>
-
       {/* Font Family */}
       <Box sx={{ mb: 2 }}>
         <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
@@ -230,6 +220,16 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
               ))}
           </Select>
         </FormControl>
+      </Box>
+
+      {/* Font Color */}
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+          <FormattedMessage id="topic-font-editor.font-color" defaultMessage="Font Color" />
+        </Typography>
+        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+          <ColorPicker closeModal={() => {}} colorModel={props.fontColorModel} />
+        </Box>
       </Box>
 
       {/* Font Size & Font Style */}

@@ -28,7 +28,7 @@ const TopicImagePickerWithActions = (props: {
   initialIconsGallery?: string;
   onEmojiChange?: (emoji: string | undefined) => void;
   onIconsGalleryChange?: (icon: string | undefined) => void;
-}) => {
+}): React.ReactElement => {
   const [emoji, setEmoji] = React.useState<string | undefined>(props.initialEmoji);
   const [iconsGallery, setIconsGallery] = React.useState<string | undefined>(
     props.initialIconsGallery,

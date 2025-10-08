@@ -7,6 +7,8 @@ body {
   min-width: 100vw;
   min-height: 100vh;
   margin: 0px;
+  /* Disable pull-to-refresh / scroll-to-reload on mobile browsers */
+  overscroll-behavior: none;
 }
 
 .mindplot-div-container {

@@ -26,7 +26,7 @@ const RichTextNoteEditorWithActions = (props: {
   closeModal: () => void;
   initialNote?: string;
   onNoteChange?: (note: string | undefined) => void;
-}) => {
+}): React.ReactElement => {
   const [note, setNote] = React.useState<string | undefined>(props.initialNote);
 
   const noteModel: NodeProperty<string | undefined> = React.useMemo(

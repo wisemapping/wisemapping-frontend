@@ -170,31 +170,31 @@
   "canvas-style.grid-size-l": [
     {
       "type": 0,
-      "value": "L"
+      "value": "Великий"
     }
   ],
   "canvas-style.grid-size-m": [
     {
       "type": 0,
-      "value": "M"
+      "value": "Середній"
     }
   ],
   "canvas-style.grid-size-s": [
     {
       "type": 0,
-      "value": "S"
+      "value": "Маленький"
     }
   ],
   "canvas-style.grid-size-xl": [
     {
       "type": 0,
-      "value": "XL"
+      "value": "Дуже великий"
     }
   ],
   "canvas-style.grid-size-xs": [
     {
       "type": 0,
-      "value": "XS"
+      "value": "Дуже маленький"
     }
   ],
   "canvas-style.grid-style": [
@@ -575,6 +575,12 @@
       "value": "Стиль теми"
     }
   ],
+  "editor-panel.tooltip-unified-styling": [
+    {
+      "type": 0,
+      "value": "Стиль теми та з'єднань"
+    }
+  ],
   "editor-panel.topic-image-title": [
     {
       "type": 0,
@@ -709,6 +715,18 @@
     {
       "type": 0,
       "value": "Призма"
+    }
+  ],
+  "relationship-style-editor.color": [
+    {
+      "type": 0,
+      "value": "Колір зв'язку"
+    }
+  ],
+  "relationship-style-editor.line-arrows": [
+    {
+      "type": 0,
+      "value": "Стиль лінії та стрілки"
     }
   ],
   "rich-text-editor.bold": [
@@ -1045,6 +1063,24 @@
     {
       "type": 0,
       "value": "Введення заголовка"
+    }
+  ],
+  "topic-font-editor.font-color": [
+    {
+      "type": 0,
+      "value": "Колір шрифту"
+    }
+  ],
+  "topic-font-editor.font-family": [
+    {
+      "type": 0,
+      "value": "Сімейство шрифтів"
+    }
+  ],
+  "topic-font-editor.font-size-style": [
+    {
+      "type": 0,
+      "value": "Розмір і стиль шрифту"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

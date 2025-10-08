@@ -170,31 +170,31 @@
   "canvas-style.grid-size-l": [
     {
       "type": 0,
-      "value": "L"
+      "value": "Grande"
     }
   ],
   "canvas-style.grid-size-m": [
     {
       "type": 0,
-      "value": "M"
+      "value": "Médio"
     }
   ],
   "canvas-style.grid-size-s": [
     {
       "type": 0,
-      "value": "S"
+      "value": "Pequeno"
     }
   ],
   "canvas-style.grid-size-xl": [
     {
       "type": 0,
-      "value": "XL"
+      "value": "Extra Grande"
     }
   ],
   "canvas-style.grid-size-xs": [
     {
       "type": 0,
-      "value": "XS"
+      "value": "Extra Pequeno"
     }
   ],
   "canvas-style.grid-style": [
@@ -536,7 +536,7 @@
   "editor-panel.tooltip-topic-font-style": [
     {
       "type": 0,
-      "value": "Estilo da fonte"
+      "value": "Estilo de fonte"
     }
   ],
   "editor-panel.tooltip-topic-share-ellipse": [
@@ -573,6 +573,12 @@
     {
       "type": 0,
       "value": "Estilo do tópico"
+    }
+  ],
+  "editor-panel.tooltip-unified-styling": [
+    {
+      "type": 0,
+      "value": "Estilo de tópico e conexões"
     }
   ],
   "editor-panel.topic-image-title": [
@@ -709,6 +715,18 @@
     {
       "type": 0,
       "value": "Prisma"
+    }
+  ],
+  "relationship-style-editor.color": [
+    {
+      "type": 0,
+      "value": "Cor do relacionamento"
+    }
+  ],
+  "relationship-style-editor.line-arrows": [
+    {
+      "type": 0,
+      "value": "Estilo de linha e setas"
     }
   ],
   "rich-text-editor.bold": [
@@ -1045,6 +1063,24 @@
     {
       "type": 0,
       "value": "Entrada de título"
+    }
+  ],
+  "topic-font-editor.font-color": [
+    {
+      "type": 0,
+      "value": "Cor da fonte"
+    }
+  ],
+  "topic-font-editor.font-family": [
+    {
+      "type": 0,
+      "value": "Família da fonte"
+    }
+  ],
+  "topic-font-editor.font-size-style": [
+    {
+      "type": 0,
+      "value": "Tamanho e estilo da fonte"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

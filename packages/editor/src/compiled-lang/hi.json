@@ -170,31 +170,31 @@
   "canvas-style.grid-size-l": [
     {
       "type": 0,
-      "value": "L"
+      "value": "बड़ा"
     }
   ],
   "canvas-style.grid-size-m": [
     {
       "type": 0,
-      "value": "M"
+      "value": "मध्यम"
     }
   ],
   "canvas-style.grid-size-s": [
     {
       "type": 0,
-      "value": "S"
+      "value": "छोटा"
     }
   ],
   "canvas-style.grid-size-xl": [
     {
       "type": 0,
-      "value": "XL"
+      "value": "अतिरिक्त बड़ा"
     }
   ],
   "canvas-style.grid-size-xs": [
     {
       "type": 0,
-      "value": "XS"
+      "value": "अतिरिक्त छोटा"
     }
   ],
   "canvas-style.grid-style": [
@@ -575,6 +575,12 @@
       "value": "विषय शैली"
     }
   ],
+  "editor-panel.tooltip-unified-styling": [
+    {
+      "type": 0,
+      "value": "विषय और कनेक्शन शैली"
+    }
+  ],
   "editor-panel.topic-image-title": [
     {
       "type": 0,
@@ -709,6 +715,18 @@
     {
       "type": 0,
       "value": "प्रिज्म"
+    }
+  ],
+  "relationship-style-editor.color": [
+    {
+      "type": 0,
+      "value": "संबंध रंग"
+    }
+  ],
+  "relationship-style-editor.line-arrows": [
+    {
+      "type": 0,
+      "value": "रेखा शैली और तीर"
     }
   ],
   "rich-text-editor.bold": [
@@ -1045,6 +1063,24 @@
     {
       "type": 0,
       "value": "शीर्षक इनपुट"
+    }
+  ],
+  "topic-font-editor.font-color": [
+    {
+      "type": 0,
+      "value": "फ़ॉन्ट रंग"
+    }
+  ],
+  "topic-font-editor.font-family": [
+    {
+      "type": 0,
+      "value": "फ़ॉन्ट परिवार"
+    }
+  ],
+  "topic-font-editor.font-size-style": [
+    {
+      "type": 0,
+      "value": "फ़ॉन्ट आकार और शैली"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

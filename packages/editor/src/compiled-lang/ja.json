@@ -170,31 +170,31 @@
   "canvas-style.grid-size-l": [
     {
       "type": 0,
-      "value": "L"
+      "value": "大"
     }
   ],
   "canvas-style.grid-size-m": [
     {
       "type": 0,
-      "value": "M"
+      "value": "中"
     }
   ],
   "canvas-style.grid-size-s": [
     {
       "type": 0,
-      "value": "S"
+      "value": "小"
     }
   ],
   "canvas-style.grid-size-xl": [
     {
       "type": 0,
-      "value": "XL"
+      "value": "極大"
     }
   ],
   "canvas-style.grid-size-xs": [
     {
       "type": 0,
-      "value": "XS"
+      "value": "極小"
     }
   ],
   "canvas-style.grid-style": [
@@ -575,6 +575,12 @@
       "value": "トピックスタイル"
     }
   ],
+  "editor-panel.tooltip-unified-styling": [
+    {
+      "type": 0,
+      "value": "トピックと接続のスタイル"
+    }
+  ],
   "editor-panel.topic-image-title": [
     {
       "type": 0,
@@ -709,6 +715,18 @@
     {
       "type": 0,
       "value": "プリズム"
+    }
+  ],
+  "relationship-style-editor.color": [
+    {
+      "type": 0,
+      "value": "関係の色"
+    }
+  ],
+  "relationship-style-editor.line-arrows": [
+    {
+      "type": 0,
+      "value": "線のスタイルと矢印"
     }
   ],
   "rich-text-editor.bold": [
@@ -1045,6 +1063,24 @@
     {
       "type": 0,
       "value": "タイトル入力"
+    }
+  ],
+  "topic-font-editor.font-color": [
+    {
+      "type": 0,
+      "value": "フォントの色"
+    }
+  ],
+  "topic-font-editor.font-family": [
+    {
+      "type": 0,
+      "value": "フォントファミリー"
+    }
+  ],
+  "topic-font-editor.font-size-style": [
+    {
+      "type": 0,
+      "value": "フォントサイズとスタイル"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

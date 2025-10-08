@@ -170,31 +170,31 @@
   "canvas-style.grid-size-l": [
     {
       "type": 0,
-      "value": "L"
+      "value": "Grande"
     }
   ],
   "canvas-style.grid-size-m": [
     {
       "type": 0,
-      "value": "M"
+      "value": "Medio"
     }
   ],
   "canvas-style.grid-size-s": [
     {
       "type": 0,
-      "value": "S"
+      "value": "Piccolo"
     }
   ],
   "canvas-style.grid-size-xl": [
     {
       "type": 0,
-      "value": "XL"
+      "value": "Molto Grande"
     }
   ],
   "canvas-style.grid-size-xs": [
     {
       "type": 0,
-      "value": "XS"
+      "value": "Molto Piccolo"
     }
   ],
   "canvas-style.grid-style": [
@@ -536,7 +536,7 @@
   "editor-panel.tooltip-topic-font-style": [
     {
       "type": 0,
-      "value": "Stile del carattere"
+      "value": "Stile carattere"
     }
   ],
   "editor-panel.tooltip-topic-share-ellipse": [
@@ -573,6 +573,12 @@
     {
       "type": 0,
       "value": "Stile dell'argomento"
+    }
+  ],
+  "editor-panel.tooltip-unified-styling": [
+    {
+      "type": 0,
+      "value": "Stile tema e connessioni"
     }
   ],
   "editor-panel.topic-image-title": [
@@ -709,6 +715,18 @@
     {
       "type": 0,
       "value": "Prisma"
+    }
+  ],
+  "relationship-style-editor.color": [
+    {
+      "type": 0,
+      "value": "Colore relazione"
+    }
+  ],
+  "relationship-style-editor.line-arrows": [
+    {
+      "type": 0,
+      "value": "Stile linea e frecce"
     }
   ],
   "rich-text-editor.bold": [
@@ -1045,6 +1063,24 @@
     {
       "type": 0,
       "value": "Input titolo"
+    }
+  ],
+  "topic-font-editor.font-color": [
+    {
+      "type": 0,
+      "value": "Colore carattere"
+    }
+  ],
+  "topic-font-editor.font-family": [
+    {
+      "type": 0,
+      "value": "Famiglia carattere"
+    }
+  ],
+  "topic-font-editor.font-size-style": [
+    {
+      "type": 0,
+      "value": "Dimensione e stile carattere"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

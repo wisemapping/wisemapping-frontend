@@ -25,11 +25,11 @@ import React from 'react';
 const TopicFontEditorWithActions = (props: {
   closeModal: () => void;
   onFontFamilyChange?: (family: string | undefined) => void;
-  onFontSizeSwitch?: (direction?: any) => void;
+  onFontSizeSwitch?: (direction?: 'up' | 'down') => void;
   onFontWeightSwitch?: () => void;
   onFontStyleSwitch?: () => void;
   onFontColorChange?: (color: string | undefined) => void;
-}) => {
+}): React.ReactElement => {
   const [fontFamily, setFontFamily] = React.useState<string | undefined>('Arial');
   const [fontSize, setFontSize] = React.useState<number>(12);
   const [fontWeight, setFontWeight] = React.useState<string | undefined>('normal');
@@ -54,7 +54,7 @@ const TopicFontEditorWithActions = (props: {
       setValue: (v: number) => {
         setFontSize(v);
       },
-      switchValue: (direction?: any) => {
+      switchValue: (direction?: 'up' | 'down') => {
         const newSize = direction === 'up' ? fontSize + 1 : fontSize - 1;
         setFontSize(newSize);
         props.onFontSizeSwitch?.(direction);
