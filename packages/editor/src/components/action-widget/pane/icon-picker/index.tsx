@@ -31,6 +31,7 @@ type IconPickerProp = {
   iconModel: NodeProperty<string | undefined>;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement => {
   const [checked, setChecked] = React.useState(true);
   const intl = useIntl();
@@ -53,7 +54,8 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
     if (setValue) {
       setValue(`emoji:${emojiChar}`);
     }
-    triggerClose();
+    // Don't close the picker - allow multiple emoji selections
+    // triggerClose();
   };
 
   return (
@@ -73,7 +75,7 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
           })}
         />
       )}
-      {!checked && <IconImageTab iconModel={iconModel} triggerClose={triggerClose} />}
+      {!checked && <IconImageTab iconModel={iconModel} />}
       <FormGroup sx={{ float: 'right' }}>
         <FormControlLabel
           label={<FormattedMessage id="icon-picker.show-images" defaultMessage="Show images" />}

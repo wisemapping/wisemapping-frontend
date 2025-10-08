@@ -251,6 +251,18 @@
       "value": "Класичний"
     }
   ],
+  "color-picker.color": [
+    {
+      "type": 0,
+      "value": "Колір"
+    }
+  ],
+  "color-picker.default-color": [
+    {
+      "type": 0,
+      "value": "Колір за замовчуванням"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -629,6 +641,84 @@
       "value": "Сповіщення заголовка"
     }
   ],
+  "icon-collection.border.dashed": [
+    {
+      "type": 0,
+      "value": "Пунктирний"
+    }
+  ],
+  "icon-collection.border.dotted": [
+    {
+      "type": 0,
+      "value": "Крапковий"
+    }
+  ],
+  "icon-collection.border.solid": [
+    {
+      "type": 0,
+      "value": "Суцільний"
+    }
+  ],
+  "icon-collection.connection.arc": [
+    {
+      "type": 0,
+      "value": "Дуга"
+    }
+  ],
+  "icon-collection.connection.curved-polyline": [
+    {
+      "type": 0,
+      "value": "Крива ламана"
+    }
+  ],
+  "icon-collection.connection.simple-polyline": [
+    {
+      "type": 0,
+      "value": "Проста ламана"
+    }
+  ],
+  "icon-collection.connection.thick-curved": [
+    {
+      "type": 0,
+      "value": "Товста крива"
+    }
+  ],
+  "icon-collection.connection.thin-curved": [
+    {
+      "type": 0,
+      "value": "Тонка крива"
+    }
+  ],
+  "icon-collection.shape.ellipse": [
+    {
+      "type": 0,
+      "value": "Еліпс"
+    }
+  ],
+  "icon-collection.shape.line": [
+    {
+      "type": 0,
+      "value": "Лінія"
+    }
+  ],
+  "icon-collection.shape.none": [
+    {
+      "type": 0,
+      "value": "Немає"
+    }
+  ],
+  "icon-collection.shape.rectangle": [
+    {
+      "type": 0,
+      "value": "Прямокутник"
+    }
+  ],
+  "icon-collection.shape.rounded": [
+    {
+      "type": 0,
+      "value": "Закруглений"
+    }
+  ],
   "icon-picker.emojis": [
     {
       "type": 0,
@@ -723,10 +813,70 @@
       "value": "Колір зв'язку"
     }
   ],
+  "relationship-style-editor.dashed-line": [
+    {
+      "type": 0,
+      "value": "Пунктирна лінія"
+    }
+  ],
+  "relationship-style-editor.dashed-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Стиль пунктирної лінії"
+    }
+  ],
+  "relationship-style-editor.dotted-line": [
+    {
+      "type": 0,
+      "value": "Крапкова лінія"
+    }
+  ],
+  "relationship-style-editor.dotted-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Стиль крапкової лінії"
+    }
+  ],
+  "relationship-style-editor.end-arrow": [
+    {
+      "type": 0,
+      "value": "Кінцева стрілка"
+    }
+  ],
+  "relationship-style-editor.end-arrow-tooltip": [
+    {
+      "type": 0,
+      "value": "Перемкнути кінцеву стрілку"
+    }
+  ],
   "relationship-style-editor.line-arrows": [
     {
       "type": 0,
       "value": "Стиль лінії та стрілки"
+    }
+  ],
+  "relationship-style-editor.solid-line": [
+    {
+      "type": 0,
+      "value": "Суцільна лінія"
+    }
+  ],
+  "relationship-style-editor.solid-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Стиль суцільної лінії"
+    }
+  ],
+  "relationship-style-editor.start-arrow": [
+    {
+      "type": 0,
+      "value": "Початкова стрілка"
+    }
+  ],
+  "relationship-style-editor.start-arrow-tooltip": [
+    {
+      "type": 0,
+      "value": "Перемкнути початкову стрілку"
     }
   ],
   "rich-text-editor.bold": [
@@ -1065,6 +1215,36 @@
       "value": "Введення заголовка"
     }
   ],
+  "topic-font-editor.active": [
+    {
+      "type": 0,
+      "value": "активний"
+    }
+  ],
+  "topic-font-editor.bold": [
+    {
+      "type": 0,
+      "value": "Жирний"
+    }
+  ],
+  "topic-font-editor.bold-tooltip": [
+    {
+      "type": 0,
+      "value": "Перемкнути жирний"
+    }
+  ],
+  "topic-font-editor.decrease-size": [
+    {
+      "type": 0,
+      "value": "Менше"
+    }
+  ],
+  "topic-font-editor.decrease-size-tooltip": [
+    {
+      "type": 0,
+      "value": "Зменшити розмір шрифту"
+    }
+  ],
   "topic-font-editor.font-color": [
     {
       "type": 0,
@@ -1081,6 +1261,30 @@
     {
       "type": 0,
       "value": "Розмір і стиль шрифту"
+    }
+  ],
+  "topic-font-editor.increase-size": [
+    {
+      "type": 0,
+      "value": "Більше"
+    }
+  ],
+  "topic-font-editor.increase-size-tooltip": [
+    {
+      "type": 0,
+      "value": "Збільшити розмір шрифту"
+    }
+  ],
+  "topic-font-editor.italic": [
+    {
+      "type": 0,
+      "value": "Курсив"
+    }
+  ],
+  "topic-font-editor.italic-tooltip": [
+    {
+      "type": 0,
+      "value": "Перемкнути курсив"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

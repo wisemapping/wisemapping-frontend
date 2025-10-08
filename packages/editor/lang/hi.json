@@ -458,11 +458,47 @@
   "editor-panel.tooltip-topic-font-style": {
     "defaultMessage": "फ़ॉन्ट शैली"
   },
+  "color-picker.color": {
+    "defaultMessage": "Color"
+  },
+  "color-picker.default-color": {
+    "defaultMessage": "Default color"
+  },
   "relationship-style-editor.color": {
     "defaultMessage": "संबंध रंग"
   },
   "relationship-style-editor.line-arrows": {
     "defaultMessage": "रेखा शैली और तीर"
+  },
+  "relationship-style-editor.solid-line": {
+    "defaultMessage": "Solid Line"
+  },
+  "relationship-style-editor.solid-line-tooltip": {
+    "defaultMessage": "Solid line style"
+  },
+  "relationship-style-editor.dashed-line": {
+    "defaultMessage": "Dashed Line"
+  },
+  "relationship-style-editor.dashed-line-tooltip": {
+    "defaultMessage": "Dashed line style"
+  },
+  "relationship-style-editor.dotted-line": {
+    "defaultMessage": "Dotted Line"
+  },
+  "relationship-style-editor.dotted-line-tooltip": {
+    "defaultMessage": "Dotted line style"
+  },
+  "relationship-style-editor.end-arrow": {
+    "defaultMessage": "End Arrow"
+  },
+  "relationship-style-editor.end-arrow-tooltip": {
+    "defaultMessage": "Toggle end arrow"
+  },
+  "relationship-style-editor.start-arrow": {
+    "defaultMessage": "Start Arrow"
+  },
+  "relationship-style-editor.start-arrow-tooltip": {
+    "defaultMessage": "Toggle start arrow"
   },
   "topic-font-editor.font-color": {
     "defaultMessage": "फ़ॉन्ट रंग"
@@ -473,11 +509,77 @@
   "topic-font-editor.font-size-style": {
     "defaultMessage": "फ़ॉन्ट आकार और शैली"
   },
+  "topic-font-editor.increase-size": {
+    "defaultMessage": "Bigger"
+  },
+  "topic-font-editor.increase-size-tooltip": {
+    "defaultMessage": "Increase font size"
+  },
+  "topic-font-editor.decrease-size": {
+    "defaultMessage": "Smaller"
+  },
+  "topic-font-editor.decrease-size-tooltip": {
+    "defaultMessage": "Decrease font size"
+  },
+  "topic-font-editor.bold": {
+    "defaultMessage": "Bold"
+  },
+  "topic-font-editor.bold-tooltip": {
+    "defaultMessage": "Toggle bold"
+  },
+  "topic-font-editor.italic": {
+    "defaultMessage": "Italic"
+  },
+  "topic-font-editor.italic-tooltip": {
+    "defaultMessage": "Toggle italic"
+  },
+  "topic-font-editor.active": {
+    "defaultMessage": "active"
+  },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "कोई आकार नहीं"
   },
   "headerNotifier": {
     "defaultMessage": "हेडर सूचक"
+  },
+  "icon-collection.shape.none": {
+    "defaultMessage": "None"
+  },
+  "icon-collection.shape.line": {
+    "defaultMessage": "Line"
+  },
+  "icon-collection.shape.rectangle": {
+    "defaultMessage": "Rectangle"
+  },
+  "icon-collection.shape.rounded": {
+    "defaultMessage": "Rounded"
+  },
+  "icon-collection.shape.ellipse": {
+    "defaultMessage": "Ellipse"
+  },
+  "icon-collection.border.solid": {
+    "defaultMessage": "Solid"
+  },
+  "icon-collection.border.dashed": {
+    "defaultMessage": "Dashed"
+  },
+  "icon-collection.border.dotted": {
+    "defaultMessage": "Dotted"
+  },
+  "icon-collection.connection.thick-curved": {
+    "defaultMessage": "Thick Curved"
+  },
+  "icon-collection.connection.arc": {
+    "defaultMessage": "Arc"
+  },
+  "icon-collection.connection.thin-curved": {
+    "defaultMessage": "Thin Curved"
+  },
+  "icon-collection.connection.simple-polyline": {
+    "defaultMessage": "Simple Polyline"
+  },
+  "icon-collection.connection.curved-polyline": {
+    "defaultMessage": "Curved Polyline"
   },
   "icon-picker.emojis": {
     "defaultMessage": "इमोजी"

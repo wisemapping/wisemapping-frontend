@@ -71,7 +71,8 @@ const TopicImagePicker = ({
       setIconsValue(undefined);
     }
 
-    triggerClose();
+    // Don't close the picker - allow multiple emoji selections
+    // triggerClose();
   };
 
   return (

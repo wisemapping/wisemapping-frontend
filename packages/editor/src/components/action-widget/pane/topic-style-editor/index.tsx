@@ -301,10 +301,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
                   type: 'rounded rectangle',
                   icon: <CheckBoxOutlineBlankOutlinedIcon />,
                   label: (
-                    <FormattedMessage
-                      id="icon-collection.shape.rounded-rectangle"
-                      defaultMessage="Rounded Rectangle"
-                    />
+                    <FormattedMessage id="icon-collection.shape.rounded" defaultMessage="Rounded" />
                   ),
                 },
                 {
@@ -317,6 +314,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
               ]}
               selectedValue={props.shapeModel.getValue()}
               onSelect={handleShapeChange}
+              ariaLabelSuffix=" shape"
             />
           </Box>
         </Box>
@@ -340,6 +338,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
               styles={borderStyles}
               selectedValue={props.borderStyleModel.getValue()}
               onSelect={handleBorderStyleChange}
+              ariaLabelSuffix=" Line"
             />
           </Box>
         </Box>

@@ -1,0 +1,76 @@
+# WiseMapping Frontend Coding Guidelines
+
+## 1. Internationalization (i18n) Changes
+
+**CRITICAL**: When making changes to any `en.json` file for internationalization:
+
+1. **All supported languages must be updated** with appropriate translations:
+   - Spanish (es.json)
+   - English (en.json)
+   - French (fr.json)
+   - German (de.json)
+   - Chinese Simplified (zh.json)
+   - Chinese Traditional (zh-CN.json)
+   - Russian (ru.json)
+   - Ukrainian (uk.json)
+   - Japanese (ja.json)
+   - Portuguese (pt.json)
+   - Italian (it.json)
+   - Hindi (hi.json)
+
+2. **After updating all language files**, you MUST run the compilation command:
+   ```bash
+   yarn i18n:compile
+   ```
+   
+   This command must be executed in the appropriate package directory (editor or webapp) where the changes were made.
+
+3. **Workflow**:
+   - Identify which package needs i18n changes (packages/editor or packages/webapp)
+   - Update `en.json` with the new or modified keys
+   - Update all other language files with appropriate translations
+   - Run `yarn i18n:compile` in that package's directory
+   - Verify that the compiled files in `src/compiled-lang/` have been updated
+
+4. **NO HARDCODED TEXT**:
+   - **NEVER hardcode user-facing text, labels, messages, or any string resources** in the code
+   - All user-facing strings MUST be defined in the i18n JSON files
+   - Use the appropriate i18n mechanism (e.g., `FormattedMessage`, `useIntl`, etc.) to reference localized strings
+   - This applies to:
+     - UI labels and buttons
+     - Error messages and notifications
+     - Tooltips and help text
+     - Placeholders and default values
+     - Any text that will be displayed to users
+   - Example of what NOT to do: `<Button>Save</Button>`
+   - Example of correct approach: `<FormattedMessage id="action.save" />`
+
+5. **NO DUPLICATE RESOURCES**:
+   - **NEVER add duplicate i18n keys** across the language files
+   - Before adding a new resource key, search existing keys to check if a similar translation already exists
+   - Reuse existing keys whenever possible to maintain consistency
+   - If you find duplicate keys, consolidate them into a single key
+
+## 2. Material UI Guidelines
+
+**PRIMARY UI LIBRARY**: This project uses Material UI (MUI) extensively.
+
+1. **Always use Material UI components first**:
+   - Before creating custom components, check if Material UI provides a suitable component
+   - Prefer MUI components over custom HTML elements or other UI libraries
+   - Examples: Use `<Button>` from MUI instead of `<button>`, `<TextField>` instead of `<input>`, etc.
+
+2. **Follow Material UI best practices**:
+   - Use MUI's theming system for styling consistency
+   - Follow MUI's styling approaches (sx prop, styled components, etc.)
+   - Leverage MUI's built-in accessibility features
+   - Use MUI's grid system and layout components
+
+3. **Reference**:
+   - Official docs: https://mui.com/
+   - Check MUI documentation for component APIs and examples before implementation
+
+## Additional Guidelines
+
+(Add more project-specific guidelines here as needed)
+

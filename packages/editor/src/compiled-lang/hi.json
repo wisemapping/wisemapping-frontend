@@ -251,6 +251,18 @@
       "value": "क्लासिक"
     }
   ],
+  "color-picker.color": [
+    {
+      "type": 0,
+      "value": "Color"
+    }
+  ],
+  "color-picker.default-color": [
+    {
+      "type": 0,
+      "value": "Default color"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -629,6 +641,84 @@
       "value": "हेडर सूचक"
     }
   ],
+  "icon-collection.border.dashed": [
+    {
+      "type": 0,
+      "value": "Dashed"
+    }
+  ],
+  "icon-collection.border.dotted": [
+    {
+      "type": 0,
+      "value": "Dotted"
+    }
+  ],
+  "icon-collection.border.solid": [
+    {
+      "type": 0,
+      "value": "Solid"
+    }
+  ],
+  "icon-collection.connection.arc": [
+    {
+      "type": 0,
+      "value": "Arc"
+    }
+  ],
+  "icon-collection.connection.curved-polyline": [
+    {
+      "type": 0,
+      "value": "Curved Polyline"
+    }
+  ],
+  "icon-collection.connection.simple-polyline": [
+    {
+      "type": 0,
+      "value": "Simple Polyline"
+    }
+  ],
+  "icon-collection.connection.thick-curved": [
+    {
+      "type": 0,
+      "value": "Thick Curved"
+    }
+  ],
+  "icon-collection.connection.thin-curved": [
+    {
+      "type": 0,
+      "value": "Thin Curved"
+    }
+  ],
+  "icon-collection.shape.ellipse": [
+    {
+      "type": 0,
+      "value": "Ellipse"
+    }
+  ],
+  "icon-collection.shape.line": [
+    {
+      "type": 0,
+      "value": "Line"
+    }
+  ],
+  "icon-collection.shape.none": [
+    {
+      "type": 0,
+      "value": "None"
+    }
+  ],
+  "icon-collection.shape.rectangle": [
+    {
+      "type": 0,
+      "value": "Rectangle"
+    }
+  ],
+  "icon-collection.shape.rounded": [
+    {
+      "type": 0,
+      "value": "Rounded"
+    }
+  ],
   "icon-picker.emojis": [
     {
       "type": 0,
@@ -723,10 +813,70 @@
       "value": "संबंध रंग"
     }
   ],
+  "relationship-style-editor.dashed-line": [
+    {
+      "type": 0,
+      "value": "Dashed Line"
+    }
+  ],
+  "relationship-style-editor.dashed-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Dashed line style"
+    }
+  ],
+  "relationship-style-editor.dotted-line": [
+    {
+      "type": 0,
+      "value": "Dotted Line"
+    }
+  ],
+  "relationship-style-editor.dotted-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Dotted line style"
+    }
+  ],
+  "relationship-style-editor.end-arrow": [
+    {
+      "type": 0,
+      "value": "End Arrow"
+    }
+  ],
+  "relationship-style-editor.end-arrow-tooltip": [
+    {
+      "type": 0,
+      "value": "Toggle end arrow"
+    }
+  ],
   "relationship-style-editor.line-arrows": [
     {
       "type": 0,
       "value": "रेखा शैली और तीर"
+    }
+  ],
+  "relationship-style-editor.solid-line": [
+    {
+      "type": 0,
+      "value": "Solid Line"
+    }
+  ],
+  "relationship-style-editor.solid-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Solid line style"
+    }
+  ],
+  "relationship-style-editor.start-arrow": [
+    {
+      "type": 0,
+      "value": "Start Arrow"
+    }
+  ],
+  "relationship-style-editor.start-arrow-tooltip": [
+    {
+      "type": 0,
+      "value": "Toggle start arrow"
     }
   ],
   "rich-text-editor.bold": [
@@ -1065,6 +1215,36 @@
       "value": "शीर्षक इनपुट"
     }
   ],
+  "topic-font-editor.active": [
+    {
+      "type": 0,
+      "value": "active"
+    }
+  ],
+  "topic-font-editor.bold": [
+    {
+      "type": 0,
+      "value": "Bold"
+    }
+  ],
+  "topic-font-editor.bold-tooltip": [
+    {
+      "type": 0,
+      "value": "Toggle bold"
+    }
+  ],
+  "topic-font-editor.decrease-size": [
+    {
+      "type": 0,
+      "value": "Smaller"
+    }
+  ],
+  "topic-font-editor.decrease-size-tooltip": [
+    {
+      "type": 0,
+      "value": "Decrease font size"
+    }
+  ],
   "topic-font-editor.font-color": [
     {
       "type": 0,
@@ -1081,6 +1261,30 @@
     {
       "type": 0,
       "value": "फ़ॉन्ट आकार और शैली"
+    }
+  ],
+  "topic-font-editor.increase-size": [
+    {
+      "type": 0,
+      "value": "Bigger"
+    }
+  ],
+  "topic-font-editor.increase-size-tooltip": [
+    {
+      "type": 0,
+      "value": "Increase font size"
+    }
+  ],
+  "topic-font-editor.italic": [
+    {
+      "type": 0,
+      "value": "Italic"
+    }
+  ],
+  "topic-font-editor.italic-tooltip": [
+    {
+      "type": 0,
+      "value": "Toggle italic"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

@@ -29,23 +29,53 @@ interface IconCollectionProps {
     type: TopicShapeType | StrokeStyle | LineType;
     icon: ReactElement;
     label: string | ReactElement;
+    ariaLabel?: string; // Optional custom aria-label
   }>;
   selectedValue: TopicShapeType | StrokeStyle | LineType;
   onSelect: (value: TopicShapeType | StrokeStyle | LineType) => void;
+  ariaLabelSuffix?: string; // Optional suffix to add to all aria-labels (e.g., " shape")
 }
 
-const IconCollection = ({ styles, selectedValue, onSelect }: IconCollectionProps): ReactElement => {
+const IconCollection = ({
+  styles,
+  selectedValue,
+  onSelect,
+  ariaLabelSuffix,
+}: IconCollectionProps): ReactElement => {
+  // Helper function to extract label text from FormattedMessage or string
+  const getLabelText = (label: string | ReactElement): string => {
+    if (typeof label === 'string') {
+      return label;
+    }
+    // If it's a FormattedMessage, extract the defaultMessage prop
+    if (React.isValidElement(label)) {
+      const props = label.props as { defaultMessage?: string };
+      // eslint-disable-next-line react/prop-types
+      return props.defaultMessage || '';
+    }
+    return '';
+  };
+
   return (
     <StyledGrid>
-      {styles.map((style) => (
-        <StyledButton
-          key={style.type}
-          selected={selectedValue === style.type}
-          onClick={() => onSelect(style.type)}
-        >
-          {style.icon}
-        </StyledButton>
-      ))}
+      {styles.map((style) => {
+        const labelText = getLabelText(style.label);
+        // Use custom aria-label if provided, otherwise construct from label + suffix
+        const ariaLabel =
+          style.ariaLabel || (ariaLabelSuffix ? `${labelText}${ariaLabelSuffix}` : labelText);
+
+        return (
+          <StyledButton
+            key={style.type}
+            selected={selectedValue === style.type}
+            onClick={() => onSelect(style.type)}
+            aria-label={ariaLabel}
+            title={labelText}
+          >
+            {style.icon}
+          </StyledButton>
+        );
+      })}
     </StyledGrid>
   );
 };

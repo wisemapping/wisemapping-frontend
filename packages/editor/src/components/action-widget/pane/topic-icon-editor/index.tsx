@@ -54,7 +54,6 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
     if (setValue) {
       setValue(`emoji:${emojiChar}`);
     }
-    closeModal();
   };
 
   return (
@@ -181,7 +180,7 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
               backgroundColor: 'background.paper',
             }}
           >
-            <IconImageTab iconModel={iconModel} triggerClose={closeModal} />
+            <IconImageTab iconModel={iconModel} />
           </Box>
         )}
       </Box>

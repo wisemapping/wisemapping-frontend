@@ -24,7 +24,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { styled } from '@mui/material/styles';
 
 import NodeProperty from '../../../../classes/model/node-property';
@@ -52,6 +52,8 @@ interface RelationshipStyleEditorProps {
 }
 
 const RelationshipStyleEditor = (props: RelationshipStyleEditorProps): ReactElement => {
+  const intl = useIntl();
+
   const handleStrokeStyleChange = (style: StrokeStyle) => {
     trackRelationshipAction('stroke_style_change', style.toLowerCase());
     const setValue = props.strokeStyleModel.setValue;
@@ -133,18 +135,42 @@ const RelationshipStyleEditor = (props: RelationshipStyleEditorProps): ReactElem
           <ActionButton
             onClick={() => handleStrokeStyleChange(StrokeStyle.SOLID)}
             selected={props.strokeStyleModel.getValue() === StrokeStyle.SOLID}
+            aria-label={intl.formatMessage({
+              id: 'relationship-style-editor.solid-line',
+              defaultMessage: 'Solid Line',
+            })}
+            title={intl.formatMessage({
+              id: 'relationship-style-editor.solid-line-tooltip',
+              defaultMessage: 'Solid line style',
+            })}
           >
             <RemoveIcon />
           </ActionButton>
           <ActionButton
             onClick={() => handleStrokeStyleChange(StrokeStyle.DASHED)}
             selected={props.strokeStyleModel.getValue() === StrokeStyle.DASHED}
+            aria-label={intl.formatMessage({
+              id: 'relationship-style-editor.dashed-line',
+              defaultMessage: 'Dashed Line',
+            })}
+            title={intl.formatMessage({
+              id: 'relationship-style-editor.dashed-line-tooltip',
+              defaultMessage: 'Dashed line style',
+            })}
           >
             <MoreHorizIcon />
           </ActionButton>
           <ActionButton
             onClick={() => handleStrokeStyleChange(StrokeStyle.DOTTED)}
             selected={props.strokeStyleModel.getValue() === StrokeStyle.DOTTED}
+            aria-label={intl.formatMessage({
+              id: 'relationship-style-editor.dotted-line',
+              defaultMessage: 'Dotted Line',
+            })}
+            title={intl.formatMessage({
+              id: 'relationship-style-editor.dotted-line-tooltip',
+              defaultMessage: 'Dotted line style',
+            })}
           >
             <FiberManualRecordIcon />
           </ActionButton>
@@ -155,12 +181,31 @@ const RelationshipStyleEditor = (props: RelationshipStyleEditorProps): ReactElem
             sx={{ mx: 1, height: '32px', alignSelf: 'center' }}
           />
 
-          <ActionButton onClick={handleEndArrowToggle} selected={props.endArrowModel.getValue()}>
+          <ActionButton
+            onClick={handleEndArrowToggle}
+            selected={props.endArrowModel.getValue()}
+            aria-label={intl.formatMessage({
+              id: 'relationship-style-editor.end-arrow',
+              defaultMessage: 'End Arrow',
+            })}
+            title={intl.formatMessage({
+              id: 'relationship-style-editor.end-arrow-tooltip',
+              defaultMessage: 'Toggle end arrow',
+            })}
+          >
             <ArrowLeftIcon />
           </ActionButton>
           <ActionButton
             onClick={handleStartArrowToggle}
             selected={props.startArrowModel.getValue()}
+            aria-label={intl.formatMessage({
+              id: 'relationship-style-editor.start-arrow',
+              defaultMessage: 'Start Arrow',
+            })}
+            title={intl.formatMessage({
+              id: 'relationship-style-editor.start-arrow-tooltip',
+              defaultMessage: 'Toggle start arrow',
+            })}
           >
             <ArrowRightIcon />
           </ActionButton>

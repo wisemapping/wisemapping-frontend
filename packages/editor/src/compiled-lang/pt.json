@@ -251,6 +251,18 @@
       "value": "Clássico"
     }
   ],
+  "color-picker.color": [
+    {
+      "type": 0,
+      "value": "Cor"
+    }
+  ],
+  "color-picker.default-color": [
+    {
+      "type": 0,
+      "value": "Cor padrão"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -629,6 +641,84 @@
       "value": "Notificador de cabeçalho"
     }
   ],
+  "icon-collection.border.dashed": [
+    {
+      "type": 0,
+      "value": "Tracejado"
+    }
+  ],
+  "icon-collection.border.dotted": [
+    {
+      "type": 0,
+      "value": "Pontilhado"
+    }
+  ],
+  "icon-collection.border.solid": [
+    {
+      "type": 0,
+      "value": "Sólido"
+    }
+  ],
+  "icon-collection.connection.arc": [
+    {
+      "type": 0,
+      "value": "Arco"
+    }
+  ],
+  "icon-collection.connection.curved-polyline": [
+    {
+      "type": 0,
+      "value": "Polilinha curva"
+    }
+  ],
+  "icon-collection.connection.simple-polyline": [
+    {
+      "type": 0,
+      "value": "Polilinha simples"
+    }
+  ],
+  "icon-collection.connection.thick-curved": [
+    {
+      "type": 0,
+      "value": "Curva grossa"
+    }
+  ],
+  "icon-collection.connection.thin-curved": [
+    {
+      "type": 0,
+      "value": "Curva fina"
+    }
+  ],
+  "icon-collection.shape.ellipse": [
+    {
+      "type": 0,
+      "value": "Elipse"
+    }
+  ],
+  "icon-collection.shape.line": [
+    {
+      "type": 0,
+      "value": "Linha"
+    }
+  ],
+  "icon-collection.shape.none": [
+    {
+      "type": 0,
+      "value": "Nenhum"
+    }
+  ],
+  "icon-collection.shape.rectangle": [
+    {
+      "type": 0,
+      "value": "Retângulo"
+    }
+  ],
+  "icon-collection.shape.rounded": [
+    {
+      "type": 0,
+      "value": "Arredondado"
+    }
+  ],
   "icon-picker.emojis": [
     {
       "type": 0,
@@ -723,10 +813,70 @@
       "value": "Cor do relacionamento"
     }
   ],
+  "relationship-style-editor.dashed-line": [
+    {
+      "type": 0,
+      "value": "Linha tracejada"
+    }
+  ],
+  "relationship-style-editor.dashed-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Estilo de linha tracejada"
+    }
+  ],
+  "relationship-style-editor.dotted-line": [
+    {
+      "type": 0,
+      "value": "Linha pontilhada"
+    }
+  ],
+  "relationship-style-editor.dotted-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Estilo de linha pontilhada"
+    }
+  ],
+  "relationship-style-editor.end-arrow": [
+    {
+      "type": 0,
+      "value": "Seta final"
+    }
+  ],
+  "relationship-style-editor.end-arrow-tooltip": [
+    {
+      "type": 0,
+      "value": "Alternar seta final"
+    }
+  ],
   "relationship-style-editor.line-arrows": [
     {
       "type": 0,
       "value": "Estilo de linha e setas"
+    }
+  ],
+  "relationship-style-editor.solid-line": [
+    {
+      "type": 0,
+      "value": "Linha sólida"
+    }
+  ],
+  "relationship-style-editor.solid-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Estilo de linha sólida"
+    }
+  ],
+  "relationship-style-editor.start-arrow": [
+    {
+      "type": 0,
+      "value": "Seta inicial"
+    }
+  ],
+  "relationship-style-editor.start-arrow-tooltip": [
+    {
+      "type": 0,
+      "value": "Alternar seta inicial"
     }
   ],
   "rich-text-editor.bold": [
@@ -1065,6 +1215,36 @@
       "value": "Entrada de título"
     }
   ],
+  "topic-font-editor.active": [
+    {
+      "type": 0,
+      "value": "ativo"
+    }
+  ],
+  "topic-font-editor.bold": [
+    {
+      "type": 0,
+      "value": "Negrito"
+    }
+  ],
+  "topic-font-editor.bold-tooltip": [
+    {
+      "type": 0,
+      "value": "Alternar negrito"
+    }
+  ],
+  "topic-font-editor.decrease-size": [
+    {
+      "type": 0,
+      "value": "Menor"
+    }
+  ],
+  "topic-font-editor.decrease-size-tooltip": [
+    {
+      "type": 0,
+      "value": "Diminuir tamanho da fonte"
+    }
+  ],
   "topic-font-editor.font-color": [
     {
       "type": 0,
@@ -1081,6 +1261,30 @@
     {
       "type": 0,
       "value": "Tamanho e estilo da fonte"
+    }
+  ],
+  "topic-font-editor.increase-size": [
+    {
+      "type": 0,
+      "value": "Maior"
+    }
+  ],
+  "topic-font-editor.increase-size-tooltip": [
+    {
+      "type": 0,
+      "value": "Aumentar tamanho da fonte"
+    }
+  ],
+  "topic-font-editor.italic": [
+    {
+      "type": 0,
+      "value": "Itálico"
+    }
+  ],
+  "topic-font-editor.italic-tooltip": [
+    {
+      "type": 0,
+      "value": "Alternar itálico"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

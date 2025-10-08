@@ -83,7 +83,19 @@ Cypress.Commands.add('focusTopicByText', (text: string) => {
 Cypress.Commands.add(
   'onMouseOverToolbarButton',
   (button: 'Style Topic & Connections' | 'Font Style' | 'Connection Style' | 'Relationship Style') => {
-    cy.get(`[aria-label="${button}"]`).first().trigger('mouseover');
+    // For buttons with custom panels (like Style Topic & Connections), we need to click instead of hover
+    // because the toolbar requires click-to-open for items with custom render
+    cy.get(`[aria-label="${button}"]`).first().click({ force: true });
+    
+    // Wait for the panel to be visible and fully rendered
+    // For Style Topic & Connections, wait for one of the tab labels to appear
+    if (button === 'Style Topic & Connections') {
+      cy.contains('Shape', { timeout: 5000 }).should('be.visible');
+    }
+    
+    // Wait a bit more for the panel content to stabilize
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
   },
 );
 

@@ -241,10 +241,30 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
           />
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <ActionButton onClick={handleFontSizeIncrease}>
+          <ActionButton
+            onClick={handleFontSizeIncrease}
+            aria-label={intl.formatMessage({
+              id: 'topic-font-editor.increase-size',
+              defaultMessage: 'Bigger',
+            })}
+            title={intl.formatMessage({
+              id: 'topic-font-editor.increase-size-tooltip',
+              defaultMessage: 'Increase font size',
+            })}
+          >
             <TextIncreaseOutlinedIcon />
           </ActionButton>
-          <ActionButton onClick={handleFontSizeDecrease}>
+          <ActionButton
+            onClick={handleFontSizeDecrease}
+            aria-label={intl.formatMessage({
+              id: 'topic-font-editor.decrease-size',
+              defaultMessage: 'Smaller',
+            })}
+            title={intl.formatMessage({
+              id: 'topic-font-editor.decrease-size-tooltip',
+              defaultMessage: 'Decrease font size',
+            })}
+          >
             <TextDecreaseOutlinedIcon />
           </ActionButton>
 
@@ -254,10 +274,48 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
             sx={{ mx: 1, height: '32px', alignSelf: 'center' }}
           />
 
-          <ActionButton onClick={handleBoldToggle} selected={currentWeight === 'bold'}>
+          <ActionButton
+            onClick={handleBoldToggle}
+            selected={currentWeight === 'bold'}
+            aria-label={
+              intl.formatMessage({
+                id: 'topic-font-editor.bold',
+                defaultMessage: 'Bold',
+              }) +
+              (currentWeight === 'bold'
+                ? ` (${intl.formatMessage({
+                    id: 'topic-font-editor.active',
+                    defaultMessage: 'active',
+                  })})`
+                : '')
+            }
+            title={intl.formatMessage({
+              id: 'topic-font-editor.bold-tooltip',
+              defaultMessage: 'Toggle bold',
+            })}
+          >
             <FormatBoldOutlinedIcon />
           </ActionButton>
-          <ActionButton onClick={handleItalicToggle} selected={currentStyle === 'italic'}>
+          <ActionButton
+            onClick={handleItalicToggle}
+            selected={currentStyle === 'italic'}
+            aria-label={
+              intl.formatMessage({
+                id: 'topic-font-editor.italic',
+                defaultMessage: 'Italic',
+              }) +
+              (currentStyle === 'italic'
+                ? ` (${intl.formatMessage({
+                    id: 'topic-font-editor.active',
+                    defaultMessage: 'active',
+                  })})`
+                : '')
+            }
+            title={intl.formatMessage({
+              id: 'topic-font-editor.italic-tooltip',
+              defaultMessage: 'Toggle italic',
+            })}
+          >
             <FormatItalicIcon />
           </ActionButton>
         </Box>

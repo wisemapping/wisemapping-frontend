@@ -251,6 +251,18 @@
       "value": "Classique"
     }
   ],
+  "color-picker.color": [
+    {
+      "type": 0,
+      "value": "Couleur"
+    }
+  ],
+  "color-picker.default-color": [
+    {
+      "type": 0,
+      "value": "Couleur par défaut"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -629,6 +641,84 @@
       "value": "Notification d'en-tête"
     }
   ],
+  "icon-collection.border.dashed": [
+    {
+      "type": 0,
+      "value": "Discontinu"
+    }
+  ],
+  "icon-collection.border.dotted": [
+    {
+      "type": 0,
+      "value": "Pointillé"
+    }
+  ],
+  "icon-collection.border.solid": [
+    {
+      "type": 0,
+      "value": "Continu"
+    }
+  ],
+  "icon-collection.connection.arc": [
+    {
+      "type": 0,
+      "value": "Arc"
+    }
+  ],
+  "icon-collection.connection.curved-polyline": [
+    {
+      "type": 0,
+      "value": "Polyligne courbe"
+    }
+  ],
+  "icon-collection.connection.simple-polyline": [
+    {
+      "type": 0,
+      "value": "Polyligne simple"
+    }
+  ],
+  "icon-collection.connection.thick-curved": [
+    {
+      "type": 0,
+      "value": "Courbe épaisse"
+    }
+  ],
+  "icon-collection.connection.thin-curved": [
+    {
+      "type": 0,
+      "value": "Courbe fine"
+    }
+  ],
+  "icon-collection.shape.ellipse": [
+    {
+      "type": 0,
+      "value": "Ellipse"
+    }
+  ],
+  "icon-collection.shape.line": [
+    {
+      "type": 0,
+      "value": "Ligne"
+    }
+  ],
+  "icon-collection.shape.none": [
+    {
+      "type": 0,
+      "value": "Aucun"
+    }
+  ],
+  "icon-collection.shape.rectangle": [
+    {
+      "type": 0,
+      "value": "Rectangle"
+    }
+  ],
+  "icon-collection.shape.rounded": [
+    {
+      "type": 0,
+      "value": "Arrondi"
+    }
+  ],
   "icon-picker.emojis": [
     {
       "type": 0,
@@ -723,10 +813,70 @@
       "value": "Couleur de relation"
     }
   ],
+  "relationship-style-editor.dashed-line": [
+    {
+      "type": 0,
+      "value": "Ligne discontinue"
+    }
+  ],
+  "relationship-style-editor.dashed-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Style de ligne discontinue"
+    }
+  ],
+  "relationship-style-editor.dotted-line": [
+    {
+      "type": 0,
+      "value": "Ligne pointillée"
+    }
+  ],
+  "relationship-style-editor.dotted-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Style de ligne pointillée"
+    }
+  ],
+  "relationship-style-editor.end-arrow": [
+    {
+      "type": 0,
+      "value": "Flèche de fin"
+    }
+  ],
+  "relationship-style-editor.end-arrow-tooltip": [
+    {
+      "type": 0,
+      "value": "Basculer la flèche de fin"
+    }
+  ],
   "relationship-style-editor.line-arrows": [
     {
       "type": 0,
       "value": "Style de ligne et flèches"
+    }
+  ],
+  "relationship-style-editor.solid-line": [
+    {
+      "type": 0,
+      "value": "Ligne continue"
+    }
+  ],
+  "relationship-style-editor.solid-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Style de ligne continue"
+    }
+  ],
+  "relationship-style-editor.start-arrow": [
+    {
+      "type": 0,
+      "value": "Flèche de début"
+    }
+  ],
+  "relationship-style-editor.start-arrow-tooltip": [
+    {
+      "type": 0,
+      "value": "Basculer la flèche de début"
     }
   ],
   "rich-text-editor.bold": [
@@ -1065,6 +1215,36 @@
       "value": "Saisie de titre"
     }
   ],
+  "topic-font-editor.active": [
+    {
+      "type": 0,
+      "value": "actif"
+    }
+  ],
+  "topic-font-editor.bold": [
+    {
+      "type": 0,
+      "value": "Gras"
+    }
+  ],
+  "topic-font-editor.bold-tooltip": [
+    {
+      "type": 0,
+      "value": "Basculer en gras"
+    }
+  ],
+  "topic-font-editor.decrease-size": [
+    {
+      "type": 0,
+      "value": "Plus petit"
+    }
+  ],
+  "topic-font-editor.decrease-size-tooltip": [
+    {
+      "type": 0,
+      "value": "Diminuer la taille de police"
+    }
+  ],
   "topic-font-editor.font-color": [
     {
       "type": 0,
@@ -1081,6 +1261,30 @@
     {
       "type": 0,
       "value": "Taille et style de police"
+    }
+  ],
+  "topic-font-editor.increase-size": [
+    {
+      "type": 0,
+      "value": "Plus grand"
+    }
+  ],
+  "topic-font-editor.increase-size-tooltip": [
+    {
+      "type": 0,
+      "value": "Augmenter la taille de police"
+    }
+  ],
+  "topic-font-editor.italic": [
+    {
+      "type": 0,
+      "value": "Italique"
+    }
+  ],
+  "topic-font-editor.italic-tooltip": [
+    {
+      "type": 0,
+      "value": "Basculer en italique"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

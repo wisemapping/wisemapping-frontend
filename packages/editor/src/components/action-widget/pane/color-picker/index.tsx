@@ -21,6 +21,7 @@ import NodeProperty from '../../../../classes/model/node-property';
 import colors from './colors.json';
 import { styled } from '@mui/material/styles';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
+import { useIntl } from 'react-intl';
 
 const NoneColorCircle = styled(Box)<{ selected?: boolean }>(({ selected, theme }) => ({
   width: '18px',
@@ -50,6 +51,7 @@ const ColorPicker = (props: {
   closeModal: () => void;
   colorModel: NodeProperty<string | undefined>;
 }): ReactElement => {
+  const intl = useIntl();
   const currentValue = props.colorModel.getValue();
   const isNoneSelected = currentValue === undefined;
 
@@ -69,15 +71,34 @@ const ColorPicker = (props: {
     props.closeModal();
   };
 
+  const colorLabel = intl.formatMessage({
+    id: 'color-picker.color',
+    defaultMessage: 'Color',
+  });
+
+  const defaultColorLabel = intl.formatMessage({
+    id: 'color-picker.default-color',
+    defaultMessage: 'Default color',
+  });
+
   return (
-    <Box component="div">
+    <Box component="div" aria-label={colorLabel}>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '216px', gap: '9px' }}>
-        <NoneColorCircle selected={isNoneSelected} onClick={handleNoneClick}>
+        <NoneColorCircle
+          selected={isNoneSelected}
+          onClick={handleNoneClick}
+          aria-label={defaultColorLabel}
+          role="button"
+          tabIndex={0}
+        >
           <NotInterestedOutlined />
         </NoneColorCircle>
         {colors.slice(1).map((color, index) => (
           <Box
             key={index}
+            component="button"
+            aria-label={color}
+            title={color}
             sx={{
               width: '18px',
               height: '18px',
@@ -85,6 +106,7 @@ const ColorPicker = (props: {
               backgroundColor: color,
               border: currentValue === color ? '2px solid #ffa800' : '2px solid transparent',
               cursor: 'pointer',
+              padding: 0,
               '&:hover': {
                 transform: 'scale(1.1)',
                 transition: 'transform 0.2s ease',

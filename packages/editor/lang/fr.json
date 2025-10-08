@@ -458,11 +458,47 @@
   "editor-panel.tooltip-topic-font-style": {
     "defaultMessage": "Style de police"
   },
+  "color-picker.color": {
+    "defaultMessage": "Couleur"
+  },
+  "color-picker.default-color": {
+    "defaultMessage": "Couleur par défaut"
+  },
   "relationship-style-editor.color": {
     "defaultMessage": "Couleur de relation"
   },
   "relationship-style-editor.line-arrows": {
     "defaultMessage": "Style de ligne et flèches"
+  },
+  "relationship-style-editor.solid-line": {
+    "defaultMessage": "Ligne continue"
+  },
+  "relationship-style-editor.solid-line-tooltip": {
+    "defaultMessage": "Style de ligne continue"
+  },
+  "relationship-style-editor.dashed-line": {
+    "defaultMessage": "Ligne discontinue"
+  },
+  "relationship-style-editor.dashed-line-tooltip": {
+    "defaultMessage": "Style de ligne discontinue"
+  },
+  "relationship-style-editor.dotted-line": {
+    "defaultMessage": "Ligne pointillée"
+  },
+  "relationship-style-editor.dotted-line-tooltip": {
+    "defaultMessage": "Style de ligne pointillée"
+  },
+  "relationship-style-editor.end-arrow": {
+    "defaultMessage": "Flèche de fin"
+  },
+  "relationship-style-editor.end-arrow-tooltip": {
+    "defaultMessage": "Basculer la flèche de fin"
+  },
+  "relationship-style-editor.start-arrow": {
+    "defaultMessage": "Flèche de début"
+  },
+  "relationship-style-editor.start-arrow-tooltip": {
+    "defaultMessage": "Basculer la flèche de début"
   },
   "topic-font-editor.font-color": {
     "defaultMessage": "Couleur de police"
@@ -473,11 +509,77 @@
   "topic-font-editor.font-size-style": {
     "defaultMessage": "Taille et style de police"
   },
+  "topic-font-editor.increase-size": {
+    "defaultMessage": "Plus grand"
+  },
+  "topic-font-editor.increase-size-tooltip": {
+    "defaultMessage": "Augmenter la taille de police"
+  },
+  "topic-font-editor.decrease-size": {
+    "defaultMessage": "Plus petit"
+  },
+  "topic-font-editor.decrease-size-tooltip": {
+    "defaultMessage": "Diminuer la taille de police"
+  },
+  "topic-font-editor.bold": {
+    "defaultMessage": "Gras"
+  },
+  "topic-font-editor.bold-tooltip": {
+    "defaultMessage": "Basculer en gras"
+  },
+  "topic-font-editor.italic": {
+    "defaultMessage": "Italique"
+  },
+  "topic-font-editor.italic-tooltip": {
+    "defaultMessage": "Basculer en italique"
+  },
+  "topic-font-editor.active": {
+    "defaultMessage": "actif"
+  },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "Aucune forme"
   },
   "headerNotifier": {
     "defaultMessage": "Notification d'en-tête"
+  },
+  "icon-collection.shape.none": {
+    "defaultMessage": "Aucun"
+  },
+  "icon-collection.shape.line": {
+    "defaultMessage": "Ligne"
+  },
+  "icon-collection.shape.rectangle": {
+    "defaultMessage": "Rectangle"
+  },
+  "icon-collection.shape.rounded": {
+    "defaultMessage": "Arrondi"
+  },
+  "icon-collection.shape.ellipse": {
+    "defaultMessage": "Ellipse"
+  },
+  "icon-collection.border.solid": {
+    "defaultMessage": "Continu"
+  },
+  "icon-collection.border.dashed": {
+    "defaultMessage": "Discontinu"
+  },
+  "icon-collection.border.dotted": {
+    "defaultMessage": "Pointillé"
+  },
+  "icon-collection.connection.thick-curved": {
+    "defaultMessage": "Courbe épaisse"
+  },
+  "icon-collection.connection.arc": {
+    "defaultMessage": "Arc"
+  },
+  "icon-collection.connection.thin-curved": {
+    "defaultMessage": "Courbe fine"
+  },
+  "icon-collection.connection.simple-polyline": {
+    "defaultMessage": "Polyligne simple"
+  },
+  "icon-collection.connection.curved-polyline": {
+    "defaultMessage": "Polyligne courbe"
   },
   "icon-picker.emojis": {
     "defaultMessage": "Emojis"

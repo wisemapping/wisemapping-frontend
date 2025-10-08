@@ -458,11 +458,47 @@
   "editor-panel.tooltip-topic-font-style": {
     "defaultMessage": "Stile carattere"
   },
+  "color-picker.color": {
+    "defaultMessage": "Colore"
+  },
+  "color-picker.default-color": {
+    "defaultMessage": "Colore predefinito"
+  },
   "relationship-style-editor.color": {
     "defaultMessage": "Colore relazione"
   },
   "relationship-style-editor.line-arrows": {
     "defaultMessage": "Stile linea e frecce"
+  },
+  "relationship-style-editor.solid-line": {
+    "defaultMessage": "Linea continua"
+  },
+  "relationship-style-editor.solid-line-tooltip": {
+    "defaultMessage": "Stile linea continua"
+  },
+  "relationship-style-editor.dashed-line": {
+    "defaultMessage": "Linea tratteggiata"
+  },
+  "relationship-style-editor.dashed-line-tooltip": {
+    "defaultMessage": "Stile linea tratteggiata"
+  },
+  "relationship-style-editor.dotted-line": {
+    "defaultMessage": "Linea punteggiata"
+  },
+  "relationship-style-editor.dotted-line-tooltip": {
+    "defaultMessage": "Stile linea punteggiata"
+  },
+  "relationship-style-editor.end-arrow": {
+    "defaultMessage": "Freccia finale"
+  },
+  "relationship-style-editor.end-arrow-tooltip": {
+    "defaultMessage": "Attiva/disattiva freccia finale"
+  },
+  "relationship-style-editor.start-arrow": {
+    "defaultMessage": "Freccia iniziale"
+  },
+  "relationship-style-editor.start-arrow-tooltip": {
+    "defaultMessage": "Attiva/disattiva freccia iniziale"
   },
   "topic-font-editor.font-color": {
     "defaultMessage": "Colore carattere"
@@ -473,11 +509,77 @@
   "topic-font-editor.font-size-style": {
     "defaultMessage": "Dimensione e stile carattere"
   },
+  "topic-font-editor.increase-size": {
+    "defaultMessage": "Più grande"
+  },
+  "topic-font-editor.increase-size-tooltip": {
+    "defaultMessage": "Aumenta dimensione carattere"
+  },
+  "topic-font-editor.decrease-size": {
+    "defaultMessage": "Più piccolo"
+  },
+  "topic-font-editor.decrease-size-tooltip": {
+    "defaultMessage": "Diminuisci dimensione carattere"
+  },
+  "topic-font-editor.bold": {
+    "defaultMessage": "Grassetto"
+  },
+  "topic-font-editor.bold-tooltip": {
+    "defaultMessage": "Attiva/disattiva grassetto"
+  },
+  "topic-font-editor.italic": {
+    "defaultMessage": "Corsivo"
+  },
+  "topic-font-editor.italic-tooltip": {
+    "defaultMessage": "Attiva/disattiva corsivo"
+  },
+  "topic-font-editor.active": {
+    "defaultMessage": "attivo"
+  },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "Nessuna forma"
   },
   "headerNotifier": {
     "defaultMessage": "Notificatore intestazione"
+  },
+  "icon-collection.shape.none": {
+    "defaultMessage": "Nessuno"
+  },
+  "icon-collection.shape.line": {
+    "defaultMessage": "Linea"
+  },
+  "icon-collection.shape.rectangle": {
+    "defaultMessage": "Rettangolo"
+  },
+  "icon-collection.shape.rounded": {
+    "defaultMessage": "Arrotondato"
+  },
+  "icon-collection.shape.ellipse": {
+    "defaultMessage": "Ellisse"
+  },
+  "icon-collection.border.solid": {
+    "defaultMessage": "Continuo"
+  },
+  "icon-collection.border.dashed": {
+    "defaultMessage": "Tratteggiato"
+  },
+  "icon-collection.border.dotted": {
+    "defaultMessage": "Punteggiato"
+  },
+  "icon-collection.connection.thick-curved": {
+    "defaultMessage": "Curva spessa"
+  },
+  "icon-collection.connection.arc": {
+    "defaultMessage": "Arco"
+  },
+  "icon-collection.connection.thin-curved": {
+    "defaultMessage": "Curva sottile"
+  },
+  "icon-collection.connection.simple-polyline": {
+    "defaultMessage": "Polilinea semplice"
+  },
+  "icon-collection.connection.curved-polyline": {
+    "defaultMessage": "Polilinea curva"
   },
   "icon-picker.emojis": {
     "defaultMessage": "Emoji"

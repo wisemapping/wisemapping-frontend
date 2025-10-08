@@ -458,11 +458,47 @@
   "editor-panel.tooltip-topic-font-style": {
     "defaultMessage": "Schriftstil"
   },
+  "color-picker.color": {
+    "defaultMessage": "Farbe"
+  },
+  "color-picker.default-color": {
+    "defaultMessage": "Standardfarbe"
+  },
   "relationship-style-editor.color": {
     "defaultMessage": "Beziehungsfarbe"
   },
   "relationship-style-editor.line-arrows": {
     "defaultMessage": "Linienstil und Pfeile"
+  },
+  "relationship-style-editor.solid-line": {
+    "defaultMessage": "Durchgezogene Linie"
+  },
+  "relationship-style-editor.solid-line-tooltip": {
+    "defaultMessage": "Durchgezogener Linienstil"
+  },
+  "relationship-style-editor.dashed-line": {
+    "defaultMessage": "Gestrichelte Linie"
+  },
+  "relationship-style-editor.dashed-line-tooltip": {
+    "defaultMessage": "Gestrichelter Linienstil"
+  },
+  "relationship-style-editor.dotted-line": {
+    "defaultMessage": "Gepunktete Linie"
+  },
+  "relationship-style-editor.dotted-line-tooltip": {
+    "defaultMessage": "Gepunkteter Linienstil"
+  },
+  "relationship-style-editor.end-arrow": {
+    "defaultMessage": "Endpfeil"
+  },
+  "relationship-style-editor.end-arrow-tooltip": {
+    "defaultMessage": "Endpfeil umschalten"
+  },
+  "relationship-style-editor.start-arrow": {
+    "defaultMessage": "Startpfeil"
+  },
+  "relationship-style-editor.start-arrow-tooltip": {
+    "defaultMessage": "Startpfeil umschalten"
   },
   "topic-font-editor.font-color": {
     "defaultMessage": "Schriftfarbe"
@@ -473,11 +509,77 @@
   "topic-font-editor.font-size-style": {
     "defaultMessage": "Schriftgröße und -stil"
   },
+  "topic-font-editor.increase-size": {
+    "defaultMessage": "Größer"
+  },
+  "topic-font-editor.increase-size-tooltip": {
+    "defaultMessage": "Schriftgröße erhöhen"
+  },
+  "topic-font-editor.decrease-size": {
+    "defaultMessage": "Kleiner"
+  },
+  "topic-font-editor.decrease-size-tooltip": {
+    "defaultMessage": "Schriftgröße verringern"
+  },
+  "topic-font-editor.bold": {
+    "defaultMessage": "Fett"
+  },
+  "topic-font-editor.bold-tooltip": {
+    "defaultMessage": "Fett umschalten"
+  },
+  "topic-font-editor.italic": {
+    "defaultMessage": "Kursiv"
+  },
+  "topic-font-editor.italic-tooltip": {
+    "defaultMessage": "Kursiv umschalten"
+  },
+  "topic-font-editor.active": {
+    "defaultMessage": "aktiv"
+  },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "Keine Form"
   },
   "headerNotifier": {
     "defaultMessage": "Header-Benachrichtigung"
+  },
+  "icon-collection.shape.none": {
+    "defaultMessage": "Keine"
+  },
+  "icon-collection.shape.line": {
+    "defaultMessage": "Linie"
+  },
+  "icon-collection.shape.rectangle": {
+    "defaultMessage": "Rechteck"
+  },
+  "icon-collection.shape.rounded": {
+    "defaultMessage": "Abgerundet"
+  },
+  "icon-collection.shape.ellipse": {
+    "defaultMessage": "Ellipse"
+  },
+  "icon-collection.border.solid": {
+    "defaultMessage": "Durchgezogen"
+  },
+  "icon-collection.border.dashed": {
+    "defaultMessage": "Gestrichelt"
+  },
+  "icon-collection.border.dotted": {
+    "defaultMessage": "Gepunktet"
+  },
+  "icon-collection.connection.thick-curved": {
+    "defaultMessage": "Dicke Kurve"
+  },
+  "icon-collection.connection.arc": {
+    "defaultMessage": "Bogen"
+  },
+  "icon-collection.connection.thin-curved": {
+    "defaultMessage": "Dünne Kurve"
+  },
+  "icon-collection.connection.simple-polyline": {
+    "defaultMessage": "Einfache Polylinie"
+  },
+  "icon-collection.connection.curved-polyline": {
+    "defaultMessage": "Gebogene Polylinie"
   },
   "icon-picker.emojis": {
     "defaultMessage": "Emojis"

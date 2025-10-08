@@ -25,9 +25,8 @@ import { SvgIcon } from './styled';
 
 type IconImageTab = {
   iconModel: NodeProperty<string | undefined>;
-  triggerClose: () => void;
 };
-const IconImageTab = ({ iconModel, triggerClose }: IconImageTab): ReactElement => {
+const IconImageTab = ({ iconModel }: IconImageTab): ReactElement => {
   return (
     <Box sx={{ width: '450px' }}>
       {iconGroups.map((family, i) => (
@@ -41,7 +40,8 @@ const IconImageTab = ({ iconModel, triggerClose }: IconImageTab): ReactElement =
                 if (setValue) {
                   setValue(`image:${icon}`);
                 }
-                triggerClose();
+                // Don't close the picker - allow multiple icon selections
+                // triggerClose();
               }}
             />
           ))}

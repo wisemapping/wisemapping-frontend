@@ -125,9 +125,6 @@
   "editor-panel.tooltip-topic-font-smaller": {
     "defaultMessage": "Менший"
   },
-  "editor-panel.tooltip-topic-font-style": {
-    "defaultMessage": "Стиль шрифту"
-  },
   "editor-panel.font-family-default": {
     "defaultMessage": "За замовчуванням"
   },
@@ -458,11 +455,47 @@
   "editor-panel.tooltip-topic-font-style": {
     "defaultMessage": "Стиль шрифту"
   },
+  "color-picker.color": {
+    "defaultMessage": "Колір"
+  },
+  "color-picker.default-color": {
+    "defaultMessage": "Колір за замовчуванням"
+  },
   "relationship-style-editor.color": {
     "defaultMessage": "Колір зв'язку"
   },
   "relationship-style-editor.line-arrows": {
     "defaultMessage": "Стиль лінії та стрілки"
+  },
+  "relationship-style-editor.solid-line": {
+    "defaultMessage": "Суцільна лінія"
+  },
+  "relationship-style-editor.solid-line-tooltip": {
+    "defaultMessage": "Стиль суцільної лінії"
+  },
+  "relationship-style-editor.dashed-line": {
+    "defaultMessage": "Пунктирна лінія"
+  },
+  "relationship-style-editor.dashed-line-tooltip": {
+    "defaultMessage": "Стиль пунктирної лінії"
+  },
+  "relationship-style-editor.dotted-line": {
+    "defaultMessage": "Крапкова лінія"
+  },
+  "relationship-style-editor.dotted-line-tooltip": {
+    "defaultMessage": "Стиль крапкової лінії"
+  },
+  "relationship-style-editor.end-arrow": {
+    "defaultMessage": "Кінцева стрілка"
+  },
+  "relationship-style-editor.end-arrow-tooltip": {
+    "defaultMessage": "Перемкнути кінцеву стрілку"
+  },
+  "relationship-style-editor.start-arrow": {
+    "defaultMessage": "Початкова стрілка"
+  },
+  "relationship-style-editor.start-arrow-tooltip": {
+    "defaultMessage": "Перемкнути початкову стрілку"
   },
   "topic-font-editor.font-color": {
     "defaultMessage": "Колір шрифту"
@@ -473,11 +506,77 @@
   "topic-font-editor.font-size-style": {
     "defaultMessage": "Розмір і стиль шрифту"
   },
+  "topic-font-editor.increase-size": {
+    "defaultMessage": "Більше"
+  },
+  "topic-font-editor.increase-size-tooltip": {
+    "defaultMessage": "Збільшити розмір шрифту"
+  },
+  "topic-font-editor.decrease-size": {
+    "defaultMessage": "Менше"
+  },
+  "topic-font-editor.decrease-size-tooltip": {
+    "defaultMessage": "Зменшити розмір шрифту"
+  },
+  "topic-font-editor.bold": {
+    "defaultMessage": "Жирний"
+  },
+  "topic-font-editor.bold-tooltip": {
+    "defaultMessage": "Перемкнути жирний"
+  },
+  "topic-font-editor.italic": {
+    "defaultMessage": "Курсив"
+  },
+  "topic-font-editor.italic-tooltip": {
+    "defaultMessage": "Перемкнути курсив"
+  },
+  "topic-font-editor.active": {
+    "defaultMessage": "активний"
+  },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "Без форми"
   },
   "headerNotifier": {
     "defaultMessage": "Сповіщення заголовка"
+  },
+  "icon-collection.shape.none": {
+    "defaultMessage": "Немає"
+  },
+  "icon-collection.shape.line": {
+    "defaultMessage": "Лінія"
+  },
+  "icon-collection.shape.rectangle": {
+    "defaultMessage": "Прямокутник"
+  },
+  "icon-collection.shape.rounded": {
+    "defaultMessage": "Закруглений"
+  },
+  "icon-collection.shape.ellipse": {
+    "defaultMessage": "Еліпс"
+  },
+  "icon-collection.border.solid": {
+    "defaultMessage": "Суцільний"
+  },
+  "icon-collection.border.dashed": {
+    "defaultMessage": "Пунктирний"
+  },
+  "icon-collection.border.dotted": {
+    "defaultMessage": "Крапковий"
+  },
+  "icon-collection.connection.thick-curved": {
+    "defaultMessage": "Товста крива"
+  },
+  "icon-collection.connection.arc": {
+    "defaultMessage": "Дуга"
+  },
+  "icon-collection.connection.thin-curved": {
+    "defaultMessage": "Тонка крива"
+  },
+  "icon-collection.connection.simple-polyline": {
+    "defaultMessage": "Проста ламана"
+  },
+  "icon-collection.connection.curved-polyline": {
+    "defaultMessage": "Крива ламана"
   },
   "icon-picker.emojis": {
     "defaultMessage": "Емодзі"
