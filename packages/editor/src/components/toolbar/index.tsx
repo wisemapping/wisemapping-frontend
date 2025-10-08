@@ -161,7 +161,8 @@ export const ToolbarSubmenu = ({
                 />
               );
             } else {
-              return <span key={i}>{o.render(() => setOpen(false))}</span>;
+              // Only render custom render functions when popover is open
+              return open ? <span key={i}>{o.render(() => setOpen(false))}</span> : null;
             }
           })}
         </div>

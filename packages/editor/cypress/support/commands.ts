@@ -30,7 +30,7 @@ declare global {
       focusTopicByText(value: string): void;
       focusTopicById(id: number): void;
 
-      onMouseOverToolbarButton(value: 'Topic Style' | 'Font Style' | 'Connection Style'): void;
+      onMouseOverToolbarButton(value: 'Style Topic & Connections' | 'Font Style' | 'Connection Style'): void;
       onClickToolbarButton(
         value: 'Add Relationship' | 'Add Icon' | 'Theme' | 'Connection Style',
       ): void;
@@ -82,7 +82,7 @@ Cypress.Commands.add('focusTopicByText', (text: string) => {
 
 Cypress.Commands.add(
   'onMouseOverToolbarButton',
-  (button: 'Topic Style' | 'Font Style' | 'Connection Style') => {
+  (button: 'Style Topic & Connections' | 'Font Style' | 'Connection Style') => {
     cy.get(`[aria-label="${button}"]`).first().trigger('mouseover');
   },
 );

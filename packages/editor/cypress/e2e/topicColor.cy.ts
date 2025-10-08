@@ -27,12 +27,12 @@ describe('Topic Color Suite', () => {
   });
 
   it('Open topic style panel', () => {
-    cy.onMouseOverToolbarButton('Topic Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
     cy.matchImageSnapshot('topic-style-panel');
   });
 
   it.skip('Change topic fill color', () => {
-    cy.onMouseOverToolbarButton('Topic Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
 
     // Click on fill color button
     cy.get('[aria-label="Fill color"]').first().click();
@@ -71,7 +71,7 @@ describe('Topic Color Suite', () => {
   });
 
   it.skip('Change topic border color', () => {
-    cy.onMouseOverToolbarButton('Topic Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
 
     // Click on border color button
     cy.get('[aria-label="Border color"]').first().click();
@@ -113,7 +113,7 @@ describe('Topic Color Suite', () => {
 
   it('Reset topic fill color to default', () => {
     // First change the color
-    cy.onMouseOverToolbarButton('Topic Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
     cy.get('[aria-label="Fill color"]').first().click({ force: true });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -122,7 +122,7 @@ describe('Topic Color Suite', () => {
     cy.get('[title="#ff0000"]').click({ force: true });
 
     // Now reset to default
-    cy.onMouseOverToolbarButton('Topic Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
     cy.get('[aria-label="Default fill color"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-topic-fill-color');
@@ -130,7 +130,7 @@ describe('Topic Color Suite', () => {
 
   it('Reset topic border color to default', () => {
     // First change the border color
-    cy.onMouseOverToolbarButton('Topic Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
     cy.get('[aria-label="Border color"]').first().click({ force: true });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -139,7 +139,7 @@ describe('Topic Color Suite', () => {
     cy.get('[title="#0000ff"]').click({ force: true });
 
     // Now reset to default
-    cy.onMouseOverToolbarButton('Topic Style');
+    cy.onMouseOverToolbarButton('Style Topic & Connections');
     cy.get('[aria-label="Default border color"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-topic-border-color');

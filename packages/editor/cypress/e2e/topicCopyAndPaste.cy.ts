@@ -26,7 +26,7 @@ describe('Topic Copy and Paste Suite', () => {
   });
 
   it('Copy and Paste', () => {
-    cy.get(`[aria-label="Topic Style"]`).first().trigger('mouseover');
+    cy.get(`[aria-label="Style Topic & Connections"]`).first().trigger('mouseover');
     cy.get('body').type('{meta}c');
 
     // Copy & Paste require permissions. More reseach needed.

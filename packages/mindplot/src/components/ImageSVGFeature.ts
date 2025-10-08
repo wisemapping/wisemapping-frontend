@@ -221,8 +221,6 @@ class ImageSVGFeature {
       'directions-bike': '\ue52f',
       'directions-walk': '\ue536',
       'location-on': '\ue55f',
-      'directions-bus': '\ue530',
-      'directions-subway': '\ue534',
       'two-wheeler': '\ue9ca',
       'directions-run': '\ue566',
 
@@ -232,6 +230,7 @@ class ImageSVGFeature {
       brush: '\ue3ae',
       lightbulb: '\ue0f0',
       'flash-on': '\ue3e1',
+      flash: '\ue3e1', // Same as flash-on
       security: '\ue32a',
       lock: '\ue897',
       'menu-book': '\ue421',
@@ -348,7 +347,7 @@ class ImageSVGFeature {
       nature: '\ue406',
 
       // Food & Drink
-      'wine-bar': '\ue1eab',
+      'wine-bar': '\ue7eb',
       coffee: '\uef4a',
       cake: '\ue7e9',
       'ice-cream': '\uea69',
@@ -432,6 +431,147 @@ class ImageSVGFeature {
       'view-kanban': '\ue8fc',
       'view-timeline': '\ue8fd',
       'view-ar': '\ue8fe',
+
+      // Additional Business & Productivity Icons (40 new icons)
+      'account-balance': '\ue84f',
+      'business-center': '\ueb3f',
+      'work-outline': '\ue940',
+      badge: '\uea67',
+      contacts: '\ue0ba',
+      store: '\ue8d1',
+      'shopping-basket': '\ue8cb',
+      receipt: '\ue8b0',
+      'credit-card': '\ue870',
+      payment: '\ue8a1',
+
+      // Files & Folders
+      'create-new-folder': '\ue2cc',
+      'folder-open': '\ue2c8',
+      'file-copy': '\ue173',
+      'insert-drive-file': '\ue24d',
+      'attach-file': '\ue226',
+
+      // Communication & Social
+      forum: '\ue0bf',
+      comment: '\ue0b9',
+      announcement: '\ue85a',
+      campaign: '\uef49',
+      feedback: '\ue87f',
+
+      // Project Management
+      flag: '\ue153',
+      bookmark: '\ue866',
+      'bookmark-border': '\ue867',
+      label: '\ue892',
+      'label-important': '\ue937',
+      extension: '\ue87b',
+      'dashboard-customize': '\ue99b',
+
+      // Transportation
+      'directions-subway': '\ue534',
+      'directions-bus': '\ue530',
+      'local-shipping': '\ue558',
+
+      // Tools & Construction
+      construction: '\uea3c',
+      handyman: '\uf10b',
+      engineering: '\uea3d',
+
+      // Emotions & Feedback
+      'sentiment-satisfied': '\ue815',
+      mood: '\ue7f2',
+      'emoji-emotions': '\uea22',
+
+      // Time & Productivity
+      alarm: '\ue855',
+      'alarm-on': '\ue857',
+      'hourglass-empty': '\ue88b',
+      pending: '\uef64',
+
+      // Analytics & Data (10 icons)
+      analytics: '\uef3e',
+      insights: '\uf092',
+      'data-usage': '\ue1af',
+      'cloud-done': '\ue876',
+      'cloud-off': '\ue16a',
+      'cloud-queue': '\ue2c2',
+      'table-view': '\uf1be',
+      api: '\uf1b7',
+      query: '\ue8b5',
+      'bar-chart-outlined': '\ue26b',
+
+      // Industry & Professional (15 icons)
+      factory: '\uebbc',
+      agriculture: '\uea79',
+      biotech: '\uea3a',
+      'real-estate': '\ue59d',
+      'local-pharmacy': '\ue54c',
+      'medical-information': '\uebed',
+      'school-outlined': '\ue80c',
+      'local-library': '\ue54b',
+      museum: '\uea36',
+      theater: '\ue8da',
+      'sports-esports': '\uea36',
+      apartment: '\uea40',
+      domain: '\ue7ee',
+      'local-cafe-outlined': '\ue541',
+      'local-dining': '\ue56c',
+
+      // Actions & Controls (20 icons)
+      'play-circle': '\ue038',
+      'pause-circle': '\ue039',
+      'stop-circle': '\ue047',
+      replay: '\ue042',
+      'forward-10': '\ue056',
+      'replay-10': '\ue059',
+      shuffle: '\ue043',
+      repeat: '\ue040',
+      'repeat-one': '\ue041',
+      sort: '\ue164',
+      'filter-list': '\ue152',
+      'filter-alt': '\uef4f',
+      'search-off': '\uea76',
+      'find-in-page': '\ue880',
+      'find-replace': '\ue881',
+      visibility: '\ue8f4',
+      'visibility-off': '\ue8f5',
+      compare: '\ue3ba',
+      flip: '\ue3e7',
+      'rotate-left': '\ue419',
+
+      // Status & Indicators (15 icons)
+      'priority-high': '\ue645',
+      'new-releases': '\ue031',
+      'fiber-new': '\ue05e',
+      verified: '\uef76',
+      'verified-user': '\ue8e8',
+      'workspace-premium': '\ue99b',
+      stars: '\ue8d0',
+      grade: '\ue885',
+      'military-tech': '\uea3f',
+      'trending-flat': '\ue8e2',
+      'trending-down': '\ue8e3',
+      circle: '\uef4a',
+      'radio-button-checked': '\ue837',
+      'radio-button-unchecked': '\ue836',
+      'check-box': '\ue834',
+
+      // Content & Media (15 icons)
+      'library-books': '\ue02f',
+      'photo-library': '\ue413',
+      'video-library': '\ue04a',
+      collections: '\ue3b6',
+      'perm-media': '\ue8aa',
+      slideshow: '\ue41b',
+      theaters: '\ue8da',
+      'live-tv': '\ue639',
+      podcasts: '\uf048',
+      'speaker-notes': '\ue8cd',
+      'format-quote': '\ue244',
+      'library-music': '\ue030',
+      'library-add': '\ue02e',
+      'video-call': '\ue070',
+      'photo-camera-front': '\ue412',
     };
 
     return materialIcons[iconName];
