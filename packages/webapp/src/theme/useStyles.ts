@@ -24,13 +24,16 @@ const getStyle = (value) => {
   return css(value);
 };
 
-function useClasses<T>(stylesElement: T | ((theme: any) => T)): T {
+function useClasses<T extends Record<string, any>>(stylesElement: T | ((theme: any) => T)): T {
   const theme = useTheme();
 
   // Memoize the result based on the theme to avoid recalculating on every render
   return useMemo(() => {
-    const rawClasses = typeof stylesElement === 'function' ? stylesElement(theme) : stylesElement;
-    const prepared = {};
+    const rawClasses =
+      typeof stylesElement === 'function'
+        ? (stylesElement as (theme: any) => T)(theme)
+        : stylesElement;
+    const prepared = {} as Record<string, any>;
 
     Object.entries(rawClasses).forEach(([key, value]) => {
       prepared[key] = getStyle(value);
