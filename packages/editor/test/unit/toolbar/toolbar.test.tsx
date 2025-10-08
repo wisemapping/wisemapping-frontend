@@ -20,19 +20,14 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
 import Toolbar, {
   ToolbarButtonOption,
   ToolbarMenuItem,
   ToolbarSubmenu,
 } from '../../../src/components/toolbar';
-import AppBar from '../../../src/components/app-bar';
 import ActionConfig from '../../../src/classes/action/action-config';
-import Capability from '../../../src/classes/action/capability';
-import Editor from '../../../src/classes/model/editor';
-import MapInfoImpl from '../../playground/map-render/js/MapInfoImpl';
-import { IntlProvider } from 'react-intl';
 
 require('babel-polyfill');
 jest.mock('../../../src/components/app-bar/styles.css', () => '');
@@ -96,13 +91,6 @@ const submenuConfig2: ActionConfig = {
 const iconFunctionConfig: ActionConfig = {
   icon: () => <ThreeDRotation></ThreeDRotation>,
   onClick: jest.fn(),
-};
-
-const submenuOnClickConfig: ActionConfig = {
-  icon: <ThreeDRotation></ThreeDRotation>,
-  useClickToClose: true,
-  options: [config, null, config, null],
-  title: 'Submenu title',
 };
 
 afterEach(() => {
@@ -176,18 +164,18 @@ describe('Editor Toolbar Button', () => {
 describe('Editor Toolbar Submenu', () => {
   it('Given an option shows a menuitem and shows a submenu ', async () => {
     render(<ToolbarSubmenu configuration={submenuConfig} />);
-    const item = screen.getByRole('menuitem');
+    const item = screen.getByRole('button');
 
-    fireEvent.mouseOver(item);
+    fireEvent.click(item);
 
     await screen.findByRole('submenu');
   });
 
   it('Shows a button for each option', async () => {
     render(<ToolbarSubmenu configuration={submenuConfig}></ToolbarSubmenu>);
-    const item = screen.getByRole('menuitem');
+    const item = screen.getByRole('button');
 
-    fireEvent.mouseOver(item);
+    fireEvent.click(item);
     const submenuButtons = await screen.findAllByRole('button');
 
     expect(submenuButtons).toHaveLength(2);
@@ -195,9 +183,9 @@ describe('Editor Toolbar Submenu', () => {
 
   it('Shows a divider for each null', async () => {
     render(<ToolbarSubmenu configuration={submenuConfig}></ToolbarSubmenu>);
-    const item = screen.getByRole('menuitem');
+    const item = screen.getByRole('button');
 
-    fireEvent.mouseOver(item);
+    fireEvent.click(item);
     const dividers = await screen.findAllByTestId('divider');
 
     expect(dividers).toHaveLength(2);
@@ -205,17 +193,17 @@ describe('Editor Toolbar Submenu', () => {
 
   it('Execute render if set', async () => {
     render(<ToolbarSubmenu configuration={submenuConfig}></ToolbarSubmenu>);
-    const item = screen.getByRole('menuitem');
+    const item = screen.getByRole('button');
 
-    fireEvent.mouseOver(item);
+    fireEvent.click(item);
 
     await screen.findByTestId('custom-render-div');
   });
 
   it('Execute render passing a function to close popover', async () => {
     render(<ToolbarSubmenu configuration={submenuConfig2}></ToolbarSubmenu>);
-    const item = screen.getByRole('menuitem');
-    fireEvent.mouseOver(item);
+    const item = screen.getByRole('button');
+    fireEvent.click(item);
     const clickeableDiv = await screen.findByTestId('custom-render-div');
     expect(screen.queryByRole('submenu')).toBeTruthy();
 
@@ -226,43 +214,13 @@ describe('Editor Toolbar Submenu', () => {
 
   it('Given a disabled configuratio when mouse is over, not shows a submenu ', async () => {
     render(<ToolbarSubmenu configuration={disabledSubMenuConfig}></ToolbarSubmenu>);
-    const item = screen.getByRole('menuitem');
-
-    fireEvent.mouseOver(item);
-
-    expect(screen.queryByRole('submenu')).toBeFalsy();
-  });
-
-  it('Given a useClickToOpen configuration when mouse is over, not shows a submenu ', async () => {
-    render(<ToolbarSubmenu configuration={submenuOnClickConfig}></ToolbarSubmenu>);
-    const item = screen.getByRole('menuitem');
-
-    fireEvent.mouseOver(item);
-
-    expect(screen.queryByRole('submenu')).toBeFalsy();
-  });
-
-  it.skip('Given a useClickToOpen configuration when click, shows a submenu with close button', async () => {
-    render(<ToolbarSubmenu configuration={submenuOnClickConfig}></ToolbarSubmenu>);
     const item = screen.getByRole('button');
 
     fireEvent.click(item);
 
-    await screen.findByRole('submenu');
-    const closeButton = await screen.findByLabelText('Close');
-
-    fireEvent.click(closeButton);
     expect(screen.queryByRole('submenu')).toBeFalsy();
   });
 
-  it('Given a useClickToOpen configuration when click, shows a submenu with title', async () => {
-    render(<ToolbarSubmenu configuration={submenuOnClickConfig}></ToolbarSubmenu>);
-    const item = screen.getByRole('button');
-
-    fireEvent.click(item);
-
-    await screen.findByText('Submenu title');
-  });
 });
 
 describe('toolbar menu item', () => {

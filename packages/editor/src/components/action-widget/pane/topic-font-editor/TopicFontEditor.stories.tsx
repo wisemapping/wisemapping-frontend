@@ -19,13 +19,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import TopicFontEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
+import { SwitchValueDirection } from '../../../toolbar/ToolbarValueModelBuilder';
 import React from 'react';
 
 // Wrapper component to expose all setValue and switchValue calls as action-trackable callbacks
 const TopicFontEditorWithActions = (props: {
   closeModal: () => void;
   onFontFamilyChange?: (family: string | undefined) => void;
-  onFontSizeSwitch?: (direction?: 'up' | 'down') => void;
+  onFontSizeSwitch?: (direction?: SwitchValueDirection) => void;
   onFontWeightSwitch?: () => void;
   onFontStyleSwitch?: () => void;
   onFontColorChange?: (color: string | undefined) => void;
@@ -54,8 +55,8 @@ const TopicFontEditorWithActions = (props: {
       setValue: (v: number) => {
         setFontSize(v);
       },
-      switchValue: (direction?: 'up' | 'down') => {
-        const newSize = direction === 'up' ? fontSize + 1 : fontSize - 1;
+      switchValue: (direction?: SwitchValueDirection) => {
+        const newSize = direction === SwitchValueDirection.up ? fontSize + 1 : fontSize - 1;
         setFontSize(newSize);
         props.onFontSizeSwitch?.(direction);
       },
