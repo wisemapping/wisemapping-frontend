@@ -2,25 +2,25 @@
   "account.delete-confirm": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "Elimina Account"
     }
   ],
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
-      "value": "Please type DELETE MY ACCOUNT to confirm:"
+      "value": "Digita ELIMINA IL MIO ACCOUNT per confermare:"
     }
   ],
   "account.delete-confirmation-title": [
     {
       "type": 0,
-      "value": "Are you absolutely sure?"
+      "value": "Sei assolutamente sicuro?"
     }
   ],
   "account.delete-confirmation-warning": [
     {
       "type": 0,
-      "value": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+      "value": "Questa azione non può essere annullata. Ciò eliminerà definitivamente il tuo account e rimuoverà tutti i dati dai nostri server."
     }
   ],
   "account.delete-warning": [
@@ -32,43 +32,43 @@
   "account.delete-warning-collaborations": [
     {
       "type": 0,
-      "value": "All shared mindmaps and collaborations"
+      "value": "Tutte le mappe mentali e le collaborazioni condivise"
     }
   ],
   "account.delete-warning-consequences": [
     {
       "type": 0,
-      "value": "This will permanently delete:"
+      "value": "Questo eliminerà definitivamente:"
     }
   ],
   "account.delete-warning-data": [
     {
       "type": 0,
-      "value": "All your personal data and account information"
+      "value": "Tutti i tuoi dati personali e le informazioni del tuo account"
     }
   ],
   "account.delete-warning-description": [
     {
       "type": 0,
-      "value": "Once you delete your account, there is no going back. Please be certain."
+      "value": "Una volta eliminato il tuo account, non potrai più tornare indietro. Si prega di essere certi."
     }
   ],
   "account.delete-warning-history": [
     {
       "type": 0,
-      "value": "All account history and activity logs"
+      "value": "Tutta la cronologia dell'account e i log delle attività"
     }
   ],
   "account.delete-warning-mindmaps": [
     {
       "type": 0,
-      "value": "All your mindmaps and their content"
+      "value": "Tutte le tue mappe mentali e il loro contenuto"
     }
   ],
   "account.delete-warning-title": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "Elimina Account"
     }
   ],
   "accountinfo.button": [
@@ -804,7 +804,7 @@
     },
     {
       "type": 1,
-      "value": "error"
+      "value": "errore"
     }
   ],
   "import.title": [
@@ -1124,7 +1124,7 @@
     },
     {
       "type": 1,
-      "value": "by"
+      "value": "di"
     },
     {
       "type": 0,
@@ -1210,7 +1210,7 @@
   "menu.admin-console": [
     {
       "type": 0,
-      "value": "Admin Console"
+      "value": "Console di amministrazione"
     }
   ],
   "menu.change-password": [
@@ -1240,7 +1240,7 @@
   "publish.copied": [
     {
       "type": 0,
-      "value": "Copied to clipboard!"
+      "value": "Copiato negli appunti!"
     }
   ],
   "publish.description": [
@@ -1360,7 +1360,7 @@
   "registration.form-legend": [
     {
       "type": 0,
-      "value": "Account Information"
+      "value": "Informazioni sull'account"
     }
   ],
   "registration.google.button": [
@@ -1462,7 +1462,7 @@
   "share.adding-button": [
     {
       "type": 0,
-      "value": "Sharing..."
+      "value": "Condivisione..."
     }
   ],
   "share.can-edit": [
