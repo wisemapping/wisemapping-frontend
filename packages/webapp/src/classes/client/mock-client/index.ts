@@ -462,7 +462,17 @@ class MockClient implements Client {
 
   activateAccount(code: string): Promise<void> {
     console.log('Activating account with code:' + code);
-    return Promise.resolve();
+    // Simulate different scenarios based on the code
+    // Use code 999999999 to simulate error (for testing)
+    if (code === '999999999') {
+      return Promise.reject(new Error('Invalid activation code or account already activated'));
+    }
+    // Add artificial delay to simulate network request
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 100);
+    });
   }
 
   processGoogleCallback(): Promise<Oauth2CallbackResult> {

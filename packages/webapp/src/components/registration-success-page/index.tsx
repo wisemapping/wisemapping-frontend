@@ -69,17 +69,17 @@ const RegistrationSuccessPage = (): React.ReactElement => {
           />
         </Typography>
 
-        <Button
-          color="primary"
-          size="medium"
-          variant="contained"
-          component={RouterLink}
-          to="/c/login"
-          disableElevation={true}
-          style={{ marginTop: '1rem' }}
-        >
-          <FormattedMessage id="login.signin" defaultMessage="Sign In" />
-        </Button>
+        <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
+          <Button
+            color="primary"
+            size="medium"
+            variant="contained"
+            disableElevation={true}
+            style={{ marginTop: '1rem' }}
+          >
+            <FormattedMessage id="login.signin" defaultMessage="Sign In" />
+          </Button>
+        </RouterLink>
       </FormContainer>
       <Footer />
     </div>

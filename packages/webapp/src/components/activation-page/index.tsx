@@ -100,16 +100,11 @@ const ActivationPage = (): React.ReactElement => {
               />
             </Alert>
 
-            <Button
-              color="primary"
-              size="medium"
-              variant="contained"
-              component={RouterLink}
-              to="/c/login"
-              disableElevation={true}
-            >
-              <FormattedMessage id="login.signin" defaultMessage="Sign In" />
-            </Button>
+            <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
+              <Button color="primary" size="medium" variant="contained" disableElevation={true}>
+                <FormattedMessage id="login.signin" defaultMessage="Sign In" />
+              </Button>
+            </RouterLink>
           </>
         ) : (
           <>
@@ -126,16 +121,11 @@ const ActivationPage = (): React.ReactElement => {
               )}
             </Alert>
 
-            <Button
-              color="primary"
-              size="medium"
-              variant="contained"
-              component={RouterLink}
-              to="/c/login"
-              disableElevation={true}
-            >
-              <FormattedMessage id="login.signin" defaultMessage="Sign In" />
-            </Button>
+            <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
+              <Button color="primary" size="medium" variant="contained" disableElevation={true}>
+                <FormattedMessage id="login.signin" defaultMessage="Sign In" />
+              </Button>
+            </RouterLink>
           </>
         )}
       </FormContainer>

@@ -1,6 +1,17 @@
 {
     "type": "static",
     "config": {
-        "clientType": "mock"
+        "clientType": "mock",
+        "apiBaseUrl": "http://localhost:3000",
+        "uiBaseUrl": "http://localhost:3000",
+        "analyticsAccount": "",
+        "recaptcha2Enabled": false,
+        "recaptcha2SiteKey": "",
+        "registrationEnabled": true,
+        "googleOauth2Url": "",
+        "googleOauth2Enabled": false,
+        "facebookOauth2Url": "",
+        "facebookOauth2Enabled": false,
+        "jwtExpirationMin": 10080
     }
 }
