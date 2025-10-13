@@ -853,11 +853,20 @@ export default class RestClient implements Client {
       switch (status) {
         case 401:
         case 302:
-          this.sessionExpired();
-          result = {
-            isAuth: true,
-            msg: 'Your current session has expired. Please, sign in and try again.',
-          };
+          // Check if there's a specific error message in the response
+          if (data && data.globalErrors && data.globalErrors.length > 0) {
+            // Use the actual error message from the backend (e.g., login failure)
+            result = {
+              msg: data.globalErrors[0],
+            };
+          } else {
+            // No specific error message, treat as session expiration
+            this.sessionExpired();
+            result = {
+              isAuth: true,
+              msg: 'Your current session has expired. Please, sign in and try again.',
+            };
+          }
           break;
         default:
           if (data) {
