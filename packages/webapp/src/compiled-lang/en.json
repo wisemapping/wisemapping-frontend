@@ -1039,12 +1039,6 @@
       "value": "Welcome"
     }
   ],
-  "login.userinactive": [
-    {
-      "type": 0,
-      "value": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
-    }
-  ],
   "map.creator": [
     {
       "type": 0,

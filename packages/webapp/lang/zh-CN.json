@@ -344,9 +344,6 @@
   "login.title": {
     "defaultMessage": "欢迎"
   },
-  "login.userinactive": {
-    "defaultMessage": "抱歉，您的账户尚未激活。当它变为活跃时，您将收到通知电子邮件。请保持关注！"
-  },
   "map.creator": {
     "defaultMessage": "创建者"
   },

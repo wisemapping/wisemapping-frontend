@@ -287,9 +287,6 @@
   "login.title": {
     "defaultMessage": "Добро пожаловать!"
   },
-  "login.userinactive": {
-    "defaultMessage": "Ваш аккаунт еще не активирован. Вам на почту придет сообщение о его активации. На связи!."
-  },
   "map.creator": {
     "defaultMessage": "Создатель"
   },

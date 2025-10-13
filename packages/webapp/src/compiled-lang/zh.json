@@ -1039,12 +1039,6 @@
       "value": "欢迎"
     }
   ],
-  "login.userinactive": [
-    {
-      "type": 0,
-      "value": "对不起，您的账号尚未激活。当它激活时，您将收到一封通知电子邮件。敬请关注！"
-    }
-  ],
   "map.creator": [
     {
       "type": 0,

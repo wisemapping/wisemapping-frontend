@@ -347,9 +347,6 @@
   "login.title": {
     "defaultMessage": "Welcome"
   },
-  "login.userinactive": {
-    "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
-  },
   "map.creator": {
     "defaultMessage": "Creator"
   },

@@ -317,9 +317,6 @@
   "login.title": {
     "defaultMessage": "欢迎"
   },
-  "login.userinactive": {
-    "defaultMessage": "对不起，您的账号尚未激活。当它激活时，您将收到一封通知电子邮件。敬请关注！"
-  },
   "map.creator": {
     "defaultMessage": "创建人"
   },

@@ -326,9 +326,6 @@
   "login.title": {
     "defaultMessage": "Bienvenido"
   },
-  "login.userinactive": {
-    "defaultMessage": "Lo sentimos, tu cuenta aún no ha sido activada. Recibirás un correo electrónico de notificación cuando se active. ¡Manténganse al tanto!."
-  },
   "map.creator": {
     "defaultMessage": "Creador"
   },

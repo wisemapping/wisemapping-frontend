@@ -341,9 +341,6 @@
   "login.title": {
     "defaultMessage": "Bem-vindo"
   },
-  "login.userinactive": {
-    "defaultMessage": "Desculpe, sua conta ainda não foi ativada. Você receberá um e-mail de notificação quando ela for ativada. Fique atento!"
-  },
   "map.creator": {
     "defaultMessage": "Criador"
   },

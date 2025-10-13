@@ -1039,12 +1039,6 @@
       "value": "Benvenuto"
     }
   ],
-  "login.userinactive": [
-    {
-      "type": 0,
-      "value": "Spiacente, il tuo account non è ancora stato attivato. Riceverai un'email di notifica quando diventerà attivo. Resta sintonizzato!"
-    }
-  ],
   "map.creator": [
     {
       "type": 0,

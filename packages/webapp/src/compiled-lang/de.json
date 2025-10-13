@@ -1039,12 +1039,6 @@
       "value": "Herzlich willkommen"
     }
   ],
-  "login.userinactive": [
-    {
-      "type": 0,
-      "value": "Entschuldigung, dein Konto wurde noch nicht aktiviert. Du erhältst eine Benachrichtigungs-E-Mail, wenn es aktiv wird."
-    }
-  ],
   "map.creator": [
     {
       "type": 0,

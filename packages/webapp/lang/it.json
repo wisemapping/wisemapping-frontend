@@ -344,9 +344,6 @@
   "login.title": {
     "defaultMessage": "Benvenuto"
   },
-  "login.userinactive": {
-    "defaultMessage": "Spiacente, il tuo account non è ancora stato attivato. Riceverai un'email di notifica quando diventerà attivo. Resta sintonizzato!"
-  },
   "map.creator": {
     "defaultMessage": "Creatore"
   },

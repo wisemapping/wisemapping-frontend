@@ -344,9 +344,6 @@
   "login.title": {
     "defaultMessage": "स्वागत है"
   },
-  "login.userinactive": {
-    "defaultMessage": "क्षमा करें, आपका खाता अभी तक सक्रिय नहीं हुआ है। जब यह सक्रिय हो जाएगा तो आपको एक सूचना ईमेल प्राप्त होगा। बने रहें!"
-  },
   "map.creator": {
     "defaultMessage": "निर्माता"
   },

@@ -287,9 +287,6 @@
   "login.title": {
     "defaultMessage": "Herzlich willkommen"
   },
-  "login.userinactive": {
-    "defaultMessage": "Entschuldigung, dein Konto wurde noch nicht aktiviert. Du erhältst eine Benachrichtigungs-E-Mail, wenn es aktiv wird."
-  },
   "map.creator": {
     "defaultMessage": "Ersteller"
   },

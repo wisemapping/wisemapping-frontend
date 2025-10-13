@@ -290,9 +290,6 @@
   "login.title": {
     "defaultMessage": "Bienvenue"
   },
-  "login.userinactive": {
-    "defaultMessage": "Désolé, votre compte n'a pas encore été activé. Vous recevrez un e-mail de notification lorsqu'il sera activé. Restez à l'écoute !"
-  },
   "map.creator": {
     "defaultMessage": "Créateur"
   },

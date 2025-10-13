@@ -46,36 +46,23 @@ export type Model = {
 };
 
 export type LoginErrorProps = {
-  errorCode: number | undefined;
+  error: LoginErrorInfo | undefined;
 };
 
 const defaultModel: Model = { email: '', password: '' };
 
-const LoginError = ({ errorCode }: LoginErrorProps) => {
+const LoginError = ({ error }: LoginErrorProps) => {
   const intl = useIntl();
 
   let msg: null | string = null;
-  if (errorCode) {
-    switch (errorCode) {
-      case 1:
-        msg = intl.formatMessage({
-          id: 'login.unexpected-error',
-          defaultMessage: 'Unexpected error during login. Please, try latter.',
-        });
-        break;
-      case 2:
-        msg = intl.formatMessage({
-          id: 'login.userinactive',
-          defaultMessage:
-            "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!.",
-        });
-        break;
-      default:
-        msg = intl.formatMessage({
-          id: 'login.error',
-          defaultMessage: 'The email address or password you entered is not valid.',
-        });
-    }
+  if (error) {
+    // Always use the backend error message
+    msg =
+      error.msg ||
+      intl.formatMessage({
+        id: 'login.error',
+        defaultMessage: 'The email address or password you entered is not valid.',
+      });
   }
   return msg ? <GlobalError error={{ msg: msg }} /> : null;
 };
@@ -83,7 +70,7 @@ const LoginError = ({ errorCode }: LoginErrorProps) => {
 const LoginPage = (): React.ReactElement => {
   const intl = useIntl();
   const [model, setModel] = useState<Model>(defaultModel);
-  const [loginError, setLoginError] = useState<number | undefined>(undefined);
+  const [loginError, setLoginError] = useState<LoginErrorInfo | undefined>(undefined);
 
   const client = useContext(ClientContext);
   const navigate = useNavigate();
@@ -112,7 +99,7 @@ const LoginPage = (): React.ReactElement => {
         navigate(redirectUrl);
       },
       onError: (error: LoginErrorInfo) => {
-        setLoginError(error.code);
+        setLoginError(error);
       },
     },
   );
@@ -166,7 +153,7 @@ const LoginPage = (): React.ReactElement => {
           </Typography>
         </header>
 
-        <LoginError errorCode={loginError} />
+        <LoginError error={loginError} />
 
         <main>
           <FormControl>

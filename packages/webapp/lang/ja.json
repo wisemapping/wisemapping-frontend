@@ -341,9 +341,6 @@
   "login.title": {
     "defaultMessage": "ようこそ"
   },
-  "login.userinactive": {
-    "defaultMessage": "申し訳ございませんが、アカウントはまだアクティベートされていません。アクティベートされると通知メールが送信されます。お待ちください。"
-  },
   "map.creator": {
     "defaultMessage": "作成者"
   },
