@@ -27,7 +27,7 @@ describe('Topic Font Suite', () => {
   });
 
   it('Open Font Shape Panel', () => {
-    cy.onMouseOverToolbarButton('Font Style');
+    cy.onClickToolbarButton('Font Style');
     cy.matchImageSnapshot('fontShapePanel');
   });
 
@@ -40,7 +40,7 @@ describe('Topic Font Suite', () => {
 
   it('Change Font Size', () => {
     // Go to the minimal size.
-    cy.onMouseOverToolbarButton('Font Style');
+    cy.onClickToolbarButton('Font Style');
 
     cy.get('[aria-label="Smaller"]').as('smaller');
     cy.get('@smaller').eq(1).click({ force: true });
@@ -68,7 +68,7 @@ describe('Topic Font Suite', () => {
   });
 
   it('Change Font To Italic', () => {
-    cy.onMouseOverToolbarButton('Font Style');
+    cy.onClickToolbarButton('Font Style');
     
     // Wait for the toolbar to be fully loaded
     // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -87,7 +87,7 @@ describe('Topic Font Suite', () => {
   });
 
   it('Change Font to Bold', () => {
-    cy.onMouseOverToolbarButton('Font Style');
+    cy.onClickToolbarButton('Font Style');
     cy.get('[aria-label^="Bold ').first().click({ force: true });
 
     cy.get('[test-id=1] > text').invoke('attr', 'font-weight').should('eq', '900');
@@ -97,7 +97,7 @@ describe('Topic Font Suite', () => {
   });
 
   it('Change Font Color', () => {
-    cy.onMouseOverToolbarButton('Font Style');
+    cy.onClickToolbarButton('Font Style');
     cy.get('[aria-label="Color"]').eq(1).click({ force: true });
     cy.get('[title="#cc0000"]').click({ force: true });
 

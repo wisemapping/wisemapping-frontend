@@ -39,7 +39,7 @@ describe('Relationship Style Suite', () => {
 
 
   it('Change to solid stroke style', () => {
-    cy.onMouseOverToolbarButton('Relationship Style');
+    cy.onClickToolbarButton('Relationship Style');
 
     // Click on solid stroke option
     cy.get('[aria-label="Solid Line"]').first().click({ force: true });
@@ -48,7 +48,7 @@ describe('Relationship Style Suite', () => {
   });
 
   it('Change to dashed stroke style', () => {
-    cy.onMouseOverToolbarButton('Relationship Style');
+    cy.onClickToolbarButton('Relationship Style');
 
     // Click on dashed stroke option  
     cy.get('[aria-label="Dashed Line"]').first().click({ force: true });
@@ -57,7 +57,7 @@ describe('Relationship Style Suite', () => {
   });
 
   it('Change to dotted stroke style', () => {
-    cy.onMouseOverToolbarButton('Relationship Style');
+    cy.onClickToolbarButton('Relationship Style');
 
     // Click on dotted stroke option
     cy.get('[aria-label="Dotted Line"]').first().click({ force: true });
@@ -66,7 +66,7 @@ describe('Relationship Style Suite', () => {
   });
 
   it('Toggle end arrow on relationship', () => {
-    cy.onMouseOverToolbarButton('Relationship Style');
+    cy.onClickToolbarButton('Relationship Style');
 
     // Click on end arrow option
     cy.get('[aria-label="End Arrow"]').first().click({ force: true });
@@ -75,7 +75,7 @@ describe('Relationship Style Suite', () => {
   });
 
   it('Toggle start arrow on relationship', () => {
-    cy.onMouseOverToolbarButton('Relationship Style');
+    cy.onClickToolbarButton('Relationship Style');
 
     // Click on start arrow option
     cy.get('[aria-label="Start Arrow"]').first().click({ force: true });
@@ -84,7 +84,7 @@ describe('Relationship Style Suite', () => {
   });
 
   it('Toggle both arrows on relationship', () => {
-    cy.onMouseOverToolbarButton('Relationship Style');
+    cy.onClickToolbarButton('Relationship Style');
 
     // Click on end arrow option
     cy.get('[aria-label="End Arrow"]').first().click({ force: true });
@@ -96,7 +96,7 @@ describe('Relationship Style Suite', () => {
   });
 
   it('Change relationship color', () => {
-    cy.onMouseOverToolbarButton('Relationship Style');
+    cy.onClickToolbarButton('Relationship Style');
 
     // Click on color option
     cy.get('[aria-label="Color"]').last().click({ force: true });
@@ -113,7 +113,7 @@ describe('Relationship Style Suite', () => {
 
   it('Reset relationship color to default', () => {
     // First change the color
-    cy.onMouseOverToolbarButton('Relationship Style');
+    cy.onClickToolbarButton('Relationship Style');
     cy.get('[aria-label="Color"]').last().click({ force: true });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -123,7 +123,7 @@ describe('Relationship Style Suite', () => {
     cy.get('[title="#0000ff"]').click({ force: true });
 
     // Now reset to default
-    cy.onMouseOverToolbarButton('Relationship Style');
+    cy.onClickToolbarButton('Relationship Style');
     cy.get('[aria-label="Default color"]').last().click({ force: true });
 
     cy.matchImageSnapshot('reset-relationship-color');

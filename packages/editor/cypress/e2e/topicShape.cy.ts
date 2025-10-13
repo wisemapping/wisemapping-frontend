@@ -29,12 +29,12 @@ describe('Topic Shape Suite', () => {
   });
 
   it('open shape', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     cy.matchImageSnapshot('topicShapePanel');
   });
 
   it('change to square shape', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
 
     // Wait for the toolbar panel to be fully rendered
     cy.get(`[aria-label="Rectangle shape"]`).should('be.visible');
@@ -74,7 +74,7 @@ describe('Topic Shape Suite', () => {
   it('change to rounded rectangle', () => {
     cy.focusTopicByText('Mind Mapping');
 
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
 
     // Wait for the toolbar panel to be fully rendered
     cy.get(`[aria-label="Rounded shape"]`).should('be.visible');
@@ -112,7 +112,7 @@ describe('Topic Shape Suite', () => {
   });
 
   it('change to line', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
 
     // Wait for the toolbar panel to be fully rendered
     cy.get(`[aria-label="Line shape"]`).should('be.visible');
@@ -124,7 +124,7 @@ describe('Topic Shape Suite', () => {
 
   it('change to ellipse shape', () => {
     cy.focusTopicByText('Productivity');
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
 
     // Wait for the toolbar panel to be fully rendered
     cy.get(`[aria-label="Ellipse shape"]`).should('be.visible');

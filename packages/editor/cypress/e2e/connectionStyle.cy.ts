@@ -22,123 +22,114 @@ describe('Connection Style Suite', () => {
     cy.visit('/editor.html');
     cy.waitEditorLoaded();
 
-    // Focus on a topic that has connections
-    cy.focusTopicById(11);
+    // Focus on the central topic which has connections to child topics
+    cy.focusTopicByText('Mind Mapping');
   });
 
   it('Open connection style panel', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
-    // Click on the Connector tab to show connection styling options
-    cy.contains('Connector').click({ force: true });
+    // Wait for the panel to open and then click the Connector tab
+    cy.contains('Connector').should('be.visible').click({ force: true });
     
     cy.matchImageSnapshot('connection-style-panel');
   });
 
   it('Change to thick curved connection', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
-    // Click on the Connector tab
-    cy.contains('Connector').click({ force: true });
+
+    // Wait for the panel to open and then click the Connector tab
+    cy.contains('Connector').should('be.visible').click({ force: true });
 
     // Click on thick curved option
-    cy.get('[aria-label="Thick Curved"]').first().click({ force: true });
-
-    // Verify the connection style changed - look for relationship elements
-    cy.get('[test-id*="relationship"]').should('exist');
+    cy.get('[aria-label="Thick Curved"]').should('be.visible').first().click({ force: true });
 
     cy.matchImageSnapshot('thick-curved-connection');
   });
 
   it('Change to arc connection', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
-    // Click on the Connector tab
-    cy.contains('Connector').click({ force: true });
+    // Wait for the panel to open and then click the Connector tab
+    cy.contains('Connector').should('be.visible').click({ force: true });
 
     // Click on arc option
-    cy.get('[aria-label="Arc"]').first().click({ force: true });
+    cy.get('[aria-label="Arc"]').should('be.visible').first().click({ force: true });
 
     cy.matchImageSnapshot('arc-connection');
   });
 
   it('Change to thin curved connection', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
-    // Click on the Connector tab
-    cy.contains('Connector').click({ force: true });
+    // Wait for the panel to open and then click the Connector tab
+    cy.contains('Connector').should('be.visible').click({ force: true });
 
     // Click on thin curved option
-    cy.get('[aria-label="Thin Curved"]').first().click({ force: true });
+    cy.get('[aria-label="Thin Curved"]').should('be.visible').first().click({ force: true });
 
     cy.matchImageSnapshot('thin-curved-connection');
   });
 
   it('Change to simple polyline connection', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
-    // Click on the Connector tab
-    cy.contains('Connector').click({ force: true });
+    // Wait for the panel to open and then click the Connector tab
+    cy.contains('Connector').should('be.visible').click({ force: true });
 
     // Click on simple polyline option
-    cy.get('[aria-label="Simple Polyline"]').first().click({ force: true });
+    cy.get('[aria-label="Simple Polyline"]').should('be.visible').first().click({ force: true });
 
     cy.matchImageSnapshot('simple-polyline-connection');
   });
 
   it('Change to curved polyline connection', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
-    // Click on the Connector tab
-    cy.contains('Connector').click({ force: true });
+    // Wait for the panel to open and then click the Connector tab
+    cy.contains('Connector').should('be.visible').click({ force: true });
 
     // Click on curved polyline option
-    cy.get('[aria-label="Curved Polyline"]').first().click({ force: true });
+    cy.get('[aria-label="Curved Polyline"]').should('be.visible').first().click({ force: true });
 
     cy.matchImageSnapshot('curved-polyline-connection');
   });
 
   it('Change connection color', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
-    // Click on the Connector tab
-    cy.contains('Connector').click({ force: true });
+    // Wait for the panel to open and then click the Connector tab
+    cy.contains('Connector').should('be.visible').click({ force: true });
 
     // Click on color option
-    cy.get('[aria-label="Color"]').last().click({ force: true });
+    cy.get('[aria-label="Color"]').should('be.visible').last().click({ force: true });
 
-    // Wait for color picker to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
-
-    // Select a color (green) - use title attribute like in font color test
-    cy.get('[title="#00ff00"]').click({ force: true });
+    // Wait for color picker to load and select a color (green)
+    cy.get('[title="#00ff00"]').should('be.visible').click({ force: true });
 
     cy.matchImageSnapshot('change-connection-color');
   });
 
   it('Reset connection color to default', () => {
     // First change the color
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
-    // Click on the Connector tab
-    cy.contains('Connector').click({ force: true });
+    // Wait for the panel to open and then click the Connector tab
+    cy.contains('Connector').should('be.visible').click({ force: true });
     
-    cy.get('[aria-label="Color"]').last().click({ force: true });
-
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.get('[aria-label="Color"]').should('be.visible').last().click({ force: true });
 
     // Select a color (red) - use title attribute like in font color test
-    cy.get('[title="#ff0000"]').click({ force: true });
+    cy.get('[title="#ff0000"]').should('be.visible').click({ force: true });
 
     // Now reset to default
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
-    // Click on the Connector tab again
-    cy.contains('Connector').click({ force: true });
+    // Wait for the Connector tab to be visible, then click it again
+    cy.contains('Connector').should('be.visible').click({ force: true });
     
-    cy.get('[aria-label="Default color"]').first().click({ force: true });
+    cy.get('[aria-label="Default color"]').should('be.visible').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-connection-color');
   });

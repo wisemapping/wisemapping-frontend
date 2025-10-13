@@ -27,12 +27,12 @@ describe('Topic Color Suite', () => {
   });
 
   it('Open topic style panel', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     cy.matchImageSnapshot('topic-style-panel');
   });
 
   it('Change topic fill color', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
 
     // The Shape tab should be open by default, which contains the fill color picker
     // Wait for panel to appear
@@ -53,7 +53,7 @@ describe('Topic Color Suite', () => {
   });
 
   it('Change topic border color', () => {
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
 
     // Click on Border tab
     cy.contains('Border').click({ force: true });
@@ -73,7 +73,7 @@ describe('Topic Color Suite', () => {
 
   it('Reset topic fill color to default', () => {
     // First change the color
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
     // The Shape tab should be open by default
     cy.get('[aria-label="Color"]').first().click({ force: true });
@@ -84,7 +84,7 @@ describe('Topic Color Suite', () => {
     cy.get('[title="#ff0000"]').click({ force: true });
 
     // Now reset to default
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
     // Click the default/reset button in the color picker
     cy.get('[aria-label="Default color"]').first().click({ force: true });
@@ -94,7 +94,7 @@ describe('Topic Color Suite', () => {
 
   it('Reset topic border color to default', () => {
     // First change the border color
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
     // Click on Border tab
     cy.contains('Border').click({ force: true });
@@ -107,7 +107,7 @@ describe('Topic Color Suite', () => {
     cy.get('[title="#0000ff"]').click({ force: true });
 
     // Now reset to default
-    cy.onMouseOverToolbarButton('Style Topic & Connections');
+    cy.onClickToolbarButton('Style Topic & Connections');
     
     // Click on Border tab again
     cy.contains('Border').click({ force: true });
