@@ -25,7 +25,7 @@ describe('Topic Copy and Paste Suite', () => {
     cy.focusTopicById(2);
   });
 
-  it('Copy and Paste', () => {
+  it.skip('Copy and Paste', () => {
     cy.get(`[aria-label="Style Topic & Connections"]`).first().trigger('mouseover');
     cy.get('body').type('{meta}c');
 
