@@ -263,6 +263,7 @@ const RegistrationForm = () => {
 
 const RegistationPage = (): React.ReactElement => {
   const intl = useIntl();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = intl.formatMessage({
@@ -271,6 +272,18 @@ const RegistationPage = (): React.ReactElement => {
     });
     trackPageView(window.location.pathname, 'Registration:Init');
   }, []);
+
+  // Redirect to login if registration is disabled
+  useEffect(() => {
+    if (!AppConfig.isRegistrationEnabled()) {
+      navigate('/c/login');
+    }
+  }, [navigate]);
+
+  // Don't render if registration is disabled
+  if (!AppConfig.isRegistrationEnabled()) {
+    return <></>;
+  }
 
   return (
     <div>

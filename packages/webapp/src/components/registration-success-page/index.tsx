@@ -41,17 +41,31 @@ const RegistrationSuccessPage = (): React.ReactElement => {
     <div>
       <Header type="none" />
       <FormContainer>
-        <Typography variant="h4" component="h1">
+        <Typography variant="h4" component="h1" gutterBottom>
           <FormattedMessage
-            id="resetpassword.success.title"
-            defaultMessage="Your account has been created successfully"
+            id="registration.success.title"
+            defaultMessage="Registration Successful!"
           />
         </Typography>
 
         <Typography paragraph>
           <FormattedMessage
-            id="registration.success.desc"
-            defaultMessage="Click 'Sign In' button below and start creating mind maps."
+            id="registration.success.email-sent"
+            defaultMessage="We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+          />
+        </Typography>
+
+        <Typography paragraph style={{ marginBottom: '2rem' }}>
+          <FormattedMessage
+            id="registration.success.check-spam"
+            defaultMessage="If you don't see the email, please check your spam folder."
+          />
+        </Typography>
+
+        <Typography variant="body2" color="textSecondary">
+          <FormattedMessage
+            id="registration.success.already-activated"
+            defaultMessage="Already activated your account?"
           />
         </Typography>
 
@@ -62,6 +76,7 @@ const RegistrationSuccessPage = (): React.ReactElement => {
           component={RouterLink}
           to="/c/login"
           disableElevation={true}
+          style={{ marginTop: '1rem' }}
         >
           <FormattedMessage id="login.signin" defaultMessage="Sign In" />
         </Button>

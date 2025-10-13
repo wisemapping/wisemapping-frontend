@@ -460,6 +460,11 @@ class MockClient implements Client {
     return Promise.resolve({ action: 'EMAIL_SENT' });
   }
 
+  activateAccount(code: string): Promise<void> {
+    console.log('Activating account with code:' + code);
+    return Promise.resolve();
+  }
+
   processGoogleCallback(): Promise<Oauth2CallbackResult> {
     // artificial delay for more realistic mock experience
     const handler = (success: (result: Oauth2CallbackResult) => void) => {

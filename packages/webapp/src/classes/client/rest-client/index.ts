@@ -572,6 +572,23 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
+  activateAccount(code: string): Promise<void> {
+    const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+      this.axios
+        .put(`${this.baseUrl}/api/restful/users/activation?code=${code}`, null, {
+          headers: { 'Content-Type': 'application/json' },
+        })
+        .then(() => {
+          success();
+        })
+        .catch((error) => {
+          const errorInfo = this.parseResponseOnError(error.response);
+          reject(errorInfo);
+        });
+    };
+    return new Promise(handler);
+  }
+
   deleteMap(id: number): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios

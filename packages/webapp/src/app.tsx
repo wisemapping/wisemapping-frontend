@@ -36,6 +36,7 @@ import AppI18n, { Locales } from './classes/app-i18n';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as MuiThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import RegistrationSuccessPage from './components/registration-success-page';
+import ActivationPage from './components/activation-page';
 import { ThemeProvider } from '@emotion/react';
 import { AppThemeProvider, useTheme } from './contexts/ThemeContext';
 import RegistrationCallbackPage from './components/registration-callback';
@@ -90,6 +91,32 @@ const HydrateFallback = () => (
   </div>
 );
 
+// Create registration routes conditionally based on configuration
+const createRegistrationRoutes = () => {
+  if (AppConfig.isRegistrationEnabled()) {
+    return [
+      <Route key="registration" path="/c/registration" element={<RegistationPage />} />,
+      <Route
+        key="registration-google"
+        path="/c/registration-google"
+        element={<RegistrationCallbackPage />}
+      />,
+      <Route
+        key="registration-facebook"
+        path="/c/registration-facebook"
+        element={<RegistrationFacebookCallbackPage />}
+      />,
+      <Route
+        key="registration-success"
+        path="/c/registration-success"
+        element={<RegistrationSuccessPage />}
+      />,
+      <Route key="activation" path="/c/activation" element={<ActivationPage />} />,
+    ];
+  }
+  return [];
+};
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
@@ -99,10 +126,7 @@ const router = createBrowserRouter(
     >
       <Route path="/" element={<Redirect to="/c/login" />} />
       <Route path="/c/login" element={<LoginPage />} />
-      <Route path="/c/registration" element={<RegistationPage />} />
-      <Route path="/c/registration-google" element={<RegistrationCallbackPage />} />
-      <Route path="/c/registration-facebook" element={<RegistrationFacebookCallbackPage />} />
-      <Route path="/c/registration-success" element={<RegistrationSuccessPage />} />
+      {createRegistrationRoutes()}
       <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />
 

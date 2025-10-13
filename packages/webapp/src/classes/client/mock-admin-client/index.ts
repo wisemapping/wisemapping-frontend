@@ -777,6 +777,21 @@ class MockAdminClient implements AdminClientInterface {
       }, 500);
     });
   }
+
+  activateAdminUser(userId: number): Promise<void> {
+    console.log(`MockAdminClient: Activating user ${userId}`);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const user = this.adminUsers.find((u) => u.id === userId);
+        if (user) {
+          user.isActive = true;
+          resolve();
+        } else {
+          throw new Error(`User with ID ${userId} not found`);
+        }
+      }, 500);
+    });
+  }
 }
 
 export default MockAdminClient;

@@ -158,6 +158,7 @@ interface Client {
 
   registerNewUser(user: NewUser): Promise<void>;
   resetPassword(email: string): Promise<ForgotPasswordResult>;
+  activateAccount(code: string): Promise<void>;
   processGoogleCallback(code: string): Promise<Oauth2CallbackResult>;
   processFacebookCallback(code: string): Promise<Oauth2CallbackResult>;
   confirmAccountSync(email: string, code?: string): Promise<Oauth2CallbackResult>;

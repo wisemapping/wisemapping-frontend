@@ -61,6 +61,7 @@ import {
   Person as PersonIcon,
   Block as BlockIcon,
   CheckCircle as CheckCircleIcon,
+  MarkEmailRead as MarkEmailReadIcon,
 } from '@mui/icons-material';
 import { AdminUsersParams } from '../../classes/client/admin-client';
 import AppConfig from '../../classes/app-config';
@@ -74,6 +75,7 @@ interface User {
   fullName: string;
   locale: string;
   creationDate: string;
+  isActive: boolean;
   isSuspended: boolean;
   suspensionReason?: string;
   suspendedDate?: string;
@@ -287,6 +289,16 @@ const AccountManagement = (): ReactElement => {
     },
   );
 
+  // Activate user mutation
+  const activateUserMutation = useMutation((userId: number) => client.activateAdminUser(userId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('adminUsers');
+    },
+    onError: (error: Error) => {
+      console.error('Failed to activate user:', error);
+    },
+  });
+
   // TODO: Implement filtering and sorting functionality
 
   const handleSort = (field: SortField) => {
@@ -379,6 +391,16 @@ const AccountManagement = (): ReactElement => {
   const handleUnsuspendUser = (userId: number, userEmail: string) => {
     if (window.confirm(`Are you sure you want to unsuspend user "${userEmail}"?`)) {
       unsuspendUserMutation.mutate(userId);
+    }
+  };
+
+  const handleActivateUser = (userId: number, userEmail: string) => {
+    if (
+      window.confirm(
+        `Are you sure you want to manually activate user "${userEmail}"? This will allow them to login immediately.`,
+      )
+    ) {
+      activateUserMutation.mutate(userId);
     }
   };
 
@@ -669,6 +691,19 @@ const AccountManagement = (): ReactElement => {
                     >
                       <EditIcon />
                     </IconButton>
+                    {!user.isActive && user.authenticationType === 'DATABASE' && (
+                      <IconButton
+                        size="small"
+                        onClick={() => handleActivateUser(user.id, user.email)}
+                        title={intl.formatMessage({
+                          id: 'admin.activate-user',
+                          defaultMessage: 'Activate user',
+                        })}
+                        color="info"
+                      >
+                        <MarkEmailReadIcon />
+                      </IconButton>
+                    )}
                     {user.isSuspended ? (
                       <IconButton
                         size="small"
