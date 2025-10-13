@@ -118,10 +118,12 @@ const ActivationPage = (): React.ReactElement => {
             </Typography>
 
             <Alert severity="error" style={{ marginBottom: '1rem' }}>
-              <FormattedMessage
-                id="activation.error.message"
-                defaultMessage="We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
-              />
+              {error || (
+                <FormattedMessage
+                  id="activation.error.message"
+                  defaultMessage="We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+                />
+              )}
             </Alert>
 
             <Button
