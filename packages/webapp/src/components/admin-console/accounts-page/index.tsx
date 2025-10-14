@@ -536,22 +536,22 @@ const AccountManagement = (): ReactElement => {
   const getAuthIcon = (authenticationType: string) => {
     const authType = authenticationType.toUpperCase();
 
-    if (authType === 'GOOGLE') {
+    if (authType === 'GOOGLE_OAUTH2') {
       return (
         <Tooltip title="Google">
           <GoogleIcon color="action" fontSize="small" />
         </Tooltip>
       );
-    } else if (authType === 'FACEBOOK') {
+    } else if (authType === 'FACEBOOK_OAUTH2') {
       return (
         <Tooltip title="Facebook">
           <FacebookIcon color="action" fontSize="small" />
         </Tooltip>
       );
     } else {
-      // DATABASE or other
+      // DATABASE or LDAP
       return (
-        <Tooltip title="Database">
+        <Tooltip title={authType === 'LDAP' ? 'LDAP' : 'Database'}>
           <StorageIcon color="action" fontSize="small" />
         </Tooltip>
       );
