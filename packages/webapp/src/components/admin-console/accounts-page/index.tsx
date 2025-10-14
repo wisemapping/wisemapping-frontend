@@ -63,8 +63,8 @@ import {
   CheckCircle as CheckCircleIcon,
   MarkEmailRead as MarkEmailReadIcon,
 } from '@mui/icons-material';
-import { AdminUsersParams } from '../../classes/client/admin-client';
-import AppConfig from '../../classes/app-config';
+import { AdminUsersParams } from '../../../classes/client/admin-client';
+import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 interface User {
@@ -141,6 +141,18 @@ const AccountManagement = (): ReactElement => {
   const [isSuspensionDialogOpen, setIsSuspensionDialogOpen] = useState(false);
   const [suspendingUser, setSuspendingUser] = useState<User | null>(null);
   const [suspensionReason, setSuspensionReason] = useState<string>('');
+
+  // Delete confirmation dialog state
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deletingUser, setDeletingUser] = useState<User | null>(null);
+
+  // Unsuspend confirmation dialog state
+  const [isUnsuspendDialogOpen, setIsUnsuspendDialogOpen] = useState(false);
+  const [unsuspendingUser, setUnsuspendingUser] = useState<User | null>(null);
+
+  // Activate confirmation dialog state
+  const [isActivateDialogOpen, setIsActivateDialogOpen] = useState(false);
+  const [activatingUser, setActivatingUser] = useState<User | null>(null);
 
   // Suspension reasons
   const suspensionReasons = [
@@ -372,14 +384,22 @@ const AccountManagement = (): ReactElement => {
     }
   };
 
-  const handleDeleteUser = (userId: number, userEmail: string) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete user "${userEmail}"? This action cannot be undone.`,
-      )
-    ) {
-      deleteUserMutation.mutate(userId);
+  const handleDeleteUser = (user: User) => {
+    setDeletingUser(user);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deletingUser) {
+      deleteUserMutation.mutate(deletingUser.id);
+      setIsDeleteDialogOpen(false);
+      setDeletingUser(null);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setIsDeleteDialogOpen(false);
+    setDeletingUser(null);
   };
 
   const handleSuspendUser = (user: User) => {
@@ -388,20 +408,40 @@ const AccountManagement = (): ReactElement => {
     setSuspensionReason('');
   };
 
-  const handleUnsuspendUser = (userId: number, userEmail: string) => {
-    if (window.confirm(`Are you sure you want to unsuspend user "${userEmail}"?`)) {
-      unsuspendUserMutation.mutate(userId);
+  const handleUnsuspendUser = (user: User) => {
+    setUnsuspendingUser(user);
+    setIsUnsuspendDialogOpen(true);
+  };
+
+  const handleConfirmUnsuspend = () => {
+    if (unsuspendingUser) {
+      unsuspendUserMutation.mutate(unsuspendingUser.id);
+      setIsUnsuspendDialogOpen(false);
+      setUnsuspendingUser(null);
     }
   };
 
-  const handleActivateUser = (userId: number, userEmail: string) => {
-    if (
-      window.confirm(
-        `Are you sure you want to manually activate user "${userEmail}"? This will allow them to login immediately.`,
-      )
-    ) {
-      activateUserMutation.mutate(userId);
+  const handleCancelUnsuspend = () => {
+    setIsUnsuspendDialogOpen(false);
+    setUnsuspendingUser(null);
+  };
+
+  const handleActivateUser = (user: User) => {
+    setActivatingUser(user);
+    setIsActivateDialogOpen(true);
+  };
+
+  const handleConfirmActivate = () => {
+    if (activatingUser) {
+      activateUserMutation.mutate(activatingUser.id);
+      setIsActivateDialogOpen(false);
+      setActivatingUser(null);
     }
+  };
+
+  const handleCancelActivate = () => {
+    setIsActivateDialogOpen(false);
+    setActivatingUser(null);
   };
 
   const handleConfirmSuspension = () => {
@@ -705,7 +745,7 @@ const AccountManagement = (): ReactElement => {
                     {!user.isActive && user.authenticationType === 'DATABASE' && (
                       <IconButton
                         size="small"
-                        onClick={() => handleActivateUser(user.id, user.email)}
+                        onClick={() => handleActivateUser(user)}
                         title={intl.formatMessage({
                           id: 'admin.activate-user',
                           defaultMessage: 'Activate user',
@@ -718,7 +758,7 @@ const AccountManagement = (): ReactElement => {
                     {user.isSuspended ? (
                       <IconButton
                         size="small"
-                        onClick={() => handleUnsuspendUser(user.id, user.email)}
+                        onClick={() => handleUnsuspendUser(user)}
                         title={intl.formatMessage({
                           id: 'admin.unsuspend-user',
                           defaultMessage: 'Unsuspend user',
@@ -742,7 +782,7 @@ const AccountManagement = (): ReactElement => {
                     )}
                     <IconButton
                       size="small"
-                      onClick={() => handleDeleteUser(user.id, user.email)}
+                      onClick={() => handleDeleteUser(user)}
                       title={intl.formatMessage({
                         id: 'admin.delete-user',
                         defaultMessage: 'Delete user',
@@ -992,6 +1032,80 @@ const AccountManagement = (): ReactElement => {
             disabled={suspendUserMutation.isLoading}
           >
             {suspendUserMutation.isLoading ? 'Suspending...' : 'Suspend User'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={isDeleteDialogOpen} onClose={handleCancelDelete} maxWidth="sm" fullWidth>
+        <DialogTitle>Delete User</DialogTitle>
+        <DialogContent>
+          <Alert severity="warning" sx={{ mb: 2 }}>
+            This action cannot be undone!
+          </Alert>
+          <Typography variant="body2">
+            Are you sure you want to delete user &quot;{deletingUser?.email}&quot;?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelDelete}>Cancel</Button>
+          <Button
+            onClick={handleConfirmDelete}
+            color="error"
+            variant="contained"
+            disabled={deleteUserMutation.isLoading}
+          >
+            {deleteUserMutation.isLoading ? 'Deleting...' : 'Delete User'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Unsuspend Confirmation Dialog */}
+      <Dialog open={isUnsuspendDialogOpen} onClose={handleCancelUnsuspend} maxWidth="sm" fullWidth>
+        <DialogTitle>Unsuspend User</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2">
+            Are you sure you want to unsuspend user &quot;{unsuspendingUser?.email}&quot;?
+          </Typography>
+          {unsuspendingUser?.suspensionReason && (
+            <Alert severity="info" sx={{ mt: 2 }}>
+              Current suspension reason: {unsuspendingUser.suspensionReason}
+            </Alert>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelUnsuspend}>Cancel</Button>
+          <Button
+            onClick={handleConfirmUnsuspend}
+            color="success"
+            variant="contained"
+            disabled={unsuspendUserMutation.isLoading}
+          >
+            {unsuspendUserMutation.isLoading ? 'Unsuspending...' : 'Unsuspend User'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Activate Confirmation Dialog */}
+      <Dialog open={isActivateDialogOpen} onClose={handleCancelActivate} maxWidth="sm" fullWidth>
+        <DialogTitle>Activate User</DialogTitle>
+        <DialogContent>
+          <Alert severity="info" sx={{ mb: 2 }}>
+            This will allow the user to login immediately without email confirmation.
+          </Alert>
+          <Typography variant="body2">
+            Are you sure you want to manually activate user &quot;{activatingUser?.email}&quot;?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelActivate}>Cancel</Button>
+          <Button
+            onClick={handleConfirmActivate}
+            color="primary"
+            variant="contained"
+            disabled={activateUserMutation.isLoading}
+          >
+            {activateUserMutation.isLoading ? 'Activating...' : 'Activate User'}
           </Button>
         </DialogActions>
       </Dialog>

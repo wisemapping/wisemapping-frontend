@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useQuery } from 'react-query';
-import AppConfig from '../../classes/app-config';
+import AppConfig from '../../../classes/app-config';
 
 // Material-UI imports with tree shaking
 import Box from '@mui/material/Box';

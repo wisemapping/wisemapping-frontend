@@ -18,6 +18,7 @@
 
 import React, { ReactElement, useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
@@ -60,8 +61,8 @@ import {
   Block as BlockIcon,
   PersonOff as PersonOffIcon,
 } from '@mui/icons-material';
-import { AdminMapsParams } from '../../classes/client/admin-client';
-import AppConfig from '../../classes/app-config';
+import { AdminMapsParams } from '../../../classes/client/admin-client';
+import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 // XML formatting utility
@@ -142,12 +143,9 @@ type SortField =
   | 'public';
 type SortDirection = 'asc' | 'desc';
 
-interface MapsManagementProps {
-  onNavigateToUser?: (userId: number) => void;
-}
-
-const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement => {
+const MapsManagement = (): ReactElement => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const client = AppConfig.getAdminClient();
   const queryClient = useQueryClient();
 
@@ -694,26 +692,20 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                   </TableCell>
                   <TableCell>{map.createdBy}</TableCell>
                   <TableCell>
-                    {onNavigateToUser ? (
-                      <Button
-                        variant="text"
-                        color="primary"
-                        size="small"
-                        onClick={() => onNavigateToUser(map.createdById)}
-                        sx={{
-                          minWidth: 'auto',
-                          padding: '4px 8px',
-                          textTransform: 'none',
-                          fontWeight: 'medium',
-                        }}
-                      >
-                        #{map.createdById}
-                      </Button>
-                    ) : (
-                      <Typography variant="body2" color="primary" fontWeight="medium">
-                        #{map.createdById}
-                      </Typography>
-                    )}
+                    <Button
+                      variant="text"
+                      color="primary"
+                      size="small"
+                      onClick={() => navigate('/c/admin/accounts')}
+                      sx={{
+                        minWidth: 'auto',
+                        padding: '4px 8px',
+                        textTransform: 'none',
+                        fontWeight: 'medium',
+                      }}
+                    >
+                      #{map.createdById}
+                    </Button>
                   </TableCell>
                   <TableCell>{formatDate(map.creationTime)}</TableCell>
                   <TableCell>{formatDate(map.lastModificationTime)}</TableCell>

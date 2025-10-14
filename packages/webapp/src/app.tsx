@@ -54,6 +54,10 @@ import AppConfig from './classes/app-config';
 const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
 const AdminConsole = React.lazy(() => import('./components/admin-console'));
+const AdminLayout = React.lazy(() => import('./components/admin-console/layout'));
+const AccountsPage = React.lazy(() => import('./components/admin-console/accounts-page'));
+const MapsAdminPage = React.lazy(() => import('./components/admin-console/maps-page'));
+const SystemPage = React.lazy(() => import('./components/admin-console/system-page'));
 
 const PageEditorWrapper = ({ mode }: { mode: PageModeType }) => {
   const id = useParams().id;
@@ -131,6 +135,7 @@ const router = createBrowserRouter(
       <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />
 
       <Route element={<CommonPage />}>
+        {/* Admin routes */}
         <Route
           path="/c/admin"
           element={
@@ -145,6 +150,63 @@ const router = createBrowserRouter(
             </Suspense>
           }
         />
+        <Route
+          element={
+            <Suspense
+              fallback={
+                <div>
+                  <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                </div>
+              }
+            >
+              <AdminLayout />
+            </Suspense>
+          }
+        >
+          <Route
+            path="/c/admin/accounts"
+            element={
+              <Suspense
+                fallback={
+                  <div>
+                    <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                  </div>
+                }
+              >
+                <AccountsPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/c/admin/maps"
+            element={
+              <Suspense
+                fallback={
+                  <div>
+                    <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                  </div>
+                }
+              >
+                <MapsAdminPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/c/admin/system"
+            element={
+              <Suspense
+                fallback={
+                  <div>
+                    <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                  </div>
+                }
+              >
+                <SystemPage />
+              </Suspense>
+            }
+          />
+        </Route>
+
         <Route
           path="/c/maps/"
           element={
