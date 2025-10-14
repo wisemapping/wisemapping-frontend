@@ -198,17 +198,14 @@ for package in $AFFECTED_PACKAGES; do
   # Run tests if script exists (runs both unit and integration tests)
   if grep -q '"test"' package.json 2>/dev/null; then
     echo "   🧪 Running tests (unit + integration)..."
-    # Capture output and exit code
-    TEST_OUTPUT=$("$YARN_CMD" test 2>&1)
-    TEST_EXIT_CODE=$?
-    
-    if [ $TEST_EXIT_CODE -ne 0 ]; then
+    # Run tests and show output in real-time
+    if ! "$YARN_CMD" test; then
+      TEST_EXIT_CODE=$?
       # Check if it's because no tests were found
-      if echo "$TEST_OUTPUT" | grep -q "No tests found\|no test\|Cannot find module"; then
+      if [ $TEST_EXIT_CODE -eq 1 ]; then
         echo "   ⏭️  No tests configured, skipping"
       else
         # Actual test failure
-        echo "$TEST_OUTPUT"
         echo ""
         echo "❌ Tests failed for @wisemapping/$package"
         echo "Please fix the failing tests before pushing."
