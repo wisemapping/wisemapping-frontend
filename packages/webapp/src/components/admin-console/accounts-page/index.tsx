@@ -63,6 +63,9 @@ import {
   CheckCircle as CheckCircleIcon,
   MarkEmailRead as MarkEmailReadIcon,
   Map as MapIcon,
+  Storage as StorageIcon,
+  Google as GoogleIcon,
+  Facebook as FacebookIcon,
 } from '@mui/icons-material';
 import { AdminUsersParams } from '../../../classes/client/admin-client';
 import AppConfig from '../../../classes/app-config';
@@ -105,7 +108,7 @@ const AccountManagement = (): ReactElement => {
   const [sortField, setSortField] = useState<SortField>('email');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10);
+  const [pageSize] = useState(50);
   const [filterActive] = useState<string>('all');
   const [filterSuspended, setFilterSuspended] = useState<string>('all');
   const [filterAuthType, setFilterAuthType] = useState<string>('all');
@@ -494,13 +497,18 @@ const AccountManagement = (): ReactElement => {
 
   const getStatusChip = (user: User) => {
     if (user.isSuspended) {
-      const reason = user.suspensionReason ? ` (${user.suspensionReason})` : '';
-      const tooltip = user.suspendedDate
-        ? `Suspended on: ${formatDate(user.suspendedDate)}`
-        : 'Suspended';
+      const tooltipParts = [];
+      if (user.suspendedDate) {
+        tooltipParts.push(`Suspended on: ${formatDate(user.suspendedDate)}`);
+      }
+      if (user.suspensionReason) {
+        tooltipParts.push(`Reason: ${user.suspensionReason}`);
+      }
+      const tooltip = tooltipParts.length > 0 ? tooltipParts.join(' | ') : 'Suspended';
+
       return (
         <Tooltip title={tooltip}>
-          <Chip label={`Suspended${reason}`} color="error" size="small" />
+          <Chip label="Suspended" color="error" size="small" />
         </Tooltip>
       );
     } else if (!user.isActive) {
@@ -521,6 +529,31 @@ const AccountManagement = (): ReactElement => {
           color="success"
           size="small"
         />
+      );
+    }
+  };
+
+  const getAuthIcon = (authenticationType: string) => {
+    const authType = authenticationType.toUpperCase();
+
+    if (authType === 'GOOGLE') {
+      return (
+        <Tooltip title="Google">
+          <GoogleIcon color="action" fontSize="small" />
+        </Tooltip>
+      );
+    } else if (authType === 'FACEBOOK') {
+      return (
+        <Tooltip title="Facebook">
+          <FacebookIcon color="action" fontSize="small" />
+        </Tooltip>
+      );
+    } else {
+      // DATABASE or other
+      return (
+        <Tooltip title="Database">
+          <StorageIcon color="action" fontSize="small" />
+        </Tooltip>
       );
     }
   };
@@ -700,15 +733,7 @@ const AccountManagement = (): ReactElement => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
-                <TableSortLabel
-                  active={sortField === 'email'}
-                  direction={sortField === 'email' ? sortDirection : 'asc'}
-                  onClick={() => handleSort('email')}
-                >
-                  Email
-                </TableSortLabel>
-              </TableCell>
+              <TableCell>ID</TableCell>
               <TableCell>
                 <TableSortLabel
                   active={sortField === 'firstname'}
@@ -719,7 +744,7 @@ const AccountManagement = (): ReactElement => {
                 </TableSortLabel>
               </TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Auth Type</TableCell>
+              <TableCell align="center">Auth</TableCell>
               <TableCell>
                 <TableSortLabel
                   active={sortField === 'creationDate'}
@@ -729,7 +754,9 @@ const AccountManagement = (): ReactElement => {
                   Created
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align="center" sx={{ whiteSpace: 'nowrap' }}>
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -753,14 +780,14 @@ const AccountManagement = (): ReactElement => {
             ) : (
               users.map((user) => (
                 <TableRow key={user.id} hover>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.fullName}</TableCell>
-                  <TableCell>{getStatusChip(user)}</TableCell>
+                  <TableCell>{user.id}</TableCell>
                   <TableCell>
-                    <Chip label={user.authenticationType} variant="outlined" size="small" />
+                    {user.fullName} &lt;{user.email}&gt;
                   </TableCell>
+                  <TableCell>{getStatusChip(user)}</TableCell>
+                  <TableCell align="center">{getAuthIcon(user.authenticationType)}</TableCell>
                   <TableCell>{formatDate(user.creationDate)}</TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center" sx={{ whiteSpace: 'nowrap' }}>
                     <IconButton
                       size="small"
                       onClick={() => handleEditUser(user)}

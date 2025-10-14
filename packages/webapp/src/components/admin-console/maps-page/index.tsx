@@ -18,7 +18,6 @@
 
 import React, { ReactElement, useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
@@ -145,7 +144,6 @@ type SortDirection = 'asc' | 'desc';
 
 const MapsManagement = (): ReactElement => {
   const intl = useIntl();
-  const navigate = useNavigate();
   const client = AppConfig.getAdminClient();
   const queryClient = useQueryClient();
 
@@ -154,7 +152,7 @@ const MapsManagement = (): ReactElement => {
   const [sortField, setSortField] = useState<SortField>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10);
+  const [pageSize] = useState(50);
   const [filterPublic, setFilterPublic] = useState<string>('all');
   const [filterLocked, setFilterLocked] = useState<string>('all');
   const [filterSpam, setFilterSpam] = useState<string>('all');
@@ -196,6 +194,13 @@ const MapsManagement = (): ReactElement => {
   const [suspendingUser, setSuspendingUser] = useState<{ userId: number; userName: string } | null>(
     null,
   );
+
+  // Owner maps dialog state
+  const [isOwnerMapsDialogOpen, setIsOwnerMapsDialogOpen] = useState(false);
+  const [selectedOwnerId, setSelectedOwnerId] = useState<number | null>(null);
+  const [selectedOwnerName, setSelectedOwnerName] = useState<string>('');
+  const [ownerMaps, setOwnerMaps] = useState<AdminMap[]>([]);
+  const [isLoadingOwnerMaps, setIsLoadingOwnerMaps] = useState(false);
 
   // Fetch maps with pagination and filters
   const {
@@ -453,6 +458,29 @@ const MapsManagement = (): ReactElement => {
     }
   };
 
+  const handleViewOwnerMaps = async (ownerId: number, ownerName: string) => {
+    setSelectedOwnerId(ownerId);
+    setSelectedOwnerName(ownerName);
+    setIsOwnerMapsDialogOpen(true);
+    setIsLoadingOwnerMaps(true);
+    setOwnerMaps([]);
+
+    try {
+      // Fetch all maps for this owner
+      const params: AdminMapsParams = {
+        page: 1,
+        pageSize: 1000, // Get all maps for this owner
+        filterUserId: ownerId,
+      };
+      const response = await client.fetchAdminMaps(params);
+      setOwnerMaps(response.maps);
+    } catch (err) {
+      console.error('Failed to load owner maps:', err);
+    } finally {
+      setIsLoadingOwnerMaps(false);
+    }
+  };
+
   if (error) {
     return (
       <Alert severity="error" sx={{ mb: 2 }}>
@@ -590,15 +618,6 @@ const MapsManagement = (): ReactElement => {
             <TableRow>
               <TableCell>
                 <TableSortLabel
-                  active={sortField === 'title'}
-                  direction={sortField === 'title' ? sortDirection : 'asc'}
-                  onClick={() => handleSort('title')}
-                >
-                  Title
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
                   active={sortField === 'id'}
                   direction={sortField === 'id' ? sortDirection : 'asc'}
                   onClick={() => handleSort('id')}
@@ -609,20 +628,17 @@ const MapsManagement = (): ReactElement => {
                   })}
                 </TableSortLabel>
               </TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Created By</TableCell>
               <TableCell>
                 <TableSortLabel
-                  active={sortField === 'createdById'}
-                  direction={sortField === 'createdById' ? sortDirection : 'asc'}
-                  onClick={() => handleSort('createdById')}
+                  active={sortField === 'title'}
+                  direction={sortField === 'title' ? sortDirection : 'asc'}
+                  onClick={() => handleSort('title')}
                 >
-                  {intl.formatMessage({
-                    id: 'admin.maps.table.user-id',
-                    defaultMessage: 'User ID',
-                  })}
+                  Title
                 </TableSortLabel>
               </TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Created By</TableCell>
               <TableCell>
                 <TableSortLabel
                   active={sortField === 'creationTime'}
@@ -654,13 +670,13 @@ const MapsManagement = (): ReactElement => {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={10} align="center">
+                <TableCell colSpan={9} align="center">
                   <CircularProgress />
                 </TableCell>
               </TableRow>
             ) : maps.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={10} align="center">
+                <TableCell colSpan={9} align="center">
                   <Typography variant="body2" color="text.secondary">
                     {intl.formatMessage({
                       id: 'admin.maps.no-maps',
@@ -672,14 +688,6 @@ const MapsManagement = (): ReactElement => {
             ) : (
               maps.map((map) => (
                 <TableRow key={map.id} hover>
-                  <TableCell>
-                    <Box display="flex" alignItems="center" gap={1}>
-                      {map.starred && <StarIcon color="primary" fontSize="small" />}
-                      <Typography variant="body2" fontWeight={map.starred ? 'bold' : 'normal'}>
-                        {map.title}
-                      </Typography>
-                    </Box>
-                  </TableCell>
                   <TableCell>
                     <Typography
                       variant="body2"
@@ -701,17 +709,24 @@ const MapsManagement = (): ReactElement => {
                     </Typography>
                   </TableCell>
                   <TableCell>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      {map.starred && <StarIcon color="primary" fontSize="small" />}
+                      <Typography variant="body2" fontWeight={map.starred ? 'bold' : 'normal'}>
+                        {map.title}
+                      </Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
                     <Typography variant="body2" color="text.secondary">
                       {map.description || 'No description'}
                     </Typography>
                   </TableCell>
-                  <TableCell>{map.createdBy}</TableCell>
                   <TableCell>
                     <Button
                       variant="text"
                       color="primary"
                       size="small"
-                      onClick={() => navigate('/c/admin/accounts')}
+                      onClick={() => handleViewOwnerMaps(map.createdById, map.createdBy)}
                       sx={{
                         minWidth: 'auto',
                         padding: '4px 8px',
@@ -719,7 +734,7 @@ const MapsManagement = (): ReactElement => {
                         fontWeight: 'medium',
                       }}
                     >
-                      #{map.createdById}
+                      {map.createdBy}
                     </Button>
                   </TableCell>
                   <TableCell>{formatDate(map.creationTime)}</TableCell>
@@ -1126,6 +1141,117 @@ const MapsManagement = (): ReactElement => {
                 defaultMessage: 'Suspend User',
               })
             )}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Owner Maps Dialog */}
+      <Dialog
+        open={isOwnerMapsDialogOpen}
+        onClose={() => setIsOwnerMapsDialogOpen(false)}
+        maxWidth="lg"
+        fullWidth
+      >
+        <DialogTitle>
+          Maps owned by {selectedOwnerName} (ID: #{selectedOwnerId})
+        </DialogTitle>
+        <DialogContent>
+          {isLoadingOwnerMaps ? (
+            <Box display="flex" justifyContent="center" p={3}>
+              <CircularProgress />
+            </Box>
+          ) : ownerMaps.length === 0 ? (
+            <Typography variant="body2" color="text.secondary" align="center" p={3}>
+              No maps found for this owner
+            </Typography>
+          ) : (
+            <TableContainer>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Map ID</TableCell>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Description</TableCell>
+                    <TableCell>Created</TableCell>
+                    <TableCell>Modified</TableCell>
+                    <TableCell>Status</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {ownerMaps.map((map) => (
+                    <TableRow key={map.id} hover>
+                      <TableCell>
+                        <Typography
+                          variant="body2"
+                          color="primary"
+                          fontWeight="medium"
+                          component="a"
+                          href={`/c/maps/${map.id}/public`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          sx={{
+                            textDecoration: 'none',
+                            cursor: 'pointer',
+                            '&:hover': {
+                              textDecoration: 'underline',
+                            },
+                          }}
+                        >
+                          #{map.id}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Box display="flex" alignItems="center" gap={1}>
+                          {map.starred && <StarIcon color="primary" fontSize="small" />}
+                          <Typography variant="body2" fontWeight={map.starred ? 'bold' : 'normal'}>
+                            {map.title}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="body2" color="text.secondary">
+                          {map.description || 'No description'}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>{formatDate(map.creationTime)}</TableCell>
+                      <TableCell>{formatDate(map.lastModificationTime)}</TableCell>
+                      <TableCell>
+                        <Box display="flex" gap={1} flexWrap="wrap">
+                          {getPublicChip(map.public)}
+                          {getLockedChip(map.isLocked, map.isLockedBy)}
+                          {getSuspendedUserChip(map.isCreatorSuspended || false)}
+                          {map.spam && getSpamChip(map.spam, map.spamType, map.spamDetectedDate)}
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Box sx={{ flexGrow: 1 }}>
+            <Button
+              variant="contained"
+              color="error"
+              startIcon={<BlockIcon />}
+              onClick={() => {
+                setIsOwnerMapsDialogOpen(false);
+                handleSuspendUser(selectedOwnerId, selectedOwnerName);
+              }}
+            >
+              {intl.formatMessage({
+                id: 'admin.maps.suspend-user.button',
+                defaultMessage: 'Suspend User',
+              })}
+            </Button>
+          </Box>
+          <Button onClick={() => setIsOwnerMapsDialogOpen(false)}>
+            {intl.formatMessage({
+              id: 'common.close',
+              defaultMessage: 'Close',
+            })}
           </Button>
         </DialogActions>
       </Dialog>
