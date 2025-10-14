@@ -19,7 +19,7 @@
 /* eslint-disable no-new */
 import { StoryFn, Meta } from '@storybook/html';
 import BalancedTestSuite from './layout/BalancedTestSuite';
-
+import SymmetricTestSuite from './layout/SymmetricTestSuite';
 import TestSuite from './layout/TestSuite';
 
 // Raphael is preloaded in preview.js
@@ -178,8 +178,7 @@ const fullSuite = () => {
   window.addEventListener('DOMContentLoaded', () => {
     new TestSuite();
     new BalancedTestSuite();
-    // @todo: Review ...
-    // new SymmetricTestSuite();
+    new SymmetricTestSuite();
   });
 
   return divElem;

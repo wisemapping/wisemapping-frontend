@@ -4381,6 +4381,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/html-vite@npm:^9.1.10":
+  version: 9.1.10
+  resolution: "@storybook/html-vite@npm:9.1.10"
+  dependencies:
+    "@storybook/builder-vite": 9.1.10
+    "@storybook/html": 9.1.10
+  peerDependencies:
+    storybook: ^9.1.10
+  checksum: db120432346c902183ec3383b7856eaaa3d4da38e84d4ad1e31f5c472cddf4fa021da29096705f8e7913b2c41df51b4626629381f6cfab3a42dffb1e0203a203
+  languageName: node
+  linkType: hard
+
 "@storybook/html-webpack5@npm:9.0.0-alpha.12":
   version: 9.0.0-alpha.12
   resolution: "@storybook/html-webpack5@npm:9.0.0-alpha.12"
@@ -4404,6 +4416,18 @@ __metadata:
   peerDependencies:
     storybook: ^9.0.0-alpha.12
   checksum: 0968de233460a32d1651c191837a9257ab194a7e30ba85bba94c155966d39fba5fd4a4aa5529d76f8bb608a7672958dd0662369340d42a8f548f6a35e73e0076
+  languageName: node
+  linkType: hard
+
+"@storybook/html@npm:9.1.10":
+  version: 9.1.10
+  resolution: "@storybook/html@npm:9.1.10"
+  dependencies:
+    "@storybook/global": ^5.0.0
+    ts-dedent: ^2.0.0
+  peerDependencies:
+    storybook: ^9.1.10
+  checksum: 566662d5b5db19c8033c01b0e3be9b1b928e936fa2d62ac2235bc8c11182fdf49f72af3979e1a1ba632dd062fea2b5d0e071c8dd4035acdfeec179d5c8686ba6
   languageName: node
   linkType: hard
 
@@ -5957,7 +5981,7 @@ __metadata:
     "@mdx-js/react": ^3.1.1
     "@storybook/addon-docs": ^9.1.10
     "@storybook/addon-links": ^9.1.10
-    "@storybook/html-webpack5": 9.0.0-alpha.12
+    "@storybook/html-vite": ^9.1.10
     "@storybook/testing-library": ^0.2.2
     cypress: ^15.2.0
     cypress-image-snapshot: ^4.0.1
@@ -10631,6 +10655,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"generator-function@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "generator-function@npm:2.0.1"
+  checksum: 3bf87f7b0230de5d74529677e6c3ceb3b7b5d9618b5a22d92b45ce3876defbaf5a77791b25a61b0fa7d13f95675b5ff67a7769f3b9af33f096e34653519e873d
+  languageName: node
+  linkType: hard
+
 "gensync@npm:^1.0.0-beta.2":
   version: 1.0.0-beta.2
   resolution: "gensync@npm:1.0.0-beta.2"
@@ -11855,7 +11886,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-generator-function@npm:^1.0.10, is-generator-function@npm:^1.0.7":
+"is-generator-function@npm:^1.0.10":
   version: 1.1.0
   resolution: "is-generator-function@npm:1.1.0"
   dependencies:
@@ -11864,6 +11895,19 @@ __metadata:
     has-tostringtag: ^1.0.2
     safe-regex-test: ^1.1.0
   checksum: f7f7276131bdf7e28169b86ac55a5b080012a597f9d85a0cbef6fe202a7133fa450a3b453e394870e3cb3685c5a764c64a9f12f614684b46969b1e6f297bed6b
+  languageName: node
+  linkType: hard
+
+"is-generator-function@npm:^1.0.7":
+  version: 1.1.2
+  resolution: "is-generator-function@npm:1.1.2"
+  dependencies:
+    call-bound: ^1.0.4
+    generator-function: ^2.0.0
+    get-proto: ^1.0.1
+    has-tostringtag: ^1.0.2
+    safe-regex-test: ^1.1.0
+  checksum: 0b81c613752a5e534939e5b3835ff722446837a5b94c3a3934af5ded36a651d9aa31c3f11f8a3453884b9658bf26dbfb7eb855e744d920b07f084bd890a43414
   languageName: node
   linkType: hard
 

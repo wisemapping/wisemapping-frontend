@@ -19,11 +19,15 @@
 // jQuery removed - using native DOM APIs
 import { $assert } from '../../../../src/components/util/assert';
 import TestSuite from './TestSuite';
-import LayoutManager from '../../../src/components/layout/LayoutManager';
+import LayoutManager from '../../../../src/components/layout/LayoutManager';
+import type { PositionType } from '../../../../src/components/util/PositionType';
 
 class SymmetricTestSuite extends TestSuite {
   constructor() {
-    document.getElementById('symmetricTest').style.display = 'block';
+    const symmetricTestElement = document.getElementById('symmetricTest');
+    if (symmetricTestElement) {
+      symmetricTestElement.style.display = 'block';
+    }
     super();
 
     this.testSymmetry();
@@ -31,9 +35,9 @@ class SymmetricTestSuite extends TestSuite {
     this.testSymmetricDragPredict();
   }
 
-  testSymmetry() {
+  testSymmetry(): void {
     console.log('testSymmetry:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -96,9 +100,9 @@ class SymmetricTestSuite extends TestSuite {
     console.log('OK!\n\n');
   }
 
-  testSymmetricPredict() {
+  testSymmetricPredict(): void {
     console.log('testSymmetricPredict:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
@@ -280,9 +284,9 @@ class SymmetricTestSuite extends TestSuite {
     console.log('OK!\n\n');
   }
 
-  testSymmetricDragPredict() {
+  testSymmetricDragPredict(): void {
     console.log('testSymmetricDragPredict:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 1);
@@ -351,3 +355,4 @@ class SymmetricTestSuite extends TestSuite {
 }
 
 export default SymmetricTestSuite;
+

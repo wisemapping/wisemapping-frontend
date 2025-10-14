@@ -20,11 +20,23 @@
 import { $assert } from '../../../../src/components/util/assert';
 import LayoutManager from '../../../../src/components/layout/LayoutManager';
 import ChildrenSorterStrategy from '../../../../src/components/layout/ChildrenSorterStrategy';
+import type { SizeType, PositionType } from '../../../../src/components/util/PositionType';
+
+interface Prediction {
+  position: PositionType;
+  order: number;
+}
 
 class TestSuite extends ChildrenSorterStrategy {
+  static NODE_SIZE: SizeType = { width: 80, height: 30 };
+  static ROOT_NODE_SIZE: SizeType = { width: 120, height: 40 };
+
   constructor() {
     super();
-    document.getElementById('basicTest').style.display = 'block';
+    const basicTestElement = document.getElementById('basicTest');
+    if (basicTestElement) {
+      basicTestElement.style.display = 'block';
+    }
     //        this.testAligned();
     this.testBaselineAligned1();
     this.testBaselineAligned2();
@@ -37,9 +49,9 @@ class TestSuite extends ChildrenSorterStrategy {
     this.testReconnectSingleNode();
   }
 
-  testAligned() {
+  testAligned(): void {
     console.log('testAligned:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
@@ -84,9 +96,9 @@ class TestSuite extends ChildrenSorterStrategy {
     console.log('OK!\n\n');
   }
 
-  testBaselineAligned1() {
+  testBaselineAligned1(): void {
     console.log('testBaselineAligned1:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
@@ -130,9 +142,9 @@ class TestSuite extends ChildrenSorterStrategy {
     console.log('OK!\n\n');
   }
 
-  testBaselineAligned2() {
+  testBaselineAligned2(): void {
     console.log('testBaselineAligned2:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
@@ -148,9 +160,9 @@ class TestSuite extends ChildrenSorterStrategy {
     console.log('OK!\n\n');
   }
 
-  testEvents() {
+  testEvents(): void {
     console.log('testEvents:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -161,7 +173,7 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.connectNode(0, 2, 1);
     manager.connectNode(1, 3, 0);
 
-    let events = [];
+    let events: any[] = [];
     manager.addEvent('change', (event) => {
       console.log(
         `\tUpdated nodes: {id:${event.getId()} order: ${event.getOrder()}position: {${
@@ -184,9 +196,9 @@ class TestSuite extends ChildrenSorterStrategy {
     console.log('OK!\n\n');
   }
 
-  testEventsComplex() {
+  testEventsComplex(): void {
     console.log('testEventsComplex:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -201,7 +213,7 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.connectNode(3, 4, 0);
     manager.connectNode(3, 5, 1);
 
-    let events = [];
+    let events: any[] = [];
     manager.addEvent('change', (event) => {
       console.log(
         `\tUpdated nodes: {id:${event.getId()} order: ${event.getOrder()}position: {${
@@ -230,9 +242,9 @@ class TestSuite extends ChildrenSorterStrategy {
     console.log('OK!\n\n');
   }
 
-  testDisconnect() {
+  testDisconnect(): void {
     console.log('testDisconnect:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -250,7 +262,7 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.connectNode(5, 6, 0);
     manager.connectNode(5, 7, 1);
 
-    let events = [];
+    let events: any[] = [];
     manager.addEvent('change', (event) => {
       const pos = event.getPosition();
       const posStr = pos ? `,position: {${pos.x}${pos.y}` : '';
@@ -286,9 +298,9 @@ class TestSuite extends ChildrenSorterStrategy {
     console.log('OK!\n\n');
   }
 
-  testReconnect() {
+  testReconnect(): void {
     console.log('testReconnect:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -348,9 +360,9 @@ class TestSuite extends ChildrenSorterStrategy {
     console.log('OK!\n\n');
   }
 
-  testRemoveNode() {
+  testRemoveNode(): void {
     console.log('testRemoveNode:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
@@ -374,7 +386,7 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.connectNode(1, 3, 1);
     manager.connectNode(3, 4, 0);
 
-    const events = [];
+    const events: any[] = [];
     manager.addEvent('change', (event) => {
       const pos = event.getPosition();
       const posStr = pos ? `,position: {${pos.x}${event.getPosition().y}` : '';
@@ -418,9 +430,9 @@ class TestSuite extends ChildrenSorterStrategy {
     console.log('OK!\n\n');
   }
 
-  testSize() {
+  testSize(): void {
     console.log('testSize:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, { width: 60, height: 60 }, position);
@@ -515,9 +527,9 @@ class TestSuite extends ChildrenSorterStrategy {
     console.log('OK!\n\n');
   }
 
-  testReconnectSingleNode() {
+  testReconnectSingleNode(): void {
     console.log('testReconnectSingleNode:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
@@ -548,7 +560,7 @@ class TestSuite extends ChildrenSorterStrategy {
     $assert(manager.find(1).getOrder() == 1, 'Node 1 should now have order 0');
   }
 
-  _plotPrediction(canvas, prediction) {
+  protected _plotPrediction(canvas: any, prediction: Prediction): void {
     if (!canvas) {
       console.warn('no canvas in _plotPrediction. Remove this method if plot() not in use');
       return;
@@ -562,7 +574,5 @@ class TestSuite extends ChildrenSorterStrategy {
   }
 }
 
-TestSuite.NODE_SIZE = { width: 80, height: 30 };
-TestSuite.ROOT_NODE_SIZE = { width: 120, height: 40 };
-
 export default TestSuite;
+
