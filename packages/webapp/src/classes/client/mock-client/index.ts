@@ -465,7 +465,9 @@ class MockClient implements Client {
     // Simulate different scenarios based on the code
     // Use code 999999999 to simulate error (for testing)
     if (code === '999999999') {
-      return Promise.reject(new Error('Invalid activation code or account already activated'));
+      return Promise.reject({
+        msg: 'Invalid activation code. The link may be incorrect or expired.',
+      });
     }
     // Add artificial delay to simulate network request
     return new Promise((resolve) => {
