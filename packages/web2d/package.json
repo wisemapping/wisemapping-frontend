@@ -20,22 +20,21 @@
     "cy:run": "cypress run",
     "dev": "webpack --config webpack.dev.js",
     "lint": "npx eslint src --ext js,ts",
-    "storybook": "storybook dev -p 6006 --quiet",
-    "storybook:test": "storybook dev -p 6006 --no-open --quiet",
+    "storybook": "storybook dev -p ${PORT:-6006} --quiet",
     "test": "yarn test:integration",
-    "test:integration": "npx start-server-and-test storybook:test http-get://localhost:6006 cy:run"
+    "test:integration": "bash -c 'p=$(node ../../scripts/find-port.js 6006); PORT=$p CYPRESS_BASE_URL=http://localhost:$p npx start-server-and-test \"storybook dev -p $p --no-open --quiet\" http-get://localhost:$p cy:run'"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.27.1",
     "@mdx-js/react": "^3.1.1",
-    "@storybook/addon-docs": "^9.1.8",
-    "@storybook/addon-links": "^9.1.8",
+    "@storybook/addon-docs": "^9.1.10",
+    "@storybook/addon-links": "^9.1.10",
     "@storybook/html-webpack5": "9.0.0-alpha.12",
     "@storybook/testing-library": "^0.2.2",
     "cypress": "^15.2.0",
     "cypress-image-snapshot": "^4.0.1",
-    "eslint-plugin-storybook": "9.1.8",
-    "storybook": "^9.1.8",
+    "eslint-plugin-storybook": "9.1.10",
+    "storybook": "^9.1.10",
     "ts-loader": "^9.5.4",
     "typescript": "^5.9.2",
     "vite": "^7.1.7"

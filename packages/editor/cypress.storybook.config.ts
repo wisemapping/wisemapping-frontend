@@ -29,7 +29,7 @@ export default defineConfig({
       return require('./cypress/plugins/index.ts')(on, config);
     },
     // Storybook runs on port 6008
-    baseUrl: 'http://localhost:6008',
+    baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:6008',
     // Only run Storybook tests
     specPattern: 'cypress/e2e/storybook/**/*.cy.ts',
     chromeWebSecurity: false,

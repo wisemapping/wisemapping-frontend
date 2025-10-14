@@ -9,7 +9,7 @@ const devConfig = {
   devtool: 'eval-cheap-module-source-map',
   devServer: {
     historyApiFallback: true,
-    port: 8080,
+    port: process.env.PORT || 8080,
     open: true,
   },
   plugins: [

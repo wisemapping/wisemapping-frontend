@@ -30,7 +30,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index.ts')(on, config);
     },
-    baseUrl: 'http://localhost:8081',
+    baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:8081',
     // Exclude storybook tests - those run separately with cypress.storybook.config.ts
     specPattern: [
       'cypress/e2e/**/*.cy.ts',
