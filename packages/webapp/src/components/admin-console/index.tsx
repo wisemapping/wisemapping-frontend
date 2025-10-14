@@ -20,7 +20,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 // Redirect /c/admin to /c/admin/accounts by default
-const AdminConsole = (): JSX.Element => {
+const AdminConsole = (): React.ReactElement => {
   return <Navigate to="/c/admin/accounts" replace />;
 };
 

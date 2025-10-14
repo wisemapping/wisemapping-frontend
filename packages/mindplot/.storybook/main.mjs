@@ -11,6 +11,18 @@ export default {
     defaultName: "Documentation"
   },
   webpackFinal: async (config) => {
+    // Reduce webpack verbosity
+    config.stats = {
+      ...config.stats,
+      preset: 'errors-warnings',
+      chunks: true,
+      modules: false,
+      assets: false,
+    };
+    config.infrastructureLogging = {
+      level: 'error',
+    };
+
     // Ensure proper module resolution for monorepo packages
     config.resolve = config.resolve || {};
     config.resolve.alias = config.resolve.alias || {};
