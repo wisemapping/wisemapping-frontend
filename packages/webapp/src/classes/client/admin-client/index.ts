@@ -48,6 +48,8 @@ export interface AdminUser {
   allowSendEmail: boolean;
   authenticationType: string;
   isAdmin?: boolean;
+  suspendedDate?: string;
+  suspensionReason?: string;
 }
 
 export interface AdminUsersResponse {

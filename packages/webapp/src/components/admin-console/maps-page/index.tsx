@@ -467,13 +467,8 @@ const MapsManagement = (): ReactElement => {
 
     try {
       // Fetch all maps for this owner
-      const params: AdminMapsParams = {
-        page: 1,
-        pageSize: 1000, // Get all maps for this owner
-        filterUserId: ownerId,
-      };
-      const response = await client.fetchAdminMaps(params);
-      setOwnerMaps(response.maps);
+      const maps = await client.getUserMaps(ownerId);
+      setOwnerMaps(maps);
     } catch (err) {
       console.error('Failed to load owner maps:', err);
     } finally {
@@ -1238,7 +1233,9 @@ const MapsManagement = (): ReactElement => {
               startIcon={<BlockIcon />}
               onClick={() => {
                 setIsOwnerMapsDialogOpen(false);
-                handleSuspendUser(selectedOwnerId, selectedOwnerName);
+                if (selectedOwnerId !== null) {
+                  handleSuspendUser(selectedOwnerId, selectedOwnerName);
+                }
               }}
             >
               {intl.formatMessage({
