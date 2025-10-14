@@ -76,14 +76,45 @@
 
 1. **Lint Compliance**:
    - All code edits MUST follow the format and rules declared in the project's ESLint configuration (`eslint.config.mjs`)
-   - After making any code changes, check for linter errors using `read_lints` tool
+   - After making any code changes, MUST run `yarn lint` in the appropriate package directory to check for linter errors
+   - The lint command varies by package:
+     - For webapp: `cd packages/webapp && yarn lint`
+     - For editor: `cd packages/editor && yarn lint`
+     - For mindplot: `cd packages/mindplot && yarn lint`
+     - For web2d: `cd packages/web2d && yarn lint`
    - Fix all linter errors before considering the task complete
    - Never commit code with linting errors
+   - The `read_lints` tool may not catch all errors that `yarn lint` finds - always verify with `yarn lint`
 
 2. **Code Style**:
    - Follow the established patterns and conventions in the codebase
    - Maintain consistent formatting with existing code
    - Respect the project's indentation, spacing, and naming conventions
+
+## 4. Component Structure and Organization
+
+**MANDATORY**: Follow the established component structure pattern.
+
+1. **Directory Structure**:
+   - Each component MUST have its main file named `index.tsx` in its own directory
+   - Subcomponents, subpages, and related components MUST be organized within subdirectories of the parent component
+   - Example structure:
+     ```
+     components/
+       my-component/
+         index.tsx          (main component)
+         subpage-one/
+           index.tsx        (subpage component)
+         subpage-two/
+           index.tsx        (subpage component)
+         shared-dialog/
+           index.tsx        (shared subcomponent)
+     ```
+
+2. **Pattern Consistency**:
+   - Always follow the existing patterns in the codebase when creating new components
+   - Look at existing component structures (e.g., `admin-console/`, `maps-page/`, `registration-page/`) as references
+   - Keep related functionality grouped together in the same directory hierarchy
 
 ## Additional Guidelines
 
