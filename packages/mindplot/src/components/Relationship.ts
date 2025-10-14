@@ -498,7 +498,6 @@ class Relationship extends ConnectionLine {
   }
 
   private _applyStrokeStyle(strokeStyle: StrokeStyle): void {
-    console.log(`Relationship ${this.getId()}: Applying stroke style: ${strokeStyle}`);
     switch (strokeStyle) {
       case StrokeStyle.SOLID:
         // Remove any dashed pattern for solid lines

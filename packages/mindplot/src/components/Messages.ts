@@ -22,7 +22,6 @@ class Messages {
   public static __bundle;
 
   static init(locale: string) {
-    console.log(`Init designer message: ${locale}`);
     let userLocale = $defined(locale) ? locale : 'en';
     let bundle = Bundle[userLocale];
 

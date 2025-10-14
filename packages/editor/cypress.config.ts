@@ -31,6 +31,11 @@ export default defineConfig({
       return require('./cypress/plugins/index.ts')(on, config);
     },
     baseUrl: 'http://localhost:8081',
+    // Exclude storybook tests - those run separately with cypress.storybook.config.ts
+    specPattern: [
+      'cypress/e2e/**/*.cy.ts',
+      '!cypress/e2e/storybook/**/*.cy.ts'
+    ],
     // Add configuration to help with macOS compatibility
     chromeWebSecurity: false,
     experimentalStudio: false,
