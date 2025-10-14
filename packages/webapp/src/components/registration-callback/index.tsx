@@ -30,7 +30,7 @@ import { useNavigate } from 'react-router';
 import GlobalError from '../form/global-error';
 import { buttonsStyle } from './style';
 import { ClientContext } from '../../classes/provider/client-context';
-import { logCriticalError } from '@wisemapping/core-js';
+import { logCriticalError } from '../../utils';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '../../contexts/ThemeContext';
 

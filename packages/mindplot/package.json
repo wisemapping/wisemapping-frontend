@@ -26,11 +26,10 @@
     "lint:fix": "eslint src --ext js,ts --fix",
     "storybook": "storybook dev -p ${PORT:-6006} --quiet",
     "test": "yarn test:unit && yarn test:integration",
-    "test:integration": "bash -c 'p=$(node ../../scripts/find-port.js 6006); PORT=$p CYPRESS_BASE_URL=http://localhost:$p npx start-server-and-test \"storybook dev -p $p --no-open --quiet\" http-get://localhost:$p cy:run'",
+    "test:integration": "PORT=6006 CYPRESS_BASE_URL=http://localhost:6006 npx start-server-and-test 'storybook dev -p 6006 --no-open --quiet' http-get://localhost:6006 cy:run",
     "test:unit": "jest ./test/unit/export/*.ts ./test/unit/import/*.ts --verbose --silent --detectOpenHandles"
   },
   "dependencies": {
-    "@wisemapping/core-js": "workspace:*",
     "@wisemapping/web2d": "workspace:*",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.3",

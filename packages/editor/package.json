@@ -27,8 +27,8 @@
     "playground": "webpack serve --config webpack.playground.js",
     "test": "yarn test:unit && yarn test:integration",
     "test:integration": "yarn test:integration:playground && yarn test:integration:storybook",
-    "test:integration:playground": "sh -c \"p=\\$(node ../../scripts/find-port.js 8081); PORT=\\$p CYPRESS_BASE_URL=http://localhost:\\$p npx start-server-and-test 'webpack serve --config webpack.playground.js --port '\\$p http-get://localhost:\\$p 'yarn cy:run'\"",
-    "test:integration:storybook": "sh -c \"p=\\$(node ../../scripts/find-port.js 6008); PORT=\\$p CYPRESS_BASE_URL=http://localhost:\\$p npx start-server-and-test 'storybook dev -p '\\$p' --quiet' http-get://localhost:\\$p 'yarn cy:storybook:run'\"",
+    "test:integration:playground": "PORT=8081 CYPRESS_BASE_URL=http://localhost:8081 npx start-server-and-test 'webpack serve --config webpack.playground.js --port 8081' http-get://localhost:8081 cy:run",
+    "test:integration:storybook": "PORT=6008 CYPRESS_BASE_URL=http://localhost:6008 npx start-server-and-test 'storybook dev -p 6008 --quiet' http-get://localhost:6008 cy:storybook:run",
     "test:unit": "jest ./test/unit/* --detectOpenHandles"
   },
   "dependencies": {
@@ -36,7 +36,6 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.2",
     "@mui/material": "^7.3.4",
-    "@wisemapping/core-js": "workspace:*",
     "@wisemapping/mindplot": "workspace:*",
     "emoji-picker-react": "^4.14.0",
     "react-color": "^2.19.3",

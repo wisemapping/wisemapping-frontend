@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '@wisemapping/core-js';
+import { $defined } from './util/assert';
 import Bundle from './lang/Bundle';
 
 class Messages {

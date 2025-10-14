@@ -103,12 +103,6 @@ add_transitive_deps() {
   local package=$1
   
   case $package in
-    "core-js")
-      mark_affected "web2d"
-      mark_affected "mindplot"
-      mark_affected "editor"
-      mark_affected "webapp"
-      ;;
     "web2d")
       mark_affected "mindplot"
       mark_affected "editor"
@@ -126,10 +120,7 @@ add_transitive_deps() {
 
 # Detect affected packages from changed files
 while IFS= read -r file; do
-  if [[ $file == packages/core-js/* ]]; then
-    mark_affected "core-js"
-    add_transitive_deps "core-js"
-  elif [[ $file == packages/web2d/* ]]; then
+  if [[ $file == packages/web2d/* ]]; then
     mark_affected "web2d"
     add_transitive_deps "web2d"
   elif [[ $file == packages/mindplot/* ]]; then
@@ -142,7 +133,6 @@ while IFS= read -r file; do
     mark_affected "webapp"
   elif [[ $file == package.json ]] || [[ $file == yarn.lock ]] || [[ $file == webpack.common.js ]] || [[ $file == eslint.config.mjs ]]; then
     # Root-level changes affect all packages
-    mark_affected "core-js"
     mark_affected "web2d"
     mark_affected "mindplot"
     mark_affected "editor"

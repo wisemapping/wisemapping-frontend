@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { Group, Rect } from '@wisemapping/web2d';
-import { $assert } from '@wisemapping/core-js';
+import { $assert } from './util/assert';
 import NodeModel from './model/NodeModel';
 import Canvas from './Canvas';
 import DragTopic from './DragTopic';

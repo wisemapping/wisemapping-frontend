@@ -17,7 +17,7 @@
  *   limitations under the License.
  */
 // jQuery removed - using native DOM APIs
-import { $assert } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/web2d';
 import LayoutManager from '../../../../src/components/layout/LayoutManager';
 import ChildrenSorterStrategy from '../../../../src/components/layout/ChildrenSorterStrategy';
 

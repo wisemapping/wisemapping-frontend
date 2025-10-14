@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { $assert } from '@wisemapping/core-js';
+import { $assert } from '../util/assert';
 import SvgIconModel from './SvgIconModel';
 import LinkModel from './LinkModel';
 import NoteModel from './NoteModel';

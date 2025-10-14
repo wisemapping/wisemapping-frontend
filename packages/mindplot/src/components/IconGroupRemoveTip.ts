@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 
-import { $assert } from '@wisemapping/core-js';
 import { Group, Rect, StraightLine } from '@wisemapping/web2d';
+import { $assert } from './util/assert';
 import Icon from './Icon';
 import PositionType from './PositionType';
 import SizeType from './SizeType';

@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 
-import { $assert } from '@wisemapping/core-js';
 import { Group } from '@wisemapping/web2d';
+import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
 import ImageIcon from './ImageIcon';
 import SizeType from './SizeType';

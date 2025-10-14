@@ -15,23 +15,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from '../util/assert';
-import FeatureModel from './FeatureModel';
 
-class SvgIconModel extends FeatureModel {
-  constructor(attributes) {
-    super('icon');
-    this.setIconType(attributes.id);
-  }
-
-  getIconType(): string {
-    return this.getAttribute('id') as string;
-  }
-
-  setIconType(iconType: string): void {
-    $assert(iconType, 'iconType id can not be null');
-    this.setAttribute('id', iconType);
+declare global {
+  interface Window {
+    newrelic: { noticeError: (error: string) => void };
   }
 }
 
-export default SvgIconModel;
+export const logCriticalError = (msg: string, exception: unknown): void => {
+  window.newrelic?.noticeError(`${msg}. Exception: ${exception}`);
+
+  console.error(`${msg}. Exception: ${exception}`);
+  console.error(exception);
+};

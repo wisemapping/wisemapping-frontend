@@ -22,7 +22,7 @@
     "lint": "npx eslint src --ext js,ts",
     "storybook": "storybook dev -p ${PORT:-6006} --quiet",
     "test": "yarn test:integration",
-    "test:integration": "bash -c 'p=$(node ../../scripts/find-port.js 6006); PORT=$p CYPRESS_BASE_URL=http://localhost:$p npx start-server-and-test \"storybook dev -p $p --no-open --quiet\" http-get://localhost:$p cy:run'"
+    "test:integration": "PORT=6006 CYPRESS_BASE_URL=http://localhost:6006 npx start-server-and-test 'storybook dev -p 6006 --no-open --quiet' http-get://localhost:6006 cy:run"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.27.1",
@@ -38,9 +38,6 @@
     "ts-loader": "^9.5.4",
     "typescript": "^5.9.2",
     "vite": "^7.1.7"
-  },
-  "peerDependencies": {
-    "@wisemapping/core-js": "workspace:*"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.com"

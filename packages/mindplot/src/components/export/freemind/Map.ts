@@ -16,7 +16,8 @@
  *   limitations under the License.
  */
 
-import { createDocument, $assert } from '@wisemapping/core-js';
+import { $assert } from '../../util/assert';
+import { createDocument } from '../../util/DOMUtils';
 import Arrowlink from './Arrowlink';
 import Cloud from './Cloud';
 import Edge from './Edge';

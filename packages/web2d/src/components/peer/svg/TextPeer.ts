@@ -15,10 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '@wisemapping/core-js';
+import { $defined } from '../utils/assert';
+import { getPosition } from '../utils/DomUtils';
 import FontPeer, { FontStyle } from './FontPeer';
 import ElementPeer from './ElementPeer';
-import { getPosition } from '../utils/DomUtils';
 import SizeType from '../../SizeType';
 import PositionType from '../../PositionType';
 

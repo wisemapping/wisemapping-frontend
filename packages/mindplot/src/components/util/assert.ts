@@ -1,5 +1,5 @@
 /*
- *    Copyright [2007-2025] [wisemapping]
+ *    Copyright [2015] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -15,23 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from '../util/assert';
-import FeatureModel from './FeatureModel';
 
-class SvgIconModel extends FeatureModel {
-  constructor(attributes) {
-    super('icon');
-    this.setIconType(attributes.id);
+export const $defined = (obj: unknown): boolean => obj !== undefined && obj !== null;
+
+export const $assert = (assert: unknown, message: string): void => {
+  if (!$defined(assert) || !assert) {
+    console.error(message);
+    throw new Error(message);
   }
-
-  getIconType(): string {
-    return this.getAttribute('id') as string;
-  }
-
-  setIconType(iconType: string): void {
-    $assert(iconType, 'iconType id can not be null');
-    this.setAttribute('id', iconType);
-  }
-}
-
-export default SvgIconModel;
+};

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { $assert } from '@wisemapping/core-js';
+import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
 import { FontWeightType } from './FontWeightType';
 import TextPeer from './peer/svg/TextPeer';

@@ -28,7 +28,7 @@
         "storybook": "storybook dev -p ${PORT:-6007} --quiet",
         "build-storybook": "storybook build",
         "test": "yarn test:integration",
-        "test:integration": "bash -c 'p=$(node ../../scripts/find-port.js 3000); PORT=$p CYPRESS_BASE_URL=http://localhost:$p npx start-server-and-test \"webpack serve --config webpack.dev.js --port $p\" http-get://localhost:$p cy:run'",
+        "test:integration": "PORT=3000 CYPRESS_BASE_URL=http://localhost:3000 npx start-server-and-test 'webpack serve --config webpack.dev.js --port 3000' http-get://localhost:3000 cy:run",
         "start:dev": "APP_CONFIG_TYPE='file:dev' webpack serve --config webpack.dev.js "
     },
     "dependencies": {
@@ -37,7 +37,6 @@
         "@mui/icons-material": "^7.3.2",
         "@mui/lab": "^7.0.0-beta.17",
         "@mui/material": "^7.3.4",
-        "@wisemapping/core-js": "workspace:*",
         "@wisemapping/editor": "workspace:^",
         "axios": "^1.12.2",
         "dayjs": "^1.11.18",

@@ -247,6 +247,23 @@ class DOMUtils {
       element.style.opacity = '';
     }, duration);
   }
+
+  /**
+   * Create a new XML Document instance
+   */
+  static createDocument(): Document {
+    const doc: Document | null =
+      window.document.implementation?.createDocument('', '', null) ?? null;
+
+    if (!doc) {
+      throw new Error('Document could not be initialized');
+    }
+
+    return doc;
+  }
 }
 
 export default DOMUtils;
+
+// Named export for convenience
+export const { createDocument } = DOMUtils;

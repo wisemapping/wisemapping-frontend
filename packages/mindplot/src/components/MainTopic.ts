@@ -15,8 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
 import { Group, ElementClass, ElementPeer } from '@wisemapping/web2d';
+import { $assert, $defined } from './util/assert';
 
 import Topic from './Topic';
 import Shape from './util/Shape';

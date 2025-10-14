@@ -5956,12 +5956,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wisemapping/core-js@workspace:*, @wisemapping/core-js@workspace:packages/core-js":
-  version: 0.0.0-use.local
-  resolution: "@wisemapping/core-js@workspace:packages/core-js"
-  languageName: unknown
-  linkType: soft
-
 "@wisemapping/editor@workspace:^, @wisemapping/editor@workspace:packages/editor":
   version: 0.0.0-use.local
   resolution: "@wisemapping/editor@workspace:packages/editor"
@@ -5978,7 +5972,6 @@ __metadata:
     "@storybook/test": 8.6.14
     "@testing-library/react": ^16.3.0
     "@types/cypress-image-snapshot": ^3.1.9
-    "@wisemapping/core-js": "workspace:*"
     "@wisemapping/mindplot": "workspace:*"
     babel-polyfill: ^6.26.0
     copy-webpack-plugin: ^13.0.1
@@ -5999,7 +5992,6 @@ __metadata:
     styled-components: ^6.1.19
     ts-loader: ^9.5.4
     typescript: ^5.9.3
-    vite: ^7.1.7
     webpack: ^5.102.1
     webpack-cli: ^6.0.1
     webpack-dev-server: ^5.2.2
@@ -6022,7 +6014,6 @@ __metadata:
     "@storybook/html-webpack5": 9.0.0-alpha.12
     "@storybook/testing-library": ^0.2.2
     "@types/webpack-env": ^1.18.8
-    "@wisemapping/core-js": "workspace:*"
     "@wisemapping/web2d": "workspace:*"
     babel-loader: ^10.0.0
     blob-polyfill: ^9.0.20240710
@@ -6061,8 +6052,6 @@ __metadata:
     ts-loader: ^9.5.4
     typescript: ^5.9.2
     vite: ^7.1.7
-  peerDependencies:
-    "@wisemapping/core-js": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -6082,7 +6071,6 @@ __metadata:
     "@storybook/react-vite": ^9.1.10
     "@testing-library/cypress": ^10.1.0
     "@welldone-software/why-did-you-render": ^10.0.1
-    "@wisemapping/core-js": "workspace:*"
     "@wisemapping/editor": "workspace:^"
     axios: ^1.12.2
     cypress: ^15.2.0

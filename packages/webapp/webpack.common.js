@@ -38,17 +38,12 @@ const commonConfig = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
-  resolve: {
-    alias: {
-      '@wisemapping/core-js': path.resolve(__dirname, '../../packages/core-js/src'),
-    },
-  },
   module: {
     rules: [
       {
         test: /\.wxml$/i,
         type: 'asset/source',
-      }
+      },
     ],
   },
   optimization: {
