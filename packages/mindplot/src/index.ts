@@ -60,6 +60,8 @@ if (!customElements.get('mindplot-component')) {
   customElements.define('mindplot-component', MindplotWebComponent);
 }
 
+export type { EditorRenderMode, MindplotWebComponentInterface, WidgetEventType };
+
 export {
   Mindmap,
   Designer,
@@ -71,7 +73,6 @@ export {
   LocalStorageManager,
   DesignerOptionsBuilder,
   buildDesigner,
-  EditorRenderMode,
   TextExporterFactory,
   ImageExporterFactory,
   TextImporterFactory,
@@ -81,13 +82,11 @@ export {
   $notify,
   DesignerKeyboard,
   MindplotWebComponent,
-  MindplotWebComponentInterface,
   LinkIcon,
   LinkModel,
   NoteIcon,
   NoteModel,
   WidgetBuilder,
-  type WidgetEventType,
   Topic,
   XMLSerializerFactory,
 };

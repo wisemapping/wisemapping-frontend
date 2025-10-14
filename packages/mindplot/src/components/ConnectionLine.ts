@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 
-import { $assert } from '@wisemapping/core-js';
 import { CurvedLine, PolyLine } from '@wisemapping/web2d';
 import type { Line } from '@wisemapping/web2d';
+import { $assert } from './util/assert';
 import PositionType from './PositionType';
 import Topic from './Topic';
 import TopicConfig from './TopicConfig';

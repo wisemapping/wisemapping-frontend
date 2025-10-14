@@ -8,7 +8,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index.js')(on, config);
     },
-    baseUrl: 'http://localhost:6006',
+    baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:6006',
     // Add macOS compatibility options
     chromeWebSecurity: false,
     experimentalStudio: false,

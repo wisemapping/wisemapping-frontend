@@ -16,22 +16,22 @@
  *   limitations under the License.
  */
 import React, { useContext, useEffect, useState } from 'react';
-import Editor, { useEditor, EditorOptions } from '@wisemapping/editor';
+import Editor, { useEditor } from '@wisemapping/editor';
+import type { EditorOptions } from '@wisemapping/editor';
 
 import {
-  EditorRenderMode,
   PersistenceManager,
   RESTPersistenceManager,
   LocalStorageManager,
   MockPersistenceManager,
-  PersistenceError,
 } from '@wisemapping/editor';
+import type { PersistenceError, MapInfo } from '@wisemapping/editor';
+import type { EditorRenderMode } from '@wisemapping/mindplot';
 import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 import { trackPageView } from '../../utils/analytics';
 import { useTheme as useMuiTheme } from '@mui/material/styles';
 import MapInfoImpl from '../../classes/editor-map-info';
-import { MapInfo } from '@wisemapping/editor';
 import AppConfig from '../../classes/app-config';
 import exampleMap from '../../classes/client/mock-client/example-map.wxml';
 import JwtTokenConfig from '../../classes/jwt-token-config';
@@ -43,7 +43,7 @@ import { KeyboardContext } from '../../classes/provider/keyboard-context';
 import { SEOHead } from '../seo';
 import PublicMapSEO from '../seo/PublicMapSEO';
 import SessionExpiredDialog from '../common-page/session-expired-dialog';
-import { EditorConfiguration } from '@wisemapping/editor/src/hooks/useEditor';
+import type { EditorConfiguration } from '@wisemapping/editor/src/hooks/useEditor';
 import { createThemeVariantStorage } from '../../services/createThemeVariantStorage';
 
 const buildPersistenceManagerForEditor = (

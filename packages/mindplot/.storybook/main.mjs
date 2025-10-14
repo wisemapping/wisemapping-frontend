@@ -35,7 +35,6 @@ export default {
     
     // Use relative path instead of absolute path for better portability
     config.resolve.alias['@wisemapping/web2d'] = require('path').resolve(__dirname, '../../web2d/src/index.ts');
-    config.resolve.alias['@wisemapping/core-js'] = require('path').resolve(__dirname, '../../core-js/src/index.ts');
     
     // Add webpack rules for handling assets and TypeScript
     config.module = config.module || {};

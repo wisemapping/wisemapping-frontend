@@ -21,8 +21,8 @@
  * It provides functionality to set, get, and render Material UI icons on topics.
  */
 
-import { $assert } from '@wisemapping/core-js';
 import { Text, Group } from '@wisemapping/web2d';
+import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
 import ActionDispatcher from './ActionDispatcher';
 import Icon from './Icon';

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert, $defined } from '../util/assert';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
 import FeatureModel from '../model/FeatureModel';

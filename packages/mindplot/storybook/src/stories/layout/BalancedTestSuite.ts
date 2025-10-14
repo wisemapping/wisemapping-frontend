@@ -16,22 +16,26 @@
  *   limitations under the License.
  */
 // jQuery removed - using native DOM APIs
-import { $assert } from '@wisemapping/core-js';
+import { $assert } from '../../../../src/components/util/assert';
 import TestSuite from './TestSuite';
 import LayoutManager from '../../../../src/components/layout/LayoutManager';
+import type { PositionType } from '../../../../src/components/util/PositionType';
 
 class BalancedTestSuite extends TestSuite {
   constructor() {
-    document.getElementById('balancedTest').style.display = 'block';
+    const balancedTestElement = document.getElementById('balancedTest');
+    if (balancedTestElement) {
+      balancedTestElement.style.display = 'block';
+    }
     super();
     this.testBalanced();
     this.testBalancedPredict();
     this.testBalancedNodeDragPredict();
   }
 
-  testBalanced() {
+  testBalanced(): void {
     console.log('testBalanced:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const plotsize = { width: 1000, height: 200 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
@@ -178,9 +182,9 @@ class BalancedTestSuite extends TestSuite {
     console.log('OK!\n\n');
   }
 
-  testBalancedPredict() {
+  testBalancedPredict(): void {
     console.log('testBalancedPredict:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -336,9 +340,9 @@ class BalancedTestSuite extends TestSuite {
     console.log('OK!\n\n');
   }
 
-  testBalancedNodeDragPredict() {
+  testBalancedNodeDragPredict(): void {
     console.log('testBalancedNodeDragPredict:');
-    const position = { x: 0, y: 0 };
+    const position: PositionType = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Graph 1
@@ -496,3 +500,4 @@ class BalancedTestSuite extends TestSuite {
 }
 
 export default BalancedTestSuite;
+

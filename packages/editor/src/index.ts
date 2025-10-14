@@ -22,7 +22,6 @@ import {
   DesignerOptionsBuilder,
   Designer,
   DesignerKeyboard,
-  EditorRenderMode,
   Mindmap,
   MockPersistenceManager,
   LocalStorageManager,
@@ -36,34 +35,31 @@ import {
 } from '@wisemapping/mindplot';
 
 import Editor from './components';
-import MapInfo from './classes/model/map-info';
-import { EditorOptions, useEditor } from './hooks/useEditor';
-import { PersistenceError } from '@wisemapping/mindplot/src/components/PersistenceManager';
-import SizeType from '@wisemapping/mindplot/src/components/SizeType';
-import { ThemeVariantStorage } from './types/ThemeVariantStorage';
+import type MapInfo from './classes/model/map-info';
+import { useEditor } from './hooks/useEditor';
+import type { EditorOptions } from './hooks/useEditor';
+import type { PersistenceError } from '@wisemapping/mindplot/src/components/PersistenceManager';
+import type SizeType from '@wisemapping/mindplot/src/components/SizeType';
+import type { ThemeVariantStorage } from './types/ThemeVariantStorage';
+
+export type { PersistenceError, EditorOptions, MapInfo, SizeType, ThemeVariantStorage };
 
 export {
   PersistenceManager,
   DesignerOptionsBuilder,
   Designer,
   DesignerKeyboard,
-  EditorRenderMode,
   Mindmap,
   MockPersistenceManager,
   LocalStorageManager,
   RESTPersistenceManager,
-  PersistenceError,
   TextExporterFactory,
   ImageExporterFactory,
   Exporter,
   Importer,
   TextImporterFactory,
-  EditorOptions,
-  MapInfo,
   XMLSerializerFactory,
-  SizeType,
   useEditor,
-  ThemeVariantStorage,
 };
 
 export default Editor;

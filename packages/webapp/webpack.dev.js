@@ -35,7 +35,7 @@ module.exports = merge(common, {
   // Use faster source maps for development (10x faster than 'source-map')
   devtool: 'eval-cheap-module-source-map',
   devServer: {
-    port: 3000,
+    port: process.env.PORT || 3000,
     hot: true,
     client: {
       overlay: {

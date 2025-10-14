@@ -15,8 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
 import cloneDeep from 'lodash/cloneDeep';
+import { $assert, $defined } from '../util/assert';
 import INodeModel, { NodeModelType } from './INodeModel';
 import FeatureModelFactory from './FeatureModelFactory';
 import FeatureModel from './FeatureModel';

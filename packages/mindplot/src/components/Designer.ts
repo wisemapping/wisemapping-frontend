@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert, $defined } from './util/assert';
 import DOMUtils from './util/DOMUtils';
 import Messages, { $msg } from './Messages';
 

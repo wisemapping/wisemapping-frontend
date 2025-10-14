@@ -16,27 +16,15 @@
  *   limitations under the License.
  */
 
-import { defineConfig } from 'cypress';
-
-export default defineConfig({
-  projectId: 'it9g7s',
-  video: true,
-  includeShadowDom: true,
-  viewportWidth: 1000,
-  viewportHeight: 660,
-  e2e: {
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.ts')(on, config);
-    },
-    // Storybook runs on port 6008
-    baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:6008',
-    // Only run Storybook tests
-    specPattern: 'cypress/e2e/storybook/**/*.cy.ts',
-    chromeWebSecurity: false,
-    experimentalStudio: false,
-  },
-  chrome: {
-    args: ['--no-sandbox', '--disable-web-security', '--disable-features=VizDisplayCompositor']
+declare global {
+  interface Window {
+    newrelic: { noticeError: (error: string) => void };
   }
-});
+}
 
+export const logCriticalError = (msg: string, exception: unknown): void => {
+  window.newrelic?.noticeError(`${msg}. Exception: ${exception}`);
+
+  console.error(`${msg}. Exception: ${exception}`);
+  console.error(exception);
+};

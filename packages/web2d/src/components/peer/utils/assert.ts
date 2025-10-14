@@ -16,43 +16,12 @@
  *   limitations under the License.
  */
 
-declare global {
-  interface Window {
-    newrelic: { noticeError: (error: string) => void };
-  }
-}
+export const $defined = (obj: unknown): boolean => obj !== undefined && obj !== null;
 
-export const createDocument = (): Document => {
-  var doc: Document | null = null;
-  if (window.document.implementation?.createDocument) {
-    doc = window.document.implementation.createDocument('', '', null);
-  }
-
-  if (!doc) {
-    throw new Error('Document could not be initialized');
-  }
-
-  return doc;
-};
-
-export const $defined = (obj: any) => {
-  return obj != undefined && obj != null;
-};
-
-export const $assert = (assert, message: string): void => {
+export const $assert = (assert: unknown, message: string): void => {
   if (!$defined(assert) || !assert) {
+    // eslint-disable-next-line no-console
     console.error(message);
     throw new Error(message);
   }
-};
-
-export const sign = (value: number): 1 | -1 => {
-  return value >= 0 ? 1 : -1;
-};
-
-export const logCriticalError = (msg: string, exception: unknown) => {
-  window.newrelic?.noticeError(`${msg}. Exception: ${exception}`);
-
-  console.error(`${msg}. Exception: ${exception}`);
-  console.error(exception);
 };

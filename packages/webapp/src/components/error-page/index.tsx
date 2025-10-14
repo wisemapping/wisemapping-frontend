@@ -23,7 +23,7 @@ import { trackPageView } from '../../utils/analytics';
 import { ErrorBody } from './styled';
 import { useRouteError } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
-import { logCriticalError } from '@wisemapping/core-js';
+import { logCriticalError } from '../../utils';
 
 export type ErrorPageType = {
   isSecurity: boolean;

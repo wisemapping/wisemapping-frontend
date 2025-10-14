@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { $defined } from '@wisemapping/core-js';
+import { $defined } from '../utils/assert';
 import PositionType from '../../PositionType';
 import ElementPeer from './ElementPeer';
 

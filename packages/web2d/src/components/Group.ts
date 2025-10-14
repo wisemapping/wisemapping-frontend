@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { $defined } from '@wisemapping/core-js';
+import { $defined } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
 import ElementPeer from './peer/svg/ElementPeer';
 import GroupPeer from './peer/svg/GroupPeer';

@@ -16,6 +16,12 @@
  *   limitations under the License.
  */
 
+declare global {
+  interface Window {
+    newrelic: { noticeError: (error: string) => void };
+  }
+}
+
 export const getCsrfToken = (): string | null => {
   const meta = document.head.querySelector('meta[name="_csrf"]');
   if (!meta) {
@@ -30,4 +36,11 @@ export const getCsrfTokenParameter = (): string | null => {
     return '';
   }
   return meta.getAttribute('content');
+};
+
+export const logCriticalError = (msg: string, exception: unknown): void => {
+  window.newrelic?.noticeError(`${msg}. Exception: ${exception}`);
+
+  console.error(`${msg}. Exception: ${exception}`);
+  console.error(exception);
 };

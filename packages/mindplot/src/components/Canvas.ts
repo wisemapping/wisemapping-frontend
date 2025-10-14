@@ -15,8 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from '@wisemapping/core-js';
 import { Workspace as Workspace2D, ElementClass, ElementPeer } from '@wisemapping/web2d';
+import { $assert } from './util/assert';
 import ScreenManager from './ScreenManager';
 import SizeType from './SizeType';
 import CanvasElement from './CanvasElement';

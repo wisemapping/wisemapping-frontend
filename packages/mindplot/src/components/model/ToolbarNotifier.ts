@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { $assert } from '@wisemapping/core-js';
+import { $assert } from '../util/assert';
 import DOMUtils from '../util/DOMUtils';
 
 class ToolbarNotifier {

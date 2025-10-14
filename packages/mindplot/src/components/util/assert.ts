@@ -1,5 +1,5 @@
 /*
- *    Copyright [2007-2025] [wisemapping]
+ *    Copyright [2015] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -16,27 +16,11 @@
  *   limitations under the License.
  */
 
-import { defineConfig } from 'cypress';
+export const $defined = (obj: unknown): boolean => obj !== undefined && obj !== null;
 
-export default defineConfig({
-  projectId: 'it9g7s',
-  video: true,
-  includeShadowDom: true,
-  viewportWidth: 1000,
-  viewportHeight: 660,
-  e2e: {
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.ts')(on, config);
-    },
-    // Storybook runs on port 6008
-    baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:6008',
-    // Only run Storybook tests
-    specPattern: 'cypress/e2e/storybook/**/*.cy.ts',
-    chromeWebSecurity: false,
-    experimentalStudio: false,
-  },
-  chrome: {
-    args: ['--no-sandbox', '--disable-web-security', '--disable-features=VizDisplayCompositor']
+export const $assert = (assert: unknown, message: string): void => {
+  if (!$defined(assert) || !assert) {
+    console.error(message);
+    throw new Error(message);
   }
-});
-
+};
