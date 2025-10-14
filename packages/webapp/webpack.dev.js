@@ -37,6 +37,12 @@ module.exports = merge(common, {
   devServer: {
     port: 3000,
     hot: true,
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false, // Don't show overlay for warnings in tests
+      },
+    },
     proxy: [
       {
         context: ['/api'],
