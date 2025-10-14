@@ -50,54 +50,59 @@ const commonConfig = {
   },
   optimization: {
     chunkIds: 'named',
-    runtimeChunk: {
-      name: 'runtime',
-    },
+    runtimeChunk: 'single',
     splitChunks: {
       chunks: 'all',
-      maxInitialRequests: 10,
-      minSize: 0,
+      minSize: 20000,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
       cacheGroups: {
-        // React core libraries
+        // Default groups disabled to prevent auto-splitting
+        defaultVendors: false,
+        default: false,
+
+        // React core libraries - single bundle
         reactVendor: {
           test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
           name: 'react-vendor',
           priority: 40,
+          enforce: true,
           reuseExistingChunk: true,
         },
-        // Material-UI and Emotion
+
+        // Material-UI and Emotion - single bundle
         muiVendor: {
           test: /[\\/]node_modules[\\/](@mui|@emotion)[\\/]/,
           name: 'mui-vendor',
           priority: 35,
+          enforce: true,
           reuseExistingChunk: true,
         },
-        // Styling and i18n libraries
+
+        // Styling and i18n libraries - single bundle
         stylesVendor: {
           test: /[\\/]node_modules[\\/](styled-components|react-intl)[\\/]/,
           name: 'styles-vendor',
           priority: 30,
+          enforce: true,
           reuseExistingChunk: true,
         },
-        // WiseMapping internal packages
+
+        // WiseMapping internal packages - single bundle
         wisemappingLibs: {
           test: /[\\/]node_modules[\\/]@wisemapping[\\/]/,
           name: 'wisemapping-libs',
           priority: 25,
+          enforce: true,
           reuseExistingChunk: true,
         },
-        // All other node_modules
+
+        // All other node_modules - single bundle
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           priority: 20,
-          reuseExistingChunk: true,
-        },
-        // Common code shared between chunks
-        common: {
-          minChunks: 2,
-          name: 'common',
-          priority: 10,
+          enforce: true,
           reuseExistingChunk: true,
         },
       },

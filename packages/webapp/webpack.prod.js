@@ -44,10 +44,6 @@ module.exports = merge(common, {
   optimization: {
     minimize: true,
     // Bundle splitting is configured in webpack.common.js
-    // Keep maxSize for automatic code splitting within chunks
-    splitChunks: {
-      maxSize: 244000, // ~244KB per chunk for optimal loading
-    },
   },
   plugins: [
     new HtmlWebpackPlugin({
