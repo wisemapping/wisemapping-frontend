@@ -497,7 +497,7 @@ const AccountManagement = (): ReactElement => {
 
   const getStatusChip = (user: User) => {
     if (user.isSuspended) {
-      const tooltipParts = [];
+      const tooltipParts: string[] = [];
       if (user.suspendedDate) {
         tooltipParts.push(`Suspended on: ${formatDate(user.suspendedDate)}`);
       }

@@ -122,6 +122,9 @@ interface AdminMap {
   starred: boolean;
   labels: string[];
   spam?: boolean;
+  spamType?: string;
+  spamDetectedDate?: string;
+  spamDescription?: string;
   isCreatorSuspended?: boolean;
 }
 

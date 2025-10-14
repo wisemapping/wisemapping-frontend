@@ -3,6 +3,7 @@ const path = require('path');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 // Get the config from the common file
 let config;
@@ -31,7 +32,8 @@ switch (process.env.APP_CONFIG_TYPE) {
 
 module.exports = merge(common, {
   mode: 'development',
-  devtool: 'source-map',
+  // Use faster source maps for development (10x faster than 'source-map')
+  devtool: 'eval-cheap-module-source-map',
   devServer: {
     port: 3000,
     hot: true,
@@ -61,5 +63,19 @@ module.exports = merge(common, {
     new (require('webpack').DefinePlugin)({
       'window.BoostrapConfig': config,
     }),
+    // Run TypeScript type checking in a separate process (non-blocking)
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: './tsconfig.json',
+        diagnosticOptions: {
+          semantic: true,
+          syntactic: true,
+        },
+      },
+    }),
   ],
+  // Monitor build performance
+  performance: {
+    hints: false, // Disable for dev builds
+  },
 });

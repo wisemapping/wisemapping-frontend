@@ -7,6 +7,9 @@
 node_modules/
 dist/
 
+# Webpack cache
+.webpack-cache/
+
 
 # Log files
 *.log
