@@ -187,6 +187,7 @@ const LoginPage = (): React.ReactElement => {
                   })}
                   required
                   autoComplete="current-password"
+                  maxLength={39}
                 />
                 <SubmitButton
                   value={intl.formatMessage({

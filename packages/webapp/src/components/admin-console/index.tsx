@@ -16,10 +16,11 @@
  *   limitations under the License.
  */
 
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 // Redirect /c/admin to /c/admin/accounts by default
-const AdminConsole = () => {
+const AdminConsole = (): JSX.Element => {
   return <Navigate to="/c/admin/accounts" replace />;
 };
 
