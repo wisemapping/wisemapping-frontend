@@ -32,7 +32,6 @@ import WorkspaceElement from './components/WorkspaceElement';
 import type Line from './components/Line';
 import ElementPeer from './components/peer/svg/ElementPeer';
 import type StyleAttributes from './components/StyleAttributes';
-import { $assert, $defined } from './components/peer/utils/DomUtils';
 
 export {
   Arrow,
@@ -49,8 +48,6 @@ export {
   Text,
   Workspace,
   ElementPeer,
-  $assert,
-  $defined,
 };
 
 export type { Line, StyleAttributes };

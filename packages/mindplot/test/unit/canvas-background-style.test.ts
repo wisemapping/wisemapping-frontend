@@ -71,6 +71,12 @@ describe('Canvas Background Style Tests', () => {
       const instance = {
         getContainer: jest.fn().mockReturnValue(mockContainer),
         getVisibleBrowserSize: jest.fn().mockReturnValue({ width: 1000, height: 800 }),
+        getContainerWidth: jest.fn().mockReturnValue(1000),
+        getContainerHeight: jest.fn().mockReturnValue(800),
+        findInContainer: jest.fn().mockReturnValue({
+          setAttribute: jest.fn(),
+          getAttribute: jest.fn(),
+        }),
         setOffset: jest.fn(),
         setScale: jest.fn(),
         fireEvent: jest.fn(),

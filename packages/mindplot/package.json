@@ -27,7 +27,7 @@
     "storybook": "storybook dev -p ${PORT:-6006} --quiet",
     "test": "yarn test:unit && yarn test:integration",
     "test:integration": "PORT=6006 CYPRESS_BASE_URL=http://localhost:6006 npx start-server-and-test 'storybook dev -p 6006 --no-open --quiet' http-get://localhost:6006 cy:run",
-    "test:unit": "jest ./test/unit/export/*.ts ./test/unit/import/*.ts --verbose --silent --detectOpenHandles"
+    "test:unit": "jest ./test/unit/**/*.test.ts --verbose --silent --detectOpenHandles"
   },
   "dependencies": {
     "@wisemapping/web2d": "workspace:*",
