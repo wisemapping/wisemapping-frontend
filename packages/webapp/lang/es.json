@@ -647,6 +647,9 @@
   "admin.status-active": {
     "defaultMessage": "Activo"
   },
+  "admin.status-inactive": {
+    "defaultMessage": "Inactivo"
+  },
   "common.locale": {
     "defaultMessage": "Idioma"
   },

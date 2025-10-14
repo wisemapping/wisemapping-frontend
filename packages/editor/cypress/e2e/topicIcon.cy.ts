@@ -138,8 +138,8 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    // Switch to image mode
-    cy.get('input[type="checkbox"]').should('be.visible').check({ force: true });
+    // Switch to image mode (MUI Switch has opacity: 0, so force check)
+    cy.get('input[type="checkbox"]').check({ force: true });
 
     // Wait for image icons to load dynamically
     waitForImageIcons();

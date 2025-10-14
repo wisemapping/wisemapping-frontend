@@ -647,6 +647,9 @@
   "admin.status-active": {
     "defaultMessage": "活跃"
   },
+  "admin.status-inactive": {
+    "defaultMessage": "不活跃"
+  },
   "common.locale": {
     "defaultMessage": "语言"
   },

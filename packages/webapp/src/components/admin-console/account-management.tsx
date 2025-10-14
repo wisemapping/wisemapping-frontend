@@ -434,6 +434,17 @@ const AccountManagement = (): ReactElement => {
           <Chip label={`Suspended${reason}`} color="error" size="small" />
         </Tooltip>
       );
+    } else if (!user.isActive) {
+      return (
+        <Chip
+          label={intl.formatMessage({
+            id: 'admin.status-inactive',
+            defaultMessage: 'Inactive',
+          })}
+          color="warning"
+          size="small"
+        />
+      );
     } else {
       return (
         <Chip

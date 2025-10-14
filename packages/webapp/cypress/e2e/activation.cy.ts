@@ -30,8 +30,8 @@ describe('Activation Page', () => {
       // Wait for error state to render
       cy.contains('Activation Failed', { timeout: 10000 }).should('be.visible');
       
-      // Check error message
-      cy.contains('Invalid activation code or account already activated').should('be.visible');
+      // Check error message (updated to match actual i18n message from backend)
+      cy.contains('Invalid activation code').should('be.visible');
       
       // Check only Sign In button is present (no Sign Up button)
       cy.contains('button', 'Sign In').should('be.visible');

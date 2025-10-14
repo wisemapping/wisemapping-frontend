@@ -590,6 +590,9 @@
   "admin.status-active": {
     "defaultMessage": "Active"
   },
+  "admin.status-inactive": {
+    "defaultMessage": "Inactive"
+  },
   "admin.status-clean": {
     "defaultMessage": "Clean"
   },

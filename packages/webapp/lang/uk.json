@@ -650,6 +650,9 @@
   "admin.status-active": {
     "defaultMessage": "Активний"
   },
+  "admin.status-inactive": {
+    "defaultMessage": "Неактивний"
+  },
   "common.locale": {
     "defaultMessage": "Мова"
   },

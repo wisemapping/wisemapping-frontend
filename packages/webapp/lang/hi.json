@@ -647,6 +647,9 @@
   "admin.status-active": {
     "defaultMessage": "सक्रिय"
   },
+  "admin.status-inactive": {
+    "defaultMessage": "निष्क्रिय"
+  },
   "common.locale": {
     "defaultMessage": "भाषा"
   },
