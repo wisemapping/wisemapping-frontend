@@ -18,21 +18,25 @@
 
 import React from 'react';
 import { ErrorInfo } from '../../../classes/client';
-import StyledAlert from './styled';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 type GlobalErrorProps = {
   error?: ErrorInfo;
+  title?: string;
 };
 
 const GlobalError = (props: GlobalErrorProps): React.ReactElement | null => {
   const error = props.error;
   const hasError = Boolean(error?.msg);
   const errorMsg = error?.msg;
+  const title = props.title;
 
   return hasError ? (
-    <StyledAlert severity="error" variant="filled" hidden={!hasError}>
+    <Alert severity="error" variant="filled" style={{ marginBottom: '1rem' }}>
+      {title && <AlertTitle>{title}</AlertTitle>}
       {errorMsg}
-    </StyledAlert>
+    </Alert>
   ) : null;
 };
 

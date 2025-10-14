@@ -1339,6 +1339,12 @@
       "value": "E-Mail"
     }
   ],
+  "registration.error.title": [
+    {
+      "type": 0,
+      "value": "Registrierung fehlgeschlagen"
+    }
+  ],
   "registration.facebook.button": [
     {
       "type": 0,

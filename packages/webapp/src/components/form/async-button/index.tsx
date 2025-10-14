@@ -17,41 +17,38 @@
  */
 
 import React from 'react';
-import { useIntl } from 'react-intl';
-import AsyncButton from '../async-button';
+import Button, { ButtonProps } from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
-type SubmitButtonProps = {
-  value: string;
-  disabled?: boolean;
+export type AsyncButtonProps = ButtonProps & {
   isLoading?: boolean;
+  loadingText?: string;
+  children: React.ReactNode;
 };
 
-const SubmitButton = ({ value, disabled, isLoading }: SubmitButtonProps): React.ReactElement => {
-  const intl = useIntl();
-
-  const loadingText = intl.formatMessage({ id: 'common.wait', defaultMessage: 'Please wait ...' });
-
+/**
+ * Reusable button component that displays a loading state with spinner and text change.
+ * When isLoading is true:
+ * - Button becomes disabled
+ * - Shows CircularProgress spinner
+ * - Displays loadingText instead of children
+ */
+const AsyncButton = ({
+  isLoading = false,
+  loadingText,
+  children,
+  disabled,
+  ...buttonProps
+}: AsyncButtonProps): React.ReactElement => {
   return (
-    <AsyncButton
-      color="primary"
-      size="medium"
-      variant="contained"
-      type="submit"
-      disableElevation={true}
-      disabled={disabled}
-      isLoading={isLoading}
-      loadingText={loadingText}
-      style={{
-        width: '300px',
-        height: '53px',
-        padding: '0px 20px',
-        margin: '7px 0px',
-        fontSize: '18px',
-      }}
+    <Button
+      {...buttonProps}
+      disabled={disabled || isLoading}
+      startIcon={isLoading ? <CircularProgress size={16} color="inherit" /> : buttonProps.startIcon}
     >
-      {value}
-    </AsyncButton>
+      {isLoading && loadingText ? loadingText : children}
+    </Button>
   );
 };
 
-export default SubmitButton;
+export default AsyncButton;

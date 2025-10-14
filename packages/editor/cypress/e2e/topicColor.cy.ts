@@ -35,16 +35,11 @@ describe('Topic Color Suite', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
 
     // The Shape tab should be open by default, which contains the fill color picker
-    // Wait for panel to appear
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(500);
+    // Wait for color picker to be visible and clickable
+    cy.get('[aria-label="Color"]').should('be.visible').first().click({ force: true });
 
-    // Click on fill color button
-    cy.get('[aria-label="Color"]').first().click({ force: true });
-
-    // Wait for color picker to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    // Wait for color options to be available
+    cy.get('[title="#cc0000"]').should('be.visible');
 
     // Select a color (red)
     cy.get('[title="#ff0000"]').click({ force: true });
@@ -62,11 +57,8 @@ describe('Topic Color Suite', () => {
     cy.get('[aria-label="Color"]').first().click({ force: true });
 
     // Wait for color picker to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
-
-    // Select a color (blue)
-    cy.get('[title="#0000ff"]').click({ force: true });
+    // Wait for color options to be available and select blue
+    cy.get('[title="#0000ff"]').should('be.visible').click({ force: true });
 
     cy.matchImageSnapshot('change-topic-border-color');
   });
@@ -76,10 +68,7 @@ describe('Topic Color Suite', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
     
     // The Shape tab should be open by default
-    cy.get('[aria-label="Color"]').first().click({ force: true });
-
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.get('[aria-label="Color"]').should('be.visible').first().click({ force: true });
 
     cy.get('[title="#ff0000"]').click({ force: true });
 
@@ -101,10 +90,8 @@ describe('Topic Color Suite', () => {
     
     cy.get('[aria-label="Color"]').first().click({ force: true });
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
-
-    cy.get('[title="#0000ff"]').click({ force: true });
+    // Wait for color options and select blue
+    cy.get('[title="#0000ff"]').should('be.visible').click({ force: true });
 
     // Now reset to default
     cy.onClickToolbarButton('Style Topic & Connections');

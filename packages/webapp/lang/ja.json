@@ -479,6 +479,9 @@
   "registration.division": {
     "defaultMessage": "または"
   },
+  "registration.error.title": {
+    "defaultMessage": "登録失敗"
+  },
   "registration.email": {
     "defaultMessage": "メールアドレス"
   },

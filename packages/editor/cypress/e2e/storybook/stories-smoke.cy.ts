@@ -29,6 +29,7 @@ describe('Storybook Stories - Smoke Tests', () => {
     { name: 'IconPicker', path: 'editor-iconpicker--default' },
     { name: 'TopicImagePicker', path: 'editor-topicimagepicker--default' },
     { name: 'CanvasStyleEditor', path: 'editor-canvasstyleeditor--default' },
+    { name: 'RelationshipStyleEditor', path: 'editor-relationshipstyleeditor--default' },
     { name: 'KeyboardShortcutHelp', path: 'editor-keyboardshortcuthelp--default' },
   ];
 
@@ -59,6 +60,8 @@ describe('Storybook Stories - Smoke Tests', () => {
       'editor-iconpicker--with-image',
       'editor-topicimagepicker--with-emoji',
       'editor-topicimagepicker--with-image',
+      'editor-canvasstyleeditor--with-solid-background',
+      'editor-canvasstyleeditor--with-dots',
     ];
 
     variants.forEach((storyPath) => {

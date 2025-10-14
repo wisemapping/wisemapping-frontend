@@ -482,6 +482,9 @@
   "registration.division": {
     "defaultMessage": "या"
   },
+  "registration.error.title": {
+    "defaultMessage": "पंजीकरण विफल"
+  },
   "registration.email": {
     "defaultMessage": "ईमेल"
   },

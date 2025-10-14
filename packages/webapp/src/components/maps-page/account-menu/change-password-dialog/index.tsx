@@ -97,6 +97,7 @@ const ChangePasswordDialog = ({ onClose }: ChangePasswordDialogProps): React.Rea
         defaultMessage: 'Please, provide the new password for your account.',
       })}
       submitButton={intl.formatMessage({ id: 'changepwd.button', defaultMessage: 'Change' })}
+      isLoading={mutation.isLoading}
     >
       <FormControl fullWidth={true}>
         <Input

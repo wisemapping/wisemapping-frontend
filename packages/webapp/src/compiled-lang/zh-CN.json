@@ -1339,6 +1339,12 @@
       "value": "电子邮件"
     }
   ],
+  "registration.error.title": [
+    {
+      "type": 0,
+      "value": "注册失败"
+    }
+  ],
   "registration.facebook.button": [
     {
       "type": 0,

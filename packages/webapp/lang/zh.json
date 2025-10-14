@@ -521,6 +521,9 @@
   "registration.division": {
     "defaultMessage": "或者"
   },
+  "registration.error.title": {
+    "defaultMessage": "注册失败"
+  },
   "login.division": {
     "defaultMessage": "或者"
   },

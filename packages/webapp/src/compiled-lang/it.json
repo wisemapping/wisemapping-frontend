@@ -1339,6 +1339,12 @@
       "value": "Email"
     }
   ],
+  "registration.error.title": [
+    {
+      "type": 0,
+      "value": "Registrazione Fallita"
+    }
+  ],
   "registration.facebook.button": [
     {
       "type": 0,

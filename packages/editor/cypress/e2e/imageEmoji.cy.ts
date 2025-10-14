@@ -18,6 +18,11 @@
 
 /// <reference types="cypress" />
 describe.skip('Image Emoji Suite - DISABLED: UI has changed, needs test updates', () => {
+  const waitForIconGallery = () => {
+    cy.contains('Icons Gallery').should('be.visible');
+    cy.get('img').should('have.length.gt', 0).first().should('have.attr', 'src').and('not.be.empty');
+  };
+
   beforeEach(() => {
     cy.visit('/editor.html');
     cy.waitEditorLoaded();
@@ -27,24 +32,15 @@ describe.skip('Image Emoji Suite - DISABLED: UI has changed, needs test updates'
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Image');
 
-    // Wait for icon panel to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Switch to image mode
+    cy.contains('Icons Gallery').should('be.visible').click();
 
-    // Switch to image mode by clicking the "Icons Gallery" tab
-    cy.contains('Icons Gallery').click();
-
-    // Wait for image icons to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
-
-    // Verify that image icons are displayed
-    cy.get('img').should('have.length.gt', 0);
+    // Wait for image icons to load dynamically
+    waitForIconGallery();
 
     // Click on the first image icon to add it
     cy.get('img').first().parent().click({ force: true });
 
-    // Take a snapshot to verify the image emoji was added
     cy.matchImageSnapshot('image-emoji-added');
   });
 
@@ -53,41 +49,26 @@ describe.skip('Image Emoji Suite - DISABLED: UI has changed, needs test updates'
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Image');
 
-    // Wait for icon panel to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Switch to image mode
+    cy.contains('Icons Gallery').should('be.visible').click();
 
-    // Switch to image mode by clicking the "Icons Gallery" tab
-    cy.contains('Icons Gallery').click();
-
-    // Wait for image icons to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Wait for image icons to load dynamically
+    waitForIconGallery();
 
     // Add the first image icon
     cy.get('img').first().parent().click({ force: true });
-
-    // Wait a bit for the icon to be applied
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
 
     // Now replace it with a different image emoji
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Image');
 
-    // Wait for panel to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
-
     // Switch to image mode again
-    cy.get('input[type="checkbox"]').check({ force: true });
+    cy.get('input[type="checkbox"]').should('be.visible').check({ force: true });
 
-    // Wait for image icons to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Wait for image icons to load dynamically
+    waitForIconGallery();
 
     // Click on a different image (second one) to replace the first
-    // First ensure we have at least 2 images loaded, if not, use the first image again
     cy.get('img').should('have.length.gt', 0).then(($imgs) => {
       if ($imgs.length >= 2) {
         cy.get('img').eq(1).parent().click({ force: true });
@@ -96,48 +77,32 @@ describe.skip('Image Emoji Suite - DISABLED: UI has changed, needs test updates'
       }
     });
 
-    // Take a snapshot to verify the image emoji was replaced
     cy.matchImageSnapshot('image-emoji-replaced');
   });
 
   it('Switch between emoji and image modes', () => {
-    // Updated to work with tab-based interface
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Image');
-
-    // Wait for icon panel to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
 
     // Initially in emoji mode - verify emoji elements are present
     cy.get('[aria-label="grinning"]').should('be.visible');
 
-    // Switch to image mode by clicking the "Icons Gallery" tab
-    cy.contains('Icons Gallery').click();
-
-    // Wait for switch
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Switch to image mode
+    cy.contains('Icons Gallery').should('be.visible').click();
 
     // Verify image icons are now visible and emoji picker is not
-    cy.get('img').should('have.length.gt', 0);
-    // Check that the emoji picker is no longer visible after switching to Icons Gallery
+    waitForIconGallery();
     cy.get('.EmojiPickerReact').should('not.be.visible');
 
-    // Switch back to emoji mode by clicking the "Emojis" tab
-    cy.contains('Emojis').click();
-
-    // Wait for switch
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Switch back to emoji mode
+    cy.contains('Emojis').should('be.visible').click();
 
     // Verify emoji picker is back
     cy.get('[aria-label="grinning"]').should('be.visible');
     
-    // Close the panel by pressing escape
+    // Close the panel
     cy.get('body').type('{esc}');
     
-    // Take a snapshot of the final state
     cy.matchImageSnapshot('emoji-mode-active');
   });
 
@@ -146,32 +111,22 @@ describe.skip('Image Emoji Suite - DISABLED: UI has changed, needs test updates'
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Image');
 
-    // Wait for panel
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
-
-    // Click on a regular emoji (should be in emoji mode by default)
-    cy.get('[aria-label="grinning"]').click();
+    // Click on a regular emoji
+    cy.get('[aria-label="grinning"]').should('be.visible').click();
 
     // Now add an image emoji to another topic
     cy.focusTopicById(4);
     cy.onClickToolbarButton('Add Image');
 
-    // Wait for panel
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Switch to image mode
+    cy.contains('Icons Gallery').should('be.visible').click();
 
-    // Switch to image mode by clicking the "Icons Gallery" tab
-    cy.contains('Icons Gallery').click();
-
-    // Wait for images to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Wait for images to load dynamically
+    waitForIconGallery();
 
     // Add an image icon
     cy.get('img').first().parent().click({ force: true });
 
-    // Take a snapshot showing both types of icons
     cy.matchImageSnapshot('emoji-and-image-emoji-comparison');
   });
 
@@ -179,31 +134,21 @@ describe.skip('Image Emoji Suite - DISABLED: UI has changed, needs test updates'
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Image');
 
-    // Wait for panel
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Switch to image mode
+    cy.contains('Icons Gallery').should('be.visible').click();
 
-    // Switch to image mode by clicking the "Icons Gallery" tab
-    cy.contains('Icons Gallery').click();
-
-    // Wait for images
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Wait for images to load dynamically
+    waitForIconGallery();
 
     // Click on a specific image icon to add it
     cy.get('img').first().parent().click({ force: true });
 
-    // Wait for the icon to be applied to the topic
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
-
-    // Verify the topic now has some visual change - check for SVG or image elements
+    // Verify the topic is visible
     cy.get('[test-id="3"]').should('be.visible');
     
     // Look for any image-related elements that might have been added
     cy.get('svg image, img').should('have.length.gt', 0);
 
-    // Take a snapshot to verify proper rendering
     cy.matchImageSnapshot('image-emoji-renders-in-topic');
   });
 });

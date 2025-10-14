@@ -485,6 +485,9 @@
   "registration.division": {
     "defaultMessage": "or"
   },
+  "registration.error.title": {
+    "defaultMessage": "Registration Failed"
+  },
   "registration.email": {
     "defaultMessage": "Email"
   },

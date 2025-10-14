@@ -32,7 +32,7 @@ declare global {
 
       onMouseOverToolbarButton(value: 'Style Topic & Connections' | 'Font Style' | 'Connection Style' | 'Relationship Style'): void;
       onClickToolbarButton(
-        value: 'Add Relationship' | 'Add Icon' | 'Theme' | 'Connection Style' | 'Relationship Style',
+        value: 'Add Relationship' | 'Add Icon' | 'Theme' | 'Connection Style' | 'Relationship Style' | 'Font Style',
       ): void;
 
       triggerUndo(): void;
@@ -93,9 +93,8 @@ Cypress.Commands.add(
       cy.contains('Shape', { timeout: 5000 }).should('be.visible');
     }
     
-    // Wait a bit more for the panel content to stabilize
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    // Wait for panel content to be fully rendered and interactive
+    cy.get('body').should('not.have.class', 'loading');
   },
 );
 
@@ -109,7 +108,8 @@ Cypress.Commands.add(
       | 'Add Note'
       | 'Theme'
       | 'Connection Style'
-      | 'Relationship Style',
+      | 'Relationship Style'
+      | 'Font Style',
   ) => {
     cy.get(`[aria-label="${button}"]`).click({ multiple: true, force: true });
   },

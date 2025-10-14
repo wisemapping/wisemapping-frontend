@@ -1339,6 +1339,12 @@
       "value": "Електронна пошта"
     }
   ],
+  "registration.error.title": [
+    {
+      "type": 0,
+      "value": "Реєстрація не вдалася"
+    }
+  ],
   "registration.facebook.button": [
     {
       "type": 0,

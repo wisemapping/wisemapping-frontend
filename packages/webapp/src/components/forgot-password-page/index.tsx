@@ -114,6 +114,7 @@ const ForgotPassword = () => {
             id: 'forgot.register',
             defaultMessage: 'Send recovery link',
           })}
+          isLoading={mutation.isLoading}
         />
       </form>
     </FormContainer>

@@ -193,6 +193,7 @@ const LoginPage = (): React.ReactElement => {
                     id: 'login.signin',
                     defaultMessage: 'Sign In',
                   })}
+                  isLoading={mutation.isLoading}
                 />
               </fieldset>
             </form>

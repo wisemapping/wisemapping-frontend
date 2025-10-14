@@ -1339,6 +1339,12 @@
       "value": "メールアドレス"
     }
   ],
+  "registration.error.title": [
+    {
+      "type": 0,
+      "value": "登録失敗"
+    }
+  ],
   "registration.facebook.button": [
     {
       "type": 0,

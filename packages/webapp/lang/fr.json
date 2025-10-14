@@ -521,6 +521,9 @@
   "registration.division": {
     "defaultMessage": "ou"
   },
+  "registration.error.title": {
+    "defaultMessage": "Échec de l'inscription"
+  },
   "login.division": {
     "defaultMessage": "ou"
   },

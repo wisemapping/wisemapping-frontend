@@ -59,7 +59,8 @@ const ActivationPage = (): React.ReactElement => {
         setLoading(false);
       })
       .catch((err) => {
-        setError(err.message || 'Activation failed');
+        // Use err.msg from ErrorInfo instead of err.message
+        setError(err.msg || 'Activation failed');
         setLoading(false);
       });
   }, []);

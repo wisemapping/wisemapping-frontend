@@ -479,6 +479,9 @@
   "registration.division": {
     "defaultMessage": "ou"
   },
+  "registration.error.title": {
+    "defaultMessage": "Falha no Registro"
+  },
   "registration.email": {
     "defaultMessage": "E-mail"
   },

@@ -165,7 +165,17 @@ const RegistrationForm = () => {
                   defaultMessage: 'Registration form',
                 })}
               >
-                <GlobalError error={error} />
+                <GlobalError
+                  error={error}
+                  title={
+                    error
+                      ? intl.formatMessage({
+                          id: 'registration.error.title',
+                          defaultMessage: 'Registration Failed',
+                        })
+                      : undefined
+                  }
+                />
                 <fieldset>
                   <legend>
                     <FormattedMessage
@@ -245,6 +255,7 @@ const RegistrationForm = () => {
                       id: 'registration.register',
                       defaultMessage: 'Register',
                     })}
+                    isLoading={mutation.isLoading}
                   />
                 </fieldset>
               </form>

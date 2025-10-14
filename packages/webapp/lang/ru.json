@@ -488,6 +488,9 @@
   "registration.division": {
     "defaultMessage": "или же"
   },
+  "registration.error.title": {
+    "defaultMessage": "Регистрация не удалась"
+  },
   "login.division": {
     "defaultMessage": "или же"
   },

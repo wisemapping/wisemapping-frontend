@@ -482,6 +482,9 @@
   "registration.division": {
     "defaultMessage": "o"
   },
+  "registration.error.title": {
+    "defaultMessage": "Registrazione Fallita"
+  },
   "registration.email": {
     "defaultMessage": "Email"
   },

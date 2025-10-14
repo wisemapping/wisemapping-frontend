@@ -482,6 +482,9 @@
   "registration.division": {
     "defaultMessage": "或"
   },
+  "registration.error.title": {
+    "defaultMessage": "注册失败"
+  },
   "registration.email": {
     "defaultMessage": "电子邮件"
   },

@@ -101,12 +101,8 @@ describe('Relationship Style Suite', () => {
     // Click on color option
     cy.get('[aria-label="Color"]').last().click({ force: true });
 
-    // Wait for color picker to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
-
-    // Select a color (red) - use title attribute like in other color tests
-    cy.get('[title="#ff0000"]').click({ force: true });
+    // Wait for color picker to load by checking for color elements
+    cy.get('[title="#ff0000"]').should('be.visible').click({ force: true });
 
     cy.matchImageSnapshot('change-relationship-color');
   });
@@ -116,15 +112,12 @@ describe('Relationship Style Suite', () => {
     cy.onClickToolbarButton('Relationship Style');
     cy.get('[aria-label="Color"]').last().click({ force: true });
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
-
-    // Select a color (blue)
-    cy.get('[title="#0000ff"]').click({ force: true });
+    // Wait for color picker to load by checking for color element
+    cy.get('[title="#0000ff"]').should('be.visible').click({ force: true });
 
     // Now reset to default
     cy.onClickToolbarButton('Relationship Style');
-    cy.get('[aria-label="Default color"]').last().click({ force: true });
+    cy.get('[aria-label="Default color"]').last().should('be.visible').click({ force: true });
 
     cy.matchImageSnapshot('reset-relationship-color');
   });

@@ -18,6 +18,18 @@
 
 /// <reference types="cypress" />
 describe('Topic Icon Suite', () => {
+  const waitForIconPanel = () => {
+    // Wait for icon panel to be fully loaded and interactive
+    cy.contains('Icon').should('be.visible');
+    cy.get('[class*="EmojiPickerReact"], img').should('exist');
+  };
+
+  const waitForImageIcons = () => {
+    // Wait for image icons to be loaded with valid src attributes
+    cy.get('img').should('have.length.gt', 0);
+    cy.get('img').first().should('have.attr', 'src').and('not.be.empty');
+  };
+
   beforeEach(() => {
     cy.visit('/editor.html');
     cy.waitEditorLoaded();
@@ -25,9 +37,7 @@ describe('Topic Icon Suite', () => {
 
   it('Open panel', () => {
     cy.onClickToolbarButton('Add Icon');
-    // Icon images must be loaded. No better solution than wait.
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(5000);
+    waitForIconPanel();
     cy.matchImageSnapshot('icons-pannel');
   });
 
@@ -35,7 +45,7 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    cy.get('[aria-label="grinning"]').click();
+    cy.get('[aria-label="grinning"]').should('be.visible').click();
     cy.matchImageSnapshot('add-new-icon');
   });
 
@@ -43,23 +53,15 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    // Wait for icon panel to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    waitForIconPanel();
 
-    // Verify that the icon panel is open and contains the "Icon" title
-    cy.contains('Icon').should('be.visible');
-
-    // Verify that images are loaded in the panel (this confirms webpack asset processing works)
+    // Verify that images are loaded in the panel
     cy.get('img').should('have.length.gt', 0);
-
-    // Check that at least one image has a src attribute (confirming image loading works)
     cy.get('img').first().should('have.attr', 'src').and('not.be.empty');
 
     // Test that icon functionality works by clicking on an icon
     cy.get('[aria-label="grinning"]').should('be.visible').click();
 
-    // Take a snapshot to verify the test completes successfully
     cy.matchImageSnapshot('verify-icon-fix-works');
   });
 
@@ -67,21 +69,13 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    // Wait for icon panel to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    waitForIconPanel();
 
-    // Find and click the "Show images" switch to enable image mode
-    // Target the actual switch input element
+    // Enable image mode (MUI Switch has opacity: 0, so force check)
     cy.get('input[type="checkbox"]').check({ force: true });
 
-    // Wait for image icons to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
-
-    // Verify that image icons are now displayed instead of emojis
-    // The image icons should be rendered as img elements with src attributes
-    cy.get('img').should('have.length.gt', 0);
+    // Wait for image icons to load dynamically
+    waitForImageIcons();
 
     // Enhanced validation: Check that ALL images have valid src attributes
     cy.get('img').each(($img) => {
@@ -89,21 +83,18 @@ describe('Topic Icon Suite', () => {
         .should('have.attr', 'src')
         .and('not.be.empty')
         .and('not.include', 'undefined')
-        .and('not.include', '../assets/'); // Should not contain raw relative paths
+        .and('not.include', '../assets/');
     });
 
     // Test clicking on an image icon to verify functionality
-    // The images are rendered inside clickable containers, so we need to find the right element
     cy.get('img').first().parent().click({ force: true });
 
-    // Take a snapshot to verify the image icons loaded correctly
     cy.matchImageSnapshot('show-images-enabled-works');
   });
 
   it('Verify no network errors when loading image icons', () => {
     // Monitor network requests for 404 errors
     cy.intercept('**/*.svg', (req) => {
-      // If any SVG request would result in 404, fail the test
       req.continue((res) => {
         if (res.statusCode === 404) {
           throw new Error(`404 error loading SVG: ${req.url}`);
@@ -112,7 +103,6 @@ describe('Topic Icon Suite', () => {
     }).as('svgRequests');
 
     cy.intercept('**/*.png', (req) => {
-      // If any PNG request would result in 404, fail the test
       req.continue((res) => {
         if (res.statusCode === 404) {
           throw new Error(`404 error loading PNG: ${req.url}`);
@@ -123,18 +113,17 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    // Wait for icon panel to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    waitForIconPanel();
 
-    // Enable image mode
+    // Enable image mode (MUI Switch has opacity: 0, so force check)
     cy.get('input[type="checkbox"]').check({ force: true });
 
-    // Wait for all images to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(3000);
+    // Wait for all images to load dynamically
+    waitForImageIcons();
+    cy.get('img').each(($img) => {
+      cy.wrap($img).should('have.attr', 'src').and('not.be.empty');
+    });
 
-    // The test passes if no network errors were thrown above
     cy.matchImageSnapshot('no-network-errors-image-icons');
   });
 
@@ -143,40 +132,21 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    // Wait for icon panel to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
-
-    // Add a regular emoji (should be in emoji mode by default)
-    cy.get('[aria-label="grinning"]').click();
-
-    // Wait for icon to be applied
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.get('[aria-label="grinning"]').should('be.visible').click();
 
     // Now add an image icon to the same topic to replace the emoji
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    // Wait for panel to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
-
     // Switch to image mode
-    cy.get('input[type="checkbox"]').check({ force: true });
+    cy.get('input[type="checkbox"]').should('be.visible').check({ force: true });
 
-    // Wait for image icons to load
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Wait for image icons to load dynamically
+    waitForImageIcons();
 
     // Add an image icon to replace the emoji
     cy.get('img').first().parent().click({ force: true });
 
-    // Wait for change to apply
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
-
-    // Take a snapshot to verify the icon was replaced
     cy.matchImageSnapshot('icon-replaced-successfully');
   });
 
@@ -185,29 +155,15 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(4);
     cy.onClickToolbarButton('Add Icon');
 
-    // Wait for panel
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
-
-    // Click grinning emoji
-    cy.get('[aria-label="grinning"]').click();
-
-    // Wait for application
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.get('[aria-label="grinning"]').should('be.visible').click({ force: true });
 
     // Replace with a different emoji
     cy.focusTopicById(4);
     cy.onClickToolbarButton('Add Icon');
 
-    // Wait for panel
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    // Click a different emoji (force in case of backdrop overlay)
+    cy.get('[aria-label*="heart"]').first().click({ force: true });
 
-    // Click a different emoji - try to find a heart emoji or use a different one
-    cy.get('[aria-label*="heart"]').first().click();
-
-    // Take snapshot to verify emoji replacement
     cy.matchImageSnapshot('emoji-replaced-with-different-emoji');
   });
 });

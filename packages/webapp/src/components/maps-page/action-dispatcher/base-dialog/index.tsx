@@ -17,7 +17,7 @@
  */
 
 import React, { useContext, useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { ErrorInfo } from '../../../../classes/client';
 import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from './style';
 import GlobalError from '../../../form/global-error';
@@ -25,6 +25,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import Button from '@mui/material/Button';
 import { CSSObject } from '@emotion/react';
 import { KeyboardContext } from '../../../../classes/provider/keyboard-context';
+import AsyncButton from '../../../form/async-button';
 
 export type DialogProps = {
   onClose: () => void;
@@ -40,17 +41,19 @@ export type DialogProps = {
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
   papercss?: CSSObject;
   isDangerousAction?: boolean;
+  isLoading?: boolean;
 };
 
 const BaseDialog = (props: DialogProps): React.ReactElement => {
   const { setHotkeyEnabled } = useContext(KeyboardContext);
+  const intl = useIntl();
   useEffect(() => {
     setHotkeyEnabled(false);
     return () => {
       setHotkeyEnabled(true);
     };
   }, []);
-  const { onClose, onSubmit, maxWidth = 'sm', papercss } = props;
+  const { onClose, onSubmit, maxWidth = 'sm', papercss, isLoading = false } = props;
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -83,7 +86,13 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
           </StyledDialogContent>
 
           <StyledDialogActions>
-            <Button type="button" color="primary" size="medium" onClick={onClose}>
+            <Button
+              type="button"
+              color="primary"
+              size="medium"
+              onClick={onClose}
+              disabled={isLoading}
+            >
               {onSubmit ? (
                 <FormattedMessage id="action.cancel-button" defaultMessage="Cancel" />
               ) : (
@@ -91,15 +100,20 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
               )}
             </Button>
             {onSubmit && (
-              <Button
+              <AsyncButton
                 color="primary"
                 size="medium"
                 variant="contained"
                 type="submit"
                 disableElevation={true}
+                isLoading={isLoading}
+                loadingText={intl.formatMessage({
+                  id: 'common.wait',
+                  defaultMessage: 'Please wait ...',
+                })}
               >
                 {props.submitButton}
-              </Button>
+              </AsyncButton>
             )}
           </StyledDialogActions>
         </form>

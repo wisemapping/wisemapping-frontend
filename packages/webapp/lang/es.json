@@ -521,6 +521,9 @@
   "registration.division": {
     "defaultMessage": "ó"
   },
+  "registration.error.title": {
+    "defaultMessage": "Registro Fallido"
+  },
   "login.division": {
     "defaultMessage": "ó"
   },

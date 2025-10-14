@@ -1339,6 +1339,12 @@
       "value": "ईमेल"
     }
   ],
+  "registration.error.title": [
+    {
+      "type": 0,
+      "value": "पंजीकरण विफल"
+    }
+  ],
   "registration.facebook.button": [
     {
       "type": 0,

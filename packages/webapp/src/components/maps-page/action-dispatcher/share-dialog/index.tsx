@@ -31,17 +31,16 @@ import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
-import CircularProgress from '@mui/material/CircularProgress';
 import { useStyles } from './style';
 import RoleIcon from '../../role-icon';
 import Tooltip from '@mui/material/Tooltip';
 import { Interpolation, Theme } from '@emotion/react';
 import { ClientContext } from '../../../../classes/provider/client-context';
+import AsyncButton from '../../../form/async-button';
 
 type ShareModel = {
   emails: string;
@@ -213,24 +212,22 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             css={classes.checkbox}
           />
 
-          <Button
+          <AsyncButton
             color="primary"
             type="button"
             variant="contained"
             disableElevation={true}
             onClick={handleOnAddClick}
-            disabled={!isValid || addMutation.isLoading}
+            disabled={!isValid}
+            isLoading={addMutation.isLoading}
+            loadingText={intl.formatMessage({
+              id: 'share.adding-button',
+              defaultMessage: 'Sharing...',
+            })}
             css={classes.shareButton}
-            startIcon={
-              addMutation.isLoading ? <CircularProgress size={16} color="inherit" /> : null
-            }
           >
-            {addMutation.isLoading ? (
-              <FormattedMessage id="share.adding-button" defaultMessage="Sharing..." />
-            ) : (
-              <FormattedMessage id="share.add-button" defaultMessage="Share" />
-            )}
-          </Button>
+            {intl.formatMessage({ id: 'share.add-button', defaultMessage: 'Share' })}
+          </AsyncButton>
 
           {showMessage && (
             <TextField

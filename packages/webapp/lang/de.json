@@ -518,6 +518,9 @@
   "registration.division": {
     "defaultMessage": "oder"
   },
+  "registration.error.title": {
+    "defaultMessage": "Registrierung fehlgeschlagen"
+  },
   "login.division": {
     "defaultMessage": "oder"
   },

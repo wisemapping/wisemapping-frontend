@@ -485,6 +485,9 @@
   "registration.division": {
     "defaultMessage": "або"
   },
+  "registration.error.title": {
+    "defaultMessage": "Реєстрація не вдалася"
+  },
   "registration.email": {
     "defaultMessage": "Електронна пошта"
   },
