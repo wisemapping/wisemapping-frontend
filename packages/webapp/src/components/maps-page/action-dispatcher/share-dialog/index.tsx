@@ -128,7 +128,10 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     email: string,
   ): void => {
     event.stopPropagation();
-    deleteMutation.mutate(email);
+    // Prevent duplicate requests if already deleting
+    if (!deleteMutation.isLoading) {
+      deleteMutation.mutate(email);
+    }
   };
 
   const { isLoading, data: permissions = [] } = useQuery<unknown, ErrorInfo, Permission[]>(
@@ -297,7 +300,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
                       >
                         <span>
                           <IconButton
-                            disabled={permission.role === 'owner'}
+                            disabled={permission.role === 'owner' || deleteMutation.isLoading}
                             onClick={(e) => handleOnDeleteClick(e, permission.email)}
                             size="small"
                           >

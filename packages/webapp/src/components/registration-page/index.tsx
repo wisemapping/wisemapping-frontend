@@ -220,13 +220,13 @@ const RegistrationForm = () => {
                     name="password"
                     type="password"
                     onChange={handleOnChange}
+                    maxLength={39}
                     label={intl.formatMessage({
                       id: 'registration.password',
                       defaultMessage: 'Password',
                     })}
                     autoComplete="new-password"
                     error={error}
-                    maxLength={30}
                   />
 
                   {AppConfig.isRecaptcha2Enabled() && (

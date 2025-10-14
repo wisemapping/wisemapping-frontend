@@ -112,7 +112,7 @@ const ChangePasswordDialog = ({ onClose }: ChangePasswordDialogProps): React.Rea
           error={error}
           fullWidth={true}
           autoComplete="new-password"
-          maxLength={30}
+          maxLength={39}
         />
 
         <Input
@@ -127,6 +127,7 @@ const ChangePasswordDialog = ({ onClose }: ChangePasswordDialogProps): React.Rea
           required={true}
           fullWidth={true}
           autoComplete="new-password"
+          maxLength={39}
         />
       </FormControl>
     </BaseDialog>
