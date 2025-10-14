@@ -35,8 +35,10 @@ const commonConfig = {
   },
   target: 'web',
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].[contenthash:8].bundle.js',
+    chunkFilename: '[name].[contenthash:8].chunk.js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true, // Clean dist folder before each build
   },
   module: {
     rules: [
@@ -48,12 +50,55 @@ const commonConfig = {
   },
   optimization: {
     chunkIds: 'named',
+    runtimeChunk: {
+      name: 'runtime',
+    },
     splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: 10,
+      minSize: 0,
       cacheGroups: {
+        // React core libraries
+        reactVendor: {
+          test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+          name: 'react-vendor',
+          priority: 40,
+          reuseExistingChunk: true,
+        },
+        // Material-UI and Emotion
+        muiVendor: {
+          test: /[\\/]node_modules[\\/](@mui|@emotion)[\\/]/,
+          name: 'mui-vendor',
+          priority: 35,
+          reuseExistingChunk: true,
+        },
+        // Styling and i18n libraries
+        stylesVendor: {
+          test: /[\\/]node_modules[\\/](styled-components|react-intl)[\\/]/,
+          name: 'styles-vendor',
+          priority: 30,
+          reuseExistingChunk: true,
+        },
+        // WiseMapping internal packages
+        wisemappingLibs: {
+          test: /[\\/]node_modules[\\/]@wisemapping[\\/]/,
+          name: 'wisemapping-libs',
+          priority: 25,
+          reuseExistingChunk: true,
+        },
+        // All other node_modules
         vendors: {
-          test: /node_modules\/.*/,
+          test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          chunks: 'all',
+          priority: 20,
+          reuseExistingChunk: true,
+        },
+        // Common code shared between chunks
+        common: {
+          minChunks: 2,
+          name: 'common',
+          priority: 10,
+          reuseExistingChunk: true,
         },
       },
     },

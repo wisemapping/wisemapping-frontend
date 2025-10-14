@@ -9,7 +9,7 @@ dist/
 
 # Webpack cache
 .webpack-cache/
-
+.cache/
 
 # Log files
 *.log
@@ -21,7 +21,21 @@ dist/
 Thumbs.db
 
 **/build/**/*
+
+# IDE and AI tools
 .vscode
+.claude
+.cursor
+
+# Test artifacts
+cypress/screenshots
+cypress/videos
+cypress/downloads
+storybook-static
+test-results.json
+
+# Linter cache
+.eslintcache
 
 # visual code local workspaces
 wisemapping-frontend.code-workspace

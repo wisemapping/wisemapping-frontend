@@ -19,6 +19,7 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "build-storybook": "storybook build",
+    "clean": "rm -rf dist node_modules/.cache storybook-static cypress/screenshots cypress/videos debug-storybook.log .eslintcache",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "dev": "webpack serve --config webpack.dev.js",

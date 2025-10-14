@@ -14,8 +14,8 @@
   ],
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "storybook": "STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p ${PORT:-6008} --quiet",
     "build-storybook": "STORYBOOK_DISABLE_TELEMETRY=1 storybook build",
+    "clean": "rm -rf dist node_modules/.cache storybook-static cypress/screenshots cypress/videos cypress/downloads debug-storybook.log .eslintcache",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:storybook:open": "cypress open --config-file cypress.storybook.config.ts",
@@ -25,6 +25,7 @@
     "lint": "eslint src --ext js,ts,tsx",
     "lint:fix": "eslint src --ext js,ts,tsx --fix",
     "playground": "webpack serve --config webpack.playground.js",
+    "storybook": "STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p ${PORT:-6008} --quiet",
     "test": "yarn test:unit && yarn test:integration",
     "test:integration": "yarn test:integration:playground && yarn test:integration:storybook",
     "test:integration:playground": "PORT=8081 CYPRESS_BASE_URL=http://localhost:8081 npx start-server-and-test 'webpack serve --config webpack.playground.js --port 8081' http-get://localhost:8081 cy:run",
