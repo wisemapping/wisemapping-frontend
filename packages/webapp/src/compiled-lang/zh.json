@@ -317,6 +317,12 @@
       "value": "清除"
     }
   ],
+  "admin.status-inactive": [
+    {
+      "type": 0,
+      "value": "不活躍"
+    }
+  ],
   "admin.status-suspended": [
     {
       "type": 0,

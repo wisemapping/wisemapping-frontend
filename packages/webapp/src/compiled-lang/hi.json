@@ -317,6 +317,12 @@
       "value": "साफ"
     }
   ],
+  "admin.status-inactive": [
+    {
+      "type": 0,
+      "value": "निष्क्रिय"
+    }
+  ],
   "admin.status-suspended": [
     {
       "type": 0,

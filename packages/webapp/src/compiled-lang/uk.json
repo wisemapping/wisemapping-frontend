@@ -317,6 +317,12 @@
       "value": "Очистити"
     }
   ],
+  "admin.status-inactive": [
+    {
+      "type": 0,
+      "value": "Неактивний"
+    }
+  ],
   "admin.status-suspended": [
     {
       "type": 0,

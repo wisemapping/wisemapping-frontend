@@ -317,6 +317,12 @@
       "value": "Nettoyer"
     }
   ],
+  "admin.status-inactive": [
+    {
+      "type": 0,
+      "value": "Inactif"
+    }
+  ],
   "admin.status-suspended": [
     {
       "type": 0,

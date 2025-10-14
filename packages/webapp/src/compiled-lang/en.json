@@ -317,6 +317,12 @@
       "value": "Clean"
     }
   ],
+  "admin.status-inactive": [
+    {
+      "type": 0,
+      "value": "Inactive"
+    }
+  ],
   "admin.status-suspended": [
     {
       "type": 0,
