@@ -26,10 +26,11 @@ import ColorUtil from './ColorUtil';
 import Topic from '../Topic';
 import Theme, { TopicType, ThemeVariant } from './Theme';
 import { $msg } from '../Messages';
-import { ThemeStyle, TopicStyleType } from './ThemeStyle';
+import { ThemeStyle } from './ThemeStyle';
+import type { TopicStyleType } from './ThemeStyle';
 
 // Re-export TopicStyleType for backward compatibility
-export { TopicStyleType } from './ThemeStyle';
+export type { TopicStyleType } from './ThemeStyle';
 
 type StyleType = string | string[] | number | undefined | LineType;
 

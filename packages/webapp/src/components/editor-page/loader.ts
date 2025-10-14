@@ -17,7 +17,7 @@
  */
 
 import { ErrorInfo, MapMetadata } from '../../classes/client';
-import { EditorRenderMode } from '@wisemapping/editor';
+import type { EditorRenderMode } from '@wisemapping/mindplot';
 import AppConfig from '../../classes/app-config';
 
 export type EditorMetadata = {
