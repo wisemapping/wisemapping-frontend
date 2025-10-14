@@ -167,6 +167,7 @@ export interface AdminClientInterface {
   activateAdminUser(userId: number): Promise<void>;
 
   getAdminMaps(params?: AdminMapsParams): Promise<AdminMapsResponse>;
+  getUserMaps(userId: number): Promise<AdminMap[]>;
   updateAdminMap(mapId: number, mapData: Partial<AdminMap>): Promise<AdminMap>;
   updateMapSpamStatus(mapId: number, spamData: { spam: boolean }): Promise<AdminMap>;
   deleteAdminMap(mapId: number): Promise<void>;
@@ -347,6 +348,16 @@ export default class AdminClient implements AdminClientInterface {
       .then((response) => response.data)
       .catch((error) => {
         console.error('Failed to fetch admin maps:', error);
+        throw this.parseResponseOnError(error.response);
+      });
+  }
+
+  getUserMaps(userId: number): Promise<AdminMap[]> {
+    return this.axios
+      .get(`${this.baseUrl}/api/restful/admin/users/${userId}/maps`)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error('Failed to fetch user maps:', error);
         throw this.parseResponseOnError(error.response);
       });
   }

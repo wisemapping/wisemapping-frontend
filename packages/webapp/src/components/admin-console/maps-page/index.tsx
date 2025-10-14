@@ -681,7 +681,22 @@ const MapsManagement = (): ReactElement => {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" color="primary" fontWeight="medium">
+                    <Typography
+                      variant="body2"
+                      color="primary"
+                      fontWeight="medium"
+                      component="a"
+                      href={`/c/maps/${map.id}/public`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        textDecoration: 'none',
+                        cursor: 'pointer',
+                        '&:hover': {
+                          textDecoration: 'underline',
+                        },
+                      }}
+                    >
                       #{map.id}
                     </Typography>
                   </TableCell>

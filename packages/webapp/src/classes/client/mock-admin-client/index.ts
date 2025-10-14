@@ -586,6 +586,23 @@ class MockAdminClient implements AdminClientInterface {
     });
   }
 
+  getUserMaps(userId: number): Promise<AdminMap[]> {
+    console.log('MockAdminClient: Getting user maps for user', userId);
+
+    // Find the user to get their email/name
+    const user = this.adminUsers.find((u) => u.id === userId);
+    if (!user) {
+      return Promise.reject(new Error('User not found'));
+    }
+
+    // Return maps created by this user
+    const userMaps = this.adminMaps.filter(
+      (map) => map.createdBy === user.email || map.createdBy === user.fullName,
+    );
+
+    return Promise.resolve(userMaps);
+  }
+
   updateAdminMap(mapId: number, mapData: Partial<AdminMap>): Promise<AdminMap> {
     console.log('MockAdminClient: Updating map', mapId, mapData);
 

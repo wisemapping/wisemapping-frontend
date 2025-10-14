@@ -62,6 +62,7 @@ import {
   Block as BlockIcon,
   CheckCircle as CheckCircleIcon,
   MarkEmailRead as MarkEmailReadIcon,
+  Map as MapIcon,
 } from '@mui/icons-material';
 import { AdminUsersParams } from '../../../classes/client/admin-client';
 import AppConfig from '../../../classes/app-config';
@@ -153,6 +154,10 @@ const AccountManagement = (): ReactElement => {
   // Activate confirmation dialog state
   const [isActivateDialogOpen, setIsActivateDialogOpen] = useState(false);
   const [activatingUser, setActivatingUser] = useState<User | null>(null);
+
+  // User maps dialog state
+  const [isUserMapsDialogOpen, setIsUserMapsDialogOpen] = useState(false);
+  const [viewingMapsUser, setViewingMapsUser] = useState<User | null>(null);
 
   // Suspension reasons
   const suspensionReasons = [
@@ -265,6 +270,8 @@ const AccountManagement = (): ReactElement => {
   const deleteUserMutation = useMutation((userId: number) => client.deleteAdminUser(userId), {
     onSuccess: () => {
       queryClient.invalidateQueries('adminUsers');
+      setIsDeleteDialogOpen(false);
+      setDeletingUser(null);
     },
     onError: (error: Error) => {
       console.error('Failed to delete user:', error);
@@ -294,6 +301,8 @@ const AccountManagement = (): ReactElement => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('adminUsers');
+        setIsUnsuspendDialogOpen(false);
+        setUnsuspendingUser(null);
       },
       onError: (error: Error) => {
         console.error('Failed to unsuspend user:', error);
@@ -305,9 +314,23 @@ const AccountManagement = (): ReactElement => {
   const activateUserMutation = useMutation((userId: number) => client.activateAdminUser(userId), {
     onSuccess: () => {
       queryClient.invalidateQueries('adminUsers');
+      setIsActivateDialogOpen(false);
+      setActivatingUser(null);
     },
     onError: (error: Error) => {
       console.error('Failed to activate user:', error);
+    },
+  });
+
+  // Lazy query for user maps (only fetches when enabled)
+  const {
+    data: userMaps,
+    isLoading: isLoadingUserMaps,
+    refetch: refetchUserMaps,
+  } = useQuery(['userMaps', viewingMapsUser?.id], () => client.getUserMaps(viewingMapsUser!.id), {
+    enabled: false, // Lazy loading - only fetch when manually triggered
+    onError: (error: Error) => {
+      console.error('Failed to fetch user maps:', error);
     },
   });
 
@@ -392,8 +415,6 @@ const AccountManagement = (): ReactElement => {
   const handleConfirmDelete = () => {
     if (deletingUser) {
       deleteUserMutation.mutate(deletingUser.id);
-      setIsDeleteDialogOpen(false);
-      setDeletingUser(null);
     }
   };
 
@@ -416,8 +437,6 @@ const AccountManagement = (): ReactElement => {
   const handleConfirmUnsuspend = () => {
     if (unsuspendingUser) {
       unsuspendUserMutation.mutate(unsuspendingUser.id);
-      setIsUnsuspendDialogOpen(false);
-      setUnsuspendingUser(null);
     }
   };
 
@@ -434,8 +453,6 @@ const AccountManagement = (): ReactElement => {
   const handleConfirmActivate = () => {
     if (activatingUser) {
       activateUserMutation.mutate(activatingUser.id);
-      setIsActivateDialogOpen(false);
-      setActivatingUser(null);
     }
   };
 
@@ -457,6 +474,18 @@ const AccountManagement = (): ReactElement => {
     setIsSuspensionDialogOpen(false);
     setSuspendingUser(null);
     setSuspensionReason('');
+  };
+
+  const handleViewUserMaps = (user: User) => {
+    setViewingMapsUser(user);
+    setIsUserMapsDialogOpen(true);
+    // Trigger lazy loading when dialog opens
+    setTimeout(() => refetchUserMaps(), 0);
+  };
+
+  const handleCloseUserMapsDialog = () => {
+    setIsUserMapsDialogOpen(false);
+    setViewingMapsUser(null);
   };
 
   const formatDate = (dateString: string) => {
@@ -782,6 +811,17 @@ const AccountManagement = (): ReactElement => {
                     )}
                     <IconButton
                       size="small"
+                      onClick={() => handleViewUserMaps(user)}
+                      title={intl.formatMessage({
+                        id: 'admin.view-user-maps',
+                        defaultMessage: 'View user maps',
+                      })}
+                      color="info"
+                    >
+                      <MapIcon />
+                    </IconButton>
+                    <IconButton
+                      size="small"
                       onClick={() => handleDeleteUser(user)}
                       title={intl.formatMessage({
                         id: 'admin.delete-user',
@@ -996,7 +1036,7 @@ const AccountManagement = (): ReactElement => {
       {/* Suspension Dialog */}
       <Dialog
         open={isSuspensionDialogOpen}
-        onClose={handleCancelSuspension}
+        onClose={suspendUserMutation.isLoading ? undefined : handleCancelSuspension}
         maxWidth="sm"
         fullWidth
       >
@@ -1024,7 +1064,9 @@ const AccountManagement = (): ReactElement => {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelSuspension}>Cancel</Button>
+          <Button onClick={handleCancelSuspension} disabled={suspendUserMutation.isLoading}>
+            Cancel
+          </Button>
           <Button
             onClick={handleConfirmSuspension}
             color="error"
@@ -1037,7 +1079,12 @@ const AccountManagement = (): ReactElement => {
       </Dialog>
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={isDeleteDialogOpen} onClose={handleCancelDelete} maxWidth="sm" fullWidth>
+      <Dialog
+        open={isDeleteDialogOpen}
+        onClose={deleteUserMutation.isLoading ? undefined : handleCancelDelete}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Delete User</DialogTitle>
         <DialogContent>
           <Alert severity="warning" sx={{ mb: 2 }}>
@@ -1048,7 +1095,9 @@ const AccountManagement = (): ReactElement => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelDelete}>Cancel</Button>
+          <Button onClick={handleCancelDelete} disabled={deleteUserMutation.isLoading}>
+            Cancel
+          </Button>
           <Button
             onClick={handleConfirmDelete}
             color="error"
@@ -1061,7 +1110,12 @@ const AccountManagement = (): ReactElement => {
       </Dialog>
 
       {/* Unsuspend Confirmation Dialog */}
-      <Dialog open={isUnsuspendDialogOpen} onClose={handleCancelUnsuspend} maxWidth="sm" fullWidth>
+      <Dialog
+        open={isUnsuspendDialogOpen}
+        onClose={unsuspendUserMutation.isLoading ? undefined : handleCancelUnsuspend}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Unsuspend User</DialogTitle>
         <DialogContent>
           <Typography variant="body2">
@@ -1074,7 +1128,9 @@ const AccountManagement = (): ReactElement => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelUnsuspend}>Cancel</Button>
+          <Button onClick={handleCancelUnsuspend} disabled={unsuspendUserMutation.isLoading}>
+            Cancel
+          </Button>
           <Button
             onClick={handleConfirmUnsuspend}
             color="success"
@@ -1087,7 +1143,12 @@ const AccountManagement = (): ReactElement => {
       </Dialog>
 
       {/* Activate Confirmation Dialog */}
-      <Dialog open={isActivateDialogOpen} onClose={handleCancelActivate} maxWidth="sm" fullWidth>
+      <Dialog
+        open={isActivateDialogOpen}
+        onClose={activateUserMutation.isLoading ? undefined : handleCancelActivate}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Activate User</DialogTitle>
         <DialogContent>
           <Alert severity="info" sx={{ mb: 2 }}>
@@ -1098,7 +1159,9 @@ const AccountManagement = (): ReactElement => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelActivate}>Cancel</Button>
+          <Button onClick={handleCancelActivate} disabled={activateUserMutation.isLoading}>
+            Cancel
+          </Button>
           <Button
             onClick={handleConfirmActivate}
             color="primary"
@@ -1107,6 +1170,83 @@ const AccountManagement = (): ReactElement => {
           >
             {activateUserMutation.isLoading ? 'Activating...' : 'Activate User'}
           </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* User Maps Dialog */}
+      <Dialog
+        open={isUserMapsDialogOpen}
+        onClose={handleCloseUserMapsDialog}
+        maxWidth="lg"
+        fullWidth
+      >
+        <DialogTitle>User Maps - {viewingMapsUser?.email}</DialogTitle>
+        <DialogContent>
+          {isLoadingUserMaps ? (
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+              <CircularProgress />
+            </Box>
+          ) : userMaps && userMaps.length > 0 ? (
+            <TableContainer>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ID</TableCell>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Description</TableCell>
+                    <TableCell>Created</TableCell>
+                    <TableCell>Last Modified</TableCell>
+                    <TableCell>Public</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {userMaps.map((map) => (
+                    <TableRow key={map.id}>
+                      <TableCell>
+                        <Typography
+                          variant="body2"
+                          color="primary"
+                          component="a"
+                          href={`/c/maps/${map.id}/public`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          sx={{
+                            textDecoration: 'none',
+                            cursor: 'pointer',
+                            '&:hover': {
+                              textDecoration: 'underline',
+                            },
+                          }}
+                        >
+                          #{map.id}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>{map.title}</TableCell>
+                      <TableCell>
+                        <Typography variant="body2" color="text.secondary" noWrap>
+                          {map.description || 'No description'}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>{formatDate(map.creationTime)}</TableCell>
+                      <TableCell>{formatDate(map.lastModificationTime)}</TableCell>
+                      <TableCell>
+                        <Chip
+                          label={map.public ? 'Public' : 'Private'}
+                          color={map.public ? 'success' : 'default'}
+                          size="small"
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : (
+            <Alert severity="info">This user has no maps.</Alert>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseUserMapsDialog}>Close</Button>
         </DialogActions>
       </Dialog>
     </Box>
