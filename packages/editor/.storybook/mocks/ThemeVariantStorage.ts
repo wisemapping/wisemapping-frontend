@@ -17,7 +17,7 @@
  */
 
 import { ThemeVariantStorage } from '../../src/types/ThemeVariantStorage';
-import { PaletteMode } from '@mui/material';
+import type { PaletteMode } from '@mui/material';
 
 export class MockThemeVariantStorage implements ThemeVariantStorage {
   private variant: PaletteMode = 'light';

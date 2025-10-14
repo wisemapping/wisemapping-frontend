@@ -17,7 +17,9 @@
  */
 
 import React, { ReactElement, useEffect } from 'react';
-import { Box, Tab, IconButton } from '@mui/material';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import ImageIcon from '@mui/icons-material/Image';

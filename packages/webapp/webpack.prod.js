@@ -43,10 +43,7 @@ module.exports = merge(common, {
   stats: process.env.WEBPACK_STATS || 'normal',
   optimization: {
     minimize: true,
-    splitChunks: {
-      minSize: 240000,
-      maxSize: 240000,
-    },
+    // Bundle splitting is configured in webpack.common.js
   },
   plugins: [
     new HtmlWebpackPlugin({

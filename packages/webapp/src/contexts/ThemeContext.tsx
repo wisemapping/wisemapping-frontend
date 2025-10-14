@@ -17,7 +17,7 @@
  */
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { PaletteMode } from '@mui/material';
+import type { PaletteMode } from '@mui/material';
 
 interface ThemeContextType {
   mode: PaletteMode;

@@ -1,122 +1,143 @@
-# WiseMapping Frontend Coding Guidelines
+# WiseMapping Frontend Rules
 
-## 1. Internationalization (i18n) Changes
+## 1. Copyright Header (MANDATORY)
 
-**CRITICAL**: When making changes to any `en.json` file for internationalization:
+ALL `.ts`, `.tsx`, `.js`, `.jsx` files MUST start with this header BEFORE any imports:
 
-1. **All supported languages must be updated** with appropriate translations:
-   - Spanish (es.json)
-   - English (en.json)
-   - French (fr.json)
-   - German (de.json)
-   - Chinese Simplified (zh.json)
-   - Chinese Traditional (zh-CN.json)
-   - Russian (ru.json)
-   - Ukrainian (uk.json)
-   - Japanese (ja.json)
-   - Portuguese (pt.json)
-   - Italian (it.json)
-   - Hindi (hi.json)
+```
+/*
+ *    Copyright [2007-2025] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+```
 
-2. **After updating all language files**, you MUST run the compilation command:
-   ```bash
-   yarn i18n:compile
-   ```
-   
-   This command must be executed in the appropriate package directory (editor or webapp) where the changes were made.
+**Exceptions**: `package.json`, `tsconfig.json`, `.md`, `.txt`, test data files, assets
 
-3. **Workflow**:
-   - Identify which package needs i18n changes (packages/editor or packages/webapp)
-   - Update `en.json` with the new or modified keys
-   - Update all other language files with appropriate translations
-   - Run `yarn i18n:compile` in that package's directory
-   - Verify that the compiled files in `src/compiled-lang/` have been updated
+## 2. Material UI Imports (CRITICAL - 500KB+ Bundle Impact)
 
-4. **NO HARDCODED TEXT**:
-   - **NEVER hardcode user-facing text, labels, messages, or any string resources** in the code
-   - All user-facing strings MUST be defined in the i18n JSON files
-   - Use the appropriate i18n mechanism (e.g., `FormattedMessage`, `useIntl`, etc.) to reference localized strings
-   - This applies to:
-     - UI labels and buttons
-     - Error messages and notifications
-     - Tooltips and help text
-     - Placeholders and default values
-     - Any text that will be displayed to users
-   - Example of what NOT to do: `<Button>Save</Button>`
-   - Example of correct approach: `<FormattedMessage id="action.save" />`
+⚠️ Pre-push hook will REJECT incorrect imports
 
-5. **NO DUPLICATE RESOURCES**:
-   - **NEVER add duplicate i18n keys** across the language files
-   - Before adding a new resource key, search existing keys to check if a similar translation already exists
-   - Reuse existing keys whenever possible to maintain consistency
-   - If you find duplicate keys, consolidate them into a single key
+### ✅ CORRECT (Tree-shakeable):
+```typescript
+// Components - one per line
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
-## 2. Material UI Guidelines
+// Icons - one per line
+import SearchIcon from '@mui/icons-material/Search';
+import EditIcon from '@mui/icons-material/Edit';
 
-**PRIMARY UI LIBRARY**: This project uses Material UI (MUI) extensively.
+// Hooks from /styles
+import { useTheme, styled } from '@mui/material/styles';
 
-1. **Always use Material UI components first**:
-   - Before creating custom components, check if Material UI provides a suitable component
-   - Prefer MUI components over custom HTML elements or other UI libraries
-   - Examples: Use `<Button>` from MUI instead of `<button>`, `<TextField>` instead of `<input>`, etc.
+// Types use 'import type'
+import type { PaletteMode } from '@mui/material';
+import type { SvgIconProps } from '@mui/material/SvgIcon';
+```
 
-2. **Follow Material UI best practices**:
-   - Use MUI's theming system for styling consistency
-   - Follow MUI's styling approaches (sx prop, styled components, etc.)
-   - Leverage MUI's built-in accessibility features
-   - Use MUI's grid system and layout components
+### ❌ WRONG (Bloats bundle):
+```typescript
+import { Button, Box } from '@mui/material';           // NO!
+import { Search, Edit } from '@mui/icons-material';    // NO!
+import { PaletteMode } from '@mui/material';           // NO! Use 'import type'
+```
 
-3. **Reference**:
-   - Official docs: https://mui.com/
-   - Check MUI documentation for component APIs and examples before implementation
+**Common Components Quick Reference**:
+```typescript
+// Layout: Box, Container, Grid, Stack
+// Inputs: Button, TextField, Select, MenuItem, Checkbox, Switch
+// Feedback: Alert, Dialog, Snackbar, CircularProgress
+// Data: Table, TableBody, TableCell, TableHead, TableRow, Chip, Tooltip
+// Navigation: Tabs, Tab, Drawer
+// Utils: IconButton, Divider, Paper, Typography
+```
 
-## 3. Code Quality and Linting
+**Validation**: Run `./scripts/check-mui-imports.sh` or `yarn build:analyze`
 
-**MANDATORY**: All code changes must conform to the project's linting configuration.
+## 3. Component File Organization (MANDATORY)
 
-1. **Lint Compliance**:
-   - All code edits MUST follow the format and rules declared in the project's ESLint configuration (`eslint.config.mjs`)
-   - After making any code changes, MUST run `yarn lint` in the appropriate package directory to check for linter errors
-   - The lint command varies by package:
-     - For webapp: `cd packages/webapp && yarn lint`
-     - For editor: `cd packages/editor && yarn lint`
-     - For mindplot: `cd packages/mindplot && yarn lint`
-     - For web2d: `cd packages/web2d && yarn lint`
-   - Fix all linter errors before considering the task complete
-   - Never commit code with linting errors
-   - The `read_lints` tool may not catch all errors that `yarn lint` finds - always verify with `yarn lint`
+Every component MUST follow the `index.tsx` pattern:
 
-2. **Code Style**:
-   - Follow the established patterns and conventions in the codebase
-   - Maintain consistent formatting with existing code
-   - Respect the project's indentation, spacing, and naming conventions
+```
+ComponentName/
+├── index.tsx              # Main component (REQUIRED)
+├── SubComponent.tsx       # Sub-components in same dir
+├── helpers.ts             # Component-specific utilities
+├── types.ts               # Component-specific types
+└── styles.css             # Component-specific styles
+```
 
-## 4. Component Structure and Organization
+**Rules**:
+- ✅ Every component dir has `index.tsx` (main entry point)
+- ✅ Sub-components stay in parent directory, named `PascalCase.tsx`
+- ✅ Helper files: `helpers.ts`, `types.ts`, `constants.ts`, `utils.ts`
+- ✅ Shared/reusable → `shared/` or `common/` directory
+- ❌ NO components at root level without directory
+- ❌ NO redundant naming: `MyComponent/MyComponent.tsx` → use `MyComponent/index.tsx`
 
-**MANDATORY**: Follow the established component structure pattern.
+**Examples**:
+```
+theme-toggle/
+└── index.tsx
 
-1. **Directory Structure**:
-   - Each component MUST have its main file named `index.tsx` in its own directory
-   - Subcomponents, subpages, and related components MUST be organized within subdirectories of the parent component
-   - Example structure:
-     ```
-     components/
-       my-component/
-         index.tsx          (main component)
-         subpage-one/
-           index.tsx        (subpage component)
-         subpage-two/
-           index.tsx        (subpage component)
-         shared-dialog/
-           index.tsx        (shared subcomponent)
-     ```
+admin-console/
+├── index.tsx
+├── layout/index.tsx
+├── maps-page/index.tsx
+└── accounts-page/index.tsx
 
-2. **Pattern Consistency**:
-   - Always follow the existing patterns in the codebase when creating new components
-   - Look at existing component structures (e.g., `admin-console/`, `maps-page/`, `registration-page/`) as references
-   - Keep related functionality grouped together in the same directory hierarchy
+action-widget/pane/
+├── topic-style-editor/
+│   ├── index.tsx
+│   ├── IconCollection.tsx
+│   └── ColorPicker.tsx
+└── shared/
+    ├── StyledTabs.tsx
+    └── StyledEditorContainer.tsx
+```
 
-## Additional Guidelines
+**Clean Imports Result**:
+```typescript
+import ThemeToggle from '../common/theme-toggle';        // ✅ Clean
+import MapsPage from '../admin-console/maps-page';       // ✅ Clean
+// vs
+import ThemeToggle from '../common/theme-toggle/ThemeToggle'; // ❌ Redundant
+```
 
-(Add more project-specific guidelines here as needed)
+## 4. Code Standards
 
+- **Language**: TypeScript preferred over JavaScript
+- **React**: Functional components + hooks (no class components)
+- **Naming**:
+  - Components: `PascalCase` (`MyComponent.tsx`)
+  - Utilities: `camelCase` (`myUtility.ts`)
+  - Constants: `UPPER_SNAKE_CASE` (`MAX_VALUE`)
+- **Git**:
+  - Clear commit messages
+  - No force push to `main`
+  - Branch names: `feature/name`, `fix/name`
+
+## 5. Performance
+
+- Check for duplicate dependencies before adding packages
+- Use dynamic imports for code splitting when appropriate
+- Run `yarn build:analyze` to verify bundle sizes
+
+## 6. Testing
+
+- Unit tests: `*.test.ts` or `*.test.tsx`
+- Integration tests: Cypress
+- Aim for good coverage on critical paths

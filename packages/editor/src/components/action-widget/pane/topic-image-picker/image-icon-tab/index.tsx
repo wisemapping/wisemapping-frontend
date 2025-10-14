@@ -1,13 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import {
-  Box,
-  Typography,
-  Grid,
-  IconButton,
-  Tooltip,
-  TextField,
-  InputAdornment,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 import { styled } from '@mui/material/styles';
 import NodeProperty from '../../../../../classes/model/node-property';
 import {

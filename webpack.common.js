@@ -70,6 +70,12 @@ module.exports = {
               happyPackMode: true,
               // Enable caching
               experimentalWatchApi: true,
+              // Ensure JSX is properly handled
+              compilerOptions: {
+                jsx: 'react-jsx',
+                module: 'esnext',
+                target: 'es2015',
+              },
             },
           },
         ],

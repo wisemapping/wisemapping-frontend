@@ -17,7 +17,8 @@
  */
 
 import React from 'react';
-import { SvgIcon, SvgIconProps } from '@mui/material';
+import SvgIcon from '@mui/material/SvgIcon';
+import type { SvgIconProps } from '@mui/material/SvgIcon';
 
 const RelationshipStyleIcon: React.FC<SvgIconProps> = (props) => {
   return (

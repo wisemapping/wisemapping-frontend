@@ -17,7 +17,11 @@
  */
 
 import React from 'react';
-import { Box, Switch, Typography, FormControlLabel, useTheme as useMuiTheme } from '@mui/material';
+import Box from '@mui/material/Box';
+import Switch from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { useTheme as useMuiTheme } from '@mui/material/styles';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { useIntl } from 'react-intl';

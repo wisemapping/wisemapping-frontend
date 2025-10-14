@@ -35,8 +35,10 @@ const commonConfig = {
   },
   target: 'web',
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].[contenthash:8].bundle.js',
+    chunkFilename: '[name].[contenthash:8].chunk.js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true, // Clean dist folder before each build
   },
   module: {
     rules: [
@@ -48,12 +50,60 @@ const commonConfig = {
   },
   optimization: {
     chunkIds: 'named',
+    runtimeChunk: 'single',
     splitChunks: {
+      chunks: 'all',
+      minSize: 20000,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
       cacheGroups: {
+        // Default groups disabled to prevent auto-splitting
+        defaultVendors: false,
+        default: false,
+
+        // React core libraries - single bundle
+        reactVendor: {
+          test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+          name: 'react-vendor',
+          priority: 40,
+          enforce: true,
+          reuseExistingChunk: true,
+        },
+
+        // Material-UI and Emotion - single bundle
+        muiVendor: {
+          test: /[\\/]node_modules[\\/](@mui|@emotion)[\\/]/,
+          name: 'mui-vendor',
+          priority: 35,
+          enforce: true,
+          reuseExistingChunk: true,
+        },
+
+        // Styling and i18n libraries - single bundle
+        stylesVendor: {
+          test: /[\\/]node_modules[\\/](styled-components|react-intl)[\\/]/,
+          name: 'styles-vendor',
+          priority: 30,
+          enforce: true,
+          reuseExistingChunk: true,
+        },
+
+        // WiseMapping internal packages - single bundle
+        wisemappingLibs: {
+          test: /[\\/]node_modules[\\/]@wisemapping[\\/]/,
+          name: 'wisemapping-libs',
+          priority: 25,
+          enforce: true,
+          reuseExistingChunk: true,
+        },
+
+        // All other node_modules - single bundle
         vendors: {
-          test: /node_modules\/.*/,
+          test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          chunks: 'all',
+          priority: 20,
+          enforce: true,
+          reuseExistingChunk: true,
         },
       },
     },

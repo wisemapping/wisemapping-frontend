@@ -35,12 +35,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {
-  Person as PersonIcon,
-  Settings as SettingsIcon,
-  Map as MapIcon,
-  AdminPanelSettings as AdminIcon,
-} from '@mui/icons-material';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import MapIcon from '@mui/icons-material/Map';
+import AdminIcon from '@mui/icons-material/AdminPanelSettings';
 import { adminConsoleStyles } from '../styles';
 import { useAdminPermissions } from '../../../classes/hooks/useAdminPermissions';
 

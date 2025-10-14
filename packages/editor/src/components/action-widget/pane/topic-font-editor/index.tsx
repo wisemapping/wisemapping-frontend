@@ -17,7 +17,13 @@
  */
 
 import React, { ReactElement, useState, useEffect } from 'react';
-import { Box, Typography, IconButton, FormControl, Select, MenuItem, Divider } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
 import CloseIcon from '@mui/icons-material/Close';
 import TextIncreaseOutlinedIcon from '@mui/icons-material/TextIncreaseOutlined';
 import TextDecreaseOutlinedIcon from '@mui/icons-material/TextDecreaseOutlined';
@@ -25,7 +31,7 @@ import FormatBoldOutlinedIcon from '@mui/icons-material/FormatBoldOutlined';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { styled } from '@mui/material/styles';
-import { SelectChangeEvent } from '@mui/material/Select';
+import type { SelectChangeEvent } from '@mui/material/Select';
 
 import NodeProperty from '../../../../classes/model/node-property';
 import { SwitchValueDirection } from '../../../toolbar/ToolbarValueModelBuilder';

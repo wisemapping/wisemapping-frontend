@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
-import { Box, IconButton } from '@mui/material';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
 import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';

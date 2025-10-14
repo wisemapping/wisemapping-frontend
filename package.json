@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "build": "lerna run build",
-    "clean": "lerna clean && rm -rf node_modules",
+    "clean": "lerna run clean --parallel && lerna clean --yes && rm -rf node_modules && yarn install",
     "lint": "lerna run lint --stream",
     "lint:fix": "lerna run lint:fix --stream",
     "playground": "lerna run playground --stream",

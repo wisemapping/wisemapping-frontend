@@ -19,7 +19,8 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import { Brightness4, Brightness7 } from '@mui/icons-material';
+import Brightness4 from '@mui/icons-material/Brightness4';
+import Brightness7 from '@mui/icons-material/Brightness7';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { useIntl } from 'react-intl';
 

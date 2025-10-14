@@ -17,7 +17,10 @@
  */
 
 import React, { ReactElement, useState } from 'react';
-import { Tab, Box, Typography, IconButton } from '@mui/material';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { FormattedMessage } from 'react-intl';
 import { StyledEditorsTabs } from '../shared/StyledTabs';
