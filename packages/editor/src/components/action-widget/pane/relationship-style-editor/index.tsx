@@ -17,7 +17,10 @@
  */
 
 import React, { ReactElement } from 'react';
-import { Box, Typography, IconButton, Divider } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
 import CloseIcon from '@mui/icons-material/Close';
 import RemoveIcon from '@mui/icons-material/Remove';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';

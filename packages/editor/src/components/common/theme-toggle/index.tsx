@@ -17,7 +17,8 @@
  */
 
 import React from 'react';
-import { IconButton, Tooltip } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { useIntl } from 'react-intl';

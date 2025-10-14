@@ -52,21 +52,19 @@ import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
-import {
-  Search as SearchIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Add as AddIcon,
-  Refresh as RefreshIcon,
-  Person as PersonIcon,
-  Block as BlockIcon,
-  CheckCircle as CheckCircleIcon,
-  MarkEmailRead as MarkEmailReadIcon,
-  Map as MapIcon,
-  Storage as StorageIcon,
-  Google as GoogleIcon,
-  Facebook as FacebookIcon,
-} from '@mui/icons-material';
+import SearchIcon from '@mui/icons-material/Search';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import PersonIcon from '@mui/icons-material/Person';
+import BlockIcon from '@mui/icons-material/Block';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import MapIcon from '@mui/icons-material/Map';
+import StorageIcon from '@mui/icons-material/Storage';
+import GoogleIcon from '@mui/icons-material/Google';
+import FacebookIcon from '@mui/icons-material/Facebook';
 import { AdminUsersParams } from '../../../classes/client/admin-client';
 import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from 'react-query';

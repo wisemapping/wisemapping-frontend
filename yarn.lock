@@ -6016,8 +6016,6 @@ __metadata:
     dayjs: ^1.11.18
     eslint: ^9.36.0
     eslint-plugin-storybook: 9.1.10
-    html2canvas: ^1.4.1
-    jspdf: ^3.0.3
     react: ^19.1.1
     react-dom: ^19.1.1
     react-ga4: ^2.1.0

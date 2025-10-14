@@ -22,7 +22,8 @@ import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useTheme as useMuiTheme } from '@mui/material/styles';
-import { Brightness4, Brightness7 } from '@mui/icons-material';
+import Brightness4 from '@mui/icons-material/Brightness4';
+import Brightness7 from '@mui/icons-material/Brightness7';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { useIntl } from 'react-intl';
 

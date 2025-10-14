@@ -17,7 +17,10 @@
  */
 
 import React, { ReactElement, useState } from 'react';
-import { Box, Typography, IconButton, Tooltip } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import GridOnIcon from '@mui/icons-material/GridOn';

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { Tabs } from '@mui/material';
+import Tabs from '@mui/material/Tabs';
 import { styled } from '@mui/material/styles';
 
 /**
