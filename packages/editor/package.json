@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "storybook": "storybook dev -p 6008",
+    "storybook": "storybook dev -p 6008 --quiet",
     "build-storybook": "storybook build",
     "cy:open": "cypress open",
     "cy:run": "cypress run",

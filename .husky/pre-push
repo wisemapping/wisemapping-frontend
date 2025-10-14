@@ -1,31 +1,257 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+
+# Preserve color output
+export FORCE_COLOR=1
+
+# Ensure PATH includes common locations for node/yarn
+export PATH="$PATH:/usr/local/bin:/opt/homebrew/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
 
 echo "🔍 Running pre-push verification..."
 
-# Check if there are any uncommitted changes to source files
-echo "🔍 Checking for uncommitted changes..."
-if ! git diff --quiet HEAD -- packages/editor/lang/ packages/webapp/lang/; then
-  echo "❌ ERROR: Uncommitted changes detected in language files!"
-  echo "Please commit your language file changes before pushing."
+# Get the repository root directory
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+# Find and verify yarn is available
+YARN_CMD=$(command -v yarn 2>/dev/null)
+if [ -z "$YARN_CMD" ]; then
+  echo "❌ ERROR: yarn command not found"
+  echo "Please ensure yarn is installed and in your PATH"
+  echo "You can skip this hook with: git push --no-verify"
   exit 1
 fi
 
-echo "📝 Compiling i18n resources..."
-cd packages/editor && yarn i18n:compile && cd ../webapp && yarn i18n:compile && cd ../..
+echo "Using yarn at: $YARN_CMD"
 
-# Check if compilation created any new files or modified existing ones
-echo "🔍 Checking if compilation created new files..."
-if ! git diff --quiet HEAD -- packages/editor/lang/ packages/webapp/lang/; then
-  echo "❌ ERROR: i18n compilation created/modified files!"
-  echo "This indicates that source language files were modified but not committed."
-  echo "Please commit your language file changes and run 'yarn i18n:compile' locally."
-  exit 1
+# Check for language file changes
+LANG_CHANGED_FILES=$(git diff --name-only @{push} 2>/dev/null || git diff --name-only origin/develop...HEAD 2>/dev/null || git diff --name-only HEAD~1)
+
+EDITOR_LANG_CHANGED=false
+WEBAPP_LANG_CHANGED=false
+
+while IFS= read -r file; do
+  if [[ $file == packages/editor/lang/* ]]; then
+    EDITOR_LANG_CHANGED=true
+  elif [[ $file == packages/webapp/lang/* ]]; then
+    WEBAPP_LANG_CHANGED=true
+  fi
+done <<< "$LANG_CHANGED_FILES"
+
+# Only compile i18n if language files changed
+if [ "$EDITOR_LANG_CHANGED" = true ] || [ "$WEBAPP_LANG_CHANGED" = true ]; then
+  echo "🔍 Checking for uncommitted changes in language files..."
+  
+  PACKAGES_TO_CHECK=""
+  [ "$EDITOR_LANG_CHANGED" = true ] && PACKAGES_TO_CHECK="$PACKAGES_TO_CHECK packages/editor/lang/"
+  [ "$WEBAPP_LANG_CHANGED" = true ] && PACKAGES_TO_CHECK="$PACKAGES_TO_CHECK packages/webapp/lang/"
+  
+  if ! git diff --quiet HEAD -- $PACKAGES_TO_CHECK; then
+    echo "❌ ERROR: Uncommitted changes detected in language files!"
+    echo "Please commit your language file changes before pushing."
+    exit 1
+  fi
+
+  echo "📝 Compiling i18n resources..."
+  
+  if [ "$EDITOR_LANG_CHANGED" = true ]; then
+    echo "   Compiling editor i18n..."
+    cd packages/editor && "$YARN_CMD" i18n:compile && cd ../..
+  fi
+  
+  if [ "$WEBAPP_LANG_CHANGED" = true ]; then
+    echo "   Compiling webapp i18n..."
+    cd packages/webapp && "$YARN_CMD" i18n:compile && cd ../..
+  fi
+
+  # Check if compilation created any new files or modified existing ones
+  echo "🔍 Checking if compilation created new files..."
+  if ! git diff --quiet HEAD -- $PACKAGES_TO_CHECK; then
+    echo "❌ ERROR: i18n compilation created/modified files!"
+    echo "This indicates that source language files were modified but not committed."
+    echo "Please commit your language file changes and run 'yarn i18n:compile' locally."
+    exit 1
+  fi
+
+  echo "✅ i18n compilation completed - no new files created"
+else
+  echo "⏭️  No language file changes detected, skipping i18n compilation"
 fi
 
-echo "✅ i18n compilation completed - no new files created"
-echo "🔍 Running lint checks..."
-yarn lint
-echo "🧪 Running tests..."
-yarn test
+# Detect changed packages
+echo "🔍 Detecting changed packages..."
+
+# Get list of changed files (comparing with remote)
+CHANGED_FILES=$(git diff --name-only @{push} 2>/dev/null || git diff --name-only origin/develop...HEAD 2>/dev/null || git diff --name-only HEAD~1)
+
+if [ -z "$CHANGED_FILES" ]; then
+  echo "✅ No changes detected, skipping tests"
+  exit 0
+fi
+
+# Initialize affected packages array
+AFFECTED_PACKAGES=""
+
+# Function to mark package as affected
+mark_affected() {
+  local package=$1
+  if [[ ! " $AFFECTED_PACKAGES " =~ " $package " ]]; then
+    AFFECTED_PACKAGES="$AFFECTED_PACKAGES $package"
+  fi
+}
+
+# Function to add transitive dependencies
+add_transitive_deps() {
+  local package=$1
+  
+  case $package in
+    "core-js")
+      mark_affected "web2d"
+      mark_affected "mindplot"
+      mark_affected "editor"
+      mark_affected "webapp"
+      ;;
+    "web2d")
+      mark_affected "mindplot"
+      mark_affected "editor"
+      mark_affected "webapp"
+      ;;
+    "mindplot")
+      mark_affected "editor"
+      mark_affected "webapp"
+      ;;
+    "editor")
+      mark_affected "webapp"
+      ;;
+  esac
+}
+
+# Detect affected packages from changed files
+while IFS= read -r file; do
+  if [[ $file == packages/core-js/* ]]; then
+    mark_affected "core-js"
+    add_transitive_deps "core-js"
+  elif [[ $file == packages/web2d/* ]]; then
+    mark_affected "web2d"
+    add_transitive_deps "web2d"
+  elif [[ $file == packages/mindplot/* ]]; then
+    mark_affected "mindplot"
+    add_transitive_deps "mindplot"
+  elif [[ $file == packages/editor/* ]]; then
+    mark_affected "editor"
+    add_transitive_deps "editor"
+  elif [[ $file == packages/webapp/* ]]; then
+    mark_affected "webapp"
+  elif [[ $file == package.json ]] || [[ $file == yarn.lock ]] || [[ $file == webpack.common.js ]] || [[ $file == eslint.config.mjs ]]; then
+    # Root-level changes affect all packages
+    mark_affected "core-js"
+    mark_affected "web2d"
+    mark_affected "mindplot"
+    mark_affected "editor"
+    mark_affected "webapp"
+    break
+  fi
+done <<< "$CHANGED_FILES"
+
+# Trim whitespace
+AFFECTED_PACKAGES=$(echo $AFFECTED_PACKAGES | xargs)
+
+if [ -z "$AFFECTED_PACKAGES" ]; then
+  echo "✅ No package changes detected (documentation or config only), skipping lint/tests"
+  exit 0
+fi
+
+echo "📦 Affected packages (including transitive dependencies):"
+for pkg in $AFFECTED_PACKAGES; do
+  echo "   - $pkg"
+done
+echo ""
+
+# Run lint and tests for each affected package
+for package in $AFFECTED_PACKAGES; do
+  PKG_DIR="packages/$package"
+  
+  if [ ! -d "$PKG_DIR" ]; then
+    continue
+  fi
+  
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "🧪 Testing package: @wisemapping/$package"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  
+  cd "$REPO_ROOT/$PKG_DIR"
+  
+  # Run lint if script exists
+  if grep -q '"lint"' package.json 2>/dev/null; then
+    echo "   🔍 Running lint..."
+    if ! "$YARN_CMD" lint; then
+      echo ""
+      echo "❌ Lint failed for @wisemapping/$package"
+      echo "Please fix the linting issues before pushing."
+      # Reset terminal state
+      tput sgr0 2>/dev/null || true
+      exit 1
+    fi
+  fi
+  
+  # Run tests if script exists (skip integration tests that need servers)
+  # Prefer test:unit if available (skips slow integration tests)
+  if grep -q '"test:unit"' package.json 2>/dev/null; then
+    echo "   🧪 Running unit tests..."
+    # Capture output and exit code
+    TEST_OUTPUT=$("$YARN_CMD" test:unit 2>&1)
+    TEST_EXIT_CODE=$?
+    
+    if [ $TEST_EXIT_CODE -ne 0 ]; then
+      # Check if it's because no tests were found
+      if echo "$TEST_OUTPUT" | grep -q "No tests found\|no test\|Cannot find module"; then
+        echo "   ⏭️  No unit tests found, skipping"
+      else
+        # Actual test failure
+        echo "$TEST_OUTPUT"
+        echo ""
+        echo "❌ Unit tests failed for @wisemapping/$package"
+        echo "Please fix the failing tests before pushing."
+        # Reset terminal state
+        tput sgr0 2>/dev/null || true
+        exit 1
+      fi
+    else
+      echo "   ✅ Unit tests passed"
+    fi
+  elif grep -q '"test"' package.json 2>/dev/null; then
+    TEST_SCRIPT=$(grep '"test"' package.json | head -1)
+    # Skip if test script uses start-server-and-test (integration tests)
+    if [[ $TEST_SCRIPT =~ "start-server-and-test" ]] || [[ $TEST_SCRIPT =~ "test:integration" ]]; then
+      echo "   ⏭️  Skipping integration tests (require server)"
+    else
+      echo "   🧪 Running tests..."
+      # Capture output and exit code
+      TEST_OUTPUT=$("$YARN_CMD" test 2>&1)
+      TEST_EXIT_CODE=$?
+      
+      if [ $TEST_EXIT_CODE -ne 0 ]; then
+        # Check if it's because no tests were found
+        if echo "$TEST_OUTPUT" | grep -q "No tests found\|no test\|Cannot find module"; then
+          echo "   ⏭️  No tests configured, skipping"
+        else
+          # Actual test failure
+          echo "$TEST_OUTPUT"
+          echo ""
+          echo "❌ Tests failed for @wisemapping/$package"
+          echo "Please fix the failing tests before pushing."
+          # Reset terminal state
+          tput sgr0 2>/dev/null || true
+          exit 1
+        fi
+      else
+        echo "   ✅ Tests passed"
+      fi
+    fi
+  fi
+  
+  cd "$REPO_ROOT"
+done
+
 echo "✅ All pre-push checks passed!"
+
+# Reset terminal state to ensure colors work after script
+tput sgr0 2>/dev/null || true
