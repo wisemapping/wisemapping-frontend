@@ -17,7 +17,7 @@
  *   limitations under the License.
  */
 // jQuery removed - using native DOM APIs
-import { $assert } from '../../../src/components/util/assert';
+import { $assert } from '../../../../src/components/util/assert';
 import TestSuite from './TestSuite';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 

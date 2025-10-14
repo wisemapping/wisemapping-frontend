@@ -6,7 +6,7 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(js|jsx|ts|tsx)",
   ],
   addons: [
-    "@storybook/addon-essentials", // includes actions, controls, docs, etc.
+    "@storybook/addon-docs",
     "@storybook/addon-links",
   ],
   framework: {
