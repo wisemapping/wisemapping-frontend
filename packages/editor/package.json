@@ -19,7 +19,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:storybook:open": "cypress open --config-file cypress.storybook.config.ts",
-    "cy:storybook:run": "cypress run --config-file cypress.storybook.config.ts",
+    "cy:storybook:run": "cypress run --config-file cypress.storybook.config.ts --browser electron",
     "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','zh-CN','ru','uk','ja','pt','it','hi'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
     "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
     "lint": "eslint src --ext js,ts,tsx",
