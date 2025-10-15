@@ -24,12 +24,14 @@ import Capability from '../../classes/action/capability';
 import Editor from '../../classes/model/editor';
 import Model from '../../classes/model/editor';
 import KeyboardShorcutsHelp from '../action-widget/pane/keyboard-shortcut-help';
+import OutlineViewDialog from '../action-widget/pane/outline-view-dialog';
 import Toolbar from '../toolbar';
 import ZoomOutOutlinedIcon from '@mui/icons-material/ZoomOutOutlined';
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrongOutlined';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
+import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import Box from '@mui/material/Box';
 import ThemeSwitcher from '../common/theme-switcher';
 import { trackEditorInteraction } from '../../utils/analytics';
@@ -49,6 +51,26 @@ export function buildZoomToolbarConfig(
   intl: IntlShape,
 ): ActionConfig[] {
   return [
+    {
+      icon: <FormatListBulletedOutlinedIcon />,
+      tooltip: intl.formatMessage({
+        id: 'zoom-panel.tooltip-outline-view',
+        defaultMessage: 'Outline View',
+      }),
+      onClick: () => trackEditorInteraction('outline_view'),
+      options: [
+        {
+          render: (closeModal) => (
+            <OutlineViewDialog
+              open={true}
+              onClose={closeModal}
+              mindmap={model.getDesigner()?.getMindmap()}
+            />
+          ),
+        },
+      ],
+      disabled: () => !model?.isMapLoadded(),
+    },
     {
       icon: <CenterFocusStrongOutlinedIcon />,
       tooltip: intl.formatMessage({

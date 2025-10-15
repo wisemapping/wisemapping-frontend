@@ -71,11 +71,11 @@ abstract class WidgetBuilder {
           evt.stopPropagation();
         });
         tooltip.addEventListener('mouseleave', (evt) => {
-          // Add 3 second delay before hiding the tooltip
+          // Add 2 second delay before hiding the tooltip
           hideTimeout = setTimeout(() => {
             if (tooltip) DOMUtils.css(tooltip, 'display', 'none');
             hideTimeout = null;
-          }, 3000);
+          }, 1000);
           evt.stopPropagation();
         });
       }
@@ -130,11 +130,11 @@ abstract class WidgetBuilder {
     });
 
     mindmapElement.addEvent('mouseleave', (evt: MouseEvent) => {
-      // Add 3 second delay before hiding the tooltip
+      // Add 2 second delay before hiding the tooltip
       hideTimeout = setTimeout(() => {
         if (tooltip) DOMUtils.css(tooltip, 'display', 'none');
         hideTimeout = null;
-      }, 3000);
+      }, 1000);
       evt.stopPropagation();
     });
   }

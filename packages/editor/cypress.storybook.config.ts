@@ -33,7 +33,6 @@ export default defineConfig({
     // Only run Storybook tests
     specPattern: 'cypress/e2e/storybook/**/*.cy.ts',
     chromeWebSecurity: false,
-    experimentalStudio: false,
   },
   chrome: {
     args: ['--no-sandbox', '--disable-web-security', '--disable-features=VizDisplayCompositor']

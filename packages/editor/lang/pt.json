@@ -47,6 +47,24 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "Desfazer"
   },
+  "outline.empty": {
+    "defaultMessage": "Sem conteúdo para exibir"
+  },
+  "outline.expand": {
+    "defaultMessage": "Expandir"
+  },
+  "outline.collapse": {
+    "defaultMessage": "Recolher"
+  },
+  "outline.has-note": {
+    "defaultMessage": "Tem nota"
+  },
+  "outline.link": {
+    "defaultMessage": "Link"
+  },
+  "outline.note": {
+    "defaultMessage": "Nota"
+  },
   "editor-panel.icon-title": {
     "defaultMessage": "Ícone"
   },
@@ -124,9 +142,6 @@
   },
   "editor-panel.tooltip-topic-font-smaller": {
     "defaultMessage": "Menor"
-  },
-  "editor-panel.tooltip-topic-font-style": {
-    "defaultMessage": "Estilo da fonte"
   },
   "editor-panel.font-family-default": {
     "defaultMessage": "Padrão"
@@ -388,6 +403,9 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Expandir todos os nós"
+  },
+  "zoom-panel.tooltip-outline-view": {
+    "defaultMessage": "Vista de Estrutura"
   },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "Adicionar imagem do tópico"

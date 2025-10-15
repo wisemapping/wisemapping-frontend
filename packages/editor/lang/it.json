@@ -47,6 +47,24 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "Annulla"
   },
+  "outline.empty": {
+    "defaultMessage": "Nessun contenuto da visualizzare"
+  },
+  "outline.expand": {
+    "defaultMessage": "Espandi"
+  },
+  "outline.collapse": {
+    "defaultMessage": "Comprimi"
+  },
+  "outline.has-note": {
+    "defaultMessage": "Ha nota"
+  },
+  "outline.link": {
+    "defaultMessage": "Link"
+  },
+  "outline.note": {
+    "defaultMessage": "Nota"
+  },
   "editor-panel.icon-title": {
     "defaultMessage": "Icona"
   },
@@ -389,6 +407,9 @@
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Espandi tutti i nodi"
   },
+  "zoom-panel.tooltip-outline-view": {
+    "defaultMessage": "Vista Struttura"
+  },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "Aggiungi immagine argomento"
   },
@@ -455,9 +476,7 @@
   "editor-panel.tooltip-unified-styling": {
     "defaultMessage": "Stile tema e connessioni"
   },
-  "editor-panel.tooltip-topic-font-style": {
-    "defaultMessage": "Stile carattere"
-  },
+  
   "color-picker.color": {
     "defaultMessage": "Colore"
   },

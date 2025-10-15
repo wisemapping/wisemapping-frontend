@@ -77,6 +77,12 @@
       "value": "Information"
     }
   ],
+  "appbar.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Outline View"
+    }
+  ],
   "appbar.tooltip-print": [
     {
       "type": 0,
@@ -429,6 +435,12 @@
     {
       "type": 0,
       "value": "Delete Topic"
+    }
+  ],
+  "editor-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Outline View"
     }
   ],
   "editor-panel.tooltip-relationship-arrow-end": [
@@ -793,6 +805,42 @@
     {
       "type": 0,
       "value": "Ocean"
+    }
+  ],
+  "outline.collapse": [
+    {
+      "type": 0,
+      "value": "Collapse"
+    }
+  ],
+  "outline.empty": [
+    {
+      "type": 0,
+      "value": "No content to display"
+    }
+  ],
+  "outline.expand": [
+    {
+      "type": 0,
+      "value": "Expand"
+    }
+  ],
+  "outline.has-note": [
+    {
+      "type": 0,
+      "value": "Has note"
+    }
+  ],
+  "outline.link": [
+    {
+      "type": 0,
+      "value": "Link"
+    }
+  ],
+  "outline.note": [
+    {
+      "type": 0,
+      "value": "Note"
     }
   ],
   "popover": [
@@ -1303,6 +1351,12 @@
     {
       "type": 0,
       "value": "Keyboard Shortcuts"
+    }
+  ],
+  "zoom-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Outline View"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [

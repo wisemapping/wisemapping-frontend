@@ -45,6 +45,12 @@ const config: StorybookConfig = {
       exclude: /node_modules/,
     });
     
+    // Add loader for WXML files (mind map XML format)
+    config.module.rules.push({
+      test: /\.wxml$/,
+      type: 'asset/source',
+    });
+    
     return config;
   },
 };

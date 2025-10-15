@@ -795,6 +795,42 @@
       "value": "海洋"
     }
   ],
+  "outline.collapse": [
+    {
+      "type": 0,
+      "value": "折叠"
+    }
+  ],
+  "outline.empty": [
+    {
+      "type": 0,
+      "value": "无内容显示"
+    }
+  ],
+  "outline.expand": [
+    {
+      "type": 0,
+      "value": "展开"
+    }
+  ],
+  "outline.has-note": [
+    {
+      "type": 0,
+      "value": "有笔记"
+    }
+  ],
+  "outline.link": [
+    {
+      "type": 0,
+      "value": "链接"
+    }
+  ],
+  "outline.note": [
+    {
+      "type": 0,
+      "value": "笔记"
+    }
+  ],
   "popover": [
     {
       "type": 0,
@@ -1303,6 +1339,12 @@
     {
       "type": 0,
       "value": "键盘快捷键"
+    }
+  ],
+  "zoom-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "大纲视图"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [

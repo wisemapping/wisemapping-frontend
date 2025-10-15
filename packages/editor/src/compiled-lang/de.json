@@ -795,6 +795,42 @@
       "value": "Ozean"
     }
   ],
+  "outline.collapse": [
+    {
+      "type": 0,
+      "value": "Einklappen"
+    }
+  ],
+  "outline.empty": [
+    {
+      "type": 0,
+      "value": "Kein Inhalt zum Anzeigen"
+    }
+  ],
+  "outline.expand": [
+    {
+      "type": 0,
+      "value": "Erweitern"
+    }
+  ],
+  "outline.has-note": [
+    {
+      "type": 0,
+      "value": "Hat Notiz"
+    }
+  ],
+  "outline.link": [
+    {
+      "type": 0,
+      "value": "Link"
+    }
+  ],
+  "outline.note": [
+    {
+      "type": 0,
+      "value": "Notiz"
+    }
+  ],
   "popover": [
     {
       "type": 0,
@@ -1303,6 +1339,12 @@
     {
       "type": 0,
       "value": "Tastatürkürzel"
+    }
+  ],
+  "zoom-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Gliederungsansicht"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [

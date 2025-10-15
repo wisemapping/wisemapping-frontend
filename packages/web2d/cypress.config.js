@@ -11,7 +11,6 @@ module.exports = defineConfig({
     baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:6006',
     // Add macOS compatibility options
     chromeWebSecurity: false,
-    experimentalStudio: false,
   },
   // Add browser launch options for macOS compatibility
   chrome: {

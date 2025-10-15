@@ -47,6 +47,24 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "撤销"
   },
+  "outline.empty": {
+    "defaultMessage": "无内容显示"
+  },
+  "outline.expand": {
+    "defaultMessage": "展开"
+  },
+  "outline.collapse": {
+    "defaultMessage": "折叠"
+  },
+  "outline.has-note": {
+    "defaultMessage": "有笔记"
+  },
+  "outline.link": {
+    "defaultMessage": "链接"
+  },
+  "outline.note": {
+    "defaultMessage": "笔记"
+  },
   "editor.try-welcome": {
     "defaultMessage": "这个编辑区域展示了一些思维导图编辑器的功能！"
   },
@@ -343,6 +361,9 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "展开所有节点"
+  },
+  "zoom-panel.tooltip-outline-view": {
+    "defaultMessage": "大纲视图"
   },
   "zoom-panel.tooltip-zoom-in": {
     "defaultMessage": "放大"

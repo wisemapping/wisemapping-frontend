@@ -47,6 +47,24 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "元に戻す"
   },
+  "outline.empty": {
+    "defaultMessage": "表示するコンテンツがありません"
+  },
+  "outline.expand": {
+    "defaultMessage": "展開"
+  },
+  "outline.collapse": {
+    "defaultMessage": "折りたたむ"
+  },
+  "outline.has-note": {
+    "defaultMessage": "ノートがあります"
+  },
+  "outline.link": {
+    "defaultMessage": "リンク"
+  },
+  "outline.note": {
+    "defaultMessage": "ノート"
+  },
   "editor-panel.icon-title": {
     "defaultMessage": "アイコン"
   },
@@ -388,6 +406,9 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "すべてのノードを展開"
+  },
+  "zoom-panel.tooltip-outline-view": {
+    "defaultMessage": "アウトラインビュー"
   },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "トピック画像を追加"

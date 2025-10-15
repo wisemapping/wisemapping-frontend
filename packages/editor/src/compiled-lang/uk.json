@@ -795,6 +795,42 @@
       "value": "Океан"
     }
   ],
+  "outline.collapse": [
+    {
+      "type": 0,
+      "value": "Згорнути"
+    }
+  ],
+  "outline.empty": [
+    {
+      "type": 0,
+      "value": "Немає вмісту для відображення"
+    }
+  ],
+  "outline.expand": [
+    {
+      "type": 0,
+      "value": "Розгорнути"
+    }
+  ],
+  "outline.has-note": [
+    {
+      "type": 0,
+      "value": "Має нотатку"
+    }
+  ],
+  "outline.link": [
+    {
+      "type": 0,
+      "value": "Посилання"
+    }
+  ],
+  "outline.note": [
+    {
+      "type": 0,
+      "value": "Нотатка"
+    }
+  ],
   "popover": [
     {
       "type": 0,
@@ -1303,6 +1339,12 @@
     {
       "type": 0,
       "value": "Гарячі клавіші"
+    }
+  ],
+  "zoom-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Вигляд структури"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [

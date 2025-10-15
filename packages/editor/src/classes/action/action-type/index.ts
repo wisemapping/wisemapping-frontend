@@ -33,6 +33,7 @@ type ActionType =
   | 'appbar-title'
   | 'keyboard-shortcuts'
   | 'theme'
-  | 'rename';
+  | 'rename'
+  | 'outline-view';
 
 export default ActionType;

@@ -13,7 +13,6 @@ module.exports = defineConfig({
     specPattern: 'cypress/e2e/**/*.{js,ts}',
     // Add macOS compatibility options
     chromeWebSecurity: false,
-    experimentalStudio: false,
   },
   // Add browser launch options for macOS compatibility
   chrome: {
