@@ -23,7 +23,7 @@ import IconButton from '@mui/material/IconButton';
 import DialogContent from '@mui/material/DialogContent';
 
 export const OutlineContainer = styled(Box)(({ theme }) => ({
-  padding: '10px 118px 10px 118px', // 10px top/bottom, 118px left/right (144px - 26px from DialogContent)
+  padding: '20px 118px 10px 118px', // 20px top, 10px bottom, 118px left/right (144px - 26px from DialogContent)
   maxHeight: '100%',
   height: '100%',
   overflow: 'auto',
@@ -167,9 +167,7 @@ export const CloseButton = styled(IconButton)({
   },
 });
 
-export const OutlineContentWrapper = styled(Box)({
-  paddingLeft: 18,
-});
+export const OutlineContentWrapper = styled(Box)({});
 
 export const CentralTopicTitle = styled(Typography)(({ theme }) => ({
   fontFamily: 'Figtree, Segoe UI, Helvetica, Arial, sans-serif',
