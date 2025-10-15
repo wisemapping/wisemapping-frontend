@@ -20,7 +20,8 @@
 import { $assert } from '../../../../src/components/util/assert';
 import LayoutManager from '../../../../src/components/layout/LayoutManager';
 import ChildrenSorterStrategy from '../../../../src/components/layout/ChildrenSorterStrategy';
-import type { SizeType, PositionType } from '../../../../src/components/util/PositionType';
+import type PositionType from '../../../../src/components/PositionType';
+import type SizeType from '../../../../src/components/SizeType';
 
 interface Prediction {
   position: PositionType;
@@ -266,7 +267,6 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.addEvent('change', (event) => {
       const pos = event.getPosition();
       const posStr = pos ? `,position: {${pos.x}${pos.y}` : '';
-      const node = manager.find(event.getId());
       console.log(`\tUpdated nodes: {id:${event.getId()} order: ${event.getOrder()}${posStr}}`);
       events.push(event);
     });
@@ -388,8 +388,6 @@ class TestSuite extends ChildrenSorterStrategy {
 
     const events: any[] = [];
     manager.addEvent('change', (event) => {
-      const pos = event.getPosition();
-      const posStr = pos ? `,position: {${pos.x}${event.getPosition().y}` : '';
       events.push(event);
     });
     manager.layout(true);

@@ -181,10 +181,7 @@ describe('Topic Link Suite', () => {
     // Press Escape to close the panel without saving
     cy.get('body').type('{esc}');
 
-    // Wait for panel to close
-    cy.wait(300);
-
-    // Verify panel is closed (input should not be visible)
+    // Verify panel is closed by waiting for input to not exist (replaces cy.wait(300))
     cy.get('input[type="url"]').should('not.exist');
 
     cy.matchImageSnapshot('link-panel-closed-without-saving');

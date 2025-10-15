@@ -178,11 +178,11 @@ class Canvas {
     }
   }
 
-  addEvent(type: string, listener: (event: MouseEvent) => void): void {
+  addEvent(type: string, listener: (event: Event, detail?: unknown) => void): void {
     this._workspace.addEvent(type, listener);
   }
 
-  removeEvent(type: string, listener: (event: MouseEvent) => void): void {
+  removeEvent(type: string, listener: (event: Event, detail?: unknown) => void): void {
     $assert(type, 'type can not be null');
     $assert(listener, 'listener can not be null');
     this._workspace.removeEvent(type, listener);

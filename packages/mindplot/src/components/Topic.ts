@@ -587,22 +587,23 @@ abstract class Topic extends NodeGraph {
 
     const me = this;
     // Focus events ...
-    elem.addEvent('mousedown', (event: MouseEvent) => {
+    elem.addEvent('mousedown', (event: Event) => {
+      const mouseEvent = event as MouseEvent;
       const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
       if (!me.isReadOnly()) {
         // Disable topic selection of readOnly mode ...
         let value = true;
-        if ((event.metaKey && isMac) || (event.ctrlKey && !isMac)) {
+        if ((mouseEvent.metaKey && isMac) || (mouseEvent.ctrlKey && !isMac)) {
           value = !me.isOnFocus();
-          event.stopPropagation();
-          event.preventDefault();
+          mouseEvent.stopPropagation();
+          mouseEvent.preventDefault();
         }
         topic.setOnFocus(value);
       }
 
       const eventDispatcher = me._getTopicEventDispatcher();
       eventDispatcher.process('clicknode', me);
-      event.stopPropagation();
+      mouseEvent.stopPropagation();
     });
   }
 

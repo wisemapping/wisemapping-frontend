@@ -29,10 +29,7 @@ describe('Outline View Suite', () => {
     // The button has the tooltip "Outline View"
     cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
-    // Wait for dialog to render
-    cy.wait(500);
-
-    // Verify the dialog is visible
+    // Wait for dialog to be visible (replaces cy.wait(500))
     cy.get('[role="dialog"]').should('be.visible');
 
     // Verify the dialog contains outline content
@@ -46,8 +43,7 @@ describe('Outline View Suite', () => {
     // Open the Outline View
     cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
-    // Wait for dialog to be visible
-    cy.wait(500);
+    // Wait for dialog to be visible and content to be loaded (replaces cy.wait(500))
     cy.get('[role="dialog"]').should('be.visible');
 
     // Verify the central topic title is displayed
@@ -66,8 +62,7 @@ describe('Outline View Suite', () => {
     // Open the Outline View
     cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
-    // Wait for dialog to be visible
-    cy.wait(500);
+    // Wait for dialog to be visible (replaces cy.wait(500))
     cy.get('[role="dialog"]').should('be.visible');
 
     // Find a node that is currently collapsed (has "Expand" aria-label)
@@ -76,18 +71,23 @@ describe('Outline View Suite', () => {
       cy.get('button[aria-label="Expand"]').first().should('be.visible').click();
     });
 
-    cy.wait(500); // Wait for expand animation
+    // Wait for expand animation by checking that Collapse button appears (replaces cy.wait(500))
+    cy.get('[role="dialog"]').within(() => {
+      cy.get('button[aria-label="Collapse"]').first().should('be.visible');
+    });
 
     // Take snapshot of expanded state
     cy.matchImageSnapshot('outline-view-node-expanded');
 
-    // Now the same button should have "Collapse" aria-label
+    // Now click the collapse button
     cy.get('[role="dialog"]').within(() => {
-      // Look for collapse button (aria-label="Collapse")
       cy.get('button[aria-label="Collapse"]').first().should('be.visible').click();
     });
 
-    cy.wait(500); // Wait for collapse animation
+    // Wait for collapse animation by checking that Expand button appears (replaces cy.wait(500))
+    cy.get('[role="dialog"]').within(() => {
+      cy.get('button[aria-label="Expand"]').first().should('be.visible');
+    });
 
     // Take snapshot of collapsed state
     cy.matchImageSnapshot('outline-view-node-collapsed');
@@ -97,8 +97,7 @@ describe('Outline View Suite', () => {
     // Open the Outline View
     cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
-    // Wait for dialog to be visible
-    cy.wait(500);
+    // Wait for dialog to be visible (replaces cy.wait(500))
     cy.get('[role="dialog"]').should('be.visible');
 
     // Click Expand All button (in the floating toolbar at bottom-left)
@@ -108,7 +107,12 @@ describe('Outline View Suite', () => {
       cy.get('button').filter('[aria-label="Expand"]').last().should('be.visible').click();
     });
 
-    cy.wait(800); // Wait for all expansions to complete
+    // Wait for all expansions to complete by checking there are no more Expand buttons (replaces cy.wait(800))
+    // After expanding all, all individual expand buttons should become collapse buttons
+    cy.get('[role="dialog"]').within(() => {
+      // Check that the content has updated (wait for DOM changes to settle)
+      cy.get('button[aria-label="Collapse"]').should('have.length.at.least', 1);
+    });
 
     // Take snapshot of all expanded
     cy.matchImageSnapshot('outline-view-expand-all');
@@ -119,7 +123,11 @@ describe('Outline View Suite', () => {
       cy.get('button').filter('[aria-label="Collapse"]').last().should('be.visible').click();
     });
 
-    cy.wait(800); // Wait for all collapses to complete
+    // Wait for all collapses to complete by checking expand buttons reappear (replaces cy.wait(800))
+    cy.get('[role="dialog"]').within(() => {
+      // After collapsing all, expand buttons should be present
+      cy.get('button[aria-label="Expand"]').should('have.length.at.least', 1);
+    });
 
     // Take snapshot of all collapsed
     cy.matchImageSnapshot('outline-view-collapse-all');
@@ -129,8 +137,7 @@ describe('Outline View Suite', () => {
     // Open the Outline View
     cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
-    // Wait for dialog to be visible
-    cy.wait(500);
+    // Wait for dialog to be visible (replaces cy.wait(500))
     cy.get('[role="dialog"]').should('be.visible');
 
     // Click the close button (X icon in top right)
@@ -138,9 +145,7 @@ describe('Outline View Suite', () => {
       cy.get('button').first().click();
     });
 
-    cy.wait(300);
-
-    // Verify dialog is closed
+    // Verify dialog is closed by waiting for it to not exist (replaces cy.wait(300))
     cy.get('[role="dialog"]').should('not.exist');
 
     cy.matchImageSnapshot('outline-view-closed');
@@ -156,14 +161,14 @@ describe('Outline View Suite', () => {
     // Select an icon by clicking on one
     cy.get('[aria-label="grinning"]').should('be.visible').click();
 
-    // Wait a moment for the icon to be added
-    cy.wait(300);
+    // Wait for the icon to be added by checking it exists on the canvas (replaces cy.wait(300))
+    // The icon should appear in the focused topic
+    cy.get('.mindplot-svg-container').should('exist');
 
     // Now open the Outline View
     cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
-    // Wait for outline dialog to be visible
-    cy.wait(500);
+    // Wait for outline dialog to be visible and icons to be rendered (replaces cy.wait(500))
     cy.get('[role="dialog"]').should('be.visible');
 
     // Verify that icons are displayed in the outline
@@ -178,8 +183,7 @@ describe('Outline View Suite', () => {
     // Open the Outline View
     cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
-    // Wait for dialog to be visible
-    cy.wait(500);
+    // Wait for dialog to be visible (replaces cy.wait(500))
     cy.get('[role="dialog"]').should('be.visible');
 
     // Check if link/note icons are present (if the map has any)

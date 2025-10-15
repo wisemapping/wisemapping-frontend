@@ -42,7 +42,7 @@ class Relationship extends ConnectionLine {
 
   private _startArrow: Arrow;
 
-  private _onFocusHandler: (event: MouseEvent) => void;
+  private _onFocusHandler: (event: Event, detail?: unknown) => void;
 
   private _model: RelationshipModel;
 

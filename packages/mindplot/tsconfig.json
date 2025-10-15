@@ -24,10 +24,11 @@
     ]
   },
   "include": [
-    "src/**/*", "storybook/src/stories", "libraries", "src/@types/**/*", "test/**/*"
+    "src/**/*", "libraries", "src/@types/**/*", "test/**/*"
   ],
   "exclude": [
     "./node_modules",
-    "./dist"
+    "./dist",
+    "storybook/**/*"
   ]
 }
