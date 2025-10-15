@@ -43,7 +43,6 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
   const [error, setError] = React.useState<ErrorInfo>();
 
   const intl = useIntl();
-  const classes = useStyles();
 
   const handleOnClose = (): void => {
     onClose();
@@ -61,84 +60,77 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
       })}
       submitButton={intl.formatMessage({ id: 'info.button', defaultMessage: 'Accept' })}
     >
-      <Paper style={{ maxHeight: 200, overflowY: 'scroll' }} variant="outlined" elevation={0}>
-        <Card variant="outlined">
-          <List dense={true} css={classes.list}>
-            <ListItem>
-              <Typography variant="body1" style={{ fontWeight: 'bold' }}>
-                <FormattedMessage id="info.basic-info" defaultMessage="Basic Info" />
-              </Typography>
-            </ListItem>
+      <StyledScrollContainer>
+        <InfoSection>
+          <SectionTitle variant="body1">
+            <FormattedMessage id="info.basic-info" defaultMessage="Basic Info" />
+          </SectionTitle>
 
-            <ListItem>
-              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
-                <FormattedMessage id="info.name" defaultMessage="Name" />:
-              </Typography>
-              <Typography variant="body2">{map?.title}</Typography>
-            </ListItem>
+          <InfoRow>
+            <InfoLabel variant="caption">
+              <FormattedMessage id="info.name" defaultMessage="Name" />:
+            </InfoLabel>
+            <InfoValue variant="body2">{map?.title}</InfoValue>
+          </InfoRow>
 
-            <ListItem>
-              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
-                <FormattedMessage id="info.description" defaultMessage="Description" />:
-              </Typography>
-              <Typography variant="body2">{map?.description}</Typography>
-            </ListItem>
+          <InfoRow>
+            <InfoLabel variant="caption">
+              <FormattedMessage id="info.description" defaultMessage="Description" />:
+            </InfoLabel>
+            <InfoValue variant="body2">{map?.description}</InfoValue>
+          </InfoRow>
 
-            <ListItem>
-              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
-                <FormattedMessage id="info.creator" defaultMessage="Creator" />:
-              </Typography>
-              <Typography variant="body2">{map?.createdBy}</Typography>
-            </ListItem>
+          <InfoRow>
+            <InfoLabel variant="caption">
+              <FormattedMessage id="info.creator" defaultMessage="Creator" />:
+            </InfoLabel>
+            <InfoValue variant="body2">{map?.createdBy}</InfoValue>
+          </InfoRow>
 
-            <ListItem>
-              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
-                <FormattedMessage id="info.creation-time" defaultMessage="Creation Date" />:
-              </Typography>
-              <Typography variant="body2">{dayjs(map?.creationTime).format('LLL')}</Typography>
-            </ListItem>
+          <InfoRow>
+            <InfoLabel variant="caption">
+              <FormattedMessage id="info.creation-time" defaultMessage="Creation Date" />:
+            </InfoLabel>
+            <InfoValue variant="body2">{dayjs(map?.creationTime).format('LLL')}</InfoValue>
+          </InfoRow>
 
-            <ListItem>
-              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
-                <FormattedMessage id="info.modified-tny" defaultMessage="Last Modified By" />:
-              </Typography>
-              <Typography variant="body2">{map?.lastModificationBy}</Typography>
-            </ListItem>
+          <InfoRow>
+            <InfoLabel variant="caption">
+              <FormattedMessage id="info.modified-tny" defaultMessage="Last Modified By" />:
+            </InfoLabel>
+            <InfoValue variant="body2">{map?.lastModificationBy}</InfoValue>
+          </InfoRow>
 
-            <ListItem>
-              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
-                <FormattedMessage id="info.modified-time" defaultMessage="Last Modified Date" />:
-              </Typography>
-              <Typography variant="body2">
-                {dayjs(map?.lastModificationTime).format('LLL')}
-              </Typography>
-            </ListItem>
+          <InfoRow>
+            <InfoLabel variant="caption">
+              <FormattedMessage id="info.modified-time" defaultMessage="Last Modified Date" />:
+            </InfoLabel>
+            <InfoValue variant="body2">{dayjs(map?.lastModificationTime).format('LLL')}</InfoValue>
+          </InfoRow>
 
-            <ListItem>
-              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
-                <FormattedMessage id="info.starred" defaultMessage="Starred" />:
-              </Typography>
-              <Typography variant="body2">{Boolean(map?.starred).toString()}</Typography>
-            </ListItem>
-          </List>
-        </Card>
+          <InfoRow>
+            <InfoLabel variant="caption">
+              <FormattedMessage id="info.starred" defaultMessage="Starred" />:
+            </InfoLabel>
+            <InfoValue variant="body2">{Boolean(map?.starred).toString()}</InfoValue>
+          </InfoRow>
+        </InfoSection>
 
-        <Card variant="outlined" style={{ marginTop: '10px' }}>
-          <List dense={true}>
-            <ListItem>
-              <Typography variant="body1" style={{ fontWeight: 'bold' }}>
-                <FormattedMessage id="info.sharing" defaultMessage="Sharing" />
-              </Typography>
-            </ListItem>
-          </List>
-          <ListItem>
-            <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
+        <StyledDivider />
+
+        <InfoSection>
+          <SectionTitle variant="body1">
+            <FormattedMessage id="info.sharing" defaultMessage="Sharing" />
+          </SectionTitle>
+
+          <InfoRow>
+            <InfoLabel variant="caption">
               <FormattedMessage id="info.public-visibility" defaultMessage="Publicly Visible" />:
-            </Typography>
-            <Typography variant="body2">{Boolean(map?.public).toString()}</Typography>
-          </ListItem>
-        </Card>
-      </Paper>
+            </InfoLabel>
+            <InfoValue variant="body2">{Boolean(map?.public).toString()}</InfoValue>
+          </InfoRow>
+        </InfoSection>
+      </StyledScrollContainer>
     </BaseDialog>
   );
 };
