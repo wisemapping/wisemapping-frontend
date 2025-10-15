@@ -25,11 +25,18 @@ describe('Outline View Suite', () => {
   });
 
   it('Open Outline View dialog', () => {
-    // Find and click the Outline View button in the zoom toolbar
-    cy.get('[aria-label*="Outline View"]').first().click({ force: true });
+    // Find and click the Outline View button in the zoom toolbar (right side)
+    // The button has the tooltip "Outline View"
+    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
+
+    // Wait for dialog to render
+    cy.wait(500);
 
     // Verify the dialog is visible
     cy.get('[role="dialog"]').should('be.visible');
+
+    // Verify the dialog contains outline content
+    cy.get('[role="dialog"]').should('contain.text', 'Welcome');
 
     // Take a snapshot of the opened dialog
     cy.matchImageSnapshot('outline-view-opened');
@@ -37,9 +44,10 @@ describe('Outline View Suite', () => {
 
   it('Outline View displays mind map structure', () => {
     // Open the Outline View
-    cy.get('[aria-label*="Outline View"]').first().click({ force: true });
+    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
     // Wait for dialog to be visible
+    cy.wait(500);
     cy.get('[role="dialog"]').should('be.visible');
 
     // Verify the central topic title is displayed
@@ -58,9 +66,10 @@ describe('Outline View Suite', () => {
 
   it('Expand and collapse nodes in Outline View', () => {
     // Open the Outline View
-    cy.get('[aria-label*="Outline View"]').first().click({ force: true });
+    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
     // Wait for dialog to be visible
+    cy.wait(500);
     cy.get('[role="dialog"]').should('be.visible');
 
     // Find a node that is currently collapsed (has "Expand" aria-label)
@@ -88,9 +97,10 @@ describe('Outline View Suite', () => {
 
   it('Expand All and Collapse All buttons work', () => {
     // Open the Outline View
-    cy.get('[aria-label*="Outline View"]').first().click({ force: true });
+    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
     // Wait for dialog to be visible
+    cy.wait(500);
     cy.get('[role="dialog"]').should('be.visible');
 
     // Click Expand All button (in the floating toolbar at bottom-left)
@@ -126,15 +136,18 @@ describe('Outline View Suite', () => {
 
   it('Close Outline View dialog', () => {
     // Open the Outline View
-    cy.get('[aria-label*="Outline View"]').first().click({ force: true });
+    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
     // Wait for dialog to be visible
+    cy.wait(500);
     cy.get('[role="dialog"]').should('be.visible');
 
     // Click the close button (X icon in top right)
     cy.get('[role="dialog"]').within(() => {
-      cy.get('button').contains('svg').click();
+      cy.get('button').first().click();
     });
+
+    cy.wait(300);
 
     // Verify dialog is closed
     cy.get('[role="dialog"]').should('not.exist');
@@ -158,9 +171,10 @@ describe('Outline View Suite', () => {
     cy.wait(300);
 
     // Now open the Outline View
-    cy.get('[aria-label*="Outline View"]').first().click({ force: true });
+    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
     // Wait for dialog to be visible
+    cy.wait(500);
     cy.get('[role="dialog"]').should('be.visible');
 
     // Verify that icons are displayed in the outline
@@ -173,9 +187,10 @@ describe('Outline View Suite', () => {
 
   it('Outline View displays link and note indicators', () => {
     // Open the Outline View
-    cy.get('[aria-label*="Outline View"]').first().click({ force: true });
+    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
 
     // Wait for dialog to be visible
+    cy.wait(500);
     cy.get('[role="dialog"]').should('be.visible');
 
     // Check if link/note icons are present (if the map has any)

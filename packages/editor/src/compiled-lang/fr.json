@@ -795,6 +795,42 @@
       "value": "Océan"
     }
   ],
+  "outline.collapse": [
+    {
+      "type": 0,
+      "value": "Réduire"
+    }
+  ],
+  "outline.empty": [
+    {
+      "type": 0,
+      "value": "Aucun contenu à afficher"
+    }
+  ],
+  "outline.expand": [
+    {
+      "type": 0,
+      "value": "Développer"
+    }
+  ],
+  "outline.has-note": [
+    {
+      "type": 0,
+      "value": "A une note"
+    }
+  ],
+  "outline.link": [
+    {
+      "type": 0,
+      "value": "Lien"
+    }
+  ],
+  "outline.note": [
+    {
+      "type": 0,
+      "value": "Note"
+    }
+  ],
   "popover": [
     {
       "type": 0,
@@ -1303,6 +1339,12 @@
     {
       "type": 0,
       "value": "Clavier"
+    }
+  ],
+  "zoom-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Vue en Plan"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [

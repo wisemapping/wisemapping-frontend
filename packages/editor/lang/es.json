@@ -59,6 +59,24 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "Deshacer"
   },
+  "outline.empty": {
+    "defaultMessage": "No hay contenido para mostrar"
+  },
+  "outline.expand": {
+    "defaultMessage": "Expandir"
+  },
+  "outline.collapse": {
+    "defaultMessage": "Contraer"
+  },
+  "outline.has-note": {
+    "defaultMessage": "Tiene nota"
+  },
+  "outline.link": {
+    "defaultMessage": "Enlace"
+  },
+  "outline.note": {
+    "defaultMessage": "Nota"
+  },
   "link.help_text": {
     "defaultMessage": "Dirección invalida"
   },
@@ -388,6 +406,9 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Expandir todos los nodos"
+  },
+  "zoom-panel.tooltip-outline-view": {
+    "defaultMessage": "Vista de Esquema"
   },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "Agregar imagen de tema"

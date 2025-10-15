@@ -795,6 +795,42 @@
       "value": "オーシャン"
     }
   ],
+  "outline.collapse": [
+    {
+      "type": 0,
+      "value": "折りたたむ"
+    }
+  ],
+  "outline.empty": [
+    {
+      "type": 0,
+      "value": "表示するコンテンツがありません"
+    }
+  ],
+  "outline.expand": [
+    {
+      "type": 0,
+      "value": "展開"
+    }
+  ],
+  "outline.has-note": [
+    {
+      "type": 0,
+      "value": "ノートがあります"
+    }
+  ],
+  "outline.link": [
+    {
+      "type": 0,
+      "value": "リンク"
+    }
+  ],
+  "outline.note": [
+    {
+      "type": 0,
+      "value": "ノート"
+    }
+  ],
   "popover": [
     {
       "type": 0,
@@ -1303,6 +1339,12 @@
     {
       "type": 0,
       "value": "キーボードショートカット"
+    }
+  ],
+  "zoom-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "アウトラインビュー"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [

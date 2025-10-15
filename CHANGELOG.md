@@ -2,6 +2,36 @@
 
 All notable changes to the Wisemapping Frontend project are documented in this file.
 
+## Week of October 12 - October 15, 2025
+
+### 🚀 Major Features & Enhancements
+
+#### New Visualization: Outline View
+
+- **Hierarchical Mind Map View**: New outline view feature that displays mind maps as a hierarchical tree structure
+- **Interactive Navigation**: Expand and collapse nodes to navigate through complex mind maps
+- **Rich Content Display**: Shows topic icons, links, and notes directly in the outline
+- **Hover Tooltips**: Interactive tooltips for links and notes with elegant styling
+- **Expand/Collapse All**: Floating toolbar with quick actions to expand or collapse all nodes at once
+- **Responsive Design**: Beautiful dark mode support with Material-UI theming
+- **Keyboard Accessible**: Full aria-label support for screen readers and keyboard navigation
+
+#### User Experience Improvements
+
+- **Bundle Size Optimization**: Improved lazy loading and bundle splitting for faster initial load times
+- **Improved Export**: Enhanced export functionality for better data portability
+- **Admin Console Enhancements**: Multiple improvements to the admin console interface
+- **Better Compilation Performance**: Reduced compilation time for faster development iterations
+
+### 🔧 Technical Improvements
+
+- **TypeScript Migration**: Migrated additional tests to TypeScript for better type safety
+- **Code Quality**: Removed compilation warnings and improved code structure
+- **Test Coverage**: Fixed and improved existing test suites
+- **Development Experience**: Enhanced webpack configuration with better logging and debugging support
+
+---
+
 ## Week of Oct 1 - October 6, 2025
 
 ### 🌍 Global Language Support

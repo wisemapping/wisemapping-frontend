@@ -59,6 +59,24 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "Annuler"
   },
+  "outline.empty": {
+    "defaultMessage": "Aucun contenu à afficher"
+  },
+  "outline.expand": {
+    "defaultMessage": "Développer"
+  },
+  "outline.collapse": {
+    "defaultMessage": "Réduire"
+  },
+  "outline.has-note": {
+    "defaultMessage": "A une note"
+  },
+  "outline.link": {
+    "defaultMessage": "Lien"
+  },
+  "outline.note": {
+    "defaultMessage": "Note"
+  },
   "link.help_text": {
     "defaultMessage": "Adresse invalide"
   },
@@ -388,6 +406,9 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Développer tous les nœuds"
+  },
+  "zoom-panel.tooltip-outline-view": {
+    "defaultMessage": "Vue en Plan"
   },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "Ajouter une image de sujet"

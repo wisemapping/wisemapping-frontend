@@ -98,6 +98,24 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "Отменить"
   },
+  "outline.empty": {
+    "defaultMessage": "Нет содержимого для отображения"
+  },
+  "outline.expand": {
+    "defaultMessage": "Развернуть"
+  },
+  "outline.collapse": {
+    "defaultMessage": "Свернуть"
+  },
+  "outline.has-note": {
+    "defaultMessage": "Есть заметка"
+  },
+  "outline.link": {
+    "defaultMessage": "Ссылка"
+  },
+  "outline.note": {
+    "defaultMessage": "Заметка"
+  },
   "editor-panel.icon-title": {
     "defaultMessage": "Иконка"
   },
@@ -151,9 +169,6 @@
   },
   "editor-panel.tooltip-topic-font-smaller": {
     "defaultMessage": "Уменьшить"
-  },
-  "editor-panel.tooltip-topic-font-style": {
-    "defaultMessage": "Стиль шрифта"
   },
   "editor-panel.tooltip-topic-share-ellipse": {
     "defaultMessage": "Форма эллипса"
@@ -388,6 +403,9 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Развернуть все узлы"
+  },
+  "zoom-panel.tooltip-outline-view": {
+    "defaultMessage": "Вид структуры"
   },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "Добавить изображение темы"

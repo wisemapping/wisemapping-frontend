@@ -47,6 +47,24 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "Скасувати"
   },
+  "outline.empty": {
+    "defaultMessage": "Немає вмісту для відображення"
+  },
+  "outline.expand": {
+    "defaultMessage": "Розгорнути"
+  },
+  "outline.collapse": {
+    "defaultMessage": "Згорнути"
+  },
+  "outline.has-note": {
+    "defaultMessage": "Має нотатку"
+  },
+  "outline.link": {
+    "defaultMessage": "Посилання"
+  },
+  "outline.note": {
+    "defaultMessage": "Нотатка"
+  },
   "editor-panel.icon-title": {
     "defaultMessage": "Іконка"
   },
@@ -265,6 +283,9 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Розгорнути всі вузли"
+  },
+  "zoom-panel.tooltip-outline-view": {
+    "defaultMessage": "Вигляд структури"
   },
   "creator-info-pane.description": {
     "defaultMessage": "Опис"

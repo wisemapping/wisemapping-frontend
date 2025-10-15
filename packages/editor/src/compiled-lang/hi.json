@@ -795,6 +795,42 @@
       "value": "महासागर"
     }
   ],
+  "outline.collapse": [
+    {
+      "type": 0,
+      "value": "संक्षिप्त करें"
+    }
+  ],
+  "outline.empty": [
+    {
+      "type": 0,
+      "value": "प्रदर्शित करने के लिए कोई सामग्री नहीं"
+    }
+  ],
+  "outline.expand": [
+    {
+      "type": 0,
+      "value": "विस्तार करें"
+    }
+  ],
+  "outline.has-note": [
+    {
+      "type": 0,
+      "value": "नोट है"
+    }
+  ],
+  "outline.link": [
+    {
+      "type": 0,
+      "value": "लिंक"
+    }
+  ],
+  "outline.note": [
+    {
+      "type": 0,
+      "value": "नोट"
+    }
+  ],
   "popover": [
     {
       "type": 0,
@@ -1303,6 +1339,12 @@
     {
       "type": 0,
       "value": "कीबोर्ड शॉर्टकट"
+    }
+  ],
+  "zoom-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "रूपरेखा दृश्य"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [

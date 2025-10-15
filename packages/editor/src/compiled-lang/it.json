@@ -548,7 +548,7 @@
   "editor-panel.tooltip-topic-font-style": [
     {
       "type": 0,
-      "value": "Stile carattere"
+      "value": "Stile del carattere"
     }
   ],
   "editor-panel.tooltip-topic-share-ellipse": [
@@ -793,6 +793,42 @@
     {
       "type": 0,
       "value": "Oceano"
+    }
+  ],
+  "outline.collapse": [
+    {
+      "type": 0,
+      "value": "Comprimi"
+    }
+  ],
+  "outline.empty": [
+    {
+      "type": 0,
+      "value": "Nessun contenuto da visualizzare"
+    }
+  ],
+  "outline.expand": [
+    {
+      "type": 0,
+      "value": "Espandi"
+    }
+  ],
+  "outline.has-note": [
+    {
+      "type": 0,
+      "value": "Ha nota"
+    }
+  ],
+  "outline.link": [
+    {
+      "type": 0,
+      "value": "Link"
+    }
+  ],
+  "outline.note": [
+    {
+      "type": 0,
+      "value": "Nota"
     }
   ],
   "popover": [
@@ -1303,6 +1339,12 @@
     {
       "type": 0,
       "value": "Scorciatoie da tastiera"
+    }
+  ],
+  "zoom-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Vista Struttura"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [

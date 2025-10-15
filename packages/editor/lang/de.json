@@ -59,6 +59,24 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "Rückgängig"
   },
+  "outline.empty": {
+    "defaultMessage": "Kein Inhalt zum Anzeigen"
+  },
+  "outline.expand": {
+    "defaultMessage": "Erweitern"
+  },
+  "outline.collapse": {
+    "defaultMessage": "Einklappen"
+  },
+  "outline.has-note": {
+    "defaultMessage": "Hat Notiz"
+  },
+  "outline.link": {
+    "defaultMessage": "Link"
+  },
+  "outline.note": {
+    "defaultMessage": "Notiz"
+  },
   "link.help_text": {
     "defaultMessage": "Ungültige Adresse"
   },
@@ -268,6 +286,9 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "Alle Knoten erweitern"
+  },
+  "zoom-panel.tooltip-outline-view": {
+    "defaultMessage": "Gliederungsansicht"
   },
   "editor-panel.tooltip-canvas-style": {
     "defaultMessage": "Hintergrund"

@@ -47,6 +47,24 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "पूर्ववत"
   },
+  "outline.empty": {
+    "defaultMessage": "प्रदर्शित करने के लिए कोई सामग्री नहीं"
+  },
+  "outline.expand": {
+    "defaultMessage": "विस्तार करें"
+  },
+  "outline.collapse": {
+    "defaultMessage": "संक्षिप्त करें"
+  },
+  "outline.has-note": {
+    "defaultMessage": "नोट है"
+  },
+  "outline.link": {
+    "defaultMessage": "लिंक"
+  },
+  "outline.note": {
+    "defaultMessage": "नोट"
+  },
   "editor-panel.icon-title": {
     "defaultMessage": "आइकन"
   },
@@ -388,6 +406,9 @@
   },
   "zoom-panel.tooltip-expand-all": {
     "defaultMessage": "सभी नोड्स को विस्तृत करें"
+  },
+  "zoom-panel.tooltip-outline-view": {
+    "defaultMessage": "रूपरेखा दृश्य"
   },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "विषय छवि जोड़ें"

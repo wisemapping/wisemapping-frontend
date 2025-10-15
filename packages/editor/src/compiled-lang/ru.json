@@ -795,6 +795,42 @@
       "value": "Океан"
     }
   ],
+  "outline.collapse": [
+    {
+      "type": 0,
+      "value": "Свернуть"
+    }
+  ],
+  "outline.empty": [
+    {
+      "type": 0,
+      "value": "Нет содержимого для отображения"
+    }
+  ],
+  "outline.expand": [
+    {
+      "type": 0,
+      "value": "Развернуть"
+    }
+  ],
+  "outline.has-note": [
+    {
+      "type": 0,
+      "value": "Есть заметка"
+    }
+  ],
+  "outline.link": [
+    {
+      "type": 0,
+      "value": "Ссылка"
+    }
+  ],
+  "outline.note": [
+    {
+      "type": 0,
+      "value": "Заметка"
+    }
+  ],
   "popover": [
     {
       "type": 0,
@@ -1303,6 +1339,12 @@
     {
       "type": 0,
       "value": "Клавиатура"
+    }
+  ],
+  "zoom-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Вид структуры"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [
