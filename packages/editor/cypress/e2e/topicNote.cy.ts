@@ -17,7 +17,7 @@
  */
 
 /// <reference types="cypress" />
-describe.skip('Topic Note Suite', () => {
+describe('Topic Note Suite', () => {
   const waitForNotePanel = () => {
     // Wait for note textarea to be visible and ready for interaction
     cy.get('textarea, [contenteditable="true"]').should('be.visible').and('not.be.disabled');
@@ -31,8 +31,7 @@ describe.skip('Topic Note Suite', () => {
   it('Add note to topic', () => {
     cy.focusTopicById(3);
     
-    // Use the aria-label that includes the keyboard shortcut - select the first one
-    cy.get('[aria-label*="Add Note"]').first().click({ force: true });
+    cy.onClickToolbarButton('Add Note');
 
     // Wait for note panel to load dynamically
     waitForNotePanel();
@@ -50,7 +49,7 @@ describe.skip('Topic Note Suite', () => {
   it('Remove note from topic', () => {
     // First add a note
     cy.focusTopicById(3);
-    cy.get('[aria-label*="Add Note"]').first().click({ force: true });
+    cy.onClickToolbarButton('Add Note');
 
     // Wait for note panel to load dynamically
     waitForNotePanel();
@@ -64,7 +63,7 @@ describe.skip('Topic Note Suite', () => {
 
     // Now remove the note by opening the note panel again
     cy.focusTopicById(3);
-    cy.get('[aria-label*="Add Note"]').first().click({ force: true });
+    cy.onClickToolbarButton('Add Note');
 
     // Wait for panel to load dynamically
     waitForNotePanel();
@@ -81,7 +80,7 @@ describe.skip('Topic Note Suite', () => {
   it('Edit existing note', () => {
     // Add initial note
     cy.focusTopicById(4);
-    cy.get('[aria-label*="Add Note"]').first().click({ force: true });
+    cy.onClickToolbarButton('Add Note');
 
     // Wait for panel to load dynamically
     waitForNotePanel();
@@ -92,7 +91,7 @@ describe.skip('Topic Note Suite', () => {
 
     // Edit the note
     cy.focusTopicById(4);
-    cy.get('[aria-label*="Add Note"]').first().click({ force: true });
+    cy.onClickToolbarButton('Add Note');
 
     // Wait for panel to load dynamically
     waitForNotePanel();
@@ -109,7 +108,7 @@ describe.skip('Topic Note Suite', () => {
 
   it('Verify note content is saved and persists', () => {
     cy.focusTopicById(5);
-    cy.get('[aria-label*="Add Note"]').first().click({ force: true });
+    cy.onClickToolbarButton('Add Note');
 
     // Wait for panel to load dynamically
     waitForNotePanel();
@@ -122,7 +121,7 @@ describe.skip('Topic Note Suite', () => {
 
     // Verify the note persists by opening the note panel again
     cy.focusTopicById(5);
-    cy.get('[aria-label*="Add Note"]').first().click({ force: true });
+    cy.onClickToolbarButton('Add Note');
 
     // Wait for panel to load dynamically
     waitForNotePanel();
