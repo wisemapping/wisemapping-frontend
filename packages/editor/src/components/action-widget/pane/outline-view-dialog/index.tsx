@@ -18,10 +18,7 @@
 
 import React, { ReactElement, useState, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import Tooltip from '@mui/material/Tooltip';
 import Popover from '@mui/material/Popover';
@@ -31,7 +28,6 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { styled } from '@mui/material/styles';
 import { Mindmap } from '@wisemapping/mindplot';
 import INodeModel from '@wisemapping/mindplot/src/components/model/INodeModel';
 import LinkModel from '@wisemapping/mindplot/src/components/model/LinkModel';
@@ -40,232 +36,29 @@ import SvgIconModel from '@wisemapping/mindplot/src/components/model/SvgIconMode
 import ContentType from '@wisemapping/mindplot/src/components/ContentType';
 import LinksImage from '@wisemapping/mindplot/assets/icons/links.svg';
 import NotesImage from '@wisemapping/mindplot/assets/icons/notes.svg';
-
-const OutlineContainer = styled(Box)(({ theme }) => ({
-  padding: '10px 118px 10px 118px', // 10px top/bottom, 118px left/right (144px - 26px from DialogContent)
-  maxHeight: '100%',
-  height: '100%',
-  overflow: 'auto',
-  fontFamily: 'Figtree, Segoe UI, Helvetica, Arial, sans-serif',
-  fontSize: '14px',
-  lineHeight: '1.6',
-  backgroundColor: theme.palette.background.paper,
-  color: theme.palette.text.primary,
-  position: 'relative',
-}));
-
-const OutlineNode = styled(Box)<{ level: number }>(({ theme, level }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: `${theme.spacing(0.5)} 0`,
-  paddingLeft: theme.spacing(level * 2),
-  position: 'relative',
-  '&:hover': {
-    backgroundColor: theme.palette.action.hover,
-  },
-}));
-
-const ExpandButton = styled(IconButton)(({ theme }) => ({
-  padding: theme.spacing(0.25),
-  marginRight: theme.spacing(0.5),
-  width: '20px',
-  height: '20px',
-  '& .MuiSvgIcon-root': {
-    fontSize: '16px',
-  },
-}));
-
-const NodeIcon = styled('img')(({ theme }) => ({
-  marginRight: theme.spacing(0.5),
-  width: '16px',
-  height: '16px',
-  display: 'inline-block',
-  verticalAlign: 'middle',
-}));
-
-const FeatureIconImg = styled('img')(({ theme }) => ({
-  marginLeft: theme.spacing(1),
-  width: '26px',
-  height: '26px',
-  cursor: 'pointer',
-  opacity: 0.7,
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  borderRadius: '4px',
-  padding: '3px',
-  border: `1px solid ${theme.palette.divider}`,
-  '&:hover': {
-    opacity: 1,
-    backgroundColor: theme.palette.action.hover,
-    transform: 'translateY(-1px)',
-    borderColor: theme.palette.text.secondary,
-  },
-}));
-
-const NodeText = styled(Typography)<{ level: number }>(({ theme, level }) => ({
-  fontWeight: level === 0 ? 600 : 400,
-  display: 'inline',
-  fontFamily: 'Figtree, Segoe UI, Helvetica, Arial, sans-serif',
-  fontSize: level === 0 ? '17px' : level === 1 ? '17px' : '15px',
-  color: theme.palette.text.primary,
-  lineHeight: 1.4,
-}));
-
-const VerticalLine = styled(Box)<{ level: number; hasChildren: boolean }>(
-  ({ theme, level, hasChildren }) => ({
-    position: 'absolute',
-    left: theme.spacing(level * 2 + 0.5),
-    top: hasChildren ? '20px' : '10px',
-    bottom: hasChildren ? '0' : '10px',
-    width: '1px',
-    borderLeft: `1px dashed ${theme.palette.divider}`,
-    pointerEvents: 'none',
-  }),
-);
-
-const FloatingToolbar = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  bottom: theme.spacing(3),
-  left: theme.spacing(3),
-  display: 'flex',
-  gap: theme.spacing(0.5),
-  backgroundColor: theme.palette.background.paper,
-  border: `1px solid ${theme.palette.divider}`,
-  borderRadius: '12px',
-  padding: theme.spacing(1),
-  boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)',
-  backdropFilter: 'blur(8px)',
-  zIndex: 1000,
-  animation: 'fadeIn 0.25s ease-out',
-  '@keyframes fadeIn': {
-    '0%': { opacity: 0, transform: 'translateY(10px)' },
-    '100%': { opacity: 1, transform: 'translateY(0)' },
-  },
-}));
-
-const NodeWrapper = styled(Box)({
-  position: 'relative',
-});
-
-const ExpandPlaceholder = styled(Box)({
-  width: '28px',
-  marginRight: '4px',
-});
-
-const IconContainer = styled(Box)({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '2px',
-  marginRight: '4px',
-});
-
-const FeatureIconContainer = styled(Box)({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '2px',
-  marginLeft: 'auto',
-  justifyContent: 'flex-end',
-});
-
-const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
-  padding: '26px',
-  position: 'relative',
-  backgroundColor: theme.palette.background.paper,
-}));
-
-const CloseButton = styled(IconButton)({
-  position: 'absolute',
-  top: 16,
-  right: 16,
-  zIndex: 1,
-  backgroundColor: 'rgba(0, 0, 0, 0.04)',
-  '&:hover': {
-    backgroundColor: 'rgba(0, 0, 0, 0.08)',
-  },
-});
-
-const OutlineContentWrapper = styled(Box)({
-  paddingLeft: 18,
-});
-
-const CentralTopicTitle = styled(Typography)(({ theme }) => ({
-  fontFamily: 'Figtree, Segoe UI, Helvetica, Arial, sans-serif',
-  fontSize: '28px',
-  fontWeight: 600,
-  marginBottom: theme.spacing(3),
-  color: theme.palette.text.primary,
-  textAlign: 'left',
-  marginLeft: 0,
-  paddingLeft: theme.spacing(2),
-}));
-
-const EmptyMessage = styled(Typography)(({ theme }) => ({
-  textAlign: 'center',
-  paddingTop: theme.spacing(4),
-  paddingBottom: theme.spacing(4),
-}));
-
-const ToolbarButton = styled(IconButton)(({ theme }) => ({
-  '&:hover': {
-    backgroundColor: theme.palette.action.hover,
-  },
-}));
-
-const TooltipContent = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? theme.palette.background.paper : '#ffffff',
-  padding: '20px 20px 12px 20px',
-  wordWrap: 'break-word',
-  textAlign: 'left',
-  fontSize: '14px',
-  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-  lineHeight: 1.6,
-  whiteSpace: 'pre-line',
-  color: theme.palette.text.primary,
-  borderRadius: '12px 12px 0 0',
-}));
-
-const TooltipTitle = styled(Typography)(({ theme }) => ({
-  backgroundColor: 'transparent',
-  fontSize: '10px',
-  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-  textTransform: 'uppercase',
-  padding: '6px 16px 8px 16px',
-  textAlign: 'right',
-  fontWeight: 500,
-  letterSpacing: '0.8px',
-  color: theme.palette.text.secondary,
-  borderTop: `1px solid ${theme.palette.divider}`,
-  marginTop: '8px',
-  opacity: 0.8,
-}));
-
-const TooltipLink = styled('a')(({ theme }) => ({
-  display: 'inline-block',
-  padding: '10px 14px',
-  margin: '6px 0',
-  background:
-    theme.palette.mode === 'dark'
-      ? 'linear-gradient(135deg, #3a3a00 0%, #4a4a00 100%)'
-      : 'linear-gradient(135deg, #fff8f0 0%, #fef5e7 100%)',
-  border: '1px solid #ffa800',
-  borderRadius: '8px',
-  fontSize: '13px',
-  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-  textDecoration: 'none',
-  color: '#ffa800',
-  wordBreak: 'break-all',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  boxShadow: '0 2px 4px rgba(255, 168, 0, 0.1)',
-  position: 'relative',
-  overflow: 'hidden',
-  '&:hover': {
-    background: 'linear-gradient(135deg, #ffa800 0%, #e57500 100%)',
-    color: '#ffffff',
-    borderColor: '#e57500',
-    textDecoration: 'none',
-    transform: 'translateY(-1px)',
-    boxShadow: '0 4px 12px rgba(255, 168, 0, 0.3)',
-  },
-}));
+import {
+  OutlineContainer,
+  OutlineNode,
+  ExpandButton,
+  NodeIcon,
+  FeatureIconImg,
+  NodeText,
+  VerticalLine,
+  FloatingToolbar,
+  NodeWrapper,
+  ExpandPlaceholder,
+  IconContainer,
+  FeatureIconContainer,
+  StyledDialogContent,
+  CloseButton,
+  OutlineContentWrapper,
+  CentralTopicTitle,
+  EmptyMessage,
+  ToolbarButton,
+  TooltipContent,
+  TooltipTitle,
+  TooltipLink,
+} from './styled';
 
 interface OutlineNodeData {
   id: string;
