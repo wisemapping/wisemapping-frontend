@@ -332,7 +332,7 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
             <CloseIcon />
           </CloseButton>
 
-          <OutlineContainer sx={{ paddingLeft: 0 }}>
+          <OutlineContainer>
             <OutlineContentWrapper>
               {/* Central Topic as Title - now part of scrollable content */}
               {centralTopicTitle && (
