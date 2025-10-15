@@ -179,7 +179,7 @@ export const CentralTopicTitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,
   textAlign: 'left',
   marginLeft: 0,
-  paddingLeft: theme.spacing(2),
+  paddingLeft: 28, // Align with the first character of outline text (18px from wrapper + 10px for expand button space)
 }));
 
 export const EmptyMessage = styled(Typography)(({ theme }) => ({
