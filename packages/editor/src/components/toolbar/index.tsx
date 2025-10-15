@@ -34,6 +34,7 @@ import { useTheme } from '@mui/material/styles';
  */
 export const ToolbarButtonOption = (props: { configuration: ActionConfig }): ReactElement => {
   const selected = props.configuration.selected && props.configuration.selected();
+  const ariaLabel = props.configuration.ariaLabel || props.configuration.tooltip || '';
   return (
     <Tooltip
       title={props.configuration.tooltip || ''}
@@ -46,7 +47,7 @@ export const ToolbarButtonOption = (props: { configuration: ActionConfig }): Rea
           onClick={props.configuration.onClick}
           disabled={props.configuration.disabled && props.configuration.disabled()}
           aria-pressed={selected}
-          aria-label={props.configuration.tooltip || ''}
+          aria-label={ariaLabel}
         >
           {typeof props.configuration.icon === 'function'
             ? props.configuration.icon()

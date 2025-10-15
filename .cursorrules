@@ -142,38 +142,114 @@ import ThemeToggle from '../common/theme-toggle/ThemeToggle'; // ❌ Redundant
 - Integration tests: Cypress
 - Aim for good coverage on critical paths
 
-## 7. Linting and Code Quality (CRITICAL)
+## 7. TypeScript Type Safety (CRITICAL)
 
-**MANDATORY**: Always run linter checks after making code changes and fix all errors before completing a task.
+**MANDATORY**: All TypeScript code must be properly typed. NO exceptions.
 
-### When to Run Linter:
-- At the end of the agent task execution (not for every individual file)
-- Before completing a task
-- Before committing code
+### Prohibited:
+- ❌ **NEVER use `any` type** - Always use specific types
+- ❌ **NEVER use `@ts-ignore` or `@ts-expect-error`** without discussion
+- ❌ **NEVER leave implicit `any`** from function parameters or variables
+
+### Required Practices:
+
+#### 1. Import Proper Types:
+```typescript
+// ✅ CORRECT - Import types from mindplot
+import { Topic, Designer } from '@wisemapping/mindplot';
+
+// ❌ WRONG - Using 'any'
+const topic: any = ...;
+```
+
+#### 2. Handle Nullable Types Correctly:
+```typescript
+// ✅ CORRECT - Properly handle Topic | null
+const getTopicDepth = (topic: Topic): number => {
+  let current: Topic | null = topic;
+  while (current && current.getParent() !== null) {
+    current = current.getParent();  // Returns Topic | null
+  }
+};
+
+// ❌ WRONG - Type mismatch
+const getTopicDepth = (topic: Topic): number => {
+  let current = topic;  // TypeScript infers Topic
+  current = current.getParent();  // ERROR: Topic | null not assignable to Topic
+};
+```
+
+#### 3. Use Unknown for Truly Unknown Types:
+```typescript
+// ✅ If you truly don't know the type
+const data: unknown = JSON.parse(str);
+if (typeof data === 'object' && data !== null) {
+  // Type guard before use
+}
+
+// ❌ WRONG
+const data: any = JSON.parse(str);
+```
+
+## 8. Linting and Code Quality (CRITICAL)
+
+**MANDATORY**: AI MUST check linter errors after EVERY file creation or modification.
+
+### When to Run Linter (REQUIRED):
+- ✅ **IMMEDIATELY after creating a new file**
+- ✅ **IMMEDIATELY after modifying an existing file**
+- ✅ **Before declaring a task complete**
+- ✅ **After any code generation or refactoring**
+
+### Linting Workflow (ENFORCED):
+```
+For EACH file created/modified:
+1. Write/modify the code
+2. IMMEDIATELY run read_lints([specific_file_path])
+3. Fix ALL errors found
+4. Re-run read_lints to verify
+5. Only then move to next file
+
+At task completion:
+1. Run read_lints on ALL modified files together
+2. Fix any remaining issues
+3. Final verification
+4. Task complete
+```
 
 ### How to Check Lints:
-- Use specific file paths when checking lints to avoid noise from unrelated files
-- Example: Check only the files you modified, not the entire codebase
-- Fix ALL linting errors - do not leave any unfixed
+```typescript
+// ✅ CORRECT - Check specific files you modified
+read_lints([
+  "packages/editor/src/components/new-component/index.tsx",
+  "packages/editor/src/components/new-component/styled.ts"
+])
 
-### Linting Workflow:
-```
-1. Complete all code changes for the task
-2. Run linter on all modified files at once
-3. Fix all errors and warnings
-4. Verify fixes by running linter again
-5. Confirm no linting errors remain
-6. Task completion
+// ❌ WRONG - Checking entire codebase (too noisy)
+read_lints()  // or read_lints([])
 ```
 
-### Common Linting Rules:
-- No `any` types in TypeScript - use proper types or `unknown`
-- No unused variables or imports
-- Follow consistent formatting and naming conventions
-- Proper error handling patterns
+### Common ESLint Rules to Follow:
+- `@typescript-eslint/no-explicit-any` - NO `any` types
+- `@typescript-eslint/no-unused-vars` - Remove unused imports/variables
+- `@typescript-eslint/explicit-function-return-type` - Type function returns when needed
+- Proper null/undefined handling
 - Material UI imports must follow tree-shakeable pattern (see rule #2)
 
+### AI Assistant Workflow (MANDATORY):
+```
+1. Create/modify TypeScript file
+2. Add proper type imports (Topic, Designer, etc.)
+3. Use correct types for all variables and parameters
+4. Handle nullable types with | null or | undefined
+5. RUN read_lints([file_path]) - DO NOT SKIP THIS
+6. Fix all errors found
+7. Verify with read_lints again
+8. Move to next file/task
+```
+
 ### Priority:
-- Linting errors MUST be fixed before task completion
-- Do not skip or ignore linting errors
-- If a linting rule seems incorrect, discuss with the user before bypassing it
+- **ZERO tolerance for linting errors** in completed tasks
+- Fix ALL errors before declaring task complete
+- If a linting rule seems incorrect, discuss with user before bypassing
+- Never commit code with linting errors

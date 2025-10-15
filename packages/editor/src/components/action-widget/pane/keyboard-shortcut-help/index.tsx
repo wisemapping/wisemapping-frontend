@@ -500,6 +500,108 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
                 ⌘ + L
               </TableCell>
             </TableRow>
+            <TableRow hover>
+              <TableCell>
+                <FormattedMessage id="shortcut-help-pane.zoom-in" defaultMessage="Zoom in" />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                Ctrl + =
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                ⌘ + =
+              </TableCell>
+            </TableRow>
+            <TableRow hover>
+              <TableCell>
+                <FormattedMessage id="shortcut-help-pane.zoom-out" defaultMessage="Zoom out" />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                Ctrl + -
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                ⌘ + -
+              </TableCell>
+            </TableRow>
+            <TableRow hover>
+              <TableCell>
+                <FormattedMessage
+                  id="shortcut-help-pane.zoom-to-fit"
+                  defaultMessage="Zoom to fit"
+                />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                Ctrl + 0
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                ⌘ + 0
+              </TableCell>
+            </TableRow>
+            <TableRow hover>
+              <TableCell>
+                <FormattedMessage
+                  id="shortcut-help-pane.outline-view"
+                  defaultMessage="Open outline view"
+                />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                Ctrl + O
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                ⌘ + O
+              </TableCell>
+            </TableRow>
+            <TableRow hover>
+              <TableCell>
+                <FormattedMessage
+                  id="shortcut-help-pane.expand-by-level"
+                  defaultMessage="Expand topics by level"
+                />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                Ctrl + E
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                ⌘ + E
+              </TableCell>
+            </TableRow>
+            <TableRow hover>
+              <TableCell>
+                <FormattedMessage
+                  id="shortcut-help-pane.expand-collapse-all"
+                  defaultMessage="Expand/Collapse all topics"
+                />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                Ctrl + Shift + E
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                ⌘ + Shift + E
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>

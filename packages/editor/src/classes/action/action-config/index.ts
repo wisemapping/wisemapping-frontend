@@ -32,6 +32,10 @@ interface ActionConfig {
    */
   tooltip?: string;
   /**
+   * text for aria-label (for accessibility and testing). If not provided, tooltip will be used.
+   */
+  ariaLabel?: string;
+  /**
    * the event handler for a common button
    */
   onClick?: (event) => void;

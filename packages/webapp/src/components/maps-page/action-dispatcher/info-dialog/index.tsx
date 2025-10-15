@@ -22,17 +22,20 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { ErrorInfo } from '../../../../classes/client';
 import BaseDialog from '../base-dialog';
 import { SimpleDialogProps } from '..';
-import { useStyles } from './style';
+import {
+  StyledScrollContainer,
+  InfoSection,
+  SectionTitle,
+  InfoRow,
+  InfoLabel,
+  InfoValue,
+  StyledDivider,
+} from './styled';
 import dayjs from 'dayjs';
-import Paper from '@mui/material/Paper';
-import Card from '@mui/material/Card';
-import ListItem from '@mui/material/ListItem';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import { useFetchMapById } from '../../../../classes/middleware';
 
-// Load fromNow pluggin
+// Load fromNow plugin
 dayjs.extend(LocalizedFormat);
 
 const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
