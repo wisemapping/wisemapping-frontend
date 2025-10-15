@@ -6,6 +6,23 @@ const { merge } = require('webpack-merge');
 
 const playgroundConfig = {
   mode: 'development',
+  devtool: 'eval-cheap-module-source-map',
+  stats: {
+    colors: true,
+    chunks: false,
+    modules: false,
+    children: false,
+    entrypoints: false,
+    assets: false,
+    timings: true,
+    builtAt: true,
+    version: true,
+    errors: true,
+    errorDetails: true,
+    warnings: true,
+    hash: false,
+    chunkOrigins: false,
+  },
   entry: {
     viewmode: path.resolve(__dirname, './test/playground/map-render/js/viewmode'),
     editor: path.resolve(__dirname, './test/playground/map-render/js/editor'),
@@ -22,7 +39,35 @@ const playgroundConfig = {
   devServer: {
     historyApiFallback: true,
     port: process.env.PORT || 8081,
+    host: 'localhost',
     open: false,
+    hot: true,
+    liveReload: true,
+    compress: true,
+    client: {
+      logging: 'info',
+      overlay: {
+        errors: true,
+        warnings: true,
+      },
+    },
+    devMiddleware: {
+      stats: 'normal',
+    },
+    onListening: function (devServer) {
+      if (!devServer) {
+        throw new Error('webpack-dev-server is not defined');
+      }
+      const port = devServer.server.address().port;
+      console.log('\n🚀 WiseMapping Editor Playground');
+      console.log(`📍 Local:            http://localhost:${port}`);
+      console.log(`📍 Network:          http://localhost:${port}`);
+      console.log(`📄 Editor:           http://localhost:${port}/editor.html`);
+      console.log(`👁️  View Mode:       http://localhost:${port}/viewmode.html`);
+      console.log(`🎨 Showcase:         http://localhost:${port}/showcase.html`);
+      console.log(`🔒 Editor Locked:    http://localhost:${port}/editorlocked.html`);
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+    },
   },
   plugins: [
     new CopyPlugin({

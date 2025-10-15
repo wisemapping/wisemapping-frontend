@@ -47,11 +47,41 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "Undo"
   },
+  "appbar.tooltip-outline-view": {
+    "defaultMessage": "Outline View"
+  },
+  "outline.title": {
+    "defaultMessage": "Outline View"
+  },
+  "outline.empty": {
+    "defaultMessage": "No content to display"
+  },
+  "outline.expand": {
+    "defaultMessage": "Expand"
+  },
+  "outline.collapse": {
+    "defaultMessage": "Collapse"
+  },
+  "outline.has-link": {
+    "defaultMessage": "Has link"
+  },
+  "outline.has-note": {
+    "defaultMessage": "Has note"
+  },
+  "outline.link": {
+    "defaultMessage": "Link"
+  },
+  "outline.note": {
+    "defaultMessage": "Note"
+  },
   "editor-panel.icon-title": {
     "defaultMessage": "Icon"
   },
   "editor-panel.link-panel-title": {
     "defaultMessage": "Link"
+  },
+  "editor-panel.tooltip-outline-view": {
+    "defaultMessage": "Outline View"
   },
   "editor-panel.note-panel-title": {
     "defaultMessage": "Note"
@@ -254,6 +284,9 @@
   "zoom-panel.tooltip-keyboard": {
     "defaultMessage": "Keyboard Shortcuts"
   },
+  "zoom-panel.tooltip-outline-view": {
+    "defaultMessage": "Outline View"
+  },
   "zoom-panel.tooltip-zoom-in": {
     "defaultMessage": "Zoom In"
   },
@@ -454,9 +487,6 @@
   },
   "editor-panel.tooltip-unified-styling": {
     "defaultMessage": "Style Topic & Connections"
-  },
-  "editor-panel.tooltip-topic-font-style": {
-    "defaultMessage": "Font Style"
   },
   "color-picker.color": {
     "defaultMessage": "Color"
