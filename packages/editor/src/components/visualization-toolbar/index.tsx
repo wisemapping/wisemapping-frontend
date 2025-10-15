@@ -32,11 +32,10 @@ import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrong
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import TocOutlinedIcon from '@mui/icons-material/TocOutlined';
-import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
 import Box from '@mui/material/Box';
 import { trackEditorInteraction } from '../../utils/analytics';
-import { Topic } from '@wisemapping/mindplot';
-import { IconWithBadgeContainer, LevelBadge } from './styled';
+import { handleExpandByLevel, buildExpandByLevelConfig } from './expand-by-level-icon';
+import { formatTooltip } from './utils';
 
 // Helper function to check if any nodes are currently collapsed
 const areNodesCollapsed = (model: Editor): boolean => {
@@ -45,47 +44,6 @@ const areNodesCollapsed = (model: Editor): boolean => {
   return allTopics.some(
     (topic) => topic.getType() !== 'CentralTopic' && topic.areChildrenShrunken(),
   );
-};
-
-// Helper function to get topic depth/level
-const getTopicDepth = (topic: Topic): number => {
-  let depth = 0;
-  let current: Topic | null = topic;
-  while (current && current.getParent() !== null) {
-    depth++;
-    current = current.getParent();
-  }
-  return depth;
-};
-
-// Helper function to expand nodes up to a specific level
-const expandToLevel = (model: Editor, targetLevel: number): void => {
-  if (!model?.isMapLoadded()) return;
-  const allTopics = model.getDesigner().getModel().getTopics();
-  const topicsToExpand: number[] = [];
-
-  allTopics.forEach((topic) => {
-    if (topic.getType() !== 'CentralTopic') {
-      const depth = getTopicDepth(topic);
-      // Expand topics that are at or below the target level and are currently collapsed
-      // Changed from < to <= to fix bug where first level wasn't expanding
-      if (depth <= targetLevel && topic.areChildrenShrunken()) {
-        topicsToExpand.push(topic.getId());
-      }
-    }
-  });
-
-  if (topicsToExpand.length > 0) {
-    model.getDesigner().getActionDispatcher().shrinkBranch(topicsToExpand, false);
-  }
-};
-
-// Helper function to format tooltip with keyboard shortcut
-const formatTooltip = (message: string, shortcut: string): string => {
-  const isMac =
-    typeof navigator !== 'undefined' && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  const modifierKey = isMac ? '⌘' : 'Ctrl';
-  return `${message} (${modifierKey}+${shortcut})`;
 };
 
 export function buildVisualizationToolbarConfig(
@@ -226,32 +184,9 @@ export function buildVisualizationToolbarConfig(
       },
       disabled: () => !model?.isMapLoadded(),
     },
-    {
-      icon: (
-        <IconWithBadgeContainer>
-          <FormatLineSpacingIcon />
-          {currentExpandLevel > 0 && <LevelBadge>{currentExpandLevel}</LevelBadge>}
-        </IconWithBadgeContainer>
-      ),
-      tooltip: formatTooltip(
-        intl.formatMessage({
-          id: 'visualization-toolbar.tooltip-expand-level',
-          defaultMessage: `Expand by Level${currentExpandLevel > 0 ? ` (Level ${currentExpandLevel})` : ''}`,
-        }),
-        'E',
-      ),
-      ariaLabel: intl.formatMessage({
-        id: 'visualization-toolbar.tooltip-expand-level',
-        defaultMessage: 'Expand by Level',
-      }),
-      onClick: () => {
-        const nextLevel = currentExpandLevel + 1;
-        setExpandLevel(nextLevel);
-        trackEditorInteraction('expand_by_level');
-        expandToLevel(model, nextLevel);
-      },
-      disabled: () => !model?.isMapLoadded(),
-    },
+    buildExpandByLevelConfig(model, intl, currentExpandLevel, setExpandLevel, () =>
+      trackEditorInteraction('expand_by_level'),
+    ),
     // Separator between expand controls and keyboard shortcuts
     undefined as ActionConfig | undefined,
     {
@@ -328,9 +263,7 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
             }
           } else {
             // Expand by level
-            const nextLevel = expandLevel + 1;
-            setExpandLevel(nextLevel);
-            expandToLevel(model, nextLevel);
+            handleExpandByLevel(model, expandLevel, setExpandLevel);
             trackEditorInteraction('expand_by_level_keyboard');
           }
           break;
@@ -355,8 +288,8 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
       configurations={config}
       position={{
         position: {
-          right: '7px',
-          top: 'calc(100% - 50px)',
+          right: '47px',
+          top: 'calc(100% - 55px)',
         },
         vertical: false,
       }}
