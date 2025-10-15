@@ -61,8 +61,10 @@ context('Topic suite', () => {
 
     cy.visit('/iframe.html?args=&id=mindplot-topic--icon-feature&viewMode=story');
 
-    // Wait for the page to fully load and make requests
-    cy.wait(2000);
+    // Wait for the story to fully load and icons to be rendered (replaces cy.wait(2000))
+    cy.get('svg', { timeout: 10000 }).should('be.visible');
+    // Wait for any image elements (icons) to be present if they exist, or for SVG to be stable
+    cy.get('body').should('contain.html', '<svg');
 
     // Check that no SVG requests failed with 404
     cy.then(() => {

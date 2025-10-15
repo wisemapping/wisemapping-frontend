@@ -32,7 +32,7 @@ import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrong
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import TocOutlinedIcon from '@mui/icons-material/TocOutlined';
-import LowPriorityIcon from '@mui/icons-material/LowPriority';
+import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
 import Box from '@mui/material/Box';
 import { trackEditorInteraction } from '../../utils/analytics';
 import { Topic } from '@wisemapping/mindplot';
@@ -94,7 +94,7 @@ export function buildVisualizationToolbarConfig(
   intl: IntlShape,
   currentExpandLevel: number,
   setExpandLevel: (level: number) => void,
-): ActionConfig[] {
+): (ActionConfig | undefined)[] {
   const zoomToFitLabel = intl.formatMessage({
     id: 'visualization-toolbar.tooltip-zoom-to-fit',
     defaultMessage: 'Zoom to Fit',
@@ -158,6 +158,8 @@ export function buildVisualizationToolbarConfig(
       },
       disabled: () => !model?.isMapLoadded(),
     },
+    // Separator between zoom controls and outline view
+    undefined as ActionConfig | undefined,
     {
       icon: <TocOutlinedIcon />,
       tooltip: formatTooltip(
@@ -185,6 +187,8 @@ export function buildVisualizationToolbarConfig(
       ],
       disabled: () => !model?.isMapLoadded(),
     },
+    // Separator between outline view and expand/collapse controls
+    undefined as ActionConfig | undefined,
     {
       icon: areNodesCollapsed(model) ? <UnfoldMoreIcon /> : <UnfoldLessIcon />,
       tooltip: formatTooltip(
@@ -212,7 +216,8 @@ export function buildVisualizationToolbarConfig(
         if (areNodesCollapsed(model)) {
           trackEditorInteraction('expand_all_nodes');
           model.getDesigner().expandAllNodes();
-          setExpandLevel(999); // Reset to max level
+          const maxDepth = model.getDesigner().getMindmap().getMaxDepth();
+          setExpandLevel(maxDepth);
         } else {
           trackEditorInteraction('collapse_all_nodes');
           model.getDesigner().collapseAllNodes();
@@ -222,9 +227,9 @@ export function buildVisualizationToolbarConfig(
       disabled: () => !model?.isMapLoadded(),
     },
     {
-      render: () => (
+      icon: (
         <IconWithBadgeContainer>
-          <LowPriorityIcon />
+          <FormatLineSpacingIcon />
           {currentExpandLevel > 0 && <LevelBadge>{currentExpandLevel}</LevelBadge>}
         </IconWithBadgeContainer>
       ),
@@ -247,6 +252,8 @@ export function buildVisualizationToolbarConfig(
       },
       disabled: () => !model?.isMapLoadded(),
     },
+    // Separator between expand controls and keyboard shortcuts
+    undefined as ActionConfig | undefined,
     {
       icon: <KeyboardOutlined />,
       tooltip: intl.formatMessage({
@@ -311,7 +318,8 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
             // Expand/Collapse All
             if (areNodesCollapsed(model)) {
               model.getDesigner().expandAllNodes();
-              setExpandLevel(999);
+              const maxDepth = model.getDesigner().getMindmap().getMaxDepth();
+              setExpandLevel(maxDepth);
               trackEditorInteraction('expand_all_keyboard');
             } else {
               model.getDesigner().collapseAllNodes();

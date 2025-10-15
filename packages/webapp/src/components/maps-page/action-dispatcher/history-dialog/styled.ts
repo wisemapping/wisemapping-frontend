@@ -18,7 +18,6 @@
 
 import { styled } from '@mui/material/styles';
 import TableContainer from '@mui/material/TableContainer';
-import Paper from '@mui/material/Paper';
 import TableCell from '@mui/material/TableCell';
 
 export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({

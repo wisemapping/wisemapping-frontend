@@ -423,26 +423,33 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const fontStyle = domElem.getAttribute('fontStyle');
     if ($defined(fontStyle) && fontStyle) {
-      const font = fontStyle.split(';');
+      // Optimized font parsing: split once and assign directly
+      const fontParts = fontStyle.split(';');
 
-      if (font[0]) {
-        topic.setFontFamily(font[0]);
+      // Only set properties if they exist and are non-empty
+      const fontFamily = fontParts[0];
+      if (fontFamily) {
+        topic.setFontFamily(fontFamily);
       }
 
-      if (font[1]) {
-        topic.setFontSize(Number.parseInt(font[1], 10));
+      const fontSize = fontParts[1];
+      if (fontSize) {
+        topic.setFontSize(Number.parseInt(fontSize, 10));
       }
 
-      if (font[2]) {
-        topic.setFontColor(font[2]);
+      const fontColor = fontParts[2];
+      if (fontColor) {
+        topic.setFontColor(fontColor);
       }
 
-      if (font[3]) {
-        topic.setFontWeight(font[3] as FontWeightType);
+      const fontWeight = fontParts[3];
+      if (fontWeight) {
+        topic.setFontWeight(fontWeight as FontWeightType);
       }
 
-      if (font[4]) {
-        topic.setFontStyle(font[4] as FontStyleType);
+      const fontStyleValue = fontParts[4];
+      if (fontStyleValue) {
+        topic.setFontStyle(fontStyleValue as FontStyleType);
       }
     }
 

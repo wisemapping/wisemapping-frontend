@@ -201,6 +201,31 @@ class Mindmap extends IMindmap {
     return result;
   }
 
+  /**
+   * Calculate the maximum depth of the mindmap tree
+   * @returns the maximum depth level in the mindmap
+   */
+  getMaxDepth(): number {
+    let maxDepth = 0;
+
+    const calculateNodeDepth = (node: NodeModel, currentDepth: number): void => {
+      maxDepth = Math.max(maxDepth, currentDepth);
+
+      const children = node.getChildren();
+      children.forEach((child) => {
+        calculateNodeDepth(child as NodeModel, currentDepth + 1);
+      });
+    };
+
+    // Start from central topic (first branch)
+    const centralTopic = this._branches[0];
+    if (centralTopic) {
+      calculateNodeDepth(centralTopic, 0);
+    }
+
+    return maxDepth;
+  }
+
   static buildEmpty = (mapId: string) => {
     const result = new Mindmap(mapId);
     const node = result.createNode('CentralTopic', 0);
