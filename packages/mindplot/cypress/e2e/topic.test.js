@@ -3,24 +3,24 @@ context('Topic suite', () => {
   it('all topic stories load successfully without errors', () => {
     const stories = [
       'border-style',
-      'font-style', 
+      'font-style',
       'background-color',
       'icon-feature',
       'shape-none',
       'shape-ellipse',
-      'shape-line'
+      'shape-line',
     ];
-    
+
     stories.forEach((story) => {
       cy.visit(`/iframe.html?args=&id=mindplot-topic--${story}&viewMode=story`);
-      
+
       // Wait for story to load
       cy.get('body', { timeout: 10000 }).should('be.visible');
-      
+
       // Ensure the story content is rendered (should contain SVG elements from mindplot)
       cy.get('body').should('contain.html', '<svg');
       cy.get('svg').should('exist').and('be.visible');
-      
+
       // Main validation: story should render successfully with SVG content
     });
   });
@@ -39,19 +39,18 @@ context('Topic suite', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--background-color&viewMode=story');
     cy.matchImageSnapshot('topic-color');
   });
-  // Review topic use of designer ...
-  it.skip('topic note feature', () => {
+  it('topic note feature', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--note-feature&viewMode=story');
     cy.matchImageSnapshot('topic-note');
   });
-  it.skip('topic link feature', () => {
+  it('topic link feature', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--link-feature&viewMode=story');
     cy.matchImageSnapshot('topic-link-feature');
   });
-  it.skip('topic icon feature', () => {
+  it('topic icon feature', () => {
     // Intercept network requests to check for 404 errors on icon files
     const failedRequests = [];
-    
+
     cy.intercept('GET', '**/*.svg', (req) => {
       req.continue((res) => {
         if (res.statusCode === 404) {
@@ -61,29 +60,32 @@ context('Topic suite', () => {
     }).as('svgRequests');
 
     cy.visit('/iframe.html?args=&id=mindplot-topic--icon-feature&viewMode=story');
-    
+
     // Wait for the page to fully load and make requests
     cy.wait(2000);
-    
+
     // Check that no SVG requests failed with 404
     cy.then(() => {
       expect(failedRequests, 'SVG icons should not return 404 errors').to.have.length(0);
     });
-    
+
     // Check that image elements have valid sources (data URLs or proper paths) if they exist
     cy.get('body').then(($body) => {
       if ($body.find('image').length > 0) {
         cy.get('image').then(($images) => {
           $images.each((index, img) => {
             const href = img.getAttribute('href') || img.getAttribute('xlink:href');
-            
+
             // Icon should have a valid href (data URL or proper path)
             expect(href, `Icon ${index} should have a valid href`).to.exist;
             expect(href, `Icon ${index} href should not be empty`).to.not.be.empty;
-            
+
             // If it's not a data URL, it should be a proper path (not relative paths that would cause 404s)
             if (!href.startsWith('data:')) {
-              expect(href, `Icon ${index} should not use relative paths that cause 404s`).to.not.match(/^\.\.\/\.\.\/assets\/icons\//);
+              expect(
+                href,
+                `Icon ${index} should not use relative paths that cause 404s`,
+              ).to.not.match(/^\.\.\/\.\.\/assets\/icons\//);
             }
           });
         });
@@ -92,7 +94,7 @@ context('Topic suite', () => {
         cy.log('No image elements found in the story - this is valid');
       }
     });
-    
+
     cy.matchImageSnapshot('topic-icon-feature');
   });
   it('topic shape line', () => {

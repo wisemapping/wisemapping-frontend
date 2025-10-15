@@ -161,9 +161,13 @@ describe('Outline View Suite', () => {
     // Select an icon by clicking on one
     cy.get('[aria-label="grinning"]').should('be.visible').click();
 
-    // Wait for the icon to be added by checking it exists on the canvas (replaces cy.wait(300))
-    // The icon should appear in the focused topic
-    cy.get('.mindplot-svg-container').should('exist');
+    // Wait for the emoji picker to close (replaces cy.wait(300))
+    // After clicking an emoji, the picker stays open (as per icon-picker/index.tsx line 58)
+    // So we need to click elsewhere or press Escape to close it
+    cy.get('body').type('{esc}');
+    
+    // Wait for the icon picker dialog to close
+    cy.get('[aria-label="grinning"]').should('not.exist');
 
     // Now open the Outline View
     cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });

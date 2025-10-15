@@ -74,13 +74,16 @@ describe('Topic Link Suite', () => {
 
     // Type a valid URL
     const validUrl = 'https://www.example.com';
-    cy.get('input[type="url"]').first().type(validUrl);
+    cy.get('input[type="url"]').first().clear().type(validUrl);
 
     // Error message should not be shown for valid URL
     cy.contains('Address is not valid').should('not.exist');
 
-    // Click Accept to save
-    cy.contains('Accept').should('be.visible').click();
+    // Click Accept to save - use button selector instead of text since FormattedMessage might render differently
+    cy.get('button').contains('Accept').should('be.visible').click();
+
+    // Wait for panel to close after saving
+    cy.get('input[type="url"]').should('not.exist');
 
     cy.matchImageSnapshot('link-with-valid-url');
   });
