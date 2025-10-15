@@ -34,6 +34,8 @@ import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
+import Brightness4 from '@mui/icons-material/Brightness4';
+import Brightness7 from '@mui/icons-material/Brightness7';
 import Typography from '@mui/material/Typography';
 import UndoAndRedo from '../action-widget/button/undo-and-redo';
 import Button from '@mui/material/Button';
@@ -89,7 +91,7 @@ const AppBar = ({
   const [currentTitle, setCurrentTitle] = useState<string>(mapInfo.getTitle());
   const inputRef = useRef<HTMLInputElement>(null);
   const intl = useIntl();
-  const { mode } = useTheme();
+  const { mode, toggleMode } = useTheme();
 
   const handleStarredOnClick = () => {
     const newStatus = !isStarred;
@@ -424,6 +426,17 @@ const AppBar = ({
       },
       tooltip: intl.formatMessage({ id: 'appbar.tooltip-publish', defaultMessage: 'Publish' }),
       visible: !capability.isHidden('publish'),
+    },
+    {
+      icon: mode === 'dark' ? <Brightness7 /> : <Brightness4 />,
+      tooltip: intl.formatMessage({
+        id: 'appbar.tooltip-theme-toggle',
+        defaultMessage: 'Toggle Theme',
+      }),
+      onClick: () => {
+        trackAppBarAction('theme_toggle');
+        toggleMode();
+      },
     },
     {
       render: () => (

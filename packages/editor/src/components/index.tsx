@@ -31,7 +31,7 @@ import WarningDialog from './warning-dialog';
 import AppBar from './app-bar';
 import { ToolbarActionType } from './toolbar/ToolbarActionType';
 import EditorToolbar from './editor-toolbar';
-import ZoomPanel from './zoom-panel';
+import VisualizationToolbar from './visualization-toolbar';
 import { SpinnerCentered } from './style';
 import { EditorConfiguration } from '../hooks/useEditor';
 import CreatorInfoPane from './creator-info-pane';
@@ -118,7 +118,7 @@ const EditorContent = ({
           {model && (
             <div className="no-print">
               <EditorToolbar model={model} capability={capability} />
-              <ZoomPanel model={model} capability={capability} />
+              <VisualizationToolbar model={model} capability={capability} />
             </div>
           )}
 

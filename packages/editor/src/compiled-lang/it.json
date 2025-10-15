@@ -1323,46 +1323,100 @@
       "value": "Attiva/disattiva corsivo"
     }
   ],
-  "zoom-panel.tooltip-collapse-all": [
+  "visualization-toolbar.tooltip-collapse-all": [
     {
       "type": 0,
       "value": "Comprimi tutti i nodi"
     }
   ],
-  "zoom-panel.tooltip-expand-all": [
+  "visualization-toolbar.tooltip-expand-all": [
     {
       "type": 0,
       "value": "Espandi tutti i nodi"
     }
   ],
-  "zoom-panel.tooltip-keyboard": [
+  "visualization-toolbar.tooltip-keyboard": [
     {
       "type": 0,
       "value": "Scorciatoie da tastiera"
     }
   ],
-  "zoom-panel.tooltip-outline-view": [
+  "visualization-toolbar.tooltip-outline-view": [
     {
       "type": 0,
       "value": "Vista Struttura"
     }
   ],
-  "zoom-panel.tooltip-zoom-in": [
+  "visualization-toolbar.tooltip-zoom-in": [
     {
       "type": 0,
       "value": "Ingrandisci"
     }
   ],
-  "zoom-panel.tooltip-zoom-out": [
+  "visualization-toolbar.tooltip-zoom-out": [
     {
       "type": 0,
       "value": "Riduci"
     }
   ],
-  "zoom-panel.tooltip-zoom-to-fit": [
+  "visualization-toolbar.tooltip-zoom-to-fit": [
     {
       "type": 0,
       "value": "Adatta alla finestra"
+    }
+  ],
+  "visualization-toolbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "Toggle Theme"
+    }
+  ],
+  "appbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "Toggle Theme"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level": [
+    {
+      "type": 0,
+      "value": "Expand by Level"
+    }
+  ],
+  "shortcut-help-pane.zoom-in": [
+    {
+      "type": 0,
+      "value": "Zoom in"
+    }
+  ],
+  "shortcut-help-pane.zoom-out": [
+    {
+      "type": 0,
+      "value": "Zoom out"
+    }
+  ],
+  "shortcut-help-pane.zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Zoom to fit"
+    }
+  ],
+  "shortcut-help-pane.outline-view": [
+    {
+      "type": 0,
+      "value": "Open outline view"
+    }
+  ],
+  "shortcut-help-pane.expand-by-level": [
+    {
+      "type": 0,
+      "value": "Expand topics by level"
+    }
+  ],
+  "shortcut-help-pane.expand-collapse-all": [
+    {
+      "type": 0,
+      "value": "Expand/Collapse all topics"
     }
   ]
 }
