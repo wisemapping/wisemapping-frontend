@@ -173,7 +173,7 @@ export const ToolbarSubmenu = ({
 };
 
 type ToolbarMenuItemProps = {
-  configuration: ActionConfig | undefined;
+  configuration?: ActionConfig | undefined;
   vertical?: boolean;
   elevation?: number;
 };
@@ -232,7 +232,7 @@ const defaultPosition: ToolbarPosition = {
 };
 
 type ToolbarProps = {
-  configurations: ActionConfig[];
+  configurations: (ActionConfig | undefined)[];
   position?: ToolbarPosition;
   rerender?: number;
 };
