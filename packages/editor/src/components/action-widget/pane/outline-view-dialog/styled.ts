@@ -21,9 +21,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DialogContent from '@mui/material/DialogContent';
+import Paper from '@mui/material/Paper';
 
 export const OutlineContainer = styled(Box)(({ theme }) => ({
-  padding: '20px 118px 10px 118px', // 20px top, 10px bottom, 118px left/right (144px - 26px from DialogContent)
+  padding: '79px 118px 10px 118px', // Top reduced to 2/3 (79px), left/right (118px), bottom minimal (10px)
   maxHeight: '100%',
   height: '100%',
   overflow: 'auto',
@@ -65,21 +66,22 @@ export const NodeIcon = styled('img')({
   verticalAlign: 'middle',
 });
 
-export const FeatureIconImg = styled('img')(({ theme }) => ({
+export const FeatureIcon = styled(IconButton)(({ theme }) => ({
   marginLeft: theme.spacing(1),
-  width: '26px',
-  height: '26px',
+  padding: theme.spacing(0.5),
   cursor: 'pointer',
-  opacity: 0.7,
   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   borderRadius: '4px',
-  padding: '3px',
   border: `1px solid ${theme.palette.divider}`,
+  color: theme.palette.text.secondary,
   '&:hover': {
-    opacity: 1,
     backgroundColor: theme.palette.action.hover,
     transform: 'translateY(-1px)',
     borderColor: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
+  },
+  '& .MuiSvgIcon-root': {
+    fontSize: '18px',
   },
 }));
 
@@ -248,3 +250,26 @@ export const TooltipLink = styled('a')(({ theme }) => ({
     boxShadow: '0 4px 12px rgba(255, 168, 0, 0.3)',
   },
 }));
+
+export const StyledDialogPaper = styled(Paper)({
+  margin: '12.5vh 12.5vw',
+  height: '75vh',
+  width: '75vw',
+  maxWidth: 'none',
+  maxHeight: 'none',
+  borderRadius: '12px',
+  overflow: 'hidden',
+});
+
+// Style object for Popover paper (used with sx prop as Popover doesn't support PaperComponent)
+export const popoverPaperStyles = {
+  backgroundColor: 'transparent',
+  boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)',
+  borderRadius: '12px',
+  border: '1px solid',
+  borderColor: 'divider',
+  backdropFilter: 'blur(8px)',
+  minWidth: '300px',
+  maxWidth: '450px',
+  overflow: 'hidden',
+};

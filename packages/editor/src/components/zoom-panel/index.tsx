@@ -31,7 +31,7 @@ import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrongOutlined';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
-import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
+import TocOutlinedIcon from '@mui/icons-material/TocOutlined';
 import Box from '@mui/material/Box';
 import ThemeSwitcher from '../common/theme-switcher';
 import { trackEditorInteraction } from '../../utils/analytics';
@@ -52,7 +52,7 @@ export function buildZoomToolbarConfig(
 ): ActionConfig[] {
   return [
     {
-      icon: <FormatListBulletedOutlinedIcon />,
+      icon: <TocOutlinedIcon />,
       tooltip: intl.formatMessage({
         id: 'zoom-panel.tooltip-outline-view',
         defaultMessage: 'Outline View',

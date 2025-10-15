@@ -27,21 +27,20 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
+import LinkIcon from '@mui/icons-material/Link';
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Mindmap } from '@wisemapping/mindplot';
 import INodeModel from '@wisemapping/mindplot/src/components/model/INodeModel';
 import LinkModel from '@wisemapping/mindplot/src/components/model/LinkModel';
 import NoteModel from '@wisemapping/mindplot/src/components/model/NoteModel';
-import SvgIconModel from '@wisemapping/mindplot/src/components/model/SvgIconModel';
-import ContentType from '@wisemapping/mindplot/src/components/ContentType';
-import LinksImage from '@wisemapping/mindplot/assets/icons/links.svg';
-import NotesImage from '@wisemapping/mindplot/assets/icons/notes.svg';
+import { OutlineBuilder, OutlineNodeData } from './OutlineBuilder';
 import {
   OutlineContainer,
   OutlineNode,
   ExpandButton,
   NodeIcon,
-  FeatureIconImg,
+  FeatureIcon,
   NodeText,
   VerticalLine,
   FloatingToolbar,
@@ -58,19 +57,9 @@ import {
   TooltipContent,
   TooltipTitle,
   TooltipLink,
+  StyledDialogPaper,
+  popoverPaperStyles,
 } from './styled';
-
-interface OutlineNodeData {
-  id: string;
-  text: string;
-  level: number;
-  children: OutlineNodeData[];
-  iconUrls: string[];
-  linkUrl?: string;
-  noteText?: string;
-  node: INodeModel;
-  isExpanded: boolean;
-}
 
 interface OutlineViewDialogProps {
   open: boolean;
@@ -78,22 +67,8 @@ interface OutlineViewDialogProps {
   mindmap?: Mindmap;
 }
 
-// Helper function to get icon URL (same logic as SvgImageIcon.getImageUrl)
-const getIconUrl = (iconId: string): string => {
-  try {
-    // Dynamically require the icon
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    return require(`@wisemapping/mindplot/assets/icons/${iconId}.svg`);
-  } catch {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      return require(`@wisemapping/mindplot/assets/icons/${iconId}.png`);
-    } catch {
-      console.warn(`Icon not found: ${iconId}`);
-      return '';
-    }
-  }
-};
+// Create outline builder instance
+const outlineBuilder = new OutlineBuilder();
 
 const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): ReactElement => {
   const intl = useIntl();
@@ -110,68 +85,12 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
         // Set the central topic as title
         setCentralTopicTitle(centralTopic.getText() || 'Untitled Map');
 
-        // Build outline data starting from level 0 (children of central topic)
-        const children = centralTopic
-          .getChildren()
-          .filter((child) => child.getText() !== undefined)
-          .map((child) => buildOutlineData(child, 0));
-
+        // Build outline data using OutlineBuilder
+        const children = outlineBuilder.buildFromCentralTopic(centralTopic);
         setOutlineData(children);
       }
     }
   }, [open, mindmap]);
-
-  const buildOutlineData = (node: INodeModel, level: number): OutlineNodeData => {
-    const features = node.getFeatures();
-
-    // Extract icon URLs (only SVG icons, not images)
-    const iconUrls: string[] = [];
-    features.forEach((feature) => {
-      const type = feature.getType();
-      if (type === 'icon') {
-        const iconModel = feature as SvgIconModel;
-        const iconType = iconModel.getIconType();
-        const iconUrl = getIconUrl(iconType);
-        if (iconUrl) {
-          iconUrls.push(iconUrl);
-        }
-      }
-    });
-
-    // Extract link URL
-    let linkUrl: string | undefined;
-    const linkFeature = features.find((f) => f.getType() === 'link');
-    if (linkFeature) {
-      linkUrl = (linkFeature as LinkModel).getUrl();
-    }
-
-    // Extract note text
-    let noteText: string | undefined;
-    const noteFeature = features.find((f) => f.getType() === 'note');
-    if (noteFeature) {
-      noteText = (noteFeature as NoteModel).getText();
-    }
-
-    const nodeText =
-      node.getContentType() === ContentType.HTML ? node.getPlainText() : node.getText();
-
-    const children = node
-      .getChildren()
-      .filter((child) => child.getText() !== undefined)
-      .map((child) => buildOutlineData(child, level + 1));
-
-    return {
-      id: `${node.getId()}-${level}`,
-      text: nodeText || '',
-      level,
-      children,
-      iconUrls,
-      linkUrl,
-      noteText,
-      node,
-      isExpanded: level < 2, // Auto-expand first two levels
-    };
-  };
 
   const toggleExpanded = (nodeId: string) => {
     const updateNode = (nodes: OutlineNodeData[]): OutlineNodeData[] => {
@@ -278,21 +197,21 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
           {/* Right side: Feature icons (links and notes) - aligned to right */}
           <FeatureIconContainer>
             {node.linkUrl && (
-              <FeatureIconImg
-                src={LinksImage}
-                alt="link"
-                title={node.linkUrl}
-                onMouseEnter={(e) => handleLinkHover(e, node.node)}
-              />
+              <Tooltip title={node.linkUrl}>
+                <FeatureIcon onMouseEnter={(e) => handleLinkHover(e, node.node)} aria-label="link">
+                  <LinkIcon fontSize="small" />
+                </FeatureIcon>
+              </Tooltip>
             )}
 
             {node.noteText && (
-              <FeatureIconImg
-                src={NotesImage}
-                alt="note"
+              <Tooltip
                 title={intl.formatMessage({ id: 'outline.has-note', defaultMessage: 'Has note' })}
-                onMouseEnter={(e) => handleNoteHover(e, node.node)}
-              />
+              >
+                <FeatureIcon onMouseEnter={(e) => handleNoteHover(e, node.node)} aria-label="note">
+                  <StickyNote2Icon fontSize="small" />
+                </FeatureIcon>
+              </Tooltip>
             )}
           </FeatureIconContainer>
         </OutlineNode>
@@ -308,25 +227,7 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
 
   return (
     <>
-      <Dialog
-        open={open}
-        onClose={onClose}
-        maxWidth={false}
-        fullWidth
-        fullScreen
-        PaperProps={{
-          sx: {
-            margin: '12.5vh 12.5vw', // Top/bottom and left/right margins
-            height: '75vh', // 75% of viewport height
-            width: '75vw',
-            maxWidth: 'none',
-            maxHeight: 'none',
-            borderRadius: '12px',
-            overflow: 'hidden',
-            backgroundColor: 'background.paper',
-          },
-        }}
-      >
+      <Dialog open={open} onClose={onClose} maxWidth={false} PaperComponent={StyledDialogPaper}>
         <StyledDialogContent>
           <CloseButton onClick={onClose} size="small">
             <CloseIcon />
@@ -396,18 +297,8 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
         }}
         slotProps={{
           paper: {
+            sx: popoverPaperStyles,
             onMouseLeave: handleCloseTooltip,
-            sx: {
-              backgroundColor: 'transparent',
-              boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)',
-              borderRadius: '12px',
-              border: '1px solid',
-              borderColor: 'divider',
-              backdropFilter: 'blur(8px)',
-              minWidth: '300px',
-              maxWidth: '450px',
-              overflow: 'hidden',
-            },
           },
         }}
       >
@@ -446,18 +337,8 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
         }}
         slotProps={{
           paper: {
+            sx: popoverPaperStyles,
             onMouseLeave: handleCloseTooltip,
-            sx: {
-              backgroundColor: 'transparent',
-              boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)',
-              borderRadius: '12px',
-              border: '1px solid',
-              borderColor: 'divider',
-              backdropFilter: 'blur(8px)',
-              minWidth: '300px',
-              maxWidth: '450px',
-              overflow: 'hidden',
-            },
           },
         }}
       >
@@ -465,10 +346,16 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
           dialogType === 'note' &&
           (() => {
             const noteFeature = selectedNode.getFeatures().find((f) => f.getType() === 'note');
-            const noteText = noteFeature ? (noteFeature as NoteModel).getText() : '';
+            const noteModel = noteFeature as NoteModel;
+            const noteText = noteModel ? noteModel.getText() : '';
+            const isHtml = noteModel?.getContentType() === 'html';
             return (
               <Box>
-                <TooltipContent>{noteText}</TooltipContent>
+                {isHtml ? (
+                  <TooltipContent dangerouslySetInnerHTML={{ __html: noteText }} />
+                ) : (
+                  <TooltipContent>{noteText}</TooltipContent>
+                )}
                 <TooltipTitle>
                   <FormattedMessage id="outline.note" defaultMessage="Note" />
                 </TooltipTitle>

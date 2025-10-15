@@ -34,7 +34,7 @@ const TopicLinkEditor = (props: {
   closeModal: () => void;
   urlModel: NodeProperty<string>;
 }): ReactElement => {
-  const [url, setUrl] = useState<string>(props.urlModel.getValue());
+  const [url, setUrl] = useState<string>(props.urlModel.getValue() || '');
   const intl = useIntl();
 
   const submitHandler = () => {
