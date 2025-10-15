@@ -141,3 +141,39 @@ import ThemeToggle from '../common/theme-toggle/ThemeToggle'; // ❌ Redundant
 - Unit tests: `*.test.ts` or `*.test.tsx`
 - Integration tests: Cypress
 - Aim for good coverage on critical paths
+
+## 7. Linting and Code Quality (CRITICAL)
+
+**MANDATORY**: Always run linter checks after making code changes and fix all errors before completing a task.
+
+### When to Run Linter:
+- At the end of the agent task execution (not for every individual file)
+- Before completing a task
+- Before committing code
+
+### How to Check Lints:
+- Use specific file paths when checking lints to avoid noise from unrelated files
+- Example: Check only the files you modified, not the entire codebase
+- Fix ALL linting errors - do not leave any unfixed
+
+### Linting Workflow:
+```
+1. Complete all code changes for the task
+2. Run linter on all modified files at once
+3. Fix all errors and warnings
+4. Verify fixes by running linter again
+5. Confirm no linting errors remain
+6. Task completion
+```
+
+### Common Linting Rules:
+- No `any` types in TypeScript - use proper types or `unknown`
+- No unused variables or imports
+- Follow consistent formatting and naming conventions
+- Proper error handling patterns
+- Material UI imports must follow tree-shakeable pattern (see rule #2)
+
+### Priority:
+- Linting errors MUST be fixed before task completion
+- Do not skip or ignore linting errors
+- If a linting rule seems incorrect, discuss with the user before bypassing it

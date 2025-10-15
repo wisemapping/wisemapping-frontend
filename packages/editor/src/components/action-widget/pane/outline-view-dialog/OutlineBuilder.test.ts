@@ -19,7 +19,13 @@
 import { OutlineBuilder } from './OutlineBuilder';
 import INodeModel from '@wisemapping/mindplot/src/components/model/INodeModel';
 import ContentType from '@wisemapping/mindplot/src/components/ContentType';
-import FeatureModel from '@wisemapping/mindplot/src/components/model/FeatureModel';
+
+// Mock feature type for testing
+interface MockFeature {
+  getType: () => string;
+  getUrl?: () => string;
+  getText?: () => string;
+}
 
 // Mock node creation helpers
 const createMockNode = (
@@ -28,7 +34,7 @@ const createMockNode = (
   options: {
     children?: INodeModel[];
     contentType?: ContentType;
-    features?: FeatureModel[];
+    features?: MockFeature[];
   } = {},
 ): INodeModel => {
   return {
