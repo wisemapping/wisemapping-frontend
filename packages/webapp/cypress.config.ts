@@ -29,6 +29,5 @@ export default defineConfig({
     baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:3000',
     // Add macOS compatibility options
     chromeWebSecurity: false,
-    experimentalStudio: false,
   }
 });

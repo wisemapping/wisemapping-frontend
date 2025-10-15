@@ -38,7 +38,6 @@ export default defineConfig({
     ],
     // Add configuration to help with macOS compatibility
     chromeWebSecurity: false,
-    experimentalStudio: false,
   },
   // Add browser launch options for macOS compatibility
   chrome: {
