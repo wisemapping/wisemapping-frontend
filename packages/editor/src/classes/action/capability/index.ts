@@ -313,5 +313,20 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
       ],
     },
   },
+  'outline-view': {
+    desktop: {
+      hidden: ['showcase'],
+    },
+    mobile: {
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'showcase',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
+    },
+  },
 };
 export default Capability;

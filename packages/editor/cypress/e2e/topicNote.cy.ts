@@ -19,8 +19,8 @@
 /// <reference types="cypress" />
 describe('Topic Note Suite', () => {
   const waitForNotePanel = () => {
-    // Wait for note textarea to be visible and ready for interaction
-    cy.get('textarea, [contenteditable="true"]').should('be.visible').and('not.be.disabled');
+    // Wait for contentEditable note editor to be visible and ready for interaction
+    cy.get('[contenteditable="true"]').should('be.visible');
   };
 
   beforeEach(() => {
@@ -38,7 +38,7 @@ describe('Topic Note Suite', () => {
 
     // Type a note
     const noteText = 'This is a test note for the topic';
-    cy.get('textarea').first().type(noteText);
+    cy.get('[contenteditable="true"]').first().type(noteText);
 
     // Click Accept/Save button
     cy.contains('Accept').should('be.visible').click();
@@ -56,7 +56,7 @@ describe('Topic Note Suite', () => {
 
     // Add note text
     const noteText = 'This note will be deleted';
-    cy.get('textarea').first().type(noteText);
+    cy.get('[contenteditable="true"]').first().type(noteText);
 
     // Save the note
     cy.contains('Accept').should('be.visible').click();
@@ -69,10 +69,10 @@ describe('Topic Note Suite', () => {
     waitForNotePanel();
 
     // Clear the note text
-    cy.get('textarea').first().clear();
+    cy.get('[contenteditable="true"]').first().clear();
 
-    // Click Accept to save the empty note (which should remove it)
-    cy.contains('Accept').should('be.visible').click();
+    // Click Delete button to remove the note
+    cy.contains('Delete').should('be.visible').click();
 
     cy.matchImageSnapshot('note-removed-from-topic');
   });
@@ -86,7 +86,7 @@ describe('Topic Note Suite', () => {
     waitForNotePanel();
 
     const initialNote = 'Initial note text';
-    cy.get('textarea').first().type(initialNote);
+    cy.get('[contenteditable="true"]').first().type(initialNote);
     cy.contains('Accept').should('be.visible').click();
 
     // Edit the note
@@ -97,10 +97,10 @@ describe('Topic Note Suite', () => {
     waitForNotePanel();
 
     // Verify the existing note text is loaded
-    cy.get('textarea').should('contain.value', initialNote);
+    cy.get('[contenteditable="true"]').should('contain.text', initialNote);
 
     // Clear and type new text
-    cy.get('textarea').first().clear().type('Updated note text');
+    cy.get('[contenteditable="true"]').first().clear().type('Updated note text');
     cy.contains('Accept').should('be.visible').click();
 
     cy.matchImageSnapshot('note-edited-successfully');
@@ -114,7 +114,7 @@ describe('Topic Note Suite', () => {
     waitForNotePanel();
 
     const noteContent = 'This note should persist after saving';
-    cy.get('textarea').first().type(noteContent);
+    cy.get('[contenteditable="true"]').first().type(noteContent);
     
     // Save the note
     cy.contains('Accept').should('be.visible').click();
@@ -127,7 +127,7 @@ describe('Topic Note Suite', () => {
     waitForNotePanel();
 
     // Verify the note content is still there
-    cy.get('textarea').should('contain.value', noteContent);
+    cy.get('[contenteditable="true"]').should('contain.text', noteContent);
 
     cy.matchImageSnapshot('note-content-persists');
   });

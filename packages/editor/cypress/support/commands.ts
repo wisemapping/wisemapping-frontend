@@ -111,7 +111,8 @@ Cypress.Commands.add(
       | 'Relationship Style'
       | 'Font Style',
   ) => {
-    cy.get(`[aria-label="${button}"]`).click({ multiple: true, force: true });
+    // Use contains selector for buttons that include keyboard shortcuts in their aria-label
+    cy.get(`[aria-label*="${button}"]`).click({ multiple: true, force: true });
   },
 );
 
