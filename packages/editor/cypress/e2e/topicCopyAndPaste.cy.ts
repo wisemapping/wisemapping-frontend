@@ -37,16 +37,11 @@ describe('Topic Copy and Paste Suite', () => {
         if (mindplotComponent && mindplotComponent.designer) {
           mindplotComponent.designer.copyToClipboard();
           
-          // Wait a bit for clipboard operation to complete
-          cy.wait(500);
-          
-          // Now paste
+          // Now paste (clipboard operation completes synchronously, replaced cy.wait(500))
           mindplotComponent.designer.pasteClipboard().then(() => {
-            // Wait for paste to complete
-            cy.wait(500);
-            
-            // Verify a new topic was created with the same text
+            // Verify a new topic was created with the same text (replaces cy.wait(500))
             // The pasted topic should have the same text as the original
+            // Using assertion which auto-waits for the DOM to update
             cy.contains(originalText).should('have.length.at.least', 2);
             
             cy.matchImageSnapshot('copyandpaste');
@@ -67,14 +62,11 @@ describe('Topic Copy and Paste Suite', () => {
         // Perform copy
         mindplotComponent.designer.copyToClipboard();
         
-        cy.wait(500);
-        
-        // Perform paste
+        // Perform paste (replaces cy.wait(500))
         mindplotComponent.designer.pasteClipboard().then(() => {
-          cy.wait(500);
-          
-          // Verify that we now have at least 2 topics with "Features" text
+          // Verify that we now have at least 2 topics with "Features" text (replaces cy.wait(500))
           // (the original and the pasted copy)
+          // Using assertion which auto-waits for DOM update
           cy.contains('Features').should('exist');
           
           cy.matchImageSnapshot('copy-and-paste-duplicate');

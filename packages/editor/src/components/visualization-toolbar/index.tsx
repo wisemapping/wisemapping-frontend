@@ -36,6 +36,7 @@ import LowPriorityIcon from '@mui/icons-material/LowPriority';
 import Box from '@mui/material/Box';
 import { trackEditorInteraction } from '../../utils/analytics';
 import { Topic } from '@wisemapping/mindplot';
+import { IconWithBadgeContainer, LevelBadge } from './styled';
 
 // Helper function to check if any nodes are currently collapsed
 const areNodesCollapsed = (model: Editor): boolean => {
@@ -67,7 +68,8 @@ const expandToLevel = (model: Editor, targetLevel: number): void => {
     if (topic.getType() !== 'CentralTopic') {
       const depth = getTopicDepth(topic);
       // Expand topics that are at or below the target level and are currently collapsed
-      if (depth < targetLevel && topic.areChildrenShrunken()) {
+      // Changed from < to <= to fix bug where first level wasn't expanding
+      if (depth <= targetLevel && topic.areChildrenShrunken()) {
         topicsToExpand.push(topic.getId());
       }
     }
@@ -220,11 +222,16 @@ export function buildVisualizationToolbarConfig(
       disabled: () => !model?.isMapLoadded(),
     },
     {
-      icon: <LowPriorityIcon />,
+      render: () => (
+        <IconWithBadgeContainer>
+          <LowPriorityIcon />
+          {currentExpandLevel > 0 && <LevelBadge>{currentExpandLevel}</LevelBadge>}
+        </IconWithBadgeContainer>
+      ),
       tooltip: formatTooltip(
         intl.formatMessage({
           id: 'visualization-toolbar.tooltip-expand-level',
-          defaultMessage: `Expand by Level (${currentExpandLevel})`,
+          defaultMessage: `Expand by Level${currentExpandLevel > 0 ? ` (Level ${currentExpandLevel})` : ''}`,
         }),
         'E',
       ),

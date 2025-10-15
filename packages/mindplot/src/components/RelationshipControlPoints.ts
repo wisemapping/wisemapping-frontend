@@ -80,10 +80,9 @@ class ControlPivotLine {
     // Build line ...
     this._line = new StraightLine({ strokeColor: '#6589de', strokeWidth: 1, opacity: 0.3 });
 
-    const mouseClick = (event: MouseEvent): boolean => {
+    const mouseClick = (event: Event): void => {
       event.preventDefault();
       event.stopPropagation();
-      return false;
     };
     this._dot.addEvent('click', mouseClick);
     this._dot.addEvent('dblclick', mouseClick);

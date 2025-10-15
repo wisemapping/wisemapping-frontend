@@ -18,14 +18,15 @@
 
 /// <reference types="cypress" />
 describe('Topic Icon Suite', () => {
-  const waitForIconPanel = () => {
-    // Wait for icon panel to be fully loaded and interactive
-    cy.contains('Icon').should('be.visible');
-    cy.get('[class*="EmojiPickerReact"], img').should('exist');
+  const waitForEmojiTab = () => {
+    // Wait for emoji picker to be visible on the Emojis tab
+    cy.contains('Emojis').should('be.visible');
+    cy.get('[aria-label="grinning"]').should('be.visible');
   };
 
-  const waitForImageIcons = () => {
-    // Wait for image icons to be loaded with valid src attributes
+  const waitForIconsGalleryTab = () => {
+    // Wait for Icons Gallery tab to be visible and images to be loaded
+    cy.contains('Icons Gallery').should('be.visible');
     cy.get('img').should('have.length.gt', 0);
     cy.get('img').first().should('have.attr', 'src').and('not.be.empty');
   };
@@ -35,47 +36,46 @@ describe('Topic Icon Suite', () => {
     cy.waitEditorLoaded();
   });
 
-  it('Open panel', () => {
+  it('Open panel with emojis tab', () => {
     cy.onClickToolbarButton('Add Icon');
-    waitForIconPanel();
-    cy.matchImageSnapshot('icons-pannel');
+    waitForEmojiTab();
+    cy.matchImageSnapshot('icons-panel-emojis');
   });
 
-  it('Add new icon', () => {
+  it('Add new emoji icon', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
+    waitForEmojiTab();
     cy.get('[aria-label="grinning"]').should('be.visible').click();
-    cy.matchImageSnapshot('add-new-icon');
+    cy.matchImageSnapshot('add-new-emoji-icon');
   });
 
-  it('Verify image icons load correctly', () => {
+  it('Switch to Icons Gallery tab and verify images load', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    waitForIconPanel();
+    // Emojis tab should be open by default
+    waitForEmojiTab();
 
-    // Verify that images are loaded in the panel
-    cy.get('img').should('have.length.gt', 0);
-    cy.get('img').first().should('have.attr', 'src').and('not.be.empty');
+    // Switch to Icons Gallery tab
+    cy.contains('Icons Gallery').should('be.visible').click();
 
-    // Test that icon functionality works by clicking on an icon
-    cy.get('[aria-label="grinning"]').should('be.visible').click();
+    // Verify image icons load correctly
+    waitForIconsGalleryTab();
 
-    cy.matchImageSnapshot('verify-icon-fix-works');
+    cy.matchImageSnapshot('icons-gallery-tab-loaded');
   });
 
-  it('Verify icons panel with "show images" enabled loads PNG/SVG icons correctly', () => {
+  it('Add image icon from Icons Gallery tab', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    waitForIconPanel();
-
-    // Enable image mode (MUI Switch has opacity: 0, so force check)
-    cy.get('input[type="checkbox"]').check({ force: true });
+    // Switch to Icons Gallery tab
+    cy.contains('Icons Gallery').should('be.visible').click();
 
     // Wait for image icons to load dynamically
-    waitForImageIcons();
+    waitForIconsGalleryTab();
 
     // Enhanced validation: Check that ALL images have valid src attributes
     cy.get('img').each(($img) => {
@@ -89,10 +89,10 @@ describe('Topic Icon Suite', () => {
     // Test clicking on an image icon to verify functionality
     cy.get('img').first().parent().click({ force: true });
 
-    cy.matchImageSnapshot('show-images-enabled-works');
+    cy.matchImageSnapshot('image-icon-added-from-gallery');
   });
 
-  it('Verify no network errors when loading image icons', () => {
+  it('Verify no network errors when loading image icons from Icons Gallery', () => {
     // Monitor network requests for 404 errors
     cy.intercept('**/*.svg', (req) => {
       req.continue((res) => {
@@ -113,41 +113,40 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    waitForIconPanel();
-
-    // Enable image mode (MUI Switch has opacity: 0, so force check)
-    cy.get('input[type="checkbox"]').check({ force: true });
+    // Switch to Icons Gallery tab
+    cy.contains('Icons Gallery').should('be.visible').click();
 
     // Wait for all images to load dynamically
-    waitForImageIcons();
+    waitForIconsGalleryTab();
     cy.get('img').each(($img) => {
       cy.wrap($img).should('have.attr', 'src').and('not.be.empty');
     });
 
-    cy.matchImageSnapshot('no-network-errors-image-icons');
+    cy.matchImageSnapshot('no-network-errors-icons-gallery');
   });
 
-  it('Remove icon from topic', () => {
+  it('Replace emoji icon with image icon', () => {
     // First add an emoji icon
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
+    waitForEmojiTab();
     cy.get('[aria-label="grinning"]').should('be.visible').click();
 
     // Now add an image icon to the same topic to replace the emoji
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    // Switch to image mode (MUI Switch has opacity: 0, so force check)
-    cy.get('input[type="checkbox"]').check({ force: true });
+    // Switch to Icons Gallery tab
+    cy.contains('Icons Gallery').should('be.visible').click();
 
     // Wait for image icons to load dynamically
-    waitForImageIcons();
+    waitForIconsGalleryTab();
 
     // Add an image icon to replace the emoji
     cy.get('img').first().parent().click({ force: true });
 
-    cy.matchImageSnapshot('icon-replaced-successfully');
+    cy.matchImageSnapshot('emoji-replaced-with-image-icon');
   });
 
   it('Replace emoji with different emoji', () => {
@@ -155,12 +154,14 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(4);
     cy.onClickToolbarButton('Add Icon');
 
+    waitForEmojiTab();
     cy.get('[aria-label="grinning"]').should('be.visible').click({ force: true });
 
     // Replace with a different emoji
     cy.focusTopicById(4);
     cy.onClickToolbarButton('Add Icon');
 
+    waitForEmojiTab();
     // Click a different emoji (force in case of backdrop overlay)
     cy.get('[aria-label*="heart"]').first().click({ force: true });
 

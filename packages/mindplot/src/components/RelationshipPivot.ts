@@ -28,11 +28,11 @@ class RelationshipPivot {
 
   private _designer: Designer;
 
-  private _mouseMoveEvent;
+  private _mouseMoveEvent: (event: Event, detail?: unknown) => void;
 
-  private _onClickEvent: (event: MouseEvent) => void;
+  private _onClickEvent: (event: Event, detail?: unknown) => void;
 
-  private _onTopicClick: (event: MouseEvent, targetTopic: Topic) => void;
+  private _onTopicClick: (event: Event, targetTopic: Topic) => void;
 
   private _sourceTopic: Topic | null;
 
@@ -132,7 +132,8 @@ class RelationshipPivot {
     }
   }
 
-  private mouseMoveHandler(event: MouseEvent): boolean {
+  private mouseMoveHandler(event: Event): boolean {
+    const mouseEvent = event as MouseEvent;
     // Throttle updates to prevent excessive redraws
     const now = Date.now();
     if (now - this._lastUpdateTime < 16) {
@@ -142,7 +143,7 @@ class RelationshipPivot {
     this._lastUpdateTime = now;
 
     const screen = this._canvas.getScreenManager();
-    const pos = screen.getWorkspaceMousePosition(event);
+    const pos = screen.getWorkspaceMousePosition(mouseEvent);
 
     // Calculate proper connection points and control points like in Relationship
     const sPos = this._calculateFromPosition(pos);
@@ -164,11 +165,11 @@ class RelationshipPivot {
     this._endArrow!.setFrom(tPos.x, tPos.y);
     this._endArrow!.setControlPoint(ctrlPoints[1]);
 
-    event.stopPropagation();
+    mouseEvent.stopPropagation();
     return false;
   }
 
-  private cleanOnMouseClick(event: MouseEvent): void {
+  private cleanOnMouseClick(event: Event): void {
     // The user clicks on a desktop on in other element that is not a node.
     this.dispose();
     event.stopPropagation();
@@ -189,7 +190,7 @@ class RelationshipPivot {
     return Shape.calculateRelationShipPointCoordinates(sourceTopic, point);
   }
 
-  private _connectOnFocus(event: MouseEvent, targetTopic: Topic): void {
+  private _connectOnFocus(event: Event, targetTopic: Topic): void {
     const sourceTopic = this._sourceTopic;
     const mindmap = this._designer.getMindmap();
 

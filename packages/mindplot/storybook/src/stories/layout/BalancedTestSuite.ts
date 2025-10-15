@@ -19,7 +19,7 @@
 import { $assert } from '../../../../src/components/util/assert';
 import TestSuite from './TestSuite';
 import LayoutManager from '../../../../src/components/layout/LayoutManager';
-import type { PositionType } from '../../../../src/components/util/PositionType';
+import type PositionType from '../../../../src/components/PositionType';
 
 class BalancedTestSuite extends TestSuite {
   constructor() {
