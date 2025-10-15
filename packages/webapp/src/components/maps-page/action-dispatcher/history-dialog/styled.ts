@@ -15,26 +15,28 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from './assert';
-import ElementPeer from '../svg/ElementPeer';
 
-class EventUtils {
-  static broadcastChangeEvent(elementPeer: ElementPeer, type: string) {
-    const listeners = elementPeer.getChangeEventListeners(type) as ((arg: unknown) => void)[];
-    if ($defined(listeners)) {
-      for (let i = 0; i < listeners.length; i++) {
-        const listener = listeners[i];
-        if (listener) {
-          listener.call(elementPeer, null);
-        }
-        // Silently skip null/undefined listeners
-      }
-    }
+import { styled } from '@mui/material/styles';
+import TableContainer from '@mui/material/TableContainer';
+import Paper from '@mui/material/Paper';
+import TableCell from '@mui/material/TableCell';
 
-    elementPeer
-      .getChildren()
-      .forEach((child: ElementPeer) => EventUtils.broadcastChangeEvent(child, type));
-  }
-}
+export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+  maxHeight: 400,
+  border: `1px solid ${theme.palette.divider}`,
+  borderRadius: theme.shape.borderRadius,
+}));
 
-export default EventUtils;
+export const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
+  fontWeight: 600,
+  backgroundColor: theme.palette.background.default,
+  position: 'sticky',
+  top: 0,
+  zIndex: 1,
+}));
+
+export const StyledEmptyCell = styled(TableCell)(({ theme }) => ({
+  textAlign: 'center',
+  padding: theme.spacing(3),
+  color: theme.palette.text.secondary,
+}));

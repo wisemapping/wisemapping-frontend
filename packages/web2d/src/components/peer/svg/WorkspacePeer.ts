@@ -72,7 +72,7 @@ class WorkspacePeer extends ElementPeer {
     if (viewBox != null) {
       coords = viewBox.split(/ /).map((e) => Number.parseInt(e, 10));
     }
-    return { width: coords[2], height: coords[3] };
+    return { width: coords[2]!, height: coords[3]! };
   }
 
   setCoordOrigin(x: number, y: number): void {
@@ -106,7 +106,7 @@ class WorkspacePeer extends ElementPeer {
     if (viewBox != null) {
       coords = viewBox.split(/ /).map((e) => Number.parseFloat(e));
     }
-    return { x: coords[0], y: coords[1] };
+    return { x: coords[0]!, y: coords[1]! };
   }
 
   getPosition() {

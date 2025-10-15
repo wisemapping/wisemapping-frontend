@@ -56,7 +56,7 @@ interface Line {
 
   getControlPoints(): [PositionType, PositionType];
 
-  trigger(value, event): void;
+  trigger(value: string, event: unknown): void;
 
   getTo(): PositionType;
 
@@ -66,9 +66,9 @@ interface Line {
 
   getType(): string;
 
-  addEvent(value, listener): void;
+  addEvent(value: string, listener: (event: Event, detail?: unknown) => void): void;
 
-  removeEvent(value, listener): void;
+  removeEvent(value: string, listener: (event: Event, detail?: unknown) => void): void;
 
   getElementClass(): WorkspaceElement<ElementPeer>;
 }

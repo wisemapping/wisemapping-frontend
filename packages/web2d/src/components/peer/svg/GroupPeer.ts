@@ -151,7 +151,7 @@ class GroupPeer extends ElementPeer {
     };
   }
 
-  append(child) {
+  append(child: ElementPeer) {
     super.append(child);
     EventUtils.broadcastChangeEvent(child, 'onChangeCoordSize');
   }
