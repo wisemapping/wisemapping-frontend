@@ -28,7 +28,7 @@ class ElementPeer {
 
   private _changeListeners: Record<string, unknown>;
 
-  private __handlers: Map<string, unknown>;
+  private __handlers: Map<(event: Event, detail?: unknown) => void, EventListener>;
 
   private _children: ElementPeer[];
 
@@ -97,24 +97,24 @@ class ElementPeer {
    * http://www.w3.org/TR/DOM-Level-3-Events/events.html
    * http://developer.mozilla.org/en/docs/addEvent
    */
-  addEvent(type: string, listener) {
+  addEvent(type: string, listener: (event: Event, detail?: unknown) => void) {
     // wrap it so it can be ~backward compatible with jQuery.trigger
-    const wrappedListener = (e) => listener(e, e.detail);
+    const wrappedListener = (e: Event) => listener(e, (e as CustomEvent).detail);
     this.__handlers.set(listener, wrappedListener);
     this._native.addEventListener(type, wrappedListener);
   }
 
-  trigger(type: string, event) {
+  trigger(type: string, event: unknown) {
     // TODO: check this for correctness and for real jQuery.trigger replacement
     this._native.dispatchEvent(new CustomEvent(type, { detail: event }));
   }
 
-  removeEvent(type: string, listener: unknown) {
-    const eventListener = this.__handlers.get(listener as string) as EventListener;
+  removeEvent(type: string, listener: (event: Event, detail?: unknown) => void) {
+    const eventListener = this.__handlers.get(listener);
     if (eventListener) {
       this._native.removeEventListener(type, eventListener);
     }
-    this.__handlers.delete(listener as string);
+    this.__handlers.delete(listener);
   }
 
   setSize(width: number, height: number): void {
@@ -227,7 +227,7 @@ class ElementPeer {
     }
   }
 
-  attachChangeEventListener(type, listener) {
+  attachChangeEventListener(type: string, listener: (arg: unknown) => void) {
     const listeners = this.getChangeEventListeners(type) as ((arg: unknown) => void)[];
     if (!$defined(listener)) {
       throw new Error('Listener can not be null');
@@ -235,7 +235,7 @@ class ElementPeer {
     listeners.push(listener);
   }
 
-  getChangeEventListeners(type) {
+  getChangeEventListeners(type: string) {
     let listeners = this._changeListeners[type];
     if (!$defined(listeners)) {
       listeners = [];

@@ -42,7 +42,7 @@ class Point {
     let result: Point | null = null;
     if (value) {
       const values = value.split(',');
-      if (values.length === 2) {
+      if (values.length === 2 && values[0] !== undefined && values[1] !== undefined) {
         const x = Number.parseInt(values[0], 10);
         const y = Number.parseInt(values[1], 10);
 

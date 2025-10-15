@@ -130,7 +130,10 @@ class CurvedLinePeer extends ElementPeer {
   }
 
   updateLine(avoidControlPointFix: boolean) {
-    this._updatePath(avoidControlPointFix);
+    if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
+      this._calculateAutoControlPoints(avoidControlPointFix);
+      this._renderPath();
+    }
   }
 
   setShowEndArrow(visible: boolean): void {
@@ -165,37 +168,39 @@ class CurvedLinePeer extends ElementPeer {
     this._updatePath();
   }
 
-  private _updatePath(avoidControlPointFix?: boolean) {
-    // Update style based on width ....
+  private _updatePath() {
     if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
-      this._calculateAutoControlPoints(avoidControlPointFix);
-
-      const moveTo = CurvedLinePeer._pointToStr(this._x1, this._y1 - this.getWidth() / 2);
-      const curveP1 = CurvedLinePeer._pointToStr(
-        this._control1.x + this._x1,
-        this._control1.y + this._y1,
-      );
-      const curveP2 = CurvedLinePeer._pointToStr(
-        this._control2.x + this._x2,
-        this._control2.y + this._y2,
-      );
-      const curveP3 = CurvedLinePeer._pointToStr(this._x2, this._y2);
-
-      const curveP4 = CurvedLinePeer._pointToStr(
-        this._control2.x + this._x2,
-        this._control2.y + this._y2 + this.getWidth() * 0.4,
-      );
-      const curveP5 = CurvedLinePeer._pointToStr(
-        this._control1.x + this._x1,
-        this._control1.y + this._y1 + this.getWidth() * 0.7,
-      );
-      const curveP6 = CurvedLinePeer._pointToStr(this._x1, this._y1 + this.getWidth() / 2);
-
-      const path = `M${moveTo} C${curveP1} ${curveP2} ${curveP3} ${
-        this.getWidth() >= 1 ? ` ${curveP4} ${curveP5} ${curveP6} Z` : ''
-      }`;
-      this._native.setAttribute('d', path);
+      this._calculateAutoControlPoints(false);
+      this._renderPath();
     }
+  }
+
+  private _renderPath() {
+    const moveTo = CurvedLinePeer._pointToStr(this._x1, this._y1 - this.getWidth() / 2);
+    const curveP1 = CurvedLinePeer._pointToStr(
+      this._control1.x + this._x1,
+      this._control1.y + this._y1,
+    );
+    const curveP2 = CurvedLinePeer._pointToStr(
+      this._control2.x + this._x2,
+      this._control2.y + this._y2,
+    );
+    const curveP3 = CurvedLinePeer._pointToStr(this._x2, this._y2);
+
+    const curveP4 = CurvedLinePeer._pointToStr(
+      this._control2.x + this._x2,
+      this._control2.y + this._y2 + this.getWidth() * 0.4,
+    );
+    const curveP5 = CurvedLinePeer._pointToStr(
+      this._control1.x + this._x1,
+      this._control1.y + this._y1 + this.getWidth() * 0.7,
+    );
+    const curveP6 = CurvedLinePeer._pointToStr(this._x1, this._y1 + this.getWidth() / 2);
+
+    const path = `M${moveTo} C${curveP1} ${curveP2} ${curveP3} ${
+      this.getWidth() >= 1 ? ` ${curveP4} ${curveP5} ${curveP6} Z` : ''
+    }`;
+    this._native.setAttribute('d', path);
   }
 
   private static _pointToStr(x: number, y: number) {
@@ -225,25 +230,19 @@ class CurvedLinePeer extends ElementPeer {
     ];
   }
 
-  private _calculateAutoControlPoints(avoidControlPointFix) {
+  private _calculateAutoControlPoints(avoidControlPointFix: boolean) {
     // Both points available, calculate real points
     const defaultpoints = CurvedLinePeer._calculateDefaultControlPoints(
       { x: this._x1, y: this._y1 },
       { x: this._x2, y: this._y2 },
     );
-    if (
-      !this._customControlPoint_1 &&
-      !($defined(avoidControlPointFix) && avoidControlPointFix === 0)
-    ) {
-      this._control1.x = defaultpoints[0].x;
-      this._control1.y = defaultpoints[0].y;
+    if (!this._customControlPoint_1 && !avoidControlPointFix) {
+      this._control1.x = defaultpoints[0]!.x;
+      this._control1.y = defaultpoints[0]!.y;
     }
-    if (
-      !this._customControlPoint_2 &&
-      !($defined(avoidControlPointFix) && avoidControlPointFix === 1)
-    ) {
-      this._control2.x = defaultpoints[1].x;
-      this._control2.y = defaultpoints[1].y;
+    if (!this._customControlPoint_2 && !avoidControlPointFix) {
+      this._control2.x = defaultpoints[1]!.x;
+      this._control2.y = defaultpoints[1]!.y;
     }
   }
 

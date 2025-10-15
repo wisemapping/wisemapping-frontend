@@ -35,7 +35,7 @@ abstract class WorkspaceElement<T extends ElementPeer> {
   }
 
   protected _initialize(attributes: StyleAttributes) {
-    const batchExecute = {};
+    const batchExecute: Record<string, (string | number)[]> = {};
 
     // Collect arguments ...
     for (const key in attributes) {
@@ -46,26 +46,44 @@ abstract class WorkspaceElement<T extends ElementPeer> {
           funcArgs = [];
         }
 
-        const signature = WorkspaceElement._propertyNameToSignature[key];
-        const argPositions = signature[1];
+        const signature =
+          WorkspaceElement._propertyNameToSignature[
+            key as keyof typeof WorkspaceElement._propertyNameToSignature
+          ];
+        const argPositions = signature?.[1];
 
         if (argPositions !== WorkspaceElement._SIGNATURE_MULTIPLE_ARGUMENTS) {
-          funcArgs[argPositions] = attributes[key];
+          const attrValue = attributes[key as keyof StyleAttributes];
+          if (
+            attrValue !== undefined &&
+            argPositions !== undefined &&
+            typeof argPositions === 'number' &&
+            funcArgs !== undefined
+          ) {
+            funcArgs[argPositions] = attrValue as string | number;
+            batchExecute[funcName] = funcArgs;
+          }
         } else {
-          funcArgs = attributes[key].split(' ');
+          const attrValue = attributes[key as keyof StyleAttributes];
+          if (typeof attrValue === 'string') {
+            funcArgs = attrValue.split(' ');
+            batchExecute[funcName] = funcArgs;
+          }
         }
-        batchExecute[funcName] = funcArgs;
       }
     }
 
     // Call functions ...
     // eslint-disable-next-line guard-for-in
     for (const key in batchExecute) {
-      const func = this[key];
+      const func = (this as Record<string, unknown>)[key];
       if (!func) {
         throw new Error(`Could not find function: ${key}`);
       }
-      func.apply(this, batchExecute[key]);
+      const batchArgs = batchExecute[key];
+      if (typeof func === 'function' && batchArgs) {
+        func.apply(this, batchArgs);
+      }
     }
   }
 
@@ -85,11 +103,11 @@ abstract class WorkspaceElement<T extends ElementPeer> {
    * The following events types are supported:
    *
    */
-  addEvent(type: string, listener) {
+  addEvent(type: string, listener: (event: Event, detail?: unknown) => void) {
     this.peer.addEvent(type, listener);
   }
 
-  trigger(type: string, event) {
+  trigger(type: string, event: unknown) {
     this.peer.trigger(type, event);
   }
 
@@ -110,7 +128,7 @@ abstract class WorkspaceElement<T extends ElementPeer> {
    *     This interace will be invoked passing an event as argument and
    * the 'this' referece in the function will be the element.
    */
-  removeEvent(type: string, listener) {
+  removeEvent(type: string, listener: (event: Event, detail?: unknown) => void) {
     this.peer.removeEvent(type, listener);
   }
 
@@ -158,14 +176,21 @@ abstract class WorkspaceElement<T extends ElementPeer> {
     this.peer.setStroke(width, style, color, opacity);
   }
 
-  _attributeNameToFuncName(attributeKey, prefix) {
-    const signature = WorkspaceElement._propertyNameToSignature[attributeKey];
+  _attributeNameToFuncName(attributeKey: string, prefix: string) {
+    const signature =
+      WorkspaceElement._propertyNameToSignature[
+        attributeKey as keyof typeof WorkspaceElement._propertyNameToSignature
+      ];
     if (!$defined(signature)) {
       throw new Error(`Unsupported attribute: ${attributeKey}`);
     }
 
-    const firstLetter = signature[0].charAt(0);
-    return prefix + firstLetter.toUpperCase() + signature[0].substring(1);
+    const propName = signature[0];
+    if (typeof propName !== 'string') {
+      throw new Error(`Invalid signature for attribute: ${attributeKey}`);
+    }
+    const firstLetter = propName.charAt(0);
+    return prefix + firstLetter.toUpperCase() + propName.substring(1);
   }
 
   /**
@@ -179,7 +204,10 @@ abstract class WorkspaceElement<T extends ElementPeer> {
   setAttribute(key: string, value: string | number) {
     const funcName = this._attributeNameToFuncName(key, 'set');
 
-    const signature = WorkspaceElement._propertyNameToSignature[key];
+    const signature =
+      WorkspaceElement._propertyNameToSignature[
+        key as keyof typeof WorkspaceElement._propertyNameToSignature
+      ];
     if (signature == null) {
       throw new Error(`Could not find the signature for:${key}`);
     }
@@ -187,7 +215,11 @@ abstract class WorkspaceElement<T extends ElementPeer> {
     // Parse arguments ..
     const argPositions = signature[1];
     let args: (string | number)[] = [];
-    if (argPositions !== WorkspaceElement._SIGNATURE_MULTIPLE_ARGUMENTS) {
+    if (
+      argPositions !== WorkspaceElement._SIGNATURE_MULTIPLE_ARGUMENTS &&
+      argPositions !== undefined &&
+      typeof argPositions === 'number'
+    ) {
       args[argPositions] = value;
     } else {
       const strValue = String(value);
@@ -195,30 +227,42 @@ abstract class WorkspaceElement<T extends ElementPeer> {
     }
 
     // Look up method ...
-    const setter = this[funcName];
+    const setter = (this as Record<string, unknown>)[funcName];
     if (setter == null) {
       throw new Error(`Could not find the function name:${funcName}`);
     }
-    setter.apply(this, args);
+    if (typeof setter === 'function') {
+      setter.apply(this, args);
+    }
   }
 
   getAttribute(key: string) {
     const funcName = this._attributeNameToFuncName(key, 'get');
 
-    const signature = WorkspaceElement._propertyNameToSignature[key];
+    const signature =
+      WorkspaceElement._propertyNameToSignature[
+        key as keyof typeof WorkspaceElement._propertyNameToSignature
+      ];
     if (signature == null) {
       throw new Error(`Could not find the signature for:${key}`);
     }
 
-    const getter = this[funcName];
+    const getter = (this as Record<string, unknown>)[funcName];
     if (getter == null) {
       throw new Error(`Could not find the function name:${funcName}`);
     }
 
-    const getterResult = getter.apply(this, []);
+    let getterResult: Record<string, unknown> = {};
+    if (typeof getter === 'function') {
+      getterResult = getter.apply(this, []) as Record<string, unknown>;
+    }
     const attibuteName = signature[2];
     if (!$defined(attibuteName)) {
       throw new Error(`Could not find attribute mapping for:${key}`);
+    }
+
+    if (typeof attibuteName !== 'string' && typeof attibuteName !== 'number') {
+      throw new Error(`Invalid attribute name type for:${key}`);
     }
 
     const result = getterResult[attibuteName];

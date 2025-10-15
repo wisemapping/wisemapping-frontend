@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '../utils/assert';
 import SizeType from '../../SizeType';
 
 export type FontStyle = {
@@ -42,9 +41,9 @@ class FontPeer {
     this._fontName = fontName;
   }
 
-  init(args) {
-    if ($defined(args.size)) {
-      this._size = Number.parseInt(args.size, 10);
+  init(args: { size?: number; style?: string; weight?: string }) {
+    if (args.size !== undefined) {
+      this._size = args.size;
     }
     if (args.style) {
       this._style = args.style;

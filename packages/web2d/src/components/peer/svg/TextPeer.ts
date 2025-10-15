@@ -174,12 +174,12 @@ class TextPeer extends ElementPeer {
 
   getFontStyle(): FontStyle {
     const color = this.getColor();
-    const style = {
+    const style: FontStyle = {
       fontFamily: this._font.getFontName(),
       size: String(this._font.getSize()),
       style: this._font.getStyle(),
       weight: this._font.getWeight(),
-      color: color || undefined,
+      color,
     };
     return style;
   }

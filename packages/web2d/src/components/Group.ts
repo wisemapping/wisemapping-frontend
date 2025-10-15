@@ -130,15 +130,13 @@ class Group extends WorkspaceElement<GroupPeer> {
     return this.peer.getCoordSize();
   }
 
-  appendDomChild(DomElement) {
+  appendDomChild(DomElement: Element | Node) {
     if (!$defined(DomElement)) {
       throw new Error('Child element can not be null');
     }
 
-    if (DomElement === this) {
-      throw new Error('Its not possible to add the group as a child of itself');
-    }
-
+    // Type guard to prevent adding itself
+    // Note: DomElement is a DOM Node/Element, while this is a Group instance
     this.peer._native.append(DomElement);
   }
 

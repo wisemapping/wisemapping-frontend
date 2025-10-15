@@ -24,7 +24,10 @@ class EventUtils {
     if ($defined(listeners)) {
       for (let i = 0; i < listeners.length; i++) {
         const listener = listeners[i];
-        listener.call(elementPeer, null);
+        if (listener) {
+          listener.call(elementPeer, null);
+        }
+        // Silently skip null/undefined listeners
       }
     }
 
