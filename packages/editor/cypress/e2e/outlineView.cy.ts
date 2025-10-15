@@ -149,21 +149,15 @@ describe('Outline View Suite', () => {
   it('Outline View displays topic icons', () => {
     // First, add an icon to a topic
     cy.focusTopicById(3);
-    cy.get('[aria-label*="Add Icon"]').first().click({ force: true });
     
-    // Wait for icon picker dialog
-    cy.wait(500);
+    // Click the Add Icon button using the custom command
+    cy.onClickToolbarButton('Add Icon');
     
-    // Select an icon (click the first icon in the picker)
-    cy.get('[role="dialog"]').first().within(() => {
-      cy.get('img').first().click();
-    });
+    // Select an icon by clicking on one
+    cy.get('[aria-label="grinning"]').should('be.visible').click();
 
-    // Wait for icon picker to close
-    cy.wait(800);
-    
-    // Ensure no dialogs are open before opening outline view
-    cy.get('[role="dialog"]').should('not.exist');
+    // Wait a moment for the icon to be added
+    cy.wait(300);
 
     // Now open the Outline View
     cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
