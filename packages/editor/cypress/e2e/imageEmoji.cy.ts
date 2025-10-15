@@ -17,9 +17,11 @@
  */
 
 /// <reference types="cypress" />
-describe.skip('Image Emoji Suite - DISABLED: UI has changed, needs test updates', () => {
+describe('Image Emoji Suite', () => {
   const waitForIconGallery = () => {
+    // Icons Gallery is the default tab, so it should be visible when picker opens
     cy.contains('Icons Gallery').should('be.visible');
+    // Wait for images to load
     cy.get('img').should('have.length.gt', 0).first().should('have.attr', 'src').and('not.be.empty');
   };
 
@@ -28,44 +30,35 @@ describe.skip('Image Emoji Suite - DISABLED: UI has changed, needs test updates'
     cy.waitEditorLoaded();
   });
 
-  it('Add image emoji to topic', () => {
+  it('Add image icon to topic', () => {
     cy.focusTopicById(3);
-    cy.onClickToolbarButton('Add Image');
+    cy.onClickToolbarButton('Add Topic Image');
 
-    // Switch to image mode
-    cy.contains('Icons Gallery').should('be.visible').click();
-
-    // Wait for image icons to load dynamically
+    // Icons Gallery tab should be open by default
     waitForIconGallery();
 
     // Click on the first image icon to add it
     cy.get('img').first().parent().click({ force: true });
 
-    cy.matchImageSnapshot('image-emoji-added');
+    cy.matchImageSnapshot('image-icon-added');
   });
 
-  it('Replace image emoji with another image emoji', () => {
-    // First add an image emoji
+  it('Replace image icon with another image icon', () => {
+    // First add an image icon
     cy.focusTopicById(3);
-    cy.onClickToolbarButton('Add Image');
+    cy.onClickToolbarButton('Add Topic Image');
 
-    // Switch to image mode
-    cy.contains('Icons Gallery').should('be.visible').click();
-
-    // Wait for image icons to load dynamically
+    // Icons Gallery tab should be open by default
     waitForIconGallery();
 
     // Add the first image icon
     cy.get('img').first().parent().click({ force: true });
 
-    // Now replace it with a different image emoji
+    // Now replace it with a different image icon
     cy.focusTopicById(3);
-    cy.onClickToolbarButton('Add Image');
+    cy.onClickToolbarButton('Add Topic Image');
 
-    // Switch to image mode again
-    cy.get('input[type="checkbox"]').should('be.visible').check({ force: true });
-
-    // Wait for image icons to load dynamically
+    // Icons Gallery tab should still be open by default
     waitForIconGallery();
 
     // Click on a different image (second one) to replace the first
@@ -77,67 +70,60 @@ describe.skip('Image Emoji Suite - DISABLED: UI has changed, needs test updates'
       }
     });
 
-    cy.matchImageSnapshot('image-emoji-replaced');
+    cy.matchImageSnapshot('image-icon-replaced');
   });
 
-  it('Switch between emoji and image modes', () => {
+  it('Switch between Icons Gallery and Emojis tabs', () => {
     cy.focusTopicById(3);
-    cy.onClickToolbarButton('Add Image');
+    cy.onClickToolbarButton('Add Topic Image');
 
-    // Initially in emoji mode - verify emoji elements are present
-    cy.get('[aria-label="grinning"]').should('be.visible');
-
-    // Switch to image mode
-    cy.contains('Icons Gallery').should('be.visible').click();
-
-    // Verify image icons are now visible and emoji picker is not
+    // Icons Gallery tab should be open by default
     waitForIconGallery();
-    cy.get('.EmojiPickerReact').should('not.be.visible');
 
-    // Switch back to emoji mode
+    // Switch to Emojis tab
     cy.contains('Emojis').should('be.visible').click();
 
-    // Verify emoji picker is back
+    // Verify emoji picker is now visible
     cy.get('[aria-label="grinning"]').should('be.visible');
     
-    // Close the panel
-    cy.get('body').type('{esc}');
+    // Switch back to Icons Gallery tab
+    cy.contains('Icons Gallery').should('be.visible').click();
+
+    // Verify image icons are visible again
+    cy.get('img').should('have.length.gt', 0);
     
-    cy.matchImageSnapshot('emoji-mode-active');
+    cy.matchImageSnapshot('tabs-switching-works');
   });
 
-  it('Add emoji vs image emoji have different values', () => {
+  it('Add emoji vs image icon have different representations', () => {
     // Add a regular emoji first
     cy.focusTopicById(3);
-    cy.onClickToolbarButton('Add Image');
+    cy.onClickToolbarButton('Add Topic Image');
+
+    // Switch to Emojis tab
+    cy.contains('Emojis').should('be.visible').click();
 
     // Click on a regular emoji
     cy.get('[aria-label="grinning"]').should('be.visible').click();
 
-    // Now add an image emoji to another topic
+    // Now add an image icon to another topic
     cy.focusTopicById(4);
-    cy.onClickToolbarButton('Add Image');
+    cy.onClickToolbarButton('Add Topic Image');
 
-    // Switch to image mode
-    cy.contains('Icons Gallery').should('be.visible').click();
-
-    // Wait for images to load dynamically
+    // Icons Gallery tab should be open by default
     waitForIconGallery();
 
     // Add an image icon
     cy.get('img').first().parent().click({ force: true });
 
-    cy.matchImageSnapshot('emoji-and-image-emoji-comparison');
+    cy.matchImageSnapshot('emoji-and-image-icon-comparison');
   });
 
-  it('Verify image emoji renders correctly in topic', () => {
+  it('Verify image icon renders correctly in topic', () => {
     cy.focusTopicById(3);
-    cy.onClickToolbarButton('Add Image');
+    cy.onClickToolbarButton('Add Topic Image');
 
-    // Switch to image mode
-    cy.contains('Icons Gallery').should('be.visible').click();
-
-    // Wait for images to load dynamically
+    // Icons Gallery tab should be open by default
     waitForIconGallery();
 
     // Click on a specific image icon to add it
@@ -146,9 +132,9 @@ describe.skip('Image Emoji Suite - DISABLED: UI has changed, needs test updates'
     // Verify the topic is visible
     cy.get('[test-id="3"]').should('be.visible');
     
-    // Look for any image-related elements that might have been added
+    // Look for any image-related elements that might have been added to the topic
     cy.get('svg image, img').should('have.length.gt', 0);
 
-    cy.matchImageSnapshot('image-emoji-renders-in-topic');
+    cy.matchImageSnapshot('image-icon-renders-in-topic');
   });
 });

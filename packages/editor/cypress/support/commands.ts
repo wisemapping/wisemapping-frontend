@@ -106,6 +106,7 @@ Cypress.Commands.add(
       | 'Add Icon'
       | 'Add Link'
       | 'Add Note'
+      | 'Add Topic Image'
       | 'Theme'
       | 'Connection Style'
       | 'Relationship Style'
