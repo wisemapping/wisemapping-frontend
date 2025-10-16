@@ -18,18 +18,23 @@
 import React, { ReactElement } from 'react';
 import MapInfo from '../../classes/model/map-info';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
+import LogoTextWhiteSvg from '../../../images/pwrdby-white.svg';
 import { CreatorInfoContainer, CreatorInfoText } from './styled';
 import { FormattedMessage } from 'react-intl';
+import { useTheme } from '../../contexts/ThemeContext';
 
 type CreatorInfoPanel = {
   mapInfo: MapInfo;
 };
 const CreatorInfoPanel = ({ mapInfo }: CreatorInfoPanel): ReactElement => {
+  const { mode } = useTheme();
+  const logoSrc = mode === 'dark' ? LogoTextWhiteSvg : LogoTextBlackSvg;
+
   return (
     <CreatorInfoContainer>
       <a href="https://www.wisemapping.com/" target="_blanc">
         <img
-          src={LogoTextBlackSvg}
+          src={logoSrc}
           aria-label="WiseMappping"
           style={{ float: 'left', paddingRight: '10px' }}
         />

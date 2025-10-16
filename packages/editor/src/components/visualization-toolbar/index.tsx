@@ -16,6 +16,8 @@
  *   limitations under the License.
  */
 import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
+import Brightness4 from '@mui/icons-material/Brightness4';
+import Brightness7 from '@mui/icons-material/Brightness7';
 import Typography from '@mui/material/Typography';
 import React, { ReactElement, useState, useEffect } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
@@ -36,6 +38,7 @@ import Box from '@mui/material/Box';
 import { trackEditorInteraction } from '../../utils/analytics';
 import { handleExpandByLevel, buildExpandByLevelConfig } from './expand-by-level-icon';
 import { formatTooltip } from './utils';
+import { useTheme } from '../../contexts/ThemeContext';
 
 // Helper function to check if any nodes are currently collapsed
 const areNodesCollapsed = (model: Editor): boolean => {
@@ -52,6 +55,8 @@ export function buildVisualizationToolbarConfig(
   intl: IntlShape,
   currentExpandLevel: number,
   setExpandLevel: (level: number) => void,
+  themeMode?: 'light' | 'dark',
+  toggleTheme?: () => void,
 ): (ActionConfig | undefined)[] {
   const zoomToFitLabel = intl.formatMessage({
     id: 'visualization-toolbar.tooltip-zoom-to-fit',
@@ -61,6 +66,10 @@ export function buildVisualizationToolbarConfig(
     id: 'visualization-toolbar.tooltip-zoom-out',
     defaultMessage: 'Zoom Out',
   });
+
+  // Check if we're in public or embedded view
+  const isPublicOrEmbedded =
+    capability.mode === 'viewonly-public' || capability.mode === 'viewonly-private';
 
   return [
     {
@@ -203,6 +212,31 @@ export function buildVisualizationToolbarConfig(
         },
       ],
     },
+    // Theme toggle - only for public and embedded views
+    isPublicOrEmbedded && toggleTheme
+      ? ({
+          icon: themeMode === 'light' ? <Brightness4 /> : <Brightness7 />,
+          tooltip: intl.formatMessage(
+            themeMode === 'light'
+              ? {
+                  id: 'visualization-toolbar.tooltip-switch-to-dark',
+                  defaultMessage: 'Switch to dark mode',
+                }
+              : {
+                  id: 'visualization-toolbar.tooltip-switch-to-light',
+                  defaultMessage: 'Switch to light mode',
+                },
+          ),
+          ariaLabel: intl.formatMessage({
+            id: 'visualization-toolbar.tooltip-theme-toggle',
+            defaultMessage: 'Toggle theme',
+          }),
+          onClick: () => {
+            trackEditorInteraction('theme_toggle');
+            toggleTheme();
+          },
+        } as ActionConfig)
+      : undefined,
   ];
 }
 
@@ -214,6 +248,7 @@ type VisualizationToolbarProps = {
 const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps): ReactElement => {
   const intl = useIntl();
   const [expandLevel, setExpandLevel] = useState(0);
+  const { mode, toggleMode } = useTheme();
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -282,13 +317,20 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
     intl,
     expandLevel,
     setExpandLevel,
+    mode,
+    toggleMode,
   );
+
+  // Check if we're in public or embedded view
+  const isPublicOrEmbedded =
+    capability.mode === 'viewonly-public' || capability.mode === 'viewonly-private';
+
   return (
     <Toolbar
       configurations={config}
       position={{
         position: {
-          right: '47px',
+          right: isPublicOrEmbedded ? '5px' : '47px',
           top: 'calc(100% - 55px)',
         },
         vertical: false,

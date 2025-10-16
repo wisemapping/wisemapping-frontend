@@ -16,6 +16,8 @@
  *   limitations under the License.
  */
 import styled from 'styled-components';
+import { styled as muiStyled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 
 export const CreatorInfoContainer = styled.div`
   display: flex;
@@ -27,8 +29,8 @@ export const CreatorInfoContainer = styled.div`
   height: 40px;
 `;
 
-export const CreatorInfoText = styled.div`
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-size: 14px;
-  color: #444546;
-`;
+export const CreatorInfoText = muiStyled(Box)(({ theme }) => ({
+  fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+  fontSize: '14px',
+  color: theme.palette.text.secondary,
+}));
