@@ -629,6 +629,24 @@
   "admin.suspension-reason": {
     "defaultMessage": "Sperrgrund"
   },
+  "admin.suspension.abuse": {
+    "defaultMessage": "Missbrauch"
+  },
+  "admin.suspension.terms-violation": {
+    "defaultMessage": "Verstoß gegen die Bedingungen"
+  },
+  "admin.suspension.security-concern": {
+    "defaultMessage": "Sicherheitsbedenken"
+  },
+  "admin.suspension.manual-review": {
+    "defaultMessage": "Manuelle Überprüfung"
+  },
+  "admin.suspension.inactivity": {
+    "defaultMessage": "Inaktivität"
+  },
+  "admin.suspension.other": {
+    "defaultMessage": "Andere"
+  },
   "admin.status-suspended": {
     "defaultMessage": "Gesperrt"
   },

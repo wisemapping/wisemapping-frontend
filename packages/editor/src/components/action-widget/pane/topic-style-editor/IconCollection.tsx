@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
 import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
@@ -36,13 +37,14 @@ const StyledButton = styled(IconButton)<{ selected?: boolean }>(({ selected, the
 
 interface IconCollectionProps {
   styles: Array<{
-    type: TopicShapeType | StrokeStyle | LineType;
+    type: TopicShapeType | StrokeStyle | LineType | undefined;
     icon: ReactElement;
     label: string | ReactElement;
+    tooltip?: string | ReactElement; // Optional custom tooltip (overrides label)
     ariaLabel?: string; // Optional custom aria-label
   }>;
-  selectedValue: TopicShapeType | StrokeStyle | LineType;
-  onSelect: (value: TopicShapeType | StrokeStyle | LineType) => void;
+  selectedValue: TopicShapeType | StrokeStyle | LineType | undefined;
+  onSelect: (value: TopicShapeType | StrokeStyle | LineType | undefined) => void;
   ariaLabelSuffix?: string; // Optional suffix to add to all aria-labels (e.g., " shape")
 }
 
@@ -68,22 +70,25 @@ const IconCollection = ({
 
   return (
     <StyledGrid>
-      {styles.map((style) => {
+      {styles.map((style, index) => {
         const labelText = getLabelText(style.label);
+        const tooltipContent = style.tooltip || style.label;
         // Use custom aria-label if provided, otherwise construct from label + suffix
         const ariaLabel =
           style.ariaLabel || (ariaLabelSuffix ? `${labelText}${ariaLabelSuffix}` : labelText);
 
+        const isSelected = selectedValue === style.type;
+
         return (
-          <StyledButton
-            key={style.type}
-            selected={selectedValue === style.type}
-            onClick={() => onSelect(style.type)}
-            aria-label={ariaLabel}
-            title={labelText}
-          >
-            {style.icon}
-          </StyledButton>
+          <Tooltip key={style.type ?? `default-${index}`} title={tooltipContent}>
+            <StyledButton
+              selected={isSelected}
+              onClick={() => onSelect(style.type)}
+              aria-label={ariaLabel}
+            >
+              {style.icon}
+            </StyledButton>
+          </Tooltip>
         );
       })}
     </StyledGrid>

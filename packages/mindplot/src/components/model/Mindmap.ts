@@ -22,6 +22,7 @@ import NodeModel from './NodeModel';
 import RelationshipModel from './RelationshipModel';
 import ModelCodeName from '../persistence/ModelCodeName';
 import ThemeType from './ThemeType';
+import { CanvasStyleType } from './CanvasStyleType';
 
 class Mindmap extends IMindmap {
   private _description: string;
@@ -36,14 +37,7 @@ class Mindmap extends IMindmap {
 
   private _theme: ThemeType;
 
-  private _canvasStyle:
-    | {
-        backgroundColor?: string;
-        backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
-        gridSize?: number;
-        gridColor?: string;
-      }
-    | undefined;
+  private _canvasStyle: CanvasStyleType | undefined;
 
   constructor(id?: string, version: string = ModelCodeName.TANGO) {
     super();
@@ -63,28 +57,22 @@ class Mindmap extends IMindmap {
     this._theme = value;
   }
 
-  getCanvasStyle():
-    | {
-        backgroundColor?: string;
-        backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
-        gridSize?: number;
-        gridColor?: string;
-      }
-    | undefined {
+  getCanvasStyle(): CanvasStyleType | undefined {
     return this._canvasStyle;
   }
 
-  setCanvasStyle(
-    value:
-      | {
-          backgroundColor?: string;
-          backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
-          gridSize?: number;
-          gridColor?: string;
-        }
-      | undefined,
-  ): void {
-    this._canvasStyle = value;
+  setCanvasStyle(value: CanvasStyleType | undefined): void {
+    // Normalize: if backgroundPattern is undefined, ensure all background attributes are also undefined
+    if (value && value.backgroundPattern === undefined) {
+      this._canvasStyle = {
+        ...value,
+        backgroundColor: undefined,
+        backgroundGridSize: undefined,
+        backgroundGridColor: undefined,
+      };
+    } else {
+      this._canvasStyle = value;
+    }
   }
 
   /** */

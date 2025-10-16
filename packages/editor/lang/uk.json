@@ -679,5 +679,38 @@
   },
   "title-input": {
     "defaultMessage": "Введення заголовка"
+  },
+  "canvas-style.tab-color": {
+    "defaultMessage": "Color"
+  },
+  "canvas-style.tab-grid": {
+    "defaultMessage": "Grid Color"
+  },
+  "canvas-style.background-style": {
+    "defaultMessage": "Background Style"
+  },
+  "canvas-style.pattern-default-tooltip": {
+    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+  },
+  "icon-collection.shape.default": {
+    "defaultMessage": "Default"
+  },
+  "icon-collection.border.default": {
+    "defaultMessage": "Default"
+  },
+  "icon-collection.connection.default": {
+    "defaultMessage": "Default"
+  },
+  "icon-collection.default-tooltip": {
+    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+  },
+  "unified-styling.shape-type": {
+    "defaultMessage": "Shape Type"
+  },
+  "unified-styling.background-color": {
+    "defaultMessage": "Background Color"
+  },
+  "topic-font-editor.reset-to-default": {
+    "defaultMessage": "Reset to Default"
   }
 }

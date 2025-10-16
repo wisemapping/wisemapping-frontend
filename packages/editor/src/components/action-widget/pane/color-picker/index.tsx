@@ -50,6 +50,7 @@ const NoneColorCircle = styled(Box)<{ selected?: boolean }>(({ selected, theme }
 const ColorPicker = (props: {
   closeModal: () => void;
   colorModel: NodeProperty<string | undefined>;
+  hideNoneOption?: boolean;
 }): ReactElement => {
   const intl = useIntl();
   const currentValue = props.colorModel.getValue();
@@ -83,17 +84,19 @@ const ColorPicker = (props: {
 
   return (
     <Box component="div" aria-label={colorLabel}>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '216px', gap: '9px' }}>
-        <NoneColorCircle
-          selected={isNoneSelected}
-          onClick={handleNoneClick}
-          aria-label={defaultColorLabel}
-          role="button"
-          tabIndex={0}
-        >
-          <NotInterestedOutlined />
-        </NoneColorCircle>
-        {colors.slice(1).map((color, index) => (
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '216px', gap: '6px' }}>
+        {!props.hideNoneOption && (
+          <NoneColorCircle
+            selected={isNoneSelected}
+            onClick={handleNoneClick}
+            aria-label={defaultColorLabel}
+            role="button"
+            tabIndex={0}
+          >
+            <NotInterestedOutlined />
+          </NoneColorCircle>
+        )}
+        {(props.hideNoneOption ? colors : colors.slice(1)).map((color, index) => (
           <Box
             key={index}
             component="button"

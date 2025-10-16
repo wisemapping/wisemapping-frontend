@@ -31,6 +31,7 @@ import ChangeFeatureToTopicCommand from './commands/ChangeFeatureToTopicCommand'
 import ChangeCanvasStyleCommand from './commands/ChangeCanvasStyleCommand';
 import ChangeThemeCommand from './commands/ChangeThemeCommand';
 import LayoutEventBus from './layout/LayoutEventBus';
+import type { CanvasStyleType } from './model/CanvasStyleType';
 import CommandContext from './CommandContext';
 import NodeModel from './model/NodeModel';
 import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
@@ -246,8 +247,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  changeShapeTypeToTopic(topicsIds: number[], shapeType: TopicShapeType) {
-    const commandFunc = (topic: Topic, commandShapeType: TopicShapeType) => {
+  changeShapeTypeToTopic(topicsIds: number[], shapeType: TopicShapeType | undefined) {
+    const commandFunc = (topic: Topic, commandShapeType: TopicShapeType | undefined) => {
       const result = topic.getShapeType();
       topic.setShapeType(commandShapeType);
 
@@ -258,8 +259,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  changeConnectionStyleToTopic(topicsIds: number[], lineType: LineType) {
-    const commandFunc = (topic: Topic, type: LineType) => {
+  changeConnectionStyleToTopic(topicsIds: number[], lineType: LineType | undefined) {
+    const commandFunc = (topic: Topic, type: LineType | undefined) => {
       const result = topic.getConnectionStyle();
       topic.setConnectionStyle(type);
       return result;
@@ -395,16 +396,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  changeCanvasStyle(
-    style:
-      | {
-          backgroundColor?: string;
-          backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
-          gridSize?: number;
-          gridColor?: string;
-        }
-      | undefined,
-  ): void {
+  changeCanvasStyle(style: CanvasStyleType | undefined): void {
     const command = new ChangeCanvasStyleCommand(style);
     this.execute(command);
   }

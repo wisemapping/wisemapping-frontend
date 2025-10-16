@@ -18,6 +18,7 @@
 import { $assert } from './util/assert';
 import { $msg } from './Messages';
 import PersistenceManager, { PersistenceError, ServerError } from './PersistenceManager';
+import throttle from 'lodash/throttle';
 
 class RESTPersistenceManager extends PersistenceManager {
   private documentUrl: string;
@@ -28,10 +29,6 @@ class RESTPersistenceManager extends PersistenceManager {
 
   private jwt: string | undefined;
 
-  private clearTimeout;
-
-  private onSave: boolean;
-
   constructor(options: { documentUrl: string; revertUrl: string; lockUrl: string; jwt?: string }) {
     $assert(options.documentUrl, 'documentUrl can not be null');
     $assert(options.revertUrl, 'revertUrl can not be null');
@@ -41,41 +38,26 @@ class RESTPersistenceManager extends PersistenceManager {
     this.documentUrl = options.documentUrl;
     this.revertUrl = options.revertUrl;
     this.lockUrl = options.lockUrl;
-    this.onSave = false;
     this.jwt = options.jwt;
   }
 
   private _handleError(error: PersistenceError, events): void {
     this.triggerError(error);
     events.onError(error);
-
-    // Clear event timeout ...
-    if (this.clearTimeout) {
-      clearTimeout(this.clearTimeout);
-    }
-    this.onSave = false;
   }
 
-  saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events): void {
-    const data = {
-      id: mapId,
-      xml: new XMLSerializer().serializeToString(mapXml),
-      properties: pref,
-    };
-
-    const query = `minor=${!saveHistory}`;
-    if (!this.onSave) {
-      // Mark save in process and fire a event unlocking the save ...
-      this.onSave = true;
-      this.clearTimeout = setTimeout(() => {
-        this.clearTimeout = null;
-        this.onSave = false;
-      }, 10000);
-
+  // Throttle saves to prevent multiple saves within 10 seconds
+  private _throttledSave = throttle(
+    (
+      mapId: string,
+      data: { id: string; xml: string; properties: string },
+      query: string,
+      events,
+    ) => {
       const headers = this._buildHttpHeader('application/json; charset=utf-8', 'application/json');
       fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
         method: 'PUT',
-        // Blob helps to resuce the memory on large payload.
+        // Blob helps to reduce the memory on large payload.
         body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
         headers,
       })
@@ -110,7 +92,20 @@ class RESTPersistenceManager extends PersistenceManager {
           };
           this._handleError(error, events);
         });
-    }
+    },
+    10000,
+    { leading: true, trailing: false },
+  );
+
+  saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events): void {
+    const data = {
+      id: mapId,
+      xml: new XMLSerializer().serializeToString(mapXml),
+      properties: pref,
+    };
+
+    const query = `minor=${!saveHistory}`;
+    this._throttledSave(mapId, data, query, events);
   }
 
   discardChanges(mapId: string): void {

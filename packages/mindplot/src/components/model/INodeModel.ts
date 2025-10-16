@@ -164,8 +164,8 @@ abstract class INodeModel {
     mindmap.disconnect(this);
   }
 
-  getShapeType(): TopicShapeType {
-    const result = this.getProperty('shapeType') as TopicShapeType;
+  getShapeType(): TopicShapeType | undefined {
+    const result = this.getProperty('shapeType') as TopicShapeType | undefined;
     return result;
   }
 
@@ -266,7 +266,7 @@ abstract class INodeModel {
   }
 
   getConnectionStyle(): LineType | undefined {
-    return this.getProperty('connectionStyle') as LineType;
+    return this.getProperty('connectionStyle') as LineType | undefined;
   }
 
   setConnectionColor(value: string | undefined): void {

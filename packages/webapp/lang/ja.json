@@ -632,6 +632,24 @@
   "admin.suspension-reason": {
     "defaultMessage": "停止理由"
   },
+  "admin.suspension.abuse": {
+    "defaultMessage": "悪用"
+  },
+  "admin.suspension.terms-violation": {
+    "defaultMessage": "利用規約違反"
+  },
+  "admin.suspension.security-concern": {
+    "defaultMessage": "セキュリティ上の懸念"
+  },
+  "admin.suspension.manual-review": {
+    "defaultMessage": "手動レビュー"
+  },
+  "admin.suspension.inactivity": {
+    "defaultMessage": "非アクティブ"
+  },
+  "admin.suspension.other": {
+    "defaultMessage": "その他"
+  },
   "admin.status-suspended": {
     "defaultMessage": "停止中"
   },

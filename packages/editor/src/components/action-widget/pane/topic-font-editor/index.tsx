@@ -29,6 +29,8 @@ import TextIncreaseOutlinedIcon from '@mui/icons-material/TextIncreaseOutlined';
 import TextDecreaseOutlinedIcon from '@mui/icons-material/TextDecreaseOutlined';
 import FormatBoldOutlinedIcon from '@mui/icons-material/FormatBoldOutlined';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
+import Button from '@mui/material/Button';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { styled } from '@mui/material/styles';
 import type { SelectChangeEvent } from '@mui/material/Select';
@@ -141,6 +143,15 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
     if (switchValue) {
       switchValue();
     }
+  };
+
+  // Check if any font property is customized
+  const hasCustomFont = currentFont !== undefined || props.fontColorModel.getValue() !== undefined;
+
+  const handleResetToDefault = () => {
+    // Reset all font properties to undefined (theme defaults)
+    props.fontFamilyModel.setValue?.(undefined);
+    props.fontColorModel.setValue?.(undefined);
   };
 
   return (
@@ -263,7 +274,11 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
           <FormattedMessage id="topic-font-editor.font-color" defaultMessage="Font Color" />
         </Typography>
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-          <ColorPicker closeModal={() => {}} colorModel={props.fontColorModel} />
+          <ColorPicker
+            closeModal={() => {}}
+            colorModel={props.fontColorModel}
+            hideNoneOption={true}
+          />
         </Box>
       </Box>
 
@@ -355,6 +370,29 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
           </ActionButton>
         </Box>
       </Box>
+
+      {/* Reset to Default Button - At bottom */}
+      {hasCustomFont && (
+        <Box sx={{ mt: 2, pt: 2, borderTop: '1px solid', borderColor: 'divider' }}>
+          <Button
+            variant="outlined"
+            size="small"
+            startIcon={<NotInterestedOutlined />}
+            onClick={handleResetToDefault}
+            fullWidth
+            sx={{
+              textTransform: 'none',
+              fontSize: '0.75rem',
+              py: 0.75,
+            }}
+          >
+            <FormattedMessage
+              id="topic-font-editor.reset-to-default"
+              defaultMessage="Reset to Default"
+            />
+          </Button>
+        </Box>
+      )}
     </StyledEditorContainer>
   );
 };

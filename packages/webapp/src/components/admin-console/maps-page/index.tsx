@@ -269,7 +269,12 @@ const MapsManagement = (): ReactElement => {
       },
       onError: (error: Error) => {
         console.error('Failed to update map:', error);
-        setFormErrors({ general: 'Failed to update map. Please try again.' });
+        setFormErrors({
+          general: intl.formatMessage({
+            id: 'admin.error.update-map-failed',
+            defaultMessage: 'Failed to update map. Please try again.',
+          }),
+        });
       },
     },
   );
@@ -350,15 +355,40 @@ const MapsManagement = (): ReactElement => {
   };
 
   const handleDeleteMap = (mapId: number, mapTitle: string) => {
-    if (window.confirm(`Are you sure you want to delete the map "${mapTitle}"?`)) {
+    if (
+      window.confirm(
+        intl.formatMessage(
+          {
+            id: 'admin.confirm.delete-map',
+            defaultMessage: 'Are you sure you want to delete the map "{title}"?',
+          },
+          { title: mapTitle },
+        ),
+      )
+    ) {
       deleteMapMutation.mutate(mapId);
     }
   };
 
   const handleToggleSpamStatus = (mapId: number, currentSpamStatus: boolean) => {
     const newSpamStatus = !currentSpamStatus;
-    const action = newSpamStatus ? 'mark as spam' : 'mark as not spam';
-    if (window.confirm(`Are you sure you want to ${action} this map?`)) {
+    const action = newSpamStatus
+      ? intl.formatMessage({ id: 'admin.action.mark-as-spam', defaultMessage: 'mark as spam' })
+      : intl.formatMessage({
+          id: 'admin.action.mark-as-not-spam',
+          defaultMessage: 'mark as not spam',
+        });
+    if (
+      window.confirm(
+        intl.formatMessage(
+          {
+            id: 'admin.confirm.spam-action',
+            defaultMessage: 'Are you sure you want to {action} this map?',
+          },
+          { action },
+        ),
+      )
+    ) {
       updateSpamStatusMutation.mutate({ mapId, spam: newSpamStatus });
     }
   };

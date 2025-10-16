@@ -635,6 +635,24 @@
   "admin.suspension-reason": {
     "defaultMessage": "Причина призупинення"
   },
+  "admin.suspension.abuse": {
+    "defaultMessage": "Зловживання"
+  },
+  "admin.suspension.terms-violation": {
+    "defaultMessage": "Порушення умов"
+  },
+  "admin.suspension.security-concern": {
+    "defaultMessage": "Проблема безпеки"
+  },
+  "admin.suspension.manual-review": {
+    "defaultMessage": "Ручна перевірка"
+  },
+  "admin.suspension.inactivity": {
+    "defaultMessage": "Неактивність"
+  },
+  "admin.suspension.other": {
+    "defaultMessage": "Інше"
+  },
   "admin.status-suspended": {
     "defaultMessage": "Призупинено"
   },

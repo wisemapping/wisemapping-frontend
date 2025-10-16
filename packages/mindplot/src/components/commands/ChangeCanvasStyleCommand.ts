@@ -17,22 +17,16 @@
  */
 import Command from '../Command';
 import CommandContext from '../CommandContext';
-
-export type CanvasStyle = {
-  backgroundColor?: string;
-  backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
-  gridSize?: number;
-  gridColor?: string;
-};
+import { CanvasStyleType } from '../model/CanvasStyleType';
 
 class ChangeCanvasStyleCommand extends Command {
-  private _newStyle: CanvasStyle | undefined;
+  private _newStyle: CanvasStyleType | undefined;
 
-  private _oldStyle: CanvasStyle | null | undefined;
+  private _oldStyle: CanvasStyleType | null | undefined;
 
   private _applied: boolean;
 
-  constructor(newStyle: CanvasStyle | undefined) {
+  constructor(newStyle: CanvasStyleType | undefined) {
     super();
     this._newStyle = newStyle;
     this._oldStyle = undefined;
@@ -47,8 +41,11 @@ class ChangeCanvasStyleCommand extends Command {
       // Store the old style for undo
       this._oldStyle = mindmap.getCanvasStyle();
 
-      // Apply the new style
-      designer.applyCanvasStyle(this._newStyle);
+      // Save the new style to the model (persistence)
+      mindmap.setCanvasStyle(this._newStyle);
+
+      // Re-render (reads from model + merges with theme defaults)
+      designer.applyCanvasStyle();
 
       this._applied = true;
     } else {
@@ -59,9 +56,13 @@ class ChangeCanvasStyleCommand extends Command {
   undoExecute(commandContext: CommandContext): void {
     if (this._applied) {
       const { designer } = commandContext;
+      const mindmap = designer.getMindmap();
 
-      // Restore the old style (can be undefined for theme default)
-      designer.applyCanvasStyle(this._oldStyle || undefined);
+      // Restore the old style to the model (persistence)
+      mindmap.setCanvasStyle(this._oldStyle || undefined);
+
+      // Re-render (reads from model + merges with theme defaults)
+      designer.applyCanvasStyle();
 
       this._applied = false;
       this._oldStyle = undefined;

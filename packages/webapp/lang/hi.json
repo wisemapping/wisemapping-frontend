@@ -632,6 +632,24 @@
   "admin.suspension-reason": {
     "defaultMessage": "निलंबन कारण"
   },
+  "admin.suspension.abuse": {
+    "defaultMessage": "दुरुपयोग"
+  },
+  "admin.suspension.terms-violation": {
+    "defaultMessage": "नियमों का उल्लंघन"
+  },
+  "admin.suspension.security-concern": {
+    "defaultMessage": "सुरक्षा चिंता"
+  },
+  "admin.suspension.manual-review": {
+    "defaultMessage": "मैनुअल समीक्षा"
+  },
+  "admin.suspension.inactivity": {
+    "defaultMessage": "निष्क्रियता"
+  },
+  "admin.suspension.other": {
+    "defaultMessage": "अन्य"
+  },
   "admin.status-suspended": {
     "defaultMessage": "निलंबित"
   },

@@ -632,6 +632,24 @@
   "admin.suspension-reason": {
     "defaultMessage": "暂停原因"
   },
+  "admin.suspension.abuse": {
+    "defaultMessage": "滥用"
+  },
+  "admin.suspension.terms-violation": {
+    "defaultMessage": "违反条款"
+  },
+  "admin.suspension.security-concern": {
+    "defaultMessage": "安全问题"
+  },
+  "admin.suspension.manual-review": {
+    "defaultMessage": "人工审核"
+  },
+  "admin.suspension.inactivity": {
+    "defaultMessage": "不活跃"
+  },
+  "admin.suspension.other": {
+    "defaultMessage": "其他"
+  },
   "admin.status-suspended": {
     "defaultMessage": "已暂停"
   },

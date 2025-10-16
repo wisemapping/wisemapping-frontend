@@ -18,6 +18,7 @@
 import { $assert } from './util/assert';
 import { Mindmap } from '..';
 import CommandContext from './CommandContext';
+import type { CanvasStyleType } from './model/CanvasStyleType';
 import { PivotType } from './RelationshipControlPoints';
 import EventDispispatcher from './EventDispatcher';
 import NodeModel from './model/NodeModel';
@@ -86,18 +87,9 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
 
   abstract changeBorderStyleToTopic(topicsIds: number[], style: string): void;
 
-  abstract changeShapeTypeToTopic(topicsIds: number[], shapeType: string): void;
+  abstract changeShapeTypeToTopic(topicsIds: number[], shapeType: string | undefined): void;
 
-  abstract changeCanvasStyle(
-    style:
-      | {
-          backgroundColor?: string;
-          backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
-          gridSize?: number;
-          gridColor?: string;
-        }
-      | undefined,
-  ): void;
+  abstract changeCanvasStyle(style: CanvasStyleType | undefined): void;
 
   abstract changeFontWeightToTopic(topicsIds: number[]): void;
 

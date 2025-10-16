@@ -629,6 +629,24 @@
   "admin.suspension-reason": {
     "defaultMessage": "Raison de la suspension"
   },
+  "admin.suspension.abuse": {
+    "defaultMessage": "Abus"
+  },
+  "admin.suspension.terms-violation": {
+    "defaultMessage": "Violation des conditions"
+  },
+  "admin.suspension.security-concern": {
+    "defaultMessage": "Préoccupation de sécurité"
+  },
+  "admin.suspension.manual-review": {
+    "defaultMessage": "Examen manuel"
+  },
+  "admin.suspension.inactivity": {
+    "defaultMessage": "Inactivité"
+  },
+  "admin.suspension.other": {
+    "defaultMessage": "Autre"
+  },
   "admin.status-suspended": {
     "defaultMessage": "Suspendu"
   },
