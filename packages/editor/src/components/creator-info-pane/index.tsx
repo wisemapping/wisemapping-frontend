@@ -25,8 +25,9 @@ import { useTheme } from '../../contexts/ThemeContext';
 
 type CreatorInfoPanel = {
   mapInfo: MapInfo;
+  showInfo?: boolean; // Control whether to show the text info (map name, creator)
 };
-const CreatorInfoPanel = ({ mapInfo }: CreatorInfoPanel): ReactElement => {
+const CreatorInfoPanel = ({ mapInfo, showInfo = true }: CreatorInfoPanel): ReactElement => {
   const { mode } = useTheme();
   const logoSrc = mode === 'dark' ? LogoTextWhiteSvg : LogoTextBlackSvg;
 
@@ -39,26 +40,28 @@ const CreatorInfoPanel = ({ mapInfo }: CreatorInfoPanel): ReactElement => {
           style={{ float: 'left', paddingRight: '10px' }}
         />
       </a>
-      <CreatorInfoText>
-        {mapInfo.getTitle().trim() != '' && (
-          <>
-            <b>
-              <FormattedMessage id="creator-info-pane.description" defaultMessage="Description" />
-              :{' '}
-            </b>
-            {mapInfo.getTitle()}
-          </>
-        )}
-        <br />
-        {mapInfo.getCreatorFullName() != '' && (
-          <>
-            <b>
-              <FormattedMessage id="creator-info-pane.creator" defaultMessage="Creator" />:{' '}
-            </b>
-            {mapInfo.getCreatorFullName()}
-          </>
-        )}
-      </CreatorInfoText>
+      {showInfo && (
+        <CreatorInfoText>
+          {mapInfo.getTitle().trim() != '' && (
+            <>
+              <b>
+                <FormattedMessage id="creator-info-pane.description" defaultMessage="Description" />
+                :{' '}
+              </b>
+              {mapInfo.getTitle()}
+            </>
+          )}
+          <br />
+          {mapInfo.getCreatorFullName() != '' && (
+            <>
+              <b>
+                <FormattedMessage id="creator-info-pane.creator" defaultMessage="Creator" />:{' '}
+              </b>
+              {mapInfo.getCreatorFullName()}
+            </>
+          )}
+        </CreatorInfoText>
+      )}
     </CreatorInfoContainer>
   );
 };

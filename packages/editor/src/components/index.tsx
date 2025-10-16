@@ -139,8 +139,8 @@ const EditorContent = ({
 
           <Notifier id="headerNotifier" theme={theme} />
 
-          {!options.enableAppBar && !options.hideCreatorInfo && (
-            <CreatorInfoPane mapInfo={mapInfo} />
+          {!options.enableAppBar && (
+            <CreatorInfoPane mapInfo={mapInfo} showInfo={!options.hideCreatorInfo} />
           )}
 
           <WarningDialog
