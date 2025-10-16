@@ -66,6 +66,13 @@ const EditorContent = ({
   const mode = internalMode;
   const theme = createEditorTheme(mode);
 
+  // Set initial theme variant from query parameter if provided
+  React.useEffect(() => {
+    if (options.initialThemeVariant) {
+      themeVariantStorage.setThemeVariant(options.initialThemeVariant);
+    }
+  }, [options.initialThemeVariant, themeVariantStorage]);
+
   // Initialize and sync mindmap theme variant with editor theme
   React.useEffect(() => {
     if (designer) {
@@ -132,7 +139,9 @@ const EditorContent = ({
 
           <Notifier id="headerNotifier" theme={theme} />
 
-          {!options.enableAppBar && <CreatorInfoPane mapInfo={mapInfo} />}
+          {!options.enableAppBar && !options.hideCreatorInfo && (
+            <CreatorInfoPane mapInfo={mapInfo} />
+          )}
 
           <WarningDialog
             capability={capability}
