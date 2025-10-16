@@ -33,33 +33,42 @@ describe('Theme Suite', () => {
     // Verify theme dialog is open
     cy.get('[role="dialog"]').should('be.visible');
     
-    // Select Light theme (should be first option)
-    cy.contains('Light').should('be.visible').click({ force: true });
+    // Select Summer theme (first option)
+    cy.contains('Summer').should('be.visible').click({ force: true });
+    
+    // Click Apply Theme button
+    cy.contains('Apply Theme').should('be.visible').click({ force: true });
     
     // Take snapshot
-    cy.matchImageSnapshot('select-light-theme');
+    cy.matchImageSnapshot('select-summer-theme');
   });
 
-  it('should select Colorful theme', () => {
+  it('should select Ocean theme', () => {
     // Click on the Theme button in toolbar
     cy.onClickToolbarButton('Theme');
     
-    // Select Colorful theme
-    cy.contains('Colorful').should('be.visible').click({ force: true });
+    // Select Ocean theme
+    cy.contains('Ocean').should('be.visible').click({ force: true });
+    
+    // Click Apply Theme button
+    cy.contains('Apply Theme').click({ force: true });
     
     // Take snapshot
-    cy.matchImageSnapshot('select-colorful-theme');
+    cy.matchImageSnapshot('select-ocean-theme');
   });
 
-  it('should select Dark theme', () => {
+  it('should select Classic theme', () => {
     // Click on the Theme button in toolbar
     cy.onClickToolbarButton('Theme');
     
-    // Select Dark theme
-    cy.contains('Dark').should('be.visible').click({ force: true });
+    // Select Classic theme
+    cy.contains('Classic').should('be.visible').click({ force: true });
+    
+    // Click Apply Theme button
+    cy.contains('Apply Theme').click({ force: true });
     
     // Take snapshot
-    cy.matchImageSnapshot('select-dark-theme');
+    cy.matchImageSnapshot('select-classic-theme');
   });
 
   it('should show theme descriptions when hovering', () => {
@@ -70,7 +79,7 @@ describe('Theme Suite', () => {
     cy.get('[role="dialog"]').should('be.visible');
     
     // Hover over a theme to see description
-    cy.contains('Colorful').trigger('mouseover');
+    cy.contains('Ocean').trigger('mouseover');
     
     // Take snapshot
     cy.matchImageSnapshot('theme-descriptions-dialog');
