@@ -32,8 +32,6 @@ import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlin
 import HorizontalRuleOutlinedIcon from '@mui/icons-material/HorizontalRuleOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
-import MoreHorizOutlined from '@mui/icons-material/MoreHorizOutlined';
-import MoreVertOutlined from '@mui/icons-material/MoreVertOutlined';
 import GestureOutlined from '@mui/icons-material/GestureOutlined';
 import ShortcutIconOutlined from '@mui/icons-material/ShortcutOutlined';
 import SwapCallsOutlined from '@mui/icons-material/SwapCallsOutlined';

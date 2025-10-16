@@ -15,10 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import throttle from 'lodash/throttle';
 import { $assert } from './util/assert';
 import { $msg } from './Messages';
 import PersistenceManager, { PersistenceError, ServerError } from './PersistenceManager';
-import throttle from 'lodash/throttle';
 
 class RESTPersistenceManager extends PersistenceManager {
   private documentUrl: string;

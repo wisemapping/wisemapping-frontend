@@ -17,10 +17,10 @@
  */
 
 import { Group, Rect, StraightLine } from '@wisemapping/web2d';
+import debounce from 'lodash/debounce';
 import { $assert } from './util/assert';
 import Icon from './Icon';
 import PositionType from './PositionType';
-import debounce from 'lodash/debounce';
 
 class ElementDeleteWidget {
   private static _instance: ElementDeleteWidget | null = null;

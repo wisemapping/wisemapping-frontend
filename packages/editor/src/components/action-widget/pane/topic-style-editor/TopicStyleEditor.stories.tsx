@@ -27,24 +27,26 @@ import React from 'react';
 // Wrapper component to expose all setValue calls as action-trackable callbacks
 const TopicStyleEditorWithActions = (props: {
   closeModal: () => void;
-  onShapeChange?: (shape: TopicShapeType) => void;
+  onShapeChange?: (shape: TopicShapeType | undefined) => void;
   onFillColorChange?: (color: string | undefined) => void;
   onBorderColorChange?: (color: string | undefined) => void;
-  onBorderStyleChange?: (style: StrokeStyle) => void;
-  onConnectionStyleChange?: (style: LineType) => void;
+  onBorderStyleChange?: (style: StrokeStyle | undefined) => void;
+  onConnectionStyleChange?: (style: LineType | undefined) => void;
   onConnectionColorChange?: (color: string | undefined) => void;
 }): React.ReactElement => {
-  const [shape, setShape] = React.useState<TopicShapeType>('rounded rectangle');
+  const [shape, setShape] = React.useState<TopicShapeType | undefined>('rounded rectangle');
   const [fillColor, setFillColor] = React.useState<string | undefined>('#00ff00');
   const [borderColor, setBorderColor] = React.useState<string | undefined>('#0000ff');
-  const [borderStyle, setBorderStyle] = React.useState<StrokeStyle>(StrokeStyle.SOLID);
-  const [connectionStyle, setConnectionStyle] = React.useState<LineType>(LineType.THICK_CURVED);
+  const [borderStyle, setBorderStyle] = React.useState<StrokeStyle | undefined>(StrokeStyle.SOLID);
+  const [connectionStyle, setConnectionStyle] = React.useState<LineType | undefined>(
+    LineType.THICK_CURVED,
+  );
   const [connectionColor, setConnectionColor] = React.useState<string | undefined>('#ff0000');
 
-  const shapeModel: NodeProperty<TopicShapeType> = React.useMemo(
+  const shapeModel: NodeProperty<TopicShapeType | undefined> = React.useMemo(
     () => ({
       getValue: () => shape,
-      setValue: (v: TopicShapeType) => {
+      setValue: (v: TopicShapeType | undefined) => {
         setShape(v);
         props.onShapeChange?.(v);
       },
@@ -77,10 +79,10 @@ const TopicStyleEditorWithActions = (props: {
     [borderColor, props.onBorderColorChange],
   );
 
-  const borderStyleModel: NodeProperty<StrokeStyle> = React.useMemo(
+  const borderStyleModel: NodeProperty<StrokeStyle | undefined> = React.useMemo(
     () => ({
       getValue: () => borderStyle,
-      setValue: (v: StrokeStyle) => {
+      setValue: (v: StrokeStyle | undefined) => {
         setBorderStyle(v);
         props.onBorderStyleChange?.(v);
       },
@@ -89,10 +91,10 @@ const TopicStyleEditorWithActions = (props: {
     [borderStyle, props.onBorderStyleChange],
   );
 
-  const connectionStyleModel: NodeProperty<LineType> = React.useMemo(
+  const connectionStyleModel: NodeProperty<LineType | undefined> = React.useMemo(
     () => ({
       getValue: () => connectionStyle,
-      setValue: (v: LineType) => {
+      setValue: (v: LineType | undefined) => {
         setConnectionStyle(v);
         props.onConnectionStyleChange?.(v);
       },
