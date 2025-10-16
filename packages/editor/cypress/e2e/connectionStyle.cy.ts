@@ -139,4 +139,19 @@ describe('Connection Style Suite', () => {
 
     cy.matchImageSnapshot('reset-connection-color');
   });
+
+  it('Default connection style hides color picker', () => {
+    cy.onClickToolbarButton('Style Topic & Connections');
+    
+    // Click the Connector tab
+    cy.contains('Connector').should('be.visible').click({ force: true });
+    
+    // Click the default connection style option
+    cy.get('[aria-label="Default"]').should('be.visible').first().click({ force: true });
+
+    // Connection Color section should not be visible
+    cy.contains('Connection Color').should('not.exist');
+
+    cy.matchImageSnapshot('default-connection-no-color-picker');
+  });
 });

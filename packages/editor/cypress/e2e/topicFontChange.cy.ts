@@ -153,4 +153,20 @@ describe('Topic Font Suite', () => {
     cy.focusTopicByText('Mind Mapping');
     cy.matchImageSnapshot('changeFontColor');
   });
+
+  it('Reset to Default hides all font options', () => {
+    cy.onClickToolbarButton('Font Style');
+    
+    // Change font family first to make Reset button visible
+    cy.get('[role="combobox"]').should('be.visible').click({ force: true });
+    cy.contains('Verdana').click({ force: true });
+
+    // Reset to Default button should now be visible
+    cy.contains('Reset to Default').should('be.visible').click({ force: true });
+
+    // After reset, the Reset to Default button should not be visible
+    cy.contains('Reset to Default').should('not.exist');
+
+    cy.matchImageSnapshot('reset-font-to-default');
+  });
 });
