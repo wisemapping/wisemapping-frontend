@@ -347,6 +347,42 @@
       "value": "Suspension Status"
     }
   ],
+  "admin.suspension.abuse": [
+    {
+      "type": 0,
+      "value": "Abuse"
+    }
+  ],
+  "admin.suspension.inactivity": [
+    {
+      "type": 0,
+      "value": "Inactivity"
+    }
+  ],
+  "admin.suspension.manual-review": [
+    {
+      "type": 0,
+      "value": "Manual Review"
+    }
+  ],
+  "admin.suspension.other": [
+    {
+      "type": 0,
+      "value": "Other"
+    }
+  ],
+  "admin.suspension.security-concern": [
+    {
+      "type": 0,
+      "value": "Security Concern"
+    }
+  ],
+  "admin.suspension.terms-violation": [
+    {
+      "type": 0,
+      "value": "Terms Violation"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,

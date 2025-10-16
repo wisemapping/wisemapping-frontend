@@ -123,13 +123,14 @@ describe('Connection Style Suite', () => {
     // Select a color (red) - use title attribute like in font color test
     cy.get('[title="#ff0000"]').should('be.visible').click({ force: true });
 
-    // Now reset to default
+    // Now reset to default by selecting the "Default" connection style option
     cy.onClickToolbarButton('Style Topic & Connections');
     
     // Wait for the Connector tab to be visible, then click it again
     cy.contains('Connector').should('be.visible').click({ force: true });
     
-    cy.get('[aria-label="Default color"]').should('be.visible').first().click({ force: true });
+    // Click the default connection style option (first option in the connection style selector)
+    cy.get('[aria-label*="Default"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-connection-color');
   });

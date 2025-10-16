@@ -347,6 +347,42 @@
       "value": "暂停状态"
     }
   ],
+  "admin.suspension.abuse": [
+    {
+      "type": 0,
+      "value": "滥用"
+    }
+  ],
+  "admin.suspension.inactivity": [
+    {
+      "type": 0,
+      "value": "不活跃"
+    }
+  ],
+  "admin.suspension.manual-review": [
+    {
+      "type": 0,
+      "value": "人工审核"
+    }
+  ],
+  "admin.suspension.other": [
+    {
+      "type": 0,
+      "value": "其他"
+    }
+  ],
+  "admin.suspension.security-concern": [
+    {
+      "type": 0,
+      "value": "安全问题"
+    }
+  ],
+  "admin.suspension.terms-violation": [
+    {
+      "type": 0,
+      "value": "违反条款"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,

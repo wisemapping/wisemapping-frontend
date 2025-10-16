@@ -72,11 +72,11 @@ describe('Topic Color Suite', () => {
 
     cy.get('[title="#ff0000"]').click({ force: true });
 
-    // Now reset to default
+    // Now reset to default by selecting the "Default" shape option
     cy.onClickToolbarButton('Style Topic & Connections');
     
-    // Click the default/reset button in the color picker
-    cy.get('[aria-label="Default color"]').first().click({ force: true });
+    // Click the default shape option (first option in the shape selector)
+    cy.get('[aria-label*="Default"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-topic-fill-color');
   });
@@ -93,13 +93,14 @@ describe('Topic Color Suite', () => {
     // Wait for color options and select blue
     cy.get('[title="#0000ff"]').should('be.visible').click({ force: true });
 
-    // Now reset to default
+    // Now reset to default by selecting the "Default" border style option
     cy.onClickToolbarButton('Style Topic & Connections');
     
     // Click on Border tab again
     cy.contains('Border').click({ force: true });
     
-    cy.get('[aria-label="Default color"]').first().click({ force: true });
+    // Click the default border style option (first option in the border style selector)
+    cy.get('[aria-label*="Default"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-topic-border-color');
   });

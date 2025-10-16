@@ -347,6 +347,42 @@
       "value": "Статус призупинення"
     }
   ],
+  "admin.suspension.abuse": [
+    {
+      "type": 0,
+      "value": "Зловживання"
+    }
+  ],
+  "admin.suspension.inactivity": [
+    {
+      "type": 0,
+      "value": "Неактивність"
+    }
+  ],
+  "admin.suspension.manual-review": [
+    {
+      "type": 0,
+      "value": "Ручна перевірка"
+    }
+  ],
+  "admin.suspension.other": [
+    {
+      "type": 0,
+      "value": "Інше"
+    }
+  ],
+  "admin.suspension.security-concern": [
+    {
+      "type": 0,
+      "value": "Проблема безпеки"
+    }
+  ],
+  "admin.suspension.terms-violation": [
+    {
+      "type": 0,
+      "value": "Порушення умов"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,
