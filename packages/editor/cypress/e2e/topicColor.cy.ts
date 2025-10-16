@@ -60,8 +60,11 @@ describe('Topic Color Suite', () => {
     // Select a non-default border style to make color picker visible
     cy.get('[aria-label="Solid Line"]').should('be.visible').first().click({ force: true });
 
-    // Wait for color options to be available
-    cy.get('[title="#0000ff"]', { timeout: 10000 }).should('be.visible').click({ force: true });
+    // Wait for "Border Color" label to appear, which indicates color picker is rendered
+    cy.contains('Border Color').should('be.visible');
+
+    // Now select blue color
+    cy.get('[title="#0000ff"]').should('be.visible').click({ force: true });
 
     cy.matchImageSnapshot('change-topic-border-color');
   });
@@ -98,8 +101,11 @@ describe('Topic Color Suite', () => {
     // Select a border style to make color picker visible
     cy.get('[aria-label="Solid Line"]').should('be.visible').first().click({ force: true });
 
-    // Wait for color options and select blue
-    cy.get('[title="#0000ff"]', { timeout: 10000 }).should('be.visible').click({ force: true });
+    // Wait for "Border Color" label to appear, which indicates color picker is rendered
+    cy.contains('Border Color').should('be.visible');
+
+    // Select blue color
+    cy.get('[title="#0000ff"]').should('be.visible').click({ force: true });
 
     // Now reset to default by clicking the Border tab again
     cy.contains('Border').click({ force: true });
