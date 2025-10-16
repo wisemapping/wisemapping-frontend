@@ -115,4 +115,31 @@ describe('Topic Color Suite', () => {
 
     cy.matchImageSnapshot('reset-topic-border-color');
   });
+
+  it('Default shape hides color picker', () => {
+    cy.onClickToolbarButton('Style Topic & Connections');
+
+    // Click the default shape option
+    cy.get('[aria-label*="Default shape"]').should('be.visible').first().click({ force: true });
+
+    // Background Color section should not be visible
+    cy.contains('Background Color').should('not.exist');
+
+    cy.matchImageSnapshot('default-shape-no-color-picker');
+  });
+
+  it('Default border style hides color picker', () => {
+    cy.onClickToolbarButton('Style Topic & Connections');
+
+    // Click on Border tab
+    cy.contains('Border').click({ force: true });
+
+    // Click the default border style option
+    cy.get('[aria-label="Default Line"]').should('be.visible').first().click({ force: true });
+
+    // Border Color section should not be visible
+    cy.contains('Border Color').should('not.exist');
+
+    cy.matchImageSnapshot('default-border-no-color-picker');
+  });
 });
