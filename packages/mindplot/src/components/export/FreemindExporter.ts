@@ -165,8 +165,8 @@ class FreemindExporter extends Exporter {
       }
     }
 
-    const wiseShape: TopicShapeType = mindmapTopic.getShapeType();
-    if (wiseShape && wiseShape !== 'line') {
+    const wiseShape: TopicShapeType | undefined = mindmapTopic.getShapeType();
+    if (wiseShape && wiseShape !== 'line' && wiseShape !== undefined) {
       const color = mindmapTopic.getBackgroundColor();
       if (color) {
         freemindNode.setBackgorundColor(this.rgbToHex(color));

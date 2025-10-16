@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import debounce from 'lodash/debounce';
 import DOMUtils from './util/DOMUtils';
 import LinkIcon from './LinkIcon';
 import LinkModel from './model/LinkModel';
@@ -23,7 +24,6 @@ import NoteModel from './model/NoteModel';
 import NoteIcon from './NoteIcon';
 import Topic from './Topic';
 import { $msg } from './Messages';
-import debounce from 'lodash/debounce';
 
 export type WidgetEventType = 'none' | 'link' | 'note';
 

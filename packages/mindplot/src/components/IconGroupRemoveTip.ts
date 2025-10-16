@@ -17,11 +17,11 @@
  */
 
 import { Group, Rect, StraightLine } from '@wisemapping/web2d';
+import debounce from 'lodash/debounce';
 import { $assert } from './util/assert';
 import Icon from './Icon';
 import PositionType from './PositionType';
 import SizeType from './SizeType';
-import debounce from 'lodash/debounce';
 
 class IconGroupRemoveTip {
   private static _instance: IconGroupRemoveTip | null = null;

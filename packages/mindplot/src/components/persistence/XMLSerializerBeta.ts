@@ -74,8 +74,9 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
 
     // Topic text is always plain, no contentType needed
 
+    // Save the model's explicit shape (undefined means use theme default)
     const shape = topic.getShapeType();
-    if ($defined(shape)) {
+    if (shape !== undefined) {
       parentTopic.setAttribute('shape', shape);
     }
 

@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 
+import debounce from 'lodash/debounce';
 import { $assert } from '../util/assert';
 import DOMUtils from '../util/DOMUtils';
-import debounce from 'lodash/debounce';
 
 class ToolbarNotifier {
   private static hideNotification = debounce((container: HTMLElement) => {
