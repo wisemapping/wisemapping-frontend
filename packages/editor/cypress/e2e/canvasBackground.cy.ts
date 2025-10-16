@@ -22,37 +22,48 @@ describe('Canvas Background Suite', () => {
     cy.visit('/editor.html');
     cy.waitEditorLoaded();
 
-    // Select root node
+    // Select root node to enable toolbar buttons
     cy.focusTopicByText('Mind Mapping');
   });
 
   it('Default background pattern hides color pickers', () => {
-    // Click on the Theme button in toolbar
-    cy.onClickToolbarButton('Theme');
+    // Click on the Background button in toolbar
+    cy.get('button[aria-label*="Background"]').should('be.visible').click({ force: true });
     
-    // Wait for the Canvas Style section
-    cy.contains('Canvas Style').should('be.visible');
+    // Wait for the Background Style section
+    cy.contains('Background Style').should('be.visible');
     
-    // Click the Default background style option
-    cy.get('[aria-label*="Default"]').should('be.visible').first().click({ force: true });
+    // First select Grid to ensure tabs are visible
+    cy.get('button').find('svg[data-testid="GridOnIcon"]').parent().click({ force: true });
     
-    // Color and Grid Color tabs should not be visible when Default is selected
-    cy.contains('Color').should('not.exist');
-    cy.contains('Grid Color').should('not.exist');
+    // Verify tabs appeared (specifically the Tab components)
+    cy.get('[role="tab"]').contains('Color').should('be.visible');
+    
+    // Close the dialog
+    cy.get('button[aria-label*="Background"]').click({ force: true });
+    
+    // Reopen the dialog
+    cy.get('button[aria-label*="Background"]').should('be.visible').click({ force: true });
+    
+    // Now click Default to hide them
+    cy.get('button').find('svg[data-testid="NotInterestedOutlinedIcon"]').parent().click({ force: true });
+    
+    // Tabs should not be visible when Default is selected
+    cy.get('[role="tab"]').should('not.exist');
     
     // Take snapshot
     cy.matchImageSnapshot('default-background-no-tabs');
   });
 
   it('Grid background pattern shows color pickers', () => {
-    // Click on the Theme button in toolbar
-    cy.onClickToolbarButton('Theme');
+    // Click on the Background button in toolbar
+    cy.get('button[aria-label*="Background"]').should('be.visible').click({ force: true });
     
-    // Wait for the Canvas Style section
-    cy.contains('Canvas Style').should('be.visible');
+    // Wait for the Background Style section
+    cy.contains('Background Style').should('be.visible');
     
-    // Click the Grid background style option
-    cy.get('[aria-label*="Grid"]').should('be.visible').first().click({ force: true });
+    // Click the Grid background style option (GridOnIcon, third button)
+    cy.get('button').find('svg[data-testid="GridOnIcon"]').parent().click({ force: true });
     
     // Color and Grid Color tabs should be visible when Grid is selected
     cy.contains('Color').should('be.visible');
@@ -63,14 +74,14 @@ describe('Canvas Background Suite', () => {
   });
 
   it('Dots background pattern shows color pickers', () => {
-    // Click on the Theme button in toolbar
-    cy.onClickToolbarButton('Theme');
+    // Click on the Background button in toolbar
+    cy.get('button[aria-label*="Background"]').should('be.visible').click({ force: true });
     
-    // Wait for the Canvas Style section
-    cy.contains('Canvas Style').should('be.visible');
+    // Wait for the Background Style section
+    cy.contains('Background Style').should('be.visible');
     
-    // Click the Dots background style option
-    cy.get('[aria-label*="Dots"]').should('be.visible').first().click({ force: true });
+    // Click the Dots background style option (FiberManualRecordIcon, fourth button)
+    cy.get('button').find('svg[data-testid="FiberManualRecordIcon"]').parent().click({ force: true });
     
     // Color and Grid Color tabs should be visible when Dots is selected
     cy.contains('Color').should('be.visible');
