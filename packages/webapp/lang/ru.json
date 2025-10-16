@@ -617,6 +617,24 @@
   "admin.suspension-reason": {
     "defaultMessage": "Причина приостановки"
   },
+  "admin.suspension.abuse": {
+    "defaultMessage": "Злоупотребление"
+  },
+  "admin.suspension.terms-violation": {
+    "defaultMessage": "Нарушение условий"
+  },
+  "admin.suspension.security-concern": {
+    "defaultMessage": "Проблема безопасности"
+  },
+  "admin.suspension.manual-review": {
+    "defaultMessage": "Ручная проверка"
+  },
+  "admin.suspension.inactivity": {
+    "defaultMessage": "Неактивность"
+  },
+  "admin.suspension.other": {
+    "defaultMessage": "Другое"
+  },
   "admin.status-suspended": {
     "defaultMessage": "Приостановлен"
   },

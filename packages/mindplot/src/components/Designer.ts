@@ -49,6 +49,7 @@ import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
 import Mindmap from './model/Mindmap';
 import NodeModel from './model/NodeModel';
 import Topic from './Topic';
+import type { CanvasStyleType } from './model/CanvasStyleType';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 import DragTopic from './DragTopic';
 import CentralTopic from './CentralTopic';
@@ -879,17 +880,13 @@ class Designer extends EventDispispatcher<DesignerEventType> {
    * Set canvas style through action dispatcher (undoable)
    * @param style - Canvas style configuration
    */
-  setCanvasStyle(
-    style:
-      | {
-          backgroundColor?: string;
-          backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
-          gridSize?: number;
-          gridColor?: string;
-        }
-      | undefined,
-  ): void {
-    this._actionDispatcher.changeCanvasStyle(style);
+  setCanvasStyle(style: CanvasStyleType | undefined): void {
+    // Normalize: if backgroundPattern is undefined, ensure backgroundGridSize and backgroundGridColor are also undefined
+    const normalizedStyle =
+      style && style.backgroundPattern === undefined
+        ? { ...style, backgroundGridSize: undefined, backgroundGridColor: undefined }
+        : style;
+    this._actionDispatcher.changeCanvasStyle(normalizedStyle);
   }
 
   /**
@@ -897,16 +894,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
    * @param style - Canvas style configuration
    * @internal
    */
-  applyCanvasStyle(
-    style:
-      | {
-          backgroundColor?: string;
-          backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
-          gridSize?: number;
-          gridColor?: string;
-        }
-      | undefined,
-  ): void {
+  applyCanvasStyle(style: CanvasStyleType | undefined): void {
     // Save canvas style to mindmap for persistence
     const mindmap = this.getMindmap();
     mindmap.setCanvasStyle(style);
@@ -927,8 +915,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const resolved = {
       backgroundColor: style.backgroundColor ?? defaultStyle.backgroundColor,
       backgroundPattern: style.backgroundPattern ?? defaultStyle.backgroundPattern,
-      gridSize: style.gridSize ?? defaultStyle.gridSize,
-      gridColor: style.gridColor ?? defaultStyle.gridColor,
+      backgroundGridSize: style.backgroundGridSize ?? defaultStyle.backgroundGridSize,
+      backgroundGridColor: style.backgroundGridColor ?? defaultStyle.backgroundGridColor,
     };
 
     let cssStyle = `position: relative;
@@ -947,17 +935,16 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     switch (resolved.backgroundPattern) {
       case 'grid':
         cssStyle += `
-          background-image: linear-gradient(${resolved.gridColor} 1px, transparent 1px),
-            linear-gradient(to right, ${resolved.gridColor} 1px, ${resolved.backgroundColor} 1px);
-          background-size: ${resolved.gridSize}px ${resolved.gridSize}px;`;
+          background-image: linear-gradient(${resolved.backgroundGridColor} 1px, transparent 1px),
+            linear-gradient(to right, ${resolved.backgroundGridColor} 1px, ${resolved.backgroundColor} 1px);
+          background-size: ${resolved.backgroundGridSize}px ${resolved.backgroundGridSize}px;`;
         break;
       case 'dots':
         cssStyle += `
-          background-image: radial-gradient(circle, ${resolved.gridColor} 1px, transparent 1px);
-          background-size: ${resolved.gridSize}px ${resolved.gridSize}px;`;
+          background-image: radial-gradient(circle, ${resolved.backgroundGridColor} 1px, transparent 1px);
+          background-size: ${resolved.backgroundGridSize}px ${resolved.backgroundGridSize}px;`;
         break;
       case 'solid':
-      case 'none':
       default:
         // Just solid background color, no additional styling needed
         break;
@@ -972,12 +959,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
    * @param theme - The theme instance
    * @return Canvas style object for Designer
    */
-  private _convertThemeToCanvasStyle(theme: Theme): {
-    backgroundColor: string;
-    backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-    gridSize: number;
-    gridColor: string;
-  } {
+  private _convertThemeToCanvasStyle(theme: Theme): CanvasStyleType {
     const backgroundColor = theme.getCanvasBackgroundColor();
     const gridColor = theme.getCanvasGridColor();
     const showGrid = theme.getCanvasShowGrid();
@@ -985,8 +967,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     return {
       backgroundColor,
       backgroundPattern: showGrid && gridColor ? 'grid' : 'solid',
-      gridSize: 20, // Default grid size
-      gridColor: gridColor || '#ebe9e7', // Default grid color
+      backgroundGridSize: 20, // Default grid size
+      backgroundGridColor: gridColor || '#ebe9e7', // Default grid color
     };
   }
 

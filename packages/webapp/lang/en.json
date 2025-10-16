@@ -635,6 +635,24 @@
   "admin.suspension-reason": {
     "defaultMessage": "Suspension Reason"
   },
+  "admin.suspension.abuse": {
+    "defaultMessage": "Abuse"
+  },
+  "admin.suspension.terms-violation": {
+    "defaultMessage": "Terms Violation"
+  },
+  "admin.suspension.security-concern": {
+    "defaultMessage": "Security Concern"
+  },
+  "admin.suspension.manual-review": {
+    "defaultMessage": "Manual Review"
+  },
+  "admin.suspension.inactivity": {
+    "defaultMessage": "Inactivity"
+  },
+  "admin.suspension.other": {
+    "defaultMessage": "Other"
+  },
   "common.first-name": {
     "defaultMessage": "First Name"
   },

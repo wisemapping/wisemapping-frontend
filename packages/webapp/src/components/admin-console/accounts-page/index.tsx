@@ -162,12 +162,42 @@ const AccountManagement = (): ReactElement => {
 
   // Suspension reasons
   const suspensionReasons = [
-    { value: 'ABUSE', label: 'Abuse' },
-    { value: 'TERMS_VIOLATION', label: 'Terms Violation' },
-    { value: 'SECURITY_CONCERN', label: 'Security Concern' },
-    { value: 'MANUAL_REVIEW', label: 'Manual Review' },
-    { value: 'INACTIVITY', label: 'Inactivity' },
-    { value: 'OTHER', label: 'Other' },
+    {
+      value: 'ABUSE',
+      label: intl.formatMessage({ id: 'admin.suspension.abuse', defaultMessage: 'Abuse' }),
+    },
+    {
+      value: 'TERMS_VIOLATION',
+      label: intl.formatMessage({
+        id: 'admin.suspension.terms-violation',
+        defaultMessage: 'Terms Violation',
+      }),
+    },
+    {
+      value: 'SECURITY_CONCERN',
+      label: intl.formatMessage({
+        id: 'admin.suspension.security-concern',
+        defaultMessage: 'Security Concern',
+      }),
+    },
+    {
+      value: 'MANUAL_REVIEW',
+      label: intl.formatMessage({
+        id: 'admin.suspension.manual-review',
+        defaultMessage: 'Manual Review',
+      }),
+    },
+    {
+      value: 'INACTIVITY',
+      label: intl.formatMessage({
+        id: 'admin.suspension.inactivity',
+        defaultMessage: 'Inactivity',
+      }),
+    },
+    {
+      value: 'OTHER',
+      label: intl.formatMessage({ id: 'admin.suspension.other', defaultMessage: 'Other' }),
+    },
   ];
 
   // Fetch users
@@ -230,7 +260,12 @@ const AccountManagement = (): ReactElement => {
       },
       onError: (error: Error) => {
         console.error('Failed to update user:', error);
-        setFormErrors({ general: 'Failed to update user. Please try again.' });
+        setFormErrors({
+          general: intl.formatMessage({
+            id: 'admin.error.update-user-failed',
+            defaultMessage: 'Failed to update user. Please try again.',
+          }),
+        });
       },
     },
   );
@@ -262,7 +297,12 @@ const AccountManagement = (): ReactElement => {
       },
       onError: (error: Error) => {
         console.error('Failed to create user:', error);
-        setFormErrors({ general: 'Failed to create user. Please try again.' });
+        setFormErrors({
+          general: intl.formatMessage({
+            id: 'admin.error.create-user-failed',
+            defaultMessage: 'Failed to create user. Please try again.',
+          }),
+        });
       },
     },
   );
@@ -375,15 +415,27 @@ const AccountManagement = (): ReactElement => {
     const errors: Record<string, string> = {};
 
     if (!formData.firstname.trim()) {
-      errors.firstname = 'First name is required';
+      errors.firstname = intl.formatMessage({
+        id: 'admin.validation.firstname-required',
+        defaultMessage: 'First name is required',
+      });
     }
     if (!formData.lastname.trim()) {
-      errors.lastname = 'Last name is required';
+      errors.lastname = intl.formatMessage({
+        id: 'admin.validation.lastname-required',
+        defaultMessage: 'Last name is required',
+      });
     }
     if (!formData.email.trim()) {
-      errors.email = 'Email is required';
+      errors.email = intl.formatMessage({
+        id: 'admin.validation.email-required',
+        defaultMessage: 'Email is required',
+      });
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errors.email = 'Invalid email format';
+      errors.email = intl.formatMessage({
+        id: 'admin.validation.email-invalid',
+        defaultMessage: 'Invalid email format',
+      });
     }
 
     if (Object.keys(errors).length > 0) {
@@ -398,7 +450,12 @@ const AccountManagement = (): ReactElement => {
       });
     } else {
       // For creating, we need a password
-      const password = prompt('Enter password for new user:');
+      const password = prompt(
+        intl.formatMessage({
+          id: 'admin.prompt.new-user-password',
+          defaultMessage: 'Enter password for new user:',
+        }),
+      );
       if (password) {
         createUserMutation.mutate({
           ...formData,
@@ -497,16 +554,42 @@ const AccountManagement = (): ReactElement => {
     if (user.isSuspended) {
       const tooltipParts: string[] = [];
       if (user.suspendedDate) {
-        tooltipParts.push(`Suspended on: ${formatDate(user.suspendedDate)}`);
+        tooltipParts.push(
+          intl.formatMessage(
+            {
+              id: 'admin.status.suspended-on',
+              defaultMessage: 'Suspended on: {date}',
+            },
+            { date: formatDate(user.suspendedDate) },
+          ),
+        );
       }
       if (user.suspensionReason) {
-        tooltipParts.push(`Reason: ${user.suspensionReason}`);
+        tooltipParts.push(
+          intl.formatMessage(
+            {
+              id: 'admin.status.reason',
+              defaultMessage: 'Reason: {reason}',
+            },
+            { reason: user.suspensionReason },
+          ),
+        );
       }
-      const tooltip = tooltipParts.length > 0 ? tooltipParts.join(' | ') : 'Suspended';
+      const tooltip =
+        tooltipParts.length > 0
+          ? tooltipParts.join(' | ')
+          : intl.formatMessage({ id: 'admin.status-suspended', defaultMessage: 'Suspended' });
 
       return (
         <Tooltip title={tooltip}>
-          <Chip label="Suspended" color="error" size="small" />
+          <Chip
+            label={intl.formatMessage({
+              id: 'admin.status-suspended',
+              defaultMessage: 'Suspended',
+            })}
+            color="error"
+            size="small"
+          />
         </Tooltip>
       );
     } else if (!user.isActive) {
@@ -536,20 +619,28 @@ const AccountManagement = (): ReactElement => {
 
     if (authType === 'GOOGLE_OAUTH2') {
       return (
-        <Tooltip title="Google">
+        <Tooltip title={intl.formatMessage({ id: 'admin.auth.google', defaultMessage: 'Google' })}>
           <GoogleIcon color="action" fontSize="small" />
         </Tooltip>
       );
     } else if (authType === 'FACEBOOK_OAUTH2') {
       return (
-        <Tooltip title="Facebook">
+        <Tooltip
+          title={intl.formatMessage({ id: 'admin.auth.facebook', defaultMessage: 'Facebook' })}
+        >
           <FacebookIcon color="action" fontSize="small" />
         </Tooltip>
       );
     } else {
       // DATABASE or LDAP
       return (
-        <Tooltip title={authType === 'LDAP' ? 'LDAP' : 'Database'}>
+        <Tooltip
+          title={
+            authType === 'LDAP'
+              ? intl.formatMessage({ id: 'admin.auth.ldap', defaultMessage: 'LDAP' })
+              : intl.formatMessage({ id: 'admin.auth.database', defaultMessage: 'Database' })
+          }
+        >
           <StorageIcon color="action" fontSize="small" />
         </Tooltip>
       );
@@ -559,7 +650,17 @@ const AccountManagement = (): ReactElement => {
   if (error) {
     return (
       <Alert severity="error" sx={{ mb: 2 }}>
-        Failed to load users: {(error as Error)?.message || 'Unknown error'}
+        {intl.formatMessage(
+          {
+            id: 'admin.error.load-users',
+            defaultMessage: 'Failed to load users: {message}',
+          },
+          {
+            message:
+              (error as Error)?.message ||
+              intl.formatMessage({ id: 'admin.error.unknown', defaultMessage: 'Unknown error' }),
+          },
+        )}
       </Alert>
     );
   }
@@ -967,7 +1068,12 @@ const AccountManagement = (): ReactElement => {
             variant="contained"
             disabled={updateUserMutation.isLoading}
           >
-            {updateUserMutation.isLoading ? 'Updating...' : 'Update User'}
+            {updateUserMutation.isLoading
+              ? intl.formatMessage({ id: 'admin.button.updating', defaultMessage: 'Updating...' })
+              : intl.formatMessage({
+                  id: 'admin.button.update-user',
+                  defaultMessage: 'Update User',
+                })}
           </Button>
         </DialogActions>
       </Dialog>

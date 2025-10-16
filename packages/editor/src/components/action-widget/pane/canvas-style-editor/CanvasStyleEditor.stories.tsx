@@ -39,8 +39,8 @@ export const Default: Story = {
     initialStyle: {
       backgroundColor: '#f2f2f2',
       backgroundPattern: 'grid',
-      gridSize: 50,
-      gridColor: '#ebe9e7',
+      backgroundGridSize: 50,
+      backgroundGridColor: '#ebe9e7',
     } as Partial<CanvasStyle>,
   },
 };
@@ -50,8 +50,8 @@ export const WithSolidBackground: Story = {
     initialStyle: {
       backgroundColor: '#ffffff',
       backgroundPattern: 'solid',
-      gridSize: 50,
-      gridColor: '#cccccc',
+      backgroundGridSize: 50,
+      backgroundGridColor: '#cccccc',
     } as Partial<CanvasStyle>,
   },
 };
@@ -61,8 +61,8 @@ export const WithDots: Story = {
     initialStyle: {
       backgroundColor: '#f8f8f8',
       backgroundPattern: 'dots',
-      gridSize: 25,
-      gridColor: '#aaaaaa',
+      backgroundGridSize: 25,
+      backgroundGridColor: '#aaaaaa',
     } as Partial<CanvasStyle>,
   },
 };

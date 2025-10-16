@@ -30,6 +30,7 @@ import { FontWeightType } from '../FontWeightType';
 import { FontStyleType } from '../FontStyleType';
 import { TopicShapeType } from '../model/INodeModel';
 import ThemeType from '../model/ThemeType';
+import { CanvasStyleType, BackgroundPatternType } from '../model/CanvasStyleType';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -58,22 +59,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       mapElem.setAttribute('theme', theme);
     }
 
-    // Add canvas style ... only persist when provided (non-null/undefined)
-    const canvasStyle = mindmap.getCanvasStyle();
-    if (canvasStyle) {
-      if (canvasStyle.backgroundColor != null) {
-        mapElem.setAttribute('backgroundColor', canvasStyle.backgroundColor);
-      }
-      if (canvasStyle.backgroundPattern != null) {
-        mapElem.setAttribute('backgroundPattern', canvasStyle.backgroundPattern);
-      }
-      if (canvasStyle.gridSize != null) {
-        mapElem.setAttribute('gridSize', String(canvasStyle.gridSize));
-      }
-      if (canvasStyle.gridColor != null) {
-        mapElem.setAttribute('gridColor', canvasStyle.gridColor);
-      }
-    }
+    // Add canvas style attributes
+    this._persistCanvasStyle(mapElem, mindmap);
 
     const version = mindmap.getVersion();
     if ($defined(version)) {
@@ -103,6 +90,66 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     });
 
     return document;
+  }
+
+  /**
+   * Persist canvas style attributes to map element
+   * @private
+   */
+  private _persistCanvasStyle(mapElem: Element, mindmap: Mindmap): void {
+    const canvasStyle = mindmap.getCanvasStyle();
+    if (!canvasStyle) {
+      return;
+    }
+
+    if (canvasStyle.backgroundColor != null) {
+      mapElem.setAttribute('backgroundColor', canvasStyle.backgroundColor);
+    }
+    if (canvasStyle.backgroundPattern != null) {
+      mapElem.setAttribute('backgroundPattern', canvasStyle.backgroundPattern);
+    }
+    if (canvasStyle.backgroundGridSize != null) {
+      mapElem.setAttribute('backgroundGridSize', String(canvasStyle.backgroundGridSize));
+    }
+    if (canvasStyle.backgroundGridColor != null) {
+      mapElem.setAttribute('backgroundGridColor', canvasStyle.backgroundGridColor);
+    }
+  }
+
+  /**
+   * Load canvas style attributes from map element
+   * @private
+   */
+  private _loadCanvasStyle(rootElem: Element, mindmap: Mindmap): void {
+    const backgroundColor = rootElem.getAttribute('backgroundColor');
+    const backgroundPatternAttr = rootElem.getAttribute('backgroundPattern');
+    const gridSizeAttr = rootElem.getAttribute('backgroundGridSize');
+    const gridColorAttr = rootElem.getAttribute('backgroundGridColor');
+
+    // Build canvas style only if at least one attribute is present
+    const canvasStyle: CanvasStyleType = {};
+
+    if (backgroundColor != null) {
+      canvasStyle.backgroundColor = backgroundColor;
+    }
+    if (backgroundPatternAttr != null && backgroundPatternAttr !== 'none') {
+      // Ignore legacy 'none' value for backward compatibility
+      canvasStyle.backgroundPattern = backgroundPatternAttr as BackgroundPatternType;
+    }
+    if (gridSizeAttr != null) {
+      const parsed = Number.parseInt(gridSizeAttr, 10);
+      if (Number.isFinite(parsed)) {
+        canvasStyle.backgroundGridSize = parsed;
+      }
+    }
+    if (gridColorAttr != null) {
+      canvasStyle.backgroundGridColor = gridColorAttr;
+    }
+
+    // Only set if we have at least one property
+    if (Object.keys(canvasStyle).length > 0) {
+      mindmap.setCanvasStyle(canvasStyle);
+    }
   }
 
   protected _topicToXML(document: Document, topic: NodeModel) {
@@ -316,52 +363,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       mindmap.setTheme('classic');
     }
 
-    // Load canvas style ... only set if all attributes are present; do not resolve defaults here
-    const backgroundColor = rootElem.getAttribute('backgroundColor');
-    const backgroundPatternAttr = rootElem.getAttribute('backgroundPattern');
-    const gridSizeAttr = rootElem.getAttribute('gridSize');
-    const gridColor = rootElem.getAttribute('gridColor');
-
-    const hasAllAttrs =
-      backgroundColor != null &&
-      backgroundPatternAttr != null &&
-      gridSizeAttr != null &&
-      gridColor != null;
-
-    if (hasAllAttrs) {
-      const gridSize = Number.parseInt(gridSizeAttr!, 10);
-      if (Number.isFinite(gridSize)) {
-        mindmap.setCanvasStyle({
-          backgroundColor: backgroundColor!,
-          backgroundPattern: backgroundPatternAttr as 'solid' | 'grid' | 'dots' | 'none',
-          gridSize,
-          gridColor: gridColor!,
-        });
-      }
-    } else if (
-      backgroundColor != null ||
-      backgroundPatternAttr != null ||
-      gridSizeAttr != null ||
-      gridColor != null
-    ) {
-      // Set only provided attributes; missing ones left undefined
-      const partial: {
-        backgroundColor?: string;
-        backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
-        gridSize?: number;
-        gridColor?: string;
-      } = {};
-      if (backgroundColor != null) partial.backgroundColor = backgroundColor;
-      if (backgroundPatternAttr != null) {
-        partial.backgroundPattern = backgroundPatternAttr as 'solid' | 'grid' | 'dots' | 'none';
-      }
-      if (gridSizeAttr != null) {
-        const parsed = Number.parseInt(gridSizeAttr, 10);
-        if (Number.isFinite(parsed)) partial.gridSize = parsed;
-      }
-      if (gridColor != null) partial.gridColor = gridColor;
-      mindmap.setCanvasStyle(partial);
-    }
+    // Load canvas style attributes
+    this._loadCanvasStyle(rootElem, mindmap);
 
     // Add all the topics nodes ...
     const childNodes = Array.from(rootElem.childNodes);

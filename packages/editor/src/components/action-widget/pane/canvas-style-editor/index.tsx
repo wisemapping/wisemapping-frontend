@@ -30,18 +30,14 @@ import { FormattedMessage } from 'react-intl';
 import { styled } from '@mui/material/styles';
 import ColorPicker from '../color-picker';
 import NodeProperty from '../../../../classes/model/node-property';
+import type { CanvasStyleType, BackgroundPatternType } from '@wisemapping/mindplot';
 
-export interface CanvasStyle {
-  backgroundColor?: string;
-  backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-  gridSize: number;
-  gridColor?: string;
-}
+export type { CanvasStyleType as CanvasStyle, BackgroundPatternType };
 
 type CanvasStyleEditorProps = {
   closeModal: () => void;
-  initialStyle?: Partial<CanvasStyle>;
-  onStyleChange: (style: Partial<CanvasStyle>) => void;
+  initialStyle?: Partial<CanvasStyleType>;
+  onStyleChange: (style: Partial<CanvasStyleType>) => void;
 };
 
 const ActionButton = styled(IconButton)<{ selected?: boolean }>(({ selected, theme }) => ({
@@ -68,16 +64,27 @@ const GridSizeButton = styled(IconButton)<{ selected?: boolean }>(({ selected, t
 }));
 
 const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
-  const defaultStyle: CanvasStyle = {
+  const defaultStyle: CanvasStyleType = {
     backgroundColor: '#f2f2f2',
     backgroundPattern: 'solid',
-    gridSize: 50,
-    gridColor: '#ebe9e7',
+    backgroundGridSize: 50,
+    backgroundGridColor: '#ebe9e7',
   };
 
-  const [style, setStyle] = useState<CanvasStyle>({
+  // Normalize initialStyle: if backgroundPattern is undefined, ensure backgroundGridSize and backgroundGridColor are also undefined
+  const normalizedInitialStyle = props.initialStyle
+    ? {
+        ...props.initialStyle,
+        ...(props.initialStyle.backgroundPattern === undefined && {
+          backgroundGridSize: undefined,
+          backgroundGridColor: undefined,
+        }),
+      }
+    : {};
+
+  const [style, setStyle] = useState<CanvasStyleType>({
     ...defaultStyle,
-    ...(props.initialStyle || {}),
+    ...normalizedInitialStyle,
   });
 
   // Create NodeProperty adapters for color pickers
@@ -91,9 +98,9 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
   };
 
   const gridColorModel: NodeProperty<string | undefined> = {
-    getValue: () => style.gridColor,
+    getValue: () => style.backgroundGridColor,
     setValue: (color: string | undefined) => {
-      const newStyle = { ...style, gridColor: color };
+      const newStyle = { ...style, backgroundGridColor: color };
       setStyle(newStyle);
       props.onStyleChange(newStyle);
     },
@@ -105,14 +112,25 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
     }
   };
 
-  const handlePatternChange = (newPattern: CanvasStyle['backgroundPattern']) => {
+  const handlePatternChange = (newPattern: BackgroundPatternType) => {
     const newStyle = { ...style, backgroundPattern: newPattern };
     setStyle(newStyle);
     props.onStyleChange(newStyle);
   };
 
+  const handlePatternNone = () => {
+    const newStyle = {
+      ...style,
+      backgroundPattern: undefined,
+      backgroundGridSize: undefined,
+      backgroundGridColor: undefined,
+    };
+    setStyle(newStyle);
+    props.onStyleChange(newStyle);
+  };
+
   const handleGridSizeChange = (newGridSize: number) => {
-    const newStyle = { ...style, gridSize: newGridSize };
+    const newStyle = { ...style, backgroundGridSize: newGridSize };
     setStyle(newStyle);
     props.onStyleChange(newStyle);
   };
@@ -169,6 +187,16 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
           <Tooltip
+            title={<FormattedMessage id="canvas-style.pattern-none" defaultMessage="None" />}
+          >
+            <ActionButton
+              selected={style.backgroundPattern === undefined}
+              onClick={handlePatternNone}
+            >
+              <NotInterestedOutlined />
+            </ActionButton>
+          </Tooltip>
+          <Tooltip
             title={<FormattedMessage id="canvas-style.pattern-solid" defaultMessage="Solid" />}
           >
             <ActionButton
@@ -196,16 +224,6 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
               onClick={() => handlePatternChange('dots')}
             >
               <MoreHorizIcon />
-            </ActionButton>
-          </Tooltip>
-          <Tooltip
-            title={<FormattedMessage id="canvas-style.pattern-none" defaultMessage="None" />}
-          >
-            <ActionButton
-              selected={style.backgroundPattern === 'none'}
-              onClick={() => handlePatternChange('none')}
-            >
-              <NotInterestedOutlined />
             </ActionButton>
           </Tooltip>
         </Box>
@@ -236,7 +254,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                 }
               >
                 <GridSizeButton
-                  selected={style.gridSize === 15}
+                  selected={style.backgroundGridSize === 15}
                   onClick={() => handleGridSizeChange(15)}
                 >
                   <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>XS</Typography>
@@ -246,7 +264,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                 title={<FormattedMessage id="canvas-style.grid-size-s" defaultMessage="Small" />}
               >
                 <GridSizeButton
-                  selected={style.gridSize === 25}
+                  selected={style.backgroundGridSize === 25}
                   onClick={() => handleGridSizeChange(25)}
                 >
                   <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>S</Typography>
@@ -256,7 +274,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                 title={<FormattedMessage id="canvas-style.grid-size-m" defaultMessage="Medium" />}
               >
                 <GridSizeButton
-                  selected={style.gridSize === 50}
+                  selected={style.backgroundGridSize === 50}
                   onClick={() => handleGridSizeChange(50)}
                 >
                   <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>M</Typography>
@@ -266,7 +284,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                 title={<FormattedMessage id="canvas-style.grid-size-l" defaultMessage="Large" />}
               >
                 <GridSizeButton
-                  selected={style.gridSize === 75}
+                  selected={style.backgroundGridSize === 75}
                   onClick={() => handleGridSizeChange(75)}
                 >
                   <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>L</Typography>
@@ -278,7 +296,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                 }
               >
                 <GridSizeButton
-                  selected={style.gridSize === 100}
+                  selected={style.backgroundGridSize === 100}
                   onClick={() => handleGridSizeChange(100)}
                 >
                   <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>XL</Typography>

@@ -17,22 +17,31 @@
  */
 import Command from '../Command';
 import CommandContext from '../CommandContext';
+import { CanvasStyleType } from '../model/CanvasStyleType';
 
-export type CanvasStyle = {
-  backgroundColor?: string;
-  backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
-  gridSize?: number;
-  gridColor?: string;
+// Normalize canvas style to ensure backgroundGridSize and backgroundGridColor are undefined when backgroundPattern is undefined
+export const normalizeCanvasStyle = (
+  style: CanvasStyleType | undefined,
+): CanvasStyleType | undefined => {
+  if (!style) return undefined;
+  if (style.backgroundPattern === undefined) {
+    return {
+      ...style,
+      backgroundGridSize: undefined,
+      backgroundGridColor: undefined,
+    };
+  }
+  return style;
 };
 
 class ChangeCanvasStyleCommand extends Command {
-  private _newStyle: CanvasStyle | undefined;
+  private _newStyle: CanvasStyleType | undefined;
 
-  private _oldStyle: CanvasStyle | null | undefined;
+  private _oldStyle: CanvasStyleType | null | undefined;
 
   private _applied: boolean;
 
-  constructor(newStyle: CanvasStyle | undefined) {
+  constructor(newStyle: CanvasStyleType | undefined) {
     super();
     this._newStyle = newStyle;
     this._oldStyle = undefined;

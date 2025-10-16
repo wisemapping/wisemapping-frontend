@@ -46,6 +46,7 @@ import WidgetBuilder, { type WidgetEventType } from './components/WidgetBuilder'
 import { buildDesigner } from './components/DesignerBuilder';
 import { $notify } from './components/model/ToolbarNotifier';
 import XMLSerializerFactory from './components/persistence/XMLSerializerFactory';
+import type { CanvasStyleType, BackgroundPatternType } from './components/model/CanvasStyleType';
 
 declare global {
   // Todo: There are some global references that needs to be removed inside mindplot.
@@ -60,7 +61,13 @@ if (!customElements.get('mindplot-component')) {
   customElements.define('mindplot-component', MindplotWebComponent);
 }
 
-export type { EditorRenderMode, MindplotWebComponentInterface, WidgetEventType };
+export type {
+  EditorRenderMode,
+  MindplotWebComponentInterface,
+  WidgetEventType,
+  CanvasStyleType,
+  BackgroundPatternType,
+};
 
 export {
   Mindmap,

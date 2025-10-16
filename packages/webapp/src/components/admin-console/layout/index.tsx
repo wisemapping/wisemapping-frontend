@@ -106,7 +106,11 @@ const AdminLayout = (): ReactElement => {
     return (
       <Box sx={{ p: 3 }}>
         <Alert severity="error" sx={{ mb: 2 }}>
-          {error || 'Access denied. Admin permissions required.'}
+          {error ||
+            intl.formatMessage({
+              id: 'admin.error.access-denied',
+              defaultMessage: 'Access denied. Admin permissions required.',
+            })}
         </Alert>
       </Box>
     );

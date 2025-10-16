@@ -17,7 +17,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     // Speed up module resolution
     modules: ['node_modules'],
-    symlinks: false,
+    symlinks: true, // Enable symlinks for yarn workspaces
   },
 
   optimization: {
