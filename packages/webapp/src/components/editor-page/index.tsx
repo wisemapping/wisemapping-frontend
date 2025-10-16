@@ -35,7 +35,7 @@ import MapInfoImpl from '../../classes/editor-map-info';
 import AppConfig from '../../classes/app-config';
 import exampleMap from '../../classes/client/mock-client/example-map.wxml';
 import JwtTokenConfig from '../../classes/jwt-token-config';
-import { useLoaderData, useNavigation } from 'react-router';
+import { useLoaderData, useNavigation, useSearchParams } from 'react-router';
 import { EditorMetadata, PageModeType } from './loader';
 import { useFetchAccount } from '../../classes/middleware';
 import { ClientContext } from '../../classes/provider/client-context';
@@ -126,6 +126,11 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   const { hotkeyEnabled } = useContext(KeyboardContext);
   const editorMetadata: EditorMetadata = useLoaderData() as EditorMetadata;
 
+  // Parse query parameters for hideCreatorInfo and theme
+  const [searchParams] = useSearchParams();
+  const hideCreatorInfoParam = searchParams.get('hideCreatorInfo');
+  const themeParam = searchParams.get('theme');
+
   // If zoom has been define, overwrite the stored value.
   if (zoom) {
     editorMetadata.zoom = zoom;
@@ -159,6 +164,8 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
       mode: editorMetadata.editorMode,
       enableAppBar: enableAppBar,
       zoom: editorMetadata.zoom,
+      hideCreatorInfo: hideCreatorInfoParam === 'true',
+      initialThemeVariant: themeParam === 'dark' || themeParam === 'light' ? themeParam : undefined,
     };
 
     persistence = buildPersistenceManagerForEditor(
