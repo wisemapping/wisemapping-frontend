@@ -347,6 +347,42 @@
       "value": "暫停狀態"
     }
   ],
+  "admin.suspension.abuse": [
+    {
+      "type": 0,
+      "value": "濫用"
+    }
+  ],
+  "admin.suspension.inactivity": [
+    {
+      "type": 0,
+      "value": "不活躍"
+    }
+  ],
+  "admin.suspension.manual-review": [
+    {
+      "type": 0,
+      "value": "人工審核"
+    }
+  ],
+  "admin.suspension.other": [
+    {
+      "type": 0,
+      "value": "其他"
+    }
+  ],
+  "admin.suspension.security-concern": [
+    {
+      "type": 0,
+      "value": "安全問題"
+    }
+  ],
+  "admin.suspension.terms-violation": [
+    {
+      "type": 0,
+      "value": "違反條款"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,

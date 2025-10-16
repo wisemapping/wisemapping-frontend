@@ -155,6 +155,12 @@
       "value": "Узор фона"
     }
   ],
+  "canvas-style.background-style": [
+    {
+      "type": 0,
+      "value": "Background Style"
+    }
+  ],
   "canvas-style.colors": [
     {
       "type": 0,
@@ -203,6 +209,12 @@
       "value": "Стиль сетки"
     }
   ],
+  "canvas-style.pattern-default-tooltip": [
+    {
+      "type": 0,
+      "value": "Default - All styles will be automatically selected based on the theme"
+    }
+  ],
   "canvas-style.pattern-dots": [
     {
       "type": 0,
@@ -237,6 +249,18 @@
     {
       "type": 0,
       "value": "Сбросить"
+    }
+  ],
+  "canvas-style.tab-color": [
+    {
+      "type": 0,
+      "value": "Color"
+    }
+  ],
+  "canvas-style.tab-grid": [
+    {
+      "type": 0,
+      "value": "Grid Color"
     }
   ],
   "canvas-style.title": [
@@ -647,6 +671,12 @@
       "value": "Пунктирный"
     }
   ],
+  "icon-collection.border.default": [
+    {
+      "type": 0,
+      "value": "Default"
+    }
+  ],
   "icon-collection.border.dotted": [
     {
       "type": 0,
@@ -671,6 +701,12 @@
       "value": "Кривая ломаная"
     }
   ],
+  "icon-collection.connection.default": [
+    {
+      "type": 0,
+      "value": "Default"
+    }
+  ],
   "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
@@ -687,6 +723,18 @@
     {
       "type": 0,
       "value": "Тонкая кривая"
+    }
+  ],
+  "icon-collection.default-tooltip": [
+    {
+      "type": 0,
+      "value": "Default - All styles will be automatically selected based on the theme"
+    }
+  ],
+  "icon-collection.shape.default": [
+    {
+      "type": 0,
+      "value": "Default"
     }
   ],
   "icon-collection.shape.ellipse": [
@@ -1323,100 +1371,64 @@
       "value": "Переключить курсив"
     }
   ],
-  "visualization-toolbar.tooltip-collapse-all": [
+  "topic-font-editor.reset-to-default": [
+    {
+      "type": 0,
+      "value": "Reset to Default"
+    }
+  ],
+  "unified-styling.background-color": [
+    {
+      "type": 0,
+      "value": "Background Color"
+    }
+  ],
+  "unified-styling.shape-type": [
+    {
+      "type": 0,
+      "value": "Shape Type"
+    }
+  ],
+  "zoom-panel.tooltip-collapse-all": [
     {
       "type": 0,
       "value": "Свернуть все узлы"
     }
   ],
-  "visualization-toolbar.tooltip-expand-all": [
+  "zoom-panel.tooltip-expand-all": [
     {
       "type": 0,
       "value": "Развернуть все узлы"
     }
   ],
-  "visualization-toolbar.tooltip-keyboard": [
+  "zoom-panel.tooltip-keyboard": [
     {
       "type": 0,
       "value": "Клавиатура"
     }
   ],
-  "visualization-toolbar.tooltip-outline-view": [
+  "zoom-panel.tooltip-outline-view": [
     {
       "type": 0,
       "value": "Вид структуры"
     }
   ],
-  "visualization-toolbar.tooltip-zoom-in": [
+  "zoom-panel.tooltip-zoom-in": [
     {
       "type": 0,
       "value": "Увеличить"
     }
   ],
-  "visualization-toolbar.tooltip-zoom-out": [
+  "zoom-panel.tooltip-zoom-out": [
     {
       "type": 0,
       "value": "Уменьшить"
     }
   ],
-  "visualization-toolbar.tooltip-zoom-to-fit": [
+  "zoom-panel.tooltip-zoom-to-fit": [
     {
       "type": 0,
       "value": "Подогнать по размеру"
-    }
-  ],
-  "visualization-toolbar.tooltip-theme-toggle": [
-    {
-      "type": 0,
-      "value": "Toggle Theme"
-    }
-  ],
-  "appbar.tooltip-theme-toggle": [
-    {
-      "type": 0,
-      "value": "Toggle Theme"
-    }
-  ],
-  "visualization-toolbar.tooltip-expand-level": [
-    {
-      "type": 0,
-      "value": "Expand by Level"
-    }
-  ],
-  "shortcut-help-pane.zoom-in": [
-    {
-      "type": 0,
-      "value": "Zoom in"
-    }
-  ],
-  "shortcut-help-pane.zoom-out": [
-    {
-      "type": 0,
-      "value": "Zoom out"
-    }
-  ],
-  "shortcut-help-pane.zoom-to-fit": [
-    {
-      "type": 0,
-      "value": "Zoom to fit"
-    }
-  ],
-  "shortcut-help-pane.outline-view": [
-    {
-      "type": 0,
-      "value": "Open outline view"
-    }
-  ],
-  "shortcut-help-pane.expand-by-level": [
-    {
-      "type": 0,
-      "value": "Expand topics by level"
-    }
-  ],
-  "shortcut-help-pane.expand-collapse-all": [
-    {
-      "type": 0,
-      "value": "Expand/Collapse all topics"
     }
   ]
 }

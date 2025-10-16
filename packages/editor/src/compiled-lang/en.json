@@ -161,6 +161,12 @@
       "value": "Background Pattern"
     }
   ],
+  "canvas-style.background-style": [
+    {
+      "type": 0,
+      "value": "Background Style"
+    }
+  ],
   "canvas-style.colors": [
     {
       "type": 0,
@@ -209,6 +215,12 @@
       "value": "Grid Style"
     }
   ],
+  "canvas-style.pattern-default-tooltip": [
+    {
+      "type": 0,
+      "value": "Default - All styles will be automatically selected based on the theme"
+    }
+  ],
   "canvas-style.pattern-dots": [
     {
       "type": 0,
@@ -243,6 +255,18 @@
     {
       "type": 0,
       "value": "Reset"
+    }
+  ],
+  "canvas-style.tab-color": [
+    {
+      "type": 0,
+      "value": "Color"
+    }
+  ],
+  "canvas-style.tab-grid": [
+    {
+      "type": 0,
+      "value": "Grid Color"
     }
   ],
   "canvas-style.title": [
@@ -659,6 +683,12 @@
       "value": "Dashed"
     }
   ],
+  "icon-collection.border.default": [
+    {
+      "type": 0,
+      "value": "Default"
+    }
+  ],
   "icon-collection.border.dotted": [
     {
       "type": 0,
@@ -683,6 +713,12 @@
       "value": "Curved Polyline"
     }
   ],
+  "icon-collection.connection.default": [
+    {
+      "type": 0,
+      "value": "Default"
+    }
+  ],
   "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
@@ -699,6 +735,18 @@
     {
       "type": 0,
       "value": "Thin Curved"
+    }
+  ],
+  "icon-collection.default-tooltip": [
+    {
+      "type": 0,
+      "value": "Default - All styles will be automatically selected based on the theme"
+    }
+  ],
+  "icon-collection.shape.default": [
+    {
+      "type": 0,
+      "value": "Default"
     }
   ],
   "icon-collection.shape.ellipse": [
@@ -1335,100 +1383,64 @@
       "value": "Toggle italic"
     }
   ],
-  "visualization-toolbar.tooltip-collapse-all": [
+  "topic-font-editor.reset-to-default": [
+    {
+      "type": 0,
+      "value": "Reset to Default"
+    }
+  ],
+  "unified-styling.background-color": [
+    {
+      "type": 0,
+      "value": "Background Color"
+    }
+  ],
+  "unified-styling.shape-type": [
+    {
+      "type": 0,
+      "value": "Shape Type"
+    }
+  ],
+  "zoom-panel.tooltip-collapse-all": [
     {
       "type": 0,
       "value": "Collapse All Nodes"
     }
   ],
-  "visualization-toolbar.tooltip-expand-all": [
+  "zoom-panel.tooltip-expand-all": [
     {
       "type": 0,
       "value": "Expand All Nodes"
     }
   ],
-  "visualization-toolbar.tooltip-keyboard": [
+  "zoom-panel.tooltip-keyboard": [
     {
       "type": 0,
       "value": "Keyboard Shortcuts"
     }
   ],
-  "visualization-toolbar.tooltip-outline-view": [
+  "zoom-panel.tooltip-outline-view": [
     {
       "type": 0,
       "value": "Outline View"
     }
   ],
-  "visualization-toolbar.tooltip-zoom-in": [
+  "zoom-panel.tooltip-zoom-in": [
     {
       "type": 0,
       "value": "Zoom In"
     }
   ],
-  "visualization-toolbar.tooltip-zoom-out": [
+  "zoom-panel.tooltip-zoom-out": [
     {
       "type": 0,
       "value": "Zoom Out"
     }
   ],
-  "visualization-toolbar.tooltip-zoom-to-fit": [
+  "zoom-panel.tooltip-zoom-to-fit": [
     {
       "type": 0,
       "value": "Zoom to Fit"
-    }
-  ],
-  "visualization-toolbar.tooltip-theme-toggle": [
-    {
-      "type": 0,
-      "value": "Toggle Theme"
-    }
-  ],
-  "appbar.tooltip-theme-toggle": [
-    {
-      "type": 0,
-      "value": "Toggle Theme"
-    }
-  ],
-  "visualization-toolbar.tooltip-expand-level": [
-    {
-      "type": 0,
-      "value": "Expand by Level"
-    }
-  ],
-  "shortcut-help-pane.zoom-in": [
-    {
-      "type": 0,
-      "value": "Zoom in"
-    }
-  ],
-  "shortcut-help-pane.zoom-out": [
-    {
-      "type": 0,
-      "value": "Zoom out"
-    }
-  ],
-  "shortcut-help-pane.zoom-to-fit": [
-    {
-      "type": 0,
-      "value": "Zoom to fit"
-    }
-  ],
-  "shortcut-help-pane.outline-view": [
-    {
-      "type": 0,
-      "value": "Open outline view"
-    }
-  ],
-  "shortcut-help-pane.expand-by-level": [
-    {
-      "type": 0,
-      "value": "Expand topics by level"
-    }
-  ],
-  "shortcut-help-pane.expand-collapse-all": [
-    {
-      "type": 0,
-      "value": "Expand/Collapse all topics"
     }
   ]
 }

@@ -347,6 +347,42 @@
       "value": "停止状態"
     }
   ],
+  "admin.suspension.abuse": [
+    {
+      "type": 0,
+      "value": "悪用"
+    }
+  ],
+  "admin.suspension.inactivity": [
+    {
+      "type": 0,
+      "value": "非アクティブ"
+    }
+  ],
+  "admin.suspension.manual-review": [
+    {
+      "type": 0,
+      "value": "手動レビュー"
+    }
+  ],
+  "admin.suspension.other": [
+    {
+      "type": 0,
+      "value": "その他"
+    }
+  ],
+  "admin.suspension.security-concern": [
+    {
+      "type": 0,
+      "value": "セキュリティ上の懸念"
+    }
+  ],
+  "admin.suspension.terms-violation": [
+    {
+      "type": 0,
+      "value": "利用規約違反"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,

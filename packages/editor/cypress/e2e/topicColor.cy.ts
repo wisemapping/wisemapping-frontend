@@ -34,10 +34,11 @@ describe('Topic Color Suite', () => {
   it('Change topic fill color', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
 
-    // The Shape tab should be open by default, which contains the fill color picker
-    // Wait for color picker to be visible and clickable
-    cy.get('[aria-label="Color"]').should('be.visible').first().click({ force: true });
+    // First select a non-default shape to make color picker visible
+    // Click on rectangle shape
+    cy.get('[aria-label="Rectangle shape"]').should('be.visible').first().click({ force: true });
 
+    // Now the color picker should be visible
     // Wait for color options to be available
     cy.get('[title="#cc0000"]').should('be.visible');
 
@@ -50,14 +51,19 @@ describe('Topic Color Suite', () => {
   it('Change topic border color', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
 
+    // First ensure topic has a shape (required for border to be visible)
+    cy.get('[aria-label="Rectangle shape"]').should('be.visible').first().click({ force: true });
+
     // Click on Border tab
     cy.contains('Border').click({ force: true });
 
-    // Click on border color button
-    cy.get('[aria-label="Color"]').first().click({ force: true });
+    // Select a non-default border style to make color picker visible
+    cy.get('[aria-label="Solid Line"]').should('be.visible').first().click({ force: true });
 
-    // Wait for color picker to load
-    // Wait for color options to be available and select blue
+    // Wait for "Border Color" label to appear, which indicates color picker is rendered
+    cy.contains('Border Color').should('be.visible');
+
+    // Now select blue color
     cy.get('[title="#0000ff"]').should('be.visible').click({ force: true });
 
     cy.matchImageSnapshot('change-topic-border-color');
@@ -67,16 +73,17 @@ describe('Topic Color Suite', () => {
     // First change the color
     cy.onClickToolbarButton('Style Topic & Connections');
     
-    // The Shape tab should be open by default
-    cy.get('[aria-label="Color"]').should('be.visible').first().click({ force: true });
+    // Select a shape first to make color picker visible
+    cy.get('[aria-label="Rectangle shape"]').should('be.visible').first().click({ force: true });
 
-    cy.get('[title="#ff0000"]').click({ force: true });
+    // Now select a color
+    cy.get('[title="#ff0000"]').should('be.visible').click({ force: true });
 
-    // Now reset to default
+    // Now reset to default by selecting the "Default" shape option
     cy.onClickToolbarButton('Style Topic & Connections');
     
-    // Click the default/reset button in the color picker
-    cy.get('[aria-label="Default color"]').first().click({ force: true });
+    // Click the default shape option (first option in the shape selector)
+    cy.get('[aria-label*="Default shape"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-topic-fill-color');
   });
@@ -85,21 +92,26 @@ describe('Topic Color Suite', () => {
     // First change the border color
     cy.onClickToolbarButton('Style Topic & Connections');
     
+    // First ensure topic has a shape (required for border to be visible)
+    cy.get('[aria-label="Rectangle shape"]').should('be.visible').first().click({ force: true });
+
     // Click on Border tab
     cy.contains('Border').click({ force: true });
     
-    cy.get('[aria-label="Color"]').first().click({ force: true });
+    // Select a border style to make color picker visible
+    cy.get('[aria-label="Solid Line"]').should('be.visible').first().click({ force: true });
 
-    // Wait for color options and select blue
+    // Wait for "Border Color" label to appear, which indicates color picker is rendered
+    cy.contains('Border Color').should('be.visible');
+
+    // Select blue color
     cy.get('[title="#0000ff"]').should('be.visible').click({ force: true });
 
-    // Now reset to default
-    cy.onClickToolbarButton('Style Topic & Connections');
-    
-    // Click on Border tab again
+    // Now reset to default by clicking the Border tab again
     cy.contains('Border').click({ force: true });
-    
-    cy.get('[aria-label="Default color"]').first().click({ force: true });
+
+    // Click the default border style option
+    cy.get('[aria-label="Default Line"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-topic-border-color');
   });

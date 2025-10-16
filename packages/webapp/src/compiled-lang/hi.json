@@ -347,6 +347,42 @@
       "value": "निलंबन स्थिति"
     }
   ],
+  "admin.suspension.abuse": [
+    {
+      "type": 0,
+      "value": "दुरुपयोग"
+    }
+  ],
+  "admin.suspension.inactivity": [
+    {
+      "type": 0,
+      "value": "निष्क्रियता"
+    }
+  ],
+  "admin.suspension.manual-review": [
+    {
+      "type": 0,
+      "value": "मैनुअल समीक्षा"
+    }
+  ],
+  "admin.suspension.other": [
+    {
+      "type": 0,
+      "value": "अन्य"
+    }
+  ],
+  "admin.suspension.security-concern": [
+    {
+      "type": 0,
+      "value": "सुरक्षा चिंता"
+    }
+  ],
+  "admin.suspension.terms-violation": [
+    {
+      "type": 0,
+      "value": "नियमों का उल्लंघन"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,

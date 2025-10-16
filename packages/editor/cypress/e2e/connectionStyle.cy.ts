@@ -102,11 +102,15 @@ describe('Connection Style Suite', () => {
     // Wait for the panel to open and then click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
 
-    // Click on color option
-    cy.get('[aria-label="Color"]').should('be.visible').last().click({ force: true });
+    // First select a non-default connection style to make color picker visible
+    // Click on thick curved connection style
+    cy.get('[aria-label="Thick Curved"]').should('be.visible').first().click({ force: true });
 
-    // Wait for color picker to load and select a color (green)
-    cy.get('[title="#00ff00"]').should('be.visible').click({ force: true });
+    // Wait for color picker to appear
+    cy.get('[title="#cc0000"]').should('be.visible');
+
+    // Select a color (green)
+    cy.get('[title="#00ff00"]').click({ force: true });
 
     cy.matchImageSnapshot('change-connection-color');
   });
@@ -118,18 +122,20 @@ describe('Connection Style Suite', () => {
     // Wait for the panel to open and then click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
     
-    cy.get('[aria-label="Color"]').should('be.visible').last().click({ force: true });
+    // Select a connection style first to make color picker visible
+    cy.get('[aria-label="Thick Curved"]').should('be.visible').first().click({ force: true });
 
-    // Select a color (red) - use title attribute like in font color test
-    cy.get('[title="#ff0000"]').should('be.visible').click({ force: true });
+    // Wait for color picker to appear
+    cy.get('[title="#cc0000"]').should('be.visible');
 
-    // Now reset to default
-    cy.onClickToolbarButton('Style Topic & Connections');
+    // Select a color (red)
+    cy.get('[title="#ff0000"]').click({ force: true });
+
+    // Now reset to default - click the Connector tab again to ensure focus
+    cy.contains('Connector').click({ force: true });
     
-    // Wait for the Connector tab to be visible, then click it again
-    cy.contains('Connector').should('be.visible').click({ force: true });
-    
-    cy.get('[aria-label="Default color"]').should('be.visible').first().click({ force: true });
+    // Click the default connection style option
+    cy.get('[aria-label="Default"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-connection-color');
   });
