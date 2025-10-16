@@ -35,6 +35,8 @@ export type EditorOptions = {
   enableKeyboardEvents: boolean;
   enableAppBar?: boolean;
   saveOnLoad?: boolean;
+  hideCreatorInfo?: boolean; // Hide creator info pane in embedded/public view
+  initialThemeVariant?: 'light' | 'dark'; // Set initial theme variant via query parameter
 };
 
 type UseEditorProps = {
