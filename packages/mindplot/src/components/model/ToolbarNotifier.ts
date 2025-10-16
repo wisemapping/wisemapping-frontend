@@ -18,9 +18,14 @@
 
 import { $assert } from '../util/assert';
 import DOMUtils from '../util/DOMUtils';
+import debounce from 'lodash/debounce';
 
 class ToolbarNotifier {
-  private static currentTimeout: NodeJS.Timeout | null = null;
+  private static hideNotification = debounce((container: HTMLElement) => {
+    DOMUtils.hide(container);
+    DOMUtils.css(container, 'opacity', '');
+    DOMUtils.css(container, 'transition', '');
+  }, 3100);
 
   static get container(): HTMLElement | null {
     return document.getElementById('headerNotifier');
@@ -36,11 +41,8 @@ class ToolbarNotifier {
   static show(msg: string, fade: boolean) {
     $assert(msg, 'msg can not be null');
 
-    // Cancel any existing timeout
-    if (this.currentTimeout) {
-      clearTimeout(this.currentTimeout);
-      this.currentTimeout = null;
-    }
+    // Cancel any pending hide
+    this.hideNotification.cancel();
 
     // Reset the container state before showing new notification
     const { container } = this;
@@ -76,27 +78,22 @@ class ToolbarNotifier {
         DOMUtils.css(container, 'transition', 'opacity 3000ms');
 
         // Start fade out after a brief delay to ensure visibility
-        setTimeout(() => {
+        window.setTimeout(() => {
           DOMUtils.css(container, 'opacity', '0');
         }, 100);
 
         // Hide after fade completes
-        this.currentTimeout = setTimeout(() => {
-          DOMUtils.hide(container);
-          DOMUtils.css(container, 'opacity', '');
-          DOMUtils.css(container, 'transition', '');
-          this.currentTimeout = null;
-        }, 3100); // 100ms delay + 3000ms fade
+        this.hideNotification(container);
       } else {
         DOMUtils.show(container);
         DOMUtils.css(container, 'opacity', '1');
 
-        // Hide after a short time
-        this.currentTimeout = setTimeout(() => {
-          DOMUtils.hide(container);
-          DOMUtils.css(container, 'opacity', '');
-          this.currentTimeout = null;
+        // Hide after a short time (use debounce with shorter delay)
+        const hideNonFading = debounce((c: HTMLElement) => {
+          DOMUtils.hide(c);
+          DOMUtils.css(c, 'opacity', '');
         }, 2000);
+        hideNonFading(container);
       }
     }
   }

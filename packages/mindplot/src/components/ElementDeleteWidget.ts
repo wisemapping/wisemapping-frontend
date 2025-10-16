@@ -20,6 +20,7 @@ import { Group, Rect, StraightLine } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import Icon from './Icon';
 import PositionType from './PositionType';
+import debounce from 'lodash/debounce';
 
 class ElementDeleteWidget {
   private static _instance: ElementDeleteWidget | null = null;
@@ -30,12 +31,13 @@ class ElementDeleteWidget {
 
   private _widgetGroup: Group | null;
 
-  private _closeTimeoutId;
+  private _debouncedClose: ReturnType<typeof debounce>;
 
   private constructor() {
     this._activeIcon = null;
     this._widget = null;
     this._widgetGroup = null;
+    this._debouncedClose = debounce(() => this._closeNow(), 200);
   }
 
   static getInstance(): ElementDeleteWidget {
@@ -124,44 +126,40 @@ class ElementDeleteWidget {
       this._activeIcon = icon;
       this._widget = widget;
       this._widgetGroup = group; // Store the actual group where widget was added
-    } else if (this._closeTimeoutId) {
-      clearTimeout(this._closeTimeoutId);
+    } else {
+      this._debouncedClose.cancel();
     }
   }
 
   hide() {
-    this.close(200);
+    this._debouncedClose();
   }
 
   close(delay: number) {
-    if (this._closeTimeoutId) {
-      clearTimeout(this._closeTimeoutId);
+    if (delay > 0) {
+      this._debouncedClose();
+    } else {
+      this._debouncedClose.cancel();
+      this._closeNow();
     }
+  }
 
+  private _closeNow() {
     if (this._activeIcon) {
       const widget = this._widget;
       const widgetGroup = this._widgetGroup;
 
-      const close = () => {
-        this._activeIcon = null;
-        if (widget && widgetGroup) {
-          try {
-            widgetGroup.removeChild(widget);
-          } catch (error) {
-            // Widget might have already been removed or is not a valid child, ignore the error
-            console.warn('Widget could not be removed:', error);
-          }
+      this._activeIcon = null;
+      if (widget && widgetGroup) {
+        try {
+          widgetGroup.removeChild(widget);
+        } catch (error) {
+          // Widget might have already been removed or is not a valid child, ignore the error
+          console.warn('Widget could not be removed:', error);
         }
-        this._widget = null;
-        this._widgetGroup = null;
-        this._closeTimeoutId = null;
-      };
-
-      if (delay > 0) {
-        this._closeTimeoutId = setTimeout(close, delay);
-      } else {
-        close();
       }
+      this._widget = null;
+      this._widgetGroup = null;
     }
   }
 

@@ -19,21 +19,6 @@ import Command from '../Command';
 import CommandContext from '../CommandContext';
 import { CanvasStyleType } from '../model/CanvasStyleType';
 
-// Normalize canvas style to ensure backgroundGridSize and backgroundGridColor are undefined when backgroundPattern is undefined
-export const normalizeCanvasStyle = (
-  style: CanvasStyleType | undefined,
-): CanvasStyleType | undefined => {
-  if (!style) return undefined;
-  if (style.backgroundPattern === undefined) {
-    return {
-      ...style,
-      backgroundGridSize: undefined,
-      backgroundGridColor: undefined,
-    };
-  }
-  return style;
-};
-
 class ChangeCanvasStyleCommand extends Command {
   private _newStyle: CanvasStyleType | undefined;
 
@@ -56,8 +41,11 @@ class ChangeCanvasStyleCommand extends Command {
       // Store the old style for undo
       this._oldStyle = mindmap.getCanvasStyle();
 
-      // Apply the new style
-      designer.applyCanvasStyle(this._newStyle);
+      // Save the new style to the model (persistence)
+      mindmap.setCanvasStyle(this._newStyle);
+
+      // Re-render (reads from model + merges with theme defaults)
+      designer.applyCanvasStyle();
 
       this._applied = true;
     } else {
@@ -68,9 +56,13 @@ class ChangeCanvasStyleCommand extends Command {
   undoExecute(commandContext: CommandContext): void {
     if (this._applied) {
       const { designer } = commandContext;
+      const mindmap = designer.getMindmap();
 
-      // Restore the old style (can be undefined for theme default)
-      designer.applyCanvasStyle(this._oldStyle || undefined);
+      // Restore the old style to the model (persistence)
+      mindmap.setCanvasStyle(this._oldStyle || undefined);
+
+      // Re-render (reads from model + merges with theme defaults)
+      designer.applyCanvasStyle();
 
       this._applied = false;
       this._oldStyle = undefined;

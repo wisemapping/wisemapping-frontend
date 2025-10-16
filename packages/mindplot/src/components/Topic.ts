@@ -116,7 +116,7 @@ abstract class Topic extends NodeGraph {
     });
   }
 
-  setShapeType(type: TopicShapeType): void {
+  setShapeType(type: TopicShapeType | undefined): void {
     const model = this.getModel();
     model.setShapeType(type);
 
@@ -485,7 +485,7 @@ abstract class Topic extends NodeGraph {
     this.redraw(this.getThemeVariant(), true);
   }
 
-  setConnectionStyle(type: LineType): void {
+  setConnectionStyle(type: LineType | undefined): void {
     const model = this.getModel();
     model.setConnectionStyle(type);
 

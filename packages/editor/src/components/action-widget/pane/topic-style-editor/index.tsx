@@ -50,12 +50,12 @@ import IconCollection from './IconCollection';
 interface TopicStyleEditorProps {
   closeModal: () => void;
   // Topic styling models
-  shapeModel: NodeProperty<TopicShapeType>;
+  shapeModel: NodeProperty<TopicShapeType | undefined>;
   fillColorModel: NodeProperty<string | undefined>;
   borderColorModel: NodeProperty<string | undefined>;
-  borderStyleModel: NodeProperty<StrokeStyle>;
+  borderStyleModel: NodeProperty<StrokeStyle | undefined>;
   // Connection styling models
-  connectionStyleModel: NodeProperty<LineType>;
+  connectionStyleModel: NodeProperty<LineType | undefined>;
   connectionColorModel: NodeProperty<string | undefined>;
 }
 
@@ -94,23 +94,45 @@ function TabPanel(props: TabPanelProps) {
 
 const borderStyles = [
   {
+    type: undefined,
+    icon: <NotInterestedOutlined />,
+    label: <FormattedMessage id="icon-collection.border.default" defaultMessage="Default" />,
+    tooltip: (
+      <FormattedMessage
+        id="icon-collection.default-tooltip"
+        defaultMessage="Default - Colors will be automatically taken based on the selected theme"
+      />
+    ),
+  },
+  {
     type: StrokeStyle.SOLID,
     icon: <HorizontalRuleOutlinedIcon />,
     label: <FormattedMessage id="icon-collection.border.solid" defaultMessage="Solid" />,
   },
   {
     type: StrokeStyle.DASHED,
-    icon: <MoreHorizOutlined />,
+    icon: <Box sx={{ fontSize: '10px', fontWeight: 700, lineHeight: 1 }}>- -</Box>,
     label: <FormattedMessage id="icon-collection.border.dashed" defaultMessage="Dashed" />,
   },
   {
     type: StrokeStyle.DOTTED,
-    icon: <MoreVertOutlined />,
+    icon: <Box sx={{ fontSize: '10px', fontWeight: 700, lineHeight: 1 }}>· ·</Box>,
     label: <FormattedMessage id="icon-collection.border.dotted" defaultMessage="Dotted" />,
   },
 ];
 
 const connectionStyles = [
+  {
+    type: undefined,
+    icon: <NotInterestedOutlined />,
+    label: <FormattedMessage id="icon-collection.connection.default" defaultMessage="Default" />,
+    tooltip: (
+      <FormattedMessage
+        id="icon-collection.default-tooltip"
+        defaultMessage="Default - Colors will be automatically taken based on the selected theme"
+      />
+    ),
+  },
   {
     type: LineType.THICK_CURVED,
     icon: <GestureOutlined />,
@@ -162,21 +184,23 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
     setActiveTab(newValue);
   };
 
-  const handleShapeChange = (shapeType: TopicShapeType | StrokeStyle | LineType) => {
+  const handleShapeChange = (shapeType: TopicShapeType | StrokeStyle | LineType | undefined) => {
     const setValue = props.shapeModel.setValue;
     if (setValue) {
-      setValue(shapeType as TopicShapeType);
+      setValue(shapeType as TopicShapeType | undefined);
     }
   };
 
-  const handleBorderStyleChange = (style: TopicShapeType | StrokeStyle | LineType) => {
+  const handleBorderStyleChange = (style: TopicShapeType | StrokeStyle | LineType | undefined) => {
     const setValue = props.borderStyleModel.setValue;
     if (setValue) {
-      setValue(style as StrokeStyle);
+      setValue(style as StrokeStyle | undefined);
     }
   };
 
-  const handleConnectionStyleChange = (lineType: TopicShapeType | StrokeStyle | LineType) => {
+  const handleConnectionStyleChange = (
+    lineType: TopicShapeType | StrokeStyle | LineType | undefined,
+  ) => {
     const setValue = props.connectionStyleModel.setValue;
     if (setValue) {
       setValue(lineType as LineType);
@@ -232,25 +256,23 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
         {/* Shape Tab */}
         <Box sx={{ px: 1, py: 0, width: '100%' }}>
           <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
-            <FormattedMessage id="unified-styling.style-topic" defaultMessage="Style Topic" />
-          </Typography>
-          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-            <ColorPicker closeModal={() => {}} colorModel={props.fillColorModel} />
-          </Box>
-
-          <Typography variant="subtitle2" gutterBottom sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}>
-            <FormattedMessage
-              id="unified-styling.shape-selection"
-              defaultMessage="Shape Selection"
-            />
+            <FormattedMessage id="unified-styling.shape-type" defaultMessage="Shape Type" />
           </Typography>
           <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
             <IconCollection
               styles={[
                 {
-                  type: 'none',
+                  type: undefined,
                   icon: <NotInterestedOutlined />,
-                  label: <FormattedMessage id="icon-collection.shape.none" defaultMessage="None" />,
+                  label: (
+                    <FormattedMessage id="icon-collection.shape.default" defaultMessage="Default" />
+                  ),
+                  tooltip: (
+                    <FormattedMessage
+                      id="icon-collection.default-tooltip"
+                      defaultMessage="Default - All styles will be automatically selected based on the theme"
+                    />
+                  ),
                 },
                 {
                   type: 'line',
@@ -287,6 +309,29 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
               ariaLabelSuffix=" shape"
             />
           </Box>
+
+          {/* Style Topic Color - Only shown when shape is not default and not line */}
+          {props.shapeModel.getValue() !== undefined && props.shapeModel.getValue() !== 'line' && (
+            <>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}
+              >
+                <FormattedMessage
+                  id="unified-styling.background-color"
+                  defaultMessage="Background Color"
+                />
+              </Typography>
+              <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+                <ColorPicker
+                  closeModal={() => {}}
+                  colorModel={props.fillColorModel}
+                  hideNoneOption={true}
+                />
+              </Box>
+            </>
+          )}
         </Box>
       </TabPanel>
 
@@ -294,13 +339,6 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
         {/* Border Tab */}
         <Box sx={{ px: 1, py: 0, width: '100%' }}>
           <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
-            <FormattedMessage id="unified-styling.border-color" defaultMessage="Border Color" />
-          </Typography>
-          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-            <ColorPicker closeModal={() => {}} colorModel={props.borderColorModel} />
-          </Box>
-
-          <Typography variant="subtitle2" gutterBottom sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}>
             <FormattedMessage id="unified-styling.border-style" defaultMessage="Border Style" />
           </Typography>
           <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
@@ -311,6 +349,26 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
               ariaLabelSuffix=" Line"
             />
           </Box>
+
+          {/* Border Color - Only shown when border style is not default */}
+          {props.borderStyleModel.getValue() !== undefined && (
+            <>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}
+              >
+                <FormattedMessage id="unified-styling.border-color" defaultMessage="Border Color" />
+              </Typography>
+              <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+                <ColorPicker
+                  closeModal={() => {}}
+                  colorModel={props.borderColorModel}
+                  hideNoneOption={true}
+                />
+              </Box>
+            </>
+          )}
         </Box>
       </TabPanel>
 
@@ -318,16 +376,6 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
         {/* Connector Tab */}
         <Box sx={{ px: 1, py: 0, width: '100%' }}>
           <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
-            <FormattedMessage
-              id="unified-styling.connection-style"
-              defaultMessage="Connection Style"
-            />
-          </Typography>
-          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-            <ColorPicker closeModal={() => {}} colorModel={props.connectionColorModel} />
-          </Box>
-
-          <Typography variant="subtitle2" gutterBottom sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}>
             <FormattedMessage
               id="unified-styling.connector-style"
               defaultMessage="Connector Style"
@@ -340,6 +388,29 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
               onSelect={handleConnectionStyleChange}
             />
           </Box>
+
+          {/* Connection Color - Only shown when connector style is not default */}
+          {props.connectionStyleModel.getValue() !== undefined && (
+            <>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}
+              >
+                <FormattedMessage
+                  id="unified-styling.connection-style"
+                  defaultMessage="Connection Style"
+                />
+              </Typography>
+              <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+                <ColorPicker
+                  closeModal={() => {}}
+                  colorModel={props.connectionColorModel}
+                  hideNoneOption={true}
+                />
+              </Box>
+            </>
+          )}
         </Box>
       </TabPanel>
     </StyledEditorContainer>

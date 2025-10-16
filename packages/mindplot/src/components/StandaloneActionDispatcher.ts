@@ -247,8 +247,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  changeShapeTypeToTopic(topicsIds: number[], shapeType: TopicShapeType) {
-    const commandFunc = (topic: Topic, commandShapeType: TopicShapeType) => {
+  changeShapeTypeToTopic(topicsIds: number[], shapeType: TopicShapeType | undefined) {
+    const commandFunc = (topic: Topic, commandShapeType: TopicShapeType | undefined) => {
       const result = topic.getShapeType();
       topic.setShapeType(commandShapeType);
 
@@ -259,8 +259,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  changeConnectionStyleToTopic(topicsIds: number[], lineType: LineType) {
-    const commandFunc = (topic: Topic, type: LineType) => {
+  changeConnectionStyleToTopic(topicsIds: number[], lineType: LineType | undefined) {
+    const commandFunc = (topic: Topic, type: LineType | undefined) => {
       const result = topic.getConnectionStyle();
       topic.setConnectionStyle(type);
       return result;

@@ -21,10 +21,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import GridOnIcon from '@mui/icons-material/GridOn';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
 import { FormattedMessage } from 'react-intl';
 import { styled } from '@mui/material/styles';
@@ -87,6 +89,12 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
     ...normalizedInitialStyle,
   });
 
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue);
+  };
+
   // Create NodeProperty adapters for color pickers
   const backgroundColorModel: NodeProperty<string | undefined> = {
     getValue: () => style.backgroundColor,
@@ -114,6 +122,15 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
 
   const handlePatternChange = (newPattern: BackgroundPatternType) => {
     const newStyle = { ...style, backgroundPattern: newPattern };
+
+    // For grid and dots patterns, ensure default grid size and color are set
+    if ((newPattern === 'grid' || newPattern === 'dots') && !style.backgroundGridSize) {
+      newStyle.backgroundGridSize = 50; // Default to Medium
+    }
+    if ((newPattern === 'grid' || newPattern === 'dots') && !style.backgroundGridColor) {
+      newStyle.backgroundGridColor = '#ebe9e7'; // Default grid color
+    }
+
     setStyle(newStyle);
     props.onStyleChange(newStyle);
   };
@@ -121,6 +138,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
   const handlePatternNone = () => {
     const newStyle = {
       ...style,
+      backgroundColor: undefined,
       backgroundPattern: undefined,
       backgroundGridSize: undefined,
       backgroundGridColor: undefined,
@@ -167,27 +185,19 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
         <CloseIcon />
       </IconButton>
 
-      {/* Background Color */}
+      {/* Background Style - Always visible */}
       <Box sx={{ mb: 2 }}>
         <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
-          <FormattedMessage id="canvas-style.background-color" defaultMessage="Background Color" />
-        </Typography>
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-          <ColorPicker closeModal={preventClose} colorModel={backgroundColorModel} />
-        </Box>
-      </Box>
-
-      {/* Background Pattern */}
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
-          <FormattedMessage
-            id="canvas-style.background-pattern"
-            defaultMessage="Background Pattern"
-          />
+          <FormattedMessage id="canvas-style.background-style" defaultMessage="Background Style" />
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
           <Tooltip
-            title={<FormattedMessage id="canvas-style.pattern-none" defaultMessage="None" />}
+            title={
+              <FormattedMessage
+                id="canvas-style.pattern-default-tooltip"
+                defaultMessage="Default - All styles will be automatically selected based on the theme"
+              />
+            }
           >
             <ActionButton
               selected={style.backgroundPattern === undefined}
@@ -223,87 +233,152 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
               selected={style.backgroundPattern === 'dots'}
               onClick={() => handlePatternChange('dots')}
             >
-              <MoreHorizIcon />
+              <FiberManualRecordIcon sx={{ fontSize: '8px' }} />
             </ActionButton>
           </Tooltip>
         </Box>
       </Box>
 
-      {/* Grid Settings - Only shown for grid and dots */}
-      {(style.backgroundPattern === 'grid' || style.backgroundPattern === 'dots') && (
+      {/* Tabs - Only shown when pattern is not default */}
+      {style.backgroundPattern !== undefined && (
         <>
-          {/* Grid Color */}
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
-              <FormattedMessage id="canvas-style.grid-color" defaultMessage="Grid Color" />
-            </Typography>
-            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-              <ColorPicker closeModal={preventClose} colorModel={gridColorModel} />
-            </Box>
-          </Box>
+          <Tabs
+            value={activeTab}
+            onChange={handleTabChange}
+            sx={{
+              minHeight: '36px',
+              mb: 2,
+              '& .MuiTabs-indicator': {
+                height: 2,
+              },
+              '& .MuiTab-root': {
+                minHeight: '36px',
+                fontSize: '0.75rem',
+                py: 0.5,
+                textTransform: 'none',
+              },
+            }}
+          >
+            <Tab label={<FormattedMessage id="canvas-style.tab-color" defaultMessage="Color" />} />
+            <Tab
+              label={<FormattedMessage id="canvas-style.tab-grid" defaultMessage="Grid Color" />}
+              disabled={style.backgroundPattern !== 'grid' && style.backgroundPattern !== 'dots'}
+            />
+          </Tabs>
 
-          {/* Grid Size */}
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
-              <FormattedMessage id="canvas-style.grid-style" defaultMessage="Grid Size" />
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
-              <Tooltip
-                title={
-                  <FormattedMessage id="canvas-style.grid-size-xs" defaultMessage="Extra Small" />
-                }
-              >
-                <GridSizeButton
-                  selected={style.backgroundGridSize === 15}
-                  onClick={() => handleGridSizeChange(15)}
-                >
-                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>XS</Typography>
-                </GridSizeButton>
-              </Tooltip>
-              <Tooltip
-                title={<FormattedMessage id="canvas-style.grid-size-s" defaultMessage="Small" />}
-              >
-                <GridSizeButton
-                  selected={style.backgroundGridSize === 25}
-                  onClick={() => handleGridSizeChange(25)}
-                >
-                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>S</Typography>
-                </GridSizeButton>
-              </Tooltip>
-              <Tooltip
-                title={<FormattedMessage id="canvas-style.grid-size-m" defaultMessage="Medium" />}
-              >
-                <GridSizeButton
-                  selected={style.backgroundGridSize === 50}
-                  onClick={() => handleGridSizeChange(50)}
-                >
-                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>M</Typography>
-                </GridSizeButton>
-              </Tooltip>
-              <Tooltip
-                title={<FormattedMessage id="canvas-style.grid-size-l" defaultMessage="Large" />}
-              >
-                <GridSizeButton
-                  selected={style.backgroundGridSize === 75}
-                  onClick={() => handleGridSizeChange(75)}
-                >
-                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>L</Typography>
-                </GridSizeButton>
-              </Tooltip>
-              <Tooltip
-                title={
-                  <FormattedMessage id="canvas-style.grid-size-xl" defaultMessage="Extra Large" />
-                }
-              >
-                <GridSizeButton
-                  selected={style.backgroundGridSize === 100}
-                  onClick={() => handleGridSizeChange(100)}
-                >
-                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>XL</Typography>
-                </GridSizeButton>
-              </Tooltip>
+          {/* Tab 0: Background Color */}
+          {activeTab === 0 && (
+            <Box sx={{ mb: 2 }}>
+              <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+                <FormattedMessage
+                  id="canvas-style.background-color"
+                  defaultMessage="Background Color"
+                />
+              </Typography>
+              <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+                <ColorPicker
+                  closeModal={preventClose}
+                  colorModel={backgroundColorModel}
+                  hideNoneOption={true}
+                />
+              </Box>
             </Box>
-          </Box>
+          )}
+
+          {/* Tab 1: Grid Color */}
+          {activeTab === 1 &&
+            (style.backgroundPattern === 'grid' || style.backgroundPattern === 'dots') && (
+              <>
+                {/* Grid Color */}
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+                    <FormattedMessage id="canvas-style.grid-color" defaultMessage="Grid Color" />
+                  </Typography>
+                  <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+                    <ColorPicker
+                      closeModal={preventClose}
+                      colorModel={gridColorModel}
+                      hideNoneOption={true}
+                    />
+                  </Box>
+                </Box>
+
+                {/* Grid Size */}
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+                    <FormattedMessage id="canvas-style.grid-style" defaultMessage="Grid Size" />
+                  </Typography>
+                  <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
+                    <Tooltip
+                      title={
+                        <FormattedMessage
+                          id="canvas-style.grid-size-xs"
+                          defaultMessage="Extra Small"
+                        />
+                      }
+                    >
+                      <GridSizeButton
+                        selected={style.backgroundGridSize === 15}
+                        onClick={() => handleGridSizeChange(15)}
+                      >
+                        <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>XS</Typography>
+                      </GridSizeButton>
+                    </Tooltip>
+                    <Tooltip
+                      title={
+                        <FormattedMessage id="canvas-style.grid-size-s" defaultMessage="Small" />
+                      }
+                    >
+                      <GridSizeButton
+                        selected={style.backgroundGridSize === 25}
+                        onClick={() => handleGridSizeChange(25)}
+                      >
+                        <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>S</Typography>
+                      </GridSizeButton>
+                    </Tooltip>
+                    <Tooltip
+                      title={
+                        <FormattedMessage id="canvas-style.grid-size-m" defaultMessage="Medium" />
+                      }
+                    >
+                      <GridSizeButton
+                        selected={style.backgroundGridSize === 50}
+                        onClick={() => handleGridSizeChange(50)}
+                      >
+                        <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>M</Typography>
+                      </GridSizeButton>
+                    </Tooltip>
+                    <Tooltip
+                      title={
+                        <FormattedMessage id="canvas-style.grid-size-l" defaultMessage="Large" />
+                      }
+                    >
+                      <GridSizeButton
+                        selected={style.backgroundGridSize === 75}
+                        onClick={() => handleGridSizeChange(75)}
+                      >
+                        <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>L</Typography>
+                      </GridSizeButton>
+                    </Tooltip>
+                    <Tooltip
+                      title={
+                        <FormattedMessage
+                          id="canvas-style.grid-size-xl"
+                          defaultMessage="Extra Large"
+                        />
+                      }
+                    >
+                      <GridSizeButton
+                        selected={style.backgroundGridSize === 100}
+                        onClick={() => handleGridSizeChange(100)}
+                      >
+                        <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>XL</Typography>
+                      </GridSizeButton>
+                    </Tooltip>
+                  </Box>
+                </Box>
+              </>
+            )}
         </>
       )}
     </Box>

@@ -175,8 +175,9 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     // Topic text is always plain, no contentType needed
 
+    // Save the model's explicit shape (undefined means use theme default)
     const shape = topic.getShapeType();
-    if ($defined(shape)) {
+    if (shape !== undefined) {
       parentTopic.setAttribute('shape', shape);
       const size = topic.getImageSize();
       if (shape === 'image' && size) {
@@ -244,8 +245,9 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       parentTopic.setAttribute('brColor', brColor);
     }
 
+    // Save the model's explicit connection style (undefined means use theme default)
     const connectionStyle = topic.getConnectionStyle();
-    if ($defined(connectionStyle)) {
+    if (connectionStyle !== undefined) {
       parentTopic.setAttribute('connStyle', `${connectionStyle}`);
     }
 

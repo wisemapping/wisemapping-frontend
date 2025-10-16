@@ -38,11 +38,11 @@ class NodePropertyBuilder {
   private fontFamilyModel: NodeProperty<string | undefined> | undefined;
   private fontStyleModel: NodeProperty<string> | undefined;
   private borderColorModel: NodeProperty<string | undefined> | undefined;
-  private borderStyleModel: NodeProperty<StrokeStyle> | undefined;
+  private borderStyleModel: NodeProperty<StrokeStyle | undefined> | undefined;
   private fontColorModel: NodeProperty<string | undefined> | undefined;
-  private topicShapeModel: NodeProperty<TopicShapeType> | undefined;
+  private topicShapeModel: NodeProperty<TopicShapeType | undefined> | undefined;
   private topicIconModel: NodeProperty<string | undefined> | undefined;
-  private connetionStyleModel: NodeProperty<LineType> | undefined;
+  private connetionStyleModel: NodeProperty<LineType | undefined> | undefined;
   private connectionColoreModel: NodeProperty<string | undefined> | undefined;
   private relationshipStyleModel: NodeProperty<LineType> | undefined;
   private relationshipColorModel: NodeProperty<string | undefined> | undefined;
@@ -208,17 +208,18 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic border style
    */
-  getBorderStyleModel(): NodeProperty<StrokeStyle> {
+  getBorderStyleModel(): NodeProperty<StrokeStyle | undefined> {
     if (!this.borderStyleModel) {
       this.borderStyleModel = {
         getValue: () => {
           const styleString = this.uniqueOrUndefined((node) => node.getBorderStyle());
-          // Convert string to StrokeStyle enum, defaulting to SOLID if invalid
+          // Convert string to StrokeStyle enum, return undefined if not set
+          if (styleString === 'solid') return StrokeStyle.SOLID;
           if (styleString === 'dashed') return StrokeStyle.DASHED;
           if (styleString === 'dotted') return StrokeStyle.DOTTED;
-          return StrokeStyle.SOLID;
+          return undefined;
         },
-        setValue: (style: StrokeStyle) => this.designer.changeBorderStyle(style),
+        setValue: (style: StrokeStyle | undefined) => this.designer.changeBorderStyle(style),
       };
     }
     return this.borderStyleModel;
@@ -303,11 +304,14 @@ class NodePropertyBuilder {
     return this.fontStyleModel;
   }
 
-  getConnectionStyleModel(): NodeProperty<LineType> {
+  getConnectionStyleModel(): NodeProperty<LineType | undefined> {
     if (!this.connetionStyleModel)
       this.connetionStyleModel = {
-        getValue: () => this.selectedTopic()?.getConnectionStyle(),
-        setValue: (value: LineType) => this.designer.changeConnectionStyle(value),
+        getValue: () => {
+          // Get the model's explicit connection style, not the theme-resolved one
+          return this.selectedTopic()?.getModel().getConnectionStyle();
+        },
+        setValue: (value: LineType | undefined) => this.designer.changeConnectionStyle(value),
       };
     return this.connetionStyleModel;
   }
@@ -389,11 +393,16 @@ class NodePropertyBuilder {
     return this.relationshipStartArrowModel;
   }
 
-  getTopicShapeModel(): NodeProperty<TopicShapeType> {
+  getTopicShapeModel(): NodeProperty<TopicShapeType | undefined> {
     if (!this.topicShapeModel)
       this.topicShapeModel = {
-        getValue: () => this.uniqueOrUndefined((node) => node.getShapeType()) as TopicShapeType,
-        setValue: (value: TopicShapeType) => this.designer.changeShapeType(value),
+        getValue: () => {
+          // Get the model's explicit shape value, not the theme-resolved shape
+          const shape = this.uniqueOrUndefined((node) => node.getModel().getShapeType());
+          // Map 'none' to undefined for UI consistency
+          return shape === 'none' ? undefined : shape;
+        },
+        setValue: (value: TopicShapeType | undefined) => this.designer.changeShapeType(value),
       };
     return this.topicShapeModel;
   }

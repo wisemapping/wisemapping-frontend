@@ -645,17 +645,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     this._mindmap = mindmap;
 
     // Update background style...
-    const customCanvasStyle = mindmap.getCanvasStyle();
-    if (customCanvasStyle) {
-      // Apply custom canvas style if it exists
-      this.applyCanvasStyle(customCanvasStyle);
-    } else {
-      // Apply theme-based style if no custom style
-      const themeId = mindmap.getTheme();
-      const theme = ThemeFactory.createById(themeId, this._themeVariant);
-      const canvasStyle = this._convertThemeToCanvasStyle(theme);
-      this.applyCanvasStyle(canvasStyle);
-    }
+    // applyCanvasStyle reads from model and merges with theme defaults
+    this.applyCanvasStyle();
 
     // Delay render ...
     this._canvas.enableQueueRender(true);
@@ -787,9 +778,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
    */
   private refreshTheme(): void {
     if (this._mindmap) {
-      // Use the internal applyCanvasStyle method to properly update the background
-      // This will handle the theme-based styling correctly
-      this.applyCanvasStyle(undefined); // undefined means use theme default
+      // Re-render canvas with new theme variant
+      this.applyCanvasStyle();
 
       // Redraw the central topic and all its children
       const centralTopic = this.getModel().getCentralTopic();
@@ -867,10 +857,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const mindmap = this.getMindmap();
     mindmap.setTheme(id);
 
-    // Update background color ...
-    const theme = ThemeFactory.createById(id, this._themeVariant);
-    const canvasStyle = this._convertThemeToCanvasStyle(theme);
-    this.applyCanvasStyle(canvasStyle);
+    // Re-render with new theme (preserves custom canvas style if it exists)
+    this.applyCanvasStyle();
 
     const centralTopic = this.getModel().getCentralTopic();
     centralTopic.redraw(this._themeVariant, true);
@@ -881,42 +869,30 @@ class Designer extends EventDispispatcher<DesignerEventType> {
    * @param style - Canvas style configuration
    */
   setCanvasStyle(style: CanvasStyleType | undefined): void {
-    // Normalize: if backgroundPattern is undefined, ensure backgroundGridSize and backgroundGridColor are also undefined
-    const normalizedStyle =
-      style && style.backgroundPattern === undefined
-        ? { ...style, backgroundGridSize: undefined, backgroundGridColor: undefined }
-        : style;
-    this._actionDispatcher.changeCanvasStyle(normalizedStyle);
+    this._actionDispatcher.changeCanvasStyle(style);
   }
 
   /**
    * Apply canvas style directly (internal use - no undo history)
-   * @param style - Canvas style configuration
+   * This method always reads from the model and merges with theme defaults for rendering.
+   * It does NOT persist to the model - only commands should do that.
    * @internal
    */
-  applyCanvasStyle(style: CanvasStyleType | undefined): void {
-    // Save canvas style to mindmap for persistence
+  applyCanvasStyle(): void {
     const mindmap = this.getMindmap();
-    mindmap.setCanvasStyle(style);
+    const customStyle = mindmap.getCanvasStyle();
 
-    // If no style provided, apply theme default
-    if (!style) {
-      const themeId = mindmap.getTheme();
-      const theme = ThemeFactory.createById(themeId, this._themeVariant);
-      const canvasStyle = this._convertThemeToCanvasStyle(theme);
-      this.applyCanvasStyle(canvasStyle);
-      return;
-    }
-
-    // Resolve missing values at render time using theme defaults
+    // Get theme defaults
     const themeId = mindmap.getTheme();
     const theme = ThemeFactory.createById(themeId, this._themeVariant);
-    const defaultStyle = this._convertThemeToCanvasStyle(theme);
+    const themeStyle = this._convertThemeToCanvasStyle(theme);
+
+    // Merge custom style with theme defaults (same pattern as Topic.getBackgroundColor)
     const resolved = {
-      backgroundColor: style.backgroundColor ?? defaultStyle.backgroundColor,
-      backgroundPattern: style.backgroundPattern ?? defaultStyle.backgroundPattern,
-      backgroundGridSize: style.backgroundGridSize ?? defaultStyle.backgroundGridSize,
-      backgroundGridColor: style.backgroundGridColor ?? defaultStyle.backgroundGridColor,
+      backgroundColor: customStyle?.backgroundColor ?? themeStyle.backgroundColor,
+      backgroundPattern: customStyle?.backgroundPattern ?? themeStyle.backgroundPattern,
+      backgroundGridSize: customStyle?.backgroundGridSize ?? themeStyle.backgroundGridSize,
+      backgroundGridColor: customStyle?.backgroundGridColor ?? themeStyle.backgroundGridColor,
     };
 
     let cssStyle = `position: relative;
@@ -1210,7 +1186,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  changeShapeType(shape: TopicShapeType): void {
+  changeShapeType(shape: TopicShapeType | undefined): void {
     const validateFunc = (topic: Topic) =>
       !(topic.getType() === 'CentralTopic' && (shape === 'line' || shape === 'none'));
 
@@ -1221,7 +1197,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  changeConnectionStyle(type: LineType): void {
+  changeConnectionStyle(type: LineType | undefined): void {
     const topicsIds = this.getModel()
       .filterSelectedTopics()
       .map((t) => t.getId());
