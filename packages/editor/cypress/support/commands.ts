@@ -32,7 +32,7 @@ declare global {
 
       onMouseOverToolbarButton(value: 'Style Topic & Connections' | 'Font Style' | 'Connection Style' | 'Relationship Style'): void;
       onClickToolbarButton(
-        value: 'Add Relationship' | 'Add Icon' | 'Theme' | 'Connection Style' | 'Relationship Style' | 'Font Style',
+        value: 'Add Relationship' | 'Add Icon' | 'Theme' | 'Connection Style' | 'Relationship Style' | 'Font Style' | 'Style Topic & Connections',
       ): void;
 
       triggerUndo(): void;
