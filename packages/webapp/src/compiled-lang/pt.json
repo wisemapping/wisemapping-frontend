@@ -245,6 +245,46 @@
       "value": "Tipo de autenticação"
     }
   ],
+  "admin.change-password": [
+    {
+      "type": 0,
+      "value": "Change password"
+    }
+  ],
+  "admin.change-password-button": [
+    {
+      "type": 0,
+      "value": "Change Password"
+    }
+  ],
+  "admin.change-password-description": [
+    {
+      "type": 0,
+      "value": "Change password for user: "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    }
+  ],
+  "admin.change-password-title": [
+    {
+      "type": 0,
+      "value": "Change Password"
+    }
+  ],
+  "admin.close": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
+  "admin.confirm-password": [
+    {
+      "type": 0,
+      "value": "Confirm Password"
+    }
+  ],
   "admin.delete": [
     {
       "type": 0,
@@ -279,6 +319,42 @@
     {
       "type": 0,
       "value": "Bloqueado"
+    }
+  ],
+  "admin.new-password": [
+    {
+      "type": 0,
+      "value": "New Password"
+    }
+  ],
+  "admin.password-error-facebook": [
+    {
+      "type": 0,
+      "value": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+    }
+  ],
+  "admin.password-error-failed": [
+    {
+      "type": 0,
+      "value": "Failed to change password"
+    }
+  ],
+  "admin.password-error-google": [
+    {
+      "type": 0,
+      "value": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+    }
+  ],
+  "admin.password-error-length": [
+    {
+      "type": 0,
+      "value": "Password must be at least 6 characters"
+    }
+  ],
+  "admin.password-error-mismatch": [
+    {
+      "type": 0,
+      "value": "Passwords do not match"
     }
   ],
   "admin.public": [

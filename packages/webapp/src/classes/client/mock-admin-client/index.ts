@@ -811,7 +811,7 @@ class MockAdminClient implements AdminClientInterface {
     });
   }
 
-  changeUserPassword(userId: number, password: string): Promise<void> {
+  changeUserPassword(userId: number, _password: string): Promise<void> {
     console.log(`MockAdminClient: Changing password for user ${userId}`);
     return new Promise((resolve) => {
       setTimeout(() => {
