@@ -65,6 +65,7 @@ import MapIcon from '@mui/icons-material/Map';
 import StorageIcon from '@mui/icons-material/Storage';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { AdminUsersParams } from '../../../classes/client/admin-client';
 import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -159,6 +160,13 @@ const AccountManagement = (): ReactElement => {
   // User maps dialog state
   const [isUserMapsDialogOpen, setIsUserMapsDialogOpen] = useState(false);
   const [viewingMapsUser, setViewingMapsUser] = useState<User | null>(null);
+
+  // Change password dialog state
+  const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
+  const [changingPasswordUser, setChangingPasswordUser] = useState<User | null>(null);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   // Suspension reasons
   const suspensionReasons = [
@@ -463,6 +471,58 @@ const AccountManagement = (): ReactElement => {
         });
       }
     }
+  };
+
+  const handleChangePassword = (user: User) => {
+    setChangingPasswordUser(user);
+    setNewPassword('');
+    setConfirmPassword('');
+    setPasswordError('');
+    setIsPasswordDialogOpen(true);
+  };
+
+  const handleConfirmPasswordChange = () => {
+    if (!changingPasswordUser) return;
+
+    // Validation
+    if (!newPassword || newPassword.length < 6) {
+      setPasswordError(
+        intl.formatMessage({
+          id: 'admin.password-error-length',
+          defaultMessage: 'Password must be at least 6 characters',
+        }),
+      );
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setPasswordError(
+        intl.formatMessage({
+          id: 'admin.password-error-mismatch',
+          defaultMessage: 'Passwords do not match',
+        }),
+      );
+      return;
+    }
+
+    client
+      .changeUserPassword(changingPasswordUser.id, newPassword)
+      .then(() => {
+        setIsPasswordDialogOpen(false);
+        setChangingPasswordUser(null);
+        setNewPassword('');
+        setConfirmPassword('');
+        setPasswordError('');
+      })
+      .catch((error) => {
+        console.error('Failed to change password:', error);
+        setPasswordError(
+          intl.formatMessage({
+            id: 'admin.password-error-failed',
+            defaultMessage: 'Failed to change password',
+          }),
+        );
+      });
   };
 
   const handleDeleteUser = (user: User) => {
@@ -935,6 +995,19 @@ const AccountManagement = (): ReactElement => {
                         <BlockIcon />
                       </IconButton>
                     )}
+                    {user.authenticationType === 'DATABASE' && (
+                      <IconButton
+                        size="small"
+                        onClick={() => handleChangePassword(user)}
+                        title={intl.formatMessage({
+                          id: 'admin.change-password',
+                          defaultMessage: 'Change password',
+                        })}
+                        color="primary"
+                      >
+                        <VpnKeyIcon />
+                      </IconButton>
+                    )}
                     <IconButton
                       size="small"
                       onClick={() => handleViewUserMaps(user)}
@@ -1378,6 +1451,80 @@ const AccountManagement = (): ReactElement => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseUserMapsDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Change Password Dialog */}
+      <Dialog
+        open={isPasswordDialogOpen}
+        onClose={() => setIsPasswordDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          {intl.formatMessage({
+            id: 'admin.change-password-title',
+            defaultMessage: 'Change Password',
+          })}
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" sx={{ mb: 2 }}>
+            {intl.formatMessage(
+              {
+                id: 'admin.change-password-description',
+                defaultMessage: 'Change password for user: {email}',
+              },
+              { email: changingPasswordUser?.email },
+            )}
+          </Typography>
+
+          {passwordError && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {passwordError}
+            </Alert>
+          )}
+
+          <TextField
+            fullWidth
+            type="password"
+            label={intl.formatMessage({
+              id: 'admin.new-password',
+              defaultMessage: 'New Password',
+            })}
+            value={newPassword}
+            onChange={(e) => {
+              setNewPassword(e.target.value);
+              setPasswordError('');
+            }}
+            margin="normal"
+            autoFocus
+          />
+
+          <TextField
+            fullWidth
+            type="password"
+            label={intl.formatMessage({
+              id: 'admin.confirm-password',
+              defaultMessage: 'Confirm Password',
+            })}
+            value={confirmPassword}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+              setPasswordError('');
+            }}
+            margin="normal"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setIsPasswordDialogOpen(false)}>
+            {intl.formatMessage({ id: 'admin.cancel', defaultMessage: 'Cancel' })}
+          </Button>
+          <Button onClick={handleConfirmPasswordChange} variant="contained" color="primary">
+            {intl.formatMessage({
+              id: 'admin.change-password-button',
+              defaultMessage: 'Change Password',
+            })}
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>
