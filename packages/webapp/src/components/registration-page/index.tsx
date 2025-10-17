@@ -193,6 +193,7 @@ const RegistrationForm = () => {
                     })}
                     autoComplete="email"
                     error={error}
+                    required={true}
                   />
                   <Input
                     name="firstname"
@@ -204,6 +205,7 @@ const RegistrationForm = () => {
                     })}
                     autoComplete="given-name"
                     error={error}
+                    required={true}
                   />
                   <Input
                     name="lastname"
@@ -215,6 +217,7 @@ const RegistrationForm = () => {
                     })}
                     autoComplete="family-name"
                     error={error}
+                    required={true}
                   />
                   <Input
                     name="password"
@@ -227,6 +230,7 @@ const RegistrationForm = () => {
                     })}
                     autoComplete="new-password"
                     error={error}
+                    required={true}
                   />
 
                   {AppConfig.isRecaptcha2Enabled() && (

@@ -1116,6 +1116,7 @@ const AccountManagement = (): ReactElement => {
               error={!!formErrors.firstname}
               helperText={formErrors.firstname}
               fullWidth
+              required
             />
             <TextField
               label={intl.formatMessage({ id: 'common.last-name', defaultMessage: 'Last Name' })}
@@ -1124,6 +1125,7 @@ const AccountManagement = (): ReactElement => {
               error={!!formErrors.lastname}
               helperText={formErrors.lastname}
               fullWidth
+              required
             />
             <TextField
               label={intl.formatMessage({ id: 'common.email', defaultMessage: 'Email' })}
@@ -1133,6 +1135,7 @@ const AccountManagement = (): ReactElement => {
               error={!!formErrors.email}
               helperText={formErrors.email}
               fullWidth
+              required
             />
             <FormControl fullWidth>
               <InputLabel>Locale</InputLabel>
@@ -1207,6 +1210,7 @@ const AccountManagement = (): ReactElement => {
               error={!!formErrors.firstname}
               helperText={formErrors.firstname}
               fullWidth
+              required
             />
             <TextField
               label={intl.formatMessage({ id: 'common.last-name', defaultMessage: 'Last Name' })}
@@ -1215,6 +1219,7 @@ const AccountManagement = (): ReactElement => {
               error={!!formErrors.lastname}
               helperText={formErrors.lastname}
               fullWidth
+              required
             />
             <TextField
               label={intl.formatMessage({ id: 'common.email', defaultMessage: 'Email' })}
@@ -1224,6 +1229,7 @@ const AccountManagement = (): ReactElement => {
               error={!!formErrors.email}
               helperText={formErrors.email}
               fullWidth
+              required
             />
             <FormControl fullWidth>
               <InputLabel>Locale</InputLabel>
