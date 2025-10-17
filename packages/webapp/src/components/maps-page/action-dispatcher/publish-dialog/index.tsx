@@ -26,7 +26,7 @@ import { useStyles } from './style';
 
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import Switch from '@mui/material/Switch';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import Tab from '@mui/material/Tab';
@@ -137,7 +137,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
           <FormControl fullWidth={true}>
             <FormControlLabel
               control={
-                <Checkbox checked={model} onChange={handleOnChange} name="public" color="primary" />
+                <Switch checked={model} onChange={handleOnChange} name="public" color="primary" />
               }
               label={
                 <Typography variant="body1" fontWeight={500}>
