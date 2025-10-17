@@ -17,6 +17,7 @@
  */
 import Client, {
   AccountInfo,
+  AuthenticationType,
   BasicMapInfo,
   ChangeHistory,
   ImportMapInfo,
@@ -255,7 +256,7 @@ class MockClient implements Client {
       lastname: 'Fulanito',
       email: 'test@example.com',
       locale: localeFromStr(locale),
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
       admin: true, // Mock admin user for testing
     });
   }

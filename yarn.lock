@@ -53,7 +53,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.18.9, @babel/core@npm:^7.27.4, @babel/core@npm:^7.28.0, @babel/core@npm:^7.28.4":
+"@babel/core@npm:^7.18.9, @babel/core@npm:^7.24.4, @babel/core@npm:^7.27.4, @babel/core@npm:^7.28.0, @babel/core@npm:^7.28.4":
   version: 7.28.4
   resolution: "@babel/core@npm:7.28.4"
   dependencies:
@@ -334,7 +334,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:^7.28.4":
+"@babel/parser@npm:^7.24.4, @babel/parser@npm:^7.28.4":
   version: 7.28.4
   resolution: "@babel/parser@npm:7.28.4"
   dependencies:
@@ -5968,14 +5968,14 @@ __metadata:
     "@types/cypress-image-snapshot": ^3.1.9
     "@types/jest": ^30.0.0
     "@wisemapping/mindplot": "workspace:*"
-    babel-jest: ^30.1.3
+    babel-jest: ^30.2.0
     babel-polyfill: ^6.26.0
     copy-webpack-plugin: ^13.0.1
     cypress: ^15.4.0
     cypress-image-snapshot: ^4.0.1
     emoji-picker-react: ^4.14.1
     eslint: ^9.37.0
-    eslint-plugin-storybook: 9.1.10
+    eslint-plugin-storybook: 9.1.12
     html-webpack-plugin: ^5.6.4
     jest: ^30.2.0
     jest-environment-jsdom: ^30.2.0
@@ -5984,7 +5984,7 @@ __metadata:
     react-color: ^2.19.3
     react-dom: ^19.2.0
     react-intl: ^7.1.14
-    react-loader-spinner: ^6.1.6
+    react-loader-spinner: ^7.0.3
     start-server-and-test: ^2.1.2
     storybook: 9.1.12
     styled-components: ^6.1.19
@@ -6019,7 +6019,7 @@ __metadata:
     cypress: ^15.4.0
     cypress-image-snapshot: ^4.0.1
     eslint: ^9.37.0
-    eslint-plugin-storybook: 9.1.10
+    eslint-plugin-storybook: 9.1.12
     html2canvas: ^1.4.1
     jest: ^30.2.0
     jspdf: ^3.0.3
@@ -6046,7 +6046,7 @@ __metadata:
     "@storybook/testing-library": ^0.2.2
     cypress: ^15.4.0
     cypress-image-snapshot: ^4.0.1
-    eslint-plugin-storybook: 9.1.10
+    eslint-plugin-storybook: 9.1.12
     storybook: ^9.1.12
     ts-loader: ^9.5.4
     typescript: ^5.9.3
@@ -6076,7 +6076,7 @@ __metadata:
     cypress-image-snapshot: ^4.0.1
     dayjs: ^1.11.18
     eslint: ^9.37.0
-    eslint-plugin-storybook: 9.1.10
+    eslint-plugin-storybook: 9.1.12
     react: ^19.2.0
     react-dom: ^19.2.0
     react-ga4: ^2.1.0
@@ -6728,7 +6728,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-jest@npm:30.2.0, babel-jest@npm:^30.1.3":
+"babel-jest@npm:30.2.0, babel-jest@npm:^30.2.0":
   version: 30.2.0
   resolution: "babel-jest@npm:30.2.0"
   dependencies:
@@ -9619,12 +9619,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "eslint-plugin-react-hooks@npm:5.2.0"
+"eslint-plugin-react-hooks@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "eslint-plugin-react-hooks@npm:7.0.0"
+  dependencies:
+    "@babel/core": ^7.24.4
+    "@babel/parser": ^7.24.4
+    hermes-parser: ^0.25.1
+    zod: ^3.22.4 || ^4.0.0
+    zod-validation-error: ^3.0.3 || ^4.0.0
   peerDependencies:
     eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
-  checksum: 5920736a78c0075488e7e30e04fbe5dba5b6b5a6c8c4b5742fdae6f9b8adf4ee387bc45dc6e03b4012865e6fd39d134da7b83a40f57c90cc9eecf80692824e3a
+  checksum: 2ce87bf30b42b086ed053ed371492e926837dc674fc362a6c3ce5a19d2507f58c29dfbb8fc59e102029acbd9104f86043901bbf56e21035aabaf6746673d3c08
   languageName: node
   linkType: hard
 
@@ -9656,15 +9662,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-storybook@npm:9.1.10":
-  version: 9.1.10
-  resolution: "eslint-plugin-storybook@npm:9.1.10"
+"eslint-plugin-storybook@npm:9.1.12":
+  version: 9.1.12
+  resolution: "eslint-plugin-storybook@npm:9.1.12"
   dependencies:
     "@typescript-eslint/utils": ^8.8.1
   peerDependencies:
     eslint: ">=8"
-    storybook: ^9.1.10
-  checksum: 0f092e943a5f1d4c256e77073466e1129a1ef8eb18b3049b42fd48013e207c8bc4cb03c31c06376abc4c107255b40a08dfb4b582f42b70d7340ccb83f5619c44
+    storybook: ^9.1.12
+  checksum: df5405fb60ade4c614efa28c945f1d776cc7fb11936770e79b8ed79e8325dd9762bee90bf9c572d1208bdc844988919fdb6f068ae78953a6b5160f2e4b559afb
   languageName: node
   linkType: hard
 
@@ -11166,6 +11172,22 @@ __metadata:
   bin:
     he: bin/he
   checksum: 3d4d6babccccd79c5c5a3f929a68af33360d6445587d628087f39a965079d84f18ce9c3d3f917ee1e3978916fc833bb8b29377c3b403f919426f91bc6965e7a7
+  languageName: node
+  linkType: hard
+
+"hermes-estree@npm:0.25.1":
+  version: 0.25.1
+  resolution: "hermes-estree@npm:0.25.1"
+  checksum: 97f42e9178dff61db017810b4f79f5a2cdbb3cde94b7d99ba84ed632ee2adfcae2244555587951b3151fc036676c68f48f57fbe2b49e253eb1f3f904d284a8b0
+  languageName: node
+  linkType: hard
+
+"hermes-parser@npm:^0.25.1":
+  version: 0.25.1
+  resolution: "hermes-parser@npm:0.25.1"
+  dependencies:
+    hermes-estree: 0.25.1
+  checksum: 4edcfaa3030931343b540182b83c432aba4cdcb1925952521ab4cfb7ab90c2c1543dfcb042ccd51d5e81e4bfe2809420e85902c2ff95ef7c6c64644ce17138ea
   languageName: node
   linkType: hard
 
@@ -16225,7 +16247,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^18.2.0, react-is@npm:^18.3.1":
+"react-is@npm:^18.3.1":
   version: 18.3.1
   resolution: "react-is@npm:18.3.1"
   checksum: e20fe84c86ff172fc8d898251b7cc2c43645d108bf96d0b8edf39b98f9a2cae97b40520ee7ed8ee0085ccc94736c4886294456033304151c3f94978cec03df21
@@ -16239,16 +16261,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-loader-spinner@npm:^6.1.6":
-  version: 6.1.6
-  resolution: "react-loader-spinner@npm:6.1.6"
+"react-loader-spinner@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "react-loader-spinner@npm:7.0.3"
   dependencies:
-    react-is: ^18.2.0
-    styled-components: ^6.1.2
+    styled-components: ^6.1.19
+    tinycolor2: ^1.6.0
   peerDependencies:
-    react: ^16.0.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: 07fbb2de7aaf9348c4c67116e25100a0a9511e51cf45be69948d618113361059a9a9688d87c142cebd80dcf6832a91f0eee7f4b303d106bd6677c51caa6aa5e3
+    react: ">=17.0.0 <20.0.0"
+    react-dom: ">=17.0.0 <20.0.0"
+  checksum: 6604b328d80f5d561489e6ab00256410363ed166d2cf9d2f82b289378120837a51e8416283672fa43bff11448563a903af7c3b3655702f0a531a2bf0719fb124
   languageName: node
   linkType: hard
 
@@ -18024,7 +18046,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-components@npm:^6.1.19, styled-components@npm:^6.1.2":
+"styled-components@npm:^6.1.19":
   version: 6.1.19
   resolution: "styled-components@npm:6.1.19"
   dependencies:
@@ -18362,7 +18384,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinycolor2@npm:^1.4.1":
+"tinycolor2@npm:^1.4.1, tinycolor2@npm:^1.6.0":
   version: 1.6.0
   resolution: "tinycolor2@npm:1.6.0"
   checksum: 6df4d07fceeedc0a878d7bac47e2cd47c1ceeb1078340a9eb8a295bc0651e17c750f73d47b3028d829f30b85c15e0572c0fd4142083e4c21a30a597e47f47230
@@ -19815,7 +19837,7 @@ __metadata:
     eslint-plugin-cypress: ^5.2.0
     eslint-plugin-import: ^2.32.0
     eslint-plugin-react: ^7.37.5
-    eslint-plugin-react-hooks: ^5.2.0
+    eslint-plugin-react-hooks: ^7.0.0
     fork-ts-checker-webpack-plugin: ^9.1.0
     globals: ^16.4.0
     html-webpack-plugin: ^5.6.4
@@ -20248,5 +20270,21 @@ __metadata:
   version: 2.1.2
   resolution: "yoctocolors@npm:2.1.2"
   checksum: 6ee42d665a4cc161c7de3f015b2a65d6c65d2808bfe3b99e228bd2b1b784ef1e54d1907415c025fc12b400f26f372bfc1b71966c6c738d998325ca422eb39363
+  languageName: node
+  linkType: hard
+
+"zod-validation-error@npm:^3.0.3 || ^4.0.0":
+  version: 4.0.2
+  resolution: "zod-validation-error@npm:4.0.2"
+  peerDependencies:
+    zod: ^3.25.0 || ^4.0.0
+  checksum: f16ccbc08c5345f28788beea814d82e1f047978414f1511bd97a171580d7dbe63cecc368caa352c1391e201539288c241d61145e57c6b84cb19112dc88a72098
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.22.4 || ^4.0.0":
+  version: 4.1.12
+  resolution: "zod@npm:4.1.12"
+  checksum: 91174acc7d2ca5572ad522643474ddd60640cf6877b5d76e5d583eb25e3c4072c6f5eb92ab94f231ec5ce61c6acdfc3e0166de45fb1005b1ea54986b026b765f
   languageName: node
   linkType: hard
