@@ -167,6 +167,7 @@ export interface AdminClientInterface {
   suspendAdminUser(userId: number): Promise<AdminUser>;
   unsuspendAdminUser(userId: number): Promise<AdminUser>;
   activateAdminUser(userId: number): Promise<void>;
+  changeUserPassword(userId: number, password: string): Promise<void>;
 
   getAdminMaps(params?: AdminMapsParams): Promise<AdminMapsResponse>;
   getUserMaps(userId: number): Promise<AdminMap[]>;
@@ -320,6 +321,18 @@ export default class AdminClient implements AdminClientInterface {
       .then(() => {})
       .catch((error) => {
         console.error('Failed to activate admin user:', error);
+        throw this.parseResponseOnError(error.response);
+      });
+  }
+
+  changeUserPassword(userId: number, password: string): Promise<void> {
+    return this.axios
+      .put(`${this.baseUrl}/api/restful/admin/users/${userId}/password`, password, {
+        headers: { 'Content-Type': 'text/plain' },
+      })
+      .then(() => {})
+      .catch((error) => {
+        console.error('Failed to change user password:', error);
         throw this.parseResponseOnError(error.response);
       });
   }

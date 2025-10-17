@@ -769,5 +769,32 @@
   },
   "registration.form-legend": {
     "defaultMessage": "Kontoinformationen"
+  },
+  "admin.change-password": {
+    "defaultMessage": "Change password"
+  },
+  "admin.change-password-title": {
+    "defaultMessage": "Change Password"
+  },
+  "admin.change-password-description": {
+    "defaultMessage": "Change password for user: {email}"
+  },
+  "admin.new-password": {
+    "defaultMessage": "New Password"
+  },
+  "admin.confirm-password": {
+    "defaultMessage": "Confirm Password"
+  },
+  "admin.change-password-button": {
+    "defaultMessage": "Change Password"
+  },
+  "admin.password-error-length": {
+    "defaultMessage": "Password must be at least 6 characters"
+  },
+  "admin.password-error-mismatch": {
+    "defaultMessage": "Passwords do not match"
+  },
+  "admin.password-error-failed": {
+    "defaultMessage": "Failed to change password"
   }
 }

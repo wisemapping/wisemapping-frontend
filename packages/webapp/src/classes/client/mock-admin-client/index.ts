@@ -809,6 +809,22 @@ class MockAdminClient implements AdminClientInterface {
       }, 500);
     });
   }
+
+  changeUserPassword(userId: number, password: string): Promise<void> {
+    console.log(`MockAdminClient: Changing password for user ${userId}`);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const user = this.adminUsers.find((u) => u.id === userId);
+        if (user) {
+          // In a real implementation, this would hash and store the password
+          console.log(`Password changed for user: ${user.email}`);
+          resolve();
+        } else {
+          throw new Error(`User with ID ${userId} not found`);
+        }
+      }, 500);
+    });
+  }
 }
 
 export default MockAdminClient;
