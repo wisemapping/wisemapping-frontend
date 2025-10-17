@@ -67,6 +67,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { AdminUsersParams } from '../../../classes/client/admin-client';
+import { AuthenticationType } from '../../../classes/client';
 import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
@@ -83,7 +84,7 @@ interface User {
   suspensionReason?: string;
   suspendedDate?: string;
   allowSendEmail: boolean;
-  authenticationType: string;
+  authenticationType: AuthenticationType;
 }
 
 interface UserFormData {
@@ -286,7 +287,7 @@ const AccountManagement = (): ReactElement => {
         creationDate: new Date().toISOString(),
         isActive: true,
         isSuspended: false,
-        authenticationType: 'DATABASE',
+        authenticationType: AuthenticationType.DATABASE,
       };
       return client.createAdminUser(adminUserData);
     },
@@ -474,6 +475,33 @@ const AccountManagement = (): ReactElement => {
   };
 
   const handleChangePassword = (user: User) => {
+    // Check if user uses OAuth authentication
+    if (user.authenticationType === AuthenticationType.GOOGLE_OAUTH2) {
+      setPasswordError(
+        intl.formatMessage({
+          id: 'admin.password-error-google',
+          defaultMessage:
+            'This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account.',
+        }),
+      );
+      setChangingPasswordUser(user);
+      setIsPasswordDialogOpen(true);
+      return;
+    }
+
+    if (user.authenticationType === AuthenticationType.FACEBOOK_OAUTH2) {
+      setPasswordError(
+        intl.formatMessage({
+          id: 'admin.password-error-facebook',
+          defaultMessage:
+            'This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account.',
+        }),
+      );
+      setChangingPasswordUser(user);
+      setIsPasswordDialogOpen(true);
+      return;
+    }
+
     setChangingPasswordUser(user);
     setNewPassword('');
     setConfirmPassword('');
@@ -674,36 +702,39 @@ const AccountManagement = (): ReactElement => {
     }
   };
 
-  const getAuthIcon = (authenticationType: string) => {
-    const authType = authenticationType.toUpperCase();
-
-    if (authType === 'GOOGLE_OAUTH2') {
-      return (
-        <Tooltip title={intl.formatMessage({ id: 'admin.auth.google', defaultMessage: 'Google' })}>
-          <GoogleIcon color="action" fontSize="small" />
-        </Tooltip>
-      );
-    } else if (authType === 'FACEBOOK_OAUTH2') {
-      return (
-        <Tooltip
-          title={intl.formatMessage({ id: 'admin.auth.facebook', defaultMessage: 'Facebook' })}
-        >
-          <FacebookIcon color="action" fontSize="small" />
-        </Tooltip>
-      );
-    } else {
-      // DATABASE or LDAP
-      return (
-        <Tooltip
-          title={
-            authType === 'LDAP'
-              ? intl.formatMessage({ id: 'admin.auth.ldap', defaultMessage: 'LDAP' })
-              : intl.formatMessage({ id: 'admin.auth.database', defaultMessage: 'Database' })
-          }
-        >
-          <StorageIcon color="action" fontSize="small" />
-        </Tooltip>
-      );
+  const getAuthIcon = (authenticationType: AuthenticationType) => {
+    switch (authenticationType) {
+      case AuthenticationType.GOOGLE_OAUTH2:
+        return (
+          <Tooltip
+            title={intl.formatMessage({ id: 'admin.auth.google', defaultMessage: 'Google' })}
+          >
+            <GoogleIcon color="action" fontSize="small" />
+          </Tooltip>
+        );
+      case AuthenticationType.FACEBOOK_OAUTH2:
+        return (
+          <Tooltip
+            title={intl.formatMessage({ id: 'admin.auth.facebook', defaultMessage: 'Facebook' })}
+          >
+            <FacebookIcon color="action" fontSize="small" />
+          </Tooltip>
+        );
+      case AuthenticationType.LDAP:
+        return (
+          <Tooltip title={intl.formatMessage({ id: 'admin.auth.ldap', defaultMessage: 'LDAP' })}>
+            <StorageIcon color="action" fontSize="small" />
+          </Tooltip>
+        );
+      case AuthenticationType.DATABASE:
+      default:
+        return (
+          <Tooltip
+            title={intl.formatMessage({ id: 'admin.auth.database', defaultMessage: 'Database' })}
+          >
+            <StorageIcon color="action" fontSize="small" />
+          </Tooltip>
+        );
     }
   };
 
@@ -957,7 +988,7 @@ const AccountManagement = (): ReactElement => {
                     >
                       <EditIcon />
                     </IconButton>
-                    {!user.isActive && user.authenticationType === 'DATABASE' && (
+                    {!user.isActive && user.authenticationType === AuthenticationType.DATABASE && (
                       <IconButton
                         size="small"
                         onClick={() => handleActivateUser(user)}
@@ -995,19 +1026,17 @@ const AccountManagement = (): ReactElement => {
                         <BlockIcon />
                       </IconButton>
                     )}
-                    {user.authenticationType === 'DATABASE' && (
-                      <IconButton
-                        size="small"
-                        onClick={() => handleChangePassword(user)}
-                        title={intl.formatMessage({
-                          id: 'admin.change-password',
-                          defaultMessage: 'Change password',
-                        })}
-                        color="primary"
-                      >
-                        <VpnKeyIcon />
-                      </IconButton>
-                    )}
+                    <IconButton
+                      size="small"
+                      onClick={() => handleChangePassword(user)}
+                      title={intl.formatMessage({
+                        id: 'admin.change-password',
+                        defaultMessage: 'Change password',
+                      })}
+                      color="primary"
+                    >
+                      <VpnKeyIcon />
+                    </IconButton>
                     <IconButton
                       size="small"
                       onClick={() => handleViewUserMaps(user)}
@@ -1479,52 +1508,67 @@ const AccountManagement = (): ReactElement => {
           </Typography>
 
           {passwordError && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+            <Alert severity="warning" sx={{ mb: 2 }}>
               {passwordError}
             </Alert>
           )}
 
-          <TextField
-            fullWidth
-            type="password"
-            label={intl.formatMessage({
-              id: 'admin.new-password',
-              defaultMessage: 'New Password',
-            })}
-            value={newPassword}
-            onChange={(e) => {
-              setNewPassword(e.target.value);
-              setPasswordError('');
-            }}
-            margin="normal"
-            autoFocus
-          />
+          {changingPasswordUser?.authenticationType === AuthenticationType.DATABASE && (
+            <>
+              <TextField
+                fullWidth
+                type="password"
+                label={intl.formatMessage({
+                  id: 'admin.new-password',
+                  defaultMessage: 'New Password',
+                })}
+                value={newPassword}
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
+                  setPasswordError('');
+                }}
+                margin="normal"
+                autoFocus
+              />
 
-          <TextField
-            fullWidth
-            type="password"
-            label={intl.formatMessage({
-              id: 'admin.confirm-password',
-              defaultMessage: 'Confirm Password',
-            })}
-            value={confirmPassword}
-            onChange={(e) => {
-              setConfirmPassword(e.target.value);
-              setPasswordError('');
-            }}
-            margin="normal"
-          />
+              <TextField
+                fullWidth
+                type="password"
+                label={intl.formatMessage({
+                  id: 'admin.confirm-password',
+                  defaultMessage: 'Confirm Password',
+                })}
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  setPasswordError('');
+                }}
+                margin="normal"
+              />
+            </>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setIsPasswordDialogOpen(false)}>
-            {intl.formatMessage({ id: 'admin.cancel', defaultMessage: 'Cancel' })}
-          </Button>
-          <Button onClick={handleConfirmPasswordChange} variant="contained" color="primary">
             {intl.formatMessage({
-              id: 'admin.change-password-button',
-              defaultMessage: 'Change Password',
+              id:
+                changingPasswordUser?.authenticationType === AuthenticationType.DATABASE
+                  ? 'admin.cancel'
+                  : 'admin.close',
+              defaultMessage:
+                changingPasswordUser?.authenticationType === AuthenticationType.DATABASE
+                  ? 'Cancel'
+                  : 'Close',
             })}
           </Button>
+          {changingPasswordUser?.authenticationType === AuthenticationType.DATABASE && (
+            <Button onClick={handleConfirmPasswordChange} variant="contained" color="primary">
+              {intl.formatMessage({
+                id: 'admin.change-password-button',
+                defaultMessage: 'Change Password',
+              })}
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </Box>

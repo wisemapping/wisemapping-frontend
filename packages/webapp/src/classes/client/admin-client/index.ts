@@ -31,6 +31,7 @@ import {
   JwtAuth,
   MapMetadata,
   LoginErrorInfo,
+  AuthenticationType,
 } from '..';
 import { Locale, LocaleCode } from '../../app-i18n';
 import JwtTokenConfig from '../../jwt-token-config';
@@ -46,7 +47,7 @@ export interface AdminUser {
   isActive: boolean;
   isSuspended: boolean;
   allowSendEmail: boolean;
-  authenticationType: string;
+  authenticationType: AuthenticationType;
   isAdmin?: boolean;
   suspendedDate?: string;
   suspensionReason?: string;
@@ -626,7 +627,7 @@ export default class AdminClient implements AdminClientInterface {
       firstname: 'Admin',
       lastname: 'User',
       locale: { code: 'en', message: {}, label: 'English' },
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
       isAdmin: true, // Admin client should always return admin user
     });
   }

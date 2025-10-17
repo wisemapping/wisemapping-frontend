@@ -796,5 +796,14 @@
   },
   "admin.password-error-failed": {
     "defaultMessage": "Failed to change password"
+  },
+  "admin.password-error-google": {
+    "defaultMessage": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+  },
+  "admin.password-error-facebook": {
+    "defaultMessage": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+  },
+  "admin.close": {
+    "defaultMessage": "Close"
   }
 }

@@ -26,6 +26,7 @@ import {
   SystemInfo,
   SystemHealth,
 } from '../admin-client';
+import { AuthenticationType } from '..';
 
 class MockAdminClient implements AdminClientInterface {
   private adminUsers: AdminUser[] = [
@@ -40,7 +41,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: true,
       isSuspended: false,
       allowSendEmail: true,
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
       isAdmin: true,
     },
     {
@@ -54,7 +55,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: true,
       isSuspended: false,
       allowSendEmail: false,
-      authenticationType: 'GOOGLE_OAUTH2',
+      authenticationType: AuthenticationType.GOOGLE_OAUTH2,
       isAdmin: false,
     },
     {
@@ -68,7 +69,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: true,
       isSuspended: false,
       allowSendEmail: true,
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
       isAdmin: false,
     },
     {
@@ -82,7 +83,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: false,
       isSuspended: true,
       allowSendEmail: false,
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
       isAdmin: false,
     },
     {
@@ -96,7 +97,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: true,
       isSuspended: false,
       allowSendEmail: true,
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
       isAdmin: false,
     },
     {
@@ -110,7 +111,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: true,
       isSuspended: false,
       allowSendEmail: true,
-      authenticationType: 'GOOGLE_OAUTH2',
+      authenticationType: AuthenticationType.GOOGLE_OAUTH2,
       isAdmin: false,
     },
     {
@@ -124,7 +125,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: true,
       isSuspended: false,
       allowSendEmail: false,
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
       isAdmin: false,
     },
     {
@@ -138,7 +139,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: true,
       isSuspended: false,
       allowSendEmail: true,
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
       isAdmin: false,
     },
     {
@@ -152,7 +153,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: true,
       isSuspended: false,
       allowSendEmail: true,
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
       isAdmin: false,
     },
     {
@@ -166,7 +167,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: true,
       isSuspended: false,
       allowSendEmail: true,
-      authenticationType: 'GOOGLE_OAUTH2',
+      authenticationType: AuthenticationType.GOOGLE_OAUTH2,
       isAdmin: false,
     },
     {
@@ -180,7 +181,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: true,
       isSuspended: false,
       allowSendEmail: false,
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
       isAdmin: false,
     },
     {
@@ -194,7 +195,7 @@ class MockAdminClient implements AdminClientInterface {
       isActive: false,
       isSuspended: false,
       allowSendEmail: true,
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
       isAdmin: false,
     },
   ];
@@ -507,7 +508,7 @@ class MockAdminClient implements AdminClientInterface {
       fullName: `${userData.firstname} ${userData.lastname}`,
       isActive: true,
       isSuspended: false,
-      authenticationType: 'DATABASE',
+      authenticationType: AuthenticationType.DATABASE,
     };
 
     this.adminUsers.push(newUser);
