@@ -94,7 +94,12 @@ export type LoginErrorInfo = ErrorInfo & {
   code: 1 | 2 | 3;
 };
 
-export type AuthenticationType = 'GOOGLE_OAUTH2' | 'FACEBOOK_OAUTH2' | 'DATABASE' | 'LDAP';
+export enum AuthenticationType {
+  GOOGLE_OAUTH2 = 'GOOGLE_OAUTH2',
+  FACEBOOK_OAUTH2 = 'FACEBOOK_OAUTH2',
+  DATABASE = 'DATABASE',
+  LDAP = 'LDAP',
+}
 
 export type AccountInfo = {
   firstname: string;
