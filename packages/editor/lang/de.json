@@ -590,6 +590,12 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Bogen"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "Organische Kurve"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "Handgezeichneter Stil mit dramatischen Kurven - Perfekt für kreative und ausdrucksstarke Mindmaps"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Dünne Kurve"
   },

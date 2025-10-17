@@ -590,6 +590,12 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Arc"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "ऑर्गेनिक कर्व"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "हाथ से खींची गई शैली जिसमें नाटकीय कर्व हैं - रचनात्मक और अभिव्यंजक माइंडमैप के लिए परफेक्ट"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Thin Curved"
   },

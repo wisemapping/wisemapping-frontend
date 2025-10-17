@@ -590,6 +590,12 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "弧形"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "有机曲线"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "手绘风格，具有戏剧性曲线 - 非常适合创意和富有表现力的思维导图"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "细曲线"
   },

@@ -29,7 +29,9 @@ export enum LineType {
   THIN_CURVED,
   POLYLINE_MIDDLE,
   POLYLINE_CURVED,
+  POLYLINE_STRAIGHT,
   THICK_CURVED,
+  THICK_CURVED_ORGANIC,
   ARC,
 }
 
@@ -58,6 +60,32 @@ class ConnectionLine {
     const srcPos = sourceNode.workoutOutgoingConnectionPoint(targetNode.getPosition());
     const destPos = targetNode.workoutIncomingConnectionPoint(sourceNode.getPosition());
     const deltaX = (srcPos.x - destPos.x) / 3;
+
+    // For organic curved lines, create simple hand-drawn style
+    if (this._type === LineType.THICK_CURVED_ORGANIC) {
+      const deltaY = (srcPos.y - destPos.y) / 2;
+
+      // Simple seed for consistent but unique curves
+      const seed = Math.abs(srcPos.x + srcPos.y + destPos.x + destPos.y);
+      const random1 = (Math.sin(seed * 0.1) + 1) / 2;
+      const random2 = (Math.sin(seed * 0.15 + 1) + 1) / 2;
+
+      // Create organic S-curve with subtle variations
+      const curveIntensity = 1.2 + random1 * 0.6; // 1.2 to 1.8
+      const asymmetry = (random2 - 0.5) * 0.4; // -0.2 to 0.2
+
+      return [
+        {
+          x: deltaX * curveIntensity + asymmetry * 0.5,
+          y: -deltaY * 1.3 + asymmetry * 0.3,
+        },
+        {
+          x: deltaX * 0.4 * curveIntensity - asymmetry * 0.5,
+          y: deltaY * 0.8 - asymmetry * 0.3,
+        },
+      ];
+    }
+
     return [
       { x: deltaX, y: 0 },
       { x: -deltaX, y: 0 },
@@ -75,6 +103,10 @@ class ConnectionLine {
         line = new PolyLine();
         (line as PolyLine).setStyle('Curved');
         break;
+      case LineType.POLYLINE_STRAIGHT:
+        line = new PolyLine();
+        (line as PolyLine).setStyle('Straight');
+        break;
       case LineType.THIN_CURVED:
         line = new CurvedLine();
         (line as CurvedLine).setWidth(10);
@@ -82,6 +114,10 @@ class ConnectionLine {
       case LineType.THICK_CURVED:
         line = new CurvedLine();
         (line as CurvedLine).setWidth(this._targetTopic.isCentralTopic() ? 15 : 3);
+        break;
+      case LineType.THICK_CURVED_ORGANIC:
+        line = new CurvedLine();
+        (line as CurvedLine).setWidth(this._targetTopic.isCentralTopic() ? 20 : 5);
         break;
       case LineType.ARC:
         line = new ArcLine(this._sourceTopic, this._targetTopic);
@@ -106,11 +142,18 @@ class ConnectionLine {
       case LineType.POLYLINE_CURVED:
         this._line.setStroke(2, 'solid', color, 1);
         break;
+      case LineType.POLYLINE_STRAIGHT:
+        this._line.setStroke(2, 'solid', color, 1);
+        break;
       case LineType.THIN_CURVED:
         this._line.setStroke(2, 'solid', color, 1);
         this._line.setFill(color, 1);
         break;
       case LineType.THICK_CURVED:
+        this._line.setStroke(2, 'solid', color, 1);
+        this._line.setFill(color, 1);
+        break;
+      case LineType.THICK_CURVED_ORGANIC:
         this._line.setStroke(2, 'solid', color, 1);
         this._line.setFill(color, 1);
         break;
@@ -151,7 +194,11 @@ class ConnectionLine {
     line2d.setFrom(tPos.x, tPos.y);
     line2d.setTo(sPos.x, sPos.y);
 
-    if (this._type === LineType.THICK_CURVED || this._type === LineType.THIN_CURVED) {
+    if (
+      this._type === LineType.THICK_CURVED ||
+      this._type === LineType.THIN_CURVED ||
+      this._type === LineType.THICK_CURVED_ORGANIC
+    ) {
       const ctrlPoints = this._getCtrlPoints(this._sourceTopic, this._targetTopic);
       (line2d as CurvedLine).setSrcControlPoint(ctrlPoints[0]);
       (line2d as CurvedLine).setDestControlPoint(ctrlPoints[1]);

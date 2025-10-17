@@ -590,6 +590,12 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Arc"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "有機曲線"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "手描きスタイルで劇的な曲線 - 創造的で表現力豊かなマインドマップに最適"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Thin Curved"
   },

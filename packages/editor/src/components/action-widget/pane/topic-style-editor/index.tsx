@@ -32,11 +32,6 @@ import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlin
 import HorizontalRuleOutlinedIcon from '@mui/icons-material/HorizontalRuleOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
-import GestureOutlined from '@mui/icons-material/GestureOutlined';
-import ShortcutIconOutlined from '@mui/icons-material/ShortcutOutlined';
-import SwapCallsOutlined from '@mui/icons-material/SwapCallsOutlined';
-import PolylineOutlined from '@mui/icons-material/PolylineOutlined';
-import TimelineOutined from '@mui/icons-material/TimelineOutlined';
 
 import NodeProperty from '../../../../classes/model/node-property';
 import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
@@ -44,6 +39,82 @@ import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
 import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
 import ColorPicker from '../color-picker';
 import IconCollection from './IconCollection';
+
+// Custom SVG icons for connection styles
+const ThickCurvedIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M3 12 Q 8 6, 12 12 T 21 12"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      fill="none"
+    />
+  </svg>
+);
+
+const OrganicCurvedIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M3 14 Q 8 4, 12 12 Q 16 20, 21 10"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      fill="none"
+    />
+  </svg>
+);
+
+const ArcIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M3 16 Q 12 4, 21 16"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      fill="none"
+    />
+  </svg>
+);
+
+const ThinCurvedIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M3 12 Q 8 8, 12 12 T 21 12"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      fill="none"
+    />
+  </svg>
+);
+
+const StraightLineIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <line
+      x1="3"
+      y1="12"
+      x2="21"
+      y2="12"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+const CurvedPolylineIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M3 12 L 8 12 Q 10 12, 10 10 L 10 8 Q 10 6, 12 6 L 14 6 Q 16 6, 16 8 L 16 12 L 21 12"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+  </svg>
+);
 
 interface TopicStyleEditorProps {
   closeModal: () => void;
@@ -126,50 +197,96 @@ const connectionStyles = [
     label: <FormattedMessage id="icon-collection.connection.default" defaultMessage="Default" />,
     tooltip: (
       <FormattedMessage
-        id="icon-collection.default-tooltip"
-        defaultMessage="Default - Colors will be automatically taken based on the selected theme"
+        id="icon-collection.connection.default-tooltip"
+        defaultMessage="Default - Connection style will be automatically selected based on the theme"
+      />
+    ),
+  },
+  {
+    type: LineType.ARC,
+    icon: <ArcIcon />,
+    label: <FormattedMessage id="icon-collection.connection.arc" defaultMessage="Arc" />,
+    tooltip: (
+      <FormattedMessage
+        id="icon-collection.connection.arc-tooltip"
+        defaultMessage="Circular arc connection - Perfect for radial layouts and organic flow"
+      />
+    ),
+  },
+  {
+    type: LineType.POLYLINE_CURVED,
+    icon: <CurvedPolylineIcon />,
+    label: (
+      <FormattedMessage
+        id="icon-collection.connection.curved-polyline"
+        defaultMessage="Curved Polyline"
+      />
+    ),
+    tooltip: (
+      <FormattedMessage
+        id="icon-collection.connection.curved-polyline-tooltip"
+        defaultMessage="Multi-segment line with smooth corners - Best for structured layouts and clear paths"
+      />
+    ),
+  },
+  {
+    type: LineType.THICK_CURVED_ORGANIC,
+    icon: <OrganicCurvedIcon />,
+    label: (
+      <FormattedMessage
+        id="icon-collection.connection.organic-curved"
+        defaultMessage="Organic Curved"
+      />
+    ),
+    tooltip: (
+      <FormattedMessage
+        id="icon-collection.connection.organic-curved-tooltip"
+        defaultMessage="Hand-drawn style with dramatic curves - Perfect for creative and expressive mind maps"
       />
     ),
   },
   {
     type: LineType.THICK_CURVED,
-    icon: <GestureOutlined />,
+    icon: <ThickCurvedIcon />,
     label: (
       <FormattedMessage
         id="icon-collection.connection.thick-curved"
         defaultMessage="Thick Curved"
       />
     ),
-  },
-  {
-    type: LineType.ARC,
-    icon: <ShortcutIconOutlined />,
-    label: <FormattedMessage id="icon-collection.connection.arc" defaultMessage="Arc" />,
-  },
-  {
-    type: LineType.THIN_CURVED,
-    icon: <SwapCallsOutlined />,
-    label: (
-      <FormattedMessage id="icon-collection.connection.thin-curved" defaultMessage="Thin Curved" />
-    ),
-  },
-  {
-    type: LineType.POLYLINE_MIDDLE,
-    icon: <PolylineOutlined />,
-    label: (
+    tooltip: (
       <FormattedMessage
-        id="icon-collection.connection.simple-polyline"
-        defaultMessage="Simple Polyline"
+        id="icon-collection.connection.thick-curved-tooltip"
+        defaultMessage="Thick curved line with smooth bezier curves - Great for emphasizing main branches"
       />
     ),
   },
   {
-    type: LineType.POLYLINE_CURVED,
-    icon: <TimelineOutined />,
+    type: LineType.THIN_CURVED,
+    icon: <ThinCurvedIcon />,
+    label: (
+      <FormattedMessage id="icon-collection.connection.thin-curved" defaultMessage="Thin Curved" />
+    ),
+    tooltip: (
+      <FormattedMessage
+        id="icon-collection.connection.thin-curved-tooltip"
+        defaultMessage="Thin curved line with elegant bezier curves - Ideal for detailed or dense mind maps"
+      />
+    ),
+  },
+  {
+    type: LineType.POLYLINE_STRAIGHT,
+    icon: <StraightLineIcon />,
     label: (
       <FormattedMessage
-        id="icon-collection.connection.curved-polyline"
-        defaultMessage="Curved Polyline"
+        id="icon-collection.connection.straight-line"
+        defaultMessage="Straight Line"
+      />
+    ),
+    tooltip: (
+      <FormattedMessage
+        id="icon-collection.connection.straight-line-tooltip"
+        defaultMessage="Direct straight line connection - Clean and minimalist style for simple relationships"
       />
     ),
   },

@@ -590,6 +590,12 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Arco"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "Curva Orgánica"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "Estilo dibujado a mano con curvas dramáticas - Perfecto para mapas mentales creativos y expresivos"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Curva delgada"
   },

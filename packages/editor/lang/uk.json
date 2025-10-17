@@ -590,6 +590,12 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Дуга"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "Органічна крива"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "Ручний стиль з драматичними кривими - Ідеально для творчих та виразних карт розуму"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Тонка крива"
   },
