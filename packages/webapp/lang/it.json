@@ -474,7 +474,7 @@
     "defaultMessage": "Per favore attendi mentre convalidiamo la tua identità"
   },
   "registration.callback.waiting.title": {
-    "defaultMessage": "Finalizzando..."
+    "defaultMessage": "Attendi..."
   },
   "registration.desc": {
     "defaultMessage": "La registrazione è gratuita e richiede solo un momento"
@@ -537,7 +537,7 @@
     "defaultMessage": "Condividi"
   },
   "share.adding-button": {
-    "defaultMessage": "Sharing..."
+    "defaultMessage": "Condivisione..."
   },
   "share.add-message": {
     "defaultMessage": "Aggiungi messaggio"
@@ -723,87 +723,87 @@
     "defaultMessage": "Errore Imprevisto | WiseMapping"
   },
   "error.security-error": {
-    "defaultMessage": "Mindmap cannot be opened."
+    "defaultMessage": "La mappa mentale non può essere aperta."
   },
   "error.undexpected-error-msg": {
-    "defaultMessage": "Unexpected error opening mindmap. Please, try latter."
+    "defaultMessage": "Errore imprevisto durante l'apertura della mappa mentale. Riprova più tardi."
   },
   "accountinfo.personal-details": {
-    "defaultMessage": "Personal Details"
+    "defaultMessage": "Dati personali"
   },
   "account.delete-warning-title": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Elimina Account"
   },
   "account.delete-warning-description": {
-    "defaultMessage": "Once you delete your account, there is no going back. Please be certain."
+    "defaultMessage": "Una volta eliminato il tuo account, non potrai più tornare indietro. Si prega di essere certi."
   },
   "account.delete-warning-consequences": {
-    "defaultMessage": "This will permanently delete:"
+    "defaultMessage": "Questo eliminerà definitivamente:"
   },
   "account.delete-warning-mindmaps": {
-    "defaultMessage": "All your mindmaps and their content"
+    "defaultMessage": "Tutte le tue mappe mentali e il loro contenuto"
   },
   "account.delete-warning-data": {
-    "defaultMessage": "All your personal data and account information"
+    "defaultMessage": "Tutti i tuoi dati personali e le informazioni del tuo account"
   },
   "account.delete-warning-collaborations": {
-    "defaultMessage": "All shared mindmaps and collaborations"
+    "defaultMessage": "Tutte le mappe mentali e le collaborazioni condivise"
   },
   "account.delete-warning-history": {
-    "defaultMessage": "All account history and activity logs"
+    "defaultMessage": "Tutta la cronologia dell'account e i log delle attività"
   },
   "account.delete-confirmation-title": {
-    "defaultMessage": "Are you absolutely sure?"
+    "defaultMessage": "Sei assolutamente sicuro?"
   },
   "account.delete-confirmation-warning": {
-    "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+    "defaultMessage": "Questa azione non può essere annullata. Ciò eliminerà definitivamente il tuo account e rimuoverà tutti i dati dai nostri server."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+    "defaultMessage": "Digita ELIMINA IL MIO ACCOUNT per confermare:"
   },
   "account.delete-confirm": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Elimina Account"
   },
   "menu.admin-console": {
-    "defaultMessage": "Admin Console"
+    "defaultMessage": "Console di amministratore"
   },
   "registration.form-legend": {
-    "defaultMessage": "Account Information"
+    "defaultMessage": "Informazioni sull'account"
   },
   "admin.change-password": {
-    "defaultMessage": "Change password"
+    "defaultMessage": "Cambia password"
   },
   "admin.change-password-title": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "Cambia password"
   },
   "admin.change-password-description": {
-    "defaultMessage": "Change password for user: {email}"
+    "defaultMessage": "Cambia password per l'utente: {email}"
   },
   "admin.new-password": {
-    "defaultMessage": "New Password"
+    "defaultMessage": "Nuova Password"
   },
   "admin.confirm-password": {
-    "defaultMessage": "Confirm Password"
+    "defaultMessage": "Conferma Password"
   },
   "admin.change-password-button": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "Cambia Password"
   },
   "admin.password-error-length": {
-    "defaultMessage": "Password must be at least 6 characters"
+    "defaultMessage": "La password deve contenere almeno 6 caratteri"
   },
   "admin.password-error-mismatch": {
-    "defaultMessage": "Passwords do not match"
+    "defaultMessage": "Le password non corrispondono"
   },
   "admin.password-error-failed": {
-    "defaultMessage": "Failed to change password"
+    "defaultMessage": "Impossibile modificare la password"
   },
   "admin.password-error-google": {
-    "defaultMessage": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+    "defaultMessage": "Questo utente è autenticato tramite Google. La modifica della password non è disponibile per gli account Google. Chiedi all'utente di gestire la propria password tramite il proprio account Google."
   },
   "admin.password-error-facebook": {
-    "defaultMessage": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+    "defaultMessage": "Questo utente è autenticato tramite Facebook. La modifica della password non è disponibile per gli account Facebook. Chiedi all'utente di gestire la propria password tramite il proprio account Facebook."
   },
   "admin.close": {
-    "defaultMessage": "Close"
+    "defaultMessage": "Chiudi"
   }
 }
