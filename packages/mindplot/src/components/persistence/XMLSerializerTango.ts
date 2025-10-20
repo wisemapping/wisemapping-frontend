@@ -682,8 +682,16 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       }
     }
 
-    model.setEndArrow(false);
-    model.setStartArrow(true);
+    // Load arrow settings from XML
+    const endArrow = domElement.getAttribute('endArrow');
+    if (endArrow !== null) {
+      model.setEndArrow(endArrow === 'true');
+    }
+
+    const startArrow = domElement.getAttribute('startArrow');
+    if (startArrow !== null) {
+      model.setStartArrow(startArrow === 'true');
+    }
 
     // Load stroke color if present
     const strokeColor = domElement.getAttribute('strokeColor');

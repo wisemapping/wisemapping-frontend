@@ -725,6 +725,12 @@
       "value": "简单折线"
     }
   ],
+  "icon-collection.connection.simple-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "直接的直线连接 - 简洁的极简风格用于简单关系"
+    }
+  ],
   "icon-collection.connection.thick-curved": [
     {
       "type": 0,

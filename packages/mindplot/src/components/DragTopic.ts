@@ -63,8 +63,24 @@ class DragTopic {
     // All topic element must be positioned based on the innerShape.
     const draggedNode = this._draggedNode;
     const size = draggedNode.getSize();
-    const cx = x - (x > 0 ? 0 : size.width);
-    const cy = Math.ceil(y - size.height / 2);
+
+    // Position the drag shadow based on layout orientation
+    // Get orientation from LayoutManager to ensure we use current layout
+    const orientation = this._layoutManager.getOrientation();
+
+    let cx: number;
+    let cy: number;
+
+    if (orientation === 'vertical') {
+      // Tree layout: center horizontally, position vertically
+      cx = x - size.width / 2;
+      cy = y - size.height / 2;
+    } else {
+      // Mindmap layout: handle left/right positioning, center vertically
+      cx = x - (x > 0 ? 0 : size.width);
+      cy = Math.ceil(y - size.height / 2);
+    }
+
     this._elem2d.setPosition(cx, cy);
 
     // In case is not free, pivot must be drawn ...
@@ -80,6 +96,10 @@ class DragTopic {
         const dragPivot = this._getDragPivot();
         const pivotPosition = predict.position;
         dragPivot.connectTo(parent!, pivotPosition);
+        // Ensure pivot remains visible when order changes during drag
+        if (!dragPivot.isVisible()) {
+          dragPivot.setVisibility(true);
+        }
         this.setOrder(predict.order);
       }
     }

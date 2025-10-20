@@ -258,7 +258,12 @@ class DragPivot implements CanvasElement {
     // Change elements position ...
     const pivotRect = this._getPivotRect();
     pivotRect.moveToFront();
-    pivotRect.setPosition(position.x, position.y);
+
+    // Position the pivot rect centered at the given position
+    const size = this._size;
+    const pivotX = position.x - size.width / 2;
+    const pivotY = position.y - size.height / 2;
+    pivotRect.setPosition(pivotX, pivotY);
 
     this._redrawLine();
   }

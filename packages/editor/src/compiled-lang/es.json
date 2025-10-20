@@ -725,6 +725,12 @@
       "value": "Polilínea simple"
     }
   ],
+  "icon-collection.connection.simple-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "Conexión de línea recta directa - Estilo limpio y minimalista para relaciones simples"
+    }
+  ],
   "icon-collection.connection.thick-curved": [
     {
       "type": 0,

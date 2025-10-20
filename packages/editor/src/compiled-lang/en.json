@@ -59,6 +59,12 @@
       "value": "Mindmap renamed"
     }
   ],
+  "appbar.tooltip-change-layout": [
+    {
+      "type": 0,
+      "value": "Change Layout"
+    }
+  ],
   "appbar.tooltip-export": [
     {
       "type": 0,
@@ -407,6 +413,12 @@
       "value": "Background"
     }
   ],
+  "editor-panel.tooltip-change-layout": [
+    {
+      "type": 0,
+      "value": "Change Layout"
+    }
+  ],
   "editor-panel.tooltip-connection-color": [
     {
       "type": 0,
@@ -749,13 +761,13 @@
       "value": "Hand-drawn style with dramatic curves - Perfect for creative and expressive mind maps"
     }
   ],
-  "icon-collection.connection.straight-line": [
+  "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
-      "value": "Straight Line"
+      "value": "Simple Polyline"
     }
   ],
-  "icon-collection.connection.straight-line-tooltip": [
+  "icon-collection.connection.simple-polyline-tooltip": [
     {
       "type": 0,
       "value": "Direct straight line connection - Clean and minimalist style for simple relationships"
@@ -867,6 +879,36 @@
     {
       "type": 0,
       "value": "icons found"
+    }
+  ],
+  "layout-selector.description": [
+    {
+      "type": 0,
+      "value": "Choose layout style"
+    }
+  ],
+  "layout-selector.mindmap": [
+    {
+      "type": 0,
+      "value": "Mindmap"
+    }
+  ],
+  "layout-selector.mindmap-description": [
+    {
+      "type": 0,
+      "value": "Horizontal layout with balanced branches"
+    }
+  ],
+  "layout-selector.tree": [
+    {
+      "type": 0,
+      "value": "Tree"
+    }
+  ],
+  "layout-selector.tree-description": [
+    {
+      "type": 0,
+      "value": "Vertical hierarchy flowing top-to-bottom"
     }
   ],
   "link.help_text": [

@@ -725,6 +725,12 @@
       "value": "Polyligne simple"
     }
   ],
+  "icon-collection.connection.simple-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "Connexion en ligne droite directe - Style épuré et minimaliste pour les relations simples"
+    }
+  ],
   "icon-collection.connection.thick-curved": [
     {
       "type": 0,

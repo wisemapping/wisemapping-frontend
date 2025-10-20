@@ -17,7 +17,6 @@
  */
 // eslint-disable-next-line max-classes-per-file
 import { Ellipse, StraightLine } from '@wisemapping/web2d';
-import Shape from './util/Shape';
 import ActionDispatcher from './ActionDispatcher';
 import Canvas from './Canvas';
 import PositionType from './PositionType';
@@ -160,13 +159,15 @@ class ControlPivotLine {
     const screen = this._canvas!.getScreenManager();
     const mousePosition = screen.getWorkspaceMousePosition(event);
 
-    // Update relatioship position ...
+    // Update relationship position ...
     const topic =
       this._pivotType === PivotType.Start
         ? this._relationship.getSourceTopic()
         : this._relationship.getTargetTopic();
 
-    let relPos = Shape.calculateRelationShipPointCoordinates(topic, mousePosition);
+    // Use the shared snap point calculation from Relationship
+    const relPos = Relationship.calculateSnapPoint(topic, mousePosition);
+
     const ctlPoint = { x: mousePosition.x - relPos.x, y: mousePosition.y - relPos.y };
     this._moveRelHandler(ctlPoint);
 
@@ -175,11 +176,11 @@ class ControlPivotLine {
 
     // Update line ...
     this._line.setTo(mousePosition.x - 5, mousePosition.y - 5);
-    relPos =
+    const linePos =
       this._pivotType === PivotType.Start
         ? this._relationship.getLine().getFrom()
         : this._relationship.getLine().getTo();
-    this._line.setFrom(relPos.x, relPos.y);
+    this._line.setFrom(linePos.x, linePos.y);
   }
 
   private mouseUpHandler() {
@@ -225,6 +226,7 @@ class RelationshipControlPoints {
       (controlPointPosition) => {
         const line = this._relationship.getLine();
         line.setSrcControlPoint(controlPointPosition);
+        line.setIsSrcControlPointCustom(true);
         relationship.redraw();
       },
       () => {
@@ -243,6 +245,7 @@ class RelationshipControlPoints {
       (controlPointPosition) => {
         const line = this._relationship.getLine();
         line.setDestControlPoint(controlPointPosition);
+        line.setIsDestControlPointCustom(true);
         relationship.redraw();
       },
       () => {

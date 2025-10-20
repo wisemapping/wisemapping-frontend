@@ -24,6 +24,7 @@ import Topic from './Topic';
 import TopicConfig from './TopicConfig';
 import ArcLine from './model/ArcLine';
 import BaseConnectionLine, { LineType } from './BaseConnectionLine';
+import Canvas from './Canvas';
 
 export { LineType };
 
@@ -178,10 +179,8 @@ class TopicConnection extends BaseConnectionLine {
       case LineType.ARC:
         this._line.setStroke(2, 'solid', color, 1);
         break;
-      default: {
-        const exhaustiveCheck: never = this.getLineType();
-        throw new Error(exhaustiveCheck);
-      }
+      default:
+        throw new Error(`Unhandled line type: ${this.getLineType()}`);
     }
     return color;
   }

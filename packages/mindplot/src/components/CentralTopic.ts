@@ -35,7 +35,7 @@ class CentralTopic extends Topic {
     });
   }
 
-  workoutIncomingConnectionPoint(): PositionType {
+  workoutIncomingConnectionPoint(sourcePosition: PositionType): PositionType {
     // This is called on central topic (parent) to get connection point FROM children
     const orientation = this.getOrientation();
 
@@ -50,6 +50,7 @@ class CentralTopic extends Topic {
     }
 
     // Mindmap layout: center of the topic
+    // For central topic in mindmap, we don't offset based on source position
     return this.getPosition();
   }
 

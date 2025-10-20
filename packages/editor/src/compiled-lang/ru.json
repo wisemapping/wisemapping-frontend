@@ -725,6 +725,12 @@
       "value": "Простая ломаная"
     }
   ],
+  "icon-collection.connection.simple-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "Прямое соединение прямой линией - Чистый и минималистичный стиль для простых отношений"
+    }
+  ],
   "icon-collection.connection.thick-curved": [
     {
       "type": 0,

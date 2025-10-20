@@ -328,5 +328,20 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
       ],
     },
   },
+  theme: {
+    desktop: {
+      hidden: ['showcase'],
+    },
+  },
+  layout: {
+    desktop: {
+      hidden: ['showcase', 'viewonly-public', 'viewonly-private', 'edition-viewer'],
+    },
+  },
+  rename: {
+    desktop: {
+      hidden: ['showcase', 'viewonly-public', 'viewonly-private', 'edition-viewer'],
+    },
+  },
 };
 export default Capability;
