@@ -20,7 +20,7 @@ import { $assert, $defined } from './util/assert';
 
 import NodeGraph, { NodeOption } from './NodeGraph';
 import TopicFeatureFactory from './TopicFeature';
-import ConnectionLine, { LineType } from './ConnectionLine';
+import TopicConnection, { LineType } from './TopicConnection';
 import IconGroup from './IconGroup';
 import ImageEmojiFeature from './ImageEmojiFeature';
 import ImageSVGFeature from './ImageSVGFeature';
@@ -47,6 +47,7 @@ import ThemeFactory from './theme/ThemeFactory';
 import { ThemeVariant } from './theme/Theme';
 import TopicShape from './shape/TopicShape';
 import TopicShapeFactory from './shape/TopicShapeFactory';
+import type { OrientationType } from './layout/LayoutType';
 
 const ICON_SCALING_FACTOR = 1.3;
 
@@ -73,11 +74,18 @@ abstract class Topic extends NodeGraph {
 
   private _connector!: ShirinkConnector;
 
-  private _outgoingLine!: ConnectionLine | null;
+  private _outgoingLine!: TopicConnection | null;
 
   private _themeVariant: ThemeVariant;
 
-  constructor(model: NodeModel, options: NodeOption, themeVariant: ThemeVariant) {
+  private _orientation: OrientationType;
+
+  constructor(
+    model: NodeModel,
+    options: NodeOption,
+    themeVariant: ThemeVariant,
+    orientation: OrientationType = 'horizontal',
+  ) {
     super(model, options);
     this._children = [];
     this._parent = null;
@@ -85,6 +93,7 @@ abstract class Topic extends NodeGraph {
     this._isInWorkspace = false;
     this._innerShape = null;
     this._themeVariant = themeVariant;
+    this._orientation = orientation;
     this._imageEmojiFeature = new ImageEmojiFeature(this);
 
     this._imageSVGFeature = new ImageSVGFeature(this);
@@ -133,6 +142,14 @@ abstract class Topic extends NodeGraph {
 
   setThemeVariant(variant: ThemeVariant): void {
     this._themeVariant = variant;
+  }
+
+  getOrientation(): OrientationType {
+    return this._orientation;
+  }
+
+  setOrientation(orientation: OrientationType): void {
+    this._orientation = orientation;
   }
 
   updateTopicShape(): boolean {
@@ -794,11 +811,11 @@ abstract class Topic extends NodeGraph {
     this.invariant();
   }
 
-  getOutgoingLine(): ConnectionLine | null {
+  getOutgoingLine(): TopicConnection | null {
     return this._outgoingLine;
   }
 
-  getIncomingLines(): ConnectionLine[] {
+  getIncomingLines(): TopicConnection[] {
     const children = this.getChildren();
     return children
       .filter((node) => $defined(node.getOutgoingLine()))
@@ -809,7 +826,7 @@ abstract class Topic extends NodeGraph {
     let result: Topic | null = null;
     const line = this.getOutgoingLine();
     if (line) {
-      result = line.getTargetTopic();
+      result = line.getParentTopic();
     }
     return result;
   }
@@ -982,7 +999,7 @@ abstract class Topic extends NodeGraph {
       this._outgoingLine = null;
 
       // Disconnect nodes ...
-      const targetTopic = outgoingLine.getTargetTopic();
+      const targetTopic = outgoingLine.getParentTopic();
       targetTopic.removeChild(this);
 
       // Update model ...
@@ -1058,9 +1075,9 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  private createConnectionLine(targetTopic: Topic): ConnectionLine {
+  private createConnectionLine(targetTopic: Topic): TopicConnection {
     const type: LineType = targetTopic.getConnectionStyle();
-    return new ConnectionLine(this, targetTopic, type);
+    return new TopicConnection(this, targetTopic, type);
   }
 
   append(child: Topic): void {
@@ -1357,8 +1374,8 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  private flatten2DElements(topic: Topic): (Topic | Relationship | ConnectionLine)[] {
-    const result: (Topic | Relationship | ConnectionLine)[] = [];
+  private flatten2DElements(topic: Topic): (Topic | Relationship | TopicConnection)[] {
+    const result: (Topic | Relationship | TopicConnection)[] = [];
     const children = topic.getChildren();
     children.forEach((child) => {
       result.push(child);

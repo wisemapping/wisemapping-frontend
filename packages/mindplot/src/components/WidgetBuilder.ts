@@ -66,7 +66,13 @@ abstract class WidgetBuilder {
     const mindmapComp = document.getElementById('mindmap-comp') as HTMLElement & {
       shadowRoot: ShadowRoot;
     };
-    const webcomponentShadowRoot = mindmapComp.shadowRoot!;
+
+    if (!mindmapComp || !mindmapComp.shadowRoot) {
+      console.warn('mindmap-comp element or shadowRoot not found');
+      return;
+    }
+
+    const webcomponentShadowRoot = mindmapComp.shadowRoot;
 
     let tooltip = webcomponentShadowRoot.getElementById('mindplot-svg-tooltip');
 

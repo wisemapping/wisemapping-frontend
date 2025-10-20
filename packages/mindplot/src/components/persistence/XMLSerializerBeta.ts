@@ -197,6 +197,9 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     // Default to classic theme for beta version maps
     mindmap.setTheme('classic');
 
+    // Beta version always uses mindmap layout
+    mindmap.setLayout('mindmap');
+
     const children = documentElement.childNodes;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];

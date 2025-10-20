@@ -99,6 +99,14 @@ class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
   getControlPoints(): [PositionType, PositionType] {
     throw new Error('Method not implemented.');
   }
+
+  setOrientation(orientation: 'horizontal' | 'vertical'): void {
+    this.peer.setOrientation(orientation);
+  }
+
+  getOrientation(): 'horizontal' | 'vertical' {
+    return this.peer.getOrientation();
+  }
 }
 
 export default ArcLine;

@@ -28,6 +28,8 @@ class ArcLinePeer extends ElementPeer {
 
   private _y2: number;
 
+  private _orientation: 'horizontal' | 'vertical';
+
   constructor() {
     const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'path');
     super(svgElement);
@@ -35,6 +37,7 @@ class ArcLinePeer extends ElementPeer {
     this._x2 = 0;
     this._y1 = 0;
     this._y2 = 0;
+    this._orientation = 'horizontal';
     this._updatePath();
   }
 
@@ -66,6 +69,15 @@ class ArcLinePeer extends ElementPeer {
     this._native.setAttribute('stroke-width', String(width));
   }
 
+  setOrientation(orientation: 'horizontal' | 'vertical'): void {
+    this._orientation = orientation;
+    this._updatePath();
+  }
+
+  getOrientation(): 'horizontal' | 'vertical' {
+    return this._orientation;
+  }
+
   private static pointToStr(x: number, y: number) {
     return `${x.toFixed(1)},${y.toFixed(1)} `;
   }
@@ -76,8 +88,18 @@ class ArcLinePeer extends ElementPeer {
       const fromPoint = ArcLinePeer.pointToStr(this._x1, this._y1);
       const toPoint = ArcLinePeer.pointToStr(this._x2, this._y2);
 
-      const curveP1 = ArcLinePeer.pointToStr(this._x1, this._y1 + (this._y2 - this._y1) / 8);
-      const curveP2 = ArcLinePeer.pointToStr(this._x2 - (this._x2 - this._x1), this._y2);
+      let curveP1: string;
+      let curveP2: string;
+
+      if (this._orientation === 'vertical') {
+        // For vertical tree layout: arc curves horizontally (concave in X direction)
+        curveP1 = ArcLinePeer.pointToStr(this._x1 + (this._x2 - this._x1) / 8, this._y1);
+        curveP2 = ArcLinePeer.pointToStr(this._x2, this._y2 - (this._y2 - this._y1));
+      } else {
+        // For horizontal mindmap layout: arc curves vertically (concave in Y direction)
+        curveP1 = ArcLinePeer.pointToStr(this._x1, this._y1 + (this._y2 - this._y1) / 8);
+        curveP2 = ArcLinePeer.pointToStr(this._x2 - (this._x2 - this._x1), this._y2);
+      }
 
       const path = `M${fromPoint} C${curveP1},${curveP2} ${toPoint}`;
       this._native.setAttribute('d', path);

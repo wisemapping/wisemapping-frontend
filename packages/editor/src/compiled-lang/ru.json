@@ -707,10 +707,28 @@
       "value": "Default"
     }
   ],
+  "icon-collection.connection.organic-curved": [
+    {
+      "type": 0,
+      "value": "Органическая кривая"
+    }
+  ],
+  "icon-collection.connection.organic-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Ручной стиль с драматическими кривыми - Идеально для творческих и выразительных карт разума"
+    }
+  ],
   "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
       "value": "Простая ломаная"
+    }
+  ],
+  "icon-collection.connection.simple-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "Прямое соединение прямой линией - Чистый и минималистичный стиль для простых отношений"
     }
   ],
   "icon-collection.connection.thick-curved": [
@@ -753,6 +771,12 @@
     {
       "type": 0,
       "value": "Нет"
+    }
+  ],
+  "icon-collection.shape.none-tooltip": [
+    {
+      "type": 0,
+      "value": "Нет - Без видимого фона фигуры"
     }
   ],
   "icon-collection.shape.rectangle": [

@@ -563,6 +563,9 @@
   "icon-collection.shape.none": {
     "defaultMessage": "Nenhum"
   },
+  "icon-collection.shape.none-tooltip": {
+    "defaultMessage": "Nenhum - Sem fundo de forma visível"
+  },
   "icon-collection.shape.line": {
     "defaultMessage": "Linha"
   },
@@ -590,11 +593,20 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Arco"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "Curva Orgânica"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "Estilo desenhado à mão com curvas dramáticas - Perfeito para mapas mentais criativos e expressivos"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Curva fina"
   },
   "icon-collection.connection.simple-polyline": {
     "defaultMessage": "Polilinha simples"
+  },
+  "icon-collection.connection.simple-polyline-tooltip": {
+    "defaultMessage": "Conexão de linha reta direta - Estilo limpo e minimalista para relacionamentos simples"
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Polilinha curva"

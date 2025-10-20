@@ -50,6 +50,9 @@
   "appbar.tooltip-outline-view": {
     "defaultMessage": "Outline View"
   },
+  "appbar.tooltip-change-layout": {
+    "defaultMessage": "Change Layout"
+  },
   "outline.empty": {
     "defaultMessage": "No content to display"
   },
@@ -314,6 +317,24 @@
   "editor-panel.canvas-style-title": {
     "defaultMessage": "Background"
   },
+  "editor-panel.tooltip-change-layout": {
+    "defaultMessage": "Change Layout"
+  },
+  "layout-selector.description": {
+    "defaultMessage": "Choose layout style"
+  },
+  "layout-selector.mindmap": {
+    "defaultMessage": "Mindmap"
+  },
+  "layout-selector.mindmap-description": {
+    "defaultMessage": "Horizontal layout with balanced branches"
+  },
+  "layout-selector.tree": {
+    "defaultMessage": "Tree"
+  },
+  "layout-selector.tree-description": {
+    "defaultMessage": "Vertical hierarchy flowing top-to-bottom"
+  },
   "canvas-style.title": {
     "defaultMessage": "Background"
   },
@@ -569,6 +590,9 @@
   "icon-collection.shape.none": {
     "defaultMessage": "None"
   },
+  "icon-collection.shape.none-tooltip": {
+    "defaultMessage": "None - No visible shape background"
+  },
   "icon-collection.shape.line": {
     "defaultMessage": "Line"
   },
@@ -593,17 +617,41 @@
   "icon-collection.connection.thick-curved": {
     "defaultMessage": "Thick Curved"
   },
+  "icon-collection.connection.thick-curved-tooltip": {
+    "defaultMessage": "Thick curved line with smooth bezier curves - Great for emphasizing main branches"
+  },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "Organic Curved"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "Hand-drawn style with dramatic curves - Perfect for creative and expressive mind maps"
+  },
   "icon-collection.connection.arc": {
     "defaultMessage": "Arc"
+  },
+  "icon-collection.connection.arc-tooltip": {
+    "defaultMessage": "Circular arc connection - Perfect for radial layouts and organic flow"
   },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Thin Curved"
   },
+  "icon-collection.connection.thin-curved-tooltip": {
+    "defaultMessage": "Thin curved line with elegant bezier curves - Ideal for detailed or dense mind maps"
+  },
   "icon-collection.connection.simple-polyline": {
     "defaultMessage": "Simple Polyline"
   },
+  "icon-collection.connection.simple-polyline-tooltip": {
+    "defaultMessage": "Direct straight line connection - Clean and minimalist style for simple relationships"
+  },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Curved Polyline"
+  },
+  "icon-collection.connection.curved-polyline-tooltip": {
+    "defaultMessage": "Multi-segment line with smooth corners - Best for structured layouts and clear paths"
+  },
+  "icon-collection.connection.default-tooltip": {
+    "defaultMessage": "Default - Connection style will be automatically selected based on the theme"
   },
   "icon-picker.emojis": {
     "defaultMessage": "Emojis"

@@ -176,18 +176,9 @@ class RelationshipPivot {
   }
 
   private _calculateFromPosition(toPosition: PositionType): PositionType {
-    // Calculate origin position ...
+    // Use the shared snap point calculation from Relationship
     const sourceTopic = this._sourceTopic!;
-    let sourcePosition = this._sourceTopic!.getPosition();
-    if (sourceTopic!.getType() === 'CentralTopic') {
-      sourcePosition = Shape.workoutIncomingConnectionPoint(sourceTopic, toPosition);
-    }
-    const controlPoint = Shape.calculateDefaultControlPoints(sourcePosition, toPosition);
-    const point = {
-      x: controlPoint[0].x + sourcePosition.x,
-      y: controlPoint[0].y + sourcePosition.y,
-    };
-    return Shape.calculateRelationShipPointCoordinates(sourceTopic, point);
+    return Relationship.calculateSnapPoint(sourceTopic, toPosition);
   }
 
   private _connectOnFocus(event: Event, targetTopic: Topic): void {

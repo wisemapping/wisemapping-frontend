@@ -58,6 +58,8 @@ class DragConnector {
   private _searchConnectionCandidates(dragTopic: DragTopic): Topic[] {
     let topics = this._designerModel.getTopics();
     const draggedNode = dragTopic.getDraggedTopic();
+    // Get orientation from topic - it should be updated when layout changes
+    const orientation = draggedNode.getOrientation();
 
     // Drag node connects to the border ...
     // const dragTopicWidth = dragTopic.getSize ? dragTopic.getSize().width : 0; // Hack...
@@ -78,22 +80,35 @@ class DragConnector {
       return result;
     });
 
-    // Filter all the nodes that are outside the vertical boundary:
-    //  * The node is to out of the x scope
-    //  * The x distance greater the vertical tolerated distance
-    topics = topics.filter((topic: Topic) => {
-      const tpos = topic.getPosition();
-      // Center topic has different alignment than the rest of the nodes.
-      // That's why i need to divide it by two...
-      const txborder = tpos.x + (topic.getSize().width / 2) * Math.sign(sPos.x);
-      const distance = (sPos.x - txborder) * Math.sign(sPos.x);
-      return distance > 0 && distance < DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE;
-    });
+    // Filter based on layout orientation
+    if (orientation === 'vertical') {
+      // Tree layout: filter by vertical position (Y axis)
+      // Only consider topics that are above the dragged topic
+      topics = topics.filter((topic: Topic) => {
+        const tpos = topic.getPosition();
+        const tborder = tpos.y - topic.getSize().height / 2;
+        const distance = sPos.y - tborder;
+        return distance > 0 && distance < DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE;
+      });
+    } else {
+      // Mindmap layout: filter by horizontal position (X axis)
+      // Filter all the nodes that are outside the horizontal boundary:
+      //  * The node is to out of the x scope
+      //  * The x distance greater the tolerated distance
+      topics = topics.filter((topic: Topic) => {
+        const tpos = topic.getPosition();
+        // Center topic has different alignment than the rest of the nodes.
+        // That's why i need to divide it by two...
+        const txborder = tpos.x + (topic.getSize().width / 2) * Math.sign(sPos.x);
+        const distance = (sPos.x - txborder) * Math.sign(sPos.x);
+        return distance > 0 && distance < DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE;
+      });
+    }
 
     // Assign a priority based on the distance:
     // - Alignment with the targetNode
-    // - Vertical distance
-    // - Horizontal proximity
+    // - Vertical/Horizontal distance (depending on orientation)
+    // - Proximity
     // - It's already connected.
     const currentConnection = dragTopic.getConnectedToTopic();
     const me = this;
@@ -101,8 +116,8 @@ class DragConnector {
       const aPos = a.getPosition();
       const bPos = b.getPosition();
 
-      const av = me._isVerticallyAligned(a.getSize(), aPos, sPos);
-      const bv = me._isVerticallyAligned(b.getSize(), bPos, sPos);
+      const av = me._isAligned(a.getSize(), aPos, sPos, orientation);
+      const bv = me._isAligned(b.getSize(), bPos, sPos, orientation);
       return (
         me._proximityWeight(av, a, sPos, currentConnection!) -
         me._proximityWeight(bv, b, sPos, currentConnection!)
@@ -126,11 +141,17 @@ class DragConnector {
     );
   }
 
-  private _isVerticallyAligned(
+  private _isAligned(
     targetSize: SizeType,
     targetPosition: PositionType,
     sourcePosition: PositionType,
+    orientation: 'horizontal' | 'vertical',
   ): boolean {
+    if (orientation === 'vertical') {
+      // Tree layout: check horizontal alignment (X axis)
+      return Math.abs(sourcePosition.x - targetPosition.x) < targetSize.width / 2;
+    }
+    // Mindmap layout: check vertical alignment (Y axis)
     return Math.abs(sourcePosition.y - targetPosition.y) < targetSize.height / 2;
   }
 

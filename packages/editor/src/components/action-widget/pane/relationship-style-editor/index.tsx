@@ -25,10 +25,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import RemoveIcon from '@mui/icons-material/Remove';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { styled } from '@mui/material/styles';
+import {
+  RelationshipStartArrowIcon,
+  RelationshipEndArrowIcon,
+} from '../../../icons/RelationshipArrowIcons';
 
 import NodeProperty from '../../../../classes/model/node-property';
 import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
@@ -196,7 +198,7 @@ const RelationshipStyleEditor = (props: RelationshipStyleEditorProps): ReactElem
               defaultMessage: 'Toggle end arrow',
             })}
           >
-            <ArrowLeftIcon />
+            <RelationshipStartArrowIcon />
           </ActionButton>
           <ActionButton
             onClick={handleStartArrowToggle}
@@ -210,7 +212,7 @@ const RelationshipStyleEditor = (props: RelationshipStyleEditorProps): ReactElem
               defaultMessage: 'Toggle start arrow',
             })}
           >
-            <ArrowRightIcon />
+            <RelationshipEndArrowIcon />
           </ActionButton>
         </Box>
       </Box>

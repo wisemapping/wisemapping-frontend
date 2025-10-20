@@ -563,6 +563,9 @@
   "icon-collection.shape.none": {
     "defaultMessage": "Aucun"
   },
+  "icon-collection.shape.none-tooltip": {
+    "defaultMessage": "Aucun - Pas de fond de forme visible"
+  },
   "icon-collection.shape.line": {
     "defaultMessage": "Ligne"
   },
@@ -590,11 +593,20 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Arc"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "Courbe Organique"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "Style dessiné à la main avec des courbes dramatiques - Parfait pour les cartes mentales créatives et expressives"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Courbe fine"
   },
   "icon-collection.connection.simple-polyline": {
     "defaultMessage": "Polyligne simple"
+  },
+  "icon-collection.connection.simple-polyline-tooltip": {
+    "defaultMessage": "Connexion en ligne droite directe - Style épuré et minimaliste pour les relations simples"
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Polyligne courbe"

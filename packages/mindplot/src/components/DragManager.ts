@@ -34,11 +34,21 @@ class DragManager {
 
   private _mouseUpListener;
 
+  private _mouseDownTime: number | null;
+
+  private _mouseDownPosition: { x: number; y: number } | null;
+
+  // Drag thresholds to prevent accidental dragging
+  private static DRAG_TIME_THRESHOLD_MS = 100; // Minimum time before drag starts
+  private static DRAG_DISTANCE_THRESHOLD = 5; // Minimum pixels moved before drag starts
+
   constructor(workspace: Canvas, eventDispatcher: EventBusDispatcher) {
     this._workspace = workspace;
     this._listeners = {};
     this._isDragInProcess = false;
     this._eventDispatcher = eventDispatcher;
+    this._mouseDownTime = null;
+    this._mouseDownPosition = null;
     DragTopic.init(this._workspace);
   }
 
@@ -48,10 +58,15 @@ class DragManager {
     const screen = workspace.getScreenManager();
     const dragManager = this;
     const me = this;
-    const mouseDownListener = function mouseDownListener() {
+    const mouseDownListener = function mouseDownListener(event: Event) {
       if (workspace.isWorkspaceEventsEnabled()) {
         // Disable double drag...
         workspace.enableWorkspaceEvents(false);
+
+        // Record mouse down time and position for drag threshold
+        me._mouseDownTime = Date.now();
+        const pos = screen.getWorkspaceMousePosition(event as MouseEvent);
+        me._mouseDownPosition = { x: pos.x, y: pos.y };
 
         // Set initial position.
         const layoutManager = me._eventDispatcher.getLayoutManager();
@@ -88,6 +103,28 @@ class DragManager {
     const screen = workspace.getScreenManager();
     const result = (event: Event) => {
       if (!this._isDragInProcess) {
+        // Check if drag threshold has been met
+        const currentTime = Date.now();
+        const timeSinceMouseDown = currentTime - (this._mouseDownTime || 0);
+
+        const originalEvent = event;
+        const currentPos = screen.getWorkspaceMousePosition(originalEvent as MouseEvent);
+        const distanceMoved = this._mouseDownPosition
+          ? Math.sqrt(
+              Math.pow(currentPos.x - this._mouseDownPosition.x, 2) +
+                Math.pow(currentPos.y - this._mouseDownPosition.y, 2),
+            )
+          : 0;
+
+        // Only start drag if time threshold OR distance threshold is met
+        const timeThresholdMet = timeSinceMouseDown >= DragManager.DRAG_TIME_THRESHOLD_MS;
+        const distanceThresholdMet = distanceMoved >= DragManager.DRAG_DISTANCE_THRESHOLD;
+
+        if (!timeThresholdMet && !distanceThresholdMet) {
+          // Threshold not met yet, don't start dragging
+          return;
+        }
+
         // Execute Listeners ..
         const startDragListener = dragManager._listeners.startdragging;
         startDragListener(event, dragNode);
@@ -146,7 +183,15 @@ class DragManager {
         dragNode.removeFromWorkspace(workspace);
 
         this._isDragInProcess = false;
+      } else {
+        // Even if drag didn't fully start, ensure drag pivot is hidden
+        // This handles cases where mouse up happens before threshold is met
+        dragNode.setVisibility(false);
       }
+
+      // Reset drag threshold trackers
+      this._mouseDownTime = null;
+      this._mouseDownPosition = null;
     };
     dragManager._mouseUpListener = result;
     return result;

@@ -69,6 +69,8 @@ export type {
   BackgroundPatternType,
 };
 
+export type { LayoutType, OrientationType } from './components/layout/LayoutType';
+
 export {
   Mindmap,
   Designer,

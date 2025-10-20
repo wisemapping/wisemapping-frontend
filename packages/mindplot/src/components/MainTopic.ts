@@ -86,11 +86,40 @@ class MainTopic extends Topic {
   }
 
   workoutIncomingConnectionPoint(sourcePosition: PositionType): PositionType {
+    // This is called on the parent to get connection point FROM child
+    const orientation = this.getOrientation();
+
+    if (orientation === 'vertical') {
+      // Tree layout: parent receives connection from child at BOTTOM center
+      const pos = this.getPosition();
+      const size = this.getSize();
+      return {
+        x: pos.x,
+        y: pos.y + size.height / 2, // Bottom center
+      };
+    }
+
+    // Mindmap layout: use existing horizontal logic
     return Shape.workoutIncomingConnectionPoint(this, sourcePosition);
   }
 
   workoutOutgoingConnectionPoint(targetPosition: PositionType): PositionType {
     $assert(targetPosition, 'targetPoint can not be null');
+
+    // This is called on the child to get connection point TO parent
+    const orientation = this.getOrientation();
+
+    if (orientation === 'vertical') {
+      // Tree layout: child connects to parent from TOP center
+      const pos = this.getPosition();
+      const size = this.getSize();
+      return {
+        x: pos.x,
+        y: pos.y - size.height / 2, // Top center
+      };
+    }
+
+    // Mindmap layout: use existing horizontal logic
     const pos = this.getPosition();
     const isAtRight = Shape.isAtRight(targetPosition, pos);
     const size = this.getSize();

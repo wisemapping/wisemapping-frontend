@@ -26,7 +26,6 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import TextureIcon from '@mui/icons-material/Texture';
-import RelationshipStyleIcon from '../icons/RelationshipStyleIcon';
 
 import ActionConfig from '../../classes/action/action-config';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
@@ -36,6 +35,7 @@ import TopicImagePicker from '../action-widget/pane/topic-image-picker';
 import TopicStyleEditor from '../action-widget/pane/topic-style-editor';
 import TopicFontEditor from '../action-widget/pane/topic-font-editor';
 import RelationshipStyleEditor from '../action-widget/pane/relationship-style-editor';
+import RelationshipStyleIcon from '../icons/RelationshipStyleIcon';
 import TopicIconEditor from '../action-widget/pane/topic-icon-editor';
 import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';

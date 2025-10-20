@@ -563,6 +563,9 @@
   "icon-collection.shape.none": {
     "defaultMessage": "Немає"
   },
+  "icon-collection.shape.none-tooltip": {
+    "defaultMessage": "Немає - Без видимого фону фігури"
+  },
   "icon-collection.shape.line": {
     "defaultMessage": "Лінія"
   },
@@ -590,11 +593,20 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Дуга"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "Органічна крива"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "Ручний стиль з драматичними кривими - Ідеально для творчих та виразних карт розуму"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Тонка крива"
   },
   "icon-collection.connection.simple-polyline": {
     "defaultMessage": "Проста ламана"
+  },
+  "icon-collection.connection.simple-polyline-tooltip": {
+    "defaultMessage": "Пряме з'єднання прямою лінією - Чистий і мінімалістичний стиль для простих відносин"
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Крива ламана"

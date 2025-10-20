@@ -24,9 +24,15 @@ import NodeModel from './model/NodeModel';
 import { NodeOption } from './NodeGraph';
 import Topic from './Topic';
 import { ThemeVariant } from './theme/Theme';
+import type { OrientationType } from './layout/LayoutType';
 
 class TopicFactory {
-  static create(nodeModel: NodeModel, options: NodeOption, themeVariant: ThemeVariant): Topic {
+  static create(
+    nodeModel: NodeModel,
+    options: NodeOption,
+    themeVariant: ThemeVariant,
+    orientation: OrientationType = 'horizontal',
+  ): Topic {
     $assert(nodeModel, 'Model can not be null');
 
     const type = nodeModel.getType();
@@ -34,9 +40,9 @@ class TopicFactory {
 
     let result: Topic;
     if (type === 'CentralTopic') {
-      result = new CentralTopic(nodeModel, options, themeVariant);
+      result = new CentralTopic(nodeModel, options, themeVariant, orientation);
     } else if (type === 'MainTopic') {
-      result = new MainTopic(nodeModel, options, themeVariant);
+      result = new MainTopic(nodeModel, options, themeVariant, orientation);
     } else {
       $assert(false, `unsupported node type:${type}`);
     }

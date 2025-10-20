@@ -30,6 +30,7 @@ import MoveControlPointCommand from './commands/MoveControlPointCommand';
 import ChangeFeatureToTopicCommand from './commands/ChangeFeatureToTopicCommand';
 import ChangeCanvasStyleCommand from './commands/ChangeCanvasStyleCommand';
 import ChangeThemeCommand from './commands/ChangeThemeCommand';
+import ChangeLayoutCommand from './commands/ChangeLayoutCommand';
 import LayoutEventBus from './layout/LayoutEventBus';
 import type { CanvasStyleType } from './model/CanvasStyleType';
 import CommandContext from './CommandContext';
@@ -44,6 +45,7 @@ import { PivotType } from './RelationshipControlPoints';
 import { TopicShapeType } from './model/INodeModel';
 import { LineType } from './ConnectionLine';
 import ThemeType from './model/ThemeType';
+import type { LayoutType } from './layout/LayoutType';
 
 class StandaloneActionDispatcher extends ActionDispatcher {
   private _actionRunner: DesignerActionRunner;
@@ -363,6 +365,11 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
   changeTheme(themeType: ThemeType): void {
     const command = new ChangeThemeCommand(themeType);
+    this.execute(command);
+  }
+
+  changeLayout(layoutType: LayoutType): void {
+    const command = new ChangeLayoutCommand(layoutType);
     this.execute(command);
   }
 

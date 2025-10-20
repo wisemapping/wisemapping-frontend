@@ -199,6 +199,10 @@ class Node {
     return this._sorter;
   }
 
+  setSorter(sorter: ChildrenSorterStrategy): void {
+    this._sorter = sorter;
+  }
+
   /** @return {String} returns id, order, position, size and shrink information */
   toString(): string {
     return `[id:${this.getId()}, order:${this.getOrder()}, position: {${this.getPosition().x},${

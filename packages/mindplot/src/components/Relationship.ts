@@ -17,7 +17,8 @@
  */
 import { Arrow, CurvedLine } from '@wisemapping/web2d';
 import type { Line } from '@wisemapping/web2d';
-import ConnectionLine, { LineType } from './ConnectionLine';
+import BaseConnectionLine, { LineType } from './BaseConnectionLine';
+import ArcLine from './model/ArcLine';
 import RelationshipControlPoints from './RelationshipControlPoints';
 import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
 import PositionType from './PositionType';
@@ -25,7 +26,14 @@ import Topic from './Topic';
 import Shape from './util/Shape';
 import Canvas from './Canvas';
 
-class Relationship extends ConnectionLine {
+/**
+ * Relationship represents arbitrary connections between topics (not hierarchical)
+ */
+class Relationship extends BaseConnectionLine {
+  private _sourceTopic: Topic;
+
+  private _targetTopic: Topic;
+
   private _focusShape: Line;
 
   private _onFocus: boolean;
@@ -42,13 +50,22 @@ class Relationship extends ConnectionLine {
 
   private _startArrow: Arrow;
 
+  private _focusStartArrow: Arrow;
+
+  private _focusEndArrow: Arrow;
+
   private _onFocusHandler: (event: Event, detail?: unknown) => void;
 
   private _model: RelationshipModel;
 
   constructor(sourceNode: Topic, targetNode: Topic, model: RelationshipModel) {
-    super(sourceNode, targetNode, LineType.THIN_CURVED);
+    super(LineType.THIN_CURVED);
+    this._sourceTopic = sourceNode;
+    this._targetTopic = targetNode;
     this._model = model;
+
+    // Initialize line after setting topics
+    this.initializeLine();
 
     const strokeColor = model.getStrokeColor() || Relationship.getStrokeColor();
 
@@ -89,6 +106,17 @@ class Relationship extends ConnectionLine {
     this._endArrow.setStrokeColor(strokeColor);
     this._endArrow.setStrokeWidth(2);
 
+    // Create focus arrows (shown when relationship is focused)
+    this._focusStartArrow = new Arrow();
+    this._focusStartArrow.setStrokeColor('#3f96ff');
+    this._focusStartArrow.setStrokeWidth(5);
+    this._focusStartArrow.setVisibility(false);
+
+    this._focusEndArrow = new Arrow();
+    this._focusEndArrow.setStrokeColor('#3f96ff');
+    this._focusEndArrow.setStrokeWidth(5);
+    this._focusEndArrow.setVisibility(false);
+
     // Set arrow visibility based on model
     this._showStartArrow = model.getStartArrow();
     this._showEndArrow = model.getEndArrow();
@@ -122,6 +150,26 @@ class Relationship extends ConnectionLine {
     this._applyStrokeStyle(this._model.getStrokeStyle());
   }
 
+  protected getLineWidth(): number {
+    return 3; // Relationships always use thin lines
+  }
+
+  protected getLineWidthOrganic(): number {
+    return 5; // Slightly thicker for organic style
+  }
+
+  protected createArcLine(): Line {
+    return new ArcLine(this._sourceTopic, this._targetTopic);
+  }
+
+  getSourceTopic(): Topic {
+    return this._sourceTopic;
+  }
+
+  getTargetTopic(): Topic {
+    return this._targetTopic;
+  }
+
   getModel(): RelationshipModel {
     return this._model;
   }
@@ -148,36 +196,7 @@ class Relationship extends ConnectionLine {
       line2d.setTo(tPos.x, tPos.y);
     } else {
       // Control points have been manually moved - recalculate best connection points
-      ctrlPoints = line2d.getControlPoints();
-
-      // Calculate control point absolute positions
-      const srcCtrlAbsolute = {
-        x: sPos.x + ctrlPoints[0].x,
-        y: sPos.y + ctrlPoints[0].y,
-      };
-      const destCtrlAbsolute = {
-        x: tPos.x + ctrlPoints[1].x,
-        y: tPos.y + ctrlPoints[1].y,
-      };
-
-      // Find best connection points based on control point directions
-      const bestSrcPos = this.calculateBestConnectionPoint(sourceTopic, srcCtrlAbsolute);
-      const bestDestPos = this.calculateBestConnectionPoint(targetTopic, destCtrlAbsolute);
-
-      line2d.setFrom(bestSrcPos.x, bestSrcPos.y);
-      line2d.setTo(bestDestPos.x, bestDestPos.y);
-
-      // Recalculate control points relative to new connection points
-      ctrlPoints = [
-        {
-          x: srcCtrlAbsolute.x - bestSrcPos.x,
-          y: srcCtrlAbsolute.y - bestSrcPos.y,
-        },
-        {
-          x: destCtrlAbsolute.x - bestDestPos.x,
-          y: destCtrlAbsolute.y - bestDestPos.y,
-        },
-      ];
+      ctrlPoints = this.recalculateCustomControlPoints(line2d, sourceTopic, targetTopic);
     }
 
     // Apply control points to create curved line
@@ -187,10 +206,7 @@ class Relationship extends ConnectionLine {
     // Positionate Arrows
     this.positionArrows();
 
-    // Add connector ...
-    this._positionLine(targetTopic);
-
-    // Poisition refresh shape ...
+    // Position refresh shape ...
     this.positionRefreshShape();
   }
 
@@ -213,21 +229,26 @@ class Relationship extends ConnectionLine {
 
   private positionArrows(): void {
     const spos = this._line.getFrom();
+    const tpos = this._line.getTo();
 
-    // Fix arrow direction: arrows should point in the direction of the relationship flow
-    // Both arrows should point from source toward target
+    // Position arrows at their respective ends
+    // Start arrow: at the source (from) position
+    // End arrow: at the target (to) position
     this._startArrow.setFrom(spos.x, spos.y);
-    this._endArrow.setFrom(spos.x, spos.y);
+    this._endArrow.setFrom(tpos.x, tpos.y);
 
     if (this._line.getType() === 'CurvedLine') {
       const controlPoints = this._line.getControlPoints();
-      // Both arrows point from source toward first control point (direction of flow)
+      // Start arrow points from source toward first control point (direction of flow)
       this._startArrow.setControlPoint(controlPoints[0]);
-      this._endArrow.setControlPoint(controlPoints[0]);
+      // End arrow points from target back toward second control point (direction of flow)
+      this._endArrow.setControlPoint(controlPoints[1]);
     } else {
-      // Both arrows point from source toward target (direction of flow)
-      this._startArrow.setControlPoint(this._line.getTo());
-      this._endArrow.setControlPoint(this._line.getTo());
+      // For straight lines:
+      // Start arrow points from source toward target
+      this._startArrow.setControlPoint(tpos);
+      // End arrow points from target back toward source
+      this._endArrow.setControlPoint(spos);
     }
   }
 
@@ -248,6 +269,8 @@ class Relationship extends ConnectionLine {
 
     workspace.append(this._startArrow);
     workspace.append(this._endArrow);
+    workspace.append(this._focusStartArrow);
+    workspace.append(this._focusEndArrow);
 
     super.addToWorkspace(workspace);
 
@@ -256,6 +279,8 @@ class Relationship extends ConnectionLine {
     this._focusShape.getElementClass().moveToBack();
     this._startArrow.moveToBack();
     this._endArrow.moveToBack();
+    this._focusStartArrow.moveToBack();
+    this._focusEndArrow.moveToBack();
 
     this.positionArrows();
     this.redraw();
@@ -272,6 +297,8 @@ class Relationship extends ConnectionLine {
     workspace.removeChild(this._focusShape.getElementClass());
     workspace.removeChild(this._startArrow);
     workspace.removeChild(this._endArrow);
+    workspace.removeChild(this._focusStartArrow);
+    workspace.removeChild(this._focusEndArrow);
 
     super.removeFromWorkspace(workspace);
   }
@@ -280,83 +307,141 @@ class Relationship extends ConnectionLine {
     return 'Relationship';
   }
 
-  private calculateRelationshipConnectionPoint(topic: Topic): PositionType {
+  /**
+   * Calculate the best snap point on a topic's border for a relationship connection
+   * @param topic The topic to connect to
+   * @param targetPosition The position we're connecting toward (other topic or control point)
+   * @returns The optimal connection point on the topic's border
+   */
+  static calculateSnapPoint(topic: Topic, targetPosition: PositionType): PositionType {
     const pos = topic.getPosition();
     const size = topic.getSize();
-    const centerOffset = 2; // Small offset from edge
+    const centerOffset = 7; // 7px offset from topic border for visual spacing
 
-    // For relationships, connect from the side facing toward center (0,0)
-    if (Math.abs(pos.x) > Math.abs(pos.y)) {
-      // Horizontal positioning: connect from left/right side
-      if (pos.x > 0) {
-        // Right side topic: connect from left edge (toward center)
-        return {
-          x: pos.x - size.width / 2 + centerOffset,
-          y: pos.y,
-        };
-      }
-      // Left side topic: connect from right edge (toward center)
-      return {
-        x: pos.x + size.width / 2 - centerOffset,
-        y: pos.y,
-      };
-    }
-    // Vertical positioning: connect from top/bottom side
-    if (pos.y > 0) {
-      // Bottom topic: connect from top edge (toward center)
-      return {
-        x: pos.x,
-        y: pos.y - size.height / 2 + centerOffset,
-      };
-    }
-    // Top topic: connect from bottom edge (toward center)
-    return {
-      x: pos.x,
-      y: pos.y + size.height / 2 - centerOffset,
-    };
-  }
+    // Calculate direction to target to minimize connection distance
+    const deltaX = targetPosition.x - pos.x;
+    const deltaY = targetPosition.y - pos.y;
 
-  private calculateBestConnectionPoint(topic: Topic, controlPoint: PositionType): PositionType {
-    const pos = topic.getPosition();
-    const size = topic.getSize();
-    const centerOffset = 2;
-
-    // Calculate direction from node center to control point
-    const deltaX = controlPoint.x - pos.x;
-    const deltaY = controlPoint.y - pos.y;
-
-    // Find which edge of the rectangle the control point direction points to
+    // Determine which edge is closest by comparing angles
     const absX = Math.abs(deltaX);
     const absY = Math.abs(deltaY);
 
-    if (absX > absY) {
-      // Control point is more horizontal - connect from left or right edge
-      if (deltaX > 0) {
-        // Control point is to the right - connect from right edge
+    // Define 10 connection points per side evenly distributed along each edge
+    const horizontalPoints = [0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95];
+    const verticalPoints = [0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95];
+
+    if (absY > absX) {
+      // Vertical connection is shorter (top or bottom)
+      const edgeY =
+        deltaY < 0
+          ? pos.y - size.height / 2 - centerOffset // Top border (move up/away)
+          : pos.y + size.height / 2 + centerOffset; // Bottom border (move down/away)
+
+      // Calculate all 10 connection points along the horizontal edge
+      const connectionPoints = horizontalPoints.map((ratio) => {
+        const x = pos.x - size.width / 2 + size.width * ratio;
         return {
-          x: pos.x + size.width / 2 - centerOffset,
-          y: pos.y,
+          x,
+          y: edgeY,
+          distance: Math.hypot(x - targetPosition.x, edgeY - targetPosition.y),
         };
-      }
-      // Control point is to the left - connect from left edge
-      return {
-        x: pos.x - size.width / 2 + centerOffset,
-        y: pos.y,
-      };
+      });
+
+      // Find the closest point
+      const closest = connectionPoints.reduce((min, point) =>
+        point.distance < min.distance ? point : min,
+      );
+
+      return { x: closest.x, y: closest.y };
     }
-    // Control point is more vertical - connect from top or bottom edge
-    if (deltaY > 0) {
-      // Control point is below - connect from bottom edge
-      return {
-        x: pos.x,
-        y: pos.y + size.height / 2 - centerOffset,
-      };
-    }
-    // Control point is above - connect from top edge
-    return {
-      x: pos.x,
-      y: pos.y - size.height / 2 + centerOffset,
+
+    // Horizontal connection is shorter (left or right)
+    const edgeX =
+      deltaX < 0
+        ? pos.x - size.width / 2 - centerOffset // Left border (move left/away)
+        : pos.x + size.width / 2 + centerOffset; // Right border (move right/away)
+
+    // Calculate all 10 connection points along the vertical edge
+    const connectionPoints = verticalPoints.map((ratio) => {
+      const y = pos.y - size.height / 2 + size.height * ratio;
+      return { x: edgeX, y, distance: Math.hypot(edgeX - targetPosition.x, y - targetPosition.y) };
+    });
+
+    // Find the closest point
+    const closest = connectionPoints.reduce((min, point) =>
+      point.distance < min.distance ? point : min,
+    );
+
+    return { x: closest.x, y: closest.y };
+  }
+
+  private calculateRelationshipConnectionPoint(topic: Topic): PositionType {
+    // Determine which topic we're calculating for
+    const isSourceTopic = topic === this._sourceTopic;
+    const otherTopic = isSourceTopic ? this._targetTopic : this._sourceTopic;
+    const otherPos = otherTopic.getPosition();
+
+    // Use the shared snap point calculation
+    return Relationship.calculateSnapPoint(topic, otherPos);
+  }
+
+  private calculateBestConnectionPoint(topic: Topic, controlPoint: PositionType): PositionType {
+    // Use the shared snap point calculation
+    return Relationship.calculateSnapPoint(topic, controlPoint);
+  }
+
+  /**
+   * Recalculates connection points and control points when control points have been customized.
+   * This ensures control points maintain their absolute positions while connection points
+   * are optimized based on the control point directions.
+   *
+   * @param line2d The line to update
+   * @param sourceTopic Source topic
+   * @param targetTopic Target topic
+   * @returns Updated control points relative to new connection points
+   */
+  private recalculateCustomControlPoints(
+    line2d: Line,
+    sourceTopic: Topic,
+    targetTopic: Topic,
+  ): [PositionType, PositionType] {
+    // Get current control points (relative to current line positions)
+    const ctrlPoints = line2d.getControlPoints();
+
+    // Use CURRENT line positions (what the control points are actually relative to)
+    // NOT freshly calculated positions which may be different
+    const currentFrom = line2d.getFrom();
+    const currentTo = line2d.getTo();
+
+    // Calculate control point absolute positions based on current line positions
+    const srcCtrlAbsolute = {
+      x: currentFrom.x + ctrlPoints[0].x,
+      y: currentFrom.y + ctrlPoints[0].y,
     };
+    const destCtrlAbsolute = {
+      x: currentTo.x + ctrlPoints[1].x,
+      y: currentTo.y + ctrlPoints[1].y,
+    };
+
+    // Find best connection points based on control point directions
+    const bestSrcPos = this.calculateBestConnectionPoint(sourceTopic, srcCtrlAbsolute);
+    const bestDestPos = this.calculateBestConnectionPoint(targetTopic, destCtrlAbsolute);
+
+    // Update line positions to new connection points
+    line2d.setFrom(bestSrcPos.x, bestSrcPos.y);
+    line2d.setTo(bestDestPos.x, bestDestPos.y);
+
+    // Recalculate control points relative to new connection points
+    return [
+      {
+        x: srcCtrlAbsolute.x - bestSrcPos.x,
+        y: srcCtrlAbsolute.y - bestSrcPos.y,
+      },
+      {
+        x: destCtrlAbsolute.x - bestDestPos.x,
+        y: destCtrlAbsolute.y - bestDestPos.y,
+      },
+    ];
   }
 
   setOnFocus(focus: boolean): void {
@@ -372,10 +457,20 @@ class Relationship extends ConnectionLine {
         this._focusShape.setStroke(5, 'solid', '#3f96ff');
         // Move focus shape below the main line so style changes are visible
         this._focusShape.moveToBack();
+
+        // Show focus arrows if corresponding arrows are enabled
+        this._focusStartArrow.setVisibility(this._showStartArrow);
+        this._focusEndArrow.setVisibility(this._showEndArrow);
+        this._focusStartArrow.moveToBack();
+        this._focusEndArrow.moveToBack();
       } else {
         // Completely hide focus shape when unfocusing
         this._focusShape.setVisibility(false);
         this._focusShape.setOpacity(0);
+
+        // Hide focus arrows
+        this._focusStartArrow.setVisibility(false);
+        this._focusEndArrow.setVisibility(false);
       }
 
       this._controlPointsController.setVisibility(focus);
@@ -394,6 +489,30 @@ class Relationship extends ConnectionLine {
 
     this._focusShape.setSrcControlPoint(ctrlPoints[0]);
     this._focusShape.setDestControlPoint(ctrlPoints[1]);
+
+    // Position focus arrows
+    this.positionFocusArrows(sPos, tPos, ctrlPoints);
+  }
+
+  private positionFocusArrows(
+    sPos: PositionType,
+    tPos: PositionType,
+    ctrlPoints: [PositionType, PositionType],
+  ): void {
+    // Position focus arrows at their respective ends (same as regular arrows)
+    this._focusStartArrow.setFrom(sPos.x, sPos.y);
+    this._focusEndArrow.setFrom(tPos.x, tPos.y);
+
+    if (this._line.getType() === 'CurvedLine') {
+      // Start arrow points from source toward first control point
+      this._focusStartArrow.setControlPoint(ctrlPoints[0]);
+      // End arrow points from target back toward second control point
+      this._focusEndArrow.setControlPoint(ctrlPoints[1]);
+    } else {
+      // For straight lines
+      this._focusStartArrow.setControlPoint(tPos);
+      this._focusEndArrow.setControlPoint(sPos);
+    }
   }
 
   addEvent(eventType: string, listener: () => void) {
@@ -438,12 +557,22 @@ class Relationship extends ConnectionLine {
     this._showEndArrow = visible;
     if (this._isInWorkspace) {
       this.redraw();
+      // Update focus arrow visibility if currently focused
+      if (this._onFocus) {
+        this._focusEndArrow.setVisibility(visible);
+      }
     }
   }
 
   setShowStartArrow(visible: boolean): void {
     this._showStartArrow = visible;
-    if (this._isInWorkspace) this.redraw();
+    if (this._isInWorkspace) {
+      this.redraw();
+      // Update focus arrow visibility if currently focused
+      if (this._onFocus) {
+        this._focusStartArrow.setVisibility(visible);
+      }
+    }
   }
 
   setFrom(x: number, y: number): void {

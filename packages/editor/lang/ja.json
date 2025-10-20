@@ -563,6 +563,9 @@
   "icon-collection.shape.none": {
     "defaultMessage": "None"
   },
+  "icon-collection.shape.none-tooltip": {
+    "defaultMessage": "None - No visible shape background"
+  },
   "icon-collection.shape.line": {
     "defaultMessage": "Line"
   },
@@ -590,11 +593,20 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Arc"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "有機曲線"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "手描きスタイルで劇的な曲線 - 創造的で表現力豊かなマインドマップに最適"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Thin Curved"
   },
   "icon-collection.connection.simple-polyline": {
     "defaultMessage": "Simple Polyline"
+  },
+  "icon-collection.connection.simple-polyline-tooltip": {
+    "defaultMessage": "Direct straight line connection - Clean and minimalist style for simple relationships"
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Curved Polyline"

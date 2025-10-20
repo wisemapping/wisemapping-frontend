@@ -563,6 +563,9 @@
   "icon-collection.shape.none": {
     "defaultMessage": "Нет"
   },
+  "icon-collection.shape.none-tooltip": {
+    "defaultMessage": "Нет - Без видимого фона фигуры"
+  },
   "icon-collection.shape.line": {
     "defaultMessage": "Линия"
   },
@@ -590,11 +593,20 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Дуга"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "Органическая кривая"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "Ручной стиль с драматическими кривыми - Идеально для творческих и выразительных карт разума"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Тонкая кривая"
   },
   "icon-collection.connection.simple-polyline": {
     "defaultMessage": "Простая ломаная"
+  },
+  "icon-collection.connection.simple-polyline-tooltip": {
+    "defaultMessage": "Прямое соединение прямой линией - Чистый и минималистичный стиль для простых отношений"
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Кривая ломаная"

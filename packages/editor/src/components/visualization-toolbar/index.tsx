@@ -212,31 +212,35 @@ export function buildVisualizationToolbarConfig(
         },
       ],
     },
+    // Separator before theme toggle - only if theme toggle will be shown
+    ...(isPublicOrEmbedded && toggleTheme ? [undefined as ActionConfig | undefined] : []),
     // Theme toggle - only for public and embedded views
-    isPublicOrEmbedded && toggleTheme
-      ? ({
-          icon: themeMode === 'light' ? <Brightness4 /> : <Brightness7 />,
-          tooltip: intl.formatMessage(
-            themeMode === 'light'
-              ? {
-                  id: 'visualization-toolbar.tooltip-switch-to-dark',
-                  defaultMessage: 'Switch to dark mode',
-                }
-              : {
-                  id: 'visualization-toolbar.tooltip-switch-to-light',
-                  defaultMessage: 'Switch to light mode',
-                },
-          ),
-          ariaLabel: intl.formatMessage({
-            id: 'visualization-toolbar.tooltip-theme-toggle',
-            defaultMessage: 'Toggle theme',
-          }),
-          onClick: () => {
-            trackEditorInteraction('theme_toggle');
-            toggleTheme();
-          },
-        } as ActionConfig)
-      : undefined,
+    ...(isPublicOrEmbedded && toggleTheme
+      ? [
+          {
+            icon: themeMode === 'light' ? <Brightness4 /> : <Brightness7 />,
+            tooltip: intl.formatMessage(
+              themeMode === 'light'
+                ? {
+                    id: 'visualization-toolbar.tooltip-switch-to-dark',
+                    defaultMessage: 'Switch to dark mode',
+                  }
+                : {
+                    id: 'visualization-toolbar.tooltip-switch-to-light',
+                    defaultMessage: 'Switch to light mode',
+                  },
+            ),
+            ariaLabel: intl.formatMessage({
+              id: 'visualization-toolbar.tooltip-theme-toggle',
+              defaultMessage: 'Toggle theme',
+            }),
+            onClick: () => {
+              trackEditorInteraction('theme_toggle');
+              toggleTheme();
+            },
+          } as ActionConfig,
+        ]
+      : []),
   ];
 }
 

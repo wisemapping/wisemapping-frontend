@@ -36,6 +36,7 @@ import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutl
 import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
 import Brightness4 from '@mui/icons-material/Brightness4';
 import Brightness7 from '@mui/icons-material/Brightness7';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import Typography from '@mui/material/Typography';
 import UndoAndRedo from '../action-widget/button/undo-and-redo';
 import Button from '@mui/material/Button';
@@ -46,6 +47,7 @@ import { ToolbarActionType } from '../toolbar/ToolbarActionType';
 import MapInfo from '../../classes/model/map-info';
 import { useIntl } from 'react-intl';
 import ThemeEditor from '../action-widget/pane/theme-editor';
+import LayoutSelector from '../action-widget/pane/layout-selector';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import TextField from '@mui/material/TextField';
 import { $notify } from '@wisemapping/mindplot';
@@ -399,6 +401,27 @@ const AppBar = ({
         },
       ],
       visible: !capability.isHidden('theme'),
+    },
+    {
+      icon: <AccountTreeIcon />,
+      tooltip: intl.formatMessage({ id: 'appbar.tooltip-change-layout', defaultMessage: 'Layout' }),
+      options: [
+        {
+          render: (closeModal) => {
+            if (model) {
+              const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
+              return (
+                <LayoutSelector
+                  closeModal={closeModal}
+                  layoutModel={modelBuilder.getLayoutModel()}
+                />
+              );
+            }
+            return <div>Layout Selector not available</div>;
+          },
+        },
+      ],
+      visible: !capability.isHidden('layout'),
     },
     {
       icon: <PrintOutlinedIcon />,

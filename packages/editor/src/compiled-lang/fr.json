@@ -707,10 +707,28 @@
       "value": "Default"
     }
   ],
+  "icon-collection.connection.organic-curved": [
+    {
+      "type": 0,
+      "value": "Courbe Organique"
+    }
+  ],
+  "icon-collection.connection.organic-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Style dessiné à la main avec des courbes dramatiques - Parfait pour les cartes mentales créatives et expressives"
+    }
+  ],
   "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
       "value": "Polyligne simple"
+    }
+  ],
+  "icon-collection.connection.simple-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "Connexion en ligne droite directe - Style épuré et minimaliste pour les relations simples"
     }
   ],
   "icon-collection.connection.thick-curved": [
@@ -753,6 +771,12 @@
     {
       "type": 0,
       "value": "Aucun"
+    }
+  ],
+  "icon-collection.shape.none-tooltip": [
+    {
+      "type": 0,
+      "value": "Aucun - Pas de fond de forme visible"
     }
   ],
   "icon-collection.shape.rectangle": [

@@ -707,10 +707,28 @@
       "value": "Default"
     }
   ],
+  "icon-collection.connection.organic-curved": [
+    {
+      "type": 0,
+      "value": "有机曲线"
+    }
+  ],
+  "icon-collection.connection.organic-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "手绘风格，具有戏剧性曲线 - 非常适合创意和富有表现力的思维导图"
+    }
+  ],
   "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
       "value": "简单折线"
+    }
+  ],
+  "icon-collection.connection.simple-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "直接的直线连接 - 简洁的极简风格用于简单关系"
     }
   ],
   "icon-collection.connection.thick-curved": [
@@ -753,6 +771,12 @@
     {
       "type": 0,
       "value": "无"
+    }
+  ],
+  "icon-collection.shape.none-tooltip": [
+    {
+      "type": 0,
+      "value": "无 - 无可见形状背景"
     }
   ],
   "icon-collection.shape.rectangle": [

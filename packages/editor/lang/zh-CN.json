@@ -563,6 +563,9 @@
   "icon-collection.shape.none": {
     "defaultMessage": "无"
   },
+  "icon-collection.shape.none-tooltip": {
+    "defaultMessage": "无 - 无可见形状背景"
+  },
   "icon-collection.shape.line": {
     "defaultMessage": "线条"
   },
@@ -590,11 +593,20 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "弧形"
   },
+  "icon-collection.connection.organic-curved": {
+    "defaultMessage": "有机曲线"
+  },
+  "icon-collection.connection.organic-curved-tooltip": {
+    "defaultMessage": "手绘风格，具有戏剧性曲线 - 非常适合创意和富有表现力的思维导图"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "细曲线"
   },
   "icon-collection.connection.simple-polyline": {
     "defaultMessage": "简单折线"
+  },
+  "icon-collection.connection.simple-polyline-tooltip": {
+    "defaultMessage": "直接的直线连接 - 简洁的极简风格用于简单关系"
   },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "曲线折线"
