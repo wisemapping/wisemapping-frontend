@@ -39,7 +39,9 @@ class DragManager {
   private _mouseDownPosition: { x: number; y: number } | null;
 
   // Drag thresholds to prevent accidental dragging
+
   private static DRAG_TIME_THRESHOLD_MS = 100; // Minimum time before drag starts
+
   private static DRAG_DISTANCE_THRESHOLD = 5; // Minimum pixels moved before drag starts
 
   constructor(workspace: Canvas, eventDispatcher: EventBusDispatcher) {
@@ -111,8 +113,8 @@ class DragManager {
         const currentPos = screen.getWorkspaceMousePosition(originalEvent as MouseEvent);
         const distanceMoved = this._mouseDownPosition
           ? Math.sqrt(
-              Math.pow(currentPos.x - this._mouseDownPosition.x, 2) +
-                Math.pow(currentPos.y - this._mouseDownPosition.y, 2),
+              (currentPos.x - this._mouseDownPosition.x) ** 2 +
+                (currentPos.y - this._mouseDownPosition.y) ** 2,
             )
           : 0;
 

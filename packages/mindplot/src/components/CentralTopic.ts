@@ -35,7 +35,7 @@ class CentralTopic extends Topic {
     });
   }
 
-  workoutIncomingConnectionPoint(sourcePosition: PositionType): PositionType {
+  workoutIncomingConnectionPoint(_sourcePosition: PositionType): PositionType {
     // This is called on central topic (parent) to get connection point FROM children
     const orientation = this.getOrientation();
 
