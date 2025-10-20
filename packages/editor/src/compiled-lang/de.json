@@ -707,6 +707,18 @@
       "value": "Default"
     }
   ],
+  "icon-collection.connection.organic-curved": [
+    {
+      "type": 0,
+      "value": "Organische Kurve"
+    }
+  ],
+  "icon-collection.connection.organic-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Handgezeichneter Stil mit dramatischen Kurven - Perfekt für kreative und ausdrucksstarke Mindmaps"
+    }
+  ],
   "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
@@ -753,6 +765,12 @@
     {
       "type": 0,
       "value": "Keine"
+    }
+  ],
+  "icon-collection.shape.none-tooltip": [
+    {
+      "type": 0,
+      "value": "Keine - Kein sichtbarer Formhintergrund"
     }
   ],
   "icon-collection.shape.rectangle": [

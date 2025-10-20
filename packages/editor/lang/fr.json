@@ -563,6 +563,9 @@
   "icon-collection.shape.none": {
     "defaultMessage": "Aucun"
   },
+  "icon-collection.shape.none-tooltip": {
+    "defaultMessage": "Aucun - Pas de fond de forme visible"
+  },
   "icon-collection.shape.line": {
     "defaultMessage": "Ligne"
   },

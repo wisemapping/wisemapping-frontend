@@ -32,6 +32,7 @@ import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlin
 import HorizontalRuleOutlinedIcon from '@mui/icons-material/HorizontalRuleOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
+import BorderClearOutlinedIcon from '@mui/icons-material/BorderClearOutlined';
 
 import NodeProperty from '../../../../classes/model/node-property';
 import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
@@ -418,6 +419,17 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
                     <FormattedMessage id="icon-collection.shape.ellipse" defaultMessage="Ellipse" />
                   ),
                 },
+                {
+                  type: 'none',
+                  icon: <BorderClearOutlinedIcon />,
+                  label: <FormattedMessage id="icon-collection.shape.none" defaultMessage="None" />,
+                  tooltip: (
+                    <FormattedMessage
+                      id="icon-collection.shape.none-tooltip"
+                      defaultMessage="None - No visible shape background"
+                    />
+                  ),
+                },
               ]}
               selectedValue={props.shapeModel.getValue()}
               onSelect={handleShapeChange}
@@ -425,28 +437,30 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
             />
           </Box>
 
-          {/* Style Topic Color - Only shown when shape is not default and not line */}
-          {props.shapeModel.getValue() !== undefined && props.shapeModel.getValue() !== 'line' && (
-            <>
-              <Typography
-                variant="subtitle2"
-                gutterBottom
-                sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}
-              >
-                <FormattedMessage
-                  id="unified-styling.background-color"
-                  defaultMessage="Background Color"
-                />
-              </Typography>
-              <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-                <ColorPicker
-                  closeModal={() => {}}
-                  colorModel={props.fillColorModel}
-                  hideNoneOption={true}
-                />
-              </Box>
-            </>
-          )}
+          {/* Style Topic Color - Only shown when shape is not default, not line, and not none */}
+          {props.shapeModel.getValue() !== undefined &&
+            props.shapeModel.getValue() !== 'line' &&
+            props.shapeModel.getValue() !== 'none' && (
+              <>
+                <Typography
+                  variant="subtitle2"
+                  gutterBottom
+                  sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}
+                >
+                  <FormattedMessage
+                    id="unified-styling.background-color"
+                    defaultMessage="Background Color"
+                  />
+                </Typography>
+                <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+                  <ColorPicker
+                    closeModal={() => {}}
+                    colorModel={props.fillColorModel}
+                    hideNoneOption={true}
+                  />
+                </Box>
+              </>
+            )}
         </Box>
       </TabPanel>
 

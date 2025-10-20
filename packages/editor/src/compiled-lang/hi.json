@@ -707,6 +707,18 @@
       "value": "Default"
     }
   ],
+  "icon-collection.connection.organic-curved": [
+    {
+      "type": 0,
+      "value": "ऑर्गेनिक कर्व"
+    }
+  ],
+  "icon-collection.connection.organic-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "हाथ से खींची गई शैली जिसमें नाटकीय कर्व हैं - रचनात्मक और अभिव्यंजक माइंडमैप के लिए परफेक्ट"
+    }
+  ],
   "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
@@ -753,6 +765,12 @@
     {
       "type": 0,
       "value": "None"
+    }
+  ],
+  "icon-collection.shape.none-tooltip": [
+    {
+      "type": 0,
+      "value": "None - No visible shape background"
     }
   ],
   "icon-collection.shape.rectangle": [

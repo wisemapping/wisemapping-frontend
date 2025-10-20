@@ -707,10 +707,22 @@
       "value": "Arc"
     }
   ],
+  "icon-collection.connection.arc-tooltip": [
+    {
+      "type": 0,
+      "value": "Circular arc connection - Perfect for radial layouts and organic flow"
+    }
+  ],
   "icon-collection.connection.curved-polyline": [
     {
       "type": 0,
       "value": "Curved Polyline"
+    }
+  ],
+  "icon-collection.connection.curved-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "Multi-segment line with smooth corners - Best for structured layouts and clear paths"
     }
   ],
   "icon-collection.connection.default": [
@@ -719,10 +731,34 @@
       "value": "Default"
     }
   ],
-  "icon-collection.connection.simple-polyline": [
+  "icon-collection.connection.default-tooltip": [
     {
       "type": 0,
-      "value": "Simple Polyline"
+      "value": "Default - Connection style will be automatically selected based on the theme"
+    }
+  ],
+  "icon-collection.connection.organic-curved": [
+    {
+      "type": 0,
+      "value": "Organic Curved"
+    }
+  ],
+  "icon-collection.connection.organic-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Hand-drawn style with dramatic curves - Perfect for creative and expressive mind maps"
+    }
+  ],
+  "icon-collection.connection.straight-line": [
+    {
+      "type": 0,
+      "value": "Straight Line"
+    }
+  ],
+  "icon-collection.connection.straight-line-tooltip": [
+    {
+      "type": 0,
+      "value": "Direct straight line connection - Clean and minimalist style for simple relationships"
     }
   ],
   "icon-collection.connection.thick-curved": [
@@ -731,10 +767,22 @@
       "value": "Thick Curved"
     }
   ],
+  "icon-collection.connection.thick-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Thick curved line with smooth bezier curves - Great for emphasizing main branches"
+    }
+  ],
   "icon-collection.connection.thin-curved": [
     {
       "type": 0,
       "value": "Thin Curved"
+    }
+  ],
+  "icon-collection.connection.thin-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Thin curved line with elegant bezier curves - Ideal for detailed or dense mind maps"
     }
   ],
   "icon-collection.default-tooltip": [
@@ -765,6 +813,12 @@
     {
       "type": 0,
       "value": "None"
+    }
+  ],
+  "icon-collection.shape.none-tooltip": [
+    {
+      "type": 0,
+      "value": "None - No visible shape background"
     }
   ],
   "icon-collection.shape.rectangle": [

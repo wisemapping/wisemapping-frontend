@@ -563,6 +563,9 @@
   "icon-collection.shape.none": {
     "defaultMessage": "无"
   },
+  "icon-collection.shape.none-tooltip": {
+    "defaultMessage": "无 - 无可见形状背景"
+  },
   "icon-collection.shape.line": {
     "defaultMessage": "线条"
   },

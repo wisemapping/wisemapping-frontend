@@ -707,6 +707,18 @@
       "value": "Default"
     }
   ],
+  "icon-collection.connection.organic-curved": [
+    {
+      "type": 0,
+      "value": "Curva Orgánica"
+    }
+  ],
+  "icon-collection.connection.organic-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Estilo dibujado a mano con curvas dramáticas - Perfecto para mapas mentales creativos y expresivos"
+    }
+  ],
   "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
@@ -753,6 +765,12 @@
     {
       "type": 0,
       "value": "Ninguno"
+    }
+  ],
+  "icon-collection.shape.none-tooltip": [
+    {
+      "type": 0,
+      "value": "Ninguno - Sin fondo de forma visible"
     }
   ],
   "icon-collection.shape.rectangle": [

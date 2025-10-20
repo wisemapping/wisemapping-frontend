@@ -707,6 +707,18 @@
       "value": "Default"
     }
   ],
+  "icon-collection.connection.organic-curved": [
+    {
+      "type": 0,
+      "value": "有機曲線"
+    }
+  ],
+  "icon-collection.connection.organic-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "手描きスタイルで劇的な曲線 - 創造的で表現力豊かなマインドマップに最適"
+    }
+  ],
   "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
@@ -753,6 +765,12 @@
     {
       "type": 0,
       "value": "None"
+    }
+  ],
+  "icon-collection.shape.none-tooltip": [
+    {
+      "type": 0,
+      "value": "None - No visible shape background"
     }
   ],
   "icon-collection.shape.rectangle": [
