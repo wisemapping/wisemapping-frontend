@@ -23,6 +23,7 @@ import RelationshipModel from './RelationshipModel';
 import ModelCodeName from '../persistence/ModelCodeName';
 import ThemeType from './ThemeType';
 import { CanvasStyleType } from './CanvasStyleType';
+import type { LayoutType } from '../layout/LayoutType';
 
 class Mindmap extends IMindmap {
   private _description: string;
@@ -39,6 +40,8 @@ class Mindmap extends IMindmap {
 
   private _canvasStyle: CanvasStyleType | undefined;
 
+  private _layout: LayoutType;
+
   constructor(id?: string, version: string = ModelCodeName.TANGO) {
     super();
     this._branches = [];
@@ -47,6 +50,7 @@ class Mindmap extends IMindmap {
     this._theme = 'classic'; // Default theme
     this._version = version;
     this._id = id;
+    this._layout = 'mindmap'; // Default layout
   }
 
   getTheme(): ThemeType {
@@ -73,6 +77,14 @@ class Mindmap extends IMindmap {
     } else {
       this._canvasStyle = value;
     }
+  }
+
+  getLayout(): LayoutType {
+    return this._layout;
+  }
+
+  setLayout(layout: LayoutType): void {
+    this._layout = layout;
   }
 
   /** */

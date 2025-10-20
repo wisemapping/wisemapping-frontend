@@ -280,13 +280,13 @@ const connectionStyles = [
     icon: <StraightLineIcon />,
     label: (
       <FormattedMessage
-        id="icon-collection.connection.straight-line"
-        defaultMessage="Straight Line"
+        id="icon-collection.connection.simple-polyline"
+        defaultMessage="Simple Polyline"
       />
     ),
     tooltip: (
       <FormattedMessage
-        id="icon-collection.connection.straight-line-tooltip"
+        id="icon-collection.connection.simple-polyline-tooltip"
         defaultMessage="Direct straight line connection - Clean and minimalist style for simple relationships"
       />
     ),

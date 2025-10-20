@@ -43,6 +43,7 @@ import LayoutEventBus from './layout/LayoutEventBus';
 import EventBusDispatcher from './layout/EventBusDispatcher';
 
 import LayoutManager from './layout/LayoutManager';
+import type { LayoutType } from './layout/LayoutType';
 
 import { $notify } from './model/ToolbarNotifier';
 import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
@@ -247,7 +248,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   private _buildNodeGraph(model: NodeModel, readOnly: boolean): Topic {
     // Create node graph ...
-    const topic = TopicFactory.create(model, { readOnly }, this._themeVariant);
+    const orientation = this._eventBussDispatcher.getLayoutManager().getOrientation();
+    const topic = TopicFactory.create(model, { readOnly }, this._themeVariant, orientation);
     this.getModel().addTopic(topic);
     const me = this;
     // Add Topic events ...
@@ -653,7 +655,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Init layout manager ...
     const size = { width: 25, height: 25 };
-    const layoutManager = new LayoutManager(mindmap.getCentralTopic().getId(), size);
+    const layoutType = mindmap.getLayout();
+    const layoutManager = new LayoutManager(mindmap.getCentralTopic().getId(), size, layoutType);
 
     layoutManager.addEvent('change', (event: ChangeEvent) => {
       const id = event.getId();
@@ -704,6 +707,45 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   getMindmap(): Mindmap {
     return this._mindmap!;
+  }
+
+  changeLayout(layout: LayoutType): void {
+    this._actionDispatcher.changeLayout(layout);
+  }
+
+  /**
+   * Apply layout directly (internal use - no undo history)
+   * @param layout - Layout type
+   * @internal
+   */
+  applyLayout(layout: LayoutType): void {
+    const mindmap = this.getMindmap();
+    mindmap.setLayout(layout);
+
+    // Update layout manager
+    const layoutManager = this._eventBussDispatcher.getLayoutManager();
+    layoutManager.setLayoutType(layout);
+
+    // Update orientation on all topics
+    const orientation = layoutManager.getOrientation();
+    this.getModel()
+      .getTopics()
+      .forEach((topic) => {
+        topic.setOrientation(orientation);
+      });
+
+    // Redraw all topics
+    this._canvas.enableQueueRender(false);
+    this.getModel()
+      .getTopics()
+      .forEach((topic) => {
+        topic.redraw(this.getThemeVariant(), true);
+      });
+    this._canvas.enableQueueRender(true);
+  }
+
+  getLayout(): LayoutType {
+    return this.getMindmap().getLayout();
   }
 
   undo(): void {

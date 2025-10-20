@@ -19,30 +19,47 @@ import { $assert, $defined } from '../util/assert';
 import EventDispispatcher from '../EventDispatcher';
 import RootedTreeSet from './RootedTreeSet';
 import OriginalLayout from './OriginalLayout';
+import TreeLayout from './TreeLayout';
 import ChangeEvent from './ChangeEvent';
 import SizeType from '../SizeType';
 import Node from './Node';
 import PositionType from '../PositionType';
 import LayoutEventType from './LayoutEventType';
+import type { LayoutType, OrientationType } from './LayoutType';
 
 class LayoutManager extends EventDispispatcher<LayoutEventType> {
   private _treeSet: RootedTreeSet;
 
-  private _layout: OriginalLayout;
+  private _mindmapLayout: OriginalLayout;
+
+  private _treeLayout: TreeLayout;
+
+  private _layoutType: LayoutType;
 
   private _events: ChangeEvent[];
 
-  constructor(rootNodeId: number, rootSize: SizeType) {
+  constructor(rootNodeId: number, rootSize: SizeType, layoutType: LayoutType = 'mindmap') {
     super();
     $assert($defined(rootNodeId), 'rootNodeId can not be null');
     $assert(rootSize, 'rootSize can not be null');
 
     this._treeSet = new RootedTreeSet();
-    this._layout = new OriginalLayout(this._treeSet);
+    this._mindmapLayout = new OriginalLayout(this._treeSet);
+    this._treeLayout = new TreeLayout(this._treeSet);
+    this._layoutType = layoutType;
 
-    const rootNode = this._layout.createNode(rootNodeId, rootSize, { x: 0, y: 0 }, 'root');
+    const rootNode = this._getCurrentLayout().createNode(
+      rootNodeId,
+      rootSize,
+      { x: 0, y: 0 },
+      'root',
+    );
     this._treeSet.setRoot(rootNode);
     this._events = [];
+  }
+
+  private _getCurrentLayout(): OriginalLayout | TreeLayout {
+    return this._layoutType === 'mindmap' ? this._mindmapLayout : this._treeLayout;
   }
 
   updateNodeSize(id: number, size: SizeType): void {
@@ -83,14 +100,14 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
   }
 
   connectNode(parentId: number, childId: number, order: number) {
-    this._layout.connectNode(parentId, childId, order);
+    this._getCurrentLayout().connectNode(parentId, childId, order);
 
     return this;
   }
 
   disconnectNode(id: number): void {
     $assert($defined(id), 'id can not be null');
-    this._layout.disconnectNode(id);
+    this._getCurrentLayout().disconnectNode(id);
   }
 
   /**
@@ -102,7 +119,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
    */
   addNode(id: number, size: SizeType, position: PositionType) {
     $assert($defined(id), 'id can not be null');
-    const result = this._layout.createNode(id, size, position, 'topic');
+    const result = this._getCurrentLayout().createNode(id, size, position, 'topic');
     this._treeSet.add(result);
 
     return this;
@@ -164,7 +181,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
 
   layout(flush?: boolean): LayoutManager {
     // File repositioning ...
-    this._layout.layout();
+    this._getCurrentLayout().layout();
 
     // Collect changes ...
     this._collectChanges(this._treeSet.getTreeRoots());
@@ -174,6 +191,32 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     }
 
     return this;
+  }
+
+  setLayoutType(layoutType: LayoutType): void {
+    if (this._layoutType !== layoutType) {
+      this._layoutType = layoutType;
+
+      // Migrate node ordering when switching layouts
+      if (layoutType === 'tree') {
+        // Switching to tree: fix ordering gaps from BalancedSorter
+        this._treeLayout.migrateFromLayout();
+      } else if (layoutType === 'mindmap') {
+        // Switching to mindmap: redistribute for balanced sorter
+        this._mindmapLayout.migrateFromLayout();
+      }
+
+      // Trigger re-layout with new layout type
+      this.layout(true);
+    }
+  }
+
+  getLayoutType(): LayoutType {
+    return this._layoutType;
+  }
+
+  getOrientation(): OrientationType {
+    return this._getCurrentLayout().getOrientation();
   }
 
   private _flushEvents() {

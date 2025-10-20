@@ -605,6 +605,9 @@
   "icon-collection.connection.simple-polyline": {
     "defaultMessage": "Проста ламана"
   },
+  "icon-collection.connection.simple-polyline-tooltip": {
+    "defaultMessage": "Пряме з'єднання прямою лінією - Чистий і мінімалістичний стиль для простих відносин"
+  },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Крива ламана"
   },

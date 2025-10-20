@@ -605,6 +605,9 @@
   "icon-collection.connection.simple-polyline": {
     "defaultMessage": "Polyligne simple"
   },
+  "icon-collection.connection.simple-polyline-tooltip": {
+    "defaultMessage": "Connexion en ligne droite directe - Style épuré et minimaliste pour les relations simples"
+  },
   "icon-collection.connection.curved-polyline": {
     "defaultMessage": "Polyligne courbe"
   },

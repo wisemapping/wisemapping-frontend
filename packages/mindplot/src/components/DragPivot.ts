@@ -93,9 +93,22 @@ class DragPivot implements CanvasElement {
     const targetPosition = targetTopic!.getPosition();
     const line = this._getConnectionLine();
 
-    // Update Line position.
-    const isAtRight = Shape.isAtRight(targetPosition, position);
-    const pivotPoint = Shape.calculateRectConnectionPoint(position, size, isAtRight);
+    // Update Line position based on orientation
+    const orientation = targetTopic!.getOrientation();
+    let pivotPoint: PositionType;
+
+    if (orientation === 'vertical') {
+      // Tree layout: connect from top center of pivot (going up to parent)
+      pivotPoint = {
+        x: position.x,
+        y: position.y - size.height / 2,
+      };
+    } else {
+      // Mindmap layout: connect from left or right side
+      const isAtRight = Shape.isAtRight(targetPosition, position);
+      pivotPoint = Shape.calculateRectConnectionPoint(position, size, isAtRight);
+    }
+
     line?.setFrom(pivotPoint.x, pivotPoint.y);
 
     // Update rect position
@@ -107,6 +120,21 @@ class DragPivot implements CanvasElement {
     // This solve several strange effects ;)
     const targetPoint = targetTopic!.workoutIncomingConnectionPoint(pivotPoint);
     line?.setTo(targetPoint.x, targetPoint.y);
+
+    // Set control points based on orientation
+    if (line) {
+      if (orientation === 'vertical') {
+        // Vertical orientation: control points based on Y distance
+        const deltaY = (targetPoint.y - pivotPoint.y) / 3;
+        line.setSrcControlPoint(new Point(0, deltaY));
+        line.setDestControlPoint(new Point(0, -deltaY));
+      } else {
+        // Horizontal orientation: control points based on X distance
+        const deltaX = (targetPoint.x - pivotPoint.x) / 3;
+        line.setSrcControlPoint(new Point(deltaX, 0));
+        line.setDestControlPoint(new Point(-deltaX, 0));
+      }
+    }
   }
 
   setPosition(point: Point): void {
@@ -159,16 +187,8 @@ class DragPivot implements CanvasElement {
 
   // If the node is connected, validate that there is a line connecting both...
   _getConnectionLine(): CurvedLine | null {
-    let result: CurvedLine | null = null;
-    const parentTopic = this._targetTopic;
-    if (parentTopic) {
-      if (parentTopic.getType() === 'CentralTopic') {
-        result = this._straightLine;
-      } else {
-        result = this._curvedLine;
-      }
-    }
-    return result;
+    // Always use straight line for drag preview
+    return this._targetTopic ? this._straightLine : null;
   }
 
   addToWorkspace(workspace: Canvas) {

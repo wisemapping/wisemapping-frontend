@@ -50,6 +50,9 @@
   "appbar.tooltip-outline-view": {
     "defaultMessage": "Outline View"
   },
+  "appbar.tooltip-change-layout": {
+    "defaultMessage": "Change Layout"
+  },
   "outline.empty": {
     "defaultMessage": "No content to display"
   },
@@ -313,6 +316,24 @@
   },
   "editor-panel.canvas-style-title": {
     "defaultMessage": "Background"
+  },
+  "editor-panel.tooltip-change-layout": {
+    "defaultMessage": "Change Layout"
+  },
+  "layout-selector.description": {
+    "defaultMessage": "Choose layout style"
+  },
+  "layout-selector.mindmap": {
+    "defaultMessage": "Mindmap"
+  },
+  "layout-selector.mindmap-description": {
+    "defaultMessage": "Horizontal layout with balanced branches"
+  },
+  "layout-selector.tree": {
+    "defaultMessage": "Tree"
+  },
+  "layout-selector.tree-description": {
+    "defaultMessage": "Vertical hierarchy flowing top-to-bottom"
   },
   "canvas-style.title": {
     "defaultMessage": "Background"
@@ -617,10 +638,10 @@
   "icon-collection.connection.thin-curved-tooltip": {
     "defaultMessage": "Thin curved line with elegant bezier curves - Ideal for detailed or dense mind maps"
   },
-  "icon-collection.connection.straight-line": {
-    "defaultMessage": "Straight Line"
+  "icon-collection.connection.simple-polyline": {
+    "defaultMessage": "Simple Polyline"
   },
-  "icon-collection.connection.straight-line-tooltip": {
+  "icon-collection.connection.simple-polyline-tooltip": {
     "defaultMessage": "Direct straight line connection - Clean and minimalist style for simple relationships"
   },
   "icon-collection.connection.curved-polyline": {

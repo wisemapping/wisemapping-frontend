@@ -23,12 +23,17 @@ import RootedTreeSet from './RootedTreeSet';
 import SizeType from '../SizeType';
 import PositionType from '../PositionType';
 import ChildrenSorterStrategy from './ChildrenSorterStrategy';
+import type { OrientationType } from './LayoutType';
 
 class OriginalLayout {
   private _treeSet: RootedTreeSet;
 
   constructor(treeSet: RootedTreeSet) {
     this._treeSet = treeSet;
+  }
+
+  getOrientation(): OrientationType {
+    return 'horizontal';
   }
 
   createNode(id: number, size: SizeType, position: PositionType, type: string): Node {
@@ -80,6 +85,59 @@ class OriginalLayout {
 
       this.layoutChildren(node, heightById);
       // this.fixOverlapping(node, heightById);
+    });
+  }
+
+  /**
+   * Migrates node ordering from TreeLayout's continuous ordering
+   * to OriginalLayout's balanced ordering (even/odd for root children)
+   */
+  migrateFromLayout(): void {
+    const roots = this._treeSet.getTreeRoots();
+    roots.forEach((node) => {
+      this._migrateNodeOrdering(node, true);
+    });
+  }
+
+  private _migrateNodeOrdering(node: Node, isRoot: boolean): void {
+    const children = this._treeSet.getChildren(node);
+
+    if (children.length === 0) {
+      return;
+    }
+
+    // Update sorter strategy based on node type
+    if (isRoot) {
+      node.setSorter(OriginalLayout.BALANCED_SORTER);
+
+      // Sort children by current order
+      const sortedChildren = [...children].sort((a, b) => a.getOrder() - b.getOrder());
+
+      // Redistribute: first half to right (even), second half to left (odd)
+      const midpoint = Math.ceil(sortedChildren.length / 2);
+
+      sortedChildren.forEach((child, index) => {
+        if (index < midpoint) {
+          // Right side: 0, 2, 4, 6...
+          child.setOrder(index * 2);
+        } else {
+          // Left side: 1, 3, 5, 7...
+          child.setOrder((index - midpoint) * 2 + 1);
+        }
+      });
+    } else {
+      // For non-root nodes, use SymmetricSorter and ensure continuous ordering
+      node.setSorter(OriginalLayout.SYMMETRIC_SORTER);
+
+      const sortedChildren = [...children].sort((a, b) => a.getOrder() - b.getOrder());
+      sortedChildren.forEach((child, index) => {
+        child.setOrder(index);
+      });
+    }
+
+    // Recursively fix all descendants
+    children.forEach((child) => {
+      this._migrateNodeOrdering(child, false);
     });
   }
 

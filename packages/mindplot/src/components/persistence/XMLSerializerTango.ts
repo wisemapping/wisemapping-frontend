@@ -31,6 +31,7 @@ import { FontStyleType } from '../FontStyleType';
 import { TopicShapeType } from '../model/INodeModel';
 import ThemeType from '../model/ThemeType';
 import { CanvasStyleType, BackgroundPatternType } from '../model/CanvasStyleType';
+import type { LayoutType } from '../layout/LayoutType';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -58,6 +59,10 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if (theme && theme !== 'classic') {
       mapElem.setAttribute('theme', theme);
     }
+
+    // Add layout - always persist
+    const layout = mindmap.getLayout();
+    mapElem.setAttribute('layout', layout);
 
     // Add canvas style attributes
     this._persistCanvasStyle(mapElem, mindmap);
@@ -364,6 +369,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       // Default to classic theme if no theme is specified
       mindmap.setTheme('classic');
     }
+
+    // Load layout attribute
+    const layoutAttr = rootElem.getAttribute('layout');
+    const layout = layoutAttr || 'mindmap'; // Default to mindmap
+    mindmap.setLayout(layout as LayoutType);
 
     // Load canvas style attributes
     this._loadCanvasStyle(rootElem, mindmap);

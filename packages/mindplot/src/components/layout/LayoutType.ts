@@ -16,25 +16,13 @@
  *   limitations under the License.
  */
 
-type ActionType =
-  | 'undo-changes'
-  | 'redo-changes'
-  | 'history'
-  | 'save'
-  | 'print'
-  | 'export'
-  | 'publish'
-  | 'share'
-  | 'info'
-  | 'account'
-  | 'edition-toolbar'
-  | 'sign-up'
-  | 'starred'
-  | 'appbar-title'
-  | 'keyboard-shortcuts'
-  | 'theme'
-  | 'layout'
-  | 'rename'
-  | 'outline-view';
+export type LayoutType = 'mindmap' | 'tree';
 
-export default ActionType;
+export type OrientationType = 'horizontal' | 'vertical';
+
+export const LAYOUT_ORIENTATION: Record<LayoutType, OrientationType> = {
+  mindmap: 'horizontal',
+  tree: 'vertical',
+};
+
+export default LayoutType;

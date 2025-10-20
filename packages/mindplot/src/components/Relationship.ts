@@ -17,7 +17,8 @@
  */
 import { Arrow, CurvedLine } from '@wisemapping/web2d';
 import type { Line } from '@wisemapping/web2d';
-import ConnectionLine, { LineType } from './ConnectionLine';
+import BaseConnectionLine, { LineType } from './BaseConnectionLine';
+import ArcLine from './model/ArcLine';
 import RelationshipControlPoints from './RelationshipControlPoints';
 import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
 import PositionType from './PositionType';
@@ -25,7 +26,14 @@ import Topic from './Topic';
 import Shape from './util/Shape';
 import Canvas from './Canvas';
 
-class Relationship extends ConnectionLine {
+/**
+ * Relationship represents arbitrary connections between topics (not hierarchical)
+ */
+class Relationship extends BaseConnectionLine {
+  private _sourceTopic: Topic;
+
+  private _targetTopic: Topic;
+
   private _focusShape: Line;
 
   private _onFocus: boolean;
@@ -47,8 +55,13 @@ class Relationship extends ConnectionLine {
   private _model: RelationshipModel;
 
   constructor(sourceNode: Topic, targetNode: Topic, model: RelationshipModel) {
-    super(sourceNode, targetNode, LineType.THIN_CURVED);
+    super(LineType.THIN_CURVED);
+    this._sourceTopic = sourceNode;
+    this._targetTopic = targetNode;
     this._model = model;
+
+    // Initialize line after setting topics
+    this.initializeLine();
 
     const strokeColor = model.getStrokeColor() || Relationship.getStrokeColor();
 
@@ -122,6 +135,26 @@ class Relationship extends ConnectionLine {
     this._applyStrokeStyle(this._model.getStrokeStyle());
   }
 
+  protected getLineWidth(): number {
+    return 3; // Relationships always use thin lines
+  }
+
+  protected getLineWidthOrganic(): number {
+    return 5; // Slightly thicker for organic style
+  }
+
+  protected createArcLine(): Line {
+    return new ArcLine(this._sourceTopic, this._targetTopic);
+  }
+
+  getSourceTopic(): Topic {
+    return this._sourceTopic;
+  }
+
+  getTargetTopic(): Topic {
+    return this._targetTopic;
+  }
+
   getModel(): RelationshipModel {
     return this._model;
   }
@@ -187,10 +220,7 @@ class Relationship extends ConnectionLine {
     // Positionate Arrows
     this.positionArrows();
 
-    // Add connector ...
-    this._positionLine(targetTopic);
-
-    // Poisition refresh shape ...
+    // Position refresh shape ...
     this.positionRefreshShape();
   }
 

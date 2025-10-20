@@ -36,6 +36,20 @@ class CentralTopic extends Topic {
   }
 
   workoutIncomingConnectionPoint(): PositionType {
+    // This is called on central topic (parent) to get connection point FROM children
+    const orientation = this.getOrientation();
+
+    if (orientation === 'vertical') {
+      // Tree layout: central topic receives connections from children at BOTTOM center
+      const pos = this.getPosition();
+      const size = this.getSize();
+      return {
+        x: pos.x,
+        y: pos.y + size.height / 2, // Bottom center
+      };
+    }
+
+    // Mindmap layout: center of the topic
     return this.getPosition();
   }
 
@@ -60,6 +74,7 @@ class CentralTopic extends Topic {
   workoutOutgoingConnectionPoint(targetPosition: PositionType) {
     $assert(targetPosition, 'targetPoint can not be null');
 
+    // Central topic doesn't connect to a parent, but keep for consistency
     const pos = this.getPosition();
     const isAtRight = Shape.isAtRight(targetPosition, pos);
     const size = this.getSize();
