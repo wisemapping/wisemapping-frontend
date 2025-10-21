@@ -83,6 +83,23 @@ const LoginPage = (): React.ReactElement => {
   const redirectUrl = searchParams.get('redirect');
   const isSharedLink = redirectUrl?.includes('shared=true') || false;
 
+  // Generic OAuth handler
+  const handleOAuthLogin = (authUrl: string | undefined, providerName: string): void => {
+    if (!authUrl) {
+      console.log(`${providerName} OAuth URL is not configured.`);
+      return;
+    }
+
+    // Pass redirect URL via OAuth state parameter
+    let finalAuthUrl = authUrl;
+    if (redirectUrl) {
+      const url = new URL(authUrl);
+      url.searchParams.set('state', redirectUrl);
+      finalAuthUrl = url.toString();
+    }
+    window.location.href = finalAuthUrl;
+  };
+
   useEffect(() => {
     document.title = intl.formatMessage({
       id: 'login.page-title',
@@ -242,14 +259,7 @@ const LoginPage = (): React.ReactElement => {
                     id: 'login.facebook.button',
                     defaultMessage: 'Sign in with Facebook',
                   })}
-                  onClick={() => {
-                    const authUrl = AppConfig.getFacebookOauth2Url();
-                    if (authUrl) {
-                      window.location.href = authUrl;
-                    } else {
-                      console.log('FacebookOauth2Url is not configured.');
-                    }
-                  }}
+                  onClick={() => handleOAuthLogin(AppConfig.getFacebookOauth2Url(), 'Facebook')}
                 />
               )}
               {AppConfig.isGoogleOauth2Enabled() && (
@@ -258,14 +268,7 @@ const LoginPage = (): React.ReactElement => {
                     id: 'login.google.button',
                     defaultMessage: 'Sign in with Google',
                   })}
-                  onClick={() => {
-                    const authUrl = AppConfig.getGoogleOauth2Url();
-                    if (authUrl) {
-                      window.location.href = authUrl;
-                    } else {
-                      console.log('GoogleOauth2Url is not configured.');
-                    }
-                  }}
+                  onClick={() => handleOAuthLogin(AppConfig.getGoogleOauth2Url(), 'Google')}
                 />
               )}
             </Box>
