@@ -1,0 +1,51 @@
+<svg focusable="true" preserveAspectRatio="none" width="1440" height="900" viewBox="-350 -300 1224.00000 765.00000">
+    <path style="fill:#495879 " stroke-width="1px" stroke="#495879" stroke-opacity="1" fill="#495879" fill-opacity="1" visibility="visible" d="M0.00,0.00 C53.77,0 107.53,-100.00 161.30,-100.00 107.53,-97.00 53.77,5.00 0.00,7.00 Z"></path>
+    <path style="fill:#495879 " stroke-width="1px" stroke="#495879" stroke-opacity="1" fill="#495879" fill-opacity="1" visibility="visible" d="M0.00,0.00 C53.77,0 107.53,0.00 161.30,0.00 107.53,3.00 53.77,5.00 0.00,7.00 Z"></path>
+    <path style="fill:#495879 " stroke-width="1px" stroke="#495879" stroke-opacity="1" fill="#495879" fill-opacity="1" visibility="visible" d="M0.00,0.00 C53.77,0 107.53,100.00 161.30,100.00 107.53,103.00 53.77,5.00 0.00,7.00 Z"></path>
+    <path style="fill:#495879 " stroke-width="1px" stroke="#495879" stroke-opacity="1" fill="#495879" fill-opacity="1" visibility="visible" d="M0.00,0.00 C53.77,0 107.53,200.00 161.30,200.00 107.53,203.00 53.77,5.00 0.00,7.00 Z"></path>
+    <g preserveAspectRatio="none" focusable="true" width="100" height="100" transform="translate(-80.00000,-23.00000) scale(1.00000,1.00000)" visibility="visible">
+        <rect width="164" height="52" rx="7.8" ry="7.8" x="-2" y="-3" stroke-width="1px" stroke="rgb(241,163,39)" fill="rgb(244,184,45)" stroke-opacity="1" fill-opacity="1" style="cursor: default;"></rect>
+        <rect width="160" height="46" rx="6.8999999999999995" ry="6.8999999999999995" x="0" y="0" stroke-width="2px" fill="rgb(80,157,192)" stroke="rgb(57,113,177)" style="cursor: default;"></rect>
+        <text font-family="Verdana" font-size="13.4375" font-style="normal" font-weight="bold" fill="#ffffff" visibility="visible" style="cursor: default;" y="13" x="20">
+            <tspan dy="1em" x="20">Central Topic</tspan>
+        </text>
+        <g preserveAspectRatio="none" focusable="true" width="0" height="26"></g>
+    </g>
+    <g preserveAspectRatio="none" focusable="true" width="100" height="100" transform="translate(161.50000,-100.00000) scale(1.00000,1.00000)" visibility="visible">
+        <rect width="280" height="42" rx="6.3" ry="6.3" x="-2" y="-3" stroke-width="1px" stroke="rgb(241,163,39)" fill="rgb(252,235,192)" stroke-opacity="0" fill-opacity="0"></rect>
+        <line stroke-width="1px" stroke="#495879" stroke-opacity="1" style="cursor: default;" x1="0" y1="36" x2="276" y2="36"></line>
+        <text font-family="Verdana" font-size="10.75" font-style="normal" font-weight="normal" fill="rgb(82,92,97)" visibility="visible" style="cursor: move;" y="10" x="9">
+            <tspan dy="1em" x="9">Topic with undefined shape (uses theme default)</tspan>
+        </text>
+        <ellipse width="6" height="6" rx="3" ry="3" cx="3" cy="3" stroke-width="1px" fill="rgb(224,229,239)" visibility="hidden" stroke="rgb(2,59,185)" style="cursor: default;"></ellipse>
+        <g preserveAspectRatio="none" focusable="true" width="0" height="15.600000000000001"></g>
+    </g>
+    <g preserveAspectRatio="none" focusable="true" width="100" height="100" transform="translate(161.50000,0.00000) scale(1.00000,1.00000)" visibility="visible">
+        <rect width="230" height="42" rx="6.3" ry="6.3" x="-2" y="-3" stroke-width="1px" stroke="rgb(241,163,39)" fill="rgb(252,235,192)" stroke-opacity="0" fill-opacity="0"></rect>
+        <line stroke-width="1px" stroke="#495879" stroke-opacity="1" style="cursor: default;" x1="0" y1="36" x2="226" y2="36"></line>
+        <text font-family="Verdana" font-size="10.75" font-style="normal" font-weight="normal" fill="rgb(82,92,97)" visibility="visible" style="cursor: move;" y="10" x="9">
+            <tspan dy="1em" x="9">Topic with explicit none shape</tspan>
+        </text>
+        <ellipse width="6" height="6" rx="3" ry="3" cx="3" cy="3" stroke-width="1px" fill="rgb(224,229,239)" visibility="hidden" stroke="rgb(2,59,185)" style="cursor: default;"></ellipse>
+        <g preserveAspectRatio="none" focusable="true" width="0" height="15.600000000000001"></g>
+    </g>
+    <g preserveAspectRatio="none" focusable="true" width="100" height="100" transform="translate(161.50000,100.00000) scale(1.00000,1.00000)" visibility="visible">
+        <rect width="180" height="42" rx="6.3" ry="6.3" x="-2" y="-3" stroke-width="1px" stroke="rgb(241,163,39)" fill="rgb(252,235,192)" stroke-opacity="0" fill-opacity="0"></rect>
+        <line stroke-width="1px" stroke="#495879" stroke-opacity="1" style="cursor: default;" x1="0" y1="36" x2="176" y2="36"></line>
+        <text font-family="Verdana" font-size="10.75" font-style="normal" font-weight="normal" fill="rgb(82,92,97)" visibility="visible" style="cursor: move;" y="10" x="9">
+            <tspan dy="1em" x="9">Topic with line shape</tspan>
+        </text>
+        <ellipse width="6" height="6" rx="3" ry="3" cx="3" cy="3" stroke-width="1px" fill="rgb(224,229,239)" visibility="hidden" stroke="rgb(2,59,185)" style="cursor: default;"></ellipse>
+        <g preserveAspectRatio="none" focusable="true" width="0" height="15.600000000000001"></g>
+    </g>
+    <g preserveAspectRatio="none" focusable="true" width="100" height="100" transform="translate(161.50000,200.00000) scale(1.00000,1.00000)" visibility="visible">
+        <rect width="220" height="42" rx="6.3" ry="6.3" x="-2" y="-3" stroke-width="1px" stroke="rgb(241,163,39)" fill="rgb(252,235,192)" stroke-opacity="1" fill-opacity="1"></rect>
+        <rect width="216" height="36" rx="5.4" ry="5.4" x="0" y="0" stroke-width="1px" fill="rgb(252,235,192)" stroke="rgb(0,0,0)" style="cursor: default;"></rect>
+        <text font-family="Verdana" font-size="10.75" font-style="normal" font-weight="normal" fill="rgb(82,92,97)" visibility="visible" style="cursor: move;" y="10" x="9">
+            <tspan dy="1em" x="9">Topic with rectangle shape</tspan>
+        </text>
+        <ellipse width="6" height="6" rx="3" ry="3" cx="3" cy="3" stroke-width="1px" fill="rgb(224,229,239)" visibility="hidden" stroke="rgb(2,59,185)" style="cursor: default;"></ellipse>
+        <g preserveAspectRatio="none" focusable="true" width="0" height="15.600000000000001"></g>
+    </g>
+</svg>
+
