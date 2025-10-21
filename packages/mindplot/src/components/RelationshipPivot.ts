@@ -187,7 +187,27 @@ class RelationshipPivot {
 
     // Avoid circular connections ...
     if (targetTopic.getId() !== sourceTopic!.getId()) {
-      const relModel = mindmap.createRelationship(targetTopic.getId(), sourceTopic!.getId());
+      // Validate that both topics exist in the designer model before creating relationship
+      const dmodel = this._designer.getModel();
+      const sourceInModel = dmodel.findTopicById(sourceTopic!.getId());
+      const targetInModel = dmodel.findTopicById(targetTopic.getId());
+
+      if (!sourceInModel || !targetInModel) {
+        console.error(
+          `[RelationshipPivot] Cannot create relationship - topic not found in designer model.\n` +
+            `  Source topic ID: ${sourceTopic!.getId()} (${sourceInModel ? 'found' : 'NOT FOUND'})\n` +
+            `  Target topic ID: ${targetTopic.getId()} (${targetInModel ? 'found' : 'NOT FOUND'})\n` +
+            `  Available topic IDs: [${dmodel
+              .getTopics()
+              .map((t) => t.getId())
+              .join(', ')}]`,
+        );
+        this.dispose();
+        return;
+      }
+
+      // Create relationship FROM sourceTopic TO targetTopic (arrow points to target)
+      const relModel = mindmap.createRelationship(sourceTopic!.getId(), targetTopic.getId());
       this._designer.getActionDispatcher().addRelationship(relModel);
     }
     this.dispose();
