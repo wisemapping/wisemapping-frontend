@@ -91,6 +91,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   private _widgetManager: WidgetBuilder;
 
+  // Internal clipboard storage for browsers that don't support clipboard API
+  private _internalClipboard: string | null = null;
+
   constructor(options: DesignerOptions) {
     super();
     // Set up i18n location ...
@@ -422,101 +425,155 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const enableImageSupport = false;
     let topics = this.getModel().filterSelectedTopics();
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore - Permissions is not defined on PermissionsName.
-    const permissions = await navigator.permissions.query({ name: 'clipboard-write' });
-    if (permissions.state === 'granted' || permissions.state === 'prompt') {
-      // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard
-      if (topics.length > 0) {
-        const blobs = {};
-        const mindmap = new Mindmap();
-        const central: NodeModel = new NodeModel('CentralTopic', mindmap);
-        mindmap.addBranch(central);
+    if (topics.length === 0) {
+      return;
+    }
 
-        // Exclude central topic ..
-        topics = topics.filter((topic) => !topic.isCentralTopic());
-        topics.forEach((topic) => {
-          const nodeModel: NodeModel = topic.getModel().deepCopy();
-          nodeModel.connectTo(central);
-        });
+    // Exclude central topic ..
+    topics = topics.filter((topic) => !topic.isCentralTopic());
 
-        // Create text blob ...
-        const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
-        const document = serializer.toXML(mindmap);
-        const xmlStr: string = new XMLSerializer().serializeToString(document);
-        const textPlainBlob = new Blob([xmlStr], { type: 'text/plain' });
-        blobs[textPlainBlob.type] = textPlainBlob;
+    if (topics.length === 0) {
+      return;
+    }
 
-        if (enableImageSupport) {
-          // Create image blob ...
-          const workspace = designer.getWorkSpace();
-          const svgElement = workspace.getSVGElement();
-          const size = { width: window.innerWidth, height: window.innerHeight };
+    // Prepare clipboard data
+    const mindmap = new Mindmap();
+    const central: NodeModel = new NodeModel('CentralTopic', mindmap);
+    mindmap.addBranch(central);
 
-          const imageUrl = ImageExpoterFactory.create(
-            'png',
-            svgElement,
-            size.width,
-            size.height,
-            false,
-          );
-          let imgStr = await imageUrl.exportAndEncode();
-          imgStr = imgStr.replace('octet/stream', 'image/png');
-          const imgBlob = await (await fetch(imgStr)).blob();
-          blobs[imgBlob.type] = imgBlob;
+    topics.forEach((topic) => {
+      const nodeModel: NodeModel = topic.getModel().deepCopy();
+      nodeModel.connectTo(central);
+    });
+
+    // Create XML string
+    const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
+    const document = serializer.toXML(mindmap);
+    const xmlStr: string = new XMLSerializer().serializeToString(document);
+
+    // Always store in internal clipboard as fallback
+    this._internalClipboard = xmlStr;
+
+    // Try to use browser clipboard API
+    let useSystemClipboard = false;
+
+    try {
+      // Check if clipboard API is available
+      if (navigator.clipboard && navigator.clipboard.write) {
+        // Try to check permissions if supported (not all browsers support this)
+        try {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore - Permissions 'clipboard-write' is not defined in all browsers
+          const permissions = await navigator.permissions.query({ name: 'clipboard-write' });
+          useSystemClipboard = permissions.state === 'granted' || permissions.state === 'prompt';
+        } catch {
+          // Permission API not supported (e.g., Safari), try to use clipboard anyway
+          useSystemClipboard = true;
         }
 
-        // Finally, add to clipboard ...
-        const clipboard = new ClipboardItem(blobs);
-        navigator.clipboard.write([clipboard]).then(
-          () => console.log('Copy of node success'),
-          (e) => {
-            console.error('Unexpected error adding to clipboard');
-            console.error(e);
-          },
-        );
+        if (useSystemClipboard) {
+          const blobs: Record<string, Blob> = {};
+          const textPlainBlob = new Blob([xmlStr], { type: 'text/plain' });
+          blobs[textPlainBlob.type] = textPlainBlob;
+
+          if (enableImageSupport) {
+            // Create image blob ...
+            const workspace = globalThis.designer.getWorkSpace();
+            const svgElement = workspace.getSVGElement();
+            const size = { width: window.innerWidth, height: window.innerHeight };
+
+            const imageUrl = ImageExpoterFactory.create(
+              'png',
+              svgElement,
+              size.width,
+              size.height,
+              false,
+            );
+            let imgStr = await imageUrl.exportAndEncode();
+            imgStr = imgStr.replace('octet/stream', 'image/png');
+            const imgBlob = await (await fetch(imgStr)).blob();
+            blobs[imgBlob.type] = imgBlob;
+          }
+
+          // Finally, add to clipboard ...
+          const clipboard = new ClipboardItem(blobs);
+          await navigator.clipboard.write([clipboard]);
+          console.log('Copy to system clipboard success');
+        }
       }
+    } catch (e) {
+      // Clipboard API failed, fall back to internal clipboard
+      console.warn('System clipboard not available, using internal clipboard:', e);
+      useSystemClipboard = false;
+    }
+
+    if (!useSystemClipboard) {
+      console.log('Copy to internal clipboard success (system clipboard not available)');
     }
   }
 
   async pasteClipboard(): Promise<void> {
-    const type = 'text/plain';
-    const clipboardItems = await navigator.clipboard.read();
-    clipboardItems.forEach(async (item) => {
-      if (item.types.includes(type)) {
-        const blob: Blob = await item.getType(type);
-        const text: string = await blob.text();
+    let text: string | null = null;
 
-        // Is a mindmap ?. Try to infer if it's a text or a map...
-        if (text.indexOf('</map>') !== -1) {
-          const dom = new DOMParser().parseFromString(text, 'application/xml');
+    // Try to read from system clipboard first
+    try {
+      if (navigator.clipboard && navigator.clipboard.read) {
+        const type = 'text/plain';
+        const clipboardItems = await navigator.clipboard.read();
 
-          const serializer = XMLSerializerFactory.createFromDocument(dom);
-          const mindmap = serializer.loadFromDom(dom, 'application/xml');
-
-          // Remove reference to the parent mindmap and clean up to support multiple copy of the nodes ...
-          const central = mindmap.getBranches()[0];
-          let children = central.getChildren();
-          children.forEach((c) => c.disconnect());
-          children = children.map((m: NodeModel) => m.deepCopy());
-
-          // Charge position to avoid overlap ...
-          children.forEach((m) => {
-            const pos = m.getPosition();
-            m.setPosition(pos.x + Math.random() * 60, pos.y + Math.random() * 30);
-          });
-
-          // Finally, add the node ...
-          this._actionDispatcher.addTopics(children, null);
-        } else {
-          const topics = this.getModel().filterSelectedTopics();
-          this._actionDispatcher.changeTextToTopic(
-            topics.map((t) => t.getId()),
-            text.trim(),
-          );
+        // Find the first item with text/plain
+        const textItem = clipboardItems.find((item) => item.types.includes(type));
+        if (textItem) {
+          const blob: Blob = await textItem.getType(type);
+          text = await blob.text();
+          console.log('Paste from system clipboard success');
         }
       }
-    });
+    } catch (e) {
+      // System clipboard not available or permission denied
+      console.warn('System clipboard not available for reading, using internal clipboard:', e);
+    }
+
+    // Fall back to internal clipboard if system clipboard is empty or failed
+    if (!text && this._internalClipboard) {
+      text = this._internalClipboard;
+      console.log('Paste from internal clipboard success');
+    }
+
+    // If we have no text at all, nothing to paste
+    if (!text) {
+      console.log('No clipboard data available');
+      return;
+    }
+
+    // Is a mindmap ?. Try to infer if it's a text or a map...
+    if (text.indexOf('</map>') !== -1) {
+      const dom = new DOMParser().parseFromString(text, 'application/xml');
+
+      const serializer = XMLSerializerFactory.createFromDocument(dom);
+      const mindmap = serializer.loadFromDom(dom, 'application/xml');
+
+      // Remove reference to the parent mindmap and clean up to support multiple copy of the nodes ...
+      const central = mindmap.getBranches()[0];
+      let children = central.getChildren();
+      children.forEach((c) => c.disconnect());
+      children = children.map((m: NodeModel) => m.deepCopy());
+
+      // Change position to avoid overlap ...
+      children.forEach((m) => {
+        const pos = m.getPosition();
+        m.setPosition(pos.x + Math.random() * 60, pos.y + Math.random() * 30);
+      });
+
+      // Finally, add the node ...
+      this._actionDispatcher.addTopics(children, null);
+    } else {
+      const topics = this.getModel().filterSelectedTopics();
+      this._actionDispatcher.changeTextToTopic(
+        topics.map((t) => t.getId()),
+        text.trim(),
+      );
+    }
   }
 
   getModel(): DesignerModel {
@@ -727,6 +784,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     layoutManager.setLayoutType(layout);
 
     // Update orientation on all topics
+    // The DragPivot reads orientation from topics when drawing connections
     const orientation = layoutManager.getOrientation();
     this.getModel()
       .getTopics()
@@ -734,14 +792,17 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         topic.setOrientation(orientation);
       });
 
-    // Redraw all topics
-    this._canvas.enableQueueRender(false);
+    // Reset DragPivot to clear any stale connection state
+    if (DragTopic._dragPivot) {
+      DragTopic._dragPivot.reset();
+    }
+
+    // Redraw all topics immediately (no queue rendering during editing)
     this.getModel()
       .getTopics()
       .forEach((topic) => {
         topic.redraw(this.getThemeVariant(), true);
       });
-    this._canvas.enableQueueRender(true);
   }
 
   getLayout(): LayoutType {

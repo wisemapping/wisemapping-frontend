@@ -1031,8 +1031,8 @@ abstract class Topic extends NodeGraph {
   }
 
   setOrder(value: number): void {
-    const changed = this.getModel().getOrder() !== value;
     const model = this.getModel();
+    const changed = model.getOrder() !== value;
     model.setOrder(value);
 
     if (changed) {

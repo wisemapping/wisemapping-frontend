@@ -22,7 +22,7 @@ import Node from './Node';
 import PositionType from '../PositionType';
 
 class TreeSorter extends AbstractBasicSorter {
-  private static INTERNODE_VERTICAL_PADDING = 14; // Very compact vertical spacing - arrows very close to parent shapes
+  private static INTERNODE_VERTICAL_PADDING = 70; // Increased spacing between parent and child (5x the original 14)
 
   private static INTERNODE_HORIZONTAL_PADDING = 5; // Very compact horizontal spacing (75% reduction)
 
