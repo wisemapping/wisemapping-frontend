@@ -250,7 +250,7 @@ class XMindImporter extends Importer {
       centralTitle = titles.length > 0 ? titles[0].textContent : 'Central Topic';
     }
 
-    let xml = `<map name='${nameMap}' version='tango' theme='prism'>\n`;
+    let xml = `<map name='${nameMap}' version='tango' theme='prism' layout='mindmap'>\n`;
 
     // Generate central topic
     xml += `    <topic central='true' text='${this.escapeXml(centralTitle)}' id='${centralId}'>\n`;
@@ -427,7 +427,7 @@ class XMindImporter extends Importer {
     _description?: string,
   ): string {
     const centralId = this.generateId();
-    let xml = `<map name='${nameMap}' version='tango' theme='prism'>\n`;
+    let xml = `<map name='${nameMap}' version='tango' theme='prism' layout='mindmap'>\n`;
 
     // Generate central topic
     xml += `    <topic central='true' text='${this.escapeXml(rootTopic.title)}' id='${centralId}'>\n`;
@@ -1076,7 +1076,7 @@ class XMindImporter extends Importer {
   }
 
   private createFallbackMap(nameMap: string, error: Error): string {
-    return `<map name="${nameMap}" version="tango">
+    return `<map name="${nameMap}" version="tango" layout="mindmap">
     <topic central="true" text="${nameMap}" id="1">
         <topic position="200,0" order="0" text="Import Error" shape="line" id="2">
             <note><![CDATA[XMind import failed: ${error.message}. Please check the file format and try again.]]></note>

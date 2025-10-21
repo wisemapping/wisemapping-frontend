@@ -166,7 +166,7 @@ class MindManagerImporter extends Importer {
     const centralId = this.generateId();
     this.topicIdMap.set(rootTopic.id, centralId.toString());
 
-    let xml = `<map name='${nameMap}' version='tango' theme='prism'>\n`;
+    let xml = `<map name='${nameMap}' version='tango' theme='prism' layout='mindmap'>\n`;
 
     // Generate central topic
     xml += `    <topic central='true' text='${this.escapeXml(rootTopic.text)}' id='${centralId}'>\n`;
@@ -385,7 +385,7 @@ class MindManagerImporter extends Importer {
     } catch (error) {
       console.error('MindManager import failed:', error);
       return Promise.resolve(
-        '<map name="MindManager Import" version="tango" theme="prism">\n' +
+        '<map name="MindManager Import" version="tango" theme="prism" layout="mindmap">\n' +
           '    <topic central="true" text="Import Error" id="1">\n' +
           `      <note><![CDATA[MindManager import failed: ${(error as Error).message}]]></note>\n` +
           '    </topic>\n' +
