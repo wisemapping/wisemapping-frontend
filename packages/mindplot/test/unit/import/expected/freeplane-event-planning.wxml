@@ -1,4 +1,4 @@
-<map name="freeplane-event-planning" version="tango" theme="prism">
+<map name="freeplane-event-planning" version="tango" theme="prism" layout="mindmap">
     <topic central="true" text="Event Planning" id="1">
         <topic position="200,0" order="0" text="Pre-Event Planning" shape="line" id="2">
             <eicon id="💡"/>

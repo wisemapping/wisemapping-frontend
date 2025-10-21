@@ -1,4 +1,4 @@
-<map name="welcome" theme="prism" version="tango">
+<map name="welcome" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Welcome To WiseMapping" id="1">
         <topic position="200,-100" order="0" shape="line" id="30">
             <text><![CDATA[

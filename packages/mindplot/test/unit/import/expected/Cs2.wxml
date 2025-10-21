@@ -1,4 +1,4 @@
-<map name="Cs2" theme="prism" version="tango">
+<map name="Cs2" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="customer service" id="1592995925">
         <topic position="200,-150" order="0" text="Knowlegebase" shape="line" id="98093912">
             <topic position="200,-200" order="0" text="Known Issues" shape="line" id="1309124106"/>

@@ -1,4 +1,4 @@
-<map name='xmind-simple' version='tango' theme='prism'>
+<map name='xmind-simple' version='tango' theme='prism' layout='mindmap'>
     <topic central='true' text='Central Topic' id='1'>
         <topic position='200,0' order='0' text='Child 1' shape='line' id='2'>
         <topic position='200,0' order='0' text='Grandchild 1' shape='line' id='3'>

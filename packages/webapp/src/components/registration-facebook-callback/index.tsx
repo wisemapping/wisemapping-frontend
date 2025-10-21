@@ -52,10 +52,14 @@ const RegistrationFacebookCallbackPage = (): React.ReactElement => {
   });
 
   useEffect(() => {
-    const facebookOauthCode = new URLSearchParams(window.location.search).get('code');
+    const searchParams = new URLSearchParams(window.location.search);
+    const facebookOauthCode = searchParams.get('code');
     if (!facebookOauthCode) {
       throw new Error(`Missing code definition: ${window.location.search}`);
     }
+
+    // Get redirect URL from OAuth state parameter
+    const stateRedirectUrl = searchParams.get('state');
 
     client
       .processFacebookCallback(facebookOauthCode)
@@ -63,8 +67,13 @@ const RegistrationFacebookCallbackPage = (): React.ReactElement => {
         if (result.googleSync) {
           // Initialize theme from system preference if not already set
           initializeThemeFromSystem();
-          // if service reports that user already has sync accounts, go to maps page
-          navigate('/c/maps/');
+          // Use redirect URL from OAuth state parameter
+          if (stateRedirectUrl && stateRedirectUrl !== 'wisemapping') {
+            navigate(stateRedirectUrl);
+          } else {
+            // if service reports that user already has sync accounts, go to maps page
+            navigate('/c/maps/');
+          }
         }
         setCallbackResult(result);
       })
@@ -80,12 +89,21 @@ const RegistrationFacebookCallbackPage = (): React.ReactElement => {
       throw new Error(`callbackResult can not be null`);
     }
 
+    // Get redirect URL from OAuth state parameter
+    const searchParams = new URLSearchParams(window.location.search);
+    const stateRedirectUrl = searchParams.get('state');
+
     client
       .confirmAccountSync(callback.email, callback.syncCode)
       .then(() => {
         // Initialize theme from system preference if not already set
         initializeThemeFromSystem();
-        navigate('/c/maps/');
+        // Use redirect URL from OAuth state parameter
+        if (stateRedirectUrl && stateRedirectUrl !== 'wisemapping') {
+          navigate(stateRedirectUrl);
+        } else {
+          navigate('/c/maps/');
+        }
       })
       .catch((error) => {
         logCriticalError(`Unexpected error on  confirmAccountSynching`, error);

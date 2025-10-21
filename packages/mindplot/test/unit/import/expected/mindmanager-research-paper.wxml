@@ -1,4 +1,4 @@
-<map name='mindmanager-research-paper' version='tango' theme='prism'>
+<map name='mindmanager-research-paper' version='tango' theme='prism' layout='mindmap'>
     <topic central='true' text='Research Paper Outline' id='1'>
         <topic position='200,0' order='0' text='Introduction' shape='line' id='2'>
             <eicon id='💡'/>

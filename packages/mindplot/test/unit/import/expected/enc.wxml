@@ -1,4 +1,4 @@
-<map name="enc" theme="prism" version="tango">
+<map name="enc" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Artigos GF comentários interessantes" id="1">
         <topic position="-200,-50" order="0" shape="rectangle" id="5" bgColor="#cccccc">
             <text><![CDATA[Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant

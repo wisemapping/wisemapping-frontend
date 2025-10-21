@@ -128,6 +128,8 @@ export default defineConfig([
         }],
 
         "implicit-arrow-linebreak": "off",
+        "no-confusing-arrow": "off", // Disabled to avoid conflict with Prettier
+        "function-paren-newline": "off", // Disabled to avoid conflict with Prettier
     },
     }
 ]);

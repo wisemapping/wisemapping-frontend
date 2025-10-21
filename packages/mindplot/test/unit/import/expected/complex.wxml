@@ -1,4 +1,4 @@
-<map name="complex" theme="prism" version="tango">
+<map name="complex" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="PPM Plan" id="1">
         <topic position="200,-300" order="0" text="Business Development " shape="line" id="4"/>
         <topic position="-290,-62" order="1" text="Backlog Management" shape="line" id="18">

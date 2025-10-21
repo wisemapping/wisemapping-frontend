@@ -1,4 +1,4 @@
-<map name="freeplane-personal-development" version="tango" theme="prism">
+<map name="freeplane-personal-development" version="tango" theme="prism" layout="mindmap">
     <topic central="true" text="Personal Development Plan" id="1">
         <topic position="200,0" order="0" text="Career Goals" shape="line" id="2">
             <eicon id="💡"/>

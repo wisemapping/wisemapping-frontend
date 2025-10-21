@@ -1,4 +1,4 @@
-<map name="python" theme="prism" version="tango">
+<map name="python" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Python Language" id="839220195" bgColor="#ffff66">
         <topic position="200,-900" order="0" text="Operators" shape="rounded rectangle" id="1297750582" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=1initLoadFile=/wiki/images/5/5a/Python_Operators.mmmm_title=Python%20Operators" urlType="url"/>

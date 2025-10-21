@@ -89,22 +89,13 @@ const RegistrationForm = () => {
 
   const maxFormWidth = 350;
 
-  const handleRegisterWithGoogleClick = () => {
-    const url = AppConfig.getGoogleOauth2Url();
-    if (url) {
-      window.location.href = url;
-    } else {
-      console.error('Auth callback url is null');
+  // Generic OAuth registration handler
+  const handleOAuthRegister = (authUrl: string | undefined, providerName: string): void => {
+    if (!authUrl) {
+      console.error(`${providerName} OAuth callback URL is null`);
+      return;
     }
-  };
-
-  const handleRegisterWithFacebookClick = () => {
-    const url = AppConfig.getFacebookOauth2Url();
-    if (url) {
-      window.location.href = url;
-    } else {
-      console.error('Facebook Auth callback url is null');
-    }
+    window.location.href = authUrl;
   };
 
   return (
@@ -130,7 +121,7 @@ const RegistrationForm = () => {
                   id: 'registration.facebook.button',
                   defaultMessage: 'Sign up with Facebook',
                 })}
-                onClick={handleRegisterWithFacebookClick}
+                onClick={() => handleOAuthRegister(AppConfig.getFacebookOauth2Url(), 'Facebook')}
               />
             )}
             {AppConfig.isGoogleOauth2Enabled() && (
@@ -139,7 +130,7 @@ const RegistrationForm = () => {
                   id: 'registration.google.button',
                   defaultMessage: 'Sign up with Google',
                 })}
-                onClick={handleRegisterWithGoogleClick}
+                onClick={() => handleOAuthRegister(AppConfig.getGoogleOauth2Url(), 'Google')}
               />
             )}
           </Box>
