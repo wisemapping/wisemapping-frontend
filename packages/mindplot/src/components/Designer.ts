@@ -754,7 +754,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         } catch (e) {
           // Skip relationships with missing topics (data consistency issue)
           console.error(
-            `[Designer] Failed to create relationship - skipping.\n` +
+            '[Designer] Failed to create relationship - skipping.\n' +
               `  Source topic ID: ${relationship.getFromNode()}\n` +
               `  Target topic ID: ${relationship.getToNode()}\n` +
               `  Available topic IDs: [${this.getModel()
@@ -1103,7 +1103,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     if (!sourceTopic || !targetTopic) {
       const error = new Error(
-        `Cannot create relationship - topic not found in designer model.\n` +
+        'Cannot create relationship - topic not found in designer model.\n' +
           `  Source topic ID: ${sourceId} (${sourceTopic ? 'found' : 'NOT FOUND'})\n` +
           `  Target topic ID: ${targetId} (${targetTopic ? 'found' : 'NOT FOUND'})\n` +
           `  Available topic IDs: [${this.getModel()

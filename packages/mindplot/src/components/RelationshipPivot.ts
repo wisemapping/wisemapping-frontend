@@ -194,9 +194,13 @@ class RelationshipPivot {
 
       if (!sourceInModel || !targetInModel) {
         console.error(
-          `[RelationshipPivot] Cannot create relationship - topic not found in designer model.\n` +
-            `  Source topic ID: ${sourceTopic!.getId()} (${sourceInModel ? 'found' : 'NOT FOUND'})\n` +
-            `  Target topic ID: ${targetTopic.getId()} (${targetInModel ? 'found' : 'NOT FOUND'})\n` +
+          '[RelationshipPivot] Cannot create relationship - topic not found in designer model.\n' +
+            `  Source topic ID: ${sourceTopic!.getId()} (${
+              sourceInModel ? 'found' : 'NOT FOUND'
+            })\n` +
+            `  Target topic ID: ${targetTopic.getId()} (${
+              targetInModel ? 'found' : 'NOT FOUND'
+            })\n` +
             `  Available topic IDs: [${dmodel
               .getTopics()
               .map((t) => t.getId())

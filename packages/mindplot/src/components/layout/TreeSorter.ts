@@ -108,7 +108,7 @@ class TreeSorter extends AbstractBasicSorter {
     // Check for invalid order values
     if (!Number.isFinite(order) || order < 0) {
       console.error(
-        `[TreeSorter] Invalid order value detected - attempting recovery.\n` +
+        '[TreeSorter] Invalid order value detected - attempting recovery.\n' +
           `  Child ID: ${child.getId()}\n` +
           `  Parent ID: ${parent.getId()}\n` +
           `  Invalid order: ${order} (${typeof order})\n` +
@@ -117,11 +117,10 @@ class TreeSorter extends AbstractBasicSorter {
       );
       order = children.length;
       recovered = true;
-    }
-    // Check for gaps/holes in sequence
-    else if (order > children.length) {
+    } else if (order > children.length) {
+      // Check for gaps/holes in sequence
       console.error(
-        `[TreeSorter] Order discontinuity detected - attempting recovery.\n` +
+        '[TreeSorter] Order discontinuity detected - attempting recovery.\n' +
           `  Child ID: ${child.getId()}\n` +
           `  Parent ID: ${parent.getId()}\n` +
           `  Requested order: ${order}\n` +
@@ -142,11 +141,11 @@ class TreeSorter extends AbstractBasicSorter {
 
       if (hasHoles) {
         console.error(
-          `[TreeSorter] Existing children have discontinuous orders - repairing.\n` +
+          '[TreeSorter] Existing children have discontinuous orders - repairing.\n' +
             `  Parent ID: ${parent.getId()}\n` +
             `  Expected orders: [${expectedOrders.join(', ')}]\n` +
             `  Actual orders: [${actualOrders.join(', ')}]\n` +
-            `  Repairing by reassigning sequential orders...`,
+            '  Repairing by reassigning sequential orders...',
         );
         // Fix existing children orders
         children.forEach((c, idx) => c.setOrder(idx));

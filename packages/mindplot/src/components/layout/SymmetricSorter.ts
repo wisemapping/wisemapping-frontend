@@ -173,7 +173,7 @@ class SymmetricSorter extends AbstractBasicSorter {
     // Check for invalid order values
     if (!Number.isFinite(order) || order < 0) {
       console.error(
-        `[SymmetricSorter] Invalid order value detected - attempting recovery.\n` +
+        '[SymmetricSorter] Invalid order value detected - attempting recovery.\n' +
           `  Child ID: ${child.getId()}\n` +
           `  Parent ID: ${parent.getId()}\n` +
           `  Invalid order: ${order} (${typeof order})\n` +
@@ -182,11 +182,10 @@ class SymmetricSorter extends AbstractBasicSorter {
       );
       order = children.length;
       recovered = true;
-    }
-    // Check for gaps/holes in sequence
-    else if (order > children.length) {
+    } else if (order > children.length) {
+      // Check for gaps/holes in sequence
       console.error(
-        `[SymmetricSorter] Order discontinuity detected - attempting recovery.\n` +
+        '[SymmetricSorter] Order discontinuity detected - attempting recovery.\n' +
           `  Child ID: ${child.getId()}\n` +
           `  Parent ID: ${parent.getId()}\n` +
           `  Requested order: ${order}\n` +
@@ -207,11 +206,11 @@ class SymmetricSorter extends AbstractBasicSorter {
 
       if (hasHoles) {
         console.error(
-          `[SymmetricSorter] Existing children have discontinuous orders - repairing.\n` +
+          '[SymmetricSorter] Existing children have discontinuous orders - repairing.\n' +
             `  Parent ID: ${parent.getId()}\n` +
             `  Expected orders: [${expectedOrders.join(', ')}]\n` +
             `  Actual orders: [${actualOrders.join(', ')}]\n` +
-            `  Repairing by reassigning sequential orders...`,
+            '  Repairing by reassigning sequential orders...',
         );
         // Fix existing children orders
         children.forEach((c, idx) => c.setOrder(idx));
