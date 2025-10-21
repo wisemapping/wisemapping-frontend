@@ -55,7 +55,18 @@ class RootedTreeSet {
    */
   remove(nodeId: number) {
     const node = this.find(nodeId);
+
+    // If node has a parent, remove it from parent's children array
+    if (node._parent) {
+      node._parent._children = node._parent._children.filter((n) => n !== node);
+      node._parent = null;
+    }
+
+    // Remove from root nodes array
     this._rootNodes = this._rootNodes.filter((n) => n !== node);
+
+    // Clean up the node's own children array to prevent memory leaks
+    node._children = [];
   }
 
   /**
@@ -426,6 +437,84 @@ class RootedTreeSet {
     }, this);
 
     return result;
+  }
+
+  /**
+   * Validates tree consistency by checking for stale references
+   * @returns array of validation errors found, empty if tree is consistent
+   */
+  validateTreeConsistency(): string[] {
+    const errors: string[] = [];
+    const allNodeIds = new Set<number>();
+
+    // Collect all node IDs by traversing from roots
+    const collectIds = (node: Node) => {
+      const nodeId = node.getId();
+      if (allNodeIds.has(nodeId)) {
+        errors.push(`Duplicate node ID found: ${nodeId}`);
+      }
+      allNodeIds.add(nodeId);
+
+      const children = node._children;
+      children.forEach((child) => {
+        // Check parent-child relationship consistency
+        if (child._parent !== node) {
+          errors.push(
+            `Child ${child.getId()}'s parent reference doesn't match actual parent ${nodeId}`,
+          );
+        }
+        collectIds(child);
+      });
+    };
+
+    // Traverse all trees
+    this._rootNodes.forEach((root) => {
+      if (root._parent !== null) {
+        errors.push(`Root node ${root.getId()} has non-null parent`);
+      }
+      collectIds(root);
+    });
+
+    // Verify all children can be found
+    const verifyChildren = (node: Node) => {
+      const children = node._children;
+      children.forEach((child) => {
+        const childId = child.getId();
+        const found = this.find(childId, false);
+        if (!found) {
+          errors.push(
+            `Stale reference: Child ${childId} in node ${node.getId()}'s children array but not findable in tree`,
+          );
+        } else if (found !== child) {
+          errors.push(
+            `Reference mismatch: Child ${childId} in node ${node.getId()}'s children array is different instance than found node`,
+          );
+        }
+        verifyChildren(child);
+      });
+    };
+
+    this._rootNodes.forEach((root) => verifyChildren(root));
+
+    return errors;
+  }
+
+  /**
+   * Logs tree consistency validation results
+   * @param throwOnError if true, throws an error when inconsistencies found
+   */
+  logTreeConsistency(throwOnError = false): void {
+    const errors = this.validateTreeConsistency();
+    if (errors.length > 0) {
+      console.error('[RootedTreeSet] Tree consistency validation failed:');
+      errors.forEach((error) => console.error(`  - ${error}`));
+      console.error('Tree dump:', this.dump());
+      if (throwOnError) {
+        throw new Error(`Tree consistency validation failed: ${errors.length} errors found`);
+      }
+    } else {
+      console.log('[RootedTreeSet] Tree consistency validation passed');
+    }
   }
 }
 

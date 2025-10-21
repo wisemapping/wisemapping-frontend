@@ -242,11 +242,9 @@ class OriginalLayout {
     );
 
     siblingsToShift.forEach((sibling) => {
-      /* eslint-disable */
       const overlappingOccurs = shiftedBranches.some((shiftedBranch) =>
         OriginalLayout._branchesOverlap(shiftedBranch, sibling, heightById),
       );
-      /* eslint-enable */
       if (overlappingOccurs) {
         const sAmount = node.getFreeDisplacement().y;
         this._treeSet.shiftBranchPosition(sibling, 0, sAmount);
