@@ -37,9 +37,20 @@ class GridSorter extends AbstractBasicSorter {
 
     const children = this._getSortedChildren(treeSet, node);
 
+    // Filter out any stale references to deleted nodes
+    const validChildren = children.filter((child) => {
+      const exists = treeSet.find(child.getId(), false);
+      if (!exists) {
+        console.warn(
+          `[GridSorter] Stale child reference detected: node ${child.getId()} in parent ${node.getId()}'s children but not in tree. Skipping.`,
+        );
+      }
+      return exists !== null;
+    });
+
     // Compute heights ...
     const me = this;
-    const heights = children.map((child) => ({
+    const heights = validChildren.map((child) => ({
       id: child.getId(),
       height: me._computeChildrenHeight(treeSet, child),
     }));

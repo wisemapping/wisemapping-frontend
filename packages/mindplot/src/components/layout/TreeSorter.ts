@@ -132,8 +132,19 @@ class TreeSorter extends AbstractBasicSorter {
   computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
     const children = this._getSortedChildren(treeSet, node);
 
+    // Filter out any stale references to deleted nodes
+    const validChildren = children.filter((child) => {
+      const exists = treeSet.find(child.getId(), false);
+      if (!exists) {
+        console.warn(
+          `[TreeSorter] Stale child reference detected: node ${child.getId()} in parent ${node.getId()}'s children but not in tree. Skipping.`,
+        );
+      }
+      return exists !== null;
+    });
+
     // Calculate total width needed for all children
-    const childrenWidths = children.map((child) => ({
+    const childrenWidths = validChildren.map((child) => ({
       id: child.getId(),
       order: child.getOrder(),
       width: this._computeChildrenWidth(treeSet, child),

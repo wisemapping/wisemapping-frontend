@@ -201,8 +201,19 @@ class SymmetricSorter extends AbstractBasicSorter {
   computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
     const children = this._getSortedChildren(treeSet, node);
 
+    // Filter out any stale references to deleted nodes
+    const validChildren = children.filter((child) => {
+      const exists = treeSet.find(child.getId(), false);
+      if (!exists) {
+        console.warn(
+          `[SymmetricSorter] Stale child reference detected: node ${child.getId()} in parent ${node.getId()}'s children but not in tree. Skipping.`,
+        );
+      }
+      return exists !== null;
+    });
+
     // Compute heights ...
-    const sizeById = children
+    const sizeById = validChildren
       .map((child) => ({
         id: child.getId(),
         order: child.getOrder(),
@@ -222,7 +233,16 @@ class SymmetricSorter extends AbstractBasicSorter {
     const result = new Map<number, PositionType>();
     for (let i = 0; i < sizeById.length; i++) {
       ysum -= sizeById[i].height;
-      const childNode = treeSet.find(sizeById[i].id);
+      const childNode = treeSet.find(sizeById[i].id, false);
+
+      // Defensive check: if node was deleted between operations, skip it
+      if (!childNode) {
+        console.warn(
+          `[SymmetricSorter] Child node ${sizeById[i].id} not found during offset calculation. Skipping.`,
+        );
+        continue;
+      }
+
       const direction = this.getChildDirection(treeSet, childNode);
 
       const yOffset = ysum + sizeById[i].height / 2;
