@@ -520,8 +520,13 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const order = domElem.getAttribute('order');
     if (order !== null && order !== 'NaN') {
-      // Hack for broken maps ...
-      topic.setOrder(parseInt(order, 10));
+      // Validate parsed order is a finite number (defense against corrupted XML)
+      const parsedOrder = parseInt(order, 10);
+      if (Number.isFinite(parsedOrder)) {
+        topic.setOrder(parsedOrder);
+      } else {
+        console.warn(`Invalid order value in XML: "${order}" for topic ${topic.getId()}, skipping`);
+      }
     }
 
     const isShrink = domElem.getAttribute('shrink');
@@ -593,7 +598,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if (topic.getType() !== 'CentralTopic') {
       topic
         .getChildren()
-        .sort((a, b) => a.getOrder()! - b.getOrder()!)
+        .sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0))
         .forEach((child, index) => {
           if (child.getOrder() !== index) {
             child.setOrder(index);

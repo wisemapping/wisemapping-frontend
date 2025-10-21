@@ -647,12 +647,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const siblingModel = this._createSiblingModel(topic);
 
       if (siblingModel && parentTopic) {
-        // Hack: if parent is central topic, add node below not on opposite side.
-        // This should be done in the layout
-        if (parentTopic.getType() === 'CentralTopic') {
-          siblingModel.setOrder(topic.getOrder()! + 2);
-        }
-
         const parentTopicId = parentTopic.getId();
         this._actionDispatcher.addTopics([siblingModel], [parentTopicId]);
       }
@@ -670,10 +664,12 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const mindmap = model.getMindmap();
       result = mindmap.createNode();
 
-      // Create a new node ...
-      const order = topic.getOrder()! + 1;
-      result.setOrder(order);
-      result.setPosition(10, 10); // Set a dummy position ...
+      // Let the layout manager calculate the proper order for the sibling
+      // This delegates to the appropriate sorter (TreeSorter, BalancedSorter, etc.)
+      const layoutManager = this._eventBussDispatcher.getLayoutManager();
+      const prediction = layoutManager.predict(parentTopic.getId(), null, null);
+      result.setOrder(prediction.order);
+      result.setPosition(prediction.position.x, prediction.position.y);
     }
 
     return result;
@@ -945,7 +941,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   nodeModelToTopic(nodeModel: NodeModel): Topic {
     let children = nodeModel.getChildren().slice();
-    children = children.sort((a, b) => a.getOrder()! - b.getOrder()!);
+    children = children.sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
 
     const result = this._buildNodeGraph(nodeModel, this.isReadOnly());
     result.setVisibility(false);

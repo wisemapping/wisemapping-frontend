@@ -82,7 +82,7 @@ class SymmetricSorter extends AbstractBasicSorter {
     // node has no siblings and its trying to reconnect to its own parent
     const sameParent = parent === graph.getParent(node);
     if (siblings.length === 0 && nodeDirection === positionDirection && sameParent) {
-      return [node.getOrder(), node.getPosition()];
+      return [node.getOrder() ?? 0, node.getPosition()];
     }
 
     const parentChildren = graph.getChildren(parent);
@@ -107,10 +107,11 @@ class SymmetricSorter extends AbstractBasicSorter {
 
       // Fit at the bottom
       if (!nodeAfter && position.y > parentChild.getPosition().y) {
+        const lastOrderValue = last.getOrder() ?? 0;
         const order =
           graph.getParent(node) && graph.getParent(node)!.getId() === parent.getId()
-            ? last.getOrder()
-            : last.getOrder() + 1;
+            ? lastOrderValue
+            : lastOrderValue + 1;
 
         const result = {
           x: parentChild.getPosition().x,
@@ -129,10 +130,12 @@ class SymmetricSorter extends AbstractBasicSorter {
         position.y < nodeAfter.getPosition().y
       ) {
         if (nodeAfter.getId() === node.getId() || parentChild.getId() === node.getId()) {
-          return [node.getOrder(), node.getPosition()];
+          return [node.getOrder() ?? 0, node.getPosition()];
         }
         const orderResult =
-          position.y > node.getPosition().y ? nodeAfter.getOrder() - 1 : parentChild.getOrder() + 1;
+          position.y > node.getPosition().y
+            ? (nodeAfter.getOrder() ?? 0) - 1
+            : (parentChild.getOrder() ?? 0) + 1;
 
         const positionResult = {
           x: parentChild.getPosition().x,
@@ -234,12 +237,20 @@ class SymmetricSorter extends AbstractBasicSorter {
     $assert(parent != null, 'can not detach null parent');
     const children = this._getSortedChildren(treeSet, parent!);
     const order = node.getOrder();
-    $assert(children[order] === node, 'Node seems not to be in the right position');
+    $assert(order !== undefined, 'Node must have an order to be detached');
+    // TypeScript doesn't understand $assert narrows the type, so we use non-null assertion
+    $assert(children[order!] === node, 'Node seems not to be in the right position');
 
     // Shift all the nodes ...
-    for (let i = node.getOrder() + 1; i < children.length; i++) {
-      const child = children[i];
-      child.setOrder(child.getOrder() - 1);
+    const nodeOrder = node.getOrder();
+    if (nodeOrder !== undefined) {
+      for (let i = nodeOrder + 1; i < children.length; i++) {
+        const child = children[i];
+        const childOrder = child.getOrder();
+        if (childOrder !== undefined) {
+          child.setOrder(childOrder - 1);
+        }
+      }
     }
     node.setOrder(0);
   }
@@ -255,7 +266,7 @@ class SymmetricSorter extends AbstractBasicSorter {
           `[SymmetricSorter] Stale child reference detected: node ${child.getId()} in parent ${node.getId()}'s children but not in tree. Skipping.`,
         );
       }
-      return exists !== null;
+      return exists !== undefined;
     });
 
     // Compute heights ...

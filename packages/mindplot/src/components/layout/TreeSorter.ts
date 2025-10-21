@@ -46,7 +46,7 @@ class TreeSorter extends AbstractBasicSorter {
 
     // If position not provided, keep current position
     if (!position) {
-      return [node.getOrder(), node.getPosition()];
+      return [node.getOrder() ?? 0, node.getPosition()];
     }
 
     // Node is being dragged - determine order based on horizontal position
@@ -65,7 +65,7 @@ class TreeSorter extends AbstractBasicSorter {
     for (let i = 0; i < parentChildren.length; i++) {
       const child = parentChildren[i];
       if (position.x > child.getPosition().x) {
-        order = child.getOrder() + 1;
+        order = (child.getOrder() ?? 0) + 1;
       }
     }
 
@@ -165,12 +165,20 @@ class TreeSorter extends AbstractBasicSorter {
     $assert(parent != null, 'cannot detach node with null parent');
     const children = this._getSortedChildren(treeSet, parent!);
     const order = node.getOrder();
-    $assert(children[order] === node, 'Node seems not to be in the right position');
+    $assert(order !== undefined, 'Node must have an order to be detached');
+    // TypeScript doesn't understand $assert narrows the type, so we use non-null assertion
+    $assert(children[order!] === node, 'Node seems not to be in the right position');
 
     // Shift all nodes after the removed node
-    for (let i = node.getOrder() + 1; i < children.length; i++) {
-      const child = children[i];
-      child.setOrder(child.getOrder() - 1);
+    const nodeOrder = node.getOrder();
+    if (nodeOrder !== undefined) {
+      for (let i = nodeOrder + 1; i < children.length; i++) {
+        const child = children[i];
+        const childOrder = child.getOrder();
+        if (childOrder !== undefined) {
+          child.setOrder(childOrder - 1);
+        }
+      }
     }
     node.setOrder(0);
   }
@@ -186,7 +194,7 @@ class TreeSorter extends AbstractBasicSorter {
           `[TreeSorter] Stale child reference detected: node ${child.getId()} in parent ${node.getId()}'s children but not in tree. Skipping.`,
         );
       }
-      return exists !== null;
+      return exists !== undefined;
     });
 
     // Calculate total width needed for all children

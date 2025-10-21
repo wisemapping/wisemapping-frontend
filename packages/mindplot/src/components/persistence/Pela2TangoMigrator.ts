@@ -59,8 +59,8 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
       } else {
         rightNodes.push(child);
       }
-      rightNodes.sort((a, b) => a.getOrder()! - b.getOrder()!);
-      leftNodes.sort((a, b) => a.getOrder()! - b.getOrder()!);
+      rightNodes.sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
+      leftNodes.sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
     });
 
     for (let i = 0; i < rightNodes.length; i++) {

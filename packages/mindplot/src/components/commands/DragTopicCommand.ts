@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '../util/assert';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
 import PositionType from '../PositionType';
@@ -30,7 +29,12 @@ class DragTopicCommand extends Command {
 
   private _order: number | undefined;
 
-  constructor(topicId: number, position: PositionType, order: number, parentTopic: Topic) {
+  constructor(
+    topicId: number,
+    position: PositionType,
+    order: number | undefined,
+    parentTopic: Topic,
+  ) {
     super();
     this._topicsId = topicId;
     this._parentId = parentTopic ? parentTopic.getId() : null;
@@ -56,8 +60,8 @@ class DragTopicCommand extends Command {
     }
 
     // Set topic order ...
-    if ($defined(this._order)) {
-      topic.setOrder(this._order!);
+    if (this._order !== undefined) {
+      topic.setOrder(this._order);
     } else if (this._position != null) {
       commandContext.moveTopic(topic, this._position);
     } else {

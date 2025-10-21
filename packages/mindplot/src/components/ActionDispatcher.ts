@@ -51,7 +51,7 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
   abstract dragTopic(
     topicId: number,
     position: PositionType,
-    order: number | null,
+    order: number | undefined,
     parentTopic: Topic | null,
   ): void;
 

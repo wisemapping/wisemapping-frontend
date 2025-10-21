@@ -292,64 +292,67 @@ class RootedTreeSet {
   }
 
   /**
-   * @param canvas
+   * Traverse the tree and apply a visitor function to each node.
+   * @param visitor - Function called for each node with (node, isRoot, children)
    */
-  plot(canvas) {
-    const branches = this._rootNodes;
-    for (let i = 0; i < branches.length; i++) {
-      const branch = branches[i];
-      this._plot(canvas, branch);
-    }
+  traverse(visitor: (node: Node, isRoot: boolean, children: Node[]) => void): void {
+    this._rootNodes.forEach((rootNode) => {
+      this._traverseNode(rootNode, visitor, true);
+    });
   }
 
-  _plot(canvas, node: Node) {
+  private _traverseNode(
+    node: Node,
+    visitor: (node: Node, isRoot: boolean, children: Node[]) => void,
+    isRoot: boolean,
+  ): void {
     const children = this.getChildren(node);
-    const cx = node.getPosition().x + canvas.width / 2 - node.getSize().width / 2;
-    const cy = node.getPosition().y + canvas.height / 2 - node.getSize().height / 2;
-    const rect = canvas.rect(cx, cy, node.getSize().width, node.getSize().height);
-    const order = node.getOrder() == null ? 'r' : node.getOrder();
-    const text = canvas.text(
-      node.getPosition().x + canvas.width / 2,
-      node.getPosition().y + canvas.height / 2,
-      `${node.getId()}[${order}]`,
-    );
-    text.attr('fill', '#FFF');
-    let fillColor;
-    if (this._rootNodes.includes(node)) {
-      fillColor = '#000';
-    } else {
-      fillColor = '#c00';
-    }
-    rect.attr('fill', fillColor);
+    visitor(node, isRoot, children);
 
-    const rectPosition = {
-      x: rect.attr('x') - canvas.width / 2 + rect.attr('width') / 2,
-      y: rect.attr('y') - canvas.height / 2 + rect.attr('height') / 2,
-    };
-    const rectSize = { width: rect.attr('width'), height: rect.attr('height') };
-    rect.click(() => {
-      console.log(
-        `[id:${node.getId()}, order:${node.getOrder()}, position:(${rectPosition.x}, ${
-          rectPosition.y
-        }), size:${rectSize.width},${rectSize.height}, freeDisplacement:(${
-          node.getFreeDisplacement().x
-        },${node.getFreeDisplacement().y})]`,
-      );
+    children.forEach((child) => {
+      this._traverseNode(child, visitor, false);
     });
-    text.click(() => {
-      console.log(
-        `[id:${node.getId()}, order:${node.getOrder()}, position:(${rectPosition.x},${
-          rectPosition.y
-        }), size:${rectSize.width}x${rectSize.height}, freeDisplacement:(${
-          node.getFreeDisplacement().x
-        },${node.getFreeDisplacement().y})]`,
-      );
-    });
+  }
 
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      this._plot(canvas, child);
-    }
+  /**
+   * Plot the tree structure using Raphael.js (for testing/debugging only)
+   * @param canvas - Raphael canvas object
+   */
+  plot(canvas) {
+    this.traverse((node, isRoot) => {
+      // Calculate position on canvas
+      const cx = node.getPosition().x + canvas.width / 2 - node.getSize().width / 2;
+      const cy = node.getPosition().y + canvas.height / 2 - node.getSize().height / 2;
+
+      // Draw rectangle for node
+      const rect = canvas.rect(cx, cy, node.getSize().width, node.getSize().height);
+
+      // Draw node label with ID and order
+      const order = node.getOrder();
+      const orderText = order !== undefined ? order.toString() : '-';
+      const text = canvas.text(
+        node.getPosition().x + canvas.width / 2,
+        node.getPosition().y + canvas.height / 2,
+        `${node.getId()}[${orderText}]`,
+      );
+      text.attr('fill', '#FFF');
+
+      // Color code: black for roots, red for children
+      const fillColor = isRoot ? '#000' : '#c00';
+      rect.attr('fill', fillColor);
+
+      // Make clickable for debugging
+      const rectPosition = {
+        x: rect.attr('x') - canvas.width / 2 + rect.attr('width') / 2,
+        y: rect.attr('y') - canvas.height / 2 + rect.attr('height') / 2,
+      };
+      const rectSize = { width: rect.attr('width'), height: rect.attr('height') };
+
+      const nodeInfo = `[id:${node.getId()}, order:${node.getOrder()}, position:(${rectPosition.x},${rectPosition.y}), size:${rectSize.width}x${rectSize.height}, freeDisplacement:(${node.getFreeDisplacement().x},${node.getFreeDisplacement().y})]`;
+
+      rect.click(() => console.log(nodeInfo));
+      text.click(() => console.log(nodeInfo));
+    });
   }
 
   /**
@@ -399,8 +402,9 @@ class RootedTreeSet {
         node.getPosition().x > parent.getPosition().x
           ? sibling.getPosition().x > parent.getPosition().x
           : sibling.getPosition().x < parent.getPosition().x;
-      const orderOK =
-        yOffset < 0 ? sibling.getOrder() < node.getOrder() : sibling.getOrder() > node.getOrder();
+      const siblingOrder = sibling.getOrder() ?? 0;
+      const nodeOrder = node.getOrder() ?? 0;
+      const orderOK = yOffset < 0 ? siblingOrder < nodeOrder : siblingOrder > nodeOrder;
       return orderOK && sameSide;
     });
 
@@ -429,10 +433,9 @@ class RootedTreeSet {
         node.getPosition().x > rootNode.getPosition().x
           ? sibling.getPosition().x > rootNode.getPosition().x
           : sibling.getPosition().x < rootNode.getPosition().x;
-      const sameDirection =
-        yOffset < 0
-          ? sibling.getOrder() < branch.getOrder()
-          : sibling.getOrder() > branch.getOrder();
+      const siblingOrder = sibling.getOrder() ?? 0;
+      const branchOrder = branch.getOrder() ?? 0;
+      const sameDirection = yOffset < 0 ? siblingOrder < branchOrder : siblingOrder > branchOrder;
       return sameSide && sameDirection;
     }, this);
 

@@ -22,13 +22,13 @@ class ChangeEvent {
 
   private _position: { x: number; y: number } | null;
 
-  private _order: number | null;
+  private _order: number | undefined;
 
   constructor(id: number) {
     $assert(!Number.isNaN(id), 'id can not be null');
     this._id = id;
     this._position = null;
-    this._order = null;
+    this._order = undefined;
   }
 
   /** @return id */
@@ -37,7 +37,7 @@ class ChangeEvent {
   }
 
   /** @return order */
-  getOrder(): number | null {
+  getOrder(): number | undefined {
     return this._order;
   }
 
@@ -47,12 +47,14 @@ class ChangeEvent {
   }
 
   /**
-   * @param {} value the order to set
-   * @throws will throw an error if the given parameter is not/cannot be converted to a numerical
-   * value
+   * Set the order value for this change event.
+   * @param value - The order value (number or undefined)
    */
-  setOrder(value: number): void {
-    $assert(!Number.isNaN(value), 'value can not be null');
+  setOrder(value: number | undefined): void {
+    $assert(
+      value === undefined || (!Number.isNaN(value) && Number.isFinite(value)),
+      `Order must be a finite number or undefined. Value: ${value}`,
+    );
     this._order = value;
   }
 

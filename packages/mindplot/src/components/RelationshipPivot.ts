@@ -211,6 +211,9 @@ class RelationshipPivot {
       }
 
       // Create relationship FROM sourceTopic TO targetTopic (arrow points to target)
+      console.log(
+        `[RelationshipPivot] Creating relationship: ${sourceTopic!.getId()} → ${targetTopic.getId()}`,
+      );
       const relModel = mindmap.createRelationship(sourceTopic!.getId(), targetTopic.getId());
       this._designer.getActionDispatcher().addRelationship(relModel);
     }

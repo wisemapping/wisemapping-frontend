@@ -173,16 +173,26 @@ abstract class INodeModel {
     this.putProperty('shapeType', type);
   }
 
-  setOrder(value: number): void {
+  /**
+   * Set the order of this node among its siblings.
+   * Pass a number for nodes with siblings, or undefined for nodes without siblings (central/isolated).
+   * @param value - The order value (finite number or undefined)
+   */
+  setOrder(value: number | undefined): void {
     $assert(
-      (typeof value === 'number' && Number.isFinite(value)) || value == null,
-      'Order must be null or a number',
+      value === undefined || (typeof value === 'number' && Number.isFinite(value)),
+      `Order must be a finite number or undefined. Received: ${value} (${typeof value})`,
     );
     this.putProperty('order', value);
   }
 
+  /**
+   * Get the order of this node among its siblings.
+   * Returns undefined for nodes without siblings (central node, isolated nodes).
+   * @returns The order value, or undefined if node has no siblings
+   */
   getOrder(): number | undefined {
-    return this.getProperty('order') as number;
+    return this.getProperty('order') as number | undefined;
   }
 
   setFontFamily(fontFamily: string | undefined): void {

@@ -226,7 +226,12 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
 
     const order = domElem.getAttribute('order');
     if ($defined(order)) {
-      topic.setOrder(parseInt(order, 10));
+      const parsedOrder = parseInt(order, 10);
+      if (Number.isFinite(parsedOrder)) {
+        topic.setOrder(parsedOrder);
+      } else {
+        console.warn(`Invalid order value in XML: "${order}" for topic ${topic.getId()}`);
+      }
     }
 
     let shape = domElem.getAttribute('shape');
