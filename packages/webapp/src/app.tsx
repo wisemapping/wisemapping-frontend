@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import React, { ReactElement, Suspense, useEffect, useState } from 'react';
-import { FormattedMessage, IntlProvider } from 'react-intl';
+import { IntlProvider } from 'react-intl';
 import {
   Route,
   RouterProvider,
@@ -41,6 +41,7 @@ import { ThemeProvider } from '@emotion/react';
 import { AppThemeProvider, useTheme } from './contexts/ThemeContext';
 import OAuthCallbackPage from './components/oauth-callback';
 import ErrorPage from './components/error-page';
+import LoadingFallback from './components/loading-fallback';
 import { HelmetProvider } from './components/seo';
 import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
 import { loader as configLoader } from './loader';
@@ -76,23 +77,11 @@ const PageEditorWrapper = ({ mode }: { mode: PageModeType }) => {
   const hid = hidStr ? Number.parseInt(hidStr) : undefined;
 
   return (
-    <Suspense
-      fallback={
-        <div>
-          <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingFallback />}>
       <EditorPage pageMode={mode} mapId={mapId} hid={hid} zoom={zoom} />
     </Suspense>
   );
 };
-
-const HydrateFallback = () => (
-  <div>
-    <FormattedMessage id="common.loading" defaultMessage="Loading..." />
-  </div>
-);
 
 // Create registration routes conditionally based on configuration
 const createRegistrationRoutes = () => {
@@ -125,7 +114,7 @@ const router = createBrowserRouter(
     <Route
       loader={configLoader}
       errorElement={<ErrorPage />}
-      hydrateFallbackElement={<HydrateFallback />}
+      hydrateFallbackElement={<LoadingFallback />}
     >
       <Route path="/" element={<Redirect to="/c/login" />} />
       <Route path="/c/login" element={<LoginPage />} />
@@ -138,26 +127,14 @@ const router = createBrowserRouter(
         <Route
           path="/c/admin"
           element={
-            <Suspense
-              fallback={
-                <div>
-                  <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                </div>
-              }
-            >
+            <Suspense fallback={<LoadingFallback />}>
               <AdminConsole />
             </Suspense>
           }
         />
         <Route
           element={
-            <Suspense
-              fallback={
-                <div>
-                  <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                </div>
-              }
-            >
+            <Suspense fallback={<LoadingFallback />}>
               <AdminLayout />
             </Suspense>
           }
@@ -165,13 +142,7 @@ const router = createBrowserRouter(
           <Route
             path="/c/admin/accounts"
             element={
-              <Suspense
-                fallback={
-                  <div>
-                    <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                  </div>
-                }
-              >
+              <Suspense fallback={<LoadingFallback />}>
                 <AccountsPage />
               </Suspense>
             }
@@ -179,13 +150,7 @@ const router = createBrowserRouter(
           <Route
             path="/c/admin/maps"
             element={
-              <Suspense
-                fallback={
-                  <div>
-                    <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                  </div>
-                }
-              >
+              <Suspense fallback={<LoadingFallback />}>
                 <MapsAdminPage />
               </Suspense>
             }
@@ -193,13 +158,7 @@ const router = createBrowserRouter(
           <Route
             path="/c/admin/system"
             element={
-              <Suspense
-                fallback={
-                  <div>
-                    <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                  </div>
-                }
-              >
+              <Suspense fallback={<LoadingFallback />}>
                 <SystemPage />
               </Suspense>
             }
@@ -209,13 +168,7 @@ const router = createBrowserRouter(
         <Route
           path="/c/maps/"
           element={
-            <Suspense
-              fallback={
-                <div>
-                  <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                </div>
-              }
-            >
+            <Suspense fallback={<LoadingFallback />}>
               <MapsPage />
             </Suspense>
           }
