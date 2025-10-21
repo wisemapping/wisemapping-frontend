@@ -111,12 +111,13 @@ class DragManager {
 
         const originalEvent = event;
         const currentPos = screen.getWorkspaceMousePosition(originalEvent as MouseEvent);
-        const distanceMoved = this._mouseDownPosition
-          ? Math.sqrt(
-              (currentPos.x - this._mouseDownPosition.x) ** 2 +
-                (currentPos.y - this._mouseDownPosition.y) ** 2,
-            )
-          : 0;
+
+        let distanceMoved = 0;
+        if (this._mouseDownPosition) {
+          const dx = currentPos.x - this._mouseDownPosition.x;
+          const dy = currentPos.y - this._mouseDownPosition.y;
+          distanceMoved = Math.sqrt(dx ** 2 + dy ** 2);
+        }
 
         // Only start drag if time threshold OR distance threshold is met
         const timeThresholdMet = timeSinceMouseDown >= DragManager.DRAG_TIME_THRESHOLD_MS;
