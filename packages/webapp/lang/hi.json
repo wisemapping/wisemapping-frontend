@@ -344,6 +344,9 @@
   "login.title": {
     "defaultMessage": "स्वागत है"
   },
+  "login.shared-map-notice": {
+    "defaultMessage": "एक माइंड मैप आपके साथ साझा किया गया है। कृपया इसे एक्सेस करने के लिए लॉग इन करें। खाता नहीं है? मुफ़्त में साइन अप करें या अपना Google/Facebook खाता उपयोग करें।"
+  },
   "map.creator": {
     "defaultMessage": "निर्माता"
   },

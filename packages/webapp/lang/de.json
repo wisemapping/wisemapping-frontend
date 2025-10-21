@@ -287,6 +287,9 @@
   "login.title": {
     "defaultMessage": "Herzlich willkommen"
   },
+  "login.shared-map-notice": {
+    "defaultMessage": "Eine Mindmap wurde mit Ihnen geteilt. Bitte melden Sie sich an, um darauf zuzugreifen. Noch kein Konto? Registrieren Sie sich kostenlos oder nutzen Sie Ihr Google/Facebook-Konto."
+  },
   "map.creator": {
     "defaultMessage": "Ersteller"
   },

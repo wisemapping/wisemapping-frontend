@@ -344,6 +344,9 @@
   "login.title": {
     "defaultMessage": "欢迎"
   },
+  "login.shared-map-notice": {
+    "defaultMessage": "有人与您分享了一张思维导图。请登录以访问。还没有账户？免费注册或使用您的Google/Facebook账户。"
+  },
   "map.creator": {
     "defaultMessage": "创建者"
   },

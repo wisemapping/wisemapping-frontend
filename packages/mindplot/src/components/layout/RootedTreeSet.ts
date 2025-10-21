@@ -76,7 +76,7 @@ class RootedTreeSet {
           `[RootedTreeSet] Idempotent connect detected - Node ${childId} is already connected to parent ${parentId}. Skipping duplicate connection.`,
           `\nChild state: ${child}`,
           `\nParent state: ${parent}`,
-          `\nStack trace:`,
+          '\nStack trace:',
           new Error().stack,
         );
         return;

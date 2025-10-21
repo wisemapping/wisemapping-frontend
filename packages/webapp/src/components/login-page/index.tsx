@@ -29,6 +29,7 @@ import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
 import FacebookButton from '../common/facebook-button';
@@ -76,6 +77,11 @@ const LoginPage = (): React.ReactElement => {
   const navigate = useNavigate();
   const location = useLocation();
   const { initializeThemeFromSystem } = useTheme();
+
+  // Check if user came from a shared link
+  const searchParams = new URLSearchParams(location.search);
+  const redirectUrl = searchParams.get('redirect');
+  const isSharedLink = redirectUrl?.includes('shared=true') || false;
 
   useEffect(() => {
     document.title = intl.formatMessage({
@@ -152,6 +158,15 @@ const LoginPage = (): React.ReactElement => {
             <FormattedMessage id="login.desc" defaultMessage="Log into your account" />
           </Typography>
         </header>
+
+        {isSharedLink && (
+          <Alert severity="info" sx={{ mb: 2 }}>
+            <FormattedMessage
+              id="login.shared-map-notice"
+              defaultMessage="A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
+            />
+          </Alert>
+        )}
 
         <LoginError error={loginError} />
 
