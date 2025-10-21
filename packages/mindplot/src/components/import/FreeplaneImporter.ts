@@ -66,7 +66,7 @@ class FreeplaneImporter extends Importer {
     const rootNodeId = rootNode.getAttribute('ID') || 'ID_1';
     this.topicIdMap.set(rootNodeId, centralId.toString());
 
-    let xml = `<map name="${this.escapeXml(mapName)}" version="tango" theme="prism">\n`;
+    let xml = `<map name="${this.escapeXml(mapName)}" version="tango" theme="prism" layout="mindmap">\n`;
     xml += `    <topic central="true" text="${this.escapeXml(centralTitle)}" id="${centralId}">\n`;
 
     // Process child nodes
@@ -564,7 +564,7 @@ class FreeplaneImporter extends Importer {
   }
 
   private createFallbackMap(nameMap: string, error: Error): string {
-    return `<map name="${this.escapeXml(nameMap)}" version="tango">
+    return `<map name="${this.escapeXml(nameMap)}" version="tango" layout="mindmap">
         <topic central="true" text="Freeplane Import Error" id="1">
             <note><![CDATA[Freeplane import failed: ${this.escapeXml(error.message)}
 Please check the file format and try again.]]></note>

@@ -63,6 +63,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
+import CircularProgress from '@mui/material/CircularProgress';
 import { ClientContext } from '../../../classes/provider/client-context';
 
 dayjs.extend(LocalizedFormat);
@@ -542,7 +543,12 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             {isLoading ? (
               <Card>
                 <CardContent>
-                  <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <CircularProgress size={24} />
+                    <Typography>
+                      <FormattedMessage id="common.loading" defaultMessage="Loading..." />
+                    </Typography>
+                  </Box>
                 </CardContent>
               </Card>
             ) : mapsInfo.length == 0 ? (
@@ -658,7 +664,12 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
               {isLoading ? (
                 <TableRow>
                   <TableCell colSpan={6}>
-                    <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                    <Box display="flex" alignItems="center" gap={2} justifyContent="center">
+                      <CircularProgress size={24} />
+                      <Typography>
+                        <FormattedMessage id="common.loading" defaultMessage="Loading..." />
+                      </Typography>
+                    </Box>
                   </TableCell>
                 </TableRow>
               ) : mapsInfo.length == 0 ? (

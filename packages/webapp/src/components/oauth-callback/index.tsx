@@ -21,11 +21,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import FormContainer from '../layout/form-container';
 import Header from '../layout/header';
 import Footer from '../layout/footer';
-import { Link as RouterLink } from 'react-router';
+import { Link as RouterLink, useLocation } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { trackPageView } from '../../utils/analytics';
-import { Oauth2CallbackResult } from '../../classes/client';
+import { Oauth2CallbackResult, ErrorInfo } from '../../classes/client';
 import { useNavigate } from 'react-router';
 import GlobalError from '../form/global-error';
 import { buttonsStyle } from './style';
@@ -34,14 +34,21 @@ import { logCriticalError } from '../../utils';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '../../contexts/ThemeContext';
 
-const RegistrationCallbackPage = (): React.ReactElement => {
+type OAuthProvider = 'google' | 'facebook';
+
+const OAuthCallbackPage = (): React.ReactElement => {
   const intl = useIntl();
   const client = useContext(ClientContext);
-
-  const [showError, setShowError] = useState(false);
-  const [callbackResult, setCallbackResult] = useState<Oauth2CallbackResult>();
+  const location = useLocation();
   const navigate = useNavigate();
   const { initializeThemeFromSystem } = useTheme();
+
+  const [error, setError] = useState<ErrorInfo | undefined>();
+  const [callbackResult, setCallbackResult] = useState<Oauth2CallbackResult>();
+
+  // Determine OAuth provider based on route path
+  const provider: OAuthProvider = location.pathname.includes('facebook') ? 'facebook' : 'google';
+  const providerName = provider === 'facebook' ? 'Facebook' : 'Google';
 
   useEffect(() => {
     document.title = intl.formatMessage({
@@ -53,16 +60,21 @@ const RegistrationCallbackPage = (): React.ReactElement => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const googleOauthCode = searchParams.get('code');
-    if (!googleOauthCode) {
+    const oauthCode = searchParams.get('code');
+    if (!oauthCode) {
       throw new Error(`Missing code definition: ${window.location.search}`);
     }
 
     // Get redirect URL from OAuth state parameter
     const stateRedirectUrl = searchParams.get('state');
 
-    client
-      .processGoogleCallback(googleOauthCode)
+    // Call the appropriate OAuth callback based on provider
+    const callbackPromise =
+      provider === 'facebook'
+        ? client.processFacebookCallback(oauthCode)
+        : client.processGoogleCallback(oauthCode);
+
+    callbackPromise
       .then((result) => {
         if (result.googleSync) {
           // Initialize theme from system preference if not already set
@@ -77,13 +89,13 @@ const RegistrationCallbackPage = (): React.ReactElement => {
         }
         setCallbackResult(result);
       })
-      .catch((error) => {
-        setShowError(true);
-        logCriticalError(`Unexpected error on processGoogleCallback`, error);
+      .catch((errorInfo: ErrorInfo) => {
+        setError(errorInfo);
+        logCriticalError(`Unexpected error on ${provider} OAuth callback`, errorInfo);
       });
   }, []);
 
-  const confirmAccountSynching = () => {
+  const confirmAccountSynching = (): void => {
     const callback = callbackResult;
     if (!callback) {
       throw new Error(`callbackResult can not be null`);
@@ -105,13 +117,14 @@ const RegistrationCallbackPage = (): React.ReactElement => {
           navigate('/c/maps/');
         }
       })
-      .catch((error) => {
-        logCriticalError(`Unexpected error on  confirmAccountSynching`, error);
+      .catch((errorInfo: ErrorInfo) => {
+        setError(errorInfo);
+        logCriticalError(`Unexpected error on confirmAccountSynching`, errorInfo);
       });
   };
 
   // if service reports that user doesnt sync accounts yet, we need to show the options
-  const needConfirmLinking = !showError && callbackResult?.email && !callbackResult?.googleSync;
+  const needConfirmLinking = !error && callbackResult?.email && !callbackResult?.googleSync;
 
   return (
     <div>
@@ -131,7 +144,8 @@ const RegistrationCallbackPage = (): React.ReactElement => {
           {needConfirmLinking ? (
             <FormattedMessage
               id="registration.callback.confirm.description"
-              defaultMessage="An account with the same email was previously registered. Do you want to link your google account to that WiseMapping account?"
+              defaultMessage="An account with the same email was previously registered. Do you want to link your {provider} account to that WiseMapping account?"
+              values={{ provider: providerName }}
             />
           ) : (
             <FormattedMessage
@@ -141,17 +155,9 @@ const RegistrationCallbackPage = (): React.ReactElement => {
           )}
         </Typography>
 
-        {showError && (
+        {error && (
           <>
-            <GlobalError
-              error={{
-                msg: intl.formatMessage({
-                  id: 'registation.callback.error.message',
-                  defaultMessage:
-                    'An error occurred validating your identity with Google, you can try again from the login page',
-                }),
-              }}
-            />
+            <GlobalError error={error} />
             <Button
               color="primary"
               size="medium"
@@ -166,7 +172,7 @@ const RegistrationCallbackPage = (): React.ReactElement => {
           </>
         )}
 
-        {!needConfirmLinking && !showError && <CircularProgress />}
+        {!needConfirmLinking && !error && <CircularProgress />}
 
         {needConfirmLinking && (
           <>
@@ -201,4 +207,4 @@ const RegistrationCallbackPage = (): React.ReactElement => {
   );
 };
 
-export default RegistrationCallbackPage;
+export default OAuthCallbackPage;
