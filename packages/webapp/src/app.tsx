@@ -39,8 +39,7 @@ import RegistrationSuccessPage from './components/registration-success-page';
 import ActivationPage from './components/activation-page';
 import { ThemeProvider } from '@emotion/react';
 import { AppThemeProvider, useTheme } from './contexts/ThemeContext';
-import RegistrationCallbackPage from './components/registration-callback';
-import RegistrationFacebookCallbackPage from './components/registration-facebook-callback';
+import OAuthCallbackPage from './components/oauth-callback';
 import ErrorPage from './components/error-page';
 import { HelmetProvider } from './components/seo';
 import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
@@ -103,12 +102,12 @@ const createRegistrationRoutes = () => {
       <Route
         key="registration-google"
         path="/c/registration-google"
-        element={<RegistrationCallbackPage />}
+        element={<OAuthCallbackPage />}
       />,
       <Route
         key="registration-facebook"
         path="/c/registration-facebook"
-        element={<RegistrationFacebookCallbackPage />}
+        element={<OAuthCallbackPage />}
       />,
       <Route
         key="registration-success"
