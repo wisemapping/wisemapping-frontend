@@ -1139,6 +1139,12 @@
       "value": "Angemeldet bleiben?"
     }
   ],
+  "login.shared-map-notice": [
+    {
+      "type": 0,
+      "value": "Eine Mindmap wurde mit Ihnen geteilt. Bitte melden Sie sich an, um darauf zuzugreifen. Noch kein Konto? Registrieren Sie sich kostenlos oder nutzen Sie Ihr Google/Facebook-Konto."
+    }
+  ],
   "login.signin": [
     {
       "type": 0,

@@ -1,0 +1,5 @@
+1 Central Topic
+	1.1 Topic with undefined shape (uses theme default)
+	1.2 Topic with explicit none shape
+	1.3 Topic with line shape
+	1.4 Topic with rectangle shape

@@ -1139,6 +1139,12 @@
       "value": "Recuérdame"
     }
   ],
+  "login.shared-map-notice": [
+    {
+      "type": 0,
+      "value": "Un mapa mental ha sido compartido contigo. Por favor inicia sesión para acceder a él. ¿No tienes cuenta? Regístrate gratis o usa tu cuenta de Google/Facebook."
+    }
+  ],
   "login.signin": [
     {
       "type": 0,

@@ -1,4 +1,4 @@
-<map name="process" theme="prism" version="tango">
+<map name="process" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="California" id="0">
         <topic position="-200,-200" order="0" text="Northern California" shape="line" id="1">
             <topic position="-200,-250" order="0" text="Oakland/Berkeley" shape="line" id="2"/>

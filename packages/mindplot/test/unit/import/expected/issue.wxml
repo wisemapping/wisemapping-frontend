@@ -1,4 +1,4 @@
-<map name="issue" theme="prism" version="tango">
+<map name="issue" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="La computadora" id="1" bgColor="#cc0000">
         <topic position="200,0" order="0" shape="rounded rectangle" id="21" bgColor="#4c1130">
             <text><![CDATA[

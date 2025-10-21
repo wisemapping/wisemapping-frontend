@@ -1139,6 +1139,12 @@
       "value": "Remember me"
     }
   ],
+  "login.shared-map-notice": [
+    {
+      "type": 0,
+      "value": "A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
+    }
+  ],
   "login.signin": [
     {
       "type": 0,
