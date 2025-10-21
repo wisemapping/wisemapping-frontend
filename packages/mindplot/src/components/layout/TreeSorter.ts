@@ -101,10 +101,57 @@ class TreeSorter extends AbstractBasicSorter {
 
   insert(treeSet: RootedTreeSet, parent: Node, child: Node, order: number): void {
     const children = this._getSortedChildren(treeSet, parent);
-    $assert(
-      order <= children.length,
-      `Order must be continuous and can not have holes. Order:${order}`,
-    );
+
+    // Validate and fix order if invalid
+    let recovered = false;
+
+    // Check for invalid order values
+    if (!Number.isFinite(order) || order < 0) {
+      console.error(
+        `[TreeSorter] Invalid order value detected - attempting recovery.\n` +
+          `  Child ID: ${child.getId()}\n` +
+          `  Parent ID: ${parent.getId()}\n` +
+          `  Invalid order: ${order} (${typeof order})\n` +
+          `  Current children count: ${children.length}\n` +
+          `  Recovering by adjusting order to: ${children.length}`,
+      );
+      order = children.length;
+      recovered = true;
+    }
+    // Check for gaps/holes in sequence
+    else if (order > children.length) {
+      console.error(
+        `[TreeSorter] Order discontinuity detected - attempting recovery.\n` +
+          `  Child ID: ${child.getId()}\n` +
+          `  Parent ID: ${parent.getId()}\n` +
+          `  Requested order: ${order}\n` +
+          `  Current children count: ${children.length}\n` +
+          `  Max valid order: ${children.length}\n` +
+          `  Existing children orders: [${children.map((c) => c.getOrder()).join(', ')}]\n` +
+          `  Recovering by adjusting order to: ${children.length}`,
+      );
+      order = children.length;
+      recovered = true;
+    }
+
+    // Check if existing children have discontinuous orders
+    if (!recovered && children.length > 0) {
+      const expectedOrders = children.map((_, idx) => idx);
+      const actualOrders = children.map((c) => c.getOrder());
+      const hasHoles = !expectedOrders.every((exp, idx) => exp === actualOrders[idx]);
+
+      if (hasHoles) {
+        console.error(
+          `[TreeSorter] Existing children have discontinuous orders - repairing.\n` +
+            `  Parent ID: ${parent.getId()}\n` +
+            `  Expected orders: [${expectedOrders.join(', ')}]\n` +
+            `  Actual orders: [${actualOrders.join(', ')}]\n` +
+            `  Repairing by reassigning sequential orders...`,
+        );
+        // Fix existing children orders
+        children.forEach((c, idx) => c.setOrder(idx));
+      }
+    }
 
     // Shift all elements after insertion point
     for (let i = order; i < children.length; i++) {
