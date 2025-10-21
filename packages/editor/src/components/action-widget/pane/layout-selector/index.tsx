@@ -109,6 +109,12 @@ const LayoutSelector = ({ closeModal, layoutModel }: LayoutSelectorProps): React
       }
 
       setValue(selectedLayout);
+
+      // Trigger a full page refresh if the layout changed
+      if (previousLayout !== selectedLayout) {
+        console.log('[LayoutSelector] Refreshing page after layout change');
+        window.location.reload();
+      }
     }
     closeModal();
   };
