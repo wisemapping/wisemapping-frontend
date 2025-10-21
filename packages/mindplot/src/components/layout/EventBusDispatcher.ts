@@ -57,21 +57,17 @@ class EventBusDispatcher {
   }
 
   private _topicConnected(args: { parentNode: Topic; childNode: Topic }) {
-    // Get the order, defaulting to 0 if undefined (e.g., for old mindmaps without order attributes)
+    // Get the order, handling undefined for topics without order attribute
     let order = args.childNode.getOrder();
     if (order === undefined) {
       // If order is not set, assign the next available order
-      // This can happen when loading old mindmaps or during incomplete initialization
+      // This can happen when loading maps where topics don't have order attributes
       const parent = args.parentNode;
       const siblings = parent.getChildren().filter((child) => child !== args.childNode);
       order = siblings.length;
 
-      // Set the order on the child to prevent future undefined issues
+      // Set the order on the child for future consistency
       args.childNode.setOrder(order);
-
-      console.warn(
-        `[EventBusDispatcher] Topic ${args.childNode.getId()} had undefined order. Assigned order ${order} based on parent's children count.`,
-      );
     }
 
     this._layoutManager!.connectNode(args.parentNode.getId(), args.childNode.getId(), order);
