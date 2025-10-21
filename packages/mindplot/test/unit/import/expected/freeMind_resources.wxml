@@ -1,4 +1,4 @@
-<map name="freeMind_resources" theme="prism" version="tango">
+<map name="freeMind_resources" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="FreeMind Resources" id="1330730879">
         <topic position="200,-100" order="0" text="Application" shape="line" id="906353570">
             <topic position="200,-50" order="0" text="What is it?" shape="line" id="293234618">

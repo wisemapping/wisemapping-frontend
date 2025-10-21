@@ -92,11 +92,22 @@ const LayoutSelector = ({ closeModal, layoutModel }: LayoutSelectorProps): React
 
   const handleLayoutSelect = (layout: LayoutType) => {
     setSelectedLayout(layout);
+    console.log(`[LayoutSelector] User selected layout: ${layout}`);
   };
 
   const handleAccept = () => {
     const setValue = layoutModel.setValue;
     if (setValue) {
+      const previousLayout = layoutModel.getValue();
+      console.log(
+        `[LayoutSelector] Applying layout change: ${previousLayout} -> ${selectedLayout}`,
+      );
+
+      // Track tree/org layout selection
+      if (selectedLayout === 'tree') {
+        console.log('[LayoutSelector] User confirmed TREE (org) layout selection');
+      }
+
       setValue(selectedLayout);
     }
     closeModal();

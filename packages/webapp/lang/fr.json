@@ -290,6 +290,9 @@
   "login.title": {
     "defaultMessage": "Bienvenue"
   },
+  "login.shared-map-notice": {
+    "defaultMessage": "Une carte mentale a été partagée avec vous. Veuillez vous connecter pour y accéder. Vous n'avez pas de compte ? Inscrivez-vous gratuitement ou utilisez votre compte Google/Facebook."
+  },
   "map.creator": {
     "defaultMessage": "Créateur"
   },

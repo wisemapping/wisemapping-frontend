@@ -106,11 +106,11 @@ export const loader = (pageMode: PageModeType) => {
 
     // If result has not been set, redict to the login with the original url
     if (!result) {
-      const url = window.location.pathname;
+      const url = window.location.pathname + window.location.search;
       result = new Response('Map could not be loaded, redirect to login.', {
         status: 302,
         headers: {
-          Location: `/c/login?redirect=${url}`,
+          Location: `/c/login?redirect=${encodeURIComponent(url)}`,
         },
       });
     }

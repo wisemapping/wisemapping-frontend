@@ -326,6 +326,9 @@
   "login.title": {
     "defaultMessage": "Bienvenido"
   },
+  "login.shared-map-notice": {
+    "defaultMessage": "Un mapa mental ha sido compartido contigo. Por favor inicia sesión para acceder a él. ¿No tienes cuenta? Regístrate gratis o usa tu cuenta de Google/Facebook."
+  },
   "map.creator": {
     "defaultMessage": "Creador"
   },

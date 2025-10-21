@@ -1,4 +1,4 @@
-<map name="pub_sub" theme="prism" version="tango">
+<map name="pub_sub" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Publish-Subscribe" id="1778785299">
         <topic position="200,-100" order="0" text="Paradigm" shape="rounded rectangle" id="1019693507">
             <topic position="200,-100" order="0" text="Publish-Subscribe Messaging" shape="line" id="175305277">

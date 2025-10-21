@@ -1139,6 +1139,12 @@
       "value": "Souviens-toi de moi"
     }
   ],
+  "login.shared-map-notice": [
+    {
+      "type": 0,
+      "value": "Une carte mentale a été partagée avec vous. Veuillez vous connecter pour y accéder. Vous n'avez pas de compte ? Inscrivez-vous gratuitement ou utilisez votre compte Google/Facebook."
+    }
+  ],
   "login.signin": [
     {
       "type": 0,
