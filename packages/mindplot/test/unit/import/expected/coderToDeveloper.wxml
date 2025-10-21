@@ -1,4 +1,4 @@
-<map name="coderToDeveloper" theme="prism" version="tango">
+<map name="coderToDeveloper" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="CODER TO DEVELOPER" id="959288270" bgColor="#ffff66">
         <topic position="-200,-250" order="0" text="SOURCE" shape="rounded rectangle" id="1341324870" bgColor="#ffff66">
             <topic position="200,-400" order="0" shape="rectangle" id="1657607465" bgColor="#99ff99">

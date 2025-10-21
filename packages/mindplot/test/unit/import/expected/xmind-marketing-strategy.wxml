@@ -1,4 +1,4 @@
-<map name='xmind-marketing-strategy' version='tango' theme='prism'>
+<map name='xmind-marketing-strategy' version='tango' theme='prism' layout='mindmap'>
     <topic central='true' text='Marketing Strategy' id='1'>
         <topic position='200,0' order='0' text='Market Analysis' shape='line' id='2'>
             <eicon id='🔴'/>

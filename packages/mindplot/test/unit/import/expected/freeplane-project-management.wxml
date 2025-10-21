@@ -1,4 +1,4 @@
-<map name="freeplane-project-management" version="tango" theme="prism">
+<map name="freeplane-project-management" version="tango" theme="prism" layout="mindmap">
     <topic central="true" text="Project Management Plan" id="1">
         <topic position="200,0" order="0" text="Planning Phase" shape="line" id="2">
             <eicon id="💡"/>

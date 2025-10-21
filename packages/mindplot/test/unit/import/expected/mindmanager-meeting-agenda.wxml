@@ -1,4 +1,4 @@
-<map name='mindmanager-meeting-agenda' version='tango' theme='prism'>
+<map name='mindmanager-meeting-agenda' version='tango' theme='prism' layout='mindmap'>
     <topic central='true' text='Meeting Agenda' id='1'>
         <topic position='200,0' order='0' text='Opening' shape='line' id='2'>
             <eicon id='💡'/>

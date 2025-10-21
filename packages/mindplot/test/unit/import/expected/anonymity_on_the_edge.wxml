@@ -1,4 +1,4 @@
-<map name="anonymity_on_the_edge" theme="prism" version="tango">
+<map name="anonymity_on_the_edge" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Anonymity on the Edge" id="1499076781">
         <topic position="200,-50" order="0" text="author" shape="line" id="858068095">
             <topic position="200,0" order="0" text="Luke O'Connor" shape="line" id="894658161">

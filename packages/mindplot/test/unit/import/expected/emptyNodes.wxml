@@ -1,4 +1,4 @@
-<map name="emptyNodes" theme="prism" version="tango">
+<map name="emptyNodes" theme="prism" layout="mindmap" version="tango">
     <topic central="true" id="0" bgColor="#ffcc33">
         <topic position="200,-50" order="0" text="objectifs journée" shape="rounded rectangle" id="1" bgColor="#808080">
             <topic position="200,-100" order="0" text="business plan associatif ?" shape="rounded rectangle" id="2" bgColor="#808080"/>

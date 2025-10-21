@@ -1,4 +1,4 @@
-<map name="SQLServer" theme="prism" version="tango">
+<map name="SQLServer" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="SQL Server 2000 Programming" id="1997664902" bgColor="#ffff66">
         <topic position="-200,-400" order="0" text="Source" shape="rounded rectangle" id="1594566921" bgColor="#ffff66">
             <topic position="200,0" order="0" text="Microsoft Official Course 2073A Workbook" shape="rectangle" id="376713119" bgColor="#99ff99">

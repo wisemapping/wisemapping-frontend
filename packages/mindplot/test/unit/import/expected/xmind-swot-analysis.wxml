@@ -1,4 +1,4 @@
-<map name='xmind-swot-analysis' version='tango' theme='prism'>
+<map name='xmind-swot-analysis' version='tango' theme='prism' layout='mindmap'>
     <topic central='true' text='SWOT Analysis' id='1'>
         <topic position='200,0' order='0' text='Strengths' shape='line' id='2'>
             <eicon id='🟢'/>

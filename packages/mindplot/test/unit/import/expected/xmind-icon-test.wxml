@@ -1,4 +1,4 @@
-<map name='xmind-icon-test' version='tango' theme='prism'>
+<map name='xmind-icon-test' version='tango' theme='prism' layout='mindmap'>
     <topic central='true' text='Icon Test Map' id='1'>
         <topic position='200,0' order='0' text='Priority Icons' shape='line' id='2'>
             <note><![CDATA[🔖 priority-1, 🔖 priority-2, 🔖 priority-3]]></note>

@@ -1,4 +1,4 @@
-<map name='mindmanager-marketing-campaign' version='tango' theme='prism'>
+<map name='mindmanager-marketing-campaign' version='tango' theme='prism' layout='mindmap'>
     <topic central='true' text='Marketing Campaign Strategy' id='1'>
         <topic position='200,0' order='0' text='Target Audience' shape='line' id='2'>
             <eicon id='💡'/>

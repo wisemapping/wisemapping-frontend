@@ -1,4 +1,4 @@
-<map name="bug3" theme="prism" version="tango">
+<map name="bug3" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Indicator needs" id="1">
         <topic position="200,-100" order="0" text="Which new measures" shape="rounded rectangle" id="5">
             <note contentType="html"><![CDATA[
