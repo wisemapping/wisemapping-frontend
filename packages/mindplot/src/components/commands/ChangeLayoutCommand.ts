@@ -41,6 +41,15 @@ class ChangeLayoutCommand extends Command {
       // Store the old layout for undo
       this._oldLayout = mindmap.getLayout();
 
+      console.log(
+        `[ChangeLayoutCommand] Executing layout change: ${this._oldLayout} -> ${this._newLayout}`,
+      );
+
+      // Track tree/org layout selection
+      if (this._newLayout === 'tree') {
+        console.log('[ChangeLayoutCommand] TREE (org) layout is being applied');
+      }
+
       // Apply the new layout
       designer.applyLayout(this._newLayout);
 
@@ -53,6 +62,10 @@ class ChangeLayoutCommand extends Command {
   undoExecute(commandContext: CommandContext): void {
     if (this._applied) {
       const { designer } = commandContext;
+
+      console.log(
+        `[ChangeLayoutCommand] Undoing layout change: ${this._newLayout} -> ${this._oldLayout}`,
+      );
 
       // Restore the old layout
       if (this._oldLayout) {

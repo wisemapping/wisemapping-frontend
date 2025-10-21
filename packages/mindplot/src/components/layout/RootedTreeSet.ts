@@ -68,10 +68,29 @@ class RootedTreeSet {
   connect(parentId: number, childId: number) {
     const parent = this.find(parentId);
     const child = this.find(childId, true);
-    $assert(
-      !child._parent,
-      `node already connected. Id:${child.getId()},previous:${child._parent}`,
-    );
+
+    // If already connected to the same parent, skip (idempotent operation)
+    if (child._parent) {
+      if (child._parent === parent) {
+        console.error(
+          `[RootedTreeSet] Idempotent connect detected - Node ${childId} is already connected to parent ${parentId}. Skipping duplicate connection.`,
+          `\nChild state: ${child}`,
+          `\nParent state: ${parent}`,
+          `\nStack trace:`,
+          new Error().stack,
+        );
+        return;
+      }
+
+      // Attempting to connect to a different parent - this is an error
+      console.error(
+        `[RootedTreeSet] Connection conflict - Node ${childId} is already connected to a different parent.`,
+        `\nAttempted parent: ${parentId} (${parent})`,
+        `\nCurrent parent: ${child._parent.getId()} (${child._parent})`,
+        `\nChild state: ${child}`,
+      );
+      $assert(false, `node already connected. Id:${child.getId()},previous:${child._parent}`);
+    }
 
     parent._children.push(child);
     child._parent = parent;
