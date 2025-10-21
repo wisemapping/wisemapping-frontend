@@ -236,23 +236,22 @@ class SymmetricSorter extends AbstractBasicSorter {
       const childNode = treeSet.find(sizeById[i].id, false);
 
       // Defensive check: if node was deleted between operations, skip it
-      if (!childNode) {
+      if (childNode) {
+        const direction = this.getChildDirection(treeSet, childNode);
+
+        const yOffset = ysum + sizeById[i].height / 2;
+        const xOffset =
+          direction *
+          (sizeById[i].width / 2 +
+            node.getSize().width / 2 +
+            SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
+
+        result.set(sizeById[i].id, { x: xOffset, y: yOffset });
+      } else {
         console.warn(
           `[SymmetricSorter] Child node ${sizeById[i].id} not found during offset calculation. Skipping.`,
         );
-        continue;
       }
-
-      const direction = this.getChildDirection(treeSet, childNode);
-
-      const yOffset = ysum + sizeById[i].height / 2;
-      const xOffset =
-        direction *
-        (sizeById[i].width / 2 +
-          node.getSize().width / 2 +
-          SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
-
-      result.set(sizeById[i].id, { x: xOffset, y: yOffset });
     }
     return result;
   }

@@ -60,11 +60,11 @@ class EventBusDispatcher {
     this._layoutManager!.connectNode(
       args.parentNode.getId(),
       args.childNode.getId(),
-      args.childNode.getOrder()!, // @todo: This can be a issue ...
+      args.childNode.getOrder()!,
     );
 
-    // Review this for of relayout, new node is not positioned properly with small gap. The problem seems to be related to some min
-    // this.getLayoutManager().layout(true);
+    // Recalculate layout after connection to update positions
+    this.getLayoutManager().layout(true);
   }
 
   getLayoutManager(): LayoutManager {

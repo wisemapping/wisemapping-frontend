@@ -42,6 +42,8 @@ class DragPivot implements CanvasElement {
 
   private _size: SizeType;
 
+  private _isInWorkspace: boolean;
+
   constructor() {
     this._position = { x: 0, y: 0 };
     this._size = DragPivot.DEFAULT_PIVOT_SIZE;
@@ -52,6 +54,7 @@ class DragPivot implements CanvasElement {
     this._connectRect = this._buildRect();
     this._targetTopic = null;
     this._isVisible = false;
+    this._isInWorkspace = false;
   }
 
   isVisible(): boolean {
@@ -171,16 +174,12 @@ class DragPivot implements CanvasElement {
 
   setVisibility(value: boolean) {
     if (this.isVisible() !== value) {
-      const pivotRect = this._getPivotRect();
-      pivotRect.setVisibility(value);
+      // Hide all visual elements
+      this._getPivotRect().setVisibility(value);
+      this._connectRect.setVisibility(value);
+      this._straightLine.setVisibility(value);
+      this._curvedLine.setVisibility(value);
 
-      const connectRect = this._connectRect;
-      connectRect.setVisibility(value);
-
-      const line = this._getConnectionLine();
-      if (line) {
-        line.setVisibility(value);
-      }
       this._isVisible = value;
     }
   }
@@ -192,6 +191,11 @@ class DragPivot implements CanvasElement {
   }
 
   addToWorkspace(workspace: Canvas) {
+    // Only add elements once - prevent duplicate additions
+    if (this._isInWorkspace) {
+      return;
+    }
+
     const pivotRect = this._getPivotRect();
     workspace.append(pivotRect);
 
@@ -215,9 +219,15 @@ class DragPivot implements CanvasElement {
     connectRect.setVisibility(false);
     workspace.append(connectRect);
     connectRect.moveToBack();
+
+    this._isInWorkspace = true;
   }
 
   removeFromWorkspace(workspace: Canvas) {
+    if (!this._isInWorkspace) {
+      return;
+    }
+
     const shape = this._getPivotRect();
     workspace.removeChild(shape);
 
@@ -231,6 +241,8 @@ class DragPivot implements CanvasElement {
     if ($defined(this._curvedLine)) {
       workspace.removeChild(this._curvedLine);
     }
+
+    this._isInWorkspace = false;
   }
 
   connectTo(targetTopic: Topic, position: PositionType) {
@@ -274,6 +286,16 @@ class DragPivot implements CanvasElement {
 
     this.setVisibility(false);
     this._targetTopic = null;
+  }
+
+  /**
+   * Reset the pivot state (useful when changing layouts)
+   */
+  reset(): void {
+    this.setVisibility(false);
+    this._targetTopic = null;
+    // Note: Don't reset _isInWorkspace - elements stay in workspace,
+    // just hidden and disconnected
   }
 
   static DEFAULT_PIVOT_SIZE = { width: 50, height: 6 };
