@@ -33,11 +33,7 @@ import { ClientContext } from '../../classes/provider/client-context';
 import { logCriticalError } from '../../utils';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '../../contexts/ThemeContext';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import Paper from '@mui/material/Paper';
-import { MapsListSkeleton } from '../maps-page/maps-list/MapsListSkeleton';
+import { MapsPageLoading } from '../maps-page/maps-list/MapsListSkeleton';
 
 type OAuthProvider = 'google' | 'facebook';
 
@@ -141,6 +137,12 @@ const OAuthCallbackPage = (): React.ReactElement => {
     stateRedirectUrl === '/c/maps/';
   const showMapsLoading = !needConfirmLinking && !error && isRedirectingToMapsList;
 
+  // Show full-screen maps loading if redirecting to maps list
+  if (showMapsLoading) {
+    return <MapsPageLoading />;
+  }
+
+  // Otherwise show the standard OAuth callback page with form container
   return (
     <div>
       <Header type="none" />
@@ -187,17 +189,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
           </>
         )}
 
-        {showMapsLoading ? (
-          <TableContainer component={Paper}>
-            <Table>
-              <TableBody>
-                <MapsListSkeleton rowsPerPage={5} />
-              </TableBody>
-            </Table>
-          </TableContainer>
-        ) : (
-          !needConfirmLinking && !error && <CircularProgress />
-        )}
+        {!needConfirmLinking && !error && <CircularProgress />}
 
         {needConfirmLinking && (
           <>
