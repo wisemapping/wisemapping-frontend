@@ -31,6 +31,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import type { SvgIconProps } from '@mui/material/SvgIcon';
 import type { LayoutType } from '@wisemapping/mindplot';
 import NodeProperty from '../../../../classes/model/node-property';
+import Model from '../../../../classes/model/editor';
 
 // Custom SVG icon for mindmap layout
 const MindmapIcon = (props: SvgIconProps) => (
@@ -59,9 +60,10 @@ const MindmapIcon = (props: SvgIconProps) => (
 type LayoutSelectorProps = {
   closeModal: () => void;
   layoutModel: NodeProperty<LayoutType>;
+  model: Model;
 };
 
-const LayoutSelector = ({ closeModal, layoutModel }: LayoutSelectorProps): ReactElement => {
+const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps): ReactElement => {
   const [selectedLayout, setSelectedLayout] = useState<LayoutType>(
     layoutModel.getValue() || 'mindmap',
   );
@@ -95,7 +97,7 @@ const LayoutSelector = ({ closeModal, layoutModel }: LayoutSelectorProps): React
     console.log(`[LayoutSelector] User selected layout: ${layout}`);
   };
 
-  const handleAccept = () => {
+  const handleAccept = async () => {
     const setValue = layoutModel.setValue;
     if (setValue) {
       const previousLayout = layoutModel.getValue();
@@ -103,16 +105,14 @@ const LayoutSelector = ({ closeModal, layoutModel }: LayoutSelectorProps): React
         `[LayoutSelector] Applying layout change: ${previousLayout} -> ${selectedLayout}`,
       );
 
-      // Track tree/org layout selection
-      if (selectedLayout === 'tree') {
-        console.log('[LayoutSelector] User confirmed TREE (org) layout selection');
-      }
-
       setValue(selectedLayout);
 
       // Trigger a full page refresh if the layout changed
       if (previousLayout !== selectedLayout) {
-        console.log('[LayoutSelector] Refreshing page after layout change');
+        // Force save with the new layout before refreshing
+        console.log('[LayoutSelector] Saving map with new layout before refresh');
+        await model.save(false);
+        console.log('[LayoutSelector] Save complete, refreshing page');
         window.location.reload();
       }
     }
