@@ -32,6 +32,7 @@ import type { SvgIconProps } from '@mui/material/SvgIcon';
 import type { LayoutType } from '@wisemapping/mindplot';
 import NodeProperty from '../../../../classes/model/node-property';
 import Model from '../../../../classes/model/editor';
+import { trackEditorInteraction } from '../../../../utils/analytics';
 
 // Custom SVG icon for mindmap layout
 const MindmapIcon = (props: SvgIconProps) => (
@@ -109,9 +110,13 @@ const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps)
 
       // Trigger a full page refresh if the layout changed
       if (previousLayout !== selectedLayout) {
+        // Track layout change
+        trackEditorInteraction('layout_change', selectedLayout);
+
         // Force save with the new layout before refreshing
+        // Use saveHistory=true to bypass saveRequired check and ensure save happens
         console.log('[LayoutSelector] Saving map with new layout before refresh');
-        await model.save(false);
+        await model.save(true);
         console.log('[LayoutSelector] Save complete, refreshing page');
         window.location.reload();
       }
