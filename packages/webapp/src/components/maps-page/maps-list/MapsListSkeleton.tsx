@@ -22,8 +22,15 @@ import CardHeader from '@mui/material/CardHeader';
 import Skeleton from '@mui/material/Skeleton';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
-import { useTheme } from '@mui/material/styles';
 import { useStyles } from './styled';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Container from '@mui/material/Container';
 
 interface MapsListSkeletonProps {
   rowsPerPage: number;
@@ -31,8 +38,6 @@ interface MapsListSkeletonProps {
 
 export const TableRowSkeleton: React.FC = () => {
   const classes = useStyles();
-  const theme = useTheme();
-  const isDarkMode = theme.palette.mode === 'dark';
 
   return (
     <TableRow>
@@ -42,9 +47,7 @@ export const TableRowSkeleton: React.FC = () => {
           variant="rounded"
           width={18}
           height={18}
-          sx={{
-            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-          }}
+          css={classes.skeletonBase}
         />
       </TableCell>
       <TableCell padding="checkbox" css={classes.bodyCell}>
@@ -53,54 +56,20 @@ export const TableRowSkeleton: React.FC = () => {
           variant="circular"
           width={24}
           height={24}
-          sx={{
-            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-          }}
+          css={classes.skeletonBase}
         />
       </TableCell>
       <TableCell css={classes.bodyCell}>
-        <Skeleton
-          animation="wave"
-          variant="text"
-          width="60%"
-          sx={{
-            fontSize: '1rem',
-            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-          }}
-        />
+        <Skeleton animation="wave" variant="text" width="60%" css={classes.skeletonTextLarge} />
       </TableCell>
       <TableCell css={classes.bodyCell}>
-        <Skeleton
-          animation="wave"
-          variant="text"
-          width="40%"
-          sx={{
-            fontSize: '0.875rem',
-            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-          }}
-        />
+        <Skeleton animation="wave" variant="text" width="40%" css={classes.skeletonTextSmall} />
       </TableCell>
       <TableCell css={classes.bodyCell}>
-        <Skeleton
-          animation="wave"
-          variant="text"
-          width={100}
-          sx={{
-            fontSize: '0.875rem',
-            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-          }}
-        />
+        <Skeleton animation="wave" variant="text" width={100} css={classes.skeletonTextSmall} />
       </TableCell>
       <TableCell css={classes.bodyCell}>
-        <Skeleton
-          animation="wave"
-          variant="text"
-          width={80}
-          sx={{
-            fontSize: '0.875rem',
-            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-          }}
-        />
+        <Skeleton animation="wave" variant="text" width={80} css={classes.skeletonTextSmall} />
       </TableCell>
       <TableCell css={classes.bodyCell}>
         <Skeleton
@@ -108,9 +77,7 @@ export const TableRowSkeleton: React.FC = () => {
           variant="circular"
           width={24}
           height={24}
-          sx={{
-            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-          }}
+          css={classes.skeletonBase}
         />
       </TableCell>
     </TableRow>
@@ -119,11 +86,9 @@ export const TableRowSkeleton: React.FC = () => {
 
 export const CardSkeleton: React.FC = () => {
   const classes = useStyles();
-  const theme = useTheme();
-  const isDarkMode = theme.palette.mode === 'dark';
 
   return (
-    <Card css={{ maxWidth: '94vw', margin: '3vw' }}>
+    <Card css={classes.cardSkeletonContainer}>
       <CardHeader
         css={classes.cardHeader}
         avatar={
@@ -132,9 +97,7 @@ export const CardSkeleton: React.FC = () => {
             variant="circular"
             width={24}
             height={24}
-            sx={{
-              bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-            }}
+            css={classes.skeletonBase}
           />
         }
         action={
@@ -143,32 +106,14 @@ export const CardSkeleton: React.FC = () => {
             variant="circular"
             width={24}
             height={24}
-            sx={{
-              bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-            }}
+            css={classes.skeletonBase}
           />
         }
         title={
-          <Skeleton
-            animation="wave"
-            variant="text"
-            width="70%"
-            sx={{
-              fontSize: '1rem',
-              bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-            }}
-          />
+          <Skeleton animation="wave" variant="text" width="70%" css={classes.skeletonTextLarge} />
         }
         subheader={
-          <Skeleton
-            animation="wave"
-            variant="text"
-            width="50%"
-            sx={{
-              fontSize: '0.875rem',
-              bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
-            }}
-          />
+          <Skeleton animation="wave" variant="text" width="50%" css={classes.skeletonTextSmall} />
         }
       />
     </Card>
@@ -196,5 +141,115 @@ export const MapsCardsListSkeleton: React.FC<MapsListSkeletonProps> = ({ rowsPer
         <CardSkeleton key={index} />
       ))}
     </>
+  );
+};
+
+export const MapsPageLoading = (): React.ReactElement => {
+  const classes = useStyles();
+
+  return (
+    <Box css={classes.loadingContainer}>
+      {/* Header AppBar with skeleton toolbar */}
+      <AppBar position="fixed" elevation={0} css={classes.loadingAppBar}>
+        <Toolbar>
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={40}
+            height={40}
+            css={classes.loadingSkeletonCircle}
+            style={{ marginRight: 16 }}
+          />
+          <Skeleton
+            animation="wave"
+            variant="rectangular"
+            width={120}
+            height={36}
+            css={classes.loadingSkeletonButton}
+            style={{ marginRight: 16 }}
+          />
+          <Skeleton
+            animation="wave"
+            variant="rectangular"
+            width={120}
+            height={36}
+            css={classes.loadingSkeletonButton}
+          />
+          <Box style={{ flexGrow: 1 }} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={40}
+            height={40}
+            css={classes.loadingSkeletonCircle}
+            style={{ marginRight: 8 }}
+          />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={40}
+            height={40}
+            css={classes.loadingSkeletonCircle}
+            style={{ marginRight: 8 }}
+          />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={40}
+            height={40}
+            css={classes.loadingSkeletonCircle}
+          />
+        </Toolbar>
+      </AppBar>
+
+      {/* Main content area with skeleton table */}
+      <Container maxWidth="xl" css={classes.loadingMainContent}>
+        <TableContainer component={Paper} elevation={0}>
+          <Table>
+            <TableBody>
+              <MapsListSkeleton rowsPerPage={10} />
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
+
+      {/* Footer with skeleton */}
+      <Box component="footer" css={classes.loadingFooter}>
+        <Container maxWidth="xl">
+          <Box css={classes.loadingFooterContent}>
+            <Skeleton
+              animation="wave"
+              variant="rectangular"
+              width={150}
+              height={40}
+              css={classes.loadingSkeletonButton}
+            />
+            <Box css={classes.loadingFooterLinks}>
+              <Skeleton
+                animation="wave"
+                variant="text"
+                width={80}
+                height={20}
+                css={classes.loadingSkeletonCircle}
+              />
+              <Skeleton
+                animation="wave"
+                variant="text"
+                width={80}
+                height={20}
+                css={classes.loadingSkeletonCircle}
+              />
+              <Skeleton
+                animation="wave"
+                variant="text"
+                width={80}
+                height={20}
+                css={classes.loadingSkeletonCircle}
+              />
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+    </Box>
   );
 };

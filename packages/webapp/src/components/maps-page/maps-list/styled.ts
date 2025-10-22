@@ -152,5 +152,69 @@ export const useStyles = () => {
     cardTitle: {
       maxWidth: '70vw',
     },
+    // Skeleton styles
+    skeletonBase: {
+      backgroundColor:
+        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+    },
+    skeletonTextLarge: {
+      fontSize: '1rem',
+      backgroundColor:
+        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+    },
+    skeletonTextSmall: {
+      fontSize: '0.875rem',
+      backgroundColor:
+        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+    },
+    cardSkeletonContainer: {
+      maxWidth: '94vw',
+      margin: '3vw',
+    },
+    // MapsPageLoading styles
+    loadingContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
+      backgroundColor: theme.palette.background.default,
+    },
+    loadingAppBar: {
+      backgroundColor: theme.palette.background.paper,
+      borderBottom: `1px solid ${theme.palette.divider}`,
+    },
+    loadingSkeletonButton: {
+      borderRadius: theme.spacing(0.5),
+      backgroundColor:
+        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+    },
+    loadingSkeletonCircle: {
+      backgroundColor:
+        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+    },
+    loadingMainContent: {
+      flexGrow: 1,
+      marginTop: theme.spacing(10),
+      marginBottom: theme.spacing(4),
+    },
+    loadingFooter: {
+      paddingTop: theme.spacing(3),
+      paddingBottom: theme.spacing(3),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      marginTop: 'auto',
+      backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : '#1e1e1e',
+      borderTop: `1px solid ${theme.palette.divider}`,
+    },
+    loadingFooterContent: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      gap: theme.spacing(2),
+    },
+    loadingFooterLinks: {
+      display: 'flex',
+      gap: theme.spacing(3),
+    },
   });
 };
