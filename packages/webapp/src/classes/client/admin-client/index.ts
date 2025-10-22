@@ -643,7 +643,7 @@ export default class AdminClient implements AdminClientInterface {
   processGoogleCallback(_code: string): Promise<Oauth2CallbackResult> {
     return Promise.resolve({
       email: 'admin@wisemapping.com',
-      googleSync: false,
+      oauthSync: false,
       syncCode: '',
     });
   }
@@ -651,7 +651,7 @@ export default class AdminClient implements AdminClientInterface {
   processFacebookCallback(_code: string): Promise<Oauth2CallbackResult> {
     return Promise.resolve({
       email: 'admin@wisemapping.com',
-      googleSync: false,
+      oauthSync: false,
       syncCode: '',
     });
   }

@@ -777,7 +777,7 @@ export default class RestClient implements Client {
         .then((response) => {
           success({
             email: response.data.email,
-            googleSync: response.data.googleSync,
+            oauthSync: response.data.oauthSync,
             syncCode: response.data.syncCode,
           });
 
@@ -807,7 +807,7 @@ export default class RestClient implements Client {
         .then((response) => {
           success({
             email: response.data.email,
-            googleSync: response.data.googleSync,
+            oauthSync: response.data.oauthSync,
             syncCode: response.data.syncCode,
           });
 
@@ -837,7 +837,7 @@ export default class RestClient implements Client {
         .then((response) => {
           success({
             email: response.data.email,
-            googleSync: response.data.googleSync,
+            oauthSync: response.data.oauthSync,
             syncCode: response.data.syncCode,
           });
 

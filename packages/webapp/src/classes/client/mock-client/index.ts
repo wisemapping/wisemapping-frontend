@@ -485,10 +485,10 @@ class MockClient implements Client {
         success({
           email: 'test@email.com',
           // -- use case 1) user must confirm if he wants to link accounts
-          // googleSync: false,
+          // oauthSync: false,
           // syncCode: "834580239598234650234578"
           // -- use case 2) user already confirmed
-          googleSync: true,
+          oauthSync: true,
           syncCode: undefined,
         });
       }, 3000);
@@ -503,10 +503,10 @@ class MockClient implements Client {
         success({
           email: 'test@email.com',
           // -- use case 1) user must confirm if he wants to link accounts
-          // googleSync: false,
+          // oauthSync: false,
           // syncCode: "834580239598234650234578"
           // -- use case 2) user already confirmed
-          googleSync: true,
+          oauthSync: true,
           syncCode: undefined,
         });
       }, 2000);

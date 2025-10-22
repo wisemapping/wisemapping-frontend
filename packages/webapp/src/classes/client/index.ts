@@ -118,7 +118,7 @@ export type Permission = {
 
 export type Oauth2CallbackResult = {
   email: string;
-  googleSync: boolean;
+  oauthSync: boolean;
   syncCode?: string;
 };
 

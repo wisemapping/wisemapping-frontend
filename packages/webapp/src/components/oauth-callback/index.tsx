@@ -76,7 +76,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
 
     callbackPromise
       .then((result) => {
-        if (result.googleSync) {
+        if (result.oauthSync) {
           // Initialize theme from system preference if not already set
           initializeThemeFromSystem();
           // Use redirect URL from OAuth state parameter
@@ -124,7 +124,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
   };
 
   // if service reports that user doesnt sync accounts yet, we need to show the options
-  const needConfirmLinking = !error && callbackResult?.email && !callbackResult?.googleSync;
+  const needConfirmLinking = !error && callbackResult?.email && !callbackResult?.oauthSync;
 
   return (
     <div>
