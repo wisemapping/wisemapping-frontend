@@ -30,7 +30,7 @@ import CanvasElement from './CanvasElement';
 class DragTopic {
   private _elem2d: Group;
 
-  private _order: number | null;
+  private _order: number | undefined;
 
   private _draggedNode: NodeGraph;
 
@@ -44,7 +44,7 @@ class DragTopic {
 
   constructor(dragShape: Group, draggedNode: NodeGraph, layoutManger: LayoutManager) {
     this._elem2d = dragShape;
-    this._order = null;
+    this._order = undefined;
     this._draggedNode = draggedNode;
     this._layoutManager = layoutManger;
     this._isInWorkspace = false;
@@ -194,7 +194,7 @@ class DragTopic {
     const position = this.getPosition();
 
     if (!this.isFreeLayoutOn()) {
-      let order: number | null = null;
+      let order: number | undefined;
       let parent: Topic | null = null;
       const isDragConnected = this.isConnected();
       if (isDragConnected) {

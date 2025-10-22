@@ -647,12 +647,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const siblingModel = this._createSiblingModel(topic);
 
       if (siblingModel && parentTopic) {
-        // Hack: if parent is central topic, add node below not on opposite side.
-        // This should be done in the layout
-        if (parentTopic.getType() === 'CentralTopic') {
-          siblingModel.setOrder(topic.getOrder()! + 2);
-        }
-
         const parentTopicId = parentTopic.getId();
         this._actionDispatcher.addTopics([siblingModel], [parentTopicId]);
       }
@@ -670,10 +664,12 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const mindmap = model.getMindmap();
       result = mindmap.createNode();
 
-      // Create a new node ...
-      const order = topic.getOrder()! + 1;
-      result.setOrder(order);
-      result.setPosition(10, 10); // Set a dummy position ...
+      // Let the layout manager calculate the proper order for the sibling
+      // This delegates to the appropriate sorter (TreeSorter, BalancedSorter, etc.)
+      const layoutManager = this._eventBussDispatcher.getLayoutManager();
+      const prediction = layoutManager.predict(parentTopic.getId(), null, null);
+      result.setOrder(prediction.order);
+      result.setPosition(prediction.position.x, prediction.position.y);
     }
 
     return result;
@@ -748,7 +744,23 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     return this._canvas.enableQueueRender(false).then(() => {
       // Connect relationships ...
       const relationships = mindmap.getRelationships();
-      relationships.forEach((relationship) => this._relationshipModelToRelationship(relationship));
+      relationships.forEach((relationship) => {
+        try {
+          this._relationshipModelToRelationship(relationship);
+        } catch (e) {
+          // Skip relationships with missing topics (data consistency issue)
+          console.error(
+            '[Designer] Failed to create relationship - skipping.\n' +
+              `  Source topic ID: ${relationship.getFromNode()}\n` +
+              `  Target topic ID: ${relationship.getToNode()}\n` +
+              `  Available topic IDs: [${this.getModel()
+                .getTopics()
+                .map((t) => t.getId())
+                .join(', ')}]\n` +
+              `  Error: ${e}`,
+          );
+        }
+      });
 
       // Render nodes ...
       nodesGraph.forEach((topic) => topic.setVisibility(true));
@@ -929,7 +941,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   nodeModelToTopic(nodeModel: NodeModel): Topic {
     let children = nodeModel.getChildren().slice();
-    children = children.sort((a, b) => a.getOrder()! - b.getOrder()!);
+    children = children.sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
 
     const result = this._buildNodeGraph(nodeModel, this.isReadOnly());
     result.setVisibility(false);
@@ -1078,6 +1090,27 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   addRelationship(model: RelationshipModel): Relationship {
     const mindmap = this.getMindmap();
+
+    // Validate topics exist before adding relationship
+    const sourceId = model.getFromNode();
+    const targetId = model.getToNode();
+    const sourceTopic = this.getModel().findTopicById(sourceId);
+    const targetTopic = this.getModel().findTopicById(targetId);
+
+    if (!sourceTopic || !targetTopic) {
+      const error = new Error(
+        'Cannot create relationship - topic not found in designer model.\n' +
+          `  Source topic ID: ${sourceId} (${sourceTopic ? 'found' : 'NOT FOUND'})\n` +
+          `  Target topic ID: ${targetId} (${targetTopic ? 'found' : 'NOT FOUND'})\n` +
+          `  Available topic IDs: [${this.getModel()
+            .getTopics()
+            .map((t) => t.getId())
+            .join(', ')}]`,
+      );
+      console.error(`[Designer.addRelationship] ${error.message}`);
+      throw error;
+    }
+
     mindmap.addRelationship(model);
     return this._relationshipModelToRelationship(model);
   }
@@ -1110,12 +1143,18 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     const targetTopicId = model.getToNode();
     const targetTopic = dmodel.findTopicById(targetTopicId);
+
+    // Validate both source and target topics exist
+    $assert(
+      sourceTopic,
+      `sourceTopic could not be found:${sourceTopicId},${dmodel.getTopics().map((e) => e.getId())}`,
+    );
     $assert(
       targetTopic,
       `targetTopic could not be found:${targetTopicId},${dmodel.getTopics().map((e) => e.getId())}`,
     );
 
-    // Build relationship line ....
+    // Build relationship line (sourceTopic and targetTopic are guaranteed non-null by asserts above)
     const result = new Relationship(sourceTopic!, targetTopic!, model);
     result.addEvent('ontblur', () => {
       const topics = this.getModel().filterSelectedTopics();

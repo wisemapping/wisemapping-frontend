@@ -17,7 +17,6 @@
  */
 
 import React, { ReactElement } from 'react';
-import { Vortex } from 'react-loader-spinner';
 
 import { IntlProvider } from 'react-intl';
 import { Designer } from '@wisemapping/mindplot';
@@ -32,7 +31,6 @@ import AppBar from './app-bar';
 import { ToolbarActionType } from './toolbar/ToolbarActionType';
 import EditorToolbar from './editor-toolbar';
 import VisualizationToolbar from './visualization-toolbar';
-import { SpinnerCentered } from './style';
 import { EditorConfiguration } from '../hooks/useEditor';
 import CreatorInfoPane from './creator-info-pane';
 import { WidgetPopover } from './widgetPopover';
@@ -40,6 +38,7 @@ import DefaultWidgetBuilder from '../classes/default-widget-manager';
 import { EditorThemeProvider, useTheme } from '../contexts/ThemeContext';
 import { createEditorTheme } from '../theme';
 import { ThemeVariantStorage } from '../types/ThemeVariantStorage';
+import EditorLoadingSkeleton from './editor-loading-skeleton';
 
 type EditorProps = {
   theme?: Theme;
@@ -148,17 +147,7 @@ const EditorContent = ({
             message={mapInfo.isLocked() ? mapInfo.getLockedMessage() : ''}
           />
 
-          {!model?.isMapLoadded() && (
-            <SpinnerCentered>
-              <Vortex
-                visible={true}
-                height="160"
-                width="160"
-                ariaLabel="vortex-loading"
-                colors={['#ffde1a', '#ffce00', '#ffa700', '#ff8d00', '#ff7400', '#ffde1a']}
-              />
-            </SpinnerCentered>
-          )}
+          {!model?.isMapLoadded() && <EditorLoadingSkeleton />}
         </IntlProvider>
       </ThemeProvider>
     </StyledEngineProvider>

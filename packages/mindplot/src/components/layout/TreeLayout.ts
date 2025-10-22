@@ -106,7 +106,7 @@ class TreeLayout {
     node.setSorter(TreeLayout.TREE_SORTER);
 
     // Sort children by current order
-    const sortedChildren = [...children].sort((a, b) => a.getOrder() - b.getOrder());
+    const sortedChildren = [...children].sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
 
     // Renumber sequentially
     sortedChildren.forEach((child, index) => {

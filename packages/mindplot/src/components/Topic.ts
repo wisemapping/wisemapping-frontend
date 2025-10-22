@@ -1025,12 +1025,20 @@ abstract class Topic extends NodeGraph {
     }
   }
 
+  /**
+   * Get the order of this topic among its siblings.
+   * Returns undefined for topics without siblings (central topic, isolated topics).
+   */
   getOrder(): number | undefined {
     const model = this.getModel();
     return model.getOrder();
   }
 
-  setOrder(value: number): void {
+  /**
+   * Set the order of this topic among its siblings.
+   * Pass a number for topics with siblings, or undefined for isolated topics.
+   */
+  setOrder(value: number | undefined): void {
     const model = this.getModel();
     const changed = model.getOrder() !== value;
     model.setOrder(value);

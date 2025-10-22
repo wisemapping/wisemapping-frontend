@@ -61,7 +61,8 @@ abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
 
   protected _getSortedChildren(treeSet: RootedTreeSet, node: Node): Node[] {
     const result = treeSet.getChildren(node);
-    result.sort((a, b) => a.getOrder() - b.getOrder());
+    // Sort by order, using nullish coalescing to treat undefined as 0
+    result.sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
     return result;
   }
 

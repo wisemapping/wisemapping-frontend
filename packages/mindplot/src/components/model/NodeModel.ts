@@ -24,7 +24,7 @@ import Mindmap from './Mindmap';
 import FeatureType from './FeatureType';
 
 class NodeModel extends INodeModel {
-  private _properties: Record<string, string | number | boolean>;
+  private _properties: Record<string, string | number | boolean | undefined>;
 
   private _children: NodeModel[];
 
@@ -102,10 +102,10 @@ class NodeModel extends INodeModel {
 
   /**
    * @param key
-   * @param value
+   * @param value - Can be string, number, boolean, or undefined
    * @throws will throw an error if key is null or undefined
    */
-  putProperty(key: string, value: string | number | boolean): void {
+  putProperty(key: string, value: string | number | boolean | undefined): void {
     this._properties[key] = value;
   }
 

@@ -80,7 +80,12 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  dragTopic(topicId: number, position: PositionType, order: number, parentTopic: Topic): void {
+  dragTopic(
+    topicId: number,
+    position: PositionType,
+    order: number | undefined,
+    parentTopic: Topic,
+  ): void {
     const command = new DragTopicCommand(topicId, position, order, parentTopic);
     this.execute(command);
   }
@@ -139,7 +144,6 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  /** */
   changeFontFamilyToTopic(topicIds: number[], fontFamily: string | undefined) {
     $assert(topicIds, 'topicIds can not be null');
 

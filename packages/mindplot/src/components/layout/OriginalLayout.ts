@@ -111,7 +111,9 @@ class OriginalLayout {
       node.setSorter(OriginalLayout.BALANCED_SORTER);
 
       // Sort children by current order
-      const sortedChildren = [...children].sort((a, b) => a.getOrder() - b.getOrder());
+      const sortedChildren = [...children].sort(
+        (a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0),
+      );
 
       // Redistribute: first half to right (even), second half to left (odd)
       const midpoint = Math.ceil(sortedChildren.length / 2);
@@ -129,7 +131,9 @@ class OriginalLayout {
       // For non-root nodes, use SymmetricSorter and ensure continuous ordering
       node.setSorter(OriginalLayout.SYMMETRIC_SORTER);
 
-      const sortedChildren = [...children].sort((a, b) => a.getOrder() - b.getOrder());
+      const sortedChildren = [...children].sort(
+        (a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0),
+      );
       sortedChildren.forEach((child, index) => {
         child.setOrder(index);
       });

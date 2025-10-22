@@ -20,7 +20,7 @@ import PositionType from '../PositionType';
 import SizeType from '../SizeType';
 import ChildrenSorterStrategy from './ChildrenSorterStrategy';
 
-type NodeValue = number | SizeType | PositionType | boolean;
+type NodeValue = number | SizeType | PositionType | boolean | undefined;
 type MapValue = {
   hasChanged: boolean;
   value: NodeValue | undefined;
@@ -72,10 +72,15 @@ class Node {
     return Boolean(this.getProperty('shrink'));
   }
 
-  setOrder(order: number): void {
+  /**
+   * Set the order of this node among its siblings.
+   * Pass a number for nodes with siblings, or undefined for nodes without siblings.
+   * @param order - The order value (finite number or undefined)
+   */
+  setOrder(order: number | undefined): void {
     $assert(
-      typeof order === 'number' && Number.isFinite(order),
-      `Order can not be null. Value:${order}`,
+      order === undefined || (typeof order === 'number' && Number.isFinite(order)),
+      `Order must be a finite number or undefined. Value:${order}`,
     );
 
     if (this.getOrder() !== order) {
@@ -104,8 +109,13 @@ class Node {
     }
   }
 
-  getOrder(): number {
-    return this.getProperty('order') as number;
+  /**
+   * Get the order of this node among its siblings.
+   * Returns undefined for nodes without siblings (central node, isolated nodes).
+   * @returns The order value, or undefined if not applicable
+   */
+  getOrder(): number | undefined {
+    return this.getProperty('order') as number | undefined;
   }
 
   hasOrderChanged(): boolean {
@@ -120,24 +130,42 @@ class Node {
     return this.isPropertyChanged('size');
   }
 
+  /**
+   * Get the position of this node.
+   * Position is always defined (initialized in constructor).
+   * @returns The node position
+   */
   getPosition(): PositionType {
-    return this.getProperty('position') as PositionType;
+    const position = this.getProperty('position') as PositionType | undefined;
+    // Position is always set in constructor, but TypeScript can't verify this
+    // Use assertion since we know it's always defined
+    $assert(position !== undefined, 'Position should always be defined');
+    return position!;
   }
 
   setSize(size: SizeType): void {
-    const currentSize = this.getSize();
+    const currentSize = this.getProperty('size') as SizeType | undefined;
+    // Only update if size changed significantly (performance optimization)
     if (
       !currentSize ||
-      (currentSize &&
-        (Math.abs(currentSize.height - size.height) > 0.5 ||
-          Math.abs(currentSize.width - size.width) > 0.5))
+      Math.abs(currentSize.height - size.height) > 0.5 ||
+      Math.abs(currentSize.width - size.width) > 0.5
     ) {
       this.setProperty('size', { ...size });
     }
   }
 
+  /**
+   * Get the size of this node.
+   * Size is always defined (initialized in constructor).
+   * @returns The node size
+   */
   getSize(): SizeType {
-    return this.getProperty('size') as SizeType;
+    const size = this.getProperty('size') as SizeType | undefined;
+    // Size is always set in constructor, but TypeScript can't verify this
+    // Use assertion since we know it's always defined
+    $assert(size !== undefined, 'Size should always be defined');
+    return size!;
   }
 
   setFreeDisplacement(displacement: PositionType): void {
@@ -150,18 +178,23 @@ class Node {
     this.setProperty('freeDisplacement', { ...newDisplacement });
   }
 
+  /**
+   * Get the free displacement of this node.
+   * Returns {x: 0, y: 0} if not set (default value).
+   * @returns The free displacement
+   */
   getFreeDisplacement(): PositionType {
-    const freeDisplacement = this.getProperty('freeDisplacement') as PositionType;
+    const freeDisplacement = this.getProperty('freeDisplacement') as PositionType | undefined;
     return freeDisplacement || { x: 0, y: 0 };
   }
 
   setPosition(position: PositionType): void {
     // This is a performance improvement to avoid movements that really could be avoided.
-    const currentPos = this.getPosition();
+    const currentPos = this.getProperty('position') as PositionType | undefined;
     if (
       !currentPos ||
-      (currentPos &&
-        (Math.abs(currentPos.x - position.x) > 0.5 || Math.abs(currentPos.y - position.y) > 0.5))
+      Math.abs(currentPos.x - position.x) > 0.5 ||
+      Math.abs(currentPos.y - position.y) > 0.5
     ) {
       this.setProperty('position', { ...position });
     }

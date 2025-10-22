@@ -38,7 +38,7 @@ class BalancedSorter extends AbstractBasicSorter {
 
       const sameParent = parent === graph.getParent(node);
       if (siblings.length === 0 && nodeDirection === positionDirection && sameParent) {
-        return [node.getOrder(), node.getPosition()];
+        return [node.getOrder() ?? 0, node.getPosition()];
       }
     }
 
@@ -84,7 +84,7 @@ class BalancedSorter extends AbstractBasicSorter {
           child === last
             ? child.getSize().height + BalancedSorter.INTERNODE_VERTICAL_PADDING * 2
             : (children[index + 1].getPosition().y - child.getPosition().y) / 2;
-        result = [child.getOrder() + 2, { x: cpos.x, y: cpos.y + yOffset }];
+        result = [(child.getOrder() ?? 0) + 2, { x: cpos.x, y: cpos.y + yOffset }];
       }
     });
 
@@ -120,10 +120,13 @@ class BalancedSorter extends AbstractBasicSorter {
     let max = 0;
     for (let i = 0; i < children.length; i++) {
       const node = children[i];
-      max = Math.max(max, node.getOrder());
-      if (node.getOrder() >= order) {
-        max = Math.max(max, node.getOrder() + 2);
-        node.setOrder(node.getOrder() + 2);
+      const nodeOrder = node.getOrder();
+      if (nodeOrder !== undefined) {
+        max = Math.max(max, nodeOrder);
+        if (nodeOrder >= order) {
+          max = Math.max(max, nodeOrder + 2);
+          node.setOrder(nodeOrder + 2);
+        }
       }
     }
 
@@ -134,15 +137,17 @@ class BalancedSorter extends AbstractBasicSorter {
   detach(treeSet: RootedTreeSet, node: Node): void {
     const parent = treeSet.getParent(node);
     if (parent) {
+      const nodeOrder = node.getOrder() ?? 0;
       // Filter nodes on one side..
-      const children = this._getChildrenForOrder(parent, treeSet, node.getOrder());
+      const children = this._getChildrenForOrder(parent, treeSet, nodeOrder);
 
       children.forEach((child) => {
-        if (child.getOrder() > node.getOrder()) {
-          child.setOrder(child.getOrder() - 2);
+        const childOrder = child.getOrder();
+        if (childOrder !== undefined && childOrder > nodeOrder) {
+          child.setOrder(childOrder - 2);
         }
       });
-      node.setOrder(node.getOrder() % 2 === 0 ? 0 : 1);
+      node.setOrder(nodeOrder % 2 === 0 ? 0 : 1);
     }
   }
 
@@ -160,14 +165,14 @@ class BalancedSorter extends AbstractBasicSorter {
           `[BalancedSorter] Stale child reference detected: node ${child.getId()} in parent ${node.getId()}'s children but not in tree. Skipping.`,
         );
       }
-      return exists !== null;
+      return exists !== undefined;
     });
 
     // Compute heights ...
     const heights = validChildren
       .map((child) => ({
         id: child.getId(),
-        order: child.getOrder(),
+        order: child.getOrder() ?? 0,
         width: child.getSize().width,
         height: this._computeChildrenHeight(treeSet, child),
       }))
@@ -218,15 +223,17 @@ class BalancedSorter extends AbstractBasicSorter {
 
   verify(treeSet: RootedTreeSet, node: Node): void {
     // Check that all is consistent ...
-    const children = this._getChildrenForOrder(node, treeSet, node.getOrder());
+    const nodeOrder = node.getOrder() ?? 0;
+    const children = this._getChildrenForOrder(node, treeSet, nodeOrder);
 
     // All odd ordered nodes should be "continuous" by themselves
     // All even numbered nodes should be "continuous" by themselves
-    const factor = node.getOrder() % 2 === 0 ? 2 : 1;
+    const factor = nodeOrder % 2 === 0 ? 2 : 1;
     for (let i = 0; i < children.length; i++) {
       const order = i === 0 && factor === 1 ? 1 : factor * i;
+      const childOrder = children[i].getOrder() ?? 0;
       $assert(
-        children[i].getOrder() === order,
+        childOrder === order,
         `Missing order elements. Missing order: ${
           i * factor
         }. Parent:${node.getId()},Node:${children[i].getId()}`,
@@ -235,7 +242,7 @@ class BalancedSorter extends AbstractBasicSorter {
   }
 
   getChildDirection(treeSet: RootedTreeSet, child: Node): 1 | -1 {
-    return child.getOrder() % 2 === 0 ? 1 : -1;
+    return (child.getOrder() ?? 0) % 2 === 0 ? 1 : -1;
   }
 
   toString(): string {
@@ -244,7 +251,7 @@ class BalancedSorter extends AbstractBasicSorter {
 
   _getChildrenForOrder(parent: Node, graph: RootedTreeSet, order: number): Node[] {
     return this._getSortedChildren(graph, parent).filter(
-      (child) => child.getOrder() % 2 === order % 2,
+      (child) => (child.getOrder() ?? 0) % 2 === order % 2,
     );
   }
 

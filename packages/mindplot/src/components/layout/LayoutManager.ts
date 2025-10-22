@@ -237,7 +237,10 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
         }
 
         // Update nodes ...
-        event.setOrder(node.getOrder());
+        const nodeOrder = node.getOrder();
+        if (nodeOrder !== undefined) {
+          event.setOrder(nodeOrder);
+        }
         event.setPosition(node.getPosition());
 
         node.resetPositionState();
