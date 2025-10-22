@@ -63,8 +63,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
-import CircularProgress from '@mui/material/CircularProgress';
 import { ClientContext } from '../../../classes/provider/client-context';
+import { MapsListSkeleton, MapsCardsListSkeleton } from './MapsListSkeleton';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
@@ -541,16 +541,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
         <TableContainer>
           <Box css={classes.cards}>
             {isLoading ? (
-              <Card>
-                <CardContent>
-                  <Box display="flex" alignItems="center" gap={2}>
-                    <CircularProgress size={24} />
-                    <Typography>
-                      <FormattedMessage id="common.loading" defaultMessage="Loading..." />
-                    </Typography>
-                  </Box>
-                </CardContent>
-              </Card>
+              <MapsCardsListSkeleton rowsPerPage={rowsPerPage} />
             ) : mapsInfo.length == 0 ? (
               <Card>
                 <CardContent>
@@ -662,16 +653,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
             <TableBody>
               {isLoading ? (
-                <TableRow>
-                  <TableCell colSpan={6}>
-                    <Box display="flex" alignItems="center" gap={2} justifyContent="center">
-                      <CircularProgress size={24} />
-                      <Typography>
-                        <FormattedMessage id="common.loading" defaultMessage="Loading..." />
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                </TableRow>
+                <MapsListSkeleton rowsPerPage={rowsPerPage} />
               ) : mapsInfo.length == 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} style={{ textAlign: 'center' }}>
