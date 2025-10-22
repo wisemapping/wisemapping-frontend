@@ -16,9 +16,10 @@
  *   limitations under the License.
  */
 
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 
-export const useEditorLoadingStyles = () => {
+export const useEditorLoadingStyles = (): Record<string, React.CSSProperties> => {
   const theme = useTheme();
 
   return {
