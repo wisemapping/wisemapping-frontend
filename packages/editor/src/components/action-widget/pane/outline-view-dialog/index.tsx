@@ -227,7 +227,13 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
 
   return (
     <>
-      <Dialog open={open} onClose={onClose} maxWidth={false} PaperComponent={StyledDialogPaper}>
+      <Dialog
+        open={open}
+        onClose={onClose}
+        maxWidth={false}
+        PaperComponent={StyledDialogPaper}
+        data-testid="outline-view-dialog"
+      >
         <StyledDialogContent>
           <CloseButton onClick={onClose} size="small">
             <CloseIcon />

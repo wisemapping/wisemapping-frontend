@@ -93,6 +93,7 @@ class Relationship extends BaseConnectionLine {
     // Critical: Use thick stroke (12px) to ensure coverage of gaps in dotted line
     this._focusShape.setStroke(12, 'solid', '#3f96ff');
     this._focusShape.setFill('none', 1);
+    this._focusShape.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
 
     // Ensure focus shape uses solid stroke rendering for continuous hit area
     (this._focusShape as CurvedLine).setWidth(0); // Force simple stroke rendering
