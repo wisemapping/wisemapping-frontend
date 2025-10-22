@@ -192,7 +192,7 @@
     "defaultMessage": "Повернутися до входу"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "Вам не потрібен пароль, будь ласка, увійдіть через Google."
+    "defaultMessage": "Вам не потрібен пароль, будь ласка, увійдіть через Facebook або Google."
   },
   "forgot.page-title": {
     "defaultMessage": "Забули пароль | WiseMapping"
@@ -468,7 +468,7 @@
     "defaultMessage": "Повернутися до входу"
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "Акаунт з такою ж електронною поштою був раніше зареєстрований. Чи хочете прив'язати ваш Google акаунт до того акаунту WiseMapping?"
+    "defaultMessage": "Акаунт з такою ж електронною поштою був раніше зареєстрований. Чи хочете прив'язати ваш {provider} акаунт до того акаунту WiseMapping?"
   },
   "registration.callback.confirm.title": {
     "defaultMessage": "Підтвердити"

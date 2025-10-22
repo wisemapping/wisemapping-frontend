@@ -192,7 +192,7 @@
     "defaultMessage": "返回登录"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "您不需要密码，请使用Google登录。"
+    "defaultMessage": "您不需要密码，请使用Facebook或Google登录。"
   },
   "forgot.page-title": {
     "defaultMessage": "忘记密码 | WiseMapping"
@@ -465,7 +465,7 @@
     "defaultMessage": "返回登录"
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "之前已注册了相同电子邮件的账户。您想将您的Google账户链接到该WiseMapping账户吗？"
+    "defaultMessage": "之前已注册了相同电子邮件的账户。您想将您的{provider}账户链接到该WiseMapping账户吗？"
   },
   "registration.callback.confirm.title": {
     "defaultMessage": "确认"

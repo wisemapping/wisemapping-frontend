@@ -534,13 +534,13 @@
     "defaultMessage": "Fertigstellung ..."
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "Ein Konto mit derselben E-Mail-Adresse wurde zuvor registriert. Möchtest du dein Google-Konto mit diesem WiseMapping-Konto verknüpfen?"
+    "defaultMessage": "Ein Konto mit derselben E-Mail-Adresse wurde zuvor registriert. Möchtest du dein {provider}-Konto mit diesem WiseMapping-Konto verknüpfen?"
   },
   "registration.callback.waiting.description": {
     "defaultMessage": "Bitte warte, während wir deine Identität überprüfen"
   },
   "registation.callback.error.message": {
-    "defaultMessage": "Beim Überprüfen deiner Identität bei Google ist ein Fehler aufgetreten. Du kannst es auf der Anmeldeseite erneut versuchen"
+    "defaultMessage": "Beim Überprüfen deiner Identität ist ein Fehler aufgetreten. Du kannst es auf der Anmeldeseite erneut versuchen"
   },
   "registration.callback.back": {
     "defaultMessage": "Zurück zur Anmeldung"
@@ -549,7 +549,7 @@
     "defaultMessage": "Konto synchronisieren"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "Du benötigst kein Passwort, bitte melde dich mit Google an"
+    "defaultMessage": "Du benötigst kein Passwort, bitte melde dich mit Facebook oder Google an"
   },
   "forgot.oauth.back": {
     "defaultMessage": "Zurück zur Anmeldung"

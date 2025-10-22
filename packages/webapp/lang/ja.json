@@ -189,7 +189,7 @@
     "defaultMessage": "ログインに戻る"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "パスワードは不要です。Googleでログインしてください。"
+    "defaultMessage": "パスワードは不要です。FacebookまたはGoogleでログインしてください。"
   },
   "forgot.page-title": {
     "defaultMessage": "パスワードを忘れた場合 | WiseMapping"
@@ -462,7 +462,7 @@
     "defaultMessage": "ログインに戻る"
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "同じメールアドレスのアカウントが以前に登録されています。GoogleアカウントをそのWiseMappingアカウントにリンクしますか？"
+    "defaultMessage": "同じメールアドレスのアカウントが以前に登録されています。{provider}アカウントをそのWiseMappingアカウントにリンクしますか？"
   },
   "registration.callback.confirm.title": {
     "defaultMessage": "確認"
