@@ -174,9 +174,36 @@ export const useStyles = () => {
     // MapsPageLoading styles
     loadingContainer: {
       display: 'flex',
-      flexDirection: 'column',
       minHeight: '100vh',
       backgroundColor: theme.palette.background.default,
+    },
+    loadingDrawer: {
+      width: 300,
+      flexShrink: 0,
+      backgroundColor: theme.palette.background.paper,
+      borderRight: `1px solid ${theme.palette.divider}`,
+      display: 'flex',
+      flexDirection: 'column',
+      padding: theme.spacing(2),
+    },
+    loadingDrawerLogo: {
+      padding: '20px 0 20px 0',
+    },
+    loadingDrawerList: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: theme.spacing(1),
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+    },
+    loadingDrawerFooter: {
+      marginTop: 'auto',
+      paddingTop: theme.spacing(2),
+    },
+    loadingMainContent: {
+      flexGrow: 1,
+      display: 'flex',
+      flexDirection: 'column',
     },
     loadingAppBar: {
       backgroundColor: theme.palette.background.paper,
@@ -191,8 +218,7 @@ export const useStyles = () => {
       backgroundColor:
         theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
     },
-    loadingMainContent: {
-      flexGrow: 1,
+    loadingTableContainer: {
       marginTop: theme.spacing(10),
       marginBottom: theme.spacing(4),
     },

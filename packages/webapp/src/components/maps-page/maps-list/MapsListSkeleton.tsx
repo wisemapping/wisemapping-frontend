@@ -149,106 +149,193 @@ export const MapsPageLoading = (): React.ReactElement => {
 
   return (
     <Box css={classes.loadingContainer}>
-      {/* Header AppBar with skeleton toolbar */}
-      <AppBar position="fixed" elevation={0} css={classes.loadingAppBar}>
-        <Toolbar>
+      {/* Left Drawer Skeleton */}
+      <Box css={classes.loadingDrawer}>
+        {/* Logo */}
+        <Box css={classes.loadingDrawerLogo}>
           <Skeleton
             animation="wave"
-            variant="circular"
+            variant="rectangular"
             width={40}
             height={40}
-            css={classes.loadingSkeletonCircle}
-            style={{ marginRight: 16 }}
+            css={classes.skeletonBase}
           />
+        </Box>
+
+        {/* Navigation Items */}
+        <Box css={classes.loadingDrawerList}>
+          {[...Array(5)].map((_, i) => (
+            <Box key={i} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+              <Skeleton
+                animation="wave"
+                variant="circular"
+                width={24}
+                height={24}
+                css={classes.skeletonBase}
+              />
+              <Skeleton
+                animation="wave"
+                variant="text"
+                width={180}
+                height={20}
+                css={classes.skeletonBase}
+              />
+            </Box>
+          ))}
+        </Box>
+
+        {/* Divider */}
+        <Skeleton
+          animation="wave"
+          variant="rectangular"
+          width="100%"
+          height={1}
+          css={classes.skeletonBase}
+          style={{ marginTop: 16, marginBottom: 16 }}
+        />
+
+        {/* Label Items */}
+        <Box css={classes.loadingDrawerList}>
+          {[...Array(3)].map((_, i) => (
+            <Box key={i} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+              <Skeleton
+                animation="wave"
+                variant="circular"
+                width={24}
+                height={24}
+                css={classes.skeletonBase}
+              />
+              <Skeleton
+                animation="wave"
+                variant="text"
+                width={140}
+                height={20}
+                css={classes.skeletonBase}
+              />
+            </Box>
+          ))}
+        </Box>
+
+        {/* Footer - Powered by */}
+        <Box css={classes.loadingDrawerFooter}>
           <Skeleton
             animation="wave"
             variant="rectangular"
             width={120}
-            height={36}
-            css={classes.loadingSkeletonButton}
-            style={{ marginRight: 16 }}
+            height={24}
+            css={classes.skeletonBase}
           />
-          <Skeleton
-            animation="wave"
-            variant="rectangular"
-            width={120}
-            height={36}
-            css={classes.loadingSkeletonButton}
-          />
-          <Box style={{ flexGrow: 1 }} />
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={40}
-            height={40}
-            css={classes.loadingSkeletonCircle}
-            style={{ marginRight: 8 }}
-          />
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={40}
-            height={40}
-            css={classes.loadingSkeletonCircle}
-            style={{ marginRight: 8 }}
-          />
-          <Skeleton
-            animation="wave"
-            variant="circular"
-            width={40}
-            height={40}
-            css={classes.loadingSkeletonCircle}
-          />
-        </Toolbar>
-      </AppBar>
+        </Box>
+      </Box>
 
-      {/* Main content area with skeleton table */}
-      <Container maxWidth="xl" css={classes.loadingMainContent}>
-        <TableContainer component={Paper} elevation={0}>
-          <Table>
-            <TableBody>
-              <MapsListSkeleton rowsPerPage={10} />
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
-
-      {/* Footer with skeleton */}
-      <Box component="footer" css={classes.loadingFooter}>
-        <Container maxWidth="xl">
-          <Box css={classes.loadingFooterContent}>
+      {/* Main Content Area */}
+      <Box css={classes.loadingMainContent}>
+        {/* Header AppBar with skeleton toolbar */}
+        <AppBar
+          position="fixed"
+          elevation={0}
+          css={classes.loadingAppBar}
+          style={{ marginLeft: 300, width: 'calc(100% - 300px)' }}
+        >
+          <Toolbar>
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={40}
+              height={40}
+              css={classes.loadingSkeletonCircle}
+              style={{ marginRight: 16 }}
+            />
             <Skeleton
               animation="wave"
               variant="rectangular"
-              width={150}
-              height={40}
+              width={120}
+              height={36}
+              css={classes.loadingSkeletonButton}
+              style={{ marginRight: 16 }}
+            />
+            <Skeleton
+              animation="wave"
+              variant="rectangular"
+              width={120}
+              height={36}
               css={classes.loadingSkeletonButton}
             />
-            <Box css={classes.loadingFooterLinks}>
-              <Skeleton
-                animation="wave"
-                variant="text"
-                width={80}
-                height={20}
-                css={classes.loadingSkeletonCircle}
-              />
-              <Skeleton
-                animation="wave"
-                variant="text"
-                width={80}
-                height={20}
-                css={classes.loadingSkeletonCircle}
-              />
-              <Skeleton
-                animation="wave"
-                variant="text"
-                width={80}
-                height={20}
-                css={classes.loadingSkeletonCircle}
-              />
-            </Box>
-          </Box>
+            <Box style={{ flexGrow: 1 }} />
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={40}
+              height={40}
+              css={classes.loadingSkeletonCircle}
+              style={{ marginRight: 8 }}
+            />
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={40}
+              height={40}
+              css={classes.loadingSkeletonCircle}
+              style={{ marginRight: 8 }}
+            />
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={40}
+              height={40}
+              css={classes.loadingSkeletonCircle}
+            />
+          </Toolbar>
+        </AppBar>
+
+        {/* Main content area with skeleton table */}
+        <Container maxWidth="xl" css={classes.loadingTableContainer}>
+          <TableContainer component={Paper} elevation={0}>
+            <Table>
+              <TableBody>
+                <MapsListSkeleton rowsPerPage={10} />
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Container>
+
+        {/* Footer with skeleton */}
+        <Box component="footer" css={classes.loadingFooter}>
+          <Container maxWidth="xl">
+            <Box css={classes.loadingFooterContent}>
+              <Skeleton
+                animation="wave"
+                variant="rectangular"
+                width={150}
+                height={40}
+                css={classes.loadingSkeletonButton}
+              />
+              <Box css={classes.loadingFooterLinks}>
+                <Skeleton
+                  animation="wave"
+                  variant="text"
+                  width={80}
+                  height={20}
+                  css={classes.loadingSkeletonCircle}
+                />
+                <Skeleton
+                  animation="wave"
+                  variant="text"
+                  width={80}
+                  height={20}
+                  css={classes.loadingSkeletonCircle}
+                />
+                <Skeleton
+                  animation="wave"
+                  variant="text"
+                  width={80}
+                  height={20}
+                  css={classes.loadingSkeletonCircle}
+                />
+              </Box>
+            </Box>
+          </Container>
+        </Box>
       </Box>
     </Box>
   );
