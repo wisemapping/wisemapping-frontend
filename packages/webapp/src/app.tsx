@@ -42,6 +42,7 @@ import { AppThemeProvider, useTheme } from './contexts/ThemeContext';
 import OAuthCallbackPage from './components/oauth-callback';
 import ErrorPage from './components/error-page';
 import LoadingFallback from './components/loading-fallback';
+import MapsPageLoading from './components/maps-page-loading';
 import { HelmetProvider } from './components/seo';
 import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
 import { loader as configLoader } from './loader';
@@ -168,7 +169,7 @@ const router = createBrowserRouter(
         <Route
           path="/c/maps/"
           element={
-            <Suspense fallback={<LoadingFallback />}>
+            <Suspense fallback={<MapsPageLoading />}>
               <MapsPage />
             </Suspense>
           }
