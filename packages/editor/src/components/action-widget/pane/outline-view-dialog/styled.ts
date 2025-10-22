@@ -251,7 +251,7 @@ export const TooltipLink = styled('a')(({ theme }) => ({
   },
 }));
 
-export const StyledDialogPaper = styled(Paper)({
+export const StyledDialogPaper = styled(Paper)(({ theme }) => ({
   margin: '12.5vh 12.5vw',
   height: '75vh',
   width: '75vw',
@@ -259,7 +259,8 @@ export const StyledDialogPaper = styled(Paper)({
   maxHeight: 'none',
   borderRadius: '12px',
   overflow: 'hidden',
-});
+  zIndex: theme.zIndex.modal + 1,
+}));
 
 // Style object for Popover paper (used with sx prop as Popover doesn't support PaperComponent)
 export const popoverPaperStyles = {

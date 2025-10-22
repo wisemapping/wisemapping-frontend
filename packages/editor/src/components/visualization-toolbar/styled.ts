@@ -18,27 +18,31 @@
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
-export const IconWithBadgeContainer = styled(Box)(({ theme }) => ({
+export const IconWithBadgeContainer = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   position: 'relative',
-  padding: theme.spacing(0.5),
+  width: '100%',
+  height: '100%',
 }));
 
 export const LevelBadge = styled(Box)(({ theme }) => ({
   position: 'absolute',
-  top: -4,
-  right: -4,
+  top: 2,
+  right: 2,
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.common.white,
-  borderRadius: '8px',
-  minWidth: 16,
-  height: 16,
-  padding: '0 4px',
+  borderRadius: '10px',
+  minWidth: 18,
+  height: 18,
+  padding: '2px 5px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  fontSize: '0.55rem',
-  fontWeight: 'bold',
+  fontSize: '0.7rem',
+  fontWeight: 700,
   lineHeight: 1,
+  boxShadow: theme.shadows[2],
+  pointerEvents: 'none', // Ensure badge doesn't interfere with button clicks
+  zIndex: 1,
 }));

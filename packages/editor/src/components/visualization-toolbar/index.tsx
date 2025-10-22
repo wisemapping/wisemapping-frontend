@@ -18,6 +18,7 @@
 import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
 import Brightness4 from '@mui/icons-material/Brightness4';
 import Brightness7 from '@mui/icons-material/Brightness7';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import Typography from '@mui/material/Typography';
 import React, { ReactElement, useState, useEffect } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
@@ -27,6 +28,8 @@ import Editor from '../../classes/model/editor';
 import Model from '../../classes/model/editor';
 import KeyboardShorcutsHelp from '../action-widget/pane/keyboard-shortcut-help';
 import OutlineViewDialog from '../action-widget/pane/outline-view-dialog';
+import LayoutSelector from '../action-widget/pane/layout-selector';
+import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import Toolbar from '../toolbar';
 import ZoomOutOutlinedIcon from '@mui/icons-material/ZoomOutOutlined';
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
@@ -212,6 +215,33 @@ export function buildVisualizationToolbarConfig(
         },
       ],
     },
+    // Layout selector - only for showcase mode
+    ...(capability.mode === 'showcase'
+      ? [
+          {
+            icon: <AccountTreeIcon />,
+            tooltip: intl.formatMessage({
+              id: 'visualization-toolbar.tooltip-layout',
+              defaultMessage: 'Change Layout',
+            }),
+            onClick: () => trackEditorInteraction('layout_selector'),
+            options: [
+              {
+                render: (closeModal: () => void) => {
+                  const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
+                  return (
+                    <LayoutSelector
+                      closeModal={closeModal}
+                      layoutModel={modelBuilder.getLayoutModel()}
+                    />
+                  );
+                },
+              },
+            ],
+            disabled: () => !model?.isMapLoadded(),
+          } as ActionConfig,
+        ]
+      : []),
     // Separator before theme toggle - only if theme toggle will be shown
     ...(isPublicOrEmbedded && toggleTheme ? [undefined as ActionConfig | undefined] : []),
     // Theme toggle - only for public and embedded views
