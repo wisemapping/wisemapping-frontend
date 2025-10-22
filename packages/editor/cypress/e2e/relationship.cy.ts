@@ -52,7 +52,7 @@ describe('Relationship Topics', () => {
     // Delete it ...
     cy.get('[test-id="15-11-relationship"]').as('rel');
     cy.get('@rel').should('exist');
-    cy.get('@rel').click({ force: true });
+    cy.get('@rel').first().click({ force: true });
 
     cy.get('body').type('{backspace}');
 
@@ -73,7 +73,7 @@ describe('Relationship Topics', () => {
     // Select relationship ...
     cy.get('[test-id="15-11-relationship"]').as('rel');
     cy.get('@rel').should('exist');
-    cy.get('@rel').click({ force: true });
+    cy.get('@rel').first().click({ force: true });
 
     // Move control point start ...
     cy.get('[test-id="relctl:0:15-11"]').first().trigger('mousedown', { force: true });

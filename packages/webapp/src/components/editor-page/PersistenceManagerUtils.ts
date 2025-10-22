@@ -23,8 +23,13 @@ export const fetchMindmap = async (mapId: number): Promise<Mindmap> => {
   let mindmap: Mindmap;
   if (AppConfig.isRestClient()) {
     const token = JwtTokenConfig.retreiveToken();
+    const apiBaseUrl = AppConfig.getApiBaseUrl();
 
-    const persistence = new LocalStorageManager(`/api/restful/maps/{id}/document/xml`, true, token);
+    const persistence = new LocalStorageManager(
+      `${apiBaseUrl}/api/restful/maps/{id}/document/xml`,
+      true,
+      token,
+    );
     mindmap = await persistence.load(String(mapId));
   } else {
     const parser = new DOMParser();

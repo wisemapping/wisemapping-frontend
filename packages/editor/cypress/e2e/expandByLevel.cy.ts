@@ -49,8 +49,7 @@ describe('Expand By Level Suite', () => {
     cy.get('button[aria-label="Expand by Level"]').should('contain', '1');
 =======
     // Wait for expand animation by verifying badge shows 2 visible levels (replaces cy.wait(500))
-    cy.get('button[aria-label="Expand by Level"]').should('contain', '2');
->>>>>>> develop
+    cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '2');
     
     cy.matchImageSnapshot('expanded-to-level-1');
     
@@ -62,8 +61,7 @@ describe('Expand By Level Suite', () => {
     cy.get('button[aria-label="Expand by Level"]').should('contain', '2');
 =======
     // Wait for expand animation by verifying badge shows 3 visible levels (replaces cy.wait(500))
-    cy.get('button[aria-label="Expand by Level"]').should('contain', '3');
->>>>>>> develop
+    cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '3');
     
     cy.matchImageSnapshot('expanded-to-level-2');
     
@@ -110,14 +108,13 @@ describe('Expand By Level Suite', () => {
     // Badge should show "2" - wait for expand to complete (replaces cy.wait(300))
 =======
     // Badge should show "2" (2 visible levels) - wait for expand to complete (replaces cy.wait(300))
->>>>>>> develop
-    cy.get('button[aria-label="Expand by Level"]').should('contain', '2');
+    cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '2');
     
     // Click to expand further - shows 3 levels visible
     cy.get('button[aria-label="Expand by Level"]').click({ force: true });
     
     // Badge should show "3" (3 visible levels) - wait for expand to complete (replaces cy.wait(300))
-    cy.get('button[aria-label="Expand by Level"]').should('contain', '3');
+    cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '3');
   });
 
   it('should reset level to max when expand all is clicked', () => {
@@ -141,15 +138,14 @@ describe('Expand By Level Suite', () => {
     cy.get('button[aria-label="Expand by Level"]').should('contain', '1');
 =======
     // Wait for expand to complete by checking badge shows "2" (replaces cy.wait(300))
-    cy.get('button[aria-label="Expand by Level"]').should('contain', '2');
->>>>>>> develop
+    cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '2');
     
     // Now expand all
     cy.get('button[aria-label="Expand All Nodes"]').should('be.visible').click({ force: true });
     
     // The badge should now show the max depth (not 999) - wait for expansion (replaces cy.wait(500))
-    cy.get('button[aria-label="Expand by Level"]').should(($button) => {
-      const text = $button.text();
+    cy.get('[data-testid="expand-level-badge"]').should('be.visible').and(($badge) => {
+      const text = $badge.text();
       const level = parseInt(text);
       
       // Should be a reasonable number (greater than 2, but not 999)
@@ -175,8 +171,7 @@ describe('Expand By Level Suite', () => {
     cy.get('button[aria-label="Expand by Level"]').should('contain', '1');
 =======
     // Badge should show "2" (2 visible levels) - wait for expand to complete (replaces cy.wait(300))
-    cy.get('button[aria-label="Expand by Level"]').should('contain', '2');
->>>>>>> develop
+    cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '2');
     
     // Use keyboard shortcut again
     cy.get('body').trigger('keydown', { key: 'e', metaKey: true, ctrlKey: false });
@@ -186,8 +181,7 @@ describe('Expand By Level Suite', () => {
     cy.get('button[aria-label="Expand by Level"]').should('contain', '2');
 =======
     // Badge should show "3" (3 visible levels) - wait for expand to complete (replaces cy.wait(300))
-    cy.get('button[aria-label="Expand by Level"]').should('contain', '3');
->>>>>>> develop
+    cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '3');
     
     cy.matchImageSnapshot('expand-by-level-keyboard-shortcut');
   });
@@ -213,8 +207,7 @@ describe('Expand By Level Suite', () => {
     cy.get('button[aria-label="Expand by Level"]').should('contain', '1');
 =======
     // Verify badge appears with "2" (2 visible levels) - wait for expand to complete (replaces cy.wait(300))
-    cy.get('button[aria-label="Expand by Level"]').should('contain', '2');
->>>>>>> develop
+    cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '2');
     
     // Verify the badge is visible and styled as a small indicator
     cy.get('button[aria-label="Expand by Level"]').within(() => {
