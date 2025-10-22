@@ -222,25 +222,5 @@ export const useStyles = () => {
       marginTop: theme.spacing(10),
       marginBottom: theme.spacing(4),
     },
-    loadingFooter: {
-      paddingTop: theme.spacing(3),
-      paddingBottom: theme.spacing(3),
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-      marginTop: 'auto',
-      backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : '#1e1e1e',
-      borderTop: `1px solid ${theme.palette.divider}`,
-    },
-    loadingFooterContent: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      flexWrap: 'wrap',
-      gap: theme.spacing(2),
-    },
-    loadingFooterLinks: {
-      display: 'flex',
-      gap: theme.spacing(3),
-    },
   });
 };
