@@ -217,40 +217,31 @@ const AppBar = ({
           }}
         >
           {isEditingTitle ? (
-            <>
-              <Tooltip
-                title={intl.formatMessage({
-                  id: 'appbar.tooltip-rename',
-                  defaultMessage: 'Rename',
-                })}
-              >
-                <TextField
-                  ref={inputRef}
-                  value={editedTitle}
-                  onChange={(e) => setEditedTitle(e.target.value)}
-                  onKeyDown={handleTitleKeyDown}
-                  onBlur={handleTitleSave}
-                  variant="outlined"
-                  size="small"
-                  data-testid="app-bar-title"
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      fontSize: '1rem',
-                      height: '32px',
-                      outline: (theme) => `2px solid ${theme.palette.primary.main}`,
-                      borderRadius: '4px',
-                      '& fieldset': {
-                        border: 'none',
-                      },
-                    },
-                    '& .MuiOutlinedInput-input': {
-                      padding: '6px 8px',
-                    },
-                  }}
-                  disabled={isSaving}
-                />
-              </Tooltip>
-            </>
+            <TextField
+              ref={inputRef}
+              value={editedTitle}
+              onChange={(e) => setEditedTitle(e.target.value)}
+              onKeyDown={handleTitleKeyDown}
+              onBlur={handleTitleSave}
+              variant="outlined"
+              size="small"
+              data-testid="app-bar-title"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  fontSize: '1rem',
+                  height: '32px',
+                  outline: (theme) => `2px solid ${theme.palette.primary.main}`,
+                  borderRadius: '4px',
+                  '& fieldset': {
+                    border: 'none',
+                  },
+                },
+                '& .MuiOutlinedInput-input': {
+                  padding: '6px 8px',
+                },
+              }}
+              disabled={isSaving}
+            />
           ) : (
             <Tooltip
               title={intl.formatMessage({ id: 'appbar.tooltip-rename', defaultMessage: 'Rename' })}
