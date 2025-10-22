@@ -504,13 +504,13 @@
     "defaultMessage": "Отделка ..."
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "Учетная запись c таким же адресом электронной почты была ранее зарегистрирована. Вы хотите связать свою учетную запись Google с этой учетной записью WiseMapping?"
+    "defaultMessage": "Учетная запись c таким же адресом электронной почты была ранее зарегистрирована. Вы хотите связать свою учетную запись {provider} с этой учетной записью WiseMapping?"
   },
   "registration.callback.waiting.description": {
     "defaultMessage": "Подождите, пока мы подтвердим вашу личность"
   },
   "registation.callback.error.message": {
-    "defaultMessage": "Произошла ошибка при подтверждении вашей личности в Google. Повторите попытку со страницы входа."
+    "defaultMessage": "Произошла ошибка при подтверждении вашей личности. Повторите попытку со страницы входа."
   },
   "registration.callback.back": {
     "defaultMessage": "Вернуться на страницу авторизации"
@@ -519,7 +519,7 @@
     "defaultMessage": "Синхронизировать учетную запись"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "Вам не нужен пароль, пожалуйста, войдите с помощью Google"
+    "defaultMessage": "Вам не нужен пароль, пожалуйста, войдите с помощью Facebook или Google"
   },
   "forgot.oauth.back": {
     "defaultMessage": "Вернуться на страницу авторизации"

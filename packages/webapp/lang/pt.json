@@ -189,7 +189,7 @@
     "defaultMessage": "Voltar ao login"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "Você não precisa de senha, faça login usando o Google"
+    "defaultMessage": "Você não precisa de senha, faça login usando Facebook ou Google"
   },
   "forgot.page-title": {
     "defaultMessage": "Esqueci minha senha | WiseMapping"
@@ -462,7 +462,7 @@
     "defaultMessage": "Voltar ao login"
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "Uma conta com o mesmo e-mail foi registrada anteriormente. Deseja vincular sua conta do Google a essa conta do WiseMapping?"
+    "defaultMessage": "Uma conta com o mesmo e-mail foi registrada anteriormente. Deseja vincular sua conta do {provider} a essa conta do WiseMapping?"
   },
   "registration.callback.confirm.title": {
     "defaultMessage": "Confirmar"

@@ -192,7 +192,7 @@
     "defaultMessage": "लॉगिन पर वापस जाएं"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "आपको पासवर्ड की आवश्यकता नहीं है, कृपया Google का उपयोग करके लॉगिन करें।"
+    "defaultMessage": "आपको पासवर्ड की आवश्यकता नहीं है, कृपया Facebook या Google का उपयोग करके लॉगिन करें।"
   },
   "forgot.page-title": {
     "defaultMessage": "पासवर्ड भूल गए | WiseMapping"
@@ -465,7 +465,7 @@
     "defaultMessage": "लॉगिन पर वापस जाएं"
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "उसी ईमेल के साथ एक खाता पहले पंजीकृत था। क्या आप अपने Google खाते को उस WiseMapping खाते से लिंक करना चाहते हैं?"
+    "defaultMessage": "उसी ईमेल के साथ एक खाता पहले पंजीकृत था। क्या आप अपने {provider} खाते को उस WiseMapping खाते से लिंक करना चाहते हैं?"
   },
   "registration.callback.confirm.title": {
     "defaultMessage": "पुष्टि करें"

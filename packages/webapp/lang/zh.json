@@ -537,13 +537,13 @@
     "defaultMessage": "整理 ..."
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "之前注册了一个具有相同电子邮件地址的帐户。你想将你的谷歌账户链接到那个 WiseMapping 账户吗？"
+    "defaultMessage": "之前注册了一个具有相同电子邮件地址的帐户。你想将你的{provider}账户链接到那个 WiseMapping 账户吗？"
   },
   "registration.callback.waiting.description": {
     "defaultMessage": "我们正在验证您的身份，请稍候"
   },
   "registation.callback.error.message": {
-    "defaultMessage": "使用 Google 验证您的身份时出错，您可以从登录页面重试"
+    "defaultMessage": "验证您的身份时出错，您可以从登录页面重试"
   },
   "registration.callback.back": {
     "defaultMessage": "回到登录"
@@ -552,7 +552,7 @@
     "defaultMessage": "同步账户"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "您不需要密码，请使用谷歌登录"
+    "defaultMessage": "您不需要密码，请使用Facebook或Google登录"
   },
   "forgot.oauth.back": {
     "defaultMessage": "回到登录"

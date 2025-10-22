@@ -192,7 +192,7 @@
     "defaultMessage": "Torna al login"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "Non hai bisogno di una password, per favore accedi usando Google."
+    "defaultMessage": "Non hai bisogno di una password, per favore accedi usando Facebook o Google."
   },
   "forgot.page-title": {
     "defaultMessage": "Password Dimenticata | WiseMapping"
@@ -465,7 +465,7 @@
     "defaultMessage": "Torna al login"
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "Un account con la stessa email è stato registrato in precedenza. Vuoi collegare il tuo account Google a quell'account WiseMapping?"
+    "defaultMessage": "Un account con la stessa email è stato registrato in precedenza. Vuoi collegare il tuo account {provider} a quell'account WiseMapping?"
   },
   "registration.callback.confirm.title": {
     "defaultMessage": "Conferma"

@@ -537,13 +537,13 @@
     "defaultMessage": "Finalizando ..."
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "Una cuenta con el mismo email fue registrada previamente. ¿Quieres asociar tu cuenta de Google con esa cuenta de WiseMapping?"
+    "defaultMessage": "Una cuenta con el mismo email fue registrada previamente. ¿Quieres asociar tu cuenta de {provider} con esa cuenta de WiseMapping?"
   },
   "registration.callback.waiting.description": {
     "defaultMessage": "Por favor espera mientras validamos tu identidad"
   },
   "registation.callback.error.message": {
-    "defaultMessage": "Ocurrió un error al validar tu identidad con Google, puedes volver a intentarlo desde la página de inicio de sesión"
+    "defaultMessage": "Ocurrió un error al validar tu identidad, puedes volver a intentarlo desde la página de inicio de sesión"
   },
   "registration.callback.back": {
     "defaultMessage": "Volver"
@@ -552,7 +552,7 @@
     "defaultMessage": "Sincronizar cuenta"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "No necesitas contraseña, por favor ingresa usando Google"
+    "defaultMessage": "No necesitas contraseña, por favor ingresa usando Facebook o Google"
   },
   "forgot.oauth.back": {
     "defaultMessage": "Volver"
