@@ -840,7 +840,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "Você não precisa de senha, faça login usando o Google"
+      "value": "Você não precisa de senha, faça login usando Facebook ou Google"
     }
   ],
   "forgot.page-title": [
@@ -1418,7 +1418,15 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "Uma conta com o mesmo e-mail foi registrada anteriormente. Deseja vincular sua conta do Google a essa conta do WiseMapping?"
+      "value": "Uma conta com o mesmo e-mail foi registrada anteriormente. Deseja vincular sua conta do "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " a essa conta do WiseMapping?"
     }
   ],
   "registration.callback.confirm.title": [

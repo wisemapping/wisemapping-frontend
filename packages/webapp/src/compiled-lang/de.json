@@ -840,7 +840,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "Du benötigst kein Passwort, bitte melde dich mit Google an"
+      "value": "Du benötigst kein Passwort, bitte melde dich mit Facebook oder Google an"
     }
   ],
   "forgot.page-title": [
@@ -1400,7 +1400,7 @@
   "registation.callback.error.message": [
     {
       "type": 0,
-      "value": "Beim Überprüfen deiner Identität bei Google ist ein Fehler aufgetreten. Du kannst es auf der Anmeldeseite erneut versuchen"
+      "value": "Beim Überprüfen deiner Identität ist ein Fehler aufgetreten. Du kannst es auf der Anmeldeseite erneut versuchen"
     }
   ],
   "registation.success-title": [
@@ -1418,7 +1418,15 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "Ein Konto mit derselben E-Mail-Adresse wurde zuvor registriert. Möchtest du dein Google-Konto mit diesem WiseMapping-Konto verknüpfen?"
+      "value": "Ein Konto mit derselben E-Mail-Adresse wurde zuvor registriert. Möchtest du dein "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": "-Konto mit diesem WiseMapping-Konto verknüpfen?"
     }
   ],
   "registration.callback.confirm.title": [

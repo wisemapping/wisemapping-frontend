@@ -840,7 +840,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "Non hai bisogno di una password, per favore accedi usando Google."
+      "value": "Non hai bisogno di una password, per favore accedi usando Facebook o Google."
     }
   ],
   "forgot.page-title": [
@@ -1418,7 +1418,15 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "Un account con la stessa email è stato registrato in precedenza. Vuoi collegare il tuo account Google a quell'account WiseMapping?"
+      "value": "Un account con la stessa email è stato registrato in precedenza. Vuoi collegare il tuo account "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " a quell'account WiseMapping?"
     }
   ],
   "registration.callback.confirm.title": [

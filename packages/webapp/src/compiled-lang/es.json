@@ -840,7 +840,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "No necesitas contraseña, por favor ingresa usando Google"
+      "value": "No necesitas contraseña, por favor ingresa usando Facebook o Google"
     }
   ],
   "forgot.page-title": [
@@ -1400,7 +1400,7 @@
   "registation.callback.error.message": [
     {
       "type": 0,
-      "value": "Ocurrió un error al validar tu identidad con Google, puedes volver a intentarlo desde la página de inicio de sesión"
+      "value": "Ocurrió un error al validar tu identidad, puedes volver a intentarlo desde la página de inicio de sesión"
     }
   ],
   "registation.success-title": [
@@ -1418,7 +1418,15 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "Una cuenta con el mismo email fue registrada previamente. ¿Quieres asociar tu cuenta de Google con esa cuenta de WiseMapping?"
+      "value": "Una cuenta con el mismo email fue registrada previamente. ¿Quieres asociar tu cuenta de "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " con esa cuenta de WiseMapping?"
     }
   ],
   "registration.callback.confirm.title": [

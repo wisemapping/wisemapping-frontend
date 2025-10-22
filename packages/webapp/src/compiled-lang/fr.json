@@ -840,7 +840,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "Vous n'avez pas besoin de mot de passe, veuillez vous connecter en utilisant Google"
+      "value": "Vous n'avez pas besoin de mot de passe, veuillez vous connecter en utilisant Facebook ou Google"
     }
   ],
   "forgot.page-title": [
@@ -1400,7 +1400,7 @@
   "registation.callback.error.message": [
     {
       "type": 0,
-      "value": "Une erreur s'est produite lors de la validation de votre identité auprès de Google, vous pouvez réessayer depuis la page de connexion"
+      "value": "Une erreur s'est produite lors de la validation de votre identité, vous pouvez réessayer depuis la page de connexion"
     }
   ],
   "registation.success-title": [
@@ -1418,7 +1418,15 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "Un compte avec le même e-mail a déjà été enregistré. Voulez-vous lier votre compte Google à ce compte WiseMapping ?"
+      "value": "Un compte avec le même e-mail a déjà été enregistré. Voulez-vous lier votre compte "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " à ce compte WiseMapping ?"
     }
   ],
   "registration.callback.confirm.title": [

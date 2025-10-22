@@ -840,7 +840,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "You dont need password, please login using Google."
+      "value": "You dont need password, please login using Facebook or Google."
     }
   ],
   "forgot.page-title": [
@@ -1418,7 +1418,15 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "An account with the same email was previously registered. Do you want to link your google account to that WiseMapping account?"
+      "value": "An account with the same email was previously registered. Do you want to link your "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " account to that WiseMapping account?"
     }
   ],
   "registration.callback.confirm.title": [
