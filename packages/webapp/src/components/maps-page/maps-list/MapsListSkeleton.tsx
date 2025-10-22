@@ -17,12 +17,12 @@
  */
 
 import React from 'react';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Skeleton from '@mui/material/Skeleton';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
+import { useTheme } from '@mui/material/styles';
 import { useStyles } from './styled';
 
 interface MapsListSkeletonProps {
@@ -31,32 +31,87 @@ interface MapsListSkeletonProps {
 
 export const TableRowSkeleton: React.FC = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === 'dark';
 
   return (
     <TableRow>
       <TableCell padding="checkbox" css={classes.bodyCell}>
-        <Skeleton variant="rectangular" width={18} height={18} />
+        <Skeleton
+          animation="wave"
+          variant="rounded"
+          width={18}
+          height={18}
+          sx={{
+            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+          }}
+        />
       </TableCell>
       <TableCell padding="checkbox" css={classes.bodyCell}>
-        <Skeleton variant="circular" width={24} height={24} />
+        <Skeleton
+          animation="wave"
+          variant="circular"
+          width={24}
+          height={24}
+          sx={{
+            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+          }}
+        />
       </TableCell>
       <TableCell css={classes.bodyCell}>
-        <Skeleton variant="text" width="60%" height={20} />
+        <Skeleton
+          animation="wave"
+          variant="text"
+          width="60%"
+          sx={{
+            fontSize: '1rem',
+            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+          }}
+        />
       </TableCell>
       <TableCell css={classes.bodyCell}>
-        <Box display="flex" gap={0.5}>
-          <Skeleton variant="rounded" width={60} height={20} />
-          <Skeleton variant="rounded" width={70} height={20} />
-        </Box>
+        <Skeleton
+          animation="wave"
+          variant="text"
+          width="40%"
+          sx={{
+            fontSize: '0.875rem',
+            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+          }}
+        />
       </TableCell>
       <TableCell css={classes.bodyCell}>
-        <Skeleton variant="text" width={100} height={20} />
+        <Skeleton
+          animation="wave"
+          variant="text"
+          width={100}
+          sx={{
+            fontSize: '0.875rem',
+            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+          }}
+        />
       </TableCell>
       <TableCell css={classes.bodyCell}>
-        <Skeleton variant="text" width={80} height={20} />
+        <Skeleton
+          animation="wave"
+          variant="text"
+          width={80}
+          sx={{
+            fontSize: '0.875rem',
+            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+          }}
+        />
       </TableCell>
       <TableCell css={classes.bodyCell}>
-        <Skeleton variant="circular" width={24} height={24} />
+        <Skeleton
+          animation="wave"
+          variant="circular"
+          width={24}
+          height={24}
+          sx={{
+            bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+          }}
+        />
       </TableCell>
     </TableRow>
   );
@@ -64,15 +119,57 @@ export const TableRowSkeleton: React.FC = () => {
 
 export const CardSkeleton: React.FC = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === 'dark';
 
   return (
     <Card css={{ maxWidth: '94vw', margin: '3vw' }}>
       <CardHeader
         css={classes.cardHeader}
-        avatar={<Skeleton variant="circular" width={24} height={24} />}
-        action={<Skeleton variant="circular" width={24} height={24} />}
-        title={<Skeleton variant="text" width="70%" height={24} />}
-        subheader={<Skeleton variant="text" width="50%" height={20} />}
+        avatar={
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={24}
+            height={24}
+            sx={{
+              bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+            }}
+          />
+        }
+        action={
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={24}
+            height={24}
+            sx={{
+              bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+            }}
+          />
+        }
+        title={
+          <Skeleton
+            animation="wave"
+            variant="text"
+            width="70%"
+            sx={{
+              fontSize: '1rem',
+              bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+            }}
+          />
+        }
+        subheader={
+          <Skeleton
+            animation="wave"
+            variant="text"
+            width="50%"
+            sx={{
+              fontSize: '0.875rem',
+              bgcolor: isDarkMode ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
+            }}
+          />
+        }
       />
     </Card>
   );
