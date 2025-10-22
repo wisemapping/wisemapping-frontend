@@ -233,6 +233,7 @@ export function buildVisualizationToolbarConfig(
                     <LayoutSelector
                       closeModal={closeModal}
                       layoutModel={modelBuilder.getLayoutModel()}
+                      model={model}
                     />
                   );
                 },

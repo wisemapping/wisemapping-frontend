@@ -25,6 +25,7 @@ import {
 } from '@wisemapping/mindplot';
 import Capability from '../../action/capability';
 import { trackEditorInteraction } from '../../../utils/analytics';
+import debounce from 'lodash/debounce';
 
 class Editor {
   private component: MindplotWebComponent;
@@ -37,11 +38,11 @@ class Editor {
     return this.component.isLoaded();
   }
 
-  save(minor: boolean): void {
+  save(minor: boolean): Promise<void> {
     if (!this.component) {
       throw new Error('Designer object has not been initialized.');
     }
-    this.component.save(minor);
+    return this.component.save(minor);
   }
 
   getDesigner(): Designer {
@@ -115,14 +116,22 @@ class Editor {
       if (!capability.isHidden('save')) {
         // Register unload save ...
         window.addEventListener('beforeunload', () => {
-          component.save(false);
+          component.save(false).catch((error) => {
+            console.error('Save failed on beforeunload:', error);
+          });
           component.unlockMap();
         });
 
-        // Autosave on a fixed period of time ...
-        setInterval(() => {
-          component.save(false);
-        }, 5000);
+        // Debounced autosave triggered by model updates
+        // Waits 3 seconds after the last change before saving
+        const debouncedAutoSave = debounce(() => {
+          component.save(false).catch((error) => {
+            console.error('Autosave failed:', error);
+          });
+        }, 3000);
+
+        // Trigger autosave on model updates
+        designer.addEvent('modelUpdate', debouncedAutoSave);
       }
     }
   }

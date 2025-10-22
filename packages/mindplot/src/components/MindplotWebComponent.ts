@@ -183,7 +183,9 @@ class MindplotWebComponent extends HTMLElement {
     const designerKeyboard = DesignerKeyboard.getInstance();
     if (designerKeyboard) {
       designerKeyboard.addShortcut(['ctrl+s', 'meta+s'], () => {
-        this.save(true);
+        this.save(true).catch((error) => {
+          console.error('Save failed from keyboard shortcut:', error);
+        });
       });
     }
   }
@@ -201,8 +203,10 @@ class MindplotWebComponent extends HTMLElement {
     return instance.load(id).then((mindmap) => this._designer!.loadMap(mindmap));
   }
 
-  save(saveHistory: boolean) {
-    if (!saveHistory && !this.getSaveRequired()) return;
+  save(saveHistory: boolean): Promise<void> {
+    if (!saveHistory && !this.getSaveRequired()) {
+      return Promise.resolve();
+    }
     console.log('Saving...');
     // Load map content ...
     const mindmap = this._designer!.getMindmap();
@@ -215,19 +219,23 @@ class MindplotWebComponent extends HTMLElement {
 
     // Call persistence manager for saving ...
     const persistenceManager = PersistenceManager.getInstance();
-    persistenceManager.save(mindmap, mindmapProp, saveHistory, {
-      onSuccess() {
-        if (saveHistory) {
-          $notify($msg('SAVE_COMPLETE'));
-        }
-      },
-      onError(error) {
-        if (saveHistory) {
-          $notify(error.message);
-        }
-      },
+    return new Promise<void>((resolve, reject) => {
+      persistenceManager.save(mindmap, mindmapProp, saveHistory, {
+        onSuccess: () => {
+          if (saveHistory) {
+            $notify($msg('SAVE_COMPLETE'));
+          }
+          this.setSaveRequired(false);
+          resolve();
+        },
+        onError: (error) => {
+          if (saveHistory) {
+            $notify(error.message);
+          }
+          reject(error);
+        },
+      });
     });
-    this.setSaveRequired(false);
   }
 
   unlockMap() {

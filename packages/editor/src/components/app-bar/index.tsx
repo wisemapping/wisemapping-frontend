@@ -328,7 +328,9 @@ const AppBar = ({
       icon: <SaveOutlinedIcon />,
       onClick: () => {
         trackAppBarAction('save');
-        model!.save(true);
+        model!.save(true).catch((error) => {
+          console.error('Save failed from app bar:', error);
+        });
       },
       tooltip: keyTooltip(
         intl.formatMessage({ id: 'appbar.tooltip-save', defaultMessage: 'Save' }),
@@ -405,6 +407,7 @@ const AppBar = ({
                 <LayoutSelector
                   closeModal={closeModal}
                   layoutModel={modelBuilder.getLayoutModel()}
+                  model={model}
                 />
               );
             }
