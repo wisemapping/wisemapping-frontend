@@ -298,44 +298,6 @@ export const MapsPageLoading = (): React.ReactElement => {
             </Table>
           </TableContainer>
         </Container>
-
-        {/* Footer with skeleton */}
-        <Box component="footer" css={classes.loadingFooter}>
-          <Container maxWidth="xl">
-            <Box css={classes.loadingFooterContent}>
-              <Skeleton
-                animation="wave"
-                variant="rectangular"
-                width={150}
-                height={40}
-                css={classes.loadingSkeletonButton}
-              />
-              <Box css={classes.loadingFooterLinks}>
-                <Skeleton
-                  animation="wave"
-                  variant="text"
-                  width={80}
-                  height={20}
-                  css={classes.loadingSkeletonCircle}
-                />
-                <Skeleton
-                  animation="wave"
-                  variant="text"
-                  width={80}
-                  height={20}
-                  css={classes.loadingSkeletonCircle}
-                />
-                <Skeleton
-                  animation="wave"
-                  variant="text"
-                  width={80}
-                  height={20}
-                  css={classes.loadingSkeletonCircle}
-                />
-              </Box>
-            </Box>
-          </Container>
-        </Box>
       </Box>
     </Box>
   );

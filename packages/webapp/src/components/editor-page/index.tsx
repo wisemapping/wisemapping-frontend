@@ -15,8 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useContext, useEffect, useState } from 'react';
-import Editor, { useEditor } from '@wisemapping/editor';
+import React, { useContext, useEffect, useState, Suspense } from 'react';
+import Editor, { useEditor, EditorLoadingSkeleton } from '@wisemapping/editor';
 import type { EditorOptions } from '@wisemapping/editor';
 
 import {
@@ -138,7 +138,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
 
   const navigation = useNavigation();
   if (navigation.state === 'loading') {
-    return <h1>Loading!</h1>;
+    return <EditorLoadingSkeleton />;
   }
 
   useEffect(() => {
@@ -227,28 +227,32 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
         accountConfiguration={
           // Prevent load on non-authenticated.
           editorOptions.mode !== 'showcase' ? (
-            <IntlProvider
-              locale={userLocale.code}
-              messages={userLocale.message as Record<string, string>}
-            >
-              <AccountMenu />
-            </IntlProvider>
+            <Suspense fallback={<></>}>
+              <IntlProvider
+                locale={userLocale.code}
+                messages={userLocale.message as Record<string, string>}
+              >
+                <AccountMenu />
+              </IntlProvider>
+            </Suspense>
           ) : (
             <></>
           )
         }
       />
       {activeDialog && (
-        <ActionDispatcher
-          action={activeDialog}
-          onClose={() => setActiveDialog(null)}
-          mapsId={[mapId]}
-          fromEditor
-        />
+        <Suspense fallback={<></>}>
+          <ActionDispatcher
+            action={activeDialog}
+            onClose={() => setActiveDialog(null)}
+            mapsId={[mapId]}
+            fromEditor
+          />
+        </Suspense>
       )}
     </IntlProvider>
   ) : (
-    <></>
+    <EditorLoadingSkeleton />
   );
 };
 
