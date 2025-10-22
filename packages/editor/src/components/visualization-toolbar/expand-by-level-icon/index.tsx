@@ -93,11 +93,13 @@ export const buildExpandByLevelConfig = (
   onInteraction: () => void,
 ): ActionConfig => {
   return {
-    icon: (
+    icon: () => (
       <IconWithBadgeContainer>
         <FormatLineSpacingIcon />
         {currentExpandLevel > 0 && (
-          <LevelBadge>{getVisibleLevelCount(currentExpandLevel)}</LevelBadge>
+          <LevelBadge data-testid="expand-level-badge">
+            {getVisibleLevelCount(currentExpandLevel)}
+          </LevelBadge>
         )}
       </IconWithBadgeContainer>
     ),
