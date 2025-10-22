@@ -35,6 +35,7 @@ import {
 } from '@wisemapping/mindplot';
 
 import Editor from './components';
+import EditorLoadingSkeleton from './components/editor-loading-skeleton';
 import type MapInfo from './classes/model/map-info';
 import { useEditor } from './hooks/useEditor';
 import type { EditorOptions } from './hooks/useEditor';
@@ -60,6 +61,7 @@ export {
   TextImporterFactory,
   XMLSerializerFactory,
   useEditor,
+  EditorLoadingSkeleton,
 };
 
 export default Editor;
