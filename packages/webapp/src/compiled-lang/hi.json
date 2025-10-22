@@ -840,7 +840,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "आपको पासवर्ड की आवश्यकता नहीं है, कृपया Google का उपयोग करके लॉगिन करें।"
+      "value": "आपको पासवर्ड की आवश्यकता नहीं है, कृपया Facebook या Google का उपयोग करके लॉगिन करें।"
     }
   ],
   "forgot.page-title": [
@@ -1418,7 +1418,15 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "उसी ईमेल के साथ एक खाता पहले पंजीकृत था। क्या आप अपने Google खाते को उस WiseMapping खाते से लिंक करना चाहते हैं?"
+      "value": "उसी ईमेल के साथ एक खाता पहले पंजीकृत था। क्या आप अपने "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " खाते को उस WiseMapping खाते से लिंक करना चाहते हैं?"
     }
   ],
   "registration.callback.confirm.title": [

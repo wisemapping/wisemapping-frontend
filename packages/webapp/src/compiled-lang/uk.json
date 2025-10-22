@@ -840,7 +840,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "Вам не потрібен пароль, будь ласка, увійдіть через Google."
+      "value": "Вам не потрібен пароль, будь ласка, увійдіть через Facebook або Google."
     }
   ],
   "forgot.page-title": [
@@ -1418,7 +1418,15 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "Акаунт з такою ж електронною поштою був раніше зареєстрований. Чи хочете прив'язати ваш Google акаунт до того акаунту WiseMapping?"
+      "value": "Акаунт з такою ж електронною поштою був раніше зареєстрований. Чи хочете прив'язати ваш "
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": " акаунт до того акаунту WiseMapping?"
     }
   ],
   "registration.callback.confirm.title": [

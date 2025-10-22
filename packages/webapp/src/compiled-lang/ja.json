@@ -840,7 +840,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "パスワードは不要です。Googleでログインしてください。"
+      "value": "パスワードは不要です。FacebookまたはGoogleでログインしてください。"
     }
   ],
   "forgot.page-title": [
@@ -1418,7 +1418,15 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "同じメールアドレスのアカウントが以前に登録されています。GoogleアカウントをそのWiseMappingアカウントにリンクしますか？"
+      "value": "同じメールアドレスのアカウントが以前に登録されています。"
+    },
+    {
+      "type": 1,
+      "value": "provider"
+    },
+    {
+      "type": 0,
+      "value": "アカウントをそのWiseMappingアカウントにリンクしますか？"
     }
   ],
   "registration.callback.confirm.title": [

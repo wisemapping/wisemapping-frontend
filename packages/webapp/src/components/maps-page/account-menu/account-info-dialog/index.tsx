@@ -276,16 +276,18 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                 />
               </Typography>
 
-              <Input
-                name="email"
-                type="text"
-                disabled={true}
-                label={intl.formatMessage({ id: 'accountinfo.email', defaultMessage: 'Email' })}
-                value={model.email}
-                onChange={handleOnChange}
-                error={error}
-                fullWidth={true}
-              />
+              {account?.authenticationType === 'DATABASE' && (
+                <Input
+                  name="email"
+                  type="text"
+                  disabled={true}
+                  label={intl.formatMessage({ id: 'accountinfo.email', defaultMessage: 'Email' })}
+                  value={model.email}
+                  onChange={handleOnChange}
+                  error={error}
+                  fullWidth={true}
+                />
+              )}
 
               <Input
                 name="firstname"
