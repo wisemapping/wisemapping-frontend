@@ -33,6 +33,11 @@ import { ClientContext } from '../../classes/provider/client-context';
 import { logCriticalError } from '../../utils';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '../../contexts/ThemeContext';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import Paper from '@mui/material/Paper';
+import { MapsListSkeleton } from '../maps-page/maps-list/MapsListSkeleton';
 
 type OAuthProvider = 'google' | 'facebook';
 
@@ -126,6 +131,16 @@ const OAuthCallbackPage = (): React.ReactElement => {
   // if service reports that user doesnt sync accounts yet, we need to show the options
   const needConfirmLinking = !error && callbackResult?.email && !callbackResult?.oauthSync;
 
+  // Determine if we're redirecting to the maps list page (not editor)
+  const searchParams = new URLSearchParams(window.location.search);
+  const stateRedirectUrl = searchParams.get('state');
+  const isRedirectingToMapsList =
+    !stateRedirectUrl ||
+    stateRedirectUrl === 'wisemapping' ||
+    stateRedirectUrl === '/c/maps' ||
+    stateRedirectUrl === '/c/maps/';
+  const showMapsLoading = !needConfirmLinking && !error && isRedirectingToMapsList;
+
   return (
     <div>
       <Header type="none" />
@@ -172,7 +187,17 @@ const OAuthCallbackPage = (): React.ReactElement => {
           </>
         )}
 
-        {!needConfirmLinking && !error && <CircularProgress />}
+        {showMapsLoading ? (
+          <TableContainer component={Paper}>
+            <Table>
+              <TableBody>
+                <MapsListSkeleton rowsPerPage={5} />
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          !needConfirmLinking && !error && <CircularProgress />
+        )}
 
         {needConfirmLinking && (
           <>
