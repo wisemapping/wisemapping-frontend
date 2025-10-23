@@ -157,6 +157,10 @@ export const useStyles = () => {
       backgroundColor:
         theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
     },
+    skeletonDrawer: {
+      backgroundColor:
+        theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.11)',
+    },
     skeletonTextLarge: {
       fontSize: '1rem',
       backgroundColor:
@@ -180,7 +184,8 @@ export const useStyles = () => {
     loadingDrawer: {
       width: 300,
       flexShrink: 0,
-      backgroundColor: theme.palette.background.paper,
+      background:
+        theme.palette.mode === 'light' ? theme.palette.primary.main : theme.palette.grey[900],
       borderRight: `1px solid ${theme.palette.divider}`,
       display: 'flex',
       flexDirection: 'column',
@@ -221,6 +226,34 @@ export const useStyles = () => {
     loadingTableContainer: {
       marginTop: theme.spacing(10),
       marginBottom: theme.spacing(4),
+      padding: '0 !important',
+    },
+    loadingSearchToolbar: {
+      display: 'flex',
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      padding: '0',
+      margin: '0',
+    },
+    loadingToolbarLeft: {
+      flexGrow: 1,
+      paddingLeft: '23px',
+    },
+    loadingToolbarRight: {
+      display: 'flex',
+      alignItems: 'center',
+      '& > *': {
+        float: 'right',
+      },
+    },
+    // Skeleton row alternating colors
+    skeletonRowEven: {
+      background: theme.palette.background.paper,
+    },
+    skeletonRowOdd: {
+      background:
+        theme.palette.mode === 'light'
+          ? alpha(theme.palette.action.hover, 0.08)
+          : alpha(theme.palette.action.hover, 0.15),
     },
   });
 };
