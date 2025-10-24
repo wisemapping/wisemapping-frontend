@@ -169,10 +169,22 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             onChange={onSelectAllClick}
             size="small"
             inputProps={{ 'aria-label': 'select all desserts' }}
-            sx={{
-              color: 'rgba(0, 0, 0, 0.26)',
-              '&.Mui-checked': { color: 'rgba(0, 0, 0, 0.54)' },
-            }}
+            sx={(theme) => ({
+              color:
+                theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.26)',
+              '&.Mui-checked': {
+                color:
+                  theme.palette.mode === 'dark'
+                    ? 'rgba(255, 255, 255, 0.7)'
+                    : 'rgba(0, 0, 0, 0.54)',
+              },
+              '&.MuiCheckbox-indeterminate': {
+                color:
+                  theme.palette.mode === 'dark'
+                    ? 'rgba(255, 255, 255, 0.7)'
+                    : 'rgba(0, 0, 0, 0.54)',
+              },
+            })}
           />
         </TableCell>
 
@@ -718,10 +730,18 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                               'aria-labelledby': String(labelId),
                             }}
                             size="small"
-                            sx={{
-                              color: 'rgba(0, 0, 0, 0.26)',
-                              '&.Mui-checked': { color: 'rgba(0, 0, 0, 0.54)' },
-                            }}
+                            sx={(theme) => ({
+                              color:
+                                theme.palette.mode === 'dark'
+                                  ? 'rgba(255, 255, 255, 0.3)'
+                                  : 'rgba(0, 0, 0, 0.26)',
+                              '&.Mui-checked': {
+                                color:
+                                  theme.palette.mode === 'dark'
+                                    ? 'rgba(255, 255, 255, 0.7)'
+                                    : 'rgba(0, 0, 0, 0.54)',
+                              },
+                            })}
                           />
                         </TableCell>
 
