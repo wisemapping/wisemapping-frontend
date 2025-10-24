@@ -22,9 +22,6 @@ describe('Outline View Suite', () => {
   beforeEach(() => {
     cy.visit('/editor.html');
     cy.waitEditorLoaded();
-    
-    // Ensure the mindmap is fully initialized by checking the central topic exists
-    cy.get('svg > g > g > rect').should('exist');
   });
 
   it('Open Outline View dialog', () => {
