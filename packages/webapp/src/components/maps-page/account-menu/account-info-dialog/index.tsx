@@ -181,6 +181,33 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     event.preventDefault();
     if (activeTab === '3') {
       // Password change tab
+      if (!passwordModel.password || passwordModel.password.trim() === '') {
+        setError({
+          msg: intl.formatMessage({
+            id: 'changepwd.password-required',
+            defaultMessage: 'Password cannot be empty.',
+          }),
+        });
+        return;
+      }
+      if (passwordModel.password.length < 8) {
+        setError({
+          msg: intl.formatMessage({
+            id: 'changepwd.password-min-length',
+            defaultMessage: 'Password must be at least 8 characters long.',
+          }),
+        });
+        return;
+      }
+      if (passwordModel.password.length > 39) {
+        setError({
+          msg: intl.formatMessage({
+            id: 'changepwd.password-max-length',
+            defaultMessage: 'Password cannot be longer than 39 characters.',
+          }),
+        });
+        return;
+      }
       if (passwordModel.password !== passwordModel.retryPassword) {
         setError({
           msg: intl.formatMessage({
@@ -571,8 +598,10 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                   value={passwordModel.password}
                   onChange={handlePasswordChange}
                   error={error}
+                  required={true}
                   fullWidth={true}
                   autoComplete="new-password"
+                  minLength={8}
                   maxLength={39}
                 />
 

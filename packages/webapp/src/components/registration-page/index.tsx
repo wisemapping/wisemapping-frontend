@@ -214,6 +214,7 @@ const RegistrationForm = () => {
                     name="password"
                     type="password"
                     onChange={handleOnChange}
+                    minLength={8}
                     maxLength={39}
                     label={intl.formatMessage({
                       id: 'registration.password',

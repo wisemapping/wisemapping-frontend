@@ -31,6 +31,7 @@ type InputProps = {
   autoComplete?: string;
   fullWidth?: boolean;
   disabled?: boolean;
+  minLength?: number;
   maxLength?: number;
   rows?: number;
 };
@@ -46,6 +47,7 @@ const Input = ({
   autoComplete,
   fullWidth = true,
   disabled = false,
+  minLength,
   maxLength = 254,
 }: InputProps): React.ReactElement => {
   const fieldError = error?.fields?.[name];
@@ -64,7 +66,7 @@ const Input = ({
       margin="dense"
       disabled={disabled}
       autoComplete={autoComplete}
-      inputProps={{ maxLength: maxLength }}
+      inputProps={{ minLength: minLength, maxLength: maxLength }}
     />
   );
 };
