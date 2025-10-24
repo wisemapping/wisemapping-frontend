@@ -32,7 +32,7 @@ declare global {
 
       onMouseOverToolbarButton(value: 'Style Topic & Connections' | 'Font Style' | 'Connection Style' | 'Relationship Style'): void;
       onClickToolbarButton(
-        value: 'Add Relationship' | 'Add Icon' | 'Theme' | 'Connection Style' | 'Relationship Style' | 'Font Style' | 'Style Topic & Connections',
+        value: 'Add Relationship' | 'Add Icon' | 'Add Link' | 'Add Note' | 'Add Topic Image' | 'Theme' | 'Connection Style' | 'Relationship Style' | 'Font Style' | 'Style Topic & Connections',
       ): void;
 
       triggerUndo(): void;
@@ -58,13 +58,24 @@ if (Cypress.env('imageSnaphots')) {
 }
 
 Cypress.Commands.add('waitEditorLoaded', () => {
-  // Wait editor ...
-  cy.get('svg > path').should('be.visible');
+  // Wait for loading spinner to disappear
   cy.get('[aria-label="vortex-loading"]', { timeout: 120000 }).should('not.exist');
-  cy.clearLocalStorage('welcome-xml');
-
-  // Wait for font ...
+  
+  // Wait for SVG canvas to be visible
+  cy.get('svg > path').should('be.visible');
+  
+  // Wait for central topic to be rendered (ensures mindmap is initialized)
+  cy.get('svg > g > g > rect', { timeout: 10000 }).should('exist');
+  
+  // Wait for fonts to load
   cy.document().its('fonts.status').should('equal', 'loaded');
+  
+  // Wait for at least one toolbar button to be enabled (ensures Designer is ready)
+  // Check visualization toolbar buttons (zoom, outline, expand/collapse)
+  cy.get('button[aria-label*="Zoom"]', { timeout: 10000 }).first().should('not.be.disabled');
+  
+  // Clear local storage after everything is loaded
+  cy.clearLocalStorage('welcome-xml');
 });
 
 Cypress.Commands.add('waitForLoad', () => {
