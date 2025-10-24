@@ -24,7 +24,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Alert from '@mui/material/Alert';
 import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
 import CircularProgress from '@mui/material/CircularProgress';
 import PersonIcon from '@mui/icons-material/Person';
@@ -33,9 +32,6 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import StorageIcon from '@mui/icons-material/Storage';
-import BlockIcon from '@mui/icons-material/Block';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Button from '@mui/material/Button';
 import { AuthenticationType } from '../../../classes/client';
 import AccountStatusChip, { getSuspensionReasonLabel } from './AccountStatusChip';
 
@@ -137,70 +133,75 @@ const UserInfoCard = ({
           })}
         </Typography>
         <Divider sx={{ mb: 2 }} />
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <Box>
-              <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
-                <CalendarTodayIcon sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }} />
-                {intl.formatMessage({
-                  id: 'admin.user-info.created',
-                  defaultMessage: 'Created',
-                })}
-              </Typography>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: '1fr 1fr',
+              md: '1fr 1fr 1fr 1fr',
+            },
+            gap: 3,
+          }}
+        >
+          <Box>
+            <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+              <CalendarTodayIcon sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }} />
+              {intl.formatMessage({
+                id: 'admin.user-info.created',
+                defaultMessage: 'Created',
+              })}
+            </Typography>
+            <Typography variant="body1" fontWeight="medium">
+              {formatDate(user.creationDate)}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+              <VerifiedUserIcon sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }} />
+              {intl.formatMessage({
+                id: 'admin.user-info.auth-type',
+                defaultMessage: 'Authentication',
+              })}
+            </Typography>
+            <Box display="flex" alignItems="center" gap={1}>
+              {getAuthIcon(user.authenticationType)}
               <Typography variant="body1" fontWeight="medium">
-                {formatDate(user.creationDate)}
+                {getAuthLabel(user.authenticationType)}
               </Typography>
             </Box>
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          </Box>
+          <Box>
+            <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+              {intl.formatMessage({
+                id: 'admin.user-info.status',
+                defaultMessage: 'Status',
+              })}
+            </Typography>
             <Box>
-              <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
-                <VerifiedUserIcon sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }} />
-                {intl.formatMessage({
-                  id: 'admin.user-info.auth-type',
-                  defaultMessage: 'Authentication',
-                })}
-              </Typography>
-              <Box display="flex" alignItems="center" gap={1}>
-                {getAuthIcon(user.authenticationType)}
-                <Typography variant="body1" fontWeight="medium">
-                  {getAuthLabel(user.authenticationType)}
-                </Typography>
-              </Box>
+              <AccountStatusChip
+                isActive={user.isActive}
+                isSuspended={user.isSuspended}
+                suspensionReason={user.suspensionReason}
+                suspendedDate={user.suspendedDate}
+                interactive={!!(onSuspend || onUnsuspend)}
+                onSuspend={onSuspend}
+                onUnsuspend={onUnsuspend}
+              />
             </Box>
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <Box>
-              <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
-                {intl.formatMessage({
-                  id: 'admin.user-info.status',
-                  defaultMessage: 'Status',
-                })}
-              </Typography>
-              <Box>
-                <AccountStatusChip
-                  isActive={user.isActive}
-                  isSuspended={user.isSuspended}
-                  suspensionReason={user.suspensionReason}
-                  suspendedDate={user.suspendedDate}
-                />
-              </Box>
-            </Box>
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <Box>
-              <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
-                {intl.formatMessage({
-                  id: 'admin.user-info.total-maps',
-                  defaultMessage: 'Total Maps',
-                })}
-              </Typography>
-              <Typography variant="body1" fontWeight="medium">
-                {isLoadingMaps ? <CircularProgress size={16} /> : totalMaps || 0}
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
+          </Box>
+          <Box>
+            <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+              {intl.formatMessage({
+                id: 'admin.user-info.total-maps',
+                defaultMessage: 'Total Maps',
+              })}
+            </Typography>
+            <Typography variant="body1" fontWeight="medium">
+              {isLoadingMaps ? <CircularProgress size={16} /> : totalMaps || 0}
+            </Typography>
+          </Box>
+        </Box>
         {user.isSuspended && user.suspensionReason && (
           <Alert severity="warning" sx={{ mt: 2 }}>
             <Typography variant="body2" fontWeight="medium">
@@ -222,76 +223,6 @@ const UserInfoCard = ({
               </Typography>
             )}
           </Alert>
-        )}
-        {(onSuspend || onUnsuspend) && (
-          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-            {user.isSuspended && onUnsuspend ? (
-              <Tooltip
-                title={
-                  !user.isActive
-                    ? intl.formatMessage({
-                        id: 'admin.unsuspend-inactive-warning',
-                        defaultMessage: 'Warning: User has not confirmed their email address',
-                      })
-                    : ''
-                }
-              >
-                <span>
-                  <Button
-                    variant="outlined"
-                    color="success"
-                    startIcon={<CheckCircleIcon />}
-                    onClick={onUnsuspend}
-                    sx={{
-                      borderWidth: 2,
-                      '&:hover': {
-                        borderWidth: 2,
-                      },
-                    }}
-                  >
-                    {intl.formatMessage({
-                      id: 'admin.unsuspend-user',
-                      defaultMessage: 'Unsuspend User',
-                    })}
-                  </Button>
-                </span>
-              </Tooltip>
-            ) : (
-              onSuspend && (
-                <Tooltip
-                  title={
-                    !user.isActive
-                      ? intl.formatMessage({
-                          id: 'admin.suspend-inactive-disabled',
-                          defaultMessage: 'Cannot suspend - user has not confirmed their email yet',
-                        })
-                      : ''
-                  }
-                >
-                  <span>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      startIcon={<BlockIcon />}
-                      onClick={onSuspend}
-                      disabled={!user.isActive}
-                      sx={{
-                        borderWidth: 2,
-                        '&:hover': {
-                          borderWidth: 2,
-                        },
-                      }}
-                    >
-                      {intl.formatMessage({
-                        id: 'admin.suspend-user',
-                        defaultMessage: 'Suspend User',
-                      })}
-                    </Button>
-                  </span>
-                </Tooltip>
-              )
-            )}
-          </Box>
         )}
       </CardContent>
     </Card>

@@ -363,7 +363,6 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
   return (
     <Toolbar
       configurations={config}
-      rerender={expandLevel}
       position={{
         position: {
           right: isPublicOrEmbedded ? '5px' : '47px',

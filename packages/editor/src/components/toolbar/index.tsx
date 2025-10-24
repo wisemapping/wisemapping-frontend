@@ -234,7 +234,6 @@ const defaultPosition: ToolbarPosition = {
 type ToolbarProps = {
   configurations: (ActionConfig | undefined)[];
   position?: ToolbarPosition;
-  rerender?: number;
 };
 // const getOrientationProps = (orientation: 'horizontal' | 'vertical'): [top:number, number, ]
 /**
@@ -242,7 +241,7 @@ type ToolbarProps = {
  * @param props.configurations the configurations array
  * @returns toolbar wich contains a button/submenu for each configuration in the array
  */
-const Toolbar = ({ configurations, position, rerender }: ToolbarProps): ReactElement => {
+const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
   const pos: ToolbarPosition = position || defaultPosition;
   const theme = useTheme();
 
@@ -277,17 +276,9 @@ const Toolbar = ({ configurations, position, rerender }: ToolbarProps): ReactEle
       }}
       role="menu"
       aria-orientation={pos.vertical ? 'vertical' : 'horizontal'}
-      data-rerender={rerender}
     >
       {configurations.map((c, i) => {
-        return (
-          <ToolbarMenuItem
-            key={`${i}-${rerender}`}
-            configuration={c}
-            elevation={2}
-            vertical={!pos.vertical}
-          />
-        );
+        return <ToolbarMenuItem key={i} configuration={c} elevation={2} vertical={!pos.vertical} />;
       })}
     </AppBar>
   );
