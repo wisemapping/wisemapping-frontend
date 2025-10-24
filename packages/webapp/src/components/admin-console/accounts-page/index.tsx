@@ -68,12 +68,11 @@ import StorageIcon from '@mui/icons-material/Storage';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { AdminUsersParams } from '../../../classes/client/admin-client';
 import { AuthenticationType } from '../../../classes/client';
 import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import UserInfoCard from '../shared/UserInfoCard';
 
 interface User {
   id: number;
@@ -1428,148 +1427,19 @@ const AccountManagement = (): ReactElement => {
           {viewingMapsUser && (
             <>
               {/* User Information Section */}
-              <Card elevation={0} sx={{ mb: 3, bgcolor: 'background.default' }}>
-                <CardContent>
-                  <Typography
-                    variant="h6"
-                    gutterBottom
-                    sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-                  >
-                    <PersonIcon color="primary" />
-                    {intl.formatMessage({
-                      id: 'admin.user-info.title',
-                      defaultMessage: 'User Information',
-                    })}
-                  </Typography>
-                  <Divider sx={{ mb: 2 }} />
-                  <Grid container spacing={3}>
-                    <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                      <Box>
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                          display="block"
-                          gutterBottom
-                        >
-                          <CalendarTodayIcon
-                            sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }}
-                          />
-                          {intl.formatMessage({
-                            id: 'admin.user-info.created',
-                            defaultMessage: 'Created',
-                          })}
-                        </Typography>
-                        <Typography variant="body1" fontWeight="medium">
-                          {formatDate(viewingMapsUser.creationDate)}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                      <Box>
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                          display="block"
-                          gutterBottom
-                        >
-                          <VerifiedUserIcon
-                            sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }}
-                          />
-                          {intl.formatMessage({
-                            id: 'admin.user-info.auth-type',
-                            defaultMessage: 'Authentication',
-                          })}
-                        </Typography>
-                        <Box display="flex" alignItems="center" gap={1}>
-                          {getAuthIcon(viewingMapsUser.authenticationType)}
-                          <Typography variant="body1" fontWeight="medium">
-                            {viewingMapsUser.authenticationType === AuthenticationType.GOOGLE_OAUTH2
-                              ? intl.formatMessage({
-                                  id: 'admin.auth.google',
-                                  defaultMessage: 'Google',
-                                })
-                              : viewingMapsUser.authenticationType ===
-                                  AuthenticationType.FACEBOOK_OAUTH2
-                                ? intl.formatMessage({
-                                    id: 'admin.auth.facebook',
-                                    defaultMessage: 'Facebook',
-                                  })
-                                : viewingMapsUser.authenticationType === AuthenticationType.LDAP
-                                  ? intl.formatMessage({
-                                      id: 'admin.auth.ldap',
-                                      defaultMessage: 'LDAP',
-                                    })
-                                  : intl.formatMessage({
-                                      id: 'admin.auth.database',
-                                      defaultMessage: 'Database',
-                                    })}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                      <Box>
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                          display="block"
-                          gutterBottom
-                        >
-                          {intl.formatMessage({
-                            id: 'admin.user-info.status',
-                            defaultMessage: 'Status',
-                          })}
-                        </Typography>
-                        <Box>{getStatusChip(viewingMapsUser)}</Box>
-                      </Box>
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                      <Box>
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                          display="block"
-                          gutterBottom
-                        >
-                          {intl.formatMessage({
-                            id: 'admin.user-info.total-maps',
-                            defaultMessage: 'Total Maps',
-                          })}
-                        </Typography>
-                        <Typography variant="body1" fontWeight="medium">
-                          {isLoadingUserMaps ? (
-                            <CircularProgress size={16} />
-                          ) : (
-                            userMaps?.length || 0
-                          )}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                  {viewingMapsUser.isSuspended && viewingMapsUser.suspensionReason && (
-                    <Alert severity="warning" sx={{ mt: 2 }}>
-                      <Typography variant="body2" fontWeight="medium">
-                        {intl.formatMessage({
-                          id: 'admin.user-info.suspension-reason',
-                          defaultMessage: 'Suspension Reason:',
-                        })}{' '}
-                        {viewingMapsUser.suspensionReason}
-                      </Typography>
-                      {viewingMapsUser.suspendedDate && (
-                        <Typography variant="caption" display="block" sx={{ mt: 0.5 }}>
-                          {intl.formatMessage(
-                            {
-                              id: 'admin.status.suspended-on',
-                              defaultMessage: 'Suspended on: {date}',
-                            },
-                            { date: formatDate(viewingMapsUser.suspendedDate) },
-                          )}
-                        </Typography>
-                      )}
-                    </Alert>
-                  )}
-                </CardContent>
-              </Card>
+              <UserInfoCard
+                user={viewingMapsUser}
+                totalMaps={userMaps?.length}
+                isLoadingMaps={isLoadingUserMaps}
+                onSuspend={() => {
+                  handleCloseUserMapsDialog();
+                  handleSuspendUser(viewingMapsUser);
+                }}
+                onUnsuspend={() => {
+                  handleCloseUserMapsDialog();
+                  handleUnsuspendUser(viewingMapsUser);
+                }}
+              />
 
               {/* Maps List Section */}
               <Typography
@@ -1650,41 +1520,6 @@ const AccountManagement = (): ReactElement => {
           )}
         </DialogContent>
         <DialogActions>
-          {viewingMapsUser && (
-            <Box sx={{ flexGrow: 1 }}>
-              {viewingMapsUser.isSuspended ? (
-                <Button
-                  variant="contained"
-                  color="success"
-                  startIcon={<CheckCircleIcon />}
-                  onClick={() => {
-                    handleCloseUserMapsDialog();
-                    handleUnsuspendUser(viewingMapsUser);
-                  }}
-                >
-                  {intl.formatMessage({
-                    id: 'admin.unsuspend-user',
-                    defaultMessage: 'Unsuspend User',
-                  })}
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  color="error"
-                  startIcon={<BlockIcon />}
-                  onClick={() => {
-                    handleCloseUserMapsDialog();
-                    handleSuspendUser(viewingMapsUser);
-                  }}
-                >
-                  {intl.formatMessage({
-                    id: 'admin.suspend-user',
-                    defaultMessage: 'Suspend User',
-                  })}
-                </Button>
-              )}
-            </Box>
-          )}
           <Button onClick={handleCloseUserMapsDialog}>
             {intl.formatMessage({
               id: 'common.close',

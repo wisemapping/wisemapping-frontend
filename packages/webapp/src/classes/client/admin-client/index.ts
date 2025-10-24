@@ -156,6 +156,7 @@ export interface SystemHealth {
 
 export interface AdminClientInterface {
   getAdminUsers(params?: AdminUsersParams): Promise<AdminUsersResponse>;
+  getAdminUser(userId: number): Promise<AdminUser>;
   updateAdminUser(userId: number, userData: Partial<AdminUser>): Promise<AdminUser>;
   createAdminUser(
     userData: Omit<AdminUser, 'id' | 'fullName'> & { password: string },
@@ -247,6 +248,18 @@ export default class AdminClient implements AdminClientInterface {
       .then((response) => response.data)
       .catch((error) => {
         console.error('Failed to fetch admin users:', error);
+        throw this.parseResponseOnError(error.response);
+      });
+  }
+
+  getAdminUser(userId: number): Promise<AdminUser> {
+    const url = `${this.baseUrl}/api/restful/admin/users/${userId}`;
+
+    return this.axios
+      .get(url)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error(`Failed to fetch user ${userId}:`, error);
         throw this.parseResponseOnError(error.response);
       });
   }
