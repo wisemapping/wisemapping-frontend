@@ -331,7 +331,7 @@ class MockClient implements Client {
       email: 'test@example.com',
       locale: localeFromStr(locale),
       authenticationType: AuthenticationType.DATABASE,
-      admin: true, // Mock admin user for testing
+      isAdmin: true, // Mock admin user for testing
     });
   }
 
