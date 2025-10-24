@@ -41,11 +41,20 @@ describe('Render all sample maps', () => {
     'welcome',
   ].forEach((mapId) => {
     it(`Render map => ${mapId}`, () => {
+      // huge2 is a very large map that needs more time to load
+      const timeout = mapId === 'huge2' ? 240000 : 120000;
+      
       cy.visit(`/viewmode.html?id=${mapId}`);
-      cy.waitEditorLoaded();
-
+      
+      // Wait for loading spinner to disappear with extended timeout for huge maps
+      cy.get('[aria-label="vortex-loading"]', { timeout }).should('not.exist');
+      
+      // Wait for SVG canvas to be visible
       cy.get('svg > path').should('be.visible');
-      cy.get('[aria-label="vortex-loading"]', { timeout: 120000 }).should('not.exist');
+      
+      // Wait for fonts to load
+      cy.document().its('fonts.status').should('equal', 'loaded');
+      
       cy.matchImageSnapshot(`map-${mapId}`);
     });
   });
