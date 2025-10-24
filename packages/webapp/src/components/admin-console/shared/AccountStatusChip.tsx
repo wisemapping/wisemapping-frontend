@@ -27,6 +27,7 @@ import ListItemText from '@mui/material/ListItemText';
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import { AuthenticationType } from '../../../classes/client';
 
 /**
  * Translates suspension reason codes to user-friendly labels.
@@ -61,6 +62,7 @@ interface AccountStatusChipProps {
   isSuspended: boolean;
   suspensionReason?: string;
   suspendedDate?: string;
+  authenticationType?: AuthenticationType;
   // Optional callbacks for status changes
   onSuspend?: () => void;
   onUnsuspend?: () => void;
@@ -79,6 +81,7 @@ const AccountStatusChip = ({
   isSuspended,
   suspensionReason,
   suspendedDate,
+  authenticationType,
   onSuspend,
   onUnsuspend,
   onActivate,
@@ -125,6 +128,11 @@ const AccountStatusChip = ({
 
   // Build the chip element
   const renderChip = () => {
+    // Check if user is OAuth (Google, Facebook, etc.) - they don't need email activation
+    const isOAuthUser =
+      authenticationType === AuthenticationType.GOOGLE_OAUTH2 ||
+      authenticationType === AuthenticationType.FACEBOOK_OAUTH2;
+
     // Suspended status (highest priority)
     if (isSuspended) {
       const tooltipParts: string[] = [];
@@ -186,8 +194,8 @@ const AccountStatusChip = ({
       );
     }
 
-    // Not Activated status
-    if (!isActive) {
+    // Not Activated status (but skip for OAuth users - they're auto-activated)
+    if (!isActive && !isOAuthUser) {
       const tooltip = interactive
         ? intl.formatMessage({
             id: 'admin.status-not-activated-tooltip-interactive',
