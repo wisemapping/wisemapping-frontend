@@ -184,6 +184,7 @@ const UserInfoCard = ({
                 isSuspended={user.isSuspended}
                 suspensionReason={user.suspensionReason}
                 suspendedDate={user.suspendedDate}
+                authenticationType={user.authenticationType}
                 interactive={!!(onSuspend || onUnsuspend)}
                 onSuspend={onSuspend}
                 onUnsuspend={onUnsuspend}

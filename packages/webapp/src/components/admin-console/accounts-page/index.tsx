@@ -919,6 +919,7 @@ const AccountManagement = (): ReactElement => {
                       isSuspended={user.isSuspended}
                       suspensionReason={user.suspensionReason}
                       suspendedDate={user.suspendedDate}
+                      authenticationType={user.authenticationType}
                       interactive={true}
                       onSuspend={() => handleSuspendUser(user)}
                       onUnsuspend={() => handleUnsuspendUser(user)}
