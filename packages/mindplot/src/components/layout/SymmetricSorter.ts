@@ -258,21 +258,11 @@ class SymmetricSorter extends AbstractBasicSorter {
   computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
     const children = this._getSortedChildren(treeSet, node);
 
-    // Filter out any stale references to deleted nodes
-    const validChildren = children.filter((child) => {
-      const exists = treeSet.find(child.getId(), false);
-      if (!exists) {
-        console.warn(
-          `[SymmetricSorter] Stale child reference detected: node ${child.getId()} in parent ${node.getId()}'s children but not in tree. Skipping.`,
-        );
-      }
-      return exists !== undefined;
-    });
-
     // Compute heights ...
-    const sizeById = validChildren
+    const sizeById = children
       .map((child) => ({
         id: child.getId(),
+        node: child,
         order: child.getOrder(),
         position: child.getPosition(),
         width: child.getSize().width,
@@ -290,25 +280,17 @@ class SymmetricSorter extends AbstractBasicSorter {
     const result = new Map<number, PositionType>();
     for (let i = 0; i < sizeById.length; i++) {
       ysum -= sizeById[i].height;
-      const childNode = treeSet.find(sizeById[i].id, false);
+      const childNode = sizeById[i].node;
+      const direction = this.getChildDirection(treeSet, childNode);
 
-      // Defensive check: if node was deleted between operations, skip it
-      if (childNode) {
-        const direction = this.getChildDirection(treeSet, childNode);
+      const yOffset = ysum + sizeById[i].height / 2;
+      const xOffset =
+        direction *
+        (sizeById[i].width / 2 +
+          node.getSize().width / 2 +
+          SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
 
-        const yOffset = ysum + sizeById[i].height / 2;
-        const xOffset =
-          direction *
-          (sizeById[i].width / 2 +
-            node.getSize().width / 2 +
-            SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
-
-        result.set(sizeById[i].id, { x: xOffset, y: yOffset });
-      } else {
-        console.warn(
-          `[SymmetricSorter] Child node ${sizeById[i].id} not found during offset calculation. Skipping.`,
-        );
-      }
+      result.set(sizeById[i].id, { x: xOffset, y: yOffset });
     }
     return result;
   }
