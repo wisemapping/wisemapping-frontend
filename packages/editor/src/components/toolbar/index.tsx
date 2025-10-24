@@ -128,6 +128,7 @@ export const ToolbarSubmenu = ({
         open={open}
         onClose={() => setOpen(false)}
         anchorEl={itemRef.current}
+        container={itemRef.current}
         anchorOrigin={orientationProps.anchorOrigin}
         transformOrigin={orientationProps.transformOrigin}
         disableScrollLock={false}
@@ -143,7 +144,7 @@ export const ToolbarSubmenu = ({
           },
         }}
         sx={{
-          zIndex: hasCustomRender ? 1500 : -1,
+          zIndex: hasCustomRender ? '1500' : '-1',
         }}
         elevation={elevation}
       >
