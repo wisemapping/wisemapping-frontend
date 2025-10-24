@@ -73,6 +73,7 @@ import { AuthenticationType } from '../../../classes/client';
 import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import UserInfoCard from '../shared/UserInfoCard';
+import AccountStatusChip, { getSuspensionReasonLabel } from '../shared/AccountStatusChip';
 
 interface User {
   id: number;
@@ -641,70 +642,6 @@ const AccountManagement = (): ReactElement => {
     return new Date(dateString).toLocaleDateString();
   };
 
-  const getStatusChip = (user: User) => {
-    if (user.isSuspended) {
-      const tooltipParts: string[] = [];
-      if (user.suspendedDate) {
-        tooltipParts.push(
-          intl.formatMessage(
-            {
-              id: 'admin.status.suspended-on',
-              defaultMessage: 'Suspended on: {date}',
-            },
-            { date: formatDate(user.suspendedDate) },
-          ),
-        );
-      }
-      if (user.suspensionReason) {
-        tooltipParts.push(
-          intl.formatMessage(
-            {
-              id: 'admin.status.reason',
-              defaultMessage: 'Reason: {reason}',
-            },
-            { reason: user.suspensionReason },
-          ),
-        );
-      }
-      const tooltip =
-        tooltipParts.length > 0
-          ? tooltipParts.join(' | ')
-          : intl.formatMessage({ id: 'admin.status-suspended', defaultMessage: 'Suspended' });
-
-      return (
-        <Tooltip title={tooltip}>
-          <Chip
-            label={intl.formatMessage({
-              id: 'admin.status-suspended',
-              defaultMessage: 'Suspended',
-            })}
-            color="error"
-            size="small"
-          />
-        </Tooltip>
-      );
-    } else if (!user.isActive) {
-      return (
-        <Chip
-          label={intl.formatMessage({
-            id: 'admin.status-inactive',
-            defaultMessage: 'Inactive',
-          })}
-          color="warning"
-          size="small"
-        />
-      );
-    } else {
-      return (
-        <Chip
-          label={intl.formatMessage({ id: 'admin.status-active', defaultMessage: 'Active' })}
-          color="success"
-          size="small"
-        />
-      );
-    }
-  };
-
   const getAuthIcon = (authenticationType: AuthenticationType) => {
     switch (authenticationType) {
       case AuthenticationType.GOOGLE_OAUTH2:
@@ -977,7 +914,18 @@ const AccountManagement = (): ReactElement => {
                   <TableCell>
                     {user.fullName} &lt;{user.email}&gt;
                   </TableCell>
-                  <TableCell>{getStatusChip(user)}</TableCell>
+                  <TableCell>
+                    <AccountStatusChip
+                      isActive={user.isActive}
+                      isSuspended={user.isSuspended}
+                      suspensionReason={user.suspensionReason}
+                      suspendedDate={user.suspendedDate}
+                      interactive={true}
+                      onSuspend={() => handleSuspendUser(user)}
+                      onUnsuspend={() => handleUnsuspendUser(user)}
+                      onActivate={() => handleActivateUser(user)}
+                    />
+                  </TableCell>
                   <TableCell align="center">{getAuthIcon(user.authenticationType)}</TableCell>
                   <TableCell>{formatDate(user.creationDate)}</TableCell>
                   <TableCell align="center" sx={{ whiteSpace: 'nowrap' }}>
@@ -1365,7 +1313,11 @@ const AccountManagement = (): ReactElement => {
           </Typography>
           {unsuspendingUser?.suspensionReason && (
             <Alert severity="info" sx={{ mt: 2 }}>
-              Current suspension reason: {unsuspendingUser.suspensionReason}
+              {intl.formatMessage({
+                id: 'admin.current-suspension-reason',
+                defaultMessage: 'Current suspension reason:',
+              })}{' '}
+              {getSuspensionReasonLabel(unsuspendingUser.suspensionReason, intl)}
             </Alert>
           )}
         </DialogContent>

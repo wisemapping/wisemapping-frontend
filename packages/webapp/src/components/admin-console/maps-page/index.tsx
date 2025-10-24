@@ -433,51 +433,111 @@ const MapsManagement = (): ReactElement => {
   };
 
   const getPublicChip = (isPublic: boolean) => (
-    <Chip
-      icon={isPublic ? <PublicIcon /> : <LockIcon />}
-      label={isPublic ? 'Public' : 'Private'}
-      color={isPublic ? 'success' : 'default'}
-      size="small"
-    />
+    <Tooltip
+      title={
+        isPublic
+          ? intl.formatMessage({
+              id: 'admin.maps.public-tooltip',
+              defaultMessage: 'Anyone can view this map',
+            })
+          : intl.formatMessage({
+              id: 'admin.maps.private-tooltip',
+              defaultMessage: 'Only collaborators can view this map',
+            })
+      }
+    >
+      <Chip
+        icon={isPublic ? <PublicIcon /> : <LockIcon />}
+        label={isPublic ? 'Public' : 'Private'}
+        color={isPublic ? 'success' : 'default'}
+        size="small"
+      />
+    </Tooltip>
   );
 
   const getLockedChip = (isLocked: boolean, lockedBy?: string) => (
-    <Chip
-      label={isLocked ? `Locked by ${lockedBy}` : 'Unlocked'}
-      color={isLocked ? 'warning' : 'default'}
-      size="small"
-    />
+    <Tooltip
+      title={
+        isLocked
+          ? intl.formatMessage(
+              {
+                id: 'admin.maps.locked-tooltip',
+                defaultMessage: 'Currently being edited by {user}',
+              },
+              { user: lockedBy || 'unknown user' },
+            )
+          : intl.formatMessage({
+              id: 'admin.maps.unlocked-tooltip',
+              defaultMessage: 'Not currently being edited',
+            })
+      }
+    >
+      <Chip
+        label={isLocked ? `Locked by ${lockedBy}` : 'Unlocked'}
+        color={isLocked ? 'warning' : 'default'}
+        size="small"
+      />
+    </Tooltip>
   );
 
   const getSpamChip = (spam: boolean, spamType?: string, spamDetectedDate?: string) => {
     if (spam) {
       return (
-        <Chip
-          label={`Spam (${spamType || 'Unknown'})`}
-          color="error"
-          size="small"
-          title={spamDetectedDate ? `Detected: ${formatDate(spamDetectedDate)}` : 'Spam detected'}
-        />
+        <Tooltip
+          title={
+            spamDetectedDate
+              ? intl.formatMessage(
+                  {
+                    id: 'admin.maps.spam-tooltip',
+                    defaultMessage: 'Detected as spam on {date}',
+                  },
+                  { date: formatDate(spamDetectedDate) },
+                )
+              : intl.formatMessage({
+                  id: 'admin.maps.spam-tooltip-no-date',
+                  defaultMessage: 'Marked as spam',
+                })
+          }
+        >
+          <Chip label={`Spam (${spamType || 'Unknown'})`} color="error" size="small" />
+        </Tooltip>
       );
     }
     return (
-      <Chip
-        label={intl.formatMessage({ id: 'admin.status-clean', defaultMessage: 'Clean' })}
-        color="success"
-        size="small"
-      />
+      <Tooltip
+        title={intl.formatMessage({
+          id: 'admin.maps.clean-tooltip',
+          defaultMessage: 'Not marked as spam',
+        })}
+      >
+        <Chip
+          label={intl.formatMessage({ id: 'admin.status-clean', defaultMessage: 'Clean' })}
+          color="success"
+          size="small"
+        />
+      </Tooltip>
     );
   };
 
   const getSuspendedUserChip = (isSuspended: boolean) => {
     if (isSuspended) {
       return (
-        <Chip
-          label={intl.formatMessage({ id: 'admin.status-suspended', defaultMessage: 'Suspended' })}
-          color="error"
-          size="small"
-          icon={<PersonOffIcon />}
-        />
+        <Tooltip
+          title={intl.formatMessage({
+            id: 'admin.maps.creator-suspended-tooltip',
+            defaultMessage: 'Map creator account has been suspended by an administrator',
+          })}
+        >
+          <Chip
+            label={intl.formatMessage({
+              id: 'admin.status-suspended',
+              defaultMessage: 'Suspended',
+            })}
+            color="error"
+            size="small"
+            icon={<PersonOffIcon />}
+          />
+        </Tooltip>
       );
     }
     return null;

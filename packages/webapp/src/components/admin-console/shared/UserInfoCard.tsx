@@ -35,9 +35,9 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import StorageIcon from '@mui/icons-material/Storage';
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import { AuthenticationType } from '../../../classes/client';
+import AccountStatusChip, { getSuspensionReasonLabel } from './AccountStatusChip';
 
 interface UserInfoCardProps {
   user: {
@@ -122,70 +122,6 @@ const UserInfoCard = ({
     }
   };
 
-  const getStatusChip = (): ReactElement => {
-    if (user.isSuspended) {
-      const tooltipParts: string[] = [];
-      if (user.suspendedDate) {
-        tooltipParts.push(
-          intl.formatMessage(
-            {
-              id: 'admin.status.suspended-on',
-              defaultMessage: 'Suspended on: {date}',
-            },
-            { date: formatDate(user.suspendedDate) },
-          ),
-        );
-      }
-      if (user.suspensionReason) {
-        tooltipParts.push(
-          intl.formatMessage(
-            {
-              id: 'admin.status.reason',
-              defaultMessage: 'Reason: {reason}',
-            },
-            { reason: user.suspensionReason },
-          ),
-        );
-      }
-      const tooltip =
-        tooltipParts.length > 0
-          ? tooltipParts.join(' | ')
-          : intl.formatMessage({ id: 'admin.status-suspended', defaultMessage: 'Suspended' });
-
-      return (
-        <Tooltip title={tooltip}>
-          <Chip
-            label={intl.formatMessage({
-              id: 'admin.status-suspended',
-              defaultMessage: 'Suspended',
-            })}
-            color="error"
-            size="small"
-          />
-        </Tooltip>
-      );
-    } else if (!user.isActive) {
-      return (
-        <Chip
-          label={intl.formatMessage({
-            id: 'admin.status-inactive',
-            defaultMessage: 'Inactive',
-          })}
-          color="warning"
-          size="small"
-        />
-      );
-    } else {
-      return (
-        <Chip
-          label={intl.formatMessage({ id: 'admin.status-active', defaultMessage: 'Active' })}
-          color="success"
-          size="small"
-        />
-      );
-    }
-  };
-
   return (
     <Card elevation={0} sx={{ mb: 3, bgcolor: 'background.default' }}>
       <CardContent>
@@ -241,7 +177,14 @@ const UserInfoCard = ({
                   defaultMessage: 'Status',
                 })}
               </Typography>
-              <Box>{getStatusChip()}</Box>
+              <Box>
+                <AccountStatusChip
+                  isActive={user.isActive}
+                  isSuspended={user.isSuspended}
+                  suspensionReason={user.suspensionReason}
+                  suspendedDate={user.suspendedDate}
+                />
+              </Box>
             </Box>
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
@@ -265,7 +208,7 @@ const UserInfoCard = ({
                 id: 'admin.user-info.suspension-reason',
                 defaultMessage: 'Suspension Reason:',
               })}{' '}
-              {user.suspensionReason}
+              {getSuspensionReasonLabel(user.suspensionReason, intl)}
             </Typography>
             {user.suspendedDate && (
               <Typography variant="caption" display="block" sx={{ mt: 0.5 }}>
@@ -281,32 +224,71 @@ const UserInfoCard = ({
           </Alert>
         )}
         {(onSuspend || onUnsuspend) && (
-          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
+          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
             {user.isSuspended && onUnsuspend ? (
-              <Button
-                variant="contained"
-                color="success"
-                startIcon={<CheckCircleIcon />}
-                onClick={onUnsuspend}
+              <Tooltip
+                title={
+                  !user.isActive
+                    ? intl.formatMessage({
+                        id: 'admin.unsuspend-inactive-warning',
+                        defaultMessage: 'Warning: User has not confirmed their email address',
+                      })
+                    : ''
+                }
               >
-                {intl.formatMessage({
-                  id: 'admin.unsuspend-user',
-                  defaultMessage: 'Unsuspend User',
-                })}
-              </Button>
+                <span>
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    startIcon={<CheckCircleIcon />}
+                    onClick={onUnsuspend}
+                    sx={{
+                      borderWidth: 2,
+                      '&:hover': {
+                        borderWidth: 2,
+                      },
+                    }}
+                  >
+                    {intl.formatMessage({
+                      id: 'admin.unsuspend-user',
+                      defaultMessage: 'Unsuspend User',
+                    })}
+                  </Button>
+                </span>
+              </Tooltip>
             ) : (
               onSuspend && (
-                <Button
-                  variant="contained"
-                  color="error"
-                  startIcon={<BlockIcon />}
-                  onClick={onSuspend}
+                <Tooltip
+                  title={
+                    !user.isActive
+                      ? intl.formatMessage({
+                          id: 'admin.suspend-inactive-disabled',
+                          defaultMessage: 'Cannot suspend - user has not confirmed their email yet',
+                        })
+                      : ''
+                  }
                 >
-                  {intl.formatMessage({
-                    id: 'admin.suspend-user',
-                    defaultMessage: 'Suspend User',
-                  })}
-                </Button>
+                  <span>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      startIcon={<BlockIcon />}
+                      onClick={onSuspend}
+                      disabled={!user.isActive}
+                      sx={{
+                        borderWidth: 2,
+                        '&:hover': {
+                          borderWidth: 2,
+                        },
+                      }}
+                    >
+                      {intl.formatMessage({
+                        id: 'admin.suspend-user',
+                        defaultMessage: 'Suspend User',
+                      })}
+                    </Button>
+                  </span>
+                </Tooltip>
               )
             )}
           </Box>
