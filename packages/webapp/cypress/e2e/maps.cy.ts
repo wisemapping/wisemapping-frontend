@@ -22,7 +22,7 @@ describe('Maps Page', () => {
   beforeEach(() => {
     cy.visit('/c/maps');
     cy.waitForPageLoaded();
-    cy.get('.MuiCard-root').should('have.length', 4);
+    cy.get('.MuiCard-root').should('have.length', 10);
   });
 
   it('should match the snapshot', () => {
@@ -34,7 +34,7 @@ context('iphone-5 resolution', () => {
   beforeEach(() => {
     cy.viewport('iphone-5');
     cy.visit('/c/maps');
-    cy.get('.MuiCard-root').should('have.length', 4);
+    cy.get('.MuiCard-root').should('have.length', 10);
   });
 
   it('Displays mobile menu button', () => {
@@ -48,7 +48,7 @@ context('iphone-5 resolution', () => {
   });
 
   it('Displays a card list', () => {
-    cy.get('.MuiCard-root').should('have.length', 4);
+    cy.get('.MuiCard-root').should('have.length', 10);
   });
 
   it('should match the snapshot', () => {
@@ -60,7 +60,7 @@ context('720p resolution', () => {
   beforeEach(() => {
     cy.viewport(1280, 720);
     cy.visit('/c/maps');
-    cy.get('.MuiCard-root').should('have.length', 4);
+    cy.get('.MuiCard-root').should('have.length', 10);
   });
 
   it('Displays mobile menu button', () => {

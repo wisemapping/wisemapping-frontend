@@ -1268,6 +1268,7 @@ const MapsManagement = (): ReactElement => {
                   handleSuspendUser(selectedOwnerId, selectedOwnerName);
                 }
               }}
+              disabled={ownerMaps.length > 0 && ownerMaps[0].isCreatorSuspended}
             >
               {intl.formatMessage({
                 id: 'admin.maps.suspend-user.button',
