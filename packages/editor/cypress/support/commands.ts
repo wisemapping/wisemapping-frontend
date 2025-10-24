@@ -65,7 +65,8 @@ Cypress.Commands.add('waitEditorLoaded', () => {
   cy.get('svg > path').should('be.visible');
   
   // Wait for central topic to be rendered (ensures mindmap is initialized)
-  cy.get('svg > g > g > rect', { timeout: 10000 }).should('exist');
+  // Look for any rect element in the SVG (more flexible than specific path)
+  cy.get('svg rect', { timeout: 10000 }).should('exist');
   
   // Wait for fonts to load
   cy.document().its('fonts.status').should('equal', 'loaded');
