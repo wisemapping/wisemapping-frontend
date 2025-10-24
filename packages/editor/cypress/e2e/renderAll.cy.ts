@@ -52,8 +52,16 @@ describe('Render all sample maps', () => {
       // Wait for SVG canvas to be visible
       cy.get('svg > path').should('be.visible');
       
+      // Wait for at least one topic node to be rendered (ensures map content is loaded)
+      cy.get('svg rect', { timeout: 10000 }).should('exist');
+      
       // Wait for fonts to load
       cy.document().its('fonts.status').should('equal', 'loaded');
+      
+      // Additional wait for huge maps to ensure all nodes are rendered
+      if (mapId === 'huge2' || mapId === 'huge') {
+        cy.wait(2000); // Extra time for large maps to finish rendering
+      }
       
       cy.matchImageSnapshot(`map-${mapId}`);
     });
