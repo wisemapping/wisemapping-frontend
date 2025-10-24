@@ -283,8 +283,11 @@ export default class RestClient implements Client {
   updateAccountPassword(pasword: string): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .put(`${this.baseUrl}/api/restful/account/password`, pasword, {
-          headers: { 'Content-Type': 'text/plain' },
+        .put(`${this.baseUrl}/api/restful/account/password`, JSON.stringify(pasword), {
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          transformRequest: [(data) => data],
         })
         .then(() => {
           success();
