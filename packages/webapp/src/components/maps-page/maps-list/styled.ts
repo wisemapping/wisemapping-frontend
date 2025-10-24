@@ -35,6 +35,11 @@ export const useStyles = () => {
       backgroundColor: 'transparent',
       marginLeft: '96px',
       marginRight: '96px',
+      [smMediaQuery]: {
+        marginTop: '0px',
+        marginLeft: '0px',
+        marginRight: '0px',
+      },
     },
     cards: {
       display: 'none',
@@ -103,18 +108,50 @@ export const useStyles = () => {
       paddingBottom: '30px',
       marging: '0',
       boxShadow: 'none',
-      backgroundColor: theme.palette.background.default,
+      backgroundColor: 'transparent',
+      [smMediaQuery]: {
+        paddingTop: '16px',
+        paddingBottom: '16px',
+        paddingLeft: '8px',
+        paddingRight: '8px',
+      },
     },
     tableContainer: {
       backgroundColor: theme.palette.background.default,
       border: '1px solid rgba(128, 128, 128, 0.2)',
       borderRadius: '12px',
       overflow: 'hidden',
+      [smMediaQuery]: {
+        border: 'none',
+        borderRadius: '0',
+      },
     },
     toolbarActions: {
       flex: '1 1 0',
-      paddingLeft: '23px;',
       minWidth: 0,
+      '& .MuiButton-root': {
+        [smMediaQuery]: {
+          minWidth: 'auto',
+          padding: '6px 8px',
+          '& .MuiButton-startIcon': {
+            margin: 0,
+          },
+        },
+      },
+      '& .button-text': {
+        [smMediaQuery]: {
+          display: 'none',
+        },
+      },
+    },
+    searchContainer: {
+      flex: '1 1 0',
+      display: 'flex',
+      justifyContent: 'center',
+      minWidth: 0,
+      [smMediaQuery]: {
+        display: 'none',
+      },
     },
     search: {
       borderRadius: 9,
@@ -124,20 +161,54 @@ export const useStyles = () => {
       },
       margin: '10px 0px',
       width: 'auto',
+    },
+    paginationDesktop: {
+      display: 'block',
+      backgroundColor: 'transparent',
       [smMediaQuery]: {
-        width: '50%',
+        display: 'none',
+      },
+    },
+    paginationMobile: {
+      display: 'none',
+      backgroundColor: 'transparent',
+      [smMediaQuery]: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '16px',
+        marginLeft: '16px',
+        marginRight: '16px',
+        backgroundColor: 'transparent',
       },
     },
     tablePagination: {
-      flex: '1 1 0',
-      border: '0',
-      paddingBottom: '5px',
-      display: 'flex',
-      justifyContent: 'flex-end',
-      minWidth: 0,
+      width: 'auto',
+      display: 'inline-flex',
+      backgroundColor: 'transparent',
+      border: '1px solid rgba(128, 128, 128, 0.15)',
+      borderRadius: '8px',
+      padding: '0',
+      margin: '0',
+      '& .MuiTablePagination-toolbar': {
+        minHeight: '40px',
+        paddingLeft: '22px',
+        paddingRight: '12px',
+        minWidth: 'auto',
+        backgroundColor: 'transparent',
+      },
+      '& .MuiTablePagination-spacer': {
+        display: 'none',
+      },
+      '& .MuiTablePagination-selectLabel': {
+        margin: 0,
+      },
+      '& .MuiTablePagination-displayedRows': {
+        margin: 0,
+      },
       [smMediaQuery]: {
         width: '50%',
         overflow: 'hidden',
+        marginRight: '0',
       },
     },
     searchIcon: {
