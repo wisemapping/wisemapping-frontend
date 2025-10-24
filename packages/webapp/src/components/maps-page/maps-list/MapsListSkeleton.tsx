@@ -35,11 +35,7 @@ interface MapsListSkeletonProps {
   rowsPerPage: number;
 }
 
-interface TableRowSkeletonProps {
-  index: number;
-}
-
-export const TableRowSkeleton: React.FC<TableRowSkeletonProps> = ({ index }) => {
+export const TableRowSkeleton: React.FC = () => {
   const classes = useStyles();
 
   return (
@@ -129,7 +125,7 @@ export const MapsListSkeleton: React.FC<MapsListSkeletonProps> = ({ rowsPerPage 
   return (
     <>
       {Array.from({ length: skeletonCount }).map((_, index) => (
-        <TableRowSkeleton key={index} index={index} />
+        <TableRowSkeleton key={index} />
       ))}
     </>
   );

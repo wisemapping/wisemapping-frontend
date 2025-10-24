@@ -41,7 +41,6 @@ import ArrowRight from '@mui/icons-material/NavigateNext';
 import ArrowLeft from '@mui/icons-material/NavigateBefore';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 
 import AddCircleTwoTone from '@mui/icons-material/AddCircleTwoTone';
 import CloudUploadTwoTone from '@mui/icons-material/CloudUploadTwoTone';
@@ -527,7 +526,6 @@ const CustomListItem = withEmotionStyles((theme) => ({
 }))(ListItemButton);
 
 const StyleListItem = (props: ListItemProps) => {
-  const { mode } = useTheme();
   const intl = useIntl();
   const icon = props.icon;
   const label = props.label;
