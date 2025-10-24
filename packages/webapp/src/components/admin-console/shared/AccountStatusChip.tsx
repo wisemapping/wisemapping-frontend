@@ -126,13 +126,16 @@ const AccountStatusChip = ({
     return new Date(dateString).toLocaleDateString();
   };
 
+  // Check if user is OAuth (Google, Facebook, etc.) - they don't need email activation
+  const isOAuthUser =
+    authenticationType === AuthenticationType.GOOGLE_OAUTH2 ||
+    authenticationType === AuthenticationType.FACEBOOK_OAUTH2;
+
+  // Treat OAuth users as active even if isActive is false
+  const effectivelyActive = isActive || isOAuthUser;
+
   // Build the chip element
   const renderChip = () => {
-    // Check if user is OAuth (Google, Facebook, etc.) - they don't need email activation
-    const isOAuthUser =
-      authenticationType === AuthenticationType.GOOGLE_OAUTH2 ||
-      authenticationType === AuthenticationType.FACEBOOK_OAUTH2;
-
     // Suspended status (highest priority)
     if (isSuspended) {
       const tooltipParts: string[] = [];
@@ -172,24 +175,27 @@ const AccountStatusChip = ({
           : intl.formatMessage({ id: 'admin.status-suspended', defaultMessage: 'Suspended' });
 
       return (
-        <Tooltip title={tooltip}>
-          <Chip
-            label={intl.formatMessage({
-              id: 'admin.status-suspended',
-              defaultMessage: 'Suspended',
-            })}
-            color="error"
-            size="small"
-            onClick={handleChipClick}
-            sx={{
-              cursor: interactive ? 'pointer' : 'default',
-              '&:hover': interactive
-                ? {
-                    opacity: 0.8,
-                  }
-                : {},
-            }}
-          />
+        <Tooltip title={tooltip} disableInteractive>
+          <span>
+            <Chip
+              label={intl.formatMessage({
+                id: 'admin.status-suspended',
+                defaultMessage: 'Suspended',
+              })}
+              color="error"
+              size="small"
+              onClick={handleChipClick}
+              clickable={interactive}
+              sx={{
+                cursor: interactive ? 'pointer' : 'default',
+                '&:hover': interactive
+                  ? {
+                      opacity: 0.8,
+                    }
+                  : {},
+              }}
+            />
+          </span>
         </Tooltip>
       );
     }
@@ -208,24 +214,27 @@ const AccountStatusChip = ({
           });
 
       return (
-        <Tooltip title={tooltip}>
-          <Chip
-            label={intl.formatMessage({
-              id: 'admin.status-not-activated',
-              defaultMessage: 'Not Activated',
-            })}
-            color="warning"
-            size="small"
-            onClick={handleChipClick}
-            sx={{
-              cursor: interactive ? 'pointer' : 'default',
-              '&:hover': interactive
-                ? {
-                    opacity: 0.8,
-                  }
-                : {},
-            }}
-          />
+        <Tooltip title={tooltip} disableInteractive>
+          <span>
+            <Chip
+              label={intl.formatMessage({
+                id: 'admin.status-not-activated',
+                defaultMessage: 'Not Activated',
+              })}
+              color="warning"
+              size="small"
+              onClick={handleChipClick}
+              clickable={interactive}
+              sx={{
+                cursor: interactive ? 'pointer' : 'default',
+                '&:hover': interactive
+                  ? {
+                      opacity: 0.8,
+                    }
+                  : {},
+              }}
+            />
+          </span>
         </Tooltip>
       );
     }
@@ -242,21 +251,24 @@ const AccountStatusChip = ({
         });
 
     return (
-      <Tooltip title={tooltip}>
-        <Chip
-          label={intl.formatMessage({ id: 'admin.status-active', defaultMessage: 'Active' })}
-          color="success"
-          size="small"
-          onClick={handleChipClick}
-          sx={{
-            cursor: interactive ? 'pointer' : 'default',
-            '&:hover': interactive
-              ? {
-                  opacity: 0.8,
-                }
-              : {},
-          }}
-        />
+      <Tooltip title={tooltip} disableInteractive>
+        <span>
+          <Chip
+            label={intl.formatMessage({ id: 'admin.status-active', defaultMessage: 'Active' })}
+            color="success"
+            size="small"
+            onClick={handleChipClick}
+            clickable={interactive}
+            sx={{
+              cursor: interactive ? 'pointer' : 'default',
+              '&:hover': interactive
+                ? {
+                    opacity: 0.8,
+                  }
+                : {},
+            }}
+          />
+        </span>
       </Tooltip>
     );
   };
@@ -264,7 +276,7 @@ const AccountStatusChip = ({
   return (
     <>
       {renderChip()}
-      {interactive && (
+      {interactive && menuOpen && (
         <Menu
           anchorEl={anchorEl}
           open={menuOpen}
@@ -278,45 +290,47 @@ const AccountStatusChip = ({
             horizontal: 'left',
           }}
         >
-          {isSuspended && onUnsuspend && (
-            <MenuItem onClick={handleUnsuspend}>
-              <ListItemIcon>
-                <CheckCircleIcon fontSize="small" color="success" />
-              </ListItemIcon>
-              <ListItemText>
-                {intl.formatMessage({
-                  id: 'admin.unsuspend-user',
-                  defaultMessage: 'Unsuspend User',
-                })}
-              </ListItemText>
-            </MenuItem>
-          )}
-          {!isSuspended && isActive && onSuspend && (
-            <MenuItem onClick={handleSuspend}>
-              <ListItemIcon>
-                <BlockIcon fontSize="small" color="error" />
-              </ListItemIcon>
-              <ListItemText>
-                {intl.formatMessage({
-                  id: 'admin.suspend-user',
-                  defaultMessage: 'Suspend User',
-                })}
-              </ListItemText>
-            </MenuItem>
-          )}
-          {!isActive && onActivate && (
-            <MenuItem onClick={handleActivate}>
-              <ListItemIcon>
-                <MarkEmailReadIcon fontSize="small" color="primary" />
-              </ListItemIcon>
-              <ListItemText>
-                {intl.formatMessage({
-                  id: 'admin.activate-user',
-                  defaultMessage: 'Activate User',
-                })}
-              </ListItemText>
-            </MenuItem>
-          )}
+          {isSuspended
+            ? onUnsuspend && (
+                <MenuItem onClick={handleUnsuspend}>
+                  <ListItemIcon>
+                    <CheckCircleIcon fontSize="small" color="success" />
+                  </ListItemIcon>
+                  <ListItemText>
+                    {intl.formatMessage({
+                      id: 'admin.unsuspend-user',
+                      defaultMessage: 'Unsuspend User',
+                    })}
+                  </ListItemText>
+                </MenuItem>
+              )
+            : effectivelyActive
+              ? onSuspend && (
+                  <MenuItem onClick={handleSuspend}>
+                    <ListItemIcon>
+                      <BlockIcon fontSize="small" color="error" />
+                    </ListItemIcon>
+                    <ListItemText>
+                      {intl.formatMessage({
+                        id: 'admin.suspend-user',
+                        defaultMessage: 'Suspend User',
+                      })}
+                    </ListItemText>
+                  </MenuItem>
+                )
+              : onActivate && (
+                  <MenuItem onClick={handleActivate}>
+                    <ListItemIcon>
+                      <MarkEmailReadIcon fontSize="small" color="primary" />
+                    </ListItemIcon>
+                    <ListItemText>
+                      {intl.formatMessage({
+                        id: 'admin.activate-user',
+                        defaultMessage: 'Activate User',
+                      })}
+                    </ListItemText>
+                  </MenuItem>
+                )}
         </Menu>
       )}
     </>
