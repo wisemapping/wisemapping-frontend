@@ -140,6 +140,80 @@ class MockClient implements Client {
         false,
         'viewer',
       ),
+      ...Array.from({ length: 46 }, (_, i) => {
+        const id = i + 13;
+        const titles = [
+          'Project Planning',
+          'Marketing Strategy',
+          'Product Roadmap',
+          'Meeting Notes',
+          'Brainstorming Session',
+          'Technical Documentation',
+          'Budget Review',
+          'Team Organization',
+          'Client Presentation',
+          'Research Findings',
+          'Sprint Planning',
+          'Architecture Design',
+          'User Stories',
+          'Feature Requirements',
+          'Bug Tracking',
+          'Release Planning',
+          'Training Materials',
+          'Process Workflow',
+          'Sales Pipeline',
+          'Customer Journey',
+          'Content Calendar',
+          'SEO Strategy',
+          'Social Media Plan',
+          'Event Planning',
+          'Performance Metrics',
+          'Risk Assessment',
+          'Competitor Analysis',
+          'SWOT Analysis',
+          'Goal Setting',
+          'Time Management',
+          'Resource Allocation',
+          'Cost Analysis',
+          'Quality Assurance',
+          'Security Audit',
+          'Data Migration',
+          'API Documentation',
+          'Mobile App Design',
+          'Web Dashboard',
+          'Analytics Review',
+          'Customer Feedback',
+          'Product Backlog',
+          'Technical Debt',
+          'Innovation Ideas',
+          'Partnership Strategy',
+          'Vendor Evaluation',
+          'Compliance Checklist',
+        ];
+        const creators = ['Paulo', 'Maria', 'John', 'Sarah', 'Mike', 'Anna'];
+        const labelSets = [[], [label1], [label2], [label3], [label1, label2], [label2, label3]];
+        const roles: ('owner' | 'editor' | 'viewer')[] = [
+          'owner',
+          'owner',
+          'owner',
+          'editor',
+          'viewer',
+        ];
+
+        return createMapInfo(
+          id,
+          i % 7 === 0, // Some starred
+          titles[i % titles.length] + ` ${Math.floor(i / titles.length) + 1}`,
+          labelSets[i % labelSets.length],
+          creators[i % creators.length],
+          new Date(2024, i % 12, (i % 28) + 1, 10, 0, 0).toISOString(),
+          creators[(i + 1) % creators.length],
+          new Date(2025, (i + 1) % 12, ((i + 5) % 28) + 1, 14 + (i % 8), 30, 0).toISOString(),
+          `Description for ${titles[i % titles.length]}`,
+          i % 5 === 0, // Some public
+          roles[i % roles.length],
+        );
+      }),
     ];
 
     this.labels = [label1, label2, label3];

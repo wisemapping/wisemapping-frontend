@@ -464,7 +464,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
       />
 
       <Paper css={classes.paper} elevation={0}>
-        <Toolbar css={classes.toolbar} variant="dense">
+        <Toolbar css={classes.toolbar} variant="dense" sx={{ backgroundColor: 'transparent' }}>
           <div css={classes.toolbarActions}>
             {selected.length > 0 && (
               <Tooltip
@@ -483,7 +483,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                   onClick={handleDeleteClick}
                   startIcon={<DeleteOutlined />}
                 >
-                  <FormattedMessage id="action.delete" defaultMessage="Delete" />
+                  <span className="button-text">
+                    <FormattedMessage id="action.delete" defaultMessage="Delete" />
+                  </span>
                 </Button>
               </Tooltip>
             )}
@@ -506,13 +508,15 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                   startIcon={<LabelTwoTone />}
                   onClick={handleAddLabelClick}
                 >
-                  <FormattedMessage id="action.label" defaultMessage="Add Label" />
+                  <span className="button-text">
+                    <FormattedMessage id="action.label" defaultMessage="Add Label" />
+                  </span>
                 </Button>
               </Tooltip>
             )}
           </div>
 
-          <div style={{ flex: '1 1 0', display: 'flex', justifyContent: 'center', minWidth: 0 }}>
+          <div css={classes.searchContainer as Interpolation<Theme>}>
             <div css={classes.search as Interpolation<Theme>}>
               <div css={classes.searchIcon as Interpolation<Theme>}>
                 <SearchIcon />
@@ -530,18 +534,21 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             </div>
           </div>
 
-          <div style={{ flex: '1 1 0', minWidth: 0 }}>
+          <div style={{ flex: '1 1 0', minWidth: 0, display: 'flex', justifyContent: 'flex-end' }}>
+            {/* Pagination on desktop */}
             {mapsInfo.length > rowsPerPage && (
-              <TablePagination
-                css={classes.tablePagination as Interpolation<Theme>}
-                count={mapsInfo.length}
-                rowsPerPageOptions={[]}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                component="div"
-              />
+              <Box css={classes.paginationDesktop as Interpolation<Theme>}>
+                <TablePagination
+                  css={classes.tablePagination as Interpolation<Theme>}
+                  count={mapsInfo.length}
+                  rowsPerPageOptions={[]}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  component="div"
+                />
+              </Box>
             )}
           </div>
         </Toolbar>
@@ -839,6 +846,22 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             </TableBody>
           </Table>
         </TableContainer>
+
+        {/* Pagination on mobile only - below table */}
+        {mapsInfo.length > rowsPerPage && (
+          <Box css={classes.paginationMobile as Interpolation<Theme>}>
+            <TablePagination
+              css={classes.tablePagination as Interpolation<Theme>}
+              count={mapsInfo.length}
+              rowsPerPageOptions={[]}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              component="div"
+            />
+          </Box>
+        )}
       </Paper>
 
       <ActionDispatcher
