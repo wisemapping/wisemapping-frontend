@@ -30,7 +30,6 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
 
 interface MapsListSkeletonProps {
   rowsPerPage: number;
@@ -44,22 +43,13 @@ export const TableRowSkeleton: React.FC<TableRowSkeletonProps> = ({ index }) => 
   const classes = useStyles();
 
   return (
-    <TableRow css={index % 2 === 0 ? classes.skeletonRowEven : classes.skeletonRowOdd}>
+    <TableRow hover>
       <TableCell padding="checkbox" css={classes.bodyCell}>
         <Skeleton
           animation="wave"
           variant="rounded"
           width={18}
           height={18}
-          css={classes.skeletonBase}
-        />
-      </TableCell>
-      <TableCell padding="checkbox" css={classes.bodyCell}>
-        <Skeleton
-          animation="wave"
-          variant="circular"
-          width={24}
-          height={24}
           css={classes.skeletonBase}
         />
       </TableCell>
@@ -74,6 +64,15 @@ export const TableRowSkeleton: React.FC<TableRowSkeletonProps> = ({ index }) => 
       </TableCell>
       <TableCell css={classes.bodyCell}>
         <Skeleton animation="wave" variant="text" width={80} css={classes.skeletonTextSmall} />
+      </TableCell>
+      <TableCell padding="checkbox" css={classes.bodyCell}>
+        <Skeleton
+          animation="wave"
+          variant="circular"
+          width={24}
+          height={24}
+          css={classes.skeletonBase}
+        />
       </TableCell>
       <TableCell css={classes.bodyCell}>
         <Skeleton
@@ -239,7 +238,7 @@ export const MapsPageLoading = (): React.ReactElement => {
           position="fixed"
           elevation={0}
           css={classes.loadingAppBar}
-          style={{ marginLeft: 300, width: 'calc(100% - 300px)' }}
+          style={{ marginLeft: 240, width: 'calc(100% - 240px)' }}
         >
           <Toolbar>
             <Skeleton
@@ -293,43 +292,54 @@ export const MapsPageLoading = (): React.ReactElement => {
         </AppBar>
 
         {/* Main content area with skeleton table */}
-        <Container maxWidth="xl" css={classes.loadingTableContainer} disableGutters>
-          <Paper elevation={0}>
+        <Box sx={{ width: '100%', marginTop: '80px' }}>
+          <Paper
+            elevation={0}
+            sx={{
+              backgroundColor: 'transparent',
+              marginTop: '30px',
+              marginLeft: '96px',
+              marginRight: '96px',
+              marginBottom: 2,
+            }}
+          >
             {/* Search Toolbar Skeleton */}
             <Toolbar css={classes.loadingSearchToolbar} variant="dense">
               <Box css={classes.loadingToolbarLeft}>
                 {/* Placeholder for action buttons - empty when no selection */}
               </Box>
-              <Box css={classes.loadingToolbarRight}>
-                {/* Search Input Skeleton */}
+              <Box css={classes.loadingToolbarCenter}>
+                {/* Search Input Skeleton - centered */}
                 <Skeleton
                   animation="wave"
                   variant="rectangular"
-                  width={160}
+                  width={240}
                   height={32}
                   css={classes.loadingSkeletonButton}
-                  style={{ marginRight: 8, borderRadius: 9 }}
+                  style={{ borderRadius: 9 }}
                 />
-                {/* Pagination Skeleton */}
-                <Skeleton
-                  animation="wave"
-                  variant="text"
-                  width={100}
-                  height={32}
-                  css={classes.skeletonBase}
-                />
+              </Box>
+              <Box css={classes.loadingToolbarRight}>
+                {/* Pagination removed - hidden when not needed */}
               </Box>
             </Toolbar>
 
-            <TableContainer>
-              <Table>
+            <TableContainer
+              sx={{
+                backgroundColor: 'background.default',
+                border: '1px solid rgba(128, 128, 128, 0.2)',
+                borderRadius: '12px',
+                overflow: 'hidden',
+              }}
+            >
+              <Table sx={{ backgroundColor: 'background.default' }}>
                 <TableBody>
                   <MapsListSkeleton rowsPerPage={10} />
                 </TableBody>
               </Table>
             </TableContainer>
           </Paper>
-        </Container>
+        </Box>
       </Box>
     </Box>
   );

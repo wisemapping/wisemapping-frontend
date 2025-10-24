@@ -20,9 +20,12 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Chip from '@mui/material/Chip';
 
 import { Label } from '../../../../classes/client';
-import { StyledButton, NewLabelContainer, NewLabelColor, CreateLabel } from './styled';
+import { NewLabelColor } from './styled';
 import Tooltip from '@mui/material/Tooltip';
 
 const labelColors = [
@@ -65,8 +68,22 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
   };
 
   return (
-    <CreateLabel>
-      <NewLabelContainer>
+    <Box
+      sx={{
+        paddingTop: '16px',
+        paddingBottom: '8px',
+        borderBottom: '1px solid',
+        borderColor: 'divider',
+        marginBottom: '16px',
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'flex-end',
+          gap: '12px',
+        }}
+      >
         <Tooltip
           arrow={true}
           title={intl.formatMessage({
@@ -80,34 +97,93 @@ const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
               e.stopPropagation();
               setNextLabelColorIndex();
             }}
+            sx={{
+              fontSize: '28px',
+              cursor: 'pointer',
+              transition: 'transform 0.2s',
+              '&:hover': {
+                transform: 'scale(1.1)',
+              },
+            }}
           />
         </Tooltip>
         <TextField
-          variant="standard"
+          variant="outlined"
+          size="small"
           label={intl.formatMessage({
             id: 'label.add-placeholder',
             defaultMessage: 'Label title',
           })}
           onChange={(e) => setNewLabelTitle(e.target.value)}
           onKeyPress={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && newLabelTitle.length) {
               handleSubmitNew();
             }
           }}
           value={newLabelTitle}
+          fullWidth
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '8px',
+            },
+          }}
         />
-        <StyledButton
-          onClick={() => handleSubmitNew()}
-          disabled={!newLabelTitle.length}
-          aria-label={intl.formatMessage({
+        <Tooltip
+          arrow={true}
+          title={intl.formatMessage({
             id: 'label.add-button',
             defaultMessage: 'Add label',
           })}
         >
-          <AddIcon />
-        </StyledButton>
-      </NewLabelContainer>
-    </CreateLabel>
+          <span>
+            <IconButton
+              color="primary"
+              onClick={() => handleSubmitNew()}
+              disabled={!newLabelTitle.length}
+              aria-label={intl.formatMessage({
+                id: 'label.add-button',
+                defaultMessage: 'Add label',
+              })}
+              sx={{
+                backgroundColor: 'primary.main',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: 'primary.dark',
+                },
+                '&:disabled': {
+                  backgroundColor: 'action.disabledBackground',
+                  color: 'action.disabled',
+                },
+              }}
+            >
+              <AddIcon />
+            </IconButton>
+          </span>
+        </Tooltip>
+      </Box>
+
+      <Box sx={{ mt: 2, display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+        {labelColors.map((color, index) => (
+          <Chip
+            key={color}
+            size="small"
+            sx={{
+              backgroundColor: color,
+              width: '32px',
+              height: '8px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              border: index === createLabelColorIndex ? '2px solid' : 'none',
+              borderColor: 'text.primary',
+              '&:hover': {
+                opacity: 0.8,
+              },
+            }}
+            onClick={() => setCreateLabelColorIndex(index)}
+          />
+        ))}
+      </Box>
+    </Box>
   );
 };
 

@@ -30,8 +30,11 @@ export const useStyles = () => {
       width: '100%',
     },
     paper: {
-      width: '100%',
+      marginTop: '30px',
       marginBottom: theme.spacing(2),
+      backgroundColor: 'transparent',
+      marginLeft: '96px',
+      marginRight: '96px',
     },
     cards: {
       display: 'none',
@@ -44,24 +47,34 @@ export const useStyles = () => {
         display: 'none',
       },
       minWidth: 750,
-      '& tr:nth-of-type(2n)': {
-        background: theme.palette.background.paper,
-      },
-      '& tr:nth-of-type(2n+1)': {
-        background:
-          theme.palette.mode === 'light'
-            ? alpha(theme.palette.action.hover, 0.08)
-            : alpha(theme.palette.action.hover, 0.15),
+      backgroundColor: theme.palette.background.default,
+      '& tbody tr': {
+        background: 'transparent',
+        borderBottom: `1px solid ${theme.palette.divider}`,
+        '&:hover': {
+          backgroundColor:
+            theme.palette.mode === 'light'
+              ? alpha(theme.palette.action.hover, 0.04)
+              : alpha(theme.palette.action.hover, 0.08),
+        },
       },
     },
     headerCell: {
-      background: theme.palette.background.paper,
+      background: theme.palette.background.default,
       fontWeight: 'bold',
       color: theme.palette.text.secondary,
-      border: 0,
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      borderTop: 0,
+      borderLeft: 0,
+      borderRight: 0,
+      fontSize: '0.96rem',
+      fontFamily: theme.typography.fontFamily,
+      padding: '8px 12px',
     },
     bodyCell: {
-      border: '0px',
+      fontSize: '0.96rem',
+      fontFamily: theme.typography.fontFamily,
+      padding: '8px 12px',
     },
     labelsCell: {
       maxWidth: '300px',
@@ -83,13 +96,25 @@ export const useStyles = () => {
     },
     toolbar: {
       display: 'flex',
-      borderBottom: `1px solid ${theme.palette.divider}`,
+      alignItems: 'center',
+      justifyContent: 'space-between',
       padding: '0',
+      paddingTop: '30px',
+      paddingBottom: '30px',
       marging: '0',
+      boxShadow: 'none',
+      backgroundColor: theme.palette.background.default,
+    },
+    tableContainer: {
+      backgroundColor: theme.palette.background.default,
+      border: '1px solid rgba(128, 128, 128, 0.2)',
+      borderRadius: '12px',
+      overflow: 'hidden',
     },
     toolbarActions: {
-      flexGrow: 1,
+      flex: '1 1 0',
       paddingLeft: '23px;',
+      minWidth: 0,
     },
     search: {
       borderRadius: 9,
@@ -98,20 +123,18 @@ export const useStyles = () => {
         backgroundColor: alpha(theme.palette.common.white, 0.25),
       },
       margin: '10px 0px',
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-        width: 'auto',
-      },
-      float: 'left',
+      width: 'auto',
       [smMediaQuery]: {
         width: '50%',
       },
     },
     tablePagination: {
-      float: 'right',
+      flex: '1 1 0',
       border: '0',
       paddingBottom: '5px',
+      display: 'flex',
+      justifyContent: 'flex-end',
+      minWidth: 0,
       [smMediaQuery]: {
         width: '50%',
         overflow: 'hidden',
@@ -139,9 +162,9 @@ export const useStyles = () => {
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-          width: '12ch',
+          width: '24ch',
           '&:focus': {
-            width: '20ch',
+            width: '39ch',
           },
         },
       },
@@ -151,6 +174,8 @@ export const useStyles = () => {
     },
     cardTitle: {
       maxWidth: '70vw',
+      fontSize: '0.875rem',
+      fontFamily: theme.typography.fontFamily,
     },
     // Skeleton styles
     skeletonBase: {
@@ -162,12 +187,12 @@ export const useStyles = () => {
         theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.11)',
     },
     skeletonTextLarge: {
-      fontSize: '1rem',
+      fontSize: '0.96rem',
       backgroundColor:
         theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
     },
     skeletonTextSmall: {
-      fontSize: '0.875rem',
+      fontSize: '0.96rem',
       backgroundColor:
         theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.11)' : 'rgba(0, 0, 0, 0.11)',
     },
@@ -182,7 +207,7 @@ export const useStyles = () => {
       backgroundColor: theme.palette.background.default,
     },
     loadingDrawer: {
-      width: 300,
+      width: 240,
       flexShrink: 0,
       background:
         theme.palette.mode === 'light' ? theme.palette.primary.main : theme.palette.grey[900],
@@ -226,34 +251,37 @@ export const useStyles = () => {
     loadingTableContainer: {
       marginTop: theme.spacing(10),
       marginBottom: theme.spacing(4),
+      marginLeft: '96px',
+      marginRight: '96px',
       padding: '0 !important',
     },
     loadingSearchToolbar: {
       display: 'flex',
-      borderBottom: `1px solid ${theme.palette.divider}`,
+      alignItems: 'center',
+      justifyContent: 'space-between',
       padding: '0',
+      paddingTop: '30px',
+      paddingBottom: '30px',
       margin: '0',
+      boxShadow: 'none',
+      backgroundColor: theme.palette.background.default,
     },
     loadingToolbarLeft: {
-      flexGrow: 1,
+      flex: '1 1 0',
       paddingLeft: '23px',
+      minWidth: 0,
+    },
+    loadingToolbarCenter: {
+      flex: '1 1 0',
+      display: 'flex',
+      justifyContent: 'center',
+      minWidth: 0,
     },
     loadingToolbarRight: {
+      flex: '1 1 0',
       display: 'flex',
-      alignItems: 'center',
-      '& > *': {
-        float: 'right',
-      },
-    },
-    // Skeleton row alternating colors
-    skeletonRowEven: {
-      background: theme.palette.background.paper,
-    },
-    skeletonRowOdd: {
-      background:
-        theme.palette.mode === 'light'
-          ? alpha(theme.palette.action.hover, 0.08)
-          : alpha(theme.palette.action.hover, 0.15),
+      justifyContent: 'flex-end',
+      minWidth: 0,
     },
   });
 };

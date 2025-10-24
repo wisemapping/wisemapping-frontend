@@ -59,8 +59,22 @@ export function LabelsCell({ labels, onDelete }: Props): React.ReactElement<Prop
               e.stopPropagation();
               onDelete(label);
             }}
+            sx={{
+              padding: '0px',
+              marginLeft: '2px',
+              '&:hover': {
+                opacity: 0.8,
+              },
+            }}
+            className="delete-button"
           >
-            <DeleteIcon style={{ height: '0.6em', width: '0.6em' }} />
+            <DeleteIcon
+              style={{ height: '0.6em', width: '0.6em' }}
+              sx={{
+                color: 'rgba(255, 255, 255, 0.95)',
+                filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))',
+              }}
+            />
           </IconButton>
         </LabelContainer>
       ))}

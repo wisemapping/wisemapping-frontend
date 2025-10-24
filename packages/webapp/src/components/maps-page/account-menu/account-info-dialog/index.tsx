@@ -40,6 +40,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LanguageIcon from '@mui/icons-material/Language';
+import LockIcon from '@mui/icons-material/Lock';
 import { useFetchAccount } from '../../../../classes/middleware';
 import { ClientContext } from '../../../../classes/provider/client-context';
 import AppI18n, { LocaleCode, Locales } from '../../../../classes/app-i18n';
@@ -54,7 +55,14 @@ type AccountInfoModel = {
   lastname: string;
 };
 
+type ChangePasswordModel = {
+  password: string;
+  retryPassword: string;
+};
+
 const defaultModel: AccountInfoModel = { firstname: '', lastname: '', email: '' };
+const defaultPasswordModel: ChangePasswordModel = { password: '', retryPassword: '' };
+
 const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElement => {
   const client = useContext(ClientContext);
   const queryClient = useQueryClient();
@@ -64,6 +72,8 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
   const [selectedLanguage, setSelectedLanguage] = React.useState<LocaleCode>('en');
 
   const [model, setModel] = React.useState<AccountInfoModel>(defaultModel);
+  const [passwordModel, setPasswordModel] =
+    React.useState<ChangePasswordModel>(defaultPasswordModel);
   const [error, setError] = React.useState<ErrorInfo>();
   const intl = useIntl();
 
@@ -113,6 +123,22 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     },
   );
 
+  const mutationChangePassword = useMutation<void, ErrorInfo, ChangePasswordModel>(
+    (model: ChangePasswordModel) => {
+      return client.updateAccountPassword(model.password);
+    },
+    {
+      onSuccess: () => {
+        setPasswordModel(defaultPasswordModel);
+        setError(undefined);
+        onClose();
+      },
+      onError: (error) => {
+        setError(error);
+      },
+    },
+  );
+
   const account = useFetchAccount();
   useEffect(() => {
     if (account) {
@@ -153,7 +179,19 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    if (showDeleteDialog) {
+    if (activeTab === '3') {
+      // Password change tab
+      if (passwordModel.password !== passwordModel.retryPassword) {
+        setError({
+          msg: intl.formatMessage({
+            id: 'changepwd.password-match',
+            defaultMessage: 'Password do not match. Please, try again.',
+          }),
+        });
+        return;
+      }
+      mutationChangePassword.mutate(passwordModel);
+    } else if (showDeleteDialog) {
       if (deleteConfirmationText === 'DELETE') {
         mutationRemove.mutate();
       } else {
@@ -175,6 +213,14 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     const name = event.target.name;
     const value = event.target.value;
     setModel({ ...model, [name as keyof AccountInfoModel]: value });
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault();
+
+    const name = event.target.name;
+    const value = event.target.value;
+    setPasswordModel({ ...passwordModel, [name as keyof ChangePasswordModel]: value });
   };
 
   const handleDeleteAccountClick = () => {
@@ -227,7 +273,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
   };
 
   const shouldShowSubmitButton = () => {
-    return activeTab === '1' || (activeTab === '2' && !showDeleteDialog);
+    return activeTab === '1' || activeTab === '3' || (activeTab === '2' && !showDeleteDialog);
   };
 
   return (
@@ -251,6 +297,17 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
               })}
               value="1"
             />
+            {account?.authenticationType === 'DATABASE' && (
+              <Tab
+                icon={<LockIcon />}
+                iconPosition="start"
+                label={intl.formatMessage({
+                  id: 'menu.change-password',
+                  defaultMessage: 'Change Password',
+                })}
+                value="2"
+              />
+            )}
             <Tab
               icon={<SettingsIcon />}
               iconPosition="start"
@@ -258,7 +315,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                 id: 'accountinfo.account-settings',
                 defaultMessage: 'Account Settings',
               })}
-              value="2"
+              value="3"
             />
           </TabList>
         </Box>
@@ -486,6 +543,57 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
             </Box>
           </FormControl>
         </TabPanel>
+
+        {account?.authenticationType === 'DATABASE' && (
+          <TabPanel value="3" sx={{ px: 0 }}>
+            <FormControl fullWidth={true}>
+              <Box sx={{ mb: 2 }}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ mb: 2, color: 'primary.main', fontWeight: 600 }}
+                >
+                  <FormattedMessage id="changepwd.title" defaultMessage="Change Password" />
+                </Typography>
+                <Typography variant="body2" sx={{ mb: 3, color: 'text.secondary' }}>
+                  <FormattedMessage
+                    id="changepwd.description"
+                    defaultMessage="Please, provide the new password for your account."
+                  />
+                </Typography>
+
+                <Input
+                  name="password"
+                  type="password"
+                  label={intl.formatMessage({
+                    id: 'changepwd.password',
+                    defaultMessage: 'Password',
+                  })}
+                  value={passwordModel.password}
+                  onChange={handlePasswordChange}
+                  error={error}
+                  fullWidth={true}
+                  autoComplete="new-password"
+                  maxLength={39}
+                />
+
+                <Input
+                  name="retryPassword"
+                  type="password"
+                  label={intl.formatMessage({
+                    id: 'changepwd.confirm-password',
+                    defaultMessage: 'Confirm Password',
+                  })}
+                  value={passwordModel.retryPassword}
+                  onChange={handlePasswordChange}
+                  required={true}
+                  fullWidth={true}
+                  autoComplete="new-password"
+                  maxLength={39}
+                />
+              </Box>
+            </FormControl>
+          </TabPanel>
+        )}
       </TabContext>
     </BaseDialog>
   );

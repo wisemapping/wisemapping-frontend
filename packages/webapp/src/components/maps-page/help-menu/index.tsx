@@ -24,7 +24,7 @@ import PolicyOutlined from '@mui/icons-material/PolicyOutlined';
 import FeedbackOutlined from '@mui/icons-material/FeedbackOutlined';
 import EmojiPeopleOutlined from '@mui/icons-material/EmailOutlined';
 import EmailOutlined from '@mui/icons-material/EmailOutlined';
-import IconButton from '@mui/material/IconButton';
+import Fab from '@mui/material/Fab';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
@@ -45,14 +45,27 @@ const HelpMenu = (): React.ReactElement => {
   };
 
   return (
-    <span>
+    <>
       <Tooltip
         arrow={true}
         title={intl.formatMessage({ id: 'help.support', defaultMessage: 'Support' })}
       >
-        <IconButton aria-haspopup="true" onClick={handleMenu} size="large">
-          <Help />
-        </IconButton>
+        <Fab
+          color="primary"
+          aria-haspopup="true"
+          onClick={handleMenu}
+          sx={{
+            width: '28px',
+            height: '28px',
+            minHeight: '28px',
+            boxShadow: 3,
+            '&:hover': {
+              boxShadow: 6,
+            },
+          }}
+        >
+          <Help sx={{ fontSize: '18px' }} />
+        </Fab>
       </Tooltip>
       <Menu
         id="appbar-profile"
@@ -109,7 +122,7 @@ const HelpMenu = (): React.ReactElement => {
           </Link>
         </MenuItem>
       </Menu>
-    </span>
+    </>
   );
 };
 

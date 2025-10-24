@@ -26,8 +26,6 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import React, { useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
 import AccountInfoDialog from './account-info-dialog';
-import ChangePasswordDialog from './change-password-dialog';
-import LockOpenOutlined from '@mui/icons-material/LockOpenOutlined';
 import Link from '@mui/material/Link';
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined';
 import AdminPanelSettingsOutlined from '@mui/icons-material/AdminPanelSettingsOutlined';
@@ -36,7 +34,7 @@ import { useFetchAccount } from '../../../classes/middleware';
 import { ClientContext } from '../../../classes/provider/client-context';
 import { useAdminPermissions } from '../../../classes/hooks/useAdminPermissions';
 
-type ActionType = 'change-password' | 'account-info' | undefined;
+type ActionType = 'account-info' | undefined;
 const AccountMenu = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -98,20 +96,6 @@ const AccountMenu = (): React.ReactElement => {
           <FormattedMessage id="menu.account" defaultMessage="Account" />
         </MenuItem>
 
-        {account?.authenticationType === 'DATABASE' && (
-          <MenuItem
-            onClick={() => {
-              handleClose();
-              setAction('change-password');
-            }}
-          >
-            <ListItemIcon>
-              <LockOpenOutlined fontSize="small" />
-            </ListItemIcon>
-            <FormattedMessage id="menu.change-password" defaultMessage="Change password" />
-          </MenuItem>
-        )}
-
         {isAdmin && (
           <MenuItem
             onClick={() => {
@@ -135,7 +119,6 @@ const AccountMenu = (): React.ReactElement => {
           </Link>
         </MenuItem>
       </Menu>
-      {action == 'change-password' && <ChangePasswordDialog onClose={() => setAction(undefined)} />}
       {action == 'account-info' && <AccountInfoDialog onClose={() => setAction(undefined)} />}
     </span>
   );
