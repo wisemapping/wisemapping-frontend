@@ -169,10 +169,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             onChange={onSelectAllClick}
             size="small"
             inputProps={{ 'aria-label': 'select all desserts' }}
+            sx={{
+              color: 'rgba(0, 0, 0, 0.26)',
+              '&.Mui-checked': { color: 'rgba(0, 0, 0, 0.54)' },
+            }}
           />
         </TableCell>
-
-        <TableCell padding="checkbox" key="starred" css={classes.headerCell}></TableCell>
 
         {headCells.map((headCell) => {
           return (
@@ -199,6 +201,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           );
         })}
 
+        <TableCell padding="checkbox" key="starred" css={classes.headerCell}></TableCell>
         <TableCell padding="checkbox" key="action" css={classes.headerCell}></TableCell>
       </TableRow>
     </TableHead>
@@ -509,7 +512,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             )}
           </div>
 
-          <div>
+          <div style={{ flex: '1 1 0', display: 'flex', justifyContent: 'center', minWidth: 0 }}>
             <div css={classes.search as Interpolation<Theme>}>
               <div css={classes.searchIcon as Interpolation<Theme>}>
                 <SearchIcon />
@@ -525,20 +528,25 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                 // startAdornment={<SearchIcon />}
               />
             </div>
-            <TablePagination
-              css={classes.tablePagination as Interpolation<Theme>}
-              count={mapsInfo.length}
-              rowsPerPageOptions={[]}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              component="div"
-            />
+          </div>
+
+          <div style={{ flex: '1 1 0', minWidth: 0 }}>
+            {mapsInfo.length > rowsPerPage && (
+              <TablePagination
+                css={classes.tablePagination as Interpolation<Theme>}
+                count={mapsInfo.length}
+                rowsPerPageOptions={[]}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                component="div"
+              />
+            )}
           </div>
         </Toolbar>
 
-        <TableContainer>
+        <TableContainer css={classes.tableContainer as Interpolation<Theme>}>
           <Box css={classes.cards}>
             {isLoading ? (
               <MapsCardsListSkeleton rowsPerPage={rowsPerPage} />
@@ -604,12 +612,28 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             </Tooltip>
                           }
                           title={
-                            <Typography css={classes.cardTitle} noWrap color="text.secondary">
+                            <Typography
+                              css={classes.cardTitle}
+                              noWrap
+                              color="text.secondary"
+                              sx={{
+                                fontSize: '0.96rem',
+                                fontFamily:
+                                  'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                              }}
+                            >
                               {row.title}
                             </Typography>
                           }
                           subheader={
-                            <Typography variant="subtitle2">
+                            <Typography
+                              variant="subtitle2"
+                              sx={{
+                                fontSize: '0.75rem',
+                                fontFamily:
+                                  'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                              }}
+                            >
                               {intl.formatMessage({
                                 id: 'map.last-update',
                                 defaultMessage: 'Last Update',
@@ -679,7 +703,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                         tabIndex={-1}
                         key={row.id}
                         selected={isItemSelected}
-                        style={{ border: '0' }}
                       >
                         <TableCell padding="checkbox" css={classes.bodyCell}>
                           <Checkbox
@@ -688,7 +711,86 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                               'aria-labelledby': String(labelId),
                             }}
                             size="small"
+                            sx={{
+                              color: 'rgba(0, 0, 0, 0.26)',
+                              '&.Mui-checked': { color: 'rgba(0, 0, 0, 0.54)' },
+                            }}
                           />
+                        </TableCell>
+
+                        <TableCell css={classes.bodyCell}>
+                          <Tooltip
+                            arrow={true}
+                            title={intl.formatMessage({
+                              id: 'maps.tooltip-open',
+                              defaultMessage: 'Open for edition',
+                            })}
+                            placement="bottom-start"
+                          >
+                            <Link
+                              href={`/c/maps/${row.id}/edit`}
+                              color="textPrimary"
+                              underline="always"
+                              onClick={(e) => e.stopPropagation()}
+                              sx={{
+                                fontSize: '0.96rem',
+                                fontFamily:
+                                  'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                              }}
+                            >
+                              {row.title}
+                            </Link>
+                          </Tooltip>
+                        </TableCell>
+
+                        <TableCell css={[classes.bodyCell, classes.labelsCell as CSSObject]}>
+                          <LabelsCell
+                            labels={row.labels}
+                            onDelete={(lbl) => {
+                              handleRemoveLabel(row.id, lbl.id);
+                            }}
+                          />
+                        </TableCell>
+
+                        <TableCell css={classes.bodyCell}>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              fontSize: '0.96rem',
+                              fontFamily:
+                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                            }}
+                          >
+                            {row.createdBy}
+                          </Typography>
+                        </TableCell>
+
+                        <TableCell css={classes.bodyCell}>
+                          <Tooltip
+                            arrow={true}
+                            title={intl.formatMessage(
+                              {
+                                id: 'maps.modified-by-desc',
+                                defaultMessage: 'Modified by {by} on {on}',
+                              },
+                              {
+                                by: row.lastModificationBy,
+                                on: dayjs(row.lastModificationTime).format('lll'),
+                              },
+                            )}
+                            placement="bottom-start"
+                          >
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                fontSize: '0.96rem',
+                                fontFamily:
+                                  'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                              }}
+                            >
+                              {dayjs(row.lastModificationTime).fromNow()}
+                            </Typography>
+                          </Tooltip>
                         </TableCell>
 
                         <TableCell padding="checkbox" css={classes.bodyCell}>
@@ -707,56 +809,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                 }}
                               />
                             </IconButton>
-                          </Tooltip>
-                        </TableCell>
-
-                        <TableCell css={classes.bodyCell}>
-                          <Tooltip
-                            arrow={true}
-                            title={intl.formatMessage({
-                              id: 'maps.tooltip-open',
-                              defaultMessage: 'Open for edition',
-                            })}
-                            placement="bottom-start"
-                          >
-                            <Link
-                              href={`/c/maps/${row.id}/edit`}
-                              color="textPrimary"
-                              underline="always"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              {row.title}
-                            </Link>
-                          </Tooltip>
-                        </TableCell>
-
-                        <TableCell css={[classes.bodyCell, classes.labelsCell as CSSObject]}>
-                          <LabelsCell
-                            labels={row.labels}
-                            onDelete={(lbl) => {
-                              handleRemoveLabel(row.id, lbl.id);
-                            }}
-                          />
-                        </TableCell>
-
-                        <TableCell css={classes.bodyCell}>{row.createdBy}</TableCell>
-
-                        <TableCell css={classes.bodyCell}>
-                          <Tooltip
-                            arrow={true}
-                            title={intl.formatMessage(
-                              {
-                                id: 'maps.modified-by-desc',
-                                defaultMessage: 'Modified by {by} on {on}',
-                              },
-                              {
-                                by: row.lastModificationBy,
-                                on: dayjs(row.lastModificationTime).format('lll'),
-                              },
-                            )}
-                            placement="bottom-start"
-                          >
-                            <span>{dayjs(row.lastModificationTime).fromNow()}</span>
                           </Tooltip>
                         </TableCell>
 

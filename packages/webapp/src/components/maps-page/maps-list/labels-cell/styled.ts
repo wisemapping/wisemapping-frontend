@@ -21,13 +21,24 @@ import styled from 'styled-components';
 export const LabelContainer = styled.div`
   display: inline-flex;
   flex-direction: row;
-  margin: 4px;
+  margin: 2px;
   padding: 4px;
   align-items: center;
-  font-size: smaller;
+  font-size: 0.96rem;
+  font-family: 'Figtree', 'Noto Sans JP', 'Helvetica', 'system-ui', 'Arial', 'sans-serif';
+
+  .delete-button {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover .delete-button {
+    opacity: 1;
+  }
 `;
 
 export const LabelText = styled.span`
   margin-left: 4px;
-  margin-right: 2px;
+  margin-right: 0px;
+  font-family: 'Figtree', 'Noto Sans JP', 'Helvetica', 'system-ui', 'Arial', 'sans-serif';
 `;

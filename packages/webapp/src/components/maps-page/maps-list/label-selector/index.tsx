@@ -20,7 +20,7 @@ import React, { useContext } from 'react';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import LabelComponent from '../label';
 import { Label, ErrorInfo, MapInfo } from '../../../../classes/client';
 import { useQuery } from 'react-query';
@@ -44,10 +44,8 @@ export function LabelSelector({ onChange, maps }: LabelSelectorProps): React.Rea
     .filter((labelId) => maps.every((m) => m.labels.find((l) => l.id === labelId)));
 
   return (
-    <Container>
-      <FormGroup>
-        <AddLabelDialog onAdd={(label) => onChange(label, true)} />
-      </FormGroup>
+    <Box>
+      <AddLabelDialog onAdd={(label) => onChange(label, true)} />
       <LabelListContainer>
         {labels.map(({ id, title, color }) => (
           <FormControlLabel
@@ -61,12 +59,20 @@ export function LabelSelector({ onChange, maps }: LabelSelectorProps): React.Rea
                 }}
                 name={title}
                 color="primary"
+                size="small"
               />
             }
             label={<LabelComponent label={{ id, title, color }} size="big" />}
+            sx={{
+              marginLeft: 0,
+              marginRight: 0,
+              '& .MuiFormControlLabel-label': {
+                marginLeft: '8px',
+              },
+            }}
           />
         ))}
       </LabelListContainer>
-    </Container>
+    </Box>
   );
 }

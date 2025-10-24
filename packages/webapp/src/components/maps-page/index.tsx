@@ -33,15 +33,19 @@ import HelpMenu from './help-menu';
 import LanguageMenu from './language-menu';
 import ThemeToggleButton from '../common/theme-toggle-button';
 import AppI18n, { Locales } from '../../classes/app-i18n';
+import { useFetchAccount } from '../../classes/middleware';
 
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowRight from '@mui/icons-material/NavigateNext';
 import ArrowLeft from '@mui/icons-material/NavigateBefore';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 
 import AddCircleTwoTone from '@mui/icons-material/AddCircleTwoTone';
 import CloudUploadTwoTone from '@mui/icons-material/CloudUploadTwoTone';
-import DeleteOutlineTwoTone from '@mui/icons-material/DeleteOutlineTwoTone';
+import ClearIcon from '@mui/icons-material/Clear';
 import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 import PersonOutlineTwoTone from '@mui/icons-material/PersonOutlineTwoTone';
 import PublicTwoTone from '@mui/icons-material/PublicTwoTone';
@@ -50,13 +54,13 @@ import ShareTwoTone from '@mui/icons-material/ShareTwoTone';
 import StarTwoTone from '@mui/icons-material/StarTwoTone';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
+
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 
-import logoIcon from './logo-small.svg';
-import poweredByIcon from './pwrdby-white.svg';
+import logoIconBlack from '../../../images/logo-and-text-black.svg';
+import logoIconWhite from '../../../images/logo-and-text-white.svg';
 import LabelDeleteConfirm from './maps-list/label-delete-confirm';
 import { trackPageView } from '../../utils/analytics';
 import { CSSObject, Interpolation, Theme } from '@emotion/react';
@@ -95,12 +99,9 @@ const MapsPage = (): ReactElement => {
   const classes = useStyles(desktopDrawerOpen);
   const { mode } = useTheme();
 
-  // Get theme-appropriate icon color
+  // Get theme-appropriate icon color - match text color
   const getIconColor = () => {
-    if (mode === 'dark') {
-      return '#ffa800'; // Orange for dark mode
-    }
-    return undefined; // Use default color for light mode (secondary color)
+    return undefined; // Use default which matches text color
   };
 
   const handleMobileDrawerToggle = () => {
@@ -160,6 +161,7 @@ const MapsPage = (): ReactElement => {
     return client.fetchLabels();
   });
 
+  const account = useFetchAccount();
   const labels: Label[] = data ? data : [];
   const filterButtons: ToolbarButtonInfo[] = [
     {
@@ -174,7 +176,7 @@ const MapsPage = (): ReactElement => {
     },
     {
       filter: { type: 'owned' },
-      label: intl.formatMessage({ id: 'maps.nav-onwned', defaultMessage: 'Owned' }),
+      label: intl.formatMessage({ id: 'maps.nav-onwned', defaultMessage: 'My Maps' }),
       icon: (
         <PersonOutlineTwoTone
           htmlColor={getIconColor()}
@@ -218,9 +220,69 @@ const MapsPage = (): ReactElement => {
 
   const drawerItemsList = (
     <>
-      <div style={{ padding: '20px 0 20px 16px' }} key="logo">
-        <img src={logoIcon} alt="logo" />
+      <div
+        style={{
+          padding: '24px 16px 20px 16px',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          marginBottom: '8px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+        key="logo"
+      >
+        <img
+          src={mode === 'dark' ? logoIconWhite : logoIconBlack}
+          alt="logo"
+          style={{ height: '32px', width: 'auto' }}
+        />
       </div>
+
+      {/* User Info Box */}
+      {account && (
+        <Box
+          sx={{
+            padding: '16px',
+            margin: '0 8px 16px 8px',
+            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+            borderRadius: '8px',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: 'text.primary',
+                fontSize: '16px',
+                fontWeight: 500,
+                fontFamily: 'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {account.firstname && account.lastname
+                ? `${account.firstname} ${account.lastname}`
+                : account.email}
+            </Typography>
+            <Typography
+              variant="caption"
+              sx={{
+                color: 'text.secondary',
+                fontSize: '14px',
+                fontFamily: 'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                display: 'block',
+              }}
+            >
+              {account.email}
+            </Typography>
+          </Box>
+        </Box>
+      )}
+
       <List component="nav">
         {filterButtons.map((buttonInfo) => {
           return (
@@ -236,15 +298,6 @@ const MapsPage = (): ReactElement => {
           );
         })}
       </List>
-      <div
-        className="poweredByIcon"
-        style={{ position: 'absolute', bottom: '10px', left: '20px' }}
-        key="power-by"
-      >
-        <Link href="http://www.wisemapping.org/">
-          <img src={poweredByIcon} alt="Powered By WiseMapping" />
-        </Link>
-      </div>
     </>
   );
 
@@ -367,7 +420,6 @@ const MapsPage = (): ReactElement => {
             <div css={classes.rightButtonGroup as Interpolation<Theme>}>
               <ThemeToggleButton />
               <LanguageMenu />
-              <HelpMenu />
               <AccountMenu />
             </div>
           </Toolbar>
@@ -402,6 +454,18 @@ const MapsPage = (): ReactElement => {
             <MapsList filter={filter} />
           </section>
         </main>
+
+        {/* Floating Help Button */}
+        <Box
+          sx={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            zIndex: 1000,
+          }}
+        >
+          <HelpMenu />
+        </Box>
       </div>
       {label && labelToDelete != null && (
         <LabelDeleteConfirm
@@ -428,6 +492,7 @@ interface ListItemProps {
 
 // https://stackoverflow.com/questions/61486061/how-to-set-selected-and-hover-color-of-listitem-in-mui
 const CustomListItem = withEmotionStyles((theme) => ({
+  position: 'relative',
   '&.Mui-selected': {
     backgroundColor:
       theme.palette.mode === 'light' ? theme.palette.primary.dark : theme.palette.grey[800],
@@ -455,6 +520,9 @@ const CustomListItem = withEmotionStyles((theme) => ({
           ? theme.palette.primary.contrastText
           : theme.palette.text.primary,
     },
+  },
+  '&:hover ~ .MuiListItemSecondaryAction-root .label-delete-button': {
+    opacity: '1 !important',
   },
 }))(ListItemButton);
 
@@ -489,27 +557,48 @@ const StyleListItem = (props: ListItemProps) => {
   };
 
   return (
-    <CustomListItem selected={isSelected} onClick={(e) => handleOnClick(e, filter)}>
-      <Tooltip title={label} disableInteractive>
-        <ListItemIcon>{icon}</ListItemIcon>
-      </Tooltip>
-      <ListItemText primary={label} />
-      {filter.type == 'label' && (
-        <ListItemSecondaryAction>
-          <IconButton
-            edge="end"
-            aria-label={intl.formatMessage({ id: 'common.delete', defaultMessage: 'Delete' })}
-            onClick={(e) => handleOnDelete(e, filter)}
-            size="large"
-          >
-            <DeleteOutlineTwoTone
-              htmlColor={mode === 'dark' ? '#ffffff' : undefined}
-              color={mode === 'dark' ? undefined : 'secondary'}
-            />
-          </IconButton>
-        </ListItemSecondaryAction>
-      )}
-    </CustomListItem>
+    <Box
+      sx={{
+        position: 'relative',
+        '&:hover .label-delete-button': {
+          opacity: '1 !important',
+        },
+      }}
+    >
+      <CustomListItem selected={isSelected} onClick={(e) => handleOnClick(e, filter)}>
+        <Tooltip title={label} disableInteractive>
+          <ListItemIcon>{icon}</ListItemIcon>
+        </Tooltip>
+        <ListItemText primary={label} />
+        {filter.type == 'label' && (
+          <ListItemSecondaryAction>
+            <IconButton
+              edge="end"
+              aria-label={intl.formatMessage({ id: 'common.delete', defaultMessage: 'Delete' })}
+              onClick={(e) => handleOnDelete(e, filter)}
+              size="small"
+              className="label-delete-button"
+              sx={{
+                opacity: 0,
+                transition: 'opacity 0.2s ease',
+                padding: '4px',
+                '&:hover': {
+                  opacity: 1,
+                },
+              }}
+            >
+              <ClearIcon
+                sx={{
+                  fontSize: '1rem',
+                  color: 'rgba(255, 255, 255, 0.95)',
+                  filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))',
+                }}
+              />
+            </IconButton>
+          </ListItemSecondaryAction>
+        )}
+      </CustomListItem>
+    </Box>
   );
 };
 

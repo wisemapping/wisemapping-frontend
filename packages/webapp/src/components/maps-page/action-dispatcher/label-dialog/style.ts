@@ -22,7 +22,8 @@ import useClasses from '../../../../theme/useStyles';
 export const useStyles = () =>
   useClasses({
     paper: {
-      maxWidth: '420px',
+      maxWidth: '500px',
+      minWidth: '400px',
     },
     title: {
       maxWidth: '100%',

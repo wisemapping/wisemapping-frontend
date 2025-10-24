@@ -175,7 +175,9 @@ const createAppTheme = (mode: PaletteMode): Theme => {
       },
     },
     typography: {
-      fontFamily: ['Montserrat'].join(','),
+      fontFamily: ['Figtree', 'Noto Sans JP', 'Helvetica', 'system-ui', 'Arial', 'sans-serif'].join(
+        ',',
+      ),
       h4: {
         color: isLight ? '#ffa800' : '#cc8500',
         fontWeight: 600,
