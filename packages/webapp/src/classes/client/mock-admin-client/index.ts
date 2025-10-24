@@ -479,6 +479,20 @@ class MockAdminClient implements AdminClientInterface {
     });
   }
 
+  getAdminUser(userId: number): Promise<AdminUser> {
+    console.log(`MockAdminClient: Getting admin user ${userId}`);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const user = this.adminUsers.find((u) => u.id === userId);
+        if (user) {
+          resolve(user);
+        } else {
+          reject(new Error(`User ${userId} not found`));
+        }
+      }, 500);
+    });
+  }
+
   updateAdminUser(userId: number, userData: Partial<AdminUser>): Promise<AdminUser> {
     console.log('MockAdminClient: Updating user', userId, userData);
 
