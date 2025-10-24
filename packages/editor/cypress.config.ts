@@ -20,7 +20,7 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
   projectId: 'it9g7s',
-  video: true,
+  video: process.env.CYPRESS_VIDEO === 'true',
   includeShadowDom: true,
   viewportWidth: 1000,
   viewportHeight: 660,
