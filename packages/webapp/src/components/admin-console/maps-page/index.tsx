@@ -321,9 +321,30 @@ const MapsManagement = (): ReactElement => {
         queryClient.invalidateQueries('adminMaps');
         setIsSuspensionDialogOpen(false);
         setSuspendingUser(null);
+        // Refresh owner user info if in owner maps dialog
+        if (selectedOwnerId !== null) {
+          loadOwnerInfo(selectedOwnerId);
+        }
       },
       onError: (error: Error) => {
         console.error('Failed to suspend user:', error);
+      },
+    },
+  );
+
+  // Unsuspend user mutation
+  const unsuspendUserMutation = useMutation(
+    ({ userId }: { userId: number }) => client.unsuspendAdminUser(userId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('adminMaps');
+        // Refresh owner user info if in owner maps dialog
+        if (selectedOwnerId !== null) {
+          loadOwnerInfo(selectedOwnerId);
+        }
+      },
+      onError: (error: Error) => {
+        console.error('Failed to unsuspend user:', error);
       },
     },
   );
@@ -406,6 +427,22 @@ const MapsManagement = (): ReactElement => {
       suspendUserMutation.mutate({
         userId: suspendingUser.userId,
       });
+    }
+  };
+
+  const handleUnsuspendUserFromDialog = (userId: number) => {
+    unsuspendUserMutation.mutate({ userId });
+  };
+
+  const loadOwnerInfo = async (userId: number) => {
+    setIsLoadingOwnerInfo(true);
+    try {
+      const userInfo = await client.getAdminUser(userId);
+      setSelectedOwnerUser(userInfo);
+    } catch (error) {
+      console.error('Failed to fetch owner info:', error);
+    } finally {
+      setIsLoadingOwnerInfo(false);
     }
   };
 
@@ -1261,6 +1298,11 @@ const MapsManagement = (): ReactElement => {
                 setIsOwnerMapsDialogOpen(false);
                 if (selectedOwnerId !== null) {
                   handleSuspendUser(selectedOwnerId, selectedOwnerName);
+                }
+              }}
+              onUnsuspend={() => {
+                if (selectedOwnerId !== null) {
+                  handleUnsuspendUserFromDialog(selectedOwnerId);
                 }
               }}
             />
