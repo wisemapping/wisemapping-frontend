@@ -22,15 +22,18 @@ describe('Outline View Suite', () => {
   beforeEach(() => {
     cy.visit('/editor.html');
     cy.waitEditorLoaded();
+    
+    // Ensure the mindmap is fully initialized by checking the central topic exists
+    cy.get('svg > g > g > rect').should('exist');
   });
 
   it('Open Outline View dialog', () => {
     // Find and click the Outline View button in the zoom toolbar (right side)
     // The button has the tooltip "Outline View"
-    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
+    cy.get('button[aria-label*="Outline View"]').should('be.visible').should('not.be.disabled').click({ force: true });
 
-    // Wait for dialog to be visible (replaces cy.wait(500))
-    cy.get('[data-testid="outline-view-dialog"]').should('be.visible');
+    // Wait for dialog to be visible with longer timeout for transition
+    cy.get('[data-testid="outline-view-dialog"]', { timeout: 10000 }).should('be.visible');
 
     // Verify the dialog contains outline content
     cy.get('[data-testid="outline-view-dialog"]').should('contain.text', 'Welcome');
@@ -41,7 +44,7 @@ describe('Outline View Suite', () => {
 
   it('Outline View displays mind map structure', () => {
     // Open the Outline View
-    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
+    cy.get('button[aria-label*="Outline View"]').should('be.visible').should('not.be.disabled').click({ force: true });
 
     // Wait for dialog to be visible and content to be loaded (replaces cy.wait(500))
     cy.get('[data-testid="outline-view-dialog"]').should('be.visible');
@@ -60,7 +63,7 @@ describe('Outline View Suite', () => {
 
   it('Expand and collapse nodes in Outline View', () => {
     // Open the Outline View
-    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
+    cy.get('button[aria-label*="Outline View"]').should('be.visible').should('not.be.disabled').click({ force: true });
 
     // Wait for dialog to be visible (replaces cy.wait(500))
     cy.get('[data-testid="outline-view-dialog"]').should('be.visible');
@@ -95,7 +98,7 @@ describe('Outline View Suite', () => {
 
   it('Expand All and Collapse All buttons work', () => {
     // Open the Outline View
-    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
+    cy.get('button[aria-label*="Outline View"]').should('be.visible').should('not.be.disabled').click({ force: true });
 
     // Wait for dialog to be visible (replaces cy.wait(500))
     cy.get('[data-testid="outline-view-dialog"]').should('be.visible');
@@ -135,7 +138,7 @@ describe('Outline View Suite', () => {
 
   it('Close Outline View dialog', () => {
     // Open the Outline View
-    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
+    cy.get('button[aria-label*="Outline View"]').should('be.visible').should('not.be.disabled').click({ force: true });
 
     // Wait for dialog to be visible (replaces cy.wait(500))
     cy.get('[data-testid="outline-view-dialog"]').should('be.visible');
@@ -170,7 +173,7 @@ describe('Outline View Suite', () => {
     cy.get('[aria-label="grinning"]').should('not.exist');
 
     // Now open the Outline View
-    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
+    cy.get('button[aria-label*="Outline View"]').should('be.visible').should('not.be.disabled').click({ force: true });
 
     // Wait for outline dialog to be visible and icons to be rendered (replaces cy.wait(500))
     cy.get('[data-testid="outline-view-dialog"]').should('be.visible');
@@ -185,7 +188,7 @@ describe('Outline View Suite', () => {
 
   it('Outline View displays link and note indicators', () => {
     // Open the Outline View
-    cy.get('button[aria-label="Outline View"]').should('be.visible').click({ force: true });
+    cy.get('button[aria-label*="Outline View"]').should('be.visible').should('not.be.disabled').click({ force: true });
 
     // Wait for dialog to be visible (replaces cy.wait(500))
     cy.get('[data-testid="outline-view-dialog"]').should('be.visible');

@@ -128,7 +128,6 @@ export const ToolbarSubmenu = ({
         open={open}
         onClose={() => setOpen(false)}
         anchorEl={itemRef.current}
-        container={itemRef.current}
         anchorOrigin={orientationProps.anchorOrigin}
         transformOrigin={orientationProps.transformOrigin}
         disableScrollLock={false}
@@ -144,7 +143,7 @@ export const ToolbarSubmenu = ({
           },
         }}
         sx={{
-          zIndex: hasCustomRender ? '1500' : '-1',
+          zIndex: hasCustomRender ? 1500 : -1,
         }}
         elevation={elevation}
       >
@@ -243,7 +242,7 @@ type ToolbarProps = {
  * @param props.configurations the configurations array
  * @returns toolbar wich contains a button/submenu for each configuration in the array
  */
-const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
+const Toolbar = ({ configurations, position, rerender }: ToolbarProps): ReactElement => {
   const pos: ToolbarPosition = position || defaultPosition;
   const theme = useTheme();
 
@@ -278,9 +277,17 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
       }}
       role="menu"
       aria-orientation={pos.vertical ? 'vertical' : 'horizontal'}
+      data-rerender={rerender}
     >
       {configurations.map((c, i) => {
-        return <ToolbarMenuItem key={i} configuration={c} elevation={2} vertical={!pos.vertical} />;
+        return (
+          <ToolbarMenuItem
+            key={`${i}-${rerender}`}
+            configuration={c}
+            elevation={2}
+            vertical={!pos.vertical}
+          />
+        );
       })}
     </AppBar>
   );
