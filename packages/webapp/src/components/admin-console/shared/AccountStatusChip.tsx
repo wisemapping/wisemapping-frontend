@@ -172,24 +172,27 @@ const AccountStatusChip = ({
           : intl.formatMessage({ id: 'admin.status-suspended', defaultMessage: 'Suspended' });
 
       return (
-        <Tooltip title={tooltip}>
-          <Chip
-            label={intl.formatMessage({
-              id: 'admin.status-suspended',
-              defaultMessage: 'Suspended',
-            })}
-            color="error"
-            size="small"
-            onClick={handleChipClick}
-            sx={{
-              cursor: interactive ? 'pointer' : 'default',
-              '&:hover': interactive
-                ? {
-                    opacity: 0.8,
-                  }
-                : {},
-            }}
-          />
+        <Tooltip title={tooltip} disableInteractive>
+          <span>
+            <Chip
+              label={intl.formatMessage({
+                id: 'admin.status-suspended',
+                defaultMessage: 'Suspended',
+              })}
+              color="error"
+              size="small"
+              onClick={handleChipClick}
+              clickable={interactive}
+              sx={{
+                cursor: interactive ? 'pointer' : 'default',
+                '&:hover': interactive
+                  ? {
+                      opacity: 0.8,
+                    }
+                  : {},
+              }}
+            />
+          </span>
         </Tooltip>
       );
     }
@@ -208,24 +211,27 @@ const AccountStatusChip = ({
           });
 
       return (
-        <Tooltip title={tooltip}>
-          <Chip
-            label={intl.formatMessage({
-              id: 'admin.status-not-activated',
-              defaultMessage: 'Not Activated',
-            })}
-            color="warning"
-            size="small"
-            onClick={handleChipClick}
-            sx={{
-              cursor: interactive ? 'pointer' : 'default',
-              '&:hover': interactive
-                ? {
-                    opacity: 0.8,
-                  }
-                : {},
-            }}
-          />
+        <Tooltip title={tooltip} disableInteractive>
+          <span>
+            <Chip
+              label={intl.formatMessage({
+                id: 'admin.status-not-activated',
+                defaultMessage: 'Not Activated',
+              })}
+              color="warning"
+              size="small"
+              onClick={handleChipClick}
+              clickable={interactive}
+              sx={{
+                cursor: interactive ? 'pointer' : 'default',
+                '&:hover': interactive
+                  ? {
+                      opacity: 0.8,
+                    }
+                  : {},
+              }}
+            />
+          </span>
         </Tooltip>
       );
     }
@@ -242,21 +248,24 @@ const AccountStatusChip = ({
         });
 
     return (
-      <Tooltip title={tooltip}>
-        <Chip
-          label={intl.formatMessage({ id: 'admin.status-active', defaultMessage: 'Active' })}
-          color="success"
-          size="small"
-          onClick={handleChipClick}
-          sx={{
-            cursor: interactive ? 'pointer' : 'default',
-            '&:hover': interactive
-              ? {
-                  opacity: 0.8,
-                }
-              : {},
-          }}
-        />
+      <Tooltip title={tooltip} disableInteractive>
+        <span>
+          <Chip
+            label={intl.formatMessage({ id: 'admin.status-active', defaultMessage: 'Active' })}
+            color="success"
+            size="small"
+            onClick={handleChipClick}
+            clickable={interactive}
+            sx={{
+              cursor: interactive ? 'pointer' : 'default',
+              '&:hover': interactive
+                ? {
+                    opacity: 0.8,
+                  }
+                : {},
+            }}
+          />
+        </span>
       </Tooltip>
     );
   };
