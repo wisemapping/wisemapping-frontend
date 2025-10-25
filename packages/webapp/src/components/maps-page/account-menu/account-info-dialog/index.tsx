@@ -300,7 +300,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
   };
 
   const shouldShowSubmitButton = () => {
-    return activeTab === '1' || activeTab === '3' || (activeTab === '2' && !showDeleteDialog);
+    return activeTab === '1' || activeTab === '3' || (activeTab === '2' && showDeleteDialog);
   };
 
   return (
@@ -324,6 +324,15 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
               })}
               value="1"
             />
+            <Tab
+              icon={<SettingsIcon />}
+              iconPosition="start"
+              label={intl.formatMessage({
+                id: 'accountinfo.account-settings',
+                defaultMessage: 'Account Settings',
+              })}
+              value="2"
+            />
             {account?.authenticationType === 'DATABASE' && (
               <Tab
                 icon={<LockIcon />}
@@ -332,18 +341,9 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                   id: 'menu.change-password',
                   defaultMessage: 'Change Password',
                 })}
-                value="2"
+                value="3"
               />
             )}
-            <Tab
-              icon={<SettingsIcon />}
-              iconPosition="start"
-              label={intl.formatMessage({
-                id: 'accountinfo.account-settings',
-                defaultMessage: 'Account Settings',
-              })}
-              value="3"
-            />
           </TabList>
         </Box>
 
