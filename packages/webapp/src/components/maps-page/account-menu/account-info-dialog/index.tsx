@@ -69,7 +69,10 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
   const [showDeleteDialog, setShowDeleteDialog] = React.useState<boolean>(false);
   const [deleteConfirmationText, setDeleteConfirmationText] = React.useState<string>('');
   const [activeTab, setActiveTab] = React.useState<string>('1');
-  const [selectedLanguage, setSelectedLanguage] = React.useState<LocaleCode>('en');
+  const account = useFetchAccount();
+  const [selectedLanguage, setSelectedLanguage] = React.useState<LocaleCode>(
+    (account?.locale || AppI18n.getUserLocale().code) as LocaleCode,
+  );
 
   const [model, setModel] = React.useState<AccountInfoModel>(defaultModel);
   const [passwordModel, setPasswordModel] =
@@ -139,7 +142,6 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     },
   );
 
-  const account = useFetchAccount();
   useEffect(() => {
     if (account) {
       setModel({
