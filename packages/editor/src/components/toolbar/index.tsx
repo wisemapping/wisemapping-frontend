@@ -119,7 +119,10 @@ export const ToolbarSubmenu = ({
       <ToolbarButtonOption
         configuration={{
           ...configuration,
-          onClick: () => setOpen(true),
+          onClick: (event) => {
+            setOpen(true);
+            if (configuration.onClick) configuration.onClick(event);
+          },
           selected: () => open,
         }}
       />
