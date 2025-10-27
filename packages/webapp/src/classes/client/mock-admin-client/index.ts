@@ -217,6 +217,7 @@ class MockAdminClient implements AdminClientInterface {
       labels: ['Sample', 'Demo'],
       spam: false,
       isCreatorSuspended: false,
+      collaboratorCount: 2,
     },
     {
       id: 2,
@@ -234,6 +235,7 @@ class MockAdminClient implements AdminClientInterface {
       labels: ['Project', 'Private'],
       spam: false,
       isCreatorSuspended: false,
+      collaboratorCount: 1,
     },
     {
       id: 3,
@@ -252,6 +254,7 @@ class MockAdminClient implements AdminClientInterface {
       labels: ['Research', 'Work-in-Progress'],
       spam: false,
       isCreatorSuspended: false,
+      collaboratorCount: 3,
     },
     {
       id: 4,
@@ -269,6 +272,7 @@ class MockAdminClient implements AdminClientInterface {
       labels: ['Knowledge', 'Public', 'Reference'],
       spam: false,
       isCreatorSuspended: false,
+      collaboratorCount: 5,
     },
     {
       id: 5,
@@ -289,6 +293,7 @@ class MockAdminClient implements AdminClientInterface {
       spamDetectedDate: '2023-05-01T12:05:00Z',
       spamDescription: 'Contains contact information and promotional content',
       isCreatorSuspended: true,
+      collaboratorCount: 0,
     },
     {
       id: 6,
@@ -306,6 +311,7 @@ class MockAdminClient implements AdminClientInterface {
       labels: ['Marketing', 'Strategy'],
       spam: false,
       isCreatorSuspended: false,
+      collaboratorCount: 2,
     },
     {
       id: 7,
@@ -323,6 +329,7 @@ class MockAdminClient implements AdminClientInterface {
       labels: ['Product', 'Roadmap', 'Planning'],
       spam: false,
       isCreatorSuspended: false,
+      collaboratorCount: 4,
     },
     {
       id: 8,
@@ -341,6 +348,7 @@ class MockAdminClient implements AdminClientInterface {
       labels: ['HR', 'Organization', 'Team'],
       spam: false,
       isCreatorSuspended: false,
+      collaboratorCount: 3,
     },
     {
       id: 9,
@@ -358,6 +366,7 @@ class MockAdminClient implements AdminClientInterface {
       labels: ['Finance', 'Budget', 'Planning'],
       spam: false,
       isCreatorSuspended: false,
+      collaboratorCount: 2,
     },
     {
       id: 10,
@@ -375,6 +384,7 @@ class MockAdminClient implements AdminClientInterface {
       labels: ['Customer', 'Feedback', 'Analysis'],
       spam: false,
       isCreatorSuspended: false,
+      collaboratorCount: 1,
     },
     {
       id: 11,
@@ -392,6 +402,7 @@ class MockAdminClient implements AdminClientInterface {
       labels: ['Technical', 'Architecture', 'System'],
       spam: false,
       isCreatorSuspended: false,
+      collaboratorCount: 3,
     },
     {
       id: 12,
@@ -412,6 +423,7 @@ class MockAdminClient implements AdminClientInterface {
       spamDetectedDate: '2023-09-01T12:10:00Z',
       spamDescription: 'Contains promotional keywords and patterns',
       isCreatorSuspended: true,
+      collaboratorCount: 0,
     },
   ];
 
