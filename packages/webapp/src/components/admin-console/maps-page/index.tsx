@@ -61,7 +61,7 @@ import PersonOffIcon from '@mui/icons-material/PersonOff';
 import { AdminMapsParams, AdminUser } from '../../../classes/client/admin-client';
 import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import UserInfoCard from '../shared/UserInfoCard';
+import UserMapsDialog from '../shared/UserMapsDialog';
 
 // XML formatting utility
 const formatXml = (xml: string): string => {
@@ -1284,127 +1284,36 @@ const MapsManagement = (): ReactElement => {
       </Dialog>
 
       {/* Owner Maps Dialog */}
-      <Dialog
+      <UserMapsDialog
         open={isOwnerMapsDialogOpen}
         onClose={() => setIsOwnerMapsDialogOpen(false)}
-        maxWidth="lg"
-        fullWidth
-      >
-        <DialogTitle>
-          Maps owned by {selectedOwnerName} (ID: #{selectedOwnerId})
-        </DialogTitle>
-        <DialogContent>
-          {selectedOwnerUser && !isLoadingOwnerInfo && (
-            <UserInfoCard
-              user={selectedOwnerUser}
-              totalMaps={ownerMaps.length}
-              isLoadingMaps={isLoadingOwnerMaps}
-              onSuspend={() => {
-                setIsOwnerMapsDialogOpen(false);
-                if (selectedOwnerId !== null) {
-                  handleSuspendUser(selectedOwnerId, selectedOwnerName);
-                }
-              }}
-              onUnsuspend={() => {
-                if (selectedOwnerId !== null) {
-                  handleUnsuspendUserFromDialog(selectedOwnerId);
-                }
-              }}
-            />
-          )}
-          {isLoadingOwnerInfo && (
-            <Box display="flex" justifyContent="center" p={3}>
-              <CircularProgress />
-            </Box>
-          )}
-          {isLoadingOwnerMaps && !isLoadingOwnerInfo ? (
-            <Box display="flex" justifyContent="center" p={3}>
-              <CircularProgress />
-            </Box>
-          ) : ownerMaps.length === 0 && !isLoadingOwnerMaps ? (
-            <Typography variant="body2" color="text.secondary" align="center" p={3}>
-              No maps found for this owner
-            </Typography>
-          ) : (
-            !isLoadingOwnerMaps && (
-              <TableContainer>
-                <Table size="small">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Map ID</TableCell>
-                      <TableCell>Title</TableCell>
-                      <TableCell>Description</TableCell>
-                      <TableCell>Created</TableCell>
-                      <TableCell>Modified</TableCell>
-                      <TableCell>Status</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {ownerMaps.map((map) => (
-                      <TableRow key={map.id} hover>
-                        <TableCell>
-                          <Typography
-                            variant="body2"
-                            color="primary"
-                            fontWeight="medium"
-                            component="a"
-                            href={`/c/maps/${map.id}/public`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            sx={{
-                              textDecoration: 'none',
-                              cursor: 'pointer',
-                              '&:hover': {
-                                textDecoration: 'underline',
-                              },
-                            }}
-                          >
-                            #{map.id}
-                          </Typography>
-                        </TableCell>
-                        <TableCell>
-                          <Box display="flex" alignItems="center" gap={1}>
-                            {map.starred && <StarIcon color="primary" fontSize="small" />}
-                            <Typography
-                              variant="body2"
-                              fontWeight={map.starred ? 'bold' : 'normal'}
-                            >
-                              {map.title}
-                            </Typography>
-                          </Box>
-                        </TableCell>
-                        <TableCell>
-                          <Typography variant="body2" color="text.secondary">
-                            {map.description || 'No description'}
-                          </Typography>
-                        </TableCell>
-                        <TableCell>{formatDate(map.creationTime)}</TableCell>
-                        <TableCell>{formatDate(map.lastModificationTime)}</TableCell>
-                        <TableCell>
-                          <Box display="flex" gap={1} flexWrap="wrap">
-                            {getPublicChip(map.public)}
-                            {getLockedChip(map.isLocked, map.isLockedBy)}
-                            {getSuspendedUserChip(map.isCreatorSuspended || false)}
-                            {map.spam && getSpamChip(map.spam, map.spamType, map.spamDetectedDate)}
-                          </Box>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setIsOwnerMapsDialogOpen(false)}>
-            {intl.formatMessage({
-              id: 'common.close',
-              defaultMessage: 'Close',
-            })}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        user={selectedOwnerUser}
+        maps={ownerMaps}
+        isLoadingUser={isLoadingOwnerInfo}
+        isLoadingMaps={isLoadingOwnerMaps}
+        onSuspend={() => {
+          setIsOwnerMapsDialogOpen(false);
+          if (selectedOwnerId !== null) {
+            handleSuspendUser(selectedOwnerId, selectedOwnerName);
+          }
+        }}
+        onUnsuspend={() => {
+          if (selectedOwnerId !== null) {
+            handleUnsuspendUserFromDialog(selectedOwnerId);
+          }
+        }}
+        onViewXml={handleViewXml}
+        onEditMap={handleEditMap}
+        onToggleSpam={handleToggleSpamStatus}
+        onDeleteMap={handleDeleteMap}
+        getPublicChip={getPublicChip}
+        getLockedChip={getLockedChip}
+        getSuspendedUserChip={getSuspendedUserChip}
+        getSpamChip={getSpamChip}
+        formatDate={formatDate}
+        updateSpamStatusLoading={updateSpamStatusMutation.isLoading}
+        deleteMapLoading={deleteMapMutation.isLoading}
+      />
     </Box>
   );
 };
