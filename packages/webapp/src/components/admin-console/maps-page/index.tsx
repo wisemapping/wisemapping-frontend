@@ -125,6 +125,7 @@ interface AdminMap {
   spamDetectedDate?: string;
   spamDescription?: string;
   isCreatorSuspended?: boolean;
+  collaboratorCount: number;
 }
 
 interface MapFormData {
@@ -772,6 +773,7 @@ const MapsManagement = (): ReactElement => {
               </TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Created By</TableCell>
+              <TableCell align="center">Collaborators</TableCell>
               <TableCell>
                 <TableSortLabel
                   active={sortField === 'creationTime'}
@@ -803,13 +805,13 @@ const MapsManagement = (): ReactElement => {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={9} align="center">
+                <TableCell colSpan={10} align="center">
                   <CircularProgress />
                 </TableCell>
               </TableRow>
             ) : maps.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={9} align="center">
+                <TableCell colSpan={10} align="center">
                   <Typography variant="body2" color="text.secondary">
                     {intl.formatMessage({
                       id: 'admin.maps.no-maps',
@@ -869,6 +871,9 @@ const MapsManagement = (): ReactElement => {
                     >
                       {map.createdBy}
                     </Button>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography variant="body2">{map.collaboratorCount}</Typography>
                   </TableCell>
                   <TableCell>{formatDate(map.creationTime)}</TableCell>
                   <TableCell>{formatDate(map.lastModificationTime)}</TableCell>
