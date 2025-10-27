@@ -60,7 +60,7 @@ interface UserMapsDialogProps {
   onDeleteMap?: (mapId: number, mapTitle: string) => void;
   getPublicChip?: (isPublic: boolean) => ReactElement;
   getLockedChip?: (isLocked: boolean, lockedBy?: string) => ReactElement;
-  getSuspendedUserChip?: (isSuspended: boolean) => ReactElement;
+  getSuspendedUserChip?: (isSuspended: boolean) => ReactElement | null;
   getSpamChip?: (spam: boolean, spamType?: string, spamDetectedDate?: string) => ReactElement;
   formatDate: (dateString: string) => string;
   updateSpamStatusLoading?: boolean;
