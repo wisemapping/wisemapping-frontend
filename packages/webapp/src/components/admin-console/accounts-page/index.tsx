@@ -71,7 +71,7 @@ import { AdminUsersParams } from '../../../classes/client/admin-client';
 import { AuthenticationType } from '../../../classes/client';
 import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import UserInfoCard from '../shared/UserInfoCard';
+import UserMapsDialog from '../shared/UserMapsDialog';
 import AccountStatusChip, { getSuspensionReasonLabel } from '../shared/AccountStatusChip';
 
 interface User {
@@ -1368,118 +1368,31 @@ const AccountManagement = (): ReactElement => {
       </Dialog>
 
       {/* User Maps Dialog */}
-      <Dialog
+      <UserMapsDialog
         open={isUserMapsDialogOpen}
         onClose={handleCloseUserMapsDialog}
-        maxWidth="lg"
-        fullWidth
-      >
-        <DialogTitle>User Maps - {viewingMapsUser?.email}</DialogTitle>
-        <DialogContent>
-          {viewingMapsUser && (
-            <>
-              {/* User Information Section */}
-              <UserInfoCard
-                user={viewingMapsUser}
-                totalMaps={userMaps?.length}
-                isLoadingMaps={isLoadingUserMaps}
-                onSuspend={() => {
-                  handleCloseUserMapsDialog();
-                  handleSuspendUser(viewingMapsUser);
-                }}
-                onUnsuspend={() => {
-                  handleCloseUserMapsDialog();
-                  handleUnsuspendUser(viewingMapsUser);
-                }}
-              />
-
-              {/* Maps List Section */}
-              <Typography
-                variant="h6"
-                gutterBottom
-                sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-              >
-                <MapIcon color="primary" />
-                {intl.formatMessage({
-                  id: 'admin.user-maps.title',
-                  defaultMessage: 'User Maps',
-                })}
-              </Typography>
-              <Divider sx={{ mb: 2 }} />
-            </>
-          )}
-          {isLoadingUserMaps ? (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
-              <CircularProgress />
-            </Box>
-          ) : userMaps && userMaps.length > 0 ? (
-            <TableContainer>
-              <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>ID</TableCell>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Description</TableCell>
-                    <TableCell>Created</TableCell>
-                    <TableCell>Last Modified</TableCell>
-                    <TableCell>Public</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {userMaps.map((map) => (
-                    <TableRow key={map.id}>
-                      <TableCell>
-                        <Typography
-                          variant="body2"
-                          color="primary"
-                          component="a"
-                          href={`/c/maps/${map.id}/public`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          sx={{
-                            textDecoration: 'none',
-                            cursor: 'pointer',
-                            '&:hover': {
-                              textDecoration: 'underline',
-                            },
-                          }}
-                        >
-                          #{map.id}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>{map.title}</TableCell>
-                      <TableCell>
-                        <Typography variant="body2" color="text.secondary" noWrap>
-                          {map.description || 'No description'}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>{formatDate(map.creationTime)}</TableCell>
-                      <TableCell>{formatDate(map.lastModificationTime)}</TableCell>
-                      <TableCell>
-                        <Chip
-                          label={map.public ? 'Public' : 'Private'}
-                          color={map.public ? 'success' : 'default'}
-                          size="small"
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          ) : (
-            <Alert severity="info">This user has no maps.</Alert>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseUserMapsDialog}>
-            {intl.formatMessage({
-              id: 'common.close',
-              defaultMessage: 'Close',
-            })}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        user={viewingMapsUser}
+        maps={userMaps || []}
+        isLoadingUser={false}
+        isLoadingMaps={isLoadingUserMaps}
+        onSuspend={
+          viewingMapsUser
+            ? () => {
+                handleCloseUserMapsDialog();
+                handleSuspendUser(viewingMapsUser);
+              }
+            : undefined
+        }
+        onUnsuspend={
+          viewingMapsUser
+            ? () => {
+                handleCloseUserMapsDialog();
+                handleUnsuspendUser(viewingMapsUser);
+              }
+            : undefined
+        }
+        formatDate={formatDate}
+      />
 
       {/* Change Password Dialog */}
       <Dialog
