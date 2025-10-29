@@ -34,7 +34,7 @@ import { logCriticalError } from '../../utils';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '../../contexts/ThemeContext';
 import { MapsPageLoading } from '../maps-page/maps-list/MapsListSkeleton';
-import JwtTokenConfig from '../../jwt-token-config';
+import JwtTokenConfig from '../../classes/jwt-token-config';
 
 type OAuthProvider = 'google' | 'facebook';
 
