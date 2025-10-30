@@ -58,10 +58,13 @@ import FlagIcon from '@mui/icons-material/Flag';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockIcon from '@mui/icons-material/Block';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
+import TagIcon from '@mui/icons-material/Tag';
+import EmailIcon from '@mui/icons-material/Email';
 import { AdminMapsParams, AdminUser } from '../../../classes/client/admin-client';
 import AppConfig from '../../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import UserMapsDialog from '../shared/UserMapsDialog';
+import SpamStatusChip from '../shared/SpamStatusChip';
 
 // XML formatting utility
 const formatXml = (xml: string): string => {
@@ -206,6 +209,29 @@ const MapsManagement = (): ReactElement => {
   const [ownerMaps, setOwnerMaps] = useState<AdminMap[]>([]);
   const [isLoadingOwnerMaps, setIsLoadingOwnerMaps] = useState(false);
   const [isLoadingOwnerInfo, setIsLoadingOwnerInfo] = useState(false);
+
+  // Detect search type
+  const getSearchType = (term: string): 'id' | 'email' | 'text' | null => {
+    if (!term || term.trim() === '') return null;
+    const trimmed = term.trim();
+
+    // Check for ID search (starts with #)
+    if (trimmed.startsWith('#')) {
+      const idStr = trimmed.substring(1);
+      if (/^\d+$/.test(idStr)) {
+        return 'id';
+      }
+    }
+
+    // Check for email search (contains @ and .)
+    if (trimmed.includes('@') && trimmed.includes('.')) {
+      return 'email';
+    }
+
+    return 'text';
+  };
+
+  const searchType = getSearchType(searchTerm);
 
   // Fetch maps with pagination and filters
   const {
@@ -518,42 +544,26 @@ const MapsManagement = (): ReactElement => {
     </Tooltip>
   );
 
-  const getSpamChip = (spam: boolean, spamType?: string, spamDetectedDate?: string) => {
-    if (spam) {
-      return (
-        <Tooltip
-          title={
-            spamDetectedDate
-              ? intl.formatMessage(
-                  {
-                    id: 'admin.maps.spam-tooltip',
-                    defaultMessage: 'Detected as spam on {date}',
-                  },
-                  { date: formatDate(spamDetectedDate) },
-                )
-              : intl.formatMessage({
-                  id: 'admin.maps.spam-tooltip-no-date',
-                  defaultMessage: 'Marked as spam',
-                })
-          }
-        >
-          <Chip label={`Spam (${spamType || 'Unknown'})`} color="error" size="small" />
-        </Tooltip>
-      );
-    }
+  const getSpamChip = (
+    spam: boolean,
+    spamType?: string,
+    spamDetectedDate?: string,
+    spamDescription?: string,
+  ) => {
     return (
-      <Tooltip
-        title={intl.formatMessage({
-          id: 'admin.maps.clean-tooltip',
-          defaultMessage: 'Not marked as spam',
-        })}
-      >
-        <Chip
-          label={intl.formatMessage({ id: 'admin.status-clean', defaultMessage: 'Clean' })}
-          color="success"
-          size="small"
-        />
-      </Tooltip>
+      <SpamStatusChip
+        spam={spam}
+        spamType={spamType}
+        spamDetectedDate={spamDetectedDate}
+        spamDescription={spamDescription}
+        onToggleSpam={(newSpamStatus) => {
+          // This callback is not used in the main table since we have separate action buttons
+          // But we pass it for consistency with the dialog
+        }}
+        formatDate={formatDate}
+        loading={updateSpamStatusMutation.isLoading}
+        showToggleButton={false}
+      />
     );
   };
 
@@ -645,15 +655,39 @@ const MapsManagement = (): ReactElement => {
         <TextField
           placeholder={intl.formatMessage({
             id: 'admin.maps.search',
-            defaultMessage: 'Search maps...',
+            defaultMessage: 'Search maps... (#123 for ID, email for creator)',
           })}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           disabled={isLoading || isFilterLoading}
+          helperText={
+            searchType === 'id'
+              ? intl.formatMessage({
+                  id: 'admin.maps.search-by-id',
+                  defaultMessage: '🔍 Searching by Map ID',
+                })
+              : searchType === 'email'
+                ? intl.formatMessage({
+                    id: 'admin.maps.search-by-email',
+                    defaultMessage: '🔍 Searching by Creator Email',
+                  })
+                : searchType === 'text'
+                  ? intl.formatMessage({
+                      id: 'admin.maps.search-by-text',
+                      defaultMessage: '🔍 Searching in titles and descriptions',
+                    })
+                  : ' '
+          }
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon />
+                {searchType === 'id' ? (
+                  <TagIcon color="primary" />
+                ) : searchType === 'email' ? (
+                  <EmailIcon color="primary" />
+                ) : (
+                  <SearchIcon />
+                )}
               </InputAdornment>
             ),
             endAdornment: isLoading ? (
@@ -662,7 +696,7 @@ const MapsManagement = (): ReactElement => {
               </InputAdornment>
             ) : null,
           }}
-          sx={{ minWidth: 200 }}
+          sx={{ minWidth: 300 }}
         />
 
         <FormControl sx={{ minWidth: 120 }}>
@@ -885,7 +919,12 @@ const MapsManagement = (): ReactElement => {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {getSpamChip(map.spam || false, map.spamType, map.spamDetectedDate)}
+                    {getSpamChip(
+                      map.spam || false,
+                      map.spamType,
+                      map.spamDetectedDate,
+                      map.spamDescription,
+                    )}
                   </TableCell>
                   <TableCell align="center">
                     <Box display="flex" gap={0.5} justifyContent="center">
@@ -1309,7 +1348,6 @@ const MapsManagement = (): ReactElement => {
         getPublicChip={getPublicChip}
         getLockedChip={getLockedChip}
         getSuspendedUserChip={getSuspendedUserChip}
-        getSpamChip={getSpamChip}
         formatDate={formatDate}
         updateSpamStatusLoading={updateSpamStatusMutation.isLoading}
         deleteMapLoading={deleteMapMutation.isLoading}
