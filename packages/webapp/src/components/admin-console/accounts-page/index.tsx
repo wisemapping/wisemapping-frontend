@@ -115,7 +115,6 @@ const AccountManagement = (): ReactElement => {
   const [filterAuthType, setFilterAuthType] = useState<string>('all');
   const [isFilterLoading, setIsFilterLoading] = useState(false);
   const [isPaginationLoading, setIsPaginationLoading] = useState(false);
-  const [filterStatus, setFilterStatus] = useState<string>('all');
 
   // Debounce search term
   useEffect(() => {
@@ -129,7 +128,7 @@ const AccountManagement = (): ReactElement => {
   // Set filter loading state when filters change
   useEffect(() => {
     setIsFilterLoading(true);
-  }, [debouncedSearchTerm, filterStatus, filterAuthType, filterSuspended]);
+  }, [debouncedSearchTerm, filterAuthType, filterSuspended]);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -236,7 +235,10 @@ const AccountManagement = (): ReactElement => {
         sortBy: sortField,
         sortOrder: sortDirection,
         filterActive: filterActive !== 'all' ? filterActive === 'active' : undefined,
-        filterSuspended: filterSuspended !== 'all' ? filterSuspended === 'suspended' : undefined,
+        // filterSuspended: 'all' → undefined (show all users)
+        // filterSuspended: 'suspended' → true (show only suspended)
+        // filterSuspended: 'not-suspended' → false (show only non-suspended)
+        filterSuspended: filterSuspended === 'all' ? undefined : filterSuspended === 'suspended',
         filterAuthType: filterAuthType !== 'all' ? filterAuthType : undefined,
       };
       console.log('Users Query triggered with params:', params);
@@ -803,22 +805,6 @@ const AccountManagement = (): ReactElement => {
             />
 
             <FormControl sx={{ minWidth: 150 }}>
-              <InputLabel>Status</InputLabel>
-              <Select
-                value={filterStatus}
-                label={intl.formatMessage({ id: 'admin.status', defaultMessage: 'Status' })}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                disabled={isLoading || isFilterLoading}
-                endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
-              >
-                <MenuItem value="all">All</MenuItem>
-                <MenuItem value="active">Active</MenuItem>
-                <MenuItem value="inactive">Inactive</MenuItem>
-                <MenuItem value="suspended">Suspended</MenuItem>
-              </Select>
-            </FormControl>
-
-            <FormControl sx={{ minWidth: 150 }}>
               <InputLabel>Auth Type</InputLabel>
               <Select
                 value={filterAuthType}
@@ -846,8 +832,8 @@ const AccountManagement = (): ReactElement => {
                 disabled={isLoading || isFilterLoading}
                 endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
               >
-                <MenuItem value="all">All Users</MenuItem>
-                <MenuItem value="active">Active Only</MenuItem>
+                <MenuItem value="all">All (Suspended + Active)</MenuItem>
+                <MenuItem value="not-suspended">Not Suspended</MenuItem>
                 <MenuItem value="suspended">Suspended Only</MenuItem>
               </Select>
             </FormControl>
