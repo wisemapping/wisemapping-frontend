@@ -100,6 +100,7 @@ const createRegistrationRoutes = () => {
         path="/c/registration-facebook"
         element={<OAuthCallbackPage />}
       />,
+      <Route key="oauth-callback" path="/c/oauth-callback" element={<OAuthCallbackPage />} />,
       <Route
         key="registration-success"
         path="/c/registration-success"

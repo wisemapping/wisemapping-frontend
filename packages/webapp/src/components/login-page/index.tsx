@@ -82,6 +82,7 @@ const LoginPage = (): React.ReactElement => {
   const searchParams = new URLSearchParams(location.search);
   const redirectUrl = searchParams.get('redirect');
   const isSharedLink = redirectUrl?.includes('shared=true') || false;
+  const oauthError = searchParams.get('error');
 
   // Generic OAuth handler
   const handleOAuthLogin = (authUrl: string | undefined, providerName: string): void => {
@@ -182,6 +183,29 @@ const LoginPage = (): React.ReactElement => {
               id="login.shared-map-notice"
               defaultMessage="A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
             />
+          </Alert>
+        )}
+
+        {oauthError && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {oauthError === 'oauth_failed' && (
+              <FormattedMessage
+                id="login.oauth-error"
+                defaultMessage="OAuth authentication failed. Please try again or use a different sign-in method."
+              />
+            )}
+            {oauthError === 'server_error' && (
+              <FormattedMessage
+                id="login.server-error"
+                defaultMessage="An unexpected error occurred. Please try again later."
+              />
+            )}
+            {oauthError !== 'oauth_failed' && oauthError !== 'server_error' && (
+              <FormattedMessage
+                id="login.generic-error"
+                defaultMessage="An error occurred during authentication. Please try again."
+              />
+            )}
           </Alert>
         )}
 

@@ -34,6 +34,7 @@ import { logCriticalError } from '../../utils';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '../../contexts/ThemeContext';
 import { MapsPageLoading } from '../maps-page/maps-list/MapsListSkeleton';
+import JwtTokenConfig from '../../classes/jwt-token-config';
 
 type OAuthProvider = 'google' | 'facebook';
 
@@ -61,9 +62,48 @@ const OAuthCallbackPage = (): React.ReactElement => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
+
+    // Check if this is a Spring Boot OAuth2 callback (with jwtToken in URL)
+    const jwtToken = searchParams.get('jwtToken');
+    const email = searchParams.get('email');
+    const oauthSync = searchParams.get('oauthSync');
+    const syncCode = searchParams.get('syncCode');
+
+    if (jwtToken && email) {
+      // This is a Spring Boot OAuth2 callback - process directly
+      // Store JWT token
+      if (jwtToken) {
+        JwtTokenConfig.storeToken(jwtToken);
+      }
+
+      const result: Oauth2CallbackResult = {
+        email: email,
+        oauthSync: oauthSync === 'true',
+        syncCode: syncCode || undefined,
+      };
+
+      if (result.oauthSync) {
+        // Initialize theme from system preference if not already set
+        initializeThemeFromSystem();
+        // Get redirect URL from OAuth state parameter
+        const stateRedirectUrl = searchParams.get('state');
+        if (stateRedirectUrl && stateRedirectUrl !== 'wisemapping') {
+          navigate(stateRedirectUrl);
+        } else {
+          navigate('/c/maps/');
+        }
+      }
+      setCallbackResult(result);
+      return;
+    }
+
+    // Legacy OAuth callback handling (old custom OAuth endpoints)
     const oauthCode = searchParams.get('code');
     if (!oauthCode) {
-      throw new Error(`Missing code definition: ${window.location.search}`);
+      setError({
+        msg: `Missing OAuth code or token in callback: ${window.location.search}`,
+      });
+      return;
     }
 
     // Get redirect URL from OAuth state parameter
