@@ -63,6 +63,25 @@ const OAuthCallbackPage = (): React.ReactElement => {
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
 
+    // Check if user cancelled the OAuth flow
+    const error = searchParams.get('error');
+    const errorReason = searchParams.get('error_reason');
+
+    if (error) {
+      // User cancelled or denied access - redirect to login
+      if (error === 'access_denied' || errorReason === 'user_denied') {
+        navigate('/c/login');
+        return;
+      }
+
+      // Other OAuth errors - show error message
+      const errorDescription = searchParams.get('error_description');
+      setError({
+        msg: errorDescription || `OAuth error: ${error}`,
+      });
+      return;
+    }
+
     // Check if this is a Spring Boot OAuth2 callback (with jwtToken in URL)
     const jwtToken = searchParams.get('jwtToken');
     const email = searchParams.get('email');
