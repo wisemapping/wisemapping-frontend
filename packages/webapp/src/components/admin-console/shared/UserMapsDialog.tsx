@@ -43,6 +43,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FlagIcon from '@mui/icons-material/Flag';
 import UserInfoCard from './UserInfoCard';
+import SpamStatusChip from './SpamStatusChip';
 import type { AdminUser, AdminMap } from '../../../classes/client/admin-client';
 
 interface UserMapsDialogProps {
@@ -61,7 +62,6 @@ interface UserMapsDialogProps {
   getPublicChip?: (isPublic: boolean) => ReactElement;
   getLockedChip?: (isLocked: boolean, lockedBy?: string) => ReactElement;
   getSuspendedUserChip?: (isSuspended: boolean) => ReactElement | null;
-  getSpamChip?: (spam: boolean, spamType?: string, spamDetectedDate?: string) => ReactElement;
   formatDate: (dateString: string) => string;
   updateSpamStatusLoading?: boolean;
   deleteMapLoading?: boolean;
@@ -83,7 +83,6 @@ const UserMapsDialog = ({
   getPublicChip,
   getLockedChip,
   getSuspendedUserChip,
-  getSpamChip,
   formatDate,
   updateSpamStatusLoading = false,
   deleteMapLoading = false,
@@ -242,63 +241,18 @@ const UserMapsDialog = ({
                         </Box>
                       </TableCell>
                       <TableCell>
-                        <Box display="flex" flexDirection="column" gap={0.5}>
-                          {/* Spam Status Chip */}
-                          <Tooltip
-                            title={
-                              map.spam
-                                ? map.spamDetectedDate
-                                  ? intl.formatMessage(
-                                      {
-                                        id: 'admin.maps.spam-tooltip',
-                                        defaultMessage: 'Detected as spam on {date}',
-                                      },
-                                      { date: formatDate(map.spamDetectedDate) },
-                                    )
-                                  : intl.formatMessage({
-                                      id: 'admin.maps.spam-tooltip-no-date',
-                                      defaultMessage: 'Marked as spam',
-                                    })
-                                : intl.formatMessage({
-                                    id: 'admin.maps.clean-tooltip',
-                                    defaultMessage: 'Not marked as spam',
-                                  })
-                            }
-                          >
-                            <Chip
-                              label={
-                                map.spam
-                                  ? `Spam (${map.spamType || 'Unknown'})`
-                                  : intl.formatMessage({
-                                      id: 'admin.status-clean',
-                                      defaultMessage: 'Clean',
-                                    })
-                              }
-                              color={map.spam ? 'error' : 'success'}
-                              size="small"
-                              icon={map.spam ? <FlagIcon /> : <CheckCircleIcon />}
-                            />
-                          </Tooltip>
-                          {/* Spam Description */}
-                          {map.spam && map.spamDescription && (
-                            <Tooltip title={map.spamDescription} arrow>
-                              <Typography
-                                variant="caption"
-                                color="text.secondary"
-                                sx={{
-                                  fontSize: '0.7rem',
-                                  maxWidth: '200px',
-                                  overflow: 'hidden',
-                                  textOverflow: 'ellipsis',
-                                  whiteSpace: 'nowrap',
-                                  cursor: 'help',
-                                }}
-                              >
-                                {map.spamDescription}
-                              </Typography>
-                            </Tooltip>
-                          )}
-                        </Box>
+                        <SpamStatusChip
+                          spam={map.spam || false}
+                          spamType={map.spamType}
+                          spamDetectedDate={map.spamDetectedDate}
+                          spamDescription={map.spamDescription}
+                          onToggleSpam={
+                            onToggleSpam ? () => onToggleSpam(map.id, map.spam || false) : undefined
+                          }
+                          formatDate={formatDate}
+                          loading={updateSpamStatusLoading}
+                          showToggleButton={!!onToggleSpam}
+                        />
                       </TableCell>
                       <TableCell align="center">
                         <Box display="flex" gap={0.5} justifyContent="center">
@@ -339,24 +293,6 @@ const UserMapsDialog = ({
                                 size="small"
                               >
                                 <EditIcon />
-                              </IconButton>
-                            </Tooltip>
-                          )}
-                          {onToggleSpam && (
-                            <Tooltip
-                              title={intl.formatMessage({
-                                id: 'admin.maps.toggle-spam',
-                                defaultMessage: map.spam ? 'Mark as not spam' : 'Mark as spam',
-                              })}
-                            >
-                              <IconButton
-                                onClick={() => onToggleSpam(map.id, map.spam || false)}
-                                aria-label={map.spam ? 'mark-not-spam' : 'mark-spam'}
-                                color={map.spam ? 'success' : 'warning'}
-                                size="small"
-                                disabled={updateSpamStatusLoading}
-                              >
-                                {map.spam ? <CheckCircleIcon /> : <FlagIcon />}
                               </IconButton>
                             </Tooltip>
                           )}
