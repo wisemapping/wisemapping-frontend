@@ -174,6 +174,12 @@ const UserMapsDialog = ({
                         defaultMessage: 'Status',
                       })}
                     </TableCell>
+                    <TableCell>
+                      {intl.formatMessage({
+                        id: 'admin.maps.table.spam-status',
+                        defaultMessage: 'Spam Status',
+                      })}
+                    </TableCell>
                     <TableCell align="center">
                       {intl.formatMessage({
                         id: 'admin.maps.table.actions',
@@ -226,15 +232,71 @@ const UserMapsDialog = ({
                           {getLockedChip && getLockedChip(map.isLocked, map.isLockedBy)}
                           {getSuspendedUserChip &&
                             getSuspendedUserChip(map.isCreatorSuspended || false)}
-                          {map.spam &&
-                            getSpamChip &&
-                            getSpamChip(map.spam, map.spamType, map.spamDetectedDate)}
                           {!getPublicChip && (
                             <Chip
                               label={map.public ? 'Public' : 'Private'}
                               color={map.public ? 'success' : 'default'}
                               size="small"
                             />
+                          )}
+                        </Box>
+                      </TableCell>
+                      <TableCell>
+                        <Box display="flex" flexDirection="column" gap={0.5}>
+                          {/* Spam Status Chip */}
+                          <Tooltip
+                            title={
+                              map.spam
+                                ? map.spamDetectedDate
+                                  ? intl.formatMessage(
+                                      {
+                                        id: 'admin.maps.spam-tooltip',
+                                        defaultMessage: 'Detected as spam on {date}',
+                                      },
+                                      { date: formatDate(map.spamDetectedDate) },
+                                    )
+                                  : intl.formatMessage({
+                                      id: 'admin.maps.spam-tooltip-no-date',
+                                      defaultMessage: 'Marked as spam',
+                                    })
+                                : intl.formatMessage({
+                                    id: 'admin.maps.clean-tooltip',
+                                    defaultMessage: 'Not marked as spam',
+                                  })
+                            }
+                          >
+                            <Chip
+                              label={
+                                map.spam
+                                  ? `Spam (${map.spamType || 'Unknown'})`
+                                  : intl.formatMessage({
+                                      id: 'admin.status-clean',
+                                      defaultMessage: 'Clean',
+                                    })
+                              }
+                              color={map.spam ? 'error' : 'success'}
+                              size="small"
+                              icon={map.spam ? <FlagIcon /> : <CheckCircleIcon />}
+                            />
+                          </Tooltip>
+                          {/* Spam Description */}
+                          {map.spam && map.spamDescription && (
+                            <Tooltip title={map.spamDescription} arrow>
+                              <Typography
+                                variant="caption"
+                                color="text.secondary"
+                                sx={{
+                                  fontSize: '0.7rem',
+                                  maxWidth: '200px',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                  whiteSpace: 'nowrap',
+                                  cursor: 'help',
+                                }}
+                              >
+                                {map.spamDescription}
+                              </Typography>
+                            </Tooltip>
                           )}
                         </Box>
                       </TableCell>
