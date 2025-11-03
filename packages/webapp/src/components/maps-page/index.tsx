@@ -63,6 +63,7 @@ import logoIconWhite from '../../../images/logo-and-text-white.svg';
 import LabelDeleteConfirm from './maps-list/label-delete-confirm';
 import { trackPageView } from '../../utils/analytics';
 import { CSSObject, Interpolation, Theme } from '@emotion/react';
+import { alpha } from '@mui/material/styles';
 import withEmotionStyles from '../HOCs/withEmotionStyles';
 import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
@@ -236,7 +237,7 @@ const MapsPage = (): ReactElement => {
       </div>
 
       {/* User Info Box */}
-      {account && (
+      {account && (desktopDrawerOpen || mobileDrawerOpen) && (
         <Box
           sx={{
             padding: '16px',
@@ -494,7 +495,9 @@ const CustomListItem = withEmotionStyles((theme) => ({
   position: 'relative',
   '&.Mui-selected': {
     backgroundColor:
-      theme.palette.mode === 'light' ? theme.palette.primary.dark : theme.palette.grey[800],
+      theme.palette.mode === 'light'
+        ? alpha(theme.palette.common.white, 0.2)
+        : theme.palette.grey[800],
     color:
       theme.palette.mode === 'light'
         ? theme.palette.primary.contrastText
@@ -508,7 +511,9 @@ const CustomListItem = withEmotionStyles((theme) => ({
   },
   '&.Mui-selected:hover': {
     backgroundColor:
-      theme.palette.mode === 'light' ? theme.palette.primary.dark : theme.palette.grey[700],
+      theme.palette.mode === 'light'
+        ? alpha(theme.palette.common.white, 0.25)
+        : theme.palette.grey[700],
     color:
       theme.palette.mode === 'light'
         ? theme.palette.primary.contrastText
