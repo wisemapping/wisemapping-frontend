@@ -64,6 +64,7 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
           id: 'action.delete-title',
           defaultMessage: 'Delete',
         })}
+        isLoading={mutation.isLoading}
       >
         <Alert severity="warning">
           <AlertTitle>{alertTitle}</AlertTitle>

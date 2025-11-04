@@ -55,6 +55,7 @@ const DeleteMultiselectDialog = ({ onClose, mapsId }: MultiDialogProps): React.R
           id: 'action.delete-title',
           defaultMessage: 'Delete',
         })}
+        isLoading={mutation.isLoading}
       >
         <Alert severity="warning">
           <AlertTitle>
