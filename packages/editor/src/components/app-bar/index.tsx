@@ -91,6 +91,7 @@ const AppBar = ({
   const [editedTitle, setEditedTitle] = useState<string>('');
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [currentTitle, setCurrentTitle] = useState<string>(mapInfo.getTitle());
+  const [isMapLoaded, setIsMapLoaded] = useState<boolean>(() => model?.isMapLoadded() ?? false);
   const inputRef = useRef<HTMLInputElement>(null);
   const intl = useIntl();
   const { mode, toggleMode } = useTheme();
@@ -180,6 +181,40 @@ const AppBar = ({
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (!model) {
+      setIsMapLoaded(false);
+      return;
+    }
+
+    if (model.isMapLoadded()) {
+      setIsMapLoaded(true);
+      return;
+    }
+
+    const designer = (() => {
+      try {
+        return model.getDesigner();
+      } catch (error) {
+        return undefined;
+      }
+    })();
+
+    if (!designer) {
+      return;
+    }
+
+    const handleLoadSuccess = (): void => {
+      setIsMapLoaded(true);
+    };
+
+    designer.addEvent('loadSuccess', handleLoadSuccess);
+
+    return () => {
+      designer.removeEvent('loadSuccess', handleLoadSuccess);
+    };
+  }, [model]);
 
   const config: (ActionConfig | undefined)[] = [
     {
@@ -399,6 +434,7 @@ const AppBar = ({
         },
       ],
       visible: !capability.isHidden('theme'),
+      disabled: () => !isMapLoaded,
     },
     {
       icon: <AccountTreeIcon />,
@@ -421,6 +457,7 @@ const AppBar = ({
         },
       ],
       visible: !capability.isHidden('layout'),
+      disabled: () => !isMapLoaded,
     },
     {
       icon: <PrintOutlinedIcon />,
@@ -439,6 +476,7 @@ const AppBar = ({
       },
       tooltip: intl.formatMessage({ id: 'appbar.tooltip-export', defaultMessage: 'Export' }),
       visible: !capability.isHidden('export'),
+      disabled: () => !isMapLoaded,
     },
     {
       icon: <CloudUploadOutlinedIcon />,
