@@ -39,7 +39,7 @@ import ThemeType from '@wisemapping/mindplot/src/components/model/ThemeType';
 import { fetchMindmap } from '../../../editor-page/PersistenceManagerUtils';
 
 import Checkbox from '@mui/material/Checkbox';
-import { useFetchMapById } from '../../../../classes/middleware';
+import { useFetchMapMetadata } from '../../../../classes/middleware';
 import { trackExport } from '../../../../utils/analytics';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'pdf' | 'txt' | 'mm' | 'mmx' | 'wxml' | 'md';
@@ -59,7 +59,7 @@ const ExportDialog = ({
 }: ExportDialogProps): React.ReactElement => {
   const intl = useIntl();
   const [submit, setSubmit] = React.useState<boolean>(false);
-  const { data: map } = useFetchMapById(mapId);
+  const { data: mapMetadata } = useFetchMapMetadata(mapId);
 
   const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
     enableImgExport ? 'image' : 'document',
@@ -183,7 +183,7 @@ const ExportDialog = ({
           // Create hidden anchor to force download ...
           const anchor: HTMLAnchorElement = document.createElement('a');
           anchor.style.display = 'display: none';
-          anchor.download = `${map?.title}.${exportFormat}`;
+          anchor.download = `${mapMetadata?.title ?? 'mindmap'}.${exportFormat}`;
           anchor.href = url;
           document.body.appendChild(anchor);
 
