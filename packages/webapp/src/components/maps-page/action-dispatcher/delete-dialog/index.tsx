@@ -24,7 +24,7 @@ import { SimpleDialogProps, handleOnMutationSuccess } from '..';
 import BaseDialog from '../base-dialog';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import { useFetchMapById } from '../../../../classes/middleware';
+import { useFetchMapMetadata } from '../../../../classes/middleware';
 import { ClientContext } from '../../../../classes/provider/client-context';
 
 const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
@@ -48,11 +48,11 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     mutation.mutate(mapId);
   };
 
-  const { data: map } = useFetchMapById(mapId);
+  const { data: mapMetadata } = useFetchMapMetadata(mapId);
   const alertTitle = `${intl.formatMessage({
     id: 'action.delete-title',
     defaultMessage: 'Delete',
-  })} ${map?.title}`;
+  })} ${mapMetadata?.title ?? ''}`;
   return (
     <div>
       <BaseDialog
