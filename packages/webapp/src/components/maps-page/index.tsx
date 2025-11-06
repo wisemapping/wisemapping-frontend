@@ -51,8 +51,14 @@ import PublicTwoTone from '@mui/icons-material/PublicTwoTone';
 import ScatterPlotTwoTone from '@mui/icons-material/ScatterPlotTwoTone';
 import ShareTwoTone from '@mui/icons-material/ShareTwoTone';
 import StarTwoTone from '@mui/icons-material/StarTwoTone';
+import SmartToyTwoTone from '@mui/icons-material/SmartToyTwoTone';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -68,6 +74,9 @@ import withEmotionStyles from '../HOCs/withEmotionStyles';
 import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
 import { useTheme } from '../../contexts/ThemeContext';
+
+const CHATGPT_COPILOT_URL =
+  'https://chatgpt.com/g/g-6908d77ed7988191bb7a62f29fcf0177-mind-map-copilot';
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -91,6 +100,7 @@ const MapsPage = (): ReactElement => {
   const client = useContext(ClientContext);
   const queryClient = useQueryClient();
   const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
+  const [mindMapCopilotDialogOpen, setMindMapCopilotDialogOpen] = React.useState(false);
   const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
   const [desktopDrawerOpen, setDesktopDrawerOpen] = React.useState(
@@ -112,6 +122,19 @@ const MapsPage = (): ReactElement => {
     if (!desktopDrawerOpen) localStorage.setItem('desktopDrawerOpen', 'true');
     else localStorage.removeItem('desktopDrawerOpen');
     setDesktopDrawerOpen(!desktopDrawerOpen);
+  };
+
+  const handleMindMapCopilotDialogOpen = () => {
+    setMindMapCopilotDialogOpen(true);
+  };
+
+  const handleMindMapCopilotDialogClose = () => {
+    setMindMapCopilotDialogOpen(false);
+  };
+
+  const handleMindMapCopilotDialogContinue = () => {
+    setMindMapCopilotDialogOpen(false);
+    window.open(CHATGPT_COPILOT_URL, '_blank', 'noopener,noreferrer');
   };
   // Reload based on user preference ...
   const userLocale = AppI18n.getUserLocale();
@@ -390,6 +413,29 @@ const MapsPage = (): ReactElement => {
             <Tooltip
               arrow={true}
               title={intl.formatMessage({
+                id: 'maps.copilot-tooltip',
+                defaultMessage: 'Start a mindmap with ChatGPT-powered AI Copilot',
+              })}
+            >
+              <Button
+                color="primary"
+                size="medium"
+                variant="outlined"
+                type="button"
+                disableElevation={true}
+                startIcon={<SmartToyTwoTone />}
+                css={classes.copilotButton}
+                onClick={handleMindMapCopilotDialogOpen}
+              >
+                <span className="message">
+                  <FormattedMessage id="maps.copilot-button" defaultMessage="AI Copilot" />
+                </span>
+              </Button>
+            </Tooltip>
+
+            <Tooltip
+              arrow={true}
+              title={intl.formatMessage({
                 id: 'maps.import-desc',
                 defaultMessage: 'Import from other tools',
               })}
@@ -415,6 +461,39 @@ const MapsPage = (): ReactElement => {
               mapsId={[]}
               fromEditor
             />
+            <Dialog
+              open={mindMapCopilotDialogOpen}
+              onClose={handleMindMapCopilotDialogClose}
+              aria-labelledby="mindmap-copilot-dialog-title"
+              aria-describedby="mindmap-copilot-dialog-description"
+            >
+              <DialogTitle id="mindmap-copilot-dialog-title">
+                <FormattedMessage
+                  id="maps.copilot-dialog.title"
+                  defaultMessage="ChatGPT-powered Mindmap Copilot"
+                />
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="mindmap-copilot-dialog-description">
+                  <FormattedMessage
+                    id="maps.copilot-dialog.description"
+                    defaultMessage="ChatGPT-powered AI Copilot is a brainstorming assistant that turns your prompts into structured mind maps. We'll open it in a new tab so you can expand ideas, generate topics, and bring the best ones back to WiseMapping."
+                  />
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
+                <Button
+                  onClick={handleMindMapCopilotDialogContinue}
+                  variant="contained"
+                  color="primary"
+                >
+                  <FormattedMessage
+                    id="maps.copilot-dialog.continue"
+                    defaultMessage="Open Copilot"
+                  />
+                </Button>
+              </DialogActions>
+            </Dialog>
 
             <div css={classes.rightButtonGroup as Interpolation<Theme>}>
               <ThemeToggleButton />

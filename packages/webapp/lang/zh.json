@@ -341,6 +341,21 @@
   "maps.choose-file": {
     "defaultMessage": "选择一个文件"
   },
+  "maps.copilot-button": {
+    "defaultMessage": "AI 副驾驶"
+  },
+  "maps.copilot-tooltip": {
+    "defaultMessage": "使用 AI 副驾驶开启思维导图"
+  },
+  "maps.copilot-dialog.title": {
+    "defaultMessage": "ChatGPT 驱动的思维导图副驾驶"
+  },
+  "maps.copilot-dialog.description": {
+    "defaultMessage": "Mind Map Copilot 是由 ChatGPT 驱动的头脑风暴助手，可将你的提示转换成结构化的思维导图。我们会在新标签页中打开它，帮助你拓展想法、生成主题，并把最佳成果带回 WiseMapping。"
+  },
+  "maps.copilot-dialog.continue": {
+    "defaultMessage": "打开副驾驶"
+  },
   "maps.create-tooltip": {
     "defaultMessage": "创建一个新的思维导图"
   },

@@ -371,6 +371,21 @@
   "maps.choose-file": {
     "defaultMessage": "Choose a file"
   },
+  "maps.copilot-button": {
+    "defaultMessage": "AI Copilot"
+  },
+  "maps.copilot-tooltip": {
+    "defaultMessage": "Start a mindmap with ChatGPT-powered AI Copilot"
+  },
+  "maps.copilot-dialog.title": {
+    "defaultMessage": "ChatGPT-powered Mindmap Copilot"
+  },
+  "maps.copilot-dialog.description": {
+    "defaultMessage": "ChatGPT-powered AI Copilot is a brainstorming assistant that turns your prompts into structured mind maps. We'll open it in a new tab so you can expand ideas, generate topics, and bring the best ones back to WiseMapping."
+  },
+  "maps.copilot-dialog.continue": {
+    "defaultMessage": "Open Copilot"
+  },
   "maps.create-tooltip": {
     "defaultMessage": "Create a new mindmap"
   },

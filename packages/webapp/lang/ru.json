@@ -311,6 +311,21 @@
   "maps.choose-file": {
     "defaultMessage": "Выберите файл"
   },
+  "maps.copilot-button": {
+    "defaultMessage": "ИИ Копилот"
+  },
+  "maps.copilot-tooltip": {
+    "defaultMessage": "Запустить майнд-карту с ИИ Копилотом"
+  },
+  "maps.copilot-dialog.title": {
+    "defaultMessage": "Майндмэп-копилот на базе ChatGPT"
+  },
+  "maps.copilot-dialog.description": {
+    "defaultMessage": "Mind Map Copilot — это помощник для мозгового штурма на базе ChatGPT, который превращает ваши запросы в структурированные майнд-карты. Мы откроем его в новой вкладке, чтобы вы могли развивать идеи, генерировать темы и вернуть лучшее в WiseMapping."
+  },
+  "maps.copilot-dialog.continue": {
+    "defaultMessage": "Открыть Копилот"
+  },
   "maps.create-tooltip": {
     "defaultMessage": "Создать новую майнд-карту"
   },

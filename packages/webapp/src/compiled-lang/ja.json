@@ -1205,6 +1205,36 @@
       "value": "ファイルを選択"
     }
   ],
+  "maps.copilot-button": [
+    {
+      "type": 0,
+      "value": "AIコパイロット"
+    }
+  ],
+  "maps.copilot-dialog.continue": [
+    {
+      "type": 0,
+      "value": "コパイロットを開く"
+    }
+  ],
+  "maps.copilot-dialog.description": [
+    {
+      "type": 0,
+      "value": "Mind Map Copilot は、あなたのプロンプトを構造化されたマインドマップに変換する ChatGPT 搭載のブレーンストーミング支援ツールです。新しいタブで開きますので、アイデアを膨らませ、トピックを生成し、ベストな内容を WiseMapping に持ち帰ってください。"
+    }
+  ],
+  "maps.copilot-dialog.title": [
+    {
+      "type": 0,
+      "value": "ChatGPT 搭載マインドマップコパイロット"
+    }
+  ],
+  "maps.copilot-tooltip": [
+    {
+      "type": 0,
+      "value": "AIコパイロットでマインドマップを始める"
+    }
+  ],
   "maps.create-tooltip": [
     {
       "type": 0,
