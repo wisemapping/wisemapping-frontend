@@ -311,6 +311,21 @@
   "maps.choose-file": {
     "defaultMessage": "Wähle eine Datei"
   },
+  "maps.copilot-button": {
+    "defaultMessage": "KI-Copilot"
+  },
+  "maps.copilot-tooltip": {
+    "defaultMessage": "Starte eine Mindmap mit dem KI-Copiloten mit ChatGPT-Unterstützung"
+  },
+  "maps.copilot-dialog.title": {
+    "defaultMessage": "ChatGPT-gestützter Mindmap-Copilot"
+  },
+  "maps.copilot-dialog.description": {
+    "defaultMessage": "Der KI-Copilot mit ChatGPT-Unterstützung ist ein Brainstorming-Assistent, der Ihre Eingaben in strukturierte Mindmaps verwandelt. Wir öffnen ihn in einem neuen Tab, damit Sie Ideen ausbauen, Themen entwickeln und das Beste nach WiseMapping zurückbringen können."
+  },
+  "maps.copilot-dialog.continue": {
+    "defaultMessage": "Copilot öffnen"
+  },
   "maps.create-tooltip": {
     "defaultMessage": "Erstelle eine neue Mindmap"
   },

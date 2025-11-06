@@ -1205,6 +1205,36 @@
       "value": "एक फ़ाइल चुनें"
     }
   ],
+  "maps.copilot-button": [
+    {
+      "type": 0,
+      "value": "एआई को-पायलट"
+    }
+  ],
+  "maps.copilot-dialog.continue": [
+    {
+      "type": 0,
+      "value": "को-पायलट खोलें"
+    }
+  ],
+  "maps.copilot-dialog.description": [
+    {
+      "type": 0,
+      "value": "Mind Map Copilot एक ChatGPT संचालित ब्रेनस्टॉर्मिंग सहायक है जो आपके संकेतों को संरचित माइंडमैप में बदल देता है। हम इसे नए टैब में खोलेंगे ताकि आप विचारों का विस्तार कर सकें, विषय तैयार कर सकें और सर्वश्रेष्ठ को वापस WiseMapping में ला सकें।"
+    }
+  ],
+  "maps.copilot-dialog.title": [
+    {
+      "type": 0,
+      "value": "ChatGPT-संचालित माइंडमैप को-पायलट"
+    }
+  ],
+  "maps.copilot-tooltip": [
+    {
+      "type": 0,
+      "value": "एआई को-पायलट के साथ माइंडमैप शुरू करें"
+    }
+  ],
   "maps.create-tooltip": [
     {
       "type": 0,

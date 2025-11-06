@@ -1205,6 +1205,36 @@
       "value": "Виберіть файл"
     }
   ],
+  "maps.copilot-button": [
+    {
+      "type": 0,
+      "value": "ШІ Копілот"
+    }
+  ],
+  "maps.copilot-dialog.continue": [
+    {
+      "type": 0,
+      "value": "Відкрити Копілот"
+    }
+  ],
+  "maps.copilot-dialog.description": [
+    {
+      "type": 0,
+      "value": "Mind Map Copilot — це помічник для брейнштормінгу на базі ChatGPT, який перетворює ваші підказки на структуровані ментальні карти. Ми відкриємо його в новій вкладці, щоб ви могли розширювати ідеї, генерувати теми та повернути найкраще до WiseMapping."
+    }
+  ],
+  "maps.copilot-dialog.title": [
+    {
+      "type": 0,
+      "value": "Копілот майндмапів на базі ChatGPT"
+    }
+  ],
+  "maps.copilot-tooltip": [
+    {
+      "type": 0,
+      "value": "Запустіть ментальну карту з ШІ Копілотом"
+    }
+  ],
   "maps.create-tooltip": [
     {
       "type": 0,

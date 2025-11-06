@@ -368,6 +368,21 @@
   "maps.choose-file": {
     "defaultMessage": "Scegli un file"
   },
+  "maps.copilot-button": {
+    "defaultMessage": "Copilota IA"
+  },
+  "maps.copilot-tooltip": {
+    "defaultMessage": "Avvia una mappa mentale con il Copilota IA"
+  },
+  "maps.copilot-dialog.title": {
+    "defaultMessage": "Copilota Mindmap con tecnologia ChatGPT"
+  },
+  "maps.copilot-dialog.description": {
+    "defaultMessage": "Mind Map Copilot è un assistente di brainstorming basato su ChatGPT che trasforma i tuoi prompt in mappe mentali strutturate. Lo apriremo in una nuova scheda così potrai ampliare le idee, generare argomenti e riportare il meglio in WiseMapping."
+  },
+  "maps.copilot-dialog.continue": {
+    "defaultMessage": "Apri il Copilota"
+  },
   "maps.create-tooltip": {
     "defaultMessage": "Crea una nuova mappa mentale"
   },

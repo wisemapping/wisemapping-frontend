@@ -80,6 +80,11 @@ export function useStyles(drawerOpen) {
         width: '100%',
       },
     },
+    copilotButton: {
+      marginRight: 10,
+      minWidth: '130px',
+      [smMediaQuery]: mobileAppbarButton,
+    },
     newMapButton: {
       marginRight: 10,
       minWidth: '130px',

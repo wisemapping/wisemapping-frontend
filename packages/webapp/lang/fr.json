@@ -314,6 +314,21 @@
   "maps.choose-file": {
     "defaultMessage": "Choisissez un fichier"
   },
+  "maps.copilot-button": {
+    "defaultMessage": "Copilote IA"
+  },
+  "maps.copilot-tooltip": {
+    "defaultMessage": "Lancer une carte mentale avec le Copilote IA"
+  },
+  "maps.copilot-dialog.title": {
+    "defaultMessage": "Copilote Mindmap propulsé par ChatGPT"
+  },
+  "maps.copilot-dialog.description": {
+    "defaultMessage": "Mind Map Copilot est un assistant de brainstorming propulsé par ChatGPT qui transforme vos requêtes en cartes mentales structurées. Nous l'ouvrirons dans un nouvel onglet pour que vous puissiez développer vos idées, générer des sujets et rapporter le meilleur dans WiseMapping."
+  },
+  "maps.copilot-dialog.continue": {
+    "defaultMessage": "Ouvrir le Copilote"
+  },
   "maps.create-tooltip": {
     "defaultMessage": "Créer une nouvelle carte mentale"
   },

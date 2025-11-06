@@ -1205,6 +1205,36 @@
       "value": "Escoge un archivo"
     }
   ],
+  "maps.copilot-button": [
+    {
+      "type": 0,
+      "value": "Copiloto IA"
+    }
+  ],
+  "maps.copilot-dialog.continue": [
+    {
+      "type": 0,
+      "value": "Abrir Copiloto"
+    }
+  ],
+  "maps.copilot-dialog.description": [
+    {
+      "type": 0,
+      "value": "Mind Map Copilot es un asistente de lluvia de ideas impulsado por ChatGPT que convierte tus indicaciones en mapas mentales estructurados. Lo abriremos en una nueva pestaña para que amplíes ideas, generes temas y traigas lo mejor de regreso a WiseMapping."
+    }
+  ],
+  "maps.copilot-dialog.title": [
+    {
+      "type": 0,
+      "value": "Copiloto de mapas mentales impulsado por ChatGPT"
+    }
+  ],
+  "maps.copilot-tooltip": [
+    {
+      "type": 0,
+      "value": "Inicia un mapa mental con el Copiloto IA"
+    }
+  ],
   "maps.create-tooltip": [
     {
       "type": 0,
