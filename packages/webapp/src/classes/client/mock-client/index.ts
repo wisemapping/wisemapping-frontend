@@ -226,15 +226,24 @@ class MockClient implements Client {
     return Promise.resolve(map);
   }
 
-  fetchMapMetadata(id: number): Promise<MapMetadata> {
-    return Promise.resolve({
+  fetchMapMetadata(id: number, includeXml = false): Promise<MapMetadata> {
+    const metadata: MapMetadata = {
       title: 'my map',
       creatorFullName: 'The Map Creator',
       id: id,
       isLocked: false,
       jsonProps: '{ "zoom": 0.8 }',
       role: 'owner',
-    });
+    };
+
+    // Include mock XML if requested
+    if (includeXml) {
+      metadata.xml = `<map name="${id}" version="tango">
+        <topic central="true" text="Mock Map ${id}" id="1" fontStyle=";;#ffffff;;;"></topic>
+      </map>`;
+    }
+
+    return Promise.resolve(metadata);
   }
 
   logout(): Promise<void> {

@@ -26,6 +26,7 @@ export type EditorMetadata = {
   editorMode: EditorRenderMode;
   mapMetadata: MapMetadata;
   zoom: number;
+  bootstrapXML?: string; // Bootstrap XML to use instead of fetching from server
 };
 
 export type PageModeType = 'edit' | 'try' | 'view-public' | 'view-private';
@@ -35,15 +36,21 @@ export type PageModeType = 'edit' | 'try' | 'view-public' | 'view-private';
  * Will return cached data if available and not stale, otherwise fetches from API.
  * @param mapId - The ID of the map to fetch metadata for
  * @param client - The client instance to use for fetching
+ * @param includeXml - Whether to include XML in the metadata response
  * @returns Promise resolving to MapMetadata
  */
-async function fetchMapMetadataWithCache(mapId: number, client: Client): Promise<MapMetadata> {
-  return queryClient.fetchQuery<unknown, ErrorInfo, MapMetadata>(`maps-metadata-${mapId}`, () =>
-    client.fetchMapMetadata(mapId),
+async function fetchMapMetadataWithCache(
+  mapId: number,
+  client: Client,
+  includeXml = false,
+): Promise<MapMetadata> {
+  const cacheKey = includeXml ? `maps-metadata-xml-${mapId}` : `maps-metadata-${mapId}`;
+  return queryClient.fetchQuery<unknown, ErrorInfo, MapMetadata>(cacheKey, () =>
+    client.fetchMapMetadata(mapId, includeXml),
   );
 }
 
-export const loader = (pageMode: PageModeType) => {
+export const loader = (pageMode: PageModeType, bootstrap = false) => {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   return async ({ params }): Promise<Response> => {
     const client = AppConfig.getClient();
@@ -70,7 +77,7 @@ export const loader = (pageMode: PageModeType) => {
       case 'edit':
       case 'view-private': {
         try {
-          const mapMetadata = await fetchMapMetadataWithCache(mapId, client);
+          const mapMetadata = await fetchMapMetadataWithCache(mapId, client, bootstrap);
 
           let editorMode: EditorRenderMode;
           if (mapMetadata.isLocked || pageMode === 'view-private') {
@@ -81,11 +88,17 @@ export const loader = (pageMode: PageModeType) => {
 
           // Build result ...
           const { zoom } = JSON.parse(mapMetadata.jsonProps);
-          const data = {
+          const data: EditorMetadata = {
             editorMode: editorMode,
             mapMetadata: mapMetadata,
             zoom: zoom,
           };
+
+          // Include XML if requested and available
+          if (bootstrap && mapMetadata.xml) {
+            data.bootstrapXML = mapMetadata.xml;
+          }
+
           result = Response.json(data);
         } catch (e) {
           // If the issue is an auth error, it needs to be redirect to login.
@@ -99,12 +112,18 @@ export const loader = (pageMode: PageModeType) => {
         break;
       }
       case 'view-public': {
-        const mapMetadata = await fetchMapMetadataWithCache(mapId, client);
-        const data = {
+        const mapMetadata = await fetchMapMetadataWithCache(mapId, client, bootstrap);
+        const data: EditorMetadata = {
           editorMode: 'viewonly-public',
           mapMetadata: mapMetadata,
           zoom: 0.8,
         };
+
+        // Include XML if requested and available
+        if (bootstrap && mapMetadata.xml) {
+          data.bootstrapXML = mapMetadata.xml;
+        }
+
         result = Response.json(data);
         break;
       }
