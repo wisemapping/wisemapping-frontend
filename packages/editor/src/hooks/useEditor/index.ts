@@ -27,6 +27,7 @@ import MapInfo from '../../classes/model/map-info';
 import Model from '../../classes/model/editor';
 import { logCriticalError } from '../../utils/error-logger';
 import DefaultWidgetBuilder from '../../classes/default-widget-manager';
+import BootstrapPersistenceManager from '../../classes/persistence/BootstrapPersistenceManager';
 
 export type EditorOptions = {
   mode: EditorRenderMode;
@@ -37,6 +38,7 @@ export type EditorOptions = {
   saveOnLoad?: boolean;
   hideCreatorInfo?: boolean; // Hide creator info pane in embedded/public view
   initialThemeVariant?: 'light' | 'dark'; // Set initial theme variant via query parameter
+  bootstrapXML?: string; // Bootstrap XML to use instead of fetching from server
 };
 
 type UseEditorProps = {
@@ -74,11 +76,21 @@ export const useEditor = ({
     return new Capability(options.mode, mapInfo.isLocked());
   }, [options.mode, mapInfo]);
 
+  // Wrap persistence manager with BootstrapPersistenceManager if bootstrapXML is provided
+  // BootstrapPersistenceManager requires XML to be mandatory
+  const effectivePersistenceManager = useMemo(() => {
+    if (options.bootstrapXML) {
+      // bootstrapXML is guaranteed to be defined here due to the if check
+      return new BootstrapPersistenceManager(persistenceManager, options.bootstrapXML);
+    }
+    return persistenceManager;
+  }, [persistenceManager, options.bootstrapXML]);
+
   useEffect(() => {
     if (!model && options && mindplotRef.current && capability) {
       const model = new Model(mindplotRef.current);
       model
-        .loadMindmap(mapInfo.getId(), persistenceManager, widgetBuilderRef.current)
+        .loadMindmap(mapInfo.getId(), effectivePersistenceManager, widgetBuilderRef.current)
         .then(() => {
           setCanvasUpdate(Date.now());
           model.registerEvents(setCanvasUpdate, capability, widgetBuilderRef.current);
@@ -88,7 +100,7 @@ export const useEditor = ({
         });
       setModel(model);
     }
-  }, [mindplotRef, options, mapInfo, persistenceManager, capability]);
+  }, [mindplotRef, options, mapInfo, effectivePersistenceManager, capability]);
 
   useEffect(() => {
     if (options?.enableKeyboardEvents) {

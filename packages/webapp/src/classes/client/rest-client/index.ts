@@ -77,13 +77,14 @@ export default class RestClient implements Client {
     );
   }
 
-  fetchMapMetadata(id: number): Promise<MapMetadata> {
+  fetchMapMetadata(id: number, includeXml = false): Promise<MapMetadata> {
     const handler = (
       success: (mapMetadata: MapMetadata) => void,
       reject: (error: ErrorInfo) => void,
     ) => {
+      const url = `${this.baseUrl}/api/restful/maps/${id}/metadata${includeXml ? '?xml=true' : ''}`;
       this.axios
-        .get(`${this.baseUrl}/api/restful/maps/${id}/metadata`, {
+        .get(url, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {

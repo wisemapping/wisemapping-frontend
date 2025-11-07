@@ -75,6 +75,7 @@ export type MapMetadata = {
   lastModificationTime?: string;
   starred?: boolean;
   public?: boolean;
+  xml?: string; // Map XML content (included when ?xml=true query parameter is provided)
 };
 
 export type ChangeHistory = {
@@ -145,7 +146,7 @@ interface Client {
   deleteMap(id: number): Promise<void>;
   renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
   fetchAllMaps(): Promise<MapInfo[]>;
-  fetchMapMetadata(id: number): Promise<MapMetadata>;
+  fetchMapMetadata(id: number, includeXml?: boolean): Promise<MapMetadata>;
   fetchMapInfo(id: number): Promise<MapInfo>;
 
   fetchMapPermissions(id: number): Promise<Permission[]>;

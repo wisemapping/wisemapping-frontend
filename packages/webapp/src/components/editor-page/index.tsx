@@ -165,6 +165,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
       zoom: editorMetadata.zoom,
       hideCreatorInfo: hideCreatorInfoParam === 'true',
       initialThemeVariant: themeParam === 'dark' || themeParam === 'light' ? themeParam : undefined,
+      bootstrapXML: editorMetadata.bootstrapXML,
     };
 
     persistence = buildPersistenceManagerForEditor(
