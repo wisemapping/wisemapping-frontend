@@ -222,11 +222,11 @@ const router = createBrowserRouter(
   },
 );
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchIntervalInBackground: false,
-      staleTime: 5 * 1000 * 60, // 10 minutes
+      staleTime: 5 * 1000 * 60, // 5 minutes
     },
   },
 });
