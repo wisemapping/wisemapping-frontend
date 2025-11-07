@@ -37,7 +37,6 @@ import exampleMap from '../../classes/client/mock-client/example-map.wxml';
 import JwtTokenConfig from '../../classes/jwt-token-config';
 import { useLoaderData, useNavigation, useSearchParams } from 'react-router';
 import { EditorMetadata, PageModeType } from './loader';
-import { useFetchAccount } from '../../classes/middleware';
 import { ClientContext } from '../../classes/provider/client-context';
 import { KeyboardContext } from '../../classes/provider/keyboard-context';
 import { SEOHead } from '../seo';
