@@ -26,6 +26,7 @@ class MapInfoImpl implements MapInfo {
   private locked: boolean;
   private lockedMsg: string | undefined;
   private creatorFullName: string;
+  private starred: boolean | undefined;
 
   constructor(
     id: number,
@@ -35,6 +36,7 @@ class MapInfoImpl implements MapInfo {
     locked: boolean,
     lockedMsg: string | undefined,
     zoom: number,
+    starred?: boolean,
   ) {
     this.id = id;
     this.client = client;
@@ -43,13 +45,21 @@ class MapInfoImpl implements MapInfo {
     this.locked = locked;
     this.lockedMsg = lockedMsg;
     this.creatorFullName = creatorFullName;
+    this.starred = starred;
   }
 
   isStarred(): Promise<boolean> {
-    return this.client.fetchStarred(this.id);
+    // Use cached starred value from metadata (always available from useFetchMapMetadata)
+    if (this.starred !== undefined) {
+      return Promise.resolve(this.starred);
+    }
+    // Fallback to false if starred wasn't provided (shouldn't happen in normal flow)
+    return Promise.resolve(false);
   }
 
   updateStarred(value: boolean): Promise<void> {
+    // Update local starred value optimistically
+    this.starred = value;
     return this.client.updateStarred(this.id, value);
   }
 

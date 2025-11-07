@@ -251,10 +251,6 @@ class MockClient implements Client {
     return cookies.get('jwt-token-mock');
   }
 
-  fetchStarred(id: number): Promise<boolean> {
-    return Promise.resolve(Boolean(this.maps.find((m) => m.id == id)?.starred));
-  }
-
   onSessionExpired(callback?: () => void): (() => void) | undefined {
     return callback;
   }

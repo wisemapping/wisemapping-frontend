@@ -575,10 +575,6 @@ export default class AdminClient implements AdminClientInterface {
     });
   }
 
-  fetchStarred(_id: number): Promise<boolean> {
-    return Promise.resolve(false);
-  }
-
   fetchMapPermissions(_id: number): Promise<Permission[]> {
     return Promise.resolve([]);
   }

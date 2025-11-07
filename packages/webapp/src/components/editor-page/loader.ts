@@ -19,6 +19,8 @@
 import { ErrorInfo, MapMetadata } from '../../classes/client';
 import type { EditorRenderMode } from '@wisemapping/mindplot';
 import AppConfig from '../../classes/app-config';
+import { queryClient } from '../../app';
+import Client from '../../classes/client';
 
 export type EditorMetadata = {
   editorMode: EditorRenderMode;
@@ -27,6 +29,19 @@ export type EditorMetadata = {
 };
 
 export type PageModeType = 'edit' | 'try' | 'view-public' | 'view-private';
+
+/**
+ * Fetches map metadata using React Query cache.
+ * Will return cached data if available and not stale, otherwise fetches from API.
+ * @param mapId - The ID of the map to fetch metadata for
+ * @param client - The client instance to use for fetching
+ * @returns Promise resolving to MapMetadata
+ */
+async function fetchMapMetadataWithCache(mapId: number, client: Client): Promise<MapMetadata> {
+  return queryClient.fetchQuery<unknown, ErrorInfo, MapMetadata>(`maps-metadata-${mapId}`, () =>
+    client.fetchMapMetadata(mapId),
+  );
+}
 
 export const loader = (pageMode: PageModeType) => {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -45,6 +60,7 @@ export const loader = (pageMode: PageModeType) => {
             creatorFullName: 'Paulo Gustavo Veiga',
             isLocked: false,
             jsonProps: '{ "zoom": 0.8 }',
+            role: 'owner' as const,
           },
           zoom: 0.8,
         });
@@ -54,27 +70,22 @@ export const loader = (pageMode: PageModeType) => {
       case 'edit':
       case 'view-private': {
         try {
-          const data = await Promise.all([
-            client.fetchMapMetadata(mapId),
-            client.fetchMapInfo(mapId),
-          ]).then((values) => {
-            const [mapMedata, mapInfo] = values;
+          const mapMetadata = await fetchMapMetadataWithCache(mapId, client);
 
-            let editorMode: EditorRenderMode;
-            if (mapMedata.isLocked || pageMode === 'view-private') {
-              editorMode = 'viewonly-private';
-            } else {
-              editorMode = `edition-${mapInfo.role}`;
-            }
+          let editorMode: EditorRenderMode;
+          if (mapMetadata.isLocked || pageMode === 'view-private') {
+            editorMode = 'viewonly-private';
+          } else {
+            editorMode = `edition-${mapMetadata.role}`;
+          }
 
-            // Build result ...
-            const { zoom } = JSON.parse(mapMedata.jsonProps);
-            return {
-              editorMode: editorMode,
-              mapMetadata: mapMedata,
-              zoom: zoom,
-            };
-          });
+          // Build result ...
+          const { zoom } = JSON.parse(mapMetadata.jsonProps);
+          const data = {
+            editorMode: editorMode,
+            mapMetadata: mapMetadata,
+            zoom: zoom,
+          };
           result = Response.json(data);
         } catch (e) {
           // If the issue is an auth error, it needs to be redirect to login.
@@ -88,13 +99,12 @@ export const loader = (pageMode: PageModeType) => {
         break;
       }
       case 'view-public': {
-        const data = await client.fetchMapMetadata(mapId).then((mapMedata) => {
-          return {
-            editorMode: 'viewonly-public',
-            mapMetadata: mapMedata,
-            zoom: 0.8,
-          };
-        });
+        const mapMetadata = await fetchMapMetadataWithCache(mapId, client);
+        const data = {
+          editorMode: 'viewonly-public',
+          mapMetadata: mapMetadata,
+          zoom: 0.8,
+        };
         result = Response.json(data);
         break;
       }
