@@ -21,7 +21,7 @@ import {
   PersistenceManager,
   WidgetBuilder,
 } from '@wisemapping/mindplot';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import Capability from '../../classes/action/capability';
 import MapInfo from '../../classes/model/map-info';
 import Model from '../../classes/model/editor';
@@ -68,13 +68,14 @@ export const useEditor = ({
   const [, setCanvasUpdate] = useState<number>();
   const widgetBuilderRef = useRef<WidgetBuilder>(new DefaultWidgetBuilder());
 
-  let capability;
-  if (options && mapInfo) {
-    capability = new Capability(options.mode, mapInfo.isLocked());
-  }
+  // Memoize capability to avoid recreating on every render
+  // Since options and mapInfo are required props, capability will always be defined
+  const capability = useMemo(() => {
+    return new Capability(options.mode, mapInfo.isLocked());
+  }, [options.mode, mapInfo]);
 
   useEffect(() => {
-    if (!model && options && mindplotRef.current) {
+    if (!model && options && mindplotRef.current && capability) {
       const model = new Model(mindplotRef.current);
       model
         .loadMindmap(mapInfo.getId(), persistenceManager, widgetBuilderRef.current)
@@ -87,15 +88,15 @@ export const useEditor = ({
         });
       setModel(model);
     }
-  }, [mindplotRef, options]);
+  }, [mindplotRef, options, mapInfo, persistenceManager, capability]);
 
   useEffect(() => {
-    if (options && options.enableKeyboardEvents) {
+    if (options?.enableKeyboardEvents) {
       DesignerKeyboard.resume();
     } else {
       DesignerKeyboard.pause();
     }
-  }, [options, options?.enableKeyboardEvents]);
+  }, [options?.enableKeyboardEvents]);
 
   return { model, mindplotRef, mapInfo, capability, options };
 };

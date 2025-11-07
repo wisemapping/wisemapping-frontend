@@ -15,9 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { useIntl } from 'react-intl';
-import ActionConfig from '../../classes/action/action-config';
 import Capability from '../../classes/action/capability';
 import Model from '../../classes/model/editor';
 import Toolbar from '../toolbar';
@@ -29,12 +28,15 @@ type EditorToolbarProps = {
 };
 
 const EditorToolbar = ({ model, capability }: EditorToolbarProps): ReactElement => {
-  let config: ActionConfig[] | undefined;
   const intl = useIntl();
+  const isMapLoaded = model?.isMapLoadded() ?? false;
 
-  if (!capability.isHidden('edition-toolbar') && model?.isMapLoadded()) {
-    config = buildEditorPanelConfig(model, intl);
-  }
+  const config = useMemo(() => {
+    if (capability.isHidden('edition-toolbar') || !model || !isMapLoaded) {
+      return undefined;
+    }
+    return buildEditorPanelConfig(model, intl);
+  }, [capability, intl, isMapLoaded, model]);
 
   return <span>{config ? <Toolbar configurations={config} /> : <></>}</span>;
 };

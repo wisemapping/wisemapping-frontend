@@ -40,8 +40,6 @@ import StarIcon from '@mui/icons-material/Star';
 import CodeIcon from '@mui/icons-material/Code';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import FlagIcon from '@mui/icons-material/Flag';
 import UserInfoCard from './UserInfoCard';
 import SpamStatusChip from './SpamStatusChip';
 import type { AdminUser, AdminMap } from '../../../classes/client/admin-client';

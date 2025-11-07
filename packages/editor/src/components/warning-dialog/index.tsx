@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { CloseButton, InfoDialog, InfoDialogContent } from './styled';
 import { useIntl } from 'react-intl';
 import { useTheme } from '@mui/material/styles';
@@ -32,44 +32,50 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
   const intl = useIntl();
   const theme = useTheme();
 
-  let msgExt: string = '';
-  let msg: string = '';
-  if (
-    capability.mode !== 'viewonly-private' &&
-    capability.mode !== 'viewonly-public' &&
-    capability.mode !== 'showcase' &&
-    capability.isMobile
-  ) {
-    msgExt = intl.formatMessage({
-      id: 'editor.edit-description-mobile',
-      defaultMessage:
-        'Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities.',
-    });
-  }
+  // Memoize formatted messages to avoid calling intl.formatMessage on every render
+  const { msgExt, msg } = useMemo(() => {
+    let msgExtValue: string = '';
+    let msgValue: string = '';
 
-  if (capability.mode === 'showcase' && capability.isMobile) {
-    msg = intl.formatMessage({
-      id: 'editor.try-welcome-mobile',
-      defaultMessage: 'This edition space showcases some of the mindmap editor capabilities!',
-    });
-    msgExt = intl.formatMessage({
-      id: 'editor.try-welcome-description-mobile',
-      defaultMessage:
-        'Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free. Limited mindmap edition capabilties are supported in Mobile devices. Use Desktop browser for full editor capabilies.',
-    });
-  }
+    if (
+      capability.mode !== 'viewonly-private' &&
+      capability.mode !== 'viewonly-public' &&
+      capability.mode !== 'showcase' &&
+      capability.isMobile
+    ) {
+      msgExtValue = intl.formatMessage({
+        id: 'editor.edit-description-mobile',
+        defaultMessage:
+          'Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities.',
+      });
+    }
 
-  if (capability.mode === 'showcase' && !capability.isMobile) {
-    msg = intl.formatMessage({
-      id: 'editor.try-welcome',
-      defaultMessage: 'This edition space showcases some of the mindmap editor capabilities!',
-    });
-    msgExt = intl.formatMessage({
-      id: 'editor.try-welcome-description',
-      defaultMessage:
-        'Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free.',
-    });
-  }
+    if (capability.mode === 'showcase' && capability.isMobile) {
+      msgValue = intl.formatMessage({
+        id: 'editor.try-welcome-mobile',
+        defaultMessage: 'This edition space showcases some of the mindmap editor capabilities!',
+      });
+      msgExtValue = intl.formatMessage({
+        id: 'editor.try-welcome-description-mobile',
+        defaultMessage:
+          'Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free. Limited mindmap edition capabilties are supported in Mobile devices. Use Desktop browser for full editor capabilies.',
+      });
+    }
+
+    if (capability.mode === 'showcase' && !capability.isMobile) {
+      msgValue = intl.formatMessage({
+        id: 'editor.try-welcome',
+        defaultMessage: 'This edition space showcases some of the mindmap editor capabilities!',
+      });
+      msgExtValue = intl.formatMessage({
+        id: 'editor.try-welcome-description',
+        defaultMessage:
+          'Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free.',
+      });
+    }
+
+    return { msgExt: msgExtValue, msg: msgValue };
+  }, [capability.mode, capability.isMobile, intl]);
 
   const [open, setOpen] = useState<boolean>(Boolean(msgExt || message).valueOf());
   return (

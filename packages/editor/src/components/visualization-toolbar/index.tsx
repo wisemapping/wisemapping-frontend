@@ -20,7 +20,7 @@ import Brightness4 from '@mui/icons-material/Brightness4';
 import Brightness7 from '@mui/icons-material/Brightness7';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import Typography from '@mui/material/Typography';
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState, useEffect, useMemo } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import ActionConfig from '../../classes/action/action-config';
 import Capability from '../../classes/action/capability';
@@ -73,6 +73,8 @@ export function buildVisualizationToolbarConfig(
   // Check if we're in public or embedded view
   const isPublicOrEmbedded =
     capability.mode === 'viewonly-public' || capability.mode === 'viewonly-private';
+
+  const nodesCollapsed = areNodesCollapsed(model);
 
   return [
     {
@@ -160,9 +162,9 @@ export function buildVisualizationToolbarConfig(
     // Separator between outline view and expand/collapse controls
     undefined as ActionConfig | undefined,
     {
-      icon: areNodesCollapsed(model) ? <UnfoldMoreIcon /> : <UnfoldLessIcon />,
+      icon: nodesCollapsed ? <UnfoldMoreIcon /> : <UnfoldLessIcon />,
       tooltip: formatTooltip(
-        areNodesCollapsed(model)
+        nodesCollapsed
           ? intl.formatMessage({
               id: 'visualization-toolbar.tooltip-expand-all',
               defaultMessage: 'Expand All Nodes',
@@ -173,7 +175,7 @@ export function buildVisualizationToolbarConfig(
             }),
         'Shift+E',
       ),
-      ariaLabel: areNodesCollapsed(model)
+      ariaLabel: nodesCollapsed
         ? intl.formatMessage({
             id: 'visualization-toolbar.tooltip-expand-all',
             defaultMessage: 'Expand All Nodes',
@@ -183,7 +185,7 @@ export function buildVisualizationToolbarConfig(
             defaultMessage: 'Collapse All Nodes',
           }),
       onClick: () => {
-        if (areNodesCollapsed(model)) {
+        if (nodesCollapsed) {
           trackEditorInteraction('expand_all_nodes');
           model.getDesigner().expandAllNodes();
           const maxDepth = model.getDesigner().getMindmap().getMaxDepth();
@@ -346,14 +348,18 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
     };
   }, [model, expandLevel]);
 
-  const config = buildVisualizationToolbarConfig(
-    model,
-    capability,
-    intl,
-    expandLevel,
-    setExpandLevel,
-    mode,
-    toggleMode,
+  const config = useMemo(
+    () =>
+      buildVisualizationToolbarConfig(
+        model,
+        capability,
+        intl,
+        expandLevel,
+        setExpandLevel,
+        mode,
+        toggleMode,
+      ),
+    [model, capability, intl, expandLevel, mode, toggleMode],
   );
 
   // Check if we're in public or embedded view

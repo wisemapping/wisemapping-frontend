@@ -24,7 +24,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import NodeProperty from '../../../../classes/model/node-property';
 import ThemeType from '@wisemapping/mindplot/src/components/model/ThemeType';
@@ -36,53 +36,57 @@ const ThemeEditor = (props: {
   const [theme, setTheme] = useState(props.themeModel.getValue());
   const intl = useIntl();
 
-  const themes = [
-    {
-      id: 'prism' as ThemeType,
-      name: intl.formatMessage({ id: 'theme.summer.name', defaultMessage: 'Summer' }),
-      description: intl.formatMessage({
-        id: 'theme.summer.description',
-        defaultMessage:
-          'Bright and vibrant orange theme. Great for creative projects and energetic presentations.',
-      }),
-    },
-    {
-      id: 'sunrise' as ThemeType,
-      name: intl.formatMessage({ id: 'theme.sunrise.name', defaultMessage: 'Sunrise' }),
-      description: intl.formatMessage({
-        id: 'theme.sunrise.description',
-        defaultMessage:
-          'Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability.',
-      }),
-    },
-    {
-      id: 'ocean' as ThemeType,
-      name: intl.formatMessage({ id: 'theme.ocean.name', defaultMessage: 'Ocean' }),
-      description: intl.formatMessage({
-        id: 'theme.ocean.description',
-        defaultMessage:
-          'Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects.',
-      }),
-    },
-    {
-      id: 'classic' as ThemeType,
-      name: intl.formatMessage({ id: 'theme.classic.name', defaultMessage: 'Classic' }),
-      description: intl.formatMessage({
-        id: 'theme.classic.description',
-        defaultMessage:
-          'Clean and professional design with blue accents. Perfect for business presentations and formal documents.',
-      }),
-    },
-    {
-      id: 'robot' as ThemeType,
-      name: intl.formatMessage({ id: 'theme.robot.name', defaultMessage: 'Robot' }),
-      description: intl.formatMessage({
-        id: 'theme.robot.description',
-        defaultMessage:
-          'Tech-inspired green theme. Perfect for technical documentation and futuristic presentations.',
-      }),
-    },
-  ];
+  // Memoize themes array to avoid recreating and calling intl.formatMessage on every render
+  const themes = useMemo(
+    () => [
+      {
+        id: 'prism' as ThemeType,
+        name: intl.formatMessage({ id: 'theme.summer.name', defaultMessage: 'Summer' }),
+        description: intl.formatMessage({
+          id: 'theme.summer.description',
+          defaultMessage:
+            'Bright and vibrant orange theme. Great for creative projects and energetic presentations.',
+        }),
+      },
+      {
+        id: 'sunrise' as ThemeType,
+        name: intl.formatMessage({ id: 'theme.sunrise.name', defaultMessage: 'Sunrise' }),
+        description: intl.formatMessage({
+          id: 'theme.sunrise.description',
+          defaultMessage:
+            'Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability.',
+        }),
+      },
+      {
+        id: 'ocean' as ThemeType,
+        name: intl.formatMessage({ id: 'theme.ocean.name', defaultMessage: 'Ocean' }),
+        description: intl.formatMessage({
+          id: 'theme.ocean.description',
+          defaultMessage:
+            'Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects.',
+        }),
+      },
+      {
+        id: 'classic' as ThemeType,
+        name: intl.formatMessage({ id: 'theme.classic.name', defaultMessage: 'Classic' }),
+        description: intl.formatMessage({
+          id: 'theme.classic.description',
+          defaultMessage:
+            'Clean and professional design with blue accents. Perfect for business presentations and formal documents.',
+        }),
+      },
+      {
+        id: 'robot' as ThemeType,
+        name: intl.formatMessage({ id: 'theme.robot.name', defaultMessage: 'Robot' }),
+        description: intl.formatMessage({
+          id: 'theme.robot.description',
+          defaultMessage:
+            'Tech-inspired green theme. Perfect for technical documentation and futuristic presentations.',
+        }),
+      },
+    ],
+    [intl],
+  );
 
   const handleThemeSelect = (selectedTheme: ThemeType) => {
     setTheme(selectedTheme);

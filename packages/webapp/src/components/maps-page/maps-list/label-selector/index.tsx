@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
@@ -38,9 +38,11 @@ export function LabelSelector({ onChange, maps }: LabelSelectorProps): React.Rea
     client.fetchLabels(),
   );
 
-  const checkedLabelIds = labels
-    .map((l) => l.id)
-    .filter((labelId) => maps.every((m) => m.labels.find((l) => l.id === labelId)));
+  const checkedLabelIds = useMemo(() => {
+    return labels
+      .map((l) => l.id)
+      .filter((labelId) => maps.every((m) => m.labels.find((l) => l.id === labelId)));
+  }, [labels, maps]);
 
   return (
     <Box>
