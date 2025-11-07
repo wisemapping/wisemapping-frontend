@@ -145,10 +145,11 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
     trackPageView(window.location.pathname, 'Map Editor');
   }, []);
 
-  // Account settings can be null and editor cannot be initilized multiple times. This creates problems
-  // at the i18n resource loading.
-  const isAccountLoaded = editorMetadata?.editorMode === 'showcase' || useFetchAccount;
-  const loadCompleted = editorMetadata && isAccountLoaded;
+  // Account loads asynchronously and should NOT block editor rendering.
+  // AppI18n.getUserLocale() handles undefined account gracefully by falling back to default locale.
+  // Editor should render immediately once editorMetadata is available.
+  const account = useFetchAccount(); // Load asynchronously, don't block
+  const loadCompleted = !!editorMetadata;
 
   let persistence: PersistenceManager;
   let mapInfo: MapInfo | undefined;
@@ -182,6 +183,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
       editorMetadata.mapMetadata.isLocked,
       editorMetadata.mapMetadata.isLockedBy,
       editorMetadata.zoom,
+      editorMetadata.mapMetadata.starred, // Use starred from metadata
     );
 
     editorConfig = useEditor({

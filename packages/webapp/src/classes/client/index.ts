@@ -66,6 +66,15 @@ export type MapMetadata = {
   isLocked: boolean;
   isLockedBy?: string;
   jsonProps: string;
+  role: Role; // User's role for this map (owner, editor, viewer, or none)
+  // Extended fields to match MapInfo
+  description?: string;
+  createdBy?: string; // Email
+  creationTime?: string;
+  lastModificationBy?: string;
+  lastModificationTime?: string;
+  starred?: boolean;
+  public?: boolean;
 };
 
 export type ChangeHistory = {
@@ -138,8 +147,6 @@ interface Client {
   fetchAllMaps(): Promise<MapInfo[]>;
   fetchMapMetadata(id: number): Promise<MapMetadata>;
   fetchMapInfo(id: number): Promise<MapInfo>;
-
-  fetchStarred(id: number): Promise<boolean>;
 
   fetchMapPermissions(id: number): Promise<Permission[]>;
   addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void>;

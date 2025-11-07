@@ -29,27 +29,33 @@ type MapLoadResult = {
 
 export const useFetchMapById = (id: number): MapLoadResult => {
   const client = useContext(ClientContext);
-  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>(`maps-${id}`, () => {
-    return client.fetchAllMaps();
-  });
+  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapMetadata>(
+    `maps-metadata-${id}`,
+    () => {
+      return client.fetchMapMetadata(id);
+    },
+  );
 
-  // If the map can not be loaded, create an error object.
+  // Convert MapMetadata to MapInfo format
   let map: MapInfo | undefined;
   let errorMsg: ErrorInfo | null = error;
-  if (!isLoading) {
-    // Sanitize error structure ...
-    if (errorMsg) {
-      errorMsg = Object.keys(errorMsg).length !== 0 ? error : null;
-    }
-    //  Seach for object...
-    map = data?.find((m) => m.id == id);
-    if (!map && !errorMsg) {
-      errorMsg = {
-        msg: `Map with id ${id} could not be found. Please, reflesh the page. Map: ${JSON.stringify(
-          data,
-        )}`,
-      };
-    }
+  if (!isLoading && data) {
+    // Convert MapMetadata to MapInfo
+    map = {
+      id: data.id,
+      title: data.title,
+      starred: data.starred ?? false,
+      labels: [], // Labels not included in metadata - would need separate call if needed
+      createdBy: data.createdBy ?? data.creatorFullName,
+      creationTime: data.creationTime ?? '',
+      lastModificationBy: data.lastModificationBy ?? '',
+      lastModificationTime: data.lastModificationTime ?? '',
+      description: data.description ?? '',
+      public: data.public ?? false,
+      role: data.role,
+    };
+  } else if (!isLoading && error) {
+    errorMsg = error;
   }
   return { isLoading: isLoading, error: errorMsg, data: map };
 };
