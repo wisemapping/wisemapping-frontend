@@ -17,7 +17,7 @@
  */
 import Popover from '@mui/material/Popover';
 import Box from '@mui/material/Box';
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import { FormattedMessage } from 'react-intl';
 import IconButton from '@mui/material/IconButton';
@@ -39,34 +39,43 @@ export const WidgetPopover = ({ widgetManager }: WidgetPopoverProps): React.Reac
     setEvent('none');
     setAnchorElem(undefined);
   };
+  const handleWidgetEvent = useCallback(
+    (newEvent: WidgetEventType, topic?: Topic) => {
+      setEvent(newEvent);
 
-  widgetManager.addHander((event: WidgetEventType, topic?: Topic) => {
-    // set event ...
-    setEvent(event);
+      let title: string | undefined = undefined;
+      let component: React.ReactElement = <></>;
 
-    let title: string | undefined = undefined;
-    let component: React.ReactElement = <></>;
-
-    switch (event) {
-      case 'note': {
-        title = 'editor-panel.note-panel-title';
-        component = widgetManager.buidEditorForNote(topic!);
-        break;
+      switch (newEvent) {
+        case 'note': {
+          title = 'editor-panel.note-panel-title';
+          component = widgetManager.buidEditorForNote(topic!);
+          break;
+        }
+        case 'link':
+          title = 'editor-panel.link-panel-title';
+          component = widgetManager.buildEditorForLink(topic!);
+          break;
+        case 'none':
+          designer.fireEvent('featureEdit', { event: 'close' });
+          break;
       }
-      case 'link':
-        title = 'editor-panel.link-panel-title';
-        component = widgetManager.buildEditorForLink(topic!);
-        break;
-      case 'none':
-        designer.fireEvent('featureEdit', { event: 'close' });
-        break;
-    }
-    topic?.closeEditors();
 
-    setPanelTitle(title);
-    setEditorComponent(component);
-    setAnchorElem(topic?.getOuterShape().peer._native);
-  });
+      topic?.closeEditors();
+
+      setPanelTitle(title);
+      setEditorComponent(component);
+      setAnchorElem(topic?.getOuterShape().peer._native);
+    },
+    [widgetManager],
+  );
+
+  useEffect(() => {
+    widgetManager.addHander(handleWidgetEvent);
+    return () => {
+      widgetManager.addHander(() => undefined);
+    };
+  }, [widgetManager, handleWidgetEvent]);
 
   const isOpen = event != 'none';
   return (

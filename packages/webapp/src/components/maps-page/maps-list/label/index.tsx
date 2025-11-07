@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React from 'react';
+import React, { memo } from 'react';
 import { useIntl } from 'react-intl';
 import { LabelContainer, LabelText } from './styled';
 
@@ -28,11 +28,11 @@ import IconButton from '@mui/material/IconButton';
 type LabelSize = 'small' | 'big';
 type LabelComponentProps = { label: Label; onDelete?: (label: Label) => void; size?: LabelSize };
 
-export default function LabelComponent({
+const LabelComponent = ({
   label,
   onDelete,
   size = 'small',
-}: LabelComponentProps): React.ReactElement<LabelComponentProps> {
+}: LabelComponentProps): React.ReactElement<LabelComponentProps> => {
   const intl = useIntl();
   const iconSize =
     size === 'small'
@@ -81,4 +81,6 @@ export default function LabelComponent({
       )}
     </LabelContainer>
   );
-}
+};
+
+export default memo(LabelComponent);

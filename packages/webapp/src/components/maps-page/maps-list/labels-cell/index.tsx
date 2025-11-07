@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React from 'react';
+import React, { memo } from 'react';
 import { LabelContainer, LabelText } from './styled';
 
 import { Label } from '../../../../classes/client';
@@ -30,7 +30,7 @@ type Props = {
   onDelete: (label: Label) => void;
 };
 
-export function LabelsCell({ labels, onDelete }: Props): React.ReactElement<Props> {
+const LabelsCellComponent: React.FC<Props> = ({ labels, onDelete }) => {
   const intl = useIntl();
 
   // Keep original label colors in both light and dark mode
@@ -80,4 +80,6 @@ export function LabelsCell({ labels, onDelete }: Props): React.ReactElement<Prop
       ))}
     </>
   );
-}
+};
+
+export const LabelsCell = memo(LabelsCellComponent);

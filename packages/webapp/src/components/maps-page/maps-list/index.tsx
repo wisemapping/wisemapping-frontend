@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useEffect, CSSProperties, useContext } from 'react';
+import React, { useEffect, useMemo, CSSProperties, useContext } from 'react';
 
 import { useStyles } from './styled';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -130,29 +130,32 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     onRequestSort(event, property);
   };
 
-  const headCells: HeadCell[] = [
-    {
-      id: 'title',
-      numeric: false,
-      label: intl.formatMessage({ id: 'map.name', defaultMessage: 'Name' }),
-    },
-    {
-      id: 'labels',
-      numeric: false,
-    },
-    {
-      id: 'createdBy',
-      numeric: false,
-      label: intl.formatMessage({ id: 'map.creator', defaultMessage: 'Creator' }),
-      style: { width: '150px', whiteSpace: 'nowrap' },
-    },
-    {
-      id: 'lastModificationTime',
-      numeric: true,
-      label: intl.formatMessage({ id: 'map.last-update', defaultMessage: 'Last Update' }),
-      style: { width: '70px', whiteSpace: 'nowrap' },
-    },
-  ];
+  const headCells: HeadCell[] = useMemo(
+    () => [
+      {
+        id: 'title',
+        numeric: false,
+        label: intl.formatMessage({ id: 'map.name', defaultMessage: 'Name' }),
+      },
+      {
+        id: 'labels',
+        numeric: false,
+      },
+      {
+        id: 'createdBy',
+        numeric: false,
+        label: intl.formatMessage({ id: 'map.creator', defaultMessage: 'Creator' }),
+        style: { width: '150px', whiteSpace: 'nowrap' },
+      },
+      {
+        id: 'lastModificationTime',
+        numeric: true,
+        label: intl.formatMessage({ id: 'map.last-update', defaultMessage: 'Last Update' }),
+        style: { width: '70px', whiteSpace: 'nowrap' },
+      },
+    ],
+    [intl],
+  );
 
   return (
     <TableHead>
@@ -300,21 +303,37 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   const intl = useIntl();
   const queryClient = useQueryClient();
 
-  // Configure locale ...
   const userLocale = AppI18n.getUserLocale();
-  dayjs.locale(userLocale.code);
+  useEffect(() => {
+    dayjs.locale(userLocale.code);
+  }, [userLocale.code]);
 
   useEffect(() => {
     setSelected([]);
     setPage(0);
     setFilter(props.filter);
-  }, [props.filter.type, (props.filter as LabelFilter).label]);
+  }, [props.filter]);
 
   const { isLoading, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
     return client.fetchAllMaps();
   });
 
-  const mapsInfo: MapInfo[] = data ? data.filter(mapsFilter(filter, searchCondition)) : [];
+  const filteredMaps: MapInfo[] = useMemo(() => {
+    if (!data) {
+      return [];
+    }
+    const predicate = mapsFilter(filter, searchCondition);
+    return data.filter(predicate);
+  }, [data, filter, searchCondition]);
+
+  const sortedMaps = useMemo(() => {
+    return stableSort(filteredMaps, getComparator(order, orderBy));
+  }, [filteredMaps, order, orderBy]);
+
+  const pagedMaps = useMemo(() => {
+    const start = page * rowsPerPage;
+    return sortedMaps.slice(start, start + rowsPerPage);
+  }, [sortedMaps, page, rowsPerPage]);
 
   const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(
     undefined,
@@ -334,7 +353,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.checked) {
-      const newSelecteds = mapsInfo.map((n) => n.id);
+      const newSelecteds = filteredMaps.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
@@ -382,15 +401,15 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
   const starredMultation = useMutation<void, ErrorInfo, number>(
     (id: number) => {
-      const map = mapsInfo.find((m) => m.id == id);
+      const map = filteredMaps.find((m) => m.id == id);
       const starred = !map?.starred;
 
       // Follow a optimistic update approach ...
-      queryClient.setQueryData<MapInfo[]>('maps', (mapsInfo) => {
+      queryClient.setQueryData<MapInfo[]>('maps', (currentMaps) => {
         if (map) {
           map.starred = starred;
         }
-        return mapsInfo || [];
+        return currentMaps || [];
       });
       return client.updateStarred(id, starred);
     },
@@ -548,11 +567,11 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
           <div style={{ flex: '1 1 0', minWidth: 0, display: 'flex', justifyContent: 'flex-end' }}>
             {/* Pagination on desktop */}
-            {mapsInfo.length > rowsPerPage && (
+            {filteredMaps.length > rowsPerPage && (
               <Box css={classes.paginationDesktop as Interpolation<Theme>}>
                 <TablePagination
                   css={classes.tablePagination as Interpolation<Theme>}
-                  count={mapsInfo.length}
+                  count={filteredMaps.length}
                   rowsPerPageOptions={[]}
                   rowsPerPage={rowsPerPage}
                   page={page}
@@ -569,7 +588,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
           <Box css={classes.cards}>
             {isLoading ? (
               <MapsCardsListSkeleton rowsPerPage={rowsPerPage} />
-            ) : mapsInfo.length == 0 ? (
+            ) : filteredMaps.length === 0 ? (
               <Card>
                 <CardContent>
                   <FormattedMessage
@@ -579,108 +598,106 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                 </CardContent>
               </Card>
             ) : (
-              stableSort(mapsInfo, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: MapInfo) => {
-                  return (
-                    <Card key={row.id} css={{ maxWidth: '94vw', margin: '3vw' }}>
-                      <Link
-                        href={`/c/maps/${row.id}/edit`}
-                        underline="none"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <CardHeader
-                          css={classes.cardHeader}
-                          avatar={
-                            <Tooltip
-                              arrow={true}
-                              title={intl.formatMessage({
-                                id: 'maps.tooltip-starred',
-                                defaultMessage: 'Starred',
-                              })}
-                            >
-                              <div className="hola" onClick={(e) => e.stopPropagation()}>
-                                <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
-                                  <StarRateRoundedIcon
-                                    color="action"
-                                    style={{
-                                      color: row.starred ? 'yellow' : 'gray',
-                                    }}
-                                  />
-                                </IconButton>
-                              </div>
-                            </Tooltip>
-                          }
-                          action={
-                            <Tooltip
-                              arrow={true}
-                              title={intl.formatMessage({
-                                id: 'map.more-actions',
-                                defaultMessage: 'More Actions',
-                              })}
-                            >
-                              <IconButton
-                                aria-label={intl.formatMessage({
-                                  id: 'common.settings',
-                                  defaultMessage: 'Settings',
-                                })}
-                                onClick={handleActionClick(row.id)}
-                              >
-                                <MoreVertIcon color="action" />
+              pagedMaps.map((row: MapInfo) => {
+                return (
+                  <Card key={row.id} css={{ maxWidth: '94vw', margin: '3vw' }}>
+                    <Link
+                      href={`/c/maps/${row.id}/edit`}
+                      underline="none"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <CardHeader
+                        css={classes.cardHeader}
+                        avatar={
+                          <Tooltip
+                            arrow={true}
+                            title={intl.formatMessage({
+                              id: 'maps.tooltip-starred',
+                              defaultMessage: 'Starred',
+                            })}
+                          >
+                            <div className="hola" onClick={(e) => e.stopPropagation()}>
+                              <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
+                                <StarRateRoundedIcon
+                                  color="action"
+                                  style={{
+                                    color: row.starred ? 'yellow' : 'gray',
+                                  }}
+                                />
                               </IconButton>
-                            </Tooltip>
-                          }
-                          title={
-                            <Typography
-                              css={classes.cardTitle}
-                              noWrap
-                              color="text.secondary"
-                              sx={{
-                                fontSize: '0.96rem',
-                                fontFamily:
-                                  'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                              }}
-                            >
-                              {row.title}
-                            </Typography>
-                          }
-                          subheader={
-                            <Typography
-                              variant="subtitle2"
-                              sx={{
-                                fontSize: '0.75rem',
-                                fontFamily:
-                                  'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                              }}
-                            >
-                              {intl.formatMessage({
-                                id: 'map.last-update',
-                                defaultMessage: 'Last Update',
+                            </div>
+                          </Tooltip>
+                        }
+                        action={
+                          <Tooltip
+                            arrow={true}
+                            title={intl.formatMessage({
+                              id: 'map.more-actions',
+                              defaultMessage: 'More Actions',
+                            })}
+                          >
+                            <IconButton
+                              aria-label={intl.formatMessage({
+                                id: 'common.settings',
+                                defaultMessage: 'Settings',
                               })}
-                              <span>: </span>
-                              <Tooltip
-                                arrow={true}
-                                title={intl.formatMessage(
-                                  {
-                                    id: 'maps.modified-by-desc',
-                                    defaultMessage: 'Modified by {by} on {on}',
-                                  },
-                                  {
-                                    by: row.lastModificationBy,
-                                    on: dayjs(row.lastModificationTime).format('lll'),
-                                  },
-                                )}
-                                placement="bottom-start"
-                              >
-                                <span>{dayjs(row.lastModificationTime).fromNow()}</span>
-                              </Tooltip>
-                            </Typography>
-                          }
-                        />
-                      </Link>
-                    </Card>
-                  );
-                })
+                              onClick={handleActionClick(row.id)}
+                            >
+                              <MoreVertIcon color="action" />
+                            </IconButton>
+                          </Tooltip>
+                        }
+                        title={
+                          <Typography
+                            css={classes.cardTitle}
+                            noWrap
+                            color="text.secondary"
+                            sx={{
+                              fontSize: '0.96rem',
+                              fontFamily:
+                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                            }}
+                          >
+                            {row.title}
+                          </Typography>
+                        }
+                        subheader={
+                          <Typography
+                            variant="subtitle2"
+                            sx={{
+                              fontSize: '0.75rem',
+                              fontFamily:
+                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                            }}
+                          >
+                            {intl.formatMessage({
+                              id: 'map.last-update',
+                              defaultMessage: 'Last Update',
+                            })}
+                            <span>: </span>
+                            <Tooltip
+                              arrow={true}
+                              title={intl.formatMessage(
+                                {
+                                  id: 'maps.modified-by-desc',
+                                  defaultMessage: 'Modified by {by} on {on}',
+                                },
+                                {
+                                  by: row.lastModificationBy,
+                                  on: dayjs(row.lastModificationTime).format('lll'),
+                                },
+                              )}
+                              placement="bottom-start"
+                            >
+                              <span>{dayjs(row.lastModificationTime).fromNow()}</span>
+                            </Tooltip>
+                          </Typography>
+                        }
+                      />
+                    </Link>
+                  </Card>
+                );
+              })
             )}
           </Box>
           <Table css={classes.table} size="small" stickyHeader>
@@ -691,13 +708,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={mapsInfo.length}
+              rowCount={filteredMaps.length}
             />
 
             <TableBody>
               {isLoading ? (
                 <MapsListSkeleton rowsPerPage={rowsPerPage} />
-              ) : mapsInfo.length == 0 ? (
+              ) : filteredMaps.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} style={{ textAlign: 'center' }}>
                     <FormattedMessage
@@ -707,79 +724,104 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                   </TableCell>
                 </TableRow>
               ) : (
-                stableSort(mapsInfo, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row: MapInfo) => {
-                    const isItemSelected = isSelected(row.id);
-                    const labelId = row.id;
+                pagedMaps.map((row: MapInfo) => {
+                  const isItemSelected = isSelected(row.id);
+                  const labelId = row.id;
 
-                    return (
-                      <TableRow
-                        hover
-                        onClick={(event) => handleRowClick(event, row.id)}
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.id}
-                        selected={isItemSelected}
-                      >
-                        <TableCell padding="checkbox" css={classes.bodyCell}>
-                          <Checkbox
-                            checked={isItemSelected}
-                            inputProps={{
-                              'aria-labelledby': String(labelId),
-                            }}
-                            size="small"
-                            sx={(theme) => ({
+                  return (
+                    <TableRow
+                      hover
+                      onClick={(event) => handleRowClick(event, row.id)}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row.id}
+                      selected={isItemSelected}
+                    >
+                      <TableCell padding="checkbox" css={classes.bodyCell}>
+                        <Checkbox
+                          checked={isItemSelected}
+                          inputProps={{
+                            'aria-labelledby': String(labelId),
+                          }}
+                          size="small"
+                          sx={(theme) => ({
+                            color:
+                              theme.palette.mode === 'dark'
+                                ? 'rgba(255, 255, 255, 0.3)'
+                                : 'rgba(0, 0, 0, 0.26)',
+                            '&.Mui-checked': {
                               color:
                                 theme.palette.mode === 'dark'
-                                  ? 'rgba(255, 255, 255, 0.3)'
-                                  : 'rgba(0, 0, 0, 0.26)',
-                              '&.Mui-checked': {
-                                color:
-                                  theme.palette.mode === 'dark'
-                                    ? 'rgba(255, 255, 255, 0.7)'
-                                    : 'rgba(0, 0, 0, 0.54)',
-                              },
-                            })}
-                          />
-                        </TableCell>
+                                  ? 'rgba(255, 255, 255, 0.7)'
+                                  : 'rgba(0, 0, 0, 0.54)',
+                            },
+                          })}
+                        />
+                      </TableCell>
 
-                        <TableCell css={classes.bodyCell}>
-                          <Tooltip
-                            arrow={true}
-                            title={intl.formatMessage({
-                              id: 'maps.tooltip-open',
-                              defaultMessage: 'Open for edition',
-                            })}
-                            placement="bottom-start"
-                          >
-                            <Link
-                              href={`/c/maps/${row.id}/edit`}
-                              color="textPrimary"
-                              underline="always"
-                              onClick={(e) => e.stopPropagation()}
-                              sx={{
-                                fontSize: '0.96rem',
-                                fontFamily:
-                                  'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                              }}
-                            >
-                              {row.title}
-                            </Link>
-                          </Tooltip>
-                        </TableCell>
-
-                        <TableCell css={[classes.bodyCell, classes.labelsCell as CSSObject]}>
-                          <LabelsCell
-                            labels={row.labels}
-                            onDelete={(lbl) => {
-                              handleRemoveLabel(row.id, lbl.id);
+                      <TableCell css={classes.bodyCell}>
+                        <Tooltip
+                          arrow={true}
+                          title={intl.formatMessage({
+                            id: 'maps.tooltip-open',
+                            defaultMessage: 'Open for edition',
+                          })}
+                          placement="bottom-start"
+                        >
+                          <Link
+                            href={`/c/maps/${row.id}/edit`}
+                            color="textPrimary"
+                            underline="always"
+                            onClick={(e) => e.stopPropagation()}
+                            sx={{
+                              fontSize: '0.96rem',
+                              fontFamily:
+                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
                             }}
-                          />
-                        </TableCell>
+                          >
+                            {row.title}
+                          </Link>
+                        </Tooltip>
+                      </TableCell>
 
-                        <TableCell css={classes.bodyCell}>
+                      <TableCell css={[classes.bodyCell, classes.labelsCell as CSSObject]}>
+                        <LabelsCell
+                          labels={row.labels}
+                          onDelete={(lbl) => {
+                            handleRemoveLabel(row.id, lbl.id);
+                          }}
+                        />
+                      </TableCell>
+
+                      <TableCell css={classes.bodyCell}>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            fontSize: '0.96rem',
+                            fontFamily:
+                              'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                          }}
+                        >
+                          {row.createdBy}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell css={classes.bodyCell}>
+                        <Tooltip
+                          arrow={true}
+                          title={intl.formatMessage(
+                            {
+                              id: 'maps.modified-by-desc',
+                              defaultMessage: 'Modified by {by} on {on}',
+                            },
+                            {
+                              by: row.lastModificationBy,
+                              on: dayjs(row.lastModificationTime).format('lll'),
+                            },
+                          )}
+                          placement="bottom-start"
+                        >
                           <Typography
                             variant="body2"
                             sx={{
@@ -788,91 +830,64 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                 'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
                             }}
                           >
-                            {row.createdBy}
+                            {dayjs(row.lastModificationTime).fromNow()}
                           </Typography>
-                        </TableCell>
+                        </Tooltip>
+                      </TableCell>
 
-                        <TableCell css={classes.bodyCell}>
-                          <Tooltip
-                            arrow={true}
-                            title={intl.formatMessage(
-                              {
-                                id: 'maps.modified-by-desc',
-                                defaultMessage: 'Modified by {by} on {on}',
-                              },
-                              {
-                                by: row.lastModificationBy,
-                                on: dayjs(row.lastModificationTime).format('lll'),
-                              },
-                            )}
-                            placement="bottom-start"
-                          >
-                            <Typography
-                              variant="body2"
-                              sx={{
-                                fontSize: '0.96rem',
-                                fontFamily:
-                                  'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                      <TableCell padding="checkbox" css={classes.bodyCell}>
+                        <Tooltip
+                          arrow={true}
+                          title={intl.formatMessage({
+                            id: 'maps.tooltip-starred',
+                            defaultMessage: 'Starred',
+                          })}
+                        >
+                          <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
+                            <StarRateRoundedIcon
+                              color="action"
+                              style={{
+                                color: row.starred ? 'yellow' : 'gray',
                               }}
-                            >
-                              {dayjs(row.lastModificationTime).fromNow()}
-                            </Typography>
-                          </Tooltip>
-                        </TableCell>
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
 
-                        <TableCell padding="checkbox" css={classes.bodyCell}>
-                          <Tooltip
-                            arrow={true}
-                            title={intl.formatMessage({
-                              id: 'maps.tooltip-starred',
-                              defaultMessage: 'Starred',
+                      <TableCell css={classes.bodyCell}>
+                        <Tooltip
+                          arrow={true}
+                          title={intl.formatMessage({
+                            id: 'map.more-actions',
+                            defaultMessage: 'More Actions',
+                          })}
+                        >
+                          <IconButton
+                            aria-label={intl.formatMessage({
+                              id: 'common.others',
+                              defaultMessage: 'Others',
                             })}
+                            size="small"
+                            onClick={handleActionClick(row.id)}
                           >
-                            <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
-                              <StarRateRoundedIcon
-                                color="action"
-                                style={{
-                                  color: row.starred ? 'yellow' : 'gray',
-                                }}
-                              />
-                            </IconButton>
-                          </Tooltip>
-                        </TableCell>
-
-                        <TableCell css={classes.bodyCell}>
-                          <Tooltip
-                            arrow={true}
-                            title={intl.formatMessage({
-                              id: 'map.more-actions',
-                              defaultMessage: 'More Actions',
-                            })}
-                          >
-                            <IconButton
-                              aria-label={intl.formatMessage({
-                                id: 'common.others',
-                                defaultMessage: 'Others',
-                              })}
-                              size="small"
-                              onClick={handleActionClick(row.id)}
-                            >
-                              <MoreHorizIcon color="action" />
-                            </IconButton>
-                          </Tooltip>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
+                            <MoreHorizIcon color="action" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
               )}
             </TableBody>
           </Table>
         </TableContainer>
 
         {/* Pagination on mobile only - below table */}
-        {mapsInfo.length > rowsPerPage && (
+        {filteredMaps.length > rowsPerPage && (
           <Box css={classes.paginationMobile as Interpolation<Theme>}>
             <TablePagination
               css={classes.tablePagination as Interpolation<Theme>}
-              count={mapsInfo.length}
+              count={filteredMaps.length}
               rowsPerPageOptions={[]}
               rowsPerPage={rowsPerPage}
               page={page}

@@ -556,7 +556,7 @@ const MapsManagement = (): ReactElement => {
         spamType={spamType}
         spamDetectedDate={spamDetectedDate}
         spamDescription={spamDescription}
-        onToggleSpam={(newSpamStatus) => {
+        onToggleSpam={(_newSpamStatus) => {
           // This callback is not used in the main table since we have separate action buttons
           // But we pass it for consistency with the dialog
         }}

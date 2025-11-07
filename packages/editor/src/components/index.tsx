@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo, useRef } from 'react';
 
 import { IntlProvider } from 'react-intl';
 import { Designer } from '@wisemapping/mindplot';
@@ -60,12 +60,25 @@ const EditorContent = ({
   // We can access editor instance and other configuration from editor props
   const { model, mindplotRef, mapInfo, capability, options } = config;
   const designer = model?.getDesigner();
-  const widgetBulder = designer ? designer.getWidgeManager() : new DefaultWidgetBuilder();
   const { mode: internalMode } = useTheme();
 
   // Get the current theme mode from the theme context
   const mode = internalMode;
-  const theme = createEditorTheme(mode);
+
+  // Memoize default widget builder to avoid recreating on every render
+  const defaultWidgetBuilderRef = useRef<DefaultWidgetBuilder | null>(null);
+  if (!defaultWidgetBuilderRef.current) {
+    defaultWidgetBuilderRef.current = new DefaultWidgetBuilder();
+  }
+
+  // Memoize widget builder to avoid recreating on every render
+  const widgetBulder = useMemo(
+    () => designer?.getWidgeManager() ?? defaultWidgetBuilderRef.current!,
+    [designer],
+  );
+
+  // Memoize theme creation - this is expensive and should only run when mode changes
+  const theme = useMemo(() => createEditorTheme(mode), [mode]);
 
   // Set initial theme variant from query parameter if provided
   React.useEffect(() => {
@@ -75,18 +88,13 @@ const EditorContent = ({
   }, [options.initialThemeVariant, themeVariantStorage]);
 
   // Initialize and sync mindmap theme variant with editor theme
+  // Only run once when designer becomes available, then update when mode changes
   React.useEffect(() => {
     if (designer) {
       designer.initializeThemeVariant(mode);
-    }
-  }, [designer]);
-
-  // Update mindmap theme variant when editor theme changes
-  React.useEffect(() => {
-    if (designer) {
       designer.setThemeVariant(mode === 'dark' ? 'dark' : 'light');
     }
-  }, [mode, designer]);
+  }, [designer, mode]);
 
   // Listen for theme variant changes from storage and update designer directly
   // This ensures immediate updates when ThemeVariantStorage changes, bypassing the mode state
@@ -102,15 +110,15 @@ const EditorContent = ({
     return unsubscribe;
   }, [themeVariantStorage, designer]);
 
+  // Memoize embed route check to avoid checking window.location on every render
+  const isEmbedRoute = useMemo(
+    () => typeof window !== 'undefined' && window.location.pathname.includes('/embed'),
+    [],
+  );
+
   // Mark embed DOM element when the map has finished loading
   React.useEffect(() => {
-    if (!designer) {
-      return undefined;
-    }
-
-    const isEmbedRoute =
-      typeof window !== 'undefined' && window.location.pathname.includes('/embed');
-    if (!isEmbedRoute) {
+    if (!designer || !isEmbedRoute) {
       return undefined;
     }
 
@@ -132,11 +140,12 @@ const EditorContent = ({
         document.body.removeAttribute(EMBED_READY_ATTRIBUTE);
       }
     };
-  }, [designer, model]);
+  }, [designer, model, isEmbedRoute]);
 
   // Initialize locale ...
   const locale = options.locale;
-  const msg = I18nMsg.loadLocaleData(locale);
+  // Memoize locale messages loading - this uses require() which should be cached but still expensive
+  const msg = useMemo(() => I18nMsg.loadLocaleData(locale), [locale]);
 
   return (
     <StyledEngineProvider injectFirst>

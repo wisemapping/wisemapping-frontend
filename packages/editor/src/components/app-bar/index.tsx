@@ -196,7 +196,7 @@ const AppBar = ({
     const designer = (() => {
       try {
         return model.getDesigner();
-      } catch (error) {
+      } catch {
         return undefined;
       }
     })();
