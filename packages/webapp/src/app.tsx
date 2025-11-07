@@ -180,36 +180,36 @@ const router = createBrowserRouter(
         <Route
           path="/c/maps/:id/edit"
           element={<PageEditorWrapper mode="edit" />}
-          loader={mapLoader('edit')}
+          loader={mapLoader('edit', true)}
           errorElement={<ErrorPage />}
         />
         <Route
           path="/c/maps/:id/print"
           element={<PageEditorWrapper mode="view-private" />}
-          loader={mapLoader('view-private')}
+          loader={mapLoader('view-private', true)}
           errorElement={<ErrorPage />}
         />
         <Route
           path="/c/maps/:id/:hid/view"
           element={<PageEditorWrapper mode="view-private" />}
-          loader={mapLoader('view-private')}
+          loader={mapLoader('view-private', true)}
           errorElement={<ErrorPage />}
         />
         <Route
           path="/c/maps/:id/public"
-          loader={mapLoader('view-public')}
+          loader={mapLoader('view-public', true)}
           element={<PageEditorWrapper mode="view-public" />}
           errorElement={<ErrorPage />}
         />
         <Route
           path="/c/maps/:id/embed"
-          loader={mapLoader('view-public')}
+          loader={mapLoader('view-public', true)}
           element={<PageEditorWrapper mode="view-public" />}
           errorElement={<ErrorPage />}
         />
         <Route
           path="/c/maps/:id/try"
-          loader={mapLoader('try')}
+          loader={mapLoader('try', true)}
           element={<PageEditorWrapper mode="try" />}
           errorElement={<ErrorPage />}
         />
