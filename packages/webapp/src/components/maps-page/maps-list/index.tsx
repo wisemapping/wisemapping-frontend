@@ -232,6 +232,8 @@ interface MapsListProps {
   filter: Filter;
 }
 
+const isLabelFilter = (filter: Filter): filter is LabelFilter => filter.type === 'label';
+
 const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => boolean) => {
   return (mapInfo: MapInfo) => {
     // Check for filter condition
@@ -308,11 +310,27 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     dayjs.locale(userLocale.code);
   }, [userLocale.code]);
 
+  const filterLabelId = isLabelFilter(props.filter) ? props.filter.label.id : undefined;
+
   useEffect(() => {
     setSelected([]);
     setPage(0);
-    setFilter(props.filter);
-  }, [props.filter]);
+    setFilter((prevFilter) => {
+      const nextFilter = props.filter;
+
+      if (prevFilter.type === nextFilter.type) {
+        if (isLabelFilter(nextFilter) && isLabelFilter(prevFilter)) {
+          if (prevFilter.label.id === nextFilter.label.id) {
+            return prevFilter;
+          }
+        } else {
+          return prevFilter;
+        }
+      }
+
+      return nextFilter;
+    });
+  }, [props.filter.type, filterLabelId]);
 
   const { isLoading, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
     return client.fetchAllMaps();

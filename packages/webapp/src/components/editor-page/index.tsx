@@ -37,7 +37,6 @@ import exampleMap from '../../classes/client/mock-client/example-map.wxml';
 import JwtTokenConfig from '../../classes/jwt-token-config';
 import { useLoaderData, useNavigation, useSearchParams } from 'react-router';
 import { EditorMetadata, PageModeType } from './loader';
-import { useFetchAccount } from '../../classes/middleware';
 import { ClientContext } from '../../classes/provider/client-context';
 import { KeyboardContext } from '../../classes/provider/keyboard-context';
 import { SEOHead } from '../seo';
@@ -148,7 +147,6 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   // Account loads asynchronously and should NOT block editor rendering.
   // AppI18n.getUserLocale() handles undefined account gracefully by falling back to default locale.
   // Editor should render immediately once editorMetadata is available.
-  const account = useFetchAccount(); // Load asynchronously, don't block
   const loadCompleted = !!editorMetadata;
 
   let persistence: PersistenceManager;

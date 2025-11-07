@@ -233,6 +233,7 @@ class MockClient implements Client {
       id: id,
       isLocked: false,
       jsonProps: '{ "zoom": 0.8 }',
+      role: 'owner',
     });
   }
 

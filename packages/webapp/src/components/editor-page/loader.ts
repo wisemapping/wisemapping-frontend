@@ -19,7 +19,7 @@
 import { ErrorInfo, MapMetadata } from '../../classes/client';
 import type { EditorRenderMode } from '@wisemapping/mindplot';
 import AppConfig from '../../classes/app-config';
-import { queryClient } from '../../app';
+import queryClient from '../../queryClient';
 import Client from '../../classes/client';
 
 export type EditorMetadata = {
