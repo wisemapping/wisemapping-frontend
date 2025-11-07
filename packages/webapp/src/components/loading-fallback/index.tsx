@@ -21,8 +21,21 @@ import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
+import { EditorLoadingSkeleton } from '@wisemapping/editor';
+
+const isEditorRoute = () => {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return /\/c\/maps\/(?:\d+)(?:\/|$)/.test(window.location.pathname);
+};
 
 const LoadingFallback = (): React.ReactElement => {
+  if (isEditorRoute()) {
+    return <EditorLoadingSkeleton />;
+  }
+
   return (
     <Box
       display="flex"

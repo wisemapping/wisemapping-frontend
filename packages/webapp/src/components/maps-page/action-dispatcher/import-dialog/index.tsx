@@ -93,6 +93,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
 
     if (files) {
       const file = files[0];
+      const extensionFile = file.name.split('.').pop()?.toLowerCase();
       // Closure to capture the file information.
       reader.onload = (event) => {
         // Suggest file name ...
@@ -104,7 +105,6 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
           }
         }
 
-        const extensionFile = file.name.split('.').pop();
         const extensionAccept = ['wxml', 'mm', 'mmx', 'xmind', 'mmap', 'opml'];
 
         if (!extensionFile || !extensionAccept.includes(extensionFile)) {
@@ -123,16 +123,23 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
           });
         }
 
-        model.contentType = 'application/xml';
+        model.contentType =
+          extensionFile === 'xmind' ? 'application/vnd.xmind.workbook' : 'application/xml';
 
         const fileContent = event?.target?.result;
-        const mapConent: string | undefined =
-          typeof fileContent === 'string' ? fileContent : fileContent?.toString();
+        let mapContent: string | Uint8Array;
+        if (typeof fileContent === 'string') {
+          mapContent = fileContent;
+        } else if (fileContent instanceof ArrayBuffer) {
+          mapContent = new Uint8Array(fileContent);
+        } else {
+          mapContent = '';
+        }
 
         try {
           const importer: Importer = TextImporterFactory.create(
             extensionFile,
-            mapConent ? mapConent : '',
+            mapContent,
           );
 
           importer.import(model.title, model.description).then((res) => {
@@ -158,7 +165,11 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
       };
 
       // Read in the image file as a data URL.
-      reader.readAsText(file);
+      if (extensionFile === 'xmind') {
+        reader.readAsArrayBuffer(file);
+      } else {
+        reader.readAsText(file);
+      }
     }
   };
 
