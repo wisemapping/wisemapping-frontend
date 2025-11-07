@@ -40,6 +40,8 @@ import { createEditorTheme } from '../theme';
 import { ThemeVariantStorage } from '../types/ThemeVariantStorage';
 import EditorLoadingSkeleton from './editor-loading-skeleton';
 
+const EMBED_READY_ATTRIBUTE = 'data-wisemapping-embed-loaded';
+
 type EditorProps = {
   theme?: Theme;
   onAction: (action: ToolbarActionType) => void;
@@ -99,6 +101,38 @@ const EditorContent = ({
 
     return unsubscribe;
   }, [themeVariantStorage, designer]);
+
+  // Mark embed DOM element when the map has finished loading
+  React.useEffect(() => {
+    if (!designer) {
+      return undefined;
+    }
+
+    const isEmbedRoute =
+      typeof window !== 'undefined' && window.location.pathname.includes('/embed');
+    if (!isEmbedRoute) {
+      return undefined;
+    }
+
+    const handleLoadSuccess = () => {
+      if (typeof document !== 'undefined') {
+        document.body.setAttribute(EMBED_READY_ATTRIBUTE, 'true');
+      }
+    };
+
+    designer.addEvent('loadSuccess', handleLoadSuccess);
+
+    if (model?.isMapLoadded()) {
+      handleLoadSuccess();
+    }
+
+    return () => {
+      designer.removeEvent('loadSuccess', handleLoadSuccess);
+      if (typeof document !== 'undefined') {
+        document.body.removeAttribute(EMBED_READY_ATTRIBUTE);
+      }
+    };
+  }, [designer, model]);
 
   // Initialize locale ...
   const locale = options.locale;
