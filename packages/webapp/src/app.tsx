@@ -30,7 +30,7 @@ import ForgotPasswordSuccessPage from './components/forgot-password-success-page
 import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
 import { ForgotPasswordPage } from './components/forgot-password-page';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from 'react-query';
 import { createAppTheme } from './theme';
 import AppI18n, { Locales } from './classes/app-i18n';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -47,6 +47,7 @@ import { EditorLoadingSkeleton } from '@wisemapping/editor';
 import { HelmetProvider } from './components/seo';
 import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
 import { loader as configLoader } from './loader';
+import queryClient from './queryClient';
 
 import { ClientContext } from './classes/provider/client-context';
 import { KeyboardContext } from './classes/provider/keyboard-context';
@@ -221,15 +222,6 @@ const router = createBrowserRouter(
     },
   },
 );
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchIntervalInBackground: false,
-      staleTime: 5 * 1000 * 60, // 5 minutes
-    },
-  },
-});
 
 // eslint-disable-next-line react/prop-types
 function Redirect({ to }) {
