@@ -19,6 +19,7 @@ import StorageIcon from '@mui/icons-material/Storage';
 import MemoryIcon from '@mui/icons-material/Memory';
 import ComputerIcon from '@mui/icons-material/Computer';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -93,6 +94,9 @@ const SystemInformation = (): ReactElement => {
         return 'success';
     }
   };
+
+  const listingMetrics = systemInfo?.mindmapListingMetrics;
+  const hasListingSnapshot = listingMetrics?.enabled && listingMetrics.lastUpdated !== undefined;
 
   if (loadingInfo || loadingHealth) {
     return (
@@ -456,6 +460,173 @@ const SystemInformation = (): ReactElement => {
               </CardContent>
             </Card>
           </Box>
+        </Box>
+
+        {/* Mindmap Listing Performance */}
+        <Box>
+          <Card>
+            <CardHeader
+              avatar={<QueryStatsIcon color="primary" />}
+              title={intl.formatMessage({
+                id: 'admin.system.mindmapMetrics.title',
+                defaultMessage: 'Mindmap Listing Performance',
+              })}
+              action={
+                <Chip
+                  label={
+                    listingMetrics?.enabled
+                      ? intl.formatMessage({ id: 'common.enabled', defaultMessage: 'Enabled' })
+                      : intl.formatMessage({ id: 'common.disabled', defaultMessage: 'Disabled' })
+                  }
+                  color={listingMetrics?.enabled ? 'success' : 'default'}
+                  size="small"
+                />
+              }
+            />
+            <CardContent>
+              {!listingMetrics?.enabled && (
+                <Alert severity="info">
+                  {intl.formatMessage({
+                    id: 'admin.system.mindmapMetrics.disabled',
+                    defaultMessage:
+                      'Set `wisemapping.performance.log-mindmap-listing` to true to capture metrics.',
+                  })}
+                </Alert>
+              )}
+
+              {listingMetrics?.enabled && !hasListingSnapshot && (
+                <Typography variant="body2" color="text.secondary">
+                  {intl.formatMessage({
+                    id: 'admin.system.mindmapMetrics.pending',
+                    defaultMessage:
+                      'Waiting for the next mindmap listing request to capture metrics.',
+                  })}
+                </Typography>
+              )}
+
+              {listingMetrics?.enabled && hasListingSnapshot && (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                    <Box>
+                      <Typography variant="caption" color="text.secondary">
+                        {intl.formatMessage({
+                          id: 'admin.system.mindmapMetrics.lastUpdated',
+                          defaultMessage: 'Last Updated',
+                        })}
+                      </Typography>
+                      <Typography variant="body2">
+                        {listingMetrics?.lastUpdated
+                          ? formatDate(listingMetrics.lastUpdated)
+                          : intl.formatMessage({ id: 'common.na', defaultMessage: 'N/A' })}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="caption" color="text.secondary">
+                        {intl.formatMessage({
+                          id: 'admin.system.mindmapMetrics.totalTime',
+                          defaultMessage: 'Total Time (ms)',
+                        })}
+                      </Typography>
+                      <Typography variant="body2">
+                        {listingMetrics?.totalTimeMs?.toLocaleString() ?? '—'}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="caption" color="text.secondary">
+                        {intl.formatMessage({
+                          id: 'admin.system.mindmapMetrics.mapCount',
+                          defaultMessage: 'Maps Returned',
+                        })}
+                      </Typography>
+                      <Typography variant="body2">
+                        {listingMetrics?.mapCount?.toLocaleString() ?? '—'}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="caption" color="text.secondary">
+                        {intl.formatMessage({
+                          id: 'admin.system.mindmapMetrics.collaborations',
+                          defaultMessage: 'Collaborations Considered',
+                        })}
+                      </Typography>
+                      <Typography variant="body2">
+                        {listingMetrics?.collaborationCount?.toLocaleString() ?? '—'}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="caption" color="text.secondary">
+                        {intl.formatMessage({
+                          id: 'admin.system.mindmapMetrics.executedStatements',
+                          defaultMessage: 'Prepared Statements',
+                        })}
+                      </Typography>
+                      <Typography variant="body2">
+                        {listingMetrics?.executedStatements?.toLocaleString() ?? '—'}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="caption" color="text.secondary">
+                        {intl.formatMessage({
+                          id: 'admin.system.mindmapMetrics.entityLoads',
+                          defaultMessage: 'Entity Loads',
+                        })}
+                      </Typography>
+                      <Typography variant="body2">
+                        {listingMetrics?.entityLoads?.toLocaleString() ?? '—'}
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  {(listingMetrics?.segments?.length ?? 0) > 0 && (
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                      <Typography variant="subtitle2">
+                        {intl.formatMessage({
+                          id: 'admin.system.mindmapMetrics.segments',
+                          defaultMessage: 'Execution Segments',
+                        })}
+                      </Typography>
+                      {listingMetrics?.segments?.map((segment) => (
+                        <Box
+                          key={segment.name}
+                          sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}
+                        >
+                          <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+                            {segment.name}: {segment.timeMs.toLocaleString()} ms (
+                            {(segment.ratio * 100).toFixed(1)}%)
+                          </Typography>
+                          <LinearProgress
+                            variant="determinate"
+                            value={Math.max(0, Math.min(100, segment.ratio * 100))}
+                          />
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
+
+                  {(listingMetrics?.topQueries?.length ?? 0) > 0 && (
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                      <Typography variant="subtitle2">
+                        {intl.formatMessage({
+                          id: 'admin.system.mindmapMetrics.topQueries',
+                          defaultMessage: 'Top Queries',
+                        })}
+                      </Typography>
+                      {listingMetrics?.topQueries?.map((query, index) => (
+                        <Box key={`${query.sql}-${index}`}>
+                          <Typography
+                            variant="body2"
+                            sx={{ fontFamily: 'monospace', whiteSpace: 'pre-wrap' }}
+                          >
+                            {query.executions.toLocaleString()}x | {query.sql}
+                          </Typography>
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
+                </Box>
+              )}
+            </CardContent>
+          </Card>
         </Box>
 
         {/* Statistics */}

@@ -33,6 +33,7 @@
   "dependencies": {
     "@wisemapping/web2d": "workspace:*",
     "html2canvas": "^1.4.1",
+    "fflate": "file:vendor/fflate",
     "jspdf": "^3.0.3",
     "lodash": "^4.17.21",
     "xml-formatter": "^3.6.7"

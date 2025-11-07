@@ -146,6 +146,26 @@ export interface SystemInfo {
     totalMindmaps?: number;
     error?: string;
   };
+  mindmapListingMetrics?: {
+    enabled: boolean;
+    lastUpdated?: number;
+    mapCount?: number;
+    collaborationCount?: number;
+    totalTimeMs?: number;
+    executedStatements?: number;
+    entityFetches?: number;
+    collectionFetches?: number;
+    entityLoads?: number;
+    segments?: {
+      name: string;
+      timeMs: number;
+      ratio: number;
+    }[];
+    topQueries?: {
+      sql: string;
+      executions: number;
+    }[];
+  };
 }
 
 export interface SystemHealth {
