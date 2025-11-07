@@ -31,7 +31,13 @@ describe('XMind Importer Test Suite', () => {
   test.each(testNames)('Importing XMind %p suite', async (testName: string) => {
     // Load XMind content...
     const xmindPath = path.resolve(__dirname, `./input/xmind/${testName}.xmind`);
-    const xmindContent = fs.readFileSync(xmindPath, 'utf-8');
+    const xmindBuffer = fs.readFileSync(xmindPath);
+    const signature = xmindBuffer.subarray(0, 2).toString();
+    const isZipArchive = signature === 'PK';
+
+    const xmindContent: string | Uint8Array = isZipArchive
+      ? xmindBuffer
+      : xmindBuffer.toString('utf-8');
 
     const importer = TextImporterFactory.create('xmind', xmindContent);
 

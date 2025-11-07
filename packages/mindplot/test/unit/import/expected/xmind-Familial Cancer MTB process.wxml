@@ -1,0 +1,134 @@
+<map name='xmind-Familial Cancer MTB process' version='tango' theme='prism' layout='tree'>
+    <topic central='true' text='Familial Cancer MTB process' id='1'>
+        <topic position='440,-280' order='0' text='Demographics' shape='line' id='2' bgColor='#D0D0D0' brColor='#D0D0D0'>
+        <topic position='660,-350' order='0' text='Name' shape='line' id='3' bgColor='#D0D0D0' brColor='#D0D0D0'>
+        </topic>
+        <topic position='660,-210' order='1' text='PID' shape='line' id='4' bgColor='#D0D0D0' brColor='#D0D0D0'>
+        </topic>
+        <topic position='660,-70' order='2' text='H&amp;C' shape='line' id='5' bgColor='#D0D0D0' brColor='#D0D0D0'>
+        </topic>
+        <topic position='660,70' order='3' text='PED' shape='line' id='6' bgColor='#D0D0D0' brColor='#D0D0D0'>
+        </topic>
+        <topic position='660,210' order='4' text='DoB' shape='line' id='7' bgColor='#D0D0D0' brColor='#D0D0D0'>
+        </topic>
+        <topic position='660,350' order='5' text='Gender: ??' shape='line' id='8' bgColor='#D0D0D0' brColor='#D0D0D0'>
+        </topic>
+        </topic>
+        <topic position='440,-140' order='1' text='Global' shape='line' id='9'>
+        <topic position='660,0' order='0' text='Genomic indicator list' shape='line' id='10'>
+        <topic position='880,-70' order='0' text='Genomic indicator (Familial risk)' shape='line' id='11'>
+        <topic position='1100,-210' order='0' text='Name' shape='line' id='12'>
+        </topic>
+        <topic position='1100,-70' order='1' text='Category' shape='line' id='13'>
+        </topic>
+        <topic position='1100,70' order='2' text='Phenotype' shape='line' id='14'>
+        </topic>
+        <topic position='1100,210' order='3' text='Evidence' shape='line' id='15'>
+        <topic position='1320,0' order='0' text='Variant link' shape='line' id='16'>
+        </topic>
+        </topic>
+        </topic>
+        <topic position='880,70' order='1' text='Genomic indicator (PGx)' shape='line' id='17'>
+        <topic position='1100,-210' order='0' text='Name' shape='line' id='18'>
+        </topic>
+        <topic position='1100,-70' order='1' text='Category' shape='line' id='19'>
+        </topic>
+        <topic position='1100,70' order='2' text='Phenotype' shape='line' id='20'>
+        </topic>
+        <topic position='1100,210' order='3' text='Evidence' shape='line' id='21'>
+        <topic position='1320,0' order='0' text='PGx link' shape='line' id='22'>
+        </topic>
+        </topic>
+        </topic>
+        </topic>
+        </topic>
+        <topic position='440,0' order='2' text='Context' shape='line' id='23'>
+        <topic position='660,0' order='0' text='Familial cancer screening planning' shape='line' id='24'>
+        <topic position='880,-210' order='0' text='Tumour type' shape='line' id='25'>
+        </topic>
+        <topic position='880,-70' order='1' text='Registry status' shape='line' id='26'>
+        </topic>
+        <topic position='880,70' order='2' text='Funding stream' shape='line' id='27'>
+        </topic>
+        <topic position='880,210' order='3' text='Sample ID:' shape='line' id='28'>
+        </topic>
+        </topic>
+        </topic>
+        <topic position='440,140' order='3' text='Events' shape='line' id='29'>
+        <topic position='660,-140' order='0' text='Genomics result' shape='line' id='30'>
+        <topic position='880,-70' order='0' text='Tumor type' shape='line' id='31'>
+        </topic>
+        <topic position='880,70' order='1' text='Variants' shape='line' id='32'>
+        </topic>
+        </topic>
+        <topic position='660,0' order='1' text='Clinical Scientist review' shape='line' id='33'>
+        <topic position='880,-70' order='0' text='Per Variant review' shape='line' id='34'>
+        <topic position='1100,-210' order='0' text='Variant link' shape='line' id='35'>
+        </topic>
+        <topic position='1100,-70' order='1' text='Review result' shape='line' id='36'>
+        </topic>
+        <topic position='1100,70' order='2' text='Reviewed by' shape='line' id='37'>
+        </topic>
+        <topic position='1100,210' order='3' text='Review notes' shape='line' id='38'>
+        </topic>
+        </topic>
+        <topic position='880,70' order='1' text='Review summary' shape='line' id='39'>
+        </topic>
+        </topic>
+        <topic position='660,140' order='2' text='MTB meeting report' shape='line' id='40'>
+        <topic position='880,-70' order='0' text='Background' shape='line' id='41'>
+        <topic position='1100,-420' order='0' text='Primary Cancer Diagnosis or 2nd cancer pren?' shape='line' id='42'>
+        </topic>
+        <topic position='1100,-280' order='1' text='Has pt had prev germline anaysis' shape='line' id='43'>
+        </topic>
+        <topic position='1100,-140' order='2' text='Previous IHC results:' shape='line' id='44'>
+        </topic>
+        <topic position='1100,0' order='3' text='Does pathology alone meet NHS-E TD criteria?' shape='line' id='45'>
+        </topic>
+        <topic position='1100,140' order='4' text='Other results from Somatic report(s)' shape='line' id='46'>
+        </topic>
+        <topic position='1100,280' order='5' text='Previous Somatic sample?' shape='line' id='47'>
+        </topic>
+        <topic position='1100,420' order='6' text='% Neoplastic nuclei:-' shape='line' id='48'>
+        </topic>
+        </topic>
+        <topic position='880,70' order='1' text='Recommendation' shape='line' id='49'>
+        <topic position='1100,-140' order='0' text='Test required' shape='line' id='50'>
+        </topic>
+        <topic position='1100,0' order='1' text='Tested by' shape='line' id='51'>
+        </topic>
+        <topic position='1100,140' order='2' text='Additional info' shape='line' id='52'>
+        </topic>
+        </topic>
+        </topic>
+        </topic>
+        <topic position='440,280' order='4' text='Managed tasks' shape='line' id='53'>
+        <topic position='660,-70' order='0' text='MDT Referral' shape='line' id='54'>
+        <topic position='880,-140' order='0' text='Referral status' shape='line' id='55'>
+        <topic position='1100,-140' order='0' text='Awaiting referral' shape='line' id='56'>
+        </topic>
+        <topic position='1100,0' order='1' text='Clinic scheduled' shape='line' id='57'>
+        </topic>
+        <topic position='1100,140' order='2' text='Seen at clinic' shape='line' id='58'>
+        </topic>
+        </topic>
+        <topic position='880,0' order='1' text='Status date' shape='line' id='59'>
+        </topic>
+        <topic position='880,140' order='2' text='MDT target' shape='line' id='60'>
+        </topic>
+        </topic>
+        <topic position='660,70' order='1' text='Deceased pathway' shape='line' id='61'>
+        <topic position='880,0' order='0' text='Check for stored normal tissue
+Normal tissue available
+Relatives contacted
+DNA extracted and stored
+o
+Normal tissue not available
+Close case' shape='line' id='62'>
+        </topic>
+        </topic>
+        </topic>
+    </topic>
+    <relationship srcTopicId='35' destTopicId='32'/>
+    <relationship srcTopicId='32' destTopicId='16'/>
+</map>

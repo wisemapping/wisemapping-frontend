@@ -65,7 +65,10 @@
  * const wisemappingXML = await importer.import('My Mind Map', 'Description');
  * ```
  */
+import { unzipSync } from 'fflate';
+import type { LayoutType } from '../layout/LayoutType';
 import Importer from './Importer';
+import { decodeUtf8, tryDecodeUtf8 } from './support/Utf8Decoder';
 
 // XMind data structures
 interface XMindTopic {
@@ -74,6 +77,7 @@ interface XMindTopic {
   children?: {
     attached?: XMindTopic[];
   };
+  structureClass?: string;
   style?: {
     id: string;
     properties?: {
@@ -86,51 +90,79 @@ interface XMindTopic {
   icons?: string[];
 }
 
-interface XMindContent {
-  id: string;
-  revisionId: string;
-  class: string;
-  rootTopic: XMindTopic;
-  title: string;
+interface XMindExtension {
+  provider: string;
+  content?: Record<string, unknown>;
 }
 
+interface XMindRelationship {
+  id: string;
+  end1Id: string;
+  end2Id: string;
+  title?: string;
+}
+
+interface XMindSheet {
+  id: string;
+  revisionId?: string;
+  class: string;
+  rootTopic: XMindTopic;
+  title?: string;
+  topicOverlapping?: string;
+  compactLayoutModeLevel?: string;
+  extensions?: XMindExtension[];
+  relationships?: XMindRelationship[];
+}
+
+type XMindRawInput = string | ArrayBuffer | Uint8Array;
+
+type DetectedInput = { kind: 'xml'; xml: string } | { kind: 'json'; sheet: XMindSheet };
+
 class XMindImporter extends Importer {
-  private xmindInput: string;
+  private xmindInput: XMindRawInput;
 
   private idCounter = 1;
 
   private topicIdMap: Map<string, string>;
 
-  constructor(map: string) {
+  private currentLayout: LayoutType = 'mindmap';
+
+  constructor(map: XMindRawInput) {
     super();
     this.xmindInput = map;
     this.topicIdMap = new Map();
   }
 
-  import(nameMap: string, description?: string): Promise<string> {
+  async import(nameMap: string, description?: string): Promise<string> {
     try {
       console.log(`Importing XMind map: ${nameMap}, description: ${description}`);
 
-      // Check if it's XML format (older XMind) or JSON format (newer XMind)
-      if (
-        this.xmindInput.trim().startsWith('<?xml') ||
-        this.xmindInput.trim().startsWith('<xmap-content')
-      ) {
-        return Promise.resolve(this.importXMLFormat(nameMap, description));
+      const detected = await this.detectInput();
+
+      this.resetState();
+
+      if (detected.kind === 'xml') {
+        return this.importXMLFormat(detected.xml, nameMap, description);
       }
-      return Promise.resolve(this.importJSONFormat(nameMap, description));
+
+      return this.importJSONFormat(detected.sheet, nameMap, description);
     } catch (error) {
       console.error('Error importing XMind map:', error);
-      // Fallback to basic map with error info
-      return Promise.resolve(this.createFallbackMap(nameMap, error as Error));
+      return this.createFallbackMap(nameMap, error as Error);
     }
   }
 
-  private importXMLFormat(nameMap: string, description?: string): string {
+  private resetState(): void {
+    this.idCounter = 1;
+    this.topicIdMap.clear();
+    this.currentLayout = 'mindmap';
+  }
+
+  private importXMLFormat(xmlContent: string, nameMap: string, description?: string): string {
     try {
       // Parse XML content
       const parser = new DOMParser();
-      const doc = parser.parseFromString(this.xmindInput, 'text/xml');
+      const doc = parser.parseFromString(xmlContent, 'text/xml');
 
       // Find the root topic (within sheet element) - handle namespaces
       let sheet = doc.querySelector('sheet');
@@ -153,30 +185,23 @@ class XMindImporter extends Importer {
         throw new Error('No root topic found in XMind file');
       }
 
-      // Reset counters and ID map
-      this.idCounter = 1;
-      this.topicIdMap.clear();
+      this.currentLayout = this.detectLayoutFromXML(rootTopic);
 
       // Generate WiseMapping XML directly from XML structure
-      const xmlContent = this.generateWiseMappingXMLFromXML(rootTopic, nameMap, description);
+      const generated = this.generateWiseMappingXMLFromXML(rootTopic, nameMap, description);
 
-      return xmlContent;
+      return generated;
     } catch (error) {
       console.error('XML XMind import failed:', error);
       return this.createFallbackMap(nameMap, error as Error);
     }
   }
 
-  private importJSONFormat(nameMap: string, description?: string): string {
+  private importJSONFormat(sheet: XMindSheet, nameMap: string, description?: string): string {
     try {
-      // Parse the XMind content
-      const xmindData = this.parseXMindContent();
+      this.currentLayout = this.detectLayoutFromJson(sheet);
 
-      // Reset counters
-      this.idCounter = 1;
-
-      // Generate WiseMapping XML directly
-      const xmlContent = this.generateWiseMappingXML(xmindData.rootTopic, nameMap, description);
+      const xmlContent = this.generateWiseMappingXML(sheet, nameMap, description);
 
       return xmlContent;
     } catch (error) {
@@ -185,24 +210,196 @@ class XMindImporter extends Importer {
     }
   }
 
-  private parseXMindContent(): XMindContent {
-    try {
-      // XMind files are ZIP archives, but the content is passed as a string
-      // We need to extract the content.json from the ZIP data
-      // The format is: content.json[{...}] where {...} is the JSON content
-      const contentMatch = this.xmindInput.match(/content\.json\[(.*?)\]PK/);
-      if (!contentMatch) {
-        throw new Error('Could not find content.json in XMind file');
+  private detectLayoutFromXML(rootTopic: Element): LayoutType {
+    const structureClass = rootTopic.getAttribute('structure-class');
+    return this.mapStructureClassToLayout(structureClass) ?? 'mindmap';
+  }
+
+  private detectLayoutFromJson(sheet: XMindSheet): LayoutType {
+    const rootStructure = sheet.rootTopic?.structureClass;
+    const layoutFromStructure = this.mapStructureClassToLayout(rootStructure);
+    if (layoutFromStructure) {
+      return layoutFromStructure;
+    }
+
+    if (sheet.extensions) {
+      for (const extension of sheet.extensions) {
+        const centralTopic = extension.content?.['centralTopic'] as string | undefined;
+        const layout = this.mapStructureClassToLayout(centralTopic);
+        if (layout) {
+          return layout;
+        }
+      }
+    }
+
+    return 'mindmap';
+  }
+
+  private mapStructureClassToLayout(structureClass?: string | null): LayoutType | null {
+    if (!structureClass) {
+      return null;
+    }
+
+    const normalized = structureClass.toLowerCase();
+
+    const treeIndicators = ['org-chart', 'tree', 'timeline', 'logic', 'fishbone', 'matrix'];
+    if (treeIndicators.some((indicator) => normalized.includes(indicator))) {
+      return 'tree';
+    }
+
+    const mindmapIndicators = ['map', 'mindmap'];
+    if (mindmapIndicators.some((indicator) => normalized.includes(indicator))) {
+      return 'mindmap';
+    }
+
+    return null;
+  }
+
+  private async detectInput(): Promise<DetectedInput> {
+    if (typeof this.xmindInput === 'string') {
+      const trimmed = this.xmindInput.trim();
+
+      if (this.looksLikeXml(trimmed)) {
+        return { kind: 'xml', xml: this.xmindInput };
       }
 
-      const contentJson = contentMatch[1];
-      const parsedContent = JSON.parse(contentJson);
+      if (this.looksLikeJson(trimmed)) {
+        const sheet = this.parseJsonSheet(this.xmindInput);
+        return { kind: 'json', sheet };
+      }
 
-      return parsedContent;
-    } catch (error) {
-      console.error('Error parsing XMind content:', error);
-      throw new Error(`Failed to parse XMind content: ${(error as Error).message}`);
+      if (this.looksLikeZipHeader(trimmed)) {
+        const binary = this.binaryStringToUint8Array(this.xmindInput);
+        return this.detectFromZip(binary);
+      }
+
+      try {
+        const binary = this.binaryStringToUint8Array(this.xmindInput);
+        return this.detectFromZip(binary);
+      } catch (error) {
+        throw new Error(
+          `Unsupported XMind input: unable to detect format (${(error as Error).message})`,
+        );
+      }
     }
+
+    const normalized = this.normalizeToUint8Array(this.xmindInput as ArrayBuffer | Uint8Array);
+    const decoded = this.tryDecodeToString(normalized);
+
+    if (decoded) {
+      const trimmed = decoded.trim();
+      if (this.looksLikeXml(trimmed)) {
+        return { kind: 'xml', xml: decoded };
+      }
+
+      if (this.looksLikeJson(trimmed)) {
+        const sheet = this.parseJsonSheet(decoded);
+        return { kind: 'json', sheet };
+      }
+
+      if (this.looksLikeZipHeader(trimmed)) {
+        return this.detectFromZip(normalized);
+      }
+    }
+
+    return this.detectFromZip(normalized);
+  }
+
+  private looksLikeXml(input: string): boolean {
+    return input.startsWith('<?xml') || input.startsWith('<xmap-content');
+  }
+
+  private looksLikeJson(input: string): boolean {
+    return input.startsWith('{') || input.startsWith('[');
+  }
+
+  private looksLikeZipHeader(input: string): boolean {
+    return input.startsWith('PK');
+  }
+
+  private binaryStringToUint8Array(input: string): Uint8Array {
+    const buffer = new Uint8Array(input.length);
+    for (let i = 0; i < input.length; i += 1) {
+      buffer[i] = input.charCodeAt(i) & 0xff;
+    }
+    return buffer;
+  }
+
+  private normalizeToUint8Array(input: ArrayBuffer | Uint8Array): Uint8Array {
+    if (input instanceof Uint8Array) {
+      return input;
+    }
+    return new Uint8Array(input);
+  }
+
+  private tryDecodeToString(input: ArrayBuffer | Uint8Array): string | null {
+    return tryDecodeUtf8(input);
+  }
+
+  private detectFromZip(data: Uint8Array | null): DetectedInput {
+    if (!data || data.length === 0) {
+      throw new Error('Empty XMind ZIP payload');
+    }
+
+    let files: Record<string, Uint8Array>;
+    try {
+      files = unzipSync(data);
+    } catch (error) {
+      throw new Error(`Failed to unzip XMind archive: ${(error as Error).message}`);
+    }
+
+    const entries = Object.keys(files);
+
+    const jsonEntry = entries.find((entry) => entry.endsWith('content.json'));
+    if (jsonEntry) {
+      const jsonContent = decodeUtf8(files[jsonEntry]);
+      const sheet = this.parseJsonSheet(jsonContent);
+      return { kind: 'json', sheet };
+    }
+
+    const xmlEntry = entries.find((entry) => entry.endsWith('content.xml'));
+    if (xmlEntry) {
+      const xmlContent = decodeUtf8(files[xmlEntry]);
+      return { kind: 'xml', xml: xmlContent };
+    }
+
+    throw new Error('XMind ZIP missing content.json or content.xml');
+  }
+
+  private parseJsonSheet(jsonContent: string): XMindSheet {
+    const parsed = JSON.parse(jsonContent) as XMindSheet | XMindSheet[] | { sheets?: XMindSheet[] };
+
+    if (Array.isArray(parsed)) {
+      const sheet = this.pickSheet(parsed);
+      if (sheet) {
+        return sheet;
+      }
+    } else if (parsed && typeof parsed === 'object') {
+      if ('rootTopic' in parsed && (parsed as XMindSheet).rootTopic) {
+        return parsed as XMindSheet;
+      }
+
+      if ('sheets' in parsed) {
+        const candidate = (parsed as { sheets?: XMindSheet[] }).sheets;
+        if (candidate && Array.isArray(candidate)) {
+          const sheet = this.pickSheet(candidate);
+          if (sheet) {
+            return sheet;
+          }
+        }
+      }
+    }
+
+    throw new Error('Invalid XMind JSON content: root topic not found');
+  }
+
+  private pickSheet(sheets: XMindSheet[]): XMindSheet | null {
+    const sheetWithRoot = sheets.find((sheet) => sheet.class === 'sheet' && !!sheet.rootTopic);
+    if (sheetWithRoot) {
+      return sheetWithRoot;
+    }
+
+    return sheets.length > 0 && sheets[0].rootTopic ? sheets[0] : null;
   }
 
   private convertXMindColor(xmindColor: string): string {
@@ -222,7 +419,24 @@ class XMindImporter extends Importer {
     return this.idCounter++;
   }
 
-  private calculatePosition(order: number): { x: number; y: number } {
+  private calculatePosition(
+    order: number,
+    depth: number,
+    siblingCount: number,
+  ): {
+    x: number;
+    y: number;
+  } {
+    if (this.currentLayout === 'tree') {
+      const horizontalSpacing = 220;
+      const verticalSpacing = 140;
+      const x = (depth + 1) * horizontalSpacing;
+      const offset = ((siblingCount - 1) / 2) * verticalSpacing;
+      const y = order * verticalSpacing - offset;
+
+      return { x, y };
+    }
+
     // Distribute first-level topics evenly between left and right sides
     // Even orders (0, 2, 4...) = Right side, Odd orders (1, 3, 5...) = Left side
     const isEven = order % 2 === 0;
@@ -250,7 +464,7 @@ class XMindImporter extends Importer {
       centralTitle = titles.length > 0 ? titles[0].textContent : 'Central Topic';
     }
 
-    let xml = `<map name='${nameMap}' version='tango' theme='prism' layout='mindmap'>\n`;
+    let xml = `<map name='${nameMap}' version='tango' theme='prism' layout='${this.currentLayout}'>\n`;
 
     // Generate central topic
     xml += `    <topic central='true' text='${this.escapeXml(centralTitle)}' id='${centralId}'>\n`;
@@ -274,8 +488,9 @@ class XMindImporter extends Importer {
         const childTopics = Array.from(topicsElement.children).filter(
           (child) => child.tagName === 'topic' || child.localName === 'topic',
         );
+        const siblingCount = childTopics.length;
         childTopics.forEach((childTopic, index) => {
-          xml += this.generateChildTopicXMLFromXML(childTopic as Element, index);
+          xml += this.generateChildTopicXMLFromXML(childTopic as Element, index, 1, siblingCount);
         });
       }
     }
@@ -293,12 +508,17 @@ class XMindImporter extends Importer {
     return xml;
   }
 
-  private generateChildTopicXMLFromXML(xmlTopic: Element, order: number): string {
+  private generateChildTopicXMLFromXML(
+    xmlTopic: Element,
+    order: number,
+    depth: number,
+    siblingCount: number,
+  ): string {
     const topicId = this.generateId();
     const xmindTopicId = xmlTopic.getAttribute('id') || `topic${this.idCounter}`;
     this.topicIdMap.set(xmindTopicId, topicId.toString());
 
-    const position = this.calculatePosition(order);
+    const position = this.calculatePosition(order, depth, siblingCount);
     let title = xmlTopic.querySelector('title')?.textContent;
     if (!title) {
       const titles = xmlTopic.getElementsByTagName('title');
@@ -352,8 +572,14 @@ class XMindImporter extends Importer {
         const childTopics = Array.from(topicsElement.children).filter(
           (child) => child.tagName === 'topic' || child.localName === 'topic',
         );
+        const nestedSiblingCount = childTopics.length;
         childTopics.forEach((childTopic, index) => {
-          xml += this.generateChildTopicXMLFromXML(childTopic as Element, index);
+          xml += this.generateChildTopicXMLFromXML(
+            childTopic as Element,
+            index,
+            depth + 1,
+            nestedSiblingCount,
+          );
         });
       }
     }
@@ -391,6 +617,32 @@ class XMindImporter extends Importer {
     return relationshipsXML;
   }
 
+  private generateRelationshipsXMLFromJson(sheet: XMindSheet): string {
+    if (!sheet.relationships || sheet.relationships.length === 0) {
+      return '';
+    }
+
+    let relationshipsXML = '';
+    sheet.relationships.forEach((relationship) => {
+      const srcTopicId = this.mapTopicId(relationship.end1Id);
+      const destTopicId = this.mapTopicId(relationship.end2Id);
+
+      if (!srcTopicId || !destTopicId) {
+        return;
+      }
+
+      relationshipsXML += `    <relationship srcTopicId='${srcTopicId}' destTopicId='${destTopicId}'`;
+
+      if (relationship.title) {
+        relationshipsXML += ` label='${this.escapeXml(relationship.title)}'`;
+      }
+
+      relationshipsXML += '/>\n';
+    });
+
+    return relationshipsXML;
+  }
+
   private generateRelationshipXML(relationshipElement: Element): string {
     const end1 = relationshipElement.getAttribute('end1');
     const end2 = relationshipElement.getAttribute('end2');
@@ -422,36 +674,48 @@ class XMindImporter extends Importer {
   }
 
   private generateWiseMappingXML(
-    rootTopic: XMindTopic,
+    sheet: XMindSheet,
     nameMap: string,
     _description?: string,
   ): string {
+    const rootTopic = sheet.rootTopic;
+    const rootTitle = rootTopic.title || 'Central Topic';
     const centralId = this.generateId();
-    let xml = `<map name='${nameMap}' version='tango' theme='prism' layout='mindmap'>\n`;
+    this.topicIdMap.set(rootTopic.id, centralId.toString());
+
+    let xml = `<map name='${nameMap}' version='tango' theme='prism' layout='${this.currentLayout}'>\n`;
 
     // Generate central topic
-    xml += `    <topic central='true' text='${this.escapeXml(rootTopic.title)}' id='${centralId}'>\n`;
+    xml += `    <topic central='true' text='${this.escapeXml(rootTitle)}' id='${centralId}'>\n`;
 
     // Generate child topics recursively
     if (rootTopic.children?.attached) {
-      xml += this.generateChildTopicsXML(rootTopic.children.attached, 0);
+      xml += this.generateChildTopicsXML(rootTopic.children.attached, 1);
     }
 
     xml += '    </topic>\n';
+    const relationshipsXML = this.generateRelationshipsXMLFromJson(sheet);
+    if (relationshipsXML) {
+      xml += relationshipsXML;
+    }
+
     xml += '</map>';
 
     return xml;
   }
 
-  private generateChildTopicsXML(topics: XMindTopic[], _order: number): string {
+  private generateChildTopicsXML(topics: XMindTopic[], depth: number): string {
     let xml = '';
+    const siblingCount = topics.length;
 
     topics.forEach((topic, index) => {
       const topicId = this.generateId();
-      const position = this.calculatePosition(index);
+      this.topicIdMap.set(topic.id, topicId.toString());
+      const position = this.calculatePosition(index, depth, siblingCount);
       const bgColor = this.extractBackgroundColor(topic);
 
-      xml += `        <topic position='${position.x},${position.y}' order='${index}' text='${this.escapeXml(topic.title)}' shape='line' id='${topicId}'`;
+      const topicTitle = topic.title || 'Untitled';
+      xml += `        <topic position='${position.x},${position.y}' order='${index}' text='${this.escapeXml(topicTitle)}' shape='line' id='${topicId}'`;
 
       if (bgColor) {
         xml += ` bgColor='${bgColor}'`;
@@ -481,7 +745,7 @@ class XMindImporter extends Importer {
 
       // Recursively generate child topics
       if (topic.children?.attached) {
-        xml += this.generateChildTopicsXML(topic.children.attached, index);
+        xml += this.generateChildTopicsXML(topic.children.attached, depth + 1);
       }
 
       xml += '        </topic>\n';

@@ -24,7 +24,7 @@ import { expect } from '@jest/globals';
 import { diff } from 'jest-diff';
 import Importer from '../../../src/components/import/Importer';
 
-const saveOutputRecord = false;
+const saveOutputRecord = process.env.XMIND_IMPORTER_UPDATE_EXPECTED === 'true';
 
 export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType) => {
   const parser = new DOMParser();

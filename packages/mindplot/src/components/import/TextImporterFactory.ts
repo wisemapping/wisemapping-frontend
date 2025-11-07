@@ -23,36 +23,46 @@ import XMindImporter from './XMindImporter';
 import MindManagerImporter from './MindManagerImporter';
 import OPMLImporter from './OPMLImporter';
 import Importer from './Importer';
+import { decodeUtf8 } from './support/Utf8Decoder';
 
 export default class TextImporterFactory {
-  static create(type: string | undefined, map: string): Importer {
+  static create(type: string | undefined, map: string | ArrayBuffer | Uint8Array): Importer {
     let result: Importer;
+    const mapAsString = TextImporterFactory.asString(map);
     switch (type) {
       case 'wxml':
-        result = new WisemappingImporter(map);
+        result = new WisemappingImporter(mapAsString);
         return result;
       case 'mm':
         // Check if it's Freeplane or FreeMind
-        if (map.includes('freeplane') || map.includes('version="freeplane')) {
-          result = new FreeplaneImporter(map);
+        if (mapAsString.includes('freeplane') || mapAsString.includes('version="freeplane')) {
+          result = new FreeplaneImporter(mapAsString);
         } else {
-          result = new FreemindImporter(map);
+          result = new FreemindImporter(mapAsString);
         }
         return result;
       case 'mmx':
-        result = new FreeplaneImporter(map);
+        result = new FreeplaneImporter(mapAsString);
         return result;
       case 'xmind':
         result = new XMindImporter(map);
         return result;
       case 'mmap':
-        result = new MindManagerImporter(map);
+        result = new MindManagerImporter(mapAsString);
         return result;
       case 'opml':
-        result = new OPMLImporter(map);
+        result = new OPMLImporter(mapAsString);
         return result;
       default:
         throw new Error(`Unsupported type ${type}`);
     }
+  }
+
+  private static asString(map: string | ArrayBuffer | Uint8Array): string {
+    if (typeof map === 'string') {
+      return map;
+    }
+
+    return decodeUtf8(map);
   }
 }
