@@ -36,7 +36,7 @@ class BootstrapPersistenceManager extends PersistenceManager {
     this.bootstrapXML = bootstrapXML;
   }
 
-  async loadMapDom(_mapId: string): Promise<Document> {
+  async loadMapDom(): Promise<Document> {
     // Bootstrap XML is mandatory - use it instead of fetching from server
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(this.bootstrapXML, 'text/xml');
