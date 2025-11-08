@@ -163,13 +163,16 @@ class MindplotWebComponent extends HTMLElement {
 
     this._designer = buildDesigner(options);
     this._designer.addEvent('modelUpdate', () => {
-      this.setSaveRequired(true);
+      if (this._isLoaded) {
+        this.setSaveRequired(true);
+      }
     });
 
     this.registerShortcuts();
 
     this._designer.addEvent('loadSuccess', (): void => {
       this._isLoaded = true;
+      this.setSaveRequired(false);
     });
 
     return this._designer;
@@ -199,6 +202,9 @@ class MindplotWebComponent extends HTMLElement {
   }
 
   loadMap(id: string): Promise<void> {
+    this._isLoaded = false;
+    this.setSaveRequired(false);
+
     const instance = PersistenceManager.getInstance();
     return instance.load(id).then((mindmap) => this._designer!.loadMap(mindmap));
   }
