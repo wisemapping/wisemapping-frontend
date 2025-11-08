@@ -6157,6 +6157,7 @@ __metadata:
     cypress-image-snapshot: ^4.0.1
     eslint: ^9.38.0
     eslint-plugin-storybook: 9.1.13
+    fflate: "file:vendor/fflate"
     html2canvas: ^1.4.1
     jest: ^30.2.0
     jspdf: ^3.0.3
@@ -10346,6 +10347,13 @@ __metadata:
     picomatch:
       optional: true
   checksum: bd537daa9d3cd53887eed35efa0eab2dbb1ca408790e10e024120e7a36c6e9ae2b33710cb8381e35def01bc9c1d7eaba746f886338413e68ff6ebaee07b9a6e8
+  languageName: node
+  linkType: hard
+
+"fflate@file:vendor/fflate::locator=%40wisemapping%2Fmindplot%40workspace%3Apackages%2Fmindplot":
+  version: 0.8.2
+  resolution: "fflate@file:vendor/fflate#vendor/fflate::hash=8d1eb0&locator=%40wisemapping%2Fmindplot%40workspace%3Apackages%2Fmindplot"
+  checksum: 35236e3bf0b1b57efc5b9f5e66ff31b546b674326a1eba9bf14322301c4d5519a2c8ff2e9c2e5e3db273a48b8c6835dbd432dd3820b0bf6d5c0b95affe157f35
   languageName: node
   linkType: hard
 
