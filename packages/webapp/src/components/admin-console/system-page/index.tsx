@@ -489,7 +489,7 @@ const SystemInformation = (): ReactElement => {
                   {intl.formatMessage({
                     id: 'admin.system.mindmapMetrics.disabled',
                     defaultMessage:
-                      'Set `wisemapping.performance.log-mindmap-listing` to true to capture metrics.',
+                      'Set `app.monitoring.performance.log-mindmap-listing` to true to capture metrics.',
                   })}
                 </Alert>
               )}
