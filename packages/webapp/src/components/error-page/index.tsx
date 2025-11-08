@@ -21,7 +21,7 @@ import Header from '../layout/header';
 import Typography from '@mui/material/Typography';
 import { trackPageView } from '../../utils/analytics';
 import { ErrorBody } from './styled';
-import { useRouteError } from 'react-router';
+import { isRouteErrorResponse, useRouteError } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
 import { logCriticalError } from '../../utils';
 
@@ -29,27 +29,111 @@ export type ErrorPageType = {
   isSecurity: boolean;
 };
 
+const isErrorInfo = (error: unknown): error is ErrorInfo =>
+  typeof error === 'object' &&
+  error !== null &&
+  ('msg' in error || 'isAuth' in error || 'fields' in error);
+
+const hasMessage = (error: unknown): error is { message: string } =>
+  typeof error === 'object' &&
+  error !== null &&
+  'message' in error &&
+  typeof error.message === 'string';
+
+const safeSerialize = (error: unknown): string => {
+  if (error instanceof Error) {
+    return JSON.stringify({
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+    });
+  }
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return String(error);
+  }
+};
+
 const ErrorPage = (): React.ReactElement => {
   const intl = useIntl();
   const error = useRouteError();
+  const routeError = isRouteErrorResponse(error) ? error : undefined;
+  const errorInfo = isErrorInfo(error) ? error : undefined;
+  const isAccessError =
+    (routeError && (routeError.status === 401 || routeError.status === 403)) ||
+    Boolean(errorInfo?.isAuth);
 
-  //@ts-expect-error 404 error have a status with the error code.
-  if (error!.status == 404) {
+  if (routeError?.status === 404) {
     logCriticalError('Page not found error.', '404');
-  } else {
-    // Error page handler ...
-    logCriticalError(`Handling ErrorPage redirect error`, JSON.stringify(error));
+  } else if (error !== undefined) {
+    logCriticalError('Handling ErrorPage redirect error', safeSerialize(error));
   }
 
-  // Is a server error info ?
-  const errorInfo = error as ErrorInfo;
+  const headline = (() => {
+    if (routeError?.status === 404) {
+      return (
+        <FormattedMessage id="error.not-found-title" defaultMessage="We can't find that page." />
+      );
+    }
+    if (isAccessError) {
+      return (
+        <FormattedMessage
+          id="error.permission-denied-title"
+          defaultMessage="You don't have access to this page."
+        />
+      );
+    }
+    return <FormattedMessage id="error.generic-title" defaultMessage="We ran into a problem." />;
+  })();
+
+  const fallbackDetail = (() => {
+    if (routeError?.status === 404) {
+      return (
+        <FormattedMessage
+          id="error.not-found-message"
+          defaultMessage="The page you're looking for might have been removed, had its name changed, or is temporarily unavailable."
+        />
+      );
+    }
+    if (isAccessError) {
+      return (
+        <FormattedMessage
+          id="error.permission-denied-message"
+          defaultMessage="If you believe you should have access, please contact your administrator."
+        />
+      );
+    }
+    return (
+      <FormattedMessage
+        id="error.generic-message"
+        defaultMessage="Please try again later or contact support if the problem continues."
+      />
+    );
+  })();
+
+  const detailMessage =
+    (errorInfo?.msg && errorInfo.msg.trim().length > 0 && errorInfo.msg) ||
+    (routeError &&
+      routeError.status !== 404 &&
+      typeof routeError.statusText === 'string' &&
+      routeError.statusText.trim().length > 0 &&
+      routeError.statusText) ||
+    (routeError &&
+      routeError.status !== 404 &&
+      typeof routeError.data === 'string' &&
+      routeError.data.trim().length > 0 &&
+      routeError.data) ||
+    (hasMessage(error) && error.message.trim().length > 0 && error.message) ||
+    fallbackDetail;
+
   useEffect(() => {
     document.title = intl.formatMessage({
       id: 'error.page-title',
       defaultMessage: 'Unexpected Error | WiseMapping',
     });
     trackPageView(window.location.pathname, 'ErrorPage');
-  }, []);
+  }, [intl]);
 
   return (
     <div>
@@ -57,18 +141,11 @@ const ErrorPage = (): React.ReactElement => {
 
       <ErrorBody>
         <Typography variant="h3" component="h3">
-          <FormattedMessage id="error.security-error" defaultMessage="Mindmap cannot be opened." />
+          {headline}
         </Typography>
 
         <Typography variant="h5" component="h6">
-          {errorInfo.msg ? (
-            errorInfo.msg
-          ) : (
-            <FormattedMessage
-              id="error.undexpected-error-msg"
-              defaultMessage="Unexpected error opening mindmap. Please, try latter."
-            />
-          )}
+          {detailMessage}
         </Typography>
       </ErrorBody>
     </div>

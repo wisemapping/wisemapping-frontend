@@ -738,7 +738,25 @@
     "defaultMessage": "JVM"
   },
   "error.page-title": {
-    "defaultMessage": "अप्रत्याशित त्रुटि | WiseMapping"
+    "defaultMessage": "अनपेक्षित त्रुटि | WiseMapping"
+  },
+  "error.generic-title": {
+    "defaultMessage": "हमें एक समस्या का सामना करना पड़ा।"
+  },
+  "error.generic-message": {
+    "defaultMessage": "कृपया बाद में फिर से प्रयास करें या समस्या बनी रहने पर सहायता से संपर्क करें।"
+  },
+  "error.permission-denied-title": {
+    "defaultMessage": "आपके पास इस पृष्ठ तक पहुँच नहीं है।"
+  },
+  "error.permission-denied-message": {
+    "defaultMessage": "यदि आपको लगता है कि आपको पहुँच मिलनी चाहिए, तो कृपया अपने व्यवस्थापक से संपर्क करें।"
+  },
+  "error.not-found-title": {
+    "defaultMessage": "हमें वह पृष्ठ नहीं मिला।"
+  },
+  "error.not-found-message": {
+    "defaultMessage": "जिस पृष्ठ की आप तलाश कर रहे हैं वह हटाया गया हो सकता है, उसका नाम बदल दिया गया हो सकता है, या वह अस्थायी रूप से उपलब्ध न हो।"
   },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."

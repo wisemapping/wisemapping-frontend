@@ -687,6 +687,42 @@
       "value": "意外错误 | WiseMapping"
     }
   ],
+  "error.generic-title": [
+    {
+      "type": 0,
+      "value": "我们遇到了一个问题。"
+    }
+  ],
+  "error.generic-message": [
+    {
+      "type": 0,
+      "value": "请稍后再试，若问题仍然存在，请联系技术支持。"
+    }
+  ],
+  "error.permission-denied-title": [
+    {
+      "type": 0,
+      "value": "您没有访问此页面的权限。"
+    }
+  ],
+  "error.permission-denied-message": [
+    {
+      "type": 0,
+      "value": "如果您认为自己应该拥有访问权限，请联系管理员。"
+    }
+  ],
+  "error.not-found-title": [
+    {
+      "type": 0,
+      "value": "我们找不到该页面。"
+    }
+  ],
+  "error.not-found-message": [
+    {
+      "type": 0,
+      "value": "您要访问的页面可能已被删除、重命名，或暂时不可用。"
+    }
+  ],
   "error.security-error": [
     {
       "type": 0,

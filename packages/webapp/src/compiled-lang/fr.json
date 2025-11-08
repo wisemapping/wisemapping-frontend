@@ -687,6 +687,42 @@
       "value": "Erreur Inattendue | WiseMapping"
     }
   ],
+  "error.generic-title": [
+    {
+      "type": 0,
+      "value": "Nous avons rencontré un problème."
+    }
+  ],
+  "error.generic-message": [
+    {
+      "type": 0,
+      "value": "Veuillez réessayer plus tard ou contacter le support si le problème persiste."
+    }
+  ],
+  "error.permission-denied-title": [
+    {
+      "type": 0,
+      "value": "Vous n'avez pas accès à cette page."
+    }
+  ],
+  "error.permission-denied-message": [
+    {
+      "type": 0,
+      "value": "Si vous pensez devoir y avoir accès, veuillez contacter votre administrateur."
+    }
+  ],
+  "error.not-found-title": [
+    {
+      "type": 0,
+      "value": "Nous ne trouvons pas cette page."
+    }
+  ],
+  "error.not-found-message": [
+    {
+      "type": 0,
+      "value": "La page que vous recherchez a peut-être été supprimée, renommée ou est temporairement indisponible."
+    }
+  ],
   "error.security-error": [
     {
       "type": 0,

@@ -123,12 +123,12 @@ class Editor {
         });
 
         // Debounced autosave triggered by model updates
-        // Waits 3 seconds after the last change before saving
+        // Waits 15 seconds after the last change before saving
         const debouncedAutoSave = debounce(() => {
           component.save(false).catch((error) => {
             console.error('Autosave failed:', error);
           });
-        }, 3000);
+        }, 15000);
 
         // Trigger autosave on model updates
         designer.addEvent('modelUpdate', debouncedAutoSave);

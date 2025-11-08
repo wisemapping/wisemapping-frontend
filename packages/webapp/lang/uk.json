@@ -740,6 +740,24 @@
   "error.page-title": {
     "defaultMessage": "Неочікувана Помилка | WiseMapping"
   },
+  "error.generic-title": {
+    "defaultMessage": "Ми зіткнулися з проблемою."
+  },
+  "error.generic-message": {
+    "defaultMessage": "Спробуйте пізніше або зверніться до служби підтримки, якщо проблема не зникає."
+  },
+  "error.permission-denied-title": {
+    "defaultMessage": "У вас немає доступу до цієї сторінки."
+  },
+  "error.permission-denied-message": {
+    "defaultMessage": "Якщо вважаєте, що маєте мати доступ, зверніться до свого адміністратора."
+  },
+  "error.not-found-title": {
+    "defaultMessage": "Нам не вдалося знайти цю сторінку."
+  },
+  "error.not-found-message": {
+    "defaultMessage": "Можливо, сторінку було видалено, перейменовано або вона тимчасово недоступна."
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."
   },

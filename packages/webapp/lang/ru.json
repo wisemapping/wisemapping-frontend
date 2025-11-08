@@ -738,10 +738,28 @@
     "defaultMessage": "JVM"
   },
   "error.page-title": {
-    "defaultMessage": "Неожиданная Ошибка | WiseMapping"
+    "defaultMessage": "Неожиданная ошибка | WiseMapping"
+  },
+  "error.generic-title": {
+    "defaultMessage": "Мы столкнулись с проблемой."
+  },
+  "error.generic-message": {
+    "defaultMessage": "Повторите попытку позже или свяжитесь со службой поддержки, если проблема не исчезнет."
+  },
+  "error.permission-denied-title": {
+    "defaultMessage": "У вас нет доступа к этой странице."
+  },
+  "error.permission-denied-message": {
+    "defaultMessage": "Если вы считаете, что должны иметь доступ, обратитесь к своему администратору."
+  },
+  "error.not-found-title": {
+    "defaultMessage": "Мы не можем найти эту страницу."
+  },
+  "error.not-found-message": {
+    "defaultMessage": "Возможно, страница была удалена, переименована или временно недоступна."
   },
   "error.security-error": {
-    "defaultMessage": "Mindmap cannot be opened."
+    "defaultMessage": "Невозможно открыть майнд-карту."
   },
   "error.undexpected-error-msg": {
     "defaultMessage": "Unexpected error opening mindmap. Please, try latter."

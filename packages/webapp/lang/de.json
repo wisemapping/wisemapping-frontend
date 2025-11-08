@@ -740,6 +740,24 @@
   "error.page-title": {
     "defaultMessage": "Unerwarteter Fehler | WiseMapping"
   },
+  "error.generic-title": {
+    "defaultMessage": "Wir sind auf ein Problem gestoßen."
+  },
+  "error.generic-message": {
+    "defaultMessage": "Bitte versuche es später erneut oder wende dich an den Support, wenn das Problem weiterhin besteht."
+  },
+  "error.permission-denied-title": {
+    "defaultMessage": "Du hast keinen Zugriff auf diese Seite."
+  },
+  "error.permission-denied-message": {
+    "defaultMessage": "Wenn du glaubst, Zugriff haben zu müssen, wende dich bitte an deinen Administrator."
+  },
+  "error.not-found-title": {
+    "defaultMessage": "Wir können diese Seite nicht finden."
+  },
+  "error.not-found-message": {
+    "defaultMessage": "Die gesuchte Seite wurde möglicherweise entfernt, umbenannt oder ist vorübergehend nicht verfügbar."
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap kann nicht geöffnet werden."
   },
