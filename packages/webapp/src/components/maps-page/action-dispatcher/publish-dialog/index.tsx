@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { ErrorInfo } from '../../../../classes/client';
@@ -44,13 +44,21 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
   const { data: map } = useFetchMapById(mapId);
 
   const client = useContext(ClientContext);
-  const [model, setModel] = React.useState<boolean>(map ? map.public : false);
+  const [model, setModel] = React.useState<boolean>(map?.public ?? false);
   const [error, setError] = React.useState<ErrorInfo>();
   const [activeTab, setActiveTab] = React.useState('1');
   const [copied, setCopied] = React.useState<boolean>(false);
   const queryClient = useQueryClient();
   const intl = useIntl();
   const classes = useStyles();
+
+  // Sync model state when map data changes (e.g., after refetch or initial load)
+  useEffect(() => {
+    if (map) {
+      setModel(map.public ?? false);
+    }
+  }, [map?.id, map?.public]);
+
   const mutation = useMutation<void, ErrorInfo, boolean>(
     (model: boolean) => {
       return client.updateMapToPublic(mapId, model);
@@ -59,7 +67,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
       onSuccess: (_, updatedModel) => {
         setModel(updatedModel);
         handleOnMutationSuccess(onClose, queryClient);
-        queryClient.invalidateQueries(`maps-${mapId}`);
+        queryClient.invalidateQueries(`maps-metadata-${mapId}`);
       },
       onError: (error) => {
         setError(error);
@@ -137,7 +145,13 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
           <FormControl fullWidth={true}>
             <FormControlLabel
               control={
-                <Switch checked={model} onChange={handleOnChange} name="public" color="primary" />
+                <Switch
+                  checked={model}
+                  onChange={handleOnChange}
+                  name="public"
+                  color="primary"
+                  disabled={mutation.isLoading}
+                />
               }
               label={
                 <Typography variant="body1" fontWeight={500}>
