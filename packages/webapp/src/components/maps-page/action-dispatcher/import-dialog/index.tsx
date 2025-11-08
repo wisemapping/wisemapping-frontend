@@ -127,20 +127,17 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
           extensionFile === 'xmind' ? 'application/vnd.xmind.workbook' : 'application/xml';
 
         const fileContent = event?.target?.result;
-        let mapContent: string | Uint8Array;
+        let mapContent: string | ArrayBuffer;
         if (typeof fileContent === 'string') {
           mapContent = fileContent;
         } else if (fileContent instanceof ArrayBuffer) {
-          mapContent = new Uint8Array(fileContent);
+          mapContent = fileContent;
         } else {
           mapContent = '';
         }
 
         try {
-          const importer: Importer = TextImporterFactory.create(
-            extensionFile,
-            mapContent,
-          );
+          const importer: Importer = TextImporterFactory.create(extensionFile, mapContent);
 
           importer.import(model.title, model.description).then((res) => {
             model.content = res;
