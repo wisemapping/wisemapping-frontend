@@ -684,13 +684,49 @@
   "error.page-title": [
     {
       "type": 0,
-      "value": "Неожиданная Ошибка | WiseMapping"
+      "value": "Неожиданная ошибка | WiseMapping"
+    }
+  ],
+  "error.generic-title": [
+    {
+      "type": 0,
+      "value": "Мы столкнулись с проблемой."
+    }
+  ],
+  "error.generic-message": [
+    {
+      "type": 0,
+      "value": "Повторите попытку позже или свяжитесь со службой поддержки, если проблема не исчезнет."
+    }
+  ],
+  "error.permission-denied-title": [
+    {
+      "type": 0,
+      "value": "У вас нет доступа к этой странице."
+    }
+  ],
+  "error.permission-denied-message": [
+    {
+      "type": 0,
+      "value": "Если вы считаете, что должны иметь доступ, обратитесь к своему администратору."
+    }
+  ],
+  "error.not-found-title": [
+    {
+      "type": 0,
+      "value": "Мы не можем найти эту страницу."
+    }
+  ],
+  "error.not-found-message": [
+    {
+      "type": 0,
+      "value": "Возможно, страница была удалена, переименована или временно недоступна."
     }
   ],
   "error.security-error": [
     {
       "type": 0,
-      "value": "Mindmap cannot be opened."
+      "value": "Невозможно открыть майнд-карту."
     }
   ],
   "error.undexpected-error-msg": [

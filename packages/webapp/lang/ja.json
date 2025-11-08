@@ -740,8 +740,26 @@
   "error.page-title": {
     "defaultMessage": "予期しないエラー | WiseMapping"
   },
+  "error.generic-title": {
+    "defaultMessage": "問題が発生しました。"
+  },
+  "error.generic-message": {
+    "defaultMessage": "後でもう一度お試しいただくか、問題が解決しない場合はサポートまでご連絡ください。"
+  },
+  "error.permission-denied-title": {
+    "defaultMessage": "このページにアクセスする権限がありません。"
+  },
+  "error.permission-denied-message": {
+    "defaultMessage": "アクセスできるはずだと思われる場合は、管理者にお問い合わせください。"
+  },
+  "error.not-found-title": {
+    "defaultMessage": "そのページが見つかりません。"
+  },
+  "error.not-found-message": {
+    "defaultMessage": "お探しのページは削除されたか、名前が変更されたか、一時的に利用できない可能性があります。"
+  },
   "error.security-error": {
-    "defaultMessage": "Mindmap cannot be opened."
+    "defaultMessage": "マインドマップを開くことができません。"
   },
   "error.undexpected-error-msg": {
     "defaultMessage": "Unexpected error opening mindmap. Please, try latter."

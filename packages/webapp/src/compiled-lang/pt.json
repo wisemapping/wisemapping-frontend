@@ -684,13 +684,49 @@
   "error.page-title": [
     {
       "type": 0,
-      "value": "Erro Inesperado | WiseMapping"
+      "value": "Erro inesperado | WiseMapping"
+    }
+  ],
+  "error.generic-title": [
+    {
+      "type": 0,
+      "value": "Encontramos um problema."
+    }
+  ],
+  "error.generic-message": [
+    {
+      "type": 0,
+      "value": "Tente novamente mais tarde ou contate o suporte se o problema continuar."
+    }
+  ],
+  "error.permission-denied-title": [
+    {
+      "type": 0,
+      "value": "Você não tem acesso a esta página."
+    }
+  ],
+  "error.permission-denied-message": [
+    {
+      "type": 0,
+      "value": "Se você acha que deveria ter acesso, entre em contato com o seu administrador."
+    }
+  ],
+  "error.not-found-title": [
+    {
+      "type": 0,
+      "value": "Não encontramos essa página."
+    }
+  ],
+  "error.not-found-message": [
+    {
+      "type": 0,
+      "value": "A página que você procura pode ter sido removida, renomeada ou estar temporariamente indisponível."
     }
   ],
   "error.security-error": [
     {
       "type": 0,
-      "value": "Mindmap cannot be opened."
+      "value": "Não é possível abrir o mapa mental."
     }
   ],
   "error.undexpected-error-msg": [

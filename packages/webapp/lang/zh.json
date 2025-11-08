@@ -740,6 +740,24 @@
   "error.page-title": {
     "defaultMessage": "意外错误 | WiseMapping"
   },
+  "error.generic-title": {
+    "defaultMessage": "我們遇到了一個問題。"
+  },
+  "error.generic-message": {
+    "defaultMessage": "請稍後再試，若問題持續發生，請聯絡技術支援。"
+  },
+  "error.permission-denied-title": {
+    "defaultMessage": "您沒有存取此頁面的權限。"
+  },
+  "error.permission-denied-message": {
+    "defaultMessage": "如果您認為應該擁有存取權限，請聯絡您的管理員。"
+  },
+  "error.not-found-title": {
+    "defaultMessage": "我們找不到該頁面。"
+  },
+  "error.not-found-message": {
+    "defaultMessage": "您要尋找的頁面可能已被刪除、重新命名，或暫時無法使用。"
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."
   },

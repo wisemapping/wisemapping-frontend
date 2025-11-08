@@ -738,10 +738,28 @@
     "defaultMessage": "JVM"
   },
   "error.page-title": {
-    "defaultMessage": "Erro Inesperado | WiseMapping"
+    "defaultMessage": "Erro inesperado | WiseMapping"
+  },
+  "error.generic-title": {
+    "defaultMessage": "Encontramos um problema."
+  },
+  "error.generic-message": {
+    "defaultMessage": "Tente novamente mais tarde ou contate o suporte se o problema continuar."
+  },
+  "error.permission-denied-title": {
+    "defaultMessage": "Você não tem acesso a esta página."
+  },
+  "error.permission-denied-message": {
+    "defaultMessage": "Se você acha que deveria ter acesso, entre em contato com o seu administrador."
+  },
+  "error.not-found-title": {
+    "defaultMessage": "Não encontramos essa página."
+  },
+  "error.not-found-message": {
+    "defaultMessage": "A página que você procura pode ter sido removida, renomeada ou estar temporariamente indisponível."
   },
   "error.security-error": {
-    "defaultMessage": "Mindmap cannot be opened."
+    "defaultMessage": "Não é possível abrir o mapa mental."
   },
   "error.undexpected-error-msg": {
     "defaultMessage": "Unexpected error opening mindmap. Please, try latter."
