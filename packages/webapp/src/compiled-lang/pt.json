@@ -681,10 +681,10 @@
       "value": "Duplicar"
     }
   ],
-  "error.page-title": [
+  "error.generic-message": [
     {
       "type": 0,
-      "value": "Erro inesperado | WiseMapping"
+      "value": "Tente novamente mais tarde ou contate o suporte se o problema continuar."
     }
   ],
   "error.generic-title": [
@@ -693,22 +693,10 @@
       "value": "Encontramos um problema."
     }
   ],
-  "error.generic-message": [
+  "error.not-found-message": [
     {
       "type": 0,
-      "value": "Tente novamente mais tarde ou contate o suporte se o problema continuar."
-    }
-  ],
-  "error.permission-denied-title": [
-    {
-      "type": 0,
-      "value": "Você não tem acesso a esta página."
-    }
-  ],
-  "error.permission-denied-message": [
-    {
-      "type": 0,
-      "value": "Se você acha que deveria ter acesso, entre em contato com o seu administrador."
+      "value": "A página que você procura pode ter sido removida, renomeada ou estar temporariamente indisponível."
     }
   ],
   "error.not-found-title": [
@@ -717,10 +705,22 @@
       "value": "Não encontramos essa página."
     }
   ],
-  "error.not-found-message": [
+  "error.page-title": [
     {
       "type": 0,
-      "value": "A página que você procura pode ter sido removida, renomeada ou estar temporariamente indisponível."
+      "value": "Erro inesperado | WiseMapping"
+    }
+  ],
+  "error.permission-denied-message": [
+    {
+      "type": 0,
+      "value": "Se você acha que deveria ter acesso, entre em contato com o seu administrador."
+    }
+  ],
+  "error.permission-denied-title": [
+    {
+      "type": 0,
+      "value": "Você não tem acesso a esta página."
     }
   ],
   "error.security-error": [

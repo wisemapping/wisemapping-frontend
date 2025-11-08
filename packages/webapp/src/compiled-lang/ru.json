@@ -681,10 +681,10 @@
       "value": "Клонировать"
     }
   ],
-  "error.page-title": [
+  "error.generic-message": [
     {
       "type": 0,
-      "value": "Неожиданная ошибка | WiseMapping"
+      "value": "Повторите попытку позже или свяжитесь со службой поддержки, если проблема не исчезнет."
     }
   ],
   "error.generic-title": [
@@ -693,22 +693,10 @@
       "value": "Мы столкнулись с проблемой."
     }
   ],
-  "error.generic-message": [
+  "error.not-found-message": [
     {
       "type": 0,
-      "value": "Повторите попытку позже или свяжитесь со службой поддержки, если проблема не исчезнет."
-    }
-  ],
-  "error.permission-denied-title": [
-    {
-      "type": 0,
-      "value": "У вас нет доступа к этой странице."
-    }
-  ],
-  "error.permission-denied-message": [
-    {
-      "type": 0,
-      "value": "Если вы считаете, что должны иметь доступ, обратитесь к своему администратору."
+      "value": "Возможно, страница была удалена, переименована или временно недоступна."
     }
   ],
   "error.not-found-title": [
@@ -717,10 +705,22 @@
       "value": "Мы не можем найти эту страницу."
     }
   ],
-  "error.not-found-message": [
+  "error.page-title": [
     {
       "type": 0,
-      "value": "Возможно, страница была удалена, переименована или временно недоступна."
+      "value": "Неожиданная ошибка | WiseMapping"
+    }
+  ],
+  "error.permission-denied-message": [
+    {
+      "type": 0,
+      "value": "Если вы считаете, что должны иметь доступ, обратитесь к своему администратору."
+    }
+  ],
+  "error.permission-denied-title": [
+    {
+      "type": 0,
+      "value": "У вас нет доступа к этой странице."
     }
   ],
   "error.security-error": [

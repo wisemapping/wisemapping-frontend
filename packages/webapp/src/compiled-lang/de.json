@@ -681,10 +681,10 @@
       "value": "Kopie"
     }
   ],
-  "error.page-title": [
+  "error.generic-message": [
     {
       "type": 0,
-      "value": "Unerwarteter Fehler | WiseMapping"
+      "value": "Bitte versuche es später erneut oder wende dich an den Support, wenn das Problem weiterhin besteht."
     }
   ],
   "error.generic-title": [
@@ -693,22 +693,10 @@
       "value": "Wir sind auf ein Problem gestoßen."
     }
   ],
-  "error.generic-message": [
+  "error.not-found-message": [
     {
       "type": 0,
-      "value": "Bitte versuche es später erneut oder wende dich an den Support, wenn das Problem weiterhin besteht."
-    }
-  ],
-  "error.permission-denied-title": [
-    {
-      "type": 0,
-      "value": "Du hast keinen Zugriff auf diese Seite."
-    }
-  ],
-  "error.permission-denied-message": [
-    {
-      "type": 0,
-      "value": "Wenn du glaubst, Zugriff haben zu müssen, wende dich bitte an deinen Administrator."
+      "value": "Die gesuchte Seite wurde möglicherweise entfernt, umbenannt oder ist vorübergehend nicht verfügbar."
     }
   ],
   "error.not-found-title": [
@@ -717,10 +705,22 @@
       "value": "Wir können diese Seite nicht finden."
     }
   ],
-  "error.not-found-message": [
+  "error.page-title": [
     {
       "type": 0,
-      "value": "Die gesuchte Seite wurde möglicherweise entfernt, umbenannt oder ist vorübergehend nicht verfügbar."
+      "value": "Unerwarteter Fehler | WiseMapping"
+    }
+  ],
+  "error.permission-denied-message": [
+    {
+      "type": 0,
+      "value": "Wenn du glaubst, Zugriff haben zu müssen, wende dich bitte an deinen Administrator."
+    }
+  ],
+  "error.permission-denied-title": [
+    {
+      "type": 0,
+      "value": "Du hast keinen Zugriff auf diese Seite."
     }
   ],
   "error.security-error": [

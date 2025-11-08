@@ -681,10 +681,10 @@
       "value": "Дублювати"
     }
   ],
-  "error.page-title": [
+  "error.generic-message": [
     {
       "type": 0,
-      "value": "Неочікувана Помилка | WiseMapping"
+      "value": "Спробуйте пізніше або зверніться до служби підтримки, якщо проблема не зникає."
     }
   ],
   "error.generic-title": [
@@ -693,22 +693,10 @@
       "value": "Ми зіткнулися з проблемою."
     }
   ],
-  "error.generic-message": [
+  "error.not-found-message": [
     {
       "type": 0,
-      "value": "Спробуйте пізніше або зверніться до служби підтримки, якщо проблема не зникає."
-    }
-  ],
-  "error.permission-denied-title": [
-    {
-      "type": 0,
-      "value": "У вас немає доступу до цієї сторінки."
-    }
-  ],
-  "error.permission-denied-message": [
-    {
-      "type": 0,
-      "value": "Якщо вважаєте, що маєте мати доступ, зверніться до свого адміністратора."
+      "value": "Можливо, сторінку було видалено, перейменовано або вона тимчасово недоступна."
     }
   ],
   "error.not-found-title": [
@@ -717,10 +705,22 @@
       "value": "Нам не вдалося знайти цю сторінку."
     }
   ],
-  "error.not-found-message": [
+  "error.page-title": [
     {
       "type": 0,
-      "value": "Можливо, сторінку було видалено, перейменовано або вона тимчасово недоступна."
+      "value": "Неочікувана Помилка | WiseMapping"
+    }
+  ],
+  "error.permission-denied-message": [
+    {
+      "type": 0,
+      "value": "Якщо вважаєте, що маєте мати доступ, зверніться до свого адміністратора."
+    }
+  ],
+  "error.permission-denied-title": [
+    {
+      "type": 0,
+      "value": "У вас немає доступу до цієї сторінки."
     }
   ],
   "error.security-error": [
