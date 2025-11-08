@@ -681,10 +681,10 @@
       "value": "複製"
     }
   ],
-  "error.page-title": [
+  "error.generic-message": [
     {
       "type": 0,
-      "value": "予期しないエラー | WiseMapping"
+      "value": "後でもう一度お試しいただくか、問題が解決しない場合はサポートまでご連絡ください。"
     }
   ],
   "error.generic-title": [
@@ -693,22 +693,10 @@
       "value": "問題が発生しました。"
     }
   ],
-  "error.generic-message": [
+  "error.not-found-message": [
     {
       "type": 0,
-      "value": "後でもう一度お試しいただくか、問題が解決しない場合はサポートまでご連絡ください。"
-    }
-  ],
-  "error.permission-denied-title": [
-    {
-      "type": 0,
-      "value": "このページにアクセスする権限がありません。"
-    }
-  ],
-  "error.permission-denied-message": [
-    {
-      "type": 0,
-      "value": "アクセスできるはずだと思われる場合は、管理者にお問い合わせください。"
+      "value": "お探しのページは削除されたか、名前が変更されたか、一時的に利用できない可能性があります。"
     }
   ],
   "error.not-found-title": [
@@ -717,10 +705,22 @@
       "value": "そのページが見つかりません。"
     }
   ],
-  "error.not-found-message": [
+  "error.page-title": [
     {
       "type": 0,
-      "value": "お探しのページは削除されたか、名前が変更されたか、一時的に利用できない可能性があります。"
+      "value": "予期しないエラー | WiseMapping"
+    }
+  ],
+  "error.permission-denied-message": [
+    {
+      "type": 0,
+      "value": "アクセスできるはずだと思われる場合は、管理者にお問い合わせください。"
+    }
+  ],
+  "error.permission-denied-title": [
+    {
+      "type": 0,
+      "value": "このページにアクセスする権限がありません。"
     }
   ],
   "error.security-error": [

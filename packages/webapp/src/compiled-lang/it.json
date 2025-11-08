@@ -681,10 +681,10 @@
       "value": "Duplica"
     }
   ],
-  "error.page-title": [
+  "error.generic-message": [
     {
       "type": 0,
-      "value": "Errore imprevisto | WiseMapping"
+      "value": "Riprova più tardi o contatta il supporto se il problema continua."
     }
   ],
   "error.generic-title": [
@@ -693,22 +693,10 @@
       "value": "Abbiamo riscontrato un problema."
     }
   ],
-  "error.generic-message": [
+  "error.not-found-message": [
     {
       "type": 0,
-      "value": "Riprova più tardi o contatta il supporto se il problema continua."
-    }
-  ],
-  "error.permission-denied-title": [
-    {
-      "type": 0,
-      "value": "Non hai accesso a questa pagina."
-    }
-  ],
-  "error.permission-denied-message": [
-    {
-      "type": 0,
-      "value": "Se ritieni di dover avere accesso, contatta il tuo amministratore."
+      "value": "La pagina che stai cercando potrebbe essere stata rimossa, rinominata o essere temporaneamente non disponibile."
     }
   ],
   "error.not-found-title": [
@@ -717,10 +705,22 @@
       "value": "Non riusciamo a trovare questa pagina."
     }
   ],
-  "error.not-found-message": [
+  "error.page-title": [
     {
       "type": 0,
-      "value": "La pagina che stai cercando potrebbe essere stata rimossa, rinominata o essere temporaneamente non disponibile."
+      "value": "Errore imprevisto | WiseMapping"
+    }
+  ],
+  "error.permission-denied-message": [
+    {
+      "type": 0,
+      "value": "Se ritieni di dover avere accesso, contatta il tuo amministratore."
+    }
+  ],
+  "error.permission-denied-title": [
+    {
+      "type": 0,
+      "value": "Non hai accesso a questa pagina."
     }
   ],
   "error.security-error": [

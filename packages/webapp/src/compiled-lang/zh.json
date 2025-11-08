@@ -681,10 +681,10 @@
       "value": "复制"
     }
   ],
-  "error.page-title": [
+  "error.generic-message": [
     {
       "type": 0,
-      "value": "意外错误 | WiseMapping"
+      "value": "請稍後再試，若問題持續發生，請聯絡技術支援。"
     }
   ],
   "error.generic-title": [
@@ -693,22 +693,10 @@
       "value": "我們遇到了一個問題。"
     }
   ],
-  "error.generic-message": [
+  "error.not-found-message": [
     {
       "type": 0,
-      "value": "請稍後再試，若問題持續發生，請聯絡技術支援。"
-    }
-  ],
-  "error.permission-denied-title": [
-    {
-      "type": 0,
-      "value": "您沒有存取此頁面的權限。"
-    }
-  ],
-  "error.permission-denied-message": [
-    {
-      "type": 0,
-      "value": "如果您認為應該擁有存取權限，請聯絡您的管理員。"
+      "value": "您要尋找的頁面可能已被刪除、重新命名，或暫時無法使用。"
     }
   ],
   "error.not-found-title": [
@@ -717,10 +705,22 @@
       "value": "我們找不到該頁面。"
     }
   ],
-  "error.not-found-message": [
+  "error.page-title": [
     {
       "type": 0,
-      "value": "您要尋找的頁面可能已被刪除、重新命名，或暫時無法使用。"
+      "value": "意外错误 | WiseMapping"
+    }
+  ],
+  "error.permission-denied-message": [
+    {
+      "type": 0,
+      "value": "如果您認為應該擁有存取權限，請聯絡您的管理員。"
+    }
+  ],
+  "error.permission-denied-title": [
+    {
+      "type": 0,
+      "value": "您沒有存取此頁面的權限。"
     }
   ],
   "error.security-error": [
