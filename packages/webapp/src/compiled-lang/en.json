@@ -690,7 +690,7 @@
   "error.generic-title": [
     {
       "type": 0,
-      "value": "We ran into a problem."
+      "value": "Hmm, that didn't work."
     }
   ],
   "error.not-found-message": [

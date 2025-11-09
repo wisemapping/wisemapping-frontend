@@ -741,7 +741,7 @@
     "defaultMessage": "Unexpected Error | WiseMapping"
   },
   "error.generic-title": {
-    "defaultMessage": "We ran into a problem."
+    "defaultMessage": "Hmm, that didn't work."
   },
   "error.generic-message": {
     "defaultMessage": "Please try again later or contact support if the problem continues."
