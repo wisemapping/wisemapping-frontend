@@ -885,12 +885,37 @@ export default class RestClient implements Client {
                 result.msg = data.fieldErrors[key];
               }
             }
-          } else {
+          } else if (
+            typeof response.statusText === 'string' &&
+            response.statusText.trim().length > 0
+          ) {
             result = { msg: response.statusText };
+          } else {
+            result = {};
           }
+      }
 
-          // No access to the operation and not seession token, assuming that the issue is related ot missing auth.
-          result.isAuth = status === 403 && JwtTokenConfig.retreiveToken() === undefined;
+      if (!result) {
+        result = {};
+      }
+
+      if (!result.msg && typeof data === 'string' && data.trim().length > 0) {
+        result.msg = data;
+      } else if (
+        !result.msg &&
+        data &&
+        typeof data === 'object' &&
+        typeof data.message === 'string' &&
+        data.message.trim().length > 0
+      ) {
+        result.msg = data.message;
+      }
+
+      result.status = status;
+
+      if (result.isAuth === undefined) {
+        // No access to the operation and not session token, assuming that the issue is related to missing auth.
+        result.isAuth = status === 403 && JwtTokenConfig.retreiveToken() === undefined;
       }
     }
 

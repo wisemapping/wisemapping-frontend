@@ -98,6 +98,7 @@ export type ErrorInfo = {
   isAuth?: boolean;
   msg?: string;
   fields?: Map<string, string>;
+  status?: number;
 };
 
 export type LoginErrorInfo = ErrorInfo & {
