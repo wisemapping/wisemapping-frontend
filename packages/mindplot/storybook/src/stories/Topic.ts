@@ -18,7 +18,7 @@
 
 // jQuery removed - using native DOM APIs
 
-import { LinkModel, Mindmap, NoteModel, Topic } from '../../../src';
+import { LinkModel, Mindmap, NoteModel, Topic } from '../../../src/index';
 import NodeModel from '../../../src/components/model/NodeModel';
 import CentralTopic from '../../../src/components/CentralTopic';
 import Canvas from '../../../src/components/Canvas';
@@ -27,6 +27,19 @@ import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import TopicEventDispatcher from '../../../src/components/TopicEventDispatcher';
 import { TopicShapeType } from '../../../src/components/model/INodeModel';
 import ThemeType from '../../../src/components/model/ThemeType';
+
+const ensureDesignerStub = () => {
+  const globalDesigner = (globalThis as unknown as { designer?: unknown }).designer;
+  if (!globalDesigner) {
+    (globalThis as Record<string, unknown>).designer = {
+      getWidgeManager: () => ({
+        configureTooltipForNode: () => {},
+        createTooltipForLink: () => {},
+      }),
+      fireEvent: () => {},
+    };
+  }
+};
 
 const registerRefreshHook = (topic: Topic) => {
   // Trigger a redraw after the node is added ...
@@ -73,6 +86,7 @@ const createTopic = ({
   theme = undefined,
   readOnly = true,
 }: TopicArgs) => {
+  ensureDesignerStub();
   // Build basic container ...
   const divElem = document.createElement('div');
   divElem.style.height = '600px';
@@ -81,8 +95,8 @@ const createTopic = ({
 
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);
-  const workspace = new Canvas(screenManager, 0.3, readOnly);
-  TopicEventDispatcher.configure(readOnly);
+  const workspace = new Canvas(screenManager, 0.3, readOnly, true);
+  const topicEventDispatcher = new TopicEventDispatcher(readOnly);
 
   // Update model ...
   const mindmap = new Mindmap();
@@ -124,11 +138,13 @@ const createTopic = ({
 
   // Create topic UI element ...
   mindmap.addBranch(model);
-  const centralTopic = new CentralTopic(model, { readOnly }, 'light'); // Default to light for storybook
+  const centralTopic = new CentralTopic(model, { readOnly, topicEventDispatcher }, 'light'); // Default to light for storybook
   workspace.append(centralTopic);
 
   // Register refresh hook ..
   registerRefreshHook(centralTopic);
+  void workspace.enableQueueRender(false);
+
 
   return divElem;
 };

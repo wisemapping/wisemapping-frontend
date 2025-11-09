@@ -40,6 +40,10 @@ abstract class ImageIcon implements Icon {
     return this._image;
   }
 
+  protected getImageElement(): Image {
+    return this._image;
+  }
+
   setGroup(group: IconGroup): void {
     this._group = group;
   }

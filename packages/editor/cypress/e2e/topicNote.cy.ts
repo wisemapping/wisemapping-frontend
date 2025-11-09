@@ -131,4 +131,33 @@ describe('Topic Note Suite', () => {
 
     cy.matchImageSnapshot('note-content-persists');
   });
+
+  it('shows note tooltip on hover', () => {
+    const tooltipNote = 'Tooltip note content';
+
+    cy.focusTopicById(3);
+    cy.onClickToolbarButton('Add Note');
+    waitForNotePanel();
+
+    cy.get('[contenteditable="true"]').first().clear().type(tooltipNote);
+    cy.contains('Accept').should('be.visible').click();
+
+    cy.get('mindplot-component')
+      .shadow()
+      .find('[test-id="topic-note-icon"]', { timeout: 5000 })
+      .first()
+      .trigger('mouseenter', { force: true });
+
+    cy.get('mindplot-component')
+      .shadow()
+      .find('#mindplot-svg-tooltip-content-note', { timeout: 2000 })
+      .should('be.visible')
+      .and('contain.text', tooltipNote);
+
+    cy.get('mindplot-component')
+      .shadow()
+      .find('[test-id="topic-note-icon"]')
+      .first()
+      .trigger('mouseleave', { force: true });
+  });
 });

@@ -20,16 +20,29 @@ import EventDispatcher from '../EventDispatcher';
 import { LayoutEventBusType } from '../LayoutEventBusType';
 
 class LayoutEventBus {
-  private static _instance: EventDispatcher<LayoutEventBusType> =
-    new EventDispatcher<LayoutEventBusType>();
+  private _dispatcher: EventDispatcher<LayoutEventBusType>;
 
-  static fireEvent(type: LayoutEventBusType, arg?: any): void {
-    return LayoutEventBus._instance.fireEvent(type, arg);
+  constructor() {
+    this._dispatcher = new EventDispatcher<LayoutEventBusType>();
   }
 
-  static addEvent(type: LayoutEventBusType, fn: (arg?: any) => void, internal?: boolean): void {
-    return LayoutEventBus._instance.addEvent(type, fn, internal);
+  fireEvent(type: LayoutEventBusType, arg?: any): void {
+    this._dispatcher.fireEvent(type, arg);
+  }
+
+  addEvent(type: LayoutEventBusType, fn: (arg?: any) => void, internal?: boolean): void {
+    this._dispatcher.addEvent(type, fn, internal);
+  }
+
+  removeEvent(type: LayoutEventBusType, fn: (arg?: any) => void): void {
+    this._dispatcher.removeEvent(type, fn);
+  }
+
+  reset(): void {
+    this._dispatcher = new EventDispatcher<LayoutEventBusType>();
   }
 }
 
-export default LayoutEventBus;
+const layoutEventBus = new LayoutEventBus();
+export default layoutEventBus;
+export { LayoutEventBus };

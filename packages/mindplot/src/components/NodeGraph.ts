@@ -24,9 +24,11 @@ import LayoutManager from './layout/LayoutManager';
 import SizeType from './SizeType';
 import PositionType from './PositionType';
 import CanvasElement from './CanvasElement';
+import type TopicEventDispatcher from './TopicEventDispatcher';
 
 export type NodeOption = {
   readOnly: boolean;
+  topicEventDispatcher?: TopicEventDispatcher;
 };
 
 abstract class NodeGraph implements CanvasElement {

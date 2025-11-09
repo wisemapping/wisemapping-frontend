@@ -94,6 +94,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   // Internal clipboard storage for browsers that don't support clipboard API
   private _internalClipboard: string | null = null;
 
+  private _topicEventDispatcher: TopicEventDispatcher;
+
   constructor(options: DesignerOptions) {
     super();
     // Set up i18n location ...
@@ -123,7 +125,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Init Screen manager..
     const screenManager = new ScreenManager(divElem);
-    this._canvas = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly());
+    this._canvas = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly(), false);
 
     // Init layout manager ...
     this._eventBussDispatcher = new EventBusDispatcher();
@@ -142,7 +144,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     this._relPivot = new RelationshipPivot(this._canvas, this);
 
-    TopicEventDispatcher.configure(this.isReadOnly());
+    this._topicEventDispatcher = new TopicEventDispatcher(this.isReadOnly());
 
     // Hack: There are static reference to designer variable. Needs to be reviewed.
     globalThis.designer = this;
@@ -252,7 +254,12 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   private _buildNodeGraph(model: NodeModel, readOnly: boolean): Topic {
     // Create node graph ...
     const orientation = this._eventBussDispatcher.getLayoutManager().getOrientation();
-    const topic = TopicFactory.create(model, { readOnly }, this._themeVariant, orientation);
+    const topic = TopicFactory.create(
+      model,
+      { readOnly, topicEventDispatcher: this._topicEventDispatcher },
+      this._themeVariant,
+      orientation,
+    );
     this.getModel().addTopic(topic);
     const me = this;
     // Add Topic events ...

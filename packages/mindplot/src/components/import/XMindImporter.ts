@@ -223,12 +223,19 @@ class XMindImporter extends Importer {
     }
 
     if (sheet.extensions) {
-      for (const extension of sheet.extensions) {
-        const centralTopic = extension.content?.['centralTopic'] as string | undefined;
-        const layout = this.mapStructureClassToLayout(centralTopic);
-        if (layout) {
-          return layout;
-        }
+      const layoutFromExtensions = sheet.extensions.reduce<LayoutType | null>(
+        (found, extension) => {
+          if (found) {
+            return found;
+          }
+          const content = extension.content as { centralTopic?: string } | undefined;
+          return this.mapStructureClassToLayout(content?.centralTopic);
+        },
+        null,
+      );
+
+      if (layoutFromExtensions) {
+        return layoutFromExtensions;
       }
     }
 
@@ -320,7 +327,7 @@ class XMindImporter extends Importer {
   private binaryStringToUint8Array(input: string): Uint8Array {
     const buffer = new Uint8Array(input.length);
     for (let i = 0; i < input.length; i += 1) {
-      buffer[i] = input.charCodeAt(i) & 0xff;
+      buffer[i] = input.charCodeAt(i) % 0x100;
     }
     return buffer;
   }
@@ -678,7 +685,7 @@ class XMindImporter extends Importer {
     nameMap: string,
     _description?: string,
   ): string {
-    const rootTopic = sheet.rootTopic;
+    const { rootTopic } = sheet;
     const rootTitle = rootTopic.title || 'Central Topic';
     const centralId = this.generateId();
     this.topicIdMap.set(rootTopic.id, centralId.toString());

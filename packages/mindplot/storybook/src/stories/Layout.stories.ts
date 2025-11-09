@@ -21,7 +21,13 @@ import { StoryFn, Meta } from '@storybook/html';
 import BalancedTestSuite from './layout/BalancedTestSuite';
 import SymmetricTestSuite from './layout/SymmetricTestSuite';
 import TestSuite from './layout/TestSuite';
-
+import {
+  MindplotWebComponent,
+  MockPersistenceManager,
+  PersistenceManager,
+  WidgetBuilder,
+} from '../../../src/index';
+import type Designer from '../../../src/components/Designer';
 // Raphael is preloaded in preview.js
 
 export default {
@@ -186,3 +192,94 @@ const fullSuite = () => {
 
 const Template: StoryFn = () => fullSuite();
 export const BasicSuite = Template.bind({});
+
+const SAMPLE_MAP_XML = `
+<map name="storybook-sample" version="tango" layout="mindmap">
+  <topic central="true" id="0" text="Root Topic">
+    <topic id="1" order="0" position="-220,-40" text="Left Branch">
+      <topic id="4" order="0" position="-360,-120" text="Left Child"/>
+      <topic id="5" order="1" position="-360,40" text="Left Sibling"/>
+    </topic>
+    <topic id="2" order="1" position="220,-60" text="Right Branch">
+      <topic id="6" order="0" position="360,-140" text="Right Child"/>
+    </topic>
+    <topic id="3" order="2" position="0,180" text="Bottom Branch">
+      <topic id="7" order="0" position="-60,280" text="Bottom Left Child"/>
+      <topic id="8" order="1" position="60,280" text="Bottom Right Child"/>
+    </topic>
+  </topic>
+</map>
+`.trim();
+
+type WidgetBuilderElement = ReturnType<WidgetBuilder['buildEditorForLink']>;
+
+class StorybookWidgetBuilder extends WidgetBuilder {
+  buildEditorForLink(): WidgetBuilderElement {
+    return null as WidgetBuilderElement;
+  }
+
+  buidEditorForNote(): WidgetBuilderElement {
+    return null as WidgetBuilderElement;
+  }
+}
+
+declare global {
+  interface Window {
+    __mindplotStoryContainer?: HTMLDivElement;
+    __mindplotStoryDesigner?: Designer;
+  }
+}
+
+const ensureMindmapStory = (): HTMLDivElement => {
+  if (!window.__mindplotStoryContainer) {
+    const container = document.createElement('div');
+    container.id = 'mindplot-story-root';
+    container.style.width = '960px';
+    container.style.height = '600px';
+    container.style.margin = '0 auto';
+    container.style.backgroundColor = '#f5f5f5';
+    container.setAttribute('data-testid', 'mindmap-story-container');
+    container.setAttribute('data-loaded', 'initial');
+
+    const mindplotElement = document.createElement(
+      'mindplot-component',
+    ) as MindplotWebComponent;
+    mindplotElement.id = 'mindmap-comp';
+    mindplotElement.setAttribute('mode', 'viewonly');
+    mindplotElement.style.width = '100%';
+    mindplotElement.style.height = '100%';
+    container.appendChild(mindplotElement);
+
+    const persistence = new MockPersistenceManager(SAMPLE_MAP_XML);
+    const widgetManager = new StorybookWidgetBuilder();
+
+    const designer = mindplotElement.buildDesigner(persistence, widgetManager);
+    window.__mindplotStoryDesigner = designer;
+    container.setAttribute('data-loaded', 'building');
+
+    designer.addEvent('loadSuccess', () => {
+      container.setAttribute('data-loaded', 'ready');
+    });
+
+    try {
+      const parser = new DOMParser();
+      const document = parser.parseFromString(SAMPLE_MAP_XML, 'text/xml');
+      const mindmap = PersistenceManager.loadFromDom('storybook-sample-map', document);
+      void designer.loadMap(mindmap).catch((error) => {
+        console.error('Mindmap story failed to load', error);
+        container.setAttribute('data-loaded', 'error');
+      });
+    } catch (error) {
+      console.error('Mindmap story failed to parse map XML', error);
+      container.setAttribute('data-loaded', 'error');
+    }
+
+    window.__mindplotStoryContainer = container;
+  }
+
+  return window.__mindplotStoryContainer!;
+};
+
+const RenderedMindmapTemplate: StoryFn = () => ensureMindmapStory();
+
+export const RenderedMindmap = RenderedMindmapTemplate.bind({});

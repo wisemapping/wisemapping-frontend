@@ -201,5 +201,35 @@ describe('Topic Link Suite', () => {
 
     cy.matchImageSnapshot('link-panel-opened-via-keyboard');
   });
+
+  it('shows link tooltip on hover', () => {
+    const linkUrl = 'https://tooltip.example.com';
+
+    cy.focusTopicById(3);
+    cy.onClickToolbarButton('Add Link');
+    waitForLinkPanel();
+
+    cy.get('input[type="url"]').first().clear().type(linkUrl);
+    cy.contains('Accept').should('be.visible').click();
+
+    cy.get('mindplot-component')
+      .shadow()
+      .find('[test-id="3"] [test-id="topic-link-icon"]', { timeout: 5000 })
+      .first()
+      .trigger('mouseenter', { force: true });
+
+    cy.get('mindplot-component')
+      .shadow()
+      .find('#mindplot-svg-tooltip-content-link', { timeout: 2000 })
+      .should('be.visible')
+      .and('have.attr', 'href', linkUrl)
+      .and('contain.text', linkUrl);
+
+    cy.get('mindplot-component')
+      .shadow()
+      .find('[test-id="3"] [test-id="topic-link-icon"]')
+      .first()
+      .trigger('mouseleave', { force: true });
+  });
 });
 

@@ -78,7 +78,7 @@ describe('Canvas Zoom Tests', () => {
     });
 
     mockScreenManager = new MockedScreenManager({} as any) as jest.Mocked<ScreenManager>;
-    canvas = new Canvas(mockScreenManager, 1.0, false);
+    canvas = new Canvas(mockScreenManager, 1.0, false, false);
   });
 
   test('setZoom should calculate viewport center focused coordinates by default', () => {

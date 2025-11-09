@@ -28,7 +28,7 @@ import LayoutEventBus from './layout/LayoutEventBus';
 import ShirinkConnector from './ShrinkConnector';
 import ActionDispatcher from './ActionDispatcher';
 
-import TopicEventDispatcher from './TopicEventDispatcher';
+import type TopicEventDispatcher from './TopicEventDispatcher';
 import { TopicShapeType } from './model/INodeModel';
 import NodeModel from './model/NodeModel';
 import Relationship from './Relationship';
@@ -80,6 +80,8 @@ abstract class Topic extends NodeGraph {
 
   private _orientation: OrientationType;
 
+  private _topicEventDispatcher?: TopicEventDispatcher;
+
   constructor(
     model: NodeModel,
     options: NodeOption,
@@ -94,6 +96,7 @@ abstract class Topic extends NodeGraph {
     this._innerShape = null;
     this._themeVariant = themeVariant;
     this._orientation = orientation;
+    this._topicEventDispatcher = options.topicEventDispatcher;
     this._imageEmojiFeature = new ImageEmojiFeature(this);
 
     this._imageSVGFeature = new ImageSVGFeature(this);
@@ -120,7 +123,12 @@ abstract class Topic extends NodeGraph {
     });
 
     this.addEvent('dblclick', (event: Event) => {
-      this._getTopicEventDispatcher().show(this);
+      const dispatcher = this._getTopicEventDispatcher();
+      if (!dispatcher) {
+        console.warn('TopicEventDispatcher not provided. Double click editing is disabled.');
+      } else {
+        dispatcher.show(this);
+      }
       event.stopPropagation();
     });
   }
@@ -619,7 +627,7 @@ abstract class Topic extends NodeGraph {
       }
 
       const eventDispatcher = me._getTopicEventDispatcher();
-      eventDispatcher.process('clicknode', me);
+      eventDispatcher?.process('clicknode', me);
       mouseEvent.stopPropagation();
     });
   }
@@ -709,7 +717,12 @@ abstract class Topic extends NodeGraph {
   }
 
   showTextEditor(text: string) {
-    this._getTopicEventDispatcher().show(this, text);
+    const dispatcher = this._getTopicEventDispatcher();
+    if (!dispatcher) {
+      console.warn('TopicEventDispatcher not provided. showTextEditor skipped.');
+      return;
+    }
+    dispatcher.show(this, text);
   }
 
   getNoteValue(): string | null {
@@ -779,11 +792,11 @@ abstract class Topic extends NodeGraph {
   }
 
   closeEditors() {
-    this._getTopicEventDispatcher().close(true);
+    this._getTopicEventDispatcher()?.close(true);
   }
 
-  private _getTopicEventDispatcher() {
-    return TopicEventDispatcher.getInstance();
+  private _getTopicEventDispatcher(): TopicEventDispatcher | undefined {
+    return this._topicEventDispatcher;
   }
 
   /**
@@ -1149,7 +1162,7 @@ abstract class Topic extends NodeGraph {
     }
 
     // If a drag node is create for it, let's hide the editor.
-    this._getTopicEventDispatcher().close(false);
+    this._getTopicEventDispatcher()?.close(false);
 
     return result;
   }
@@ -1341,7 +1354,8 @@ abstract class Topic extends NodeGraph {
 
         // Show emoji, but only show text if this specific topic is not being edited
         this._imageEmojiFeature.setVisibility(true);
-        const isThisTopicBeingEdited = this._getTopicEventDispatcher().isEditingTopic(this);
+        const isThisTopicBeingEdited =
+          this._getTopicEventDispatcher()?.isEditingTopic(this) ?? false;
         textShape.setVisibility(!isThisTopicBeingEdited);
       } else if (hasSVG) {
         // Setup delete widget for SVG
@@ -1352,12 +1366,14 @@ abstract class Topic extends NodeGraph {
         iconGroup.setPosition(padding, positioning.iconY);
 
         // Show SVG, but only show text if this specific topic is not being edited
-        const isThisTopicBeingEdited = this._getTopicEventDispatcher().isEditingTopic(this);
+        const isThisTopicBeingEdited =
+          this._getTopicEventDispatcher()?.isEditingTopic(this) ?? false;
         textShape.setVisibility(!isThisTopicBeingEdited);
       } else {
         // Default positioning for shapes without emoji or SVG
         // Only show text if this specific topic is not being edited
-        const isThisTopicBeingEdited = this._getTopicEventDispatcher().isEditingTopic(this);
+        const isThisTopicBeingEdited =
+          this._getTopicEventDispatcher()?.isEditingTopic(this) ?? false;
         textShape.setVisibility(!isThisTopicBeingEdited);
         iconGroup.setPosition(padding, positioning.iconY);
         textShape.setPosition(padding + iconGroupWith + textIconSpacing, positioning.textY);

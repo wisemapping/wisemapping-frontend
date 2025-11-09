@@ -42,7 +42,12 @@ class Canvas {
 
   private _mouseUpListener;
 
-  constructor(screenManager: ScreenManager, zoom: number, isReadOnly: boolean) {
+  constructor(
+    screenManager: ScreenManager,
+    zoom: number,
+    isReadOnly: boolean,
+    delayRenderQueue: boolean,
+  ) {
     // Create a suitable container ...
     $assert(screenManager, 'Div container can not be null');
     $assert(zoom, 'zoom container can not be null');
@@ -66,7 +71,7 @@ class Canvas {
     this.setZoom(zoom, true);
     this._renderQueue = [];
     this._eventsEnabled = false;
-    this._queueRenderEnabled = false;
+    this._queueRenderEnabled = delayRenderQueue;
     this._mouseMoveListener = null;
     this._mouseUpListener = null;
   }
