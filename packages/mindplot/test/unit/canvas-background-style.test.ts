@@ -87,7 +87,7 @@ describe('Canvas Background Style Tests', () => {
     });
 
     mockScreenManager = new MockedScreenManager({} as any) as jest.Mocked<ScreenManager>;
-    canvas = new Canvas(mockScreenManager, 1.0, false);
+    canvas = new Canvas(mockScreenManager, 1.0, false, false);
   });
 
   test('should apply solid background style correctly', () => {

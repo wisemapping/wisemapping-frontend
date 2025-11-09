@@ -123,7 +123,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Init Screen manager..
     const screenManager = new ScreenManager(divElem);
-    this._canvas = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly());
+    this._canvas = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly(), false);
 
     // Init layout manager ...
     this._eventBussDispatcher = new EventBusDispatcher();

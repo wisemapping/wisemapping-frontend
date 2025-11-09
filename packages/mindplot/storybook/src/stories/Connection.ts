@@ -47,6 +47,7 @@ const registerRefreshHook = (topics: Topic[]) => {
   globalThis.observer.observe(rootElement, { childList: true });
 };
 
+
 export type TopicArgs = {
   readOnly?: boolean;
   theme?: ThemeType;
@@ -61,7 +62,7 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
 
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);
-  const canvas = new Canvas(screenManager, 0.7, readOnly);
+  const canvas = new Canvas(screenManager, 0.7, readOnly, true);
   TopicEventDispatcher.configure(readOnly);
 
   // Register event propagation ..
@@ -169,6 +170,7 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
 
   // Register refresh hook ..
   registerRefreshHook(topics);
+  void canvas.enableQueueRender(false);
 
   return divElem;
 };

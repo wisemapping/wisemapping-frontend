@@ -81,7 +81,7 @@ const createTopic = ({
 
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);
-  const workspace = new Canvas(screenManager, 0.3, readOnly);
+  const workspace = new Canvas(screenManager, 0.3, readOnly, true);
   TopicEventDispatcher.configure(readOnly);
 
   // Update model ...
@@ -129,6 +129,8 @@ const createTopic = ({
 
   // Register refresh hook ..
   registerRefreshHook(centralTopic);
+  void workspace.enableQueueRender(false);
+
 
   return divElem;
 };
