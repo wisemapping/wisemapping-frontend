@@ -96,7 +96,7 @@ const createTopic = ({
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);
   const workspace = new Canvas(screenManager, 0.3, readOnly, true);
-  TopicEventDispatcher.configure(readOnly);
+  const topicEventDispatcher = new TopicEventDispatcher(readOnly);
 
   // Update model ...
   const mindmap = new Mindmap();
@@ -138,7 +138,7 @@ const createTopic = ({
 
   // Create topic UI element ...
   mindmap.addBranch(model);
-  const centralTopic = new CentralTopic(model, { readOnly }, 'light'); // Default to light for storybook
+  const centralTopic = new CentralTopic(model, { readOnly, topicEventDispatcher }, 'light'); // Default to light for storybook
   workspace.append(centralTopic);
 
   // Register refresh hook ..

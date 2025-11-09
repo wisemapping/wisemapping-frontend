@@ -63,7 +63,7 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);
   const canvas = new Canvas(screenManager, 0.7, readOnly, true);
-  TopicEventDispatcher.configure(readOnly);
+  const topicEventDispatcher = new TopicEventDispatcher(readOnly);
 
   // Register event propagation ..
   const mindmap = new Mindmap();
@@ -106,14 +106,16 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
   }
 
   // Create and add to canvas..
-  const centralTopic = new CentralTopic(central, { readOnly }, 'light'); // Default to light for storybook
+  const topicOptions = { readOnly, topicEventDispatcher } as const;
 
-  const child1Topic = new MainTopic(child1, { readOnly }, 'light'); // Default to light for storybook
-  const child2Topic = new MainTopic(child2, { readOnly }, 'light'); // Default to light for storybook
-  const child3Topic = new MainTopic(child3, { readOnly }, 'light'); // Default to light for storybook
-  const child4Topic = new MainTopic(child4, { readOnly }, 'light'); // Default to light for storybook
-  const subchild1Topic = new MainTopic(subchild1, { readOnly }, 'light'); // Default to light for storybook
-  const subchild2Topic = new MainTopic(subchild2, { readOnly }, 'light'); // Default to light for storybook
+  const centralTopic = new CentralTopic(central, topicOptions, 'light'); // Default to light for storybook
+
+  const child1Topic = new MainTopic(child1, topicOptions, 'light'); // Default to light for storybook
+  const child2Topic = new MainTopic(child2, topicOptions, 'light'); // Default to light for storybook
+  const child3Topic = new MainTopic(child3, topicOptions, 'light'); // Default to light for storybook
+  const child4Topic = new MainTopic(child4, topicOptions, 'light'); // Default to light for storybook
+  const subchild1Topic = new MainTopic(subchild1, topicOptions, 'light'); // Default to light for storybook
+  const subchild2Topic = new MainTopic(subchild2, topicOptions, 'light'); // Default to light for storybook
 
   const topics = [
     child1Topic,

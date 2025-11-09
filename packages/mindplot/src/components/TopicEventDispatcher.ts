@@ -24,8 +24,6 @@ type TopicEventType = 'editnode' | 'clicknode';
 class TopicEventDispatcher extends EventDispispatcher<TopicEventType> {
   private _readOnly: boolean;
 
-  private static _instance: TopicEventDispatcher;
-
   constructor(readOnly: boolean) {
     super();
     this._readOnly = readOnly;
@@ -65,22 +63,6 @@ class TopicEventDispatcher extends EventDispispatcher<TopicEventType> {
   isEditingTopic(topic: Topic): boolean {
     const activeTopic = MultitTextEditor.getInstance().getActiveTopic();
     return activeTopic === topic;
-  }
-
-  static configure(readOnly: boolean): TopicEventDispatcher {
-    if (this._instance) {
-      throw new Error('events already initialized');
-    }
-
-    this._instance = new TopicEventDispatcher(readOnly);
-    return this._instance;
-  }
-
-  static getInstance(): TopicEventDispatcher {
-    if (!this._instance) {
-      throw new Error('Event dispatched has not been initialized');
-    }
-    return this._instance;
   }
 }
 export default TopicEventDispatcher;
