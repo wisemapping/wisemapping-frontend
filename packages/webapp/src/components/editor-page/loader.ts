@@ -50,6 +50,13 @@ async function fetchMapMetadataWithCache(
   );
 }
 
+const isErrorInfo = (error: unknown): error is ErrorInfo =>
+  typeof error === 'object' &&
+  error !== null &&
+  ('msg' in error || 'isAuth' in error || 'fields' in error || 'status' in error);
+
+const PUBLIC_MAP_REMOVED_MESSAGE = 'The map you are looking for is no longer available.';
+
 export const loader = (pageMode: PageModeType, bootstrap = false) => {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   return async ({ params }): Promise<Response> => {
@@ -112,19 +119,29 @@ export const loader = (pageMode: PageModeType, bootstrap = false) => {
         break;
       }
       case 'view-public': {
-        const mapMetadata = await fetchMapMetadataWithCache(mapId, client, bootstrap);
-        const data: EditorMetadata = {
-          editorMode: 'viewonly-public',
-          mapMetadata: mapMetadata,
-          zoom: 0.8,
-        };
+        try {
+          const mapMetadata = await fetchMapMetadataWithCache(mapId, client, bootstrap);
+          const data: EditorMetadata = {
+            editorMode: 'viewonly-public',
+            mapMetadata: mapMetadata,
+            zoom: 0.8,
+          };
 
-        // Include XML if requested and available
-        if (bootstrap && mapMetadata.xml) {
-          data.bootstrapXML = mapMetadata.xml;
+          // Include XML if requested and available
+          if (bootstrap && mapMetadata.xml) {
+            data.bootstrapXML = mapMetadata.xml;
+          }
+
+          result = Response.json(data);
+        } catch (error) {
+          if (isErrorInfo(error) && error.status === 410) {
+            throw new Response(error.msg ?? PUBLIC_MAP_REMOVED_MESSAGE, {
+              status: 410,
+              statusText: 'Gone',
+            });
+          }
+          throw error;
         }
-
-        result = Response.json(data);
         break;
       }
       default: {
