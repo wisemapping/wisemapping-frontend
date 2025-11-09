@@ -18,7 +18,7 @@
 
 // jQuery removed - using native DOM APIs
 
-import { LinkModel, Mindmap, NoteModel, Topic } from '../../../src';
+import { LinkModel, Mindmap, NoteModel, Topic } from '../../../src/index';
 import NodeModel from '../../../src/components/model/NodeModel';
 import CentralTopic from '../../../src/components/CentralTopic';
 import Canvas from '../../../src/components/Canvas';

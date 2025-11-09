@@ -26,7 +26,7 @@ import {
   MockPersistenceManager,
   PersistenceManager,
   WidgetBuilder,
-} from '../../../src';
+} from '../../../src/index';
 import type Designer from '../../../src/components/Designer';
 // Raphael is preloaded in preview.js
 

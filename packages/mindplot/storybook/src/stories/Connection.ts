@@ -18,7 +18,7 @@
 
 // jQuery removed - using native DOM APIs
 
-import { Mindmap, Topic } from '../../../src';
+import { Mindmap, Topic } from '../../../src/index';
 import NodeModel from '../../../src/components/model/NodeModel';
 import CentralTopic from '../../../src/components/CentralTopic';
 import Canvas from '../../../src/components/Canvas';
@@ -54,6 +54,8 @@ export type TopicArgs = {
 };
 
 const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => {
+  LayoutEventBus.reset();
+
   // Build basic container ...
   const divElem = document.createElement('div');
   divElem.style.height = '600px';
