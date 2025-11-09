@@ -66,14 +66,6 @@ const SitemapGenerator: React.FC<SitemapGeneratorProps> = ({ publicMaps = [] }) 
     });
 
     // Add public maps
-    publicMaps.forEach((map) => {
-      sitemap += '  <url>\n';
-      sitemap += `    <loc>${baseUrl}/c/maps/${map.id}/public</loc>\n`;
-      sitemap += `    <lastmod>${map.lastModified}</lastmod>\n`;
-      sitemap += '    <changefreq>weekly</changefreq>\n';
-      sitemap += '    <priority>0.6</priority>\n';
-      sitemap += '  </url>\n';
-    });
 
     sitemap += '</urlset>';
     return sitemap;
