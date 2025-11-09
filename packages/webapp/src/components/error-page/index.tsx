@@ -84,7 +84,7 @@ const ErrorPage = (): React.ReactElement => {
         />
       );
     }
-    return <FormattedMessage id="error.generic-title" defaultMessage="We ran into a problem." />;
+    return <FormattedMessage id="error.generic-title" defaultMessage="Hmm, that didn't work." />;
   })();
 
   const fallbackDetail = (() => {

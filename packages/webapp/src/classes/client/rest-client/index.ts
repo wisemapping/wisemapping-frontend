@@ -846,6 +846,13 @@ export default class RestClient implements Client {
     if (response) {
       const status: number = response.status;
       const data = response.data;
+      const isMetadataRequest =
+        typeof response?.config?.url === 'string' &&
+        response.config.url.includes('/maps/') &&
+        response.config.url.includes('/metadata') &&
+        response?.config?.method?.toLowerCase() === 'get';
+      const isSpamMindmapError = status === 422 && isMetadataRequest;
+      const normalizedStatus = isSpamMindmapError ? 410 : status;
       console.error(`Status Code: ${status}`);
       console.error(`Status Data: ${response.data}`);
       console.error(`Status Message: ${response.message}`);
@@ -911,11 +918,11 @@ export default class RestClient implements Client {
         result.msg = data.message;
       }
 
-      result.status = status;
+      result.status = normalizedStatus;
 
       if (result.isAuth === undefined) {
         // No access to the operation and not session token, assuming that the issue is related to missing auth.
-        result.isAuth = status === 403 && JwtTokenConfig.retreiveToken() === undefined;
+        result.isAuth = normalizedStatus === 403 && JwtTokenConfig.retreiveToken() === undefined;
       }
     }
 
