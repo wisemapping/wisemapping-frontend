@@ -28,6 +28,19 @@ import TopicEventDispatcher from '../../../src/components/TopicEventDispatcher';
 import { TopicShapeType } from '../../../src/components/model/INodeModel';
 import ThemeType from '../../../src/components/model/ThemeType';
 
+const ensureDesignerStub = () => {
+  const globalDesigner = (globalThis as unknown as { designer?: unknown }).designer;
+  if (!globalDesigner) {
+    (globalThis as Record<string, unknown>).designer = {
+      getWidgeManager: () => ({
+        configureTooltipForNode: () => {},
+        createTooltipForLink: () => {},
+      }),
+      fireEvent: () => {},
+    };
+  }
+};
+
 const registerRefreshHook = (topic: Topic) => {
   // Trigger a redraw after the node is added ...
   if (globalThis.observer) {
@@ -73,6 +86,7 @@ const createTopic = ({
   theme = undefined,
   readOnly = true,
 }: TopicArgs) => {
+  ensureDesignerStub();
   // Build basic container ...
   const divElem = document.createElement('div');
   divElem.style.height = '600px';

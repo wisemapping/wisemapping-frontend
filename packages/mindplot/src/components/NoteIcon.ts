@@ -46,13 +46,25 @@ class NoteIcon extends ImageIcon {
     const topic = this._topic;
 
     // Hover tooltip ...
-    const wm = designer.getWidgeManager();
+    const designerInstance = (globalThis as Record<string, unknown>).designer as
+      | {
+          getWidgeManager: () => { configureTooltipForNode: (...args: unknown[]) => void };
+          fireEvent: (...args: unknown[]) => void;
+        }
+      | undefined;
+
+    if (!designerInstance) {
+      console.warn('NoteIcon: designer not provided. Tooltips will be disabled.');
+      return;
+    }
+
+    const wm = designerInstance.getWidgeManager();
     wm.configureTooltipForNode(this._topic, this._noteModel, this);
 
     // Register edition popup ...
     if (!this._readOnly) {
       this.getElement().addEvent('click', (evt) => {
-        designer.fireEvent('featureEdit', { event: 'note', topic });
+        designerInstance.fireEvent('featureEdit', { event: 'note', topic });
         evt.stopPropagation();
       });
     }
