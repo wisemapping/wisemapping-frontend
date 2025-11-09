@@ -144,7 +144,7 @@ describe('Topic Note Suite', () => {
 
     cy.get('mindplot-component')
       .shadow()
-      .find('image[href*="notes.svg"], image[xlink\\:href*="notes.svg"]', { timeout: 5000 })
+      .find('[test-id="topic-note-icon"]', { timeout: 5000 })
       .first()
       .trigger('mouseenter', { force: true });
 
@@ -156,7 +156,7 @@ describe('Topic Note Suite', () => {
 
     cy.get('mindplot-component')
       .shadow()
-      .find('image[href*="notes.svg"], image[xlink\\:href*="notes.svg"]')
+      .find('[test-id="topic-note-icon"]')
       .first()
       .trigger('mouseleave', { force: true });
   });

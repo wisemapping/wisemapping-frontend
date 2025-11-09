@@ -39,6 +39,8 @@ class LinkIcon extends ImageIcon {
     this._topic = topic;
     this._readOnly = readOnly;
 
+    this.getImageElement().setTestId('topic-link-icon');
+
     this._registerEvents();
   }
 

@@ -214,7 +214,7 @@ describe('Topic Link Suite', () => {
 
     cy.get('mindplot-component')
       .shadow()
-      .find('image[href*="links.svg"], image[xlink\\:href*="links.svg"]', { timeout: 5000 })
+      .find('[test-id="3"] [test-id="topic-link-icon"]', { timeout: 5000 })
       .first()
       .trigger('mouseenter', { force: true });
 
@@ -227,7 +227,7 @@ describe('Topic Link Suite', () => {
 
     cy.get('mindplot-component')
       .shadow()
-      .find('image[href*="links.svg"], image[xlink\\:href*="links.svg"]')
+      .find('[test-id="3"] [test-id="topic-link-icon"]')
       .first()
       .trigger('mouseleave', { force: true });
   });

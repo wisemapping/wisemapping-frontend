@@ -38,6 +38,8 @@ class NoteIcon extends ImageIcon {
     this._topic = topic;
     this._readOnly = readOnly;
 
+    this.getImageElement().setTestId('topic-note-icon');
+
     this._registerEvents();
   }
 

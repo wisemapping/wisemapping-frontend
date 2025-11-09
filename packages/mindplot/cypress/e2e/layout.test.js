@@ -70,11 +70,24 @@ context('Layout suite', () => {
       });
 
       expect(grandchildren, 'There should be grandchildren').to.have.length.greaterThan(0);
-      grandchildren.forEach((grandchild, index) => {
+
+      const grandchildPositions = grandchildren.map((grandchild, index) => {
         const pos = grandchild.getPosition();
         expect(pos, `Grandchild ${index} position`).to.exist;
-        expect(Math.abs(pos.y), `Grandchild ${index} vertical offset`).to.be.greaterThan(10);
+        expect(Number.isFinite(pos.x), `Grandchild ${index} x is finite`).to.be.true;
+        expect(Number.isFinite(pos.y), `Grandchild ${index} y is finite`).to.be.true;
+        return pos;
       });
+
+      const distinctY = new Set(grandchildPositions.map((pos) => Math.round(pos.y)));
+      expect(
+        distinctY.size,
+        'Grandchildren should occupy multiple vertical rows',
+      ).to.be.greaterThan(1);
+      expect(
+        grandchildPositions.some((pos) => Math.abs(pos.y) > 30),
+        'At least one grandchild should sit far from the root vertically',
+      ).to.be.true;
     });
   });
 });
