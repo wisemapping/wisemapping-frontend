@@ -758,6 +758,12 @@
   "error.not-found-message": {
     "defaultMessage": "La pagina che stai cercando potrebbe essere stata rimossa, rinominata o essere temporaneamente non disponibile."
   },
+  "error.map-unavailable-title": {
+    "defaultMessage": "Questa mappa mentale non è disponibile per la visualizzazione pubblica."
+  },
+  "error.map-unavailable-message": {
+    "defaultMessage": "Questa mappa mentale non è disponibile per la visualizzazione pubblica perché viola le nostre politiche del sito. Se hai bisogno di ulteriore assistenza, contatta support@wisemapping.com."
+  },
   "error.security-error": {
     "defaultMessage": "Non è possibile aprire la mappa mentale."
   },

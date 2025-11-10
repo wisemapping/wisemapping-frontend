@@ -758,6 +758,12 @@
   "error.not-found-message": {
     "defaultMessage": "The page you're looking for might have been removed, had its name changed, or is temporarily unavailable."
   },
+  "error.map-unavailable-title": {
+    "defaultMessage": "This mindmap is not available for public display."
+  },
+  "error.map-unavailable-message": {
+    "defaultMessage": "This mindmap is not available for public display because it violates our site policies. If you need further assistance, contact support@wisemapping.com."
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."
   },

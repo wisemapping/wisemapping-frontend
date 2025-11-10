@@ -758,6 +758,12 @@
   "error.not-found-message": {
     "defaultMessage": "您要尋找的頁面可能已被刪除、重新命名，或暫時無法使用。"
   },
+  "error.map-unavailable-title": {
+    "defaultMessage": "此思維導圖不提供公開顯示。"
+  },
+  "error.map-unavailable-message": {
+    "defaultMessage": "此思維導圖不提供公開顯示，因為它違反了我們的網站政策。如果您需要進一步協助，請聯繫 support@wisemapping.com。"
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."
   },

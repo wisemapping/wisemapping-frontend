@@ -76,6 +76,14 @@ const ErrorPage = (): React.ReactElement => {
         <FormattedMessage id="error.not-found-title" defaultMessage="We can't find that page." />
       );
     }
+    if (routeError?.status === 410) {
+      return (
+        <FormattedMessage
+          id="error.map-unavailable-title"
+          defaultMessage="This mindmap is not available for public display."
+        />
+      );
+    }
     if (isAccessError) {
       return (
         <FormattedMessage
@@ -93,6 +101,14 @@ const ErrorPage = (): React.ReactElement => {
         <FormattedMessage
           id="error.not-found-message"
           defaultMessage="The page you're looking for might have been removed, had its name changed, or is temporarily unavailable."
+        />
+      );
+    }
+    if (routeError?.status === 410) {
+      return (
+        <FormattedMessage
+          id="error.map-unavailable-message"
+          defaultMessage="This mindmap is not available for public display because it violates our site policies. If you need further assistance, contact support@wisemapping.com."
         />
       );
     }
@@ -116,11 +132,13 @@ const ErrorPage = (): React.ReactElement => {
     (errorInfo?.msg && errorInfo.msg.trim().length > 0 && errorInfo.msg) ||
     (routeError &&
       routeError.status !== 404 &&
+      routeError.status !== 410 &&
       typeof routeError.statusText === 'string' &&
       routeError.statusText.trim().length > 0 &&
       routeError.statusText) ||
     (routeError &&
       routeError.status !== 404 &&
+      routeError.status !== 410 &&
       typeof routeError.data === 'string' &&
       routeError.data.trim().length > 0 &&
       routeError.data) ||

@@ -758,6 +758,12 @@
   "error.not-found-message": {
     "defaultMessage": "Можливо, сторінку було видалено, перейменовано або вона тимчасово недоступна."
   },
+  "error.map-unavailable-title": {
+    "defaultMessage": "Ця майнд-карта недоступна для публічного перегляду."
+  },
+  "error.map-unavailable-message": {
+    "defaultMessage": "Ця майнд-карта недоступна для публічного перегляду, оскільки порушує політику нашого сайту. Якщо вам потрібна додаткова допомога, зверніться до support@wisemapping.com."
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."
   },

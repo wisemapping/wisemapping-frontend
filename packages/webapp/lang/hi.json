@@ -758,6 +758,12 @@
   "error.not-found-message": {
     "defaultMessage": "जिस पृष्ठ की आप तलाश कर रहे हैं वह हटाया गया हो सकता है, उसका नाम बदल दिया गया हो सकता है, या वह अस्थायी रूप से उपलब्ध न हो।"
   },
+  "error.map-unavailable-title": {
+    "defaultMessage": "यह माइंडमैप सार्वजनिक प्रदर्शन के लिए उपलब्ध नहीं है।"
+  },
+  "error.map-unavailable-message": {
+    "defaultMessage": "यह माइंडमैप सार्वजनिक प्रदर्शन के लिए उपलब्ध नहीं है क्योंकि यह हमारी साइट नीतियों का उल्लंघन करता है। यदि आपको आगे सहायता की आवश्यकता है, तो support@wisemapping.com से संपर्क करें।"
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."
   },
