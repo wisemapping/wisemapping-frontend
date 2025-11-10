@@ -1,6 +1,10 @@
 {
     "rewrites": [
         {
+            "source": "/sitemap.xml",
+            "destination": "/index.html"
+        },
+        {
             "source": "/c/(.*)*",
             "destination": "/index.html"
         }

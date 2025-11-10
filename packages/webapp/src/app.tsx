@@ -48,6 +48,7 @@ import { HelmetProvider } from './components/seo';
 import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
 import { loader as configLoader } from './loader';
 import { sitemapLoader } from './components/sitemap/loader';
+import Sitemap from './components/sitemap';
 import queryClient from './queryClient';
 
 import { ClientContext } from './classes/provider/client-context';
@@ -122,7 +123,7 @@ const router = createBrowserRouter(
       hydrateFallbackElement={<LoadingFallback />}
     >
       <Route path="/" element={<Redirect to="/c/login" />} />
-      <Route path="/sitemap.xml" loader={sitemapLoader} />
+      <Route path="/sitemap.xml" loader={sitemapLoader} element={<Sitemap />} />
       <Route path="/c/login" element={<LoginPage />} />
       {createRegistrationRoutes()}
       <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
