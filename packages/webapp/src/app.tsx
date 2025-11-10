@@ -25,6 +25,8 @@ import {
   createRoutesFromElements,
   createBrowserRouter,
   useSearchParams,
+  useLocation,
+  Outlet,
 } from 'react-router';
 import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
 import RegistationPage from './components/registration-page';
@@ -115,19 +117,51 @@ const createRegistrationRoutes = () => {
   return [];
 };
 
+// Wrapper component that reads locale from URL and provides it to IntlProvider
+const IntlProviderWrapper = ({ children }: { children: React.ReactNode }): ReactElement => {
+  const location = useLocation();
+  // Re-read locale when location changes to pick up locale from URL
+  const locale = AppI18n.getUserLocale();
+
+  return (
+    <IntlProvider
+      locale={locale.code}
+      defaultLocale={Locales.EN.code}
+      messages={locale.message as Record<string, string>}
+      key={location.pathname} // Force re-render when pathname changes
+    >
+      {children}
+    </IntlProvider>
+  );
+};
+
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
+    <Route
+      element={
+        <IntlProviderWrapper>
+          <Outlet />
+        </IntlProviderWrapper>
+      }
+    >
       <Route path="/sitemap.xml" loader={sitemapLoader} element={<Sitemap />} />
       <Route
         loader={configLoader}
-        errorElement={<ErrorPage />}
+        errorElement={
+          <IntlProviderWrapper>
+            <ErrorPage />
+          </IntlProviderWrapper>
+        }
         hydrateFallbackElement={<LoadingFallback />}
       >
         <Route path="/" element={<Redirect to="/c/login" />} />
         <Route path="/c/login" element={<LoginPage />} />
+        {/* Localized routes for login, registration, and forgot-password */}
+        <Route path="/:locale/c/login" element={<LoginPage />} />
         {createRegistrationRoutes()}
+        <Route path="/:locale/c/registration" element={<RegistationPage />} />
         <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/:locale/c/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />
 
         <Route element={<CommonPage />}>
@@ -185,41 +219,65 @@ const router = createBrowserRouter(
             path="/c/maps/:id/edit"
             element={<PageEditorWrapper mode="edit" />}
             loader={mapLoader('edit', true)}
-            errorElement={<ErrorPage />}
+            errorElement={
+              <IntlProviderWrapper>
+                <ErrorPage />
+              </IntlProviderWrapper>
+            }
           />
           <Route
             path="/c/maps/:id/print"
             element={<PageEditorWrapper mode="view-private" />}
             loader={mapLoader('view-private', true)}
-            errorElement={<ErrorPage />}
+            errorElement={
+              <IntlProviderWrapper>
+                <ErrorPage />
+              </IntlProviderWrapper>
+            }
           />
           <Route
             path="/c/maps/:id/:hid/view"
             element={<PageEditorWrapper mode="view-private" />}
             loader={mapLoader('view-private', true)}
-            errorElement={<ErrorPage />}
+            errorElement={
+              <IntlProviderWrapper>
+                <ErrorPage />
+              </IntlProviderWrapper>
+            }
           />
           <Route
             path="/c/maps/:id/public"
             loader={mapLoader('view-public', true)}
             element={<PageEditorWrapper mode="view-public" />}
-            errorElement={<ErrorPage />}
+            errorElement={
+              <IntlProviderWrapper>
+                <ErrorPage />
+              </IntlProviderWrapper>
+            }
           />
           <Route
             path="/c/maps/:id/embed"
             loader={mapLoader('view-public', true)}
             element={<PageEditorWrapper mode="view-public" />}
-            errorElement={<ErrorPage />}
+            errorElement={
+              <IntlProviderWrapper>
+                <ErrorPage />
+              </IntlProviderWrapper>
+            }
           />
           <Route
             path="/c/maps/:id/try"
             loader={mapLoader('try', true)}
             element={<PageEditorWrapper mode="try" />}
-            errorElement={<ErrorPage />}
+            errorElement={
+              <IntlProviderWrapper>
+                <ErrorPage />
+              </IntlProviderWrapper>
+            }
           />
         </Route>
       </Route>
-    </>,
+    </Route>,
   ),
   {
     future: {
@@ -238,7 +296,6 @@ function Redirect({ to }) {
 }
 
 const AppWithTheme = (): ReactElement => {
-  const locale = AppI18n.getDefaultLocale();
   const [hotkeyEnabled, setHotkeyEnabled] = useState(true);
   const { mode } = useTheme();
   const theme = createAppTheme(mode);
@@ -247,22 +304,16 @@ const AppWithTheme = (): ReactElement => {
     <HelmetProvider>
       <ClientContext.Provider value={AppConfig.getClient()}>
         <QueryClientProvider client={queryClient}>
-          <IntlProvider
-            locale={locale.code}
-            defaultLocale={Locales.EN.code}
-            messages={locale.message as Record<string, string>}
-          >
-            <StyledEngineProvider injectFirst>
-              <MuiThemeProvider theme={theme}>
-                <ThemeProvider theme={theme}>
-                  <CssBaseline />
-                  <KeyboardContext.Provider value={{ hotkeyEnabled, setHotkeyEnabled }}>
-                    <RouterProvider router={router} />
-                  </KeyboardContext.Provider>
-                </ThemeProvider>
-              </MuiThemeProvider>
-            </StyledEngineProvider>
-          </IntlProvider>
+          <StyledEngineProvider injectFirst>
+            <MuiThemeProvider theme={theme}>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <KeyboardContext.Provider value={{ hotkeyEnabled, setHotkeyEnabled }}>
+                  <RouterProvider router={router} />
+                </KeyboardContext.Provider>
+              </ThemeProvider>
+            </MuiThemeProvider>
+          </StyledEngineProvider>
         </QueryClientProvider>
       </ClientContext.Provider>
     </HelmetProvider>

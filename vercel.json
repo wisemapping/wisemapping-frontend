@@ -5,6 +5,10 @@
             "destination": "/index.html"
         },
         {
+            "source": "/(en|es|fr|de|ru|uk|zh|zh-CN|ja|pt|it|hi)/c/(.*)*",
+            "destination": "/index.html"
+        },
+        {
             "source": "/c/(.*)*",
             "destination": "/index.html"
         }

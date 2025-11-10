@@ -40,6 +40,7 @@ import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
 import { useTheme } from '../../contexts/ThemeContext';
 import { trackPageView } from '../../utils/analytics';
+import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 
 export type Model = {
   email: string;
@@ -141,13 +142,19 @@ const LoginPage = (): React.ReactElement => {
     setModel({ ...model, [name as keyof Model]: value });
   };
 
+  const canonicalUrl = getCanonicalUrl('/c/login');
+  const alternateLanguages = getAlternateLanguageUrls('/c/login');
+  const baseUrl =
+    typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
+
   return (
     <div>
       <SEOHead
         title="Login | WiseMapping"
         description="Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others. Free online mind mapping tool."
         keywords="login, sign in, mind mapping, wise mapping, account access, collaboration"
-        canonicalUrl="/c/login"
+        canonicalUrl={canonicalUrl}
+        alternateLanguages={alternateLanguages}
         ogType="website"
         structuredData={{
           '@context': 'https://schema.org',
@@ -155,7 +162,7 @@ const LoginPage = (): React.ReactElement => {
           name: 'Login - WiseMapping',
           description:
             'Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others.',
-          url: 'https://www.wisemapping.com/c/login',
+          url: `${baseUrl}${canonicalUrl}`,
           mainEntity: {
             '@type': 'WebApplication',
             name: 'WiseMapping',

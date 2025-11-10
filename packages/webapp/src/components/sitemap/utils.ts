@@ -23,6 +23,7 @@ export type SitemapUrl = {
   lastmod: string;
   changefreq: string;
   priority: string;
+  alternates?: Array<{ hreflang: string; href: string }>;
 };
 
 export type BuildSitemapOptions = {
@@ -32,7 +33,24 @@ export type BuildSitemapOptions = {
 
 const DEFAULT_BASE_URL = 'https://app.wisemapping.com';
 
-const STATIC_PAGES = [
+// Supported locales for localized URLs
+const SUPPORTED_LOCALES = [
+  'en',
+  'es',
+  'fr',
+  'de',
+  'ru',
+  'uk',
+  'zh',
+  'zh-CN',
+  'ja',
+  'pt',
+  'it',
+  'hi',
+] as const;
+
+// Pages that should have localized versions
+const LOCALIZED_PAGES = [
   {
     path: '/c/login',
     changefreq: 'monthly',
@@ -48,7 +66,7 @@ const STATIC_PAGES = [
     changefreq: 'monthly',
     priority: '0.7',
   },
-];
+] as const;
 
 /**
  * Returns today's date in YYYY-MM-DD format
@@ -58,18 +76,40 @@ export function getCurrentDate(): string {
 }
 
 /**
+ * Escapes XML special characters
+ */
+function escapeXml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+/**
  * Generates XML sitemap content from a list of URLs
+ * Includes xhtml:link elements for alternate language versions when provided
  */
 export function generateSitemapXml(urls: SitemapUrl[]): string {
   let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
-  sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+  sitemap +=
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
 
   urls.forEach((url) => {
     sitemap += '  <url>\n';
-    sitemap += `    <loc>${url.loc}</loc>\n`;
-    sitemap += `    <lastmod>${url.lastmod}</lastmod>\n`;
-    sitemap += `    <changefreq>${url.changefreq}</changefreq>\n`;
-    sitemap += `    <priority>${url.priority}</priority>\n`;
+    sitemap += `    <loc>${escapeXml(url.loc)}</loc>\n`;
+
+    // Add alternate language links if provided
+    if (url.alternates && url.alternates.length > 0) {
+      url.alternates.forEach((alt) => {
+        sitemap += `    <xhtml:link rel="alternate" hreflang="${escapeXml(alt.hreflang)}" href="${escapeXml(alt.href)}" />\n`;
+      });
+    }
+
+    sitemap += `    <lastmod>${escapeXml(url.lastmod)}</lastmod>\n`;
+    sitemap += `    <changefreq>${escapeXml(url.changefreq)}</changefreq>\n`;
+    sitemap += `    <priority>${escapeXml(url.priority)}</priority>\n`;
     sitemap += '  </url>\n';
   });
 
@@ -111,18 +151,70 @@ export function isWithinLastMonth(map: MapInfo): boolean {
 }
 
 /**
+ * Maps locale codes to hreflang values
+ * Some locales need special handling (e.g., zh-CN -> zh-CN, zh -> zh)
+ */
+function getHreflangCode(locale: string): string {
+  // zh-CN should stay as zh-CN, zh should stay as zh
+  if (locale === 'zh-CN' || locale === 'zh') {
+    return locale;
+  }
+  // For other locales, use the first part (e.g., en-US -> en)
+  return locale.split('-')[0];
+}
+
+/**
  * Builds the static sitemap entries that are always present.
+ * Includes both non-localized and localized versions for login, registration, and forgot-password.
+ * Each URL entry includes hreflang links to all alternate language versions.
  */
 export function buildStaticUrls(options: BuildSitemapOptions = {}): SitemapUrl[] {
   const baseUrl = options.baseUrl ?? DEFAULT_BASE_URL;
   const lastmod = options.sourceDate ?? getCurrentDate();
 
-  return STATIC_PAGES.map((page) => ({
-    loc: `${baseUrl}${page.path}`,
-    lastmod,
-    changefreq: page.changefreq,
-    priority: page.priority,
-  }));
+  const urls: SitemapUrl[] = [];
+
+  // Build URLs for each localized page
+  LOCALIZED_PAGES.forEach((page) => {
+    // Generate all alternate language URLs for this page
+    const alternateUrls: Array<{ hreflang: string; href: string }> = [];
+
+    // Add non-localized version as x-default
+    alternateUrls.push({
+      hreflang: 'x-default',
+      href: `${baseUrl}${page.path}`,
+    });
+
+    // Add all localized versions
+    SUPPORTED_LOCALES.forEach((locale) => {
+      alternateUrls.push({
+        hreflang: getHreflangCode(locale),
+        href: `${baseUrl}/${locale}${page.path}`,
+      });
+    });
+
+    // Create URL entry for non-localized version
+    urls.push({
+      loc: `${baseUrl}${page.path}`,
+      lastmod,
+      changefreq: page.changefreq,
+      priority: page.priority,
+      alternates: alternateUrls,
+    });
+
+    // Create URL entry for each localized version
+    SUPPORTED_LOCALES.forEach((locale) => {
+      urls.push({
+        loc: `${baseUrl}/${locale}${page.path}`,
+        lastmod,
+        changefreq: page.changefreq,
+        priority: page.priority,
+        alternates: alternateUrls,
+      });
+    });
+  });
+
+  return urls;
 }
 
 /**

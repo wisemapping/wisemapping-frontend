@@ -10,6 +10,9 @@ User-agent: *
 Allow: /
 Allow: /c/login
 Allow: /c/registration
+# Allow localized versions of login and registration (using wildcard for locale)
+Allow: /*/c/login
+Allow: /*/c/registration
 Allow: /c/maps/*/public
 
 # Disallow private/authenticated routes
@@ -62,6 +65,9 @@ User-agent: Googlebot
 Allow: /
 Allow: /c/login
 Allow: /c/registration
+# Allow localized versions of login and registration (using wildcard for locale)
+Allow: /*/c/login
+Allow: /*/c/registration
 Allow: /c/maps/*/public
 Disallow: /c/maps/*/edit
 Disallow: /c/maps/*/view
@@ -89,6 +95,9 @@ User-agent: Bingbot
 Allow: /
 Allow: /c/login
 Allow: /c/registration
+# Allow localized versions of login and registration (using wildcard for locale)
+Allow: /*/c/login
+Allow: /*/c/registration
 Allow: /c/maps/*/public
 Disallow: /c/maps/*/edit
 Disallow: /c/maps/*/view
@@ -105,6 +114,9 @@ User-agent: Yandex
 Allow: /
 Allow: /c/login
 Allow: /c/registration
+# Allow localized versions of login and registration (using wildcard for locale)
+Allow: /*/c/login
+Allow: /*/c/registration
 Allow: /c/maps/*/public
 Disallow: /c/maps/*/edit
 Disallow: /c/maps/*/view
@@ -121,6 +133,9 @@ User-agent: Baiduspider
 Allow: /
 Allow: /c/login
 Allow: /c/registration
+# Allow localized versions of login and registration (using wildcard for locale)
+Allow: /*/c/login
+Allow: /*/c/registration
 Allow: /c/maps/*/public
 Disallow: /c/maps/*/edit
 Disallow: /c/maps/*/view

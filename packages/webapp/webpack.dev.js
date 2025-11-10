@@ -60,7 +60,10 @@ module.exports = merge(common, {
       },
     ],
     historyApiFallback: {
-      rewrites: [{ from: /^\/c\//, to: '/index.html' }],
+      rewrites: [
+        { from: /^\/(en|es|fr|de|ru|uk|zh|zh-CN|ja|pt|it|hi)\/c\//, to: '/index.html' },
+        { from: /^\/c\//, to: '/index.html' },
+      ],
     },
     setupMiddlewares: (middlewares, devServer) => {
       if (devServer?.app) {
