@@ -9,7 +9,6 @@ require('ts-node').register({
   transpileOnly: true,
   project: path.join(__dirname, 'tsconfig.json'),
 });
-const { buildStaticUrls, generateSitemapXml } = require('./src/components/sitemap/utils');
 
 // Get the config from the common file
 let config;
@@ -67,7 +66,10 @@ module.exports = merge(common, {
     },
     setupMiddlewares: (middlewares, devServer) => {
       if (devServer?.app) {
-        devServer.app.get('/sitemap.xml', (req, res) => {
+        // Use the same logic as the API route - import utils directly
+        const { buildStaticUrls, generateSitemapXml } = require('./src/components/sitemap/utils');
+
+        const handleSitemapRequest = (req, res) => {
           try {
             const host = req.get('host') || 'localhost:3000';
             const protocol =
@@ -75,13 +77,21 @@ module.exports = merge(common, {
             const baseUrl = `${protocol}://${host}`;
             const urls = buildStaticUrls({ baseUrl });
             const xml = generateSitemapXml(urls);
+
             res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-            res.send(xml);
+            res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=3600');
+            res.status(200).send(xml);
           } catch (error) {
-            console.error('Failed to serve sitemap.xml from dev server', error);
+            console.error('Failed to serve sitemap from dev server', error);
             res.status(500).send('Unable to generate sitemap');
           }
-        });
+        };
+
+        // Handle /sitemap.xml - same as production rewrite
+        devServer.app.get('/sitemap.xml', handleSitemapRequest);
+
+        // Also handle /api/sitemap directly (for consistency)
+        devServer.app.get('/api/sitemap', handleSitemapRequest);
       }
 
       return middlewares;
