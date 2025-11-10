@@ -64,6 +64,27 @@ function formatDate(dateString: string | undefined): string {
 }
 
 /**
+ * Checks if a map was created or modified within the last month
+ */
+function isWithinLastMonth(map: MapInfo): boolean {
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+  // Check last modification time first, then creation time
+  const relevantDate = map.lastModificationTime || map.creationTime;
+  if (!relevantDate) {
+    return false;
+  }
+
+  try {
+    const mapDate = new Date(relevantDate);
+    return mapDate >= oneMonthAgo;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Sitemap loader - fetches public maps and generates XML sitemap
  */
 export async function sitemapLoader(): Promise<Response> {
@@ -95,9 +116,9 @@ export async function sitemapLoader(): Promise<Response> {
   try {
     const client = AppConfig.getClient();
     const allMaps = await client.fetchAllMaps();
-    const publicMaps = allMaps.filter((map) => map.public === true);
+    const publicMaps = allMaps.filter((map) => map.public === true && isWithinLastMonth(map));
 
-    // Add public maps to sitemap
+    // Add public maps to sitemap (only those from the last month)
     publicMaps.forEach((map: MapInfo) => {
       urls.push({
         loc: `${BASE_URL}/c/maps/${map.id}/public`,
