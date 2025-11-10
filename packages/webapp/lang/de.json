@@ -758,6 +758,12 @@
   "error.not-found-message": {
     "defaultMessage": "Die gesuchte Seite wurde möglicherweise entfernt, umbenannt oder ist vorübergehend nicht verfügbar."
   },
+  "error.map-unavailable-title": {
+    "defaultMessage": "Diese Mindmap ist nicht für die öffentliche Anzeige verfügbar."
+  },
+  "error.map-unavailable-message": {
+    "defaultMessage": "Diese Mindmap ist nicht für die öffentliche Anzeige verfügbar, da sie unsere Website-Richtlinien verletzt. Wenn Sie weitere Hilfe benötigen, kontaktieren Sie support@wisemapping.com."
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap kann nicht geöffnet werden."
   },

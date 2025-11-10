@@ -758,6 +758,12 @@
   "error.not-found-message": {
     "defaultMessage": "您要访问的页面可能已被删除、重命名，或暂时不可用。"
   },
+  "error.map-unavailable-title": {
+    "defaultMessage": "此思维导图不提供公开显示。"
+  },
+  "error.map-unavailable-message": {
+    "defaultMessage": "此思维导图不提供公开显示，因为它违反了我们的网站政策。如果您需要进一步协助，请联系 support@wisemapping.com。"
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."
   },

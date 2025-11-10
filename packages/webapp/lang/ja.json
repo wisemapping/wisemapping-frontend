@@ -758,6 +758,12 @@
   "error.not-found-message": {
     "defaultMessage": "お探しのページは削除されたか、名前が変更されたか、一時的に利用できない可能性があります。"
   },
+  "error.map-unavailable-title": {
+    "defaultMessage": "このマインドマップは公開表示には利用できません。"
+  },
+  "error.map-unavailable-message": {
+    "defaultMessage": "このマインドマップは、サイトポリシーに違反しているため、公開表示には利用できません。さらにサポートが必要な場合は、support@wisemapping.com にお問い合わせください。"
+  },
   "error.security-error": {
     "defaultMessage": "マインドマップを開くことができません。"
   },

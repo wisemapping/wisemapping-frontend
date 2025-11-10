@@ -758,6 +758,12 @@
   "error.not-found-message": {
     "defaultMessage": "Возможно, страница была удалена, переименована или временно недоступна."
   },
+  "error.map-unavailable-title": {
+    "defaultMessage": "Эта майнд-карта недоступна для публичного просмотра."
+  },
+  "error.map-unavailable-message": {
+    "defaultMessage": "Эта майнд-карта недоступна для публичного просмотра, поскольку нарушает политику нашего сайта. Если вам нужна дополнительная помощь, обратитесь в support@wisemapping.com."
+  },
   "error.security-error": {
     "defaultMessage": "Невозможно открыть майнд-карту."
   },
