@@ -52,9 +52,12 @@ describe('Sitemap XML', () => {
       const urlsetElements = xmlDoc.getElementsByTagName('urlset');
       expect(urlsetElements.length).to.be.greaterThan(0);
       const urlset = urlsetElements[0];
-      expect(urlset).to.exist;
-      expect(urlset.getAttribute('xmlns')).to.eq('http://www.sitemaps.org/schemas/sitemap/0.9');
-      expect(urlset.getAttribute('xmlns:xhtml')).to.eq('http://www.w3.org/1999/xhtml');
+      expect(urlset).to.not.be.null;
+      expect(urlset).to.not.be.undefined;
+      if (urlset) {
+        expect(urlset.getAttribute('xmlns')).to.eq('http://www.sitemaps.org/schemas/sitemap/0.9');
+        expect(urlset.getAttribute('xmlns:xhtml')).to.eq('http://www.w3.org/1999/xhtml');
+      }
 
       // Get all URL entries (use getElementsByTagName for namespace-aware querying)
       const urls = xmlDoc.getElementsByTagName('url');
@@ -67,10 +70,14 @@ describe('Sitemap XML', () => {
         const changefreq = url.getElementsByTagName('changefreq')[0];
         const priority = url.getElementsByTagName('priority')[0];
 
-        expect(loc).to.exist;
-        expect(lastmod).to.exist;
-        expect(changefreq).to.exist;
-        expect(priority).to.exist;
+        expect(loc).to.not.be.null;
+        expect(loc).to.not.be.undefined;
+        expect(lastmod).to.not.be.null;
+        expect(lastmod).to.not.be.undefined;
+        expect(changefreq).to.not.be.null;
+        expect(changefreq).to.not.be.undefined;
+        expect(priority).to.not.be.null;
+        expect(priority).to.not.be.undefined;
 
         // Verify URL is valid
         expect(loc?.textContent).to.match(/^https?:\/\//);
@@ -124,7 +131,8 @@ describe('Sitemap XML', () => {
         const nonLocalizedEntry = Array.from(urls).find(
           (url) => url.getElementsByTagName('loc')[0]?.textContent === nonLocalizedUrl,
         );
-        expect(nonLocalizedEntry).to.exist;
+        expect(nonLocalizedEntry).to.not.be.null;
+        expect(nonLocalizedEntry).to.not.be.undefined;
 
         if (nonLocalizedEntry) {
           // Use getElementsByTagNameNS for namespace-aware querying
@@ -135,7 +143,8 @@ describe('Sitemap XML', () => {
           const xDefault = Array.from(hreflangLinks).find(
             (link) => link.getAttribute('hreflang') === 'x-default',
           );
-          expect(xDefault).to.exist;
+          expect(xDefault).to.not.be.null;
+          expect(xDefault).to.not.be.undefined;
           expect(xDefault?.getAttribute('href')).to.eq(nonLocalizedUrl);
 
           // Verify all locales are present
@@ -144,7 +153,8 @@ describe('Sitemap XML', () => {
             const localeLink = Array.from(hreflangLinks).find(
               (link) => link.getAttribute('hreflang') === hreflang,
             );
-            expect(localeLink).to.exist;
+            expect(localeLink).to.not.be.null;
+            expect(localeLink).to.not.be.undefined;
             expect(localeLink?.getAttribute('href')).to.eq(`${baseUrl}/${locale}${page}`);
           });
         }
@@ -155,7 +165,8 @@ describe('Sitemap XML', () => {
           const localizedEntry = Array.from(urls).find(
             (url) => url.getElementsByTagName('loc')[0]?.textContent === localizedUrl,
           );
-          expect(localizedEntry).to.exist;
+          expect(localizedEntry).to.not.be.null;
+          expect(localizedEntry).to.not.be.undefined;
 
           if (localizedEntry) {
             const hreflangLinks = localizedEntry.getElementsByTagNameNS('http://www.w3.org/1999/xhtml', 'link');
@@ -165,7 +176,8 @@ describe('Sitemap XML', () => {
             const xDefault = Array.from(hreflangLinks).find(
               (link) => link.getAttribute('hreflang') === 'x-default',
             );
-            expect(xDefault).to.exist;
+            expect(xDefault).to.not.be.null;
+            expect(xDefault).to.not.be.undefined;
             expect(xDefault?.getAttribute('href')).to.eq(`${baseUrl}${page}`);
           }
         });
@@ -239,7 +251,8 @@ describe('Sitemap XML', () => {
 
       Array.from(urls).forEach((url) => {
         const lastmod = url.getElementsByTagName('lastmod')[0]?.textContent;
-        expect(lastmod).to.exist;
+        expect(lastmod).to.not.be.null;
+        expect(lastmod).to.not.be.undefined;
         // Verify date format (YYYY-MM-DD or ISO 8601)
         expect(lastmod).to.match(/^\d{4}-\d{2}-\d{2}/);
         // Verify date is valid
