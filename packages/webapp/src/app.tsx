@@ -117,107 +117,109 @@ const createRegistrationRoutes = () => {
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route
-      loader={configLoader}
-      errorElement={<ErrorPage />}
-      hydrateFallbackElement={<LoadingFallback />}
-    >
-      <Route path="/" element={<Redirect to="/c/login" />} />
+    <>
       <Route path="/sitemap.xml" loader={sitemapLoader} element={<Sitemap />} />
-      <Route path="/c/login" element={<LoginPage />} />
-      {createRegistrationRoutes()}
-      <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
-      <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />
+      <Route
+        loader={configLoader}
+        errorElement={<ErrorPage />}
+        hydrateFallbackElement={<LoadingFallback />}
+      >
+        <Route path="/" element={<Redirect to="/c/login" />} />
+        <Route path="/c/login" element={<LoginPage />} />
+        {createRegistrationRoutes()}
+        <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />
 
-      <Route element={<CommonPage />}>
-        {/* Admin routes */}
-        <Route
-          path="/c/admin"
-          element={
-            <Suspense fallback={<LoadingFallback />}>
-              <AdminConsole />
-            </Suspense>
-          }
-        />
-        <Route
-          element={
-            <Suspense fallback={<LoadingFallback />}>
-              <AdminLayout />
-            </Suspense>
-          }
-        >
+        <Route element={<CommonPage />}>
+          {/* Admin routes */}
           <Route
-            path="/c/admin/accounts"
+            path="/c/admin"
             element={
               <Suspense fallback={<LoadingFallback />}>
-                <AccountsPage />
+                <AdminConsole />
               </Suspense>
             }
           />
           <Route
-            path="/c/admin/maps"
             element={
               <Suspense fallback={<LoadingFallback />}>
-                <MapsAdminPage />
+                <AdminLayout />
+              </Suspense>
+            }
+          >
+            <Route
+              path="/c/admin/accounts"
+              element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <AccountsPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/c/admin/maps"
+              element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <MapsAdminPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/c/admin/system"
+              element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <SystemPage />
+                </Suspense>
+              }
+            />
+          </Route>
+
+          <Route
+            path="/c/maps/"
+            element={
+              <Suspense fallback={<MapsPageLoading />}>
+                <MapsPage />
               </Suspense>
             }
           />
           <Route
-            path="/c/admin/system"
-            element={
-              <Suspense fallback={<LoadingFallback />}>
-                <SystemPage />
-              </Suspense>
-            }
+            path="/c/maps/:id/edit"
+            element={<PageEditorWrapper mode="edit" />}
+            loader={mapLoader('edit', true)}
+            errorElement={<ErrorPage />}
+          />
+          <Route
+            path="/c/maps/:id/print"
+            element={<PageEditorWrapper mode="view-private" />}
+            loader={mapLoader('view-private', true)}
+            errorElement={<ErrorPage />}
+          />
+          <Route
+            path="/c/maps/:id/:hid/view"
+            element={<PageEditorWrapper mode="view-private" />}
+            loader={mapLoader('view-private', true)}
+            errorElement={<ErrorPage />}
+          />
+          <Route
+            path="/c/maps/:id/public"
+            loader={mapLoader('view-public', true)}
+            element={<PageEditorWrapper mode="view-public" />}
+            errorElement={<ErrorPage />}
+          />
+          <Route
+            path="/c/maps/:id/embed"
+            loader={mapLoader('view-public', true)}
+            element={<PageEditorWrapper mode="view-public" />}
+            errorElement={<ErrorPage />}
+          />
+          <Route
+            path="/c/maps/:id/try"
+            loader={mapLoader('try', true)}
+            element={<PageEditorWrapper mode="try" />}
+            errorElement={<ErrorPage />}
           />
         </Route>
-
-        <Route
-          path="/c/maps/"
-          element={
-            <Suspense fallback={<MapsPageLoading />}>
-              <MapsPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/c/maps/:id/edit"
-          element={<PageEditorWrapper mode="edit" />}
-          loader={mapLoader('edit', true)}
-          errorElement={<ErrorPage />}
-        />
-        <Route
-          path="/c/maps/:id/print"
-          element={<PageEditorWrapper mode="view-private" />}
-          loader={mapLoader('view-private', true)}
-          errorElement={<ErrorPage />}
-        />
-        <Route
-          path="/c/maps/:id/:hid/view"
-          element={<PageEditorWrapper mode="view-private" />}
-          loader={mapLoader('view-private', true)}
-          errorElement={<ErrorPage />}
-        />
-        <Route
-          path="/c/maps/:id/public"
-          loader={mapLoader('view-public', true)}
-          element={<PageEditorWrapper mode="view-public" />}
-          errorElement={<ErrorPage />}
-        />
-        <Route
-          path="/c/maps/:id/embed"
-          loader={mapLoader('view-public', true)}
-          element={<PageEditorWrapper mode="view-public" />}
-          errorElement={<ErrorPage />}
-        />
-        <Route
-          path="/c/maps/:id/try"
-          loader={mapLoader('try', true)}
-          element={<PageEditorWrapper mode="try" />}
-          errorElement={<ErrorPage />}
-        />
       </Route>
-    </Route>,
+    </>,
   ),
   {
     future: {
