@@ -112,8 +112,11 @@ export async function sitemapLoader(): Promise<Response> {
     priority: '0.8',
   });
 
-  // Try to fetch public maps
+  // Try to fetch public maps (only if config is available)
+  // Note: Sitemap route is outside configLoader, so config may not be loaded
   try {
+    // Check if config is available before trying to get client
+    AppConfig.fetchOrGetConfig();
     const client = AppConfig.getClient();
     const allMaps = await client.fetchAllMaps();
     const publicMaps = allMaps.filter((map) => map.public === true && isWithinLastMonth(map));
@@ -128,8 +131,8 @@ export async function sitemapLoader(): Promise<Response> {
       });
     });
   } catch (error) {
-    // If fetching maps fails (e.g., no authentication), continue with static pages only
-    console.warn('Could not fetch public maps for sitemap:', error);
+    // If fetching maps fails (e.g., no config, no authentication), continue with static pages only
+    // This is expected for public sitemap access
   }
 
   // Generate XML
