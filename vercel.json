@@ -77,6 +77,14 @@
                 {
                     "key": "X-Frame-Options",
                     "value": "DENY"
+                },
+                {
+                    "key": "X-Robots-Tag",
+                    "value": "noindex"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-cache, no-store, must-revalidate"
                 }
             ]
         },
