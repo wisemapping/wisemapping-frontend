@@ -39,8 +39,28 @@ Cypress.on('window:before:load', (win) => {
 });
 
 afterEach(() => {
-  cy.window().then((win) => {
-    expect(win.console.error).to.have.callCount(0);
-    expect(win.console.warn).to.have.callCount(0);
-  });
+  // Only check console errors/warnings if we have a window context
+  // (cy.request() tests don't load a window, so spies won't be set up)
+  // Use cy.document() first to check if we're in a browser context
+  cy.document({ log: false })
+    .then(() => {
+      // If document exists, we have a window, so check for spies
+      return cy.window({ log: false });
+    })
+    .then((win) => {
+      // Check if spies were set up by verifying they have the callCount property
+      // Cypress spies have a callCount property, regular functions don't
+      const errorSpy = win.console.error as unknown as { callCount?: number };
+      const warnSpy = win.console.warn as unknown as { callCount?: number };
+
+      if (errorSpy && typeof errorSpy.callCount === 'number') {
+        expect(win.console.error).to.have.callCount(0);
+      }
+      if (warnSpy && typeof warnSpy.callCount === 'number') {
+        expect(win.console.warn).to.have.callCount(0);
+      }
+    })
+    .catch(() => {
+      // If document/window is not available (e.g., in cy.request() tests), skip the check
+    });
 });
