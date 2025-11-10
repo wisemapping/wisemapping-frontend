@@ -34,6 +34,8 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router';
 import { ClientContext } from '../../classes/provider/client-context';
 import Button from '@mui/material/Button';
+import { SEOHead } from '../seo';
+import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');
@@ -131,8 +133,29 @@ const ForgotPasswordPage = (): React.ReactElement => {
     trackPageView(window.location.pathname, 'ForgotPassword:Init');
   }, []);
 
+  const canonicalUrl = getCanonicalUrl('/c/forgot-password');
+  const alternateLanguages = getAlternateLanguageUrls('/c/forgot-password');
+  const baseUrl =
+    typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
+
   return (
     <div>
+      <SEOHead
+        title="Forgot Password | WiseMapping"
+        description="Reset your WiseMapping account password. Enter your email address and we'll send you a password recovery link."
+        keywords="forgot password, reset password, password recovery, account recovery, wise mapping"
+        canonicalUrl={canonicalUrl}
+        alternateLanguages={alternateLanguages}
+        ogType="website"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'Forgot Password - WiseMapping',
+          description:
+            "Reset your WiseMapping account password. Enter your email address and we'll send you a password recovery link.",
+          url: `${baseUrl}${canonicalUrl}`,
+        }}
+      />
       <Header type="only-signin" />
       <ForgotPassword />
       <Footer />

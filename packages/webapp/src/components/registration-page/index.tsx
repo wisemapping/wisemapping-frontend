@@ -43,6 +43,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import { SEOHead } from '../seo';
+import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 
 export type Model = {
   email: string;
@@ -292,13 +293,19 @@ const RegistationPage = (): React.ReactElement => {
     return <></>;
   }
 
+  const canonicalUrl = getCanonicalUrl('/c/registration');
+  const alternateLanguages = getAlternateLanguageUrls('/c/registration');
+  const baseUrl =
+    typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
+
   return (
     <div>
       <SEOHead
         title="Sign Up | WiseMapping"
         description="Create your free WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others. Join thousands of users worldwide."
         keywords="sign up, register, create account, mind mapping, free account, collaboration, brainstorming"
-        canonicalUrl="/c/registration"
+        canonicalUrl={canonicalUrl}
+        alternateLanguages={alternateLanguages}
         ogType="website"
         structuredData={{
           '@context': 'https://schema.org',
@@ -306,7 +313,7 @@ const RegistationPage = (): React.ReactElement => {
           name: 'Sign Up - WiseMapping',
           description:
             'Create your free WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others.',
-          url: 'https://www.wisemapping.com/c/registration',
+          url: `${baseUrl}${canonicalUrl}`,
           mainEntity: {
             '@type': 'WebApplication',
             name: 'WiseMapping',

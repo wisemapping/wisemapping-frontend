@@ -46,6 +46,22 @@ export default abstract class AppI18n {
 
   public static getUserLocale(): Locale {
     const path = window.location.pathname;
+
+    // Check if locale is in the URL path (e.g., /en/c/login, /es/c/registration)
+    const localeMatch = path.match(
+      /^\/(en|es|fr|de|ru|uk|zh|zh-CN|ja|pt|it|hi)\/c\/(login|registration|forgot-password)/,
+    );
+    if (localeMatch && localeMatch[1]) {
+      try {
+        const localeFromUrl = localeFromStr(localeMatch[1]);
+        // Store the locale from URL in localStorage so it persists
+        localStorage.setItem(AppI18n.LOCAL_STORAGE_KEY, localeFromUrl.code);
+        return localeFromUrl;
+      } catch {
+        // If locale from URL is invalid, fall through to default logic
+      }
+    }
+
     // @Todo Hack: Try page must not account info. Add this to avoid 403 errors.
     const isPublicPage =
       path.endsWith('/try') || path.endsWith('/public') || path.endsWith('/embed');
