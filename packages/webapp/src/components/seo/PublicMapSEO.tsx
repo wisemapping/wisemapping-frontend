@@ -37,7 +37,7 @@ const PublicMapSEO: React.FC<PublicMapSEOProps> = ({
   ...seoProps
 }) => {
   const baseUrl =
-    typeof window !== 'undefined' ? window.location.origin : 'https://www.wisemapping.com';
+    typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
   const fullMapUrl = mapUrl || `${baseUrl}/c/maps/${mapId}/public`;
 
   const title = `${mapTitle} | Public Mind Map | WiseMapping`;
@@ -61,7 +61,7 @@ const PublicMapSEO: React.FC<PublicMapSEOProps> = ({
     publisher: {
       '@type': 'Organization',
       name: 'WiseMapping',
-      url: 'https://www.wisemapping.com',
+      url: baseUrl,
     },
     applicationCategory: 'ProductivityApplication',
     operatingSystem: 'Web Browser',

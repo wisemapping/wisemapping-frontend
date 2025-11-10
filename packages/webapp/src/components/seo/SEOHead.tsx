@@ -59,7 +59,7 @@ const SEOHead: React.FC<SEOProps> = ({
   alternateLanguages = [],
 }) => {
   const baseUrl =
-    typeof window !== 'undefined' ? window.location.origin : 'https://www.wisemapping.com';
+    typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
   const fullCanonicalUrl = canonicalUrl ? `${baseUrl}${canonicalUrl}` : undefined;
   const fullOgImage = ogImage.startsWith('http') ? ogImage : `${baseUrl}${ogImage}`;
   const fullTwitterImage = twitterImage

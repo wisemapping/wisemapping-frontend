@@ -159,7 +159,7 @@ Disallow: /
 # Sitemap Location
 # ============================================================================
 # Tell crawlers where to find the sitemap
-Sitemap: https://www.wisemapping.com/sitemap.xml
+Sitemap: https://app.wisemapping.com/sitemap.xml
 
 # ============================================================================
 # Crawl Delay (Default)
