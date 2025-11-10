@@ -1,4 +1,64 @@
+# WiseMapping Robots.txt
+# This file provides instructions to web crawlers about which pages should be indexed
+
+# ============================================================================
+# Default Rules for All Crawlers
+# ============================================================================
 User-agent: *
+
+# Allow public content
+Allow: /
+Allow: /c/login
+Allow: /c/registration
+Allow: /c/maps/*/public
+
+# Disallow private/authenticated routes
+Disallow: /c/maps/*/edit
+Disallow: /c/maps/*/view
+Disallow: /c/maps/*/print
+Disallow: /c/maps/*/try
+
+# Disallow admin console
+Disallow: /c/admin/
+
+# Disallow authentication flows (these are not useful for SEO)
+Disallow: /c/forgot-password
+Disallow: /c/forgot-password-success
+Disallow: /c/activation
+Disallow: /c/registration-success
+Disallow: /c/oauth-callback
+Disallow: /c/registration-google
+Disallow: /c/registration-facebook
+
+# Disallow API endpoints (not meant for crawlers)
+Disallow: /api/
+
+# Disallow user-specific content (requires authentication)
+Disallow: /c/maps/
+Disallow: /c/maps?*
+
+# Allow static assets (images, CSS, JS, fonts, etc.)
+Allow: /images/
+Allow: /assets/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.ico$
+Allow: /*.woff$
+Allow: /*.woff2$
+Allow: /*.ttf$
+Allow: /*.eot$
+
+# ============================================================================
+# Specific Rules for Major Search Engines
+# ============================================================================
+
+# Google Bot
+User-agent: Googlebot
 Allow: /
 Allow: /c/login
 Allow: /c/registration
@@ -8,9 +68,101 @@ Disallow: /c/maps/*/view
 Disallow: /c/maps/*/print
 Disallow: /c/maps/*/embed
 Disallow: /c/maps/*/try
+Disallow: /c/admin/
+Disallow: /c/maps/
+Disallow: /api/
+Crawl-delay: 1
 
-# Sitemap
+# Google Image Bot
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /assets/
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Disallow: /
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+Allow: /c/login
+Allow: /c/registration
+Allow: /c/maps/*/public
+Disallow: /c/maps/*/edit
+Disallow: /c/maps/*/view
+Disallow: /c/maps/*/print
+Disallow: /c/maps/*/embed
+Disallow: /c/maps/*/try
+Disallow: /c/admin/
+Disallow: /c/maps/
+Disallow: /api/
+Crawl-delay: 1
+
+# Yandex Bot
+User-agent: Yandex
+Allow: /
+Allow: /c/login
+Allow: /c/registration
+Allow: /c/maps/*/public
+Disallow: /c/maps/*/edit
+Disallow: /c/maps/*/view
+Disallow: /c/maps/*/print
+Disallow: /c/maps/*/embed
+Disallow: /c/maps/*/try
+Disallow: /c/admin/
+Disallow: /c/maps/
+Disallow: /api/
+Crawl-delay: 2
+
+# Baidu Bot
+User-agent: Baiduspider
+Allow: /
+Allow: /c/login
+Allow: /c/registration
+Allow: /c/maps/*/public
+Disallow: /c/maps/*/edit
+Disallow: /c/maps/*/view
+Disallow: /c/maps/*/print
+Disallow: /c/maps/*/embed
+Disallow: /c/maps/*/try
+Disallow: /c/admin/
+Disallow: /c/maps/
+Disallow: /api/
+Crawl-delay: 2
+
+# ============================================================================
+# Block Bad Bots and Scrapers
+# ============================================================================
+
+# Block common scrapers and bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+# ============================================================================
+# Sitemap Location
+# ============================================================================
+# Tell crawlers where to find the sitemap
 Sitemap: https://www.wisemapping.com/sitemap.xml
 
-# Crawl-delay for respectful crawling
+# ============================================================================
+# Crawl Delay (Default)
+# ============================================================================
+# Respectful crawling delay for all other bots
 Crawl-delay: 1
