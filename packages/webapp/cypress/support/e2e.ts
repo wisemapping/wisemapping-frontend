@@ -34,6 +34,34 @@ Cypress.Commands.add('waitForPageLoaded', () => {
 });
 
 Cypress.on('window:before:load', (win) => {
+  // Store original console methods
+  const originalError = win.console.error.bind(win.console);
+  const originalWarn = win.console.warn.bind(win.console);
+
+  // Wrap console methods to filter browser extension errors
+  win.console.error = (...args: unknown[]) => {
+    const errorMessage = String(args[0] || '');
+    // Ignore browser extension errors
+    if (
+      errorMessage.includes('content_script.js') ||
+      errorMessage.includes('Cannot read properties of undefined') ||
+      errorMessage.includes("reading 'control'")
+    ) {
+      return;
+    }
+    originalError(...args);
+  };
+
+  win.console.warn = (...args: unknown[]) => {
+    const warnMessage = String(args[0] || '');
+    // Ignore browser extension warnings
+    if (warnMessage.includes('content_script.js')) {
+      return;
+    }
+    originalWarn(...args);
+  };
+
+  // Spy on the wrapped methods to track real application errors
   cy.spy(win.console, 'error');
   cy.spy(win.console, 'warn');
 });

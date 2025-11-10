@@ -313,7 +313,8 @@ abstract class Topic extends NodeGraph {
       const icon = TopicFeatureFactory.createIcon(this, f, this.isReadOnly());
 
       const type = f.getType();
-      const addRemoveAction = type === 'eicon' || type === 'icon';
+      const addRemoveAction =
+        type === 'eicon' || type === 'icon' || type === 'note' || type === 'link';
       result.addIcon(icon, addRemoveAction && !this.isReadOnly());
     });
 
@@ -329,8 +330,13 @@ abstract class Topic extends NodeGraph {
     model.addFeature(featureModel);
 
     const result: Icon = TopicFeatureFactory.createIcon(this, featureModel, this.isReadOnly());
-    const isIcon = featureModel.getType() === 'icon' || featureModel.getType() === 'eicon';
-    iconGroup.addIcon(result, isIcon && !this.isReadOnly());
+    const featureType = featureModel.getType();
+    const canRemove =
+      featureType === 'icon' ||
+      featureType === 'eicon' ||
+      featureType === 'note' ||
+      featureType === 'link';
+    iconGroup.addIcon(result, canRemove && !this.isReadOnly());
 
     this.redraw(this.getThemeVariant(), false);
     return result;
