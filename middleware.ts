@@ -49,34 +49,153 @@ export default async function middleware(request: Request) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Map Not Available | WiseMapping</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      font-family: 'Figtree', 'Noto Sans JP', 'Helvetica', system-ui, Arial, sans-serif;
       margin: 0;
-      background-color: #f5f5f5;
+      padding: 0;
+      min-height: 100vh;
+      background-color: #fafafa;
+      color: #333333;
     }
-    .container {
-      text-align: center;
-      padding: 2rem;
-      max-width: 600px;
+    .header-nav {
+      height: 90px;
+      position: sticky;
+      top: -16px;
+      z-index: 1;
+      background: linear-gradient(#fafafa, rgba(250, 250, 250, 0.3));
     }
-    h1 {
-      color: #333;
-      margin-bottom: 1rem;
+    .header-nav::before,
+    .header-nav::after {
+      content: '';
+      display: block;
+      height: 16px;
+      position: sticky;
     }
-    p {
-      color: #666;
-      line-height: 1.6;
+    .header-nav::before {
+      top: 58px;
+    }
+    .header-nav::after {
+      top: 0;
+      z-index: 2;
+    }
+    .header-div {
+      height: 74px;
+      padding: 10px;
+      position: sticky;
+      top: 0px;
+      margin-top: -16px;
+      z-index: 3;
+      display: grid;
+      white-space: nowrap;
+      grid-template-columns: 150px 1fr 160px 20px;
+      background: #fafafa;
+    }
+    .header-logo {
+      grid-column-start: 1;
+      margin-left: 20px;
+      margin-top: 0px;
+    }
+    .header-logo a {
+      padding: 0px;
+      text-decoration: none;
+    }
+    .header-logo img {
+      transition: opacity 0.2s ease;
+      height: auto;
+    }
+    .header-logo:hover img {
+      opacity: 0.8;
+    }
+    .header-signup {
+      grid-column-start: 3;
+      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .signup-button {
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap;
+      text-transform: none;
+      border-radius: 9px;
+      padding: 6px 20px;
+      background: transparent;
+      border: 1px solid #ffa800;
+      color: #ffa800;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .signup-button:hover {
+      background-color: #ffa800;
+      color: #FFFFFF;
+    }
+    .error-body {
+      margin: auto;
+      width: 90%;
+      padding: 10px;
+    }
+    .error-headline {
+      font-size: 3rem;
+      font-weight: 400;
+      line-height: 1.167;
+      color: #333333;
+      margin: 0 0 1rem 0;
+    }
+    .error-message {
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.334;
+      color: #333333;
+      margin: 0;
+    }
+    .error-message a {
+      color: #ffa800;
+      text-decoration: none;
+    }
+    .error-message a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 600px) {
+      .header-div {
+        grid-template-columns: 120px 1fr 120px 10px;
+      }
+      .header-signup {
+        grid-column-start: 3;
+      }
+      .error-headline {
+        font-size: 2rem;
+      }
+      .error-message {
+        font-size: 1.25rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>This mindmap is not available for public display.</h1>
-    <p>This mindmap is not available for public display because it violates our site policies. If you need further assistance, contact support@wisemapping.com.</p>
+  <nav class="header-nav">
+    <div class="header-div">
+      <div class="header-logo">
+        <a href="/c/login" class="header-logo-link">
+          <img src="https://app.wisemapping.com/logo-small.svg" alt="WiseMapping" />
+        </a>
+      </div>
+      <span style="grid-column-start: 2; grid-column-end: 3; text-align: right; font-size: 14px; padding: 10px;">
+        <span>Don't have an account ?</span>
+      </span>
+      <div class="header-signup">
+        <a href="/c/registration" class="signup-button">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+  <div class="error-body">
+    <h3 class="error-headline">This mindmap is not available for public display.</h3>
+    <h5 class="error-message">This mindmap is not available for public display because it violates our site policies. If you need further assistance, contact <a href="mailto:support@wisemapping.com">support@wisemapping.com</a>.</h5>
   </div>
 </body>
 </html>`,
