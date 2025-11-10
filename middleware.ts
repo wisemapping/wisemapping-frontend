@@ -182,7 +182,7 @@ export default async function middleware(request: Request) {
     <div class="header-div">
       <div class="header-logo">
         <a href="/c/login" class="header-logo-link">
-          <img src="https://app.wisemapping.com/logo-small.svg" alt="WiseMapping" />
+          <img src="/logo-small.png" alt="WiseMapping" />
         </a>
       </div>
       <span style="grid-column-start: 2; grid-column-end: 3; text-align: right; font-size: 14px; padding: 10px;">
