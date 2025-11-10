@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/sitemap.xml",
-            "destination": "/index.html"
+            "destination": "/api/sitemap"
         },
         {
             "source": "/(en|es|fr|de|ru|uk|zh|zh-CN|ja|pt|it|hi)/c/(.*)*",
