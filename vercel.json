@@ -138,8 +138,38 @@
             ]
         },
         {
+            "source": "/sitemap.xml",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/xml; charset=utf-8"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=3600, s-maxage=3600"
+                }
+            ]
+        },
+        {
+            "source": "/robots.txt",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=3600, s-maxage=3600"
+                }
+            ]
+        },
+        {
             "source": "/c/(login|registration|forgot-password)",
             "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "text/html; charset=utf-8"
+                },
                 {
                     "key": "Cache-Control",
                     "value": "public, max-age=86400, s-maxage=86400"
@@ -149,6 +179,10 @@
         {
             "source": "/(en|es|fr|de|ru|uk|zh|zh-CN|ja|pt|it|hi)/c/(login|registration|forgot-password)",
             "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "text/html; charset=utf-8"
+                },
                 {
                     "key": "Cache-Control",
                     "value": "public, max-age=86400, s-maxage=86400"
