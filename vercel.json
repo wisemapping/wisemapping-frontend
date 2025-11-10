@@ -5,11 +5,11 @@
             "destination": "/api/sitemap"
         },
         {
-            "source": "/(en|es|fr|de|ru|uk|zh|zh-CN|ja|pt|it|hi)/c/(.*)*",
+            "source": "/(en|es|fr|de|ru|uk|zh|zh-CN|ja|pt|it|hi)/c/:path*",
             "destination": "/index.html"
         },
         {
-            "source": "/c/(.*)*",
+            "source": "/c/:path*",
             "destination": "/index.html"
         }
     ],
