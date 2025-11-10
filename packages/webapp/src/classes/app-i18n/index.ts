@@ -43,6 +43,18 @@ export class Locale {
 
 export default abstract class AppI18n {
   private static LOCAL_STORAGE_KEY = 'user.locale';
+  private static readonly PUBLIC_AUTH_ROUTES = new Set<string>([
+    '/c/login',
+    '/c/registration',
+    '/c/registration-google',
+    '/c/registration-facebook',
+    '/c/oauth-callback',
+    '/c/registration-success',
+    '/c/activation',
+    '/c/forgot-password',
+    '/c/forgot-password-success',
+  ]);
+  private static localePrefixRegex: RegExp | null = null;
 
   public static getUserLocale(): Locale {
     const path = window.location.pathname;
@@ -64,7 +76,10 @@ export default abstract class AppI18n {
 
     // @Todo Hack: Try page must not account info. Add this to avoid 403 errors.
     const isPublicPage =
-      path.endsWith('/try') || path.endsWith('/public') || path.endsWith('/embed');
+      AppI18n.isPublicUnauthenticatedRoute(path) ||
+      path.endsWith('/try') ||
+      path.endsWith('/public') ||
+      path.endsWith('/embed');
     let result: Locale;
     if (!isPublicPage) {
       const account = useFetchAccount();
@@ -109,6 +124,25 @@ export default abstract class AppI18n {
       result = this.getBrowserLocale();
     }
     return result;
+  }
+
+  private static isPublicUnauthenticatedRoute(path: string): boolean {
+    const normalizedPath = AppI18n.stripLocaleFromPath(path);
+    return AppI18n.PUBLIC_AUTH_ROUTES.has(normalizedPath);
+  }
+
+  private static stripLocaleFromPath(path: string): string {
+    if (!AppI18n.localePrefixRegex) {
+      AppI18n.localePrefixRegex = AppI18n.buildLocalePrefixRegex();
+    }
+    return path.replace(AppI18n.localePrefixRegex, '');
+  }
+
+  private static buildLocalePrefixRegex(): RegExp {
+    const localePattern = Object.values(Locales)
+      .map((locale) => locale.code.replace('-', '\\-'))
+      .join('|');
+    return new RegExp(`^/(${localePattern})(?=/)`);
   }
 }
 

@@ -39,8 +39,22 @@ Cypress.on('window:before:load', (win) => {
 });
 
 afterEach(() => {
-  cy.window().then((win) => {
-    expect(win.console.error).to.have.callCount(0);
-    expect(win.console.warn).to.have.callCount(0);
+  // cy.request() tests don't boot an AUT window, so Cypress won't have spies set up.
+  // Use Cypress.state to check for an existing window and only assert when present.
+  cy.then(() => {
+    const win = Cypress.state('window') as Window | undefined;
+    if (!win) {
+      return;
+    }
+
+    const errorSpy = win.console.error as unknown as { callCount?: number };
+    const warnSpy = win.console.warn as unknown as { callCount?: number };
+
+    if (errorSpy && typeof errorSpy.callCount === 'number') {
+      expect(win.console.error).to.have.callCount(0);
+    }
+    if (warnSpy && typeof warnSpy.callCount === 'number') {
+      expect(win.console.warn).to.have.callCount(0);
+    }
   });
 });

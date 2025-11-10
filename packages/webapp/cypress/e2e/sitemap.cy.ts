@@ -48,21 +48,24 @@ describe('Sitemap XML', () => {
       expect(parseError).to.be.null;
 
       // Verify root element
-      const urlset = xmlDoc.querySelector('urlset');
+      // Use getElementsByTagName for namespace-aware querying
+      const urlsetElements = xmlDoc.getElementsByTagName('urlset');
+      expect(urlsetElements.length).to.be.greaterThan(0);
+      const urlset = urlsetElements[0];
       expect(urlset).to.exist;
-      expect(urlset?.getAttribute('xmlns')).to.eq('http://www.sitemaps.org/schemas/sitemap/0.9');
-      expect(urlset?.getAttribute('xmlns:xhtml')).to.eq('http://www.w3.org/1999/xhtml');
+      expect(urlset.getAttribute('xmlns')).to.eq('http://www.sitemaps.org/schemas/sitemap/0.9');
+      expect(urlset.getAttribute('xmlns:xhtml')).to.eq('http://www.w3.org/1999/xhtml');
 
-      // Get all URL entries
-      const urls = xmlDoc.querySelectorAll('url');
+      // Get all URL entries (use getElementsByTagName for namespace-aware querying)
+      const urls = xmlDoc.getElementsByTagName('url');
       expect(urls.length).to.be.greaterThan(0);
 
       // Verify each URL has required elements
-      urls.forEach((url) => {
-        const loc = url.querySelector('loc');
-        const lastmod = url.querySelector('lastmod');
-        const changefreq = url.querySelector('changefreq');
-        const priority = url.querySelector('priority');
+      Array.from(urls).forEach((url) => {
+        const loc = url.getElementsByTagName('loc')[0];
+        const lastmod = url.getElementsByTagName('lastmod')[0];
+        const changefreq = url.getElementsByTagName('changefreq')[0];
+        const priority = url.getElementsByTagName('priority')[0];
 
         expect(loc).to.exist;
         expect(lastmod).to.exist;
@@ -84,7 +87,8 @@ describe('Sitemap XML', () => {
     }).then((response) => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(response.body, 'text/xml');
-      const urls = Array.from(xmlDoc.querySelectorAll('url loc')).map((loc) => loc.textContent || '');
+      const locElements = xmlDoc.getElementsByTagName('loc');
+      const urls = Array.from(locElements).map((loc) => loc.textContent || '');
 
       // Check for non-localized versions
       LOCALIZED_PAGES.forEach((page) => {
@@ -111,19 +115,20 @@ describe('Sitemap XML', () => {
     }).then((response) => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(response.body, 'text/xml');
-      const urls = xmlDoc.querySelectorAll('url');
+      const urls = xmlDoc.getElementsByTagName('url');
 
       // Check each localized page URL has hreflang links
       LOCALIZED_PAGES.forEach((page) => {
         // Check non-localized version
         const nonLocalizedUrl = `${baseUrl}${page}`;
         const nonLocalizedEntry = Array.from(urls).find(
-          (url) => url.querySelector('loc')?.textContent === nonLocalizedUrl,
+          (url) => url.getElementsByTagName('loc')[0]?.textContent === nonLocalizedUrl,
         );
         expect(nonLocalizedEntry).to.exist;
 
         if (nonLocalizedEntry) {
-          const hreflangLinks = nonLocalizedEntry.querySelectorAll('xhtml\\:link');
+          // Use getElementsByTagNameNS for namespace-aware querying
+          const hreflangLinks = nonLocalizedEntry.getElementsByTagNameNS('http://www.w3.org/1999/xhtml', 'link');
           expect(hreflangLinks.length).to.be.greaterThan(0);
 
           // Verify x-default exists
@@ -148,12 +153,12 @@ describe('Sitemap XML', () => {
         SUPPORTED_LOCALES.forEach((locale) => {
           const localizedUrl = `${baseUrl}/${locale}${page}`;
           const localizedEntry = Array.from(urls).find(
-            (url) => url.querySelector('loc')?.textContent === localizedUrl,
+            (url) => url.getElementsByTagName('loc')[0]?.textContent === localizedUrl,
           );
           expect(localizedEntry).to.exist;
 
           if (localizedEntry) {
-            const hreflangLinks = localizedEntry.querySelectorAll('xhtml\\:link');
+            const hreflangLinks = localizedEntry.getElementsByTagNameNS('http://www.w3.org/1999/xhtml', 'link');
             expect(hreflangLinks.length).to.be.greaterThan(SUPPORTED_LOCALES.length);
 
             // Verify x-default exists
@@ -177,7 +182,7 @@ describe('Sitemap XML', () => {
     }).then((response) => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(response.body, 'text/xml');
-      const urls = xmlDoc.querySelectorAll('url');
+      const urls = xmlDoc.getElementsByTagName('url');
 
       const expectedPriorities: Record<string, string> = {
         '/c/login': '0.8',
@@ -195,11 +200,11 @@ describe('Sitemap XML', () => {
         // Check non-localized version
         const nonLocalizedUrl = `${baseUrl}${page}`;
         const nonLocalizedEntry = Array.from(urls).find(
-          (url) => url.querySelector('loc')?.textContent === nonLocalizedUrl,
+          (url) => url.getElementsByTagName('loc')[0]?.textContent === nonLocalizedUrl,
         );
         if (nonLocalizedEntry) {
-          const priority = nonLocalizedEntry.querySelector('priority')?.textContent;
-          const changefreq = nonLocalizedEntry.querySelector('changefreq')?.textContent;
+          const priority = nonLocalizedEntry.getElementsByTagName('priority')[0]?.textContent;
+          const changefreq = nonLocalizedEntry.getElementsByTagName('changefreq')[0]?.textContent;
           expect(priority).to.eq(expectedPriorities[page]);
           expect(changefreq).to.eq(expectedChangefreq[page]);
         }
@@ -208,11 +213,11 @@ describe('Sitemap XML', () => {
         SUPPORTED_LOCALES.forEach((locale) => {
           const localizedUrl = `${baseUrl}/${locale}${page}`;
           const localizedEntry = Array.from(urls).find(
-            (url) => url.querySelector('loc')?.textContent === localizedUrl,
+            (url) => url.getElementsByTagName('loc')[0]?.textContent === localizedUrl,
           );
           if (localizedEntry) {
-            const priority = localizedEntry.querySelector('priority')?.textContent;
-            const changefreq = localizedEntry.querySelector('changefreq')?.textContent;
+            const priority = localizedEntry.getElementsByTagName('priority')[0]?.textContent;
+            const changefreq = localizedEntry.getElementsByTagName('changefreq')[0]?.textContent;
             expect(priority).to.eq(expectedPriorities[page]);
             expect(changefreq).to.eq(expectedChangefreq[page]);
           }
@@ -230,10 +235,10 @@ describe('Sitemap XML', () => {
     }).then((response) => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(response.body, 'text/xml');
-      const urls = xmlDoc.querySelectorAll('url');
+      const urls = xmlDoc.getElementsByTagName('url');
 
-      urls.forEach((url) => {
-        const lastmod = url.querySelector('lastmod')?.textContent;
+      Array.from(urls).forEach((url) => {
+        const lastmod = url.getElementsByTagName('lastmod')[0]?.textContent;
         expect(lastmod).to.exist;
         // Verify date format (YYYY-MM-DD or ISO 8601)
         expect(lastmod).to.match(/^\d{4}-\d{2}-\d{2}/);
