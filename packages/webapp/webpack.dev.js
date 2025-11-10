@@ -5,6 +5,12 @@ const common = require('./webpack.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
+require('ts-node').register({
+  transpileOnly: true,
+  project: path.join(__dirname, 'tsconfig.json'),
+});
+const { buildStaticUrls, generateSitemapXml } = require('./src/components/sitemap/utils');
+
 // Get the config from the common file
 let config;
 switch (process.env.APP_CONFIG_TYPE) {
@@ -55,6 +61,27 @@ module.exports = merge(common, {
     ],
     historyApiFallback: {
       rewrites: [{ from: /^\/c\//, to: '/index.html' }],
+    },
+    setupMiddlewares: (middlewares, devServer) => {
+      if (devServer?.app) {
+        devServer.app.get('/sitemap.xml', (req, res) => {
+          try {
+            const host = req.get('host') || 'localhost:3000';
+            const protocol =
+              req.get('x-forwarded-proto') || (devServer.options.https ? 'https' : 'http');
+            const baseUrl = `${protocol}://${host}`;
+            const urls = buildStaticUrls({ baseUrl });
+            const xml = generateSitemapXml(urls);
+            res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+            res.send(xml);
+          } catch (error) {
+            console.error('Failed to serve sitemap.xml from dev server', error);
+            res.status(500).send('Unable to generate sitemap');
+          }
+        });
+      }
+
+      return middlewares;
     },
   },
   plugins: [
