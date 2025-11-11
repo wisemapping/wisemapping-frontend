@@ -506,11 +506,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
   return (
     <div css={classes.root}>
-      <ActionChooser
-        anchor={activeRowAction?.el}
-        onClose={handleActionMenuClose}
-        mapId={activeRowAction?.mapId}
-      />
+      {activeRowAction?.mapId !== undefined && (
+        <ActionChooser
+          anchor={activeRowAction?.el}
+          onClose={handleActionMenuClose}
+          mapId={activeRowAction.mapId}
+        />
+      )}
 
       <Paper css={classes.paper} elevation={0}>
         <Toolbar css={classes.toolbar} variant="dense" sx={{ backgroundColor: 'transparent' }}>

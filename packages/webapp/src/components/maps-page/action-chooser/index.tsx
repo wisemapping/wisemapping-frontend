@@ -57,16 +57,11 @@ export type ActionType =
 interface ActionProps {
   onClose: (action: ActionType) => void;
   anchor?: HTMLElement;
-  mapId?: number;
+  mapId: number;
 }
 
 const ActionChooser = (props: ActionProps): React.ReactElement => {
   const { anchor, onClose, mapId } = props;
-
-  // Fail if mapId is not provided - this component requires a valid map ID
-  if (mapId === undefined) {
-    throw new Error('ActionChooser requires a valid mapId');
-  }
 
   const handleOnClose = (
     action: ActionType,
