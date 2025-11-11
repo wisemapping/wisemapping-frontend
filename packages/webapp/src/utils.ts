@@ -121,7 +121,7 @@ export const logCriticalError = (msg: string, exception: unknown): void => {
         // Generic object serialization with better error handling
         try {
           serializedException = JSON.stringify(exception);
-        } catch (stringifyError) {
+        } catch {
           // If JSON.stringify fails, try to extract useful info
           const keys = Object.keys(exception);
           const partialInfo: Record<string, unknown> = {};
@@ -151,7 +151,7 @@ export const logCriticalError = (msg: string, exception: unknown): void => {
           serializedException = JSON.stringify(partialInfo);
         }
       }
-    } catch (serializationError) {
+    } catch {
       // Last resort: provide meaningful information
       if (typeof exception === 'object' && exception !== null) {
         const keys = Object.keys(exception);
