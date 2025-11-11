@@ -21,7 +21,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { ErrorInfo } from '../../../../classes/client';
 import BaseDialog from '../base-dialog';
-import { handleOnMutationSuccess, SimpleDialogProps } from '..';
+import { SimpleDialogProps } from '..';
 import { useStyles } from './style';
 
 import FormControl from '@mui/material/FormControl';
@@ -71,7 +71,8 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
       onSuccess: (_, updatedModel) => {
         setModel(updatedModel);
         previousModelRef.current = updatedModel;
-        handleOnMutationSuccess(onClose, queryClient);
+        // Invalidate queries to refresh data, but keep dialog open
+        queryClient.invalidateQueries('maps');
         queryClient.invalidateQueries(`maps-metadata-${mapId}`);
       },
       onError: (error) => {
