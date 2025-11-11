@@ -64,7 +64,6 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
 import { ClientContext } from '../../../classes/provider/client-context';
-import { MapsListSkeleton, MapsCardsListSkeleton } from './MapsListSkeleton';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
@@ -332,17 +331,18 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     });
   }, [props.filter.type, filterLabelId]);
 
-  const { isLoading, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
-    return client.fetchAllMaps();
-  });
+  const { data: mapsData = [] } = useQuery<unknown, ErrorInfo, MapInfo[]>(
+    'maps',
+    () => {
+      return client.fetchAllMaps();
+    },
+    { suspense: true },
+  );
 
   const filteredMaps: MapInfo[] = useMemo(() => {
-    if (!data) {
-      return [];
-    }
     const predicate = mapsFilter(filter, searchCondition);
-    return data.filter(predicate);
-  }, [data, filter, searchCondition]);
+    return mapsData.filter(predicate);
+  }, [mapsData, filter, searchCondition]);
 
   const sortedMaps = useMemo(() => {
     return stableSort(filteredMaps, getComparator(order, orderBy));
@@ -606,9 +606,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
         <TableContainer css={classes.tableContainer as Interpolation<Theme>}>
           <Box css={classes.cards}>
-            {isLoading ? (
-              <MapsCardsListSkeleton rowsPerPage={rowsPerPage} />
-            ) : filteredMaps.length === 0 ? (
+            {filteredMaps.length === 0 ? (
               <Card>
                 <CardContent>
                   <FormattedMessage
@@ -732,9 +730,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             />
 
             <TableBody>
-              {isLoading ? (
-                <MapsListSkeleton rowsPerPage={rowsPerPage} />
-              ) : filteredMaps.length === 0 ? (
+              {filteredMaps.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} style={{ textAlign: 'center' }}>
                     <FormattedMessage

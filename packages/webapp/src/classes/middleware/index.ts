@@ -36,7 +36,8 @@ export const useFetchMapById = (id: number): MapLoadResult => {
       return client.fetchMapMetadata(id);
     },
     {
-      enabled: id > 0 && !Number.isNaN(id),
+      // 0 is a valid map ID, only disable for null/undefined/NaN
+      enabled: id != null && !Number.isNaN(id),
     },
   );
 
