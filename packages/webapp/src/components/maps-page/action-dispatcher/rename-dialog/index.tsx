@@ -19,7 +19,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
-import { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
+import { ErrorInfo } from '../../../../classes/client';
 import { SimpleDialogProps, handleOnMutationSuccess } from '..';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
