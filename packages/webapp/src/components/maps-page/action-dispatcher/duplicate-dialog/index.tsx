@@ -97,10 +97,13 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    event.preventDefault();
-
     const name = event.target.name;
     const value = event.target.value;
+
+    // Clear any previous errors when user starts typing
+    if (error) {
+      setError(undefined);
+    }
 
     // Update the model with the correct field name
     if (name === 'title') {
@@ -124,6 +127,9 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
         });
         return;
       }
+
+      // Clear any previous errors when model is successfully initialized
+      setError(undefined);
 
       // Add translated "Copy of " prefix to the title
       const copyPrefix = intl.formatMessage({
@@ -181,6 +187,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
             })}
             value={model.description}
             onChange={handleOnChange}
+            error={error}
             required={false}
             fullWidth={true}
           />
