@@ -179,7 +179,21 @@ const OAuthCallbackPage = (): React.ReactElement => {
       })
       .catch((errorInfo: ErrorInfo) => {
         setError(errorInfo);
-        logCriticalError(`Unexpected error on confirmAccountSynching`, errorInfo);
+        // Add detailed debug information for troubleshooting
+        const debugInfo = {
+          errorInfo,
+          context: {
+            email: callback.email,
+            syncCode: callback.syncCode || '(not provided)',
+            stateRedirectUrl: stateRedirectUrl || '(not provided)',
+            provider,
+            url: window.location.href,
+          },
+        };
+        logCriticalError(
+          `Unexpected error on confirmAccountSynching. Email: ${callback.email}, Provider: ${provider}, Status: ${errorInfo.status || 'unknown'}, Message: ${errorInfo.msg || 'none'}`,
+          debugInfo,
+        );
       });
   };
 
