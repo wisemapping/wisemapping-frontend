@@ -20,6 +20,7 @@ import { useQuery } from 'react-query';
 import { AccountInfo, ErrorInfo, MapInfo, MapMetadata } from '../client';
 import { ClientContext } from '../provider/client-context';
 import { useContext } from 'react';
+import AppI18n from '../app-i18n';
 
 type MapLoadResult = {
   isLoading: boolean;
@@ -79,9 +80,15 @@ export const useFetchMapMetadata = (id: number): MapMetadataLoadResult => {
 
 export const useFetchAccount = (): AccountInfo | undefined => {
   const client = useContext(ClientContext);
-  const { data } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
-    return client.fetchAccountInfo();
-  });
+  const { data } = useQuery<unknown, ErrorInfo, AccountInfo>(
+    'account',
+    () => {
+      return client.fetchAccountInfo();
+    },
+    {
+      enabled: !AppI18n.isPublicPage(),
+    },
+  );
   return data;
 };
 
@@ -91,8 +98,14 @@ export const useFetchAccountWithState = (): {
   error: ErrorInfo | null;
 } => {
   const client = useContext(ClientContext);
-  const { data, isLoading, error } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
-    return client.fetchAccountInfo();
-  });
+  const { data, isLoading, error } = useQuery<unknown, ErrorInfo, AccountInfo>(
+    'account',
+    () => {
+      return client.fetchAccountInfo();
+    },
+    {
+      enabled: !AppI18n.isPublicPage(),
+    },
+  );
   return { data, isLoading, error };
 };

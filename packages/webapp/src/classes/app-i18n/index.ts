@@ -44,6 +44,7 @@ export class Locale {
 export default abstract class AppI18n {
   private static LOCAL_STORAGE_KEY = 'user.locale';
   private static readonly PUBLIC_AUTH_ROUTES = new Set<string>([
+    '/',
     '/c/login',
     '/c/registration',
     '/c/registration-google',
@@ -75,11 +76,7 @@ export default abstract class AppI18n {
     }
 
     // @Todo Hack: Try page must not account info. Add this to avoid 403 errors.
-    const isPublicPage =
-      AppI18n.isPublicUnauthenticatedRoute(path) ||
-      path.endsWith('/try') ||
-      path.endsWith('/public') ||
-      path.endsWith('/embed');
+    const isPublicPage = AppI18n.isPublicPage(path);
     let result: Locale;
     if (!isPublicPage) {
       const account = useFetchAccount();
@@ -124,6 +121,22 @@ export default abstract class AppI18n {
       result = this.getBrowserLocale();
     }
     return result;
+  }
+
+  /**
+   * Checks if a given path is a public page that should not require authentication.
+   * Used to exclude account endpoint calls on public pages to avoid 403 errors.
+   * @param path - The path to check (defaults to current window location)
+   * @returns true if the path is a public page, false otherwise
+   */
+  public static isPublicPage(path?: string): boolean {
+    const currentPath = path ?? window.location.pathname;
+    return (
+      AppI18n.isPublicUnauthenticatedRoute(currentPath) ||
+      currentPath.endsWith('/try') ||
+      currentPath.endsWith('/public') ||
+      currentPath.endsWith('/embed')
+    );
   }
 
   private static isPublicUnauthenticatedRoute(path: string): boolean {

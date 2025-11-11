@@ -51,6 +51,14 @@ class ElementDeleteWidget {
     $assert(icon, 'icon can not be null');
     $assert(group, 'group can not be null');
 
+    // Check if the map is read-only - don't show delete widget in read-only mode
+    const designer = (globalThis as Record<string, unknown>).designer as
+      | { isReadOnly: () => boolean }
+      | undefined;
+    if (designer?.isReadOnly()) {
+      return;
+    }
+
     // Nothing to do ...
     if (this._activeIcon !== icon) {
       // If there is an active icon, close it first ...
