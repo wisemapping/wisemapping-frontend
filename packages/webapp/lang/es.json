@@ -116,6 +116,9 @@
   "deletem.title": {
     "defaultMessage": "Todos los mapas seleccionados serán eliminados"
   },
+  "duplicate.copy-prefix": {
+    "defaultMessage": "Copia de "
+  },
   "duplicate.title": {
     "defaultMessage": "Duplicar"
   },
@@ -361,6 +364,9 @@
   },
   "maps.copilot-dialog.description": {
     "defaultMessage": "Mind Map Copilot es un asistente de lluvia de ideas impulsado por ChatGPT que convierte tus indicaciones en mapas mentales estructurados. Lo abriremos en una nueva pestaña para que amplíes ideas, generes temas y traigas lo mejor de regreso a WiseMapping."
+  },
+  "maps.untitled": {
+    "defaultMessage": "Sin título"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Abrir Copiloto"
@@ -764,6 +770,9 @@
   "error.map-unavailable-message": {
     "defaultMessage": "Este mapa mental no está disponible para visualización pública porque viola nuestras políticas del sitio. Si necesita más ayuda, contacte a support@wisemapping.com."
   },
+  "error.map-title-required": {
+    "defaultMessage": "El título del mapa es obligatorio y no puede estar vacío"
+  },
   "error.security-error": {
     "defaultMessage": "No se puede abrir el mapa mental."
   },
@@ -847,5 +856,8 @@
   },
   "admin.close": {
     "defaultMessage": "Close"
+  },
+  "validation.title-required": {
+    "defaultMessage": "El título es obligatorio"
   }
 }

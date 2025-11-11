@@ -113,6 +113,9 @@
   "deletem.title": {
     "defaultMessage": "Все выбранные карты будут удалены"
   },
+  "duplicate.copy-prefix": {
+    "defaultMessage": "Копия "
+  },
   "duplicate.title": {
     "defaultMessage": "Клонировать"
   },
@@ -322,6 +325,9 @@
   },
   "maps.copilot-dialog.description": {
     "defaultMessage": "Mind Map Copilot — это помощник для мозгового штурма на базе ChatGPT, который превращает ваши запросы в структурированные майнд-карты. Мы откроем его в новой вкладке, чтобы вы могли развивать идеи, генерировать темы и вернуть лучшее в WiseMapping."
+  },
+  "maps.untitled": {
+    "defaultMessage": "Без названия"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Открыть Копилот"
@@ -764,6 +770,9 @@
   "error.map-unavailable-message": {
     "defaultMessage": "Эта майнд-карта недоступна для публичного просмотра, поскольку нарушает политику нашего сайта. Если вам нужна дополнительная помощь, обратитесь в support@wisemapping.com."
   },
+  "error.map-title-required": {
+    "defaultMessage": "Название карты обязательно и не может быть пустым"
+  },
   "error.security-error": {
     "defaultMessage": "Невозможно открыть майнд-карту."
   },
@@ -847,5 +856,8 @@
   },
   "admin.close": {
     "defaultMessage": "Close"
+  },
+  "validation.title-required": {
+    "defaultMessage": "Название обязательно"
   }
 }

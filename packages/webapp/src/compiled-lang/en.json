@@ -675,6 +675,12 @@
       "value": "Loading ..."
     }
   ],
+  "duplicate.copy-prefix": [
+    {
+      "type": 0,
+      "value": "Copy of "
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
@@ -691,6 +697,24 @@
     {
       "type": 0,
       "value": "Hmm, that didn't work."
+    }
+  ],
+  "error.map-title-required": [
+    {
+      "type": 0,
+      "value": "Map title is required and cannot be empty"
+    }
+  ],
+  "error.map-unavailable-message": [
+    {
+      "type": 0,
+      "value": "This mindmap is not available for public display because it violates our site policies. If you need further assistance, contact support@wisemapping.com."
+    }
+  ],
+  "error.map-unavailable-title": [
+    {
+      "type": 0,
+      "value": "This mindmap is not available for public display."
     }
   ],
   "error.not-found-message": [
@@ -1379,6 +1403,12 @@
       "value": "Starred"
     }
   ],
+  "maps.untitled": [
+    {
+      "type": 0,
+      "value": "Untitled"
+    }
+  ],
   "maps.view": [
     {
       "type": 0,
@@ -1715,6 +1745,12 @@
     {
       "type": 0,
       "value": "Toggle Theme"
+    }
+  ],
+  "validation.title-required": [
+    {
+      "type": 0,
+      "value": "Title is required"
     }
   ]
 }

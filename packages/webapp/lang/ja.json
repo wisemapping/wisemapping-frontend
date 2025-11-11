@@ -116,6 +116,9 @@
   "deletem.title": {
     "defaultMessage": "選択されたすべてのマップが削除されます"
   },
+  "duplicate.copy-prefix": {
+    "defaultMessage": "のコピー"
+  },
   "duplicate.title": {
     "defaultMessage": "複製"
   },
@@ -376,6 +379,9 @@
   },
   "maps.copilot-dialog.description": {
     "defaultMessage": "Mind Map Copilot は、あなたのプロンプトを構造化されたマインドマップに変換する ChatGPT 搭載のブレーンストーミング支援ツールです。新しいタブで開きますので、アイデアを膨らませ、トピックを生成し、ベストな内容を WiseMapping に持ち帰ってください。"
+  },
+  "maps.untitled": {
+    "defaultMessage": "無題"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "コパイロットを開く"
@@ -764,6 +770,9 @@
   "error.map-unavailable-message": {
     "defaultMessage": "このマインドマップは、サイトポリシーに違反しているため、公開表示には利用できません。さらにサポートが必要な場合は、support@wisemapping.com にお問い合わせください。"
   },
+  "error.map-title-required": {
+    "defaultMessage": "マップのタイトルは必須で、空にすることはできません"
+  },
   "error.security-error": {
     "defaultMessage": "マインドマップを開くことができません。"
   },
@@ -847,5 +856,8 @@
   },
   "admin.close": {
     "defaultMessage": "Close"
+  },
+  "validation.title-required": {
+    "defaultMessage": "タイトルは必須です"
   }
 }

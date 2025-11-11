@@ -44,8 +44,13 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
 
   const mutation = useMutation<number, ErrorInfo, DuplicateModel>(
     (model: DuplicateModel) => {
-      const { id, ...rest } = model;
-      return client.duplicateMap(id, rest);
+      const { id, title, description } = model;
+      // Convert to BasicMapInfo format
+      const basicInfo: BasicMapInfo = {
+        title: title,
+        description: description,
+      };
+      return client.duplicateMap(id, basicInfo);
     },
     {
       onSuccess: (mapId) => {
@@ -64,7 +69,31 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     setError(undefined);
-    mutation.mutate(model);
+
+    // Validate that title is not empty or just whitespace
+    const trimmedTitle = model.title?.trim();
+    if (!trimmedTitle || trimmedTitle.length === 0) {
+      setError({
+        fields: new Map([
+          [
+            'title',
+            intl.formatMessage({
+              id: 'validation.title-required',
+              defaultMessage: 'Title is required',
+            }),
+          ],
+        ]),
+      });
+      return;
+    }
+
+    // Ensure title is never undefined - use trimmed version
+    const validatedModel: DuplicateModel = {
+      ...model,
+      title: trimmedTitle,
+    };
+
+    mutation.mutate(validatedModel);
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -72,15 +101,44 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
 
     const name = event.target.name;
     const value = event.target.value;
-    setModel({ ...model, [name as keyof BasicMapInfo]: value });
+
+    // Update the model with the correct field name
+    if (name === 'title') {
+      // Title is required - always set it (even if empty, validation will catch it on submit)
+      setModel({ ...model, title: value });
+    } else if (name === 'description') {
+      setModel({ ...model, description: value });
+    }
   };
 
   const { data: map } = useFetchMapById(mapId);
   useEffect(() => {
     if (map) {
-      setModel({ ...map, id: mapId });
+      // Validate that map.title exists and is not empty
+      if (!map.title || map.title.trim().length === 0) {
+        setError({
+          msg: intl.formatMessage({
+            id: 'error.map-title-required',
+            defaultMessage: 'Map title is required and cannot be empty',
+          }),
+        });
+        return;
+      }
+
+      // Add translated "Copy of " prefix to the title
+      const copyPrefix = intl.formatMessage({
+        id: 'duplicate.copy-prefix',
+        defaultMessage: 'Copy of ',
+      });
+      const copyTitle = `${copyPrefix}${map.title.trim()}`;
+
+      setModel({
+        title: copyTitle,
+        description: map.description ?? '',
+        id: mapId,
+      });
     }
-  }, [map, mapId]);
+  }, [map, mapId, intl]);
 
   return (
     <div>
@@ -106,10 +164,12 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
               id: 'action.rename-name-placeholder',
               defaultMessage: 'Name',
             })}
-            value={model.title}
+            value={model.title || ''}
             onChange={handleOnChange}
             error={error}
             fullWidth={true}
+            required={true}
+            minLength={1}
           />
 
           <Input

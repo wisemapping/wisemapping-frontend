@@ -675,6 +675,12 @@
       "value": "Загрузка..."
     }
   ],
+  "duplicate.copy-prefix": [
+    {
+      "type": 0,
+      "value": "Копия "
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
@@ -691,6 +697,24 @@
     {
       "type": 0,
       "value": "Мы столкнулись с проблемой."
+    }
+  ],
+  "error.map-title-required": [
+    {
+      "type": 0,
+      "value": "Название карты обязательно и не может быть пустым"
+    }
+  ],
+  "error.map-unavailable-message": [
+    {
+      "type": 0,
+      "value": "Эта майнд-карта недоступна для публичного просмотра, поскольку нарушает политику нашего сайта. Если вам нужна дополнительная помощь, обратитесь в support@wisemapping.com."
+    }
+  ],
+  "error.map-unavailable-title": [
+    {
+      "type": 0,
+      "value": "Эта майнд-карта недоступна для публичного просмотра."
     }
   ],
   "error.not-found-message": [
@@ -1379,6 +1403,12 @@
       "value": "Отмеченные"
     }
   ],
+  "maps.untitled": [
+    {
+      "type": 0,
+      "value": "Без названия"
+    }
+  ],
   "maps.view": [
     {
       "type": 0,
@@ -1715,6 +1745,12 @@
     {
       "type": 0,
       "value": "Переключить Тему"
+    }
+  ],
+  "validation.title-required": [
+    {
+      "type": 0,
+      "value": "Название обязательно"
     }
   ]
 }
