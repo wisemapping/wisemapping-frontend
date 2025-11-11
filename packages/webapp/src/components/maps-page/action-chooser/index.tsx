@@ -63,6 +63,11 @@ interface ActionProps {
 const ActionChooser = (props: ActionProps): React.ReactElement => {
   const { anchor, onClose, mapId } = props;
 
+  // Fail if mapId is not provided - this component requires a valid map ID
+  if (mapId === undefined) {
+    throw new Error('ActionChooser requires a valid mapId');
+  }
+
   const handleOnClose = (
     action: ActionType,
   ): ((event: React.MouseEvent<HTMLLIElement>) => void) => {
@@ -75,7 +80,8 @@ const ActionChooser = (props: ActionProps): React.ReactElement => {
     };
   };
 
-  const role = mapId !== undefined ? useFetchMapById(mapId)?.data?.role : undefined;
+  const { data: mapData } = useFetchMapById(mapId);
+  const role = mapData?.role;
   return (
     <Menu
       anchorEl={anchor}

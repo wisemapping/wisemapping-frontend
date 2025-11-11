@@ -62,7 +62,22 @@ export const loader = (pageMode: PageModeType, bootstrap = false) => {
   return async ({ params }): Promise<Response> => {
     const client = AppConfig.getClient();
     let result: Response | undefined;
-    const mapId = Number.parseInt(params.id);
+
+    // Validate that params.id exists and is a valid number
+    if (!params.id || params.id === 'undefined') {
+      return new Response('Map ID is required', {
+        status: 400,
+        statusText: 'Bad Request',
+      });
+    }
+
+    const mapId = Number.parseInt(params.id, 10);
+    if (Number.isNaN(mapId)) {
+      return new Response('Invalid map ID', {
+        status: 400,
+        statusText: 'Bad Request',
+      });
+    }
 
     switch (pageMode) {
       case 'try': {
