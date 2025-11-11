@@ -675,6 +675,12 @@
       "value": "Caricamento..."
     }
   ],
+  "duplicate.copy-prefix": [
+    {
+      "type": 0,
+      "value": "Copia di "
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
@@ -691,6 +697,24 @@
     {
       "type": 0,
       "value": "Abbiamo riscontrato un problema."
+    }
+  ],
+  "error.map-title-required": [
+    {
+      "type": 0,
+      "value": "Il titolo della mappa è obbligatorio e non può essere vuoto"
+    }
+  ],
+  "error.map-unavailable-message": [
+    {
+      "type": 0,
+      "value": "Questa mappa mentale non è disponibile per la visualizzazione pubblica perché viola le nostre politiche del sito. Se hai bisogno di ulteriore assistenza, contatta support@wisemapping.com."
+    }
+  ],
+  "error.map-unavailable-title": [
+    {
+      "type": 0,
+      "value": "Questa mappa mentale non è disponibile per la visualizzazione pubblica."
     }
   ],
   "error.not-found-message": [
@@ -1379,6 +1403,12 @@
       "value": "Preferiti"
     }
   ],
+  "maps.untitled": [
+    {
+      "type": 0,
+      "value": "Senza titolo"
+    }
+  ],
   "maps.view": [
     {
       "type": 0,
@@ -1715,6 +1745,12 @@
     {
       "type": 0,
       "value": "Cambia Tema"
+    }
+  ],
+  "validation.title-required": [
+    {
+      "type": 0,
+      "value": "Il titolo è obbligatorio"
     }
   ]
 }

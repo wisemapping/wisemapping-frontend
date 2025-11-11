@@ -119,6 +119,9 @@
   "dialog.loading": {
     "defaultMessage": "Loading ..."
   },
+  "duplicate.copy-prefix": {
+    "defaultMessage": "Copy of "
+  },
   "duplicate.title": {
     "defaultMessage": "Duplicate"
   },
@@ -382,6 +385,9 @@
   },
   "maps.copilot-dialog.description": {
     "defaultMessage": "ChatGPT-powered AI Copilot is a brainstorming assistant that turns your prompts into structured mind maps. We'll open it in a new tab so you can expand ideas, generate topics, and bring the best ones back to WiseMapping."
+  },
+  "maps.untitled": {
+    "defaultMessage": "Untitled"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Open Copilot"
@@ -764,6 +770,9 @@
   "error.map-unavailable-message": {
     "defaultMessage": "This mindmap is not available for public display because it violates our site policies. If you need further assistance, contact support@wisemapping.com."
   },
+  "error.map-title-required": {
+    "defaultMessage": "Map title is required and cannot be empty"
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."
   },
@@ -847,5 +856,8 @@
   },
   "admin.close": {
     "defaultMessage": "Close"
+  },
+  "validation.title-required": {
+    "defaultMessage": "Title is required"
   }
 }

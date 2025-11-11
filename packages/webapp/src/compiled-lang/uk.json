@@ -675,6 +675,12 @@
       "value": "Завантаження..."
     }
   ],
+  "duplicate.copy-prefix": [
+    {
+      "type": 0,
+      "value": "Копія "
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
@@ -691,6 +697,24 @@
     {
       "type": 0,
       "value": "Ми зіткнулися з проблемою."
+    }
+  ],
+  "error.map-title-required": [
+    {
+      "type": 0,
+      "value": "Назва карти обов'язкова і не може бути порожньою"
+    }
+  ],
+  "error.map-unavailable-message": [
+    {
+      "type": 0,
+      "value": "Ця майнд-карта недоступна для публічного перегляду, оскільки порушує політику нашого сайту. Якщо вам потрібна додаткова допомога, зверніться до support@wisemapping.com."
+    }
+  ],
+  "error.map-unavailable-title": [
+    {
+      "type": 0,
+      "value": "Ця майнд-карта недоступна для публічного перегляду."
     }
   ],
   "error.not-found-message": [
@@ -1379,6 +1403,12 @@
       "value": "Відмічена"
     }
   ],
+  "maps.untitled": [
+    {
+      "type": 0,
+      "value": "Без назви"
+    }
+  ],
   "maps.view": [
     {
       "type": 0,
@@ -1715,6 +1745,12 @@
     {
       "type": 0,
       "value": "Перемкнути тему"
+    }
+  ],
+  "validation.title-required": [
+    {
+      "type": 0,
+      "value": "Назва обов'язкова"
     }
   ]
 }

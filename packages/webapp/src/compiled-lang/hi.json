@@ -675,6 +675,12 @@
       "value": "लोड हो रहा है..."
     }
   ],
+  "duplicate.copy-prefix": [
+    {
+      "type": 0,
+      "value": "की प्रतिलिपि "
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
@@ -691,6 +697,24 @@
     {
       "type": 0,
       "value": "हमें एक समस्या का सामना करना पड़ा।"
+    }
+  ],
+  "error.map-title-required": [
+    {
+      "type": 0,
+      "value": "मानचित्र शीर्षक आवश्यक है और खाली नहीं हो सकता"
+    }
+  ],
+  "error.map-unavailable-message": [
+    {
+      "type": 0,
+      "value": "यह माइंडमैप सार्वजनिक प्रदर्शन के लिए उपलब्ध नहीं है क्योंकि यह हमारी साइट नीतियों का उल्लंघन करता है। यदि आपको आगे सहायता की आवश्यकता है, तो support@wisemapping.com से संपर्क करें।"
+    }
+  ],
+  "error.map-unavailable-title": [
+    {
+      "type": 0,
+      "value": "यह माइंडमैप सार्वजनिक प्रदर्शन के लिए उपलब्ध नहीं है।"
     }
   ],
   "error.not-found-message": [
@@ -1379,6 +1403,12 @@
       "value": "पसंदीदा"
     }
   ],
+  "maps.untitled": [
+    {
+      "type": 0,
+      "value": "शीर्षकहीन"
+    }
+  ],
   "maps.view": [
     {
       "type": 0,
@@ -1715,6 +1745,12 @@
     {
       "type": 0,
       "value": "थीम बदलें"
+    }
+  ],
+  "validation.title-required": [
+    {
+      "type": 0,
+      "value": "शीर्षक आवश्यक है"
     }
   ]
 }

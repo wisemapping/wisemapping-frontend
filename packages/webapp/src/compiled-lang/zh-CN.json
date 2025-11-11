@@ -675,6 +675,12 @@
       "value": "加载中..."
     }
   ],
+  "duplicate.copy-prefix": [
+    {
+      "type": 0,
+      "value": "的副本"
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
@@ -691,6 +697,24 @@
     {
       "type": 0,
       "value": "我们遇到了一个问题。"
+    }
+  ],
+  "error.map-title-required": [
+    {
+      "type": 0,
+      "value": "地图标题是必需的，不能为空"
+    }
+  ],
+  "error.map-unavailable-message": [
+    {
+      "type": 0,
+      "value": "此思维导图不提供公开显示，因为它违反了我们的网站政策。如果您需要进一步协助，请联系 support@wisemapping.com。"
+    }
+  ],
+  "error.map-unavailable-title": [
+    {
+      "type": 0,
+      "value": "此思维导图不提供公开显示。"
     }
   ],
   "error.not-found-message": [
@@ -1379,6 +1403,12 @@
       "value": "收藏"
     }
   ],
+  "maps.untitled": [
+    {
+      "type": 0,
+      "value": "无标题"
+    }
+  ],
   "maps.view": [
     {
       "type": 0,
@@ -1715,6 +1745,12 @@
     {
       "type": 0,
       "value": "切换主题"
+    }
+  ],
+  "validation.title-required": [
+    {
+      "type": 0,
+      "value": "标题是必需的"
     }
   ]
 }

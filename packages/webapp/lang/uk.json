@@ -119,6 +119,9 @@
   "dialog.loading": {
     "defaultMessage": "Завантаження..."
   },
+  "duplicate.copy-prefix": {
+    "defaultMessage": "Копія "
+  },
   "duplicate.title": {
     "defaultMessage": "Дублювати"
   },
@@ -382,6 +385,9 @@
   },
   "maps.copilot-dialog.description": {
     "defaultMessage": "Mind Map Copilot — це помічник для брейнштормінгу на базі ChatGPT, який перетворює ваші підказки на структуровані ментальні карти. Ми відкриємо його в новій вкладці, щоб ви могли розширювати ідеї, генерувати теми та повернути найкраще до WiseMapping."
+  },
+  "maps.untitled": {
+    "defaultMessage": "Без назви"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Відкрити Копілот"
@@ -764,6 +770,9 @@
   "error.map-unavailable-message": {
     "defaultMessage": "Ця майнд-карта недоступна для публічного перегляду, оскільки порушує політику нашого сайту. Якщо вам потрібна додаткова допомога, зверніться до support@wisemapping.com."
   },
+  "error.map-title-required": {
+    "defaultMessage": "Назва карти обов'язкова і не може бути порожньою"
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."
   },
@@ -847,5 +856,8 @@
   },
   "admin.close": {
     "defaultMessage": "Close"
+  },
+  "validation.title-required": {
+    "defaultMessage": "Назва обов'язкова"
   }
 }

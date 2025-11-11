@@ -113,6 +113,9 @@
   "deletem.title": {
     "defaultMessage": "Alle ausgewählten Mindmaps werden gelöscht"
   },
+  "duplicate.copy-prefix": {
+    "defaultMessage": "Kopie von "
+  },
   "duplicate.title": {
     "defaultMessage": "Kopie"
   },
@@ -322,6 +325,9 @@
   },
   "maps.copilot-dialog.description": {
     "defaultMessage": "Der KI-Copilot mit ChatGPT-Unterstützung ist ein Brainstorming-Assistent, der Ihre Eingaben in strukturierte Mindmaps verwandelt. Wir öffnen ihn in einem neuen Tab, damit Sie Ideen ausbauen, Themen entwickeln und das Beste nach WiseMapping zurückbringen können."
+  },
+  "maps.untitled": {
+    "defaultMessage": "Ohne Titel"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Copilot öffnen"
@@ -764,6 +770,9 @@
   "error.map-unavailable-message": {
     "defaultMessage": "Diese Mindmap ist nicht für die öffentliche Anzeige verfügbar, da sie unsere Website-Richtlinien verletzt. Wenn Sie weitere Hilfe benötigen, kontaktieren Sie support@wisemapping.com."
   },
+  "error.map-title-required": {
+    "defaultMessage": "Der Kartentitel ist erforderlich und darf nicht leer sein"
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap kann nicht geöffnet werden."
   },
@@ -847,5 +856,8 @@
   },
   "admin.close": {
     "defaultMessage": "Close"
+  },
+  "validation.title-required": {
+    "defaultMessage": "Titel ist erforderlich"
   }
 }

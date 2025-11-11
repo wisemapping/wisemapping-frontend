@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { ErrorInfo } from '../../../../classes/client';
@@ -37,6 +37,7 @@ import TextField from '@mui/material/TextField';
 import AppConfig from '../../../../classes/app-config';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useFetchMapById } from '../../../../classes/middleware';
 import { ClientContext } from '../../../../classes/provider/client-context';
 
@@ -51,11 +52,14 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
   const queryClient = useQueryClient();
   const intl = useIntl();
   const classes = useStyles();
+  const previousModelRef = useRef<boolean>(map?.public ?? false);
 
   // Sync model state when map data changes (e.g., after refetch or initial load)
   useEffect(() => {
     if (map) {
-      setModel(map.public ?? false);
+      const newValue = map.public ?? false;
+      setModel(newValue);
+      previousModelRef.current = newValue;
     }
   }, [map?.id, map?.public]);
 
@@ -66,11 +70,14 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     {
       onSuccess: (_, updatedModel) => {
         setModel(updatedModel);
+        previousModelRef.current = updatedModel;
         handleOnMutationSuccess(onClose, queryClient);
         queryClient.invalidateQueries(`maps-metadata-${mapId}`);
       },
       onError: (error) => {
         setError(error);
+        // Revert the switch state on error to the previous value
+        setModel(previousModelRef.current);
       },
     },
   );
@@ -82,13 +89,19 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    setError(undefined);
-    mutation.mutate(model);
+    // Form submission is now handled by the switch onChange
+    // This prevents form submission if user presses Enter
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean): void => {
     event.preventDefault();
+    setError(undefined);
+    // Store the previous value for error handling
+    previousModelRef.current = model;
+    // Update local state optimistically
     setModel(checked);
+    // Trigger the mutation immediately
+    mutation.mutate(checked);
   };
 
   const handleTabChange = (event: React.ChangeEvent<HTMLInputElement>, newValue: string) => {
@@ -145,13 +158,28 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
           <FormControl fullWidth={true}>
             <FormControlLabel
               control={
-                <Switch
-                  checked={model}
-                  onChange={handleOnChange}
-                  name="public"
-                  color="primary"
-                  disabled={mutation.isLoading}
-                />
+                <Box sx={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+                  <Switch
+                    checked={model}
+                    onChange={handleOnChange}
+                    name="public"
+                    color="primary"
+                    disabled={mutation.isLoading}
+                  />
+                  {mutation.isLoading && (
+                    <CircularProgress
+                      size={24}
+                      sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        marginTop: '-12px',
+                        marginLeft: '-12px',
+                        color: (theme) => theme.palette.primary.main,
+                      }}
+                    />
+                  )}
+                </Box>
               }
               label={
                 <Typography variant="body1" fontWeight={500}>

@@ -116,6 +116,9 @@
   "deletem.title": {
     "defaultMessage": "所有选中的脑图将被删除"
   },
+  "duplicate.copy-prefix": {
+    "defaultMessage": "的副本"
+  },
   "duplicate.title": {
     "defaultMessage": "复制"
   },
@@ -352,6 +355,9 @@
   },
   "maps.copilot-dialog.description": {
     "defaultMessage": "Mind Map Copilot 是由 ChatGPT 驱动的头脑风暴助手，可将你的提示转换成结构化的思维导图。我们会在新标签页中打开它，帮助你拓展想法、生成主题，并把最佳成果带回 WiseMapping。"
+  },
+  "maps.untitled": {
+    "defaultMessage": "無標題"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "打开副驾驶"
@@ -764,6 +770,9 @@
   "error.map-unavailable-message": {
     "defaultMessage": "此思維導圖不提供公開顯示，因為它違反了我們的網站政策。如果您需要進一步協助，請聯繫 support@wisemapping.com。"
   },
+  "error.map-title-required": {
+    "defaultMessage": "地圖標題是必需的，不能為空"
+  },
   "error.security-error": {
     "defaultMessage": "Mindmap cannot be opened."
   },
@@ -847,5 +856,8 @@
   },
   "admin.close": {
     "defaultMessage": "Close"
+  },
+  "validation.title-required": {
+    "defaultMessage": "標題是必需的"
   }
 }

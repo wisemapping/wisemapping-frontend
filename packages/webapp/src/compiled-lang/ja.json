@@ -675,6 +675,12 @@
       "value": "読み込み中..."
     }
   ],
+  "duplicate.copy-prefix": [
+    {
+      "type": 0,
+      "value": "のコピー"
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
@@ -691,6 +697,24 @@
     {
       "type": 0,
       "value": "問題が発生しました。"
+    }
+  ],
+  "error.map-title-required": [
+    {
+      "type": 0,
+      "value": "マップのタイトルは必須で、空にすることはできません"
+    }
+  ],
+  "error.map-unavailable-message": [
+    {
+      "type": 0,
+      "value": "このマインドマップは、サイトポリシーに違反しているため、公開表示には利用できません。さらにサポートが必要な場合は、support@wisemapping.com にお問い合わせください。"
+    }
+  ],
+  "error.map-unavailable-title": [
+    {
+      "type": 0,
+      "value": "このマインドマップは公開表示には利用できません。"
     }
   ],
   "error.not-found-message": [
@@ -1379,6 +1403,12 @@
       "value": "お気に入り"
     }
   ],
+  "maps.untitled": [
+    {
+      "type": 0,
+      "value": "無題"
+    }
+  ],
   "maps.view": [
     {
       "type": 0,
@@ -1715,6 +1745,12 @@
     {
       "type": 0,
       "value": "テーマ切り替え"
+    }
+  ],
+  "validation.title-required": [
+    {
+      "type": 0,
+      "value": "タイトルは必須です"
     }
   ]
 }
