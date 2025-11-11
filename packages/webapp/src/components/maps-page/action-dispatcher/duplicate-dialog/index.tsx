@@ -97,6 +97,8 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault();
+
     const name = event.target.name;
     const value = event.target.value;
 
@@ -106,12 +108,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
     }
 
     // Update the model with the correct field name
-    if (name === 'title') {
-      // Title is required - always set it (even if empty, validation will catch it on submit)
-      setModel({ ...model, title: value });
-    } else if (name === 'description') {
-      setModel({ ...model, description: value });
-    }
+    setModel({ ...model, [name as keyof BasicMapInfo]: value });
   };
 
   const { data: map } = useFetchMapById(mapId);
@@ -170,7 +167,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
               id: 'action.rename-name-placeholder',
               defaultMessage: 'Name',
             })}
-            value={model.title || ''}
+            value={model.title}
             onChange={handleOnChange}
             error={error}
             fullWidth={true}
@@ -185,7 +182,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
               id: 'action.rename-description-placeholder',
               defaultMessage: 'Description',
             })}
-            value={model.description}
+            value={model.description || ''}
             onChange={handleOnChange}
             error={error}
             required={false}
