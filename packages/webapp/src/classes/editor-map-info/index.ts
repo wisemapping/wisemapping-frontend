@@ -72,7 +72,12 @@ class MapInfoImpl implements MapInfo {
   }
 
   updateTitle(title: string): Promise<void> {
-    return this.client.renameMap(Number.parseInt(this.getId(), 10), { title: title });
+    // Use this.id directly - it's already a number, no need to convert through string
+    // Validate that id is valid (0 is a valid map ID, only reject null/undefined/NaN)
+    if (this.id == null || Number.isNaN(this.id)) {
+      return Promise.reject(new Error(`Invalid map ID: ${this.id}`));
+    }
+    return this.client.renameMap(this.id, { title: title });
   }
 
   isLocked(): boolean {

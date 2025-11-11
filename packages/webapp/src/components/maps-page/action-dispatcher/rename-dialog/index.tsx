@@ -66,23 +66,66 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     setError(undefined);
-    mutation.mutate(model);
+
+    // Validate that mapId is valid (0 is a valid ID)
+    if (mapId == null || Number.isNaN(mapId)) {
+      setError({
+        msg: intl.formatMessage({
+          id: 'error.invalid-map-id',
+          defaultMessage: 'Invalid map ID',
+        }),
+      });
+      return;
+    }
+
+    // Use mapId from props, not model.id, to ensure it's always valid
+    const validatedModel: RenameModel = {
+      id: mapId,
+      title: model.title,
+      description: model.description,
+    };
+
+    mutation.mutate(validatedModel);
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    event.preventDefault();
-
     const name = event.target.name;
     const value = event.target.value;
-    setModel({ ...model, [name as keyof BasicMapInfo]: value });
+
+    // Clear any previous errors when user starts typing
+    if (error) {
+      setError(undefined);
+    }
+
+    // Update the model with the correct field name
+    // Only update title and description, preserve id from mapId prop
+    if (name === 'title') {
+      setModel({ ...model, title: value });
+    } else if (name === 'description') {
+      setModel({ ...model, description: value });
+    }
   };
 
   const { data: map } = useFetchMapById(mapId);
+
+  // Validate mapId - show error if invalid (0 is a valid ID)
+  useEffect(() => {
+    if (mapId == null || Number.isNaN(mapId)) {
+      setError({
+        msg: intl.formatMessage({
+          id: 'error.invalid-map-id',
+          defaultMessage: 'Invalid map ID',
+        }),
+      });
+      return;
+    }
+  }, [mapId, intl]);
+
   useEffect(() => {
     if (map) {
       setModel(map);
     }
-  }, [mapId]);
+  }, [map]);
 
   return (
     <div>
