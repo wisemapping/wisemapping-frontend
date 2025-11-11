@@ -35,6 +35,9 @@ export const useFetchMapById = (id: number): MapLoadResult => {
     () => {
       return client.fetchMapMetadata(id);
     },
+    {
+      enabled: id > 0 && !Number.isNaN(id),
+    },
   );
 
   // Convert MapMetadata to MapInfo format
