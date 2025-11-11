@@ -31,10 +31,6 @@ import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 
-interface MapsListSkeletonProps {
-  rowsPerPage: number;
-}
-
 export const TableRowSkeleton: React.FC = () => {
   const classes = useStyles();
 
@@ -119,25 +115,13 @@ export const CardSkeleton: React.FC = () => {
   );
 };
 
-export const MapsListSkeleton: React.FC<MapsListSkeletonProps> = ({ rowsPerPage }) => {
+const MapsListSkeleton: React.FC<{ rowsPerPage: number }> = ({ rowsPerPage }) => {
   const skeletonCount = Math.min(rowsPerPage, 5); // Show max 5 skeleton rows
 
   return (
     <>
       {Array.from({ length: skeletonCount }).map((_, index) => (
         <TableRowSkeleton key={index} />
-      ))}
-    </>
-  );
-};
-
-export const MapsCardsListSkeleton: React.FC<MapsListSkeletonProps> = ({ rowsPerPage }) => {
-  const skeletonCount = Math.min(rowsPerPage, 5); // Show max 5 skeleton cards
-
-  return (
-    <>
-      {Array.from({ length: skeletonCount }).map((_, index) => (
-        <CardSkeleton key={index} />
       ))}
     </>
   );
