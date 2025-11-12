@@ -27,7 +27,7 @@ export class SecurityConfig {
    */
   static readonly CSP_HEADER = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // Note: unsafe-eval needed for some libraries
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://*.googlesyndication.com https://googleads.g.doubleclick.net https://js-agent.newrelic.com",
     "style-src 'self' 'unsafe-inline'", // unsafe-inline needed for dynamic styles
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",

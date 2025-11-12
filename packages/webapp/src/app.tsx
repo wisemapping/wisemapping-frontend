@@ -45,6 +45,7 @@ import OAuthCallbackPage from './components/oauth-callback';
 import ErrorPage from './components/error-page';
 import LoadingFallback from './components/loading-fallback';
 import { MapsPageLoading } from './components/maps-page/maps-list/MapsListSkeleton';
+import MapsPageErrorFallback from './components/maps-page/MapsPageErrorFallback';
 import { EditorLoadingSkeleton } from '@wisemapping/editor';
 import { HelmetProvider } from './components/seo';
 import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
@@ -212,6 +213,7 @@ const buildRouter = () =>
                   <MapsPage />
                 </Suspense>
               }
+              errorElement={<MapsPageErrorFallback />}
             />
             <Route
               path="/c/maps/:id/edit"
