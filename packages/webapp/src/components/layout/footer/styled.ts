@@ -20,7 +20,7 @@ import { styled } from '@mui/material/styles';
 /* Footer */
 
 export const StyledFooter = styled('footer')(({ theme }) => ({
-  height: '250px',
+  height: '175px',
   marginTop: '80px',
   padding: '30px 0 10px 0',
   backgroundColor: theme.palette.primary.main,

@@ -44,50 +44,77 @@ type Config = {
 };
 
 class AppConfig {
-  private static _config: Config;
+  private static _config: Config | null = null;
 
-  static fetchOrGetConfig(): Config {
-    try {
-      if (!this._config) {
-        let result: Config;
+  private static _initializationPromise: Promise<Config> | null = null;
 
-        // Dynamic import for BootstrapConfig
-        const windowWithConfig = window as unknown as { BoostrapConfig?: ConfigContainer };
-        if (!windowWithConfig.BoostrapConfig) {
-          throw new Error(
-            'BoostrapConfig is not available on window object. Make sure the configuration is properly loaded.',
-          );
-        }
-        const extConfig: ConfigContainer = windowWithConfig.BoostrapConfig;
-        if (extConfig.type === 'static') {
-          // Configuration has been defined as part of webpack ...
-          result = extConfig.config;
-        } else {
-          // Configuration must be fetch externally ...
-          console.log(`Fetching remote config from '${extConfig.url}'`);
-          if (!extConfig.url) {
-            throw new Error(`Fetching remote config from ${extConfig.url} can not be empty`);
-          }
-
-          const xhr = new XMLHttpRequest();
-          xhr.open('GET', extConfig.url, false);
-          xhr.send(null);
-          if (xhr.status === 200) {
-            result = JSON.parse(xhr.responseText);
-          } else {
-            throw new Error('Request failed: ' + xhr.statusText);
-          }
-        }
-
-        this._config = result;
-        console.log(`App Config: ${JSON.stringify(this._config)}`);
-        console.log(`App Config clientType: ${this._config.clientType}`);
-      }
-    } catch (e) {
-      throw { msg: `Unexpected error application. Please, try latter. Detail: ${e.message}` };
+  static async initialize(): Promise<Config> {
+    if (this._config) {
+      return this._config;
     }
 
+    if (!this._initializationPromise) {
+      this._initializationPromise = this.loadConfig()
+        .then((config) => {
+          this._config = config;
+          console.log(`App Config: ${JSON.stringify(this._config)}`);
+          console.log(`App Config clientType: ${this._config.clientType}`);
+          return config;
+        })
+        .catch((error: unknown) => {
+          const message =
+            error instanceof Error
+              ? error.message
+              : 'Unexpected error while loading configuration.';
+          throw { msg: `Unexpected error application. Please, try latter. Detail: ${message}` };
+        })
+        .finally(() => {
+          this._initializationPromise = null;
+        });
+    }
+
+    return this._initializationPromise;
+  }
+
+  static fetchOrGetConfig(): Config {
+    if (!this._config) {
+      throw new Error(
+        'App configuration has not been initialized. Call AppConfig.initialize() before accessing configuration.',
+      );
+    }
     return this._config;
+  }
+
+  private static async loadConfig(): Promise<Config> {
+    // Dynamic import for BootstrapConfig
+    const windowWithConfig = window as unknown as { BoostrapConfig?: ConfigContainer };
+    if (!windowWithConfig.BoostrapConfig) {
+      throw new Error(
+        'BoostrapConfig is not available on window object. Make sure the configuration is properly loaded.',
+      );
+    }
+    const extConfig: ConfigContainer = windowWithConfig.BoostrapConfig;
+    if (extConfig.type === 'static') {
+      // Configuration has been defined as part of webpack ...
+      return extConfig.config;
+    }
+
+    // Configuration must be fetched externally ...
+    console.log(`Fetching remote config from '${extConfig.url}'`);
+    if (!extConfig.url) {
+      throw new Error(`Fetching remote config from ${extConfig.url} can not be empty`);
+    }
+
+    const response = await fetch(extConfig.url, {
+      credentials: 'include',
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed: ${response.statusText}`);
+    }
+
+    return (await response.json()) as Config;
   }
 
   static isMockEnv(): boolean {

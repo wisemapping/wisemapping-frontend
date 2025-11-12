@@ -19,8 +19,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router';
-import Header from '../layout/header';
-import Footer from '../layout/footer';
+import AccountAccessLayout from '../layout/AccountAccessLayout';
 import SubmitButton from '../form/submit-button';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
@@ -148,7 +147,7 @@ const LoginPage = (): React.ReactElement => {
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
 
   return (
-    <div>
+    <>
       <SEOHead
         title="Login | WiseMapping"
         description="Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others. Free online mind mapping tool."
@@ -171,144 +170,142 @@ const LoginPage = (): React.ReactElement => {
           },
         }}
       />
-      <Header type={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'} />
+      <AccountAccessLayout headerType={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'}>
+        <FormContainer>
+          <header>
+            <Typography variant="h4" component="h1">
+              <FormattedMessage id="login.title" defaultMessage="Welcome" />
+            </Typography>
 
-      <FormContainer>
-        <header>
-          <Typography variant="h4" component="h1">
-            <FormattedMessage id="login.title" defaultMessage="Welcome" />
-          </Typography>
+            <Typography paragraph>
+              <FormattedMessage id="login.desc" defaultMessage="Log into your account" />
+            </Typography>
+          </header>
 
-          <Typography paragraph>
-            <FormattedMessage id="login.desc" defaultMessage="Log into your account" />
-          </Typography>
-        </header>
-
-        {isSharedLink && (
-          <Alert severity="info" sx={{ mb: 2 }}>
-            <FormattedMessage
-              id="login.shared-map-notice"
-              defaultMessage="A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
-            />
-          </Alert>
-        )}
-
-        {oauthError && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {oauthError === 'oauth_failed' && (
+          {isSharedLink && (
+            <Alert severity="info" sx={{ mb: 2 }}>
               <FormattedMessage
-                id="login.oauth-error"
-                defaultMessage="OAuth authentication failed. Please try again or use a different sign-in method."
+                id="login.shared-map-notice"
+                defaultMessage="A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
               />
-            )}
-            {oauthError === 'server_error' && (
-              <FormattedMessage
-                id="login.server-error"
-                defaultMessage="An unexpected error occurred. Please try again later."
-              />
-            )}
-            {oauthError !== 'oauth_failed' && oauthError !== 'server_error' && (
-              <FormattedMessage
-                id="login.generic-error"
-                defaultMessage="An error occurred during authentication. Please try again."
-              />
-            )}
-          </Alert>
-        )}
+            </Alert>
+          )}
 
-        <LoginError error={loginError} />
-
-        <main>
-          <FormControl>
-            <form
-              onSubmit={handleOnSubmit}
-              role="form"
-              aria-label={intl.formatMessage({
-                id: 'common.login-form',
-                defaultMessage: 'Login form',
-              })}
-            >
-              <fieldset>
-                <Input
-                  onChange={handleOnChange}
-                  name="email"
-                  type="email"
-                  label={intl.formatMessage({
-                    id: 'login.email',
-                    defaultMessage: 'Email',
-                  })}
-                  required
-                  autoComplete="email"
-                />
-                <Input
-                  onChange={handleOnChange}
-                  name="password"
-                  type="password"
-                  label={intl.formatMessage({
-                    id: 'login.password',
-                    defaultMessage: 'Password',
-                  })}
-                  required
-                  autoComplete="current-password"
-                  maxLength={39}
-                />
-                <SubmitButton
-                  value={intl.formatMessage({
-                    id: 'login.signin',
-                    defaultMessage: 'Sign In',
-                  })}
-                  isLoading={mutation.isLoading}
-                />
-              </fieldset>
-            </form>
-          </FormControl>
-        </main>
-        <Link component={RouterLink} to="/c/forgot-password">
-          <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
-        </Link>
-        {(AppConfig.isGoogleOauth2Enabled() || AppConfig.isFacebookOauth2Enabled()) && (
-          <>
-            <Separator
-              responsive={false}
-              text={intl.formatMessage({
-                id: 'login.division',
-                defaultMessage: 'or',
-              })}
-            />
-            <Box
-              sx={{
-                display: 'flex',
-                gap: 2,
-                flexWrap: 'wrap',
-                width: '100%',
-                marginBottom: '-20px',
-              }}
-            >
-              {AppConfig.isFacebookOauth2Enabled() && (
-                <FacebookButton
-                  text={intl.formatMessage({
-                    id: 'login.facebook.button',
-                    defaultMessage: 'Sign in with Facebook',
-                  })}
-                  onClick={() => handleOAuthLogin(AppConfig.getFacebookOauth2Url(), 'Facebook')}
+          {oauthError && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {oauthError === 'oauth_failed' && (
+                <FormattedMessage
+                  id="login.oauth-error"
+                  defaultMessage="OAuth authentication failed. Please try again or use a different sign-in method."
                 />
               )}
-              {AppConfig.isGoogleOauth2Enabled() && (
-                <GoogleButton
-                  text={intl.formatMessage({
-                    id: 'login.google.button',
-                    defaultMessage: 'Sign in with Google',
-                  })}
-                  onClick={() => handleOAuthLogin(AppConfig.getGoogleOauth2Url(), 'Google')}
+              {oauthError === 'server_error' && (
+                <FormattedMessage
+                  id="login.server-error"
+                  defaultMessage="An unexpected error occurred. Please try again later."
                 />
               )}
-            </Box>
-          </>
-        )}
-      </FormContainer>
+              {oauthError !== 'oauth_failed' && oauthError !== 'server_error' && (
+                <FormattedMessage
+                  id="login.generic-error"
+                  defaultMessage="An error occurred during authentication. Please try again."
+                />
+              )}
+            </Alert>
+          )}
 
-      <Footer />
-    </div>
+          <LoginError error={loginError} />
+
+          <main>
+            <FormControl>
+              <form
+                onSubmit={handleOnSubmit}
+                role="form"
+                aria-label={intl.formatMessage({
+                  id: 'common.login-form',
+                  defaultMessage: 'Login form',
+                })}
+              >
+                <fieldset>
+                  <Input
+                    onChange={handleOnChange}
+                    name="email"
+                    type="email"
+                    label={intl.formatMessage({
+                      id: 'login.email',
+                      defaultMessage: 'Email',
+                    })}
+                    required
+                    autoComplete="email"
+                  />
+                  <Input
+                    onChange={handleOnChange}
+                    name="password"
+                    type="password"
+                    label={intl.formatMessage({
+                      id: 'login.password',
+                      defaultMessage: 'Password',
+                    })}
+                    required
+                    autoComplete="current-password"
+                    maxLength={39}
+                  />
+                  <SubmitButton
+                    value={intl.formatMessage({
+                      id: 'login.signin',
+                      defaultMessage: 'Sign In',
+                    })}
+                    isLoading={mutation.isLoading}
+                  />
+                </fieldset>
+              </form>
+            </FormControl>
+          </main>
+          <Link component={RouterLink} to="/c/forgot-password">
+            <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
+          </Link>
+          {(AppConfig.isGoogleOauth2Enabled() || AppConfig.isFacebookOauth2Enabled()) && (
+            <>
+              <Separator
+                responsive={false}
+                text={intl.formatMessage({
+                  id: 'login.division',
+                  defaultMessage: 'or',
+                })}
+              />
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  flexWrap: 'wrap',
+                  width: '100%',
+                  marginBottom: '-20px',
+                }}
+              >
+                {AppConfig.isFacebookOauth2Enabled() && (
+                  <FacebookButton
+                    text={intl.formatMessage({
+                      id: 'login.facebook.button',
+                      defaultMessage: 'Sign in with Facebook',
+                    })}
+                    onClick={() => handleOAuthLogin(AppConfig.getFacebookOauth2Url(), 'Facebook')}
+                  />
+                )}
+                {AppConfig.isGoogleOauth2Enabled() && (
+                  <GoogleButton
+                    text={intl.formatMessage({
+                      id: 'login.google.button',
+                      defaultMessage: 'Sign in with Google',
+                    })}
+                    onClick={() => handleOAuthLogin(AppConfig.getGoogleOauth2Url(), 'Google')}
+                  />
+                )}
+              </Box>
+            </>
+          )}
+        </FormContainer>
+      </AccountAccessLayout>
+    </>
   );
 };
 
