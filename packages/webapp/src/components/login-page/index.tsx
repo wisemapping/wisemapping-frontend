@@ -170,7 +170,12 @@ const LoginPage = (): React.ReactElement => {
           },
         }}
       />
-      <AccountAccessLayout headerType={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'}>
+      <AccountAccessLayout
+        headerType={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'}
+        contentSx={{
+          padding: { xs: '8px 16px', md: '16px 16px' },
+        }}
+      >
         <FormContainer>
           <header>
             <Typography variant="h4" component="h1">
