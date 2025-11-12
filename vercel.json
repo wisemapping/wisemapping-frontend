@@ -1,9 +1,9 @@
 {
     "rewrites": [
-        {
-            "source": "/sitemap.xml",
-            "destination": "/api/sitemap"
-        },
+    {
+        "source": "/sitemap.xml",
+        "destination": "/api/sitemap"
+    },
         {
             "source": "/:locale/c/:path*",
             "destination": "/index.html"
@@ -171,10 +171,6 @@
                 {
                     "key": "X-XSS-Protection",
                     "value": "1; mode=block"
-                },
-                {
-                    "key": "X-Frame-Options",
-                    "value": ""
                 },
                 {
                     "key": "X-Robots-Tag",
