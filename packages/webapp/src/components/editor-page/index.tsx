@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useContext, useEffect, useState, Suspense } from 'react';
+import React, { useContext, useEffect, useState, Suspense, useRef } from 'react';
 import Editor, { useEditor, EditorLoadingSkeleton } from '@wisemapping/editor';
 import type { EditorOptions } from '@wisemapping/editor';
 
@@ -118,6 +118,7 @@ const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.ReactElement => {
   const [activeDialog, setActiveDialog] = useState<ActionType | null>(null);
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
+  const mapInfoRef = useRef<MapInfoImpl | undefined>(undefined);
 
   const userLocale = AppI18n.getUserLocale();
   const theme = useMuiTheme(); // Get MUI theme object
@@ -174,16 +175,28 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
       hid,
     );
 
-    mapInfo = new MapInfoImpl(
-      mapId,
-      client,
-      editorMetadata.mapMetadata.title,
-      editorMetadata.mapMetadata.creatorFullName,
-      editorMetadata.mapMetadata.isLocked,
-      editorMetadata.mapMetadata.isLockedBy,
-      editorMetadata.zoom,
-      editorMetadata.mapMetadata.starred, // Use starred from metadata
-    );
+    const existingMapInfo = mapInfoRef.current;
+    if (!existingMapInfo || existingMapInfo.getId() !== mapId.toString()) {
+      mapInfoRef.current = new MapInfoImpl(
+        mapId,
+        client,
+        editorMetadata.mapMetadata.title,
+        editorMetadata.mapMetadata.creatorFullName,
+        editorMetadata.mapMetadata.isLocked,
+        editorMetadata.mapMetadata.isLockedBy,
+        editorMetadata.zoom,
+        editorMetadata.mapMetadata.starred,
+      );
+    } else {
+      existingMapInfo.updateMetadata({
+        locked: editorMetadata.mapMetadata.isLocked,
+        lockedMsg: editorMetadata.mapMetadata.isLockedBy,
+        zoom: editorMetadata.zoom,
+        starred: editorMetadata.mapMetadata.starred,
+        creatorFullName: editorMetadata.mapMetadata.creatorFullName,
+      });
+    }
+    mapInfo = mapInfoRef.current!;
 
     editorConfig = useEditor({
       mapInfo,

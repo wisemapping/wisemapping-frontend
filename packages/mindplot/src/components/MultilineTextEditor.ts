@@ -95,18 +95,21 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
         case 'Enter': {
           const keyboardEvent = event as KeyboardEvent;
           if (keyboardEvent.metaKey || keyboardEvent.ctrlKey) {
-            // Add return ...
+            keyboardEvent.preventDefault();
+
             const text = this.getTextAreaText();
-            const cursorPosition = text.length;
-            const head = text.substring(0, cursorPosition);
-            let tail = '';
-            if (cursorPosition < text.length) {
-              tail = text.substring(cursorPosition, text.length);
-            }
-            DOMUtils.val(textareaElem, `${head}\n${tail}`);
+            const selectionStart = textareaElem.selectionStart ?? text.length;
+            const selectionEnd = textareaElem.selectionEnd ?? selectionStart;
+            const head = text.substring(0, selectionStart);
+            const tail = text.substring(selectionEnd);
+            const newText = `${head}\n${tail}`;
+
+            this.setText(newText);
+            this.fireEvent('input', [event, newText]);
 
             textareaElem.focus();
-            textareaElem.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+            const newCursorPosition = selectionStart + 1;
+            textareaElem.setSelectionRange(newCursorPosition, newCursorPosition);
           } else {
             this.close(true);
           }
