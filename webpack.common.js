@@ -74,7 +74,7 @@ module.exports = {
               compilerOptions: {
                 jsx: 'react-jsx',
                 module: 'esnext',
-                target: 'es2015',
+                target: 'es2022',
               },
             },
           },

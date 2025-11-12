@@ -92,6 +92,7 @@ const AppBar = ({
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [currentTitle, setCurrentTitle] = useState<string>(mapInfo.getTitle());
   const [isMapLoaded, setIsMapLoaded] = useState<boolean>(() => model?.isMapLoadded() ?? false);
+  const canRename = !capability.isHidden('rename');
   const inputRef = useRef<HTMLInputElement>(null);
   const intl = useIntl();
   const { mode, toggleMode } = useTheme();
@@ -103,11 +104,12 @@ const AppBar = ({
   };
 
   const handleTitleClick = () => {
-    if (!capability.isHidden('rename')) {
-      trackAppBarAction('rename_map');
-      setIsEditingTitle(true);
-      setEditedTitle(currentTitle);
+    if (!canRename) {
+      return;
     }
+    trackAppBarAction('rename_map');
+    setIsEditingTitle(true);
+    setEditedTitle(currentTitle);
   };
 
   const handleTitleSave = async () => {
@@ -170,6 +172,63 @@ const AppBar = ({
       }
     }
   }, [isEditingTitle]);
+
+  useEffect(() => {
+    if (!canRename && isEditingTitle) {
+      setIsEditingTitle(false);
+      setEditedTitle(currentTitle);
+    }
+  }, [canRename, isEditingTitle, currentTitle]);
+
+  useEffect(() => {
+    const latestTitle = mapInfo.getTitle();
+    setCurrentTitle(latestTitle);
+    setEditedTitle(latestTitle);
+  }, [mapInfo]);
+
+  const readOnlyTitleField = (
+    <TextField
+      value={currentTitle}
+      variant="outlined"
+      size="small"
+      InputProps={{ readOnly: true }}
+      onClick={canRename ? handleTitleClick : undefined}
+      data-testid="app-bar-title"
+      sx={{
+        cursor: canRename ? 'pointer' : 'default',
+        '& .MuiOutlinedInput-root': {
+          fontSize: '1rem',
+          height: '32px',
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'transparent',
+          },
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: canRename ? (theme) => theme.palette.primary.main : 'transparent',
+          },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'transparent',
+          },
+        },
+        '& .MuiOutlinedInput-input': {
+          padding: '6px 8px',
+          cursor: canRename ? 'pointer' : 'default',
+        },
+      }}
+    />
+  );
+
+  const readOnlyTitleDisplay = canRename ? (
+    <Tooltip
+      title={intl.formatMessage({
+        id: 'appbar.tooltip-rename',
+        defaultMessage: 'Rename',
+      })}
+    >
+      {readOnlyTitleField}
+    </Tooltip>
+  ) : (
+    readOnlyTitleField
+  );
 
   useEffect(() => {
     if (!capability.isHidden('starred')) {
@@ -256,7 +315,7 @@ const AppBar = ({
             gap: '8px',
           }}
         >
-          {isEditingTitle ? (
+          {isEditingTitle && canRename ? (
             <TextField
               ref={inputRef}
               value={editedTitle}
@@ -283,38 +342,7 @@ const AppBar = ({
               disabled={isSaving}
             />
           ) : (
-            <Tooltip
-              title={intl.formatMessage({ id: 'appbar.tooltip-rename', defaultMessage: 'Rename' })}
-            >
-              <TextField
-                value={currentTitle}
-                variant="outlined"
-                size="small"
-                InputProps={{ readOnly: true }}
-                onClick={handleTitleClick}
-                data-testid="app-bar-title"
-                sx={{
-                  cursor: !capability.isHidden('rename') ? 'pointer' : 'default',
-                  '& .MuiOutlinedInput-root': {
-                    fontSize: '1rem',
-                    height: '32px',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: 'transparent',
-                    },
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: (theme) => theme.palette.primary.main,
-                    },
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                      borderColor: 'transparent',
-                    },
-                  },
-                  '& .MuiOutlinedInput-input': {
-                    padding: '6px 8px',
-                    cursor: !capability.isHidden('rename') ? 'pointer' : 'default',
-                  },
-                }}
-              />
-            </Tooltip>
+            readOnlyTitleDisplay
           )}
         </div>
       ),
