@@ -102,5 +102,29 @@ class MapInfoImpl implements MapInfo {
   getId(): string {
     return String(this.id);
   }
+
+  updateMetadata(metadata: {
+    locked?: boolean;
+    lockedMsg?: string | undefined;
+    zoom?: number;
+    starred?: boolean;
+    creatorFullName?: string;
+  }): void {
+    if (metadata.locked !== undefined) {
+      this.locked = metadata.locked;
+    }
+    if (metadata.lockedMsg !== undefined) {
+      this.lockedMsg = metadata.lockedMsg;
+    }
+    if (metadata.zoom !== undefined) {
+      this.zoom = metadata.zoom;
+    }
+    if (metadata.starred !== undefined) {
+      this.starred = metadata.starred;
+    }
+    if (metadata.creatorFullName !== undefined) {
+      this.creatorFullName = metadata.creatorFullName;
+    }
+  }
 }
 export default MapInfoImpl;

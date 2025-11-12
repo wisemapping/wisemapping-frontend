@@ -59,4 +59,45 @@ context('Storybook Regression Tests', () => {
     cy.get('[data-testid="error-message"]').should('not.exist');
     cy.get('.error').should('not.exist');
   });
+
+  it('supports inserting a newline at the caret using modifier + Enter', () => {
+    cy.visit('/iframe.html?args=&id=mindplot-texteditor--multiline-editor&viewMode=story');
+
+    cy.contains('Border Style', { timeout: 15000 }).should('be.visible').dblclick({ force: true });
+
+    cy.get('textarea', { timeout: 5000 })
+      .should('be.visible')
+      .and('have.value', 'Border Style')
+      .as('multilineEditor');
+
+    cy.get('@multilineEditor').then(($textarea) => {
+      const textarea = $textarea.get(0);
+      expect(textarea).to.not.be.undefined;
+      if (textarea instanceof HTMLTextAreaElement) {
+        textarea.focus();
+        textarea.setSelectionRange(1, 1);
+      }
+    });
+
+    cy.get('@multilineEditor').trigger('keydown', {
+      key: 'Enter',
+      code: 'Enter',
+      metaKey: true,
+      ctrlKey: true,
+      bubbles: true,
+      cancelable: true,
+      eventConstructor: 'KeyboardEvent',
+    });
+
+    cy.get('@multilineEditor').should('have.value', 'B\norder Style');
+
+    cy.get('@multilineEditor').should(($textarea) => {
+      const textarea = $textarea.get(0);
+      expect(textarea).to.not.be.undefined;
+      if (textarea instanceof HTMLTextAreaElement) {
+        expect(textarea.selectionStart).to.eq(2);
+        expect(textarea.selectionEnd).to.eq(2);
+      }
+    });
+  });
 });
