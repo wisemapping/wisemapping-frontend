@@ -48,51 +48,6 @@
                 {
                     "key": "X-Frame-Options",
                     "value": "DENY"
-                },
-                {
-                    "key": "Strict-Transport-Security",
-                    "value": "max-age=86400; includeSubDomains; preload"
-                },
-                {
-                    "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.googlesyndication.com https://googleads.g.doubleclick.net https://js-agent.newrelic.com; connect-src 'self' https://api.wisemapping.com https://api2.wisemapping.com https://*.nr-data.net https://*.googlesyndication.com https://googleads.g.doubleclick.net; img-src 'self' data: https://*.googlesyndication.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://*.googlesyndication.com https://googleads.g.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
-                }
-            ]
-        },
-        {
-            "source": "/c/maps/:mapId/public",
-            "headers": [
-                {
-                    "key": "Access-Control-Allow-Credentials",
-                    "value": "true"
-                },
-                {
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "https://api.wisemapping.com"
-                },
-                {
-                    "key": "Access-Control-Allow-Methods",
-                    "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-                },
-                {
-                    "key": "Access-Control-Allow-Headers",
-                    "value": "X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-                },
-                {
-                    "key": "Referrer-Policy",
-                    "value": "no-referrer-when-downgrade"
-                },
-                {
-                    "key": "X-Content-Type-Options",
-                    "value": "nosniff"
-                },
-                {
-                    "key": "X-XSS-Protection",
-                    "value": "1; mode=block"
-                },
-                {
-                    "key": "X-Frame-Options",
-                    "value": "DENY"
                 }
             ]
         },
