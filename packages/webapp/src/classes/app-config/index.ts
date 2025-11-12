@@ -106,7 +106,7 @@ class AppConfig {
     }
 
     const response = await fetch(extConfig.url, {
-      credentials: 'include',
+      credentials: 'omit',
       cache: 'no-store',
     });
 
