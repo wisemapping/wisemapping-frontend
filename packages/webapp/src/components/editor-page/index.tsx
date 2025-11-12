@@ -216,7 +216,6 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
           description={`Edit and collaborate on "${mapInfo?.getTitle() || 'Mind Map'}" using WiseMapping's powerful mind mapping editor.`}
           keywords={`mind map, ${mapInfo?.getTitle() || 'mind map'}, editing, collaboration, visual thinking`}
           canonicalUrl={`/c/maps/${mapId}/edit`}
-          noindex={pageMode === 'view-private'}
         />
       )}
       <SessionExpiredDialog open={sessionExpired} />

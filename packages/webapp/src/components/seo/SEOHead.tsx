@@ -33,8 +33,6 @@ export interface SEOProps {
   twitterDescription?: string;
   twitterImage?: string;
   structuredData?: object;
-  noindex?: boolean;
-  nofollow?: boolean;
   language?: string;
   alternateLanguages?: Array<{ hreflang: string; href: string }>;
 }
@@ -53,8 +51,6 @@ const SEOHead: React.FC<SEOProps> = ({
   twitterDescription,
   twitterImage,
   structuredData,
-  noindex = false,
-  nofollow = false,
   language = 'en',
   alternateLanguages = [],
 }) => {
@@ -68,18 +64,12 @@ const SEOHead: React.FC<SEOProps> = ({
       : `${baseUrl}${twitterImage}`
     : fullOgImage;
 
-  const robotsContent: string[] = [];
-  if (noindex) robotsContent.push('noindex');
-  if (nofollow) robotsContent.push('nofollow');
-  if (robotsContent.length === 0) robotsContent.push('index', 'follow');
-
   return (
     <Helmet>
       {/* Basic Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <meta name="robots" content={robotsContent.join(', ')} />
       <meta name="author" content="WiseMapping" />
       <meta name="publisher" content="WiseMapping" />
 
