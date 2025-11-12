@@ -326,7 +326,12 @@ const RegistationPage = (): React.ReactElement => {
           },
         }}
       />
-      <AccountAccessLayout headerType="only-signin">
+      <AccountAccessLayout
+        headerType="only-signin"
+        contentSx={{
+          padding: { xs: '8px 16px', md: '16px 16px' },
+        }}
+      >
         <RegistrationForm />
       </AccountAccessLayout>
     </>

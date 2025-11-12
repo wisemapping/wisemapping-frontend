@@ -333,7 +333,7 @@ const AppWithTheme = (): ReactElement => {
   }
 
   if (!router) {
-    return <div>Loading configuration...</div>;
+    return <div></div>;
   }
 
   return (
