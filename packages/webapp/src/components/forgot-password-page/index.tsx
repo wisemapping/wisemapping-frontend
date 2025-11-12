@@ -20,8 +20,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { ErrorInfo, ForgotPasswordResult } from '../../classes/client';
 
-import Header from '../layout/header';
-import Footer from '../layout/footer';
+import AccountAccessLayout from '../layout/AccountAccessLayout';
 import FormContainer from '../layout/form-container';
 import { useMutation } from 'react-query';
 import Input from '../form/input';
@@ -139,7 +138,7 @@ const ForgotPasswordPage = (): React.ReactElement => {
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
 
   return (
-    <div>
+    <>
       <SEOHead
         title="Forgot Password | WiseMapping"
         description="Reset your WiseMapping account password. Enter your email address and we'll send you a password recovery link."
@@ -156,10 +155,10 @@ const ForgotPasswordPage = (): React.ReactElement => {
           url: `${baseUrl}${canonicalUrl}`,
         }}
       />
-      <Header type="only-signin" />
-      <ForgotPassword />
-      <Footer />
-    </div>
+      <AccountAccessLayout headerType="only-signin">
+        <ForgotPassword />
+      </AccountAccessLayout>
+    </>
   );
 };
 

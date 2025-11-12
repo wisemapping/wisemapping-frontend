@@ -22,8 +22,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { useNavigate } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
 
-import Header from '../layout/header';
-import Footer from '../layout/footer';
+import AccountAccessLayout from '../layout/AccountAccessLayout';
 
 import { useMutation } from 'react-query';
 import Input from '../form/input';
@@ -299,7 +298,7 @@ const RegistationPage = (): React.ReactElement => {
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
 
   return (
-    <div>
+    <>
       <SEOHead
         title="Sign Up | WiseMapping"
         description="Create your free WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others. Join thousands of users worldwide."
@@ -327,10 +326,10 @@ const RegistationPage = (): React.ReactElement => {
           },
         }}
       />
-      <Header type="only-signin" />
-      <RegistrationForm />
-      <Footer />
-    </div>
+      <AccountAccessLayout headerType="only-signin">
+        <RegistrationForm />
+      </AccountAccessLayout>
+    </>
   );
 };
 

@@ -20,8 +20,8 @@ import AppConfig from './classes/app-config';
 import ReactGA from 'react-ga4';
 
 export const loader = async (): Promise<Response> => {
-  // Force the loading with the goal to validate if the config can be loaded...
-  AppConfig.fetchOrGetConfig();
+  // Ensure configuration is loaded before continuing.
+  await AppConfig.initialize();
 
   // Google Analytics Initialization.
   const trackingId = AppConfig.getGoogleAnalyticsAccount();

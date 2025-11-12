@@ -133,155 +133,156 @@ const IntlProviderWrapper = ({ children }: { children: React.ReactNode }): React
   );
 };
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route
-      element={
-        <IntlProviderWrapper>
-          <Outlet />
-        </IntlProviderWrapper>
-      }
-    >
+const buildRouter = () =>
+  createBrowserRouter(
+    createRoutesFromElements(
       <Route
-        loader={configLoader}
-        errorElement={
+        element={
           <IntlProviderWrapper>
-            <ErrorPage />
+            <Outlet />
           </IntlProviderWrapper>
         }
-        hydrateFallbackElement={<LoadingFallback />}
       >
-        <Route path="/" element={<Redirect to="/c/login" />} />
-        <Route path="/c/login" element={<LoginPage />} />
-        {/* Localized routes for login, registration, and forgot-password */}
-        <Route path="/:locale/c/login" element={<LoginPage />} />
-        {createRegistrationRoutes()}
-        <Route path="/:locale/c/registration" element={<RegistationPage />} />
-        <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/:locale/c/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />
+        <Route
+          loader={configLoader}
+          errorElement={
+            <IntlProviderWrapper>
+              <ErrorPage />
+            </IntlProviderWrapper>
+          }
+          hydrateFallbackElement={<LoadingFallback />}
+        >
+          <Route path="/" element={<Redirect to="/c/login" />} />
+          <Route path="/c/login" element={<LoginPage />} />
+          {/* Localized routes for login, registration, and forgot-password */}
+          <Route path="/:locale/c/login" element={<LoginPage />} />
+          {createRegistrationRoutes()}
+          <Route path="/:locale/c/registration" element={<RegistationPage />} />
+          <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/:locale/c/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />
 
-        <Route element={<CommonPage />}>
-          {/* Admin routes */}
-          <Route
-            path="/c/admin"
-            element={
-              <Suspense fallback={<LoadingFallback />}>
-                <AdminConsole />
-              </Suspense>
-            }
-          />
-          <Route
-            element={
-              <Suspense fallback={<LoadingFallback />}>
-                <AdminLayout />
-              </Suspense>
-            }
-          >
+          <Route element={<CommonPage />}>
+            {/* Admin routes */}
             <Route
-              path="/c/admin/accounts"
+              path="/c/admin"
               element={
                 <Suspense fallback={<LoadingFallback />}>
-                  <AccountsPage />
+                  <AdminConsole />
                 </Suspense>
               }
             />
             <Route
-              path="/c/admin/maps"
               element={
                 <Suspense fallback={<LoadingFallback />}>
-                  <MapsAdminPage />
+                  <AdminLayout />
+                </Suspense>
+              }
+            >
+              <Route
+                path="/c/admin/accounts"
+                element={
+                  <Suspense fallback={<LoadingFallback />}>
+                    <AccountsPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/c/admin/maps"
+                element={
+                  <Suspense fallback={<LoadingFallback />}>
+                    <MapsAdminPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/c/admin/system"
+                element={
+                  <Suspense fallback={<LoadingFallback />}>
+                    <SystemPage />
+                  </Suspense>
+                }
+              />
+            </Route>
+
+            <Route
+              path="/c/maps/"
+              element={
+                <Suspense fallback={<MapsPageLoading />}>
+                  <MapsPage />
                 </Suspense>
               }
             />
             <Route
-              path="/c/admin/system"
-              element={
-                <Suspense fallback={<LoadingFallback />}>
-                  <SystemPage />
-                </Suspense>
+              path="/c/maps/:id/edit"
+              element={<PageEditorWrapper mode="edit" />}
+              loader={mapLoader('edit', true)}
+              errorElement={
+                <IntlProviderWrapper>
+                  <ErrorPage />
+                </IntlProviderWrapper>
+              }
+            />
+            <Route
+              path="/c/maps/:id/print"
+              element={<PageEditorWrapper mode="view-private" />}
+              loader={mapLoader('view-private', true)}
+              errorElement={
+                <IntlProviderWrapper>
+                  <ErrorPage />
+                </IntlProviderWrapper>
+              }
+            />
+            <Route
+              path="/c/maps/:id/:hid/view"
+              element={<PageEditorWrapper mode="view-private" />}
+              loader={mapLoader('view-private', true)}
+              errorElement={
+                <IntlProviderWrapper>
+                  <ErrorPage />
+                </IntlProviderWrapper>
+              }
+            />
+            <Route
+              path="/c/maps/:id/public"
+              loader={mapLoader('view-public', true)}
+              element={<PageEditorWrapper mode="view-public" />}
+              errorElement={
+                <IntlProviderWrapper>
+                  <ErrorPage />
+                </IntlProviderWrapper>
+              }
+            />
+            <Route
+              path="/c/maps/:id/embed"
+              loader={mapLoader('view-public', true)}
+              element={<PageEditorWrapper mode="view-public" />}
+              errorElement={
+                <IntlProviderWrapper>
+                  <ErrorPage />
+                </IntlProviderWrapper>
+              }
+            />
+            <Route
+              path="/c/maps/:id/try"
+              loader={mapLoader('try', true)}
+              element={<PageEditorWrapper mode="try" />}
+              errorElement={
+                <IntlProviderWrapper>
+                  <ErrorPage />
+                </IntlProviderWrapper>
               }
             />
           </Route>
-
-          <Route
-            path="/c/maps/"
-            element={
-              <Suspense fallback={<MapsPageLoading />}>
-                <MapsPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/c/maps/:id/edit"
-            element={<PageEditorWrapper mode="edit" />}
-            loader={mapLoader('edit', true)}
-            errorElement={
-              <IntlProviderWrapper>
-                <ErrorPage />
-              </IntlProviderWrapper>
-            }
-          />
-          <Route
-            path="/c/maps/:id/print"
-            element={<PageEditorWrapper mode="view-private" />}
-            loader={mapLoader('view-private', true)}
-            errorElement={
-              <IntlProviderWrapper>
-                <ErrorPage />
-              </IntlProviderWrapper>
-            }
-          />
-          <Route
-            path="/c/maps/:id/:hid/view"
-            element={<PageEditorWrapper mode="view-private" />}
-            loader={mapLoader('view-private', true)}
-            errorElement={
-              <IntlProviderWrapper>
-                <ErrorPage />
-              </IntlProviderWrapper>
-            }
-          />
-          <Route
-            path="/c/maps/:id/public"
-            loader={mapLoader('view-public', true)}
-            element={<PageEditorWrapper mode="view-public" />}
-            errorElement={
-              <IntlProviderWrapper>
-                <ErrorPage />
-              </IntlProviderWrapper>
-            }
-          />
-          <Route
-            path="/c/maps/:id/embed"
-            loader={mapLoader('view-public', true)}
-            element={<PageEditorWrapper mode="view-public" />}
-            errorElement={
-              <IntlProviderWrapper>
-                <ErrorPage />
-              </IntlProviderWrapper>
-            }
-          />
-          <Route
-            path="/c/maps/:id/try"
-            loader={mapLoader('try', true)}
-            element={<PageEditorWrapper mode="try" />}
-            errorElement={
-              <IntlProviderWrapper>
-                <ErrorPage />
-              </IntlProviderWrapper>
-            }
-          />
         </Route>
-      </Route>
-    </Route>,
-  ),
-  {
-    future: {
-      v7_startTransition: true,
+      </Route>,
+    ),
+    {
+      future: {
+        v7_startTransition: true,
+      },
     },
-  },
-);
+  );
 
 // eslint-disable-next-line react/prop-types
 function Redirect({ to }) {
@@ -296,6 +297,42 @@ const AppWithTheme = (): ReactElement => {
   const [hotkeyEnabled, setHotkeyEnabled] = useState(true);
   const { mode } = useTheme();
   const theme = createAppTheme(mode);
+  const [router, setRouter] = useState<ReturnType<typeof createBrowserRouter> | null>(null);
+  const [initializationError, setInitializationError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    AppConfig.initialize()
+      .then(() => {
+        if (!cancelled) {
+          setRouter(buildRouter());
+        }
+      })
+      .catch((error: unknown) => {
+        if (!cancelled) {
+          if (error && typeof error === 'object' && 'msg' in error) {
+            setInitializationError((error as { msg: string }).msg);
+          } else if (error instanceof Error) {
+            setInitializationError(error.message);
+          } else {
+            setInitializationError('Unable to load application configuration.');
+          }
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (initializationError) {
+    return <div role="alert">{initializationError}</div>;
+  }
+
+  if (!router) {
+    return <div>Loading configuration...</div>;
+  }
 
   return (
     <HelmetProvider>
