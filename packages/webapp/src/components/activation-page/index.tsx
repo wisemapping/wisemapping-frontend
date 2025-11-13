@@ -18,9 +18,8 @@
 
 import React, { useEffect, useState, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import AccountAccessLayout from '../layout/AccountAccessLayout';
 import FormContainer from '../layout/form-container';
-import Header from '../layout/header';
-import Footer from '../layout/footer';
 import { Link as RouterLink } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -66,8 +65,7 @@ const ActivationPage = (): React.ReactElement => {
   }, []);
 
   return (
-    <div>
-      <Header type="none" />
+    <AccountAccessLayout headerType="none">
       <FormContainer>
         {loading ? (
           <>
@@ -130,8 +128,7 @@ const ActivationPage = (): React.ReactElement => {
           </>
         )}
       </FormContainer>
-      <Footer />
-    </div>
+    </AccountAccessLayout>
   );
 };
 
