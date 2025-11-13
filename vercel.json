@@ -51,7 +51,7 @@
                 },
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' https:; connect-src 'self' https://api.wisemapping.com https://api2.wisemapping.com https://www.google.com https://www.gstatic.com; img-src 'self' https: data:; frame-src https:; style-src 'self' 'unsafe-inline' https:; object-src 'none';"
+                    "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https://api.wisemapping.com https://api2.wisemapping.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://*.google-analytics.com; img-src 'self' https: data:; frame-src https:; style-src 'self' 'unsafe-inline' https:; object-src 'none';"
                 }
             ]
         },
@@ -92,7 +92,7 @@
                 },
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' https:; connect-src 'self' https://api.wisemapping.com https://api2.wisemapping.com https://www.google.com https://www.gstatic.com; img-src 'self' https: data:; frame-src https:; style-src 'self' 'unsafe-inline' https:; object-src 'none';"
+                    "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https://api.wisemapping.com https://api2.wisemapping.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://*.google-analytics.com; img-src 'self' https: data:; frame-src https:; style-src 'self' 'unsafe-inline' https:; object-src 'none';"
                 }
             ]
         },
