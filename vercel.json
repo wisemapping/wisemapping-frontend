@@ -15,6 +15,47 @@
     ],
     "headers": [
         {
+            "source": "/c/maps/:mapId/embed",
+            "headers": [
+                {
+                    "key": "Access-Control-Allow-Credentials",
+                    "value": "true"
+                },
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "https://api2.wisemapping.com"
+                },
+                {
+                    "key": "Access-Control-Allow-Methods",
+                    "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+                },
+                {
+                    "key": "Access-Control-Allow-Headers",
+                    "value": "X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+                },
+                {
+                    "key": "Referrer-Policy",
+                    "value": "no-referrer-when-downgrade"
+                },
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                },
+                {
+                    "key": "X-XSS-Protection",
+                    "value": "1; mode=block"
+                },
+                {
+                    "key": "X-Robots-Tag",
+                    "value": "noindex"
+                },
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.googlesyndication.com https://googleads.g.doubleclick.net https://js-agent.newrelic.com https://www.googletagmanager.com https://www.google-analytics.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://fundingchoicesmessages.google.com; connect-src 'self' https://api.wisemapping.com https://api2.wisemapping.com https://*.nr-data.net https://*.googlesyndication.com https://googleads.g.doubleclick.net https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://*.adtrafficquality.google https://fundingchoicesmessages.google.com; img-src 'self' data: https://*.googlesyndication.com https://googleads.g.doubleclick.net https://www.google-analytics.com https://*.adtrafficquality.google; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://*.googlesyndication.com https://googleads.g.doubleclick.net https://*.adtrafficquality.google https://www.google.com https://*.google.com; frame-ancestors 'self' https://www.wisemapping.com https://wisemapping.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+                }
+            ]
+        },
+        {
             "source": "/:path*",
             "headers": [
                 {
@@ -138,43 +179,6 @@
                 {
                     "key": "Cache-Control",
                     "value": "no-cache, no-store, must-revalidate"
-                }
-            ]
-        },
-        {
-            "source": "/c/maps/:mapId/embed",
-            "headers": [
-                {
-                    "key": "Access-Control-Allow-Credentials",
-                    "value": "true"
-                },
-                {
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "https://api2.wisemapping.com"
-                },
-                {
-                    "key": "Access-Control-Allow-Methods",
-                    "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-                },
-                {
-                    "key": "Access-Control-Allow-Headers",
-                    "value": "X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-                },
-                {
-                    "key": "Referrer-Policy",
-                    "value": "no-referrer-when-downgrade"
-                },
-                {
-                    "key": "X-Content-Type-Options",
-                    "value": "nosniff"
-                },
-                {
-                    "key": "X-XSS-Protection",
-                    "value": "1; mode=block"
-                },
-                {
-                    "key": "X-Robots-Tag",
-                    "value": "noindex"
                 }
             ]
         },
