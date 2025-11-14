@@ -19,9 +19,14 @@ import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Header from '../layout/header';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Link from '@mui/material/Link';
 import { trackPageView } from '../../utils/analytics';
 import { ErrorBody } from './styled';
-import { isRouteErrorResponse, useRouteError } from 'react-router';
+import { isRouteErrorResponse, useRouteError, useNavigate } from 'react-router';
+import { Link as RouterLink } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
 import { logCriticalError } from '../../utils';
 
@@ -57,21 +62,27 @@ const safeSerialize = (error: unknown): string => {
 
 const ErrorPage = (): React.ReactElement => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const error = useRouteError();
   const routeError = isRouteErrorResponse(error) ? error : undefined;
   const errorInfo = isErrorInfo(error) ? error : undefined;
+
+  // If no error is thrown (catch-all route), treat as 404
+  const isNotFound = error === undefined || routeError?.status === 404;
   const isAccessError =
     (routeError && (routeError.status === 401 || routeError.status === 403)) ||
     Boolean(errorInfo?.isAuth);
 
-  if (routeError?.status === 404) {
+  if (isNotFound && error === undefined) {
+    logCriticalError('Page not found error (catch-all route).', '404');
+  } else if (routeError?.status === 404) {
     logCriticalError('Page not found error.', '404');
   } else if (error !== undefined) {
     logCriticalError('Handling ErrorPage redirect error', safeSerialize(error));
   }
 
   const headline = (() => {
-    if (routeError?.status === 404) {
+    if (isNotFound) {
       return (
         <FormattedMessage id="error.not-found-title" defaultMessage="We can't find that page." />
       );
@@ -96,7 +107,7 @@ const ErrorPage = (): React.ReactElement => {
   })();
 
   const fallbackDetail = (() => {
-    if (routeError?.status === 404) {
+    if (isNotFound) {
       return (
         <FormattedMessage
           id="error.not-found-message"
@@ -131,19 +142,27 @@ const ErrorPage = (): React.ReactElement => {
   const detailMessage =
     (errorInfo?.msg && errorInfo.msg.trim().length > 0 && errorInfo.msg) ||
     (routeError &&
-      routeError.status !== 404 &&
+      !isNotFound &&
       routeError.status !== 410 &&
       typeof routeError.statusText === 'string' &&
       routeError.statusText.trim().length > 0 &&
       routeError.statusText) ||
     (routeError &&
-      routeError.status !== 404 &&
+      !isNotFound &&
       routeError.status !== 410 &&
       typeof routeError.data === 'string' &&
       routeError.data.trim().length > 0 &&
       routeError.data) ||
     (hasMessage(error) && error.message.trim().length > 0 && error.message) ||
     fallbackDetail;
+
+  const handleGoHome = () => {
+    navigate('/c/maps/');
+  };
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     document.title = intl.formatMessage({
@@ -158,13 +177,63 @@ const ErrorPage = (): React.ReactElement => {
       <Header type="only-signup" />
 
       <ErrorBody>
-        <Typography variant="h3" component="h3">
-          {headline}
-        </Typography>
+        <Box
+          sx={{
+            maxWidth: 600,
+            margin: '0 auto',
+            padding: { xs: 2, md: 4 },
+            textAlign: 'center',
+          }}
+        >
+          <Typography variant="h3" component="h1" gutterBottom>
+            {headline}
+          </Typography>
 
-        <Typography variant="h5" component="h6">
-          {detailMessage}
-        </Typography>
+          <Typography variant="body1" component="p" sx={{ mb: 4, color: 'text.secondary' }}>
+            {detailMessage}
+          </Typography>
+
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            spacing={2}
+            sx={{ justifyContent: 'center', alignItems: 'center' }}
+          >
+            {isNotFound && (
+              <>
+                <Button variant="contained" color="primary" onClick={handleGoHome}>
+                  <FormattedMessage id="error.go-home" defaultMessage="Go to Home" />
+                </Button>
+                <Button variant="outlined" color="primary" onClick={handleGoBack}>
+                  <FormattedMessage id="error.go-back" defaultMessage="Go Back" />
+                </Button>
+              </>
+            )}
+            {isAccessError && (
+              <Button variant="contained" color="primary" component={RouterLink} to="/c/login">
+                <FormattedMessage id="error.go-to-login" defaultMessage="Sign In" />
+              </Button>
+            )}
+            {!isNotFound && !isAccessError && (
+              <Button variant="contained" color="primary" onClick={handleGoHome}>
+                <FormattedMessage id="error.go-home" defaultMessage="Go to Home" />
+              </Button>
+            )}
+          </Stack>
+
+          <Box sx={{ mt: 4 }}>
+            <Typography variant="body2" component="p" sx={{ color: 'text.secondary' }}>
+              <FormattedMessage
+                id="error.contact-support"
+                defaultMessage="Need help? Contact us at {support}"
+                values={{
+                  support: (
+                    <Link href="mailto:support@wisemapping.com">support@wisemapping.com</Link>
+                  ),
+                }}
+              />
+            </Typography>
+          </Box>
+        </Box>
       </ErrorBody>
     </div>
   );

@@ -276,6 +276,15 @@ const buildRouter = () =>
               }
             />
           </Route>
+          {/* Catch-all route for unmatched paths (404) */}
+          <Route
+            path="*"
+            element={
+              <IntlProviderWrapper>
+                <ErrorPage />
+              </IntlProviderWrapper>
+            }
+          />
         </Route>
       </Route>,
     ),
