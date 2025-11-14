@@ -99,7 +99,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   constructor(options: DesignerOptions) {
     super();
     // Set up i18n location ...
-    console.log(`Editor location: ${options.locale}`);
     Messages.init(options.locale ? options.locale : 'en');
     const divElem = options.divContainer;
 
