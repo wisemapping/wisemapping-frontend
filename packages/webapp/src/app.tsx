@@ -279,7 +279,13 @@ const buildRouter = () =>
           {/* Catch-all route for unmatched paths (404) */}
           <Route
             path="*"
-            element={
+            loader={() => {
+              throw new Response('Page not found', {
+                status: 404,
+                statusText: 'Not Found',
+              });
+            }}
+            errorElement={
               <IntlProviderWrapper>
                 <ErrorPage />
               </IntlProviderWrapper>
