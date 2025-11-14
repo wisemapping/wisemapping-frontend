@@ -57,8 +57,6 @@ class AppConfig {
       this._initializationPromise = this.loadConfig()
         .then((config) => {
           this._config = config;
-          console.log(`App Config: ${JSON.stringify(this._config)}`);
-          console.log(`App Config clientType: ${this._config.clientType}`);
           return config;
         })
         .catch((error: unknown) => {
