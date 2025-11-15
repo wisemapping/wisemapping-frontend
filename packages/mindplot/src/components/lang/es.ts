@@ -37,6 +37,8 @@ const ES = {
   SESSION_EXPIRED: 'Su session ha expirado. Por favor, ingrese nuevamente.',
   CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'El estilo de conexión no se puede cambiar para el tópico central.',
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Tópico central no se puede cambiar al estilo de línea.',
+  TAB_TO_CREATE_CHILD: 'para crear hijo',
+  ENTER_TO_CREATE_SIBLING: 'para crear hermano',
 };
 
 export default ES;

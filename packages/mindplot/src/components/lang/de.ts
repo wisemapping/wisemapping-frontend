@@ -37,6 +37,8 @@ const DE = {
   SESSION_EXPIRED: 'Deine Sitzung ist abgelaufen, bitte melde dich erneut an.',
   CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'Der Verbindungsstil kann für das zentrale Thema nicht geändert werden.',
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Der Sstil kann für das zentrale Thema nicht geändert werden.',
+  TAB_TO_CREATE_CHILD: 'um Kind zu erstellen',
+  ENTER_TO_CREATE_SIBLING: 'um Geschwister zu erstellen',
 };
 
 export default DE;

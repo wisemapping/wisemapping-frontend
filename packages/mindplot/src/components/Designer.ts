@@ -818,9 +818,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   private _initializeSelectionShadows(): void {
-    if (!this._options.enableSelectionAssistance) {
-      return;
-    }
+    // Selection assistance is enabled by default
 
     this._cleanupSelectionShadows();
 

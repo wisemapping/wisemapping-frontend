@@ -428,7 +428,7 @@ const SimpleMapWithShadowTemplate: StoryFn<TopicArgs & { zoom?: number }> = (arg
     zoom,
     mode: 'viewonly-public',
     locale: 'en',
-    enableSelectionAssistance: true, // Enable selection assistance feature
+    // Selection assistance is enabled by default
   });
 
   const designer = new Designer(designerOptions);
@@ -439,7 +439,7 @@ const SimpleMapWithShadowTemplate: StoryFn<TopicArgs & { zoom?: number }> = (arg
   const mindmap = PersistenceManager.loadFromDom('simple-map', mapDom);
 
   // Load map into designer - HTMLTopicSelected will be automatically created
-  // if enableSelectionAssistance is true
+  // (enabled by default)
   void designer.loadMap(mindmap);
 
   return divElem;

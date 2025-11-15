@@ -37,7 +37,8 @@ const FR = {
   SESSION_EXPIRED: 'Votre session a expiré, veuillez vous reconnecter.',
   CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'Le style de connexion ne peut pas être modifié pour le sujet central.',
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Le sujet central ne peut pas être changé en style de ligne.',
-
+  TAB_TO_CREATE_CHILD: 'pour créer un enfant',
+  ENTER_TO_CREATE_SIBLING: 'pour créer un frère',
 };
 
 export default FR;
