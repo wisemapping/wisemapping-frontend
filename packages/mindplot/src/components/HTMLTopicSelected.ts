@@ -23,12 +23,40 @@ import ColorUtil from './theme/ColorUtil';
 import type { ThemeVariant } from './theme/Theme';
 import type { OrientationType } from './layout/LayoutType';
 
+type HelperElements = {
+  container: HTMLDivElement;
+  tabRow: HTMLDivElement;
+  tabKey: HTMLDivElement;
+  tabText: HTMLSpanElement;
+  enterRow: HTMLDivElement;
+  enterKey: HTMLDivElement;
+  enterText: HTMLSpanElement;
+};
+
+type OverlayGeometry = {
+  overlayLeft: number;
+  overlayTop: number;
+  overlayWidth: number;
+  overlayHeight: number;
+  overlayRight: number;
+  topicLeft: number;
+  topicRight: number;
+  topicBottom: number;
+  topicCenterX: number;
+  topicCenterY: number;
+  orientation: OrientationType;
+  isVertical: boolean;
+  isOnLeft: boolean;
+};
+
 class HTMLTopicSelected {
   private _overlayContainer: HTMLDivElement;
 
   private _overlay: HTMLDivElement;
 
   private _helperContainer: HTMLDivElement | null;
+
+  private _helperElements: HelperElements | null = null;
 
   private _rightPlus: HTMLDivElement | null = null;
 
@@ -214,22 +242,17 @@ class HTMLTopicSelected {
   /**
    * Update colors based on topic variant
    */
-  private updateColors(): void {
-    // Check if topic still exists before updating colors
-    let variant: ThemeVariant;
-    let connectionColor: string;
-    try {
-      if (!this._topic || !this._topic.getModel()) {
-        // Topic has been removed - return without updating colors
-        return;
-      }
-      variant = this._topic.getThemeVariant();
-      connectionColor = this._topic.getConnectionColor(variant);
-    } catch (error) {
-      // Topic may have been removed - return without updating colors
-      return;
+  private updateColors(): boolean {
+    const topicColors = this.withTopic((topic) => {
+      const variant = topic.getThemeVariant();
+      const connectionColor = topic.getConnectionColor(variant);
+      return { variant, connectionColor };
+    });
+    if (!topicColors) {
+      return false;
     }
 
+    const { variant, connectionColor } = topicColors;
     // Border color: use connection color directly
     this._overlay.style.border = `2px solid ${connectionColor}`;
 
@@ -257,6 +280,7 @@ class HTMLTopicSelected {
 
     // Update helper text colors based on variant
     this.updateHelperTextColors(variant);
+    return true;
   }
 
   /**
@@ -267,97 +291,61 @@ class HTMLTopicSelected {
       return;
     }
 
-    // Find all key elements (Tab and Enter keys) - they have borderRadius: 4px
-    const keyElements = this._helperContainer.querySelectorAll('div') as NodeListOf<HTMLDivElement>;
-    const keys = Array.from(keyElements).filter(
-      (el) =>
-        el.style.borderRadius === '4px' &&
-        el.textContent &&
-        ['Tab', 'Enter'].includes(el.textContent),
-    );
+    if (!this._helperElements) {
+      return;
+    }
 
-    // Find all text elements (the "to create child" and "to create sibling" text) - they are spans
-    const textElements = this._helperContainer.querySelectorAll(
-      'span',
-    ) as NodeListOf<HTMLSpanElement>;
+    const { tabKey, tabText, enterKey, enterText } = this._helperElements;
+    const applyColors = (
+      key: HTMLDivElement,
+      text: HTMLSpanElement,
+      keyStyles: { backgroundColor: string; borderColor: string; color: string },
+      textColor: string,
+    ) => {
+      key.style.backgroundColor = keyStyles.backgroundColor;
+      key.style.borderColor = keyStyles.borderColor;
+      key.style.color = keyStyles.color;
+      text.style.color = textColor;
+    };
 
     if (variant === 'dark') {
-      // Dark mode: light text and dark backgrounds
-      keys.forEach((keyEl) => {
-        keyEl.style.backgroundColor = '#3a3a3a'; // Dark gray background
-        keyEl.style.borderColor = '#555'; // Slightly lighter border
-        keyEl.style.color = '#e0e0e0'; // Light text
-      });
-      textElements.forEach((textEl) => {
-        textEl.style.color = '#b0b0b0'; // Light gray text
-      });
+      applyColors(
+        tabKey,
+        tabText,
+        { backgroundColor: '#3a3a3a', borderColor: '#555', color: '#e0e0e0' },
+        '#b0b0b0',
+      );
+      applyColors(
+        enterKey,
+        enterText,
+        { backgroundColor: '#3a3a3a', borderColor: '#555', color: '#e0e0e0' },
+        '#b0b0b0',
+      );
     } else {
-      // Light mode: dark text and light backgrounds (default)
-      keys.forEach((keyEl) => {
-        keyEl.style.backgroundColor = '#f5f5f5'; // Light gray background
-        keyEl.style.borderColor = '#ddd'; // Light gray border
-        keyEl.style.color = '#333'; // Dark text
-      });
-      textElements.forEach((textEl) => {
-        textEl.style.color = '#666'; // Gray text
-      });
+      applyColors(
+        tabKey,
+        tabText,
+        { backgroundColor: '#f5f5f5', borderColor: '#ddd', color: '#333' },
+        '#666',
+      );
+      applyColors(
+        enterKey,
+        enterText,
+        { backgroundColor: '#f5f5f5', borderColor: '#ddd', color: '#333' },
+        '#666',
+      );
     }
   }
 
-  private updateOverlay(): void {
-    // Check if topic still exists and is valid before updating
-    let corners;
-    try {
-      if (!this._topic || !this._topic.getModel()) {
-        // Topic has been removed - hide overlay and return
-        if (this._overlay) {
-          this._overlay.style.display = 'none';
-        }
-        return;
-      }
-      corners = this._topic.getAbsoluteCornerCoordinates();
-      if (!corners) {
-        if (this._overlay) {
-          this._overlay.style.display = 'none';
-        }
-        return;
-      }
-    } catch (error) {
-      // Topic may have been removed - hide overlay and return
-      if (this._overlay) {
-        this._overlay.style.display = 'none';
-      }
-      return;
+  private computeOverlayGeometry(topic: Topic): OverlayGeometry | null {
+    const corners = topic.getAbsoluteCornerCoordinates();
+    if (!corners) {
+      return null;
     }
 
-    // Get orientation early - needed for helper text positioning and button behavior
-    let orientation: OrientationType;
-    let isVertical: boolean;
-    let isOnLeft: boolean;
-    try {
-      orientation = this._topic.getOrientation();
-      isVertical = orientation === 'vertical';
-      isOnLeft = this.isTopicOnLeftSide();
-    } catch (error) {
-      // Topic may have been removed during operation - hide overlay and return
-      if (this._overlay) {
-        this._overlay.style.display = 'none';
-      }
-      return;
-    }
-
-    // Update colors based on variant before showing overlay
-    try {
-      this.updateColors();
-    } catch (error) {
-      // Topic may have been removed during operation - hide overlay and return
-      if (this._overlay) {
-        this._overlay.style.display = 'none';
-      }
-      return;
-    }
-
-    this._overlay.style.display = 'block';
+    const orientation = topic.getOrientation();
+    const isVertical = orientation === 'vertical';
+    const isOnLeft = this.isTopicOnLeftSide();
 
     // Use ScreenManager's getContainerPosition for consistency
     const containerPosition = this._screenManager.getContainerPosition();
@@ -370,464 +358,238 @@ class HTMLTopicSelected {
 
     // Make overlay 5px bigger (2.5px on each side)
     const padding = 2.5;
-    // Vertical offset to move shadow up
-    const verticalOffset = 3; // Move shadow up by 3px
-    // Horizontal offset to center the overlay properly on the topic
-    // The bounding box might include visual offsets (like borders or outer shapes),
-    // so we adjust to the left to better center on the visible topic shape
-    const horizontalOffset = 2; // Shift overlay 2px to the left for better centering
+    const verticalOffset = 3;
+    const horizontalOffset = 2;
     const overlayWidth = width + padding * 2;
     const overlayHeight = height + padding * 2;
     const overlayLeft = left - padding - horizontalOffset;
     const overlayTop = top - padding - verticalOffset;
-    const overlayRight = overlayLeft + overlayWidth;
 
-    // Calculate actual topic shape boundaries (for button positioning)
-    // Topic shape: left, top, width, height (from corners)
-    const topicLeft = left;
-    const topicRight = left + width;
-    const topicBottom = top + height;
-    const topicCenterX = left + width / 2;
-    const topicCenterY = top + height / 2;
+    return {
+      overlayLeft,
+      overlayTop,
+      overlayWidth,
+      overlayHeight,
+      overlayRight: overlayLeft + overlayWidth,
+      topicLeft: left,
+      topicRight: left + width,
+      topicBottom: top + height,
+      topicCenterX: left + width / 2,
+      topicCenterY: top + height / 2,
+      orientation,
+      isVertical,
+      isOnLeft,
+    };
+  }
 
-    // Round to avoid sub-pixel rendering issues
+  private updateOverlay(): void {
+    const geometry = this.withTopic((topic) => this.computeOverlayGeometry(topic));
+    if (!geometry) {
+      if (this._overlay) {
+        this._overlay.style.display = 'none';
+      }
+      return;
+    }
+
+    const hasChildren = this.withTopic((topic) => topic.getChildren().length > 0) ?? false;
+
+    const colorsUpdated = this.updateColors();
+    if (colorsUpdated === false) {
+      if (this._overlay) {
+        this._overlay.style.display = 'none';
+      }
+      return;
+    }
+
+    this._overlay.style.display = 'block';
+    this.applyOverlayFrame(geometry);
+    this.updateHelperBox(geometry, hasChildren);
+    this.ensurePlusButtons();
+    this.updatePlusButtons(geometry, hasChildren);
+  }
+
+  private applyOverlayFrame({
+    overlayLeft,
+    overlayTop,
+    overlayWidth,
+    overlayHeight,
+  }: OverlayGeometry): void {
     this._overlay.style.left = `${Math.round(overlayLeft)}px`;
     this._overlay.style.top = `${Math.round(overlayTop)}px`;
     this._overlay.style.width = `${Math.round(overlayWidth)}px`;
     this._overlay.style.height = `${Math.round(overlayHeight)}px`;
 
-    // Apply border-radius to two opposite corners only
     const minDimension = Math.min(overlayWidth, overlayHeight);
     const borderRadiusValue = Math.max(15, minDimension * 0.2);
     const borderRadius = `${borderRadiusValue}px`;
 
-    // Reset all corners
     this._overlay.style.borderTopLeftRadius = '0px';
     this._overlay.style.borderTopRightRadius = '0px';
     this._overlay.style.borderBottomLeftRadius = '0px';
     this._overlay.style.borderBottomRightRadius = '0px';
 
-    // Apply rounded corners to top-left and bottom-right (opposite corners)
     this._overlay.style.borderTopLeftRadius = borderRadius;
     this._overlay.style.borderBottomRightRadius = borderRadius;
-
-    // Update or create helper box
-    // Check if helper container already exists (stored reference or in DOM) to prevent duplicates
-    const existingHelper =
-      this._helperContainer ||
-      (this._overlay.parentElement?.querySelector(
-        '[style*="flex-direction: column"]',
-      ) as HTMLDivElement);
-    if (!existingHelper) {
-      this.createHelperBox(
-        overlayLeft,
-        overlayTop,
-        overlayWidth,
-        overlayHeight,
-        overlayRight,
-        isOnLeft,
-      );
-
-      // Position plus buttons when creating helper box
-      // Buttons should be equidistant from the actual topic shape (not the overlay)
-      // Distance from topic shape edge to button center (left/right increased by 20% more: 15px * 1.2 = 18px)
-      // Bottom button distance reduced by 20%: 8px * 0.8 = 6.4px, rounded to 6px
-      const plusButtonDistanceLeftRight = 18; // Distance from topic shape edge to button center (for left/right buttons, increased by 20% more)
-      const plusButtonDistanceBottom = 6; // Distance from topic shape edge to button center (for bottom button, reduced by 20%)
-
-      if (this._rightPlus) {
-        // Position button center at desired location, then use transform to center it
-        if (isOnLeft) {
-          // Topic is on left, button goes on left side of topic
-          // Position button center 18px from topic left edge (increased by 20% more)
-          this._rightPlus.style.left = `${Math.round(topicLeft - plusButtonDistanceLeftRight)}px`;
-          this._rightPlus.style.right = 'auto';
-        } else {
-          // Topic is on right, button goes on right side of topic
-          // Position button center 18px from topic right edge (increased by 20% more)
-          this._rightPlus.style.left = `${Math.round(topicRight + plusButtonDistanceLeftRight)}px`;
-          this._rightPlus.style.right = 'auto';
-        }
-        // Center button vertically at middle of topic (not overlay)
-        this._rightPlus.style.top = `${Math.round(topicCenterY)}px`;
-        // Use transform to center button horizontally and vertically, then scale to 0
-        this._rightPlus.style.transform = 'translate(-50%, -50%) scale(0)';
-      }
-      if (this._bottomPlus) {
-        // Bottom button: always in the middle, below the topic
-        // Position button center at horizontal center of topic, 6px below topic bottom (reduced by 20%)
-        this._bottomPlus.style.left = `${Math.round(topicCenterX)}px`;
-        this._bottomPlus.style.top = `${Math.round(topicBottom + plusButtonDistanceBottom)}px`;
-        // Use transform to center button horizontally
-        this._bottomPlus.style.transform = 'translateX(-50%) scale(0)';
-      }
-    } else {
-      // Update existing helper container position based on orientation
-      // orientation and isVertical are already declared above
-
-      if (isVertical) {
-        // Vertical layout: position helper text at bottom, left-aligned, stacked vertically
-        existingHelper.style.flexDirection = 'column';
-        existingHelper.style.gap = '8px';
-        existingHelper.style.alignItems = 'flex-start'; // Left-align items
-        existingHelper.style.justifyContent = 'flex-start'; // Start from top
-        // Position at bottom of topic, below the bottom "+" button, left-aligned with topic
-        const plusButtonDistanceBottom = 6; // Distance from topic to bottom button
-        const plusButtonRadius = 10; // Half of button width (20px / 2)
-        const gapFromPlus = 13; // Gap from button to text
-        const topicBottom = overlayTop + overlayHeight; // Bottom of overlay
-        const bottomButtonBottom = topicBottom + plusButtonDistanceBottom + plusButtonRadius; // Bottom edge of button
-        existingHelper.style.top = `${bottomButtonBottom + gapFromPlus}px`;
-        existingHelper.style.left = `${overlayLeft}px`; // Left-align with topic
-        existingHelper.style.transform = 'none'; // No transform - use left alignment
-        existingHelper.style.right = 'auto';
-      } else {
-        // Horizontal layout: position on left or right side based on topic position
-        existingHelper.style.flexDirection = 'column';
-        existingHelper.style.gap = '8px';
-        existingHelper.style.alignItems = isOnLeft ? 'flex-end' : 'flex-start';
-        existingHelper.style.top = `${overlayTop}px`;
-        existingHelper.style.transform = 'none';
-
-        // Constants for positioning - button center is equidistant from overlay edges
-        const plusButtonDistanceConst = 12; // Distance from overlay edge to "+" center
-        const plusButtonRadius = 10; // Half of button width (20px / 2)
-        const gapFromPlus = 13; // 13px distance from "+" button (3px + 10px additional)
-        const textStartFromOverlayEdge = plusButtonDistanceConst + plusButtonRadius + gapFromPlus; // 12 + 10 + 13 = 35px
-
-        if (isOnLeft) {
-          // Helper text is on the left side - position 13px from left "+" button outer edge
-          // "+" button center is at: overlayLeft - 12px
-          // "+" button left edge is at: overlayLeft - 12px - 10px = overlayLeft - 22px
-          // Text container RIGHT edge should be 13px to the left of button left edge
-          // Since text is right-aligned (row-reverse), we position from right edge
-          const containerPosition = this._screenManager.getContainerPosition();
-          const containerRight =
-            containerPosition.left + (this._containerElement?.clientWidth || 0);
-          const buttonLeftEdge = overlayLeft - plusButtonDistanceConst - plusButtonRadius; // overlayLeft - 22px
-          // Text right edge = button left edge - 13px gap
-          const textRightEdge = buttonLeftEdge - gapFromPlus;
-          existingHelper.style.right = `${containerRight - textRightEdge}px`;
-          existingHelper.style.left = 'auto';
-        } else {
-          // Helper text is on the right side - position 13px from right "+" button outer edge
-          // "+" button center is at: overlayRight + 12px
-          // "+" button right edge is at: overlayRight + 12px + 10px = overlayRight + 22px
-          // Text container's LEFT edge should be at: overlay right edge + 35px (to ensure no overlap)
-          existingHelper.style.left = `${overlayRight + textStartFromOverlayEdge}px`;
-          existingHelper.style.right = 'auto';
-        }
-      }
-
-      // Check if topic has children
-      let hasChildren: boolean;
-      try {
-        if (!this._topic || !this._topic.getModel()) {
-          // Topic has been removed - hide overlay and return
-          if (this._overlay) {
-            this._overlay.style.display = 'none';
-          }
-          return;
-        }
-        hasChildren = this._topic.getChildren().length > 0;
-      } catch (error) {
-        // Topic may have been removed - hide overlay and return
-        if (this._overlay) {
-          this._overlay.style.display = 'none';
-        }
-        return;
-      }
-
-      // Update helper text container visibility based on whether topic has children
-      existingHelper.style.display = hasChildren ? 'none' : 'flex';
-
-      // Update text alignment for helper text elements based on orientation and side (only if visible)
-      if (!hasChildren) {
-        if (isVertical) {
-          // Vertical layout: left-aligned, stacked vertically
-          existingHelper.style.alignItems = 'flex-start'; // Left-align items
-          existingHelper.style.justifyContent = 'flex-start'; // Start from top
-          const helperElements = existingHelper.querySelectorAll('[style*="display: flex"]');
-          helperElements.forEach((element) => {
-            const helperElem = element as HTMLDivElement;
-            // In vertical layout, text items are left-aligned and use normal row direction
-            helperElem.style.justifyContent = 'flex-start';
-            helperElem.style.flexDirection = 'row';
-            helperElem.style.textAlign = 'left';
-          });
-        } else {
-          // Horizontal layout: align text based on side
-          existingHelper.style.alignItems = isOnLeft ? 'flex-end' : 'flex-start';
-          const helperElements = existingHelper.querySelectorAll('[style*="display: flex"]');
-          helperElements.forEach((element) => {
-            const helperElem = element as HTMLDivElement;
-            if (isOnLeft) {
-              helperElem.style.justifyContent = 'flex-end';
-              helperElem.style.flexDirection = 'row-reverse';
-              helperElem.style.textAlign = 'right';
-            } else {
-              helperElem.style.justifyContent = 'flex-start';
-              helperElem.style.flexDirection = 'row';
-              helperElem.style.textAlign = 'left';
-            }
-          });
-        }
-      }
-
-      // Calculate actual topic shape boundaries (for button positioning)
-      // Topic shape: left, top, width, height (from corners)
-      const topicLeft = left;
-      const topicRight = left + width;
-      const topicBottom = top + height;
-      const topicCenterX = left + width / 2;
-      const topicCenterY = top + height / 2;
-
-      // Update plus buttons position and visibility
-      // orientation and isVertical are already declared at the top of updateOverlay()
-      // Right/Left button: positioned on the side opposite to where helper text is shown
-      // Buttons should be equidistant from the actual topic shape (not the overlay)
-      // Distance from topic shape edge to button center (left/right increased by 20% more: 15px * 1.2 = 18px)
-      // Bottom button distance reduced by 20%: 8px * 0.8 = 6.4px, rounded to 6px
-      const plusButtonDistanceBottom = 6; // Distance from topic shape edge to button center (for bottom button, reduced by 20%)
-      const plusButtonDistanceLeftRight = 18; // Distance from topic shape edge to button center (for left/right buttons, increased by 20% more)
-
-      if (this._rightPlus) {
-        // Position button center at desired location, then use transform to center it
-        if (isOnLeft) {
-          // Topic is on left, button goes on left side of topic
-          // Position button center 18px from topic left edge (increased by 20% more)
-          this._rightPlus.style.left = `${Math.round(topicLeft - plusButtonDistanceLeftRight)}px`;
-          this._rightPlus.style.right = 'auto';
-        } else {
-          // Topic is on right, button goes on right side of topic
-          // Position button center 18px from topic right edge (increased by 20% more)
-          this._rightPlus.style.left = `${Math.round(topicRight + plusButtonDistanceLeftRight)}px`;
-          this._rightPlus.style.right = 'auto';
-        }
-        // Center button vertically at middle of topic (not overlay)
-        this._rightPlus.style.top = `${Math.round(topicCenterY)}px`;
-        // Use transform to center button horizontally and vertically
-        this._rightPlus.style.transform = 'translate(-50%, -50%)';
-        // Visibility: In horizontal layout, hide if has children (creates child)
-        // In vertical layout, always show (creates sibling)
-        this._rightPlus.style.display = isVertical || !hasChildren ? 'flex' : 'none';
-        this._rightPlus.style.pointerEvents = isVertical || !hasChildren ? 'auto' : 'none';
-      }
-      if (this._bottomPlus) {
-        // Bottom button: always in the middle, below the topic
-        // Position button center at horizontal center of topic, 6px below topic bottom (reduced by 20%)
-        this._bottomPlus.style.left = `${Math.round(topicCenterX)}px`;
-        this._bottomPlus.style.top = `${Math.round(topicBottom + plusButtonDistanceBottom)}px`;
-        // Use transform to center button horizontally
-        this._bottomPlus.style.transform = 'translateX(-50%)';
-        // Visibility: In horizontal layout, always show (creates sibling)
-        // In vertical layout, hide if has children (creates child)
-        this._bottomPlus.style.display = !isVertical || !hasChildren ? 'flex' : 'none';
-        this._bottomPlus.style.pointerEvents = !isVertical || !hasChildren ? 'auto' : 'none';
-      }
-    }
   }
 
-  private createHelperBox(
-    left: number,
-    top: number,
-    width: number,
-    height: number,
-    right: number,
-    isOnLeft: boolean,
+  private ensureHelperElements(): HelperElements | null {
+    if (this._helperElements) {
+      return this._helperElements;
+    }
+
+    if (!this._overlayContainer) {
+      return null;
+    }
+
+    const helperContainer = document.createElement('div');
+    helperContainer.style.position = 'absolute';
+    helperContainer.style.pointerEvents = 'none';
+    helperContainer.style.zIndex = '1000';
+    helperContainer.style.transition = 'none';
+    helperContainer.style.display = 'flex';
+    helperContainer.style.flexDirection = 'column';
+    helperContainer.style.gap = '8px';
+    helperContainer.style.alignItems = 'flex-start';
+    helperContainer.style.justifyContent = 'flex-start';
+
+    const createHelperRow = () => {
+      const row = document.createElement('div');
+      row.style.display = 'flex';
+      row.style.alignItems = 'center';
+      row.style.gap = '8px';
+      row.style.justifyContent = 'flex-start';
+      row.style.flexDirection = 'row';
+      row.style.textAlign = 'left';
+      return row;
+    };
+
+    const createKey = (label: string) => {
+      const key = document.createElement('div');
+      key.textContent = label;
+      key.style.padding = '4px 8px';
+      key.style.border = '1px solid';
+      key.style.borderRadius = '4px';
+      key.style.fontSize = '12px';
+      key.style.fontFamily = 'Arial, sans-serif';
+      key.style.display = 'flex';
+      key.style.alignItems = 'center';
+      key.style.justifyContent = 'center';
+      key.style.lineHeight = '1';
+      return key;
+    };
+
+    const createText = (textContent: string) => {
+      const text = document.createElement('span');
+      text.textContent = textContent;
+      text.style.fontSize = '14px';
+      text.style.fontFamily = 'Arial, sans-serif';
+      text.style.display = 'flex';
+      text.style.alignItems = 'center';
+      text.style.lineHeight = '1';
+      return text;
+    };
+
+    const tabRow = createHelperRow();
+    const tabKey = createKey('Tab');
+    const tabText = createText('to create child');
+    tabRow.appendChild(tabKey);
+    tabRow.appendChild(tabText);
+
+    const enterRow = createHelperRow();
+    const enterKey = createKey('Enter');
+    const enterText = createText('to create sibling');
+    enterRow.appendChild(enterKey);
+    enterRow.appendChild(enterText);
+
+    helperContainer.appendChild(tabRow);
+    helperContainer.appendChild(enterRow);
+    this._overlayContainer.appendChild(helperContainer);
+
+    this._helperContainer = helperContainer;
+    this._helperElements = {
+      container: helperContainer,
+      tabRow,
+      tabKey,
+      tabText,
+      enterRow,
+      enterKey,
+      enterText,
+    };
+
+    const variant = this.withTopic((topic) => topic.getThemeVariant());
+    if (variant) {
+      this.updateHelperTextColors(variant);
+    }
+
+    return this._helperElements;
+  }
+
+  private setHelperRowLayout(
+    row: HTMLDivElement,
+    direction: 'row' | 'row-reverse',
+    justify: 'flex-start' | 'flex-end',
+    textAlign: 'left' | 'right',
   ): void {
-    // Check if topic still exists before creating helper box
-    let hasChildren: boolean;
-    let orientation: OrientationType;
-    let isVertical: boolean;
-    let variant: ThemeVariant = 'light';
-    try {
-      if (!this._topic || !this._topic.getModel()) {
-        // Topic has been removed - return without creating helper box
-        return;
-      }
-      hasChildren = this._topic.getChildren().length > 0;
-      orientation = this._topic.getOrientation();
-      isVertical = orientation === 'vertical';
-      variant = this._topic.getThemeVariant();
-    } catch (error) {
-      // Topic may have been removed - return without creating helper box
+    row.style.flexDirection = direction;
+    row.style.justifyContent = justify;
+    row.style.textAlign = textAlign;
+  }
+
+  private updateHelperBox(geometry: OverlayGeometry, hasChildren: boolean): void {
+    const helper = this.ensureHelperElements();
+    if (!helper) {
       return;
     }
 
-    // Helper text container - position based on orientation
-    // Horizontal: on left or right side, Vertical: at bottom
-    const helperContainer = document.createElement('div');
-    helperContainer.style.position = 'absolute';
-    helperContainer.style.display = hasChildren ? 'none' : 'flex'; // Hide if topic has children
-    helperContainer.style.pointerEvents = 'none';
-    helperContainer.style.zIndex = '1000';
-    helperContainer.style.transition = 'none'; // No fade animation - remove instantly
+    const { container, tabRow, enterRow } = helper;
+    container.style.display = hasChildren ? 'none' : 'flex';
 
-    if (isVertical) {
-      // Vertical layout: position helper text at bottom, left-aligned, stacked vertically
-      helperContainer.style.flexDirection = 'column'; // Vertical layout - Tab and Enter stacked
-      helperContainer.style.gap = '8px';
-      helperContainer.style.alignItems = 'flex-start'; // Left-align items
-      helperContainer.style.justifyContent = 'flex-start'; // Start from top
-      // Position at bottom of topic, below the bottom "+" button, left-aligned with topic
-      const plusButtonDistanceBottom = 6; // Distance from topic to bottom button
-      const plusButtonRadius = 10; // Half of button width (20px / 2)
-      const gapFromPlus = 13; // Gap from button to text
-      const bottomButtonBottom = top + height + plusButtonDistanceBottom + plusButtonRadius; // Bottom edge of button
-      helperContainer.style.top = `${bottomButtonBottom + gapFromPlus}px`;
-      helperContainer.style.left = `${left}px`; // Left-align with topic
-      helperContainer.style.transform = 'none'; // No transform - use left alignment
-      helperContainer.style.right = 'auto';
+    if (hasChildren) {
+      return;
+    }
+
+    const plusButtonRadius = 10;
+    const plusButtonDistanceBottom = 6;
+    const plusButtonDistanceLeftRight = 18;
+    const helperHorizontalGap = 20;
+    const helperVerticalGap = 20;
+
+    if (geometry.isVertical) {
+      container.style.flexDirection = 'column';
+      container.style.alignItems = 'flex-start';
+      container.style.justifyContent = 'flex-start';
+      const topicBottom = geometry.overlayTop + geometry.overlayHeight;
+      const bottomButtonBottom = topicBottom + plusButtonDistanceBottom + plusButtonRadius;
+      container.style.top = `${bottomButtonBottom + helperVerticalGap}px`;
+      container.style.left = `${geometry.overlayLeft}px`;
+      container.style.right = 'auto';
+      container.style.transform = 'none';
+      this.setHelperRowLayout(tabRow, 'row', 'flex-start', 'left');
+      this.setHelperRowLayout(enterRow, 'row', 'flex-start', 'left');
     } else {
-      // Horizontal layout: position on left or right side based on topic position
-      helperContainer.style.flexDirection = 'column';
-      helperContainer.style.gap = '8px';
-      helperContainer.style.alignItems = isOnLeft ? 'flex-end' : 'flex-start'; // Right-align items when on left, left-align when on right
-      helperContainer.style.top = `${top}px`;
-
-      // Position helper text: 13px distance from "+" button outer edge (3px base + 10px additional)
-      // "+" button center is positioned 12px from overlay edge (equidistant on both sides)
-      // "+" button is 20px wide (radius = 10px), so its outer edge is at 12px + 10px = 22px from overlay edge
-      // We want 13px gap after the "+" button, so text starts at 22px + 13px = 35px from overlay edge
-      const plusButtonDistance = 12; // Distance from overlay edge to "+" center (equal on both sides)
-      const plusButtonRadius = 10; // Half of button width (20px / 2)
-      const gapFromPlus = 13; // 13px distance from "+" button (3px + 10px additional)
-      const textStartFromOverlayEdge = plusButtonDistance + plusButtonRadius + gapFromPlus; // 12 + 10 + 13 = 35px
-
-      if (isOnLeft) {
-        // Helper text is on the left side - position 13px from left "+" button outer edge
-        // "+" button center is at: left - 12px
-        // "+" button left edge is at: left - 12px - 10px = left - 22px
-        // Text container RIGHT edge should be 13px to the left of button left edge
-        // Since text is right-aligned (row-reverse), we position from right edge
-        const containerPosition = this._screenManager.getContainerPosition();
-        const containerRight = containerPosition.left + (this._containerElement?.clientWidth || 0);
-        const buttonLeftEdge = left - plusButtonDistance - plusButtonRadius; // left - 22px
-        // Text right edge = button left edge - 13px gap
-        const textRightEdge = buttonLeftEdge - gapFromPlus;
-        helperContainer.style.right = `${containerRight - textRightEdge}px`;
-        helperContainer.style.left = 'auto';
-        helperContainer.style.transform = 'none';
+      container.style.flexDirection = 'column';
+      container.style.alignItems = geometry.isOnLeft ? 'flex-end' : 'flex-start';
+      container.style.justifyContent = 'flex-start';
+      container.style.top = `${geometry.overlayTop}px`;
+      const helperOffset = plusButtonDistanceLeftRight + plusButtonRadius + helperHorizontalGap;
+      if (geometry.isOnLeft) {
+        container.style.left = `${geometry.topicLeft - helperOffset}px`;
+        container.style.right = 'auto';
+        container.style.transform = 'translateX(-100%)';
       } else {
-        // Helper text is on the right side - position 13px from right "+" button outer edge
-        // "+" button center is at: right + 12px
-        // "+" button right edge is at: right + 12px + 10px = right + 22px
-        // Text container's LEFT edge should be at: overlay right edge + 35px (to ensure no overlap)
-        // Using left positioning ensures the entire text container is to the right of the topic
-        helperContainer.style.left = `${right + textStartFromOverlayEdge}px`;
-        helperContainer.style.right = 'auto';
-        helperContainer.style.transform = 'none';
+        container.style.left = `${geometry.topicRight + helperOffset}px`;
+        container.style.right = 'auto';
+        container.style.transform = 'none';
       }
+      const direction = geometry.isOnLeft ? 'row-reverse' : 'row';
+      const justify = geometry.isOnLeft ? 'flex-end' : 'flex-start';
+      const textAlign = geometry.isOnLeft ? 'right' : 'left';
+      this.setHelperRowLayout(tabRow, direction, justify, textAlign);
+      this.setHelperRowLayout(enterRow, direction, justify, textAlign);
     }
+  }
 
-    // Only create helper text if topic has no children
-    if (!hasChildren) {
-      // Tab to create child
-      const tabHelper = document.createElement('div');
-      tabHelper.style.display = 'flex';
-      tabHelper.style.alignItems = 'center';
-      tabHelper.style.gap = '8px';
-
-      if (isVertical) {
-        // Vertical layout: center-aligned, normal row direction
-        tabHelper.style.justifyContent = 'flex-start';
-        tabHelper.style.flexDirection = 'row';
-        tabHelper.style.textAlign = 'left';
-      } else {
-        // Horizontal layout: align text based on side: right-aligned when on left, left-aligned when on right
-        if (isOnLeft) {
-          tabHelper.style.justifyContent = 'flex-end';
-          tabHelper.style.flexDirection = 'row-reverse';
-          tabHelper.style.textAlign = 'right';
-        } else {
-          tabHelper.style.justifyContent = 'flex-start';
-          tabHelper.style.flexDirection = 'row';
-          tabHelper.style.textAlign = 'left';
-        }
-      }
-
-      const tabKey = document.createElement('div');
-      tabKey.textContent = 'Tab';
-      tabKey.style.padding = '4px 8px';
-      tabKey.style.border = '1px solid';
-      tabKey.style.borderRadius = '4px';
-      tabKey.style.fontSize = '12px';
-      tabKey.style.fontFamily = 'Arial, sans-serif';
-      tabKey.style.display = 'flex';
-      tabKey.style.alignItems = 'center';
-      tabKey.style.justifyContent = 'center';
-      tabKey.style.lineHeight = '1';
-
-      const tabText = document.createElement('span');
-      tabText.textContent = 'to create child';
-      tabText.style.fontSize = '14px';
-      tabText.style.fontFamily = 'Arial, sans-serif';
-      tabText.style.display = 'flex';
-      tabText.style.alignItems = 'center';
-      tabText.style.lineHeight = '1';
-
-      tabHelper.appendChild(tabKey);
-      tabHelper.appendChild(tabText);
-      helperContainer.appendChild(tabHelper);
-
-      // Enter to create sibling
-      const enterHelper = document.createElement('div');
-      enterHelper.style.display = 'flex';
-      enterHelper.style.alignItems = 'center';
-      enterHelper.style.gap = '8px';
-
-      if (isVertical) {
-        // Vertical layout: center-aligned, normal row direction
-        enterHelper.style.justifyContent = 'flex-start';
-        enterHelper.style.flexDirection = 'row';
-        enterHelper.style.textAlign = 'left';
-      } else {
-        // Horizontal layout: align text based on side: right-aligned when on left, left-aligned when on right
-        if (isOnLeft) {
-          enterHelper.style.justifyContent = 'flex-end';
-          enterHelper.style.flexDirection = 'row-reverse';
-          enterHelper.style.textAlign = 'right';
-        } else {
-          enterHelper.style.justifyContent = 'flex-start';
-          enterHelper.style.flexDirection = 'row';
-          enterHelper.style.textAlign = 'left';
-        }
-      }
-
-      const enterKey = document.createElement('div');
-      enterKey.textContent = 'Enter';
-      enterKey.style.padding = '4px 8px';
-      enterKey.style.border = '1px solid';
-      enterKey.style.borderRadius = '4px';
-      enterKey.style.fontSize = '12px';
-      enterKey.style.fontFamily = 'Arial, sans-serif';
-      enterKey.style.display = 'flex';
-      enterKey.style.alignItems = 'center';
-      enterKey.style.justifyContent = 'center';
-      enterKey.style.lineHeight = '1';
-
-      const enterText = document.createElement('span');
-      enterText.textContent = 'to create sibling';
-      enterText.style.fontSize = '14px';
-      enterText.style.fontFamily = 'Arial, sans-serif';
-      enterText.style.display = 'flex';
-      enterText.style.alignItems = 'center';
-      enterText.style.lineHeight = '1';
-
-      enterHelper.appendChild(enterKey);
-      enterHelper.appendChild(enterText);
-      helperContainer.appendChild(enterHelper);
-    }
-
-    // Orientation and isVertical are already declared at the start of createHelperBox
-    // Plus icon at middle right of overlay (use existing hasChildren variable)
-    // 20px circle with larger 18px "+" symbol for better visibility
-    // Append to overlay container instead of overlay so clicks work
-    // Position will be set in updateOverlay() or createHelperBox() to use correct overlay dimensions
-
-    // Check if plus buttons already exist - prevent duplicates
-    // If buttons exist but aren't in the DOM, clean up reference
+  private ensurePlusButtons(): void {
     if (this._rightPlus && !this._rightPlus.parentElement) {
       this._rightPlus = null;
     }
@@ -835,158 +597,119 @@ class HTMLTopicSelected {
       this._bottomPlus = null;
     }
 
-    // Only create if they don't exist (either never created or cleaned up)
     if (!this._rightPlus) {
-      this._rightPlus = document.createElement('div');
-      this._rightPlus.textContent = '+';
-      this._rightPlus.style.position = 'absolute';
-      // Initial position - will be updated in updateOverlay()
-      this._rightPlus.style.left = '0px';
-      this._rightPlus.style.top = '0px';
-      this._rightPlus.style.width = '20px';
-      this._rightPlus.style.height = '20px';
-      this._rightPlus.style.borderRadius = '50%';
-      // Color will be set by updateColors() method
-      this._rightPlus.style.color = 'white';
-      this._rightPlus.style.display = 'flex';
-      this._rightPlus.style.alignItems = 'center';
-      this._rightPlus.style.justifyContent = 'center';
-      this._rightPlus.style.fontSize = '16px';
-      this._rightPlus.style.fontWeight = 'bold';
-      this._rightPlus.style.lineHeight = '1';
-      this._rightPlus.style.padding = '0';
-      this._rightPlus.style.margin = '0';
-      this._rightPlus.style.boxSizing = 'border-box';
-      this._rightPlus.style.textAlign = 'center';
-      this._rightPlus.style.pointerEvents = 'auto'; // Make clickable
-      this._rightPlus.style.cursor = 'pointer';
-      this._rightPlus.style.zIndex = '1001';
-      // Transform will be set based on position (left or right) in updateOverlay()
-      this._rightPlus.style.transformOrigin = 'center center';
-      this._rightPlus.style.opacity = '0';
-      this._rightPlus.style.fontSize = '0px';
-      this._rightPlus.style.transition =
-        'opacity 0.5s ease, transform 0.5s ease, font-size 0.5s ease';
-      // Visibility: In horizontal layout, hide if has children (creates child)
-      // In vertical layout, always show (creates sibling)
-      this._rightPlus.style.display = isVertical || !hasChildren ? 'flex' : 'none';
-      // Disable pointer events when hidden to allow clicks through to topic
-      this._rightPlus.style.pointerEvents = isVertical || !hasChildren ? 'auto' : 'none';
-
-      // Add click handler - behavior depends on orientation
-      // Horizontal: creates child, Vertical: creates sibling
-      this._rightPlus.addEventListener('click', (e) => {
-        e.stopPropagation();
-        e.preventDefault();
+      const rightPlus = document.createElement('div');
+      rightPlus.textContent = '+';
+      rightPlus.style.position = 'absolute';
+      rightPlus.style.left = '0px';
+      rightPlus.style.top = '0px';
+      rightPlus.style.width = '20px';
+      rightPlus.style.height = '20px';
+      rightPlus.style.borderRadius = '50%';
+      rightPlus.style.color = 'white';
+      rightPlus.style.display = 'flex';
+      rightPlus.style.alignItems = 'center';
+      rightPlus.style.justifyContent = 'center';
+      rightPlus.style.fontSize = '16px';
+      rightPlus.style.fontWeight = 'bold';
+      rightPlus.style.lineHeight = '1';
+      rightPlus.style.padding = '0';
+      rightPlus.style.margin = '0';
+      rightPlus.style.boxSizing = 'border-box';
+      rightPlus.style.textAlign = 'center';
+      rightPlus.style.pointerEvents = 'auto';
+      rightPlus.style.cursor = 'pointer';
+      rightPlus.style.zIndex = '1001';
+      rightPlus.style.transformOrigin = 'center center';
+      rightPlus.addEventListener('click', (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        const isVertical =
+          this.withTopic((topic) => topic.getOrientation() === 'vertical') ?? false;
         if (isVertical) {
           this._createSibling();
         } else {
           this._createChild();
         }
       });
-
-      // Append to main container so clicks work (container has pointerEvents: auto)
-      this._containerElement.appendChild(this._rightPlus);
+      this._containerElement.appendChild(rightPlus);
+      this._rightPlus = rightPlus;
+      this.updateColors();
     }
 
-    // Plus icon at bottom middle of overlay
-    // 20px circle with larger 18px "+" symbol for better visibility
-    // Append to overlay container instead of overlay so clicks work
-    // Position will be set in updateOverlay() or createHelperBox() to use correct overlay dimensions
     if (!this._bottomPlus) {
-      this._bottomPlus = document.createElement('div');
-      this._bottomPlus.textContent = '+';
-      this._bottomPlus.style.position = 'absolute';
-      // Initial position - will be updated in updateOverlay()
-      this._bottomPlus.style.left = '0px';
-      this._bottomPlus.style.top = '0px';
-      this._bottomPlus.style.width = '20px';
-      this._bottomPlus.style.height = '20px';
-      this._bottomPlus.style.borderRadius = '50%';
-      // Color will be set by updateColors() method
-      this._bottomPlus.style.color = 'white';
-      this._bottomPlus.style.display = 'flex';
-      this._bottomPlus.style.alignItems = 'center';
-      this._bottomPlus.style.justifyContent = 'center';
-      this._bottomPlus.style.fontSize = '16px';
-      this._bottomPlus.style.fontWeight = 'bold';
-      this._bottomPlus.style.lineHeight = '1';
-      this._bottomPlus.style.padding = '0';
-      this._bottomPlus.style.margin = '0';
-      this._bottomPlus.style.boxSizing = 'border-box';
-      this._bottomPlus.style.textAlign = 'center';
-      this._bottomPlus.style.pointerEvents = 'auto'; // Make clickable
-      this._bottomPlus.style.cursor = 'pointer';
-      this._bottomPlus.style.zIndex = '1001';
-      this._bottomPlus.style.transform = 'translateX(-50%) scale(0)';
-      this._bottomPlus.style.transformOrigin = 'center center';
-      this._bottomPlus.style.opacity = '0';
-      this._bottomPlus.style.fontSize = '0px';
-      this._bottomPlus.style.transition =
-        'opacity 0.5s ease, transform 0.5s ease, font-size 0.5s ease';
-      // Visibility: In horizontal layout, always show (creates sibling)
-      // In vertical layout, hide if has children (creates child)
-      this._bottomPlus.style.display = !isVertical || !hasChildren ? 'flex' : 'none';
-      this._bottomPlus.style.pointerEvents = !isVertical || !hasChildren ? 'auto' : 'none';
-
-      // Add click handler - behavior depends on orientation
-      // Horizontal: creates sibling, Vertical: creates child
-      this._bottomPlus.addEventListener('click', (e) => {
-        e.stopPropagation();
-        e.preventDefault();
+      const bottomPlus = document.createElement('div');
+      bottomPlus.textContent = '+';
+      bottomPlus.style.position = 'absolute';
+      bottomPlus.style.left = '0px';
+      bottomPlus.style.top = '0px';
+      bottomPlus.style.width = '20px';
+      bottomPlus.style.height = '20px';
+      bottomPlus.style.borderRadius = '50%';
+      bottomPlus.style.color = 'white';
+      bottomPlus.style.display = 'flex';
+      bottomPlus.style.alignItems = 'center';
+      bottomPlus.style.justifyContent = 'center';
+      bottomPlus.style.fontSize = '16px';
+      bottomPlus.style.fontWeight = 'bold';
+      bottomPlus.style.lineHeight = '1';
+      bottomPlus.style.padding = '0';
+      bottomPlus.style.margin = '0';
+      bottomPlus.style.boxSizing = 'border-box';
+      bottomPlus.style.textAlign = 'center';
+      bottomPlus.style.pointerEvents = 'auto';
+      bottomPlus.style.cursor = 'pointer';
+      bottomPlus.style.zIndex = '1001';
+      bottomPlus.style.transformOrigin = 'center center';
+      bottomPlus.addEventListener('click', (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        const isVertical =
+          this.withTopic((topic) => topic.getOrientation() === 'vertical') ?? false;
         if (isVertical) {
           this._createChild();
         } else {
           this._createSibling();
         }
       });
+      this._containerElement.appendChild(bottomPlus);
+      this._bottomPlus = bottomPlus;
+      this.updateColors();
+    }
+  }
 
-      // Append to main container so clicks work (container has pointerEvents: auto)
-      this._containerElement.appendChild(this._bottomPlus);
+  private updatePlusButtons(geometry: OverlayGeometry, hasChildren: boolean): void {
+    const plusButtonDistanceLeftRight = 18;
+    const plusButtonDistanceBottom = 6;
+
+    if (this._rightPlus) {
+      if (geometry.isOnLeft) {
+        this._rightPlus.style.left = `${Math.round(geometry.topicLeft - plusButtonDistanceLeftRight)}px`;
+        this._rightPlus.style.right = 'auto';
+      } else {
+        this._rightPlus.style.left = `${Math.round(geometry.topicRight + plusButtonDistanceLeftRight)}px`;
+        this._rightPlus.style.right = 'auto';
+      }
+      this._rightPlus.style.top = `${Math.round(geometry.topicCenterY)}px`;
+      this._rightPlus.style.transform = 'translate(-50%, -50%)';
+      const shouldDisplay = geometry.isVertical || !hasChildren;
+      this._rightPlus.style.display = shouldDisplay ? 'flex' : 'none';
+      this._rightPlus.style.pointerEvents = shouldDisplay ? 'auto' : 'none';
     }
 
-    // Update colors after creating plus buttons
-    this.updateColors();
-
-    // Trigger animation after a small delay to ensure styles are applied
-    if (this._rightPlus && this._bottomPlus) {
-      setTimeout(() => {
-        // Check if elements still exist before updating (topic may have been deleted)
-        // Right plus button (creates child) - only animate if visible (no children)
-        if (this._rightPlus && this._rightPlus.parentElement && !hasChildren) {
-          this._rightPlus.style.opacity = '1';
-          this._rightPlus.style.transform = 'translate(-50%, -50%) scale(1)';
-          this._rightPlus.style.fontSize = '16px';
-        }
-        // Bottom plus button (creates sibling) - always animate if element exists
-        if (this._bottomPlus && this._bottomPlus.parentElement) {
-          this._bottomPlus.style.opacity = '1';
-          this._bottomPlus.style.transform = 'translateX(-50%) scale(1)';
-          this._bottomPlus.style.fontSize = '16px';
-        }
-      }, 10);
+    if (this._bottomPlus) {
+      this._bottomPlus.style.left = `${Math.round(geometry.topicCenterX)}px`;
+      this._bottomPlus.style.top = `${Math.round(geometry.topicBottom + plusButtonDistanceBottom)}px`;
+      this._bottomPlus.style.transform = 'translateX(-50%)';
+      const shouldDisplay = !geometry.isVertical || !hasChildren;
+      this._bottomPlus.style.display = shouldDisplay ? 'flex' : 'none';
+      this._bottomPlus.style.pointerEvents = shouldDisplay ? 'auto' : 'none';
     }
-
-    // Append helper container to overlay container
-    this._overlayContainer.appendChild(helperContainer);
-    this._helperContainer = helperContainer;
-
-    // Set initial colors based on variant
-    this.updateHelperTextColors(variant);
   }
 
   toggle(): void {
-    // Check if topic still exists before toggling
-    try {
-      if (!this._topic || !this._topic.getModel()) {
-        // Topic has been removed - hide overlay and return
-        if (this._overlay) {
-          this._overlay.style.display = 'none';
-        }
-        return;
-      }
-    } catch (error) {
-      // Topic may have been removed - hide overlay and return
+    const topicExists = this.withTopic(() => true);
+    if (!topicExists) {
       if (this._overlay) {
         this._overlay.style.display = 'none';
       }
@@ -996,102 +719,26 @@ class HTMLTopicSelected {
     this._isVisible = !this._isVisible;
 
     if (this._isVisible) {
-      this._overlay.style.display = 'block';
       this.updateOverlay();
       if (this._helperContainer) {
         this._helperContainer.style.display = 'flex';
       }
-
-      // Get orientation to determine button behavior
-      let orientation: OrientationType;
-      let isVertical: boolean;
-      let hasChildren: boolean;
-      try {
-        orientation = this._topic.getOrientation();
-        isVertical = orientation === 'vertical';
-        hasChildren = this._topic.getChildren().length > 0;
-      } catch (error) {
-        // Topic may have been removed during operation - hide overlay and return
-        if (this._overlay) {
-          this._overlay.style.display = 'none';
-        }
-        return;
-      }
-
-      // Trigger animation for plus icons
-      if (this._rightPlus) {
-        // Visibility: In horizontal layout, hide if has children (creates child)
-        // In vertical layout, always show (creates sibling)
-        const shouldShowRight = isVertical || !hasChildren;
-        if (shouldShowRight) {
-          // Show right button
-          this._rightPlus.style.display = 'flex';
-          this._rightPlus.style.pointerEvents = 'auto';
-          this._rightPlus.style.opacity = '0';
-          // Use translate(-50%, -50%) to center both horizontally and vertically
-          this._rightPlus.style.transform = 'translate(-50%, -50%) scale(0)';
-          this._rightPlus.style.fontSize = '0px';
-          setTimeout(() => {
-            // Check if element still exists before updating (topic may have been deleted)
-            if (this._rightPlus && this._rightPlus.parentElement) {
-              this._rightPlus.style.opacity = '1';
-              this._rightPlus.style.transform = 'translate(-50%, -50%) scale(1)';
-              this._rightPlus.style.fontSize = '16px';
-            }
-          }, 10);
-        } else {
-          // Hide right button if topic already has children (horizontal layout only)
-          this._rightPlus.style.display = 'none';
-          this._rightPlus.style.pointerEvents = 'none';
-        }
-      }
-      if (this._bottomPlus) {
-        // Visibility: In horizontal layout, always show (creates sibling)
-        // In vertical layout, hide if has children (creates child)
-        const shouldShowBottom = !isVertical || !hasChildren;
-        if (shouldShowBottom) {
-          // Show bottom button
-          this._bottomPlus.style.display = 'flex';
-          this._bottomPlus.style.pointerEvents = 'auto';
-          this._bottomPlus.style.opacity = '0';
-          this._bottomPlus.style.transform = 'translateX(-50%) scale(0)';
-          this._bottomPlus.style.fontSize = '0px';
-          setTimeout(() => {
-            // Check if element still exists before updating (topic may have been deleted)
-            if (this._bottomPlus && this._bottomPlus.parentElement) {
-              this._bottomPlus.style.opacity = '1';
-              this._bottomPlus.style.transform = 'translateX(-50%) scale(1)';
-              this._bottomPlus.style.fontSize = '16px';
-            }
-          }, 10);
-        } else {
-          // Hide bottom button if topic already has children (vertical layout only)
-          this._bottomPlus.style.display = 'none';
-          this._bottomPlus.style.pointerEvents = 'none';
-        }
-      }
     } else {
-      // Hide all elements in the same lifecycle
-      this._overlay.style.display = 'none';
+      if (this._overlay) {
+        this._overlay.style.display = 'none';
+      }
 
       if (this._helperContainer) {
         this._helperContainer.style.display = 'none';
       }
 
-      // Hide and reset plus icons for next animation
       if (this._rightPlus) {
-        this._rightPlus.style.display = 'none'; // Hide completely
-        this._rightPlus.style.opacity = '0';
-        this._rightPlus.style.transform = 'translate(-50%, -50%) scale(0)';
-        this._rightPlus.style.fontSize = '0px';
-        this._rightPlus.style.pointerEvents = 'none'; // Disable when hidden
+        this._rightPlus.style.display = 'none';
+        this._rightPlus.style.pointerEvents = 'none';
       }
       if (this._bottomPlus) {
-        this._bottomPlus.style.display = 'none'; // Hide completely
-        this._bottomPlus.style.opacity = '0';
-        this._bottomPlus.style.transform = 'translateX(-50%) scale(0)';
-        this._bottomPlus.style.fontSize = '0px';
-        this._bottomPlus.style.pointerEvents = 'none'; // Disable when hidden
+        this._bottomPlus.style.display = 'none';
+        this._bottomPlus.style.pointerEvents = 'none';
       }
     }
   }
@@ -1151,6 +798,17 @@ class HTMLTopicSelected {
   hide(): void {
     if (this._isVisible) {
       this.toggle();
+    }
+  }
+
+  private withTopic<T>(callback: (topic: Topic) => T): T | null {
+    try {
+      if (!this._topic || !this._topic.getModel()) {
+        return null;
+      }
+      return callback(this._topic);
+    } catch (error) {
+      return null;
     }
   }
 
@@ -1217,6 +875,7 @@ class HTMLTopicSelected {
     this._rightPlus = null;
     this._bottomPlus = null;
     this._helperContainer = null;
+    this._helperElements = null;
   }
 }
 
