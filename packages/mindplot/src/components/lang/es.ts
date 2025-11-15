@@ -39,6 +39,8 @@ const ES = {
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Tópico central no se puede cambiar al estilo de línea.',
   TAB_TO_CREATE_CHILD: 'para crear hijo',
   ENTER_TO_CREATE_SIBLING: 'para crear hermano',
+  PLUS_TOOLTIP_CREATE_CHILD: 'Crear tópico hijo',
+  PLUS_TOOLTIP_CREATE_SIBLING: 'Crear tópico hermano',
 };
 
 export default ES;

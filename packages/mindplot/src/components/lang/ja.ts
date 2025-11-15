@@ -115,6 +115,10 @@ const JA = {
   'zoom-panel.tooltip-zoom-to-fit': 'フィット',
   'creator-info-pane.description': '説明',
   'creator-info-pane.creator': '作成者',
+  TAB_TO_CREATE_CHILD: '子トピックを作成',
+  ENTER_TO_CREATE_SIBLING: '兄弟トピックを作成',
+  PLUS_TOOLTIP_CREATE_CHILD: '子トピックを作成',
+  PLUS_TOOLTIP_CREATE_SIBLING: '兄弟トピックを作成',
 };
 
 export default JA;

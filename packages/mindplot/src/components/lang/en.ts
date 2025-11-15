@@ -40,6 +40,8 @@ interface LanguageStrings {
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: string;
   TAB_TO_CREATE_CHILD: string;
   ENTER_TO_CREATE_SIBLING: string;
+  PLUS_TOOLTIP_CREATE_CHILD: string;
+  PLUS_TOOLTIP_CREATE_SIBLING: string;
 }
 
 const EN: LanguageStrings = {
@@ -65,6 +67,8 @@ const EN: LanguageStrings = {
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Central topic can not be changed to line style.',
   TAB_TO_CREATE_CHILD: 'to create child',
   ENTER_TO_CREATE_SIBLING: 'to create sibling',
+  PLUS_TOOLTIP_CREATE_CHILD: 'Create child topic',
+  PLUS_TOOLTIP_CREATE_SIBLING: 'Create sibling topic',
 };
 
 export default EN;

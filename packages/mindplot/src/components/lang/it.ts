@@ -39,6 +39,8 @@ const IT = {
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'L\'argomento centrale non può essere cambiato in stile linea.',
   TAB_TO_CREATE_CHILD: 'per creare un figlio',
   ENTER_TO_CREATE_SIBLING: 'per creare un fratello',
+  PLUS_TOOLTIP_CREATE_CHILD: 'Crea argomento figlio',
+  PLUS_TOOLTIP_CREATE_SIBLING: 'Crea argomento fratello',
 };
 
 export default IT;

@@ -116,6 +116,10 @@ const PT = {
   'zoom-panel.tooltip-zoom-to-fit': 'Ajustar ao tamanho',
   'creator-info-pane.description': 'Descrição',
   'creator-info-pane.creator': 'Criador',
+  TAB_TO_CREATE_CHILD: 'para criar filho',
+  ENTER_TO_CREATE_SIBLING: 'para criar irmão',
+  PLUS_TOOLTIP_CREATE_CHILD: 'Criar tópico filho',
+  PLUS_TOOLTIP_CREATE_SIBLING: 'Criar tópico irmão',
 };
 
 export default PT;

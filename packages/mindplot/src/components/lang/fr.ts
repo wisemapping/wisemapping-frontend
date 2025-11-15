@@ -39,6 +39,8 @@ const FR = {
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Le sujet central ne peut pas être changé en style de ligne.',
   TAB_TO_CREATE_CHILD: 'pour créer un enfant',
   ENTER_TO_CREATE_SIBLING: 'pour créer un frère',
+  PLUS_TOOLTIP_CREATE_CHILD: 'Créer un noeud enfant',
+  PLUS_TOOLTIP_CREATE_SIBLING: 'Créer un noeud frère',
 };
 
 export default FR;
