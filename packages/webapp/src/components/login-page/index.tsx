@@ -109,6 +109,32 @@ const LoginPage = (): React.ReactElement => {
     trackPageView(window.location.pathname, 'Login');
   }, []);
 
+  // Check if user is already authenticated and redirect if so (only when redirect parameter is present)
+  useEffect(() => {
+    const currentSearchParams = new URLSearchParams(location.search);
+    const redirectUrl = currentSearchParams.get('redirect');
+
+    // Only check authentication if redirect parameter is present
+    if (!redirectUrl) {
+      return;
+    }
+
+    const checkAuthentication = async (): Promise<void> => {
+      try {
+        // Try to fetch account info to check if user is authenticated
+        await client.fetchAccountInfo();
+
+        // If successful, user is authenticated - redirect to redirect URL
+        navigate(redirectUrl);
+      } catch (error) {
+        // If error (401/403/etc), user is not authenticated - show login form
+        // Silently handle the error as this is expected for unauthenticated users
+      }
+    };
+
+    checkAuthentication();
+  }, [client, navigate, location.search]);
+
   const mutation = useMutation<void, ErrorInfo, Model>(
     (model: Model) => client.login({ ...model }),
     {
