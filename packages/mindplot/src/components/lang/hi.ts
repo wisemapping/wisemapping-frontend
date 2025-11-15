@@ -38,6 +38,8 @@ interface LanguageStrings {
   SESSION_EXPIRED: string;
   CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: string;
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: string;
+  TAB_TO_CREATE_CHILD: string;
+  ENTER_TO_CREATE_SIBLING: string;
 }
 
 const HI: LanguageStrings = {
@@ -61,6 +63,8 @@ const HI: LanguageStrings = {
   SESSION_EXPIRED: 'आपका सत्र समाप्त हो गया है, कृपया फिर से लॉग इन करें।',
   CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'केंद्रीय विषय के लिए कनेक्शन शैली नहीं बदली जा सकती।',
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'केंद्रीय विषय को लाइन शैली में नहीं बदला जा सकता।',
+  TAB_TO_CREATE_CHILD: 'बच्चा बनाने के लिए',
+  ENTER_TO_CREATE_SIBLING: 'सहोदर बनाने के लिए',
 };
 
 export default HI;

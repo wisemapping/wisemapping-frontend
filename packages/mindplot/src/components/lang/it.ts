@@ -37,6 +37,8 @@ const IT = {
   SESSION_EXPIRED: 'La tua sessione è scaduta, per favore accedi di nuovo.',
   CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'Lo stile di connessione non può essere cambiato per l\'argomento centrale.',
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'L\'argomento centrale non può essere cambiato in stile linea.',
+  TAB_TO_CREATE_CHILD: 'per creare un figlio',
+  ENTER_TO_CREATE_SIBLING: 'per creare un fratello',
 };
 
 export default IT;

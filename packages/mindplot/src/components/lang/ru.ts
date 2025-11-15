@@ -36,6 +36,10 @@ const RU = {
   CENTRAL_TOPIC_CAN_NOT_BE_DELETED: 'Central topic can not be deleted.',
   RELATIONSHIP_COULD_NOT_BE_CREATED: 'Relationship could not be created. A parent relationship topic must be selected first.',
   SESSION_EXPIRED: 'Your session has expired, please log-in again.',
+  CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'Connection style can not be changed for central topic.',
+  CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Central topic can not be changed to line style.',
+  TAB_TO_CREATE_CHILD: 'для создания дочернего элемента',
+  ENTER_TO_CREATE_SIBLING: 'для создания родственного элемента',
 };
 
 export default RU;

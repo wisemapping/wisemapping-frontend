@@ -30,7 +30,6 @@ export type DesignerOptions = {
   widgetManager: WidgetBuilder;
   saveOnLoad?: boolean;
   locale?: string;
-  enableSelectionAssistance?: boolean;
 };
 
 class OptionsBuilder {
@@ -42,7 +41,6 @@ class OptionsBuilder {
       zoom: 0.85,
       saveOnLoad: true,
       locale: 'en',
-      enableSelectionAssistance: false,
     };
 
     return { ...defaultOptions, ...options };

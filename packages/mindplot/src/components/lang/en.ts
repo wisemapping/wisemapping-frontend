@@ -38,6 +38,8 @@ interface LanguageStrings {
   SESSION_EXPIRED: string;
   CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: string;
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: string;
+  TAB_TO_CREATE_CHILD: string;
+  ENTER_TO_CREATE_SIBLING: string;
 }
 
 const EN: LanguageStrings = {
@@ -61,6 +63,8 @@ const EN: LanguageStrings = {
   SESSION_EXPIRED: 'Your session has expired, please log-in again.',
   CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'Connection style can not be changed for central topic.',
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Central topic can not be changed to line style.',
+  TAB_TO_CREATE_CHILD: 'to create child',
+  ENTER_TO_CREATE_SIBLING: 'to create sibling',
 };
 
 export default EN;

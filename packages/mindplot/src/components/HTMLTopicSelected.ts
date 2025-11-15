@@ -22,6 +22,7 @@ import Designer from './Designer';
 import ColorUtil from './theme/ColorUtil';
 import type { ThemeVariant } from './theme/Theme';
 import type { OrientationType } from './layout/LayoutType';
+import { $msg } from './Messages';
 
 type HelperElements = {
   container: HTMLDivElement;
@@ -491,13 +492,13 @@ class HTMLTopicSelected {
 
     const tabRow = createHelperRow();
     const tabKey = createKey('Tab');
-    const tabText = createText('to create child');
+    const tabText = createText($msg('TAB_TO_CREATE_CHILD'));
     tabRow.appendChild(tabKey);
     tabRow.appendChild(tabText);
 
     const enterRow = createHelperRow();
     const enterKey = createKey('Enter');
-    const enterText = createText('to create sibling');
+    const enterText = createText($msg('ENTER_TO_CREATE_SIBLING'));
     enterRow.appendChild(enterKey);
     enterRow.appendChild(enterText);
 
@@ -541,10 +542,22 @@ class HTMLTopicSelected {
       return;
     }
 
-    const { container, tabRow, enterRow } = helper;
-    container.style.display = hasChildren ? 'none' : 'flex';
+    // Check total number of nodes in the mindmap
+    let totalNodes = 0;
+    if (this._designer) {
+      try {
+        totalNodes = this._designer.getModel().getTopics().length;
+      } catch (error) {
+        // If we can't get the count, default to showing text
+      }
+    }
 
-    if (hasChildren) {
+    const { container, tabRow, enterRow } = helper;
+    // Hide helper text if topic has children OR if there are more than 10 nodes
+    const shouldShowHelper = !hasChildren && totalNodes <= 10;
+    container.style.display = shouldShowHelper ? 'flex' : 'none';
+
+    if (!shouldShowHelper) {
       return;
     }
 

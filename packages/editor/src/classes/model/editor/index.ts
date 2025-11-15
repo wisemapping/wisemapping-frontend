@@ -60,14 +60,7 @@ class Editor {
     mapId: string,
     persistenceManager: PersistenceManager,
     widgetBuilder: WidgetBuilder,
-    enableSelectionAssistance?: boolean,
   ): Promise<void> {
-    if (enableSelectionAssistance !== undefined) {
-      this.component.setAttribute(
-        'enable-selection-assistance',
-        enableSelectionAssistance.toString(),
-      );
-    }
     this.component.buildDesigner(persistenceManager, widgetBuilder);
     return this.component.loadMap(mapId);
   }
