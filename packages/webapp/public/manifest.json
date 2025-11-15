@@ -2,7 +2,7 @@
   "name": "WiseMapping - Visual Thinking Evolution",
   "short_name": "WiseMapping",
   "description": "Visual thinking and mind mapping application",
-  "start_url": "/",
+  "start_url": "/c/login?redirect=/c/maps/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
