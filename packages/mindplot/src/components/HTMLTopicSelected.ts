@@ -149,7 +149,7 @@ class HTMLTopicSelected {
             this.hide();
             return;
           }
-        } catch (error) {
+        } catch {
           // Designer or model may have been removed - hide overlay and return
           this.hide();
           return;
@@ -946,12 +946,11 @@ class HTMLTopicSelected {
       .forEach((topic) => HTMLTopicSelected.ensureTopicShadow(designer, topic));
 
     // Helper to find topic by model
-    const findTopicByModel = (nodeModel: NodeModel): Topic | undefined => {
-      return designer
+    const findTopicByModel = (nodeModel: NodeModel): Topic | undefined =>
+      designer
         .getModel()
         .getTopics()
         .find((t) => t.getModel() === nodeModel);
-    };
 
     const selectionShadows = designer.getSelectionShadows();
 
