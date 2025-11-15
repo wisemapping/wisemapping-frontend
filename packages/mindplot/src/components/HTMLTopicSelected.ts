@@ -65,6 +65,14 @@ class HTMLTopicSelected {
 
   private _bottomPlus: HTMLDivElement | null = null;
 
+  private _rightPlusBaseColor: string | null = null;
+
+  private _rightPlusHoverColor: string | null = null;
+
+  private _bottomPlusBaseColor: string | null = null;
+
+  private _bottomPlusHoverColor: string | null = null;
+
   private _screenManager: ScreenManager;
 
   private _containerElement: HTMLDivElement;
@@ -149,7 +157,7 @@ class HTMLTopicSelected {
             this.hide();
             return;
           }
-        } catch (error) {
+        } catch {
           // Designer or model may have been removed - hide overlay and return
           this.hide();
           return;
@@ -279,11 +287,22 @@ class HTMLTopicSelected {
 
     // Plus button colors: use connection color, lightened for better contrast
     const plusButtonColor = ColorUtil.lightenColor(connectionColor, 40);
+    // Hover color: lighten even more to signal interactivity
+    const plusButtonHoverColor = ColorUtil.lightenColor(connectionColor, 60);
+
+    // Store colors for hover effects
+    this._rightPlusBaseColor = plusButtonColor;
+    this._rightPlusHoverColor = plusButtonHoverColor;
+    this._bottomPlusBaseColor = plusButtonColor;
+    this._bottomPlusHoverColor = plusButtonHoverColor;
+
     if (this._rightPlus) {
       this._rightPlus.style.backgroundColor = plusButtonColor;
+      this.setupHoverEffect(this._rightPlus, plusButtonColor, plusButtonHoverColor);
     }
     if (this._bottomPlus) {
       this._bottomPlus.style.backgroundColor = plusButtonColor;
+      this.setupHoverEffect(this._bottomPlus, plusButtonColor, plusButtonHoverColor);
     }
 
     // Update helper text colors based on variant
@@ -606,6 +625,121 @@ class HTMLTopicSelected {
     }
   }
 
+  /**
+   * Set up hover effect for plus buttons
+   */
+  private setupHoverEffect(button: HTMLDivElement, baseColor: string, hoverColor: string): void {
+    // Use a data attribute to track if hover is set up to avoid duplicate listeners
+    if (button.dataset.hoverSetup === 'true') {
+      // Update colors if they've changed
+      if (button === this._rightPlus) {
+        this._rightPlusBaseColor = baseColor;
+        this._rightPlusHoverColor = hoverColor;
+      } else if (button === this._bottomPlus) {
+        this._bottomPlusBaseColor = baseColor;
+        this._bottomPlusHoverColor = hoverColor;
+      }
+      // Update current color if not hovering
+      if (button.style.backgroundColor !== hoverColor) {
+        button.style.backgroundColor = baseColor;
+      }
+      return;
+    }
+
+    // Store colors on the button element for access in event handlers
+    (button as HTMLDivElement & { _baseColor?: string; _hoverColor?: string })._baseColor =
+      baseColor;
+    (button as HTMLDivElement & { _baseColor?: string; _hoverColor?: string })._hoverColor =
+      hoverColor;
+
+    button.addEventListener('mouseenter', () => {
+      button.style.backgroundColor = hoverColor;
+      button.style.transition = 'background-color 0.2s ease';
+    });
+
+    button.addEventListener('mouseleave', () => {
+      button.style.backgroundColor = baseColor;
+    });
+
+    button.dataset.hoverSetup = 'true';
+  }
+
+  /**
+   * Helper function to handle both click and touch events for plus buttons
+   * Prevents duplicate triggers by tracking if action was already handled
+   */
+  private addPlusButtonHandlers(button: HTMLDivElement, handler: () => void): void {
+    let touchHandled = false;
+
+    // Get hover color for touch feedback
+    const getHoverColor = (): string | undefined => {
+      const buttonWithColors = button as HTMLDivElement & {
+        _baseColor?: string;
+        _hoverColor?: string;
+      };
+      return buttonWithColors._hoverColor;
+    };
+
+    const getBaseColor = (): string | undefined => {
+      const buttonWithColors = button as HTMLDivElement & {
+        _baseColor?: string;
+        _hoverColor?: string;
+      };
+      return buttonWithColors._baseColor;
+    };
+
+    // Handle click events (desktop and mobile fallback)
+    button.addEventListener('click', (event) => {
+      // If touch was already handled, ignore click (prevents double-trigger)
+      if (touchHandled) {
+        touchHandled = false;
+        return;
+      }
+      event.stopPropagation();
+      event.preventDefault();
+      handler();
+    });
+
+    // Handle touch events (mobile)
+    button.addEventListener('touchstart', (event) => {
+      // Stop propagation but don't prevent default to allow normal touch behavior
+      event.stopPropagation();
+      // Show hover color for visual feedback
+      const hoverColor = getHoverColor();
+      if (hoverColor) {
+        button.style.backgroundColor = hoverColor;
+        button.style.transition = 'background-color 0.1s ease';
+      }
+    });
+
+    button.addEventListener('touchend', (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+      touchHandled = true;
+      handler();
+      // Reset to base color after a short delay
+      const baseColor = getBaseColor();
+      if (baseColor) {
+        setTimeout(() => {
+          button.style.backgroundColor = baseColor;
+        }, 150);
+      }
+      // Reset flag after a short delay to allow click event to check it
+      setTimeout(() => {
+        touchHandled = false;
+      }, 300);
+    });
+
+    // Reset flag and color if touch is cancelled (e.g., user swipes away)
+    button.addEventListener('touchcancel', () => {
+      touchHandled = false;
+      const baseColor = getBaseColor();
+      if (baseColor) {
+        button.style.backgroundColor = baseColor;
+      }
+    });
+  }
+
   private ensurePlusButtons(): void {
     if (this._rightPlus && !this._rightPlus.parentElement) {
       this._rightPlus = null;
@@ -638,9 +772,7 @@ class HTMLTopicSelected {
       rightPlus.style.cursor = 'pointer';
       rightPlus.style.zIndex = '1001';
       rightPlus.style.transformOrigin = 'center center';
-      rightPlus.addEventListener('click', (event) => {
-        event.stopPropagation();
-        event.preventDefault();
+      this.addPlusButtonHandlers(rightPlus, () => {
         const isVertical =
           this.withTopic((topic) => topic.getOrientation() === 'vertical') ?? false;
         if (isVertical) {
@@ -678,9 +810,7 @@ class HTMLTopicSelected {
       bottomPlus.style.cursor = 'pointer';
       bottomPlus.style.zIndex = '1001';
       bottomPlus.style.transformOrigin = 'center center';
-      bottomPlus.addEventListener('click', (event) => {
-        event.stopPropagation();
-        event.preventDefault();
+      this.addPlusButtonHandlers(bottomPlus, () => {
         const isVertical =
           this.withTopic((topic) => topic.getOrientation() === 'vertical') ?? false;
         if (isVertical) {
@@ -946,12 +1076,11 @@ class HTMLTopicSelected {
       .forEach((topic) => HTMLTopicSelected.ensureTopicShadow(designer, topic));
 
     // Helper to find topic by model
-    const findTopicByModel = (nodeModel: NodeModel): Topic | undefined => {
-      return designer
+    const findTopicByModel = (nodeModel: NodeModel): Topic | undefined =>
+      designer
         .getModel()
         .getTopics()
         .find((t) => t.getModel() === nodeModel);
-    };
 
     const selectionShadows = designer.getSelectionShadows();
 
