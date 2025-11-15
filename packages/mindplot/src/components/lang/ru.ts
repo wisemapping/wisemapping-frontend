@@ -40,6 +40,8 @@ const RU = {
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Central topic can not be changed to line style.',
   TAB_TO_CREATE_CHILD: 'для создания дочернего элемента',
   ENTER_TO_CREATE_SIBLING: 'для создания родственного элемента',
+  PLUS_TOOLTIP_CREATE_CHILD: 'Создать дочерний элемент',
+  PLUS_TOOLTIP_CREATE_SIBLING: 'Создать родственный элемент',
 };
 
 export default RU;

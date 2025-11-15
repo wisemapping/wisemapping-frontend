@@ -39,6 +39,8 @@ const DE = {
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Der Sstil kann für das zentrale Thema nicht geändert werden.',
   TAB_TO_CREATE_CHILD: 'um Kind zu erstellen',
   ENTER_TO_CREATE_SIBLING: 'um Geschwister zu erstellen',
+  PLUS_TOOLTIP_CREATE_CHILD: 'Kind-Thema erstellen',
+  PLUS_TOOLTIP_CREATE_SIBLING: 'Geschwister-Thema erstellen',
 };
 
 export default DE;

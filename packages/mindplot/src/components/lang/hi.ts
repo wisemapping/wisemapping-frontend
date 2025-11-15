@@ -40,6 +40,8 @@ interface LanguageStrings {
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: string;
   TAB_TO_CREATE_CHILD: string;
   ENTER_TO_CREATE_SIBLING: string;
+  PLUS_TOOLTIP_CREATE_CHILD: string;
+  PLUS_TOOLTIP_CREATE_SIBLING: string;
 }
 
 const HI: LanguageStrings = {
@@ -65,6 +67,8 @@ const HI: LanguageStrings = {
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'केंद्रीय विषय को लाइन शैली में नहीं बदला जा सकता।',
   TAB_TO_CREATE_CHILD: 'बच्चा बनाने के लिए',
   ENTER_TO_CREATE_SIBLING: 'सहोदर बनाने के लिए',
+  PLUS_TOOLTIP_CREATE_CHILD: 'बच्चा विषय बनाएं',
+  PLUS_TOOLTIP_CREATE_SIBLING: 'सहोदर विषय बनाएं',
 };
 
 export default HI;
