@@ -122,7 +122,7 @@ class HTMLTopicSelected {
           this.hide();
           return;
         }
-      } catch (error) {
+      } catch {
         // Topic may have been removed - hide overlay and return
         this.hide();
         return;
@@ -134,7 +134,7 @@ class HTMLTopicSelected {
           this.hide();
           return;
         }
-      } catch (error) {
+      } catch {
         // Topic may have been removed - hide overlay and return
         this.hide();
         return;
@@ -212,7 +212,7 @@ class HTMLTopicSelected {
       const topicPosition = this._topic.getPosition();
       const centralPosition = current.getPosition();
       return topicPosition.x < centralPosition.x;
-    } catch (error) {
+    } catch {
       // Topic may have been removed - default to left
       return true;
     }
@@ -489,6 +489,7 @@ class HTMLTopicSelected {
       key.style.alignItems = 'center';
       key.style.justifyContent = 'center';
       key.style.lineHeight = '1';
+      key.style.whiteSpace = 'nowrap';
       return key;
     };
 
@@ -500,6 +501,7 @@ class HTMLTopicSelected {
       text.style.display = 'flex';
       text.style.alignItems = 'center';
       text.style.lineHeight = '1';
+      text.style.whiteSpace = 'nowrap';
       return text;
     };
 
@@ -797,7 +799,7 @@ class HTMLTopicSelected {
         }
         return;
       }
-    } catch (error) {
+    } catch {
       // Topic may have been removed - hide overlay and return
       if (this._overlay) {
         this._overlay.style.display = 'none';
@@ -822,7 +824,7 @@ class HTMLTopicSelected {
         return null;
       }
       return callback(this._topic);
-    } catch (error) {
+    } catch {
       return null;
     }
   }
@@ -941,9 +943,7 @@ class HTMLTopicSelected {
     designer
       .getModel()
       .filterSelectedTopics()
-      .forEach((topic) => {
-        HTMLTopicSelected.ensureTopicShadow(designer, topic);
-      });
+      .forEach((topic) => HTMLTopicSelected.ensureTopicShadow(designer, topic));
 
     // Helper to find topic by model
     const findTopicByModel = (nodeModel: NodeModel): Topic | undefined => {
@@ -954,6 +954,13 @@ class HTMLTopicSelected {
     };
 
     const selectionShadows = designer.getSelectionShadows();
+
+    // Update shadows when layout changes (position, size, etc.)
+    const updateShadows = () => {
+      requestAnimationFrame(() => {
+        selectionShadows.forEach((shadow) => shadow.update());
+      });
+    };
 
     // Lifecycle hooks: create shadow when topic is selected
     LayoutEventBus.addEvent('topicSelected', (nodeModel: NodeModel) => {
@@ -979,13 +986,6 @@ class HTMLTopicSelected {
         selectionShadows.delete(topic);
       }
     });
-
-    // Update shadows when layout changes (position, size, etc.)
-    const updateShadows = () => {
-      requestAnimationFrame(() => {
-        selectionShadows.forEach((shadow) => shadow.update());
-      });
-    };
 
     LayoutEventBus.addEvent('forceLayout', updateShadows);
     LayoutEventBus.addEvent('topicResize', updateShadows);
