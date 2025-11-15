@@ -254,6 +254,54 @@ class HTMLTopicSelected {
     if (this._bottomPlus) {
       this._bottomPlus.style.backgroundColor = plusButtonColor;
     }
+
+    // Update helper text colors based on variant
+    this.updateHelperTextColors(variant);
+  }
+
+  /**
+   * Update helper text colors based on theme variant
+   */
+  private updateHelperTextColors(variant: ThemeVariant): void {
+    if (!this._helperContainer) {
+      return;
+    }
+
+    // Find all key elements (Tab and Enter keys) - they have borderRadius: 4px
+    const keyElements = this._helperContainer.querySelectorAll('div') as NodeListOf<HTMLDivElement>;
+    const keys = Array.from(keyElements).filter(
+      (el) =>
+        el.style.borderRadius === '4px' &&
+        el.textContent &&
+        ['Tab', 'Enter'].includes(el.textContent),
+    );
+
+    // Find all text elements (the "to create child" and "to create sibling" text) - they are spans
+    const textElements = this._helperContainer.querySelectorAll(
+      'span',
+    ) as NodeListOf<HTMLSpanElement>;
+
+    if (variant === 'dark') {
+      // Dark mode: light text and dark backgrounds
+      keys.forEach((keyEl) => {
+        keyEl.style.backgroundColor = '#3a3a3a'; // Dark gray background
+        keyEl.style.borderColor = '#555'; // Slightly lighter border
+        keyEl.style.color = '#e0e0e0'; // Light text
+      });
+      textElements.forEach((textEl) => {
+        textEl.style.color = '#b0b0b0'; // Light gray text
+      });
+    } else {
+      // Light mode: dark text and light backgrounds (default)
+      keys.forEach((keyEl) => {
+        keyEl.style.backgroundColor = '#f5f5f5'; // Light gray background
+        keyEl.style.borderColor = '#ddd'; // Light gray border
+        keyEl.style.color = '#333'; // Dark text
+      });
+      textElements.forEach((textEl) => {
+        textEl.style.color = '#666'; // Gray text
+      });
+    }
   }
 
   private updateOverlay(): void {
@@ -364,10 +412,12 @@ class HTMLTopicSelected {
     this._overlay.style.borderBottomRightRadius = borderRadius;
 
     // Update or create helper box
-    // Both horizontal and vertical layouts use column direction (stacked vertically)
-    const existingHelper = this._overlay.parentElement?.querySelector(
-      '[style*="flex-direction: column"]',
-    ) as HTMLDivElement;
+    // Check if helper container already exists (stored reference or in DOM) to prevent duplicates
+    const existingHelper =
+      this._helperContainer ||
+      (this._overlay.parentElement?.querySelector(
+        '[style*="flex-direction: column"]',
+      ) as HTMLDivElement);
     if (!existingHelper) {
       this.createHelperBox(
         overlayLeft,
@@ -590,6 +640,7 @@ class HTMLTopicSelected {
     let hasChildren: boolean;
     let orientation: OrientationType;
     let isVertical: boolean;
+    let variant: ThemeVariant = 'light';
     try {
       if (!this._topic || !this._topic.getModel()) {
         // Topic has been removed - return without creating helper box
@@ -598,6 +649,7 @@ class HTMLTopicSelected {
       hasChildren = this._topic.getChildren().length > 0;
       orientation = this._topic.getOrientation();
       isVertical = orientation === 'vertical';
+      variant = this._topic.getThemeVariant();
     } catch (error) {
       // Topic may have been removed - return without creating helper box
       return;
@@ -698,12 +750,10 @@ class HTMLTopicSelected {
       const tabKey = document.createElement('div');
       tabKey.textContent = 'Tab';
       tabKey.style.padding = '4px 8px';
-      tabKey.style.backgroundColor = '#f5f5f5';
-      tabKey.style.border = '1px solid #ddd';
+      tabKey.style.border = '1px solid';
       tabKey.style.borderRadius = '4px';
       tabKey.style.fontSize = '12px';
       tabKey.style.fontFamily = 'Arial, sans-serif';
-      tabKey.style.color = '#333';
       tabKey.style.display = 'flex';
       tabKey.style.alignItems = 'center';
       tabKey.style.justifyContent = 'center';
@@ -713,7 +763,6 @@ class HTMLTopicSelected {
       tabText.textContent = 'to create child';
       tabText.style.fontSize = '14px';
       tabText.style.fontFamily = 'Arial, sans-serif';
-      tabText.style.color = '#666';
       tabText.style.display = 'flex';
       tabText.style.alignItems = 'center';
       tabText.style.lineHeight = '1';
@@ -749,12 +798,10 @@ class HTMLTopicSelected {
       const enterKey = document.createElement('div');
       enterKey.textContent = 'Enter';
       enterKey.style.padding = '4px 8px';
-      enterKey.style.backgroundColor = '#f5f5f5';
-      enterKey.style.border = '1px solid #ddd';
+      enterKey.style.border = '1px solid';
       enterKey.style.borderRadius = '4px';
       enterKey.style.fontSize = '12px';
       enterKey.style.fontFamily = 'Arial, sans-serif';
-      enterKey.style.color = '#333';
       enterKey.style.display = 'flex';
       enterKey.style.alignItems = 'center';
       enterKey.style.justifyContent = 'center';
@@ -764,7 +811,6 @@ class HTMLTopicSelected {
       enterText.textContent = 'to create sibling';
       enterText.style.fontSize = '14px';
       enterText.style.fontFamily = 'Arial, sans-serif';
-      enterText.style.color = '#666';
       enterText.style.display = 'flex';
       enterText.style.alignItems = 'center';
       enterText.style.lineHeight = '1';
@@ -779,110 +825,125 @@ class HTMLTopicSelected {
     // 20px circle with larger 18px "+" symbol for better visibility
     // Append to overlay container instead of overlay so clicks work
     // Position will be set in updateOverlay() or createHelperBox() to use correct overlay dimensions
-    this._rightPlus = document.createElement('div');
-    this._rightPlus.textContent = '+';
-    this._rightPlus.style.position = 'absolute';
-    // Initial position - will be updated in updateOverlay()
-    this._rightPlus.style.left = '0px';
-    this._rightPlus.style.top = '0px';
-    this._rightPlus.style.width = '20px';
-    this._rightPlus.style.height = '20px';
-    this._rightPlus.style.borderRadius = '50%';
-    // Color will be set by updateColors() method
-    this._rightPlus.style.color = 'white';
-    this._rightPlus.style.display = 'flex';
-    this._rightPlus.style.alignItems = 'center';
-    this._rightPlus.style.justifyContent = 'center';
-    this._rightPlus.style.fontSize = '16px';
-    this._rightPlus.style.fontWeight = 'bold';
-    this._rightPlus.style.lineHeight = '1';
-    this._rightPlus.style.padding = '0';
-    this._rightPlus.style.margin = '0';
-    this._rightPlus.style.boxSizing = 'border-box';
-    this._rightPlus.style.textAlign = 'center';
-    this._rightPlus.style.pointerEvents = 'auto'; // Make clickable
-    this._rightPlus.style.cursor = 'pointer';
-    this._rightPlus.style.zIndex = '1001';
-    // Transform will be set based on position (left or right) in updateOverlay()
-    this._rightPlus.style.transformOrigin = 'center center';
-    this._rightPlus.style.opacity = '0';
-    this._rightPlus.style.fontSize = '0px';
-    this._rightPlus.style.transition =
-      'opacity 0.5s ease, transform 0.5s ease, font-size 0.5s ease';
-    // Visibility: In horizontal layout, hide if has children (creates child)
-    // In vertical layout, always show (creates sibling)
-    this._rightPlus.style.display = isVertical || !hasChildren ? 'flex' : 'none';
-    // Disable pointer events when hidden to allow clicks through to topic
-    this._rightPlus.style.pointerEvents = isVertical || !hasChildren ? 'auto' : 'none';
 
-    // Add click handler - behavior depends on orientation
-    // Horizontal: creates child, Vertical: creates sibling
-    this._rightPlus.addEventListener('click', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      if (isVertical) {
-        this._createSibling();
-      } else {
-        this._createChild();
-      }
-    });
+    // Check if plus buttons already exist - prevent duplicates
+    // If buttons exist but aren't in the DOM, clean up reference
+    if (this._rightPlus && !this._rightPlus.parentElement) {
+      this._rightPlus = null;
+    }
+    if (this._bottomPlus && !this._bottomPlus.parentElement) {
+      this._bottomPlus = null;
+    }
 
-    // Append to main container so clicks work (container has pointerEvents: auto)
-    this._containerElement.appendChild(this._rightPlus);
+    // Only create if they don't exist (either never created or cleaned up)
+    if (!this._rightPlus) {
+      this._rightPlus = document.createElement('div');
+      this._rightPlus.textContent = '+';
+      this._rightPlus.style.position = 'absolute';
+      // Initial position - will be updated in updateOverlay()
+      this._rightPlus.style.left = '0px';
+      this._rightPlus.style.top = '0px';
+      this._rightPlus.style.width = '20px';
+      this._rightPlus.style.height = '20px';
+      this._rightPlus.style.borderRadius = '50%';
+      // Color will be set by updateColors() method
+      this._rightPlus.style.color = 'white';
+      this._rightPlus.style.display = 'flex';
+      this._rightPlus.style.alignItems = 'center';
+      this._rightPlus.style.justifyContent = 'center';
+      this._rightPlus.style.fontSize = '16px';
+      this._rightPlus.style.fontWeight = 'bold';
+      this._rightPlus.style.lineHeight = '1';
+      this._rightPlus.style.padding = '0';
+      this._rightPlus.style.margin = '0';
+      this._rightPlus.style.boxSizing = 'border-box';
+      this._rightPlus.style.textAlign = 'center';
+      this._rightPlus.style.pointerEvents = 'auto'; // Make clickable
+      this._rightPlus.style.cursor = 'pointer';
+      this._rightPlus.style.zIndex = '1001';
+      // Transform will be set based on position (left or right) in updateOverlay()
+      this._rightPlus.style.transformOrigin = 'center center';
+      this._rightPlus.style.opacity = '0';
+      this._rightPlus.style.fontSize = '0px';
+      this._rightPlus.style.transition =
+        'opacity 0.5s ease, transform 0.5s ease, font-size 0.5s ease';
+      // Visibility: In horizontal layout, hide if has children (creates child)
+      // In vertical layout, always show (creates sibling)
+      this._rightPlus.style.display = isVertical || !hasChildren ? 'flex' : 'none';
+      // Disable pointer events when hidden to allow clicks through to topic
+      this._rightPlus.style.pointerEvents = isVertical || !hasChildren ? 'auto' : 'none';
+
+      // Add click handler - behavior depends on orientation
+      // Horizontal: creates child, Vertical: creates sibling
+      this._rightPlus.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (isVertical) {
+          this._createSibling();
+        } else {
+          this._createChild();
+        }
+      });
+
+      // Append to main container so clicks work (container has pointerEvents: auto)
+      this._containerElement.appendChild(this._rightPlus);
+    }
 
     // Plus icon at bottom middle of overlay
     // 20px circle with larger 18px "+" symbol for better visibility
     // Append to overlay container instead of overlay so clicks work
     // Position will be set in updateOverlay() or createHelperBox() to use correct overlay dimensions
-    this._bottomPlus = document.createElement('div');
-    this._bottomPlus.textContent = '+';
-    this._bottomPlus.style.position = 'absolute';
-    // Initial position - will be updated in updateOverlay()
-    this._bottomPlus.style.left = '0px';
-    this._bottomPlus.style.top = '0px';
-    this._bottomPlus.style.width = '20px';
-    this._bottomPlus.style.height = '20px';
-    this._bottomPlus.style.borderRadius = '50%';
-    // Color will be set by updateColors() method
-    this._bottomPlus.style.color = 'white';
-    this._bottomPlus.style.display = 'flex';
-    this._bottomPlus.style.alignItems = 'center';
-    this._bottomPlus.style.justifyContent = 'center';
-    this._bottomPlus.style.fontSize = '16px';
-    this._bottomPlus.style.fontWeight = 'bold';
-    this._bottomPlus.style.lineHeight = '1';
-    this._bottomPlus.style.padding = '0';
-    this._bottomPlus.style.margin = '0';
-    this._bottomPlus.style.boxSizing = 'border-box';
-    this._bottomPlus.style.textAlign = 'center';
-    this._bottomPlus.style.pointerEvents = 'auto'; // Make clickable
-    this._bottomPlus.style.cursor = 'pointer';
-    this._bottomPlus.style.zIndex = '1001';
-    this._bottomPlus.style.transform = 'translateX(-50%) scale(0)';
-    this._bottomPlus.style.transformOrigin = 'center center';
-    this._bottomPlus.style.opacity = '0';
-    this._bottomPlus.style.fontSize = '0px';
-    this._bottomPlus.style.transition =
-      'opacity 0.5s ease, transform 0.5s ease, font-size 0.5s ease';
-    // Visibility: In horizontal layout, always show (creates sibling)
-    // In vertical layout, hide if has children (creates child)
-    this._bottomPlus.style.display = !isVertical || !hasChildren ? 'flex' : 'none';
-    this._bottomPlus.style.pointerEvents = !isVertical || !hasChildren ? 'auto' : 'none';
+    if (!this._bottomPlus) {
+      this._bottomPlus = document.createElement('div');
+      this._bottomPlus.textContent = '+';
+      this._bottomPlus.style.position = 'absolute';
+      // Initial position - will be updated in updateOverlay()
+      this._bottomPlus.style.left = '0px';
+      this._bottomPlus.style.top = '0px';
+      this._bottomPlus.style.width = '20px';
+      this._bottomPlus.style.height = '20px';
+      this._bottomPlus.style.borderRadius = '50%';
+      // Color will be set by updateColors() method
+      this._bottomPlus.style.color = 'white';
+      this._bottomPlus.style.display = 'flex';
+      this._bottomPlus.style.alignItems = 'center';
+      this._bottomPlus.style.justifyContent = 'center';
+      this._bottomPlus.style.fontSize = '16px';
+      this._bottomPlus.style.fontWeight = 'bold';
+      this._bottomPlus.style.lineHeight = '1';
+      this._bottomPlus.style.padding = '0';
+      this._bottomPlus.style.margin = '0';
+      this._bottomPlus.style.boxSizing = 'border-box';
+      this._bottomPlus.style.textAlign = 'center';
+      this._bottomPlus.style.pointerEvents = 'auto'; // Make clickable
+      this._bottomPlus.style.cursor = 'pointer';
+      this._bottomPlus.style.zIndex = '1001';
+      this._bottomPlus.style.transform = 'translateX(-50%) scale(0)';
+      this._bottomPlus.style.transformOrigin = 'center center';
+      this._bottomPlus.style.opacity = '0';
+      this._bottomPlus.style.fontSize = '0px';
+      this._bottomPlus.style.transition =
+        'opacity 0.5s ease, transform 0.5s ease, font-size 0.5s ease';
+      // Visibility: In horizontal layout, always show (creates sibling)
+      // In vertical layout, hide if has children (creates child)
+      this._bottomPlus.style.display = !isVertical || !hasChildren ? 'flex' : 'none';
+      this._bottomPlus.style.pointerEvents = !isVertical || !hasChildren ? 'auto' : 'none';
 
-    // Add click handler - behavior depends on orientation
-    // Horizontal: creates sibling, Vertical: creates child
-    this._bottomPlus.addEventListener('click', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      if (isVertical) {
-        this._createChild();
-      } else {
-        this._createSibling();
-      }
-    });
+      // Add click handler - behavior depends on orientation
+      // Horizontal: creates sibling, Vertical: creates child
+      this._bottomPlus.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (isVertical) {
+          this._createChild();
+        } else {
+          this._createSibling();
+        }
+      });
 
-    // Append to main container so clicks work (container has pointerEvents: auto)
-    this._containerElement.appendChild(this._bottomPlus);
+      // Append to main container so clicks work (container has pointerEvents: auto)
+      this._containerElement.appendChild(this._bottomPlus);
+    }
 
     // Update colors after creating plus buttons
     this.updateColors();
@@ -909,6 +970,9 @@ class HTMLTopicSelected {
     // Append helper container to overlay container
     this._overlayContainer.appendChild(helperContainer);
     this._helperContainer = helperContainer;
+
+    // Set initial colors based on variant
+    this.updateHelperTextColors(variant);
   }
 
   toggle(): void {
