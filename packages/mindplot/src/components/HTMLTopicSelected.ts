@@ -542,22 +542,11 @@ class HTMLTopicSelected {
       return;
     }
 
-    // Check total number of nodes in the mindmap
-    let totalNodes = 0;
-    if (this._designer) {
-      try {
-        totalNodes = this._designer.getModel().getTopics().length;
-      } catch (error) {
-        // If we can't get the count, default to showing text
-      }
-    }
-
     const { container, tabRow, enterRow } = helper;
-    // Hide helper text if topic has children OR if there are more than 10 nodes
-    const shouldShowHelper = !hasChildren && totalNodes <= 10;
-    container.style.display = shouldShowHelper ? 'flex' : 'none';
+    // Hide helper text if topic has children
+    container.style.display = hasChildren ? 'none' : 'flex';
 
-    if (!shouldShowHelper) {
+    if (hasChildren) {
       return;
     }
 

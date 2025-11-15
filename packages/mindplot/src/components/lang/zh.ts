@@ -36,10 +36,6 @@ const ZH = {
   CENTRAL_TOPIC_CAN_NOT_BE_DELETED: '无法删除中心主题。',
   RELATIONSHIP_COULD_NOT_BE_CREATED: '无法创建关系。必须先选择要建立关系的主题。',
   SESSION_EXPIRED: '您的会话已过期，请重新登录。',
-  CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: '无法为中心主题更改连接样式。',
-  CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: '中心主题不能更改为线条样式。',
-  TAB_TO_CREATE_CHILD: '创建子主题',
-  ENTER_TO_CREATE_SIBLING: '创建同级主题',
 };
 
 export default ZH;
