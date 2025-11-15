@@ -126,7 +126,7 @@ const LoginPage = (): React.ReactElement => {
 
         // If successful, user is authenticated - redirect to redirect URL
         navigate(redirectUrl);
-      } catch (_error) {
+      } catch {
         // If error (401/403/etc), user is not authenticated - show login form
         // Silently handle the error as this is expected for unauthenticated users
       }

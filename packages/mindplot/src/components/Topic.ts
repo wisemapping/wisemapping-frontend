@@ -728,6 +728,27 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setChildrenShrunken(value);
 
+    // When collapsing, unselect any selected descendant topics
+    if (value) {
+      const getAllDescendants = (topic: Topic): Topic[] => {
+        const descendants: Topic[] = [];
+        const children = topic.getChildren();
+        children.forEach((child) => {
+          descendants.push(child);
+          descendants.push(...getAllDescendants(child));
+        });
+        return descendants;
+      };
+
+      const descendants = getAllDescendants(this);
+      descendants.forEach((descendant) => {
+        if (descendant.isOnFocus()) {
+          // Unselect the topic - this will fire topicUnselected event
+          descendant.setOnFocus(false);
+        }
+      });
+    }
+
     // Change render base on the state.
     const shrinkConnector = this.getShrinkConnector();
     if (shrinkConnector) {
