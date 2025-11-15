@@ -39,6 +39,7 @@ const options: EditorOptions = {
   enableKeyboardEvents: true,
   enableAppBar: true,
   saveOnLoad: false,
+  enableSelectionAssistance: true, // Enable HTMLTopicSelected in playground
 };
 
 const mapInfo = new MapInfoImpl('welcome', 'Develop Map Title', 'The Creator', false);

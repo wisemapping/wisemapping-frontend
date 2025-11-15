@@ -22,8 +22,6 @@ import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import TextureIcon from '@mui/icons-material/Texture';
 
@@ -279,35 +277,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
   };
 
-  const addNodeToolbarConfiguration = {
-    icon: <AddCircleOutlineOutlinedIcon />,
-    tooltip:
-      intl.formatMessage({ id: 'editor-panel.tooltip-add-topic', defaultMessage: 'Add Topic' }) +
-      ' (Enter)',
-    onClick: () => {
-      trackEditorPanelAction('create_sibling_topic');
-      model.getDesigner().createSiblingForSelectedNode();
-    },
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
-  };
-
-  const deleteNodeToolbarConfiguration = {
-    icon: <RemoveCircleOutlineIcon />,
-    tooltip:
-      intl.formatMessage({
-        id: 'editor-panel.tooltip-delete-topic',
-        defaultMessage: 'Delete Topic',
-      }) + ' (Delete)',
-    onClick: () => {
-      trackEditorPanelAction('delete_selected_entities');
-      model.getDesigner().deleteSelectedEntities();
-    },
-    disabled: () => model.getDesigner().getModel().filterSelectedTopics().length === 0,
-  };
-
   return [
-    addNodeToolbarConfiguration,
-    deleteNodeToolbarConfiguration,
     styleConfiguration,
     fontFormatToolbarConfiguration,
     editIconConfiguration,

@@ -25,6 +25,10 @@ export type LayoutEventBusType =
   | 'topicAdded'
   | 'topicRemoved'
   | 'topicDisconect'
+  | 'topicSelected'
+  | 'topicUnselected'
+  | 'canvasPanned'
+  | 'canvasZoomed'
   | 'modelUpdate';
 
 export default LayoutEventBusType;

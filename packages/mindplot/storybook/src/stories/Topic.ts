@@ -71,6 +71,10 @@ export type TopicArgs = {
   theme?: ThemeType;
 };
 
+export type CreateTopicOptions = {
+  onTopicCreated?: (topic: Topic, container: HTMLDivElement, workspace: Canvas) => void;
+};
+
 const createTopic = ({
   backgroundColor = undefined,
   text = undefined,
@@ -85,13 +89,14 @@ const createTopic = ({
   imageEmojiChar = undefined,
   theme = undefined,
   readOnly = true,
-}: TopicArgs) => {
+}: TopicArgs, options?: CreateTopicOptions) => {
   ensureDesignerStub();
   // Build basic container ...
   const divElem = document.createElement('div');
   divElem.style.height = '600px';
   divElem.style.width = '800px';
   divElem.style.backgroundColor = 'gray';
+  divElem.style.position = 'relative';
 
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);
@@ -145,6 +150,9 @@ const createTopic = ({
   registerRefreshHook(centralTopic);
   void workspace.enableQueueRender(false);
 
+  if (options?.onTopicCreated) {
+    options.onTopicCreated(centralTopic, divElem, workspace);
+  }
 
   return divElem;
 };

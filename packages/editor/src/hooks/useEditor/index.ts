@@ -39,6 +39,7 @@ export type EditorOptions = {
   hideCreatorInfo?: boolean; // Hide creator info pane in embedded/public view
   initialThemeVariant?: 'light' | 'dark'; // Set initial theme variant via query parameter
   bootstrapXML?: string; // Bootstrap XML to use instead of fetching from server
+  enableSelectionAssistance?: boolean; // Enable HTMLTopicSelected feature
 };
 
 type UseEditorProps = {
@@ -90,7 +91,12 @@ export const useEditor = ({
     if (!model && options && mindplotRef.current && capability) {
       const model = new Model(mindplotRef.current);
       model
-        .loadMindmap(mapInfo.getId(), effectivePersistenceManager, widgetBuilderRef.current)
+        .loadMindmap(
+          mapInfo.getId(),
+          effectivePersistenceManager,
+          widgetBuilderRef.current,
+          options.enableSelectionAssistance,
+        )
         .then(() => {
           setCanvasUpdate(Date.now());
           model.registerEvents(setCanvasUpdate, capability, widgetBuilderRef.current);

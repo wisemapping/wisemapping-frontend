@@ -65,6 +65,7 @@ import ThemeType from './model/ThemeType';
 import ThemeFactory from './theme/ThemeFactory';
 import Theme, { ThemeVariant } from './theme/Theme';
 import ChangeEvent from './layout/ChangeEvent';
+import HTMLTopicSelected from './HTMLTopicSelected';
 
 type DesignerEventType = 'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess' | 'featureEdit';
 
@@ -95,6 +96,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   private _internalClipboard: string | null = null;
 
   private _topicEventDispatcher: TopicEventDispatcher;
+
+  private _selectionShadows: Map<Topic, HTMLTopicSelected> = new Map();
 
   constructor(options: DesignerOptions) {
     super();
@@ -302,6 +305,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       if (topics.length === 0 || rels.length === 0) {
         me.fireEvent('onblur');
       }
+
+      // HTMLTopicSelected handles its own hiding via ontblur event
+      // Shadow will be kept but hidden - only disposed on topicRemoved
     });
 
     topic.addEvent('ontfocus', () => {
@@ -311,6 +317,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       if (topics.length === 1 || rels.length === 1) {
         me.fireEvent('onfocus');
       }
+
+      // HTMLTopicSelected creation is now handled via LayoutEventBus 'topicSelected' event
+      // which fires from Topic.setOnFocus() and includes the topic model/ID
     });
 
     return topic;
@@ -670,11 +679,36 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const mindmap = model.getMindmap();
       result = mindmap.createNode();
 
-      // Let the layout manager calculate the proper order for the sibling
-      // This delegates to the appropriate sorter (TreeSorter, BalancedSorter, etc.)
+      // Get the current topic's order to insert right after it
+      const currentOrder = topic.getOrder();
+      let newOrder: number;
+
+      if (currentOrder !== undefined) {
+        // Insert right after the current topic (currentOrder + 1)
+        // The layout manager's insert method will automatically shift
+        // all siblings with order >= (currentOrder + 1) by incrementing their order
+        newOrder = currentOrder + 1;
+      } else {
+        // If current topic has no order, fall back to layout manager prediction
+        // This should not happen in normal cases, but handle it gracefully
+        const layoutManager = this._eventBussDispatcher.getLayoutManager();
+        const prediction = layoutManager.predict(parentTopic.getId(), null, null);
+        newOrder = prediction.order;
+      }
+
+      // Set the order on the new sibling
+      // When the topic is connected, the layout manager's insert method will:
+      // 1. Shift all siblings with order >= newOrder by incrementing their order
+      // 2. Set the new sibling's order to newOrder
+      result.setOrder(newOrder);
+
+      // Let the layout manager predict the position for insertion
+      // The position will be recalculated during layout after connection,
+      // but we need an initial position. The layout system will position it
+      // correctly based on the order we set.
       const layoutManager = this._eventBussDispatcher.getLayoutManager();
+      // Predict position - the layout system will use the order to position it correctly
       const prediction = layoutManager.predict(parentTopic.getId(), null, null);
-      result.setOrder(prediction.order);
       result.setPosition(prediction.position.x, prediction.position.y);
     }
 
@@ -774,10 +808,97 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       // Enable workspace drag events ...
       this._canvas.registerEvents();
 
+      // Initialize selection shadows if enabled
+      this._initializeSelectionShadows();
+
       // Finally, sort the map ...
       LayoutEventBus.fireEvent('forceLayout');
       this.fireEvent('loadSuccess');
     });
+  }
+
+  private _initializeSelectionShadows(): void {
+    if (!this._options.enableSelectionAssistance) {
+      return;
+    }
+
+    this._cleanupSelectionShadows();
+
+    // Create shadows for topics already selected on map load
+    // (setOnFocus only fires events on state change, so already-selected topics won't fire topicSelected)
+    this.getModel()
+      .filterSelectedTopics()
+      .forEach((topic) => {
+        this._ensureTopicShadow(topic);
+      });
+
+    // Helper to find topic by model
+    const findTopicByModel = (nodeModel: NodeModel): Topic | undefined => {
+      return this.getModel()
+        .getTopics()
+        .find((t) => t.getModel() === nodeModel);
+    };
+
+    // Lifecycle hooks: create shadow when topic is selected
+    LayoutEventBus.addEvent('topicSelected', (nodeModel: NodeModel) => {
+      const topic = findTopicByModel(nodeModel);
+      if (topic) {
+        this._ensureTopicShadow(topic);
+      }
+      // Update all shadows to handle multiple selection (hide shadows if multiple topics selected)
+      updateShadows();
+    });
+
+    // Lifecycle hooks: hide shadows when topic is unselected (may reveal single selection)
+    LayoutEventBus.addEvent('topicUnselected', () => {
+      // Update all shadows to handle selection count changes
+      updateShadows();
+    });
+
+    // Lifecycle hooks: dispose shadow when topic is removed
+    LayoutEventBus.addEvent('topicRemoved', (nodeModel: NodeModel) => {
+      const topic = findTopicByModel(nodeModel);
+      if (topic && this._selectionShadows.has(topic)) {
+        this._selectionShadows.get(topic)?.dispose();
+        this._selectionShadows.delete(topic);
+      }
+    });
+
+    // Update shadows when layout changes (position, size, etc.)
+    const updateShadows = () => {
+      requestAnimationFrame(() => {
+        this._selectionShadows.forEach((shadow) => shadow.update());
+      });
+    };
+
+    LayoutEventBus.addEvent('forceLayout', updateShadows);
+    LayoutEventBus.addEvent('topicResize', updateShadows);
+    LayoutEventBus.addEvent('topicMoved', updateShadows);
+    LayoutEventBus.addEvent('topicConnected', updateShadows);
+
+    // Update shadows when canvas is panned/dragged or zoomed
+    LayoutEventBus.addEvent('canvasPanned', updateShadows);
+    LayoutEventBus.addEvent('canvasZoomed', updateShadows);
+  }
+
+  /**
+   * Ensure a shadow exists for a topic (create if it doesn't exist)
+   * Called when a topic receives focus
+   */
+  private _ensureTopicShadow(topic: Topic): void {
+    if (!this._selectionShadows.has(topic)) {
+      const screenManager = this._canvas.getScreenManager();
+      const containerElement = this.getContainer();
+      const shadow = new HTMLTopicSelected(topic, containerElement, screenManager, this);
+      this._selectionShadows.set(topic, shadow);
+    }
+  }
+
+  private _cleanupSelectionShadows(): void {
+    this._selectionShadows.forEach((shadow) => {
+      shadow.dispose();
+    });
+    this._selectionShadows.clear();
   }
 
   getMindmap(): Mindmap {
