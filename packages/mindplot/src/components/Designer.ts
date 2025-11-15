@@ -809,7 +809,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       this._canvas.registerEvents();
 
       // Initialize selection shadows if enabled
-      this._initializeSelectionShadows();
+      HTMLTopicSelected.initializeSelectionShadows(this);
 
       // Finally, sort the map ...
       LayoutEventBus.fireEvent('forceLayout');
@@ -817,86 +817,18 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     });
   }
 
-  private _initializeSelectionShadows(): void {
-    // Selection assistance is enabled by default
-
-    this._cleanupSelectionShadows();
-
-    // Create shadows for topics already selected on map load
-    // (setOnFocus only fires events on state change, so already-selected topics won't fire topicSelected)
-    this.getModel()
-      .filterSelectedTopics()
-      .forEach((topic) => {
-        this._ensureTopicShadow(topic);
-      });
-
-    // Helper to find topic by model
-    const findTopicByModel = (nodeModel: NodeModel): Topic | undefined => {
-      return this.getModel()
-        .getTopics()
-        .find((t) => t.getModel() === nodeModel);
-    };
-
-    // Lifecycle hooks: create shadow when topic is selected
-    LayoutEventBus.addEvent('topicSelected', (nodeModel: NodeModel) => {
-      const topic = findTopicByModel(nodeModel);
-      if (topic) {
-        this._ensureTopicShadow(topic);
-      }
-      // Update all shadows to handle multiple selection (hide shadows if multiple topics selected)
-      updateShadows();
-    });
-
-    // Lifecycle hooks: hide shadows when topic is unselected (may reveal single selection)
-    LayoutEventBus.addEvent('topicUnselected', () => {
-      // Update all shadows to handle selection count changes
-      updateShadows();
-    });
-
-    // Lifecycle hooks: dispose shadow when topic is removed
-    LayoutEventBus.addEvent('topicRemoved', (nodeModel: NodeModel) => {
-      const topic = findTopicByModel(nodeModel);
-      if (topic && this._selectionShadows.has(topic)) {
-        this._selectionShadows.get(topic)?.dispose();
-        this._selectionShadows.delete(topic);
-      }
-    });
-
-    // Update shadows when layout changes (position, size, etc.)
-    const updateShadows = () => {
-      requestAnimationFrame(() => {
-        this._selectionShadows.forEach((shadow) => shadow.update());
-      });
-    };
-
-    LayoutEventBus.addEvent('forceLayout', updateShadows);
-    LayoutEventBus.addEvent('topicResize', updateShadows);
-    LayoutEventBus.addEvent('topicMoved', updateShadows);
-    LayoutEventBus.addEvent('topicConnected', updateShadows);
-
-    // Update shadows when canvas is panned/dragged or zoomed
-    LayoutEventBus.addEvent('canvasPanned', updateShadows);
-    LayoutEventBus.addEvent('canvasZoomed', updateShadows);
+  /**
+   * Get the selection shadows map
+   */
+  getSelectionShadows(): Map<Topic, HTMLTopicSelected> {
+    return this._selectionShadows;
   }
 
   /**
-   * Ensure a shadow exists for a topic (create if it doesn't exist)
-   * Called when a topic receives focus
+   * Get the screen manager from the canvas
    */
-  private _ensureTopicShadow(topic: Topic): void {
-    if (!this._selectionShadows.has(topic)) {
-      const screenManager = this._canvas.getScreenManager();
-      const containerElement = this.getContainer();
-      const shadow = new HTMLTopicSelected(topic, containerElement, screenManager, this);
-      this._selectionShadows.set(topic, shadow);
-    }
-  }
-
-  private _cleanupSelectionShadows(): void {
-    this._selectionShadows.forEach((shadow) => {
-      shadow.dispose();
-    });
-    this._selectionShadows.clear();
+  getScreenManager(): ScreenManager {
+    return this._canvas.getScreenManager();
   }
 
   getMindmap(): Mindmap {

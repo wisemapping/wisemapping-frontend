@@ -23,6 +23,8 @@ import ColorUtil from './theme/ColorUtil';
 import type { ThemeVariant } from './theme/Theme';
 import type { OrientationType } from './layout/LayoutType';
 import { $msg } from './Messages';
+import LayoutEventBus from './layout/LayoutEventBus';
+import NodeModel from './model/NodeModel';
 
 type HelperElements = {
   container: HTMLDivElement;
@@ -51,9 +53,9 @@ type OverlayGeometry = {
 };
 
 class HTMLTopicSelected {
-  private _overlayContainer: HTMLDivElement;
+  private _overlayContainer: HTMLDivElement | null = null;
 
-  private _overlay: HTMLDivElement;
+  private _overlay: HTMLDivElement | null = null;
 
   private _helperContainer: HTMLDivElement | null;
 
@@ -244,6 +246,11 @@ class HTMLTopicSelected {
    * Update colors based on topic variant
    */
   private updateColors(): boolean {
+    // Don't update colors if overlay doesn't exist (read-only mode)
+    if (!this._overlay) {
+      return false;
+    }
+
     const topicColors = this.withTopic((topic) => {
       const variant = topic.getThemeVariant();
       const connectionColor = topic.getConnectionColor(variant);
@@ -402,8 +409,10 @@ class HTMLTopicSelected {
       return;
     }
 
-    this._overlay.style.display = 'block';
-    this.applyOverlayFrame(geometry);
+    if (this._overlay) {
+      this._overlay.style.display = 'block';
+      this.applyOverlayFrame(geometry);
+    }
     this.updateHelperBox(geometry, hasChildren);
     this.ensurePlusButtons();
     this.updatePlusButtons(geometry, hasChildren);
@@ -415,6 +424,10 @@ class HTMLTopicSelected {
     overlayWidth,
     overlayHeight,
   }: OverlayGeometry): void {
+    if (!this._overlay) {
+      return;
+    }
+
     this._overlay.style.left = `${Math.round(overlayLeft)}px`;
     this._overlay.style.top = `${Math.round(overlayTop)}px`;
     this._overlay.style.width = `${Math.round(overlayWidth)}px`;
@@ -864,6 +877,10 @@ class HTMLTopicSelected {
       this._overlayContainer.parentElement.removeChild(this._overlayContainer);
     }
 
+    // Clear references
+    this._overlayContainer = null;
+    this._overlay = null;
+
     // Remove plus buttons from main container
     if (this._rightPlus && this._rightPlus.parentElement) {
       this._rightPlus.parentElement.removeChild(this._rightPlus);
@@ -878,6 +895,106 @@ class HTMLTopicSelected {
     this._bottomPlus = null;
     this._helperContainer = null;
     this._helperElements = null;
+  }
+
+  /**
+   * Clean up all selection shadows for a designer instance
+   */
+  static cleanupSelectionShadows(designer: Designer): void {
+    const selectionShadows = designer.getSelectionShadows();
+    selectionShadows.forEach((shadow) => {
+      shadow.dispose();
+    });
+    selectionShadows.clear();
+  }
+
+  /**
+   * Ensure a shadow exists for a topic (create if it doesn't exist)
+   * Called when a topic receives focus
+   */
+  static ensureTopicShadow(designer: Designer, topic: Topic): void {
+    const selectionShadows = designer.getSelectionShadows();
+    if (!selectionShadows.has(topic)) {
+      const screenManager = designer.getScreenManager();
+      const containerElement = designer.getContainer();
+      const shadow = new HTMLTopicSelected(topic, containerElement, screenManager, designer);
+      selectionShadows.set(topic, shadow);
+    }
+  }
+
+  /**
+   * Initialize selection shadows for a designer instance
+   * Sets up event listeners and creates shadows for already-selected topics
+   */
+  static initializeSelectionShadows(designer: Designer): void {
+    // Don't initialize selection shadows in read-only mode
+    if (designer.isReadOnly()) {
+      return;
+    }
+
+    // Selection assistance is enabled by default
+
+    HTMLTopicSelected.cleanupSelectionShadows(designer);
+
+    // Create shadows for topics already selected on map load
+    // (setOnFocus only fires events on state change, so already-selected topics won't fire topicSelected)
+    designer
+      .getModel()
+      .filterSelectedTopics()
+      .forEach((topic) => {
+        HTMLTopicSelected.ensureTopicShadow(designer, topic);
+      });
+
+    // Helper to find topic by model
+    const findTopicByModel = (nodeModel: NodeModel): Topic | undefined => {
+      return designer
+        .getModel()
+        .getTopics()
+        .find((t) => t.getModel() === nodeModel);
+    };
+
+    const selectionShadows = designer.getSelectionShadows();
+
+    // Lifecycle hooks: create shadow when topic is selected
+    LayoutEventBus.addEvent('topicSelected', (nodeModel: NodeModel) => {
+      const topic = findTopicByModel(nodeModel);
+      if (topic) {
+        HTMLTopicSelected.ensureTopicShadow(designer, topic);
+      }
+      // Update all shadows to handle multiple selection (hide shadows if multiple topics selected)
+      updateShadows();
+    });
+
+    // Lifecycle hooks: hide shadows when topic is unselected (may reveal single selection)
+    LayoutEventBus.addEvent('topicUnselected', () => {
+      // Update all shadows to handle selection count changes
+      updateShadows();
+    });
+
+    // Lifecycle hooks: dispose shadow when topic is removed
+    LayoutEventBus.addEvent('topicRemoved', (nodeModel: NodeModel) => {
+      const topic = findTopicByModel(nodeModel);
+      if (topic && selectionShadows.has(topic)) {
+        selectionShadows.get(topic)?.dispose();
+        selectionShadows.delete(topic);
+      }
+    });
+
+    // Update shadows when layout changes (position, size, etc.)
+    const updateShadows = () => {
+      requestAnimationFrame(() => {
+        selectionShadows.forEach((shadow) => shadow.update());
+      });
+    };
+
+    LayoutEventBus.addEvent('forceLayout', updateShadows);
+    LayoutEventBus.addEvent('topicResize', updateShadows);
+    LayoutEventBus.addEvent('topicMoved', updateShadows);
+    LayoutEventBus.addEvent('topicConnected', updateShadows);
+
+    // Update shadows when canvas is panned/dragged or zoomed
+    LayoutEventBus.addEvent('canvasPanned', updateShadows);
+    LayoutEventBus.addEvent('canvasZoomed', updateShadows);
   }
 }
 
