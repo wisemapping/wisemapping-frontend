@@ -39,6 +39,7 @@ import type MindplotWebComponentInterface from './components/MindplotWebComponen
 import LinkIcon from './components/LinkIcon';
 import NoteIcon from './components/NoteIcon';
 import Topic from './components/Topic';
+import HTMLTopicSelected from './components/HTMLTopicSelected';
 
 import LinkModel from './components/model/LinkModel';
 import NoteModel from './components/model/NoteModel';
@@ -97,5 +98,6 @@ export {
   NoteModel,
   WidgetBuilder,
   Topic,
+  HTMLTopicSelected,
   XMLSerializerFactory,
 };

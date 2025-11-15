@@ -139,6 +139,8 @@ class MindplotWebComponent extends HTMLElement {
     const editorRenderMode = this.getAttribute('mode') as EditorRenderMode;
     const locale = this.getAttribute('locale');
     const zoom = this.getAttribute('zoom');
+    const enableSelectionAssistanceAttr = this.getAttribute('enable-selection-assistance');
+    const enableSelectionAssistance = enableSelectionAssistanceAttr === 'true';
 
     // Clear theme cache to ensure updated configurations are loaded
     ThemeFactory.clearCache();
@@ -157,6 +159,7 @@ class MindplotWebComponent extends HTMLElement {
       divContainer: mindplodElem!,
       zoom: zoom ? Number.parseFloat(zoom) : 1,
       locale: locale || 'en',
+      enableSelectionAssistance,
     });
 
     this._designer = buildDesigner(options);

@@ -51,6 +51,13 @@ import type { OrientationType } from './layout/LayoutType';
 
 const ICON_SCALING_FACTOR = 1.3;
 
+export type TopicCornerCoordinates = {
+  topLeft: PositionType;
+  topRight: PositionType;
+  bottomLeft: PositionType;
+  bottomRight: PositionType;
+};
+
 abstract class Topic extends NodeGraph {
   private _innerShape: TopicShape | null;
 
@@ -259,6 +266,38 @@ abstract class Topic extends NodeGraph {
     }
 
     return this._outerShape;
+  }
+
+  /**
+   * Returns the topic bounding box corners using native HTML page coordinates (CSS pixels).
+   * Coordinates are relative to the document (viewport + scroll offset).
+   */
+  getAbsoluteCornerCoordinates(): TopicCornerCoordinates | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    const groupPeer = this.get2DElement().peer;
+    const nativeElement = groupPeer?._native;
+    if (!nativeElement || !nativeElement.isConnected) {
+      return null;
+    }
+
+    const rect = nativeElement.getBoundingClientRect();
+    const scrollLeft = window.scrollX !== undefined ? window.scrollX : (window.pageXOffset ?? 0);
+    const scrollTop = window.scrollY !== undefined ? window.scrollY : (window.pageYOffset ?? 0);
+
+    const left = rect.left + scrollLeft;
+    const right = rect.right + scrollLeft;
+    const top = rect.top + scrollTop;
+    const bottom = rect.bottom + scrollTop;
+
+    return {
+      topLeft: { x: left, y: top },
+      topRight: { x: right, y: top },
+      bottomLeft: { x: left, y: bottom },
+      bottomRight: { x: right, y: bottom },
+    };
   }
 
   getOrBuildTextShape(): Text {
@@ -656,8 +695,15 @@ abstract class Topic extends NodeGraph {
       // In any case, always try to hide the editor ...
       this.closeEditors();
 
-      // Fire event ...
+      // Fire topic-level event (for backward compatibility)
       this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
+
+      // Fire LayoutEventBus event for global selection tracking (includes topic model/ID)
+      if (focus) {
+        LayoutEventBus.fireEvent('topicSelected', this.getModel());
+      } else {
+        LayoutEventBus.fireEvent('topicUnselected', this.getModel());
+      }
     }
   }
 
@@ -1127,6 +1173,12 @@ abstract class Topic extends NodeGraph {
   }
 
   removeFromWorkspace(workspace: Canvas): void {
+    // Unselect topic first (fires topicUnselected event)
+    // This ensures topicUnselected fires before topicRemoved
+    if (this.isOnFocus()) {
+      this.setOnFocus(false);
+    }
+
     const elem2d = this.get2DElement();
     workspace.removeChild(elem2d);
     const line = this.getOutgoingLine();

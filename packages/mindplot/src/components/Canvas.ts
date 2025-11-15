@@ -20,6 +20,7 @@ import { $assert } from './util/assert';
 import ScreenManager from './ScreenManager';
 import SizeType from './SizeType';
 import CanvasElement from './CanvasElement';
+import LayoutEventBus from './layout/LayoutEventBus';
 
 class Canvas {
   private _zoom: number;
@@ -246,6 +247,8 @@ class Canvas {
 
     // Some changes in the screen. Let's fire an update event...
     this._screenManager.fireEvent('update');
+    // Also fire LayoutEventBus event for canvas zooming
+    LayoutEventBus.fireEvent('canvasZoomed', { zoom });
   }
 
   getScreenManager(): ScreenManager {
@@ -273,6 +276,17 @@ class Canvas {
     const workspace = this._workspace;
     const screenManager = this._screenManager;
     const mWorkspace = this;
+    let panUpdateScheduled = false;
+    const schedulePanUpdate = () => {
+      if (!panUpdateScheduled) {
+        panUpdateScheduled = true;
+        requestAnimationFrame(() => {
+          LayoutEventBus.fireEvent('canvasPanned');
+          panUpdateScheduled = false;
+        });
+      }
+    };
+
     const mouseDownListener = (event: Event) => {
       if (!this._mouseMoveListener) {
         if (mWorkspace.isWorkspaceEventsEnabled()) {
@@ -325,6 +339,8 @@ class Canvas {
 
             // Fire drag event ...
             screenManager.fireEvent('update');
+            // Also fire LayoutEventBus event for canvas panning (throttled via requestAnimationFrame)
+            schedulePanUpdate();
             wasDragged = true;
           };
           screenManager.addEvent('mousemove', this._mouseMoveListener);
