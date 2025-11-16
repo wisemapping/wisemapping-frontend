@@ -259,6 +259,14 @@ class Canvas {
     return this._screenManager;
   }
 
+  setCoordOrigin(x: number, y: number): void {
+    this._workspace.setCoordOrigin(x, y);
+  }
+
+  setCoordSize(width: number, height: number): void {
+    this._workspace.setCoordSize(width, height);
+  }
+
   enableWorkspaceEvents(value: boolean) {
     this._eventsEnabled = value;
   }
