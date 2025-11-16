@@ -375,8 +375,119 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   zoomToFit(): void {
-    this.getModel().setZoom(1);
-    this._canvas.setZoom(1, true);
+    const topics = this.getModel().getTopics();
+    if (!topics || topics.length === 0) {
+      // If no topics, just center on origin
+      this.getModel().setZoom(1);
+      this._canvas.setZoom(1, true);
+      return;
+    }
+
+    // Calculate bounding box of all topics
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
+
+    topics.forEach((topic) => {
+      const position = topic.getPosition();
+      const size = topic.getSize();
+
+      // Topic position is the center, so calculate bounds
+      const halfWidth = size.width / 2;
+      const halfHeight = size.height / 2;
+
+      minX = Math.min(minX, position.x - halfWidth);
+      maxX = Math.max(maxX, position.x + halfWidth);
+      minY = Math.min(minY, position.y - halfHeight);
+      maxY = Math.max(maxY, position.y + halfHeight);
+    });
+
+    // Add padding (10% on each side)
+    const paddingX = (maxX - minX) * 0.1;
+    const paddingY = (maxY - minY) * 0.1;
+    minX -= paddingX;
+    maxX += paddingX;
+    minY -= paddingY;
+    maxY += paddingY;
+
+    const contentWidth = maxX - minX;
+    const contentHeight = maxY - minY;
+    const contentCenterX = (minX + maxX) / 2;
+    const contentCenterY = (minY + maxY) / 2;
+
+    // Get container dimensions
+    const screenManager = this._canvas.getScreenManager();
+    const containerWidth = screenManager.getContainerWidth();
+    let containerHeight = screenManager.getContainerHeight();
+
+    // Subtract AppBar height from available height
+    // Find the main AppBar (not the toolbars which are positioned absolutely)
+    // The main AppBar is typically at the top of the page
+    const allAppBars = document.querySelectorAll('.MuiAppBar-root');
+    let topAppBarHeight = 0;
+
+    for (const appBar of Array.from(allAppBars)) {
+      const appBarElement = appBar as HTMLElement;
+      const appBarRect = appBarElement.getBoundingClientRect();
+      const style = window.getComputedStyle(appBarElement);
+
+      // Check if this is the top AppBar (not absolutely positioned toolbars)
+      // Toolbars use position: absolute, main AppBar uses position: fixed or static
+      if (appBarRect.height > 0 && appBarRect.top >= 0 && style.position !== 'absolute') {
+        topAppBarHeight = Math.max(topAppBarHeight, appBarRect.height);
+      }
+    }
+
+    // Subtract the top AppBar height from available height
+    if (topAppBarHeight > 0) {
+      containerHeight = Math.max(containerHeight - topAppBarHeight, containerWidth * 0.1); // Ensure minimum height
+    }
+
+    // Handle edge cases where content has no size
+    if (contentWidth <= 0 || contentHeight <= 0) {
+      // Content has no size, just center on content center
+      this.getModel().setZoom(1);
+      const visibleWidth = containerWidth;
+      const visibleHeight = containerHeight;
+      const coordOriginX = contentCenterX - visibleWidth / 2;
+      const coordOriginY = contentCenterY - visibleHeight / 2;
+      this._canvas.setCoordOrigin(coordOriginX, coordOriginY);
+      this._canvas.setCoordSize(visibleWidth, visibleHeight);
+      screenManager.setOffset(coordOriginX, coordOriginY);
+      screenManager.setScale(1);
+      screenManager.fireEvent('update');
+      return;
+    }
+
+    // Calculate zoom to fit content in container
+    const zoomX = containerWidth / contentWidth;
+    const zoomY = containerHeight / contentHeight;
+    const zoom = Math.min(zoomX, zoomY, 1); // Don't zoom in beyond 1x
+
+    // Calculate coordinate origin to center content in view
+    // The visible area in workspace coordinates is: coordOrigin to coordOrigin + (containerSize / zoom)
+    const visibleWidth = containerWidth / zoom;
+    const visibleHeight = containerHeight / zoom;
+
+    // Center the content in the visible area
+    const coordOriginX = contentCenterX - visibleWidth / 2;
+    const coordOriginY = contentCenterY - visibleHeight / 2;
+
+    // Update zoom in model
+    this.getModel().setZoom(zoom);
+
+    // Update canvas zoom and coordinate origin
+    this._canvas.setCoordOrigin(coordOriginX, coordOriginY);
+    this._canvas.setCoordSize(visibleWidth, visibleHeight);
+
+    // Update screen manager
+    screenManager.setOffset(coordOriginX, coordOriginY);
+    screenManager.setScale(zoom);
+
+    // Fire update events
+    screenManager.fireEvent('update');
+    LayoutEventBus.fireEvent('canvasZoomed', { zoom });
   }
 
   zoomOut(factor = 1.2) {

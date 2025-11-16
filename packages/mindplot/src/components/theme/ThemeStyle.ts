@@ -401,6 +401,8 @@ export class ThemeStyle {
         return LineType.POLYLINE_CURVED;
       case 'THICK_CURVED':
         return LineType.THICK_CURVED;
+      case 'THICK_CURVED_ORGANIC':
+        return LineType.THICK_CURVED_ORGANIC;
       case 'ARC':
         return LineType.ARC;
       case 'HEARTBEAT':

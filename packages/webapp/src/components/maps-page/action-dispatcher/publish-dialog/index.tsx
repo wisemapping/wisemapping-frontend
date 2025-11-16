@@ -88,12 +88,6 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     setError(undefined);
   };
 
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    // Form submission is now handled by the switch onChange
-    // This prevents form submission if user presses Enter
-  };
-
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean): void => {
     event.preventDefault();
     setError(undefined);
@@ -141,16 +135,11 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     <div>
       <BaseDialog
         onClose={handleOnClose}
-        onSubmit={handleOnSubmit}
         error={error}
         title={intl.formatMessage({ id: 'publish.title', defaultMessage: 'Publish' })}
         description={intl.formatMessage({
           id: 'publish.description',
           defaultMessage: 'By publishing the map you make it visible to everyone on the Internet.',
-        })}
-        submitButton={intl.formatMessage({
-          id: 'publish.button',
-          defaultMessage: 'Accept',
         })}
         maxWidth="md"
         papercss={classes.paper}
