@@ -6,7 +6,7 @@
     "defaultMessage": "Accetta"
   },
   "accountinfo.deleteaccount": {
-    "defaultMessage": "Elimina Account"
+    "defaultMessage": "Elimina account"
   },
   "accountinfo.email": {
     "defaultMessage": "Email"
@@ -57,7 +57,7 @@
     "defaultMessage": "Info"
   },
   "action.label": {
-    "defaultMessage": "Aggiungi Etichetta"
+    "defaultMessage": "Aggiungi etichetta"
   },
   "action.new": {
     "defaultMessage": "Nuova mappa"
@@ -99,7 +99,7 @@
     "defaultMessage": "Le password non corrispondono. Per favore, riprova."
   },
   "changepwd.title": {
-    "defaultMessage": "Cambia Password"
+    "defaultMessage": "Cambia password"
   },
   "common.wait": {
     "defaultMessage": "Per favore attendi..."
@@ -150,7 +150,7 @@
     "defaultMessage": "Esporta"
   },
   "export.warning": {
-    "defaultMessage": "L'esportazione in Immagine (SVG,PNG,JPEG,PDF) è disponibile solo nella barra degli strumenti dell'editor."
+    "defaultMessage": "L'esportazione in immagine (SVG,PNG,JPEG,PDF) è disponibile solo nella barra degli strumenti dell'editor."
   },
   "footer.aboutus": {
     "defaultMessage": "Chi Siamo"
@@ -183,7 +183,7 @@
     "defaultMessage": "Il Nostro Team"
   },
   "footer.termsandconditions": {
-    "defaultMessage": "Termini e Condizioni"
+    "defaultMessage": "Termini e condizioni"
   },
   "forgot.desc": {
     "defaultMessage": "Ti invieremo un'email per reimpostare la tua password."
@@ -198,7 +198,7 @@
     "defaultMessage": "Non hai bisogno di una password, per favore accedi usando Facebook o Google."
   },
   "forgot.page-title": {
-    "defaultMessage": "Password Dimenticata | WiseMapping"
+    "defaultMessage": "Password dimenticata | WiseMapping"
   },
   "forgot.register": {
     "defaultMessage": "Invia link di recupero"
@@ -213,7 +213,7 @@
     "defaultMessage": "Reimposta la tua password"
   },
   "forgotsuccess.page-title": {
-    "defaultMessage": "Password Recuperata | WiseMapping"
+    "defaultMessage": "Password recuperata | WiseMapping"
   },
   "header.donthaveaccount": {
     "defaultMessage": "Non hai un account?"
@@ -240,13 +240,13 @@
     "defaultMessage": "Importa mappa mentale esistente"
   },
   "info.basic-info": {
-    "defaultMessage": "Informazioni Base"
+    "defaultMessage": "Informazioni di base"
   },
   "info.button": {
     "defaultMessage": "Accetta"
   },
   "info.creation-time": {
-    "defaultMessage": "Data di Creazione"
+    "defaultMessage": "Data di creazione"
   },
   "info.creator": {
     "defaultMessage": "Creatore"
@@ -258,16 +258,16 @@
     "defaultMessage": "Pubblicando la mappa la rendi visibile a tutti su Internet."
   },
   "info.modified-time": {
-    "defaultMessage": "Data Ultima Modifica"
+    "defaultMessage": "Data ultima modifica"
   },
   "info.modified-tny": {
-    "defaultMessage": "Ultima Modifica Di"
+    "defaultMessage": "Ultima modifica di"
   },
   "info.name": {
     "defaultMessage": "Nome"
   },
   "info.public-visibility": {
-    "defaultMessage": "Pubblicamente Visibile"
+    "defaultMessage": "Visibile pubblicamente"
   },
   "info.sharing": {
     "defaultMessage": "Condivisione"
@@ -309,7 +309,7 @@
     "defaultMessage": "Cambia Lingua"
   },
   "language.help": {
-    "defaultMessage": "Aiuta a Tradurre"
+    "defaultMessage": "Aiuta a tradurre"
   },
   "login.desc": {
     "defaultMessage": "Accedi al tuo account"
@@ -372,13 +372,13 @@
     "defaultMessage": "Scegli un file"
   },
   "maps.copilot-button": {
-    "defaultMessage": "Copilota IA"
+    "defaultMessage": "Copilot IA"
   },
   "maps.copilot-tooltip": {
-    "defaultMessage": "Avvia una mappa mentale con il Copilota IA"
+    "defaultMessage": "Avvia una mappa mentale con Copilot IA"
   },
   "maps.copilot-dialog.title": {
-    "defaultMessage": "Copilota Mindmap con tecnologia ChatGPT"
+    "defaultMessage": "Copilot Mindmap con tecnologia ChatGPT"
   },
   "maps.copilot-dialog.description": {
     "defaultMessage": "Mind Map Copilot è un assistente di brainstorming basato su ChatGPT che trasforma i tuoi prompt in mappe mentali strutturate. Lo apriremo in una nuova scheda così potrai ampliare le idee, generare argomenti e riportare il meglio in WiseMapping."
@@ -387,7 +387,7 @@
     "defaultMessage": "Senza titolo"
   },
   "maps.copilot-dialog.continue": {
-    "defaultMessage": "Apri il Copilota"
+    "defaultMessage": "Apri Copilot"
   },
   "maps.create-tooltip": {
     "defaultMessage": "Crea una nuova mappa mentale"
@@ -402,7 +402,7 @@
     "defaultMessage": "Modificato"
   },
   "maps.modified-by": {
-    "defaultMessage": "Modificato Da"
+    "defaultMessage": "Modificato da"
   },
   "maps.modified-by-desc": {
     "defaultMessage": "Modificato da {by} il {on}"
@@ -456,7 +456,7 @@
     "defaultMessage": "Abilita condivisione pubblica"
   },
   "publish.copied": {
-    "defaultMessage": "Copied to clipboard!"
+    "defaultMessage": "Copiato negli appunti!"
   },
   "publish.description": {
     "defaultMessage": "Pubblicando la mappa la rendi visibile a tutti su Internet."
@@ -561,7 +561,7 @@
     "defaultMessage": "Condividi"
   },
   "share.adding-button": {
-    "defaultMessage": "Sharing..."
+    "defaultMessage": "Condivisione..."
   },
   "share.add-message": {
     "defaultMessage": "Aggiungi messaggio"
@@ -591,7 +591,7 @@
     "defaultMessage": "Chiaro"
   },
   "theme.toggle": {
-    "defaultMessage": "Cambia Tema"
+    "defaultMessage": "Cambia tema"
   },
   "admin.delete-user": {
     "defaultMessage": "Elimina utente"
@@ -777,85 +777,85 @@
     "defaultMessage": "Non è possibile aprire la mappa mentale."
   },
   "error.undexpected-error-msg": {
-    "defaultMessage": "Unexpected error opening mindmap. Please, try latter."
+    "defaultMessage": "Errore imprevisto durante l'apertura della mappa mentale. Riprova più tardi."
   },
   "accountinfo.personal-details": {
-    "defaultMessage": "Personal Details"
+    "defaultMessage": "Dati personali"
   },
   "account.delete-warning-title": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Elimina account"
   },
   "account.delete-warning-description": {
-    "defaultMessage": "Once you delete your account, there is no going back. Please be certain."
+    "defaultMessage": "Una volta eliminato il tuo account, non potrai più tornare indietro. Si prega di essere sicuri."
   },
   "account.delete-warning-consequences": {
-    "defaultMessage": "This will permanently delete:"
+    "defaultMessage": "Questo eliminerà definitivamente:"
   },
   "account.delete-warning-mindmaps": {
-    "defaultMessage": "All your mindmaps and their content"
+    "defaultMessage": "Tutte le tue mappe mentali e il loro contenuto"
   },
   "account.delete-warning-data": {
-    "defaultMessage": "All your personal data and account information"
+    "defaultMessage": "Tutti i tuoi dati personali e le informazioni del tuo account"
   },
   "account.delete-warning-collaborations": {
-    "defaultMessage": "All shared mindmaps and collaborations"
+    "defaultMessage": "Tutte le mappe mentali e le collaborazioni condivise"
   },
   "account.delete-warning-history": {
-    "defaultMessage": "All account history and activity logs"
+    "defaultMessage": "Tutta la cronologia dell'account e i log delle attività"
   },
   "account.delete-confirmation-title": {
-    "defaultMessage": "Are you absolutely sure?"
+    "defaultMessage": "Ne sei assolutamente sicuro?"
   },
   "account.delete-confirmation-warning": {
-    "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+    "defaultMessage": "Questa azione non può essere annullata. Ciò eliminerà definitivamente il tuo account e rimuoverà tutti i dati dai nostri server."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+    "defaultMessage": "Digita ELIMINA IL MIO ACCOUNT per confermare:"
   },
   "account.delete-confirm": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Elimina account"
   },
   "menu.admin-console": {
-    "defaultMessage": "Admin Console"
+    "defaultMessage": "Console amminstratore"
   },
   "registration.form-legend": {
-    "defaultMessage": "Account Information"
+    "defaultMessage": "Informazioni sull'account"
   },
   "admin.change-password": {
-    "defaultMessage": "Change password"
+    "defaultMessage": "Cambia password"
   },
   "admin.change-password-title": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "Cambiare password"
   },
   "admin.change-password-description": {
-    "defaultMessage": "Change password for user: {email}"
+    "defaultMessage": "Cambia password per l'utente: {email}"
   },
   "admin.new-password": {
-    "defaultMessage": "New Password"
+    "defaultMessage": "Nuova password"
   },
   "admin.confirm-password": {
-    "defaultMessage": "Confirm Password"
+    "defaultMessage": "Conferma password"
   },
   "admin.change-password-button": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "Cambia password"
   },
   "admin.password-error-length": {
-    "defaultMessage": "Password must be at least 6 characters"
+    "defaultMessage": "La password deve contenere almeno 6 caratteri"
   },
   "admin.password-error-mismatch": {
-    "defaultMessage": "Passwords do not match"
+    "defaultMessage": "Le password non corrispondono"
   },
   "admin.password-error-failed": {
-    "defaultMessage": "Failed to change password"
+    "defaultMessage": "Impossibile modificare la password"
   },
   "admin.password-error-google": {
-    "defaultMessage": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+    "defaultMessage": "Questo utente è autenticato tramite Google. La modifica della password non è disponibile per gli account Google. Chiedi all'utente di gestire la propria password tramite il proprio account Google."
   },
   "admin.password-error-facebook": {
-    "defaultMessage": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+    "defaultMessage": "Questo utente è autenticato tramite Facebook. La modifica della password non è disponibile per gli account Facebook. Chiedi all'utente di gestire la propria password tramite il proprio account Facebook."
   },
   "admin.close": {
-    "defaultMessage": "Close"
+    "defaultMessage": "Chiudi"
   },
   "validation.title-required": {
     "defaultMessage": "Il titolo è obbligatorio"
