@@ -626,6 +626,9 @@
   "note.character.limit.warning": {
     "defaultMessage": "(सीमा के करीब)"
   },
+  "aurora": {
+    "defaultMessage": "Aurora"
+  },
   "ocean": {
     "defaultMessage": "महासागर"
   },
@@ -658,6 +661,12 @@
   },
   "theme.classic.name": {
     "defaultMessage": "क्लासिक"
+  },
+  "theme.aurora.description": {
+    "defaultMessage": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+  },
+  "theme.aurora.name": {
+    "defaultMessage": "Aurora"
   },
   "theme.ocean.description": {
     "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."

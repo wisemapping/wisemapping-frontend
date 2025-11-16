@@ -21,6 +21,7 @@ import { FontStyleType } from '../FontStyleType';
 import { FontWeightType } from '../FontWeightType';
 import { TopicShapeType } from '../model/INodeModel';
 import { TopicType, ThemeVariant } from './Theme';
+import type { BackgroundPatternType } from '../model/CanvasStyleType';
 
 // Import JSON files
 import prismDefault from './styles/prism-default.json';
@@ -38,6 +39,9 @@ import sunriseDark from './styles/sunrise-dark.json';
 import oceanDefault from './styles/ocean-default.json';
 import oceanLight from './styles/ocean-light.json';
 import oceanDark from './styles/ocean-dark.json';
+import auroraDefault from './styles/aurora-default.json';
+import auroraLight from './styles/aurora-light.json';
+import auroraDark from './styles/aurora-dark.json';
 
 export type TopicStyleType = {
   borderColor: string | string[];
@@ -61,6 +65,7 @@ export type CanvasStyleType = {
   gridColor?: string;
   opacity?: number;
   showGrid?: boolean;
+  gridPattern?: BackgroundPatternType;
 };
 
 type JsonTopicStyleType = {
@@ -85,6 +90,7 @@ type JsonCanvasStyleType = {
   gridColor?: string;
   opacity?: number;
   showGrid?: boolean;
+  gridPattern?: BackgroundPatternType;
 };
 
 type JsonThemeStyles = {
@@ -205,6 +211,12 @@ export class ThemeStyle {
         return oceanLight as JsonThemeStyles;
       case 'ocean-dark.json':
         return oceanDark as JsonThemeStyles;
+      case 'aurora-default.json':
+        return auroraDefault as JsonThemeStyles;
+      case 'aurora-light.json':
+        return auroraLight as JsonThemeStyles;
+      case 'aurora-dark.json':
+        return auroraDark as JsonThemeStyles;
       default:
         console.warn(`Unknown style file: ${filename}`);
         return {};
@@ -311,6 +323,15 @@ export class ThemeStyle {
       showGrid = defaultCanvas.showGrid;
     }
 
+    let gridPattern: BackgroundPatternType | undefined;
+    if (variantCanvas.gridPattern) {
+      gridPattern = variantCanvas.gridPattern;
+    } else if (lightCanvas.gridPattern) {
+      gridPattern = lightCanvas.gridPattern;
+    } else if (defaultCanvas.gridPattern) {
+      gridPattern = defaultCanvas.gridPattern;
+    }
+
     const merged: CanvasStyleType = {
       backgroundColor:
         variantCanvas.backgroundColor ||
@@ -320,6 +341,7 @@ export class ThemeStyle {
       gridColor: variantCanvas.gridColor || lightCanvas.gridColor || defaultCanvas.gridColor,
       opacity,
       showGrid,
+      gridPattern,
     };
 
     return merged;

@@ -40,7 +40,7 @@ export default {
     linkText: { control: 'text' },
     eicon: { control: 'multi-select', options: ['❤️', '🌈', '🖇️'] },
     imageEmojiChar: { control: 'text' },
-    theme: { control: 'select', options: ['classic', 'prism', 'robot', 'sunrise', 'ocean'] },
+    theme: { control: 'select', options: ['classic', 'aurora', 'prism', 'robot', 'sunrise', 'ocean'] },
     zoom: {
       control: { type: 'range', min: 0.3, max: 1.9, step: 0.1 },
       description: 'Zoom level (0.3 = zoomed out, 1.9 = zoomed in)',
@@ -140,10 +140,17 @@ ThemeOcean.args = {
   theme: 'ocean',
 };
 
+export const ThemeAurora = Template.bind({});
+ThemeAurora.args = {
+  text: 'Theme Aurora',
+  eicon: ['🌌'],
+  shapeType: 'none',
+  theme: 'aurora',
+};
+
 export const ImageEmojiFeature = Template.bind({});
 ImageEmojiFeature.args = {
   text: 'Image Emoji Feature',
   shapeType: 'rectangle',
   imageEmojiChar: '😀',
 };
-

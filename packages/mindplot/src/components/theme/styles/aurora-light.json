@@ -1,0 +1,56 @@
+{
+  "CentralTopic": {
+    "backgroundColor": "#F9FBFF",
+    "borderColor": "#FFFFFF",
+    "fontColor": "#050514",
+    "outerBackgroundColor": "#E4DAFF",
+    "outerBorderColor": "#A17CFF"
+  },
+  "MainTopic": {
+    "backgroundColor": [
+      "#FCE4EC",
+      "#FFEAD7",
+      "#FFF8D5",
+      "#D0F7E5",
+      "#D4F6FF",
+      "#E6E4FF"
+    ],
+    "borderColor": [
+      "#F86D70",
+      "#F8A133",
+      "#F7E733",
+      "#5AE88C",
+      "#42DBE7",
+      "#7A78FF"
+    ],
+    "connectionColor": [
+      "#F86D70",
+      "#F8A133",
+      "#F7E733",
+      "#5AE88C",
+      "#42DBE7",
+      "#7A78FF"
+    ],
+    "fontColor": "#080B22",
+    "outerBackgroundColor": "#FFFFFF",
+    "outerBorderColor": "#C8C1FF"
+  },
+  "SubTopic": {
+    "backgroundColor": "#F0F4FF",
+    "borderColor": "#C9D2FF",
+    "fontColor": "#0E1530",
+    "connectionColor": "#7A78FF"
+  },
+  "IsolatedTopic": {
+    "borderColor": "#A17CFF",
+    "fontColor": "#1C0E72",
+    "backgroundColor": "#FFFFFF"
+  },
+  "Canvas": {
+    "backgroundColor": "#15182B",
+    "gridColor": "rgba(111, 255, 255, 0.15)",
+    "opacity": 0.95,
+    "showGrid": true,
+    "gridPattern": "dots"
+  }
+}

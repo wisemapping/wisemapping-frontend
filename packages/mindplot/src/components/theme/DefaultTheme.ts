@@ -28,6 +28,7 @@ import Theme, { TopicType, ThemeVariant } from './Theme';
 import { $msg } from '../Messages';
 import { ThemeStyle } from './ThemeStyle';
 import type { TopicStyleType } from './ThemeStyle';
+import type { BackgroundPatternType } from '../model/CanvasStyleType';
 
 // Re-export TopicStyleType for backward compatibility
 export type { TopicStyleType } from './ThemeStyle';
@@ -77,6 +78,11 @@ class DefaultTheme implements Theme {
   getCanvasShowGrid(): boolean {
     const canvasStyle = this._themeStyle.getCanvasStyle();
     return canvasStyle.showGrid !== false; // Default to true if not specified
+  }
+
+  getCanvasGridPattern(): BackgroundPatternType {
+    const canvasStyle = this._themeStyle.getCanvasStyle();
+    return canvasStyle.gridPattern || 'grid';
   }
 
   protected resolve(key: keyof TopicStyleType, topic: Topic, resolveDefault = true): StyleType {

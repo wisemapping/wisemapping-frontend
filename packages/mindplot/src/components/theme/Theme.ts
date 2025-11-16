@@ -49,6 +49,7 @@ interface Theme {
   getCanvasGridColor(): string | undefined;
   getCanvasOpacity(): number;
   getCanvasShowGrid(): boolean;
+  getCanvasGridPattern(): 'solid' | 'grid' | 'dots';
 
   getFontColor(topic: Topic): string;
 

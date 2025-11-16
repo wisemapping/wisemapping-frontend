@@ -861,6 +861,12 @@
       "value": "(Приближается к лимиту)"
     }
   ],
+  "aurora": [
+    {
+      "type": 0,
+      "value": "Аврора"
+    }
+  ],
   "ocean": [
     {
       "type": 0,
@@ -1237,6 +1243,18 @@
     {
       "type": 0,
       "value": "Классический"
+    }
+  ],
+  "theme.aurora.description": [
+    {
+      "type": 0,
+      "value": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    }
+  ],
+  "theme.aurora.name": [
+    {
+      "type": 0,
+      "value": "Аврора"
     }
   ],
   "theme.dark": [

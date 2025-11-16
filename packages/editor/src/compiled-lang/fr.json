@@ -861,6 +861,12 @@
       "value": "(Limite approchée)"
     }
   ],
+  "aurora": [
+    {
+      "type": 0,
+      "value": "Aurora"
+    }
+  ],
   "ocean": [
     {
       "type": 0,
@@ -1237,6 +1243,18 @@
     {
       "type": 0,
       "value": "Classique"
+    }
+  ],
+  "theme.aurora.description": [
+    {
+      "type": 0,
+      "value": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    }
+  ],
+  "theme.aurora.name": [
+    {
+      "type": 0,
+      "value": "Aurora"
     }
   ],
   "theme.dark": [

@@ -61,3 +61,8 @@ export const ocean = Template.bind({});
 ocean.args = {
   theme: 'ocean',
 };
+
+export const aurora = Template.bind({});
+aurora.args = {
+  theme: 'aurora',
+};
