@@ -18,6 +18,7 @@
 
 import Canvas from '../../src/components/Canvas';
 import ScreenManager from '../../src/components/ScreenManager';
+import LayoutEventBus from '../../src/components/layout/LayoutEventBus';
 
 // Mock DOM elements and jQuery
 const mockDiv = {
@@ -53,9 +54,21 @@ jest.mock('@wisemapping/web2d', () => ({
   })),
 }));
 
-describe('Canvas Zoom Tests', () => {
+jest.mock('../../src/components/layout/LayoutEventBus', () => ({
+  __esModule: true,
+  default: {
+    fireEvent: jest.fn(),
+    addEvent: jest.fn(),
+    removeEvent: jest.fn(),
+  },
+}));
+
+const layoutEventBus = LayoutEventBus as jest.Mocked<typeof LayoutEventBus>;
+
+describe('Canvas', () => {
   let canvas: Canvas;
   let mockScreenManager: jest.Mocked<ScreenManager>;
+  let workspace;
 
   beforeEach(() => {
     MockedScreenManager.mockImplementation(() => {
@@ -79,46 +92,74 @@ describe('Canvas Zoom Tests', () => {
 
     mockScreenManager = new MockedScreenManager({} as any) as jest.Mocked<ScreenManager>;
     canvas = new Canvas(mockScreenManager, 1.0, false, false);
+    workspace = (canvas as any)._workspace;
   });
 
-  test('setZoom should calculate viewport center focused coordinates by default', () => {
-    // Set initial state
-    const workspace = (canvas as any)._workspace;
-    workspace.getCoordOrigin.mockReturnValue({ x: -500, y: -400 });
-    workspace.getCoordSize.mockReturnValue({ width: 1000, height: 800 });
+  describe('zoom', () => {
+    test('setZoom should calculate viewport center focused coordinates by default', () => {
+      workspace.getCoordOrigin.mockReturnValue({ x: -500, y: -400 });
+      workspace.getCoordSize.mockReturnValue({ width: 1000, height: 800 });
 
-    // Calculate expected center of visible area: origin + half coord size
-    // visibleCenterX = -500 + 1000/2 = 0
-    // visibleCenterY = -400 + 800/2 = 0
-    // New coord origin = visibleCenter - newCoordSize/2
-    // coordOriginX = 0 - 2000/2 = -1000
-    // coordOriginY = 0 - 1600/2 = -800
+      canvas.setZoom(2.0);
 
-    // Call setZoom (viewport center focus is now default)
-    canvas.setZoom(2.0);
+      expect(workspace.setCoordOrigin).toHaveBeenCalledWith(-1000, -800);
+      expect(workspace.setCoordSize).toHaveBeenCalledWith(2000, 1600);
+    });
 
-    // Verify that setCoordOrigin was called with correct viewport-centered coordinates
-    expect(workspace.setCoordOrigin).toHaveBeenCalledWith(-1000, -800);
-    expect(workspace.setCoordSize).toHaveBeenCalledWith(2000, 1600); // 1000*2, 800*2
+    test('setZoom with different zoom levels should maintain viewport centering', () => {
+      workspace.getCoordOrigin.mockReturnValue({ x: -500, y: -400 });
+      workspace.getCoordSize.mockReturnValue({ width: 1000, height: 800 });
+
+      canvas.setZoom(0.5);
+
+      expect(workspace.setCoordOrigin).toHaveBeenCalled();
+      expect(workspace.setCoordSize).toHaveBeenCalledWith(500, 400);
+    });
+
+    test('setZoom with center flag should center the viewport', () => {
+      canvas.setZoom(2.0, true);
+
+      expect(workspace.setCoordOrigin).toHaveBeenCalledWith(-1000, -800);
+      expect(workspace.setCoordSize).toHaveBeenCalledWith(2000, 1600);
+    });
   });
 
-  test('setZoom with different zoom levels should maintain viewport centering', () => {
-    const workspace = (canvas as any)._workspace;
-    workspace.getCoordOrigin.mockReturnValue({ x: -500, y: -400 });
-    workspace.getCoordSize.mockReturnValue({ width: 1000, height: 800 });
+  describe('ensureVisible', () => {
+    beforeEach(() => {
+      workspace.getCoordOrigin.mockReturnValue({ x: 0, y: 0 });
+      workspace.getCoordSize.mockReturnValue({ width: 1000, height: 800 });
+      workspace.setCoordOrigin.mockClear();
+      mockScreenManager.setOffset.mockClear();
+      mockScreenManager.fireEvent.mockClear();
+      layoutEventBus.fireEvent.mockClear();
+    });
 
-    canvas.setZoom(0.5);
+    test('pans when bounds exceed the right edge', () => {
+      const result = canvas.ensureVisible({ left: 1200, right: 1250, top: 100, bottom: 200 });
 
-    expect(workspace.setCoordOrigin).toHaveBeenCalled();
-    expect(workspace.setCoordSize).toHaveBeenCalledWith(500, 400); // 1000*0.5, 800*0.5
-  });
+      expect(result).toBe(true);
+      expect(workspace.setCoordOrigin).toHaveBeenCalledWith(330, 0);
+      expect(mockScreenManager.setOffset).toHaveBeenCalledWith(330, 0);
+      expect(mockScreenManager.fireEvent).toHaveBeenCalledWith('update');
+      expect(layoutEventBus.fireEvent).toHaveBeenCalledWith('canvasPanned');
+    });
 
-  test('setZoom with center flag should center the viewport', () => {
-    const workspace = (canvas as any)._workspace;
+    test('pans when bounds are too close to the top-left edge', () => {
+      const result = canvas.ensureVisible({ left: 40, right: 80, top: 10, bottom: 40 });
 
-    canvas.setZoom(2.0, true);
+      expect(result).toBe(true);
+      expect(workspace.setCoordOrigin).toHaveBeenCalledWith(-40, -70);
+      expect(mockScreenManager.setOffset).toHaveBeenCalledWith(-40, -70);
+      expect(layoutEventBus.fireEvent).toHaveBeenCalledWith('canvasPanned');
+    });
 
-    expect(workspace.setCoordOrigin).toHaveBeenCalledWith(-1000, -800); // -(width/2)*zoom, -(height/2)*zoom
-    expect(workspace.setCoordSize).toHaveBeenCalledWith(2000, 1600);
+    test('does nothing when target is comfortably inside the viewport', () => {
+      const result = canvas.ensureVisible({ left: 200, right: 260, top: 200, bottom: 240 });
+
+      expect(result).toBe(false);
+      expect(workspace.setCoordOrigin).not.toHaveBeenCalled();
+      expect(mockScreenManager.setOffset).not.toHaveBeenCalled();
+      expect(layoutEventBus.fireEvent).not.toHaveBeenCalled();
+    });
   });
 });

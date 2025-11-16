@@ -317,7 +317,7 @@ class DesignerKeyboard extends Keyboard {
     designer.deselectAll();
 
     // Give focus to the selected node....
-    node.setOnFocus(true);
+    designer.goToNode(node);
   }
 
   static register(designer: Designer) {

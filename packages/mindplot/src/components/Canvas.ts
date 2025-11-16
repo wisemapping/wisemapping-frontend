@@ -22,6 +22,10 @@ import SizeType from './SizeType';
 import CanvasElement from './CanvasElement';
 import LayoutEventBus from './layout/LayoutEventBus';
 
+const DEFAULT_VISIBILITY_PADDING = 80;
+const VISIBILITY_PADDING_RATIO = 0.08;
+type BoundsType = { left: number; right: number; top: number; bottom: number };
+
 class Canvas {
   private _zoom: number;
 
@@ -374,6 +378,64 @@ class Canvas {
     };
     screenManager.addEvent('mousedown', mouseDownListener);
     screenManager.addEvent('touchstart', mouseDownListener);
+  }
+
+  ensureVisible(bounds: BoundsType, minPadding = DEFAULT_VISIBILITY_PADDING): boolean {
+    const workspace = this._workspace;
+    const origin = workspace.getCoordOrigin();
+    const coordSize = workspace.getCoordSize();
+
+    const computePadding = (length: number) => {
+      const relativePadding = length * VISIBILITY_PADDING_RATIO;
+      const desiredPadding = Math.max(relativePadding, minPadding);
+      return Math.min(desiredPadding, length / 2);
+    };
+
+    const paddingX = computePadding(coordSize.width);
+    const paddingY = computePadding(coordSize.height);
+
+    const viewLeft = origin.x;
+    const viewTop = origin.y;
+    const viewRight = origin.x + coordSize.width;
+    const viewBottom = origin.y + coordSize.height;
+
+    const paddedLeft = viewLeft + paddingX;
+    const paddedRight = viewRight - paddingX;
+    const paddedTop = viewTop + paddingY;
+    const paddedBottom = viewBottom - paddingY;
+
+    const centerX = (bounds.left + bounds.right) / 2;
+    const centerY = (bounds.top + bounds.bottom) / 2;
+
+    const needsBothHorizontal = bounds.left < paddedLeft && bounds.right > paddedRight;
+    const needsBothVertical = bounds.top < paddedTop && bounds.bottom > paddedBottom;
+
+    let newOriginX = origin.x;
+    if (needsBothHorizontal) {
+      newOriginX = centerX - coordSize.width / 2;
+    } else if (bounds.right > paddedRight) {
+      newOriginX += bounds.right - paddedRight;
+    } else if (bounds.left < paddedLeft) {
+      newOriginX += bounds.left - paddedLeft;
+    }
+
+    let newOriginY = origin.y;
+    if (needsBothVertical) {
+      newOriginY = centerY - coordSize.height / 2;
+    } else if (bounds.bottom > paddedBottom) {
+      newOriginY += bounds.bottom - paddedBottom;
+    } else if (bounds.top < paddedTop) {
+      newOriginY += bounds.top - paddedTop;
+    }
+
+    if (newOriginX !== origin.x || newOriginY !== origin.y) {
+      workspace.setCoordOrigin(newOriginX, newOriginY);
+      this._screenManager.setOffset(newOriginX, newOriginY);
+      this._screenManager.fireEvent('update');
+      LayoutEventBus.fireEvent('canvasPanned');
+      return true;
+    }
+    return false;
   }
 
   getZoom() {

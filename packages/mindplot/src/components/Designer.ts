@@ -129,6 +129,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const screenManager = new ScreenManager(divElem);
     this._canvas = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly(), false);
 
+    this._registerAutoPanOnFocus();
+
     // Init layout manager ...
     this._eventBussDispatcher = new EventBusDispatcher();
 
@@ -1486,6 +1488,40 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   goToNode(node: Topic): void {
     node.setOnFocus(true);
     this.onObjectFocusEvent(node);
+    this.ensureNodeVisible(node);
+  }
+
+  private ensureNodeVisible(node: Topic): void {
+    const canvas = this._canvas;
+    if (!canvas) {
+      return;
+    }
+
+    const position = node.getPosition();
+    const size = node.getSize();
+    const bounds = {
+      left: position.x - size.width / 2,
+      right: position.x + size.width / 2,
+      top: position.y - size.height / 2,
+      bottom: position.y + size.height / 2,
+    };
+
+    canvas.ensureVisible(bounds);
+  }
+
+  private _registerAutoPanOnFocus(): void {
+    LayoutEventBus.addEvent(
+      'topicSelected',
+      (nodeModel: NodeModel) => {
+        const topic = this.getModel()
+          .getTopics()
+          .find((candidate) => candidate.getModel() === nodeModel);
+        if (topic) {
+          this.ensureNodeVisible(topic);
+        }
+      },
+      true,
+    );
   }
 
   getWorkSpace(): Canvas {
