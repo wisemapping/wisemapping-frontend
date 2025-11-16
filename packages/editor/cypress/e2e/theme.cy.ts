@@ -47,8 +47,8 @@ describe('Theme Suite', () => {
     // Click on the Theme button in toolbar
     cy.onClickToolbarButton('Theme');
     
-    // Select Ocean theme
-    cy.contains('Ocean').should('be.visible').click({ force: true });
+    // Select Ocean theme - scroll into view first to ensure it's visible
+    cy.contains('Ocean').scrollIntoView().should('be.visible').click({ force: true });
     
     // Click Apply Theme button
     cy.contains('Apply Theme').click({ force: true });
