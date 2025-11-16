@@ -65,14 +65,6 @@ class HTMLTopicSelected {
 
   private _bottomPlus: HTMLDivElement | null = null;
 
-  private _rightPlusBaseColor: string | null = null;
-
-  private _rightPlusHoverColor: string | null = null;
-
-  private _bottomPlusBaseColor: string | null = null;
-
-  private _bottomPlusHoverColor: string | null = null;
-
   private _screenManager: ScreenManager;
 
   private _containerElement: HTMLDivElement;
@@ -192,11 +184,6 @@ class HTMLTopicSelected {
 
     // Check initial state - if topic is already selected, show shadow
     updateShadowVisibility();
-    // topic.addEvent('ontfocus', () => {
-    //   if (!this._isVisible) {
-    //     this.show();
-    //   }
-    // });
   }
 
   private isTopicOnLeftSide(): boolean {
@@ -302,12 +289,6 @@ class HTMLTopicSelected {
     const plusButtonColor = ColorUtil.lightenColor(connectionColor, 40);
     // Hover color: lighten even more to signal interactivity
     const plusButtonHoverColor = ColorUtil.lightenColor(connectionColor, 60);
-
-    // Store colors for hover effects
-    this._rightPlusBaseColor = plusButtonColor;
-    this._rightPlusHoverColor = plusButtonHoverColor;
-    this._bottomPlusBaseColor = plusButtonColor;
-    this._bottomPlusHoverColor = plusButtonHoverColor;
 
     if (this._rightPlus) {
       this._rightPlus.style.backgroundColor = plusButtonColor;
@@ -672,26 +653,27 @@ class HTMLTopicSelected {
   private setupHoverEffect(button: HTMLDivElement, baseColor: string, hoverColor: string): void {
     // Use a data attribute to track if hover is set up to avoid duplicate listeners
     if (button.dataset.hoverSetup === 'true') {
-      // Update colors if they've changed
-      if (button === this._rightPlus) {
-        this._rightPlusBaseColor = baseColor;
-        this._rightPlusHoverColor = hoverColor;
-      } else if (button === this._bottomPlus) {
-        this._bottomPlusBaseColor = baseColor;
-        this._bottomPlusHoverColor = hoverColor;
-      }
-      // Update current color if not hovering
+      // Update stored colors on the button for touch feedback
+      const buttonWithColors = button as HTMLDivElement & {
+        _baseColor?: string;
+        _hoverColor?: string;
+      };
+      buttonWithColors._baseColor = baseColor;
+      buttonWithColors._hoverColor = hoverColor;
+      // Ensure current color is the base color when not hovering
       if (button.style.backgroundColor !== hoverColor) {
         button.style.backgroundColor = baseColor;
       }
       return;
     }
 
-    // Store colors on the button element for access in event handlers
-    (button as HTMLDivElement & { _baseColor?: string; _hoverColor?: string })._baseColor =
-      baseColor;
-    (button as HTMLDivElement & { _baseColor?: string; _hoverColor?: string })._hoverColor =
-      hoverColor;
+    // Store colors on the button element for access in event handlers and touch feedback
+    const buttonWithColors = button as HTMLDivElement & {
+      _baseColor?: string;
+      _hoverColor?: string;
+    };
+    buttonWithColors._baseColor = baseColor;
+    buttonWithColors._hoverColor = hoverColor;
 
     button.addEventListener('mouseenter', () => {
       button.style.backgroundColor = hoverColor;
