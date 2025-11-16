@@ -29,6 +29,7 @@ import Point from './components/Point';
 import Image from './components/Image';
 import ArcLine from './components/ArcLine';
 import HeartbeatLine from './components/HeartbeatLine';
+import NeuronLine from './components/NeuronLine';
 import WorkspaceElement from './components/WorkspaceElement';
 import type Line from './components/Line';
 import ElementPeer from './components/peer/svg/ElementPeer';
@@ -46,6 +47,7 @@ export {
   PolyLine,
   ArcLine,
   HeartbeatLine,
+  NeuronLine,
   Rect,
   Text,
   Workspace,

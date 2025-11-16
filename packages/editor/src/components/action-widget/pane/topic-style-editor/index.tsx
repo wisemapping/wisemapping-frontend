@@ -54,18 +54,6 @@ const ThickCurvedIcon = () => (
   </svg>
 );
 
-const OrganicCurvedIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-    <path
-      d="M3 14 Q 8 4, 12 12 Q 16 20, 21 10"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-      fill="none"
-    />
-  </svg>
-);
-
 const ArcIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path
@@ -127,6 +115,21 @@ const HeartbeatIcon = () => (
       strokeLinejoin="round"
       fill="none"
     />
+  </svg>
+);
+
+const NeuronIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M3 9 C6 7, 7 13, 9 12 C11 11, 12 6, 14 8 C16 10, 17 16, 20 15"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+    <circle cx="9" cy="12" r="1" fill="currentColor" />
+    <circle cx="14" cy="8" r="1" fill="currentColor" />
   </svg>
 );
 
@@ -241,6 +244,17 @@ const connectionStyles = [
     ),
   },
   {
+    type: LineType.NEURON,
+    icon: <NeuronIcon />,
+    label: <FormattedMessage id="icon-collection.connection.neuron" defaultMessage="Neuron" />,
+    tooltip: (
+      <FormattedMessage
+        id="icon-collection.connection.neuron-tooltip"
+        defaultMessage="Organic impulse line with branching pulses – ideal for science, neural nets, or anything futuristic"
+      />
+    ),
+  },
+  {
     type: LineType.POLYLINE_CURVED,
     icon: <CurvedPolylineIcon />,
     label: (
@@ -253,22 +267,6 @@ const connectionStyles = [
       <FormattedMessage
         id="icon-collection.connection.curved-polyline-tooltip"
         defaultMessage="Multi-segment line with smooth corners - Best for structured layouts and clear paths"
-      />
-    ),
-  },
-  {
-    type: LineType.THICK_CURVED_ORGANIC,
-    icon: <OrganicCurvedIcon />,
-    label: (
-      <FormattedMessage
-        id="icon-collection.connection.organic-curved"
-        defaultMessage="Organic Curved"
-      />
-    ),
-    tooltip: (
-      <FormattedMessage
-        id="icon-collection.connection.organic-curved-tooltip"
-        defaultMessage="Hand-drawn style with dramatic curves - Perfect for creative and expressive mind maps"
       />
     ),
   },

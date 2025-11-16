@@ -405,6 +405,8 @@ export class ThemeStyle {
         return LineType.ARC;
       case 'HEARTBEAT':
         return LineType.HEARTBEAT;
+      case 'NEURON':
+        return LineType.NEURON;
       default:
         throw new Error(`Unknown connection style: ${connectionStyle}`);
     }

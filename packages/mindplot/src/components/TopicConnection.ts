@@ -183,6 +183,10 @@ class TopicConnection extends BaseConnectionLine {
         this._line.setStroke(this._parentTopic.isCentralTopic() ? 4.5 : 3, 'solid', color, 1);
         this._line.setFill('none', 1);
         break;
+      case LineType.NEURON:
+        this._line.setStroke(this._parentTopic.isCentralTopic() ? 4 : 3, 'solid', color, 1);
+        this._line.setFill('none', 1);
+        break;
       default:
         throw new Error(`Unhandled line type: ${this.getLineType()}`);
     }
