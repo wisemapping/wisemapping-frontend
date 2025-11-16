@@ -146,15 +146,47 @@ abstract class WidgetBuilder {
           DOMUtils.css(tooltipLink, 'display', 'none');
         }
 
-        // Position tooltip centered below the icon
+        // Position tooltip near the icon while keeping it inside the visible mindmap container
         const targetRect = targetElement.getBoundingClientRect();
-        const width = tooltip ? DOMUtils.width(tooltip) || 0 : 0;
-        const tooltipX = Math.max(0, targetRect.left + targetRect.width / 2 - width / 2);
-        const tooltipY = Math.max(0, targetRect.bottom);
 
         if (tooltip) {
-          DOMUtils.css(tooltip, 'top', `${tooltipY}px`);
-          DOMUtils.css(tooltip, 'left', `${tooltipX}px`);
+          const tooltipWidth = DOMUtils.width(tooltip) || 0;
+          const tooltipHeight = DOMUtils.height(tooltip) || 0;
+
+          const containerRect = mindmapComp.getBoundingClientRect();
+          const containerWidth = containerRect.width;
+          const containerHeight = containerRect.height;
+
+          // Decide whether to place tooltip above or below the icon.
+          // Add a small margin so it does not sit directly over the icon.
+          const margin = 8;
+          const placeAbove =
+            targetRect.bottom - containerRect.top + tooltipHeight + margin > containerHeight &&
+            targetRect.top - containerRect.top > tooltipHeight + margin;
+
+          let top = placeAbove
+            ? targetRect.top - containerRect.top - tooltipHeight - margin
+            : targetRect.bottom - containerRect.top + margin;
+
+          // Center horizontally relative to the icon
+          let left = targetRect.left - containerRect.left + targetRect.width / 2 - tooltipWidth / 2;
+
+          // Clamp horizontally so the tooltip stays within the mindmap container
+          if (left < 0) {
+            left = 0;
+          } else if (left + tooltipWidth > containerWidth) {
+            left = Math.max(0, containerWidth - tooltipWidth);
+          }
+
+          // Final safety clamp for top within the container
+          if (top < 0) {
+            top = 0;
+          } else if (top + tooltipHeight > containerHeight) {
+            top = Math.max(0, containerHeight - tooltipHeight);
+          }
+
+          DOMUtils.css(tooltip, 'top', `${top}px`);
+          DOMUtils.css(tooltip, 'left', `${left}px`);
           DOMUtils.css(tooltip, 'position', 'absolute');
           DOMUtils.css(tooltip, 'display', 'block');
         }
