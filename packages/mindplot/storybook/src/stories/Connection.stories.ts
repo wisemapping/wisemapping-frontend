@@ -66,3 +66,8 @@ export const aurora = Template.bind({});
 aurora.args = {
   theme: 'aurora',
 };
+
+export const retro = Template.bind({});
+retro.args = {
+  theme: 'retro',
+};

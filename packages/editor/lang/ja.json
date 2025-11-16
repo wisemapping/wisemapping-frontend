@@ -629,6 +629,9 @@
   "aurora": {
     "defaultMessage": "オーロラ"
   },
+  "retro": {
+    "defaultMessage": "レトロナイト"
+  },
   "ocean": {
     "defaultMessage": "オーシャン"
   },
@@ -667,6 +670,12 @@
   },
   "theme.aurora.name": {
     "defaultMessage": "オーロラ"
+  },
+  "theme.retro.description": {
+    "defaultMessage": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+  },
+  "theme.retro.name": {
+    "defaultMessage": "80s レトロナイト"
   },
   "theme.ocean.description": {
     "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."

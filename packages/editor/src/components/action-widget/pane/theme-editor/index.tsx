@@ -58,6 +58,15 @@ const ThemeEditor = (props: {
         }),
       },
       {
+        id: 'retro' as ThemeType,
+        name: intl.formatMessage({ id: 'theme.retro.name', defaultMessage: '80s Retro Night' }),
+        description: intl.formatMessage({
+          id: 'theme.retro.description',
+          defaultMessage:
+            '80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties.',
+        }),
+      },
+      {
         id: 'sunrise' as ThemeType,
         name: intl.formatMessage({ id: 'theme.sunrise.name', defaultMessage: 'Sunrise' }),
         description: intl.formatMessage({

@@ -42,6 +42,9 @@ import oceanDark from './styles/ocean-dark.json';
 import auroraDefault from './styles/aurora-default.json';
 import auroraLight from './styles/aurora-light.json';
 import auroraDark from './styles/aurora-dark.json';
+import retroDefault from './styles/retro-default.json';
+import retroLight from './styles/retro-light.json';
+import retroDark from './styles/retro-dark.json';
 
 export type TopicStyleType = {
   borderColor: string | string[];
@@ -217,6 +220,12 @@ export class ThemeStyle {
         return auroraLight as JsonThemeStyles;
       case 'aurora-dark.json':
         return auroraDark as JsonThemeStyles;
+      case 'retro-default.json':
+        return retroDefault as JsonThemeStyles;
+      case 'retro-light.json':
+        return retroLight as JsonThemeStyles;
+      case 'retro-dark.json':
+        return retroDark as JsonThemeStyles;
       default:
         console.warn(`Unknown style file: ${filename}`);
         return {};

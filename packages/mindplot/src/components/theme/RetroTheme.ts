@@ -15,6 +15,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-type ThemeType = 'classic' | 'prism' | 'robot' | 'sunrise' | 'ocean' | 'aurora' | 'retro';
 
-export default ThemeType;
+import DefaultTheme from './DefaultTheme';
+import { ThemeVariant } from './Theme';
+import { ThemeStyle } from './ThemeStyle';
+
+class RetroTheme extends DefaultTheme {
+  constructor(variant: ThemeVariant) {
+    const themeStyle = new ThemeStyle('retro', variant);
+    super(themeStyle, variant);
+  }
+}
+
+export default RetroTheme;

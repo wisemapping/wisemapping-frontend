@@ -867,6 +867,12 @@
       "value": "Aurora"
     }
   ],
+  "retro": [
+    {
+      "type": 0,
+      "value": "Retro Night"
+    }
+  ],
   "ocean": [
     {
       "type": 0,
@@ -1255,6 +1261,18 @@
     {
       "type": 0,
       "value": "Aurora"
+    }
+  ],
+  "theme.retro.description": [
+    {
+      "type": 0,
+      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    }
+  ],
+  "theme.retro.name": [
+    {
+      "type": 0,
+      "value": "Noche Retro 80s"
     }
   ],
   "theme.dark": [

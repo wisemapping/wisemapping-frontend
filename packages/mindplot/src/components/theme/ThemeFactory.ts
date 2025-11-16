@@ -25,6 +25,7 @@ import OceanTheme from './OceanTheme';
 import RobotTheme from './RobotTheme';
 import Theme, { ThemeVariant } from './Theme';
 import AuroraTheme from './AuroraTheme';
+import RetroTheme from './RetroTheme';
 
 class ThemeFactory {
   private static _cache = new Map<string, Theme>();
@@ -61,6 +62,9 @@ class ThemeFactory {
         break;
       case 'aurora':
         result = new AuroraTheme(variant);
+        break;
+      case 'retro':
+        result = new RetroTheme(variant);
         break;
       default: {
         const exhaustiveCheck: never = actualId;
