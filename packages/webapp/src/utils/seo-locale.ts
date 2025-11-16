@@ -73,17 +73,14 @@ export function getLocaleFromPath(): SupportedLocale | null {
 
 /**
  * Generates canonical URL based on current path and locale
- * If locale is in URL, uses localized canonical. Otherwise uses non-localized.
+ * Always returns the non-localized version as canonical to avoid duplicate content issues.
+ * Use hreflang tags for alternate language versions.
  */
 export function getCanonicalUrl(
   basePath: '/c/login' | '/c/registration' | '/c/forgot-password',
 ): string {
-  const locale = getLocaleFromPath();
-
-  if (locale) {
-    return `/${locale}${basePath}`;
-  }
-
+  // Always return non-localized version as canonical
+  // This consolidates duplicate content and prevents Google from choosing different canonicals
   return basePath;
 }
 
