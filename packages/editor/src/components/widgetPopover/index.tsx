@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import Popover from '@mui/material/Popover';
+import type { PopoverOrigin } from '@mui/material/Popover';
 import Box from '@mui/material/Box';
 import React, { useState, useCallback, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
@@ -34,6 +35,14 @@ export const WidgetPopover = ({ widgetManager }: WidgetPopoverProps): React.Reac
   const [panelTitle, setPanelTitle] = useState<string | undefined>(undefined);
   const [achorElem, setAnchorElem] = useState<Element | undefined>(undefined);
   const [editorComponent, setEditorComponent] = useState<React.ReactElement | undefined>(undefined);
+  const [anchorOrigin, setAnchorOrigin] = useState<PopoverOrigin>({
+    vertical: 'bottom',
+    horizontal: 'left',
+  });
+  const [transformOrigin, setTransformOrigin] = useState<PopoverOrigin>({
+    vertical: 'top',
+    horizontal: 'left',
+  });
 
   const closeEditor = () => {
     setEvent('none');
@@ -63,9 +72,30 @@ export const WidgetPopover = ({ widgetManager }: WidgetPopoverProps): React.Reac
 
       topic?.closeEditors();
 
+      const anchorElement = topic?.getOuterShape().peer._native as Element | undefined;
+
+      if (anchorElement) {
+        const rect = anchorElement.getBoundingClientRect();
+        const isBottomHalf = rect.top > window.innerHeight / 2;
+        const isRightHalf = rect.left > window.innerWidth / 2;
+
+        const nextAnchorOrigin: PopoverOrigin = {
+          vertical: isBottomHalf ? 'top' : 'bottom',
+          horizontal: isRightHalf ? 'right' : 'left',
+        };
+
+        const nextTransformOrigin: PopoverOrigin = {
+          vertical: isBottomHalf ? 'bottom' : 'top',
+          horizontal: isRightHalf ? 'right' : 'left',
+        };
+
+        setAnchorOrigin(nextAnchorOrigin);
+        setTransformOrigin(nextTransformOrigin);
+      }
+
       setPanelTitle(title);
       setEditorComponent(component);
-      setAnchorElem(topic?.getOuterShape().peer._native);
+      setAnchorElem(anchorElement);
     },
     [widgetManager],
   );
@@ -86,10 +116,8 @@ export const WidgetPopover = ({ widgetManager }: WidgetPopoverProps): React.Reac
           open={isOpen}
           anchorEl={achorElem}
           onClose={closeEditor}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
+          anchorOrigin={anchorOrigin}
+          transformOrigin={transformOrigin}
         >
           <Box
             sx={{
