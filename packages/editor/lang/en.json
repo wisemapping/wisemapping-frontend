@@ -620,12 +620,6 @@
   "icon-collection.connection.thick-curved-tooltip": {
     "defaultMessage": "Thick curved line with smooth bezier curves - Great for emphasizing main branches"
   },
-  "icon-collection.connection.organic-curved": {
-    "defaultMessage": "Organic Curved"
-  },
-  "icon-collection.connection.organic-curved-tooltip": {
-    "defaultMessage": "Hand-drawn style with dramatic curves - Perfect for creative and expressive mind maps"
-  },
   "icon-collection.connection.arc": {
     "defaultMessage": "Arc"
   },
@@ -637,6 +631,12 @@
   },
   "icon-collection.connection.heartbeat-tooltip": {
     "defaultMessage": "ECG-inspired waveform with sharp spikes – perfect for conveying energy, urgency, or life signals"
+  },
+  "icon-collection.connection.neuron": {
+    "defaultMessage": "Neuron"
+  },
+  "icon-collection.connection.neuron-tooltip": {
+    "defaultMessage": "Organic impulse line with branching pulses – ideal for science, neural nets, or anything futuristic"
   },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Thin Curved"

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { CurvedLine, PolyLine, HeartbeatLine } from '@wisemapping/web2d';
+import { CurvedLine, PolyLine, HeartbeatLine, NeuronLine } from '@wisemapping/web2d';
 import type { Line } from '@wisemapping/web2d';
 import Canvas from './Canvas';
 
@@ -29,6 +29,7 @@ export enum LineType {
   THICK_CURVED_ORGANIC,
   ARC,
   HEARTBEAT,
+  NEURON,
 }
 
 /**
@@ -86,6 +87,9 @@ abstract class BaseConnectionLine {
         break;
       case LineType.HEARTBEAT:
         line = new HeartbeatLine();
+        break;
+      case LineType.NEURON:
+        line = new NeuronLine();
         break;
       default: {
         const exhaustiveCheck: never = lineType;
