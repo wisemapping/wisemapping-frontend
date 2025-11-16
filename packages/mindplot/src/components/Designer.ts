@@ -424,20 +424,22 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // Subtract AppBar height from available height
     // Find the main AppBar (not the toolbars which are positioned absolutely)
     // The main AppBar is typically at the top of the page
-    const allAppBars = document.querySelectorAll('.MuiAppBar-root');
-    let topAppBarHeight = 0;
+    const allAppBars = Array.from(document.querySelectorAll('.MuiAppBar-root')) as HTMLElement[];
 
-    for (const appBar of Array.from(allAppBars)) {
-      const appBarElement = appBar as HTMLElement;
-      const appBarRect = appBarElement.getBoundingClientRect();
-      const style = window.getComputedStyle(appBarElement);
+    // Find the top AppBar height (not absolutely positioned toolbars)
+    const topAppBarHeight = allAppBars
+      .map((appBarElement) => {
+        const appBarRect = appBarElement.getBoundingClientRect();
+        const style = window.getComputedStyle(appBarElement);
 
-      // Check if this is the top AppBar (not absolutely positioned toolbars)
-      // Toolbars use position: absolute, main AppBar uses position: fixed or static
-      if (appBarRect.height > 0 && appBarRect.top >= 0 && style.position !== 'absolute') {
-        topAppBarHeight = Math.max(topAppBarHeight, appBarRect.height);
-      }
-    }
+        // Check if this is the top AppBar (not absolutely positioned toolbars)
+        // Toolbars use position: absolute, main AppBar uses position: fixed or static
+        if (appBarRect.height > 0 && appBarRect.top >= 0 && style.position !== 'absolute') {
+          return appBarRect.height;
+        }
+        return 0;
+      })
+      .reduce((max, height) => Math.max(max, height), 0);
 
     // Subtract the top AppBar height from available height
     if (topAppBarHeight > 0) {
