@@ -591,7 +591,16 @@
     "defaultMessage": "Thick Curved"
   },
   "icon-collection.connection.arc": {
-    "defaultMessage": "Arc"
+    "defaultMessage": "चाप"
+  },
+  "icon-collection.connection.arc-tooltip": {
+    "defaultMessage": "वृत्ताकार चाप कनेक्शन - रेडियल लेआउट और जैविक प्रवाह के लिए परफेक्ट"
+  },
+  "icon-collection.connection.heartbeat": {
+    "defaultMessage": "हृदय स्पंदन"
+  },
+  "icon-collection.connection.heartbeat-tooltip": {
+    "defaultMessage": "तीक्ष्ण स्पाइक्स के साथ ECG-प्रेरित तरंग रूप - ऊर्जा, तात्कालिकता या जीवन संकेतों को व्यक्त करने के लिए परफेक्ट"
   },
   "icon-collection.connection.organic-curved": {
     "defaultMessage": "ऑर्गेनिक कर्व"

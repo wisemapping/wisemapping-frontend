@@ -698,7 +698,13 @@
   "icon-collection.connection.arc": [
     {
       "type": 0,
-      "value": "Arc"
+      "value": "चाप"
+    }
+  ],
+  "icon-collection.connection.arc-tooltip": [
+    {
+      "type": 0,
+      "value": "वृत्ताकार चाप कनेक्शन - रेडियल लेआउट और जैविक प्रवाह के लिए परफेक्ट"
     }
   ],
   "icon-collection.connection.curved-polyline": [
@@ -711,6 +717,18 @@
     {
       "type": 0,
       "value": "Default"
+    }
+  ],
+  "icon-collection.connection.heartbeat": [
+    {
+      "type": 0,
+      "value": "हृदय स्पंदन"
+    }
+  ],
+  "icon-collection.connection.heartbeat-tooltip": [
+    {
+      "type": 0,
+      "value": "तीक्ष्ण स्पाइक्स के साथ ECG-प्रेरित तरंग रूप - ऊर्जा, तात्कालिकता या जीवन संकेतों को व्यक्त करने के लिए परफेक्ट"
     }
   ],
   "icon-collection.connection.organic-curved": [

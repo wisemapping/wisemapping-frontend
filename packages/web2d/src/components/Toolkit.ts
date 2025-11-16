@@ -27,6 +27,7 @@ import TextPeer from './peer/svg/TextPeer';
 import ImagePeer from './peer/svg/ImagePeer';
 import RectPeer from './peer/svg/RectPeer';
 import ArcLinePeer from './peer/svg/ArcLinePeer';
+import HeartbeatLinePeer from './peer/svg/HeartbeatLinePeer';
 
 class Toolkit {
   static createWorkspace() {
@@ -55,6 +56,10 @@ class Toolkit {
 
   static createArcLine(): ArcLinePeer {
     return new ArcLinePeer();
+  }
+
+  static createHeartbeatLine(): HeartbeatLinePeer {
+    return new HeartbeatLinePeer();
   }
 
   static createArrow() {

@@ -593,6 +593,15 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Bogen"
   },
+  "icon-collection.connection.arc-tooltip": {
+    "defaultMessage": "Kreisförmige Bogenverbindung - Perfekt für radiale Layouts und organischen Fluss"
+  },
+  "icon-collection.connection.heartbeat": {
+    "defaultMessage": "Herzschlag"
+  },
+  "icon-collection.connection.heartbeat-tooltip": {
+    "defaultMessage": "EKG-inspirierte Wellenform mit scharfen Spitzen - perfekt zur Vermittlung von Energie, Dringlichkeit oder Lebenssignalen"
+  },
   "icon-collection.connection.organic-curved": {
     "defaultMessage": "Organische Kurve"
   },

@@ -141,7 +141,13 @@ const ThemeEditor = (props: {
       <DialogTitle>
         <FormattedMessage id="theme-editor.title" defaultMessage="Choose Theme" />
       </DialogTitle>
-      <DialogContent>
+      <DialogContent
+        dividers
+        sx={{
+          maxHeight: '60vh',
+          overflowY: 'auto',
+        }}
+      >
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.4 }}>
           <FormattedMessage
             id="theme-editor.description"

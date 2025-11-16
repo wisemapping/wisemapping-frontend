@@ -701,6 +701,12 @@
       "value": "Дуга"
     }
   ],
+  "icon-collection.connection.arc-tooltip": [
+    {
+      "type": 0,
+      "value": "Круговое дуговое соединение - Идеально для радиальных макетов и органического потока"
+    }
+  ],
   "icon-collection.connection.curved-polyline": [
     {
       "type": 0,
@@ -711,6 +717,18 @@
     {
       "type": 0,
       "value": "Default"
+    }
+  ],
+  "icon-collection.connection.heartbeat": [
+    {
+      "type": 0,
+      "value": "Сердцебиение"
+    }
+  ],
+  "icon-collection.connection.heartbeat-tooltip": [
+    {
+      "type": 0,
+      "value": "Волновая форма, вдохновленная ЭКГ, с резкими пиками - идеально подходит для передачи энергии, срочности или жизненных сигналов"
     }
   ],
   "icon-collection.connection.organic-curved": [

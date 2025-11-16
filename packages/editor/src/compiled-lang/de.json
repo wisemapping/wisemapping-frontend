@@ -701,6 +701,12 @@
       "value": "Bogen"
     }
   ],
+  "icon-collection.connection.arc-tooltip": [
+    {
+      "type": 0,
+      "value": "Kreisförmige Bogenverbindung - Perfekt für radiale Layouts und organischen Fluss"
+    }
+  ],
   "icon-collection.connection.curved-polyline": [
     {
       "type": 0,
@@ -711,6 +717,18 @@
     {
       "type": 0,
       "value": "Default"
+    }
+  ],
+  "icon-collection.connection.heartbeat": [
+    {
+      "type": 0,
+      "value": "Herzschlag"
+    }
+  ],
+  "icon-collection.connection.heartbeat-tooltip": [
+    {
+      "type": 0,
+      "value": "EKG-inspirierte Wellenform mit scharfen Spitzen - perfekt zur Vermittlung von Energie, Dringlichkeit oder Lebenssignalen"
     }
   ],
   "icon-collection.connection.organic-curved": [

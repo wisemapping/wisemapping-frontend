@@ -698,7 +698,13 @@
   "icon-collection.connection.arc": [
     {
       "type": 0,
-      "value": "弧形"
+      "value": "弧线"
+    }
+  ],
+  "icon-collection.connection.arc-tooltip": [
+    {
+      "type": 0,
+      "value": "圆形弧线连接 - 非常适合放射状布局和有机流动"
     }
   ],
   "icon-collection.connection.curved-polyline": [
@@ -711,6 +717,18 @@
     {
       "type": 0,
       "value": "Default"
+    }
+  ],
+  "icon-collection.connection.heartbeat": [
+    {
+      "type": 0,
+      "value": "心跳"
+    }
+  ],
+  "icon-collection.connection.heartbeat-tooltip": [
+    {
+      "type": 0,
+      "value": "受心电图启发的波形，具有尖锐的峰值 - 非常适合传达能量、紧迫感或生命信号"
     }
   ],
   "icon-collection.connection.organic-curved": [
