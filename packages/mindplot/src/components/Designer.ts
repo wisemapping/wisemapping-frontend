@@ -450,6 +450,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     if (contentWidth <= 0 || contentHeight <= 0) {
       // Content has no size, just center on content center
       this.getModel().setZoom(1);
+      this._canvas.setZoomValue(1);
       const visibleWidth = containerWidth;
       const visibleHeight = containerHeight;
       const coordOriginX = contentCenterX - visibleWidth / 2;
@@ -476,8 +477,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const coordOriginX = contentCenterX - visibleWidth / 2;
     const coordOriginY = contentCenterY - visibleHeight / 2;
 
-    // Update zoom in model
+    // Update zoom in model and canvas
     this.getModel().setZoom(zoom);
+    this._canvas.setZoomValue(zoom);
 
     // Update canvas zoom and coordinate origin
     this._canvas.setCoordOrigin(coordOriginX, coordOriginY);
