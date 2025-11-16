@@ -137,6 +137,12 @@
       "value": "撤销"
     }
   ],
+  "aurora": [
+    {
+      "type": 0,
+      "value": "极光"
+    }
+  ],
   "canvas-style.apply": [
     {
       "type": 0,
@@ -861,18 +867,6 @@
       "value": "(接近限制)"
     }
   ],
-  "aurora": [
-    {
-      "type": 0,
-      "value": "极光"
-    }
-  ],
-  "retro": [
-    {
-      "type": 0,
-      "value": "复古之夜"
-    }
-  ],
   "ocean": [
     {
       "type": 0,
@@ -997,6 +991,12 @@
     {
       "type": 0,
       "value": "切换起点箭头"
+    }
+  ],
+  "retro": [
+    {
+      "type": 0,
+      "value": "复古之夜"
     }
   ],
   "rich-text-editor.bold": [
@@ -1239,18 +1239,6 @@
       "value": "选择主题"
     }
   ],
-  "theme.classic.description": [
-    {
-      "type": 0,
-      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
-    }
-  ],
-  "theme.classic.name": [
-    {
-      "type": 0,
-      "value": "经典"
-    }
-  ],
   "theme.aurora.description": [
     {
       "type": 0,
@@ -1263,16 +1251,16 @@
       "value": "极光"
     }
   ],
-  "theme.retro.description": [
+  "theme.classic.description": [
     {
       "type": 0,
-      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
     }
   ],
-  "theme.retro.name": [
+  "theme.classic.name": [
     {
       "type": 0,
-      "value": "80年代复古之夜"
+      "value": "经典"
     }
   ],
   "theme.dark": [
@@ -1297,6 +1285,18 @@
     {
       "type": 0,
       "value": "海洋"
+    }
+  ],
+  "theme.retro.description": [
+    {
+      "type": 0,
+      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    }
+  ],
+  "theme.retro.name": [
+    {
+      "type": 0,
+      "value": "80年代复古之夜"
     }
   ],
   "theme.robot.description": [

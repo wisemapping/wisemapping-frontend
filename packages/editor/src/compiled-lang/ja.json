@@ -137,6 +137,12 @@
       "value": "元に戻す"
     }
   ],
+  "aurora": [
+    {
+      "type": 0,
+      "value": "オーロラ"
+    }
+  ],
   "canvas-style.apply": [
     {
       "type": 0,
@@ -861,18 +867,6 @@
       "value": "(制限に近づいています)"
     }
   ],
-  "aurora": [
-    {
-      "type": 0,
-      "value": "オーロラ"
-    }
-  ],
-  "retro": [
-    {
-      "type": 0,
-      "value": "レトロナイト"
-    }
-  ],
   "ocean": [
     {
       "type": 0,
@@ -997,6 +991,12 @@
     {
       "type": 0,
       "value": "Toggle start arrow"
+    }
+  ],
+  "retro": [
+    {
+      "type": 0,
+      "value": "レトロナイト"
     }
   ],
   "rich-text-editor.bold": [
@@ -1239,18 +1239,6 @@
       "value": "テーマを選択"
     }
   ],
-  "theme.classic.description": [
-    {
-      "type": 0,
-      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
-    }
-  ],
-  "theme.classic.name": [
-    {
-      "type": 0,
-      "value": "クラシック"
-    }
-  ],
   "theme.aurora.description": [
     {
       "type": 0,
@@ -1263,16 +1251,16 @@
       "value": "オーロラ"
     }
   ],
-  "theme.retro.description": [
+  "theme.classic.description": [
     {
       "type": 0,
-      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
     }
   ],
-  "theme.retro.name": [
+  "theme.classic.name": [
     {
       "type": 0,
-      "value": "80s レトロナイト"
+      "value": "クラシック"
     }
   ],
   "theme.dark": [
@@ -1297,6 +1285,18 @@
     {
       "type": 0,
       "value": "オーシャン"
+    }
+  ],
+  "theme.retro.description": [
+    {
+      "type": 0,
+      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    }
+  ],
+  "theme.retro.name": [
+    {
+      "type": 0,
+      "value": "80s レトロナイト"
     }
   ],
   "theme.robot.description": [

@@ -137,6 +137,12 @@
       "value": "Desfazer"
     }
   ],
+  "aurora": [
+    {
+      "type": 0,
+      "value": "Aurora"
+    }
+  ],
   "canvas-style.apply": [
     {
       "type": 0,
@@ -861,18 +867,6 @@
       "value": "(Aproximando-se do limite)"
     }
   ],
-  "aurora": [
-    {
-      "type": 0,
-      "value": "Aurora"
-    }
-  ],
-  "retro": [
-    {
-      "type": 0,
-      "value": "Retro Night"
-    }
-  ],
   "ocean": [
     {
       "type": 0,
@@ -997,6 +991,12 @@
     {
       "type": 0,
       "value": "Alternar seta inicial"
+    }
+  ],
+  "retro": [
+    {
+      "type": 0,
+      "value": "Retro Night"
     }
   ],
   "rich-text-editor.bold": [
@@ -1239,18 +1239,6 @@
       "value": "Escolher tema"
     }
   ],
-  "theme.classic.description": [
-    {
-      "type": 0,
-      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
-    }
-  ],
-  "theme.classic.name": [
-    {
-      "type": 0,
-      "value": "Clássico"
-    }
-  ],
   "theme.aurora.description": [
     {
       "type": 0,
@@ -1263,16 +1251,16 @@
       "value": "Aurora"
     }
   ],
-  "theme.retro.description": [
+  "theme.classic.description": [
     {
       "type": 0,
-      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
     }
   ],
-  "theme.retro.name": [
+  "theme.classic.name": [
     {
       "type": 0,
-      "value": "Noite Retrô 80s"
+      "value": "Clássico"
     }
   ],
   "theme.dark": [
@@ -1297,6 +1285,18 @@
     {
       "type": 0,
       "value": "Oceano"
+    }
+  ],
+  "theme.retro.description": [
+    {
+      "type": 0,
+      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    }
+  ],
+  "theme.retro.name": [
+    {
+      "type": 0,
+      "value": "Noite Retrô 80s"
     }
   ],
   "theme.robot.description": [
