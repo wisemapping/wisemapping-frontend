@@ -117,6 +117,19 @@ const CurvedPolylineIcon = () => (
   </svg>
 );
 
+const HeartbeatIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M3 12 H7 L9 7 L11 17 L13 10 L15 12 H21"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+  </svg>
+);
+
 interface TopicStyleEditorProps {
   closeModal: () => void;
   // Topic styling models
@@ -211,6 +224,19 @@ const connectionStyles = [
       <FormattedMessage
         id="icon-collection.connection.arc-tooltip"
         defaultMessage="Circular arc connection - Perfect for radial layouts and organic flow"
+      />
+    ),
+  },
+  {
+    type: LineType.HEARTBEAT,
+    icon: <HeartbeatIcon />,
+    label: (
+      <FormattedMessage id="icon-collection.connection.heartbeat" defaultMessage="Heartbeat" />
+    ),
+    tooltip: (
+      <FormattedMessage
+        id="icon-collection.connection.heartbeat-tooltip"
+        defaultMessage="ECG-inspired waveform with sharp spikes – perfect for conveying energy, urgency, or life signals"
       />
     ),
   },

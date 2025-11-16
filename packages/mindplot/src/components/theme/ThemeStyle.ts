@@ -403,6 +403,8 @@ export class ThemeStyle {
         return LineType.THICK_CURVED;
       case 'ARC':
         return LineType.ARC;
+      case 'HEARTBEAT':
+        return LineType.HEARTBEAT;
       default:
         throw new Error(`Unknown connection style: ${connectionStyle}`);
     }

@@ -632,6 +632,12 @@
   "icon-collection.connection.arc-tooltip": {
     "defaultMessage": "Circular arc connection - Perfect for radial layouts and organic flow"
   },
+  "icon-collection.connection.heartbeat": {
+    "defaultMessage": "Heartbeat"
+  },
+  "icon-collection.connection.heartbeat-tooltip": {
+    "defaultMessage": "ECG-inspired waveform with sharp spikes – perfect for conveying energy, urgency, or life signals"
+  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Thin Curved"
   },

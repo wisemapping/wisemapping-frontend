@@ -755,6 +755,18 @@
       "value": "Default - Connection style will be automatically selected based on the theme"
     }
   ],
+  "icon-collection.connection.heartbeat": [
+    {
+      "type": 0,
+      "value": "Heartbeat"
+    }
+  ],
+  "icon-collection.connection.heartbeat-tooltip": [
+    {
+      "type": 0,
+      "value": "ECG-inspired waveform with sharp spikes – perfect for conveying energy, urgency, or life signals"
+    }
+  ],
   "icon-collection.connection.organic-curved": [
     {
       "type": 0,

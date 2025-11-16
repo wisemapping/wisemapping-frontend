@@ -179,6 +179,10 @@ class TopicConnection extends BaseConnectionLine {
       case LineType.ARC:
         this._line.setStroke(2, 'solid', color, 1);
         break;
+      case LineType.HEARTBEAT:
+        this._line.setStroke(this._parentTopic.isCentralTopic() ? 4.5 : 3, 'solid', color, 1);
+        this._line.setFill('none', 1);
+        break;
       default:
         throw new Error(`Unhandled line type: ${this.getLineType()}`);
     }

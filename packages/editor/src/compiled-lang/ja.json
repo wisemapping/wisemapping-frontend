@@ -698,7 +698,13 @@
   "icon-collection.connection.arc": [
     {
       "type": 0,
-      "value": "Arc"
+      "value": "アーク"
+    }
+  ],
+  "icon-collection.connection.arc-tooltip": [
+    {
+      "type": 0,
+      "value": "円形のアーク接続 - 放射状レイアウトと有機的な流れに最適"
     }
   ],
   "icon-collection.connection.curved-polyline": [
@@ -711,6 +717,18 @@
     {
       "type": 0,
       "value": "Default"
+    }
+  ],
+  "icon-collection.connection.heartbeat": [
+    {
+      "type": 0,
+      "value": "心拍"
+    }
+  ],
+  "icon-collection.connection.heartbeat-tooltip": [
+    {
+      "type": 0,
+      "value": "鋭いスパイクを持つECGにインスパイアされた波形 - エネルギー、緊急性、または生命信号を伝えるのに最適"
     }
   ],
   "icon-collection.connection.organic-curved": [

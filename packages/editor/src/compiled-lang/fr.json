@@ -701,6 +701,12 @@
       "value": "Arc"
     }
   ],
+  "icon-collection.connection.arc-tooltip": [
+    {
+      "type": 0,
+      "value": "Connexion en arc circulaire - Parfait pour les mises en page radiales et le flux organique"
+    }
+  ],
   "icon-collection.connection.curved-polyline": [
     {
       "type": 0,
@@ -711,6 +717,18 @@
     {
       "type": 0,
       "value": "Default"
+    }
+  ],
+  "icon-collection.connection.heartbeat": [
+    {
+      "type": 0,
+      "value": "Battement de cœur"
+    }
+  ],
+  "icon-collection.connection.heartbeat-tooltip": [
+    {
+      "type": 0,
+      "value": "Forme d'onde inspirée de l'ECG avec des pics nets - parfait pour transmettre l'énergie, l'urgence ou les signaux de vie"
     }
   ],
   "icon-collection.connection.organic-curved": [

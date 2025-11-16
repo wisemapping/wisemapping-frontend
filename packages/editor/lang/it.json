@@ -593,6 +593,15 @@
   "icon-collection.connection.arc": {
     "defaultMessage": "Arco"
   },
+  "icon-collection.connection.arc-tooltip": {
+    "defaultMessage": "Connessione ad arco circolare - Perfetto per layout radiali e flusso organico"
+  },
+  "icon-collection.connection.heartbeat": {
+    "defaultMessage": "Battito cardiaco"
+  },
+  "icon-collection.connection.heartbeat-tooltip": {
+    "defaultMessage": "Forma d'onda ispirata all'ECG con picchi netti - perfetto per trasmettere energia, urgenza o segnali di vita"
+  },
   "icon-collection.connection.organic-curved": {
     "defaultMessage": "Curva Organica"
   },

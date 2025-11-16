@@ -591,7 +591,16 @@
     "defaultMessage": "粗曲线"
   },
   "icon-collection.connection.arc": {
-    "defaultMessage": "弧形"
+    "defaultMessage": "弧線"
+  },
+  "icon-collection.connection.arc-tooltip": {
+    "defaultMessage": "圓形弧線連接 - 非常適合放射狀佈局和有機流動"
+  },
+  "icon-collection.connection.heartbeat": {
+    "defaultMessage": "心跳"
+  },
+  "icon-collection.connection.heartbeat-tooltip": {
+    "defaultMessage": "受心電圖啟發的波形，具有尖銳的峰值 - 非常適合傳達能量、緊迫感或生命信號"
   },
   "icon-collection.connection.organic-curved": {
     "defaultMessage": "有機曲線"

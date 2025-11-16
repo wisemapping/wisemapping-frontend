@@ -701,6 +701,12 @@
       "value": "Arco"
     }
   ],
+  "icon-collection.connection.arc-tooltip": [
+    {
+      "type": 0,
+      "value": "Conexión de arco circular - Perfecto para diseños radiales y flujo orgánico"
+    }
+  ],
   "icon-collection.connection.curved-polyline": [
     {
       "type": 0,
@@ -711,6 +717,18 @@
     {
       "type": 0,
       "value": "Default"
+    }
+  ],
+  "icon-collection.connection.heartbeat": [
+    {
+      "type": 0,
+      "value": "Latido"
+    }
+  ],
+  "icon-collection.connection.heartbeat-tooltip": [
+    {
+      "type": 0,
+      "value": "Forma de onda inspirada en ECG con picos agudos - perfecto para transmitir energía, urgencia o señales de vida"
     }
   ],
   "icon-collection.connection.organic-curved": [

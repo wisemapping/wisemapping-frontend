@@ -61,8 +61,8 @@ describe('Theme Suite', () => {
     // Click on the Theme button in toolbar
     cy.onClickToolbarButton('Theme');
     
-    // Select Classic theme
-    cy.contains('Classic').should('be.visible').click({ force: true });
+    // Select Classic theme - scroll into view first to ensure it's visible
+    cy.contains('Classic').scrollIntoView().should('be.visible').click({ force: true });
     
     // Click Apply Theme button
     cy.contains('Apply Theme').click({ force: true });
