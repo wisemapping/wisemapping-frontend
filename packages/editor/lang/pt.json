@@ -626,6 +626,12 @@
   "note.character.limit.warning": {
     "defaultMessage": "(Aproximando-se do limite)"
   },
+  "aurora": {
+    "defaultMessage": "Aurora"
+  },
+  "retro": {
+    "defaultMessage": "Retro Night"
+  },
   "ocean": {
     "defaultMessage": "Oceano"
   },
@@ -658,6 +664,18 @@
   },
   "theme.classic.name": {
     "defaultMessage": "Clássico"
+  },
+  "theme.aurora.description": {
+    "defaultMessage": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+  },
+  "theme.aurora.name": {
+    "defaultMessage": "Aurora"
+  },
+  "theme.retro.description": {
+    "defaultMessage": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+  },
+  "theme.retro.name": {
+    "defaultMessage": "Noite Retrô 80s"
   },
   "theme.ocean.description": {
     "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."

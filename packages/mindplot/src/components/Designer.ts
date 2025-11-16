@@ -1113,10 +1113,11 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const backgroundColor = theme.getCanvasBackgroundColor();
     const gridColor = theme.getCanvasGridColor();
     const showGrid = theme.getCanvasShowGrid();
+    const gridPattern = theme.getCanvasGridPattern();
 
     return {
       backgroundColor,
-      backgroundPattern: showGrid && gridColor ? 'grid' : 'solid',
+      backgroundPattern: showGrid && gridColor ? gridPattern : 'solid',
       backgroundGridSize: 20, // Default grid size
       backgroundGridColor: gridColor || '#ebe9e7', // Default grid color
     };

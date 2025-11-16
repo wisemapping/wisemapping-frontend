@@ -56,7 +56,7 @@ export default {
     linkText: { control: 'text' },
     eicon: { control: 'multi-select', options: ['❤️', '🌈', '🖇️'] },
     imageEmojiChar: { control: 'text' },
-    theme: { control: 'select', options: ['classic', 'prism', 'robot', 'sunrise', 'ocean'] },
+    theme: { control: 'select', options: ['classic', 'aurora', 'retro', 'prism', 'robot', 'sunrise', 'ocean'] },
     zoom: {
       control: { type: 'range', min: 0.3, max: 1.9, step: 0.1 },
       description: 'Zoom level (0.3 = zoomed out, 1.9 = zoomed in)',
@@ -467,4 +467,3 @@ SimpleMapWithShadow.args = {
   shapeType: 'rectangle',
   zoom: 0.7,
 };
-

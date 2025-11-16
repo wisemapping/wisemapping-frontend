@@ -1,7 +1,7 @@
 context('Connection suite', () => {
   // Test to ensure all stories load without import/export errors
   it('all stories load successfully without errors', () => {
-    const stories = ['classic', 'prism', 'robot', 'sunrise', 'ocean'];
+    const stories = ['classic', 'prism', 'robot', 'sunrise', 'ocean', 'aurora', 'retro'];
 
     stories.forEach((story) => {
       cy.visit(`/iframe.html?args=&id=mindplot-connection--${story}&viewMode=story`);
@@ -35,5 +35,15 @@ context('Connection suite', () => {
   it('sunrise theme', () => {
     cy.visit('/iframe.html?args=&id=mindplot-connection--sunrise&viewMode=story');
     cy.matchImageSnapshot('connection-sunrise');
+  });
+
+  it('aurora theme', () => {
+    cy.visit('/iframe.html?args=&id=mindplot-connection--aurora&viewMode=story');
+    cy.matchImageSnapshot('connection-aurora');
+  });
+
+  it('retro theme', () => {
+    cy.visit('/iframe.html?args=&id=mindplot-connection--retro&viewMode=story');
+    cy.matchImageSnapshot('connection-retro');
   });
 });

@@ -861,6 +861,18 @@
       "value": "(接近限制)"
     }
   ],
+  "aurora": [
+    {
+      "type": 0,
+      "value": "极光"
+    }
+  ],
+  "retro": [
+    {
+      "type": 0,
+      "value": "复古之夜"
+    }
+  ],
   "ocean": [
     {
       "type": 0,
@@ -1237,6 +1249,30 @@
     {
       "type": 0,
       "value": "经典"
+    }
+  ],
+  "theme.aurora.description": [
+    {
+      "type": 0,
+      "value": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    }
+  ],
+  "theme.aurora.name": [
+    {
+      "type": 0,
+      "value": "极光"
+    }
+  ],
+  "theme.retro.description": [
+    {
+      "type": 0,
+      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    }
+  ],
+  "theme.retro.name": [
+    {
+      "type": 0,
+      "value": "80年代复古之夜"
     }
   ],
   "theme.dark": [

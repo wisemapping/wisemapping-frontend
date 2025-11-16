@@ -1,0 +1,90 @@
+{
+  "CentralTopic": {
+    "msgKey": "CENTRAL_TOPIC",
+    "borderColor": "#FF6FE2",
+    "backgroundColor": "#1B0036",
+    "fontFamily": "'Orbitron', 'Space Grotesk', 'Segoe UI', sans-serif",
+    "fontSize": 12,
+    "fontStyle": "normal",
+    "fontWeight": "bold",
+    "fontColor": "#F8F8FF",
+    "connectionStyle": "THICK_CURVED",
+    "connectionColor": "#FF4FD8",
+    "shapeType": "rounded rectangle",
+    "outerBackgroundColor": "#FF4FD8",
+    "outerBorderColor": "#00F0FF"
+  },
+  "MainTopic": {
+    "msgKey": "MAIN_TOPIC",
+    "borderColor": [
+      "#FF4FD8",
+      "#FF8F5C",
+      "#00F0FF",
+      "#6A5BFF",
+      "#FFC95C",
+      "#4DEB8F"
+    ],
+    "connectionColor": [
+      "#FF4FD8",
+      "#FF8F5C",
+      "#00F0FF",
+      "#6A5BFF",
+      "#FFC95C",
+      "#4DEB8F"
+    ],
+    "backgroundColor": [
+      "#39005B",
+      "#3F006B",
+      "#002F5F",
+      "#072E63",
+      "#51144E",
+      "#004050"
+    ],
+    "fontFamily": "'Space Grotesk', 'Montserrat', 'Segoe UI', sans-serif",
+    "fontSize": 10,
+    "fontStyle": "normal",
+    "fontWeight": "bold",
+    "fontColor": "#F7F4FF",
+    "connectionStyle": "THICK_CURVED",
+    "shapeType": "rounded rectangle",
+    "outerBackgroundColor": "#240046",
+    "outerBorderColor": "#00F0FF"
+  },
+  "SubTopic": {
+    "msgKey": "SUB_TOPIC",
+    "borderColor": "#00F0FF",
+    "backgroundColor": "#16002C",
+    "fontFamily": "'Space Grotesk', 'Segoe UI', sans-serif",
+    "fontSize": 9,
+    "fontStyle": "normal",
+    "fontWeight": "normal",
+    "fontColor": "#F3F1FF",
+    "connectionStyle": "POLYLINE_CURVED",
+    "connectionColor": "#FF4FD8",
+    "shapeType": "rectangle",
+    "outerBackgroundColor": "#0A0014",
+    "outerBorderColor": "#FF8F5C"
+  },
+  "IsolatedTopic": {
+    "msgKey": "ISOLATED_TOPIC",
+    "borderColor": "#FF8F5C",
+    "backgroundColor": "#2B003C",
+    "fontFamily": "'Fira Code', 'Cascadia Code', 'Courier New', monospace",
+    "fontSize": 9,
+    "fontStyle": "normal",
+    "fontWeight": "normal",
+    "fontColor": "#FFE2FF",
+    "connectionStyle": "POLYLINE_MIDDLE",
+    "connectionColor": "#00F0FF",
+    "shapeType": "line",
+    "outerBackgroundColor": "#0A0014",
+    "outerBorderColor": "#FF8F5C"
+  },
+  "Canvas": {
+    "backgroundColor": "#070012",
+    "gridColor": "rgba(255, 111, 226, 0.35)",
+    "opacity": 0.95,
+    "showGrid": true,
+    "gridPattern": "grid"
+  }
+}

@@ -626,6 +626,12 @@
   "note.character.limit.warning": {
     "defaultMessage": "(接近限制)"
   },
+  "aurora": {
+    "defaultMessage": "极光"
+  },
+  "retro": {
+    "defaultMessage": "复古之夜"
+  },
   "ocean": {
     "defaultMessage": "海洋"
   },
@@ -658,6 +664,18 @@
   },
   "theme.classic.name": {
     "defaultMessage": "经典"
+  },
+  "theme.aurora.description": {
+    "defaultMessage": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+  },
+  "theme.aurora.name": {
+    "defaultMessage": "极光"
+  },
+  "theme.retro.description": {
+    "defaultMessage": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+  },
+  "theme.retro.name": {
+    "defaultMessage": "80年代复古之夜"
   },
   "theme.ocean.description": {
     "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."

@@ -1,0 +1,37 @@
+{
+  "CentralTopic": {
+    "backgroundColor": "#0F1022",
+    "outerBackgroundColor": "#6C2EF5",
+    "outerBorderColor": "#1FFFFF",
+    "fontColor": "#FFFFFF",
+    "connectionColor": "#1FFFFF"
+  },
+  "MainTopic": {
+    "backgroundColor": [
+      "#32194F",
+      "#401F5D",
+      "#452664",
+      "#203A68",
+      "#14385F",
+      "#0F3350"
+    ],
+    "fontColor": "#F4F2FF"
+  },
+  "SubTopic": {
+    "backgroundColor": "#1B1F3E",
+    "borderColor": "#3BBAD6",
+    "fontColor": "#D4E0FF",
+    "connectionColor": "#3BD1FF"
+  },
+  "IsolatedTopic": {
+    "borderColor": "#FF9FB1",
+    "fontColor": "#FFB9D2",
+    "backgroundColor": "#101223"
+  },
+  "Canvas": {
+    "backgroundColor": "#060913",
+    "gridColor": "rgba(255, 255, 255, 0.06)",
+    "opacity": 0.92,
+    "showGrid": true
+  }
+}

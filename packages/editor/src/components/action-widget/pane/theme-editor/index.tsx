@@ -49,6 +49,24 @@ const ThemeEditor = (props: {
         }),
       },
       {
+        id: 'aurora' as ThemeType,
+        name: intl.formatMessage({ id: 'theme.aurora.name', defaultMessage: 'Aurora' }),
+        description: intl.formatMessage({
+          id: 'theme.aurora.description',
+          defaultMessage:
+            'Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling.',
+        }),
+      },
+      {
+        id: 'retro' as ThemeType,
+        name: intl.formatMessage({ id: 'theme.retro.name', defaultMessage: '80s Retro Night' }),
+        description: intl.formatMessage({
+          id: 'theme.retro.description',
+          defaultMessage:
+            '80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties.',
+        }),
+      },
+      {
         id: 'sunrise' as ThemeType,
         name: intl.formatMessage({ id: 'theme.sunrise.name', defaultMessage: 'Sunrise' }),
         description: intl.formatMessage({

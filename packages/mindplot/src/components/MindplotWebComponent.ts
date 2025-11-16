@@ -91,6 +91,7 @@ class MindplotWebComponent extends HTMLElement {
     const opacity = theme.getCanvasOpacity();
     const showGrid = theme.getCanvasShowGrid();
     const gridColor = theme.getCanvasGridColor();
+    const gridPattern = theme.getCanvasGridPattern();
 
     let style = `position: relative;
       left: 0;
@@ -107,10 +108,16 @@ class MindplotWebComponent extends HTMLElement {
 
     // Add grid if enabled
     if (showGrid && gridColor) {
-      style += `
-      background-image: linear-gradient(${gridColor} 1px, transparent 1px),
-        linear-gradient(to right, ${gridColor} 1px, ${backgroundColor} 1px);
-      background-size: 20px 20px;`;
+      if (gridPattern === 'dots') {
+        style += `
+        background-image: radial-gradient(circle, ${gridColor} 1px, transparent 1px);
+        background-size: 20px 20px;`;
+      } else {
+        style += `
+        background-image: linear-gradient(${gridColor} 1px, transparent 1px),
+          linear-gradient(to right, ${gridColor} 1px, ${backgroundColor} 1px);
+        background-size: 20px 20px;`;
+      }
     }
 
     wrapper.setAttribute('style', style);

@@ -861,6 +861,18 @@
       "value": "(Limite approchée)"
     }
   ],
+  "aurora": [
+    {
+      "type": 0,
+      "value": "Aurora"
+    }
+  ],
+  "retro": [
+    {
+      "type": 0,
+      "value": "Retro Night"
+    }
+  ],
   "ocean": [
     {
       "type": 0,
@@ -1237,6 +1249,30 @@
     {
       "type": 0,
       "value": "Classique"
+    }
+  ],
+  "theme.aurora.description": [
+    {
+      "type": 0,
+      "value": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    }
+  ],
+  "theme.aurora.name": [
+    {
+      "type": 0,
+      "value": "Aurora"
+    }
+  ],
+  "theme.retro.description": [
+    {
+      "type": 0,
+      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    }
+  ],
+  "theme.retro.name": [
+    {
+      "type": 0,
+      "value": "Nuit Rétro 80s"
     }
   ],
   "theme.dark": [
