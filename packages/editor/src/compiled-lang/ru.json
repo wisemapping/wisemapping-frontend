@@ -137,6 +137,12 @@
       "value": "Отменить"
     }
   ],
+  "aurora": [
+    {
+      "type": 0,
+      "value": "Аврора"
+    }
+  ],
   "canvas-style.apply": [
     {
       "type": 0,
@@ -861,18 +867,6 @@
       "value": "(Приближается к лимиту)"
     }
   ],
-  "aurora": [
-    {
-      "type": 0,
-      "value": "Аврора"
-    }
-  ],
-  "retro": [
-    {
-      "type": 0,
-      "value": "Ретро Ночь"
-    }
-  ],
   "ocean": [
     {
       "type": 0,
@@ -997,6 +991,12 @@
     {
       "type": 0,
       "value": "Переключить начальную стрелку"
+    }
+  ],
+  "retro": [
+    {
+      "type": 0,
+      "value": "Ретро Ночь"
     }
   ],
   "rich-text-editor.bold": [
@@ -1239,18 +1239,6 @@
       "value": "Выбрать тему"
     }
   ],
-  "theme.classic.description": [
-    {
-      "type": 0,
-      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
-    }
-  ],
-  "theme.classic.name": [
-    {
-      "type": 0,
-      "value": "Классический"
-    }
-  ],
   "theme.aurora.description": [
     {
       "type": 0,
@@ -1263,16 +1251,16 @@
       "value": "Аврора"
     }
   ],
-  "theme.retro.description": [
+  "theme.classic.description": [
     {
       "type": 0,
-      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
     }
   ],
-  "theme.retro.name": [
+  "theme.classic.name": [
     {
       "type": 0,
-      "value": "80s Ретро Ночь"
+      "value": "Классический"
     }
   ],
   "theme.dark": [
@@ -1297,6 +1285,18 @@
     {
       "type": 0,
       "value": "Океан"
+    }
+  ],
+  "theme.retro.description": [
+    {
+      "type": 0,
+      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    }
+  ],
+  "theme.retro.name": [
+    {
+      "type": 0,
+      "value": "80s Ретро Ночь"
     }
   ],
   "theme.robot.description": [
