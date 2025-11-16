@@ -267,6 +267,10 @@ class Canvas {
     this._workspace.setCoordSize(width, height);
   }
 
+  setZoomValue(zoom: number): void {
+    this._zoom = zoom;
+  }
+
   enableWorkspaceEvents(value: boolean) {
     this._eventsEnabled = value;
   }

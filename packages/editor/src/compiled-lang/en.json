@@ -767,16 +767,16 @@
       "value": "ECG-inspired waveform with sharp spikes – perfect for conveying energy, urgency, or life signals"
     }
   ],
-  "icon-collection.connection.organic-curved": [
+  "icon-collection.connection.neuron": [
     {
       "type": 0,
-      "value": "Organic Curved"
+      "value": "Neuron"
     }
   ],
-  "icon-collection.connection.organic-curved-tooltip": [
+  "icon-collection.connection.neuron-tooltip": [
     {
       "type": 0,
-      "value": "Hand-drawn style with dramatic curves - Perfect for creative and expressive mind maps"
+      "value": "Organic impulse line with branching pulses – ideal for science, neural nets, or anything futuristic"
     }
   ],
   "icon-collection.connection.simple-polyline": [
