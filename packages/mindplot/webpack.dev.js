@@ -16,9 +16,7 @@ const devConfig = {
     new HotModuleReplacementPlugin(),
     // Run TypeScript type checking in a separate process (non-blocking)
     new ForkTsCheckerWebpackPlugin({
-      async: {
-        concurrency: 2,
-      },
+      async: true,
       typescript: {
         configFile: './tsconfig.json',
         diagnosticOptions: {
