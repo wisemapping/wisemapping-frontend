@@ -166,7 +166,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
     const stateRedirectUrl = searchParams.get('state');
 
     client
-      .confirmAccountSync(callback.email, callback.syncCode)
+      .confirmAccountSync(callback.email, callback.syncCode, provider)
       .then(() => {
         // Initialize theme from system preference if not already set
         initializeThemeFromSystem();
