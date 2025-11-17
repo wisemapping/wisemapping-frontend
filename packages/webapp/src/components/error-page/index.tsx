@@ -170,6 +170,36 @@ const ErrorPage = (): React.ReactElement => {
       defaultMessage: 'Unexpected Error | WiseMapping',
     });
     trackPageView(window.location.pathname, 'ErrorPage');
+
+    // Log unhandled DOM manipulation errors that might escape React's error boundary
+    // (e.g., errors from third-party scripts like New Relic wrapping DOM methods)
+    const unhandledErrorHandler = (event: ErrorEvent): void => {
+      // Check if this is a DOM manipulation error related to insertBefore
+      if (event.error?.name === 'NotFoundError' && event.error?.message?.includes('insertBefore')) {
+        logCriticalError(
+          'ErrorPage - Unhandled DOM manipulation error (insertBefore)',
+          safeSerialize(event.error),
+        );
+      }
+    };
+
+    const unhandledRejectionHandler = (event: PromiseRejectionEvent): void => {
+      const error = event.reason;
+      if (error?.name === 'NotFoundError' && error?.message?.includes('insertBefore')) {
+        logCriticalError(
+          'ErrorPage - Unhandled promise rejection with DOM manipulation error (insertBefore)',
+          safeSerialize(error),
+        );
+      }
+    };
+
+    window.addEventListener('error', unhandledErrorHandler);
+    window.addEventListener('unhandledrejection', unhandledRejectionHandler);
+
+    return () => {
+      window.removeEventListener('error', unhandledErrorHandler);
+      window.removeEventListener('unhandledrejection', unhandledRejectionHandler);
+    };
   }, [intl]);
 
   return (
