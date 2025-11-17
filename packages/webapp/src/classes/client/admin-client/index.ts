@@ -687,7 +687,11 @@ export default class AdminClient implements AdminClientInterface {
     });
   }
 
-  confirmAccountSync(_email: string, _code?: string): Promise<Oauth2CallbackResult> {
+  confirmAccountSync(
+    _email: string,
+    _code?: string,
+    _provider?: string,
+  ): Promise<Oauth2CallbackResult> {
     return this.processGoogleCallback('');
   }
 

@@ -175,7 +175,11 @@ interface Client {
   activateAccount(code: string): Promise<void>;
   processGoogleCallback(code: string): Promise<Oauth2CallbackResult>;
   processFacebookCallback(code: string): Promise<Oauth2CallbackResult>;
-  confirmAccountSync(email: string, code?: string): Promise<Oauth2CallbackResult>;
+  confirmAccountSync(
+    email: string,
+    code?: string,
+    provider?: string,
+  ): Promise<Oauth2CallbackResult>;
 
   fetchHistory(id: number): Promise<ChangeHistory[]>;
   revertHistory(id: number, cid: number): Promise<void>;

@@ -808,13 +808,25 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
-  confirmAccountSync(email: string, code: string): Promise<Oauth2CallbackResult> {
+  confirmAccountSync(
+    email: string,
+    code?: string,
+    provider?: string,
+  ): Promise<Oauth2CallbackResult> {
     const handler = (
       success: (result: Oauth2CallbackResult) => void,
       reject: (error: ErrorInfo) => void,
     ) => {
+      const params = new URLSearchParams();
+      params.append('email', email);
+      if (code) {
+        params.append('code', code);
+      }
+      if (provider) {
+        params.append('provider', provider);
+      }
       this.axios
-        .put(`${this.baseUrl}/api/restful/oauth2/confirmaccountsync?email=${email}&code=${code}`, {
+        .put(`${this.baseUrl}/api/restful/oauth2/confirmaccountsync?${params.toString()}`, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
