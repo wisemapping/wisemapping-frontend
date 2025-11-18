@@ -21,6 +21,7 @@ import type { EditorRenderMode } from '@wisemapping/mindplot';
 import AppConfig from '../../classes/app-config';
 import queryClient from '../../queryClient';
 import Client from '../../classes/client';
+import { createJsonResponse } from '../../utils/response';
 
 export type EditorMetadata = {
   editorMode: EditorRenderMode;
@@ -93,7 +94,7 @@ export const loader = (pageMode: PageModeType, bootstrap = false) => {
           },
           zoom: 0.8,
         });
-        result = Response.json(value);
+        result = createJsonResponse(value);
         break;
       }
       case 'edit':
@@ -121,7 +122,7 @@ export const loader = (pageMode: PageModeType, bootstrap = false) => {
             data.bootstrapXML = mapMetadata.xml;
           }
 
-          result = Response.json(data);
+          result = createJsonResponse(data);
         } catch (e) {
           // If the issue is an auth error, it needs to be redirect to login.
           const error = e as ErrorInfo;
@@ -147,7 +148,7 @@ export const loader = (pageMode: PageModeType, bootstrap = false) => {
             data.bootstrapXML = mapMetadata.xml;
           }
 
-          result = Response.json(data);
+          result = createJsonResponse(data);
         } catch (error) {
           if (isErrorInfo(error) && error.status === 410) {
             throw new Response(error.msg ?? PUBLIC_MAP_REMOVED_MESSAGE, {
