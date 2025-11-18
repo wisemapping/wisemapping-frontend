@@ -1355,9 +1355,20 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     return result;
   }
 
+  private _clearFocusRecursively(node: Topic): void {
+    if (node.isOnFocus()) {
+      node.setOnFocus(false);
+    }
+
+    node.getChildren().forEach((child) => this._clearFocusRecursively(child));
+  }
+
   removeTopic(node: Topic): void {
     if (!node.isCentralTopic()) {
+      this._clearFocusRecursively(node);
       const parent = node.getParent();
+      // Ensure any inline editors bound to this topic or its descendants are closed before removal
+      node.closeEditors();
       node.disconnect(this._canvas);
 
       // remove children
