@@ -18,6 +18,7 @@
 
 import AppConfig from './classes/app-config';
 import ReactGA from 'react-ga4';
+import { createJsonResponse } from './utils/response';
 
 export const loader = async (): Promise<Response> => {
   // Ensure configuration is loaded before continuing.
@@ -32,5 +33,5 @@ export const loader = async (): Promise<Response> => {
       },
     ]);
   }
-  return Response.json('Load success');
+  return createJsonResponse('Load success');
 };
