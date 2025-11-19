@@ -47,7 +47,10 @@ class HeartbeatLinePeer extends ElementPeer {
   private _y2: number;
 
   constructor() {
-    const svgElement = window.document.createElementNS(HeartbeatLinePeer.svgNamespace, 'path');
+    const svgElement = window.document.createElementNS(
+      HeartbeatLinePeer.svgNamespace,
+      'path',
+    ) as SVGPathElement;
     super(svgElement);
 
     this._path = svgElement;

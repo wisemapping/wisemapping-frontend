@@ -110,7 +110,23 @@ export const loader = (pageMode: PageModeType, bootstrap = false) => {
           }
 
           // Build result ...
-          const { zoom } = JSON.parse(mapMetadata.jsonProps);
+          // Safely parse jsonProps with fallback to default zoom
+          let zoom = 0.8; // Default zoom value
+          if (mapMetadata.jsonProps && mapMetadata.jsonProps.trim()) {
+            try {
+              const parsedProps = JSON.parse(mapMetadata.jsonProps.trim());
+              if (parsedProps && typeof parsedProps === 'object' && 'zoom' in parsedProps) {
+                zoom = typeof parsedProps.zoom === 'number' ? parsedProps.zoom : zoom;
+              }
+            } catch (error) {
+              console.warn(
+                `Failed to parse jsonProps for map ${mapMetadata.id}:`,
+                mapMetadata.jsonProps,
+                error,
+              );
+              // Use default zoom value on parse error
+            }
+          }
           const data: EditorMetadata = {
             editorMode: editorMode,
             mapMetadata: mapMetadata,
