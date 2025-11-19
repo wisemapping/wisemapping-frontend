@@ -46,7 +46,10 @@ class NeuronLinePeer extends ElementPeer {
   private _y2: number;
 
   constructor() {
-    const svgElement = window.document.createElementNS(NeuronLinePeer.svgNamespace, 'path');
+    const svgElement = window.document.createElementNS(
+      NeuronLinePeer.svgNamespace,
+      'path',
+    ) as SVGPathElement;
     super(svgElement);
 
     this._path = svgElement;
