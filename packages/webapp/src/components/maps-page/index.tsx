@@ -67,7 +67,7 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import logoIconBlack from '../../../images/logo-and-text-black.svg';
 import logoIconWhite from '../../../images/logo-and-text-white.svg';
 import LabelDeleteConfirm from './maps-list/label-delete-confirm';
-import { trackPageView } from '../../utils/analytics';
+import { trackMindmapListAction, trackPageView } from '../../utils/analytics';
 import { CSSObject, Interpolation, Theme } from '@emotion/react';
 import { alpha } from '@mui/material/styles';
 import withEmotionStyles from '../HOCs/withEmotionStyles';
@@ -125,6 +125,7 @@ const MapsPage = (): ReactElement => {
   };
 
   const handleMindMapCopilotDialogOpen = () => {
+    trackMindmapListAction('ai_copilot_dialog_open', 'mindmap_list_ai');
     setMindMapCopilotDialogOpen(true);
   };
 
@@ -133,6 +134,7 @@ const MapsPage = (): ReactElement => {
   };
 
   const handleMindMapCopilotDialogContinue = () => {
+    trackMindmapListAction('ai_copilot_open', 'mindmap_list_ai');
     setMindMapCopilotDialogOpen(false);
     window.open(CHATGPT_COPILOT_URL, '_blank', 'noopener,noreferrer');
   };

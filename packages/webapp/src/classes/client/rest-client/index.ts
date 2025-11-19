@@ -865,9 +865,6 @@ export default class RestClient implements Client {
         response?.config?.method?.toLowerCase() === 'get';
       const isSpamMindmapError = status === 422 && isMetadataRequest;
       const normalizedStatus = isSpamMindmapError ? 410 : status;
-      console.error(`Status Code: ${status}`);
-      console.error(`Status Data: ${response.data}`);
-      console.error(`Status Message: ${response.message}`);
 
       switch (status) {
         case 401:
