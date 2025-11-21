@@ -24,6 +24,8 @@ import { Link as RouterLink } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { trackPageView } from '../../utils/analytics';
+import { SEOHead } from '../seo';
+import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 
 const RegistrationSuccessPage = (): React.ReactElement => {
   const intl = useIntl();
@@ -36,50 +38,74 @@ const RegistrationSuccessPage = (): React.ReactElement => {
     trackPageView(window.location.pathname, 'Registration:Success');
   });
 
+  const canonicalUrl = getCanonicalUrl('/c/registration-success');
+  const alternateLanguages = getAlternateLanguageUrls('/c/registration-success');
+  const baseUrl =
+    typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
+
   return (
-    <AccountAccessLayout headerType="none">
-      <FormContainer>
-        <Typography variant="h4" component="h1" gutterBottom>
-          <FormattedMessage
-            id="registration.success.title"
-            defaultMessage="Registration Successful!"
-          />
-        </Typography>
+    <>
+      <SEOHead
+        title="Registration Successful | WiseMapping"
+        description="Your WiseMapping account registration was successful. Check your email for the activation link to complete your account setup and start creating mind maps."
+        keywords="registration success, account created, mind mapping, wise mapping, account activation"
+        canonicalUrl={canonicalUrl}
+        alternateLanguages={alternateLanguages}
+        ogType="website"
+        robots="noindex, follow"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'Registration Successful - WiseMapping',
+          description:
+            'Your WiseMapping account registration was successful. Check your email for the activation link to complete your account setup.',
+          url: `${baseUrl}${canonicalUrl}`,
+        }}
+      />
+      <AccountAccessLayout headerType="none">
+        <FormContainer>
+          <Typography variant="h4" component="h1" gutterBottom>
+            <FormattedMessage
+              id="registration.success.title"
+              defaultMessage="Registration Successful!"
+            />
+          </Typography>
 
-        <Typography paragraph>
-          <FormattedMessage
-            id="registration.success.email-sent"
-            defaultMessage="We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
-          />
-        </Typography>
+          <Typography paragraph>
+            <FormattedMessage
+              id="registration.success.email-sent"
+              defaultMessage="We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+            />
+          </Typography>
 
-        <Typography paragraph style={{ marginBottom: '2rem' }}>
-          <FormattedMessage
-            id="registration.success.check-spam"
-            defaultMessage="If you don't see the email, please check your spam folder."
-          />
-        </Typography>
+          <Typography paragraph style={{ marginBottom: '2rem' }}>
+            <FormattedMessage
+              id="registration.success.check-spam"
+              defaultMessage="If you don't see the email, please check your spam folder."
+            />
+          </Typography>
 
-        <Typography variant="body2" color="textSecondary">
-          <FormattedMessage
-            id="registration.success.already-activated"
-            defaultMessage="Already activated your account?"
-          />
-        </Typography>
+          <Typography variant="body2" color="textSecondary">
+            <FormattedMessage
+              id="registration.success.already-activated"
+              defaultMessage="Already activated your account?"
+            />
+          </Typography>
 
-        <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
-          <Button
-            color="primary"
-            size="medium"
-            variant="contained"
-            disableElevation={true}
-            style={{ marginTop: '1rem' }}
-          >
-            <FormattedMessage id="login.signin" defaultMessage="Sign In" />
-          </Button>
-        </RouterLink>
-      </FormContainer>
-    </AccountAccessLayout>
+          <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
+            <Button
+              color="primary"
+              size="medium"
+              variant="contained"
+              disableElevation={true}
+              style={{ marginTop: '1rem' }}
+            >
+              <FormattedMessage id="login.signin" defaultMessage="Sign In" />
+            </Button>
+          </RouterLink>
+        </FormContainer>
+      </AccountAccessLayout>
+    </>
   );
 };
 
