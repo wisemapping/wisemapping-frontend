@@ -77,7 +77,13 @@ export function getLocaleFromPath(): SupportedLocale | null {
  * Use hreflang tags for alternate language versions.
  */
 export function getCanonicalUrl(
-  basePath: '/c/login' | '/c/registration' | '/c/forgot-password',
+  basePath:
+    | '/c/login'
+    | '/c/registration'
+    | '/c/forgot-password'
+    | '/c/registration-success'
+    | '/c/activation'
+    | '/c/forgot-password-success',
 ): string {
   // Always return non-localized version as canonical
   // This consolidates duplicate content and prevents Google from choosing different canonicals
@@ -89,7 +95,13 @@ export function getCanonicalUrl(
  * Includes all supported locales plus the non-localized version
  */
 export function getAlternateLanguageUrls(
-  basePath: '/c/login' | '/c/registration' | '/c/forgot-password',
+  basePath:
+    | '/c/login'
+    | '/c/registration'
+    | '/c/forgot-password'
+    | '/c/registration-success'
+    | '/c/activation'
+    | '/c/forgot-password-success',
 ): Array<{ hreflang: string; href: string }> {
   const baseUrl =
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
