@@ -35,10 +35,11 @@ export interface SEOProps {
   structuredData?: object;
   language?: string;
   alternateLanguages?: Array<{ hreflang: string; href: string }>;
+  robots?: string;
 }
 
 const SEOHead: React.FC<SEOProps> = ({
-  title = 'WiseMapping - Visual Thinking Evolution',
+  title = 'WiseMapping - Free & Open-Source Mind Mapping for Ideas, Teams & Education',
   description = 'WiseMapping is a free, fast and simple online mind mapping editor for individuals and business. Sign up to start organizing and sharing your ideas and thoughts.',
   keywords = 'mindmap,mind map,mind maps,mindmaps,ideas,brainstorming,organize,thoughts,structure,collaboration,free,fast,simple,online,tool,knowledge,share,sharing,publish',
   canonicalUrl,
@@ -53,6 +54,7 @@ const SEOHead: React.FC<SEOProps> = ({
   structuredData,
   language = 'en',
   alternateLanguages = [],
+  robots = 'index, follow',
 }) => {
   const baseUrl =
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
@@ -72,6 +74,7 @@ const SEOHead: React.FC<SEOProps> = ({
       <meta name="keywords" content={keywords} />
       <meta name="author" content="WiseMapping" />
       <meta name="publisher" content="WiseMapping" />
+      <meta name="robots" content={robots} />
 
       {/* Canonical URL */}
       {fullCanonicalUrl && <link rel="canonical" href={fullCanonicalUrl} />}

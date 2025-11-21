@@ -27,6 +27,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import { trackPageView } from '../../utils/analytics';
 import { ClientContext } from '../../classes/provider/client-context';
+import { SEOHead } from '../seo';
+import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 
 const ActivationPage = (): React.ReactElement => {
   const intl = useIntl();
@@ -42,6 +44,11 @@ const ActivationPage = (): React.ReactElement => {
     });
     trackPageView(window.location.pathname, 'Activation');
   }, []);
+
+  const canonicalUrl = getCanonicalUrl('/c/activation');
+  const alternateLanguages = getAlternateLanguageUrls('/c/activation');
+  const baseUrl =
+    typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
 
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('code');
@@ -65,70 +72,89 @@ const ActivationPage = (): React.ReactElement => {
   }, []);
 
   return (
-    <AccountAccessLayout headerType="none">
-      <FormContainer>
-        {loading ? (
-          <>
-            <Typography variant="h4" component="h1" gutterBottom>
-              <FormattedMessage
-                id="activation.loading.title"
-                defaultMessage="Activating Your Account"
-              />
-            </Typography>
-            <CircularProgress />
-            <Typography paragraph style={{ marginTop: '1rem' }}>
-              <FormattedMessage
-                id="activation.loading.desc"
-                defaultMessage="Please wait while we activate your account..."
-              />
-            </Typography>
-          </>
-        ) : success ? (
-          <>
-            <Typography variant="h4" component="h1" gutterBottom>
-              <FormattedMessage
-                id="activation.success.title"
-                defaultMessage="Account Activated Successfully"
-              />
-            </Typography>
-
-            <Alert severity="success" style={{ marginBottom: '1rem' }}>
-              <FormattedMessage
-                id="activation.success.message"
-                defaultMessage="Your account has been activated. You can now sign in and start creating mind maps."
-              />
-            </Alert>
-
-            <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
-              <Button color="primary" size="medium" variant="contained" disableElevation={true}>
-                <FormattedMessage id="login.signin" defaultMessage="Sign In" />
-              </Button>
-            </RouterLink>
-          </>
-        ) : (
-          <>
-            <Typography variant="h4" component="h1" gutterBottom>
-              <FormattedMessage id="activation.error.title" defaultMessage="Activation Failed" />
-            </Typography>
-
-            <Alert severity="error" style={{ marginBottom: '1rem' }}>
-              {error || (
+    <>
+      <SEOHead
+        title="Account Activation | WiseMapping"
+        description="Activate your WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others. Complete your account setup in seconds."
+        keywords="account activation, activate account, mind mapping, wise mapping, account setup"
+        canonicalUrl={canonicalUrl}
+        alternateLanguages={alternateLanguages}
+        ogType="website"
+        robots="noindex, follow"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'Account Activation - WiseMapping',
+          description:
+            'Activate your WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others.',
+          url: `${baseUrl}${canonicalUrl}`,
+        }}
+      />
+      <AccountAccessLayout headerType="none">
+        <FormContainer>
+          {loading ? (
+            <>
+              <Typography variant="h4" component="h1" gutterBottom>
                 <FormattedMessage
-                  id="activation.error.message"
-                  defaultMessage="We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+                  id="activation.loading.title"
+                  defaultMessage="Activating Your Account"
                 />
-              )}
-            </Alert>
+              </Typography>
+              <CircularProgress />
+              <Typography paragraph style={{ marginTop: '1rem' }}>
+                <FormattedMessage
+                  id="activation.loading.desc"
+                  defaultMessage="Please wait while we activate your account..."
+                />
+              </Typography>
+            </>
+          ) : success ? (
+            <>
+              <Typography variant="h4" component="h1" gutterBottom>
+                <FormattedMessage
+                  id="activation.success.title"
+                  defaultMessage="Account Activated Successfully"
+                />
+              </Typography>
 
-            <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
-              <Button color="primary" size="medium" variant="contained" disableElevation={true}>
-                <FormattedMessage id="login.signin" defaultMessage="Sign In" />
-              </Button>
-            </RouterLink>
-          </>
-        )}
-      </FormContainer>
-    </AccountAccessLayout>
+              <Alert severity="success" style={{ marginBottom: '1rem' }}>
+                <FormattedMessage
+                  id="activation.success.message"
+                  defaultMessage="Your account has been activated. You can now sign in and start creating mind maps."
+                />
+              </Alert>
+
+              <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
+                <Button color="primary" size="medium" variant="contained" disableElevation={true}>
+                  <FormattedMessage id="login.signin" defaultMessage="Sign In" />
+                </Button>
+              </RouterLink>
+            </>
+          ) : (
+            <>
+              <Typography variant="h4" component="h1" gutterBottom>
+                <FormattedMessage id="activation.error.title" defaultMessage="Activation Failed" />
+              </Typography>
+
+              <Alert severity="error" style={{ marginBottom: '1rem' }}>
+                {error || (
+                  <FormattedMessage
+                    id="activation.error.message"
+                    defaultMessage="We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+                  />
+                )}
+              </Alert>
+
+              <RouterLink to="/c/login" style={{ textDecoration: 'none' }}>
+                <Button color="primary" size="medium" variant="contained" disableElevation={true}>
+                  <FormattedMessage id="login.signin" defaultMessage="Sign In" />
+                </Button>
+              </RouterLink>
+            </>
+          )}
+        </FormContainer>
+      </AccountAccessLayout>
+    </>
   );
 };
 

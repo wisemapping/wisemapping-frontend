@@ -29,7 +29,6 @@ import Toolbar, {
 } from '../../../src/components/toolbar';
 import ActionConfig from '../../../src/classes/action/action-config';
 
-require('babel-polyfill');
 jest.mock('../../../src/components/app-bar/styles.css', () => '');
 
 const config: ActionConfig = {

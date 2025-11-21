@@ -306,6 +306,7 @@ const RegistationPage = (): React.ReactElement => {
         canonicalUrl={canonicalUrl}
         alternateLanguages={alternateLanguages}
         ogType="website"
+        robots="index, follow"
         structuredData={{
           '@context': 'https://schema.org',
           '@type': 'WebPage',

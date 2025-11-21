@@ -1,0 +1,32 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": false,
+        "bugfixes": true,
+        "modules": false,
+        "targets": {
+          "esmodules": true
+        },
+        "exclude": [
+          "transform-typeof-symbol",
+          "transform-unicode-regex",
+          "transform-sticky-regex",
+          "transform-new-target",
+          "transform-modules-commonjs",
+          "transform-literals",
+          "transform-arrow-functions",
+          "transform-classes",
+          "transform-template-literals",
+          "transform-destructuring",
+          "transform-spread",
+          "transform-parameters"
+        ]
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "sourceType": "module"
+}
+

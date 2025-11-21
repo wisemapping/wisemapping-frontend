@@ -24,6 +24,8 @@ import { Link as RouterLink } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { trackPageView } from '../../utils/analytics';
+import { SEOHead } from '../seo';
+import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 
 const ForgotPasswordSuccessPage = (): React.ReactElement => {
   const intl = useIntl();
@@ -36,35 +38,59 @@ const ForgotPasswordSuccessPage = (): React.ReactElement => {
     trackPageView(window.location.pathname, 'ForgotPassword:Success');
   });
 
+  const canonicalUrl = getCanonicalUrl('/c/forgot-password-success');
+  const alternateLanguages = getAlternateLanguageUrls('/c/forgot-password-success');
+  const baseUrl =
+    typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
+
   return (
-    <AccountAccessLayout headerType="none">
-      <FormContainer>
-        <Typography variant="h4" component="h1">
-          <FormattedMessage
-            id="forgot.success.title"
-            defaultMessage="Your temporal password has been sent."
-          />
-        </Typography>
+    <>
+      <SEOHead
+        title="Password Recovery Email Sent | WiseMapping"
+        description="A password recovery email has been sent to your inbox. Check your email to reset your WiseMapping account password and regain access to your mind maps."
+        keywords="password recovery, reset password, forgot password, account recovery, wise mapping"
+        canonicalUrl={canonicalUrl}
+        alternateLanguages={alternateLanguages}
+        ogType="website"
+        robots="noindex, follow"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'Password Recovery Email Sent - WiseMapping',
+          description:
+            'A password recovery email has been sent to your inbox. Check your email to reset your account password.',
+          url: `${baseUrl}${canonicalUrl}`,
+        }}
+      />
+      <AccountAccessLayout headerType="none">
+        <FormContainer>
+          <Typography variant="h4" component="h1">
+            <FormattedMessage
+              id="forgot.success.title"
+              defaultMessage="Your temporal password has been sent."
+            />
+          </Typography>
 
-        <Typography paragraph>
-          <FormattedMessage
-            id="forgot.success.desc"
-            defaultMessage="We've sent you an email that will allow you to reset your password. You should receive it in the next minutes."
-          />
-        </Typography>
+          <Typography paragraph>
+            <FormattedMessage
+              id="forgot.success.desc"
+              defaultMessage="We've sent you an email that will allow you to reset your password. You should receive it in the next minutes."
+            />
+          </Typography>
 
-        <Button
-          color="primary"
-          size="medium"
-          variant="contained"
-          component={RouterLink}
-          to="/c/login"
-          disableElevation={true}
-        >
-          <FormattedMessage id="login.signin" defaultMessage="Sign In" />
-        </Button>
-      </FormContainer>
-    </AccountAccessLayout>
+          <Button
+            color="primary"
+            size="medium"
+            variant="contained"
+            component={RouterLink}
+            to="/c/login"
+            disableElevation={true}
+          >
+            <FormattedMessage id="login.signin" defaultMessage="Sign In" />
+          </Button>
+        </FormContainer>
+      </AccountAccessLayout>
+    </>
   );
 };
 
