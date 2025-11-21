@@ -72,6 +72,7 @@ export function useStyles(drawerOpen) {
     appBar: {
       background: theme.palette.background.paper,
       color: theme.palette.text.primary,
+      zIndex: theme.zIndex.drawer + 1,
     },
     appBarShift: {
       marginLeft: drawerWidth,

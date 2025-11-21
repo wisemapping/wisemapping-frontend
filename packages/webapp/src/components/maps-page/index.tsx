@@ -251,6 +251,8 @@ const MapsPage = (): ReactElement => {
           marginBottom: '8px',
           display: 'flex',
           alignItems: 'center',
+          position: 'relative',
+          zIndex: 0,
         }}
         key="logo"
       >
@@ -370,7 +372,7 @@ const MapsPage = (): ReactElement => {
               })}
               edge="start"
               onClick={handleMobileDrawerToggle}
-              sx={{ mr: 2, display: { sm: 'none' } }}
+              sx={{ mr: 2, display: { sm: 'none' }, zIndex: 1300, position: 'relative' }}
               id="open-main-drawer"
             >
               <MenuIcon />
@@ -382,7 +384,13 @@ const MapsPage = (): ReactElement => {
               })}
               edge="start"
               onClick={handleDesktopDrawerToggle}
-              sx={{ p: 0, mr: 2, display: { xs: 'none', sm: 'inherit' } }}
+              sx={{
+                p: 0,
+                mr: 2,
+                display: { xs: 'none', sm: 'inherit' },
+                zIndex: 1300,
+                position: 'relative',
+              }}
               id="open-desktop-drawer"
             >
               {!desktopDrawerOpen && <ArrowRight />}
