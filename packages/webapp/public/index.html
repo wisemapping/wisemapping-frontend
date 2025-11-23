@@ -2,17 +2,42 @@
 <html lang="en">
 
 <head>
-  <title>WiseMapping - Free & Open-Source Mind Mapping for Ideas, Teams & Education</title>
+  <title>WiseMapping - Free & Open-Source Mind Mapping</title>
   <meta charset="utf-8" />
   <link rel="icon" href="/favicon.ico" />
 
+  <!-- Preconnect to font domains for faster font loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.wisemapping.com">
+  
+  <!-- Load fonts asynchronously with font-display: swap to prevent render blocking -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap"
     as="style" onload="this.onload=null;this.rel='stylesheet'" crossorigin>
-  <link rel="preconnect" href="https://api.wisemapping.com">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap">
+  </noscript>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="WiseMapping is a free, fast and simple online mind mapping editor for individuals and business. Sign up to start organizing and sharing your ideas and thoughts." />
+  
+  <!-- Critical CSS for LCP element (Welcome heading) to reduce render delay -->
+  <style>
+    /* Critical styles for LCP element - prevents render blocking */
+    h1.MuiTypography-h4 {
+      font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      font-weight: 400;
+      font-size: 2.125rem;
+      line-height: 1.235;
+      letter-spacing: 0.00735em;
+      margin: 0;
+    }
+    /* Prevent layout shift during font load */
+    body {
+      font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    }
+  </style>
 
   <!-- PWA Manifest -->
   <link rel="manifest" href="/manifest.json" />

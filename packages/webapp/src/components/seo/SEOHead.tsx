@@ -39,7 +39,7 @@ export interface SEOProps {
 }
 
 const SEOHead: React.FC<SEOProps> = ({
-  title = 'WiseMapping - Free & Open-Source Mind Mapping for Ideas, Teams & Education',
+  title = 'WiseMapping - Free & Open-Source Mind Mapping',
   description = 'WiseMapping is a free, fast and simple online mind mapping editor for individuals and business. Sign up to start organizing and sharing your ideas and thoughts.',
   keywords = 'mindmap,mind map,mind maps,mindmaps,ideas,brainstorming,organize,thoughts,structure,collaboration,free,fast,simple,online,tool,knowledge,share,sharing,publish',
   canonicalUrl,
