@@ -35,12 +35,12 @@
     "dependencies": {
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
-        "@mui/icons-material": "^7.3.4",
-        "@mui/lab": "^7.0.1-beta.18",
-        "@mui/material": "^7.3.4",
+        "@mui/icons-material": "^7.3.5",
+        "@mui/lab": "^7.0.1-beta.19",
+        "@mui/material": "^7.3.5",
         "@wisemapping/editor": "workspace:^",
-        "axios": "^1.12.2",
-        "dayjs": "^1.11.18",
+        "axios": "^1.13.2",
+        "dayjs": "^1.11.19",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
         "react-ga4": "^2.1.0",
@@ -48,7 +48,7 @@
         "react-helmet-async": "^2.0.5",
         "react-intl": "^7.1.14",
         "react-query": "^3.39.3",
-        "react-router-dom": "^7.9.4",
+        "react-router-dom": "^7.9.6",
         "styled-components": "^6.1.19",
         "universal-cookie": "^8.0.1",
         "update-browserslist-db": "^1.1.4"
@@ -61,12 +61,12 @@
         "@storybook/react-vite": "^9.1.13",
         "@testing-library/cypress": "^10.1.0",
         "@welldone-software/why-did-you-render": "^10.0.1",
-        "cypress": "^15.5.0",
+        "cypress": "^15.7.0",
         "cypress-image-snapshot": "^4.0.1",
         "eslint": "^9.38.0",
         "eslint-plugin-storybook": "9.1.13",
         "storybook": "^9.1.13",
-        "vite": "^7.1.12"
+        "vite": "^7.2.4"
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.com"
