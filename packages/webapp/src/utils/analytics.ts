@@ -84,3 +84,22 @@ export const trackPageView = (page: string, title: string): void => {
     console.warn('Failed to track page view:', error);
   }
 };
+
+/**
+ * Sets the user ID in Google Analytics
+ * @param email - The user's email address to set as user ID, or null to clear it
+ */
+export const setAnalyticsUserId = (email: string | null): void => {
+  try {
+    ReactGA.set({ userId: email || undefined });
+  } catch (error) {
+    console.warn('Failed to set analytics user ID:', error);
+  }
+};
+
+/**
+ * Clears the user ID in Google Analytics
+ */
+export const clearAnalyticsUserId = (): void => {
+  setAnalyticsUserId(null);
+};

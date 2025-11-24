@@ -19,6 +19,8 @@
 import AppConfig from './classes/app-config';
 import ReactGA from 'react-ga4';
 import { createJsonResponse } from './utils/response';
+import JwtTokenConfig from './classes/jwt-token-config';
+import { setAnalyticsUserId } from './utils/analytics';
 
 export const loader = async (): Promise<Response> => {
   // Ensure configuration is loaded before continuing.
@@ -32,6 +34,22 @@ export const loader = async (): Promise<Response> => {
         trackingId: trackingId,
       },
     ]);
+
+    // Initialize user ID if user is already logged in
+    const token = JwtTokenConfig.retreiveToken();
+    if (token) {
+      // Fetch account info and set user ID asynchronously
+      // Don't await to avoid blocking the loader
+      AppConfig.getClient()
+        .fetchAccountInfo()
+        .then((accountInfo) => {
+          setAnalyticsUserId(accountInfo.email);
+        })
+        .catch((error) => {
+          // Don't block app load if analytics fails
+          console.warn('Failed to set analytics user ID on app load:', error);
+        });
+    }
   }
   return createJsonResponse('Load success');
 };

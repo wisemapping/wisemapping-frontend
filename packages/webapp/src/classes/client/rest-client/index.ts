@@ -34,6 +34,7 @@ import Client, {
 } from '..';
 import AppI18n, { Locale, LocaleCode, localeFromStr } from '../../app-i18n';
 import JwtTokenConfig from '../../jwt-token-config';
+import { setAnalyticsUserId, clearAnalyticsUserId } from '../../../utils/analytics';
 
 export default class RestClient implements Client {
   private baseUrl: string;
@@ -102,6 +103,7 @@ export default class RestClient implements Client {
 
   logout(): Promise<void> {
     JwtTokenConfig.removeToken();
+    clearAnalyticsUserId();
 
     return Promise.resolve();
   }
@@ -117,6 +119,15 @@ export default class RestClient implements Client {
           const token = response.data;
 
           JwtTokenConfig.storeToken(token);
+          // Fetch account info and set analytics user ID
+          this.fetchAccountInfo()
+            .then((accountInfo) => {
+              setAnalyticsUserId(accountInfo.email);
+            })
+            .catch((error) => {
+              // Don't block login if analytics fails
+              console.warn('Failed to set analytics user ID after login:', error);
+            });
           success();
         })
         .catch((error) => {
@@ -768,6 +779,15 @@ export default class RestClient implements Client {
           const token = response.data.jwtToken;
           if (token) {
             JwtTokenConfig.storeToken(token);
+            // Fetch account info and set analytics user ID
+            this.fetchAccountInfo()
+              .then((accountInfo) => {
+                setAnalyticsUserId(accountInfo.email);
+              })
+              .catch((error) => {
+                // Don't block OAuth flow if analytics fails
+                console.warn('Failed to set analytics user ID after Google OAuth:', error);
+              });
           }
         })
         .catch((error) => {
@@ -798,6 +818,15 @@ export default class RestClient implements Client {
           const token = response.data.jwtToken;
           if (token) {
             JwtTokenConfig.storeToken(token);
+            // Fetch account info and set analytics user ID
+            this.fetchAccountInfo()
+              .then((accountInfo) => {
+                setAnalyticsUserId(accountInfo.email);
+              })
+              .catch((error) => {
+                // Don't block OAuth flow if analytics fails
+                console.warn('Failed to set analytics user ID after Facebook OAuth:', error);
+              });
           }
         })
         .catch((error) => {
@@ -840,6 +869,15 @@ export default class RestClient implements Client {
           const token = response.data.jwtToken;
           if (token) {
             JwtTokenConfig.storeToken(token);
+            // Fetch account info and set analytics user ID
+            this.fetchAccountInfo()
+              .then((accountInfo) => {
+                setAnalyticsUserId(accountInfo.email);
+              })
+              .catch((error) => {
+                // Don't block account sync if analytics fails
+                console.warn('Failed to set analytics user ID after account sync:', error);
+              });
           }
         })
         .catch((error) => {

@@ -33,6 +33,7 @@ import Client, {
 import { LocaleCode, localeFromStr } from '../../app-i18n';
 import Cookies from 'universal-cookie';
 import JwtTokenConfig from '../../jwt-token-config';
+import { setAnalyticsUserId, clearAnalyticsUserId } from '../../../utils/analytics';
 
 const label1: Label = {
   id: 1,
@@ -247,11 +248,14 @@ class MockClient implements Client {
   }
 
   logout(): Promise<void> {
+    clearAnalyticsUserId();
     return Promise.resolve();
   }
 
   login(auth: JwtAuth): Promise<void> {
     JwtTokenConfig.storeToken(auth.email);
+    // Set analytics user ID using email from auth
+    setAnalyticsUserId(auth.email);
     return Promise.resolve();
   }
 
