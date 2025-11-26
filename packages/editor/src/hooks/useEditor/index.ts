@@ -110,5 +110,17 @@ export const useEditor = ({
     }
   }, [options?.enableKeyboardEvents]);
 
+  useEffect(() => {
+    if (!model) {
+      return undefined;
+    }
+
+    return () => {
+      model.flushPendingChangesOnce().catch((error) => {
+        logCriticalError('Unexpected error saving map before leaving editor', error);
+      });
+    };
+  }, [model]);
+
   return { model, mindplotRef, mapInfo, capability, options };
 };

@@ -30,6 +30,8 @@ import debounce from 'lodash/debounce';
 class Editor {
   private component: MindplotWebComponent;
 
+  private pendingFlushPromise: Promise<void> | null = null;
+
   constructor(component: MindplotWebComponent) {
     this.component = component;
   }
@@ -116,10 +118,9 @@ class Editor {
       if (!capability.isHidden('save')) {
         // Register unload save ...
         window.addEventListener('beforeunload', () => {
-          component.save(false).catch((error) => {
+          this.flushPendingChangesOnce().catch((error) => {
             console.error('Save failed on beforeunload:', error);
           });
-          component.unlockMap();
         });
 
         // Debounced autosave triggered by model updates
@@ -134,6 +135,26 @@ class Editor {
         designer.addEvent('modelUpdate', debouncedAutoSave);
       }
     }
+  }
+
+  async flushPendingChanges(): Promise<void> {
+    try {
+      await this.save(false);
+    } catch (error) {
+      console.error('Save failed while leaving editor:', error);
+      throw error;
+    } finally {
+      this.component.unlockMap();
+    }
+  }
+
+  flushPendingChangesOnce(): Promise<void> {
+    if (!this.pendingFlushPromise) {
+      this.pendingFlushPromise = this.flushPendingChanges().finally(() => {
+        this.pendingFlushPromise = null;
+      });
+    }
+    return this.pendingFlushPromise;
   }
 }
 

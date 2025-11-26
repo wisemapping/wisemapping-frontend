@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, useEffect, useState, useRef } from 'react';
+import React, { ReactElement, useEffect, useState, useRef, useMemo } from 'react';
 import MaterialToolbar from '@mui/material/Toolbar';
 import MaterialAppBar from '@mui/material/AppBar';
 import { ToolbarMenuItem } from '../toolbar';
@@ -53,6 +53,7 @@ import TextField from '@mui/material/TextField';
 import { $notify } from '@wisemapping/mindplot';
 import { useTheme } from '../../contexts/ThemeContext';
 import { trackAppBarAction } from '../../utils/analytics';
+import debounce from 'lodash/debounce';
 
 interface AppBarProps {
   model: Editor | undefined;
@@ -179,6 +180,33 @@ const AppBar = ({
       setEditedTitle(currentTitle);
     }
   }, [canRename, isEditingTitle, currentTitle]);
+
+  // Debounced save handler - ensures at least 5 seconds between saves
+  // Intermediate saves are discarded (only the last save within 5 seconds executes)
+  const handleDebouncedSave = useMemo(
+    () =>
+      debounce(
+        () => {
+          if (!model) {
+            return;
+          }
+          trackAppBarAction('save');
+          model.save(true).catch((error) => {
+            console.error('Save failed from app bar:', error);
+          });
+        },
+        5000,
+        { leading: false, trailing: true },
+      ),
+    [model],
+  );
+
+  // Cleanup debounced function on unmount
+  useEffect(() => {
+    return () => {
+      handleDebouncedSave.cancel();
+    };
+  }, [handleDebouncedSave]);
 
   useEffect(() => {
     const latestTitle = mapInfo.getTitle();
@@ -394,12 +422,7 @@ const AppBar = ({
     undefined,
     {
       icon: <SaveOutlinedIcon />,
-      onClick: () => {
-        trackAppBarAction('save');
-        model!.save(true).catch((error) => {
-          console.error('Save failed from app bar:', error);
-        });
-      },
+      onClick: handleDebouncedSave,
       tooltip: keyTooltip(
         intl.formatMessage({ id: 'appbar.tooltip-save', defaultMessage: 'Save' }),
         'S',
