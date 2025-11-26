@@ -181,8 +181,8 @@ const AppBar = ({
     }
   }, [canRename, isEditingTitle, currentTitle]);
 
-  // Debounced save handler - ensures at least 5 seconds between saves
-  // Intermediate saves are discarded (only the last save within 5 seconds executes)
+  // Debounced save handler - first save is immediate, subsequent saves within 5 seconds are debounced
+  // First save executes immediately, intermediate saves are discarded (only the last save within 5 seconds executes)
   const handleDebouncedSave = useMemo(
     () =>
       debounce(
@@ -196,7 +196,7 @@ const AppBar = ({
           });
         },
         5000,
-        { leading: false, trailing: true },
+        { leading: true, trailing: true },
       ),
     [model],
   );
