@@ -83,15 +83,15 @@
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.39.1",
     "@formatjs/cli": "^6.7.4",
-    "@storybook/builder-webpack5": "9.1.13",
-    "@storybook/react-webpack5": "9.1.13",
+    "@storybook/builder-webpack5": "^10.1.4",
+    "@storybook/react-webpack5": "^10.1.4",
     "@types/jest": "^30.0.0",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
     "babel-loader": "^10.0.0",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
-    "eslint": "^9.38.0",
+    "eslint": "9.39.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-config-standard": "^17.1.0",
@@ -126,5 +126,6 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "packageManager": "yarn@4.12.0"
 }
