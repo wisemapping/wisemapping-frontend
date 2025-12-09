@@ -19,7 +19,7 @@
 /// <reference types="cypress" />
 describe('Connection Style Suite', () => {
   beforeEach(() => {
-    cy.visit('/editor.html');
+    cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
 
     // Focus on the central topic which has connections to child topics

@@ -19,7 +19,7 @@
 /// <reference types="cypress" />
 describe('Zoom Suite', () => {
   beforeEach(() => {
-    cy.visit('/editor.html');
+    cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
   });
 

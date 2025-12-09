@@ -172,12 +172,13 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
             <ExpandPlaceholder />
           )}
 
-          {/* Left side: Topic icons */}
-          {node.iconUrls.length > 0 && (
+          {/* Left side: Topic icons (SVG icons and emojis) */}
+          {(node.iconUrls.length > 0 || node.emojiChars.length > 0) && (
             <IconContainer>
+              {/* Render SVG icons */}
               {node.iconUrls.map((iconUrl, index) => (
                 <NodeIcon
-                  key={index}
+                  key={`icon-${index}`}
                   src={iconUrl}
                   alt="icon"
                   onError={(e) => {
@@ -185,6 +186,23 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
                     e.currentTarget.style.display = 'none';
                   }}
                 />
+              ))}
+              {/* Render emoji icons */}
+              {node.emojiChars.map((emoji, index) => (
+                <span
+                  key={`emoji-${index}`}
+                  style={{
+                    fontSize: '16px',
+                    lineHeight: '16px',
+                    marginRight: '4px',
+                    fontFamily:
+                      '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", "EmojiSymbols", "EmojiOne Mozilla", "Twemoji Mozilla", "Segoe UI Symbol", sans-serif',
+                  }}
+                  role="img"
+                  aria-label="icon"
+                >
+                  {emoji}
+                </span>
               ))}
             </IconContainer>
           )}

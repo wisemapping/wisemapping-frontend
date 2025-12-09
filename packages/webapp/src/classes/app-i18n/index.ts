@@ -27,6 +27,18 @@ import 'dayjs/locale/ja';
 import 'dayjs/locale/pt';
 import 'dayjs/locale/it';
 import 'dayjs/locale/hi';
+import enMessages from '../../compiled-lang/en.json';
+import esMessages from '../../compiled-lang/es.json';
+import deMessages from '../../compiled-lang/de.json';
+import frMessages from '../../compiled-lang/fr.json';
+import ruMessages from '../../compiled-lang/ru.json';
+import ukMessages from '../../compiled-lang/uk.json';
+import zhMessages from '../../compiled-lang/zh.json';
+import zhCnMessages from '../../compiled-lang/zh.json';
+import jaMessages from '../../compiled-lang/ja.json';
+import ptMessages from '../../compiled-lang/pt.json';
+import itMessages from '../../compiled-lang/it.json';
+import hiMessages from '../../compiled-lang/hi.json';
 import { useFetchAccount } from '../middleware';
 
 export class Locale {
@@ -174,18 +186,18 @@ export type LocaleCode =
   | 'hi';
 
 export const Locales = {
-  EN: new Locale('en', 'English', require('./../../compiled-lang/en.json')), // eslint-disable-line
-  ES: new Locale('es', 'Español', require('./../../compiled-lang/es.json')), // eslint-disable-line
-  DE: new Locale('de', 'Deutsch', require('./../../compiled-lang/de.json')), // eslint-disable-line
-  FR: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')), // eslint-disable-line
-  RU: new Locale('ru', 'Pусский', require('./../../compiled-lang/ru.json')), // eslint-disable-line
-  UK: new Locale('uk', 'Українська', require('./../../compiled-lang/uk.json')), // eslint-disable-line
-  ZH: new Locale('zh', '中文 (简体)', require('./../../compiled-lang/zh.json')), // eslint-disable-line
-  ZH_CN: new Locale('zh-CN', '中文 (普通话)', require('./../../compiled-lang/zh.json')), // eslint-disable-line
-  JA: new Locale('ja', '日本語', require('./../../compiled-lang/ja.json')), // eslint-disable-line
-  PT: new Locale('pt', 'Português', require('./../../compiled-lang/pt.json')), // eslint-disable-line
-  IT: new Locale('it', 'Italiano', require('./../../compiled-lang/it.json')), // eslint-disable-line
-  HI: new Locale('hi', 'हिन्दी', require('./../../compiled-lang/hi.json')), // eslint-disable-line
+  EN: new Locale('en', 'English', enMessages),
+  ES: new Locale('es', 'Español', esMessages),
+  DE: new Locale('de', 'Deutsch', deMessages),
+  FR: new Locale('fr', 'Français', frMessages),
+  RU: new Locale('ru', 'Pусский', ruMessages),
+  UK: new Locale('uk', 'Українська', ukMessages),
+  ZH: new Locale('zh', '中文 (简体)', zhMessages),
+  ZH_CN: new Locale('zh-CN', '中文 (普通话)', zhCnMessages),
+  JA: new Locale('ja', '日本語', jaMessages),
+  PT: new Locale('pt', 'Português', ptMessages),
+  IT: new Locale('it', 'Italiano', itMessages),
+  HI: new Locale('hi', 'हिन्दी', hiMessages),
 };
 
 export const localeFromStr = (code: string): Locale => {

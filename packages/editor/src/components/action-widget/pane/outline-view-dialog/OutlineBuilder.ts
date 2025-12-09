@@ -28,6 +28,7 @@ export interface OutlineNodeData {
   level: number;
   children: OutlineNodeData[];
   iconUrls: string[];
+  emojiChars: string[];
   linkUrl?: string;
   noteText?: string;
   node: INodeModel;
@@ -76,16 +77,26 @@ export class OutlineBuilder {
   buildOutlineData(node: INodeModel, level: number): OutlineNodeData {
     const features = node.getFeatures();
 
-    // Extract icon URLs (only SVG icons, not images)
+    // Extract icon URLs (SVG icons) and emoji characters
     const iconUrls: string[] = [];
+    const emojiChars: string[] = [];
+
     features.forEach((feature) => {
       const type = feature.getType();
       if (type === 'icon') {
+        // SVG icon from gallery
         const iconModel = feature as SvgIconModel;
         const iconType = iconModel.getIconType();
         const iconUrl = this.getIconUrl(iconType);
         if (iconUrl) {
           iconUrls.push(iconUrl);
+        }
+      } else if (type === 'eicon') {
+        // Emoji icon - extract the emoji character
+        // The feature attributes contain the emoji ID
+        const attributes = feature.getAttributes();
+        if (attributes && attributes.id) {
+          emojiChars.push(attributes.id);
         }
       }
     });
@@ -118,6 +129,7 @@ export class OutlineBuilder {
       level,
       children,
       iconUrls,
+      emojiChars,
       linkUrl,
       noteText,
       node,

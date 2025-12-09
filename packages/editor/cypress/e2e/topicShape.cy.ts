@@ -19,7 +19,7 @@
 /// <reference types="cypress" />
 describe('Topic Shape Suite', () => {
   beforeEach(() => {
-    cy.visit('/editor.html');
+    cy.visit('/map-render/html/editor.html');
 
     // Wait all has been loaded ...
     cy.waitEditorLoaded();

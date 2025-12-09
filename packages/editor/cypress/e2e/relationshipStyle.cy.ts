@@ -19,7 +19,7 @@
 /// <reference types="cypress" />
 describe('Relationship Style Suite', () => {
   beforeEach(() => {
-    cy.visit('/editor.html');
+    cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
 
     // Create a relationship between two topics for testing

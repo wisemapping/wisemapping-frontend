@@ -20,7 +20,7 @@
 describe('Topic Copy and Paste Suite', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
-    cy.visit('/editor.html');
+    cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
   });
 

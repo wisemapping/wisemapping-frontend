@@ -144,7 +144,7 @@ const EditorContent = ({
 
   // Initialize locale ...
   const locale = options.locale;
-  // Memoize locale messages loading - this uses require() which should be cached but still expensive
+  // Memoize locale messages loading
   const msg = useMemo(() => I18nMsg.loadLocaleData(locale), [locale]);
 
   return (

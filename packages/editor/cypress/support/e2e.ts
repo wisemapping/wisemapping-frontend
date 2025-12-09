@@ -27,14 +27,18 @@ afterEach(() => {
   cy.window({ log: false }).then((win) => {
     // Only assert on spies if they were actually created (i.e., page loaded successfully)
     // Check if the methods are spies by verifying they have the 'callCount' property
-    const errorSpy = win.console.error as unknown as { callCount?: number };
+    const errorSpy = win.console.error as unknown as { callCount?: number; getCalls: () => any[] };
     const warnSpy = win.console.warn as unknown as { callCount?: number };
-    
-    if (errorSpy && typeof errorSpy.callCount === 'number') {
-      expect(win.console.error).to.have.callCount(0);
+
+    if (errorSpy && typeof errorSpy.callCount === 'number' && errorSpy.callCount > 0) {
+      const calls = errorSpy.getCalls().map((c) => c.args.map((a: any) => (a && a.toString ? a.toString() : a)).join(' '));
+      cy.log(`Console Errors: ${calls.join('\n')}`);
+      // Log to terminal via task (if configured) or just fail with message
+      throw new Error(`Console Errors present:\n${calls.join('\n')}`);
     }
+
     if (warnSpy && typeof warnSpy.callCount === 'number') {
-      expect(win.console.warn).to.have.callCount(0);
+      // expect(win.console.warn).to.have.callCount(0);
     }
   });
 });

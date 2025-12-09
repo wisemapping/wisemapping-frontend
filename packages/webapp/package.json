@@ -13,24 +13,22 @@
         "src"
     ],
     "scripts": {
-        "build": "webpack --config webpack.prod.js",
-        "build:verbose": "webpack --config webpack.prod.js --stats=verbose",
-        "build:analyze": "ANALYZE=true webpack --config webpack.prod.js",
-        "build:sizes": "yarn build && ls -lah dist/*.bundle.js | awk '{print $5 \"\\t\" $9}' | sort -hr && ls -la dist/*.bundle.js | awk '{sum += $5} END {print \"Total: \" sum/1024/1024 \" MB\"}'",
+        "build": "vite build",
+        "build:analyze": "ANALYZE=true vite build",
         "clean": "rm -rf dist node_modules/.cache cypress/screenshots cypress/videos cypress/downloads debug-storybook.log test-results.json .eslintcache",
         "cy:open": "npx cypress open",
         "cy:run": "npx cypress run",
-        "dev": "webpack --config webpack.dev.js",
+        "dev": "vite",
         "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','zh-CN','ru','uk','ja','pt','it','hi'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
         "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
         "lint": "eslint src --ext js,ts,tsx",
         "lint:fix": "eslint src --ext js,ts,tsx --fix",
-        "start": "webpack serve --config webpack.dev.js ",
+        "start": "vite",
         "storybook": "storybook dev -p ${PORT:-6007} --quiet",
         "build-storybook": "storybook build",
         "test": "yarn test:integration",
-        "test:integration": "PORT=3000 CYPRESS_BASE_URL=http://localhost:3000 npx start-server-and-test 'webpack serve --config webpack.dev.js --port 3000' http-get://localhost:3000 cy:run",
-        "start:dev": "APP_CONFIG_TYPE='file:dev' webpack serve --config webpack.dev.js "
+        "test:integration": "PORT=3000 CYPRESS_BASE_URL=http://localhost:3000 npx start-server-and-test 'vite --port 3000' http-get://localhost:3000 cy:run",
+        "start:dev": "APP_CONFIG_TYPE='file:dev' vite"
     },
     "dependencies": {
         "@emotion/react": "^11.14.0",
@@ -56,16 +54,16 @@
     "devDependencies": {
         "@formatjs/cli": "^6.7.4",
         "@mdx-js/react": "^3.1.1",
-        "@storybook/addon-docs": "^9.1.13",
-        "@storybook/addon-links": "^9.1.13",
-        "@storybook/react-vite": "^9.1.13",
+        "@storybook/addon-docs": "^10.1.4",
+        "@storybook/addon-links": "^10.1.4",
+        "@storybook/react-vite": "^10.1.4",
         "@testing-library/cypress": "^10.1.0",
         "@welldone-software/why-did-you-render": "^10.0.1",
         "cypress": "^15.7.0",
         "cypress-image-snapshot": "^4.0.1",
         "eslint": "^9.38.0",
-        "eslint-plugin-storybook": "9.1.13",
-        "storybook": "^9.1.13",
+        "eslint-plugin-storybook": "^0.11.3",
+        "storybook": "^10.1.4",
         "vite": "^7.2.4"
     },
     "publishConfig": {

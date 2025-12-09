@@ -19,7 +19,7 @@
 /// <reference types="cypress" />
 describe('Canvas Background Suite', () => {
   beforeEach(() => {
-    cy.visit('/editor.html');
+    cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
 
     // Select root node to enable toolbar buttons

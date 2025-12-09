@@ -20,7 +20,7 @@
 
 describe('Outline View Suite', () => {
   beforeEach(() => {
-    cy.visit('/editor.html');
+    cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
   });
 
@@ -154,10 +154,13 @@ describe('Outline View Suite', () => {
   it('Outline View displays topic icons', () => {
     // First, add an icon to a topic
     cy.focusTopicById(3);
-    
+
     // Click the Add Icon button using the custom command
     cy.onClickToolbarButton('Add Icon');
-    
+
+    // Wait for the icon picker popover to be visible
+    cy.get('.MuiPopover-root').should('be.visible');
+
     // Select an icon by clicking on one
     cy.get('[aria-label="grinning"]').should('be.visible').click();
 
@@ -165,9 +168,9 @@ describe('Outline View Suite', () => {
     // After clicking an emoji, the picker stays open (as per icon-picker/index.tsx line 58)
     // So we need to click elsewhere or press Escape to close it
     cy.get('body').type('{esc}');
-    
-    // Wait for the icon picker dialog to close
-    cy.get('[aria-label="grinning"]').should('not.exist');
+
+    // Wait for the icon picker popover to close
+    cy.get('.MuiPopover-root').should('not.exist');
 
     // Now open the Outline View
     cy.get('button[aria-label*="Outline View"]').should('be.visible').should('not.be.disabled').click({ force: true });
@@ -177,7 +180,8 @@ describe('Outline View Suite', () => {
 
     // Verify that icons are displayed in the outline
     cy.get('[data-testid="outline-view-dialog"]').within(() => {
-      cy.get('img[alt="icon"]').should('exist');
+      // Check for either img[alt="icon"] (SVG icons) or [role="img"][aria-label="icon"] (emojis)
+      cy.get('img[alt="icon"], [role="img"][aria-label="icon"]').should('exist');
     });
 
     cy.matchImageSnapshot('outline-view-with-icons');
