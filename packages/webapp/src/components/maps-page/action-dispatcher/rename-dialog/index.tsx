@@ -37,6 +37,7 @@ const defaultModel: RenameModel = { title: '', description: '', id: -1 };
 const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const client = useContext(ClientContext);
   const [model, setModel] = React.useState<RenameModel>(defaultModel);
+  const [isInitialized, setIsInitialized] = React.useState<boolean>(false);
   const [error, setError] = React.useState<ErrorInfo>();
 
   const intl = useIntl();
@@ -60,6 +61,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
   const handleOnClose = (): void => {
     onClose();
     setModel(defaultModel);
+    setIsInitialized(false);
     setError(undefined);
   };
 
@@ -122,10 +124,12 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
   }, [mapId, intl]);
 
   useEffect(() => {
-    if (map) {
+    // Only set model from map data on initial load
+    if (map && !isInitialized) {
       setModel(map);
+      setIsInitialized(true);
     }
-  }, [map]);
+  }, [map, isInitialized]);
 
   return (
     <div>

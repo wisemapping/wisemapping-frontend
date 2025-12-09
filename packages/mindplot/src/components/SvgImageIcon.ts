@@ -31,17 +31,17 @@ import { mapIconNameToAsset } from './IconMapping';
 const images: { [key: string]: string } = {};
 
 // Initialize icon URLs using webpack's require.context
+// Initialize icon URLs using Vite's import.meta.glob
 const initializeIcons = () => {
-  const iconContext = require.context('../../assets/icons', false, /\.(svg|png)$/);
+  const iconModules = import.meta.glob('../../assets/icons/*.{svg,png}', { eager: true });
 
-  iconContext.keys().forEach((iconPath) => {
-    // Extract filename without extension
-    const filename = iconPath.replace('./', '').replace(/\.(svg|png)$/, '');
-    const extension = iconPath.match(/\.(svg|png)$/)?.[1];
-
-    if (extension) {
-      // Use webpack's processed URL (data URL in both dev and prod)
-      images[`${filename}.${extension}`] = iconContext(iconPath);
+  Object.keys(iconModules).forEach((path) => {
+    // path is like "../../assets/icons/iconName.svg"
+    const filenameWithExt = path.split('/').pop();
+    if (filenameWithExt) {
+      const mod = iconModules[path] as { default: string } | string;
+      const url = typeof mod === 'object' && 'default' in mod ? mod.default : (mod as string);
+      images[filenameWithExt] = url;
     }
   });
 };

@@ -60,21 +60,21 @@ if (Cypress.env('imageSnaphots')) {
 Cypress.Commands.add('waitEditorLoaded', () => {
   // Wait for loading spinner to disappear
   cy.get('[aria-label="vortex-loading"]', { timeout: 120000 }).should('not.exist');
-  
+
   // Wait for SVG canvas to be visible
-  cy.get('svg > path').should('be.visible');
-  
+  cy.get('svg > path', { timeout: 30000 }).should('be.visible');
+
   // Wait for central topic to be rendered (ensures mindmap is initialized)
   // Look for any rect element in the SVG (more flexible than specific path)
   cy.get('svg rect', { timeout: 10000 }).should('exist');
-  
+
   // Wait for fonts to load
   cy.document().its('fonts.status').should('equal', 'loaded');
-  
+
   // Wait for at least one toolbar button to be enabled (ensures Designer is ready)
   // Check visualization toolbar buttons (zoom, outline, expand/collapse)
   cy.get('button[aria-label*="Zoom"]', { timeout: 10000 }).first().should('not.be.disabled');
-  
+
   // Clear local storage after everything is loaded
   cy.clearLocalStorage('welcome-xml');
 });
@@ -98,13 +98,13 @@ Cypress.Commands.add(
     // For buttons with custom panels (like Style Topic & Connections), we need to click instead of hover
     // because the toolbar requires click-to-open for items with custom render
     cy.get(`[aria-label="${button}"]`).first().click({ force: true });
-    
+
     // Wait for the panel to be visible and fully rendered
     // For Style Topic & Connections, wait for one of the tab labels to appear
     if (button === 'Style Topic & Connections') {
       cy.contains('Shape', { timeout: 5000 }).should('be.visible');
     }
-    
+
     // Wait for panel content to be fully rendered and interactive
     cy.get('body').should('not.have.class', 'loading');
   },

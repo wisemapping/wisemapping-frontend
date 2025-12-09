@@ -19,7 +19,7 @@
 /// <reference types="cypress" />
 describe('Node manager', () => {
   beforeEach(() => {
-    cy.visit('/editor.html');
+    cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
 
     // Select root node ...

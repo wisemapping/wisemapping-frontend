@@ -24,7 +24,7 @@ describe('Topic Note Suite', () => {
   };
 
   beforeEach(() => {
-    cy.visit('/editor.html');
+    cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
   });
 

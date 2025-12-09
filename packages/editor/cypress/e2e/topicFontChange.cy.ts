@@ -20,7 +20,7 @@
 describe('Topic Font Suite', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
-    cy.visit('/editor.html');
+    cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
 
     cy.focusTopicById(1);

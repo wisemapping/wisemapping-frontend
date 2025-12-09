@@ -1,6 +1,8 @@
 {
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "vite.config.ts",
+    ".storybook/**/*"
   ],
   "compilerOptions": {
     "jsx": "react-jsx",
