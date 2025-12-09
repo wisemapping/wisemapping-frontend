@@ -82,6 +82,7 @@ const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
         onClose={handleOnClose}
         onSubmit={handleOnSubmit}
         error={error}
+        isLoading={mutation.isLoading}
         title={intl.formatMessage({
           id: 'create.title',
           defaultMessage: 'Create a new mindmap',

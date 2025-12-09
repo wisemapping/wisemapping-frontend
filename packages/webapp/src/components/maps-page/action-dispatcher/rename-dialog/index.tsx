@@ -137,6 +137,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
         onClose={handleOnClose}
         onSubmit={handleOnSubmit}
         error={error}
+        isLoading={mutation.isLoading}
         title={intl.formatMessage({ id: 'rename.title', defaultMessage: 'Rename' })}
         description={intl.formatMessage({
           id: 'rename.description',
