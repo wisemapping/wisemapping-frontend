@@ -91,7 +91,6 @@ export default defineConfig(({ mode }) => {
                         GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED || false,
                         NEW_RELIC_ENABLED: process.env.NEW_RELIC_ENABLED || false,
                         base: process.env.PUBLIC_URL || '',
-                        BOOTSTRAP_CONFIG: JSON.stringify(bootstrapConfig),
                     },
                 },
             }),
@@ -102,6 +101,9 @@ export default defineConfig(({ mode }) => {
                 '@wisemapping/mindplot': path.resolve(__dirname, '../mindplot'),
                 '@wisemapping/web2d': path.resolve(__dirname, '../web2d'),
             }
+        },
+        define: {
+            VITE_BOOTSTRAP_CONFIG: JSON.stringify(bootstrapConfig),
         },
         server: {
             port: 3000,
