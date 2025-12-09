@@ -10,18 +10,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://api.wisemapping.com">
-  
+
   <!-- Load fonts asynchronously with font-display: swap to prevent render blocking -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap"
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap"
     as="style" onload="this.onload=null;this.rel='stylesheet'" crossorigin>
   <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap">
   </noscript>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000" />
-  <meta name="description" content="WiseMapping is a free, fast and simple online mind mapping editor for individuals and business. Sign up to start organizing and sharing your ideas and thoughts." />
-  
+  <meta name="description"
+    content="WiseMapping is a free, fast and simple online mind mapping editor for individuals and business. Sign up to start organizing and sharing your ideas and thoughts." />
+
   <!-- Critical CSS for LCP element (Welcome heading) to reduce render delay -->
   <style>
     /* Critical styles for LCP element - prevents render blocking */
@@ -33,6 +36,7 @@
       letter-spacing: 0.00735em;
       margin: 0;
     }
+
     /* Prevent layout shift during font load */
     body {
       font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -106,6 +110,10 @@
   <!--
       Dynamic runtime configuration properties (https://dev.to/matt_catalfamo/runtime-configurations-with-react-22dl)
     -->
+  <script type="text/javascript">
+    // Inject bootstrap configuration into window object
+    window.BoostrapConfig = <%= BOOTSTRAP_CONFIG %>;
+  </script>
 </head>
 
 <body>
