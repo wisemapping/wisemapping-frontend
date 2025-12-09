@@ -179,6 +179,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
         onClose={handleOnClose}
         onSubmit={handleOnSubmit}
         error={error}
+        isLoading={mutation.isLoading}
         title={intl.formatMessage({ id: 'duplicate.title', defaultMessage: 'Duplicate' })}
         description={intl.formatMessage({
           id: 'rename.description',

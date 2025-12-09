@@ -176,6 +176,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         onClose={handleOnClose}
         onSubmit={handleOnSubmit}
         error={error}
+        isLoading={mutation.isLoading}
         title={intl.formatMessage({
           id: 'import.title',
           defaultMessage: 'Import existing mindmap',
