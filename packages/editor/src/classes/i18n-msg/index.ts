@@ -30,7 +30,12 @@ import pt from './../../compiled-lang/pt.json';
 import it from './../../compiled-lang/it.json';
 import hi from './../../compiled-lang/hi.json';
 
-type LocaleData = Record<string, string>;
+type MessagePart = {
+  type: number;
+  value: string;
+};
+
+type LocaleData = Record<string, MessagePart[]>;
 
 class I18nMsg {
   static loadLocaleData(locale: string): LocaleData {
