@@ -25,16 +25,42 @@ Cypress.on('window:before:load', (win) => {
 
 afterEach(() => {
   cy.window({ log: false }).then((win) => {
-    // Only assert on spies if they were actually created (i.e., page loaded successfully)
     // Check if the methods are spies by verifying they have the 'callCount' property
     const errorSpy = win.console.error as unknown as { callCount?: number; getCalls: () => any[] };
     const warnSpy = win.console.warn as unknown as { callCount?: number };
 
     if (errorSpy && typeof errorSpy.callCount === 'number' && errorSpy.callCount > 0) {
-      const calls = errorSpy.getCalls().map((c) => c.args.map((a: any) => (a && a.toString ? a.toString() : a)).join(' '));
-      cy.log(`Console Errors: ${calls.join('\n')}`);
-      // Log to terminal via task (if configured) or just fail with message
-      throw new Error(`Console Errors present:\n${calls.join('\n')}`);
+      const calls = errorSpy.getCalls();
+
+      // Log each error with full details
+      console.log('\n========== CONSOLE ERRORS DETECTED ==========');
+      console.log(`Total errors: ${calls.length}`);
+
+      calls.forEach((call, index) => {
+        console.log(`\n--- Error ${index + 1} ---`);
+        call.args.forEach((arg, argIndex) => {
+          console.log(`Arg ${argIndex}:`, arg);
+          // If it's an error object, log the stack
+          if (arg && arg.stack) {
+            console.log('Stack:', arg.stack);
+          }
+        });
+      });
+
+      console.log('\n============================================\n');
+
+      // Create a detailed error message
+      const errorMessages = calls.map((c, i) => {
+        const args = c.args.map((a: any) => {
+          if (a && a.stack) {
+            return `${a.toString()}\nStack: ${a.stack}`;
+          }
+          return a && a.toString ? a.toString() : JSON.stringify(a);
+        });
+        return `Error ${i + 1}: ${args.join(' ')}`;
+      });
+
+      throw new Error(`Console Errors present (${calls.length} total):\n\n${errorMessages.join('\n\n')}`);
     }
 
     if (warnSpy && typeof warnSpy.callCount === 'number') {
