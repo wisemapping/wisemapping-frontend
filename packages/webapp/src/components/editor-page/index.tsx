@@ -145,6 +145,24 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
     trackPageView(window.location.pathname, 'Map Editor');
   }, []);
 
+  // Prevent pinch-to-zoom on the editor page (Safari/iOS)
+  // Using CSS touch-action is the modern standard approach for SPAs
+  useEffect(() => {
+    // Store original styles to restore on unmount
+    const originalBodyTouchAction = document.body.style.touchAction;
+    const originalHtmlTouchAction = document.documentElement.style.touchAction;
+
+    // Apply touch-action to prevent pinch zoom
+    document.body.style.touchAction = 'none';
+    document.documentElement.style.touchAction = 'none';
+
+    // Cleanup: restore original styles when component unmounts
+    return () => {
+      document.body.style.touchAction = originalBodyTouchAction;
+      document.documentElement.style.touchAction = originalHtmlTouchAction;
+    };
+  }, []);
+
   // Account loads asynchronously and should NOT block editor rendering.
   // AppI18n.getUserLocale() handles undefined account gracefully by falling back to default locale.
   // Editor should render immediately once editorMetadata is available.
