@@ -96,11 +96,14 @@ export default defineConfig(({ mode }) => {
             }),
         ],
         resolve: {
-            alias: {
-                '@wisemapping/editor': path.resolve(__dirname, '../editor'),
-                '@wisemapping/mindplot': path.resolve(__dirname, '../mindplot'),
-                '@wisemapping/web2d': path.resolve(__dirname, '../web2d'),
-            }
+            alias: [
+                { find: /^@wisemapping\/editor\/src\/(.*)/, replacement: path.resolve(__dirname, '../editor/src/$1') },
+                { find: /^@wisemapping\/editor$/, replacement: path.resolve(__dirname, '../editor/src/index.ts') },
+                { find: /^@wisemapping\/mindplot\/src\/(.*)/, replacement: path.resolve(__dirname, '../mindplot/src/$1') },
+                { find: /^@wisemapping\/mindplot$/, replacement: path.resolve(__dirname, '../mindplot/src/index.ts') },
+                { find: /^@wisemapping\/web2d\/src\/(.*)/, replacement: path.resolve(__dirname, '../web2d/src/$1') },
+                { find: /^@wisemapping\/web2d$/, replacement: path.resolve(__dirname, '../web2d/src/index.ts') },
+            ]
         },
         define: {
             VITE_BOOTSTRAP_CONFIG: JSON.stringify(bootstrapConfig),

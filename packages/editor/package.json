@@ -6,14 +6,24 @@
     "type": "git",
     "url": "git@github.com:wisemapping/wisemapping-frontend.git"
   },
-  "main": "src/index.ts",
-  "license": "MIT",
-  "author": "Paulo Veiga <pveiga@wisemapping.com>",
+  "main": "dist/editor.umd.js",
+  "module": "dist/editor.es.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/editor.es.js",
+      "require": "./dist/editor.umd.js"
+    },
+    "./dist/editor.css": "./dist/editor.css"
+  },
   "files": [
-    "src"
+    "dist",
+    "images",
+    "compiled-lang"
   ],
   "scripts": {
-    "build": "vite build",
+    "build": "yarn i18n:compile && vite build",
     "build-storybook": "STORYBOOK_DISABLE_TELEMETRY=1 storybook build",
     "clean": "rm -rf dist node_modules/.cache storybook-static cypress/screenshots cypress/videos cypress/downloads debug-storybook.log .eslintcache",
     "cy:open": "cypress open",

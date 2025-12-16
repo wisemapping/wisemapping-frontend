@@ -50,7 +50,7 @@ class NoteIcon extends ImageIcon {
     // Hover tooltip ...
     const designerInstance = (globalThis as Record<string, unknown>).designer as
       | {
-          getWidgeManager: () => { configureTooltipForNode: (...args: unknown[]) => void };
+          getWidgetManager: () => { configureTooltipForNode: (...args: unknown[]) => void };
           fireEvent: (...args: unknown[]) => void;
         }
       | undefined;
@@ -60,7 +60,7 @@ class NoteIcon extends ImageIcon {
       return;
     }
 
-    const wm = designerInstance.getWidgeManager();
+    const wm = designerInstance.getWidgetManager();
     wm.configureTooltipForNode(this._topic, this._noteModel, this);
 
     // Register edition popup ...

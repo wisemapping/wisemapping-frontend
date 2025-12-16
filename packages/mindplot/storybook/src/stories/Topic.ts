@@ -32,7 +32,7 @@ const ensureDesignerStub = () => {
   const globalDesigner = (globalThis as unknown as { designer?: unknown }).designer;
   if (!globalDesigner) {
     (globalThis as Record<string, unknown>).designer = {
-      getWidgeManager: () => ({
+      getWidgetManager: () => ({
         configureTooltipForNode: () => {},
         createTooltipForLink: () => {},
       }),

@@ -138,13 +138,22 @@ class Editor {
   }
 
   async flushPendingChanges(): Promise<void> {
+    // If the map is not loaded, there is no need to flush or unlock
+    if (!this.isMapLoadded()) {
+      return;
+    }
+
     try {
       await this.save(false);
     } catch (error) {
       console.error('Save failed while leaving editor:', error);
-      throw error;
+      // We don't rethrow here to ensure unlocking happens (if possible) and cleanup continues
     } finally {
-      this.component.unlockMap();
+      try {
+        this.component.unlockMap();
+      } catch (e) {
+        console.warn('Failed to unlock map:', e);
+      }
     }
   }
 

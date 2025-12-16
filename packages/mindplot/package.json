@@ -7,14 +7,24 @@
     "type": "git",
     "url": "git@github.com:wisemapping/wisemapping-frontend.git"
   },
-  "main": "src/index.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "directories": {
     "lib": "src",
     "test": "__tests__"
   },
   "author": "Paulo Veiga <pveiga@wisemapping.com>",
   "files": [
-    "src"
+    "dist",
+    "assets"
   ],
   "scripts": {
     "build": "vite build",

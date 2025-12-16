@@ -73,7 +73,7 @@ const EditorContent = ({
 
   // Memoize widget builder to avoid recreating on every render
   const widgetBulder = useMemo(
-    () => designer?.getWidgeManager() ?? defaultWidgetBuilderRef.current!,
+    () => designer?.getWidgetManager() ?? defaultWidgetBuilderRef.current!,
     [designer],
   );
 

@@ -33,7 +33,6 @@ export default defineConfig(({ command }) => {
                 { find: /^@wisemapping\/web2d$/, replacement: path.resolve(__dirname, '../web2d/src/index.ts') },
             ]
         },
-        root: 'test/playground',
         assetsInclude: ['**/*.wxml'],  // Include .wxml files as assets
         preview: {
             port: 8081,
@@ -67,5 +66,8 @@ export default defineConfig(({ command }) => {
     }
 
     // Dev/Preview config - no build options needed for dev server
-    return config;
+    return {
+        ...config,
+        root: 'test/playground',
+    };
 });

@@ -48,3 +48,6 @@ wisemapping-frontend.code-workspace
 
 packages/**/.yalc/
 packages/**/yalc.lock
+
+# Yarn pack
+*.tgz

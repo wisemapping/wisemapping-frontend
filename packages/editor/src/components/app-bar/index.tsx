@@ -312,12 +312,7 @@ const AppBar = ({
       }),
       onClick: () => {
         trackAppBarAction('back_to_maps_list');
-        // In try mode (showcase), go back to previous page
-        if (capability.mode === 'showcase') {
-          window.history.back();
-        } else {
-          window.location.href = '/c/maps/';
-        }
+        onAction('back');
       },
     },
     {

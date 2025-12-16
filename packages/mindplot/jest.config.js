@@ -7,6 +7,10 @@ const config = {
     '^.+\\.(ts)?$': 'ts-jest',
     '^.+\\.(js)$': 'babel-jest',
   },
+  moduleNameMapper: {
+    '^@wisemapping/web2d$': '<rootDir>/../web2d/src/index.ts',
+    '^@wisemapping/web2d/(.*)$': '<rootDir>/../web2d/src/$1',
+  },
 };
 
 module.exports = config;

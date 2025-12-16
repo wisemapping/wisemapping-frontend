@@ -25,6 +25,7 @@ import de from './../../compiled-lang/de.json';
 import ru from './../../compiled-lang/ru.json';
 import uk from './../../compiled-lang/uk.json';
 import zh from './../../compiled-lang/zh.json';
+import zhCN from './../../compiled-lang/zh-CN.json';
 import ja from './../../compiled-lang/ja.json';
 import pt from './../../compiled-lang/pt.json';
 import it from './../../compiled-lang/it.json';
@@ -53,8 +54,9 @@ class I18nMsg {
       case 'uk':
         return uk;
       case 'zh':
-      case 'zh-CN':
         return zh;
+      case 'zh-CN':
+        return zhCN;
       case 'ja':
         return ja;
       case 'pt':

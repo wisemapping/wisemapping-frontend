@@ -41,16 +41,18 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 # Generate I18n resource
 
-## Extract 
+## Extract
+
 `yarn extract`
 
 ## Compile
+
 `yarn compile lang/en.json --ast --out-file src/compiled-lang/en.json`
 `yarn compile lang/es.json --ast --out-file src/compiled-lang/es.json`
 `yarn compile lang/fr.json --ast --out-file src/compiled-lang/fr.json`
 `yarn compile lang/de.json --ast --out-file src/compiled-lang/de.json`
+
 ## License
 
 The source code is Licensed under the WiseMapping Open License, Version 1.0 (the “License”);
-You may obtain a copy of the [License](https://wisemapping.atlassian.net/wiki/display/WS/License)
-
+You may obtain a copy of the License in the LICENSE file.

@@ -5,9 +5,10 @@ import path from 'path';
 export default defineConfig({
     plugins: [tsconfigPaths()],
     resolve: {
-        alias: {
-            '@wisemapping/web2d': path.resolve(__dirname, '../web2d'),
-        },
+        alias: [
+            { find: /^@wisemapping\/web2d\/src\/(.*)/, replacement: path.resolve(__dirname, '../web2d/src/$1') },
+            { find: /^@wisemapping\/web2d$/, replacement: path.resolve(__dirname, '../web2d/src/index.ts') },
+        ],
     },
     build: {
         lib: {

@@ -40,96 +40,93 @@ export default defineConfig([
             "plugin:@typescript-eslint/recommended",
         ),
 
-    plugins: {
-        "@typescript-eslint": typescriptEslint,
-        cypress,
-    },
-
-    languageOptions: {
-        globals: {
-            ...globals.browser,
-            ...globals.commonjs,
-            ...globals.jest,
-            designer: true,
+        plugins: {
+            "@typescript-eslint": typescriptEslint,
+            cypress,
         },
 
-        parser: tsParser,
-        ecmaVersion: 11,
-        sourceType: "script",
-    },
-
-    settings: {
-        "import/resolver": {
-            node: {
-                extensions: [".js", ".ts"],
+        languageOptions: {
+            globals: {
+                ...globals.browser,
+                ...globals.commonjs,
+                ...globals.jest,
+                designer: true,
             },
 
-            webpack: {
-                config: "./webpack.common.js",
+            parser: tsParser,
+            ecmaVersion: 11,
+            sourceType: "script",
+        },
+
+        settings: {
+            "import/core-modules": ["@wisemapping/web2d"],
+            "import/resolver": {
+                node: {
+                    extensions: [".js", ".ts"],
+                },
             },
         },
-    },
 
-    rules: {
-        ...cypress.configs.recommended.rules,
-        "indent": ["error", 2, {
-            "SwitchCase": 1,
-            "VariableDeclarator": 1,
-            "outerIIFEBody": 1,
-            "MemberExpression": 1,
-            "FunctionDeclaration": {
-                "parameters": 1,
-                "body": 1
-            },
-            "FunctionExpression": {
-                "parameters": 1,
-                "body": 1
-            },
-            "CallExpression": {
-                "arguments": 1
-            },
-            "ArrayExpression": 1,
-            "ObjectExpression": 1,
-            "ImportDeclaration": 1,
-            "flatTernaryExpressions": false,
-            "ignoreComments": false
-        }],
-        "operator-linebreak": ["error", "after", {
-            overrides: {
-                "+": "ignore",
-                "-": "ignore",
-                ":": "ignore",
-                "*": "ignore",
-                "?": "ignore",
-                ">": "ignore",
-                "||": "ignore",
-                "&&": "ignore",
-                "(": "ignore",
-            },
-        }],
+        rules: {
+            ...cypress.configs.recommended.rules,
+            "indent": ["error", 2, {
+                "SwitchCase": 1,
+                "VariableDeclarator": 1,
+                "outerIIFEBody": 1,
+                "MemberExpression": 1,
+                "FunctionDeclaration": {
+                    "parameters": 1,
+                    "body": 1
+                },
+                "FunctionExpression": {
+                    "parameters": 1,
+                    "body": 1
+                },
+                "CallExpression": {
+                    "arguments": 1
+                },
+                "ArrayExpression": 1,
+                "ObjectExpression": 1,
+                "ImportDeclaration": 1,
+                "flatTernaryExpressions": false,
+                "ignoreComments": false
+            }],
+            "operator-linebreak": ["error", "after", {
+                overrides: {
+                    "+": "ignore",
+                    "-": "ignore",
+                    ":": "ignore",
+                    "*": "ignore",
+                    "?": "ignore",
+                    ">": "ignore",
+                    "||": "ignore",
+                    "&&": "ignore",
+                    "(": "ignore",
+                },
+            }],
 
-        "object-curly-newline": "off",
-        "no-underscore-dangle": "off",
-        "no-plusplus": "off",
-        "no-param-reassign": "off",
-        "max-len": [1, 300],
-        "class-methods-use-this": "off",
-        "no-console": "off",
-        "@typescript-eslint/no-explicit-any": "error",
-        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-        "@typescript-eslint/no-this-alias": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
+            "object-curly-newline": "off",
+            "no-underscore-dangle": "off",
+            "no-plusplus": "off",
+            "no-param-reassign": "off",
+            "max-len": [1, 300],
+            "class-methods-use-this": "off",
+            "no-console": "off",
+            "@typescript-eslint/no-explicit-any": "error",
+            "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+            "@typescript-eslint/no-this-alias": "off",
+            "@typescript-eslint/no-non-null-assertion": "off",
 
-        "import/extensions": ["error", "ignorePackages", {
-            js: "never",
-            jsx: "never",
-            ts: "never",
-            tsx: "never",
-        }],
+            "import/extensions": ["error", "ignorePackages", {
+                js: "never",
+                jsx: "never",
+                ts: "never",
+                tsx: "never",
+            }],
 
-        "implicit-arrow-linebreak": "off",
-        "no-confusing-arrow": "off", // Disabled to avoid conflict with Prettier
-        "function-paren-newline": "off", // Disabled to avoid conflict with Prettier
-    },
+            "implicit-arrow-linebreak": "off",
+            "no-confusing-arrow": "off", // Disabled to avoid conflict with Prettier
+            "function-paren-newline": "off", // Disabled to avoid conflict with Prettier
+        },
     }
 ]);

@@ -223,7 +223,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     });
   }
 
-  getWidgeManager(): WidgetBuilder {
+  getWidgetManager(): WidgetBuilder {
     return this._widgetManager;
   }
 

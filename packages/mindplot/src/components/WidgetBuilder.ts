@@ -230,6 +230,15 @@ abstract class WidgetBuilder {
   abstract buildEditorForLink(topic: Topic): React.ReactElement;
 
   abstract buidEditorForNote(topic: Topic): React.ReactElement;
+
+  getContainerSize(): { width: number; height: number } {
+    const mindmapComp = document.getElementById('mindmap-comp');
+    if (mindmapComp) {
+      const rect = mindmapComp.getBoundingClientRect();
+      return { width: rect.width, height: rect.height };
+    }
+    return { width: window.innerWidth, height: window.innerHeight };
+  }
 }
 
 export default WidgetBuilder;

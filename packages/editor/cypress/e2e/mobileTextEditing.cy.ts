@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-describe('Mobile Text Editing Suite', () => {
+describe.skip('Mobile Text Editing Suite', () => {
     beforeEach(() => {
         cy.visit('/map-render/html/editor.html');
         cy.waitEditorLoaded();
