@@ -33,7 +33,7 @@ import {
 } from '../../../icons/RelationshipArrowIcons';
 
 import NodeProperty from '../../../../classes/model/node-property';
-import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
+import { StrokeStyle } from '@wisemapping/mindplot';
 import ColorPicker from '../color-picker';
 import { trackRelationshipAction } from '../../../../utils/analytics';
 

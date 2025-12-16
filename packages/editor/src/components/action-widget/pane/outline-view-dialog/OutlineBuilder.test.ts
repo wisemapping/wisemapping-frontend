@@ -17,8 +17,7 @@
  */
 
 import { OutlineBuilder } from './OutlineBuilder';
-import INodeModel from '@wisemapping/mindplot/src/components/model/INodeModel';
-import ContentType from '@wisemapping/mindplot/src/components/ContentType';
+import { INodeModel, ContentType } from '@wisemapping/mindplot';
 
 // Mock feature type for testing
 interface MockFeature {

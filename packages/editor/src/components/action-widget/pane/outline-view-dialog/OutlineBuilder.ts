@@ -16,11 +16,7 @@
  *   limitations under the License.
  */
 
-import INodeModel from '@wisemapping/mindplot/src/components/model/INodeModel';
-import LinkModel from '@wisemapping/mindplot/src/components/model/LinkModel';
-import NoteModel from '@wisemapping/mindplot/src/components/model/NoteModel';
-import SvgIconModel from '@wisemapping/mindplot/src/components/model/SvgIconModel';
-import ContentType from '@wisemapping/mindplot/src/components/ContentType';
+import { INodeModel, LinkModel, NoteModel, SvgIconModel, ContentType } from '@wisemapping/mindplot';
 
 export interface OutlineNodeData {
   id: string;

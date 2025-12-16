@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { ThemeVariant } from '@wisemapping/mindplot/src/components/theme/Theme';
+import { ThemeVariant } from '@wisemapping/mindplot';
 
 /**
  * Interface for theme variant storage.

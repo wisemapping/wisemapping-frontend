@@ -35,9 +35,7 @@ import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
 import BorderClearOutlinedIcon from '@mui/icons-material/BorderClearOutlined';
 
 import NodeProperty from '../../../../classes/model/node-property';
-import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
-import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
-import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
+import { TopicShapeType, LineType, StrokeStyle } from '@wisemapping/mindplot';
 import ColorPicker from '../color-picker';
 import IconCollection from './IconCollection';
 

@@ -1,3 +1,20 @@
+/*
+ *    Copyright [2007-2025] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 !(function (f) {
   typeof module != 'undefined' && typeof exports == 'object'
     ? (module.exports = f())
@@ -271,7 +288,6 @@
                       ? ((R = 3 + S(t, m, 7)), (m += 3))
                       : 18 == J && ((R = 11 + S(t, m, 127)), (m += 7));
                   R--;
-
                 )
                   H[N++] = Q;
               }
@@ -542,7 +558,6 @@
               for (
                 var W = Math.min(b, Y) - 1, X = Math.min(32767, Z), $ = Math.min(258, Y);
                 V <= X && --R && P != B;
-
               ) {
                 if (t[Z + K] == t[Z + K - V]) {
                   for (var _ = 0; _ < $ && t[Z + _] == t[Z + _ - V]; ++_);

@@ -27,7 +27,7 @@ import Typography from '@mui/material/Typography';
 import React, { ReactElement, useState, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import NodeProperty from '../../../../classes/model/node-property';
-import ThemeType from '@wisemapping/mindplot/src/components/model/ThemeType';
+import { ThemeType } from '@wisemapping/mindplot';
 
 const ThemeEditor = (props: {
   closeModal: () => void;

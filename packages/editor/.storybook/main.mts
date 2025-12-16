@@ -56,7 +56,7 @@ const config: StorybookConfig = {
       '@wisemapping/mindplot/src/components/DesignerKeyboard': path.resolve(__dirname, './mocks/DesignerKeyboard.ts'),
       '@wisemapping/mindplot/src/components/theme/ThemeStyle': path.resolve(__dirname, './mocks/ThemeStyle.ts'),
       // Add explicit alias for MUI icons to fix workspace resolution
-      '@mui/icons-material': path.resolve(__dirname, '../node_modules/@mui/icons-material'),
+      '@mui/icons-material': path.resolve(__dirname, '../../../node_modules/@mui/icons-material'),
     };
 
     // Add dedupe for MUI packages to fix workspace resolution

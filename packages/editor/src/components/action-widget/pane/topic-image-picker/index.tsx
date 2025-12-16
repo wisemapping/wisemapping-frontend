@@ -26,7 +26,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
 
 import NodeProperty from '../../../../classes/model/node-property';
-import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
+import { DesignerKeyboard } from '@wisemapping/mindplot';
 import TopicImageTab from './image-icon-tab';
 import { StyledEditorsTabs } from '../shared/StyledTabs';
 import { StyledEditorContainer } from '../shared/StyledEditorContainer';
