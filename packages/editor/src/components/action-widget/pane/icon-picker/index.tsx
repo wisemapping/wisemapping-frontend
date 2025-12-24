@@ -18,7 +18,7 @@
 import React, { ReactElement, useEffect } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
-import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
+import { DesignerKeyboard } from '@wisemapping/mindplot';
 import IconImageTab from './image-icon-tab';
 import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';

@@ -25,7 +25,7 @@ import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt
 import ImageIcon from '@mui/icons-material/Image';
 import { FormattedMessage } from 'react-intl';
 import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
-import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
+import { DesignerKeyboard } from '@wisemapping/mindplot';
 import { useTheme } from '../../../../contexts/ThemeContext';
 import NodeProperty from '../../../../classes/model/node-property';
 import IconImageTab from '../icon-picker/image-icon-tab';

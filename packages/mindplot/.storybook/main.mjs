@@ -24,9 +24,10 @@ const config = {
   async viteFinal(config) {
     return mergeConfig(config, {
       resolve: {
-        alias: {
-          '@wisemapping/web2d': join(__dirname, '../../web2d')
-        },
+        alias: [
+          { find: /^@wisemapping\/web2d\/src\/(.*)/, replacement: join(__dirname, '../../web2d/src/$1') },
+          { find: /^@wisemapping\/web2d$/, replacement: join(__dirname, '../../web2d/src/index.ts') },
+        ],
       },
     });
   },

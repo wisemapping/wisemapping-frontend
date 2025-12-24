@@ -23,7 +23,16 @@
       "vite/client",
       "jest",
       "node"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@wisemapping/web2d": [
+        "../web2d/src/index.ts"
+      ],
+      "@wisemapping/web2d/*": [
+        "../web2d/src/*"
+      ]
+    }
   },
   "include": [
     "src/**/*",

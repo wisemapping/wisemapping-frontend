@@ -24,4 +24,5 @@ export type ToolbarActionType =
   | 'share'
   | 'info'
   | 'theme'
-  | 'rename';
+  | 'rename'
+  | 'back';

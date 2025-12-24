@@ -34,7 +34,7 @@ import frMessages from '../../compiled-lang/fr.json';
 import ruMessages from '../../compiled-lang/ru.json';
 import ukMessages from '../../compiled-lang/uk.json';
 import zhMessages from '../../compiled-lang/zh.json';
-import zhCnMessages from '../../compiled-lang/zh.json';
+import zhCnMessages from '../../compiled-lang/zh-CN.json';
 import jaMessages from '../../compiled-lang/ja.json';
 import ptMessages from '../../compiled-lang/pt.json';
 import itMessages from '../../compiled-lang/it.json';

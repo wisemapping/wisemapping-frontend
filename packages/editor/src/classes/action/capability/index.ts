@@ -124,7 +124,7 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
   },
   print: {
     desktop: {
-      hidden: ['showcase'],
+      hidden: ['showcase', 'desktop'],
     },
     mobile: {
       hidden: [
@@ -134,6 +134,7 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
         'edition-viewer',
         'edition-editor',
         'edition-owner',
+        'desktop',
       ],
     },
   },
@@ -145,6 +146,7 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
         'viewonly-private',
         'edition-viewer',
         'edition-editor',
+        'desktop',
       ],
     },
     mobile: {
@@ -155,6 +157,7 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
         'edition-viewer',
         'edition-editor',
         'edition-owner',
+        'desktop',
       ],
     },
   },
@@ -166,6 +169,7 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
         'viewonly-private',
         'edition-viewer',
         'edition-editor',
+        'desktop',
       ],
     },
     mobile: {
@@ -176,12 +180,13 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
         'edition-viewer',
         'edition-editor',
         'edition-owner',
+        'desktop',
       ],
     },
   },
   info: {
     desktop: {
-      hidden: ['showcase'],
+      hidden: ['showcase', 'desktop'],
     },
     mobile: {
       hidden: [
@@ -191,12 +196,13 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
         'edition-viewer',
         'edition-editor',
         'edition-owner',
+        'desktop',
       ],
     },
   },
   account: {
     desktop: {
-      hidden: ['showcase'],
+      hidden: ['showcase', 'desktop'],
     },
   },
   'edition-toolbar': {
@@ -214,7 +220,7 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
   },
   history: {
     desktop: {
-      hidden: ['viewonly-public', 'viewonly-private', 'edition-viewer', 'showcase'],
+      hidden: ['viewonly-public', 'viewonly-private', 'edition-viewer', 'showcase', 'desktop'],
     },
     mobile: {
       hidden: [
@@ -224,6 +230,7 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
         'edition-viewer',
         'edition-editor',
         'edition-owner',
+        'desktop',
       ],
     },
   },
@@ -259,12 +266,13 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
         'edition-viewer',
         'edition-editor',
         'edition-owner',
+        'desktop',
       ],
     },
   },
   starred: {
     desktop: {
-      hidden: ['showcase', 'viewonly-private', 'viewonly-public'],
+      hidden: ['showcase', 'viewonly-private', 'viewonly-public', 'desktop'],
     },
     mobile: {
       hidden: [
@@ -274,6 +282,7 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
         'edition-viewer',
         'edition-editor',
         'edition-owner',
+        'desktop',
       ],
     },
   },
@@ -330,7 +339,7 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
   },
   layout: {
     desktop: {
-      hidden: ['showcase', 'viewonly-public', 'viewonly-private', 'edition-viewer'],
+      hidden: ['showcase', 'viewonly-public', 'viewonly-private', 'edition-viewer', 'desktop'],
     },
   },
 };

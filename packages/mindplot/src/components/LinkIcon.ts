@@ -51,7 +51,7 @@ class LinkIcon extends ImageIcon {
     // Hover tooltip ...
     const designerInstance = (globalThis as Record<string, unknown>).designer as
       | {
-          getWidgeManager: () => { createTooltipForLink: (...args: unknown[]) => void };
+          getWidgetManager: () => { createTooltipForLink: (...args: unknown[]) => void };
           fireEvent: (...args: unknown[]) => void;
         }
       | undefined;
@@ -61,7 +61,7 @@ class LinkIcon extends ImageIcon {
       return;
     }
 
-    const wm = designerInstance.getWidgeManager();
+    const wm = designerInstance.getWidgetManager();
     wm.createTooltipForLink(this._topic, this._linksModel, this);
 
     if (!this._readOnly) {

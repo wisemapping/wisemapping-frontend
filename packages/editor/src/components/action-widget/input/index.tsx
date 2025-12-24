@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import TextField, { TextFieldProps } from '@mui/material/TextField';
-import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
+import { DesignerKeyboard } from '@wisemapping/mindplot';
 import React, { ReactElement, useEffect } from 'react';
 
 /**

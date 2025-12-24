@@ -10,7 +10,7 @@
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "es2020",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "strict": true,
     "target": "es2022",
     "allowJs": true,

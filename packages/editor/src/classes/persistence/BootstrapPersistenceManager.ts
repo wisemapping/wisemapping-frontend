@@ -17,7 +17,7 @@
  */
 
 import { PersistenceManager } from '@wisemapping/mindplot';
-import type { PersistenceErrorCallback } from '@wisemapping/mindplot/src/components/PersistenceManager';
+import type { PersistenceErrorCallback } from '@wisemapping/mindplot';
 
 /**
  * A PersistenceManager wrapper that uses bootstrap XML instead of fetching from server.

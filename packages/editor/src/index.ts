@@ -33,6 +33,7 @@ import {
   TextImporterFactory,
   XMLSerializerFactory,
 } from '@wisemapping/mindplot';
+import type { EditorRenderMode } from '@wisemapping/mindplot';
 
 import Editor from './components';
 import EditorLoadingSkeleton from './components/editor-loading-skeleton';
@@ -43,7 +44,14 @@ import type { PersistenceError } from '@wisemapping/mindplot/src/components/Pers
 import type SizeType from '@wisemapping/mindplot/src/components/SizeType';
 import type { ThemeVariantStorage } from './types/ThemeVariantStorage';
 
-export type { PersistenceError, EditorOptions, MapInfo, SizeType, ThemeVariantStorage };
+export type {
+  PersistenceError,
+  EditorOptions,
+  MapInfo,
+  SizeType,
+  ThemeVariantStorage,
+  EditorRenderMode,
+};
 
 export {
   PersistenceManager,

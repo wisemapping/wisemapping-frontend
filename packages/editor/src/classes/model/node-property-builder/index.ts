@@ -17,18 +17,20 @@
  */
 
 import { Designer, Topic } from '@wisemapping/mindplot';
-import Relationship from '@wisemapping/mindplot/src/components/Relationship';
-import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
+import {
+  Relationship,
+  StrokeStyle,
+  LineType,
+  TopicShapeType,
+  ThemeType,
+} from '@wisemapping/mindplot';
 import NodeProperty from '../node-property';
 import {
   SwitchValueDirection,
-  getPreviousValue,
   fontSizes,
+  getPreviousValue,
   getNextValue,
 } from '../../../components/toolbar/ToolbarValueModelBuilder';
-import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
-import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
-import ThemeType from '@wisemapping/mindplot/src/components/model/ThemeType';
 
 class NodePropertyBuilder {
   designer: Designer;

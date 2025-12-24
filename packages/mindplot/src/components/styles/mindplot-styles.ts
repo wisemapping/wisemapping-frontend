@@ -23,7 +23,7 @@ const mindplotStyles: string = `
     text-align: left;
     padding: 0;
     position: absolute;
-    z-index: 999;
+    z-index: 9999;
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 12px;

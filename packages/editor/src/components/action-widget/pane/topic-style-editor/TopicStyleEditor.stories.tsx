@@ -19,9 +19,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import TopicStyleEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
-import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
-import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
-import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
+import { TopicShapeType, StrokeStyle, LineType } from '@wisemapping/mindplot';
 import React from 'react';
 
 // Wrapper component to expose all setValue calls as action-trackable callbacks

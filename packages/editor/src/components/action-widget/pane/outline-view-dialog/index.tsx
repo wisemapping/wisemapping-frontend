@@ -30,10 +30,7 @@ import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import LinkIcon from '@mui/icons-material/Link';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Mindmap } from '@wisemapping/mindplot';
-import INodeModel from '@wisemapping/mindplot/src/components/model/INodeModel';
-import LinkModel from '@wisemapping/mindplot/src/components/model/LinkModel';
-import NoteModel from '@wisemapping/mindplot/src/components/model/NoteModel';
+import { Mindmap, INodeModel, LinkModel, NoteModel } from '@wisemapping/mindplot';
 import { OutlineBuilder, OutlineNodeData } from './OutlineBuilder';
 import {
   OutlineContainer,

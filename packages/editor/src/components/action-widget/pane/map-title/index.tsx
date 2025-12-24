@@ -20,7 +20,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import MapInfo from '../../../../classes/model/map-info';
 import { TitleInput } from './styled';
-import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
+import { DesignerKeyboard } from '@wisemapping/mindplot';
 
 type MapTitleProp = {
   mapInfo: MapInfo;

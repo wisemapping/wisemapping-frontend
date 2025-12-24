@@ -20,7 +20,7 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import RelationshipStyleEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
-import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
+import { StrokeStyle } from '@wisemapping/mindplot';
 
 // Mock NodeProperty implementation
 class MockNodeProperty<T> implements NodeProperty<T> {

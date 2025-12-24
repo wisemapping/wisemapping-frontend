@@ -101,3 +101,14 @@ export {
   HTMLTopicSelected,
   XMLSerializerFactory,
 };
+
+export type { TopicShapeType } from './components/model/INodeModel';
+export { StrokeStyle } from './components/model/RelationshipModel';
+export { LineType } from './components/ConnectionLine';
+export { ContentType } from './components/ContentType';
+export { default as INodeModel } from './components/model/INodeModel';
+export { default as SvgIconModel } from './components/model/SvgIconModel';
+export { default as Relationship } from './components/Relationship';
+export type { default as ThemeType } from './components/model/ThemeType';
+export type { ThemeVariant } from './components/theme/Theme';
+export type { PersistenceErrorCallback } from './components/PersistenceManager';
