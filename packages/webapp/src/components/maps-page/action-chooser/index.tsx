@@ -52,6 +52,7 @@ export type ActionType =
   | 'publish'
   | 'history'
   | 'theme'
+  | 'back'
   | undefined;
 
 interface ActionProps {
