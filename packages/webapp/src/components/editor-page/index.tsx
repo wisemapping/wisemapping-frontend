@@ -278,6 +278,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
             onClose={() => setActiveDialog(null)}
             mapsId={[mapId]}
             fromEditor
+            pageMode={pageMode}
           />
         </Suspense>
       )}

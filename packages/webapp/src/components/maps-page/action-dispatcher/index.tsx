@@ -20,6 +20,7 @@ import React, { useEffect } from 'react';
 import RenameDialog from './rename-dialog';
 import DeleteDialog from './delete-dialog';
 import { ActionType } from '../action-chooser';
+import { PageModeType } from '../../editor-page/loader';
 import { QueryClient } from 'react-query';
 import DuplicateDialog from './duplicate-dialog';
 import CreateDialog from './create-dialog';
@@ -43,6 +44,7 @@ type ActionDialogProps = {
   mapsId: number[];
   onClose: (success?: boolean) => void;
   fromEditor: boolean;
+  pageMode?: PageModeType;
 };
 
 const ActionDispatcher = ({
@@ -50,6 +52,7 @@ const ActionDispatcher = ({
   action,
   onClose,
   fromEditor,
+  pageMode,
 }: ActionDialogProps): React.ReactElement => {
   useEffect(() => {
     if (action) {
@@ -62,7 +65,11 @@ const ActionDispatcher = ({
           onClose(true);
           break;
         case 'back':
-          window.location.href = '/c/maps';
+          if (pageMode === 'try') {
+            window.history.back();
+          } else {
+            window.location.href = '/c/maps';
+          }
           onClose(true);
           break;
         case 'print':
