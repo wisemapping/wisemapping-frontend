@@ -54,31 +54,32 @@ const ActionDispatcher = ({
   useEffect(() => {
     if (action) {
       trackMindmapListAction(action, 'map_metadata');
+
+      // Handle immediate actions
+      switch (action) {
+        case 'open':
+          window.location.href = `/c/maps/${mapsId}/edit`;
+          onClose(true);
+          break;
+        case 'back':
+          window.location.href = '/c/maps';
+          onClose(true);
+          break;
+        case 'print':
+          window.open(`/c/maps/${mapsId}/print`, 'print');
+          onClose(true);
+          break;
+        case 'theme':
+          // Theme is handled within the editor, just close the dialog
+          onClose(true);
+          break;
+      }
     }
-  }, [action]);
+  }, [action, mapsId, onClose]);
 
   const handleOnClose = (success?: boolean): void => {
     onClose(success);
   };
-
-  switch (action) {
-    case 'open':
-      window.location.href = `/c/maps/${mapsId}/edit`;
-      handleOnClose(true);
-      break;
-    case 'back':
-      window.location.href = '/c/maps';
-      handleOnClose(true);
-      break;
-    case 'print':
-      window.open(`/c/maps/${mapsId}/print`, 'print');
-      handleOnClose(true);
-      break;
-    case 'theme':
-      // Theme is handled within the editor, just close the dialog
-      handleOnClose(true);
-      break;
-  }
 
   return (
     <span>
