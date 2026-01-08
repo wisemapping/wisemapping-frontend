@@ -48,6 +48,7 @@ export const ToolbarButtonOption = (props: { configuration: ActionConfig }): Rea
           disabled={props.configuration.disabled && props.configuration.disabled()}
           aria-pressed={selected}
           aria-label={ariaLabel}
+          data-testid={props.configuration['data-testid']}
           sx={{ overflow: 'visible', position: 'relative' }}
         >
           {typeof props.configuration.icon === 'function'
