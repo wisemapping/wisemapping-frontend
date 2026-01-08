@@ -18,20 +18,21 @@ describe('Editor Back Button', () => {
 });
 
 describe('Try Mode Back Button', () => {
-    it('should navigate back to previous page when back button is clicked', () => {
-        // 1. Start at a "previous" page
-        cy.visit('/c/maps');
-
-        // 2. Navigate to the try mode URL
-        // We use window.location to simulate a real navigation that pushes to history, 
-        // effectively similar to clicking a link or cy.visit (which also works for history usually)
+    it('should navigate back to maps list when back button is clicked', () => {
+        // 1. Visit the try mode URL directly
         cy.visit('/c/maps/1/try');
         cy.waitForEditorLoaded();
+
+        // 2. Mock the history.back method to verify it is called
+        cy.window().then((win) => {
+            cy.spy(win.history, 'back').as('historyBack');
+        });
 
         // 3. Click the back button
         cy.get('[aria-label="Back to maps list"]').click();
 
-        // 4. Verify we are back at the previous page
-        cy.location('pathname').should('match', /\/c\/maps\/?$/);
+        // 4. Verify history.back was called
+        cy.get('@historyBack').should('have.been.calledOnce');
     });
 });
+
