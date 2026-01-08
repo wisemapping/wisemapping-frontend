@@ -310,6 +310,7 @@ const AppBar = ({
         id: 'appbar.back-to-map-list',
         defaultMessage: 'Back to maps list',
       }),
+      'data-testid': 'app-bar-back-button',
       onClick: () => {
         trackAppBarAction('back_to_maps_list');
         onAction('back');

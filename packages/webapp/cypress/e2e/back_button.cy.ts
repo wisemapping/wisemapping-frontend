@@ -8,8 +8,9 @@ describe('Editor Back Button', () => {
 
     it('should navigate back to maps list when back button is clicked', () => {
         // Click the back button (arrow icon)
+        // Click the back button (arrow icon)
         // The button has a tooltip "Back to maps list" which becomes the aria-label
-        cy.get('[aria-label="Back to maps list"]').click();
+        cy.get('[data-testid="app-bar-back-button"]').click();
 
         // Verify navigation to map list
         // Note: The app might redirect to /c/maps or /c/maps/ depending on router config, allow both
@@ -29,7 +30,7 @@ describe('Try Mode Back Button', () => {
         });
 
         // 3. Click the back button
-        cy.get('[aria-label="Back to maps list"]').click();
+        cy.get('[data-testid="app-bar-back-button"]').click();
 
         // 4. Verify history.back was called
         cy.get('@historyBack').should('have.been.calledOnce');

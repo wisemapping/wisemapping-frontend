@@ -59,6 +59,10 @@ interface ActionConfig {
    * if false the menu entry or button is not visible. Also custom render will be ignored.
    */
   visible?: boolean;
+  /**
+   * For testing purposes, allows selecting specific buttons
+   */
+  'data-testid'?: string;
 }
 
 export default ActionConfig;
