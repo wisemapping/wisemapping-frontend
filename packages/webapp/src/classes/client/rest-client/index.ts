@@ -43,8 +43,14 @@ export default class RestClient implements Client {
 
   private checkResponseForSessionExpired = <T>(error: {
     response?: AxiosResponse<T>;
+    config?: { url?: string };
   }): Promise<{ response?: AxiosResponse<T> }> => {
-    if (error.response && (error.response.status === 405 || error.response.status === 403)) {
+    const status = error.response ? error.response.status : 0;
+    if (
+      status === 405 ||
+      status === 403 ||
+      (status === 401 && !error.config?.url?.endsWith('/authenticate'))
+    ) {
       this.sessionExpired();
     }
     return Promise.reject(error);
