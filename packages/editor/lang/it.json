@@ -294,7 +294,7 @@
     "defaultMessage": "Inserisci Link"
   },
   "rich-text-editor.insert-icon": {
-    "defaultMessage": "Inserisci Icona"
+    "defaultMessage": "Inserisci icona"
   },
   "rich-text-editor.bold": {
     "defaultMessage": "Grassetto"
@@ -309,10 +309,10 @@
     "defaultMessage": "Barrato"
   },
   "rich-text-editor.bullet-list": {
-    "defaultMessage": "Elenco Puntato"
+    "defaultMessage": "Elenco puntato"
   },
   "rich-text-editor.numbered-list": {
-    "defaultMessage": "Elenco Numerato"
+    "defaultMessage": "Elenco numerato"
   },
   "image-icon-tab.icon-found": {
     "defaultMessage": "icona trovata"
@@ -351,10 +351,10 @@
     "defaultMessage": "Piccolo"
   },
   "canvas-style.grid-size-xl": {
-    "defaultMessage": "Molto Grande"
+    "defaultMessage": "Molto grande"
   },
   "canvas-style.grid-size-xs": {
-    "defaultMessage": "Molto Piccolo"
+    "defaultMessage": "Molto piccolo"
   },
   "canvas-style.grid-style": {
     "defaultMessage": "Stile griglia"
@@ -669,43 +669,43 @@
     "defaultMessage": "Scegli tema"
   },
   "theme.classic.description": {
-    "defaultMessage": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+    "defaultMessage": "Design pulito e professionale con dettagli blu. Perfetto per presentazioni aziendali e documenti formali."
   },
   "theme.classic.name": {
     "defaultMessage": "Classico"
   },
   "theme.aurora.description": {
-    "defaultMessage": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    "defaultMessage": "Tema sfumato ispirato al neon con effetti luminosi, tipografia audace e connettori ad alto contrasto, ideati per una narrazione coinvolgente."
   },
   "theme.aurora.name": {
     "defaultMessage": "Aurora"
   },
   "theme.retro.description": {
-    "defaultMessage": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    "defaultMessage": "Palette synthwave anni '80 con cerchi al neon, sfumature cromate e tele a griglia ispirate alle feste notturne retrò."
   },
   "theme.retro.name": {
     "defaultMessage": "Notte Retrò 80s"
   },
   "theme.ocean.description": {
-    "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+    "defaultMessage": "Tema blu ispirato all'oceano con varianti chiaro/scuro. Colori calmi e professionali, perfetti per progetti aziendali e creativi."
   },
   "theme.ocean.name": {
     "defaultMessage": "Oceano"
   },
   "theme.robot.description": {
-    "defaultMessage": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+    "defaultMessage": "Tema verde ispirato alla tecnologia. Perfetto per documentazione tecnica e presentazioni futuristiche."
   },
   "theme.robot.name": {
     "defaultMessage": "Robot"
   },
   "theme.summer.description": {
-    "defaultMessage": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+    "defaultMessage": "Tema arancione brillante e vibrante. Ideale per progetti creativi e presentazioni energiche."
   },
   "theme.summer.name": {
     "defaultMessage": "Estate"
   },
   "theme.sunrise.description": {
-    "defaultMessage": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+    "defaultMessage": "Tema Sunrise con varianti di modalità chiaro/scuro. Colori e contrasto migliorati per una migliore leggibilità."
   },
   "theme.sunrise.name": {
     "defaultMessage": "Alba"
@@ -720,36 +720,36 @@
     "defaultMessage": "Input titolo"
   },
   "canvas-style.tab-color": {
-    "defaultMessage": "Color"
+    "defaultMessage": "Colore"
   },
   "canvas-style.tab-grid": {
-    "defaultMessage": "Grid Color"
+    "defaultMessage": "Colore Griglia"
   },
   "canvas-style.background-style": {
-    "defaultMessage": "Background Style"
+    "defaultMessage": "Stile di sfondo"
   },
   "canvas-style.pattern-default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "Predefinito - tutti gli stili verranno selezionati automaticamente in base al tema"
   },
   "icon-collection.shape.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "Predefinito"
   },
   "icon-collection.border.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "Predefinito"
   },
   "icon-collection.connection.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "Predefinito"
   },
   "icon-collection.default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "Predefinito - Tutti gli stili verranno selezionati automaticamente in base al tema"
   },
   "unified-styling.shape-type": {
-    "defaultMessage": "Shape Type"
+    "defaultMessage": "Tipo di forma"
   },
   "unified-styling.background-color": {
-    "defaultMessage": "Background Color"
+    "defaultMessage": "Colore di sfondo"
   },
   "topic-font-editor.reset-to-default": {
-    "defaultMessage": "Reset to Default"
+    "defaultMessage": "Ripristina impostazioni predefinite"
   }
 }
