@@ -38,6 +38,7 @@ class JwtTokenConfig {
     // Set jwt token on cookie ...
     const cookies = new Cookies();
     cookies.remove(JwtTokenConfig.COOKIE_NAME, { path: '/' });
+    cookies.remove('JSESSIONID', { path: '/' });
   }
 }
 

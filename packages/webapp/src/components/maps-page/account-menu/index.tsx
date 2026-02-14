@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { useQueryClient } from 'react-query';
 import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
@@ -41,6 +42,7 @@ const AccountMenu = (): React.ReactElement => {
   const [action, setAction] = React.useState<ActionType>(undefined);
   const client = useContext(ClientContext);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -54,6 +56,7 @@ const AccountMenu = (): React.ReactElement => {
     event.preventDefault();
 
     client.logout();
+    queryClient.removeQueries('account');
     navigate('/c/login');
   };
 
