@@ -1,9 +1,9 @@
 {
     "rewrites": [
-    {
-        "source": "/sitemap.xml",
-        "destination": "/api/sitemap"
-    },
+        {
+            "source": "/sitemap.xml",
+            "destination": "/api/sitemap"
+        },
         {
             "source": "/:locale/c/:path*",
             "destination": "/index.html"
@@ -47,7 +47,7 @@
                 },
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; img-src 'self' https: data:; font-src 'self' https://fonts.gstatic.com data:; frame-src https:; style-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; object-src 'none';"
+                    "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; img-src 'self' https: data: blob:; font-src 'self' https://fonts.gstatic.com data:; frame-src https:; style-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; object-src 'none';"
                 }
             ]
         },
@@ -88,7 +88,7 @@
                 },
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; img-src 'self' https: data:; font-src 'self' https://fonts.gstatic.com data:; frame-src https:; style-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; object-src 'none';"
+                    "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; img-src 'self' https: data: blob:; font-src 'self' https://fonts.gstatic.com data:; frame-src https:; style-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; object-src 'none';"
                 }
             ]
         },
