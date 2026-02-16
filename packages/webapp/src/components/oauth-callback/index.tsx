@@ -113,6 +113,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
         } else {
           navigate('/c/maps/');
         }
+        return;
       }
       setCallbackResult(result);
       return;
@@ -148,6 +149,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
             // if service reports that user already has sync accounts, go to maps page
             navigate('/c/maps/');
           }
+          return;
         }
         setCallbackResult(result);
       })
