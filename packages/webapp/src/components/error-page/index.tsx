@@ -77,7 +77,7 @@ const ErrorPage = (): React.ReactElement => {
     logCriticalError('Page not found error (catch-all route).', '404');
   } else if (routeError?.status === 404) {
     logCriticalError('Page not found error.', '404');
-  } else if (error !== undefined) {
+  } else if (error !== undefined && !isAccessError) {
     logCriticalError('Handling ErrorPage redirect error', safeSerialize(error));
   }
 
