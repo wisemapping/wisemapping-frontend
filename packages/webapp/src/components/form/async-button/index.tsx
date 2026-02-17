@@ -46,7 +46,7 @@ const AsyncButton = ({
       disabled={disabled || isLoading}
       startIcon={isLoading ? <CircularProgress size={16} color="inherit" /> : buttonProps.startIcon}
     >
-      {isLoading && loadingText ? loadingText : children}
+      {isLoading && loadingText ? <span>{loadingText}</span> : <span>{children}</span>}
     </Button>
   );
 };
