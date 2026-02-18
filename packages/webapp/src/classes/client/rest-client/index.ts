@@ -869,7 +869,7 @@ export default class RestClient implements Client {
         params.append('provider', provider);
       }
       this.axios
-        .put(`${this.baseUrl}/api/restful/oauth2/confirmaccountsync?${params.toString()}`, {
+        .put(`${this.baseUrl}/api/restful/oauth2/confirmaccountsync?${params.toString()}`, null, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
