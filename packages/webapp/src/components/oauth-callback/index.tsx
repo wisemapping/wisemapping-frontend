@@ -183,9 +183,19 @@ const OAuthCallbackPage = (): React.ReactElement => {
       })
       .catch((errorInfo: ErrorInfo) => {
         setError(errorInfo);
+
+        // Check for session expiry during pending oauth
+        let probableCause: string | undefined;
+        if (errorInfo.status === 401 && callback.syncCode === 'oauth_pending') {
+          probableCause =
+            'Session expired while waiting for OAuth confirmation. This can happen if the session cookie is lost or expired during the redirect.';
+          console.warn(probableCause);
+        }
+
         // Add detailed debug information for troubleshooting
         const debugInfo = {
           errorInfo,
+          probableCause,
           context: {
             email: callback.email,
             syncCode: callback.syncCode || '(not provided)',
