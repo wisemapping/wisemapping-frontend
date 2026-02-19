@@ -904,7 +904,9 @@ export default class RestClient implements Client {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private parseResponseOnError = (response: any): ErrorInfo => {
-    console.error(`Performing backend action error: ${JSON.stringify(response)}`);
+    if (response?.status !== 401) {
+      console.error(`Performing backend action error: ${JSON.stringify(response)}`);
+    }
 
     let result: ErrorInfo | undefined;
     if (response) {
