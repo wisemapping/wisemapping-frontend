@@ -260,7 +260,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
         </Typography>
 
         {error && (
-          <>
+          <div key="error-state">
             <GlobalError error={error} />
             <Button
               color="primary"
@@ -273,13 +273,13 @@ const OAuthCallbackPage = (): React.ReactElement => {
             >
               <FormattedMessage id="registration.callback.back" defaultMessage="Back to login" />
             </Button>
-          </>
+          </div>
         )}
 
         {!needConfirmLinking && !error && <CircularProgress />}
 
         {needConfirmLinking && (
-          <>
+          <div key="confirm-sync">
             <Button
               color="secondary"
               size="medium"
@@ -303,7 +303,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
             >
               <FormattedMessage id="registration.callback.sync" defaultMessage="Sync account" />
             </Button>
-          </>
+          </div>
         )}
       </FormContainer>
       <Footer />
