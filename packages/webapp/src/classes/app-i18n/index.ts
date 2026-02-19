@@ -114,7 +114,7 @@ export default abstract class AppI18n {
     try {
       result = localeFromStr(localeCode);
     } catch {
-      console.warn(`Unsupported languange code ${localeCode}`);
+      // Unsupported language code, falling back to default
     }
 
     return result;
