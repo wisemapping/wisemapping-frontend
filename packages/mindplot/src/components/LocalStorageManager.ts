@@ -79,10 +79,23 @@ class LocalStorageManager extends PersistenceManager {
     if (localStorate == null || this.forceLoad) {
       const url = this.documentUrl.replace('{id}', mapId);
 
-      result = fetch(url, {
-        method: 'get',
-        headers: this.buildHeader(),
-      })
+      const fetchWithRetry = async (urlStr: string, retries = 3): Promise<Response> => {
+        try {
+          return await fetch(urlStr, {
+            method: 'get',
+            headers: this.buildHeader(),
+          });
+        } catch (error) {
+          if (retries > 0) {
+            console.warn(`Fetch failed for ${urlStr}, retrying in 500ms...`, error);
+            await new Promise((resolve) => setTimeout(resolve, 500));
+            return fetchWithRetry(urlStr, retries - 1);
+          }
+          throw error;
+        }
+      };
+
+      result = fetchWithRetry(url)
         .then((response: Response) => {
           if (!response.ok) {
             console.error(`load error: ${response.status}`);

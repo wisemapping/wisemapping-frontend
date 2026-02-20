@@ -178,6 +178,7 @@ export const ToolbarSubmenu = ({
 };
 
 type ToolbarMenuItemProps = {
+  key?: React.Key;
   configuration?: ActionConfig | undefined;
   vertical?: boolean;
   elevation?: number;
