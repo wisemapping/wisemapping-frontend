@@ -1448,6 +1448,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.28.6":
+  version: 7.28.6
+  resolution: "@babel/runtime@npm:7.28.6"
+  checksum: 42d8a868c2fc2e9a77927945a6daa7ec03c7ea49e611e0d15442933cdabb12f20e3a6849c729259076c10a4247adec229331d1f94c2d0073ea0979d7853e29fd
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.27.1, @babel/template@npm:^7.27.2":
   version: 7.27.2
   resolution: "@babel/template@npm:7.27.2"
@@ -5348,7 +5355,7 @@ __metadata:
     fflate: "file:vendor/fflate"
     html2canvas: ^1.4.1
     jest: ^30.2.0
-    jspdf: ^3.0.4
+    jspdf: ^4.2.0
     lodash: ^4.17.21
     mocha: ^11.7.5
     raphael: ^2.3.0
@@ -7743,7 +7750,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^3.2.4":
+"dompurify@npm:^3.3.1":
   version: 3.3.1
   resolution: "dompurify@npm:3.3.1"
   dependencies:
@@ -11392,14 +11399,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jspdf@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "jspdf@npm:3.0.4"
+"jspdf@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "jspdf@npm:4.2.0"
   dependencies:
-    "@babel/runtime": ^7.28.4
+    "@babel/runtime": ^7.28.6
     canvg: ^3.0.11
     core-js: ^3.6.0
-    dompurify: ^3.2.4
+    dompurify: ^3.3.1
     fast-png: ^6.2.0
     fflate: ^0.8.1
     html2canvas: ^1.0.0-rc.5
@@ -11412,7 +11419,7 @@ __metadata:
       optional: true
     html2canvas:
       optional: true
-  checksum: 42f5ac74472d4e51b5880d418098f61e656ef57f76edff6fcc9d2e6878fbdd81dc43b5a8eab0d8605f10fdfcb145af5d056dbe368c59b8f6ddbde8973f9c51af
+  checksum: 5c34ab24e0d83db3dd6dfa231d038beee73e1119ed3fdd2ef2aba3dd0578dde60a650eca531a2c48472fbe708ca5eb80dc1d3facd77f288541a2f6756d7eab77
   languageName: node
   linkType: hard
 
