@@ -84,7 +84,7 @@ describe('Image Emoji Suite', () => {
     cy.contains('Emojis').should('be.visible').click();
 
     // Verify emoji picker is now visible
-    cy.get('button.epr-emoji').first().should('be.visible');
+    cy.getEmoji().first().should('be.visible');
 
     // Switch back to Icons Gallery tab
     cy.contains('Icons Gallery').should('be.visible').click();
@@ -104,7 +104,7 @@ describe('Image Emoji Suite', () => {
     cy.contains('Emojis').should('be.visible').click();
 
     // Click on a regular emoji
-    cy.get('button.epr-emoji').first().should('be.visible').click();
+    cy.getEmoji().first().should('be.visible').click();
 
     // Now add an image icon to another topic
     cy.focusTopicById(4);

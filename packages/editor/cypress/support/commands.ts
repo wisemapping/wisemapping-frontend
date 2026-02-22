@@ -37,6 +37,7 @@ declare global {
 
       triggerUndo(): void;
       triggerRedo(): void;
+      getEmoji(): Chainable<JQuery<HTMLElement>>;
     }
   }
 }
@@ -135,4 +136,8 @@ Cypress.Commands.add('triggerUndo', () => {
 
 Cypress.Commands.add('triggerRedo', () => {
   cy.get('[aria-label^="Redo ').eq(1).click();
+});
+
+Cypress.Commands.add('getEmoji', () => {
+  return cy.get('button.epr-emoji');
 });

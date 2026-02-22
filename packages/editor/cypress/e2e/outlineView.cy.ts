@@ -162,7 +162,7 @@ describe('Outline View Suite', () => {
     cy.get('.MuiPopover-root').should('be.visible');
 
     // Select an icon by clicking on one
-    cy.get('[aria-label="grinning"]').should('be.visible').click();
+    cy.getEmoji().first().should('be.visible').click();
 
     // Wait for the emoji picker to close (replaces cy.wait(300))
     // After clicking an emoji, the picker stays open (as per icon-picker/index.tsx line 58)

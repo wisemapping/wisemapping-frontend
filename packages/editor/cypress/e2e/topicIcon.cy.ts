@@ -21,7 +21,7 @@ describe('Topic Icon Suite', () => {
   const waitForEmojiTab = () => {
     // Wait for emoji picker to be visible on the Emojis tab
     cy.contains('Emojis').should('be.visible');
-    cy.get('[aria-label="grinning"]').should('be.visible');
+    cy.getEmoji().first().should('be.visible');
   };
 
   const waitForIconsGalleryTab = () => {
@@ -47,7 +47,7 @@ describe('Topic Icon Suite', () => {
     cy.onClickToolbarButton('Add Icon');
 
     waitForEmojiTab();
-    cy.get('[aria-label="grinning"]').should('be.visible').click();
+    cy.getEmoji().first().should('be.visible').click();
     cy.matchImageSnapshot('add-new-emoji-icon');
   });
 
@@ -131,7 +131,7 @@ describe('Topic Icon Suite', () => {
     cy.onClickToolbarButton('Add Icon');
 
     waitForEmojiTab();
-    cy.get('[aria-label="grinning"]').should('be.visible').click();
+    cy.getEmoji().first().should('be.visible').click();
 
     // Now add an image icon to the same topic to replace the emoji
     cy.focusTopicById(3);
@@ -155,7 +155,7 @@ describe('Topic Icon Suite', () => {
     cy.onClickToolbarButton('Add Icon');
 
     waitForEmojiTab();
-    cy.get('[aria-label="grinning"]').should('be.visible').click({ force: true });
+    cy.getEmoji().first().should('be.visible').click({ force: true });
 
     // Replace with a different emoji
     cy.focusTopicById(4);
@@ -163,7 +163,7 @@ describe('Topic Icon Suite', () => {
 
     waitForEmojiTab();
     // Click a different emoji (force in case of backdrop overlay)
-    cy.get('[aria-label*="heart"]').first().click({ force: true });
+    cy.getEmoji().eq(1).click({ force: true });
 
     cy.matchImageSnapshot('emoji-replaced-with-different-emoji');
   });
