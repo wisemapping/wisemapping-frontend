@@ -18,12 +18,7 @@
 
 /// <reference types="cypress" />
 describe('Image Emoji Suite', () => {
-  const waitForIconGallery = () => {
-    // Icons Gallery is the default tab, so it should be visible when picker opens
-    cy.contains('Icons Gallery').should('be.visible');
-    // Wait for images to load
-    cy.get('img').should('have.length.gt', 0).first().should('have.attr', 'src').and('not.be.empty');
-  };
+
 
   beforeEach(() => {
     cy.visit('/map-render/html/editor.html');
@@ -35,7 +30,7 @@ describe('Image Emoji Suite', () => {
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Click on the first image icon to add it
     cy.get('img').first().parent().click({ force: true });
@@ -49,7 +44,7 @@ describe('Image Emoji Suite', () => {
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Add the first image icon
     cy.get('img').first().parent().click({ force: true });
@@ -59,7 +54,7 @@ describe('Image Emoji Suite', () => {
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should still be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Click on a different image (second one) to replace the first
     cy.get('img').should('have.length.gt', 0).then(($imgs) => {
@@ -78,20 +73,20 @@ describe('Image Emoji Suite', () => {
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Switch to Emojis tab
     cy.contains('Emojis').should('be.visible').click();
 
     // Verify emoji picker is now visible
-    cy.get('[aria-label="grinning"]').should('be.visible');
-    
+    cy.getEmoji().first().should('be.visible');
+
     // Switch back to Icons Gallery tab
     cy.contains('Icons Gallery').should('be.visible').click();
 
     // Verify image icons are visible again
     cy.get('img').should('have.length.gt', 0);
-    
+
     cy.matchImageSnapshot('tabs-switching-works');
   });
 
@@ -104,14 +99,14 @@ describe('Image Emoji Suite', () => {
     cy.contains('Emojis').should('be.visible').click();
 
     // Click on a regular emoji
-    cy.get('[aria-label="grinning"]').should('be.visible').click();
+    cy.getEmoji().first().should('be.visible').click();
 
     // Now add an image icon to another topic
     cy.focusTopicById(4);
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Add an image icon
     cy.get('img').first().parent().click({ force: true });
@@ -124,14 +119,14 @@ describe('Image Emoji Suite', () => {
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Click on a specific image icon to add it
     cy.get('img').first().parent().click({ force: true });
 
     // Verify the topic is visible
     cy.get('[test-id="3"]').should('be.visible');
-    
+
     // Look for any image-related elements that might have been added to the topic
     cy.get('svg image, img').should('have.length.gt', 0);
 
