@@ -18,18 +18,7 @@
 
 /// <reference types="cypress" />
 describe('Topic Icon Suite', () => {
-  const waitForEmojiTab = () => {
-    // Wait for emoji picker to be visible on the Emojis tab
-    cy.contains('Emojis').should('be.visible');
-    cy.getEmoji().first().should('be.visible');
-  };
 
-  const waitForIconsGalleryTab = () => {
-    // Wait for Icons Gallery tab to be visible and images to be loaded
-    cy.contains('Icons Gallery').should('be.visible');
-    cy.get('img').should('have.length.gt', 0);
-    cy.get('img').first().should('have.attr', 'src').and('not.be.empty');
-  };
 
   beforeEach(() => {
     cy.visit('/map-render/html/editor.html');
@@ -38,7 +27,7 @@ describe('Topic Icon Suite', () => {
 
   it('Open panel with emojis tab', () => {
     cy.onClickToolbarButton('Add Icon');
-    waitForEmojiTab();
+    cy.waitForEmojiTab();
     cy.matchImageSnapshot('icons-panel-emojis');
   });
 
@@ -46,7 +35,7 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    waitForEmojiTab();
+    cy.waitForEmojiTab();
     cy.getEmoji().first().should('be.visible').click();
     cy.matchImageSnapshot('add-new-emoji-icon');
   });
@@ -56,13 +45,13 @@ describe('Topic Icon Suite', () => {
     cy.onClickToolbarButton('Add Icon');
 
     // Emojis tab should be open by default
-    waitForEmojiTab();
+    cy.waitForEmojiTab();
 
     // Switch to Icons Gallery tab
     cy.contains('Icons Gallery').should('be.visible').click();
 
     // Verify image icons load correctly
-    waitForIconsGalleryTab();
+    cy.waitForIconsGalleryTab();
 
     cy.matchImageSnapshot('icons-gallery-tab-loaded');
   });
@@ -75,7 +64,7 @@ describe('Topic Icon Suite', () => {
     cy.contains('Icons Gallery').should('be.visible').click();
 
     // Wait for image icons to load dynamically
-    waitForIconsGalleryTab();
+    cy.waitForIconsGalleryTab();
 
     // Enhanced validation: Check that ALL images have valid src attributes
     cy.get('img').each(($img) => {
@@ -117,7 +106,7 @@ describe('Topic Icon Suite', () => {
     cy.contains('Icons Gallery').should('be.visible').click();
 
     // Wait for all images to load dynamically
-    waitForIconsGalleryTab();
+    cy.waitForIconsGalleryTab();
     cy.get('img').each(($img) => {
       cy.wrap($img).should('have.attr', 'src').and('not.be.empty');
     });
@@ -130,7 +119,7 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(3);
     cy.onClickToolbarButton('Add Icon');
 
-    waitForEmojiTab();
+    cy.waitForEmojiTab();
     cy.getEmoji().first().should('be.visible').click();
 
     // Now add an image icon to the same topic to replace the emoji
@@ -141,7 +130,7 @@ describe('Topic Icon Suite', () => {
     cy.contains('Icons Gallery').should('be.visible').click();
 
     // Wait for image icons to load dynamically
-    waitForIconsGalleryTab();
+    cy.waitForIconsGalleryTab();
 
     // Add an image icon to replace the emoji
     cy.get('img').first().parent().click({ force: true });
@@ -154,14 +143,14 @@ describe('Topic Icon Suite', () => {
     cy.focusTopicById(4);
     cy.onClickToolbarButton('Add Icon');
 
-    waitForEmojiTab();
+    cy.waitForEmojiTab();
     cy.getEmoji().first().should('be.visible').click({ force: true });
 
     // Replace with a different emoji
     cy.focusTopicById(4);
     cy.onClickToolbarButton('Add Icon');
 
-    waitForEmojiTab();
+    cy.waitForEmojiTab();
     // Click a different emoji (force in case of backdrop overlay)
     cy.getEmoji().eq(1).click({ force: true });
 

@@ -38,6 +38,8 @@ declare global {
       triggerUndo(): void;
       triggerRedo(): void;
       getEmoji(): Chainable<JQuery<HTMLElement>>;
+      waitForEmojiTab(): void;
+      waitForIconsGalleryTab(): void;
     }
   }
 }
@@ -139,5 +141,16 @@ Cypress.Commands.add('triggerRedo', () => {
 });
 
 Cypress.Commands.add('getEmoji', () => {
-  return cy.get('button.epr-emoji');
+  return cy.get('button.epr-emoji:visible');
+});
+
+Cypress.Commands.add('waitForEmojiTab', () => {
+  cy.contains('Emojis').should('be.visible');
+  cy.getEmoji().first().should('be.visible');
+});
+
+Cypress.Commands.add('waitForIconsGalleryTab', () => {
+  cy.contains('Icons Gallery').should('be.visible');
+  cy.get('img').should('have.length.gt', 0);
+  cy.get('img').first().should('have.attr', 'src').and('not.be.empty');
 });

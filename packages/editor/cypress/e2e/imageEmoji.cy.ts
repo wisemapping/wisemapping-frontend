@@ -18,12 +18,7 @@
 
 /// <reference types="cypress" />
 describe('Image Emoji Suite', () => {
-  const waitForIconGallery = () => {
-    // Icons Gallery is the default tab, so it should be visible when picker opens
-    cy.contains('Icons Gallery').should('be.visible');
-    // Wait for images to load
-    cy.get('img').should('have.length.gt', 0).first().should('have.attr', 'src').and('not.be.empty');
-  };
+
 
   beforeEach(() => {
     cy.visit('/map-render/html/editor.html');
@@ -35,7 +30,7 @@ describe('Image Emoji Suite', () => {
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Click on the first image icon to add it
     cy.get('img').first().parent().click({ force: true });
@@ -49,7 +44,7 @@ describe('Image Emoji Suite', () => {
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Add the first image icon
     cy.get('img').first().parent().click({ force: true });
@@ -59,7 +54,7 @@ describe('Image Emoji Suite', () => {
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should still be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Click on a different image (second one) to replace the first
     cy.get('img').should('have.length.gt', 0).then(($imgs) => {
@@ -78,7 +73,7 @@ describe('Image Emoji Suite', () => {
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Switch to Emojis tab
     cy.contains('Emojis').should('be.visible').click();
@@ -111,7 +106,7 @@ describe('Image Emoji Suite', () => {
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Add an image icon
     cy.get('img').first().parent().click({ force: true });
@@ -124,7 +119,7 @@ describe('Image Emoji Suite', () => {
     cy.onClickToolbarButton('Add Topic Image');
 
     // Icons Gallery tab should be open by default
-    waitForIconGallery();
+    cy.waitForIconsGalleryTab();
 
     // Click on a specific image icon to add it
     cy.get('img').first().parent().click({ force: true });
