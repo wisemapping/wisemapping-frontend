@@ -45,8 +45,8 @@
     "@wisemapping/web2d": "workspace:*",
     "fflate": "file:vendor/fflate",
     "html2canvas": "^1.4.1",
-    "jspdf": "^3.0.4",
-    "lodash": "^4.17.21",
+    "jspdf": "^4.2.0",
+    "lodash": "^4.17.23",
     "xml-formatter": "^3.6.7"
   },
   "devDependencies": {

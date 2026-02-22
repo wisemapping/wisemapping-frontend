@@ -84,14 +84,14 @@ describe('Image Emoji Suite', () => {
     cy.contains('Emojis').should('be.visible').click();
 
     // Verify emoji picker is now visible
-    cy.get('[aria-label="grinning"]').should('be.visible');
-    
+    cy.get('button.epr-emoji').first().should('be.visible');
+
     // Switch back to Icons Gallery tab
     cy.contains('Icons Gallery').should('be.visible').click();
 
     // Verify image icons are visible again
     cy.get('img').should('have.length.gt', 0);
-    
+
     cy.matchImageSnapshot('tabs-switching-works');
   });
 
@@ -104,7 +104,7 @@ describe('Image Emoji Suite', () => {
     cy.contains('Emojis').should('be.visible').click();
 
     // Click on a regular emoji
-    cy.get('[aria-label="grinning"]').should('be.visible').click();
+    cy.get('button.epr-emoji').first().should('be.visible').click();
 
     // Now add an image icon to another topic
     cy.focusTopicById(4);
@@ -131,7 +131,7 @@ describe('Image Emoji Suite', () => {
 
     // Verify the topic is visible
     cy.get('[test-id="3"]').should('be.visible');
-    
+
     // Look for any image-related elements that might have been added to the topic
     cy.get('svg image, img').should('have.length.gt', 0);
 
