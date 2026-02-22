@@ -88,7 +88,9 @@ class LocalStorageManager extends PersistenceManager {
         } catch (error) {
           if (retries > 0) {
             console.warn(`Fetch failed for ${urlStr}, retrying in 500ms...`, error);
-            await new Promise((resolve) => setTimeout(resolve, 500));
+            await new Promise<void>((resolve) => {
+              setTimeout(resolve, 500);
+            });
             return fetchWithRetry(urlStr, retries - 1);
           }
           throw error;
