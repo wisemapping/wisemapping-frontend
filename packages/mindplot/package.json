@@ -60,7 +60,7 @@
     "blob-polyfill": "^9.0.20240710",
     "cypress": "^15.10.0",
     "cypress-image-snapshot": "^4.0.1",
-    "eslint": "^10.0.0",
+    "eslint": "^10.0.1",
     "eslint-plugin-storybook": "^10.2.10",
     "jest": "^30.2.0",
     "mocha": "^11.7.5",

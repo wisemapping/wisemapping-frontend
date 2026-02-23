@@ -33,9 +33,9 @@
     "dependencies": {
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
-        "@mui/icons-material": "^7.3.6",
+        "@mui/icons-material": "^7.3.8",
         "@mui/lab": "^7.0.1-beta.20",
-        "@mui/material": "^7.3.6",
+        "@mui/material": "^7.3.8",
         "@wisemapping/editor": "workspace:^",
         "axios": "^1.13.5",
         "dayjs": "^1.11.19",
@@ -61,7 +61,7 @@
         "@welldone-software/why-did-you-render": "^10.0.1",
         "cypress": "^15.10.0",
         "cypress-image-snapshot": "^4.0.1",
-        "eslint": "^10.0.0",
+        "eslint": "^10.0.1",
         "eslint-plugin-storybook": "^10.2.10",
         "storybook": "^10.2.10",
         "vite": "^7.3.1"
