@@ -236,7 +236,7 @@ const isLabelFilter = (filter: Filter): filter is LabelFilter => filter.type ===
 const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => boolean) => {
   return (mapInfo: MapInfo) => {
     // Check for filter condition
-    let result = false;
+    let result: boolean;
     switch (filter.type) {
       case 'all':
         result = true;
