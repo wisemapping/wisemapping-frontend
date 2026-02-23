@@ -34,7 +34,7 @@
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
         "@mui/icons-material": "^7.3.8",
-        "@mui/lab": "^7.0.1-beta.20",
+        "@mui/lab": "^7.0.1-beta.22",
         "@mui/material": "^7.3.8",
         "@wisemapping/editor": "workspace:^",
         "axios": "^1.13.5",
