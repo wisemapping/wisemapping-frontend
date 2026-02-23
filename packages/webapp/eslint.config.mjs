@@ -50,7 +50,7 @@ export default defineConfig([globalIgnores(["**/packages/mindplot/**/*", "**/dis
 
     settings: {
         react: {
-            version: "detect",
+            version: "19.0.0",
         },
 
         "import/resolver": {

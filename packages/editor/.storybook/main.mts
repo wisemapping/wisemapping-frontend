@@ -55,6 +55,9 @@ const config: StorybookConfig = {
       ...config.resolve.alias,
       '@wisemapping/mindplot/src/components/DesignerKeyboard': path.resolve(__dirname, './mocks/DesignerKeyboard.ts'),
       '@wisemapping/mindplot/src/components/theme/ThemeStyle': path.resolve(__dirname, './mocks/ThemeStyle.ts'),
+      // Resolve workspace packages directly to source to avoid build order issues in storybook
+      '@wisemapping/mindplot': path.resolve(__dirname, '../../mindplot/src/index.ts'),
+      '@wisemapping/web2d': path.resolve(__dirname, '../../web2d/src/index.ts'),
       // Add explicit alias for MUI icons to fix workspace resolution
       '@mui/icons-material': path.resolve(__dirname, '../../../node_modules/@mui/icons-material'),
     };

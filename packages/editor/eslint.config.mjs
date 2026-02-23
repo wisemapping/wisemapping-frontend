@@ -52,7 +52,7 @@ export default defineConfig([globalIgnores(["**/dist/**/*"]), {
 
     settings: {
         react: {
-            version: "detect",
+            version: "19.0.0",
         },
 
         "import/resolver": {
