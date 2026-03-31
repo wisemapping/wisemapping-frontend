@@ -36,7 +36,7 @@
         "@mui/icons-material": "^7.3.8",
         "@mui/lab": "^7.0.1-beta.22",
         "@mui/material": "^7.3.8",
-        "@wisemapping/editor": "workspace:^",
+        "@wisemapping/editor": "*",
         "axios": "^1.13.5",
         "dayjs": "^1.11.19",
         "react": "^19.2.4",

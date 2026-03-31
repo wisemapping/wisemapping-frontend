@@ -5151,7 +5151,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wisemapping/editor@workspace:^, @wisemapping/editor@workspace:packages/editor":
+"@wisemapping/editor@*, @wisemapping/editor@workspace:packages/editor":
   version: 0.0.0-use.local
   resolution: "@wisemapping/editor@workspace:packages/editor"
   dependencies:
@@ -5170,7 +5170,7 @@ __metadata:
     "@types/cypress-image-snapshot": ^3.1.9
     "@types/jest": ^30.0.0
     "@vitejs/plugin-react": ^5.1.4
-    "@wisemapping/mindplot": "workspace:*"
+    "@wisemapping/mindplot": "*"
     babel-jest: ^30.2.0
     babel-polyfill: ^6.26.0
     cypress: ^15.10.0
@@ -5199,7 +5199,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@wisemapping/mindplot@workspace:*, @wisemapping/mindplot@workspace:packages/mindplot":
+"@wisemapping/mindplot@*, @wisemapping/mindplot@workspace:packages/mindplot":
   version: 0.0.0-use.local
   resolution: "@wisemapping/mindplot@workspace:packages/mindplot"
   dependencies:
@@ -5210,7 +5210,7 @@ __metadata:
     "@storybook/addon-links": ^10.2.10
     "@storybook/html-vite": ^10.2.10
     "@storybook/testing-library": ^0.2.2
-    "@wisemapping/web2d": "workspace:*"
+    "@wisemapping/web2d": "*"
     blob-polyfill: ^9.0.20240710
     cypress: ^15.10.0
     cypress-image-snapshot: ^4.0.1
@@ -5230,7 +5230,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@wisemapping/web2d@workspace:*, @wisemapping/web2d@workspace:packages/web2d":
+"@wisemapping/web2d@*, @wisemapping/web2d@workspace:packages/web2d":
   version: 0.0.0-use.local
   resolution: "@wisemapping/web2d@workspace:packages/web2d"
   dependencies:
@@ -5265,7 +5265,7 @@ __metadata:
     "@storybook/react-vite": ^10.2.10
     "@testing-library/cypress": ^10.1.0
     "@welldone-software/why-did-you-render": ^10.0.1
-    "@wisemapping/editor": "workspace:^"
+    "@wisemapping/editor": "*"
     axios: ^1.13.5
     cypress: ^15.10.0
     cypress-image-snapshot: ^4.0.1
