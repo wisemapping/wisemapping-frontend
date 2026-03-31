@@ -5166,7 +5166,6 @@ __metadata:
     ts-jest: ^29.4.6
     typescript: ^5.9.3
     vite: ^8.0.3
-    vite-tsconfig-paths: ^6.1.1
   peerDependencies:
     react: ^19.0.0
     react-dom: ^19.0.0
@@ -9341,13 +9340,6 @@ __metadata:
     define-properties: ^1.2.1
     gopd: ^1.0.1
   checksum: 39ad667ad9f01476474633a1834a70842041f70a55571e8dcef5fb957980a92da5022db5430fca8aecc5d47704ae30618c0bc877a579c70710c904e9ef06108a
-  languageName: node
-  linkType: hard
-
-"globrex@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "globrex@npm:0.1.2"
-  checksum: adca162494a176ce9ecf4dd232f7b802956bb1966b37f60c15e49d2e7d961b66c60826366dc2649093cad5a0d69970cfa8875bd1695b5a1a2f33dcd2aa88da3c
   languageName: node
   linkType: hard
 
@@ -15817,20 +15809,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfck@npm:^3.0.3":
-  version: 3.1.6
-  resolution: "tsconfck@npm:3.1.6"
-  peerDependencies:
-    typescript: ^5.0.0
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  bin:
-    tsconfck: bin/tsconfck.js
-  checksum: 9ccebfe1317e9890bd0d4743b91880c6c484d01ba16ecaa088031c3e5956591be26174b5780fba2e8328d14c8aefe097d1956ab3697157d15a4fd8eea8ac2843
-  languageName: node
-  linkType: hard
-
 "tsconfig-paths@npm:^3.15.0":
   version: 3.15.0
   resolution: "tsconfig-paths@npm:3.15.0"
@@ -16382,19 +16360,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-tsconfig-paths@npm:^6.1.1":
-  version: 6.1.1
-  resolution: "vite-tsconfig-paths@npm:6.1.1"
-  dependencies:
-    debug: ^4.1.1
-    globrex: ^0.1.2
-    tsconfck: ^3.0.3
-  peerDependencies:
-    vite: "*"
-  checksum: 380566b99926df66e0a3e78b80cdd25e5be38bf546b22b157e4b3b263f31a049d221d8d6df48c3bcd9bb4eef02d4073645ae2b37fdb9e5bd3d8b30341b2db3de
-  languageName: node
-  linkType: hard
-
 "vite@npm:^8.0.3":
   version: 8.0.3
   resolution: "vite@npm:8.0.3"
@@ -16692,7 +16657,6 @@ __metadata:
     typescript: ^5.9.3
     update-browserslist-db: ^1.2.3
     vite-plugin-html: ^3.2.2
-    vite-tsconfig-paths: ^6.1.1
   languageName: unknown
   linkType: soft
 

@@ -16,11 +16,12 @@
  *   limitations under the License.
  */
 import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 
 export default defineConfig({
-    plugins: [tsconfigPaths()],
+    resolve: {
+        tsconfigPaths: true,
+    },
     build: {
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
