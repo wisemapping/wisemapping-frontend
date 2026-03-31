@@ -59,7 +59,7 @@
         "@storybook/react-vite": "^10.2.10",
         "@testing-library/cypress": "^10.1.0",
         "@welldone-software/why-did-you-render": "^10.0.1",
-        "cypress": "^15.10.0",
+        "cypress": "^15.13.0",
         "cypress-image-snapshot": "^4.0.1",
         "eslint": "^10.0.1",
         "eslint-plugin-storybook": "^10.2.10",
