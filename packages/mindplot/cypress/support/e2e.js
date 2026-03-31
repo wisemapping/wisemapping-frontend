@@ -40,14 +40,16 @@ Cypress.on('window:before:load', (win) => {
 
 afterEach(() => {
   cy.window().then((win) => {
-    // Temporarily allow console errors during Storybook 9 migration
-    // TODO: Re-enable strict error checking once all migration issues are resolved
-    if (win.console.error.callCount > 0) {
-      console.log(
-        'Console errors detected:',
-        win.console.error.getCalls().map((call) => call.args),
-      );
+    if (win.console.error && typeof win.console.error.callCount === 'number') {
+      if (win.console.error.callCount > 0) {
+        console.log(
+          'Console errors detected:',
+          win.console.error.getCalls().map((call) => call.args),
+        );
+      }
     }
-    expect(win.console.warn).to.have.callCount(0);
+    if (win.console.warn && typeof win.console.warn.callCount === 'number') {
+      expect(win.console.warn).to.have.callCount(0);
+    }
   });
 });

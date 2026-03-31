@@ -17,10 +17,15 @@
  */
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
-import { createHtmlPlugin } from 'vite-plugin-html';
 import { buildStaticUrls, generateSitemapXml } from './src/components/sitemap/utils';
+
+const htmlTemplatePlugin = (data: Record<string, unknown>) => ({
+    name: 'html-template',
+    transformIndexHtml(html: string) {
+        return html.replace(/<%= (\w+) %>/g, (_, key) => String(data[key] ?? ''));
+    },
+});
 
 const wxmlLoader = () => {
     return {
@@ -99,20 +104,15 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             react(),
-            tsconfigPaths(),
             wxmlLoader(),
             sitemapMiddleware(),
-            createHtmlPlugin({
-                inject: {
-                    data: {
-                        GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED || false,
-                        NEW_RELIC_ENABLED: process.env.NEW_RELIC_ENABLED || false,
-                        base: process.env.PUBLIC_URL || '',
-                    },
-                },
+            htmlTemplatePlugin({
+                GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED || false,
+                NEW_RELIC_ENABLED: process.env.NEW_RELIC_ENABLED || false,
             }),
         ],
         resolve: {
+            tsconfigPaths: true,
             alias: [
                 { find: /^@wisemapping\/editor\/src\/(.*)/, replacement: path.resolve(__dirname, '../editor/src/$1') },
                 { find: /^@wisemapping\/editor$/, replacement: path.resolve(__dirname, '../editor/src/index.ts') },

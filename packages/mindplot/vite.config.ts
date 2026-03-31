@@ -16,12 +16,11 @@
  *   limitations under the License.
  */
 import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 
 export default defineConfig({
-    plugins: [tsconfigPaths()],
     resolve: {
+        tsconfigPaths: true,
         alias: [
             { find: /^@wisemapping\/web2d\/src\/(.*)/, replacement: path.resolve(__dirname, '../web2d/src/$1') },
             { find: /^@wisemapping\/web2d$/, replacement: path.resolve(__dirname, '../web2d/src/index.ts') },
