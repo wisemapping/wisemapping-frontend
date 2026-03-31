@@ -53,6 +53,11 @@ const Footer = (): React.ReactElement => {
               />
             </a>
           </div>
+          <div>
+            <a href="https://www.wisemapping.com/privacy">
+              <FormattedMessage id="footer.privacypolicy" defaultMessage="Privacy Policy" />
+            </a>
+          </div>
         </div>
         <div>
           <h4>

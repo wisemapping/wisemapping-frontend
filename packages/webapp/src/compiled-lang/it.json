@@ -879,6 +879,12 @@
       "value": "Termini e Condizioni"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "Informativa sulla Privacy"
+    }
+  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -1630,7 +1636,31 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "Termini del Cliente: Per favore controlla le informazioni dell'Account WiseMapping che hai inserito sopra, e rivedi i Termini del Cliente qui. Cliccando su 'Registrati' qui sotto accetti i Termini del Cliente sopra e l'Informativa sulla Privacy"
+      "value": "Ho letto e accetto i "
+    },
+    {
+      "type": 8,
+      "value": "termsLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "Termini di Utilizzo"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": " e l'"
+    },
+    {
+      "type": 8,
+      "value": "privacyLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "Informativa sulla Privacy"
+        }
+      ]
     }
   ],
   "registration.title": [

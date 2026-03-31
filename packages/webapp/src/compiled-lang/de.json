@@ -879,6 +879,12 @@
       "value": "Allgemeine Geschäftsbedingungen"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "Datenschutzrichtlinie"
+    }
+  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -1627,10 +1633,38 @@
       "value": "Klicke unten auf die Schaltfläche Anmelden und beginne mit der Erstellung von Mindmaps."
     }
   ],
-  "registration.termandconditions": [
+    "registration.termandconditions": [
     {
       "type": 0,
-      "value": "Kundenbedingungen: Bitte überprüfe die WiseMapping-Kontoinformationen, die du oben eingegeben hast und lese dir die Kundenbedingungen hier durch. Indem du unten auf Registrieren klickst, stimmst du den obigen Kundenbedingungen und der Datenschutzrichtlinie zu."
+      "value": "Ich habe die "
+    },
+    {
+      "type": 8,
+      "value": "termsLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "Nutzungsbedingungen"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": " und die "
+    },
+    {
+      "type": 8,
+      "value": "privacyLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "Datenschutzrichtlinie"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": " gelesen und stimme ihnen zu"
     }
   ],
   "registration.title": [
