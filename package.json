@@ -82,7 +82,7 @@
     "@eslint/compat": "^2.0.3",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^10.0.1",
-    "@formatjs/cli": "^6.13.0",
+    "@formatjs/cli": "^6.14.1",
     "@types/jest": "^30.0.0",
     "@typescript-eslint/eslint-plugin": "^8.58.0",
     "@typescript-eslint/parser": "^8.58.0",

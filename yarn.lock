@@ -2156,14 +2156,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/cli@npm:^6.13.0":
-  version: 6.13.0
-  resolution: "@formatjs/cli@npm:6.13.0"
+"@formatjs/cli@npm:^6.14.1":
+  version: 6.14.1
+  resolution: "@formatjs/cli@npm:6.14.1"
   peerDependencies:
     "@glimmer/syntax": ^0.84.3 || ^0.95.0
-    "@vue/compiler-core": 3.5.27
+    "@vue/compiler-core": ^3.5.0
     content-tag: ^4.1.0
-    vue: 3.5.27
+    vue: ^3.5.0
   peerDependenciesMeta:
     "@glimmer/env":
       optional: true
@@ -2181,7 +2181,7 @@ __metadata:
       optional: true
   bin:
     formatjs: bin/formatjs
-  checksum: ce420f68b662e9b00887e22f73b5323900fc1a69670fb8a44f2ac922ca1dca098c698528f648666fdb2732f37ef37b6a7979639df80c26b9b11379699abc9fdc
+  checksum: 2d76b6c7e512eb46d9bfeba820925afff86c28cf6aa4020b6f1fce0fd9e7ccb0402f7b1c6d808f36cc584927694ad25b517664eaec40b78054d233abd28deb12
   languageName: node
   linkType: hard
 
@@ -5132,7 +5132,7 @@ __metadata:
     "@babel/core": ^7.29.0
     "@emotion/react": ^11.14.0
     "@emotion/styled": ^11.14.1
-    "@formatjs/cli": ^6.13.0
+    "@formatjs/cli": ^6.14.1
     "@mdx-js/react": ^3.1.1
     "@mui/icons-material": ^7.3.9
     "@mui/material": ^7.3.9
@@ -5193,14 +5193,14 @@ __metadata:
     fflate: "file:vendor/fflate"
     html2canvas: ^1.4.1
     jest: ^30.3.0
-    jspdf: ^4.2.0
+    jspdf: ^4.2.1
     lodash: ^4.17.23
     mocha: ^11.7.5
     raphael: ^2.3.0
     storybook: ^10.3.3
     typescript: ^5.9.3
     vite: ^8.0.3
-    xml-formatter: ^3.6.7
+    xml-formatter: ^3.7.0
   languageName: unknown
   linkType: soft
 
@@ -5229,7 +5229,7 @@ __metadata:
   dependencies:
     "@emotion/react": ^11.14.0
     "@emotion/styled": ^11.14.1
-    "@formatjs/cli": ^6.13.0
+    "@formatjs/cli": ^6.14.1
     "@mdx-js/react": ^3.1.1
     "@mui/icons-material": ^7.3.9
     "@mui/lab": ^7.0.1-beta.23
@@ -5240,10 +5240,10 @@ __metadata:
     "@testing-library/cypress": ^10.1.0
     "@welldone-software/why-did-you-render": ^10.0.1
     "@wisemapping/editor": "*"
-    axios: ^1.13.5
+    axios: ^1.14.0
     cypress: ^15.13.0
     cypress-image-snapshot: ^4.0.1
-    dayjs: ^1.11.19
+    dayjs: ^1.11.20
     eslint: ^10.1.0
     eslint-plugin-storybook: ^10.3.3
     react: ^19.2.4
@@ -5256,7 +5256,7 @@ __metadata:
     react-router-dom: ^7.13.2
     storybook: ^10.3.3
     styled-components: ^6.3.12
-    universal-cookie: ^8.0.1
+    universal-cookie: ^8.1.0
     update-browserslist-db: ^1.2.3
     vite: ^8.0.3
   languageName: unknown
@@ -5805,6 +5805,17 @@ __metadata:
     form-data: ^4.0.5
     proxy-from-env: ^1.1.0
   checksum: 985024c4a32f837053f198f02a308fd6f8bfb4053a2f21e39e37992bc6d06917f008679c36b3e7f0f0c9060c85ffe37c61e58d2ac662595d68dc1b89cef78de8
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.14.0":
+  version: 1.14.0
+  resolution: "axios@npm:1.14.0"
+  dependencies:
+    follow-redirects: ^1.15.11
+    form-data: ^4.0.5
+    proxy-from-env: ^2.1.0
+  checksum: 505d21ea777e7613ec61dc2ca92647a55878b6c86ae268e791747fb199913e68b1a9bdb9faa5a72eb59dcefc5e93c2579636504b84dbfed59aa9a680ade749e6
   languageName: node
   linkType: hard
 
@@ -6915,7 +6926,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:^1.0.1, cookie@npm:^1.0.2":
+"cookie@npm:^1.0.1, cookie@npm:^1.1.1":
   version: 1.1.1
   resolution: "cookie@npm:1.1.1"
   checksum: e40c4ff817a73ec0a41413654ca9a71e6207bd6e511151bb1d307aef2903eb59771127a85474afe0e12a8982804f7b03cce0bda798b55c306aca9608b4b9acab
@@ -7235,10 +7246,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.10.4, dayjs@npm:^1.11.19":
+"dayjs@npm:^1.10.4":
   version: 1.11.19
   resolution: "dayjs@npm:1.11.19"
   checksum: dfafcca2c67cc6e542fd880d77f1d91667efd323edc28f0487b470b184a11cc97696163ed5be1142ea2a031045b27a0d0555e72f60a63275e0e0401ac24bea5d
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.20":
+  version: 1.11.20
+  resolution: "dayjs@npm:1.11.20"
+  checksum: 26f4867c4ae1315885ac3e560906d3f8c49cb6a1303e6fdd5f87ace3b814b07a45f036facad70299cea36f3eb62ee2070dd239079c56d8f55e4e684afb752a67
   languageName: node
   linkType: hard
 
@@ -11228,9 +11246,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jspdf@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "jspdf@npm:4.2.0"
+"jspdf@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "jspdf@npm:4.2.1"
   dependencies:
     "@babel/runtime": ^7.28.6
     canvg: ^3.0.11
@@ -11248,7 +11266,7 @@ __metadata:
       optional: true
     html2canvas:
       optional: true
-  checksum: 5c34ab24e0d83db3dd6dfa231d038beee73e1119ed3fdd2ef2aba3dd0578dde60a650eca531a2c48472fbe708ca5eb80dc1d3facd77f288541a2f6756d7eab77
+  checksum: 43bee0cdeca23ee256ba4aeef6c96b16558ee280e6b6763f769c9c325688ed76b5306510285a6209138f3ccee2a4ca55c4ff64ec979c04b02043c12a2633efe6
   languageName: node
   linkType: hard
 
@@ -13670,6 +13688,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"proxy-from-env@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "proxy-from-env@npm:2.1.0"
+  checksum: b106ad790f26d47ba4791af3fe8cba5c8d35d85020119c82c05b413eb11b3ab97d2393ecaed51bca97c2788fa256408283dfeb4d970b2ebcae6702310f064e7e
+  languageName: node
+  linkType: hard
+
 "pump@npm:^3.0.0":
   version: 3.0.3
   resolution: "pump@npm:3.0.3"
@@ -16078,12 +16103,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"universal-cookie@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "universal-cookie@npm:8.0.1"
+"universal-cookie@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "universal-cookie@npm:8.1.0"
   dependencies:
-    cookie: ^1.0.2
-  checksum: f553acc9a6b72d983bb6ec02cd382ac80d533fc0d27e9f5f2df485585ab94b4e145ebd8e4dafbb84184f88c622d9cbc29862af3d70337fe2c4732a677a07d010
+    cookie: ^1.1.1
+  checksum: 9d526f92eee7b87a415528b605450cdf78d9b169922494d59f9c742f976ce270c6ee553065e3da46f8721855ea726946c2c6e2d2ef1a80a9e27e4d857496dc4c
   languageName: node
   linkType: hard
 
@@ -16641,7 +16666,7 @@ __metadata:
     "@eslint/compat": ^2.0.3
     "@eslint/eslintrc": ^3.3.5
     "@eslint/js": ^10.0.1
-    "@formatjs/cli": ^6.13.0
+    "@formatjs/cli": ^6.14.1
     "@types/jest": ^30.0.0
     "@typescript-eslint/eslint-plugin": ^8.58.0
     "@typescript-eslint/parser": ^8.58.0
@@ -16787,12 +16812,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml-formatter@npm:^3.6.7":
-  version: 3.6.7
-  resolution: "xml-formatter@npm:3.6.7"
+"xml-formatter@npm:^3.7.0":
+  version: 3.7.0
+  resolution: "xml-formatter@npm:3.7.0"
   dependencies:
     xml-parser-xo: ^4.1.5
-  checksum: 88713ff2caa28325430949180a4c05ed7375123d7841d9bc990d9e3993902c136da2b6e5573fbd70bccec04c17a695f1c4c6408a303b670d7918d61a8da6c45e
+  checksum: 4c404a66ce942fc0461d900764dd3efe5df1052871404314421e2272f597ff7588306b689b35ea55c6a39141033a8ea12fc5d34900717c5a1868e0adffb68d2f
   languageName: node
   linkType: hard
 
