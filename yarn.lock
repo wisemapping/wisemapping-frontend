@@ -2149,6 +2149,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/bigdecimal@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@formatjs/bigdecimal@npm:0.2.0"
+  checksum: 176efa6f077fd6840ddde12bf37aa99ca3a72fa63890d60c0ff57ba87196e5aed1123689b9d57983bb35560596eb5f35d935154db49575df95f19097ff9a432d
+  languageName: node
+  linkType: hard
+
 "@formatjs/cli@npm:^6.13.0":
   version: 6.13.0
   resolution: "@formatjs/cli@npm:6.13.0"
@@ -2178,73 +2185,61 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/ecma402-abstract@npm:3.1.1":
+"@formatjs/ecma402-abstract@npm:3.2.0":
+  version: 3.2.0
+  resolution: "@formatjs/ecma402-abstract@npm:3.2.0"
+  dependencies:
+    "@formatjs/bigdecimal": 0.2.0
+    "@formatjs/fast-memoize": 3.1.1
+    "@formatjs/intl-localematcher": 0.8.2
+  checksum: 83426ee241de5d4b2b20deb3ef12fc13d40236cdf3fdb246b6215018a019b7ec712bf5ffbe157dd4c4c4c11d15410ea8bcda99252a6d44fcb946d7789b4ff8ce
+  languageName: node
+  linkType: hard
+
+"@formatjs/fast-memoize@npm:3.1.1":
   version: 3.1.1
-  resolution: "@formatjs/ecma402-abstract@npm:3.1.1"
-  dependencies:
-    "@formatjs/fast-memoize": 3.1.0
-    "@formatjs/intl-localematcher": 0.8.1
-    decimal.js: ^10.6.0
-    tslib: ^2.8.1
-  checksum: fff0eaa284f1b5a59ec378832ede585d439971878df82269a0d76ce412f7d283689f565e343a943fd4f00c7d7fae1b2595072cf8a7727ec63954c28885d27704
+  resolution: "@formatjs/fast-memoize@npm:3.1.1"
+  checksum: 8eb728653517785f644099539461c9dbfae86e2cc55b36cc361b625e93718c91f77eda84a6a14567d862f8f5781e7b8d5a498118579aaff6829e1ed7b673408b
   languageName: node
   linkType: hard
 
-"@formatjs/fast-memoize@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@formatjs/fast-memoize@npm:3.1.0"
+"@formatjs/icu-messageformat-parser@npm:3.5.3":
+  version: 3.5.3
+  resolution: "@formatjs/icu-messageformat-parser@npm:3.5.3"
   dependencies:
-    tslib: ^2.8.1
-  checksum: 700dfd0a10d20d8cb7427406127f78612a696e4942d38a8f153d82ca213f26bd0616d01a29957f194688887551595455eb0f629c2ce36d964a66ba15815afde9
+    "@formatjs/ecma402-abstract": 3.2.0
+    "@formatjs/icu-skeleton-parser": 2.1.3
+  checksum: fd1dbaf4adf1d4d870c207d96adb79e6e99df4823cf529d13ef2cae76822002dd1e41c08c8c595b2be8d13b1d730ff832d17e0a1414648be259bfa42d7ba1008
   languageName: node
   linkType: hard
 
-"@formatjs/icu-messageformat-parser@npm:3.5.1":
-  version: 3.5.1
-  resolution: "@formatjs/icu-messageformat-parser@npm:3.5.1"
+"@formatjs/icu-skeleton-parser@npm:2.1.3":
+  version: 2.1.3
+  resolution: "@formatjs/icu-skeleton-parser@npm:2.1.3"
   dependencies:
-    "@formatjs/ecma402-abstract": 3.1.1
-    "@formatjs/icu-skeleton-parser": 2.1.1
-    tslib: ^2.8.1
-  checksum: de782838608dc085da059cb43e46a38a28e0f7427c257f1710bb3e3f2f1da14868c0e079cc4329dd37a0952519e9de4abb566065d7d835ad7b893162f5ada421
+    "@formatjs/ecma402-abstract": 3.2.0
+  checksum: 32029a39ae5dfe4cb8dc3f0109cda4d1ceea8484fe037a1c72eb24c0e82cf202f9467a6145bb0ab65f2950a51fc5dcfd4f3790cb3404e637bbcf4199eaecadf9
   languageName: node
   linkType: hard
 
-"@formatjs/icu-skeleton-parser@npm:2.1.1":
-  version: 2.1.1
-  resolution: "@formatjs/icu-skeleton-parser@npm:2.1.1"
+"@formatjs/intl-localematcher@npm:0.8.2":
+  version: 0.8.2
+  resolution: "@formatjs/intl-localematcher@npm:0.8.2"
   dependencies:
-    "@formatjs/ecma402-abstract": 3.1.1
-    tslib: ^2.8.1
-  checksum: b0353a1aedfa8e058650ea6f8ff0a764e4a5032f1396a4d9e68ef958159d27a0481acec80eb85853480cf8a41f0f45406ef6037f069de2b045d497de95bfdb88
+    "@formatjs/fast-memoize": 3.1.1
+  checksum: de8672b50c63b813981fa7d14278bf0cac52aaf636e0ed145f3ed4c4831461da076144740fbf11eb9d367a0021b4950d08ed3a9dc7b0ca27e83fb31fb3d8386c
   languageName: node
   linkType: hard
 
-"@formatjs/intl-localematcher@npm:0.8.1":
-  version: 0.8.1
-  resolution: "@formatjs/intl-localematcher@npm:0.8.1"
+"@formatjs/intl@npm:4.1.5":
+  version: 4.1.5
+  resolution: "@formatjs/intl@npm:4.1.5"
   dependencies:
-    "@formatjs/fast-memoize": 3.1.0
-    tslib: ^2.8.1
-  checksum: 86077272fffb814fe0548b2dcf6af93c58d3087e708f7dffc269c2783108f44a8bcc53da590325cfbc0de5d1ddda637bb1a93fa846d222838bc4658e2eb8d048
-  languageName: node
-  linkType: hard
-
-"@formatjs/intl@npm:4.1.2":
-  version: 4.1.2
-  resolution: "@formatjs/intl@npm:4.1.2"
-  dependencies:
-    "@formatjs/ecma402-abstract": 3.1.1
-    "@formatjs/fast-memoize": 3.1.0
-    "@formatjs/icu-messageformat-parser": 3.5.1
-    intl-messageformat: 11.1.2
-    tslib: ^2.8.1
-  peerDependencies:
-    typescript: ^5.6.0
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: efa387b1bc75cfc804b307ddac3128d26ee2250489e52b40c17516b3c6712b304e80227b2df4e58197da7015c0df46cda25f84f0f5e562d7311318d74715f4f5
+    "@formatjs/ecma402-abstract": 3.2.0
+    "@formatjs/fast-memoize": 3.1.1
+    "@formatjs/icu-messageformat-parser": 3.5.3
+    intl-messageformat: 11.2.0
+  checksum: 8c5a747bd290d3cac3bcec1d39c95d5d095207b868fb8471c712455269a5d51284d4f71888e3a98f50c52c77422a560fba3badcc1a9c532e2b11bfdfe0e90e38
   languageName: node
   linkType: hard
 
@@ -4491,17 +4486,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/hoist-non-react-statics@npm:^3.3.1":
-  version: 3.3.7
-  resolution: "@types/hoist-non-react-statics@npm:3.3.7"
-  dependencies:
-    hoist-non-react-statics: ^3.3.0
-  peerDependencies:
-    "@types/react": "*"
-  checksum: 13f610572c073970b3f43cc446396974fed786fee6eac2d6fd4b0ca5c985f13e79d4a0de58af4e5b4c68470d808567c3a14108d98edb7d526d4d46c8ec851ed1
-  languageName: node
-  linkType: hard
-
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.1, @types/istanbul-lib-coverage@npm:^2.0.6":
   version: 2.0.6
   resolution: "@types/istanbul-lib-coverage@npm:2.0.6"
@@ -5174,7 +5158,7 @@ __metadata:
     react: ^19.2.4
     react-color: ^2.19.3
     react-dom: ^19.2.4
-    react-intl: ^8.1.3
+    react-intl: ^10.1.1
     react-loader-spinner: ^8.0.2
     start-server-and-test: ^3.0.0
     storybook: ^10.3.3
@@ -5264,12 +5248,12 @@ __metadata:
     eslint-plugin-storybook: ^10.3.3
     react: ^19.2.4
     react-dom: ^19.2.4
-    react-ga4: ^2.1.0
+    react-ga4: ^3.0.1
     react-google-recaptcha: ^3.1.0
-    react-helmet-async: ^2.0.5
-    react-intl: ^8.1.3
+    react-helmet-async: ^3.0.0
+    react-intl: ^10.1.1
     react-query: ^3.39.3
-    react-router-dom: ^7.13.0
+    react-router-dom: ^7.13.2
     storybook: ^10.3.3
     styled-components: ^6.3.12
     universal-cookie: ^8.0.1
@@ -7303,7 +7287,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"decimal.js@npm:^10.5.0, decimal.js@npm:^10.6.0":
+"decimal.js@npm:^10.5.0":
   version: 10.6.0
   resolution: "decimal.js@npm:10.6.0"
   checksum: 9302b990cd6f4da1c7602200002e40e15d15660374432963421d3cd6d81cc6e27e0a488356b030fee64650947e32e78bdbea245d596dadfeeeb02e146d485999
@@ -9510,7 +9494,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.1, hoist-non-react-statics@npm:^3.3.2":
+"hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.1":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
@@ -9844,15 +9828,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"intl-messageformat@npm:11.1.2":
-  version: 11.1.2
-  resolution: "intl-messageformat@npm:11.1.2"
+"intl-messageformat@npm:11.2.0":
+  version: 11.2.0
+  resolution: "intl-messageformat@npm:11.2.0"
   dependencies:
-    "@formatjs/ecma402-abstract": 3.1.1
-    "@formatjs/fast-memoize": 3.1.0
-    "@formatjs/icu-messageformat-parser": 3.5.1
-    tslib: ^2.8.1
-  checksum: 50cb1c1b39dd833123d077e7b1e3330ebebf17fcc59a9ac4738c7e7cc85247f3f78b8b6aa62809026c044f3696f3d79cd9ac8e13dbb4a63e1d77ee288367740d
+    "@formatjs/ecma402-abstract": 3.2.0
+    "@formatjs/fast-memoize": 3.1.1
+    "@formatjs/icu-messageformat-parser": 3.5.3
+  checksum: f48f276954b5cd902350defc521e6c2d931aa0f5452396676940c47c612fda1a00fd5ca8d5bb6138b05c2a44fe0fa04760d70d3acb7c0a990ef498878d13e1ca
   languageName: node
   linkType: hard
 
@@ -13846,10 +13829,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-ga4@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "react-ga4@npm:2.1.0"
-  checksum: f7fb41141418d4ad14756f1126a1e9958db37d4d84ae6cd798043dc03a390b6dba74d69311af0349f0b9580a43bda8930138194ccc29c4100efe446e2d6eb057
+"react-ga4@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "react-ga4@npm:3.0.1"
+  checksum: e41a7ef79ff87f9bf7032729c850fa167d562dc2391ba70c437e21d7db44275d222920e1239cb91692495f917722340e5be5ce2112a8f5457d6bb9bcf79d8ed8
   languageName: node
   linkType: hard
 
@@ -13865,38 +13848,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-helmet-async@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "react-helmet-async@npm:2.0.5"
+"react-helmet-async@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "react-helmet-async@npm:3.0.0"
   dependencies:
     invariant: ^2.2.4
     react-fast-compare: ^3.2.2
     shallowequal: ^1.1.0
   peerDependencies:
-    react: ^16.6.0 || ^17.0.0 || ^18.0.0
-  checksum: cc2d13496f6fdee6b5f9472d3f7369db3e70e4fc1a55793708c2bbd90d48b0dedc725fd066f987c7a3d74b03a29bd5e65b9f40fa29bd8239e7cfb526aff4d4b6
+    react: ^16.6.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 78273903cbdbbf4ed555b38ec95e9080d7526e4194845f664c0374146fcdeb6ab4e02aee70b3b852b88272a3992c8c1dae2bf3fed188ccfa2d19b8e5e2432545
   languageName: node
   linkType: hard
 
-"react-intl@npm:^8.1.3":
-  version: 8.1.3
-  resolution: "react-intl@npm:8.1.3"
+"react-intl@npm:^10.1.1":
+  version: 10.1.1
+  resolution: "react-intl@npm:10.1.1"
   dependencies:
-    "@formatjs/ecma402-abstract": 3.1.1
-    "@formatjs/icu-messageformat-parser": 3.5.1
-    "@formatjs/intl": 4.1.2
-    "@types/hoist-non-react-statics": ^3.3.1
-    hoist-non-react-statics: ^3.3.2
-    intl-messageformat: 11.1.2
-    tslib: ^2.8.1
+    "@formatjs/ecma402-abstract": 3.2.0
+    "@formatjs/icu-messageformat-parser": 3.5.3
+    "@formatjs/intl": 4.1.5
+    intl-messageformat: 11.2.0
   peerDependencies:
     "@types/react": 19
     react: 19
-    typescript: ^5.6.0
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 72c666af0af40165b53dc7ab180fb3ccb6d74be9f5be124901c334f01fde36262c1e8d9cdee00e0e55a96b1b7579215f72514f6f1e7c329e988aa9fd845c32f6
+  checksum: 7901e35a7a71abf2b44276ed3f47811a36951ffa91565d8c5d8e1d13008f5d9651ee294336db36a042ba385043bedcb8b2735276e926d81753b018ac843b3c14
   languageName: node
   linkType: hard
 
@@ -13959,21 +13935,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^7.13.0":
-  version: 7.13.0
-  resolution: "react-router-dom@npm:7.13.0"
+"react-router-dom@npm:^7.13.2":
+  version: 7.13.2
+  resolution: "react-router-dom@npm:7.13.2"
   dependencies:
-    react-router: 7.13.0
+    react-router: 7.13.2
   peerDependencies:
     react: ">=18"
     react-dom: ">=18"
-  checksum: ad5eb55a47672994a9e323401e6cf1790c80b6c16649073dce3450007871824076e18578e8b11857b2924fedb2286f0f7a5d3f5f021006ba6f7f4fa6e06eeed2
+  checksum: a578420a7219a01a4f3f61f99ccf3892341084b493f02d1b1422f2766bfe038993dc494f7e3203313ca22d3b90fa386435409248ffa49c503586b17cf0724e72
   languageName: node
   linkType: hard
 
-"react-router@npm:7.13.0":
-  version: 7.13.0
-  resolution: "react-router@npm:7.13.0"
+"react-router@npm:7.13.2":
+  version: 7.13.2
+  resolution: "react-router@npm:7.13.2"
   dependencies:
     cookie: ^1.0.1
     set-cookie-parser: ^2.6.0
@@ -13983,7 +13959,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 3d6274556392fe83c6b30d8c761a45079613ba7ecb2c547031d37aea914b576c1fdea6f0a4bf72c4b2c526530510e7aa69b21f5290f08d52212bb239d72d6a50
+  checksum: 84e704693900afca4933641cd86110a72305b18a2eb922b2d367c7f6f733c177af2ef1c9e4b291f235c34462250ea20da045f75146dd28d0abe6675d5fac3e3b
   languageName: node
   linkType: hard
 
@@ -15860,7 +15836,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.8.1, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.4.0, tslib@npm:^2.8.1":
+"tslib@npm:2.8.1, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.4.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: e4aba30e632b8c8902b47587fd13345e2827fa639e7c3121074d5ee0880723282411a8838f830b55100cbe4517672f84a2472667d355b81e8af165a55dc6203a
