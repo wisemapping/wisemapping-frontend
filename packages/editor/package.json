@@ -74,7 +74,7 @@
     "babel-polyfill": "^6.26.0",
     "cypress": "^15.13.0",
     "cypress-image-snapshot": "^4.0.1",
-    "eslint": "^10.0.1",
+    "eslint": "^10.1.0",
     "eslint-plugin-storybook": "^10.2.10",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",

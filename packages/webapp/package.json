@@ -61,7 +61,7 @@
         "@welldone-software/why-did-you-render": "^10.0.1",
         "cypress": "^15.13.0",
         "cypress-image-snapshot": "^4.0.1",
-        "eslint": "^10.0.1",
+        "eslint": "^10.1.0",
         "eslint-plugin-storybook": "^10.2.10",
         "storybook": "^10.2.10",
         "vite": "^7.3.1"
