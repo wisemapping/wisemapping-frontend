@@ -5151,71 +5151,71 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wisemapping/editor@*, @wisemapping/editor@workspace:packages/editor":
+"@wisemapping/editor@npm:*, @wisemapping/editor@workspace:packages/editor":
   version: 0.0.0-use.local
   resolution: "@wisemapping/editor@workspace:packages/editor"
   dependencies:
-    "@babel/core": ^7.29.0
-    "@emotion/react": ^11.14.0
-    "@emotion/styled": ^11.14.1
-    "@formatjs/cli": ^6.13.0
-    "@mdx-js/react": ^3.1.1
-    "@mui/icons-material": ^7.3.8
-    "@mui/material": ^7.3.8
-    "@storybook/addon-docs": ^10.2.10
-    "@storybook/addon-links": ^10.2.10
-    "@storybook/react-vite": ^10.2.10
-    "@storybook/testing-library": ^0.2.2
-    "@testing-library/react": ^16.3.2
-    "@types/cypress-image-snapshot": ^3.1.9
-    "@types/jest": ^30.0.0
-    "@vitejs/plugin-react": ^5.1.4
-    "@wisemapping/mindplot": "*"
-    babel-jest: ^30.2.0
-    babel-polyfill: ^6.26.0
-    cypress: ^15.10.0
-    cypress-image-snapshot: ^4.0.1
-    emoji-picker-react: ^4.18.0
-    eslint: ^10.0.1
-    eslint-plugin-storybook: ^10.2.10
-    jest: ^30.2.0
-    jest-environment-jsdom: ^30.2.0
-    jest-transform-stub: ^2.0.0
-    react: ^19.2.4
-    react-color: ^2.19.3
-    react-dom: ^19.2.4
-    react-intl: ^8.1.3
-    react-loader-spinner: ^8.0.2
-    start-server-and-test: ^2.1.3
-    storybook: ^10.2.10
-    styled-components: ^6.3.11
-    ts-jest: ^29.4.6
-    typescript: ^5.9.3
-    vite: ^7.3.1
-    vite-tsconfig-paths: ^6.1.1
+    "@babel/core": "npm:^7.29.0"
+    "@emotion/react": "npm:^11.14.0"
+    "@emotion/styled": "npm:^11.14.1"
+    "@formatjs/cli": "npm:^6.13.0"
+    "@mdx-js/react": "npm:^3.1.1"
+    "@mui/icons-material": "npm:^7.3.8"
+    "@mui/material": "npm:^7.3.8"
+    "@storybook/addon-docs": "npm:^10.2.10"
+    "@storybook/addon-links": "npm:^10.2.10"
+    "@storybook/react-vite": "npm:^10.2.10"
+    "@storybook/testing-library": "npm:^0.2.2"
+    "@testing-library/react": "npm:^16.3.2"
+    "@types/cypress-image-snapshot": "npm:^3.1.9"
+    "@types/jest": "npm:^30.0.0"
+    "@vitejs/plugin-react": "npm:^5.1.4"
+    "@wisemapping/mindplot": "npm:*"
+    babel-jest: "npm:^30.2.0"
+    babel-polyfill: "npm:^6.26.0"
+    cypress: "npm:^15.10.0"
+    cypress-image-snapshot: "npm:^4.0.1"
+    emoji-picker-react: "npm:^4.18.0"
+    eslint: "npm:^10.0.1"
+    eslint-plugin-storybook: "npm:^10.2.10"
+    jest: "npm:^30.2.0"
+    jest-environment-jsdom: "npm:^30.2.0"
+    jest-transform-stub: "npm:^2.0.0"
+    react: "npm:^19.2.4"
+    react-color: "npm:^2.19.3"
+    react-dom: "npm:^19.2.4"
+    react-intl: "npm:^8.1.3"
+    react-loader-spinner: "npm:^8.0.2"
+    start-server-and-test: "npm:^2.1.3"
+    storybook: "npm:^10.2.10"
+    styled-components: "npm:^6.3.11"
+    ts-jest: "npm:^29.4.6"
+    typescript: "npm:^5.9.3"
+    vite: "npm:^7.3.1"
+    vite-tsconfig-paths: "npm:^6.1.1"
   peerDependencies:
     react: ^19.0.0
     react-dom: ^19.0.0
   languageName: unknown
   linkType: soft
 
-"@wisemapping/mindplot@*, @wisemapping/mindplot@workspace:packages/mindplot":
+"@wisemapping/mindplot@npm:*, @wisemapping/mindplot@workspace:packages/mindplot":
   version: 0.0.0-use.local
   resolution: "@wisemapping/mindplot@workspace:packages/mindplot"
   dependencies:
-    "@babel/core": ^7.29.0
-    "@babel/preset-typescript": ^7.28.5
-    "@mdx-js/react": ^3.1.1
-    "@storybook/addon-docs": ^10.2.10
-    "@storybook/addon-links": ^10.2.10
-    "@storybook/html-vite": ^10.2.10
-    "@storybook/testing-library": ^0.2.2
-    "@wisemapping/web2d": "*"
-    blob-polyfill: ^9.0.20240710
-    cypress: ^15.10.0
-    cypress-image-snapshot: ^4.0.1
-    eslint: ^10.0.1
-    eslint-plugin-storybook: ^10.2.10
+    "@babel/core": "npm:^7.29.0"
+    "@babel/preset-typescript": "npm:^7.28.5"
+    "@mdx-js/react": "npm:^3.1.1"
+    "@storybook/addon-docs": "npm:^10.2.10"
+    "@storybook/addon-links": "npm:^10.2.10"
+    "@storybook/html-vite": "npm:^10.2.10"
+    "@storybook/testing-library": "npm:^0.2.2"
+    "@wisemapping/web2d": "npm:*"
+    blob-polyfill: "npm:^9.0.20240710"
+    cypress: "npm:^15.10.0"
+    cypress-image-snapshot: "npm:^4.0.1"
+    eslint: "npm:^10.0.1"
+    eslint-plugin-storybook: "npm:^10.2.10"
     fflate: "file:vendor/fflate"
     html2canvas: "npm:^1.4.1"
     jest: "npm:^30.2.0"
@@ -5230,7 +5230,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@wisemapping/web2d@*, @wisemapping/web2d@workspace:packages/web2d":
+"@wisemapping/web2d@npm:*, @wisemapping/web2d@workspace:packages/web2d":
   version: 0.0.0-use.local
   resolution: "@wisemapping/web2d@workspace:packages/web2d"
   dependencies:
@@ -5253,38 +5253,38 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@wisemapping/webapp@workspace:packages/webapp"
   dependencies:
-    "@emotion/react": ^11.14.0
-    "@emotion/styled": ^11.14.1
-    "@formatjs/cli": ^6.13.0
-    "@mdx-js/react": ^3.1.1
-    "@mui/icons-material": ^7.3.8
-    "@mui/lab": ^7.0.1-beta.22
-    "@mui/material": ^7.3.8
-    "@storybook/addon-docs": ^10.2.10
-    "@storybook/addon-links": ^10.2.10
-    "@storybook/react-vite": ^10.2.10
-    "@testing-library/cypress": ^10.1.0
-    "@welldone-software/why-did-you-render": ^10.0.1
-    "@wisemapping/editor": "*"
-    axios: ^1.13.5
-    cypress: ^15.10.0
-    cypress-image-snapshot: ^4.0.1
-    dayjs: ^1.11.19
-    eslint: ^10.0.1
-    eslint-plugin-storybook: ^10.2.10
-    react: ^19.2.4
-    react-dom: ^19.2.4
-    react-ga4: ^2.1.0
-    react-google-recaptcha: ^3.1.0
-    react-helmet-async: ^2.0.5
-    react-intl: ^8.1.3
-    react-query: ^3.39.3
-    react-router-dom: ^7.13.0
-    storybook: ^10.2.10
-    styled-components: ^6.3.11
-    universal-cookie: ^8.0.1
-    update-browserslist-db: ^1.2.3
-    vite: ^7.3.1
+    "@emotion/react": "npm:^11.14.0"
+    "@emotion/styled": "npm:^11.14.1"
+    "@formatjs/cli": "npm:^6.13.0"
+    "@mdx-js/react": "npm:^3.1.1"
+    "@mui/icons-material": "npm:^7.3.8"
+    "@mui/lab": "npm:^7.0.1-beta.22"
+    "@mui/material": "npm:^7.3.8"
+    "@storybook/addon-docs": "npm:^10.2.10"
+    "@storybook/addon-links": "npm:^10.2.10"
+    "@storybook/react-vite": "npm:^10.2.10"
+    "@testing-library/cypress": "npm:^10.1.0"
+    "@welldone-software/why-did-you-render": "npm:^10.0.1"
+    "@wisemapping/editor": "npm:*"
+    axios: "npm:^1.13.5"
+    cypress: "npm:^15.10.0"
+    cypress-image-snapshot: "npm:^4.0.1"
+    dayjs: "npm:^1.11.19"
+    eslint: "npm:^10.0.1"
+    eslint-plugin-storybook: "npm:^10.2.10"
+    react: "npm:^19.2.4"
+    react-dom: "npm:^19.2.4"
+    react-ga4: "npm:^2.1.0"
+    react-google-recaptcha: "npm:^3.1.0"
+    react-helmet-async: "npm:^2.0.5"
+    react-intl: "npm:^8.1.3"
+    react-query: "npm:^3.39.3"
+    react-router-dom: "npm:^7.13.0"
+    storybook: "npm:^10.2.10"
+    styled-components: "npm:^6.3.11"
+    universal-cookie: "npm:^8.0.1"
+    update-browserslist-db: "npm:^1.2.3"
+    vite: "npm:^7.3.1"
   languageName: unknown
   linkType: soft
 
@@ -11233,8 +11233,8 @@ __metadata:
   linkType: hard
 
 "jspdf@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "jspdf@npm:4.2.0"
+  version: 4.2.1
+  resolution: "jspdf@npm:4.2.1"
   dependencies:
     "@babel/runtime": "npm:^7.28.6"
     canvg: "npm:^3.0.11"
@@ -11252,7 +11252,7 @@ __metadata:
       optional: true
     html2canvas:
       optional: true
-  checksum: 10/2c31dfce3ea6d7f839d551bb152bb24a26d6bd2093f7b2b3dd1227438446dbca22edb239ad2899328defaa24860f94a7582ed782d26dace136f6462d8101c0ce
+  checksum: 10/594dd7c1f34a3d9c48e555be2a8e664b5875c2709e1e83490a0fe20d953b35d96193ecbeaba4aa751020d2b63c8c8a82bb91c73660a775d6f8b2bef4f9ca11b0
   languageName: node
   linkType: hard
 
