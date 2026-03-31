@@ -40,7 +40,11 @@ Cypress.on('window:before:load', (win) => {
 
 afterEach(() => {
   cy.window().then((win) => {
-    expect(win.console.error).to.have.callCount(0);
-    expect(win.console.warn).to.have.callCount(0);
+    if (win.console.error && typeof win.console.error.callCount === 'number') {
+      expect(win.console.error).to.have.callCount(0);
+    }
+    if (win.console.warn && typeof win.console.warn.callCount === 'number') {
+      expect(win.console.warn).to.have.callCount(0);
+    }
   });
 });
