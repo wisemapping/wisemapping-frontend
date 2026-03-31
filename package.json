@@ -106,8 +106,7 @@
     "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "update-browserslist-db": "^1.2.3",
-    "vite-plugin-html": "^3.2.2"
+    "update-browserslist-db": "^1.2.3"
   },
   "engines": {
     "node": ">=24.0.0"
