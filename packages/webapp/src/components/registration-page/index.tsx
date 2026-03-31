@@ -30,6 +30,8 @@ import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import AppConfig from '../../classes/app-config';
 import { trackPageView } from '../../utils/analytics';
 import Separator from '../common/separator';
@@ -50,9 +52,17 @@ export type Model = {
   firstname: string;
   password: string;
   recaptcha: string;
+  acceptedTerms: boolean;
 };
 
-const defaultModel: Model = { email: '', lastname: '', firstname: '', password: '', recaptcha: '' };
+const defaultModel: Model = {
+  email: '',
+  lastname: '',
+  firstname: '',
+  password: '',
+  recaptcha: '',
+  acceptedTerms: false,
+};
 
 const RegistrationForm = () => {
   const [model, setModel] = useState<Model>(defaultModel);
@@ -240,17 +250,51 @@ const RegistrationForm = () => {
                       </div>
                     </>
                   )}
-                  <div style={{ fontSize: '12px', padding: '10px 0px' }}>
-                    <FormattedMessage
-                      id="registration.termandconditions"
-                      defaultMessage="Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
-                    />
-                  </div>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={model.acceptedTerms}
+                        onChange={(e) => setModel({ ...model, acceptedTerms: e.target.checked })}
+                        name="acceptedTerms"
+                        size="small"
+                      />
+                    }
+                    label={
+                      <Typography variant="body2" sx={{ fontSize: '12px' }}>
+                        <FormattedMessage
+                          id="registration.termandconditions"
+                          defaultMessage="I have read and agree to the <termsLink>Terms of Use</termsLink> and <privacyLink>Privacy Policy</privacyLink>"
+                          values={{
+                            termsLink: (chunks: React.ReactNode) => (
+                              <Link
+                                href="https://www.wisemapping.com/termsofuse.html"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {chunks}
+                              </Link>
+                            ),
+                            privacyLink: (chunks: React.ReactNode) => (
+                              <Link
+                                href="https://www.wisemapping.com/privacy"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {chunks}
+                              </Link>
+                            ),
+                          }}
+                        />
+                      </Typography>
+                    }
+                    sx={{ alignItems: 'flex-start', margin: '8px 0' }}
+                  />
                   <SubmitButton
                     value={intl.formatMessage({
                       id: 'registration.register',
                       defaultMessage: 'Register',
                     })}
+                    disabled={!model.acceptedTerms}
                     isLoading={mutation.isLoading}
                   />
                 </fieldset>

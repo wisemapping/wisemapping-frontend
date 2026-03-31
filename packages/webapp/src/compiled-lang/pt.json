@@ -879,6 +879,12 @@
       "value": "Termos e condições"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "Política de Privacidade"
+    }
+  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -1630,7 +1636,31 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "Termos do cliente: verifique as informações da conta WiseMapping inseridas acima e revise os Termos do cliente aqui. Ao clicar em 'Cadastrar' abaixo, você concorda com os Termos do cliente acima e a Política de Privacidade"
+      "value": "Li e aceito os "
+    },
+    {
+      "type": 8,
+      "value": "termsLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "Termos de Uso"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": " e a "
+    },
+    {
+      "type": 8,
+      "value": "privacyLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "Política de Privacidade"
+        }
+      ]
     }
   ],
   "registration.title": [

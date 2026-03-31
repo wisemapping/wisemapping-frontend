@@ -879,6 +879,12 @@
       "value": "条款和条件"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "隐私政策"
+    }
+  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -1630,7 +1636,31 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "客户条款：请检查您在上面输入的WiseMapping账户信息，并在此处查看客户条款。点击下面的'注册'即表示您同意上述客户条款和隐私政策"
+      "value": "我已阅读并同意"
+    },
+    {
+      "type": 8,
+      "value": "termsLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "使用条款"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": "和"
+    },
+    {
+      "type": 8,
+      "value": "privacyLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "隐私政策"
+        }
+      ]
     }
   ],
   "registration.title": [

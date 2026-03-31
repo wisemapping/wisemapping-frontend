@@ -28,6 +28,7 @@ export type NewUser = {
   lastname: string;
   password: string;
   recaptcha: string | null;
+  acceptedTerms: boolean;
 };
 
 export type ImportMapInfo = {

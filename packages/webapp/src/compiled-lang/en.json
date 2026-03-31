@@ -879,6 +879,12 @@
       "value": "Term And Conditions"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "Privacy Policy"
+    }
+  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -1630,7 +1636,31 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
+      "value": "I have read and agree to the "
+    },
+    {
+      "type": 8,
+      "value": "termsLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "Terms of Use"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": " and "
+    },
+    {
+      "type": 8,
+      "value": "privacyLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "Privacy Policy"
+        }
+      ]
     }
   ],
   "registration.title": [

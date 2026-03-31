@@ -879,6 +879,12 @@
       "value": "नियम और शर्तें"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "गोपनीयता नीति"
+    }
+  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -1630,7 +1636,35 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "क्लाइंट की शर्तें: कृपया ऊपर दर्ज की गई WiseMapping खाता जानकारी की जांच करें, और यहां क्लाइंट की शर्तों की समीक्षा करें। नीचे 'पंजीकरण' पर क्लिक करके आप ऊपर की क्लाइंट शर्तों और गोपनीयता नीति से सहमत हो रहे हैं"
+      "value": "मैंने "
+    },
+    {
+      "type": 8,
+      "value": "termsLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "उपयोग की शर्तें"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": " और "
+    },
+    {
+      "type": 8,
+      "value": "privacyLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "गोपनीयता नीति"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": " पढ़ ली है और स्वीकार करता/करती हूँ"
     }
   ],
   "registration.title": [

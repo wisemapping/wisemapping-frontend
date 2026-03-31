@@ -879,6 +879,12 @@
       "value": "Termes et conditions"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "Politique de confidentialité"
+    }
+  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -1630,7 +1636,31 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "Conditions d'utilisation : veuillez vérifier les informations de compte WiseMapping que vous avez saisies ci-dessus et consulter les conditions d'utilisation ici. En cliquant sur \"S'inscrire\" ci-dessous, vous acceptez les conditions d'utilisation ci-dessus et la politique de confidentialité"
+      "value": "J'ai lu et j'accepte les "
+    },
+    {
+      "type": 8,
+      "value": "termsLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "Conditions d'utilisation"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": " et la "
+    },
+    {
+      "type": 8,
+      "value": "privacyLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "Politique de confidentialité"
+        }
+      ]
     }
   ],
   "registration.title": [

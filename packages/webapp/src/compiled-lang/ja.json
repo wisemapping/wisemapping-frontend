@@ -879,6 +879,12 @@
       "value": "利用規約"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "プライバシーポリシー"
+    }
+  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -1629,8 +1635,32 @@
   ],
   "registration.termandconditions": [
     {
+      "type": 8,
+      "value": "termsLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "利用規約"
+        }
+      ]
+    },
+    {
       "type": 0,
-      "value": "クライアント条件：上記で入力したWiseMappingアカウント情報を確認し、こちらでクライアント条件を確認してください。下の「登録」をクリックすることで、上記のクライアント条件とプライバシーポリシーに同意したことになります"
+      "value": "と"
+    },
+    {
+      "type": 8,
+      "value": "privacyLink",
+      "children": [
+        {
+          "type": 0,
+          "value": "プライバシーポリシー"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": "を読み、同意します"
     }
   ],
   "registration.title": [
