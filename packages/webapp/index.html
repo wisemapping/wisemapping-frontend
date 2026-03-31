@@ -60,20 +60,26 @@
   <!-- Google Ads Sense Config. Lazy loading optimization -->
   <script type="text/javascript">
     if (<%= GOOGLE_ADDS_ENABLED %>) {
-      // Enable good ads ... 
-      function downloadJsAtOnload() {
-        setTimeout(function downloadJs() {
+      // 1. Load Google Funding Choices CMP
+      var fcScript = document.createElement("script");
+      fcScript.async = true;
+      fcScript.src = "https://fundingchoicesmessages.google.com/i/pub-4996113942657337?fctype=gdpr";
+      document.head.appendChild(fcScript);
+
+      // 2. Wait for consent to be resolved before loading AdSense
+      window.googlefc = window.googlefc || {};
+      window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
+      window.googlefc.callbackQueue.push({
+        'CONSENT_DATA_READY': function() {
           var element = document.createElement("script");
           element.setAttribute("data-ad-client", "ca-pub-4996113942657337");
           element.async = true;
           element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+          element.crossOrigin = "anonymous";
           document.body.appendChild(element);
-        }, 50);
-      };
-
-      window.addEventListener("load", downloadJsAtOnload, false);
+        }
+      });
     }
-
   </script>
 
   <!-- 
