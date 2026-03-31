@@ -42,7 +42,7 @@
     "test:unit": "jest ./test/unit/**/*.test.ts --verbose --silent --detectOpenHandles"
   },
   "dependencies": {
-    "@wisemapping/web2d": "workspace:*",
+    "@wisemapping/web2d": "*",
     "fflate": "file:vendor/fflate",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.0",
