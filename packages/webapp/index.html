@@ -57,10 +57,20 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="WiseMapping" />
 
+  <!-- Google Funding Choices GDPR Consent Dialog -->
+  <script type="text/javascript">
+    if (<%= GOOGLE_ADDS_ENABLED %>) {
+      var fc = document.createElement("script");
+      fc.src = "https://fundingchoicesmessages.google.com/i/pub-4996113942657337?ers=1";
+      fc.async = true;
+      document.head.appendChild(fc);
+    }
+  </script>
+
   <!-- Google Ads Sense Config. Lazy loading optimization -->
   <script type="text/javascript">
     if (<%= GOOGLE_ADDS_ENABLED %>) {
-      // Enable good ads ... 
+      // Enable good ads ...
       function downloadJsAtOnload() {
         setTimeout(function downloadJs() {
           var element = document.createElement("script");
