@@ -57,31 +57,29 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="WiseMapping" />
 
-  <!-- Google Funding Choices GDPR Consent Dialog -->
+  <!-- Google Funding Choices GDPR Consent + AdSense (loaded only after consent) -->
   <script type="text/javascript">
     if (<%= GOOGLE_ADDS_ENABLED %>) {
+      // Initialize Google Funding Choices callback queue
+      window.googlefc = window.googlefc || {};
+      window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
+
+      // Load Funding Choices CMP script immediately
       var fc = document.createElement("script");
-      fc.src = "https://fundingchoicesmessages.google.com/i/pub-4996113942657337?ers=1";
+      fc.src = "https://fundingchoicesmessages.google.com/i/pub-4996113942657337?ers=1&fctype=gdpr";
       fc.async = true;
       document.head.appendChild(fc);
-    }
-  </script>
 
-  <!-- Google Ads Sense Config. Lazy loading optimization -->
-  <script type="text/javascript">
-    if (<%= GOOGLE_ADDS_ENABLED %>) {
-      // Enable good ads ...
-      function downloadJsAtOnload() {
-        setTimeout(function downloadJs() {
+      // Load AdSense only after consent is resolved
+      window.googlefc.callbackQueue.push({
+        'CONSENT_DATA_READY': function () {
           var element = document.createElement("script");
           element.setAttribute("data-ad-client", "ca-pub-4996113942657337");
           element.async = true;
           element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
           document.body.appendChild(element);
-        }, 50);
-      };
-
-      window.addEventListener("load", downloadJsAtOnload, false);
+        }
+      });
     }
   </script>
 
