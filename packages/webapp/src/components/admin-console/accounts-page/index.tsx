@@ -45,6 +45,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Pagination from '@mui/material/Pagination';
+import Collapse from '@mui/material/Collapse';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -66,6 +67,8 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkOffIcon from '@mui/icons-material/LinkOff';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { AdminUsersParams } from '../../../classes/client/admin-client';
 import { AuthenticationType } from '../../../classes/client';
 import AppConfig from '../../../classes/app-config';
@@ -172,6 +175,7 @@ const AccountManagement = (): ReactElement => {
   const [passwordError, setPasswordError] = useState('');
 
   // Facebook data deletion state
+  const [isFacebookFilterExpanded, setIsFacebookFilterExpanded] = useState(false);
   const [facebookIdInput, setFacebookIdInput] = useState('');
   const [facebookLookupResult, setFacebookLookupResult] = useState<User | null>(null);
   const [facebookLookupError, setFacebookLookupError] = useState('');
@@ -832,7 +836,12 @@ const AccountManagement = (): ReactElement => {
               defaultMessage: 'Search & Filters',
             })}
           </Typography>
-          <Box display="flex" gap={2} mb={2} flexWrap="wrap">
+          <Box
+            display="flex"
+            gap={2}
+            mb={facebookEnabled && isFacebookFilterExpanded ? 1 : 2}
+            flexWrap="wrap"
+          >
             <TextField
               placeholder={intl.formatMessage({
                 id: 'admin.accounts.search',
@@ -890,95 +899,114 @@ const AccountManagement = (): ReactElement => {
                 <MenuItem value="suspended">Suspended Only</MenuItem>
               </Select>
             </FormControl>
+
+            {facebookEnabled && (
+              <Tooltip
+                title={intl.formatMessage({
+                  id: 'admin.facebook.filter-tooltip',
+                  defaultMessage: 'Facebook data deletion lookup',
+                })}
+              >
+                <IconButton
+                  size="small"
+                  onClick={() => setIsFacebookFilterExpanded((v) => !v)}
+                  sx={{
+                    color: isFacebookFilterExpanded ? '#1877F2' : 'text.secondary',
+                    alignSelf: 'center',
+                  }}
+                >
+                  <FacebookIcon fontSize="small" />
+                  {isFacebookFilterExpanded ? (
+                    <ExpandLessIcon fontSize="small" />
+                  ) : (
+                    <ExpandMoreIcon fontSize="small" />
+                  )}
+                </IconButton>
+              </Tooltip>
+            )}
           </Box>
+
+          {facebookEnabled && (
+            <Collapse in={isFacebookFilterExpanded}>
+              <Box
+                display="flex"
+                gap={2}
+                alignItems="flex-start"
+                flexWrap="wrap"
+                pt={1}
+                pb={1}
+                borderTop="1px dashed"
+                borderColor="divider"
+              >
+                <TextField
+                  label="facebookId"
+                  placeholder="652098797767905"
+                  value={facebookIdInput}
+                  onChange={(e) => {
+                    setFacebookIdInput(e.target.value);
+                    setFacebookLookupResult(null);
+                    setFacebookLookupError('');
+                  }}
+                  onKeyDown={(e) => e.key === 'Enter' && handleFacebookLookup()}
+                  size="small"
+                  sx={{ minWidth: 240, fontFamily: 'monospace' }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <FacebookIcon fontSize="small" sx={{ color: '#1877F2' }} />
+                      </InputAdornment>
+                    ),
+                    endAdornment: isFacebookLookupLoading ? (
+                      <InputAdornment position="end">
+                        <CircularProgress size={16} />
+                      </InputAdornment>
+                    ) : null,
+                  }}
+                />
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={handleFacebookLookup}
+                  disabled={!facebookIdInput.trim() || isFacebookLookupLoading}
+                  sx={{ alignSelf: 'center', borderColor: '#1877F2', color: '#1877F2' }}
+                >
+                  {intl.formatMessage({
+                    id: 'admin.facebook.lookup-button',
+                    defaultMessage: 'Find Account',
+                  })}
+                </Button>
+                {facebookLookupError && (
+                  <Alert severity="warning" sx={{ py: 0, alignSelf: 'center' }}>
+                    {facebookLookupError}
+                  </Alert>
+                )}
+                {facebookLookupResult && (
+                  <Alert
+                    severity="success"
+                    sx={{ py: 0, alignSelf: 'center' }}
+                    action={
+                      <Button
+                        size="small"
+                        color="error"
+                        startIcon={<LinkOffIcon />}
+                        onClick={() => handleRemoveFacebookAccount(facebookLookupResult)}
+                      >
+                        {intl.formatMessage({
+                          id: 'admin.facebook.remove-button',
+                          defaultMessage: 'Remove',
+                        })}
+                      </Button>
+                    }
+                  >
+                    <strong>{facebookLookupResult.fullName}</strong> &lt;
+                    {facebookLookupResult.email}&gt;
+                  </Alert>
+                )}
+              </Box>
+            </Collapse>
+          )}
         </CardContent>
       </Card>
-
-      {/* Facebook Data Deletion — only shown when Facebook OAuth is enabled */}
-      {facebookEnabled && (
-        <Card elevation={1} sx={{ mb: 3, borderLeft: '4px solid #1877F2' }}>
-          <CardContent>
-            <Typography
-              variant="h6"
-              gutterBottom
-              sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-            >
-              <FacebookIcon sx={{ color: '#1877F2' }} />
-              {intl.formatMessage({
-                id: 'admin.facebook.deletion-title',
-                defaultMessage: 'Facebook Data Deletion Request',
-              })}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              {intl.formatMessage({
-                id: 'admin.facebook.deletion-description',
-                defaultMessage:
-                  'Enter the Facebook user ID from the deletion request to locate the associated WiseMapping account.',
-              })}
-            </Typography>
-            <Box display="flex" gap={2} alignItems="flex-start" flexWrap="wrap">
-              <TextField
-                label={intl.formatMessage({
-                  id: 'admin.facebook.user-id-label',
-                  defaultMessage: 'Facebook User ID',
-                })}
-                placeholder="e.g. 123456789"
-                value={facebookIdInput}
-                onChange={(e) => {
-                  setFacebookIdInput(e.target.value);
-                  setFacebookLookupResult(null);
-                  setFacebookLookupError('');
-                }}
-                onKeyDown={(e) => e.key === 'Enter' && handleFacebookLookup()}
-                sx={{ minWidth: 260 }}
-                size="small"
-              />
-              <Button
-                variant="contained"
-                onClick={handleFacebookLookup}
-                disabled={!facebookIdInput.trim() || isFacebookLookupLoading}
-                startIcon={
-                  isFacebookLookupLoading ? <CircularProgress size={16} /> : <SearchIcon />
-                }
-                sx={{ bgcolor: '#1877F2', '&:hover': { bgcolor: '#1558b0' } }}
-              >
-                {intl.formatMessage({
-                  id: 'admin.facebook.lookup-button',
-                  defaultMessage: 'Find Account',
-                })}
-              </Button>
-            </Box>
-            {facebookLookupError && (
-              <Alert severity="warning" sx={{ mt: 2 }}>
-                {facebookLookupError}
-              </Alert>
-            )}
-            {facebookLookupResult && (
-              <Alert
-                severity="success"
-                sx={{ mt: 2 }}
-                action={
-                  <Button
-                    color="error"
-                    size="small"
-                    variant="contained"
-                    startIcon={<LinkOffIcon />}
-                    onClick={() => handleRemoveFacebookAccount(facebookLookupResult)}
-                  >
-                    {intl.formatMessage({
-                      id: 'admin.facebook.remove-button',
-                      defaultMessage: 'Remove Facebook Account',
-                    })}
-                  </Button>
-                }
-              >
-                <strong>{facebookLookupResult.fullName}</strong> &lt;{facebookLookupResult.email}
-                &gt;
-              </Alert>
-            )}
-          </CardContent>
-        </Card>
-      )}
 
       {/* Users Table */}
       <TableContainer component={Paper}>
