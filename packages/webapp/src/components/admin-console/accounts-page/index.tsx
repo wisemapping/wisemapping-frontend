@@ -64,6 +64,7 @@ import MapIcon from '@mui/icons-material/Map';
 import StorageIcon from '@mui/icons-material/Storage';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import LinkOffIcon from '@mui/icons-material/LinkOff';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { AdminUsersParams } from '../../../classes/client/admin-client';
 import { AuthenticationType } from '../../../classes/client';
@@ -103,6 +104,7 @@ const AccountManagement = (): ReactElement => {
   const intl = useIntl();
   const client = AppConfig.getAdminClient();
   const queryClient = useQueryClient();
+  const facebookEnabled = AppConfig.isFacebookOauth2Enabled();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
@@ -168,6 +170,14 @@ const AccountManagement = (): ReactElement => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  // Facebook data deletion state
+  const [facebookIdInput, setFacebookIdInput] = useState('');
+  const [facebookLookupResult, setFacebookLookupResult] = useState<User | null>(null);
+  const [facebookLookupError, setFacebookLookupError] = useState('');
+  const [isFacebookLookupLoading, setIsFacebookLookupLoading] = useState(false);
+  const [isRemoveFacebookDialogOpen, setIsRemoveFacebookDialogOpen] = useState(false);
+  const [removingFacebookUser, setRemovingFacebookUser] = useState<User | null>(null);
 
   // Suspension reasons
   const suspensionReasons = [
@@ -386,6 +396,49 @@ const AccountManagement = (): ReactElement => {
       console.error('Failed to fetch user maps:', error);
     },
   });
+
+  // Remove Facebook account mutation
+  const removeFacebookAccountMutation = useMutation(
+    (userId: number) => client.removeFacebookAccount(userId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('adminUsers');
+        setIsRemoveFacebookDialogOpen(false);
+        setRemovingFacebookUser(null);
+        // Clear lookup result since the account changed
+        setFacebookLookupResult(null);
+        setFacebookIdInput('');
+      },
+      onError: (error: Error) => {
+        console.error('Failed to remove Facebook account:', error);
+      },
+    },
+  );
+
+  const handleFacebookLookup = () => {
+    const id = facebookIdInput.trim();
+    if (!id) return;
+    setIsFacebookLookupLoading(true);
+    setFacebookLookupResult(null);
+    setFacebookLookupError('');
+    client
+      .getUserByFacebookId(id)
+      .then((user) => setFacebookLookupResult(user as unknown as User))
+      .catch(() =>
+        setFacebookLookupError(
+          intl.formatMessage({
+            id: 'admin.facebook.lookup-not-found',
+            defaultMessage: 'No account found for this Facebook user ID.',
+          }),
+        ),
+      )
+      .finally(() => setIsFacebookLookupLoading(false));
+  };
+
+  const handleRemoveFacebookAccount = (user: User) => {
+    setRemovingFacebookUser(user);
+    setIsRemoveFacebookDialogOpen(true);
+  };
 
   // TODO: Implement filtering and sorting functionality
 
@@ -841,6 +894,92 @@ const AccountManagement = (): ReactElement => {
         </CardContent>
       </Card>
 
+      {/* Facebook Data Deletion — only shown when Facebook OAuth is enabled */}
+      {facebookEnabled && (
+        <Card elevation={1} sx={{ mb: 3, borderLeft: '4px solid #1877F2' }}>
+          <CardContent>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+            >
+              <FacebookIcon sx={{ color: '#1877F2' }} />
+              {intl.formatMessage({
+                id: 'admin.facebook.deletion-title',
+                defaultMessage: 'Facebook Data Deletion Request',
+              })}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              {intl.formatMessage({
+                id: 'admin.facebook.deletion-description',
+                defaultMessage:
+                  'Enter the Facebook user ID from the deletion request to locate the associated WiseMapping account.',
+              })}
+            </Typography>
+            <Box display="flex" gap={2} alignItems="flex-start" flexWrap="wrap">
+              <TextField
+                label={intl.formatMessage({
+                  id: 'admin.facebook.user-id-label',
+                  defaultMessage: 'Facebook User ID',
+                })}
+                placeholder="e.g. 123456789"
+                value={facebookIdInput}
+                onChange={(e) => {
+                  setFacebookIdInput(e.target.value);
+                  setFacebookLookupResult(null);
+                  setFacebookLookupError('');
+                }}
+                onKeyDown={(e) => e.key === 'Enter' && handleFacebookLookup()}
+                sx={{ minWidth: 260 }}
+                size="small"
+              />
+              <Button
+                variant="contained"
+                onClick={handleFacebookLookup}
+                disabled={!facebookIdInput.trim() || isFacebookLookupLoading}
+                startIcon={
+                  isFacebookLookupLoading ? <CircularProgress size={16} /> : <SearchIcon />
+                }
+                sx={{ bgcolor: '#1877F2', '&:hover': { bgcolor: '#1558b0' } }}
+              >
+                {intl.formatMessage({
+                  id: 'admin.facebook.lookup-button',
+                  defaultMessage: 'Find Account',
+                })}
+              </Button>
+            </Box>
+            {facebookLookupError && (
+              <Alert severity="warning" sx={{ mt: 2 }}>
+                {facebookLookupError}
+              </Alert>
+            )}
+            {facebookLookupResult && (
+              <Alert
+                severity="success"
+                sx={{ mt: 2 }}
+                action={
+                  <Button
+                    color="error"
+                    size="small"
+                    variant="contained"
+                    startIcon={<LinkOffIcon />}
+                    onClick={() => handleRemoveFacebookAccount(facebookLookupResult)}
+                  >
+                    {intl.formatMessage({
+                      id: 'admin.facebook.remove-button',
+                      defaultMessage: 'Remove Facebook Account',
+                    })}
+                  </Button>
+                }
+              >
+                <strong>{facebookLookupResult.fullName}</strong> &lt;{facebookLookupResult.email}
+                &gt;
+              </Alert>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
       {/* Users Table */}
       <TableContainer component={Paper}>
         <Table>
@@ -983,6 +1122,20 @@ const AccountManagement = (): ReactElement => {
                     >
                       <MapIcon />
                     </IconButton>
+                    {facebookEnabled &&
+                      user.authenticationType === AuthenticationType.FACEBOOK_OAUTH2 && (
+                        <IconButton
+                          size="small"
+                          onClick={() => handleRemoveFacebookAccount(user)}
+                          title={intl.formatMessage({
+                            id: 'admin.facebook.remove-button',
+                            defaultMessage: 'Remove Facebook Account',
+                          })}
+                          sx={{ color: '#1877F2' }}
+                        >
+                          <LinkOffIcon />
+                        </IconButton>
+                      )}
                     <IconButton
                       size="small"
                       onClick={() => handleDeleteUser(user)}
@@ -1464,6 +1617,67 @@ const AccountManagement = (): ReactElement => {
               })}
             </Button>
           )}
+        </DialogActions>
+      </Dialog>
+      {/* Remove Facebook Account Confirmation Dialog */}
+      <Dialog
+        open={isRemoveFacebookDialogOpen}
+        onClose={
+          removeFacebookAccountMutation.isLoading
+            ? undefined
+            : () => setIsRemoveFacebookDialogOpen(false)
+        }
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <FacebookIcon sx={{ color: '#1877F2' }} />
+          {intl.formatMessage({
+            id: 'admin.facebook.remove-dialog-title',
+            defaultMessage: 'Remove Facebook Account',
+          })}
+        </DialogTitle>
+        <DialogContent>
+          <Alert severity="warning" sx={{ mb: 2 }}>
+            {intl.formatMessage({
+              id: 'admin.facebook.remove-warning',
+              defaultMessage:
+                'This will disconnect the Facebook authentication from this account. The user will receive a password reset email to regain access.',
+            })}
+          </Alert>
+          <Typography variant="body2">
+            {intl.formatMessage(
+              {
+                id: 'admin.facebook.remove-confirm',
+                defaultMessage: 'Remove Facebook association for "{email}"?',
+              },
+              { email: removingFacebookUser?.email },
+            )}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setIsRemoveFacebookDialogOpen(false)}
+            disabled={removeFacebookAccountMutation.isLoading}
+          >
+            {intl.formatMessage({ id: 'admin.cancel', defaultMessage: 'Cancel' })}
+          </Button>
+          <Button
+            onClick={() =>
+              removingFacebookUser && removeFacebookAccountMutation.mutate(removingFacebookUser.id)
+            }
+            color="error"
+            variant="contained"
+            startIcon={<LinkOffIcon />}
+            disabled={removeFacebookAccountMutation.isLoading}
+          >
+            {removeFacebookAccountMutation.isLoading
+              ? intl.formatMessage({ id: 'admin.facebook.removing', defaultMessage: 'Removing...' })
+              : intl.formatMessage({
+                  id: 'admin.facebook.remove-button',
+                  defaultMessage: 'Remove Facebook Account',
+                })}
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>
