@@ -191,6 +191,8 @@ export interface AdminClientInterface {
   unsuspendAdminUser(userId: number): Promise<AdminUser>;
   activateAdminUser(userId: number): Promise<void>;
   changeUserPassword(userId: number, password: string): Promise<void>;
+  getUserByFacebookId(facebookId: string): Promise<AdminUser>;
+  removeFacebookAccount(userId: number): Promise<void>;
 
   getAdminMaps(params?: AdminMapsParams): Promise<AdminMapsResponse>;
   getUserMaps(userId: number): Promise<AdminMap[]>;
@@ -368,6 +370,26 @@ export default class AdminClient implements AdminClientInterface {
       .then(() => {})
       .catch((error) => {
         console.error('Failed to change user password:', error);
+        throw this.parseResponseOnError(error.response);
+      });
+  }
+
+  getUserByFacebookId(facebookId: string): Promise<AdminUser> {
+    return this.axios
+      .get(`${this.baseUrl}/api/restful/admin/users/facebook/${encodeURIComponent(facebookId)}`)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error(`Failed to find user for Facebook ID ${facebookId}:`, error);
+        throw this.parseResponseOnError(error.response);
+      });
+  }
+
+  removeFacebookAccount(userId: number): Promise<void> {
+    return this.axios
+      .delete(`${this.baseUrl}/api/restful/admin/users/${userId}/facebook`)
+      .then(() => {})
+      .catch((error) => {
+        console.error(`Failed to remove Facebook account for user ${userId}:`, error);
         throw this.parseResponseOnError(error.response);
       });
   }
