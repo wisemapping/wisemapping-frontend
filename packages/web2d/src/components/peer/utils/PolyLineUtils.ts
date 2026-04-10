@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-export const buildCurvedPath = (dist: number, x1: number, y1: number, x2: number, y2: number) => {
+export const buildCurvedPath = (_dist: number, x1: number, y1: number, x2: number, y2: number) => {
   let signx = 1;
   let signy = 1;
   if (x2 < x1) {
@@ -41,14 +41,20 @@ export const buildCurvedPath = (dist: number, x1: number, y1: number, x2: number
   return path;
 };
 
-export const buildStraightPath = (dist: number, x1: number, y1: number, x2: number, y2: number) => {
+export const buildStraightPath = (
+  _dist: number,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+) => {
   // For horizontal layout, break at 50% of the horizontal distance
   const middlex = x1 + (x2 - x1) * 0.5;
   return `${x1}, ${y1} ${middlex}, ${y1} ${middlex}, ${y2} ${x2}, ${y2}`;
 };
 
 export const buildVerticalStraightPath = (
-  dist: number,
+  _dist: number,
   x1: number,
   y1: number,
   x2: number,
@@ -60,7 +66,7 @@ export const buildVerticalStraightPath = (
 };
 
 export const buildVerticalCurvedPath = (
-  dist: number,
+  _dist: number,
   x1: number,
   y1: number,
   x2: number,

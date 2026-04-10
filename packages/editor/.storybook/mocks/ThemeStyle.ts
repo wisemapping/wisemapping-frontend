@@ -16,10 +16,12 @@
  *   limitations under the License.
  */
 // Stub for ThemeStyle exports used by editor components
-import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
-import { FontStyleType } from '@wisemapping/mindplot/src/components/FontStyleType';
-import { FontWeightType } from '@wisemapping/mindplot/src/components/FontWeightType';
-import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
+import type {
+  FontStyleType,
+  FontWeightType,
+  LineType,
+  TopicShapeType,
+} from '@wisemapping/mindplot';
 
 export type TopicStyleType = {
   borderColor: string | string[];
@@ -48,5 +50,4 @@ export type CanvasStyleType = {
 export class ThemeStyle {
   // Mock implementation
 }
-
 

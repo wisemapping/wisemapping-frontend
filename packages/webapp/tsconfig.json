@@ -4,21 +4,52 @@
   ],
   "compilerOptions": {
     "jsx": "react-jsx",
+    "types": [
+      "vite/client",
+      "node",
+      "react",
+      "react-dom"
+    ],
     "outDir": "./dist/",
+    "rootDir": "..",
     "sourceMap": true,
     "module": "es2020",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "strict": false,
     "target": "es2022",
     "allowJs": true,
     "esModuleInterop": true,
     "declaration": true,
+    "skipLibCheck": true,
     "rootDirs": [
       "src",
+      "../editor/src",
+      "../mindplot/src",
+      "../web2d/src"
     ],
     "noImplicitAny": false,
     "strictNullChecks": true,
     "jsxImportSource": "@emotion/react",
+    "paths": {
+      "@wisemapping/editor": [
+        "../editor/src/index.ts"
+      ],
+      "@wisemapping/editor/*": [
+        "../editor/src/*"
+      ],
+      "@wisemapping/mindplot": [
+        "../mindplot/src/index.ts"
+      ],
+      "@wisemapping/mindplot/*": [
+        "../mindplot/src/*"
+      ],
+      "@wisemapping/web2d": [
+        "../web2d/src/index.ts"
+      ],
+      "@wisemapping/web2d/*": [
+        "../web2d/src/*"
+      ]
+    },
     "resolveJsonModule": true
   },
   "exclude": [

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { ThemeVariant } from '@wisemapping/mindplot/src/components/theme/Theme';
+import type { ThemeVariant } from '@wisemapping/mindplot';
 import { ThemeVariantStorage } from '@wisemapping/editor';
 
 /**

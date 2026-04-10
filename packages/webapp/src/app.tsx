@@ -294,11 +294,6 @@ const buildRouter = () =>
         </Route>
       </Route>,
     ),
-    {
-      future: {
-        v7_startTransition: true,
-      },
-    },
   );
 
 // eslint-disable-next-line react/prop-types

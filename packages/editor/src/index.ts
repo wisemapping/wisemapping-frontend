@@ -39,14 +39,14 @@ import Editor from './components';
 import EditorLoadingSkeleton from './components/editor-loading-skeleton';
 import type MapInfo from './classes/model/map-info';
 import { useEditor } from './hooks/useEditor';
-import type { EditorOptions } from './hooks/useEditor';
-import type { PersistenceError } from '@wisemapping/mindplot/src/components/PersistenceManager';
-import type SizeType from '@wisemapping/mindplot/src/components/SizeType';
+import type { EditorConfiguration, EditorOptions } from './hooks/useEditor';
+import type { PersistenceError, SizeType } from '@wisemapping/mindplot';
 import type { ThemeVariantStorage } from './types/ThemeVariantStorage';
 
 export type {
   PersistenceError,
   EditorOptions,
+  EditorConfiguration,
   MapInfo,
   SizeType,
   ThemeVariantStorage,

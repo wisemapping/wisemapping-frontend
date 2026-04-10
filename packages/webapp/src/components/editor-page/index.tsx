@@ -42,8 +42,9 @@ import { KeyboardContext } from '../../classes/provider/keyboard-context';
 import { SEOHead } from '../seo';
 import PublicMapSEO from '../seo/PublicMapSEO';
 import SessionExpiredDialog from '../common-page/session-expired-dialog';
-import type { EditorConfiguration } from '@wisemapping/editor/src/hooks/useEditor';
+import type { EditorConfiguration } from '@wisemapping/editor';
 import { createThemeVariantStorage } from '../../services/createThemeVariantStorage';
+import type { ActionType } from '../maps-page/action-chooser';
 
 const buildPersistenceManagerForEditor = (
   mode: EditorRenderMode,
@@ -93,24 +94,6 @@ export type EditorPropsType = {
   pageMode: PageModeType;
   zoom?: number;
 };
-
-type ActionType =
-  | 'open'
-  | 'share'
-  | 'import'
-  | 'delete'
-  | 'info'
-  | 'create'
-  | 'duplicate'
-  | 'export'
-  | 'label'
-  | 'rename'
-  | 'print'
-  | 'info'
-  | 'publish'
-  | 'history'
-  | 'theme'
-  | undefined;
 
 const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher'));
 const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
