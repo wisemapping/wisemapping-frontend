@@ -57,6 +57,18 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="WiseMapping" />
 
+  <!-- Consent Mode v2: set defaults BEFORE any Google tag scripts load -->
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied'
+    });
+  </script>
+
   <!-- Google Funding Choices GDPR Consent + AdSense (loaded only after consent) -->
   <script type="text/javascript">
     if (<%= GOOGLE_ADDS_ENABLED %>) {
