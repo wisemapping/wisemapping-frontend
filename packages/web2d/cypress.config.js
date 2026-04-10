@@ -19,6 +19,10 @@ const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   video: process.env.CYPRESS_VIDEO === 'true',
+  allowCypressEnv: false,
+  expose: {
+    imageSnaphots: !!process.env.CYPRESS_imageSnaphots,
+  },
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
