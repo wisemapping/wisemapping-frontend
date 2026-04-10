@@ -30,9 +30,9 @@
     "cy:run": "cypress run",
     "dev": "vite build --watch",
     "lint": "npx eslint src --ext js,ts",
-    "storybook": "storybook dev -p ${PORT:-6006} --quiet",
+    "storybook": "STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p ${PORT:-6006} --quiet",
     "test": "yarn test:integration",
-    "test:integration": "PORT=6006 CYPRESS_BASE_URL=http://localhost:6006 npx start-server-and-test 'storybook dev -p 6006 --no-open --quiet' http-get://localhost:6006 cy:run"
+    "test:integration": "PORT=6106 node ../../scripts/run-storybook-cypress.js"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.28.5",
