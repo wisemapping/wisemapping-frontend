@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const getAbsolutePath = (value: string) => dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
 
 const config: StorybookConfig = {
   stories: [
@@ -11,11 +12,11 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(js|jsx|ts|tsx)",
   ],
   addons: [
-    "@storybook/addon-docs",
-    "@storybook/addon-links",
+    getAbsolutePath("@storybook/addon-docs"),
+    getAbsolutePath("@storybook/addon-links"),
   ],
   framework: {
-    name: "@storybook/react-vite",
+    name: getAbsolutePath("@storybook/react-vite"),
     options: {
       builder: {
         viteConfigPath: undefined,

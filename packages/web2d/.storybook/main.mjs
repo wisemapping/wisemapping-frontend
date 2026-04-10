@@ -1,10 +1,15 @@
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const getAbsolutePath = (value) => dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
+
 export default {
   stories: [
     "../storybook/src/**/*.stories.@(js|jsx|ts|tsx|mdx)"
   ],
-  addons: ["@storybook/addon-links", "@storybook/addon-docs"],
+  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-docs")],
   framework: {
-    name: "@storybook/html-vite",
+    name: getAbsolutePath("@storybook/html-vite"),
     options: {}
   },
   docs: {

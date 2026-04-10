@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import { mergeConfig } from "vite";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const getAbsolutePath = (value) => dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
 
 /** @type { import('@storybook/html-vite').StorybookConfig } */
 const config = {
@@ -11,11 +12,11 @@ const config = {
     "../size-test/**/*.stories.@(js|jsx|ts|tsx|mdx)"
   ],
   addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-docs",
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-docs"),
   ],
   framework: {
-    name: "@storybook/html-vite",
+    name: getAbsolutePath("@storybook/html-vite"),
     options: {},
   },
   docs: {
