@@ -81,7 +81,7 @@
     "jest-transform-stub": "^2.0.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "start-server-and-test": "^3.0.0",
+    "start-server-and-test": "^3.0.2",
     "storybook": "^10.3.5",
     "ts-jest": "^29.4.9",
     "typescript": "^6.0.2",
