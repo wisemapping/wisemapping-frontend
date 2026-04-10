@@ -60,6 +60,18 @@
   <!-- Google Funding Choices GDPR Consent + AdSense (loaded only after consent) -->
   <script type="text/javascript">
     if (<%= GOOGLE_ADDS_ENABLED %>) {
+      // Consent Mode v2: initialize gtag and set defaults BEFORE the CMP script loads.
+      // Must be inside this block so that when ads are disabled, analytics_storage stays
+      // unset (gtag defaults to granted) and GA continues to work via ReactGA.
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied'
+      });
+
       // Initialize Google Funding Choices callback queue
       window.googlefc = window.googlefc || {};
       window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
