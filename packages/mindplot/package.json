@@ -24,8 +24,7 @@
   "author": "Paulo Veiga <pveiga@wisemapping.com>",
   "files": [
     "dist",
-    "assets",
-    "vendor"
+    "assets"
   ],
   "scripts": {
     "build": "vite build",
@@ -43,31 +42,31 @@
   },
   "dependencies": {
     "@wisemapping/web2d": "*",
-    "fflate": "file:vendor/fflate",
+    "fflate": "^0.8.2",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "xml-formatter": "^3.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@babel/preset-typescript": "^7.28.5",
     "@mdx-js/react": "^3.1.1",
-    "@storybook/addon-docs": "^10.2.10",
-    "@storybook/addon-links": "^10.2.10",
-    "@storybook/html-vite": "^10.2.10",
+    "@storybook/addon-docs": "^10.3.5",
+    "@storybook/addon-links": "^10.3.5",
+    "@storybook/html-vite": "^10.3.5",
     "@storybook/testing-library": "^0.2.2",
     "blob-polyfill": "^9.0.20240710",
-    "cypress": "^15.13.0",
+    "cypress": "^15.13.1",
     "cypress-image-snapshot": "^4.0.1",
-    "eslint": "^10.1.0",
-    "eslint-plugin-storybook": "^10.2.10",
+    "eslint": "^10.2.0",
+    "eslint-plugin-storybook": "^10.3.5",
     "jest": "^30.3.0",
     "mocha": "^11.7.5",
     "raphael": "^2.3.0",
-    "storybook": "^10.2.10",
+    "storybook": "^10.3.5",
     "typescript": "^5.9.3",
-    "vite": "^8.0.3"
+    "vite": "^8.0.8"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.com"
