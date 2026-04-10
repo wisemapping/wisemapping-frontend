@@ -18,8 +18,6 @@
 
 /* eslint-disable @typescript-eslint/no-namespace */
 /// <reference types="cypress" />
-import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
-
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -46,6 +44,8 @@ declare global {
 // make matchImageSnapshot() call the real implementation only if CYPRESS_imageSnaphots is set
 // otherwise it calls a noop
 if (Cypress.expose('imageSnaphots')) {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { addMatchImageSnapshotCommand } = require('cypress-image-snapshot/command');
   addMatchImageSnapshotCommand({
     failureThreshold: 0.001,
     failureThresholdType: 'percent',
