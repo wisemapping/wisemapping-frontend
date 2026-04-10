@@ -17,7 +17,7 @@
  */
 
 import { ThemeVariantStorage } from '../../../../src/types/ThemeVariantStorage';
-import { ThemeVariant } from '@wisemapping/mindplot/src/components/theme/Theme';
+import type { ThemeVariant } from '@wisemapping/mindplot';
 
 /**
  * Mock implementation of ThemeVariantStorage for playground files.

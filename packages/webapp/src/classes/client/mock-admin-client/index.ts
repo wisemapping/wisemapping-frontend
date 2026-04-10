@@ -852,6 +852,33 @@ class MockAdminClient implements AdminClientInterface {
       }, 500);
     });
   }
+
+  getUserByFacebookId(facebookId: string): Promise<AdminUser> {
+    console.log(`MockAdminClient: Getting user by Facebook ID ${facebookId}`);
+    const user = this.adminUsers.find(
+      (adminUser) =>
+        adminUser.authenticationType === AuthenticationType.FACEBOOK_OAUTH2 &&
+        String(adminUser.id) === facebookId,
+    );
+
+    if (!user) {
+      return Promise.reject(new Error(`User with Facebook ID ${facebookId} not found`));
+    }
+
+    return Promise.resolve({ ...user });
+  }
+
+  removeFacebookAccount(userId: number): Promise<void> {
+    console.log(`MockAdminClient: Removing Facebook account for user ${userId}`);
+    const user = this.adminUsers.find((adminUser) => adminUser.id === userId);
+
+    if (!user) {
+      return Promise.reject(new Error(`User with ID ${userId} not found`));
+    }
+
+    user.authenticationType = AuthenticationType.DATABASE;
+    return Promise.resolve();
+  }
 }
 
 export default MockAdminClient;

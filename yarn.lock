@@ -4561,6 +4561,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^24.12.2":
+  version: 24.12.2
+  resolution: "@types/node@npm:24.12.2"
+  dependencies:
+    undici-types: "npm:~7.16.0"
+  checksum: 10/99b9f15e67a4b3c39b39ad83ee0febad7f0b4709c004863104d7acfa4146dd7e58c12a08a9a7ff2be8c2eefd0063bf991fade0879d7c4a370a0ee7fd4c799e8a
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.4
   resolution: "@types/normalize-package-data@npm:2.4.4"
@@ -4596,12 +4605,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:^19.2.3":
+  version: 19.2.3
+  resolution: "@types/react-dom@npm:19.2.3"
+  peerDependencies:
+    "@types/react": ^19.2.0
+  checksum: 10/616c4a8aee250ea05fb1e7b98e7e00475dd3a6c1c30d7be18b4b93caba832f4203106b3a496a6b147e5acc2da14575eca47bce234c633bca1f8430ef8ffb234a
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.4.12":
   version: 4.4.12
   resolution: "@types/react-transition-group@npm:4.4.12"
   peerDependencies:
     "@types/react": "*"
   checksum: 10/ea14bc84f529a3887f9954b753843820ac8a3c49fcdfec7840657ecc6a8800aad98afdbe4b973eb96c7252286bde38476fcf64b1c09527354a9a9366e516d9a2
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^19.2.14":
+  version: 19.2.14
+  resolution: "@types/react@npm:19.2.14"
+  dependencies:
+    csstype: "npm:^3.2.2"
+  checksum: 10/fbff239089ee64b6bd9b00543594db498278b06de527ef1b0f71bb0eb09cc4445a71b5dd3c0d3d0257255c4eed94406be40a74ad4a987ade8a8d5dd65c82bc5f
   languageName: node
   linkType: hard
 
@@ -5163,7 +5190,7 @@ __metadata:
     storybook: "npm:^10.3.5"
     styled-components: "npm:^6.4.0"
     ts-jest: "npm:^29.4.9"
-    typescript: "npm:^5.9.3"
+    typescript: "npm:^6.0.2"
     vite: "npm:^8.0.8"
   peerDependencies:
     react: ^19.0.0
@@ -5196,7 +5223,7 @@ __metadata:
     mocha: "npm:^11.7.5"
     raphael: "npm:^2.3.0"
     storybook: "npm:^10.3.5"
-    typescript: "npm:^5.9.3"
+    typescript: "npm:^6.0.2"
     vite: "npm:^8.0.8"
     xml-formatter: "npm:^3.7.0"
   languageName: unknown
@@ -5216,7 +5243,7 @@ __metadata:
     cypress-image-snapshot: "npm:^4.0.1"
     eslint-plugin-storybook: "npm:^10.3.5"
     storybook: "npm:^10.3.5"
-    typescript: "npm:^5.9.3"
+    typescript: "npm:^6.0.2"
     vite: "npm:^8.0.8"
   languageName: unknown
   linkType: soft
@@ -5511,17 +5538,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"arg@npm:5.0.2, arg@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "arg@npm:5.0.2"
+  checksum: 10/92fe7de222054a060fd2329e92e867410b3ea260328147ee3fb7855f78efae005f4087e698d4e688a856893c56bb09951588c40f2c901cf6996cd8cd7bcfef2c
+  languageName: node
+  linkType: hard
+
 "arg@npm:^4.1.0":
   version: 4.1.3
   resolution: "arg@npm:4.1.3"
   checksum: 10/969b491082f20cad166649fa4d2073ea9e974a4e5ac36247ca23d2e5a8b3cb12d60e9ff70a8acfe26d76566c71fd351ee5e6a9a6595157eb36f92b1fd64e1599
-  languageName: node
-  linkType: hard
-
-"arg@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "arg@npm:5.0.2"
-  checksum: 10/92fe7de222054a060fd2329e92e867410b3ea260328147ee3fb7855f78efae005f4087e698d4e688a856893c56bb09951588c40f2c901cf6996cd8cd7bcfef2c
   languageName: node
   linkType: hard
 
@@ -7028,7 +7055,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:3.2.3, csstype@npm:^3.0.2, csstype@npm:^3.2.3":
+"csstype@npm:3.2.3, csstype@npm:^3.0.2, csstype@npm:^3.2.2, csstype@npm:^3.2.3":
   version: 3.2.3
   resolution: "csstype@npm:3.2.3"
   checksum: 10/ad41baf7e2ffac65ab544d79107bf7cd1a4bb9bab9ac3302f59ab4ba655d5e30942a8ae46e10ba160c6f4ecea464cc95b975ca2fefbdeeacd6ac63f12f99fe1f
@@ -10823,7 +10850,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:^18.0.2":
+"joi@npm:^18.0.2, joi@npm:^18.1.2":
   version: 18.1.2
   resolution: "joi@npm:18.1.2"
   dependencies:
@@ -14781,6 +14808,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"start-server-and-test@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "start-server-and-test@npm:3.0.2"
+  dependencies:
+    arg: "npm:5.0.2"
+    bluebird: "npm:3.7.2"
+    check-more-types: "npm:2.24.0"
+    debug: "npm:4.4.3"
+    execa: "npm:5.1.1"
+    lazy-ass: "npm:1.6.0"
+    tree-kill: "npm:1.2.2"
+    wait-on: "npm:9.0.5"
+  bin:
+    server-test: src/bin/start.js
+    start-server-and-test: src/bin/start.js
+    start-test: src/bin/start.js
+  checksum: 10/1963166f9e606b4ca430de4f540c5f9150e0e7212fc17015f2efb957ebe50603750aa003f4850fedc43b707f0a10adfb9e34bca395c7b4115e6dc8d9cb0aa3f3
+  languageName: node
+  linkType: hard
+
 "stop-iteration-iterator@npm:^1.0.0, stop-iteration-iterator@npm:^1.1.0":
   version: 1.1.0
   resolution: "stop-iteration-iterator@npm:1.1.0"
@@ -15701,7 +15748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:>=3 < 6, typescript@npm:^5.9.3":
+"typescript@npm:>=3 < 6":
   version: 5.9.3
   resolution: "typescript@npm:5.9.3"
   bin:
@@ -15711,13 +15758,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.9.3#optional!builtin<compat/typescript>":
+"typescript@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "typescript@npm:6.0.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/b9fc2fcee7ee8e5ca6f5138181964550531e18e2d20ecb71b802d4d495881e3444e0ef94cbb6e84eb2ba41e913f6feae3ca33cc722b32e6e6dfadb32d23b80e6
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>":
   version: 5.9.3
   resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/696e1b017bc2635f4e0c94eb4435357701008e2f272f553d06e35b494b8ddc60aa221145e286c28ace0c89ee32827a28c2040e3a69bdc108b1a5dc8fb40b72e3
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^6.0.2#optional!builtin<compat/typescript>":
+  version: 6.0.2
+  resolution: "typescript@patch:typescript@npm%3A6.0.2#optional!builtin<compat/typescript>::version=6.0.2&hash=5786d5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/e5501dfcf8c5b6b9a61f6fa53decc40187cebe3a2b7b2bd51c615007ad4cf6d58298461fef63294f6be9d5f2f33019b2a2e2bf02d9cb7d7f6ec94372bf24ffa2
   languageName: node
   linkType: hard
 
@@ -16136,6 +16203,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"wait-on@npm:9.0.5":
+  version: 9.0.5
+  resolution: "wait-on@npm:9.0.5"
+  dependencies:
+    axios: "npm:^1.15.0"
+    joi: "npm:^18.1.2"
+    lodash: "npm:^4.18.1"
+    minimist: "npm:^1.2.8"
+    rxjs: "npm:^7.8.2"
+  bin:
+    wait-on: bin/wait-on
+  checksum: 10/34d7119ff5f18376fba90e12beaf213d59ae64f3de8b11a05bce66178b6641c348f287a3202b41b2db43ae198187393b13fffb069c84650a45e21ec8869a639f
+  languageName: node
+  linkType: hard
+
 "walk-up-path@npm:^4.0.0":
   version: 4.0.0
   resolution: "walk-up-path@npm:4.0.0"
@@ -16328,6 +16410,9 @@ __metadata:
     "@eslint/js": "npm:^10.0.1"
     "@formatjs/cli": "npm:^6.14.1"
     "@types/jest": "npm:^30.0.0"
+    "@types/node": "npm:^24.12.2"
+    "@types/react": "npm:^19.2.14"
+    "@types/react-dom": "npm:^19.2.3"
     "@typescript-eslint/eslint-plugin": "npm:^8.58.1"
     "@typescript-eslint/parser": "npm:^8.58.1"
     eslint: "npm:^10.2.0"
@@ -16346,10 +16431,10 @@ __metadata:
     lerna: "npm:^9.0.7"
     lint-staged: "npm:^16.4.0"
     prettier: "npm:^3.8.2"
-    start-server-and-test: "npm:^3.0.0"
+    start-server-and-test: "npm:^3.0.2"
     ts-jest: "npm:^29.4.9"
     ts-node: "npm:^10.9.2"
-    typescript: "npm:^5.9.3"
+    typescript: "npm:^6.0.2"
     update-browserslist-db: "npm:^1.2.3"
   languageName: unknown
   linkType: soft

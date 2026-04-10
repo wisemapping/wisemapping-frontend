@@ -33,6 +33,7 @@ import NeuronLine from './components/NeuronLine';
 import WorkspaceElement from './components/WorkspaceElement';
 import type Line from './components/Line';
 import ElementPeer from './components/peer/svg/ElementPeer';
+import type { FontStyle } from './components/peer/svg/FontPeer';
 import type StyleAttributes from './components/StyleAttributes';
 
 export {
@@ -54,4 +55,4 @@ export {
   ElementPeer,
 };
 
-export type { Line, StyleAttributes };
+export type { Line, StyleAttributes, FontStyle };

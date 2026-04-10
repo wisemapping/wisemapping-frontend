@@ -16,7 +16,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { FontStyle } from '@wisemapping/web2d/src/components/peer/svg/FontPeer';
+import type { FontStyle } from '@wisemapping/web2d';
 
 import DOMUtils from './util/DOMUtils';
 import EventManager from './util/EventManager';

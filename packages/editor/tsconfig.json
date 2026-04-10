@@ -1,12 +1,21 @@
 {
   "include": [
     "src/**/*",
+    "test/**/*",
     "vite.config.ts",
     ".storybook/**/*"
   ],
   "compilerOptions": {
     "jsx": "react-jsx",
+    "types": [
+      "vite/client",
+      "jest",
+      "node",
+      "react",
+      "react-dom"
+    ],
     "outDir": "./dist/",
+    "rootDir": "..",
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "es2020",
@@ -17,9 +26,26 @@
     "esModuleInterop": true,
     "strictNullChecks": true,
     "declaration": true,
+    "skipLibCheck": true,
     "rootDirs": [
       "src",
+      "../mindplot/src",
+      "../web2d/src"
     ],
+    "paths": {
+      "@wisemapping/mindplot": [
+        "../mindplot/src/index.ts"
+      ],
+      "@wisemapping/mindplot/*": [
+        "../mindplot/src/*"
+      ],
+      "@wisemapping/web2d": [
+        "../web2d/src/index.ts"
+      ],
+      "@wisemapping/web2d/*": [
+        "../web2d/src/*"
+      ]
+    },
     "resolveJsonModule": true
   },
   "exclude": [

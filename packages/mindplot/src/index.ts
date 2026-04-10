@@ -71,6 +71,8 @@ export type {
 };
 
 export type { LayoutType, OrientationType } from './components/layout/LayoutType';
+export type { FontStyleType } from './components/FontStyleType';
+export type { FontWeightType } from './components/FontWeightType';
 
 export {
   Mindmap,
@@ -111,4 +113,5 @@ export { default as SvgIconModel } from './components/model/SvgIconModel';
 export { default as Relationship } from './components/Relationship';
 export type { default as ThemeType } from './components/model/ThemeType';
 export type { ThemeVariant } from './components/theme/Theme';
-export type { PersistenceErrorCallback } from './components/PersistenceManager';
+export type { PersistenceError, PersistenceErrorCallback } from './components/PersistenceManager';
+export type { default as SizeType } from './components/SizeType';

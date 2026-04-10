@@ -35,7 +35,7 @@ import {
   Mindmap,
   SizeType,
 } from '@wisemapping/editor';
-import ThemeType from '@wisemapping/mindplot/src/components/model/ThemeType';
+import type { ThemeType } from '@wisemapping/mindplot';
 import { fetchMindmap } from '../../../editor-page/PersistenceManagerUtils';
 
 import Checkbox from '@mui/material/Checkbox';
