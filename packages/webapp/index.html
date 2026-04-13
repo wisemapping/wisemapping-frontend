@@ -57,88 +57,50 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="WiseMapping" />
 
-  <!-- Google Funding Choices GDPR Consent + AdSense (loaded only after consent) -->
+  <!-- Google Consent Mode v2 + Funding Choices CMP + AdSense -->
   <script type="text/javascript">
     if (<%= GOOGLE_ADDS_ENABLED %>) {
-      // Consent Mode v2: initialize gtag and set defaults BEFORE the CMP script loads.
-      // Must be inside this block so that when ads are disabled, analytics_storage stays
-      // unset (gtag defaults to granted) and GA continues to work via ReactGA.
+      var ALL_GRANTED = { analytics_storage: 'granted', ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted' };
+
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
-      gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'analytics_storage': 'denied',
-        'wait_for_update': 500  // give Funding Choices 500 ms to update consent before GA fires
-      });
+      gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', wait_for_update: 500 });
 
-      // Initialize Google Funding Choices callback queue
       window.googlefc = window.googlefc || {};
       window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
 
-      // Load Funding Choices CMP script immediately.
-      // ?ers=1 enables Extended Return Signal so CONSENT_DATA_READY fires for ALL
-      // jurisdictions — both EU (after dialog) and non-EU (immediately, no dialog needed).
-      // Previously ?fctype=gdpr was used, which silently skipped non-GDPR users (e.g. Argentina).
-      var fc = document.createElement("script");
-      fc.src = "https://fundingchoicesmessages.google.com/i/pub-4996113942657337?ers=1";
+      var fc = document.createElement('script');
+      fc.src = 'https://fundingchoicesmessages.google.com/i/pub-4996113942657337?ers=1';
       fc.async = true;
       document.head.appendChild(fc);
 
-      // Load AdSense only after consent state is known.
+      function grantConsent() { gtag('consent', 'update', ALL_GRANTED); }
+
+      function grantConsentIfNonGdpr() {
+        if (typeof window.__tcfapi === 'function') {
+          window.__tcfapi('getTCData', 2, function(tcData, success) {
+            if (!success || !tcData || !tcData.gdprApplies) grantConsent();
+          });
+        } else {
+          grantConsent();
+        }
+      }
+
       var adsenseLoaded = false;
       function loadAdSense() {
         if (adsenseLoaded) return;
         adsenseLoaded = true;
-        var element = document.createElement("script");
-        element.setAttribute("data-ad-client", "ca-pub-4996113942657337");
-        element.async = true;
-        element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-        document.body.appendChild(element);
+        var s = document.createElement('script');
+        s.setAttribute('data-ad-client', 'ca-pub-4996113942657337');
+        s.async = true;
+        s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+        document.body.appendChild(s);
       }
 
-      // Grant all consent signals for non-GDPR users.
-      // Funding Choices calls gtag('consent','update',{granted}) for EU users via the
-      // dialog, but does NOT auto-grant for non-EU users — consent stays 'denied'.
-      // Detection: TCF 2.0 (__tcfapi) is only initialised in GDPR-regulated environments.
-      function grantConsentIfNonGdpr() {
-        if (typeof window.__tcfapi === 'function') {
-          window.__tcfapi('getTCData', 2, function(tcData, success) {
-            if (!success || !tcData || !tcData.gdprApplies) {
-              gtag('consent', 'update', {
-                analytics_storage: 'granted',
-                ad_storage: 'granted',
-                ad_user_data: 'granted',
-                ad_personalization: 'granted'
-              });
-            }
-            // If gdprApplies === true, the CMP already handled the update via dialog.
-          });
-        } else {
-          // No TCF API → not a GDPR region → grant consent.
-          gtag('consent', 'update', {
-            analytics_storage: 'granted',
-            ad_storage: 'granted',
-            ad_user_data: 'granted',
-            ad_personalization: 'granted'
-          });
-        }
-      }
+      function onConsentReady() { grantConsentIfNonGdpr(); loadAdSense(); }
 
-      window.googlefc.callbackQueue.push({
-        'CONSENT_MODE_DATA_READY': function() {
-          grantConsentIfNonGdpr();
-          loadAdSense();
-        }
-      });
-
-      // Fallback: if CMP never fires (network error or unrecognised jurisdiction),
-      // grant consent and load AdSense after 3 s.
-      setTimeout(function() {
-        grantConsentIfNonGdpr();
-        loadAdSense();
-      }, 3000);
+      window.googlefc.callbackQueue.push({ 'CONSENT_MODE_DATA_READY': onConsentReady });
+      setTimeout(onConsentReady, 3000);
     }
   </script>
 
