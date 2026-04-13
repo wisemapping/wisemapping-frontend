@@ -98,19 +98,47 @@
         document.body.appendChild(element);
       }
 
-      // CONSENT_MODE_DATA_READY is the correct callback for loading Google Ads/Analytics tags.
-      // Per Google's documentation it fires in two cases:
-      //   1. Immediately — when Funding Choices determines no regulation applies (non-EU users)
-      //   2. After dialog — once the user makes a GDPR/consent decision (EU users)
-      // CONSENT_DATA_READY (what was here before) only fires when a supported consent framework
-      // (GDPR, CCPA) actually governs the user — so it NEVER fires for e.g. Argentina, Brazil.
+      // Grant all consent signals for non-GDPR users.
+      // Funding Choices calls gtag('consent','update',{granted}) for EU users via the
+      // dialog, but does NOT auto-grant for non-EU users — consent stays 'denied'.
+      // Detection: TCF 2.0 (__tcfapi) is only initialised in GDPR-regulated environments.
+      function grantConsentIfNonGdpr() {
+        if (typeof window.__tcfapi === 'function') {
+          window.__tcfapi('getTCData', 2, function(tcData, success) {
+            if (!success || !tcData || !tcData.gdprApplies) {
+              gtag('consent', 'update', {
+                analytics_storage: 'granted',
+                ad_storage: 'granted',
+                ad_user_data: 'granted',
+                ad_personalization: 'granted'
+              });
+            }
+            // If gdprApplies === true, the CMP already handled the update via dialog.
+          });
+        } else {
+          // No TCF API → not a GDPR region → grant consent.
+          gtag('consent', 'update', {
+            analytics_storage: 'granted',
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted'
+          });
+        }
+      }
+
       window.googlefc.callbackQueue.push({
-        'CONSENT_MODE_DATA_READY': loadAdSense
+        'CONSENT_MODE_DATA_READY': function() {
+          grantConsentIfNonGdpr();
+          loadAdSense();
+        }
       });
 
       // Fallback: if CMP never fires (network error or unrecognised jurisdiction),
-      // load AdSense after 3 s so ads are not silently blocked.
-      setTimeout(loadAdSense, 3000);
+      // grant consent and load AdSense after 3 s.
+      setTimeout(function() {
+        grantConsentIfNonGdpr();
+        loadAdSense();
+      }, 3000);
     }
   </script>
 
