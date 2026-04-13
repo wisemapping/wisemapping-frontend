@@ -97,9 +97,14 @@
         document.body.appendChild(element);
       }
 
-      // Primary: CMP fires this when consent state is resolved.
+      // CONSENT_MODE_DATA_READY is the correct callback for loading Google Ads/Analytics tags.
+      // Per Google's documentation it fires in two cases:
+      //   1. Immediately — when Funding Choices determines no regulation applies (non-EU users)
+      //   2. After dialog — once the user makes a GDPR/consent decision (EU users)
+      // CONSENT_DATA_READY (what was here before) only fires when a supported consent framework
+      // (GDPR, CCPA) actually governs the user — so it NEVER fires for e.g. Argentina, Brazil.
       window.googlefc.callbackQueue.push({
-        'CONSENT_DATA_READY': loadAdSense
+        'CONSENT_MODE_DATA_READY': loadAdSense
       });
 
       // Fallback: if CMP never fires (network error or unrecognised jurisdiction),
