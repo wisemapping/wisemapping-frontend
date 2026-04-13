@@ -76,22 +76,35 @@
       window.googlefc = window.googlefc || {};
       window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
 
-      // Load Funding Choices CMP script immediately
+      // Load Funding Choices CMP script immediately.
+      // ?ers=1 enables Extended Return Signal so CONSENT_DATA_READY fires for ALL
+      // jurisdictions — both EU (after dialog) and non-EU (immediately, no dialog needed).
+      // Previously ?fctype=gdpr was used, which silently skipped non-GDPR users (e.g. Argentina).
       var fc = document.createElement("script");
-      fc.src = "https://fundingchoicesmessages.google.com/i/pub-4996113942657337?ers=1&fctype=gdpr";
+      fc.src = "https://fundingchoicesmessages.google.com/i/pub-4996113942657337?ers=1";
       fc.async = true;
       document.head.appendChild(fc);
 
-      // Load AdSense only after consent is resolved
+      // Load AdSense only after consent state is known.
+      var adsenseLoaded = false;
+      function loadAdSense() {
+        if (adsenseLoaded) return;
+        adsenseLoaded = true;
+        var element = document.createElement("script");
+        element.setAttribute("data-ad-client", "ca-pub-4996113942657337");
+        element.async = true;
+        element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+        document.body.appendChild(element);
+      }
+
+      // Primary: CMP fires this when consent state is resolved.
       window.googlefc.callbackQueue.push({
-        'CONSENT_DATA_READY': function () {
-          var element = document.createElement("script");
-          element.setAttribute("data-ad-client", "ca-pub-4996113942657337");
-          element.async = true;
-          element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-          document.body.appendChild(element);
-        }
+        'CONSENT_DATA_READY': loadAdSense
       });
+
+      // Fallback: if CMP never fires (network error or unrecognised jurisdiction),
+      // load AdSense after 3 s so ads are not silently blocked.
+      setTimeout(loadAdSense, 3000);
     }
   </script>
 
