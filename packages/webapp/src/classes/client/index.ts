@@ -173,6 +173,7 @@ interface Client {
 
   registerNewUser(user: NewUser): Promise<void>;
   resetPassword(email: string): Promise<ForgotPasswordResult>;
+  resetPasswordFromToken(token: string, newPassword: string): Promise<void>;
   activateAccount(code: string): Promise<void>;
   processGoogleCallback(code: string): Promise<Oauth2CallbackResult>;
   processFacebookCallback(code: string): Promise<Oauth2CallbackResult>;

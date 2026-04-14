@@ -640,6 +640,23 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
+  resetPasswordFromToken(token: string, newPassword: string): Promise<void> {
+    const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+      this.axios
+        .post(
+          `${this.baseUrl}/api/restful/users/resetPasswordToken`,
+          { token, password: newPassword },
+          { headers: { 'Content-Type': 'application/json' } },
+        )
+        .then(() => success())
+        .catch((error) => {
+          const errorInfo = this.parseResponseOnError(error.response);
+          reject(errorInfo);
+        });
+    };
+    return new Promise(handler);
+  }
+
   duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number> {
     const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
       this.axios

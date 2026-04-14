@@ -924,13 +924,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "パスワードをリセットできるメールをお送りしました。数分以内に受信されるはずです。"
+      "value": "パスワードリセットリンクをメールで送信しました。リンクは1時間で有効期限が切れます。リンクを使用するまで現在のパスワードは変更されません。"
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "一時パスワードが送信されました。"
+      "value": "メールを確認してください。"
     }
   ],
   "forgot.title": [
@@ -1781,6 +1781,72 @@
     {
       "type": 0,
       "value": "タイトルは必須です"
+    }
+  ],
+  "reset-password.page-title": [
+    {
+      "type": 0,
+      "value": "パスワードのリセット | WiseMapping"
+    }
+  ],
+  "reset-password.title": [
+    {
+      "type": 0,
+      "value": "新しいパスワードを設定"
+    }
+  ],
+  "reset-password.desc": [
+    {
+      "type": 0,
+      "value": "以下に新しいパスワードを入力してください。"
+    }
+  ],
+  "reset-password.password": [
+    {
+      "type": 0,
+      "value": "新しいパスワード"
+    }
+  ],
+  "reset-password.confirm-password": [
+    {
+      "type": 0,
+      "value": "新しいパスワードを確認"
+    }
+  ],
+  "reset-password.submit": [
+    {
+      "type": 0,
+      "value": "新しいパスワードを設定する"
+    }
+  ],
+  "reset-password.invalid-link": [
+    {
+      "type": 0,
+      "value": "パスワードリセットリンクが無効です。新しいリンクをリクエストしてください。"
+    }
+  ],
+  "reset-password.request-new": [
+    {
+      "type": 0,
+      "value": "新しいリンクをリクエスト"
+    }
+  ],
+  "reset-password.too-short": [
+    {
+      "type": 0,
+      "value": "パスワードは8文字以上である必要があります。"
+    }
+  ],
+  "reset-password.too-long": [
+    {
+      "type": 0,
+      "value": "パスワードは40文字未満である必要があります。"
+    }
+  ],
+  "reset-password.mismatch": [
+    {
+      "type": 0,
+      "value": "パスワードが一致しません。"
     }
   ]
 }

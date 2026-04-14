@@ -924,13 +924,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "हमने आपको एक ईमेल भेजा है जो आपको अपना पासवर्ड रीसेट करने की अनुमति देगा। आपको इसे अगले कुछ मिनटों में प्राप्त होना चाहिए।"
+      "value": "हमने आपके ईमेल पर पासवर्ड रीसेट लिंक भेजा है। लिंक 1 घंटे में समाप्त हो जाएगी। जब तक आप लिंक का उपयोग नहीं करते, आपका वर्तमान पासवर्ड अपरिवर्तित रहेगा।"
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "आपका अस्थायी पासवर्ड भेज दिया गया है।"
+      "value": "अपना ईमेल जांचें।"
     }
   ],
   "forgot.title": [
@@ -1785,6 +1785,72 @@
     {
       "type": 0,
       "value": "शीर्षक आवश्यक है"
+    }
+  ],
+  "reset-password.page-title": [
+    {
+      "type": 0,
+      "value": "पासवर्ड रीसेट करें | WiseMapping"
+    }
+  ],
+  "reset-password.title": [
+    {
+      "type": 0,
+      "value": "नया पासवर्ड सेट करें"
+    }
+  ],
+  "reset-password.desc": [
+    {
+      "type": 0,
+      "value": "नीचे अपना नया पासवर्ड दर्ज करें।"
+    }
+  ],
+  "reset-password.password": [
+    {
+      "type": 0,
+      "value": "नया पासवर्ड"
+    }
+  ],
+  "reset-password.confirm-password": [
+    {
+      "type": 0,
+      "value": "नए पासवर्ड की पुष्टि करें"
+    }
+  ],
+  "reset-password.submit": [
+    {
+      "type": 0,
+      "value": "नया पासवर्ड सेट करें"
+    }
+  ],
+  "reset-password.invalid-link": [
+    {
+      "type": 0,
+      "value": "पासवर्ड रीसेट लिंक अमान्य है। कृपया एक नया अनुरोध करें।"
+    }
+  ],
+  "reset-password.request-new": [
+    {
+      "type": 0,
+      "value": "नया लिंक अनुरोध करें"
+    }
+  ],
+  "reset-password.too-short": [
+    {
+      "type": 0,
+      "value": "पासवर्ड कम से कम 8 अक्षर का होना चाहिए।"
+    }
+  ],
+  "reset-password.too-long": [
+    {
+      "type": 0,
+      "value": "पासवर्ड 40 अक्षरों से कम होना चाहिए।"
+    }
+  ],
+  "reset-password.mismatch": [
+    {
+      "type": 0,
+      "value": "पासवर्ड मेल नहीं खाते।"
     }
   ]
 }

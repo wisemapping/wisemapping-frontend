@@ -924,13 +924,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Ti abbiamo inviato un'email che ti permetterà di reimpostare la tua password. Dovresti riceverla nei prossimi minuti."
+      "value": "Abbiamo inviato un link per reimpostare la tua password via email. Il link scade tra 1 ora. La tua password attuale rimane invariata finché non utilizzi il link."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "La tua password temporanea è stata inviata."
+      "value": "Controlla la tua email."
     }
   ],
   "forgot.title": [
@@ -1781,6 +1781,72 @@
     {
       "type": 0,
       "value": "Il titolo è obbligatorio"
+    }
+  ],
+  "reset-password.page-title": [
+    {
+      "type": 0,
+      "value": "Reimposta password | WiseMapping"
+    }
+  ],
+  "reset-password.title": [
+    {
+      "type": 0,
+      "value": "Imposta una nuova password"
+    }
+  ],
+  "reset-password.desc": [
+    {
+      "type": 0,
+      "value": "Inserisci la tua nuova password qui sotto."
+    }
+  ],
+  "reset-password.password": [
+    {
+      "type": 0,
+      "value": "Nuova password"
+    }
+  ],
+  "reset-password.confirm-password": [
+    {
+      "type": 0,
+      "value": "Conferma nuova password"
+    }
+  ],
+  "reset-password.submit": [
+    {
+      "type": 0,
+      "value": "Imposta nuova password"
+    }
+  ],
+  "reset-password.invalid-link": [
+    {
+      "type": 0,
+      "value": "Link per la reimpostazione della password non valido. Richiedi un nuovo link."
+    }
+  ],
+  "reset-password.request-new": [
+    {
+      "type": 0,
+      "value": "Richiedi nuovo link"
+    }
+  ],
+  "reset-password.too-short": [
+    {
+      "type": 0,
+      "value": "La password deve essere di almeno 8 caratteri."
+    }
+  ],
+  "reset-password.too-long": [
+    {
+      "type": 0,
+      "value": "La password deve essere inferiore a 40 caratteri."
+    }
+  ],
+  "reset-password.mismatch": [
+    {
+      "type": 0,
+      "value": "Le password non corrispondono."
     }
   ]
 }

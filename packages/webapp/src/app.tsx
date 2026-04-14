@@ -29,6 +29,7 @@ import {
   Outlet,
 } from 'react-router';
 import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
+import ResetPasswordPage from './components/reset-password-page';
 import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
 import { ForgotPasswordPage } from './components/forgot-password-page';
@@ -162,6 +163,7 @@ const buildRouter = () =>
           <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/:locale/c/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />
+          <Route path="/c/reset-password" element={<ResetPasswordPage />} />
 
           <Route element={<CommonPage />}>
             {/* Admin routes */}

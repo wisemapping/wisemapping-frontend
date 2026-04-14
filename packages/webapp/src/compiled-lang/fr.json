@@ -924,13 +924,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Nous vous avons envoyé un e-mail qui vous permettra de réinitialiser votre mot de passe. Vous devriez le recevoir dans les prochaines minutes."
+      "value": "Nous vous avons envoyé un lien de réinitialisation par e-mail. Ce lien expire dans 1 heure. Votre mot de passe actuel reste inchangé jusqu'à ce que vous utilisiez le lien."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Votre mot de passe temporaire a été envoyé."
+      "value": "Vérifiez vos e-mails."
     }
   ],
   "forgot.title": [
@@ -1781,6 +1781,72 @@
     {
       "type": 0,
       "value": "Le titre est requis"
+    }
+  ],
+  "reset-password.page-title": [
+    {
+      "type": 0,
+      "value": "Réinitialisation du mot de passe | WiseMapping"
+    }
+  ],
+  "reset-password.title": [
+    {
+      "type": 0,
+      "value": "Définir un nouveau mot de passe"
+    }
+  ],
+  "reset-password.desc": [
+    {
+      "type": 0,
+      "value": "Entrez votre nouveau mot de passe ci-dessous."
+    }
+  ],
+  "reset-password.password": [
+    {
+      "type": 0,
+      "value": "Nouveau mot de passe"
+    }
+  ],
+  "reset-password.confirm-password": [
+    {
+      "type": 0,
+      "value": "Confirmer le nouveau mot de passe"
+    }
+  ],
+  "reset-password.submit": [
+    {
+      "type": 0,
+      "value": "Définir le nouveau mot de passe"
+    }
+  ],
+  "reset-password.invalid-link": [
+    {
+      "type": 0,
+      "value": "Lien de réinitialisation de mot de passe invalide. Veuillez en demander un nouveau."
+    }
+  ],
+  "reset-password.request-new": [
+    {
+      "type": 0,
+      "value": "Demander un nouveau lien"
+    }
+  ],
+  "reset-password.too-short": [
+    {
+      "type": 0,
+      "value": "Le mot de passe doit comporter au moins 8 caractères."
+    }
+  ],
+  "reset-password.too-long": [
+    {
+      "type": 0,
+      "value": "Le mot de passe ne doit pas dépasser 40 caractères."
+    }
+  ],
+  "reset-password.mismatch": [
+    {
+      "type": 0,
+      "value": "Les mots de passe ne correspondent pas."
     }
   ]
 }

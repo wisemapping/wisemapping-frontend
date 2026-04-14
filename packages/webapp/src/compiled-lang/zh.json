@@ -924,13 +924,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "我们已经向您发送了一封电子邮件，允许您重置密码。您应该会在几分钟内收到"
+      "value": "我們已向您的郵箱發送了密碼重置連結。該連結將在 1 小時後過期。在您使用該連結之前，您目前的密碼保持不變。"
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "您的临时密码已发送。"
+      "value": "請查收您的郵件。"
     }
   ],
   "forgot.title": [
@@ -1781,6 +1781,72 @@
     {
       "type": 0,
       "value": "標題是必需的"
+    }
+  ],
+  "reset-password.page-title": [
+    {
+      "type": 0,
+      "value": "重置密碼 | WiseMapping"
+    }
+  ],
+  "reset-password.title": [
+    {
+      "type": 0,
+      "value": "設定新密碼"
+    }
+  ],
+  "reset-password.desc": [
+    {
+      "type": 0,
+      "value": "請在下方輸入您的新密碼。"
+    }
+  ],
+  "reset-password.password": [
+    {
+      "type": 0,
+      "value": "新密碼"
+    }
+  ],
+  "reset-password.confirm-password": [
+    {
+      "type": 0,
+      "value": "確認新密碼"
+    }
+  ],
+  "reset-password.submit": [
+    {
+      "type": 0,
+      "value": "設定新密碼"
+    }
+  ],
+  "reset-password.invalid-link": [
+    {
+      "type": 0,
+      "value": "密碼重置連結無效。請申請新連結。"
+    }
+  ],
+  "reset-password.request-new": [
+    {
+      "type": 0,
+      "value": "申請新連結"
+    }
+  ],
+  "reset-password.too-short": [
+    {
+      "type": 0,
+      "value": "密碼至少需要 8 個字元。"
+    }
+  ],
+  "reset-password.too-long": [
+    {
+      "type": 0,
+      "value": "密碼必須少於 40 個字元。"
+    }
+  ],
+  "reset-password.mismatch": [
+    {
+      "type": 0,
+      "value": "兩次輸入的密碼不一致。"
     }
   ]
 }

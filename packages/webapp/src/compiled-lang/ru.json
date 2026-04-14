@@ -924,13 +924,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Мы отправили e-mail с инструкциями по восстановлению пароля. Вы должны получить его в течение пары минут."
+      "value": "Мы отправили ссылку для сброса пароля на вашу почту. Ссылка действительна 1 час. Ваш текущий пароль остаётся неизменным, пока вы не воспользуетесь ссылкой."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Ваш временный пароль отправлен."
+      "value": "Проверьте вашу почту."
     }
   ],
   "forgot.title": [
@@ -1781,6 +1781,72 @@
     {
       "type": 0,
       "value": "Название обязательно"
+    }
+  ],
+  "reset-password.page-title": [
+    {
+      "type": 0,
+      "value": "Сброс пароля | WiseMapping"
+    }
+  ],
+  "reset-password.title": [
+    {
+      "type": 0,
+      "value": "Установить новый пароль"
+    }
+  ],
+  "reset-password.desc": [
+    {
+      "type": 0,
+      "value": "Введите новый пароль ниже."
+    }
+  ],
+  "reset-password.password": [
+    {
+      "type": 0,
+      "value": "Новый пароль"
+    }
+  ],
+  "reset-password.confirm-password": [
+    {
+      "type": 0,
+      "value": "Подтвердите новый пароль"
+    }
+  ],
+  "reset-password.submit": [
+    {
+      "type": 0,
+      "value": "Установить новый пароль"
+    }
+  ],
+  "reset-password.invalid-link": [
+    {
+      "type": 0,
+      "value": "Ссылка для сброса пароля недействительна. Пожалуйста, запросите новую."
+    }
+  ],
+  "reset-password.request-new": [
+    {
+      "type": 0,
+      "value": "Запросить новую ссылку"
+    }
+  ],
+  "reset-password.too-short": [
+    {
+      "type": 0,
+      "value": "Пароль должен содержать не менее 8 символов."
+    }
+  ],
+  "reset-password.too-long": [
+    {
+      "type": 0,
+      "value": "Пароль должен содержать не более 40 символов."
+    }
+  ],
+  "reset-password.mismatch": [
+    {
+      "type": 0,
+      "value": "Пароли не совпадают."
     }
   ]
 }
