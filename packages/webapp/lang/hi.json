@@ -1,4 +1,7 @@
 {
+  "common.terms-notice": {
+    "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
+  },
   "account.delete-warning": {
     "defaultMessage": "ध्यान रखें कि आप जो भी माइंडमैप जोड़े हैं, उन्हें पुनर्प्राप्त नहीं कर सकेंगे। आपकी सभी जानकारी हटा दी जाएगी और इसे पुनर्स्थापित नहीं किया जा सकता।"
   },

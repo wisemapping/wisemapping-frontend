@@ -1,4 +1,7 @@
 {
+  "common.terms-notice": {
+    "defaultMessage": "Al continuar, aceptas nuestros <termsLink>Términos de Uso</termsLink> y <privacyLink>Política de Privacidad</privacyLink>."
+  },
   "account.delete-warning": {
     "defaultMessage": "Tenga en cuenta que no podrá recuperar ningún mapa mental que haya creado. Toda su información será eliminada y no podrá ser restaurada."
   },

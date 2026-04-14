@@ -57,60 +57,50 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="WiseMapping" />
 
-  <!-- Google Funding Choices GDPR Consent + AdSense (loaded only after consent) -->
+  <!-- Google Consent Mode v2 + Funding Choices CMP + AdSense -->
   <script type="text/javascript">
     if (<%= GOOGLE_ADDS_ENABLED %>) {
-      // Consent Mode v2: initialize gtag and set defaults BEFORE the CMP script loads.
-      // Must be inside this block so that when ads are disabled, analytics_storage stays
-      // unset (gtag defaults to granted) and GA continues to work via ReactGA.
+      var ALL_GRANTED = { analytics_storage: 'granted', ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted' };
+
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
-      gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'analytics_storage': 'denied',
-        'wait_for_update': 500  // give Funding Choices 500 ms to update consent before GA fires
-      });
+      gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', wait_for_update: 500 });
 
-      // Initialize Google Funding Choices callback queue
       window.googlefc = window.googlefc || {};
       window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
 
-      // Load Funding Choices CMP script immediately.
-      // ?ers=1 enables Extended Return Signal so CONSENT_DATA_READY fires for ALL
-      // jurisdictions — both EU (after dialog) and non-EU (immediately, no dialog needed).
-      // Previously ?fctype=gdpr was used, which silently skipped non-GDPR users (e.g. Argentina).
-      var fc = document.createElement("script");
-      fc.src = "https://fundingchoicesmessages.google.com/i/pub-4996113942657337?ers=1";
+      var fc = document.createElement('script');
+      fc.src = 'https://fundingchoicesmessages.google.com/i/pub-4996113942657337?ers=1';
       fc.async = true;
       document.head.appendChild(fc);
 
-      // Load AdSense only after consent state is known.
+      function grantConsent() { gtag('consent', 'update', ALL_GRANTED); }
+
+      function grantConsentIfNonGdpr() {
+        if (typeof window.__tcfapi === 'function') {
+          window.__tcfapi('getTCData', 2, function(tcData, success) {
+            if (!success || !tcData || !tcData.gdprApplies) grantConsent();
+          });
+        } else {
+          grantConsent();
+        }
+      }
+
       var adsenseLoaded = false;
       function loadAdSense() {
         if (adsenseLoaded) return;
         adsenseLoaded = true;
-        var element = document.createElement("script");
-        element.setAttribute("data-ad-client", "ca-pub-4996113942657337");
-        element.async = true;
-        element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-        document.body.appendChild(element);
+        var s = document.createElement('script');
+        s.setAttribute('data-ad-client', 'ca-pub-4996113942657337');
+        s.async = true;
+        s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+        document.body.appendChild(s);
       }
 
-      // CONSENT_MODE_DATA_READY is the correct callback for loading Google Ads/Analytics tags.
-      // Per Google's documentation it fires in two cases:
-      //   1. Immediately — when Funding Choices determines no regulation applies (non-EU users)
-      //   2. After dialog — once the user makes a GDPR/consent decision (EU users)
-      // CONSENT_DATA_READY (what was here before) only fires when a supported consent framework
-      // (GDPR, CCPA) actually governs the user — so it NEVER fires for e.g. Argentina, Brazil.
-      window.googlefc.callbackQueue.push({
-        'CONSENT_MODE_DATA_READY': loadAdSense
-      });
+      function onConsentReady() { grantConsentIfNonGdpr(); loadAdSense(); }
 
-      // Fallback: if CMP never fires (network error or unrecognised jurisdiction),
-      // load AdSense after 3 s so ads are not silently blocked.
-      setTimeout(loadAdSense, 3000);
+      window.googlefc.callbackQueue.push({ 'CONSENT_MODE_DATA_READY': onConsentReady });
+      setTimeout(onConsentReady, 3000);
     }
   </script>
 

@@ -1,4 +1,7 @@
 {
+  "common.terms-notice": {
+    "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
+  },
   "account.delete-warning": {
     "defaultMessage": "Майте на увазі, що ви не зможете відновити жодну карту розуму, яку ви додали. Вся ваша інформація буде видалена і не може бути відновлена."
   },
