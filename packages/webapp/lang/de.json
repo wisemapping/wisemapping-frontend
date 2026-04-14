@@ -1,4 +1,7 @@
 {
+  "common.terms-notice": {
+    "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
+  },
   "account.delete-warning": {
     "defaultMessage": "Denke daran, dass du keine von dir erstellte Mindmap mehr aufrufen kannst. Alle deine Informationen werden gelöscht und können nicht wiederhergestellt werden."
   },

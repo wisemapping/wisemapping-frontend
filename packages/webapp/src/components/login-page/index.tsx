@@ -335,6 +335,40 @@ const LoginPage = (): React.ReactElement => {
               </Box>
             </>
           )}
+          <Typography
+            variant="body2"
+            sx={{
+              fontSize: '12px',
+              mt: 3,
+              textAlign: 'center',
+              width: '100%',
+            }}
+          >
+            <FormattedMessage
+              id="common.terms-notice"
+              defaultMessage="By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
+              values={{
+                termsLink: (chunks: React.ReactNode) => (
+                  <Link
+                    href="https://www.wisemapping.com/termsofuse.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {chunks}
+                  </Link>
+                ),
+                privacyLink: (chunks: React.ReactNode) => (
+                  <Link
+                    href="https://www.wisemapping.com/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {chunks}
+                  </Link>
+                ),
+              }}
+            />
+          </Typography>
         </FormContainer>
       </AccountAccessLayout>
     </>

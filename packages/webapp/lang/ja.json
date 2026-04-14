@@ -1,4 +1,7 @@
 {
+  "common.terms-notice": {
+    "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
+  },
   "account.delete-warning": {
     "defaultMessage": "作成したマインドマップは復元できません。すべての情報が削除され、復元することはできません。"
   },
