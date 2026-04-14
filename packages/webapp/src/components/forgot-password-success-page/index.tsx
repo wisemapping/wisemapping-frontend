@@ -65,16 +65,13 @@ const ForgotPasswordSuccessPage = (): React.ReactElement => {
       <AccountAccessLayout headerType="none">
         <FormContainer>
           <Typography variant="h4" component="h1">
-            <FormattedMessage
-              id="forgot.success.title"
-              defaultMessage="Your temporal password has been sent."
-            />
+            <FormattedMessage id="forgot.success.title" defaultMessage="Check your email." />
           </Typography>
 
           <Typography paragraph>
             <FormattedMessage
               id="forgot.success.desc"
-              defaultMessage="We've sent you an email that will allow you to reset your password. You should receive it in the next minutes."
+              defaultMessage="We've sent a password reset link to your email. The link expires in 1 hour. Your current password remains unchanged until you use the link."
             />
           </Typography>
 

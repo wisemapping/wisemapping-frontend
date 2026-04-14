@@ -924,13 +924,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Enviamos um e-mail que permitirá redefinir sua senha. Você deve recebê-lo nos próximos minutos."
+      "value": "Enviamos um link de redefinição de senha para o seu e-mail. O link expira em 1 hora. Sua senha atual permanece inalterada até que você use o link."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Sua senha temporária foi enviada."
+      "value": "Verifique seu e-mail."
     }
   ],
   "forgot.title": [
@@ -1781,6 +1781,72 @@
     {
       "type": 0,
       "value": "Título é obrigatório"
+    }
+  ],
+  "reset-password.page-title": [
+    {
+      "type": 0,
+      "value": "Redefinir senha | WiseMapping"
+    }
+  ],
+  "reset-password.title": [
+    {
+      "type": 0,
+      "value": "Definir nova senha"
+    }
+  ],
+  "reset-password.desc": [
+    {
+      "type": 0,
+      "value": "Digite sua nova senha abaixo."
+    }
+  ],
+  "reset-password.password": [
+    {
+      "type": 0,
+      "value": "Nova senha"
+    }
+  ],
+  "reset-password.confirm-password": [
+    {
+      "type": 0,
+      "value": "Confirmar nova senha"
+    }
+  ],
+  "reset-password.submit": [
+    {
+      "type": 0,
+      "value": "Definir nova senha"
+    }
+  ],
+  "reset-password.invalid-link": [
+    {
+      "type": 0,
+      "value": "Link de redefinição de senha inválido. Por favor, solicite um novo."
+    }
+  ],
+  "reset-password.request-new": [
+    {
+      "type": 0,
+      "value": "Solicitar novo link"
+    }
+  ],
+  "reset-password.too-short": [
+    {
+      "type": 0,
+      "value": "A senha deve ter pelo menos 8 caracteres."
+    }
+  ],
+  "reset-password.too-long": [
+    {
+      "type": 0,
+      "value": "A senha deve ter menos de 40 caracteres."
+    }
+  ],
+  "reset-password.mismatch": [
+    {
+      "type": 0,
+      "value": "As senhas não coincidem."
     }
   ]
 }

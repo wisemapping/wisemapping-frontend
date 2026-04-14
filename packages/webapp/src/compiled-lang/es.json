@@ -924,13 +924,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Le hemos enviado un correo electrónico que le permitirá restablecer su contraseña. Deberías recibirlo en los próximos minutos."
+      "value": "Hemos enviado un enlace para restablecer tu contraseña a tu correo. El enlace expira en 1 hora. Tu contraseña actual permanece sin cambios hasta que uses el enlace."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Su contraseña temporal ha sido enviada."
+      "value": "Revisa tu correo electrónico."
     }
   ],
   "forgot.title": [
@@ -1781,6 +1781,72 @@
     {
       "type": 0,
       "value": "El título es obligatorio"
+    }
+  ],
+  "reset-password.page-title": [
+    {
+      "type": 0,
+      "value": "Restablecer contraseña | WiseMapping"
+    }
+  ],
+  "reset-password.title": [
+    {
+      "type": 0,
+      "value": "Establecer una nueva contraseña"
+    }
+  ],
+  "reset-password.desc": [
+    {
+      "type": 0,
+      "value": "Introduce tu nueva contraseña a continuación."
+    }
+  ],
+  "reset-password.password": [
+    {
+      "type": 0,
+      "value": "Nueva contraseña"
+    }
+  ],
+  "reset-password.confirm-password": [
+    {
+      "type": 0,
+      "value": "Confirmar nueva contraseña"
+    }
+  ],
+  "reset-password.submit": [
+    {
+      "type": 0,
+      "value": "Establecer nueva contraseña"
+    }
+  ],
+  "reset-password.invalid-link": [
+    {
+      "type": 0,
+      "value": "Enlace de restablecimiento de contraseña inválido. Por favor, solicita uno nuevo."
+    }
+  ],
+  "reset-password.request-new": [
+    {
+      "type": 0,
+      "value": "Solicitar nuevo enlace"
+    }
+  ],
+  "reset-password.too-short": [
+    {
+      "type": 0,
+      "value": "La contraseña debe tener al menos 8 caracteres."
+    }
+  ],
+  "reset-password.too-long": [
+    {
+      "type": 0,
+      "value": "La contraseña debe tener menos de 40 caracteres."
+    }
+  ],
+  "reset-password.mismatch": [
+    {
+      "type": 0,
+      "value": "Las contraseñas no coinciden."
     }
   ]
 }
