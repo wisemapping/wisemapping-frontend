@@ -16,14 +16,15 @@
  *   limitations under the License.
  */
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { Link as RouterLink } from 'react-router';
 import { useMutation } from 'react-query';
+
 import Typography from '@mui/material/Typography';
-import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 
 import AccountAccessLayout from '../layout/AccountAccessLayout';
 import FormContainer from '../layout/form-container';
@@ -33,16 +34,19 @@ import SubmitButton from '../form/submit-button';
 import { ClientContext } from '../../classes/provider/client-context';
 import { ErrorInfo } from '../../classes/client';
 import { trackPageView } from '../../utils/analytics';
+import { SEOHead } from '../seo';
+import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 
-const ResetPassword = (): React.ReactElement => {
+const ResetPassword = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const client = useContext(ClientContext);
+  const [searchParams] = useSearchParams();
 
-  const token = new URLSearchParams(window.location.search).get('token');
+  const token = searchParams.get('token');
 
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [validationError, setValidationError] = useState<string | null>(null);
   const [error, setError] = useState<ErrorInfo | undefined>(undefined);
 
@@ -50,7 +54,7 @@ const ResetPassword = (): React.ReactElement => {
     ({ token, password }) => client.resetPasswordFromToken(token, password),
     {
       onSuccess: () => {
-        navigate('/c/login?passwordReset=true');
+        navigate('/c/login');
       },
       onError: (error) => {
         setError(error);
@@ -60,13 +64,18 @@ const ResetPassword = (): React.ReactElement => {
 
   if (!token) {
     return (
-      <FormContainer>
+      <FormContainer maxWidth="xs">
+        <Typography variant="h4" component="h1">
+          <FormattedMessage id="reset-password.title" defaultMessage="Set a new password" />
+        </Typography>
+
         <Alert severity="error">
           <FormattedMessage
             id="reset-password.invalid-link"
             defaultMessage="Invalid password reset link. Please request a new one."
           />
         </Alert>
+
         <Button
           color="primary"
           size="medium"
@@ -74,7 +83,6 @@ const ResetPassword = (): React.ReactElement => {
           component={RouterLink}
           to="/c/forgot-password"
           disableElevation={true}
-          style={{ marginTop: '1rem' }}
         >
           <FormattedMessage id="reset-password.request-new" defaultMessage="Request new link" />
         </Button>
@@ -82,7 +90,7 @@ const ResetPassword = (): React.ReactElement => {
     );
   }
 
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     setValidationError(null);
 
@@ -130,11 +138,7 @@ const ResetPassword = (): React.ReactElement => {
         />
       </Typography>
 
-      {validationError && (
-        <Alert severity="error" style={{ marginBottom: '0.5rem' }}>
-          {validationError}
-        </Alert>
-      )}
+      {validationError && <Alert severity="error">{validationError}</Alert>}
 
       <GlobalError error={error} />
 
@@ -184,10 +188,32 @@ const ResetPasswordPage = (): React.ReactElement => {
     trackPageView(window.location.pathname, 'ResetPassword');
   }, []);
 
+  const canonicalUrl = getCanonicalUrl('/c/reset-password');
+  const alternateLanguages = getAlternateLanguageUrls('/c/reset-password');
+  const baseUrl =
+    typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
+
   return (
-    <AccountAccessLayout headerType="only-signin">
-      <ResetPassword />
-    </AccountAccessLayout>
+    <>
+      <SEOHead
+        title="Reset Password | WiseMapping"
+        description="Set a new password for your WiseMapping account."
+        canonicalUrl={canonicalUrl}
+        alternateLanguages={alternateLanguages}
+        ogType="website"
+        robots="noindex, follow"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'Reset Password - WiseMapping',
+          description: 'Set a new password for your WiseMapping account.',
+          url: `${baseUrl}${canonicalUrl}`,
+        }}
+      />
+      <AccountAccessLayout headerType="only-signin">
+        <ResetPassword />
+      </AccountAccessLayout>
+    </>
   );
 };
 
