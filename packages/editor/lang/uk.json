@@ -751,5 +751,143 @@
   },
   "topic-font-editor.reset-to-default": {
     "defaultMessage": "Reset to Default"
+  },
+  "appbar.tooltip-change-layout": {
+    "defaultMessage": "Змінити макет"
+  },
+  "appbar.tooltip-outline-view": {
+    "defaultMessage": "Перегляд структури"
+  },
+  "appbar.tooltip-theme-toggle": {
+    "defaultMessage": "Перемкнути тему"
+  },
+  "editor-panel.tooltip-change-layout": {
+    "defaultMessage": "Змінити макет"
+  },
+  "editor-panel.tooltip-outline-view": {
+    "defaultMessage": "Перегляд структури"
+  },
+  "icon-collection.connection.curved-polyline-tooltip": {
+    "defaultMessage": "Багатосегментна лінія з плавними кутами - Найкраще підходить для структурованих макетів і чітких шляхів"
+  },
+  "icon-collection.connection.default-tooltip": {
+    "defaultMessage": "За замовчуванням - Стиль з'єднання буде автоматично вибрано на основі теми"
+  },
+  "icon-collection.connection.neuron": {
+    "defaultMessage": "Нейрон"
+  },
+  "icon-collection.connection.neuron-tooltip": {
+    "defaultMessage": "Органічна імпульсна лінія з розгалуженими імпульсами - ідеально для науки, нейронних мереж або футуристичних тем"
+  },
+  "icon-collection.connection.thick-curved-tooltip": {
+    "defaultMessage": "Товста вигнута лінія з плавними кривими Безьє - Чудово підходить для виділення головних гілок"
+  },
+  "icon-collection.connection.thin-curved-tooltip": {
+    "defaultMessage": "Тонка вигнута лінія з елегантними кривими Безьє - Ідеально для детальних або щільних ментальних карт"
+  },
+  "layout-selector.accept": {
+    "defaultMessage": "Прийняти"
+  },
+  "layout-selector.cancel": {
+    "defaultMessage": "Скасувати"
+  },
+  "layout-selector.description": {
+    "defaultMessage": "Вибрати стиль макету"
+  },
+  "layout-selector.mindmap": {
+    "defaultMessage": "Ментальна карта"
+  },
+  "layout-selector.mindmap-description": {
+    "defaultMessage": "Горизонтальний макет із симетричними гілками"
+  },
+  "layout-selector.title": {
+    "defaultMessage": "Вибрати макет"
+  },
+  "layout-selector.tree": {
+    "defaultMessage": "Дерево"
+  },
+  "layout-selector.tree-description": {
+    "defaultMessage": "Вертикальна ієрархія зверху вниз"
+  },
+  "layout.mindmap.description": {
+    "defaultMessage": "Горизонтальний макет із симетричними гілками з обох сторін. Найкраще для традиційних ментальних карт і мозкового штурму."
+  },
+  "layout.mindmap.name": {
+    "defaultMessage": "Ментальна карта"
+  },
+  "layout.tree.description": {
+    "defaultMessage": "Вертикальна ієрархія зверху вниз. Відмінно підходить для організаційних схем і ієрархічних структур."
+  },
+  "layout.tree.name": {
+    "defaultMessage": "Дерево"
+  },
+  "shortcut-help-pane.expand-by-level": {
+    "defaultMessage": "Розгорнути теми за рівнем"
+  },
+  "shortcut-help-pane.expand-collapse-all": {
+    "defaultMessage": "Розгорнути/Згорнути всі теми"
+  },
+  "shortcut-help-pane.outline-view": {
+    "defaultMessage": "Відкрити перегляд структури"
+  },
+  "shortcut-help-pane.zoom-in": {
+    "defaultMessage": "Збільшити"
+  },
+  "shortcut-help-pane.zoom-out": {
+    "defaultMessage": "Зменшити"
+  },
+  "shortcut-help-pane.zoom-to-fit": {
+    "defaultMessage": "Підігнати масштаб"
+  },
+  "unified-styling.border-color": {
+    "defaultMessage": "Колір рамки"
+  },
+  "unified-styling.border-style": {
+    "defaultMessage": "Стиль рамки"
+  },
+  "unified-styling.connection-style": {
+    "defaultMessage": "Стиль з'єднання"
+  },
+  "unified-styling.connector-style": {
+    "defaultMessage": "Стиль конектора"
+  },
+  "unified-styling.tab.border": {
+    "defaultMessage": "Рамка"
+  },
+  "unified-styling.tab.connector": {
+    "defaultMessage": "Конектор"
+  },
+  "unified-styling.tab.shape": {
+    "defaultMessage": "Форма"
+  },
+  "visualization-toolbar.tooltip-collapse-all": {
+    "defaultMessage": "Згорнути всі вузли"
+  },
+  "visualization-toolbar.tooltip-expand-all": {
+    "defaultMessage": "Розгорнути всі вузли"
+  },
+  "visualization-toolbar.tooltip-expand-level": {
+    "defaultMessage": "Розгорнути за рівнем"
+  },
+  "visualization-toolbar.tooltip-keyboard": {
+    "defaultMessage": "Комбінації клавіш"
+  },
+  "visualization-toolbar.tooltip-layout": {
+    "defaultMessage": "Змінити макет"
+  },
+  "visualization-toolbar.tooltip-outline-view": {
+    "defaultMessage": "Перегляд структури"
+  },
+  "visualization-toolbar.tooltip-theme-toggle": {
+    "defaultMessage": "Перемкнути тему"
+  },
+  "visualization-toolbar.tooltip-zoom-in": {
+    "defaultMessage": "Збільшити"
+  },
+  "visualization-toolbar.tooltip-zoom-out": {
+    "defaultMessage": "Зменшити"
+  },
+  "visualization-toolbar.tooltip-zoom-to-fit": {
+    "defaultMessage": "Підігнати масштаб"
   }
 }

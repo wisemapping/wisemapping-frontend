@@ -751,5 +751,143 @@
   },
   "topic-font-editor.reset-to-default": {
     "defaultMessage": "Reset to Default"
+  },
+  "appbar.tooltip-change-layout": {
+    "defaultMessage": "レイアウト変更"
+  },
+  "appbar.tooltip-outline-view": {
+    "defaultMessage": "アウトライン表示"
+  },
+  "appbar.tooltip-theme-toggle": {
+    "defaultMessage": "テーマ切替"
+  },
+  "editor-panel.tooltip-change-layout": {
+    "defaultMessage": "レイアウト変更"
+  },
+  "editor-panel.tooltip-outline-view": {
+    "defaultMessage": "アウトライン表示"
+  },
+  "icon-collection.connection.curved-polyline-tooltip": {
+    "defaultMessage": "滑らかなコーナーを持つ複数セグメントの線 - 構造化されたレイアウトと明確なパスに最適"
+  },
+  "icon-collection.connection.default-tooltip": {
+    "defaultMessage": "デフォルト - テーマに基づいて接続スタイルが自動的に選択されます"
+  },
+  "icon-collection.connection.neuron": {
+    "defaultMessage": "ニューロン"
+  },
+  "icon-collection.connection.neuron-tooltip": {
+    "defaultMessage": "分岐パルスを持つ有機的なインパルスライン - 科学、ニューラルネット、未来的なテーマに最適"
+  },
+  "icon-collection.connection.thick-curved-tooltip": {
+    "defaultMessage": "滑らかなベジェ曲線を持つ太い曲線 - メインブランチを強調するのに最適"
+  },
+  "icon-collection.connection.thin-curved-tooltip": {
+    "defaultMessage": "エレガントなベジェ曲線を持つ細い曲線 - 詳細または密度の高いマインドマップに最適"
+  },
+  "layout-selector.accept": {
+    "defaultMessage": "確定"
+  },
+  "layout-selector.cancel": {
+    "defaultMessage": "キャンセル"
+  },
+  "layout-selector.description": {
+    "defaultMessage": "レイアウトスタイルを選択"
+  },
+  "layout-selector.mindmap": {
+    "defaultMessage": "マインドマップ"
+  },
+  "layout-selector.mindmap-description": {
+    "defaultMessage": "均衡した枝を持つ水平レイアウト"
+  },
+  "layout-selector.title": {
+    "defaultMessage": "レイアウトを選択"
+  },
+  "layout-selector.tree": {
+    "defaultMessage": "ツリー"
+  },
+  "layout-selector.tree-description": {
+    "defaultMessage": "上から下に流れる垂直階層"
+  },
+  "layout.mindmap.description": {
+    "defaultMessage": "両側に均衡した枝を持つ水平レイアウト。従来のマインドマッピングやブレインストーミングに最適。"
+  },
+  "layout.mindmap.name": {
+    "defaultMessage": "マインドマップ"
+  },
+  "layout.tree.description": {
+    "defaultMessage": "上から下に流れる垂直階層。組織図や階層構造に最適。"
+  },
+  "layout.tree.name": {
+    "defaultMessage": "ツリー"
+  },
+  "shortcut-help-pane.expand-by-level": {
+    "defaultMessage": "レベルごとにトピックを展開"
+  },
+  "shortcut-help-pane.expand-collapse-all": {
+    "defaultMessage": "すべてのトピックを展開/折りたたみ"
+  },
+  "shortcut-help-pane.outline-view": {
+    "defaultMessage": "アウトライン表示を開く"
+  },
+  "shortcut-help-pane.zoom-in": {
+    "defaultMessage": "ズームイン"
+  },
+  "shortcut-help-pane.zoom-out": {
+    "defaultMessage": "ズームアウト"
+  },
+  "shortcut-help-pane.zoom-to-fit": {
+    "defaultMessage": "フィットするようにズーム"
+  },
+  "unified-styling.border-color": {
+    "defaultMessage": "ボーダーカラー"
+  },
+  "unified-styling.border-style": {
+    "defaultMessage": "ボーダースタイル"
+  },
+  "unified-styling.connection-style": {
+    "defaultMessage": "接続スタイル"
+  },
+  "unified-styling.connector-style": {
+    "defaultMessage": "コネクタースタイル"
+  },
+  "unified-styling.tab.border": {
+    "defaultMessage": "ボーダー"
+  },
+  "unified-styling.tab.connector": {
+    "defaultMessage": "コネクター"
+  },
+  "unified-styling.tab.shape": {
+    "defaultMessage": "形状"
+  },
+  "visualization-toolbar.tooltip-collapse-all": {
+    "defaultMessage": "すべてのノードを折りたたむ"
+  },
+  "visualization-toolbar.tooltip-expand-all": {
+    "defaultMessage": "すべてのノードを展開"
+  },
+  "visualization-toolbar.tooltip-expand-level": {
+    "defaultMessage": "レベルごとに展開"
+  },
+  "visualization-toolbar.tooltip-keyboard": {
+    "defaultMessage": "キーボードショートカット"
+  },
+  "visualization-toolbar.tooltip-layout": {
+    "defaultMessage": "レイアウト変更"
+  },
+  "visualization-toolbar.tooltip-outline-view": {
+    "defaultMessage": "アウトライン表示"
+  },
+  "visualization-toolbar.tooltip-theme-toggle": {
+    "defaultMessage": "テーマ切替"
+  },
+  "visualization-toolbar.tooltip-zoom-in": {
+    "defaultMessage": "ズームイン"
+  },
+  "visualization-toolbar.tooltip-zoom-out": {
+    "defaultMessage": "ズームアウト"
+  },
+  "visualization-toolbar.tooltip-zoom-to-fit": {
+    "defaultMessage": "フィットするようにズーム"
   }
 }

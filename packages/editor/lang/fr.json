@@ -751,5 +751,143 @@
   },
   "topic-font-editor.reset-to-default": {
     "defaultMessage": "Reset to Default"
+  },
+  "appbar.tooltip-change-layout": {
+    "defaultMessage": "Changer la disposition"
+  },
+  "appbar.tooltip-outline-view": {
+    "defaultMessage": "Vue plan"
+  },
+  "appbar.tooltip-theme-toggle": {
+    "defaultMessage": "Changer de thème"
+  },
+  "editor-panel.tooltip-change-layout": {
+    "defaultMessage": "Changer la disposition"
+  },
+  "editor-panel.tooltip-outline-view": {
+    "defaultMessage": "Vue plan"
+  },
+  "icon-collection.connection.curved-polyline-tooltip": {
+    "defaultMessage": "Ligne multi-segments avec des coins adoucis - Idéale pour les mises en page structurées et les chemins clairs"
+  },
+  "icon-collection.connection.default-tooltip": {
+    "defaultMessage": "Par défaut - Le style de connexion sera automatiquement sélectionné selon le thème"
+  },
+  "icon-collection.connection.neuron": {
+    "defaultMessage": "Neurone"
+  },
+  "icon-collection.connection.neuron-tooltip": {
+    "defaultMessage": "Ligne d'impulsion organique avec des pulses ramifiés - idéale pour la science, les réseaux neuronaux ou tout ce qui est futuriste"
+  },
+  "icon-collection.connection.thick-curved-tooltip": {
+    "defaultMessage": "Ligne courbe épaisse avec des courbes bezier lisses - Idéale pour mettre en valeur les branches principales"
+  },
+  "icon-collection.connection.thin-curved-tooltip": {
+    "defaultMessage": "Ligne courbe fine avec des courbes bezier élégantes - Idéale pour les cartes mentales détaillées ou denses"
+  },
+  "layout-selector.accept": {
+    "defaultMessage": "Accepter"
+  },
+  "layout-selector.cancel": {
+    "defaultMessage": "Annuler"
+  },
+  "layout-selector.description": {
+    "defaultMessage": "Choisir le style de disposition"
+  },
+  "layout-selector.mindmap": {
+    "defaultMessage": "Carte mentale"
+  },
+  "layout-selector.mindmap-description": {
+    "defaultMessage": "Disposition horizontale avec des branches équilibrées"
+  },
+  "layout-selector.title": {
+    "defaultMessage": "Choisir la disposition"
+  },
+  "layout-selector.tree": {
+    "defaultMessage": "Arbre"
+  },
+  "layout-selector.tree-description": {
+    "defaultMessage": "Hiérarchie verticale de haut en bas"
+  },
+  "layout.mindmap.description": {
+    "defaultMessage": "Disposition horizontale avec des branches équilibrées des deux côtés. Idéale pour la création de cartes mentales traditionnelles et le brainstorming."
+  },
+  "layout.mindmap.name": {
+    "defaultMessage": "Carte mentale"
+  },
+  "layout.tree.description": {
+    "defaultMessage": "Hiérarchie verticale de haut en bas. Excellente pour les organigrammes et les structures hiérarchiques."
+  },
+  "layout.tree.name": {
+    "defaultMessage": "Arbre"
+  },
+  "shortcut-help-pane.expand-by-level": {
+    "defaultMessage": "Développer les sujets par niveau"
+  },
+  "shortcut-help-pane.expand-collapse-all": {
+    "defaultMessage": "Développer/Réduire tous les sujets"
+  },
+  "shortcut-help-pane.outline-view": {
+    "defaultMessage": "Ouvrir la vue plan"
+  },
+  "shortcut-help-pane.zoom-in": {
+    "defaultMessage": "Zoom avant"
+  },
+  "shortcut-help-pane.zoom-out": {
+    "defaultMessage": "Zoom arrière"
+  },
+  "shortcut-help-pane.zoom-to-fit": {
+    "defaultMessage": "Ajuster le zoom"
+  },
+  "unified-styling.border-color": {
+    "defaultMessage": "Couleur de bordure"
+  },
+  "unified-styling.border-style": {
+    "defaultMessage": "Style de bordure"
+  },
+  "unified-styling.connection-style": {
+    "defaultMessage": "Style de connexion"
+  },
+  "unified-styling.connector-style": {
+    "defaultMessage": "Style de connecteur"
+  },
+  "unified-styling.tab.border": {
+    "defaultMessage": "Bordure"
+  },
+  "unified-styling.tab.connector": {
+    "defaultMessage": "Connecteur"
+  },
+  "unified-styling.tab.shape": {
+    "defaultMessage": "Forme"
+  },
+  "visualization-toolbar.tooltip-collapse-all": {
+    "defaultMessage": "Réduire tous les nœuds"
+  },
+  "visualization-toolbar.tooltip-expand-all": {
+    "defaultMessage": "Développer tous les nœuds"
+  },
+  "visualization-toolbar.tooltip-expand-level": {
+    "defaultMessage": "Développer par niveau"
+  },
+  "visualization-toolbar.tooltip-keyboard": {
+    "defaultMessage": "Raccourcis clavier"
+  },
+  "visualization-toolbar.tooltip-layout": {
+    "defaultMessage": "Changer la disposition"
+  },
+  "visualization-toolbar.tooltip-outline-view": {
+    "defaultMessage": "Vue plan"
+  },
+  "visualization-toolbar.tooltip-theme-toggle": {
+    "defaultMessage": "Changer de thème"
+  },
+  "visualization-toolbar.tooltip-zoom-in": {
+    "defaultMessage": "Zoom avant"
+  },
+  "visualization-toolbar.tooltip-zoom-out": {
+    "defaultMessage": "Zoom arrière"
+  },
+  "visualization-toolbar.tooltip-zoom-to-fit": {
+    "defaultMessage": "Ajuster le zoom"
   }
 }

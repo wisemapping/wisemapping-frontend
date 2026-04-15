@@ -751,5 +751,143 @@
   },
   "topic-font-editor.reset-to-default": {
     "defaultMessage": "Reset to Default"
+  },
+  "appbar.tooltip-change-layout": {
+    "defaultMessage": "Alterar Layout"
+  },
+  "appbar.tooltip-outline-view": {
+    "defaultMessage": "Visão de Estrutura"
+  },
+  "appbar.tooltip-theme-toggle": {
+    "defaultMessage": "Alternar Tema"
+  },
+  "editor-panel.tooltip-change-layout": {
+    "defaultMessage": "Alterar Layout"
+  },
+  "editor-panel.tooltip-outline-view": {
+    "defaultMessage": "Visão de Estrutura"
+  },
+  "icon-collection.connection.curved-polyline-tooltip": {
+    "defaultMessage": "Linha multi-segmento com cantos suaves - Melhor para layouts estruturados e caminhos claros"
+  },
+  "icon-collection.connection.default-tooltip": {
+    "defaultMessage": "Padrão - O estilo de conexão será selecionado automaticamente com base no tema"
+  },
+  "icon-collection.connection.neuron": {
+    "defaultMessage": "Neurônio"
+  },
+  "icon-collection.connection.neuron-tooltip": {
+    "defaultMessage": "Linha de impulso orgânico com pulsos ramificados - ideal para ciência, redes neurais ou temas futuristas"
+  },
+  "icon-collection.connection.thick-curved-tooltip": {
+    "defaultMessage": "Linha curva grossa com curvas bezier suaves - Ótima para enfatizar os ramos principais"
+  },
+  "icon-collection.connection.thin-curved-tooltip": {
+    "defaultMessage": "Linha curva fina com curvas bezier elegantes - Ideal para mapas mentais detalhados ou densos"
+  },
+  "layout-selector.accept": {
+    "defaultMessage": "Aceitar"
+  },
+  "layout-selector.cancel": {
+    "defaultMessage": "Cancelar"
+  },
+  "layout-selector.description": {
+    "defaultMessage": "Escolher estilo de layout"
+  },
+  "layout-selector.mindmap": {
+    "defaultMessage": "Mapa Mental"
+  },
+  "layout-selector.mindmap-description": {
+    "defaultMessage": "Layout horizontal com ramos equilibrados"
+  },
+  "layout-selector.title": {
+    "defaultMessage": "Escolher Layout"
+  },
+  "layout-selector.tree": {
+    "defaultMessage": "Árvore"
+  },
+  "layout-selector.tree-description": {
+    "defaultMessage": "Hierarquia vertical de cima para baixo"
+  },
+  "layout.mindmap.description": {
+    "defaultMessage": "Layout horizontal com ramos equilibrados em ambos os lados. Ideal para mapeamento mental tradicional e brainstorming."
+  },
+  "layout.mindmap.name": {
+    "defaultMessage": "Mapa Mental"
+  },
+  "layout.tree.description": {
+    "defaultMessage": "Hierarquia vertical de cima para baixo. Ótimo para organogramas e estruturas hierárquicas."
+  },
+  "layout.tree.name": {
+    "defaultMessage": "Árvore"
+  },
+  "shortcut-help-pane.expand-by-level": {
+    "defaultMessage": "Expandir tópicos por nível"
+  },
+  "shortcut-help-pane.expand-collapse-all": {
+    "defaultMessage": "Expandir/Recolher todos os tópicos"
+  },
+  "shortcut-help-pane.outline-view": {
+    "defaultMessage": "Abrir visão de estrutura"
+  },
+  "shortcut-help-pane.zoom-in": {
+    "defaultMessage": "Ampliar"
+  },
+  "shortcut-help-pane.zoom-out": {
+    "defaultMessage": "Reduzir"
+  },
+  "shortcut-help-pane.zoom-to-fit": {
+    "defaultMessage": "Ajustar zoom"
+  },
+  "unified-styling.border-color": {
+    "defaultMessage": "Cor da Borda"
+  },
+  "unified-styling.border-style": {
+    "defaultMessage": "Estilo de Borda"
+  },
+  "unified-styling.connection-style": {
+    "defaultMessage": "Estilo de Conexão"
+  },
+  "unified-styling.connector-style": {
+    "defaultMessage": "Estilo de Conector"
+  },
+  "unified-styling.tab.border": {
+    "defaultMessage": "Borda"
+  },
+  "unified-styling.tab.connector": {
+    "defaultMessage": "Conector"
+  },
+  "unified-styling.tab.shape": {
+    "defaultMessage": "Forma"
+  },
+  "visualization-toolbar.tooltip-collapse-all": {
+    "defaultMessage": "Recolher Todos os Nós"
+  },
+  "visualization-toolbar.tooltip-expand-all": {
+    "defaultMessage": "Expandir Todos os Nós"
+  },
+  "visualization-toolbar.tooltip-expand-level": {
+    "defaultMessage": "Expandir por Nível"
+  },
+  "visualization-toolbar.tooltip-keyboard": {
+    "defaultMessage": "Atalhos de Teclado"
+  },
+  "visualization-toolbar.tooltip-layout": {
+    "defaultMessage": "Alterar Layout"
+  },
+  "visualization-toolbar.tooltip-outline-view": {
+    "defaultMessage": "Visão de Estrutura"
+  },
+  "visualization-toolbar.tooltip-theme-toggle": {
+    "defaultMessage": "Alternar Tema"
+  },
+  "visualization-toolbar.tooltip-zoom-in": {
+    "defaultMessage": "Ampliar"
+  },
+  "visualization-toolbar.tooltip-zoom-out": {
+    "defaultMessage": "Reduzir"
+  },
+  "visualization-toolbar.tooltip-zoom-to-fit": {
+    "defaultMessage": "Ajustar Zoom"
   }
 }
