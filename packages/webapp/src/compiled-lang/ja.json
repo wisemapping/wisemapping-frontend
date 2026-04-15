@@ -639,6 +639,40 @@
       "value": "設定"
     }
   ],
+  "common.terms-notice": [
+    {
+      "type": 0,
+      "value": "By continuing, you agree to our "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Terms of Service"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": " and "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Privacy Policy"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "common.wait": [
     {
       "type": 0,
@@ -879,12 +913,6 @@
       "value": "利用規約"
     }
   ],
-  "footer.privacypolicy": [
-    {
-      "type": 0,
-      "value": "プライバシーポリシー"
-    }
-  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -924,13 +952,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "パスワードリセットリンクをメールで送信しました。リンクは1時間で有効期限が切れます。リンクを使用するまで現在のパスワードは変更されません。"
+      "value": "パスワードをリセットできるメールをお送りしました。数分以内に受信されるはずです。"
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "メールを確認してください。"
+      "value": "一時パスワードが送信されました。"
     }
   ],
   "forgot.title": [
@@ -1635,32 +1663,8 @@
   ],
   "registration.termandconditions": [
     {
-      "type": 8,
-      "value": "termsLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "利用規約"
-        }
-      ]
-    },
-    {
       "type": 0,
-      "value": "と"
-    },
-    {
-      "type": 8,
-      "value": "privacyLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "プライバシーポリシー"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": "を読み、同意します"
+      "value": "クライアント条件：上記で入力したWiseMappingアカウント情報を確認し、こちらでクライアント条件を確認してください。下の「登録」をクリックすることで、上記のクライアント条件とプライバシーポリシーに同意したことになります"
     }
   ],
   "registration.title": [
@@ -1781,72 +1785,6 @@
     {
       "type": 0,
       "value": "タイトルは必須です"
-    }
-  ],
-  "reset-password.page-title": [
-    {
-      "type": 0,
-      "value": "パスワードのリセット | WiseMapping"
-    }
-  ],
-  "reset-password.title": [
-    {
-      "type": 0,
-      "value": "新しいパスワードを設定"
-    }
-  ],
-  "reset-password.desc": [
-    {
-      "type": 0,
-      "value": "以下に新しいパスワードを入力してください。"
-    }
-  ],
-  "reset-password.password": [
-    {
-      "type": 0,
-      "value": "新しいパスワード"
-    }
-  ],
-  "reset-password.confirm-password": [
-    {
-      "type": 0,
-      "value": "新しいパスワードを確認"
-    }
-  ],
-  "reset-password.submit": [
-    {
-      "type": 0,
-      "value": "新しいパスワードを設定する"
-    }
-  ],
-  "reset-password.invalid-link": [
-    {
-      "type": 0,
-      "value": "パスワードリセットリンクが無効です。新しいリンクをリクエストしてください。"
-    }
-  ],
-  "reset-password.request-new": [
-    {
-      "type": 0,
-      "value": "新しいリンクをリクエスト"
-    }
-  ],
-  "reset-password.too-short": [
-    {
-      "type": 0,
-      "value": "パスワードは8文字以上である必要があります。"
-    }
-  ],
-  "reset-password.too-long": [
-    {
-      "type": 0,
-      "value": "パスワードは40文字未満である必要があります。"
-    }
-  ],
-  "reset-password.mismatch": [
-    {
-      "type": 0,
-      "value": "パスワードが一致しません。"
     }
   ]
 }
