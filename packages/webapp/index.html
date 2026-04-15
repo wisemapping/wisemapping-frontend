@@ -100,7 +100,10 @@
       function onConsentReady() { grantConsentIfNonGdpr(); loadAdSense(); }
 
       window.googlefc.callbackQueue.push({ 'CONSENT_MODE_DATA_READY': onConsentReady });
-      setTimeout(onConsentReady, 3000);
+      // Fallback: if Funding Choices fails to load (e.g. blocked by ad blocker), load AdSense
+      // after 3 seconds in non-personalised mode (all consents remain denied by default).
+      // Do NOT call grantConsentIfNonGdpr() here — consent must only come from the CMP banner.
+      setTimeout(loadAdSense, 3000);
     }
   </script>
 
