@@ -75,9 +75,9 @@ export const exporterAssert = async (testName: string, exporter: Exporter) => {
 
   // compare with expected ...
   const expectedStr = fs.readFileSync(expectedPath).toString();
-  if (actualStr.trim() !== expectedStr.trim()) {
+  if (actualStr !== expectedStr) {
     const diffResult = diff(actualStr, expectedStr);
     console.log(diffResult);
-    expect(actualStr.trim()).toEqual(expectedStr.trim());
+    expect(actualStr).toEqual(expectedStr);
   }
 };
