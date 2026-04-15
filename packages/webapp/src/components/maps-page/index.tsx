@@ -160,6 +160,23 @@ const MapsPage = (): ReactElement => {
     trackPageView(window.location.pathname, 'Maps List');
   }, []);
 
+  // Suppress lateral and bottom auto-ads on the maps list page.
+  // AdSense loads once on the initial SPA page load and persists across client-side
+  // navigation, so dashboard URL exclusions don't fire here. We push a config
+  // override on mount to disable anchor (bottom) and side-rail (lateral) formats.
+  // Vignette ads are unaffected — they fire on outbound navigation from any page
+  // where the AdSense script is active.
+  useEffect(() => {
+    const adsbygoogle = (window as unknown as { adsbygoogle?: object[] }).adsbygoogle;
+    if (adsbygoogle) {
+      (adsbygoogle as object[]).push({
+        google_ad_client: 'ca-pub-4996113942657337',
+        overlays: { bottom: false },
+        side_rails: { enabled: false },
+      });
+    }
+  }, []);
+
   const mutation = useMutation((id: number) => client.deleteLabel(id), {
     onSuccess: () => {
       queryClient.invalidateQueries('labels');
