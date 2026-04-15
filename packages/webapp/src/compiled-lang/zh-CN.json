@@ -1649,6 +1649,40 @@
       "value": "密码"
     }
   ],
+  "registration.recaptcha-notice": [
+    {
+      "type": 0,
+      "value": "本网站受reCAPTCHA保护，并适用Google的"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "隐私政策"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": "和"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "服务条款"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": "。"
+    }
+  ],
   "registration.register": [
     {
       "type": 0,

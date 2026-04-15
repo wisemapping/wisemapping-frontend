@@ -527,6 +527,9 @@
   "registration.password": {
     "defaultMessage": "パスワード"
   },
+  "registration.recaptcha-notice": {
+    "defaultMessage": "このサイトはreCAPTCHAで保護されており、Googleの<privacyLink>プライバシーポリシー</privacyLink>と<termsLink>利用規約</termsLink>が適用されます。"
+  },
   "registration.register": {
     "defaultMessage": "登録"
   },

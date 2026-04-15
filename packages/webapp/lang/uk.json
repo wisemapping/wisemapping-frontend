@@ -536,6 +536,9 @@
   "registration.password": {
     "defaultMessage": "Пароль"
   },
+  "registration.recaptcha-notice": {
+    "defaultMessage": "Цей сайт захищено reCAPTCHA, і до нього застосовуються <privacyLink>Політика конфіденційності</privacyLink> та <termsLink>Умови використання</termsLink> Google."
+  },
   "registration.register": {
     "defaultMessage": "Зареєструватися"
   },

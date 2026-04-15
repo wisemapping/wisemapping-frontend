@@ -33,7 +33,7 @@ import Client, {
 import { LocaleCode, localeFromStr } from '../../app-i18n';
 import Cookies from 'universal-cookie';
 import JwtTokenConfig from '../../jwt-token-config';
-import { setAnalyticsUserId, clearAnalyticsUserId } from '../../../utils/analytics';
+import { setAnalyticsUserEmail, clearAnalyticsUserId } from '../../../utils/analytics';
 
 const label1: Label = {
   id: 1,
@@ -254,8 +254,7 @@ class MockClient implements Client {
 
   login(auth: JwtAuth): Promise<void> {
     JwtTokenConfig.storeToken(auth.email);
-    // Set analytics user ID using email from auth
-    setAnalyticsUserId(auth.email);
+    setAnalyticsUserEmail(auth.email);
     return Promise.resolve();
   }
 
@@ -528,7 +527,6 @@ class MockClient implements Client {
   }
 
   registerNewUser(user: NewUser): Promise<void> {
-    console.log('user:' + user);
     if (user.email == 'error@example.com') {
       return Promise.reject({ msg: 'Unexpected error' });
     }
@@ -540,8 +538,7 @@ class MockClient implements Client {
     return Promise.resolve(this.maps);
   }
 
-  resetPassword(email: string): Promise<ForgotPasswordResult> {
-    console.log('email:' + email);
+  resetPassword(_email: string): Promise<ForgotPasswordResult> {
     return Promise.resolve({ action: 'EMAIL_SENT' });
   }
 

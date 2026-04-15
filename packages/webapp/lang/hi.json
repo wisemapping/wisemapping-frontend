@@ -530,6 +530,9 @@
   "registration.password": {
     "defaultMessage": "पासवर्ड"
   },
+  "registration.recaptcha-notice": {
+    "defaultMessage": "यह साइट reCAPTCHA द्वारा सुरक्षित है और Google की <privacyLink>गोपनीयता नीति</privacyLink> और <termsLink>सेवा की शर्तें</termsLink> लागू होती हैं।"
+  },
   "registration.register": {
     "defaultMessage": "पंजीकरण करें"
   },

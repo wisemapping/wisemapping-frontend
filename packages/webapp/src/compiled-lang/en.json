@@ -1649,6 +1649,40 @@
       "value": "Password"
     }
   ],
+  "registration.recaptcha-notice": [
+    {
+      "type": 0,
+      "value": "This site is protected by reCAPTCHA and the Google "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Privacy Policy"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": " and "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Terms of Service"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": " apply."
+    }
+  ],
   "registration.register": [
     {
       "type": 0,
