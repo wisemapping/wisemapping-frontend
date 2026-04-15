@@ -639,6 +639,40 @@
       "value": "Configuración"
     }
   ],
+  "common.terms-notice": [
+    {
+      "type": 0,
+      "value": "Al continuar, aceptas nuestros "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Términos de Uso"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": " y "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Política de Privacidad"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "common.wait": [
     {
       "type": 0,
@@ -879,12 +913,6 @@
       "value": "Términos y Condiciones"
     }
   ],
-  "footer.privacypolicy": [
-    {
-      "type": 0,
-      "value": "Política de Privacidad"
-    }
-  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -924,13 +952,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Hemos enviado un enlace para restablecer tu contraseña a tu correo. El enlace expira en 1 hora. Tu contraseña actual permanece sin cambios hasta que uses el enlace."
+      "value": "Le hemos enviado un correo electrónico que le permitirá restablecer su contraseña. Deberías recibirlo en los próximos minutos."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Revisa tu correo electrónico."
+      "value": "Su contraseña temporal ha sido enviada."
     }
   ],
   "forgot.title": [
@@ -1636,31 +1664,7 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "He leído y acepto los "
-    },
-    {
-      "type": 8,
-      "value": "termsLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "Términos de Uso"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " y la "
-    },
-    {
-      "type": 8,
-      "value": "privacyLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "Política de Privacidad"
-        }
-      ]
+      "value": "Condiciones del cliente: verifique la información de la cuenta de WiseMapping que ingresó anteriormente y revise las Condiciones del cliente aquí. Al hacer clic en 'Registrarse' a continuación, acepta los Términos del cliente anteriores y la Política de privacidad"
     }
   ],
   "registration.title": [
@@ -1781,72 +1785,6 @@
     {
       "type": 0,
       "value": "El título es obligatorio"
-    }
-  ],
-  "reset-password.page-title": [
-    {
-      "type": 0,
-      "value": "Restablecer contraseña | WiseMapping"
-    }
-  ],
-  "reset-password.title": [
-    {
-      "type": 0,
-      "value": "Establecer una nueva contraseña"
-    }
-  ],
-  "reset-password.desc": [
-    {
-      "type": 0,
-      "value": "Introduce tu nueva contraseña a continuación."
-    }
-  ],
-  "reset-password.password": [
-    {
-      "type": 0,
-      "value": "Nueva contraseña"
-    }
-  ],
-  "reset-password.confirm-password": [
-    {
-      "type": 0,
-      "value": "Confirmar nueva contraseña"
-    }
-  ],
-  "reset-password.submit": [
-    {
-      "type": 0,
-      "value": "Establecer nueva contraseña"
-    }
-  ],
-  "reset-password.invalid-link": [
-    {
-      "type": 0,
-      "value": "Enlace de restablecimiento de contraseña inválido. Por favor, solicita uno nuevo."
-    }
-  ],
-  "reset-password.request-new": [
-    {
-      "type": 0,
-      "value": "Solicitar nuevo enlace"
-    }
-  ],
-  "reset-password.too-short": [
-    {
-      "type": 0,
-      "value": "La contraseña debe tener al menos 8 caracteres."
-    }
-  ],
-  "reset-password.too-long": [
-    {
-      "type": 0,
-      "value": "La contraseña debe tener menos de 40 caracteres."
-    }
-  ],
-  "reset-password.mismatch": [
-    {
-      "type": 0,
-      "value": "Las contraseñas no coinciden."
     }
   ]
 }

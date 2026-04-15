@@ -639,6 +639,40 @@
       "value": "Настройки"
     }
   ],
+  "common.terms-notice": [
+    {
+      "type": 0,
+      "value": "By continuing, you agree to our "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Terms of Service"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": " and "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Privacy Policy"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "common.wait": [
     {
       "type": 0,
@@ -879,12 +913,6 @@
       "value": "Общие Правила"
     }
   ],
-  "footer.privacypolicy": [
-    {
-      "type": 0,
-      "value": "Политика конфиденциальности"
-    }
-  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -924,13 +952,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Мы отправили ссылку для сброса пароля на вашу почту. Ссылка действительна 1 час. Ваш текущий пароль остаётся неизменным, пока вы не воспользуетесь ссылкой."
+      "value": "Мы отправили e-mail с инструкциями по восстановлению пароля. Вы должны получить его в течение пары минут."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Проверьте вашу почту."
+      "value": "Ваш временный пароль отправлен."
     }
   ],
   "forgot.title": [
@@ -1636,31 +1664,7 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "Я прочитал(а) и принимаю "
-    },
-    {
-      "type": 8,
-      "value": "termsLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "Условия использования"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " и "
-    },
-    {
-      "type": 8,
-      "value": "privacyLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "Политику конфиденциальности"
-        }
-      ]
+      "value": "Правила: Пожалуйста, проверьте информацию учетной записи WiseMapping, которую вы указали, и ознакомьтесь с Правилами. По нажатию на кнопку 'Регистрация' вы соглашаетесь с Правилами и Политикой Конфиденциальности"
     }
   ],
   "registration.title": [
@@ -1781,72 +1785,6 @@
     {
       "type": 0,
       "value": "Название обязательно"
-    }
-  ],
-  "reset-password.page-title": [
-    {
-      "type": 0,
-      "value": "Сброс пароля | WiseMapping"
-    }
-  ],
-  "reset-password.title": [
-    {
-      "type": 0,
-      "value": "Установить новый пароль"
-    }
-  ],
-  "reset-password.desc": [
-    {
-      "type": 0,
-      "value": "Введите новый пароль ниже."
-    }
-  ],
-  "reset-password.password": [
-    {
-      "type": 0,
-      "value": "Новый пароль"
-    }
-  ],
-  "reset-password.confirm-password": [
-    {
-      "type": 0,
-      "value": "Подтвердите новый пароль"
-    }
-  ],
-  "reset-password.submit": [
-    {
-      "type": 0,
-      "value": "Установить новый пароль"
-    }
-  ],
-  "reset-password.invalid-link": [
-    {
-      "type": 0,
-      "value": "Ссылка для сброса пароля недействительна. Пожалуйста, запросите новую."
-    }
-  ],
-  "reset-password.request-new": [
-    {
-      "type": 0,
-      "value": "Запросить новую ссылку"
-    }
-  ],
-  "reset-password.too-short": [
-    {
-      "type": 0,
-      "value": "Пароль должен содержать не менее 8 символов."
-    }
-  ],
-  "reset-password.too-long": [
-    {
-      "type": 0,
-      "value": "Пароль должен содержать не более 40 символов."
-    }
-  ],
-  "reset-password.mismatch": [
-    {
-      "type": 0,
-      "value": "Пароли не совпадают."
     }
   ]
 }

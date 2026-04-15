@@ -639,6 +639,40 @@
       "value": "设置"
     }
   ],
+  "common.terms-notice": [
+    {
+      "type": 0,
+      "value": "By continuing, you agree to our "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Terms of Service"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": " and "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Privacy Policy"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "common.wait": [
     {
       "type": 0,
@@ -879,12 +913,6 @@
       "value": "条款和条件"
     }
   ],
-  "footer.privacypolicy": [
-    {
-      "type": 0,
-      "value": "隐私政策"
-    }
-  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -924,13 +952,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "我们已向您的邮箱发送了密码重置链接。该链接将在 1 小时后过期。在您使用该链接之前，您的当前密码保持不变。"
+      "value": "我们已向您发送一封电子邮件，允许您重置密码。您应该在接下来的几分钟内收到它。"
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "请查收您的邮件。"
+      "value": "您的临时密码已发送。"
     }
   ],
   "forgot.title": [
@@ -1636,31 +1664,7 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "我已阅读并同意"
-    },
-    {
-      "type": 8,
-      "value": "termsLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "使用条款"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": "和"
-    },
-    {
-      "type": 8,
-      "value": "privacyLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "隐私政策"
-        }
-      ]
+      "value": "客户条款：请检查您在上面输入的WiseMapping账户信息，并在此处查看客户条款。点击下面的'注册'即表示您同意上述客户条款和隐私政策"
     }
   ],
   "registration.title": [
@@ -1781,72 +1785,6 @@
     {
       "type": 0,
       "value": "标题是必需的"
-    }
-  ],
-  "reset-password.page-title": [
-    {
-      "type": 0,
-      "value": "重置密码 | WiseMapping"
-    }
-  ],
-  "reset-password.title": [
-    {
-      "type": 0,
-      "value": "设置新密码"
-    }
-  ],
-  "reset-password.desc": [
-    {
-      "type": 0,
-      "value": "请在下方输入您的新密码。"
-    }
-  ],
-  "reset-password.password": [
-    {
-      "type": 0,
-      "value": "新密码"
-    }
-  ],
-  "reset-password.confirm-password": [
-    {
-      "type": 0,
-      "value": "确认新密码"
-    }
-  ],
-  "reset-password.submit": [
-    {
-      "type": 0,
-      "value": "设置新密码"
-    }
-  ],
-  "reset-password.invalid-link": [
-    {
-      "type": 0,
-      "value": "密码重置链接无效。请申请新链接。"
-    }
-  ],
-  "reset-password.request-new": [
-    {
-      "type": 0,
-      "value": "申请新链接"
-    }
-  ],
-  "reset-password.too-short": [
-    {
-      "type": 0,
-      "value": "密码至少需要 8 个字符。"
-    }
-  ],
-  "reset-password.too-long": [
-    {
-      "type": 0,
-      "value": "密码必须少于 40 个字符。"
-    }
-  ],
-  "reset-password.mismatch": [
-    {
-      "type": 0,
-      "value": "两次输入的密码不一致。"
     }
   ]
 }

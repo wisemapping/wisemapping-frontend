@@ -639,6 +639,40 @@
       "value": "Settings"
     }
   ],
+  "common.terms-notice": [
+    {
+      "type": 0,
+      "value": "By continuing, you agree to our "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Terms of Service"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": " and "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Privacy Policy"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "common.wait": [
     {
       "type": 0,
@@ -879,12 +913,6 @@
       "value": "Term And Conditions"
     }
   ],
-  "footer.privacypolicy": [
-    {
-      "type": 0,
-      "value": "Privacy Policy"
-    }
-  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -924,13 +952,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "We've sent a password reset link to your email. The link expires in 1 hour. Your current password remains unchanged until you use the link."
+      "value": "We've sent you an email that will allow you to reset your password. You should receive it in the next minutes."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Check your email."
+      "value": "Your temporal password has been sent."
     }
   ],
   "forgot.title": [
@@ -1636,31 +1664,7 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "I have read and agree to the "
-    },
-    {
-      "type": 8,
-      "value": "termsLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "Terms of Use"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " and "
-    },
-    {
-      "type": 8,
-      "value": "privacyLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "Privacy Policy"
-        }
-      ]
+      "value": "Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
     }
   ],
   "registration.title": [
@@ -1781,72 +1785,6 @@
     {
       "type": 0,
       "value": "Title is required"
-    }
-  ],
-  "reset-password.page-title": [
-    {
-      "type": 0,
-      "value": "Reset Password | WiseMapping"
-    }
-  ],
-  "reset-password.title": [
-    {
-      "type": 0,
-      "value": "Set a new password"
-    }
-  ],
-  "reset-password.desc": [
-    {
-      "type": 0,
-      "value": "Enter your new password below."
-    }
-  ],
-  "reset-password.password": [
-    {
-      "type": 0,
-      "value": "New password"
-    }
-  ],
-  "reset-password.confirm-password": [
-    {
-      "type": 0,
-      "value": "Confirm new password"
-    }
-  ],
-  "reset-password.submit": [
-    {
-      "type": 0,
-      "value": "Set new password"
-    }
-  ],
-  "reset-password.invalid-link": [
-    {
-      "type": 0,
-      "value": "Invalid password reset link. Please request a new one."
-    }
-  ],
-  "reset-password.request-new": [
-    {
-      "type": 0,
-      "value": "Request new link"
-    }
-  ],
-  "reset-password.too-short": [
-    {
-      "type": 0,
-      "value": "Password must be at least 8 characters."
-    }
-  ],
-  "reset-password.too-long": [
-    {
-      "type": 0,
-      "value": "Password must be less than 40 characters."
-    }
-  ],
-  "reset-password.mismatch": [
-    {
-      "type": 0,
-      "value": "Passwords do not match."
     }
   ]
 }

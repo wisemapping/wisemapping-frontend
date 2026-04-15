@@ -639,6 +639,40 @@
       "value": "Налаштування"
     }
   ],
+  "common.terms-notice": [
+    {
+      "type": 0,
+      "value": "By continuing, you agree to our "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Terms of Service"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": " and "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Privacy Policy"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "common.wait": [
     {
       "type": 0,
@@ -879,12 +913,6 @@
       "value": "Умови використання"
     }
   ],
-  "footer.privacypolicy": [
-    {
-      "type": 0,
-      "value": "Політика конфіденційності"
-    }
-  ],
   "forgot.desc": [
     {
       "type": 0,
@@ -924,13 +952,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Ми надіслали посилання для скидання пароля на вашу пошту. Посилання дійсне 1 годину. Ваш поточний пароль залишається незмінним, доки ви не скористаєтесь посиланням."
+      "value": "Ми надіслали вам електронний лист, який дозволить скинути ваш пароль. Ви повинні отримати його в найближчі хвилини."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Перевірте свою пошту."
+      "value": "Ваш тимчасовий пароль було надіслано."
     }
   ],
   "forgot.title": [
@@ -1636,31 +1664,7 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "Я прочитав(ла) та приймаю "
-    },
-    {
-      "type": 8,
-      "value": "termsLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "Умови використання"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " та "
-    },
-    {
-      "type": 8,
-      "value": "privacyLink",
-      "children": [
-        {
-          "type": 0,
-          "value": "Політику конфіденційності"
-        }
-      ]
+      "value": "Умови клієнта: Будь ласка, перевірте інформацію про акаунт WiseMapping, яку ви ввели вище, і перегляньте Умови клієнта тут. Натиснувши 'Зареєструватися' нижче, ви погоджуєтеся з Умовами клієнта вище та Політикою конфіденційності"
     }
   ],
   "registration.title": [
@@ -1781,72 +1785,6 @@
     {
       "type": 0,
       "value": "Назва обов'язкова"
-    }
-  ],
-  "reset-password.page-title": [
-    {
-      "type": 0,
-      "value": "Скидання пароля | WiseMapping"
-    }
-  ],
-  "reset-password.title": [
-    {
-      "type": 0,
-      "value": "Встановити новий пароль"
-    }
-  ],
-  "reset-password.desc": [
-    {
-      "type": 0,
-      "value": "Введіть новий пароль нижче."
-    }
-  ],
-  "reset-password.password": [
-    {
-      "type": 0,
-      "value": "Новий пароль"
-    }
-  ],
-  "reset-password.confirm-password": [
-    {
-      "type": 0,
-      "value": "Підтвердіть новий пароль"
-    }
-  ],
-  "reset-password.submit": [
-    {
-      "type": 0,
-      "value": "Встановити новий пароль"
-    }
-  ],
-  "reset-password.invalid-link": [
-    {
-      "type": 0,
-      "value": "Посилання для скидання пароля недійсне. Будь ласка, запросіть нове."
-    }
-  ],
-  "reset-password.request-new": [
-    {
-      "type": 0,
-      "value": "Запросити нове посилання"
-    }
-  ],
-  "reset-password.too-short": [
-    {
-      "type": 0,
-      "value": "Пароль повинен містити не менше 8 символів."
-    }
-  ],
-  "reset-password.too-long": [
-    {
-      "type": 0,
-      "value": "Пароль повинен містити не більше 40 символів."
-    }
-  ],
-  "reset-password.mismatch": [
-    {
-      "type": 0,
-      "value": "Паролі не збігаються."
     }
   ]
 }
