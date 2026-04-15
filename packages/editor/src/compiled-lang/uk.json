@@ -59,6 +59,12 @@
       "value": "Карту розуму перейменовано"
     }
   ],
+  "appbar.tooltip-change-layout": [
+    {
+      "type": 0,
+      "value": "Змінити макет"
+    }
+  ],
   "appbar.tooltip-export": [
     {
       "type": 0,
@@ -75,6 +81,12 @@
     {
       "type": 0,
       "value": "Інформація"
+    }
+  ],
+  "appbar.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Перегляд структури"
     }
   ],
   "appbar.tooltip-print": [
@@ -129,6 +141,12 @@
     {
       "type": 0,
       "value": "Тема"
+    }
+  ],
+  "appbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "Перемкнути тему"
     }
   ],
   "appbar.tooltip-undo": [
@@ -407,6 +425,12 @@
       "value": "Фон"
     }
   ],
+  "editor-panel.tooltip-change-layout": [
+    {
+      "type": 0,
+      "value": "Змінити макет"
+    }
+  ],
   "editor-panel.tooltip-connection-color": [
     {
       "type": 0,
@@ -459,6 +483,12 @@
     {
       "type": 0,
       "value": "Видалити тему"
+    }
+  ],
+  "editor-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Перегляд структури"
     }
   ],
   "editor-panel.tooltip-relationship-arrow-end": [
@@ -713,10 +743,22 @@
       "value": "Крива ламана"
     }
   ],
+  "icon-collection.connection.curved-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "Багатосегментна лінія з плавними кутами - Найкраще підходить для структурованих макетів і чітких шляхів"
+    }
+  ],
   "icon-collection.connection.default": [
     {
       "type": 0,
       "value": "Default"
+    }
+  ],
+  "icon-collection.connection.default-tooltip": [
+    {
+      "type": 0,
+      "value": "За замовчуванням - Стиль з'єднання буде автоматично вибрано на основі теми"
     }
   ],
   "icon-collection.connection.heartbeat": [
@@ -729,6 +771,18 @@
     {
       "type": 0,
       "value": "Хвильова форма, натхненна ЕКГ, з різкими піками - ідеально підходить для передачі енергії, терміновості або життєвих сигналів"
+    }
+  ],
+  "icon-collection.connection.neuron": [
+    {
+      "type": 0,
+      "value": "Нейрон"
+    }
+  ],
+  "icon-collection.connection.neuron-tooltip": [
+    {
+      "type": 0,
+      "value": "Органічна імпульсна лінія з розгалуженими імпульсами - ідеально для науки, нейронних мереж або футуристичних тем"
     }
   ],
   "icon-collection.connection.organic-curved": [
@@ -761,10 +815,22 @@
       "value": "Товста крива"
     }
   ],
+  "icon-collection.connection.thick-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Товста вигнута лінія з плавними кривими Безьє - Чудово підходить для виділення головних гілок"
+    }
+  ],
   "icon-collection.connection.thin-curved": [
     {
       "type": 0,
       "value": "Тонка крива"
+    }
+  ],
+  "icon-collection.connection.thin-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Тонка вигнута лінія з елегантними кривими Безьє - Ідеально для детальних або щільних ментальних карт"
     }
   ],
   "icon-collection.default-tooltip": [
@@ -849,6 +915,78 @@
     {
       "type": 0,
       "value": "іконки знайдені"
+    }
+  ],
+  "layout-selector.accept": [
+    {
+      "type": 0,
+      "value": "Прийняти"
+    }
+  ],
+  "layout-selector.cancel": [
+    {
+      "type": 0,
+      "value": "Скасувати"
+    }
+  ],
+  "layout-selector.description": [
+    {
+      "type": 0,
+      "value": "Вибрати стиль макету"
+    }
+  ],
+  "layout-selector.mindmap": [
+    {
+      "type": 0,
+      "value": "Ментальна карта"
+    }
+  ],
+  "layout-selector.mindmap-description": [
+    {
+      "type": 0,
+      "value": "Горизонтальний макет із симетричними гілками"
+    }
+  ],
+  "layout-selector.title": [
+    {
+      "type": 0,
+      "value": "Вибрати макет"
+    }
+  ],
+  "layout-selector.tree": [
+    {
+      "type": 0,
+      "value": "Дерево"
+    }
+  ],
+  "layout-selector.tree-description": [
+    {
+      "type": 0,
+      "value": "Вертикальна ієрархія зверху вниз"
+    }
+  ],
+  "layout.mindmap.description": [
+    {
+      "type": 0,
+      "value": "Горизонтальний макет із симетричними гілками з обох сторін. Найкраще для традиційних ментальних карт і мозкового штурму."
+    }
+  ],
+  "layout.mindmap.name": [
+    {
+      "type": 0,
+      "value": "Ментальна карта"
+    }
+  ],
+  "layout.tree.description": [
+    {
+      "type": 0,
+      "value": "Вертикальна ієрархія зверху вниз. Відмінно підходить для організаційних схем і ієрархічних структур."
+    }
+  ],
+  "layout.tree.name": [
+    {
+      "type": 0,
+      "value": "Дерево"
     }
   ],
   "link.help_text": [
@@ -1167,6 +1305,18 @@
       "value": "F2 або Подвійне натискання"
     }
   ],
+  "shortcut-help-pane.expand-by-level": [
+    {
+      "type": 0,
+      "value": "Розгорнути теми за рівнем"
+    }
+  ],
+  "shortcut-help-pane.expand-collapse-all": [
+    {
+      "type": 0,
+      "value": "Розгорнути/Згорнути всі теми"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1177,6 +1327,12 @@
     {
       "type": 0,
       "value": "Стрілки"
+    }
+  ],
+  "shortcut-help-pane.outline-view": [
+    {
+      "type": 0,
+      "value": "Відкрити перегляд структури"
     }
   ],
   "shortcut-help-pane.overwrite-edit-topic": [
@@ -1225,6 +1381,24 @@
     {
       "type": 0,
       "value": "Скасувати редагування"
+    }
+  ],
+  "shortcut-help-pane.zoom-in": [
+    {
+      "type": 0,
+      "value": "Збільшити"
+    }
+  ],
+  "shortcut-help-pane.zoom-out": [
+    {
+      "type": 0,
+      "value": "Зменшити"
+    }
+  ],
+  "shortcut-help-pane.zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Підігнати масштаб"
     }
   ],
   "sunrise": [
@@ -1461,10 +1635,112 @@
       "value": "Background Color"
     }
   ],
+  "unified-styling.border-color": [
+    {
+      "type": 0,
+      "value": "Колір рамки"
+    }
+  ],
+  "unified-styling.border-style": [
+    {
+      "type": 0,
+      "value": "Стиль рамки"
+    }
+  ],
+  "unified-styling.connection-style": [
+    {
+      "type": 0,
+      "value": "Стиль з'єднання"
+    }
+  ],
+  "unified-styling.connector-style": [
+    {
+      "type": 0,
+      "value": "Стиль конектора"
+    }
+  ],
   "unified-styling.shape-type": [
     {
       "type": 0,
       "value": "Shape Type"
+    }
+  ],
+  "unified-styling.tab.border": [
+    {
+      "type": 0,
+      "value": "Рамка"
+    }
+  ],
+  "unified-styling.tab.connector": [
+    {
+      "type": 0,
+      "value": "Конектор"
+    }
+  ],
+  "unified-styling.tab.shape": [
+    {
+      "type": 0,
+      "value": "Форма"
+    }
+  ],
+  "visualization-toolbar.tooltip-collapse-all": [
+    {
+      "type": 0,
+      "value": "Згорнути всі вузли"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-all": [
+    {
+      "type": 0,
+      "value": "Розгорнути всі вузли"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level": [
+    {
+      "type": 0,
+      "value": "Розгорнути за рівнем"
+    }
+  ],
+  "visualization-toolbar.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "Комбінації клавіш"
+    }
+  ],
+  "visualization-toolbar.tooltip-layout": [
+    {
+      "type": 0,
+      "value": "Змінити макет"
+    }
+  ],
+  "visualization-toolbar.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Перегляд структури"
+    }
+  ],
+  "visualization-toolbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "Перемкнути тему"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-in": [
+    {
+      "type": 0,
+      "value": "Збільшити"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-out": [
+    {
+      "type": 0,
+      "value": "Зменшити"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Підігнати масштаб"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

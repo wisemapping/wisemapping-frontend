@@ -751,5 +751,143 @@
   },
   "topic-font-editor.reset-to-default": {
     "defaultMessage": "Reset to Default"
+  },
+  "appbar.tooltip-change-layout": {
+    "defaultMessage": "लेआउट बदलें"
+  },
+  "appbar.tooltip-outline-view": {
+    "defaultMessage": "आउटलाइन दृश्य"
+  },
+  "appbar.tooltip-theme-toggle": {
+    "defaultMessage": "थीम बदलें"
+  },
+  "editor-panel.tooltip-change-layout": {
+    "defaultMessage": "लेआउट बदलें"
+  },
+  "editor-panel.tooltip-outline-view": {
+    "defaultMessage": "आउटलाइन दृश्य"
+  },
+  "icon-collection.connection.curved-polyline-tooltip": {
+    "defaultMessage": "मुलायम कोनों वाली बहु-खंड रेखा - संरचित लेआउट और स्पष्ट पथों के लिए सर्वश्रेष्ठ"
+  },
+  "icon-collection.connection.default-tooltip": {
+    "defaultMessage": "डिफ़ॉल्ट - थीम के आधार पर कनेक्शन शैली स्वचालित रूप से चुनी जाएगी"
+  },
+  "icon-collection.connection.neuron": {
+    "defaultMessage": "न्यूरॉन"
+  },
+  "icon-collection.connection.neuron-tooltip": {
+    "defaultMessage": "शाखाओं वाली धड़कनों के साथ जैविक आवेग रेखा - विज्ञान, तंत्रिका नेटवर्क या भविष्यवादी विषयों के लिए आदर्श"
+  },
+  "icon-collection.connection.thick-curved-tooltip": {
+    "defaultMessage": "मुलायम बेज़ियर वक्रों के साथ मोटी घुमावदार रेखा - मुख्य शाखाओं पर जोर देने के लिए उत्तम"
+  },
+  "icon-collection.connection.thin-curved-tooltip": {
+    "defaultMessage": "सुंदर बेज़ियर वक्रों के साथ पतली घुमावदार रेखा - विस्तृत या घने माइंड मैप्स के लिए आदर्श"
+  },
+  "layout-selector.accept": {
+    "defaultMessage": "स्वीकार करें"
+  },
+  "layout-selector.cancel": {
+    "defaultMessage": "रद्द करें"
+  },
+  "layout-selector.description": {
+    "defaultMessage": "लेआउट शैली चुनें"
+  },
+  "layout-selector.mindmap": {
+    "defaultMessage": "माइंड मैप"
+  },
+  "layout-selector.mindmap-description": {
+    "defaultMessage": "संतुलित शाखाओं के साथ क्षैतिज लेआउट"
+  },
+  "layout-selector.title": {
+    "defaultMessage": "लेआउट चुनें"
+  },
+  "layout-selector.tree": {
+    "defaultMessage": "पेड़"
+  },
+  "layout-selector.tree-description": {
+    "defaultMessage": "ऊपर से नीचे की ओर ऊर्ध्वाधर पदानुक्रम"
+  },
+  "layout.mindmap.description": {
+    "defaultMessage": "दोनों तरफ संतुलित शाखाओं के साथ क्षैतिज लेआउट। पारंपरिक माइंड मैपिंग और विचार-मंथन के लिए सर्वश्रेष्ठ।"
+  },
+  "layout.mindmap.name": {
+    "defaultMessage": "माइंड मैप"
+  },
+  "layout.tree.description": {
+    "defaultMessage": "ऊपर से नीचे की ओर ऊर्ध्वाधर पदानुक्रम। संगठनात्मक चार्ट और पदानुक्रमिक संरचनाओं के लिए उत्कृष्ट।"
+  },
+  "layout.tree.name": {
+    "defaultMessage": "पेड़"
+  },
+  "shortcut-help-pane.expand-by-level": {
+    "defaultMessage": "स्तर के अनुसार विषय विस्तार करें"
+  },
+  "shortcut-help-pane.expand-collapse-all": {
+    "defaultMessage": "सभी विषय विस्तार/संकुचित करें"
+  },
+  "shortcut-help-pane.outline-view": {
+    "defaultMessage": "आउटलाइन दृश्य खोलें"
+  },
+  "shortcut-help-pane.zoom-in": {
+    "defaultMessage": "ज़ूम इन"
+  },
+  "shortcut-help-pane.zoom-out": {
+    "defaultMessage": "ज़ूम आउट"
+  },
+  "shortcut-help-pane.zoom-to-fit": {
+    "defaultMessage": "फिट करने के लिए ज़ूम"
+  },
+  "unified-styling.border-color": {
+    "defaultMessage": "बॉर्डर रंग"
+  },
+  "unified-styling.border-style": {
+    "defaultMessage": "बॉर्डर शैली"
+  },
+  "unified-styling.connection-style": {
+    "defaultMessage": "कनेक्शन शैली"
+  },
+  "unified-styling.connector-style": {
+    "defaultMessage": "कनेक्टर शैली"
+  },
+  "unified-styling.tab.border": {
+    "defaultMessage": "बॉर्डर"
+  },
+  "unified-styling.tab.connector": {
+    "defaultMessage": "कनेक्टर"
+  },
+  "unified-styling.tab.shape": {
+    "defaultMessage": "आकार"
+  },
+  "visualization-toolbar.tooltip-collapse-all": {
+    "defaultMessage": "सभी नोड संकुचित करें"
+  },
+  "visualization-toolbar.tooltip-expand-all": {
+    "defaultMessage": "सभी नोड विस्तार करें"
+  },
+  "visualization-toolbar.tooltip-expand-level": {
+    "defaultMessage": "स्तर के अनुसार विस्तार"
+  },
+  "visualization-toolbar.tooltip-keyboard": {
+    "defaultMessage": "कीबोर्ड शॉर्टकट"
+  },
+  "visualization-toolbar.tooltip-layout": {
+    "defaultMessage": "लेआउट बदलें"
+  },
+  "visualization-toolbar.tooltip-outline-view": {
+    "defaultMessage": "आउटलाइन दृश्य"
+  },
+  "visualization-toolbar.tooltip-theme-toggle": {
+    "defaultMessage": "थीम बदलें"
+  },
+  "visualization-toolbar.tooltip-zoom-in": {
+    "defaultMessage": "ज़ूम इन"
+  },
+  "visualization-toolbar.tooltip-zoom-out": {
+    "defaultMessage": "ज़ूम आउट"
+  },
+  "visualization-toolbar.tooltip-zoom-to-fit": {
+    "defaultMessage": "फिट करने के लिए ज़ूम"
   }
 }

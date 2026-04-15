@@ -59,6 +59,12 @@
       "value": "Карта разума переименована"
     }
   ],
+  "appbar.tooltip-change-layout": [
+    {
+      "type": 0,
+      "value": "Изменить макет"
+    }
+  ],
   "appbar.tooltip-export": [
     {
       "type": 0,
@@ -75,6 +81,12 @@
     {
       "type": 0,
       "value": "Информация"
+    }
+  ],
+  "appbar.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Просмотр структуры"
     }
   ],
   "appbar.tooltip-print": [
@@ -129,6 +141,12 @@
     {
       "type": 0,
       "value": "Тема"
+    }
+  ],
+  "appbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "Переключить тему"
     }
   ],
   "appbar.tooltip-undo": [
@@ -407,6 +425,12 @@
       "value": "Фон"
     }
   ],
+  "editor-panel.tooltip-change-layout": [
+    {
+      "type": 0,
+      "value": "Изменить макет"
+    }
+  ],
   "editor-panel.tooltip-connection-color": [
     {
       "type": 0,
@@ -459,6 +483,12 @@
     {
       "type": 0,
       "value": "Удалить тему"
+    }
+  ],
+  "editor-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Просмотр структуры"
     }
   ],
   "editor-panel.tooltip-relationship-arrow-end": [
@@ -713,10 +743,22 @@
       "value": "Кривая ломаная"
     }
   ],
+  "icon-collection.connection.curved-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "Многосегментная линия с плавными углами - Лучший вариант для структурированных макетов и чётких путей"
+    }
+  ],
   "icon-collection.connection.default": [
     {
       "type": 0,
       "value": "Default"
+    }
+  ],
+  "icon-collection.connection.default-tooltip": [
+    {
+      "type": 0,
+      "value": "По умолчанию - Стиль соединения будет автоматически выбран на основе темы"
     }
   ],
   "icon-collection.connection.heartbeat": [
@@ -729,6 +771,18 @@
     {
       "type": 0,
       "value": "Волновая форма, вдохновленная ЭКГ, с резкими пиками - идеально подходит для передачи энергии, срочности или жизненных сигналов"
+    }
+  ],
+  "icon-collection.connection.neuron": [
+    {
+      "type": 0,
+      "value": "Нейрон"
+    }
+  ],
+  "icon-collection.connection.neuron-tooltip": [
+    {
+      "type": 0,
+      "value": "Органическая импульсная линия с ветвящимися импульсами - идеально для науки, нейронных сетей или футуристических тем"
     }
   ],
   "icon-collection.connection.organic-curved": [
@@ -761,10 +815,22 @@
       "value": "Толстая кривая"
     }
   ],
+  "icon-collection.connection.thick-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Толстая изогнутая линия с плавными кривыми Безье - Отлично подходит для выделения главных ветвей"
+    }
+  ],
   "icon-collection.connection.thin-curved": [
     {
       "type": 0,
       "value": "Тонкая кривая"
+    }
+  ],
+  "icon-collection.connection.thin-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Тонкая изогнутая линия с элегантными кривыми Безье - Идеально для детальных или плотных ментальных карт"
     }
   ],
   "icon-collection.default-tooltip": [
@@ -849,6 +915,78 @@
     {
       "type": 0,
       "value": "иконки найдены"
+    }
+  ],
+  "layout-selector.accept": [
+    {
+      "type": 0,
+      "value": "Принять"
+    }
+  ],
+  "layout-selector.cancel": [
+    {
+      "type": 0,
+      "value": "Отмена"
+    }
+  ],
+  "layout-selector.description": [
+    {
+      "type": 0,
+      "value": "Выбрать стиль макета"
+    }
+  ],
+  "layout-selector.mindmap": [
+    {
+      "type": 0,
+      "value": "Интеллект-карта"
+    }
+  ],
+  "layout-selector.mindmap-description": [
+    {
+      "type": 0,
+      "value": "Горизонтальный макет с симметричными ветвями"
+    }
+  ],
+  "layout-selector.title": [
+    {
+      "type": 0,
+      "value": "Выбрать макет"
+    }
+  ],
+  "layout-selector.tree": [
+    {
+      "type": 0,
+      "value": "Дерево"
+    }
+  ],
+  "layout-selector.tree-description": [
+    {
+      "type": 0,
+      "value": "Вертикальная иерархия сверху вниз"
+    }
+  ],
+  "layout.mindmap.description": [
+    {
+      "type": 0,
+      "value": "Горизонтальный макет с симметричными ветвями с обеих сторон. Лучший вариант для традиционных интеллект-карт и мозгового штурма."
+    }
+  ],
+  "layout.mindmap.name": [
+    {
+      "type": 0,
+      "value": "Интеллект-карта"
+    }
+  ],
+  "layout.tree.description": [
+    {
+      "type": 0,
+      "value": "Вертикальная иерархия сверху вниз. Отлично подходит для организационных диаграмм и иерархических структур."
+    }
+  ],
+  "layout.tree.name": [
+    {
+      "type": 0,
+      "value": "Дерево"
     }
   ],
   "link.help_text": [
@@ -1167,6 +1305,18 @@
       "value": "F2 или двойной клик"
     }
   ],
+  "shortcut-help-pane.expand-by-level": [
+    {
+      "type": 0,
+      "value": "Раскрыть темы по уровню"
+    }
+  ],
+  "shortcut-help-pane.expand-collapse-all": [
+    {
+      "type": 0,
+      "value": "Раскрыть/Свернуть все темы"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1177,6 +1327,12 @@
     {
       "type": 0,
       "value": "Клавиши со стрелками"
+    }
+  ],
+  "shortcut-help-pane.outline-view": [
+    {
+      "type": 0,
+      "value": "Открыть просмотр структуры"
     }
   ],
   "shortcut-help-pane.overwrite-edit-topic": [
@@ -1225,6 +1381,24 @@
     {
       "type": 0,
       "value": "Отменить редактирование"
+    }
+  ],
+  "shortcut-help-pane.zoom-in": [
+    {
+      "type": 0,
+      "value": "Увеличить"
+    }
+  ],
+  "shortcut-help-pane.zoom-out": [
+    {
+      "type": 0,
+      "value": "Уменьшить"
+    }
+  ],
+  "shortcut-help-pane.zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Подогнать масштаб"
     }
   ],
   "sunrise": [
@@ -1461,10 +1635,112 @@
       "value": "Background Color"
     }
   ],
+  "unified-styling.border-color": [
+    {
+      "type": 0,
+      "value": "Цвет границы"
+    }
+  ],
+  "unified-styling.border-style": [
+    {
+      "type": 0,
+      "value": "Стиль границы"
+    }
+  ],
+  "unified-styling.connection-style": [
+    {
+      "type": 0,
+      "value": "Стиль соединения"
+    }
+  ],
+  "unified-styling.connector-style": [
+    {
+      "type": 0,
+      "value": "Стиль коннектора"
+    }
+  ],
   "unified-styling.shape-type": [
     {
       "type": 0,
       "value": "Shape Type"
+    }
+  ],
+  "unified-styling.tab.border": [
+    {
+      "type": 0,
+      "value": "Граница"
+    }
+  ],
+  "unified-styling.tab.connector": [
+    {
+      "type": 0,
+      "value": "Коннектор"
+    }
+  ],
+  "unified-styling.tab.shape": [
+    {
+      "type": 0,
+      "value": "Форма"
+    }
+  ],
+  "visualization-toolbar.tooltip-collapse-all": [
+    {
+      "type": 0,
+      "value": "Свернуть все узлы"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-all": [
+    {
+      "type": 0,
+      "value": "Раскрыть все узлы"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level": [
+    {
+      "type": 0,
+      "value": "Раскрыть по уровню"
+    }
+  ],
+  "visualization-toolbar.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "Сочетания клавиш"
+    }
+  ],
+  "visualization-toolbar.tooltip-layout": [
+    {
+      "type": 0,
+      "value": "Изменить макет"
+    }
+  ],
+  "visualization-toolbar.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Просмотр структуры"
+    }
+  ],
+  "visualization-toolbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "Переключить тему"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-in": [
+    {
+      "type": 0,
+      "value": "Увеличить"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-out": [
+    {
+      "type": 0,
+      "value": "Уменьшить"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Подогнать масштаб"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

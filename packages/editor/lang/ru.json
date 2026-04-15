@@ -751,5 +751,143 @@
   },
   "topic-font-editor.reset-to-default": {
     "defaultMessage": "Reset to Default"
+  },
+  "appbar.tooltip-change-layout": {
+    "defaultMessage": "Изменить макет"
+  },
+  "appbar.tooltip-outline-view": {
+    "defaultMessage": "Просмотр структуры"
+  },
+  "appbar.tooltip-theme-toggle": {
+    "defaultMessage": "Переключить тему"
+  },
+  "editor-panel.tooltip-change-layout": {
+    "defaultMessage": "Изменить макет"
+  },
+  "editor-panel.tooltip-outline-view": {
+    "defaultMessage": "Просмотр структуры"
+  },
+  "icon-collection.connection.curved-polyline-tooltip": {
+    "defaultMessage": "Многосегментная линия с плавными углами - Лучший вариант для структурированных макетов и чётких путей"
+  },
+  "icon-collection.connection.default-tooltip": {
+    "defaultMessage": "По умолчанию - Стиль соединения будет автоматически выбран на основе темы"
+  },
+  "icon-collection.connection.neuron": {
+    "defaultMessage": "Нейрон"
+  },
+  "icon-collection.connection.neuron-tooltip": {
+    "defaultMessage": "Органическая импульсная линия с ветвящимися импульсами - идеально для науки, нейронных сетей или футуристических тем"
+  },
+  "icon-collection.connection.thick-curved-tooltip": {
+    "defaultMessage": "Толстая изогнутая линия с плавными кривыми Безье - Отлично подходит для выделения главных ветвей"
+  },
+  "icon-collection.connection.thin-curved-tooltip": {
+    "defaultMessage": "Тонкая изогнутая линия с элегантными кривыми Безье - Идеально для детальных или плотных ментальных карт"
+  },
+  "layout-selector.accept": {
+    "defaultMessage": "Принять"
+  },
+  "layout-selector.cancel": {
+    "defaultMessage": "Отмена"
+  },
+  "layout-selector.description": {
+    "defaultMessage": "Выбрать стиль макета"
+  },
+  "layout-selector.mindmap": {
+    "defaultMessage": "Интеллект-карта"
+  },
+  "layout-selector.mindmap-description": {
+    "defaultMessage": "Горизонтальный макет с симметричными ветвями"
+  },
+  "layout-selector.title": {
+    "defaultMessage": "Выбрать макет"
+  },
+  "layout-selector.tree": {
+    "defaultMessage": "Дерево"
+  },
+  "layout-selector.tree-description": {
+    "defaultMessage": "Вертикальная иерархия сверху вниз"
+  },
+  "layout.mindmap.description": {
+    "defaultMessage": "Горизонтальный макет с симметричными ветвями с обеих сторон. Лучший вариант для традиционных интеллект-карт и мозгового штурма."
+  },
+  "layout.mindmap.name": {
+    "defaultMessage": "Интеллект-карта"
+  },
+  "layout.tree.description": {
+    "defaultMessage": "Вертикальная иерархия сверху вниз. Отлично подходит для организационных диаграмм и иерархических структур."
+  },
+  "layout.tree.name": {
+    "defaultMessage": "Дерево"
+  },
+  "shortcut-help-pane.expand-by-level": {
+    "defaultMessage": "Раскрыть темы по уровню"
+  },
+  "shortcut-help-pane.expand-collapse-all": {
+    "defaultMessage": "Раскрыть/Свернуть все темы"
+  },
+  "shortcut-help-pane.outline-view": {
+    "defaultMessage": "Открыть просмотр структуры"
+  },
+  "shortcut-help-pane.zoom-in": {
+    "defaultMessage": "Увеличить"
+  },
+  "shortcut-help-pane.zoom-out": {
+    "defaultMessage": "Уменьшить"
+  },
+  "shortcut-help-pane.zoom-to-fit": {
+    "defaultMessage": "Подогнать масштаб"
+  },
+  "unified-styling.border-color": {
+    "defaultMessage": "Цвет границы"
+  },
+  "unified-styling.border-style": {
+    "defaultMessage": "Стиль границы"
+  },
+  "unified-styling.connection-style": {
+    "defaultMessage": "Стиль соединения"
+  },
+  "unified-styling.connector-style": {
+    "defaultMessage": "Стиль коннектора"
+  },
+  "unified-styling.tab.border": {
+    "defaultMessage": "Граница"
+  },
+  "unified-styling.tab.connector": {
+    "defaultMessage": "Коннектор"
+  },
+  "unified-styling.tab.shape": {
+    "defaultMessage": "Форма"
+  },
+  "visualization-toolbar.tooltip-collapse-all": {
+    "defaultMessage": "Свернуть все узлы"
+  },
+  "visualization-toolbar.tooltip-expand-all": {
+    "defaultMessage": "Раскрыть все узлы"
+  },
+  "visualization-toolbar.tooltip-expand-level": {
+    "defaultMessage": "Раскрыть по уровню"
+  },
+  "visualization-toolbar.tooltip-keyboard": {
+    "defaultMessage": "Сочетания клавиш"
+  },
+  "visualization-toolbar.tooltip-layout": {
+    "defaultMessage": "Изменить макет"
+  },
+  "visualization-toolbar.tooltip-outline-view": {
+    "defaultMessage": "Просмотр структуры"
+  },
+  "visualization-toolbar.tooltip-theme-toggle": {
+    "defaultMessage": "Переключить тему"
+  },
+  "visualization-toolbar.tooltip-zoom-in": {
+    "defaultMessage": "Увеличить"
+  },
+  "visualization-toolbar.tooltip-zoom-out": {
+    "defaultMessage": "Уменьшить"
+  },
+  "visualization-toolbar.tooltip-zoom-to-fit": {
+    "defaultMessage": "Подогнать масштаб"
   }
 }

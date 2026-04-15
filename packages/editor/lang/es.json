@@ -751,5 +751,143 @@
   },
   "topic-font-editor.reset-to-default": {
     "defaultMessage": "Reset to Default"
+  },
+  "visualization-toolbar.tooltip-expand-level": {
+    "defaultMessage": "Expandir por Nivel"
+  },
+  "appbar.tooltip-change-layout": {
+    "defaultMessage": "Cambiar Diseño"
+  },
+  "appbar.tooltip-outline-view": {
+    "defaultMessage": "Vista de Esquema"
+  },
+  "appbar.tooltip-theme-toggle": {
+    "defaultMessage": "Alternar Tema"
+  },
+  "editor-panel.tooltip-change-layout": {
+    "defaultMessage": "Cambiar Diseño"
+  },
+  "editor-panel.tooltip-outline-view": {
+    "defaultMessage": "Vista de Esquema"
+  },
+  "icon-collection.connection.curved-polyline-tooltip": {
+    "defaultMessage": "Línea de múltiples segmentos con esquinas suavizadas - Ideal para diseños estructurados y caminos claros"
+  },
+  "icon-collection.connection.default-tooltip": {
+    "defaultMessage": "Predeterminado - El estilo de conexión se seleccionará automáticamente según el tema"
+  },
+  "icon-collection.connection.neuron": {
+    "defaultMessage": "Neurona"
+  },
+  "icon-collection.connection.neuron-tooltip": {
+    "defaultMessage": "Línea de impulso orgánico con pulsos ramificados - ideal para ciencia, redes neuronales o temas futuristas"
+  },
+  "icon-collection.connection.thick-curved-tooltip": {
+    "defaultMessage": "Línea curva gruesa con curvas bezier suaves - Ideal para enfatizar las ramas principales"
+  },
+  "icon-collection.connection.thin-curved-tooltip": {
+    "defaultMessage": "Línea curva fina con elegantes curvas bezier - Ideal para mapas mentales detallados o densos"
+  },
+  "layout-selector.accept": {
+    "defaultMessage": "Aceptar"
+  },
+  "layout-selector.cancel": {
+    "defaultMessage": "Cancelar"
+  },
+  "layout-selector.description": {
+    "defaultMessage": "Elegir estilo de diseño"
+  },
+  "layout-selector.mindmap": {
+    "defaultMessage": "Mapa Mental"
+  },
+  "layout-selector.mindmap-description": {
+    "defaultMessage": "Diseño horizontal con ramas equilibradas"
+  },
+  "layout-selector.title": {
+    "defaultMessage": "Elegir Diseño"
+  },
+  "layout-selector.tree": {
+    "defaultMessage": "Árbol"
+  },
+  "layout-selector.tree-description": {
+    "defaultMessage": "Jerarquía vertical de arriba a abajo"
+  },
+  "layout.mindmap.description": {
+    "defaultMessage": "Diseño horizontal con ramas equilibradas en ambos lados. Ideal para la creación de mapas mentales tradicionales y lluvia de ideas."
+  },
+  "layout.mindmap.name": {
+    "defaultMessage": "Mapa Mental"
+  },
+  "layout.tree.description": {
+    "defaultMessage": "Jerarquía vertical de arriba a abajo. Excelente para organigramas y estructuras jerárquicas."
+  },
+  "layout.tree.name": {
+    "defaultMessage": "Árbol"
+  },
+  "shortcut-help-pane.expand-by-level": {
+    "defaultMessage": "Expandir temas por nivel"
+  },
+  "shortcut-help-pane.expand-collapse-all": {
+    "defaultMessage": "Expandir/Colapsar todos los temas"
+  },
+  "shortcut-help-pane.outline-view": {
+    "defaultMessage": "Abrir vista de esquema"
+  },
+  "shortcut-help-pane.zoom-in": {
+    "defaultMessage": "Acercar"
+  },
+  "shortcut-help-pane.zoom-out": {
+    "defaultMessage": "Alejar"
+  },
+  "shortcut-help-pane.zoom-to-fit": {
+    "defaultMessage": "Ajustar zoom"
+  },
+  "unified-styling.border-color": {
+    "defaultMessage": "Color de Borde"
+  },
+  "unified-styling.border-style": {
+    "defaultMessage": "Estilo de Borde"
+  },
+  "unified-styling.connection-style": {
+    "defaultMessage": "Estilo de Conexión"
+  },
+  "unified-styling.connector-style": {
+    "defaultMessage": "Estilo de Conector"
+  },
+  "unified-styling.tab.border": {
+    "defaultMessage": "Borde"
+  },
+  "unified-styling.tab.connector": {
+    "defaultMessage": "Conector"
+  },
+  "unified-styling.tab.shape": {
+    "defaultMessage": "Forma"
+  },
+  "visualization-toolbar.tooltip-collapse-all": {
+    "defaultMessage": "Colapsar Todos los Nodos"
+  },
+  "visualization-toolbar.tooltip-expand-all": {
+    "defaultMessage": "Expandir Todos los Nodos"
+  },
+  "visualization-toolbar.tooltip-keyboard": {
+    "defaultMessage": "Atajos de Teclado"
+  },
+  "visualization-toolbar.tooltip-layout": {
+    "defaultMessage": "Cambiar Diseño"
+  },
+  "visualization-toolbar.tooltip-outline-view": {
+    "defaultMessage": "Vista de Esquema"
+  },
+  "visualization-toolbar.tooltip-theme-toggle": {
+    "defaultMessage": "Alternar Tema"
+  },
+  "visualization-toolbar.tooltip-zoom-in": {
+    "defaultMessage": "Acercar"
+  },
+  "visualization-toolbar.tooltip-zoom-out": {
+    "defaultMessage": "Alejar"
+  },
+  "visualization-toolbar.tooltip-zoom-to-fit": {
+    "defaultMessage": "Ajustar Zoom"
   }
 }

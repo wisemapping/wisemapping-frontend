@@ -59,6 +59,12 @@
       "value": "マインドマップがリネームされました"
     }
   ],
+  "appbar.tooltip-change-layout": [
+    {
+      "type": 0,
+      "value": "レイアウト変更"
+    }
+  ],
   "appbar.tooltip-export": [
     {
       "type": 0,
@@ -75,6 +81,12 @@
     {
       "type": 0,
       "value": "情報"
+    }
+  ],
+  "appbar.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "アウトライン表示"
     }
   ],
   "appbar.tooltip-print": [
@@ -129,6 +141,12 @@
     {
       "type": 0,
       "value": "テーマ"
+    }
+  ],
+  "appbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "テーマ切替"
     }
   ],
   "appbar.tooltip-undo": [
@@ -407,6 +425,12 @@
       "value": "背景"
     }
   ],
+  "editor-panel.tooltip-change-layout": [
+    {
+      "type": 0,
+      "value": "レイアウト変更"
+    }
+  ],
   "editor-panel.tooltip-connection-color": [
     {
       "type": 0,
@@ -459,6 +483,12 @@
     {
       "type": 0,
       "value": "トピックを削除"
+    }
+  ],
+  "editor-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "アウトライン表示"
     }
   ],
   "editor-panel.tooltip-relationship-arrow-end": [
@@ -713,10 +743,22 @@
       "value": "Curved Polyline"
     }
   ],
+  "icon-collection.connection.curved-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "滑らかなコーナーを持つ複数セグメントの線 - 構造化されたレイアウトと明確なパスに最適"
+    }
+  ],
   "icon-collection.connection.default": [
     {
       "type": 0,
       "value": "Default"
+    }
+  ],
+  "icon-collection.connection.default-tooltip": [
+    {
+      "type": 0,
+      "value": "デフォルト - テーマに基づいて接続スタイルが自動的に選択されます"
     }
   ],
   "icon-collection.connection.heartbeat": [
@@ -729,6 +771,18 @@
     {
       "type": 0,
       "value": "鋭いスパイクを持つECGにインスパイアされた波形 - エネルギー、緊急性、または生命信号を伝えるのに最適"
+    }
+  ],
+  "icon-collection.connection.neuron": [
+    {
+      "type": 0,
+      "value": "ニューロン"
+    }
+  ],
+  "icon-collection.connection.neuron-tooltip": [
+    {
+      "type": 0,
+      "value": "分岐パルスを持つ有機的なインパルスライン - 科学、ニューラルネット、未来的なテーマに最適"
     }
   ],
   "icon-collection.connection.organic-curved": [
@@ -761,10 +815,22 @@
       "value": "Thick Curved"
     }
   ],
+  "icon-collection.connection.thick-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "滑らかなベジェ曲線を持つ太い曲線 - メインブランチを強調するのに最適"
+    }
+  ],
   "icon-collection.connection.thin-curved": [
     {
       "type": 0,
       "value": "Thin Curved"
+    }
+  ],
+  "icon-collection.connection.thin-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "エレガントなベジェ曲線を持つ細い曲線 - 詳細または密度の高いマインドマップに最適"
     }
   ],
   "icon-collection.default-tooltip": [
@@ -849,6 +915,78 @@
     {
       "type": 0,
       "value": "アイコンが見つかりました"
+    }
+  ],
+  "layout-selector.accept": [
+    {
+      "type": 0,
+      "value": "確定"
+    }
+  ],
+  "layout-selector.cancel": [
+    {
+      "type": 0,
+      "value": "キャンセル"
+    }
+  ],
+  "layout-selector.description": [
+    {
+      "type": 0,
+      "value": "レイアウトスタイルを選択"
+    }
+  ],
+  "layout-selector.mindmap": [
+    {
+      "type": 0,
+      "value": "マインドマップ"
+    }
+  ],
+  "layout-selector.mindmap-description": [
+    {
+      "type": 0,
+      "value": "均衡した枝を持つ水平レイアウト"
+    }
+  ],
+  "layout-selector.title": [
+    {
+      "type": 0,
+      "value": "レイアウトを選択"
+    }
+  ],
+  "layout-selector.tree": [
+    {
+      "type": 0,
+      "value": "ツリー"
+    }
+  ],
+  "layout-selector.tree-description": [
+    {
+      "type": 0,
+      "value": "上から下に流れる垂直階層"
+    }
+  ],
+  "layout.mindmap.description": [
+    {
+      "type": 0,
+      "value": "両側に均衡した枝を持つ水平レイアウト。従来のマインドマッピングやブレインストーミングに最適。"
+    }
+  ],
+  "layout.mindmap.name": [
+    {
+      "type": 0,
+      "value": "マインドマップ"
+    }
+  ],
+  "layout.tree.description": [
+    {
+      "type": 0,
+      "value": "上から下に流れる垂直階層。組織図や階層構造に最適。"
+    }
+  ],
+  "layout.tree.name": [
+    {
+      "type": 0,
+      "value": "ツリー"
     }
   ],
   "link.help_text": [
@@ -1167,6 +1305,18 @@
       "value": "F2またはダブルクリック"
     }
   ],
+  "shortcut-help-pane.expand-by-level": [
+    {
+      "type": 0,
+      "value": "レベルごとにトピックを展開"
+    }
+  ],
+  "shortcut-help-pane.expand-collapse-all": [
+    {
+      "type": 0,
+      "value": "すべてのトピックを展開/折りたたみ"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1177,6 +1327,12 @@
     {
       "type": 0,
       "value": "矢印キー"
+    }
+  ],
+  "shortcut-help-pane.outline-view": [
+    {
+      "type": 0,
+      "value": "アウトライン表示を開く"
     }
   ],
   "shortcut-help-pane.overwrite-edit-topic": [
@@ -1225,6 +1381,24 @@
     {
       "type": 0,
       "value": "編集を元に戻す"
+    }
+  ],
+  "shortcut-help-pane.zoom-in": [
+    {
+      "type": 0,
+      "value": "ズームイン"
+    }
+  ],
+  "shortcut-help-pane.zoom-out": [
+    {
+      "type": 0,
+      "value": "ズームアウト"
+    }
+  ],
+  "shortcut-help-pane.zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "フィットするようにズーム"
     }
   ],
   "sunrise": [
@@ -1461,10 +1635,112 @@
       "value": "Background Color"
     }
   ],
+  "unified-styling.border-color": [
+    {
+      "type": 0,
+      "value": "ボーダーカラー"
+    }
+  ],
+  "unified-styling.border-style": [
+    {
+      "type": 0,
+      "value": "ボーダースタイル"
+    }
+  ],
+  "unified-styling.connection-style": [
+    {
+      "type": 0,
+      "value": "接続スタイル"
+    }
+  ],
+  "unified-styling.connector-style": [
+    {
+      "type": 0,
+      "value": "コネクタースタイル"
+    }
+  ],
   "unified-styling.shape-type": [
     {
       "type": 0,
       "value": "Shape Type"
+    }
+  ],
+  "unified-styling.tab.border": [
+    {
+      "type": 0,
+      "value": "ボーダー"
+    }
+  ],
+  "unified-styling.tab.connector": [
+    {
+      "type": 0,
+      "value": "コネクター"
+    }
+  ],
+  "unified-styling.tab.shape": [
+    {
+      "type": 0,
+      "value": "形状"
+    }
+  ],
+  "visualization-toolbar.tooltip-collapse-all": [
+    {
+      "type": 0,
+      "value": "すべてのノードを折りたたむ"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-all": [
+    {
+      "type": 0,
+      "value": "すべてのノードを展開"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level": [
+    {
+      "type": 0,
+      "value": "レベルごとに展開"
+    }
+  ],
+  "visualization-toolbar.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "キーボードショートカット"
+    }
+  ],
+  "visualization-toolbar.tooltip-layout": [
+    {
+      "type": 0,
+      "value": "レイアウト変更"
+    }
+  ],
+  "visualization-toolbar.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "アウトライン表示"
+    }
+  ],
+  "visualization-toolbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "テーマ切替"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-in": [
+    {
+      "type": 0,
+      "value": "ズームイン"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-out": [
+    {
+      "type": 0,
+      "value": "ズームアウト"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "フィットするようにズーム"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

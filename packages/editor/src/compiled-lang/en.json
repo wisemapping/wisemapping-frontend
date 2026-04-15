@@ -143,6 +143,12 @@
       "value": "Theme"
     }
   ],
+  "appbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "Toggle Theme"
+    }
+  ],
   "appbar.tooltip-undo": [
     {
       "type": 0,
@@ -899,6 +905,18 @@
       "value": "icons found"
     }
   ],
+  "layout-selector.accept": [
+    {
+      "type": 0,
+      "value": "Accept"
+    }
+  ],
+  "layout-selector.cancel": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "layout-selector.description": [
     {
       "type": 0,
@@ -917,6 +935,12 @@
       "value": "Horizontal layout with balanced branches"
     }
   ],
+  "layout-selector.title": [
+    {
+      "type": 0,
+      "value": "Choose Layout"
+    }
+  ],
   "layout-selector.tree": [
     {
       "type": 0,
@@ -927,6 +951,30 @@
     {
       "type": 0,
       "value": "Vertical hierarchy flowing top-to-bottom"
+    }
+  ],
+  "layout.mindmap.description": [
+    {
+      "type": 0,
+      "value": "Horizontal layout with balanced branches on both sides. Best for traditional mind mapping and brainstorming."
+    }
+  ],
+  "layout.mindmap.name": [
+    {
+      "type": 0,
+      "value": "Mindmap"
+    }
+  ],
+  "layout.tree.description": [
+    {
+      "type": 0,
+      "value": "Vertical hierarchy flowing top-to-bottom. Great for organizational charts and hierarchical structures."
+    }
+  ],
+  "layout.tree.name": [
+    {
+      "type": 0,
+      "value": "Tree"
     }
   ],
   "link.help_text": [
@@ -1245,6 +1293,18 @@
       "value": "F2 or Double Click"
     }
   ],
+  "shortcut-help-pane.expand-by-level": [
+    {
+      "type": 0,
+      "value": "Expand topics by level"
+    }
+  ],
+  "shortcut-help-pane.expand-collapse-all": [
+    {
+      "type": 0,
+      "value": "Expand/Collapse all topics"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1255,6 +1315,12 @@
     {
       "type": 0,
       "value": "Arrow keys"
+    }
+  ],
+  "shortcut-help-pane.outline-view": [
+    {
+      "type": 0,
+      "value": "Open outline view"
     }
   ],
   "shortcut-help-pane.overwrite-edit-topic": [
@@ -1303,6 +1369,24 @@
     {
       "type": 0,
       "value": "Undo edition"
+    }
+  ],
+  "shortcut-help-pane.zoom-in": [
+    {
+      "type": 0,
+      "value": "Zoom in"
+    }
+  ],
+  "shortcut-help-pane.zoom-out": [
+    {
+      "type": 0,
+      "value": "Zoom out"
+    }
+  ],
+  "shortcut-help-pane.zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Zoom to fit"
     }
   ],
   "sunrise": [
@@ -1539,10 +1623,112 @@
       "value": "Background Color"
     }
   ],
+  "unified-styling.border-color": [
+    {
+      "type": 0,
+      "value": "Border Color"
+    }
+  ],
+  "unified-styling.border-style": [
+    {
+      "type": 0,
+      "value": "Border Style"
+    }
+  ],
+  "unified-styling.connection-style": [
+    {
+      "type": 0,
+      "value": "Connection Style"
+    }
+  ],
+  "unified-styling.connector-style": [
+    {
+      "type": 0,
+      "value": "Connector Style"
+    }
+  ],
   "unified-styling.shape-type": [
     {
       "type": 0,
       "value": "Shape Type"
+    }
+  ],
+  "unified-styling.tab.border": [
+    {
+      "type": 0,
+      "value": "Border"
+    }
+  ],
+  "unified-styling.tab.connector": [
+    {
+      "type": 0,
+      "value": "Connector"
+    }
+  ],
+  "unified-styling.tab.shape": [
+    {
+      "type": 0,
+      "value": "Shape"
+    }
+  ],
+  "visualization-toolbar.tooltip-collapse-all": [
+    {
+      "type": 0,
+      "value": "Collapse All Nodes"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-all": [
+    {
+      "type": 0,
+      "value": "Expand All Nodes"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level": [
+    {
+      "type": 0,
+      "value": "Expand by Level"
+    }
+  ],
+  "visualization-toolbar.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "Keyboard Shortcuts"
+    }
+  ],
+  "visualization-toolbar.tooltip-layout": [
+    {
+      "type": 0,
+      "value": "Change Layout"
+    }
+  ],
+  "visualization-toolbar.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Outline View"
+    }
+  ],
+  "visualization-toolbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "Toggle theme"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-in": [
+    {
+      "type": 0,
+      "value": "Zoom In"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-out": [
+    {
+      "type": 0,
+      "value": "Zoom Out"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Zoom to Fit"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

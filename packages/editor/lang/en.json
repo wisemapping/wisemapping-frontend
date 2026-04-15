@@ -790,5 +790,98 @@
   },
   "topic-font-editor.reset-to-default": {
     "defaultMessage": "Reset to Default"
+  },
+  "appbar.tooltip-theme-toggle": {
+    "defaultMessage": "Toggle Theme"
+  },
+  "layout-selector.accept": {
+    "defaultMessage": "Accept"
+  },
+  "layout-selector.cancel": {
+    "defaultMessage": "Cancel"
+  },
+  "layout-selector.title": {
+    "defaultMessage": "Choose Layout"
+  },
+  "layout.mindmap.description": {
+    "defaultMessage": "Horizontal layout with balanced branches on both sides. Best for traditional mind mapping and brainstorming."
+  },
+  "layout.mindmap.name": {
+    "defaultMessage": "Mindmap"
+  },
+  "layout.tree.description": {
+    "defaultMessage": "Vertical hierarchy flowing top-to-bottom. Great for organizational charts and hierarchical structures."
+  },
+  "layout.tree.name": {
+    "defaultMessage": "Tree"
+  },
+  "shortcut-help-pane.expand-by-level": {
+    "defaultMessage": "Expand topics by level"
+  },
+  "shortcut-help-pane.expand-collapse-all": {
+    "defaultMessage": "Expand/Collapse all topics"
+  },
+  "shortcut-help-pane.outline-view": {
+    "defaultMessage": "Open outline view"
+  },
+  "shortcut-help-pane.zoom-in": {
+    "defaultMessage": "Zoom in"
+  },
+  "shortcut-help-pane.zoom-out": {
+    "defaultMessage": "Zoom out"
+  },
+  "shortcut-help-pane.zoom-to-fit": {
+    "defaultMessage": "Zoom to fit"
+  },
+  "unified-styling.border-color": {
+    "defaultMessage": "Border Color"
+  },
+  "unified-styling.border-style": {
+    "defaultMessage": "Border Style"
+  },
+  "unified-styling.connection-style": {
+    "defaultMessage": "Connection Style"
+  },
+  "unified-styling.connector-style": {
+    "defaultMessage": "Connector Style"
+  },
+  "unified-styling.tab.border": {
+    "defaultMessage": "Border"
+  },
+  "unified-styling.tab.connector": {
+    "defaultMessage": "Connector"
+  },
+  "unified-styling.tab.shape": {
+    "defaultMessage": "Shape"
+  },
+  "visualization-toolbar.tooltip-collapse-all": {
+    "defaultMessage": "Collapse All Nodes"
+  },
+  "visualization-toolbar.tooltip-expand-all": {
+    "defaultMessage": "Expand All Nodes"
+  },
+  "visualization-toolbar.tooltip-expand-level": {
+    "defaultMessage": "Expand by Level"
+  },
+  "visualization-toolbar.tooltip-keyboard": {
+    "defaultMessage": "Keyboard Shortcuts"
+  },
+  "visualization-toolbar.tooltip-layout": {
+    "defaultMessage": "Change Layout"
+  },
+  "visualization-toolbar.tooltip-outline-view": {
+    "defaultMessage": "Outline View"
+  },
+  "visualization-toolbar.tooltip-theme-toggle": {
+    "defaultMessage": "Toggle theme"
+  },
+  "visualization-toolbar.tooltip-zoom-in": {
+    "defaultMessage": "Zoom In"
+  },
+  "visualization-toolbar.tooltip-zoom-out": {
+    "defaultMessage": "Zoom Out"
+  },
+  "visualization-toolbar.tooltip-zoom-to-fit": {
+    "defaultMessage": "Zoom to Fit"
   }
 }

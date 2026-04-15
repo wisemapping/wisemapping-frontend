@@ -59,6 +59,12 @@
       "value": "Mindmap umbenannt"
     }
   ],
+  "appbar.tooltip-change-layout": [
+    {
+      "type": 0,
+      "value": "Layout ändern"
+    }
+  ],
   "appbar.tooltip-export": [
     {
       "type": 0,
@@ -75,6 +81,12 @@
     {
       "type": 0,
       "value": "Informationen"
+    }
+  ],
+  "appbar.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Gliederungsansicht"
     }
   ],
   "appbar.tooltip-print": [
@@ -129,6 +141,12 @@
     {
       "type": 0,
       "value": "Thema"
+    }
+  ],
+  "appbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "Thema wechseln"
     }
   ],
   "appbar.tooltip-undo": [
@@ -407,6 +425,12 @@
       "value": "Hintergrund"
     }
   ],
+  "editor-panel.tooltip-change-layout": [
+    {
+      "type": 0,
+      "value": "Layout ändern"
+    }
+  ],
   "editor-panel.tooltip-connection-color": [
     {
       "type": 0,
@@ -459,6 +483,12 @@
     {
       "type": 0,
       "value": "Thema löschen"
+    }
+  ],
+  "editor-panel.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Gliederungsansicht"
     }
   ],
   "editor-panel.tooltip-relationship-arrow-end": [
@@ -713,10 +743,22 @@
       "value": "Gebogene Polylinie"
     }
   ],
+  "icon-collection.connection.curved-polyline-tooltip": [
+    {
+      "type": 0,
+      "value": "Mehrsegmentige Linie mit glatten Ecken - Ideal für strukturierte Layouts und klare Pfade"
+    }
+  ],
   "icon-collection.connection.default": [
     {
       "type": 0,
       "value": "Default"
+    }
+  ],
+  "icon-collection.connection.default-tooltip": [
+    {
+      "type": 0,
+      "value": "Standard - Der Verbindungsstil wird automatisch basierend auf dem Thema ausgewählt"
     }
   ],
   "icon-collection.connection.heartbeat": [
@@ -729,6 +771,18 @@
     {
       "type": 0,
       "value": "EKG-inspirierte Wellenform mit scharfen Spitzen - perfekt zur Vermittlung von Energie, Dringlichkeit oder Lebenssignalen"
+    }
+  ],
+  "icon-collection.connection.neuron": [
+    {
+      "type": 0,
+      "value": "Neuron"
+    }
+  ],
+  "icon-collection.connection.neuron-tooltip": [
+    {
+      "type": 0,
+      "value": "Organische Impulslinie mit verzweigten Pulsen - ideal für Wissenschaft, neuronale Netze oder futuristische Themen"
     }
   ],
   "icon-collection.connection.organic-curved": [
@@ -761,10 +815,22 @@
       "value": "Dicke Kurve"
     }
   ],
+  "icon-collection.connection.thick-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Dicke gebogene Linie mit glatten Bezier-Kurven - Ideal zum Hervorheben der Hauptäste"
+    }
+  ],
   "icon-collection.connection.thin-curved": [
     {
       "type": 0,
       "value": "Dünne Kurve"
+    }
+  ],
+  "icon-collection.connection.thin-curved-tooltip": [
+    {
+      "type": 0,
+      "value": "Dünne gebogene Linie mit eleganten Bezier-Kurven - Ideal für detaillierte oder dichte Mindmaps"
     }
   ],
   "icon-collection.default-tooltip": [
@@ -849,6 +915,78 @@
     {
       "type": 0,
       "value": "Symbole gefunden"
+    }
+  ],
+  "layout-selector.accept": [
+    {
+      "type": 0,
+      "value": "Akzeptieren"
+    }
+  ],
+  "layout-selector.cancel": [
+    {
+      "type": 0,
+      "value": "Abbrechen"
+    }
+  ],
+  "layout-selector.description": [
+    {
+      "type": 0,
+      "value": "Layout-Stil auswählen"
+    }
+  ],
+  "layout-selector.mindmap": [
+    {
+      "type": 0,
+      "value": "Mindmap"
+    }
+  ],
+  "layout-selector.mindmap-description": [
+    {
+      "type": 0,
+      "value": "Horizontales Layout mit ausgewogenen Ästen"
+    }
+  ],
+  "layout-selector.title": [
+    {
+      "type": 0,
+      "value": "Layout auswählen"
+    }
+  ],
+  "layout-selector.tree": [
+    {
+      "type": 0,
+      "value": "Baum"
+    }
+  ],
+  "layout-selector.tree-description": [
+    {
+      "type": 0,
+      "value": "Vertikale Hierarchie von oben nach unten"
+    }
+  ],
+  "layout.mindmap.description": [
+    {
+      "type": 0,
+      "value": "Horizontales Layout mit ausgewogenen Ästen auf beiden Seiten. Ideal für traditionelle Mindmaps und Brainstorming."
+    }
+  ],
+  "layout.mindmap.name": [
+    {
+      "type": 0,
+      "value": "Mindmap"
+    }
+  ],
+  "layout.tree.description": [
+    {
+      "type": 0,
+      "value": "Vertikale Hierarchie von oben nach unten. Hervorragend für Organigramme und hierarchische Strukturen."
+    }
+  ],
+  "layout.tree.name": [
+    {
+      "type": 0,
+      "value": "Baum"
     }
   ],
   "link.help_text": [
@@ -1167,6 +1305,18 @@
       "value": "F2 oder Doppelklick"
     }
   ],
+  "shortcut-help-pane.expand-by-level": [
+    {
+      "type": 0,
+      "value": "Themen nach Ebene erweitern"
+    }
+  ],
+  "shortcut-help-pane.expand-collapse-all": [
+    {
+      "type": 0,
+      "value": "Alle Themen erweitern/reduzieren"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1177,6 +1327,12 @@
     {
       "type": 0,
       "value": "Pfeiltasten"
+    }
+  ],
+  "shortcut-help-pane.outline-view": [
+    {
+      "type": 0,
+      "value": "Gliederungsansicht öffnen"
     }
   ],
   "shortcut-help-pane.overwrite-edit-topic": [
@@ -1225,6 +1381,24 @@
     {
       "type": 0,
       "value": "Änderung rückgängig machen"
+    }
+  ],
+  "shortcut-help-pane.zoom-in": [
+    {
+      "type": 0,
+      "value": "Vergrößern"
+    }
+  ],
+  "shortcut-help-pane.zoom-out": [
+    {
+      "type": 0,
+      "value": "Verkleinern"
+    }
+  ],
+  "shortcut-help-pane.zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Zoom anpassen"
     }
   ],
   "sunrise": [
@@ -1461,10 +1635,112 @@
       "value": "Background Color"
     }
   ],
+  "unified-styling.border-color": [
+    {
+      "type": 0,
+      "value": "Rahmenfarbe"
+    }
+  ],
+  "unified-styling.border-style": [
+    {
+      "type": 0,
+      "value": "Rahmenstil"
+    }
+  ],
+  "unified-styling.connection-style": [
+    {
+      "type": 0,
+      "value": "Verbindungsstil"
+    }
+  ],
+  "unified-styling.connector-style": [
+    {
+      "type": 0,
+      "value": "Verbinderstil"
+    }
+  ],
   "unified-styling.shape-type": [
     {
       "type": 0,
       "value": "Shape Type"
+    }
+  ],
+  "unified-styling.tab.border": [
+    {
+      "type": 0,
+      "value": "Rahmen"
+    }
+  ],
+  "unified-styling.tab.connector": [
+    {
+      "type": 0,
+      "value": "Verbinder"
+    }
+  ],
+  "unified-styling.tab.shape": [
+    {
+      "type": 0,
+      "value": "Form"
+    }
+  ],
+  "visualization-toolbar.tooltip-collapse-all": [
+    {
+      "type": 0,
+      "value": "Alle Knoten reduzieren"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-all": [
+    {
+      "type": 0,
+      "value": "Alle Knoten erweitern"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level": [
+    {
+      "type": 0,
+      "value": "Nach Ebene erweitern"
+    }
+  ],
+  "visualization-toolbar.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "Tastenkürzel"
+    }
+  ],
+  "visualization-toolbar.tooltip-layout": [
+    {
+      "type": 0,
+      "value": "Layout ändern"
+    }
+  ],
+  "visualization-toolbar.tooltip-outline-view": [
+    {
+      "type": 0,
+      "value": "Gliederungsansicht"
+    }
+  ],
+  "visualization-toolbar.tooltip-theme-toggle": [
+    {
+      "type": 0,
+      "value": "Thema wechseln"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-in": [
+    {
+      "type": 0,
+      "value": "Vergrößern"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-out": [
+    {
+      "type": 0,
+      "value": "Verkleinern"
+    }
+  ],
+  "visualization-toolbar.tooltip-zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Zoom anpassen"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

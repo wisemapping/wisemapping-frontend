@@ -751,5 +751,143 @@
   },
   "topic-font-editor.reset-to-default": {
     "defaultMessage": "Reset to Default"
+  },
+  "appbar.tooltip-change-layout": {
+    "defaultMessage": "更改布局"
+  },
+  "appbar.tooltip-outline-view": {
+    "defaultMessage": "大纲视图"
+  },
+  "appbar.tooltip-theme-toggle": {
+    "defaultMessage": "切换主题"
+  },
+  "editor-panel.tooltip-change-layout": {
+    "defaultMessage": "更改布局"
+  },
+  "editor-panel.tooltip-outline-view": {
+    "defaultMessage": "大纲视图"
+  },
+  "icon-collection.connection.curved-polyline-tooltip": {
+    "defaultMessage": "具有平滑角的多段线 - 最适合结构化布局和清晰路径"
+  },
+  "icon-collection.connection.default-tooltip": {
+    "defaultMessage": "默认 - 连接样式将根据主题自动选择"
+  },
+  "icon-collection.connection.neuron": {
+    "defaultMessage": "神经元"
+  },
+  "icon-collection.connection.neuron-tooltip": {
+    "defaultMessage": "具有分支脉冲的有机脉冲线 - 适合科学、神经网络或未来主义主题"
+  },
+  "icon-collection.connection.thick-curved-tooltip": {
+    "defaultMessage": "具有平滑贝塞尔曲线的粗曲线 - 非常适合强调主要分支"
+  },
+  "icon-collection.connection.thin-curved-tooltip": {
+    "defaultMessage": "具有优雅贝塞尔曲线的细曲线 - 适合详细或密集的思维导图"
+  },
+  "layout-selector.accept": {
+    "defaultMessage": "确认"
+  },
+  "layout-selector.cancel": {
+    "defaultMessage": "取消"
+  },
+  "layout-selector.description": {
+    "defaultMessage": "选择布局样式"
+  },
+  "layout-selector.mindmap": {
+    "defaultMessage": "思维导图"
+  },
+  "layout-selector.mindmap-description": {
+    "defaultMessage": "具有均衡分支的水平布局"
+  },
+  "layout-selector.title": {
+    "defaultMessage": "选择布局"
+  },
+  "layout-selector.tree": {
+    "defaultMessage": "树形"
+  },
+  "layout-selector.tree-description": {
+    "defaultMessage": "从上到下的垂直层次结构"
+  },
+  "layout.mindmap.description": {
+    "defaultMessage": "两侧具有均衡分支的水平布局。最适合传统思维导图和头脑风暴。"
+  },
+  "layout.mindmap.name": {
+    "defaultMessage": "思维导图"
+  },
+  "layout.tree.description": {
+    "defaultMessage": "从上到下的垂直层次结构。非常适合组织架构图和层次结构。"
+  },
+  "layout.tree.name": {
+    "defaultMessage": "树形"
+  },
+  "shortcut-help-pane.expand-by-level": {
+    "defaultMessage": "按级别展开主题"
+  },
+  "shortcut-help-pane.expand-collapse-all": {
+    "defaultMessage": "展开/折叠所有主题"
+  },
+  "shortcut-help-pane.outline-view": {
+    "defaultMessage": "打开大纲视图"
+  },
+  "shortcut-help-pane.zoom-in": {
+    "defaultMessage": "放大"
+  },
+  "shortcut-help-pane.zoom-out": {
+    "defaultMessage": "缩小"
+  },
+  "shortcut-help-pane.zoom-to-fit": {
+    "defaultMessage": "适合缩放"
+  },
+  "unified-styling.border-color": {
+    "defaultMessage": "边框颜色"
+  },
+  "unified-styling.border-style": {
+    "defaultMessage": "边框样式"
+  },
+  "unified-styling.connection-style": {
+    "defaultMessage": "连接样式"
+  },
+  "unified-styling.connector-style": {
+    "defaultMessage": "连接器样式"
+  },
+  "unified-styling.tab.border": {
+    "defaultMessage": "边框"
+  },
+  "unified-styling.tab.connector": {
+    "defaultMessage": "连接器"
+  },
+  "unified-styling.tab.shape": {
+    "defaultMessage": "形状"
+  },
+  "visualization-toolbar.tooltip-collapse-all": {
+    "defaultMessage": "折叠所有节点"
+  },
+  "visualization-toolbar.tooltip-expand-all": {
+    "defaultMessage": "展开所有节点"
+  },
+  "visualization-toolbar.tooltip-expand-level": {
+    "defaultMessage": "按级别展开"
+  },
+  "visualization-toolbar.tooltip-keyboard": {
+    "defaultMessage": "键盘快捷键"
+  },
+  "visualization-toolbar.tooltip-layout": {
+    "defaultMessage": "更改布局"
+  },
+  "visualization-toolbar.tooltip-outline-view": {
+    "defaultMessage": "大纲视图"
+  },
+  "visualization-toolbar.tooltip-theme-toggle": {
+    "defaultMessage": "切换主题"
+  },
+  "visualization-toolbar.tooltip-zoom-in": {
+    "defaultMessage": "放大"
+  },
+  "visualization-toolbar.tooltip-zoom-out": {
+    "defaultMessage": "缩小"
+  },
+  "visualization-toolbar.tooltip-zoom-to-fit": {
+    "defaultMessage": "适合缩放"
   }
 }
