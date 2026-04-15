@@ -34,7 +34,7 @@ import Client, {
 } from '..';
 import AppI18n, { Locale, LocaleCode, localeFromStr } from '../../app-i18n';
 import JwtTokenConfig from '../../jwt-token-config';
-import { setAnalyticsUserId, clearAnalyticsUserId } from '../../../utils/analytics';
+import { setAnalyticsUserEmail, clearAnalyticsUserId } from '../../../utils/analytics';
 
 export default class RestClient implements Client {
   private baseUrl: string;
@@ -136,7 +136,7 @@ export default class RestClient implements Client {
           // Fetch account info and set analytics user ID
           this.fetchAccountInfo()
             .then((accountInfo) => {
-              setAnalyticsUserId(accountInfo.email);
+              setAnalyticsUserEmail(accountInfo.email);
             })
             .catch((error) => {
               // Don't block login if analytics fails
@@ -813,7 +813,7 @@ export default class RestClient implements Client {
             // Fetch account info and set analytics user ID
             this.fetchAccountInfo()
               .then((accountInfo) => {
-                setAnalyticsUserId(accountInfo.email);
+                setAnalyticsUserEmail(accountInfo.email);
               })
               .catch((error) => {
                 // Don't block OAuth flow if analytics fails
@@ -852,7 +852,7 @@ export default class RestClient implements Client {
             // Fetch account info and set analytics user ID
             this.fetchAccountInfo()
               .then((accountInfo) => {
-                setAnalyticsUserId(accountInfo.email);
+                setAnalyticsUserEmail(accountInfo.email);
               })
               .catch((error) => {
                 // Don't block OAuth flow if analytics fails
@@ -903,7 +903,7 @@ export default class RestClient implements Client {
             // Fetch account info and set analytics user ID
             this.fetchAccountInfo()
               .then((accountInfo) => {
-                setAnalyticsUserId(accountInfo.email);
+                setAnalyticsUserEmail(accountInfo.email);
               })
               .catch((error) => {
                 // Don't block account sync if analytics fails

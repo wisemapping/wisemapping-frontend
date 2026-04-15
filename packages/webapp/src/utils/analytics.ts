@@ -85,16 +85,35 @@ export const trackPageView = (page: string, title: string): void => {
   }
 };
 
-/**
- * Sets the user ID in Google Analytics
- * @param email - The user's email address to set as user ID, or null to clear it
- */
-export const setAnalyticsUserId = (email: string | null): void => {
+const hashEmail = async (email: string): Promise<string> => {
+  const data = new TextEncoder().encode(email.toLowerCase().trim());
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hashBuffer))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+};
+
+const setAnalyticsUserId = (userId: string | null): void => {
   try {
-    ReactGA.set({ userId: email || undefined });
+    ReactGA.set({ userId: userId ?? undefined });
   } catch (error) {
     console.warn('Failed to set analytics user ID:', error);
   }
+};
+
+/**
+ * Hashes the user's email with SHA-256 and sets it as the GA4 user ID.
+ * Sends a pseudonymous identifier — the original email is not recoverable.
+ * Pass null to clear the user ID (e.g. on logout).
+ */
+export const setAnalyticsUserEmail = (email: string | null): void => {
+  if (!email) {
+    setAnalyticsUserId(null);
+    return;
+  }
+  hashEmail(email)
+    .then((hash) => setAnalyticsUserId(hash))
+    .catch((error) => console.warn('Failed to set analytics user ID:', error));
 };
 
 /**

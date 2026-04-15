@@ -1649,6 +1649,40 @@
       "value": "Пароль"
     }
   ],
+  "registration.recaptcha-notice": [
+    {
+      "type": 0,
+      "value": "Цей сайт захищено reCAPTCHA, і до нього застосовуються "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Політика конфіденційності"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": " та "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Умови використання"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": " Google."
+    }
+  ],
   "registration.register": [
     {
       "type": 0,

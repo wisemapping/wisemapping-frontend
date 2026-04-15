@@ -843,8 +843,6 @@ class MockAdminClient implements AdminClientInterface {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
         if (user) {
-          // In a real implementation, this would hash and store the password
-          console.log(`Password changed for user: ${user.email}`);
           resolve();
         } else {
           throw new Error(`User with ID ${userId} not found`);

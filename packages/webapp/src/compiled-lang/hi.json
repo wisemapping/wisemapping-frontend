@@ -1649,6 +1649,40 @@
       "value": "पासवर्ड"
     }
   ],
+  "registration.recaptcha-notice": [
+    {
+      "type": 0,
+      "value": "यह साइट reCAPTCHA द्वारा सुरक्षित है और Google की "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "गोपनीयता नीति"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": " और "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "सेवा की शर्तें"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": " लागू होती हैं।"
+    }
+  ],
   "registration.register": [
     {
       "type": 0,

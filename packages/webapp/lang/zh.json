@@ -473,6 +473,9 @@
   "registration.password": {
     "defaultMessage": "密码"
   },
+  "registration.recaptcha-notice": {
+    "defaultMessage": "本网站受reCAPTCHA保护，并适用Google的<privacyLink>隐私政策</privacyLink>和<termsLink>服务条款</termsLink>。"
+  },
   "registration.register": {
     "defaultMessage": "注册"
   },

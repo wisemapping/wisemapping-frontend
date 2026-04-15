@@ -20,7 +20,7 @@ import AppConfig from './classes/app-config';
 import ReactGA from 'react-ga4';
 import { createJsonResponse } from './utils/response';
 import JwtTokenConfig from './classes/jwt-token-config';
-import { setAnalyticsUserId } from './utils/analytics';
+import { setAnalyticsUserEmail } from './utils/analytics';
 
 export const loader = async (): Promise<Response> => {
   // Ensure configuration is loaded before continuing.
@@ -43,7 +43,7 @@ export const loader = async (): Promise<Response> => {
       AppConfig.getClient()
         .fetchAccountInfo()
         .then((accountInfo) => {
-          setAnalyticsUserId(accountInfo.email);
+          setAnalyticsUserEmail(accountInfo.email);
         })
         .catch((error) => {
           // Don't block app load if analytics fails

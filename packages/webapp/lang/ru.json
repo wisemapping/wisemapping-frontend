@@ -440,6 +440,9 @@
   "registration.password": {
     "defaultMessage": "Пароль"
   },
+  "registration.recaptcha-notice": {
+    "defaultMessage": "Этот сайт защищён reCAPTCHA, и к нему применяются <privacyLink>Политика конфиденциальности</privacyLink> и <termsLink>Условия использования</termsLink> Google."
+  },
   "registration.register": {
     "defaultMessage": "Регистрация"
   },

@@ -40,6 +40,17 @@ export const getCsrfTokenParameter = (): string | null => {
   return meta.getAttribute('content');
 };
 
+const PII_KEYS =
+  /email|name|password|passwd|phone|address|user|firstname|lastname|givenname|surname/i;
+
+const sanitizeContext = (ctx: Record<string, unknown>): Record<string, unknown> => {
+  const safe: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(ctx)) {
+    safe[key] = PII_KEYS.test(key) ? '[redacted]' : value;
+  }
+  return safe;
+};
+
 export const logCriticalError = (msg: string, exception: unknown): void => {
   // Serialize exception properly for logging
   let serializedException: string;
@@ -97,11 +108,9 @@ export const logCriticalError = (msg: string, exception: unknown): void => {
             isAuth: debugInfo.errorInfo.isAuth,
             msg: debugInfo.errorInfo.msg,
             status: debugInfo.errorInfo.status,
-            fields: debugInfo.errorInfo.fields
-              ? Object.fromEntries(debugInfo.errorInfo.fields)
-              : undefined,
+            // fields intentionally omitted: may contain user-supplied input (PII)
           },
-          context: safeContext,
+          context: sanitizeContext(safeContext),
         };
         serializedException = JSON.stringify(serialized);
       } else if (
@@ -114,7 +123,7 @@ export const logCriticalError = (msg: string, exception: unknown): void => {
           isAuth: errorInfo.isAuth,
           msg: errorInfo.msg,
           status: errorInfo.status,
-          fields: errorInfo.fields ? Object.fromEntries(errorInfo.fields) : undefined,
+          // fields intentionally omitted: may contain user-supplied input (PII)
         };
         serializedException = JSON.stringify(serialized);
       } else {

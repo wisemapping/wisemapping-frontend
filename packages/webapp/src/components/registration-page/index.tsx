@@ -280,6 +280,35 @@ const RegistrationForm = () => {
                           }}
                         />
                       </div>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontSize: '11px', textAlign: 'center', color: 'text.secondary' }}
+                      >
+                        <FormattedMessage
+                          id="registration.recaptcha-notice"
+                          defaultMessage="This site is protected by reCAPTCHA and the Google <privacyLink>Privacy Policy</privacyLink> and <termsLink>Terms of Service</termsLink> apply."
+                          values={{
+                            privacyLink: (chunks: React.ReactNode) => (
+                              <Link
+                                href="https://policies.google.com/privacy"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {chunks}
+                              </Link>
+                            ),
+                            termsLink: (chunks: React.ReactNode) => (
+                              <Link
+                                href="https://policies.google.com/terms"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {chunks}
+                              </Link>
+                            ),
+                          }}
+                        />
+                      </Typography>
                     </>
                   )}
                   <SubmitButton

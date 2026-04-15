@@ -1649,6 +1649,40 @@
       "value": "Passwort"
     }
   ],
+  "registration.recaptcha-notice": [
+    {
+      "type": 0,
+      "value": "Diese Website ist durch reCAPTCHA geschützt und es gelten die "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Datenschutzerklärung"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": " und die "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Nutzungsbedingungen"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": " von Google."
+    }
+  ],
   "registration.register": [
     {
       "type": 0,

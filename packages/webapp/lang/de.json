@@ -440,6 +440,9 @@
   "registration.password": {
     "defaultMessage": "Passwort"
   },
+  "registration.recaptcha-notice": {
+    "defaultMessage": "Diese Website ist durch reCAPTCHA geschützt und es gelten die <privacyLink>Datenschutzerklärung</privacyLink> und die <termsLink>Nutzungsbedingungen</termsLink> von Google."
+  },
   "registration.register": {
     "defaultMessage": "Registrieren"
   },

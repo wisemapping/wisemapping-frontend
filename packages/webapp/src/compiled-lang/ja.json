@@ -1649,6 +1649,40 @@
       "value": "パスワード"
     }
   ],
+  "registration.recaptcha-notice": [
+    {
+      "type": 0,
+      "value": "このサイトはreCAPTCHAで保護されており、Googleの"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "プライバシーポリシー"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": "と"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "利用規約"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": "が適用されます。"
+    }
+  ],
   "registration.register": [
     {
       "type": 0,

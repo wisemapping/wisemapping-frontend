@@ -24,7 +24,7 @@ import Footer from '../layout/footer';
 import { Link as RouterLink, useLocation } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { trackPageView, setAnalyticsUserId } from '../../utils/analytics';
+import { trackPageView, setAnalyticsUserEmail } from '../../utils/analytics';
 import { Oauth2CallbackResult, ErrorInfo } from '../../classes/client';
 import { useNavigate } from 'react-router';
 import GlobalError from '../form/global-error';
@@ -93,8 +93,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
       // Store JWT token
       if (jwtToken) {
         JwtTokenConfig.storeToken(jwtToken);
-        // Set analytics user ID using email from URL
-        setAnalyticsUserId(email);
+        setAnalyticsUserEmail(email);
       }
 
       const result: Oauth2CallbackResult = {

@@ -1649,6 +1649,40 @@
       "value": "Пароль"
     }
   ],
+  "registration.recaptcha-notice": [
+    {
+      "type": 0,
+      "value": "Этот сайт защищён reCAPTCHA, и к нему применяются "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Политика конфиденциальности"
+        }
+      ],
+      "type": 8,
+      "value": "privacyLink"
+    },
+    {
+      "type": 0,
+      "value": " и "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Условия использования"
+        }
+      ],
+      "type": 8,
+      "value": "termsLink"
+    },
+    {
+      "type": 0,
+      "value": " Google."
+    }
+  ],
   "registration.register": [
     {
       "type": 0,

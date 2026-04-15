@@ -536,6 +536,9 @@
   "registration.password": {
     "defaultMessage": "Password"
   },
+  "registration.recaptcha-notice": {
+    "defaultMessage": "This site is protected by reCAPTCHA and the Google <privacyLink>Privacy Policy</privacyLink> and <termsLink>Terms of Service</termsLink> apply."
+  },
   "registration.register": {
     "defaultMessage": "Register"
   },
