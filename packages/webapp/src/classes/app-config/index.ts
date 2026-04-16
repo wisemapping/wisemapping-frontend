@@ -48,6 +48,10 @@ class AppConfig {
 
   private static _initializationPromise: Promise<Config> | null = null;
 
+  private static _client: Client | null = null;
+
+  private static _adminClient: AdminClientInterface | null = null;
+
   static async initialize(): Promise<Config> {
     if (this._config) {
       return this._config;
@@ -174,6 +178,10 @@ class AppConfig {
   }
 
   static getClient(): Client {
+    if (this._client) {
+      return this._client;
+    }
+
     let result: Client | undefined;
     try {
       if (this.isRestClient()) {
@@ -193,14 +201,20 @@ class AppConfig {
       result = new MockClient();
     }
 
+    this._client = result;
     return result;
   }
 
   static getAdminClient(): AdminClientInterface {
+    if (this._adminClient) {
+      return this._adminClient;
+    }
+
     // If we're in mock mode, always use MockAdminClient for admin functionality
     if (this.isMockEnv()) {
       console.log('Mock environment detected, using MockAdminClient');
-      return new MockAdminClient();
+      this._adminClient = new MockAdminClient();
+      return this._adminClient;
     }
 
     let result: AdminClientInterface | undefined;
@@ -222,6 +236,7 @@ class AppConfig {
       result = new MockAdminClient();
     }
 
+    this._adminClient = result;
     return result;
   }
 

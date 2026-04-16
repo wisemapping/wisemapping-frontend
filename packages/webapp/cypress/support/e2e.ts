@@ -18,9 +18,14 @@
 
 import './commands';
 
+Cypress.Commands.add('getMindplotShadowRoot', () =>
+  cy.get('mindplot-component', { timeout: 120000 }).shadow(),
+);
+
 Cypress.Commands.add('waitForEditorLoaded', () => {
   // Wait editor ...
-  cy.get('svg > path').should('be.visible');
+  cy.getMindplotShadowRoot().find('svg', { timeout: 120000 }).should('be.visible');
+  cy.getMindplotShadowRoot().find('svg [test-id="1"]', { timeout: 120000 }).should('exist');
   cy.get('[aria-label="vortex-loading"]', { timeout: 120000 }).should('not.exist');
   cy.clearLocalStorage('welcome-xml');
 

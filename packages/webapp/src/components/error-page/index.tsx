@@ -68,12 +68,12 @@ const ErrorPage = (): React.ReactElement => {
   const errorInfo = isErrorInfo(error) ? error : undefined;
 
   // If no error is thrown (catch-all route), treat as 404
-  const isNotFound = error === undefined || routeError?.status === 404;
+  const isNotFound = error == null || routeError?.status === 404;
   const isAccessError =
     (routeError && (routeError.status === 401 || routeError.status === 403)) ||
     Boolean(errorInfo?.isAuth);
 
-  if (isNotFound && error === undefined) {
+  if (isNotFound && error == null) {
     logCriticalError('Page not found error (catch-all route).', '404');
   } else if (routeError?.status === 404) {
     logCriticalError('Page not found error.', '404');
