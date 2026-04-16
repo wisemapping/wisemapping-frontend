@@ -4,3 +4,5 @@ dist
 lang
 coverage
 *.json
+packages/mindplot/test/unit/export/expected/
+packages/mindplot/test/unit/import/expected/
