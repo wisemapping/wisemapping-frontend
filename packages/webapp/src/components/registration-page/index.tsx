@@ -318,39 +318,13 @@ const RegistrationForm = () => {
                     })}
                     isLoading={mutation.isLoading}
                   />
-                  <Typography variant="body2" sx={{ fontSize: '12px', mt: 2, textAlign: 'center' }}>
-                    <FormattedMessage
-                      id="common.terms-notice"
-                      defaultMessage="By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
-                      values={{
-                        termsLink: (chunks: React.ReactNode) => (
-                          <Link
-                            href="https://www.wisemapping.com/termsofuse.html"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {chunks}
-                          </Link>
-                        ),
-                        privacyLink: (chunks: React.ReactNode) => (
-                          <Link
-                            href="https://www.wisemapping.com/privacy"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {chunks}
-                          </Link>
-                        ),
-                      }}
-                    />
-                  </Typography>
                 </fieldset>
               </form>
             </FormControl>
           </main>
         </Grid>
       </Grid>
-      <Grid>
+      <Grid size={12} sx={{ textAlign: 'center', mt: 2 }}>
         <Link component={RouterLink} to="/c/login">
           <FormattedMessage id="header.haveaccount" defaultMessage="Already have an account?" />
         </Link>
