@@ -77,7 +77,7 @@ const RegistrationForm = () => {
       onSuccess: () => navigate('/c/registration-success'),
       onError: (error) => {
         setError(error);
-        captcha.reset();
+        captcha?.reset();
       },
     },
   );

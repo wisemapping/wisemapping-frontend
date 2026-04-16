@@ -338,7 +338,7 @@ class MockClient implements Client {
       firstname: 'Costme',
       lastname: 'Fulanito',
       email: 'test@example.com',
-      locale: localeFromStr(locale),
+      locale: locale ? localeFromStr(locale) : undefined,
       authenticationType: AuthenticationType.DATABASE,
       isAdmin: true, // Mock admin user for testing
     });
@@ -354,7 +354,21 @@ class MockClient implements Client {
   }
 
   createMap(map: BasicMapInfo): Promise<number> {
-    throw new Error('Method not implemented.' + map);
+    const newMap: MapInfo = {
+      id: Math.floor(Math.random() * 10000) + 100,
+      description: map.description || '',
+      title: map.title,
+      starred: false,
+      createdBy: 'current user',
+      labels: [],
+      lastModificationTime: new Date().toISOString(),
+      lastModificationBy: 'current user',
+      creationTime: new Date().toISOString(),
+      public: false,
+      role: 'owner',
+    };
+    this.maps.push(newMap);
+    return Promise.resolve(newMap.id);
   }
 
   fetchLabels(): Promise<Label[]> {
@@ -544,55 +558,28 @@ class MockClient implements Client {
 
   activateAccount(code: string): Promise<void> {
     console.log('Activating account with code:' + code);
-    // Simulate different scenarios based on the code
-    // Use code 999999999 to simulate error (for testing)
     if (code === '999999999') {
       return Promise.reject({
         msg: 'Invalid activation code. The link may be incorrect or expired.',
       });
     }
-    // Add artificial delay to simulate network request
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 100);
-    });
+    return Promise.resolve();
   }
 
   processGoogleCallback(): Promise<Oauth2CallbackResult> {
-    // artificial delay for more realistic mock experience
-    const handler = (success: (result: Oauth2CallbackResult) => void) => {
-      setTimeout(() => {
-        success({
-          email: 'test@email.com',
-          // -- use case 1) user must confirm if he wants to link accounts
-          // oauthSync: false,
-          // syncCode: "834580239598234650234578"
-          // -- use case 2) user already confirmed
-          oauthSync: true,
-          syncCode: undefined,
-        });
-      }, 3000);
-    };
-    return new Promise(handler);
+    return Promise.resolve({
+      email: 'test@email.com',
+      oauthSync: true,
+      syncCode: undefined,
+    });
   }
 
   processFacebookCallback(): Promise<Oauth2CallbackResult> {
-    // artificial delay for more realistic mock experience
-    const handler = (success: (result: Oauth2CallbackResult) => void) => {
-      setTimeout(() => {
-        success({
-          email: 'test@email.com',
-          // -- use case 1) user must confirm if he wants to link accounts
-          // oauthSync: false,
-          // syncCode: "834580239598234650234578"
-          // -- use case 2) user already confirmed
-          oauthSync: true,
-          syncCode: undefined,
-        });
-      }, 2000);
-    };
-    return new Promise(handler);
+    return Promise.resolve({
+      email: 'test@email.com',
+      oauthSync: true,
+      syncCode: undefined,
+    });
   }
 
   confirmAccountSync(
