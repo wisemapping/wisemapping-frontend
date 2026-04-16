@@ -103,7 +103,6 @@ const ActionDispatcher = ({
       {action === 'import' && <ImportDialog onClose={handleOnClose} />}
       {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapsId[0]} />}
-      {action === 'create' && <CreateDialog onClose={handleOnClose} />}
       {action === 'export' && (
         <ExportDialog onClose={handleOnClose} mapId={mapsId[0]} enableImgExport={fromEditor} />
       )}
