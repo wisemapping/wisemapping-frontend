@@ -881,6 +881,12 @@
   "visualization-toolbar.tooltip-theme-toggle": {
     "defaultMessage": "थीम बदलें"
   },
+  "visualization-toolbar.tooltip-switch-to-dark": {
+    "defaultMessage": "डार्क मोड पर स्विच करें"
+  },
+  "visualization-toolbar.tooltip-switch-to-light": {
+    "defaultMessage": "लाइट मोड पर स्विच करें"
+  },
   "visualization-toolbar.tooltip-zoom-in": {
     "defaultMessage": "ज़ूम इन"
   },

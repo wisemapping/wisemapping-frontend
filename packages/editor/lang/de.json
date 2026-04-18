@@ -881,6 +881,12 @@
   "visualization-toolbar.tooltip-theme-toggle": {
     "defaultMessage": "Thema wechseln"
   },
+  "visualization-toolbar.tooltip-switch-to-dark": {
+    "defaultMessage": "Zum Dunkelmodus wechseln"
+  },
+  "visualization-toolbar.tooltip-switch-to-light": {
+    "defaultMessage": "Zum Hellmodus wechseln"
+  },
   "visualization-toolbar.tooltip-zoom-in": {
     "defaultMessage": "Vergrößern"
   },

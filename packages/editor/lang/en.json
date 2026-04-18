@@ -875,6 +875,12 @@
   "visualization-toolbar.tooltip-theme-toggle": {
     "defaultMessage": "Toggle theme"
   },
+  "visualization-toolbar.tooltip-switch-to-dark": {
+    "defaultMessage": "Switch to dark mode"
+  },
+  "visualization-toolbar.tooltip-switch-to-light": {
+    "defaultMessage": "Switch to light mode"
+  },
   "visualization-toolbar.tooltip-zoom-in": {
     "defaultMessage": "Zoom In"
   },

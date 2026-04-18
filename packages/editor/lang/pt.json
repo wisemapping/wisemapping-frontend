@@ -881,6 +881,12 @@
   "visualization-toolbar.tooltip-theme-toggle": {
     "defaultMessage": "Alternar Tema"
   },
+  "visualization-toolbar.tooltip-switch-to-dark": {
+    "defaultMessage": "Mudar para modo escuro"
+  },
+  "visualization-toolbar.tooltip-switch-to-light": {
+    "defaultMessage": "Mudar para modo claro"
+  },
   "visualization-toolbar.tooltip-zoom-in": {
     "defaultMessage": "Ampliar"
   },

@@ -881,6 +881,12 @@
   "visualization-toolbar.tooltip-theme-toggle": {
     "defaultMessage": "切換主題"
   },
+  "visualization-toolbar.tooltip-switch-to-dark": {
+    "defaultMessage": "切換至深色模式"
+  },
+  "visualization-toolbar.tooltip-switch-to-light": {
+    "defaultMessage": "切換至淺色模式"
+  },
   "visualization-toolbar.tooltip-zoom-in": {
     "defaultMessage": "放大"
   },

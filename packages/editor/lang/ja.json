@@ -881,6 +881,12 @@
   "visualization-toolbar.tooltip-theme-toggle": {
     "defaultMessage": "テーマ切替"
   },
+  "visualization-toolbar.tooltip-switch-to-dark": {
+    "defaultMessage": "ダークモードに切り替え"
+  },
+  "visualization-toolbar.tooltip-switch-to-light": {
+    "defaultMessage": "ライトモードに切り替え"
+  },
   "visualization-toolbar.tooltip-zoom-in": {
     "defaultMessage": "ズームイン"
   },
