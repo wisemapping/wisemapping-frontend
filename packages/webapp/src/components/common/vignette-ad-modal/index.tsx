@@ -26,7 +26,7 @@ import Typography from '@mui/material/Typography';
 const AD_CLIENT = 'ca-pub-4996113942657337';
 
 // Default ad slot (login vignette). Maps list uses its own slot via props.
-const DEFAULT_AD_SLOT = '3862174951';
+const DEFAULT_AD_SLOT = '9706710065';
 
 // Session storage key for frequency cap (login flow)
 const SESSION_KEY = 'wm_vignette_shown';
