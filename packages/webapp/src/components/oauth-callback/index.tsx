@@ -107,11 +107,9 @@ const OAuthCallbackPage = (): React.ReactElement => {
         initializeThemeFromSystem();
         // Get redirect URL from OAuth state parameter
         const stateRedirectUrl = searchParams.get('state');
-        if (stateRedirectUrl && stateRedirectUrl !== 'wisemapping') {
-          navigate(stateRedirectUrl);
-        } else {
-          navigate('/c/maps/');
-        }
+        // Hard navigation triggers Google Auto ads vignette between login and dashboard.
+        window.location.href =
+          stateRedirectUrl && stateRedirectUrl !== 'wisemapping' ? stateRedirectUrl : '/c/maps/';
         return;
       }
       setCallbackResult(result);
@@ -141,13 +139,11 @@ const OAuthCallbackPage = (): React.ReactElement => {
         if (result.oauthSync) {
           // Initialize theme from system preference if not already set
           initializeThemeFromSystem();
-          // Use redirect URL from OAuth state parameter
-          if (stateRedirectUrl && stateRedirectUrl !== 'wisemapping') {
-            navigate(stateRedirectUrl);
-          } else {
-            // if service reports that user already has sync accounts, go to maps page
-            navigate('/c/maps/');
-          }
+          // Hard navigation triggers Google Auto ads vignette between login and dashboard.
+          window.location.href =
+            stateRedirectUrl && stateRedirectUrl !== 'wisemapping'
+              ? stateRedirectUrl
+              : '/c/maps/';
           return;
         }
         setCallbackResult(result);
@@ -173,12 +169,9 @@ const OAuthCallbackPage = (): React.ReactElement => {
       .then(() => {
         // Initialize theme from system preference if not already set
         initializeThemeFromSystem();
-        // Use redirect URL from OAuth state parameter
-        if (stateRedirectUrl && stateRedirectUrl !== 'wisemapping') {
-          navigate(stateRedirectUrl);
-        } else {
-          navigate('/c/maps/');
-        }
+        // Hard navigation triggers Google Auto ads vignette between login and dashboard.
+        window.location.href =
+          stateRedirectUrl && stateRedirectUrl !== 'wisemapping' ? stateRedirectUrl : '/c/maps/';
       })
       .catch((errorInfo: ErrorInfo) => {
         setError(errorInfo);
