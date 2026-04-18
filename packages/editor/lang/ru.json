@@ -881,6 +881,12 @@
   "visualization-toolbar.tooltip-theme-toggle": {
     "defaultMessage": "Переключить тему"
   },
+  "visualization-toolbar.tooltip-switch-to-dark": {
+    "defaultMessage": "Переключиться в тёмный режим"
+  },
+  "visualization-toolbar.tooltip-switch-to-light": {
+    "defaultMessage": "Переключиться в светлый режим"
+  },
   "visualization-toolbar.tooltip-zoom-in": {
     "defaultMessage": "Увеличить"
   },
