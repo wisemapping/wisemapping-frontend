@@ -401,6 +401,15 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "絵文字を検索..."
   },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "アイコンを検索..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "よく使う"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "アイコンが見つかりません"
+  },
   "zoom-panel.tooltip-collapse-all": {
     "defaultMessage": "すべてのノードを折りたたむ"
   },

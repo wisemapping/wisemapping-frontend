@@ -269,6 +269,15 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "搜索表情..."
   },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "搜尋圖示..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "常用"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "找不到圖示"
+  },
   "icon-picker.show-images": {
     "defaultMessage": "显示图像"
   },
