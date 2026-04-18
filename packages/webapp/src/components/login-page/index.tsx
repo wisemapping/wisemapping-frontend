@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router';
 import AccountAccessLayout from '../layout/AccountAccessLayout';
@@ -40,9 +40,6 @@ import { SEOHead } from '../seo';
 import { useTheme } from '../../contexts/ThemeContext';
 import { trackPageView } from '../../utils/analytics';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
-import VignetteAdModal, { shouldShowVignette } from '../common/vignette-ad-modal';
-import LoginBannerAd from '../common/login-banner-ad';
-import MobileAnchorAd from '../common/mobile-anchor-ad';
 
 export type Model = {
   email: string;
@@ -75,18 +72,11 @@ const LoginPage = (): React.ReactElement => {
   const intl = useIntl();
   const [model, setModel] = useState<Model>(defaultModel);
   const [loginError, setLoginError] = useState<LoginErrorInfo | undefined>(undefined);
-  const [vignetteOpen, setVignetteOpen] = useState(false);
-  const [pendingRedirect, setPendingRedirect] = useState<string | null>(null);
 
   const client = useContext(ClientContext);
   const navigate = useNavigate();
   const location = useLocation();
   const { initializeThemeFromSystem } = useTheme();
-
-  const handleVignetteClose = useCallback(() => {
-    setVignetteOpen(false);
-    if (pendingRedirect) navigate(pendingRedirect);
-  }, [navigate, pendingRedirect]);
 
   // Check if user came from a shared link
   const searchParams = new URLSearchParams(location.search);
@@ -157,14 +147,7 @@ const LoginPage = (): React.ReactElement => {
         let redirectUrl = new URLSearchParams(location.search).get('redirect');
         redirectUrl = redirectUrl ? redirectUrl : '/c/maps/';
         console.log(`redirectUrl: ${redirectUrl}`);
-
-        // Show vignette ad once per session before navigating to dashboard
-        if (shouldShowVignette()) {
-          setPendingRedirect(redirectUrl);
-          setVignetteOpen(true);
-        } else {
-          navigate(redirectUrl);
-        }
+        window.location.href = redirectUrl;
       },
       onError: (error: LoginErrorInfo) => {
         setLoginError(error);
@@ -215,25 +198,13 @@ const LoginPage = (): React.ReactElement => {
           },
         }}
       />
-      <VignetteAdModal open={vignetteOpen} onClose={handleVignetteClose} />
-      <MobileAnchorAd />
       <AccountAccessLayout
         headerType={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'}
         contentSx={{
           padding: { xs: '8px 16px', md: '16px 16px' },
-          alignItems: 'flex-start',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          <LoginBannerAd />
-          <FormContainer>
+        <FormContainer>
           <header>
             <Typography variant="h4" component="h1">
               <FormattedMessage id="login.title" defaultMessage="Welcome" />
@@ -399,8 +370,7 @@ const LoginPage = (): React.ReactElement => {
               }}
             />
           </Typography>
-          </FormContainer>
-        </Box>
+        </FormContainer>
       </AccountAccessLayout>
     </>
   );
