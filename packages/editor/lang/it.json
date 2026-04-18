@@ -401,6 +401,15 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Cerca emoji..."
   },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "Cerca icone..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "Usati frequentemente"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "Nessuna icona trovata"
+  },
   "zoom-panel.tooltip-collapse-all": {
     "defaultMessage": "Comprimi tutti i nodi"
   },

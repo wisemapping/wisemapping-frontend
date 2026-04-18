@@ -410,6 +410,15 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Emojis suchen..."
   },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "Symbole suchen..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "Häufig verwendet"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "Keine Symbole gefunden"
+  },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "Themenbild hinzufügen"
   },

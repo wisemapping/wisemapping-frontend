@@ -329,6 +329,15 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Поиск эмодзи..."
   },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "Поиск значков..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "Часто используемые"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "Значки не найдены"
+  },
   "common.close": {
     "defaultMessage": "Закрыть"
   },

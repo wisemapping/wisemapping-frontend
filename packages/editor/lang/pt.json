@@ -329,6 +329,15 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Pesquisar emojis..."
   },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "Pesquisar ícones..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "Usados frequentemente"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "Nenhum ícone encontrado"
+  },
   "common.close": {
     "defaultMessage": "Fechar"
   },

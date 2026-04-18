@@ -401,6 +401,15 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "搜索表情..."
   },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "搜索图标..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "常用"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "未找到图标"
+  },
   "zoom-panel.tooltip-collapse-all": {
     "defaultMessage": "折叠所有节点"
   },
