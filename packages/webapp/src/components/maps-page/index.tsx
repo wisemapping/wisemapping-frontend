@@ -74,9 +74,15 @@ import withEmotionStyles from '../HOCs/withEmotionStyles';
 import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
 import { useTheme } from '../../contexts/ThemeContext';
+import VignetteAdModal, { shouldShowVignette } from '../common/vignette-ad-modal';
 
 const CHATGPT_COPILOT_URL =
   'https://chatgpt.com/g/g-6908d77ed7988191bb7a62f29fcf0177-mind-map-copilot';
+
+// AdSense slot for maps list vignette (create a new Display responsive unit in AdSense)
+const MAPS_VIGNETTE_AD_SLOT = '3862174951';
+// Session key for maps list vignette frequency cap (independent of login vignette)
+const MAPS_VIGNETTE_SESSION_KEY = 'wm_maps_vignette_shown';
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -103,6 +109,7 @@ const MapsPage = (): ReactElement => {
   const [mindMapCopilotDialogOpen, setMindMapCopilotDialogOpen] = React.useState(false);
   const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
+  const [vignetteOpen, setVignetteOpen] = React.useState(false);
   const [desktopDrawerOpen, setDesktopDrawerOpen] = React.useState(
     localStorage.getItem('desktopDrawerOpen') === 'true',
   );
@@ -158,6 +165,12 @@ const MapsPage = (): ReactElement => {
     });
     window.scrollTo(0, 0);
     trackPageView(window.location.pathname, 'Maps List');
+  }, []);
+
+  useEffect(() => {
+    if (shouldShowVignette(MAPS_VIGNETTE_SESSION_KEY)) {
+      setVignetteOpen(true);
+    }
   }, []);
 
   const mutation = useMutation((id: number) => client.deleteLabel(id), {
@@ -556,6 +569,11 @@ const MapsPage = (): ReactElement => {
           <HelpMenu />
         </Box>
       </div>
+      <VignetteAdModal
+        open={vignetteOpen}
+        onClose={() => setVignetteOpen(false)}
+        adSlot={MAPS_VIGNETTE_AD_SLOT}
+      />
       {label && labelToDelete != null && (
         <LabelDeleteConfirm
           onClose={() => setLabelToDelete(null)}

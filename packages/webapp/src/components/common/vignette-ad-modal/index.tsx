@@ -25,11 +25,10 @@ import Typography from '@mui/material/Typography';
 // AdSense publisher client ID
 const AD_CLIENT = 'ca-pub-4996113942657337';
 
-// Ad slot for the login vignette interstitial — create this unit in AdSense as a
-// "Display" responsive ad and paste the data-ad-slot value here.
-const AD_SLOT = '3862174951';
+// Default ad slot (login vignette). Maps list uses its own slot via props.
+const DEFAULT_AD_SLOT = '3862174951';
 
-// Session storage key for frequency cap
+// Session storage key for frequency cap (login flow)
 const SESSION_KEY = 'wm_vignette_shown';
 
 // Auto-dismiss after this many milliseconds
@@ -38,9 +37,10 @@ const AUTO_DISMISS_MS = 6000;
 type Props = {
   open: boolean;
   onClose: () => void;
+  adSlot?: string;
 };
 
-const VignetteAdModal = ({ open, onClose }: Props): React.ReactElement => {
+const VignetteAdModal = ({ open, onClose, adSlot = DEFAULT_AD_SLOT }: Props): React.ReactElement => {
   const [countdown, setCountdown] = useState(Math.round(AUTO_DISMISS_MS / 1000));
   const adRef = useRef<HTMLInsElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -156,7 +156,7 @@ const VignetteAdModal = ({ open, onClose }: Props): React.ReactElement => {
             className="adsbygoogle"
             style={{ display: 'block', width: '100%', minHeight: 250 }}
             data-ad-client={AD_CLIENT}
-            data-ad-slot={AD_SLOT}
+            data-ad-slot={adSlot}
             data-ad-format="auto"
             data-full-width-responsive="true"
           />
@@ -169,11 +169,12 @@ const VignetteAdModal = ({ open, onClose }: Props): React.ReactElement => {
 /**
  * Returns true if the vignette should be shown this session.
  * Marks it as shown so it only fires once per browser session.
+ * Pass a custom key to have an independent frequency cap per page.
  */
-export function shouldShowVignette(): boolean {
+export function shouldShowVignette(key: string = SESSION_KEY): boolean {
   try {
-    if (sessionStorage.getItem(SESSION_KEY)) return false;
-    sessionStorage.setItem(SESSION_KEY, '1');
+    if (sessionStorage.getItem(key)) return false;
+    sessionStorage.setItem(key, '1');
     return true;
   } catch {
     // sessionStorage unavailable (private mode edge cases)
