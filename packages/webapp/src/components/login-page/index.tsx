@@ -42,6 +42,7 @@ import { trackPageView } from '../../utils/analytics';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 import VignetteAdModal, { shouldShowVignette } from '../common/vignette-ad-modal';
 import LoginBannerAd from '../common/login-banner-ad';
+import MobileAnchorAd from '../common/mobile-anchor-ad';
 
 export type Model = {
   email: string;
@@ -214,6 +215,7 @@ const LoginPage = (): React.ReactElement => {
         }}
       />
       <VignetteAdModal open={vignetteOpen} onClose={handleVignetteClose} />
+      <MobileAnchorAd />
       <AccountAccessLayout
         headerType={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'}
         contentSx={{
