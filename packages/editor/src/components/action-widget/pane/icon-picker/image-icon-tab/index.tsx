@@ -18,8 +18,8 @@
 
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
-import Paper from '@mui/material/Paper';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
@@ -89,36 +89,34 @@ const IconImageTab = ({ iconModel }: IconImageTab): ReactElement => {
 
   return (
     <Box sx={{ width: '450px' }}>
-      <Paper
-        elevation={0}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          border: '1px solid',
-          borderColor: 'divider',
-          borderRadius: 1,
-          mb: 1,
-          px: 1,
+      <TextField
+        fullWidth
+        size="small"
+        autoFocus
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder={intl.formatMessage({
+          id: 'icon-picker.search-placeholder',
+          defaultMessage: 'Search icons...',
+        })}
+        sx={{ mb: 1 }}
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon fontSize="small" />
+              </InputAdornment>
+            ),
+            endAdornment: searchQuery ? (
+              <InputAdornment position="end">
+                <IconButton size="small" onClick={() => setSearchQuery('')}>
+                  <ClearIcon fontSize="small" />
+                </IconButton>
+              </InputAdornment>
+            ) : undefined,
+          },
         }}
-      >
-        <SearchIcon sx={{ color: 'text.secondary', mr: 0.5, fontSize: 18 }} />
-        <InputBase
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder={intl.formatMessage({
-            id: 'icon-picker.search-placeholder',
-            defaultMessage: 'Search icons...',
-          })}
-          inputProps={{ 'aria-label': 'search icons' }}
-          sx={{ flex: 1, fontSize: '0.875rem', py: 0.5 }}
-          autoFocus
-        />
-        {searchQuery && (
-          <IconButton size="small" onClick={() => setSearchQuery('')} sx={{ p: 0.25 }}>
-            <ClearIcon sx={{ fontSize: 16 }} />
-          </IconButton>
-        )}
-      </Paper>
+      />
 
       {showFrequentlyUsed && (
         <Box sx={{ mb: 1 }}>
