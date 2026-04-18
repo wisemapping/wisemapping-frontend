@@ -1719,6 +1719,18 @@
       "value": "Vue plan"
     }
   ],
+  "visualization-toolbar.tooltip-switch-to-dark": [
+    {
+      "type": 0,
+      "value": "Passer en mode sombre"
+    }
+  ],
+  "visualization-toolbar.tooltip-switch-to-light": [
+    {
+      "type": 0,
+      "value": "Passer en mode clair"
+    }
+  ],
   "visualization-toolbar.tooltip-theme-toggle": [
     {
       "type": 0,

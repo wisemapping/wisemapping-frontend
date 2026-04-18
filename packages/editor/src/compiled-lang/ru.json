@@ -1719,6 +1719,18 @@
       "value": "Просмотр структуры"
     }
   ],
+  "visualization-toolbar.tooltip-switch-to-dark": [
+    {
+      "type": 0,
+      "value": "Переключиться в тёмный режим"
+    }
+  ],
+  "visualization-toolbar.tooltip-switch-to-light": [
+    {
+      "type": 0,
+      "value": "Переключиться в светлый режим"
+    }
+  ],
   "visualization-toolbar.tooltip-theme-toggle": [
     {
       "type": 0,

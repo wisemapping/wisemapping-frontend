@@ -69,6 +69,7 @@ export default defineConfig(({ command }) => {
                 rollupOptions: {
                     external: ['react', 'react-dom', '@wisemapping/mindplot'],
                     output: {
+                        exports: 'named',
                         globals: {
                             react: 'React',
                             'react-dom': 'ReactDOM',

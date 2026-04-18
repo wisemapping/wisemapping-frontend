@@ -1719,6 +1719,18 @@
       "value": "アウトライン表示"
     }
   ],
+  "visualization-toolbar.tooltip-switch-to-dark": [
+    {
+      "type": 0,
+      "value": "ダークモードに切り替え"
+    }
+  ],
+  "visualization-toolbar.tooltip-switch-to-light": [
+    {
+      "type": 0,
+      "value": "ライトモードに切り替え"
+    }
+  ],
   "visualization-toolbar.tooltip-theme-toggle": [
     {
       "type": 0,

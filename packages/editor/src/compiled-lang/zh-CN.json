@@ -1719,6 +1719,18 @@
       "value": "大纲视图"
     }
   ],
+  "visualization-toolbar.tooltip-switch-to-dark": [
+    {
+      "type": 0,
+      "value": "切换到深色模式"
+    }
+  ],
+  "visualization-toolbar.tooltip-switch-to-light": [
+    {
+      "type": 0,
+      "value": "切换到浅色模式"
+    }
+  ],
   "visualization-toolbar.tooltip-theme-toggle": [
     {
       "type": 0,

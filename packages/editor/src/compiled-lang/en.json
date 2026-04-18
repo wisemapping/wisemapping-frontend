@@ -1707,6 +1707,18 @@
       "value": "Outline View"
     }
   ],
+  "visualization-toolbar.tooltip-switch-to-dark": [
+    {
+      "type": 0,
+      "value": "Switch to dark mode"
+    }
+  ],
+  "visualization-toolbar.tooltip-switch-to-light": [
+    {
+      "type": 0,
+      "value": "Switch to light mode"
+    }
+  ],
   "visualization-toolbar.tooltip-theme-toggle": [
     {
       "type": 0,
