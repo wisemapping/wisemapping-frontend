@@ -188,6 +188,9 @@
   "footer.termsandconditions": {
     "defaultMessage": "नियम और शर्तें"
   },
+  "footer.privacypolicy": {
+    "defaultMessage": "गोपनीयता नीति"
+  },
   "forgot.desc": {
     "defaultMessage": "हम आपको आपका पासवर्ड रीसेट करने के लिए एक ईमेल भेजेंगे।"
   },

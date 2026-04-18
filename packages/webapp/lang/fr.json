@@ -173,6 +173,9 @@
   "footer.termsandconditions": {
     "defaultMessage": "Termes et conditions"
   },
+  "footer.privacypolicy": {
+    "defaultMessage": "Politique de confidentialité"
+  },
   "forgot.desc": {
     "defaultMessage": "Nous vous enverrons un e-mail pour réinitialiser votre mot de passe."
   },

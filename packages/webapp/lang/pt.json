@@ -185,6 +185,9 @@
   "footer.termsandconditions": {
     "defaultMessage": "Termos e condições"
   },
+  "footer.privacypolicy": {
+    "defaultMessage": "Política de Privacidade"
+  },
   "forgot.desc": {
     "defaultMessage": "Enviaremos um e-mail para redefinir sua senha."
   },

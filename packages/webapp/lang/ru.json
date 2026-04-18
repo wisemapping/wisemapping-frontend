@@ -170,6 +170,9 @@
   "footer.termsandconditions": {
     "defaultMessage": "Общие Правила"
   },
+  "footer.privacypolicy": {
+    "defaultMessage": "Политика конфиденциальности"
+  },
   "forgot.desc": {
     "defaultMessage": "Мы отправим Вам e-mail для восстановления пароля."
   },
