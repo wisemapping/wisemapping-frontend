@@ -153,6 +153,7 @@ const LoginPage = (): React.ReactElement => {
         initializeThemeFromSystem();
 
         // If the url has been defined, redirect to the original url.
+        // Hard navigation triggers Google Auto ads vignette between login and dashboard.
         let redirectUrl = new URLSearchParams(location.search).get('redirect');
         redirectUrl = redirectUrl ? redirectUrl : '/c/maps/';
         console.log(`redirectUrl: ${redirectUrl}`);
