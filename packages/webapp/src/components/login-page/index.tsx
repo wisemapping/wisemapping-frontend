@@ -41,6 +41,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { trackPageView } from '../../utils/analytics';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 import VignetteAdModal, { shouldShowVignette } from '../common/vignette-ad-modal';
+import LoginBannerAd from '../common/login-banner-ad';
 
 export type Model = {
   email: string;
@@ -217,9 +218,19 @@ const LoginPage = (): React.ReactElement => {
         headerType={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'}
         contentSx={{
           padding: { xs: '8px 16px', md: '16px 16px' },
+          alignItems: 'flex-start',
         }}
       >
-        <FormContainer>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <LoginBannerAd />
+          <FormContainer>
           <header>
             <Typography variant="h4" component="h1">
               <FormattedMessage id="login.title" defaultMessage="Welcome" />
@@ -385,7 +396,8 @@ const LoginPage = (): React.ReactElement => {
               }}
             />
           </Typography>
-        </FormContainer>
+          </FormContainer>
+        </Box>
       </AccountAccessLayout>
     </>
   );
