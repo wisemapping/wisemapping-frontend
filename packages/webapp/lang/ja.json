@@ -185,6 +185,9 @@
   "footer.termsandconditions": {
     "defaultMessage": "利用規約"
   },
+  "footer.privacypolicy": {
+    "defaultMessage": "プライバシーポリシー"
+  },
   "forgot.desc": {
     "defaultMessage": "パスワードをリセットするためのメールをお送りします。"
   },

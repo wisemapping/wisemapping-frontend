@@ -182,6 +182,9 @@
   "footer.termsandconditions": {
     "defaultMessage": "Términos y Condiciones"
   },
+  "footer.privacypolicy": {
+    "defaultMessage": "Política de Privacidad"
+  },
   "forgot.desc": {
     "defaultMessage": "Le enviaremos un correo electrónico para restablecer su contraseña."
   },

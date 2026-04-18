@@ -176,6 +176,9 @@
   "footer.termsandconditions": {
     "defaultMessage": "条款和条件"
   },
+  "footer.privacypolicy": {
+    "defaultMessage": "隱私政策"
+  },
   "forgot.desc": {
     "defaultMessage": "我们将向您发送电子邮件以重置您的密码。"
   },
