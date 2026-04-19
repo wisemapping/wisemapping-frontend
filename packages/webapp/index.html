@@ -75,7 +75,7 @@
 
   <!-- Google Consent Mode v2 + Funding Choices CMP + AdSense -->
   <script type="text/javascript">
-    if (<%= GOOGLE_ADDS_ENABLED %> && !/\/maps\/[^/]+\/(editor|public|try)/.test(window.location.pathname)) {
+    if (<%= GOOGLE_ADDS_ENABLED %> && !/\/maps\/[^/]+\/(edit|print|view|public|embed|try)/.test(window.location.pathname)) {
       var ALL_GRANTED = { analytics_storage: 'granted', ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted' };
 
       window.dataLayer = window.dataLayer || [];
