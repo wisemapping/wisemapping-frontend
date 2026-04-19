@@ -35,7 +35,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '../../contexts/ThemeContext';
 import { MapsPageLoading } from '../maps-page/maps-list/MapsListSkeleton';
 import JwtTokenConfig from '../../classes/jwt-token-config';
-import VignetteAdModal, { shouldShowVignette } from '../common/vignette-ad-modal';
 
 type OAuthProvider = 'google' | 'facebook';
 
@@ -48,14 +47,10 @@ const OAuthCallbackPage = (): React.ReactElement => {
 
   const [error, setError] = useState<ErrorInfo | undefined>();
   const [callbackResult, setCallbackResult] = useState<Oauth2CallbackResult>();
-  const [vignetteUrl, setVignetteUrl] = useState<string | null>(null);
 
+  // Route through login page so Google Ads vignette fires from a page with ads already loaded.
   const navigateAfterOAuth = (url: string): void => {
-    if (shouldShowVignette()) {
-      setVignetteUrl(url);
-    } else {
-      window.location.href = url;
-    }
+    window.location.href = `/c/login?redirect=${encodeURIComponent(url)}`;
   };
 
   // Determine OAuth provider based on route path
@@ -150,9 +145,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
           // Initialize theme from system preference if not already set
           initializeThemeFromSystem();
           navigateAfterOAuth(
-            stateRedirectUrl && stateRedirectUrl !== 'wisemapping'
-              ? stateRedirectUrl
-              : '/c/maps/',
+            stateRedirectUrl && stateRedirectUrl !== 'wisemapping' ? stateRedirectUrl : '/c/maps/',
           );
           return;
         }
@@ -226,18 +219,14 @@ const OAuthCallbackPage = (): React.ReactElement => {
     stateRedirectUrl === '/c/maps/';
   const showMapsLoading = !needConfirmLinking && !error && isRedirectingToMapsList;
 
-  // Show full-screen maps loading if redirecting to maps list (but not when vignette is open)
-  if (showMapsLoading && !vignetteUrl) {
+  // Show full-screen maps loading if redirecting to maps list
+  if (showMapsLoading) {
     return <MapsPageLoading />;
   }
 
   // Otherwise show the standard OAuth callback page with form container
   return (
     <div>
-      <VignetteAdModal
-        open={vignetteUrl !== null}
-        onClose={() => { if (vignetteUrl) window.location.href = vignetteUrl; }}
-      />
       <Header type="none" />
       <FormContainer>
         <Typography variant="h4" component="h1">
