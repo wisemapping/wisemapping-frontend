@@ -721,6 +721,16 @@
       "value": "Duplicate"
     }
   ],
+  "error.contact-support": [
+    {
+      "type": 0,
+      "value": "Need help? Contact us at "
+    },
+    {
+      "type": 1,
+      "value": "support"
+    }
+  ],
   "error.generic-message": [
     {
       "type": 0,

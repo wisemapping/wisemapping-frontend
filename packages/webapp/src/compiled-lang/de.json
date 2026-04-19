@@ -721,6 +721,16 @@
       "value": "Kopie"
     }
   ],
+  "error.contact-support": [
+    {
+      "type": 0,
+      "value": "Benötigen Sie Hilfe? Kontaktieren Sie uns unter "
+    },
+    {
+      "type": 1,
+      "value": "support"
+    }
+  ],
   "error.generic-message": [
     {
       "type": 0,

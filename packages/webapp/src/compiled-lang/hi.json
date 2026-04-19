@@ -721,6 +721,16 @@
       "value": "डुप्लिकेट"
     }
   ],
+  "error.contact-support": [
+    {
+      "type": 0,
+      "value": "सहायता चाहिए? हमसे यहाँ संपर्क करें "
+    },
+    {
+      "type": 1,
+      "value": "support"
+    }
+  ],
   "error.generic-message": [
     {
       "type": 0,
