@@ -122,6 +122,7 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
               height: 'clamp(280px, 50vh, 350px)',
               overflow: 'hidden',
               backgroundColor: 'background.paper',
+              '& .EmojiPickerReact': { '--epr-emoji-size': '22px' } as object,
             }}
           >
             <EmojiPicker
