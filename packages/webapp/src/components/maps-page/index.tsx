@@ -138,8 +138,9 @@ const MapsPage = (): ReactElement => {
     setMindMapCopilotDialogOpen(false);
     window.open(CHATGPT_COPILOT_URL, '_blank', 'noopener,noreferrer');
   };
+  const account = useFetchAccount();
   // Reload based on user preference ...
-  const userLocale = AppI18n.getUserLocale();
+  const userLocale = AppI18n.getUserLocale(account?.locale);
 
   const cache = createIntlCache();
   const intl = createIntl(
@@ -186,7 +187,6 @@ const MapsPage = (): ReactElement => {
     return client.fetchLabels();
   });
 
-  const account = useFetchAccount();
   const labels: Label[] = data ? data : [];
   const filterButtons: ToolbarButtonInfo[] = [
     {

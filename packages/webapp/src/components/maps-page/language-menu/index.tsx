@@ -21,6 +21,7 @@ import React, { useContext } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 import AppI18n, { LocaleCode, Locales } from '../../../classes/app-i18n';
+import { useFetchAccount } from '../../../classes/middleware';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -73,7 +74,8 @@ const LanguageMenu = (): React.ReactElement => {
     mutation.mutate(localeCode);
   };
 
-  const userLocale = AppI18n.getUserLocale();
+  const account = useFetchAccount();
+  const userLocale = AppI18n.getUserLocale(account?.locale);
   return (
     <span>
       <Tooltip

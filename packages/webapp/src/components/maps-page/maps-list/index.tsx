@@ -56,6 +56,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { LabelsCell } from './labels-cell';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import AppI18n from '../../../classes/app-i18n';
+import { useFetchAccount } from '../../../classes/middleware';
 import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 import { CSSObject, Interpolation, Theme } from '@emotion/react';
 import Box from '@mui/material/Box';
@@ -304,7 +305,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   const intl = useIntl();
   const queryClient = useQueryClient();
 
-  const userLocale = AppI18n.getUserLocale();
+  const account = useFetchAccount();
+  const userLocale = AppI18n.getUserLocale(account?.locale);
   useEffect(() => {
     dayjs.locale(userLocale.code);
   }, [userLocale.code]);

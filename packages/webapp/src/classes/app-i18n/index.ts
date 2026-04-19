@@ -39,8 +39,6 @@ import jaMessages from '../../compiled-lang/ja.json';
 import ptMessages from '../../compiled-lang/pt.json';
 import itMessages from '../../compiled-lang/it.json';
 import hiMessages from '../../compiled-lang/hi.json';
-import { useFetchAccount } from '../middleware';
-
 export class Locale {
   code: LocaleCode;
   label: string;
@@ -69,7 +67,7 @@ export default abstract class AppI18n {
   ]);
   private static localePrefixRegex: RegExp | null = null;
 
-  public static getUserLocale(): Locale {
+  public static getUserLocale(accountLocale?: Locale): Locale {
     const path = window.location.pathname;
 
     // Check if locale is in the URL path (e.g., /en/c/login, /es/c/registration)
@@ -91,11 +89,10 @@ export default abstract class AppI18n {
     const isPublicPage = AppI18n.isPublicPage(path);
     let result: Locale;
     if (!isPublicPage) {
-      const account = useFetchAccount();
-      result = account?.locale ? account.locale : this.getDefaultLocale();
+      result = accountLocale ?? this.getDefaultLocale();
 
       // If the local storage value is different, update ...
-      if (account?.locale && result.code !== localStorage.getItem(AppI18n.LOCAL_STORAGE_KEY)) {
+      if (accountLocale && result.code !== localStorage.getItem(AppI18n.LOCAL_STORAGE_KEY)) {
         localStorage.setItem(AppI18n.LOCAL_STORAGE_KEY, result.code);
       }
     } else {
