@@ -868,5 +868,8 @@
   },
   "validation.title-required": {
     "defaultMessage": "Il titolo è obbligatorio"
+  },
+  "login.redirecting": {
+    "defaultMessage": "Reindirizzamento..."
   }
 }

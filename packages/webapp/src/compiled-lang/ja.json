@@ -1233,6 +1233,12 @@
       "value": "パスワード"
     }
   ],
+  "login.redirecting": [
+    {
+      "type": 0,
+      "value": "リダイレクト中..."
+    }
+  ],
   "login.remberme": [
     {
       "type": 0,

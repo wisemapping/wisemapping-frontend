@@ -359,6 +359,9 @@
   "login.shared-map-notice": {
     "defaultMessage": "A mind map has been shared with you. Please log in to access it. Don't have an account? Sign up for free or use your Google/Facebook account."
   },
+  "login.redirecting": {
+    "defaultMessage": "Redirecting..."
+  },
   "map.creator": {
     "defaultMessage": "Creator"
   },

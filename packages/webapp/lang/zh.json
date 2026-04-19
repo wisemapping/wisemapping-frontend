@@ -868,5 +868,8 @@
   },
   "validation.title-required": {
     "defaultMessage": "標題是必需的"
+  },
+  "login.redirecting": {
+    "defaultMessage": "重定向中..."
   }
 }

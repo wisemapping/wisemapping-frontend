@@ -1233,6 +1233,12 @@
       "value": "Mot de passe"
     }
   ],
+  "login.redirecting": [
+    {
+      "type": 0,
+      "value": "Redirection en cours..."
+    }
+  ],
   "login.remberme": [
     {
       "type": 0,

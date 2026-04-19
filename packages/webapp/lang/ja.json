@@ -868,5 +868,8 @@
   },
   "validation.title-required": {
     "defaultMessage": "タイトルは必須です"
+  },
+  "login.redirecting": {
+    "defaultMessage": "リダイレクト中..."
   }
 }
