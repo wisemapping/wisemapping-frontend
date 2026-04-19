@@ -40,7 +40,7 @@ import { SEOHead } from '../seo';
 import { useTheme } from '../../contexts/ThemeContext';
 import { trackPageView } from '../../utils/analytics';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
-import VignetteAdModal, { shouldShowVignette } from '../common/vignette-ad-modal';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export type Model = {
   email: string;
@@ -73,7 +73,9 @@ const LoginPage = (): React.ReactElement => {
   const intl = useIntl();
   const [model, setModel] = useState<Model>(defaultModel);
   const [loginError, setLoginError] = useState<LoginErrorInfo | undefined>(undefined);
-  const [vignetteUrl, setVignetteUrl] = useState<string | null>(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState<boolean>(() =>
+    Boolean(new URLSearchParams(window.location.search).get('redirect')),
+  );
 
   const client = useContext(ClientContext);
   const navigate = useNavigate();
@@ -123,20 +125,11 @@ const LoginPage = (): React.ReactElement => {
 
     const checkAuthentication = async (): Promise<void> => {
       try {
-        // Try to fetch account info to check if user is authenticated
         await client.fetchAccountInfo();
-
-        // If successful, user is authenticated - perform hard navigation to trigger vignette
-        if (redirectUrl) {
-          console.debug('Redirecting (hard) after auth check to', redirectUrl);
-          window.location.href = redirectUrl;
-        } else {
-          console.debug('Redirecting (hard) after auth check to default maps page');
-          window.location.href = '/c/maps/';
-        }
+        window.location.href = redirectUrl;
       } catch {
-        // If error (401/403/etc), user is not authenticated - show login form
-        // Silently handle the error as this is expected for unauthenticated users
+        // Not authenticated — show the login form
+        setIsCheckingAuth(false);
       }
     };
 
@@ -153,11 +146,7 @@ const LoginPage = (): React.ReactElement => {
         let redirectUrl = new URLSearchParams(location.search).get('redirect');
         redirectUrl = redirectUrl ? redirectUrl : '/c/maps/';
 
-        if (shouldShowVignette()) {
-          setVignetteUrl(redirectUrl);
-        } else {
-          window.location.href = redirectUrl;
-        }
+        window.location.href = redirectUrl;
       },
       onError: (error: LoginErrorInfo) => {
         setLoginError(error);
@@ -183,15 +172,28 @@ const LoginPage = (): React.ReactElement => {
   const baseUrl =
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
 
-  const handleVignetteClose = () => {
-    if (vignetteUrl) {
-      window.location.href = vignetteUrl;
-    }
-  };
+  if (isCheckingAuth) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+          gap: 2,
+        }}
+      >
+        <CircularProgress />
+        <Typography variant="body1">
+          <FormattedMessage id="login.redirecting" defaultMessage="Redirecting..." />
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <>
-      <VignetteAdModal open={vignetteUrl !== null} onClose={handleVignetteClose} />
       <SEOHead
         title="Login | WiseMapping"
         description="Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others. Free online mind mapping tool."
