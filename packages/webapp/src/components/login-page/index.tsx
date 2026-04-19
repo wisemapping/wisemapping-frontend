@@ -18,7 +18,7 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Link as RouterLink, useLocation, useNavigate } from 'react-router';
+import { Link as RouterLink, useLocation } from 'react-router';
 import AccountAccessLayout from '../layout/AccountAccessLayout';
 import SubmitButton from '../form/submit-button';
 import Input from '../form/input';
@@ -73,12 +73,9 @@ const LoginPage = (): React.ReactElement => {
   const intl = useIntl();
   const [model, setModel] = useState<Model>(defaultModel);
   const [loginError, setLoginError] = useState<LoginErrorInfo | undefined>(undefined);
-  const [isCheckingAuth, setIsCheckingAuth] = useState<boolean>(() =>
-    Boolean(new URLSearchParams(window.location.search).get('redirect')),
-  );
+  const [isCheckingAuth, setIsCheckingAuth] = useState<boolean>(true);
 
   const client = useContext(ClientContext);
-  const navigate = useNavigate();
   const location = useLocation();
   const { initializeThemeFromSystem } = useTheme();
 
@@ -113,30 +110,22 @@ const LoginPage = (): React.ReactElement => {
     trackPageView(window.location.pathname, 'Login');
   }, []);
 
-  // Check if user is already authenticated and redirect if so (only when redirect parameter is present)
   useEffect(() => {
-    const currentSearchParams = new URLSearchParams(location.search);
-    const redirectUrl = currentSearchParams.get('redirect');
-
-    // Only check authentication if redirect parameter is present
-    if (!redirectUrl) {
-      return;
-    }
+    const redirectUrl = new URLSearchParams(location.search).get('redirect');
 
     const checkAuthentication = async (): Promise<void> => {
       try {
         await client.fetchAccountInfo();
         // Delay so Google Ads has time to initialize before navigation triggers the vignette.
         await new Promise((resolve) => setTimeout(resolve, 2500));
-        window.location.href = redirectUrl;
+        window.location.href = redirectUrl ?? '/c/maps/';
       } catch {
-        // Not authenticated — show the login form
         setIsCheckingAuth(false);
       }
     };
 
     checkAuthentication();
-  }, [client, navigate, location.search]);
+  }, [client, location.search]);
 
   const mutation = useMutation<void, ErrorInfo, Model>(
     (model: Model) => client.login({ ...model }),

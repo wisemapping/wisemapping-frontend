@@ -33,7 +33,6 @@ import { ClientContext } from '../../classes/provider/client-context';
 import { logCriticalError } from '../../utils';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '../../contexts/ThemeContext';
-import { MapsPageLoading } from '../maps-page/maps-list/MapsListSkeleton';
 import JwtTokenConfig from '../../classes/jwt-token-config';
 
 type OAuthProvider = 'google' | 'facebook';
@@ -209,22 +208,7 @@ const OAuthCallbackPage = (): React.ReactElement => {
   // if service reports that user doesnt sync accounts yet, we need to show the options
   const needConfirmLinking = !error && callbackResult?.email && !callbackResult?.oauthSync;
 
-  // Determine if we're redirecting to the maps list page (not editor)
-  const searchParams = new URLSearchParams(window.location.search);
-  const stateRedirectUrl = searchParams.get('state');
-  const isRedirectingToMapsList =
-    !stateRedirectUrl ||
-    stateRedirectUrl === 'wisemapping' ||
-    stateRedirectUrl === '/c/maps' ||
-    stateRedirectUrl === '/c/maps/';
-  const showMapsLoading = !needConfirmLinking && !error && isRedirectingToMapsList;
-
-  // Show full-screen maps loading if redirecting to maps list
-  if (showMapsLoading) {
-    return <MapsPageLoading />;
-  }
-
-  // Otherwise show the standard OAuth callback page with form container
+  // Show the standard OAuth callback page with form container
   return (
     <div>
       <Header type="none" />
