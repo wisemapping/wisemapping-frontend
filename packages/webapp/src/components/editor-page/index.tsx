@@ -29,6 +29,7 @@ import type { PersistenceError, MapInfo } from '@wisemapping/editor';
 import type { EditorRenderMode } from '@wisemapping/mindplot';
 import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
+import { useFetchAccount } from '../../classes/middleware';
 import { trackPageView } from '../../utils/analytics';
 import { useTheme as useMuiTheme } from '@mui/material/styles';
 import MapInfoImpl from '../../classes/editor-map-info';
@@ -103,7 +104,8 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
   const mapInfoRef = useRef<MapInfoImpl | undefined>(undefined);
 
-  const userLocale = AppI18n.getUserLocale();
+  const account = useFetchAccount();
+  const userLocale = AppI18n.getUserLocale(account?.locale);
   const theme = useMuiTheme(); // Get MUI theme object
   const client = useContext(ClientContext);
   const { hotkeyEnabled } = useContext(KeyboardContext);

@@ -71,7 +71,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
   const [activeTab, setActiveTab] = React.useState<string>('1');
   const account = useFetchAccount();
   const [selectedLanguage, setSelectedLanguage] = React.useState<LocaleCode>(
-    (account?.locale || AppI18n.getUserLocale().code) as LocaleCode,
+    (account?.locale?.code || AppI18n.getUserLocale(account?.locale).code) as LocaleCode,
   );
 
   const [model, setModel] = React.useState<AccountInfoModel>(defaultModel);

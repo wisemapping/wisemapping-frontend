@@ -57,6 +57,7 @@ import { ClientContext } from './classes/provider/client-context';
 import { KeyboardContext } from './classes/provider/keyboard-context';
 import CommonPage from './components/common-page';
 import AppConfig from './classes/app-config';
+import { useFetchAccount } from './classes/middleware';
 
 const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
@@ -120,8 +121,9 @@ const createRegistrationRoutes = () => {
 // Wrapper component that reads locale from URL and provides it to IntlProvider
 const IntlProviderWrapper = ({ children }: { children: React.ReactNode }): ReactElement => {
   const location = useLocation();
+  const account = useFetchAccount();
   // Re-read locale when location changes to pick up locale from URL
-  const locale = AppI18n.getUserLocale();
+  const locale = AppI18n.getUserLocale(account?.locale);
 
   // Trigger an auto-ads refresh on every SPA route change so AdSense sees
   // a new pageview. Manual AdUnit instances push individually on mount;
