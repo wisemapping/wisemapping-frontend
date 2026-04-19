@@ -875,10 +875,28 @@
       "value": "Emojis"
     }
   ],
+  "icon-picker.frequently-used": [
+    {
+      "type": 0,
+      "value": "Frequently Used"
+    }
+  ],
   "icon-picker.icons": [
     {
       "type": 0,
       "value": "Icons Gallery"
+    }
+  ],
+  "icon-picker.no-results": [
+    {
+      "type": 0,
+      "value": "No icons found"
+    }
+  ],
+  "icon-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Search icons..."
     }
   ],
   "icon-picker.show-images": [

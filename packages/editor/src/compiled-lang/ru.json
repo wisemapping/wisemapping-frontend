@@ -887,10 +887,28 @@
       "value": "Эмодзи"
     }
   ],
+  "icon-picker.frequently-used": [
+    {
+      "type": 0,
+      "value": "Часто используемые"
+    }
+  ],
   "icon-picker.icons": [
     {
       "type": 0,
       "value": "Галерея иконок"
+    }
+  ],
+  "icon-picker.no-results": [
+    {
+      "type": 0,
+      "value": "Значки не найдены"
+    }
+  ],
+  "icon-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Поиск значков..."
     }
   ],
   "icon-picker.show-images": [

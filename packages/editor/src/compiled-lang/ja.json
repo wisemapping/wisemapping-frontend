@@ -887,10 +887,28 @@
       "value": "絵文字"
     }
   ],
+  "icon-picker.frequently-used": [
+    {
+      "type": 0,
+      "value": "よく使う"
+    }
+  ],
   "icon-picker.icons": [
     {
       "type": 0,
       "value": "アイコンギャラリー"
+    }
+  ],
+  "icon-picker.no-results": [
+    {
+      "type": 0,
+      "value": "アイコンが見つかりません"
+    }
+  ],
+  "icon-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "アイコンを検索..."
     }
   ],
   "icon-picker.show-images": [

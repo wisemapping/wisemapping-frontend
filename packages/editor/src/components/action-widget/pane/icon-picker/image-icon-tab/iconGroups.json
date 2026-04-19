@@ -1,60 +1,23 @@
 [
     {
-        "id": "things",
+        "id": "tasks",
         "icons": [
-            "social_facebook",
-            "social_twitter",
-            "social_redit",
-            "social_instagram",
-            "social_google-plus",
-            "meetapps_slack",
-            "meetapps_google-meet",
-            "meetapps_whatapp",
-            "meetapps_ms-teams",
-            "meetapps_zoom",
-            "meetapps_facebook-messenger",
-            "appsgoogle_youtube",
-            "appsgoogle_gmail",
-            "appsgoogle_maps",
             "task_0",
             "task_25",
             "task_50",
             "task_75",
             "task_100",
-            "hard_ipod",
-            "things_address_book",
-            "things_wrench",
-            "things_window-layout",
-            "things_bubbles",
-            "object_music"
-        ]
-    },
-    {
-        "id": "other",
-        "icons": [
-            "chart_line",
-            "chart_curve",
-            "chart_pie",
-            "chart_organisation",
-            "onoff_add",
-            "onoff_delete",
-            "onoff_status_offline",
-            "onoff_status_online",
-            "money_dollar",
-            "money_ruby",
-            "time_calendar",
-            "time_clock",
             "sign_warning",
             "sign_info",
             "sign_help",
             "sign_cancel",
-            "soft_cursor",
-            "soft_database_table",
-            "soft_database",
-            "soft_feed",
-            "soft_folder_explore",
-            "soft_rss",
-            "soft_penguin",
+            "sign_exclamation",
+            "sign_closed"
+        ]
+    },
+    {
+        "id": "flags",
+        "icons": [
             "flag_blue",
             "flag_green",
             "flag_orange",
@@ -66,7 +29,92 @@
             "tag_orange",
             "tag_red",
             "tag_pink",
-            "tag_yellow"
+            "tag_yellow",
+            "tag_purple",
+            "tag_white"
+        ]
+    },
+    {
+        "id": "business",
+        "icons": [
+            "chart_line",
+            "chart_curve",
+            "chart_pie",
+            "chart_organisation",
+            "money_dollar",
+            "money_ruby",
+            "time_calendar",
+            "time_clock"
+        ]
+    },
+    {
+        "id": "tech",
+        "icons": [
+            "soft_database",
+            "soft_database_table",
+            "soft_folder_explore",
+            "soft_feed",
+            "soft_rss",
+            "notes",
+            "links",
+            "arrow_merge",
+            "hard_drive_cd",
+            "soft_cursor",
+            "hard_ipod",
+            "soft_penguin"
+        ]
+    },
+    {
+        "id": "collaboration",
+        "icons": [
+            "meetapps_slack",
+            "meetapps_zoom",
+            "meetapps_ms-teams",
+            "meetapps_google-meet",
+            "meetapps_whatapp",
+            "meetapps_facebook-messenger"
+        ]
+    },
+    {
+        "id": "social",
+        "icons": [
+            "social_facebook",
+            "social_twitter",
+            "social_instagram",
+            "social_redit",
+            "social_google-plus",
+            "appsgoogle_gmail",
+            "appsgoogle_youtube",
+            "appsgoogle_maps"
+        ]
+    },
+    {
+        "id": "actions",
+        "icons": [
+            "onoff_add",
+            "onoff_delete",
+            "onoff_status_online",
+            "onoff_status_offline",
+            "things_address_book",
+            "things_wrench",
+            "things_window-layout",
+            "things_bubbles",
+            "object_music"
+        ]
+    },
+    {
+        "id": "ai",
+        "icons": [
+            "ai_openai",
+            "ai_anthropic",
+            "ai_googlegemini",
+            "ai_meta",
+            "ai_mistralai",
+            "ai_perplexity",
+            "ai_huggingface",
+            "ai_githubcopilot",
+            "ai_cursor",
+            "ai_xai"
         ]
     }
 ]
