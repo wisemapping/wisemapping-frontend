@@ -88,10 +88,9 @@ const IconImageTab = ({ iconModel }: IconImageTab): ReactElement => {
   const showNoResults = searchQuery.trim().length > 0 && filteredIcons.length === 0;
 
   return (
-    <Box sx={{ width: '450px' }}>
+    <Box sx={{ width: '100%' }}>
       <TextField
         fullWidth
-        size="small"
         autoFocus
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
@@ -99,7 +98,17 @@ const IconImageTab = ({ iconModel }: IconImageTab): ReactElement => {
           id: 'icon-picker.search-placeholder',
           defaultMessage: 'Search icons...',
         })}
-        sx={{ mb: 1 }}
+        sx={{
+          mb: 1,
+          '& .MuiOutlinedInput-root': {
+            borderRadius: '8px',
+            height: '40px',
+            backgroundColor: 'action.hover',
+            '& fieldset': { borderColor: 'transparent' },
+            '&:hover fieldset': { borderColor: 'divider' },
+            '&.Mui-focused fieldset': { borderColor: 'primary.main', borderWidth: '2px' },
+          },
+        }}
         slotProps={{
           input: {
             startAdornment: (

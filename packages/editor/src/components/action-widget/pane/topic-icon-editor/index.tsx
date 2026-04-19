@@ -110,7 +110,6 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
       {/* Content area */}
       <Box
         sx={{
-          overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
           backgroundColor: 'background.paper',
@@ -119,7 +118,7 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
         {tabValue === 0 && (
           <Box
             sx={{
-              width: 'clamp(240px, 85vw, 320px)',
+              width: '100%',
               height: 'clamp(280px, 50vh, 350px)',
               overflow: 'hidden',
               backgroundColor: 'background.paper',
@@ -141,9 +140,10 @@ const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): React
         {tabValue === 1 && (
           <Box
             sx={{
-              width: 'clamp(240px, 85vw, 320px)',
+              width: '100%',
               height: 'clamp(280px, 50vh, 350px)',
-              overflow: 'hidden',
+              overflowY: 'auto',
+              overflowX: 'hidden',
               backgroundColor: 'background.paper',
             }}
           >
