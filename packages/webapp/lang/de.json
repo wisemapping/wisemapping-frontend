@@ -170,6 +170,9 @@
   "footer.termsandconditions": {
     "defaultMessage": "Allgemeine Geschäftsbedingungen"
   },
+  "footer.privacypolicy": {
+    "defaultMessage": "Datenschutzrichtlinie"
+  },
   "forgot.desc": {
     "defaultMessage": "Wir senden dir eine E-Mail, um dein Passwort zurückzusetzen."
   },

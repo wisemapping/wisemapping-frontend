@@ -188,6 +188,9 @@
   "footer.termsandconditions": {
     "defaultMessage": "Умови використання"
   },
+  "footer.privacypolicy": {
+    "defaultMessage": "Політика конфіденційності"
+  },
   "forgot.desc": {
     "defaultMessage": "Ми надішлемо вам електронний лист для скидання пароля."
   },

@@ -404,6 +404,15 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Пошук емодзі..."
   },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "Пошук значків..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "Часто використовувані"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "Значки не знайдено"
+  },
   "common.close": {
     "defaultMessage": "Закрити"
   },

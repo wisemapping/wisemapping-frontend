@@ -188,6 +188,9 @@
   "footer.termsandconditions": {
     "defaultMessage": "Termini e Condizioni"
   },
+  "footer.privacypolicy": {
+    "defaultMessage": "Informativa sulla privacy"
+  },
   "forgot.desc": {
     "defaultMessage": "Ti invieremo un'email per reimpostare la tua password."
   },

@@ -434,6 +434,15 @@
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Search emojis..."
   },
+  "icon-picker.search-placeholder": {
+    "defaultMessage": "Search icons..."
+  },
+  "icon-picker.frequently-used": {
+    "defaultMessage": "Frequently Used"
+  },
+  "icon-picker.no-results": {
+    "defaultMessage": "No icons found"
+  },
   "common.close": {
     "defaultMessage": "Close"
   },
