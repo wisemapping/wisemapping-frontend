@@ -126,8 +126,14 @@ const LoginPage = (): React.ReactElement => {
         // Try to fetch account info to check if user is authenticated
         await client.fetchAccountInfo();
 
-        // If successful, user is authenticated - redirect to redirect URL
-        navigate(redirectUrl);
+        // If successful, user is authenticated - perform hard navigation to trigger vignette
+        if (redirectUrl) {
+          console.debug('Redirecting (hard) after auth check to', redirectUrl);
+          window.location.href = redirectUrl;
+        } else {
+          console.debug('Redirecting (hard) after auth check to default maps page');
+          window.location.href = '/c/maps/';
+        }
       } catch {
         // If error (401/403/etc), user is not authenticated - show login form
         // Silently handle the error as this is expected for unauthenticated users
