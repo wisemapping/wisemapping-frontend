@@ -41,6 +41,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { trackPageView } from '../../utils/analytics';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 import CircularProgress from '@mui/material/CircularProgress';
+import VignetteAdModal, { shouldShowVignette } from '../common/vignette-ad-modal';
 
 export type Model = {
   email: string;
@@ -76,6 +77,7 @@ const LoginPage = (): React.ReactElement => {
   const [isCheckingAuth, setIsCheckingAuth] = useState<boolean>(() =>
     Boolean(new URLSearchParams(window.location.search).get('redirect')),
   );
+  const [vignetteUrl, setVignetteUrl] = useState<string | null>(null);
 
   const client = useContext(ClientContext);
   const navigate = useNavigate();
@@ -126,9 +128,14 @@ const LoginPage = (): React.ReactElement => {
     const checkAuthentication = async (): Promise<void> => {
       try {
         await client.fetchAccountInfo();
-        // Delay so Google Ads has time to initialize before navigation triggers the vignette.
-        await new Promise((resolve) => setTimeout(resolve, 2500));
-        window.location.href = redirectUrl;
+        // User is authenticated (OAuth just completed) — show vignette then redirect.
+        initializeThemeFromSystem();
+        if (shouldShowVignette()) {
+          setIsCheckingAuth(false);
+          setVignetteUrl(redirectUrl);
+        } else {
+          window.location.href = redirectUrl;
+        }
       } catch {
         // Not authenticated — show the login form
         setIsCheckingAuth(false);
@@ -142,13 +149,16 @@ const LoginPage = (): React.ReactElement => {
     (model: Model) => client.login({ ...model }),
     {
       onSuccess: () => {
-        // Initialize theme from system preference if not already set
         initializeThemeFromSystem();
 
         let redirectUrl = new URLSearchParams(location.search).get('redirect');
         redirectUrl = redirectUrl ? redirectUrl : '/c/maps/';
 
-        window.location.href = redirectUrl;
+        if (shouldShowVignette()) {
+          setVignetteUrl(redirectUrl);
+        } else {
+          window.location.href = redirectUrl;
+        }
       },
       onError: (error: LoginErrorInfo) => {
         setLoginError(error);
@@ -174,6 +184,12 @@ const LoginPage = (): React.ReactElement => {
   const baseUrl =
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
 
+  const handleVignetteClose = () => {
+    if (vignetteUrl) {
+      window.location.href = vignetteUrl;
+    }
+  };
+
   if (isCheckingAuth) {
     return (
       <Box
@@ -196,6 +212,7 @@ const LoginPage = (): React.ReactElement => {
 
   return (
     <>
+      <VignetteAdModal open={vignetteUrl !== null} onClose={handleVignetteClose} />
       <SEOHead
         title="Login | WiseMapping"
         description="Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others. Free online mind mapping tool."
