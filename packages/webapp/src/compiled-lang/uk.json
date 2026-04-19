@@ -1233,6 +1233,12 @@
       "value": "Пароль"
     }
   ],
+  "login.redirecting": [
+    {
+      "type": 0,
+      "value": "Переспрямування..."
+    }
+  ],
   "login.remberme": [
     {
       "type": 0,

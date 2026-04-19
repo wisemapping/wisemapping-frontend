@@ -868,5 +868,8 @@
   },
   "validation.title-required": {
     "defaultMessage": "Назва обов'язкова"
+  },
+  "login.redirecting": {
+    "defaultMessage": "Переспрямування..."
   }
 }

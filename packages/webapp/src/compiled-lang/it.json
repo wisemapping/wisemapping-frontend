@@ -1233,6 +1233,12 @@
       "value": "Password"
     }
   ],
+  "login.redirecting": [
+    {
+      "type": 0,
+      "value": "Reindirizzamento..."
+    }
+  ],
   "login.remberme": [
     {
       "type": 0,
