@@ -114,7 +114,10 @@
             "ai_huggingface",
             "ai_githubcopilot",
             "ai_cursor",
-            "ai_xai"
+            "ai_xai",
+            "ai_openrouter",
+            "ai_elevenlabs",
+            "ai_ollama"
         ]
     }
 ]
