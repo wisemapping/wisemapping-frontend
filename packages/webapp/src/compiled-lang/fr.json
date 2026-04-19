@@ -895,6 +895,12 @@
       "value": "Autres"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "Politique de confidentialité"
+    }
+  ],
   "footer.support": [
     {
       "type": 0,

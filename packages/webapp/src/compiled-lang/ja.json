@@ -895,6 +895,12 @@
       "value": "その他"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "プライバシーポリシー"
+    }
+  ],
   "footer.support": [
     {
       "type": 0,
