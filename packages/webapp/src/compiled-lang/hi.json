@@ -895,6 +895,12 @@
       "value": "अन्य"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "गोपनीयता नीति"
+    }
+  ],
   "footer.support": [
     {
       "type": 0,

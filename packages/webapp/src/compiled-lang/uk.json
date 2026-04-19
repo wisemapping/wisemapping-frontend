@@ -895,6 +895,12 @@
       "value": "Інше"
     }
   ],
+  "footer.privacypolicy": [
+    {
+      "type": 0,
+      "value": "Політика конфіденційності"
+    }
+  ],
   "footer.support": [
     {
       "type": 0,

@@ -887,10 +887,28 @@
       "value": "表情符号"
     }
   ],
+  "icon-picker.frequently-used": [
+    {
+      "type": 0,
+      "value": "常用"
+    }
+  ],
   "icon-picker.icons": [
     {
       "type": 0,
       "value": "图标库"
+    }
+  ],
+  "icon-picker.no-results": [
+    {
+      "type": 0,
+      "value": "找不到圖示"
+    }
+  ],
+  "icon-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "搜尋圖示..."
     }
   ],
   "icon-picker.show-images": [

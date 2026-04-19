@@ -887,10 +887,28 @@
       "value": "Emoji"
     }
   ],
+  "icon-picker.frequently-used": [
+    {
+      "type": 0,
+      "value": "Usati frequentemente"
+    }
+  ],
   "icon-picker.icons": [
     {
       "type": 0,
       "value": "Galleria icone"
+    }
+  ],
+  "icon-picker.no-results": [
+    {
+      "type": 0,
+      "value": "Nessuna icona trovata"
+    }
+  ],
+  "icon-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Cerca icone..."
     }
   ],
   "icon-picker.show-images": [

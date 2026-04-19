@@ -887,10 +887,28 @@
       "value": "Емодзі"
     }
   ],
+  "icon-picker.frequently-used": [
+    {
+      "type": 0,
+      "value": "Часто використовувані"
+    }
+  ],
   "icon-picker.icons": [
     {
       "type": 0,
       "value": "Галерея іконок"
+    }
+  ],
+  "icon-picker.no-results": [
+    {
+      "type": 0,
+      "value": "Значки не знайдено"
+    }
+  ],
+  "icon-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Пошук значків..."
     }
   ],
   "icon-picker.show-images": [
