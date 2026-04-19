@@ -127,7 +127,7 @@ const LoginPage = (): React.ReactElement => {
       try {
         await client.fetchAccountInfo();
         // Delay so Google Ads has time to initialize before navigation triggers the vignette.
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 2500));
         window.location.href = redirectUrl;
       } catch {
         // Not authenticated — show the login form
