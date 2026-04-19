@@ -155,7 +155,7 @@ const ForgotPasswordPage = (): React.ReactElement => {
           url: `${baseUrl}${canonicalUrl}`,
         }}
       />
-      <AccountAccessLayout headerType="only-signin">
+      <AccountAccessLayout headerType="only-signin" showAds>
         <ForgotPassword />
       </AccountAccessLayout>
     </>

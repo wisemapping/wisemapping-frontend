@@ -20,6 +20,10 @@ declare module '*.png';
 declare module '*.svg';
 declare module '*.wxml';
 
+interface Window {
+  adsbygoogle: Record<string, unknown>[];
+}
+
 interface ImportMeta {
   glob: (pattern: string, options?: { eager?: boolean }) => Record<string, unknown>;
 }

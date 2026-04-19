@@ -212,6 +212,7 @@ const LoginPage = (): React.ReactElement => {
         contentSx={{
           padding: { xs: '8px 16px', md: '16px 16px' },
         }}
+        showAds
       >
         <FormContainer>
           <header>

@@ -123,6 +123,19 @@ const IntlProviderWrapper = ({ children }: { children: React.ReactNode }): React
   // Re-read locale when location changes to pick up locale from URL
   const locale = AppI18n.getUserLocale();
 
+  // Trigger an auto-ads refresh on every SPA route change so AdSense sees
+  // a new pageview. Manual AdUnit instances push individually on mount;
+  // this extra push covers pages that rely on auto-ads (e.g. /c/maps/).
+  // The push is a no-op when the AdSense script hasn't loaded yet (GDPR
+  // consent pending) — it will be processed once the script loads.
+  useEffect(() => {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch {
+      // no-op
+    }
+  }, [location.pathname]);
+
   return (
     <IntlProvider
       locale={locale.code}
