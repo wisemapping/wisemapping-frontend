@@ -761,6 +761,9 @@
   "error.generic-title": {
     "defaultMessage": "Hmm, that didn't work."
   },
+  "error.contact-support": {
+    "defaultMessage": "Need help? Contact us at {support}"
+  },
   "error.generic-message": {
     "defaultMessage": "Please try again later or contact support if the problem continues."
   },

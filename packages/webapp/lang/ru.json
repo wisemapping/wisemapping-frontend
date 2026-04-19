@@ -758,6 +758,9 @@
   "error.generic-title": {
     "defaultMessage": "Мы столкнулись с проблемой."
   },
+  "error.contact-support": {
+    "defaultMessage": "Нужна помощь? Свяжитесь с нами по адресу {support}"
+  },
   "error.generic-message": {
     "defaultMessage": "Повторите попытку позже или свяжитесь со службой поддержки, если проблема не исчезнет."
   },
