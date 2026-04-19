@@ -131,7 +131,6 @@ const LoginPage = (): React.ReactElement => {
     (model: Model) => client.login({ ...model }),
     {
       onSuccess: () => {
-        // Initialize theme from system preference if not already set
         initializeThemeFromSystem();
 
         let redirectUrl = new URLSearchParams(location.search).get('redirect');
