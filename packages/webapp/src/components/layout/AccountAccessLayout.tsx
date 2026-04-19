@@ -61,7 +61,6 @@ const AccountAccessLayout = ({
           width: '100%',
           display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'center',
           alignItems: 'center',
           padding: { xs: '32px 16px', md: '48px 16px' },
           ...contentSx,
@@ -69,13 +68,14 @@ const AccountAccessLayout = ({
       >
         {showAds ? (
           <>
-            {/* Left skyscraper — desktop only */}
+            {/* Left whitespace column — expands to fill available space,
+                ad floats in the center of it */}
             <Box
               sx={{
                 display: { xs: 'none', md: 'flex' },
+                flex: 1,
                 alignItems: 'center',
-                flexShrink: 0,
-                mr: 3,
+                justifyContent: 'center',
               }}
             >
               <AdUnit
@@ -84,11 +84,14 @@ const AccountAccessLayout = ({
               />
             </Box>
 
-            {/* Center content + mobile banner */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {/* Center content — natural width, stays centered because
+                left and right columns grow symmetrically */}
+            <Box
+              sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}
+            >
               {children}
 
-              {/* Mobile banner — shown below the card on small screens */}
+              {/* Mobile banner — below the card on small screens */}
               <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'center', mt: 2 }}>
                 <AdUnit
                   slot={AD_SLOTS.mobile}
@@ -97,13 +100,13 @@ const AccountAccessLayout = ({
               </Box>
             </Box>
 
-            {/* Right skyscraper — desktop only */}
+            {/* Right whitespace column */}
             <Box
               sx={{
                 display: { xs: 'none', md: 'flex' },
+                flex: 1,
                 alignItems: 'center',
-                flexShrink: 0,
-                ml: 3,
+                justifyContent: 'center',
               }}
             >
               <AdUnit
@@ -113,7 +116,7 @@ const AccountAccessLayout = ({
             </Box>
           </>
         ) : (
-          children
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>{children}</Box>
         )}
       </Box>
       <Footer />
