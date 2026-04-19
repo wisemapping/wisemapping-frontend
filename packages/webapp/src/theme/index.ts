@@ -49,7 +49,7 @@ const createAppTheme = (mode: PaletteMode): Theme => {
       MuiFormControl: {
         styleOverrides: {
           root: {
-            '& fieldset': {
+            '& fieldset:not(.MuiOutlinedInput-notchedOutline)': {
               border: 'none',
             },
           },

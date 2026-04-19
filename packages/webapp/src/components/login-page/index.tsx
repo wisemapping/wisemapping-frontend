@@ -332,15 +332,6 @@ const LoginPage = (): React.ReactElement => {
                   marginBottom: '-20px',
                 }}
               >
-                {AppConfig.isFacebookOauth2Enabled() && (
-                  <FacebookButton
-                    text={intl.formatMessage({
-                      id: 'login.facebook.button',
-                      defaultMessage: 'Sign in with Facebook',
-                    })}
-                    onClick={() => handleOAuthLogin(AppConfig.getFacebookOauth2Url(), 'Facebook')}
-                  />
-                )}
                 {AppConfig.isGoogleOauth2Enabled() && (
                   <GoogleButton
                     text={intl.formatMessage({
@@ -348,6 +339,15 @@ const LoginPage = (): React.ReactElement => {
                       defaultMessage: 'Sign in with Google',
                     })}
                     onClick={() => handleOAuthLogin(AppConfig.getGoogleOauth2Url(), 'Google')}
+                  />
+                )}
+                {AppConfig.isFacebookOauth2Enabled() && (
+                  <FacebookButton
+                    text={intl.formatMessage({
+                      id: 'login.facebook.button',
+                      defaultMessage: 'Sign in with Facebook',
+                    })}
+                    onClick={() => handleOAuthLogin(AppConfig.getFacebookOauth2Url(), 'Facebook')}
                   />
                 )}
               </Box>
