@@ -23,12 +23,9 @@ import AccountAccessLayout from '../layout/AccountAccessLayout';
 import { Link as RouterLink } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
 import { trackPageView } from '../../utils/analytics';
 import { SEOHead } from '../seo';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
-import LoginBannerAd from '../common/login-banner-ad';
-import MobileAnchorAd from '../common/mobile-anchor-ad';
 
 const RegistrationSuccessPage = (): React.ReactElement => {
   const intl = useIntl();
@@ -65,17 +62,7 @@ const RegistrationSuccessPage = (): React.ReactElement => {
           url: `${baseUrl}${canonicalUrl}`,
         }}
       />
-      <MobileAnchorAd />
       <AccountAccessLayout headerType="none">
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          <LoginBannerAd />
         <FormContainer>
           <Typography variant="h4" component="h1" gutterBottom>
             <FormattedMessage
@@ -117,7 +104,6 @@ const RegistrationSuccessPage = (): React.ReactElement => {
             </Button>
           </RouterLink>
         </FormContainer>
-        </Box>
       </AccountAccessLayout>
     </>
   );

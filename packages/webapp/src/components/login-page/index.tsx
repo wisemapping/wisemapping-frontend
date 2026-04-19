@@ -41,7 +41,6 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { trackPageView } from '../../utils/analytics';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 import CircularProgress from '@mui/material/CircularProgress';
-import VignetteAdModal, { shouldShowVignette } from '../common/vignette-ad-modal';
 
 export type Model = {
   email: string;
@@ -137,11 +136,7 @@ const LoginPage = (): React.ReactElement => {
         let redirectUrl = new URLSearchParams(location.search).get('redirect');
         redirectUrl = redirectUrl ? redirectUrl : '/c/maps/';
 
-        if (shouldShowVignette()) {
-          setVignetteUrl(redirectUrl);
-        } else {
-          window.location.href = redirectUrl;
-        }
+        window.location.href = redirectUrl;
       },
       onError: (error: LoginErrorInfo) => {
         setLoginError(error);
@@ -167,12 +162,6 @@ const LoginPage = (): React.ReactElement => {
   const baseUrl =
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
 
-  const handleVignetteClose = () => {
-    if (vignetteUrl) {
-      window.location.href = vignetteUrl;
-    }
-  };
-
   if (isCheckingAuth) {
     return (
       <Box
@@ -195,7 +184,6 @@ const LoginPage = (): React.ReactElement => {
 
   return (
     <>
-      <VignetteAdModal open={vignetteUrl !== null} onClose={handleVignetteClose} />
       <SEOHead
         title="Login | WiseMapping"
         description="Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others. Free online mind mapping tool."
