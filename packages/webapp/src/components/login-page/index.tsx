@@ -40,6 +40,7 @@ import { SEOHead } from '../seo';
 import { useTheme } from '../../contexts/ThemeContext';
 import { trackPageView } from '../../utils/analytics';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
+import VignetteAdModal, { shouldShowVignette } from '../common/vignette-ad-modal';
 
 export type Model = {
   email: string;
@@ -72,6 +73,7 @@ const LoginPage = (): React.ReactElement => {
   const intl = useIntl();
   const [model, setModel] = useState<Model>(defaultModel);
   const [loginError, setLoginError] = useState<LoginErrorInfo | undefined>(undefined);
+  const [vignetteUrl, setVignetteUrl] = useState<string | null>(null);
 
   const client = useContext(ClientContext);
   const navigate = useNavigate();
@@ -148,12 +150,14 @@ const LoginPage = (): React.ReactElement => {
         // Initialize theme from system preference if not already set
         initializeThemeFromSystem();
 
-        // If the url has been defined, redirect to the original url.
-        // Hard navigation triggers Google Auto ads vignette between login and dashboard.
         let redirectUrl = new URLSearchParams(location.search).get('redirect');
         redirectUrl = redirectUrl ? redirectUrl : '/c/maps/';
-        console.log(`redirectUrl: ${redirectUrl}`);
-        window.location.href = redirectUrl;
+
+        if (shouldShowVignette()) {
+          setVignetteUrl(redirectUrl);
+        } else {
+          window.location.href = redirectUrl;
+        }
       },
       onError: (error: LoginErrorInfo) => {
         setLoginError(error);
@@ -179,8 +183,15 @@ const LoginPage = (): React.ReactElement => {
   const baseUrl =
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
 
+  const handleVignetteClose = () => {
+    if (vignetteUrl) {
+      window.location.href = vignetteUrl;
+    }
+  };
+
   return (
     <>
+      <VignetteAdModal open={vignetteUrl !== null} onClose={handleVignetteClose} />
       <SEOHead
         title="Login | WiseMapping"
         description="Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others. Free online mind mapping tool."

@@ -35,6 +35,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '../../contexts/ThemeContext';
 import { MapsPageLoading } from '../maps-page/maps-list/MapsListSkeleton';
 import JwtTokenConfig from '../../classes/jwt-token-config';
+import VignetteAdModal, { shouldShowVignette } from '../common/vignette-ad-modal';
 
 type OAuthProvider = 'google' | 'facebook';
 
@@ -47,6 +48,15 @@ const OAuthCallbackPage = (): React.ReactElement => {
 
   const [error, setError] = useState<ErrorInfo | undefined>();
   const [callbackResult, setCallbackResult] = useState<Oauth2CallbackResult>();
+  const [vignetteUrl, setVignetteUrl] = useState<string | null>(null);
+
+  const navigateAfterOAuth = (url: string): void => {
+    if (shouldShowVignette()) {
+      setVignetteUrl(url);
+    } else {
+      window.location.href = url;
+    }
+  };
 
   // Determine OAuth provider based on route path
   const provider: OAuthProvider = location.pathname.includes('facebook') ? 'facebook' : 'google';
@@ -107,9 +117,9 @@ const OAuthCallbackPage = (): React.ReactElement => {
         initializeThemeFromSystem();
         // Get redirect URL from OAuth state parameter
         const stateRedirectUrl = searchParams.get('state');
-        // Hard navigation triggers Google Auto ads vignette between login and dashboard.
-        window.location.href =
-          stateRedirectUrl && stateRedirectUrl !== 'wisemapping' ? stateRedirectUrl : '/c/maps/';
+        navigateAfterOAuth(
+          stateRedirectUrl && stateRedirectUrl !== 'wisemapping' ? stateRedirectUrl : '/c/maps/',
+        );
         return;
       }
       setCallbackResult(result);
@@ -139,11 +149,11 @@ const OAuthCallbackPage = (): React.ReactElement => {
         if (result.oauthSync) {
           // Initialize theme from system preference if not already set
           initializeThemeFromSystem();
-          // Hard navigation triggers Google Auto ads vignette between login and dashboard.
-          window.location.href =
+          navigateAfterOAuth(
             stateRedirectUrl && stateRedirectUrl !== 'wisemapping'
               ? stateRedirectUrl
-              : '/c/maps/';
+              : '/c/maps/',
+          );
           return;
         }
         setCallbackResult(result);
@@ -169,9 +179,9 @@ const OAuthCallbackPage = (): React.ReactElement => {
       .then(() => {
         // Initialize theme from system preference if not already set
         initializeThemeFromSystem();
-        // Hard navigation triggers Google Auto ads vignette between login and dashboard.
-        window.location.href =
-          stateRedirectUrl && stateRedirectUrl !== 'wisemapping' ? stateRedirectUrl : '/c/maps/';
+        navigateAfterOAuth(
+          stateRedirectUrl && stateRedirectUrl !== 'wisemapping' ? stateRedirectUrl : '/c/maps/',
+        );
       })
       .catch((errorInfo: ErrorInfo) => {
         setError(errorInfo);
@@ -216,14 +226,18 @@ const OAuthCallbackPage = (): React.ReactElement => {
     stateRedirectUrl === '/c/maps/';
   const showMapsLoading = !needConfirmLinking && !error && isRedirectingToMapsList;
 
-  // Show full-screen maps loading if redirecting to maps list
-  if (showMapsLoading) {
+  // Show full-screen maps loading if redirecting to maps list (but not when vignette is open)
+  if (showMapsLoading && !vignetteUrl) {
     return <MapsPageLoading />;
   }
 
   // Otherwise show the standard OAuth callback page with form container
   return (
     <div>
+      <VignetteAdModal
+        open={vignetteUrl !== null}
+        onClose={() => { if (vignetteUrl) window.location.href = vignetteUrl; }}
+      />
       <Header type="none" />
       <FormContainer>
         <Typography variant="h4" component="h1">
