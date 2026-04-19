@@ -758,6 +758,9 @@
   "error.generic-title": {
     "defaultMessage": "Hemos encontrado un problema."
   },
+  "error.contact-support": {
+    "defaultMessage": "¿Necesitas ayuda? Contáctanos en {support}"
+  },
   "error.generic-message": {
     "defaultMessage": "Inténtalo de nuevo más tarde o contacta al soporte si el problema continúa."
   },

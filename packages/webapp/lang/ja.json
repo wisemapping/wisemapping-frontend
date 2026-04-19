@@ -758,6 +758,9 @@
   "error.generic-title": {
     "defaultMessage": "問題が発生しました。"
   },
+  "error.contact-support": {
+    "defaultMessage": "お困りですか？こちらまでご連絡ください：{support}"
+  },
   "error.generic-message": {
     "defaultMessage": "後でもう一度お試しいただくか、問題が解決しない場合はサポートまでご連絡ください。"
   },

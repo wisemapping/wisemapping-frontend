@@ -758,6 +758,9 @@
   "error.generic-title": {
     "defaultMessage": "我們遇到了一個問題。"
   },
+  "error.contact-support": {
+    "defaultMessage": "需要幫助？請聯絡我們：{support}"
+  },
   "error.generic-message": {
     "defaultMessage": "請稍後再試，若問題持續發生，請聯絡技術支援。"
   },

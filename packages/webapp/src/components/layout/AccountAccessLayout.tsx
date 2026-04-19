@@ -21,17 +21,35 @@ import Box from '@mui/material/Box';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Header from './header';
 import Footer from './footer';
+import AdUnit from '../ads/AdUnit';
+
+// TODO: Replace these placeholder slot IDs with real AdSense slot IDs.
+// Create 3 "Display ads" units in the AdSense console (Ads → By ad unit → Display ads):
+//   - Left skyscraper  : 160×600
+//   - Right skyscraper : 160×600
+//   - Mobile banner    : 320×100
+// Then paste the slot IDs (the 10-digit number) below.
+const AD_SLOTS = {
+  left: '7031912437',
+  right: '7199433396',
+  mobile: '4501117862',
+} as const;
 
 type AccountAccessLayoutProps = {
   headerType: 'only-signup' | 'only-signin' | 'none';
   children: React.ReactNode;
   contentSx?: SxProps<Theme>;
+  /** When true, renders 160×600 skyscrapers flanking the card on desktop
+   *  and a 320×100 banner below the card on mobile. Ads are served only
+   *  after Google Consent Mode v2 signals are ready (see index.html). */
+  showAds?: boolean;
 };
 
 const AccountAccessLayout = ({
   headerType,
   children,
   contentSx,
+  showAds = false,
 }: AccountAccessLayoutProps): React.ReactElement => {
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column">
@@ -42,13 +60,61 @@ const AccountAccessLayout = ({
           flex: 1,
           width: '100%',
           display: 'flex',
+          flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
           padding: { xs: '32px 16px', md: '48px 16px' },
           ...contentSx,
         }}
       >
-        {children}
+        {showAds ? (
+          <>
+            {/* Left skyscraper — desktop only */}
+            <Box
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                alignItems: 'center',
+                flexShrink: 0,
+                mr: 3,
+              }}
+            >
+              <AdUnit
+                slot={AD_SLOTS.left}
+                style={{ display: 'inline-block', width: '160px', height: '600px' }}
+              />
+            </Box>
+
+            {/* Center content + mobile banner */}
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              {children}
+
+              {/* Mobile banner — shown below the card on small screens */}
+              <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'center', mt: 2 }}>
+                <AdUnit
+                  slot={AD_SLOTS.mobile}
+                  style={{ display: 'inline-block', width: '320px', height: '100px' }}
+                />
+              </Box>
+            </Box>
+
+            {/* Right skyscraper — desktop only */}
+            <Box
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                alignItems: 'center',
+                flexShrink: 0,
+                ml: 3,
+              }}
+            >
+              <AdUnit
+                slot={AD_SLOTS.right}
+                style={{ display: 'inline-block', width: '160px', height: '600px' }}
+              />
+            </Box>
+          </>
+        ) : (
+          children
+        )}
       </Box>
       <Footer />
     </Box>
