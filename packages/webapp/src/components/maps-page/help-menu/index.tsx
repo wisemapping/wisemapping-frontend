@@ -21,6 +21,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import Help from '@mui/icons-material/Help';
 import PolicyOutlined from '@mui/icons-material/PolicyOutlined';
+import PrivacyTipOutlined from '@mui/icons-material/PrivacyTipOutlined';
+import FavoriteOutlined from '@mui/icons-material/FavoriteOutlined';
 import FeedbackOutlined from '@mui/icons-material/FeedbackOutlined';
 import EmojiPeopleOutlined from '@mui/icons-material/EmailOutlined';
 import EmailOutlined from '@mui/icons-material/EmailOutlined';
@@ -92,6 +94,29 @@ const HelpMenu = (): React.ReactElement => {
               <PolicyOutlined fontSize="small" />
             </ListItemIcon>
             <FormattedMessage id="footer.termsandconditions" defaultMessage="Term And Conditions" />
+          </Link>
+        </MenuItem>
+
+        <MenuItem onClick={handleClose}>
+          <Link color="textSecondary" href="https://www.wisemapping.com/privacy" target="help">
+            <ListItemIcon>
+              <PrivacyTipOutlined fontSize="small" />
+            </ListItemIcon>
+            <FormattedMessage id="footer.privacypolicy" defaultMessage="Privacy Policy" />
+          </Link>
+        </MenuItem>
+
+        <MenuItem onClick={handleClose}>
+          <Link
+            color="textSecondary"
+            href="https://www.paypal.com/donate/?hosted_button_id=CF7GJ7T6E4RS4"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ListItemIcon>
+              <FavoriteOutlined fontSize="small" />
+            </ListItemIcon>
+            <FormattedMessage id="footer.donations" defaultMessage="Donate" />
           </Link>
         </MenuItem>
 

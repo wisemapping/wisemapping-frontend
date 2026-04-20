@@ -170,6 +170,21 @@
   "footer.termsandconditions": {
     "defaultMessage": "Allgemeine Geschäftsbedingungen"
   },
+  "footer.col-support": {
+    "defaultMessage": "Support"
+  },
+  "footer.col-community": {
+    "defaultMessage": "Community"
+  },
+  "footer.col-company": {
+    "defaultMessage": "Unternehmen"
+  },
+  "footer.news": {
+    "defaultMessage": "News"
+  },
+  "footer.twitter": {
+    "defaultMessage": "X"
+  },
   "footer.privacypolicy": {
     "defaultMessage": "Datenschutzrichtlinie"
   },

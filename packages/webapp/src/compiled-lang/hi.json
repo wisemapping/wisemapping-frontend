@@ -863,6 +863,24 @@
       "value": "हमारे बारे में"
     }
   ],
+  "footer.col-community": [
+    {
+      "type": 0,
+      "value": "समुदाय"
+    }
+  ],
+  "footer.col-company": [
+    {
+      "type": 0,
+      "value": "कंपनी"
+    }
+  ],
+  "footer.col-support": [
+    {
+      "type": 0,
+      "value": "सहायता"
+    }
+  ],
   "footer.contactus": [
     {
       "type": 0,
@@ -891,6 +909,12 @@
     {
       "type": 0,
       "value": "प्रतिक्रिया"
+    }
+  ],
+  "footer.news": [
+    {
+      "type": 0,
+      "value": "समाचार"
     }
   ],
   "footer.opensource": [
@@ -927,6 +951,12 @@
     {
       "type": 0,
       "value": "नियम और शर्तें"
+    }
+  ],
+  "footer.twitter": [
+    {
+      "type": 0,
+      "value": "X"
     }
   ],
   "forgot.desc": [

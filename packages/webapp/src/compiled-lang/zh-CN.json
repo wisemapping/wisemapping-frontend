@@ -863,6 +863,24 @@
       "value": "关于我们"
     }
   ],
+  "footer.col-community": [
+    {
+      "type": 0,
+      "value": "社区"
+    }
+  ],
+  "footer.col-company": [
+    {
+      "type": 0,
+      "value": "公司"
+    }
+  ],
+  "footer.col-support": [
+    {
+      "type": 0,
+      "value": "支持"
+    }
+  ],
   "footer.contactus": [
     {
       "type": 0,
@@ -891,6 +909,12 @@
     {
       "type": 0,
       "value": "反馈"
+    }
+  ],
+  "footer.news": [
+    {
+      "type": 0,
+      "value": "新闻"
     }
   ],
   "footer.opensource": [
@@ -927,6 +951,12 @@
     {
       "type": 0,
       "value": "条款和条件"
+    }
+  ],
+  "footer.twitter": [
+    {
+      "type": 0,
+      "value": "X"
     }
   ],
   "forgot.desc": [

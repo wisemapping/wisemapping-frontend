@@ -191,6 +191,21 @@
   "footer.privacypolicy": {
     "defaultMessage": "Privacy Policy"
   },
+  "footer.col-support": {
+    "defaultMessage": "Support"
+  },
+  "footer.col-community": {
+    "defaultMessage": "Community"
+  },
+  "footer.col-company": {
+    "defaultMessage": "Company"
+  },
+  "footer.news": {
+    "defaultMessage": "News"
+  },
+  "footer.twitter": {
+    "defaultMessage": "X"
+  },
   "forgot.desc": {
     "defaultMessage": "We will send you an email to reset your password."
   },

@@ -188,6 +188,21 @@
   "footer.termsandconditions": {
     "defaultMessage": "Умови використання"
   },
+  "footer.col-support": {
+    "defaultMessage": "Підтримка"
+  },
+  "footer.col-community": {
+    "defaultMessage": "Спільнота"
+  },
+  "footer.col-company": {
+    "defaultMessage": "Компанія"
+  },
+  "footer.news": {
+    "defaultMessage": "Новини"
+  },
+  "footer.twitter": {
+    "defaultMessage": "X"
+  },
   "footer.privacypolicy": {
     "defaultMessage": "Політика конфіденційності"
   },

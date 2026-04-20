@@ -185,6 +185,21 @@
   "footer.termsandconditions": {
     "defaultMessage": "利用規約"
   },
+  "footer.col-support": {
+    "defaultMessage": "サポート"
+  },
+  "footer.col-community": {
+    "defaultMessage": "コミュニティ"
+  },
+  "footer.col-company": {
+    "defaultMessage": "会社"
+  },
+  "footer.news": {
+    "defaultMessage": "ニュース"
+  },
+  "footer.twitter": {
+    "defaultMessage": "X"
+  },
   "footer.privacypolicy": {
     "defaultMessage": "プライバシーポリシー"
   },

@@ -863,6 +863,24 @@
       "value": "私たちについて"
     }
   ],
+  "footer.col-community": [
+    {
+      "type": 0,
+      "value": "コミュニティ"
+    }
+  ],
+  "footer.col-company": [
+    {
+      "type": 0,
+      "value": "会社"
+    }
+  ],
+  "footer.col-support": [
+    {
+      "type": 0,
+      "value": "サポート"
+    }
+  ],
   "footer.contactus": [
     {
       "type": 0,
@@ -891,6 +909,12 @@
     {
       "type": 0,
       "value": "フィードバック"
+    }
+  ],
+  "footer.news": [
+    {
+      "type": 0,
+      "value": "ニュース"
     }
   ],
   "footer.opensource": [
@@ -927,6 +951,12 @@
     {
       "type": 0,
       "value": "利用規約"
+    }
+  ],
+  "footer.twitter": [
+    {
+      "type": 0,
+      "value": "X"
     }
   ],
   "forgot.desc": [

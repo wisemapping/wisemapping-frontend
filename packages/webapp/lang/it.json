@@ -188,6 +188,21 @@
   "footer.termsandconditions": {
     "defaultMessage": "Termini e Condizioni"
   },
+  "footer.col-support": {
+    "defaultMessage": "Supporto"
+  },
+  "footer.col-community": {
+    "defaultMessage": "Comunità"
+  },
+  "footer.col-company": {
+    "defaultMessage": "Azienda"
+  },
+  "footer.news": {
+    "defaultMessage": "Novità"
+  },
+  "footer.twitter": {
+    "defaultMessage": "X"
+  },
   "footer.privacypolicy": {
     "defaultMessage": "Informativa sulla privacy"
   },

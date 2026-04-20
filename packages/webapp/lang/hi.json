@@ -188,6 +188,21 @@
   "footer.termsandconditions": {
     "defaultMessage": "नियम और शर्तें"
   },
+  "footer.col-support": {
+    "defaultMessage": "सहायता"
+  },
+  "footer.col-community": {
+    "defaultMessage": "समुदाय"
+  },
+  "footer.col-company": {
+    "defaultMessage": "कंपनी"
+  },
+  "footer.news": {
+    "defaultMessage": "समाचार"
+  },
+  "footer.twitter": {
+    "defaultMessage": "X"
+  },
   "footer.privacypolicy": {
     "defaultMessage": "गोपनीयता नीति"
   },

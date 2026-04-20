@@ -20,7 +20,6 @@ import { styled } from '@mui/material/styles';
 /* Footer */
 
 export const StyledFooter = styled('footer')(({ theme }) => ({
-  height: '175px',
   marginTop: '80px',
   padding: '30px 0 10px 0',
   backgroundColor: theme.palette.primary.main,
@@ -28,12 +27,20 @@ export const StyledFooter = styled('footer')(({ theme }) => ({
   justifyContent: 'center',
   overflow: 'hidden',
 
+  '& .copyright': {
+    marginTop: '12px',
+    fontSize: '12px',
+    color: 'white',
+  },
+
   '& > div': {
     maxWidth: '950px',
     width: '100%',
     display: 'grid',
-    gridTemplateColumns: '200px 1fr 1fr 1fr 3fr',
+    gridTemplateColumns: '200px 1fr 1fr 1fr auto',
+    gap: '20px',
     padding: '0 20px',
+    alignItems: 'start',
 
     '& > div:nth-of-type(1)': {
       gridColumn: '1',
@@ -62,14 +69,31 @@ export const StyledFooter = styled('footer')(({ theme }) => ({
   '& a': {
     fontSize: '14px',
     color: 'white',
-    wordWrap: 'nowrap',
+    whiteSpace: 'nowrap',
+    lineHeight: 1.5,
+    display: 'inline-block',
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
   },
 
   '& h4': {
     fontSize: '14px',
     color: 'white',
-    wordWrap: 'nowrap',
-    fontWeight: '500px',
-    margin: '0px',
+    whiteSpace: 'nowrap',
+    fontWeight: 700,
+    margin: '0 0 6px 0',
+  },
+
+  '& .donate-link': {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
+    fontWeight: 600,
+  },
+
+  '& .donate-icon': {
+    fontSize: '14px',
   },
 }));
