@@ -113,6 +113,7 @@ const ExportDialog = ({
     let size: SizeType;
     let mindmap: Mindmap;
     let originalTheme: ThemeType | undefined;
+    let backgroundColor = '#ffffff';
 
     const designer: Designer = globalThis.designer;
     // exporting from editor toolbar action
@@ -130,6 +131,18 @@ const ExportDialog = ({
         designer.applyTheme(exportTheme);
         // Re-render to apply new theme
         workspace.getSVGElement();
+      }
+
+      // Resolve the canvas background color applied by the Designer so exports
+      // include it (SVG, PNG, JPEG, PDF). Designer sets the style on the SVG's
+      // grandparent element (see Canvas.setBackgroundStyle). Read after
+      // applyTheme so the color matches the export theme.
+      const canvasContainer = svgElement?.parentElement?.parentElement;
+      if (canvasContainer) {
+        const resolved = window.getComputedStyle(canvasContainer).backgroundColor;
+        if (resolved && resolved !== 'rgba(0, 0, 0, 0)' && resolved !== 'transparent') {
+          backgroundColor = resolved;
+        }
       }
     } else {
       // exporting from map list
@@ -153,6 +166,7 @@ const ExportDialog = ({
           size!.width,
           size!.height,
           zoomToFit,
+          backgroundColor,
         );
         break;
       }
@@ -234,7 +248,7 @@ const ExportDialog = ({
                 label={intl.formatMessage({
                   id: 'export.image',
                   defaultMessage:
-                    'Image: Get a graphic representation of your map including all colors and shapes.',
+                    'Image (SVG, PNG, JPEG, PDF): Get a graphic representation of your map including all colors and shapes.',
                 })}
                 color="secondary"
                 style={{ fontSize: '9px' }}
@@ -280,7 +294,7 @@ const ExportDialog = ({
                 label={intl.formatMessage({
                   id: 'export.document-label',
                   defaultMessage:
-                    'Document: Export your mindmap in a self-contained document ready to share',
+                    'Document (TXT, MD): Export your mindmap in a self-contained document ready to share',
                 })}
                 color="secondary"
               />
@@ -312,7 +326,7 @@ const ExportDialog = ({
                 label={intl.formatMessage({
                   id: 'export.document',
                   defaultMessage:
-                    'Mindmap Tools: Export your mindmap in thirdparty mindmap tool formats',
+                    'Mindmap Tools (WXML, MM, MMX): Export your mindmap in thirdparty mindmap tool formats',
                 })}
                 color="secondary"
               />

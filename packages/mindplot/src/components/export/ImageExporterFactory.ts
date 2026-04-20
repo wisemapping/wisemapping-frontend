@@ -28,23 +28,38 @@ class ImageExpoterFactory {
     width: number,
     height: number,
     adjustToFit = true,
+    backgroundColor = 'white',
   ): Exporter {
     let result: Exporter;
     switch (type) {
       case 'svg': {
-        result = new SVGExporter(svgElement, adjustToFit);
+        result = new SVGExporter(svgElement, adjustToFit, backgroundColor);
         break;
       }
       case 'png': {
-        result = new BinaryImageExporter(svgElement, width, height, 'image/png', adjustToFit);
+        result = new BinaryImageExporter(
+          svgElement,
+          width,
+          height,
+          'image/png',
+          adjustToFit,
+          backgroundColor,
+        );
         break;
       }
       case 'jpg': {
-        result = new BinaryImageExporter(svgElement, width, height, 'image/jpeg', adjustToFit);
+        result = new BinaryImageExporter(
+          svgElement,
+          width,
+          height,
+          'image/jpeg',
+          adjustToFit,
+          backgroundColor,
+        );
         break;
       }
       case 'pdf': {
-        result = new PDFExporter(svgElement, adjustToFit);
+        result = new PDFExporter(svgElement, adjustToFit, backgroundColor);
         break;
       }
       default:
