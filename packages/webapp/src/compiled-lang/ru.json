@@ -863,6 +863,24 @@
       "value": "О Нас"
     }
   ],
+  "footer.col-community": [
+    {
+      "type": 0,
+      "value": "Сообщество"
+    }
+  ],
+  "footer.col-company": [
+    {
+      "type": 0,
+      "value": "Компания"
+    }
+  ],
+  "footer.col-support": [
+    {
+      "type": 0,
+      "value": "Поддержка"
+    }
+  ],
   "footer.contactus": [
     {
       "type": 0,
@@ -891,6 +909,12 @@
     {
       "type": 0,
       "value": "Обратная связь"
+    }
+  ],
+  "footer.news": [
+    {
+      "type": 0,
+      "value": "Новости"
     }
   ],
   "footer.opensource": [
@@ -927,6 +951,12 @@
     {
       "type": 0,
       "value": "Общие Правила"
+    }
+  ],
+  "footer.twitter": [
+    {
+      "type": 0,
+      "value": "X"
     }
   ],
   "forgot.desc": [

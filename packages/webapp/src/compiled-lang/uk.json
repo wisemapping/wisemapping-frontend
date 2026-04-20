@@ -863,6 +863,24 @@
       "value": "Про нас"
     }
   ],
+  "footer.col-community": [
+    {
+      "type": 0,
+      "value": "Спільнота"
+    }
+  ],
+  "footer.col-company": [
+    {
+      "type": 0,
+      "value": "Компанія"
+    }
+  ],
+  "footer.col-support": [
+    {
+      "type": 0,
+      "value": "Підтримка"
+    }
+  ],
   "footer.contactus": [
     {
       "type": 0,
@@ -891,6 +909,12 @@
     {
       "type": 0,
       "value": "Відгуки"
+    }
+  ],
+  "footer.news": [
+    {
+      "type": 0,
+      "value": "Новини"
     }
   ],
   "footer.opensource": [
@@ -927,6 +951,12 @@
     {
       "type": 0,
       "value": "Умови використання"
+    }
+  ],
+  "footer.twitter": [
+    {
+      "type": 0,
+      "value": "X"
     }
   ],
   "forgot.desc": [

@@ -18,6 +18,7 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { StyledFooter } from './styled';
 import poweredByIcon from './pwrdby-white.svg';
 import ThemeToggle from '../../common/theme-toggle';
@@ -30,26 +31,85 @@ const Footer = (): React.ReactElement => {
           <a href="http://www.wisemapping.org/">
             <img src={poweredByIcon} alt="Powered By WiseMapping" />
           </a>
+          <div className="copyright">
+            <FormattedMessage
+              id="footer.copyright"
+              defaultMessage="© {year} WiseMapping LLC"
+              values={{ year: new Date().getFullYear() }}
+            />
+          </div>
         </div>
+
+        {/* Support — help-seeking paths */}
         <div>
           <h4>
-            <FormattedMessage id="footer.faqandhelp" defaultMessage="Help & FAQ" />
+            <FormattedMessage id="footer.col-support" defaultMessage="Support" />
           </h4>
-          <div>
-            <a href="https://www.wisemapping.com/aboutus.html">
-              <FormattedMessage id="footer.aboutus" defaultMessage="About Us" />
-            </a>
-          </div>
           <div>
             <a href="https://www.wisemapping.com/faq.html">
               <FormattedMessage id="footer.faq" defaultMessage="F.A.Q." />
             </a>
           </div>
           <div>
+            <a href="mailto:team@wisemapping.com">
+              <FormattedMessage id="footer.contactus" defaultMessage="Contact Us" />
+            </a>
+          </div>
+          <div>
+            <a href="mailto:feedback@wisemapping.com">
+              <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />
+            </a>
+          </div>
+        </div>
+
+        {/* Community — project-external reach */}
+        <div>
+          <h4>
+            <FormattedMessage id="footer.col-community" defaultMessage="Community" />
+          </h4>
+          <div>
+            <a href="https://www.wisemapping.com/opensource" rel="noopener noreferrer">
+              <FormattedMessage id="footer.opensource" defaultMessage="Open Source" />
+            </a>
+          </div>
+          <div>
+            <a href="https://www.wisemapping.com/news" rel="noopener noreferrer">
+              <FormattedMessage id="footer.news" defaultMessage="News" />
+            </a>
+          </div>
+          <div>
+            <a href="https://x.com/wisemapping" target="_blank" rel="noopener noreferrer">
+              <FormattedMessage id="footer.twitter" defaultMessage="X" />
+            </a>
+          </div>
+        </div>
+
+        {/* Company — legal, trust, and ways to back the project */}
+        <div>
+          <h4>
+            <FormattedMessage id="footer.col-company" defaultMessage="Company" />
+          </h4>
+          <div>
+            <a
+              href="https://www.paypal.com/donate/?hosted_button_id=CF7GJ7T6E4RS4"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="donate-link"
+            >
+              <FavoriteIcon className="donate-icon" />
+              <FormattedMessage id="footer.donations" defaultMessage="Donate" />
+            </a>
+          </div>
+          <div>
+            <a href="https://www.wisemapping.com/aboutus.html">
+              <FormattedMessage id="footer.aboutus" defaultMessage="About Us" />
+            </a>
+          </div>
+          <div>
             <a href="https://www.wisemapping.com/termsofuse.html">
               <FormattedMessage
                 id="footer.termsandconditions"
-                defaultMessage="Term And Conditions"
+                defaultMessage="Terms and Conditions"
               />
             </a>
           </div>
@@ -59,41 +119,7 @@ const Footer = (): React.ReactElement => {
             </a>
           </div>
         </div>
-        <div>
-          <h4>
-            <FormattedMessage id="footer.contactus" defaultMessage="Contact Us" />
-          </h4>
-          <div>
-            <a href="mailto:support@wisemapping.com">
-              <FormattedMessage id="footer.support" defaultMessage="Support" />
-            </a>
-          </div>
-          <div>
-            <a href="mailto:feedback@wisemapping.com">
-              <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />
-            </a>
-          </div>
-          <div>
-            <a href="mailto:team@wisemapping.com">
-              <FormattedMessage id="footer.team" defaultMessage="Our Team" />
-            </a>
-          </div>
-        </div>
-        <div>
-          <h4>
-            <FormattedMessage id="footer.others" defaultMessage="Others" />
-          </h4>
-          <div>
-            <a href="https://www.paypal.com/donate/?hosted_button_id=CF7GJ7T6E4RS4">
-              <FormattedMessage id="footer.donations" defaultMessage="Donations" />
-            </a>
-          </div>
-          <div>
-            <a href="http://www.wisemapping.org/">
-              <FormattedMessage id="footer.opensource" defaultMessage="Open Source" />
-            </a>
-          </div>
-        </div>
+
         <div
           style={{
             display: 'flex',

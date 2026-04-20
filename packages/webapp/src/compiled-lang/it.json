@@ -863,6 +863,24 @@
       "value": "Chi Siamo"
     }
   ],
+  "footer.col-community": [
+    {
+      "type": 0,
+      "value": "Comunità"
+    }
+  ],
+  "footer.col-company": [
+    {
+      "type": 0,
+      "value": "Azienda"
+    }
+  ],
+  "footer.col-support": [
+    {
+      "type": 0,
+      "value": "Supporto"
+    }
+  ],
   "footer.contactus": [
     {
       "type": 0,
@@ -891,6 +909,12 @@
     {
       "type": 0,
       "value": "Feedback"
+    }
+  ],
+  "footer.news": [
+    {
+      "type": 0,
+      "value": "Novità"
     }
   ],
   "footer.opensource": [
@@ -927,6 +951,12 @@
     {
       "type": 0,
       "value": "Termini e Condizioni"
+    }
+  ],
+  "footer.twitter": [
+    {
+      "type": 0,
+      "value": "X"
     }
   ],
   "forgot.desc": [

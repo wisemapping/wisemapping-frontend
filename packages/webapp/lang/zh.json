@@ -176,6 +176,21 @@
   "footer.termsandconditions": {
     "defaultMessage": "条款和条件"
   },
+  "footer.col-support": {
+    "defaultMessage": "支持"
+  },
+  "footer.col-community": {
+    "defaultMessage": "社区"
+  },
+  "footer.col-company": {
+    "defaultMessage": "公司"
+  },
+  "footer.news": {
+    "defaultMessage": "新闻"
+  },
+  "footer.twitter": {
+    "defaultMessage": "X"
+  },
   "footer.privacypolicy": {
     "defaultMessage": "隱私政策"
   },

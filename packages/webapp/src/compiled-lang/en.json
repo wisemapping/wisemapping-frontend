@@ -863,6 +863,24 @@
       "value": "About Us"
     }
   ],
+  "footer.col-community": [
+    {
+      "type": 0,
+      "value": "Community"
+    }
+  ],
+  "footer.col-company": [
+    {
+      "type": 0,
+      "value": "Company"
+    }
+  ],
+  "footer.col-support": [
+    {
+      "type": 0,
+      "value": "Support"
+    }
+  ],
   "footer.contactus": [
     {
       "type": 0,
@@ -891,6 +909,12 @@
     {
       "type": 0,
       "value": "Feedback"
+    }
+  ],
+  "footer.news": [
+    {
+      "type": 0,
+      "value": "News"
     }
   ],
   "footer.opensource": [
@@ -927,6 +951,12 @@
     {
       "type": 0,
       "value": "Term And Conditions"
+    }
+  ],
+  "footer.twitter": [
+    {
+      "type": 0,
+      "value": "X"
     }
   ],
   "forgot.desc": [
