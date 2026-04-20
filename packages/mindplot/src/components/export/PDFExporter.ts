@@ -24,10 +24,13 @@ class PDFExporter extends Exporter {
 
   private adjustToFit: boolean;
 
-  constructor(svgElement: Element, adjustToFit = true) {
+  private backgroundColor: string;
+
+  constructor(svgElement: Element, adjustToFit = true, backgroundColor = 'white') {
     super('pdf', 'application/pdf');
     this.svgElement = svgElement;
     this.adjustToFit = adjustToFit;
+    this.backgroundColor = backgroundColor;
   }
 
   async export(): Promise<string> {
@@ -44,7 +47,7 @@ class PDFExporter extends Exporter {
 
       // Convert SVG to canvas using html2canvas
       const canvas = await html2canvas(tempContainer, {
-        backgroundColor: '#ffffff',
+        backgroundColor: this.backgroundColor,
         scale: 2, // Higher resolution
         useCORS: true,
         allowTaint: true,

@@ -29,18 +29,22 @@ class BinaryImageExporter extends Exporter {
 
   private adjustToFit: boolean;
 
+  private backgroundColor: string;
+
   constructor(
     svgElement: Element,
     width: number,
     height: number,
     imgFormat: 'image/png' | 'image/jpeg',
     adjustToFit = true,
+    backgroundColor = 'white',
   ) {
     super(imgFormat.split('/')[0], imgFormat);
     this.svgElement = svgElement;
     this.adjustToFit = adjustToFit;
     this.width = width;
     this.height = height;
+    this.backgroundColor = backgroundColor;
   }
 
   export(): Promise<string> {
@@ -48,7 +52,7 @@ class BinaryImageExporter extends Exporter {
   }
 
   exportAndEncode(): Promise<string> {
-    const svgExporter = new SVGExporter(this.svgElement, this.adjustToFit);
+    const svgExporter = new SVGExporter(this.svgElement, this.adjustToFit, this.backgroundColor);
     const svgUrl = svgExporter.exportAndEncode();
     return svgUrl.then((value: string) => {
       // Get the device pixel ratio, falling back to 1. But, I will double the resolution to look nicer.
@@ -78,6 +82,9 @@ class BinaryImageExporter extends Exporter {
       const result = new Promise<string>((resolve) => {
         img.onload = () => {
           const ctx = canvas.getContext('2d')!;
+          // Fill background first so JPEG/PNG have a solid fill ...
+          ctx.fillStyle = this.backgroundColor;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
           // Scale for retina ...
           ctx.scale(dpr, dpr);
           ctx.drawImage(img, 0, 0);

@@ -29,12 +29,15 @@ class SVGExporter extends Exporter {
 
   private adjustToFit: boolean;
 
+  private backgroundColor: string;
+
   private static MAX_SUPPORTED_SIZE = 2500;
 
-  constructor(svgElement: Element, adjustToFit = true) {
+  constructor(svgElement: Element, adjustToFit = true, backgroundColor = 'white') {
     super('svg', 'image/svg+xml');
     this.svgElement = svgElement;
     this.adjustToFit = adjustToFit;
+    this.backgroundColor = backgroundColor;
   }
 
   export(): Promise<string> {
@@ -47,10 +50,10 @@ class SVGExporter extends Exporter {
       svgTxt = svgTxt.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ');
     }
 
-    // Add white background. This is mainly for PNG export ...
+    // Add background. This is mainly for PNG export ...
     let svgDoc = SVGExporter.parseXMLString(svgTxt, 'application/xml');
     const svgElement = svgDoc.getElementsByTagName('svg')[0];
-    svgElement.setAttribute('style', 'background-color:white');
+    svgElement.setAttribute('style', `background-color:${this.backgroundColor}`);
     svgElement.setAttribute('focusable', 'false');
 
     // Does need to be adjust ?.

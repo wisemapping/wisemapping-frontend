@@ -40,4 +40,25 @@ describe('SVG export test execution', () => {
     const exporter = new SVGExporter(svgDocument.documentElement);
     await exporterAssert(testName, exporter);
   });
+
+  test('Custom background color is embedded in SVG style', async () => {
+    const svgPath = path.resolve(__dirname, './input/welcome.svg');
+    const svgDocument = parseXMLFile(svgPath, 'image/svg+xml');
+
+    const exporter = new SVGExporter(svgDocument.documentElement, true, '#ff00aa');
+    const result = await exporter.export();
+
+    expect(result).toContain('background-color:#ff00aa');
+    expect(result).not.toContain('background-color:white');
+  });
+
+  test('Default background color is white when not provided', async () => {
+    const svgPath = path.resolve(__dirname, './input/welcome.svg');
+    const svgDocument = parseXMLFile(svgPath, 'image/svg+xml');
+
+    const exporter = new SVGExporter(svgDocument.documentElement);
+    const result = await exporter.export();
+
+    expect(result).toContain('background-color:white');
+  });
 });
