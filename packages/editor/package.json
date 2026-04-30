@@ -50,9 +50,8 @@
     "@wisemapping/mindplot": "*",
     "emoji-picker-react": "^4.19.1",
     "react-color": "^2.19.3",
-    "react-intl": "^10.1.2",
-    "react-loader-spinner": "^8.0.2",
-    "styled-components": "^6.4.0"
+    "react-intl": "^10.1.4",
+    "styled-components": "^6.4.1"
   },
   "peerDependencies": {
     "react": "^19.0.0",
