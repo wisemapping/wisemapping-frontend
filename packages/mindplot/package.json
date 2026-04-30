@@ -55,7 +55,6 @@
     "@storybook/addon-docs": "^10.3.5",
     "@storybook/addon-links": "^10.3.5",
     "@storybook/html-vite": "^10.3.5",
-    "@storybook/testing-library": "^0.2.2",
     "blob-polyfill": "^9.0.20240710",
     "cypress": "^15.13.1",
     "cypress-image-snapshot": "^4.0.1",
