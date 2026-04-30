@@ -239,6 +239,42 @@
       "value": "共有"
     }
   ],
+  "activation.error.message": [
+    {
+      "type": 0,
+      "value": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+    }
+  ],
+  "activation.error.title": [
+    {
+      "type": 0,
+      "value": "Activation Failed"
+    }
+  ],
+  "activation.loading.desc": [
+    {
+      "type": 0,
+      "value": "Please wait while we activate your account..."
+    }
+  ],
+  "activation.loading.title": [
+    {
+      "type": 0,
+      "value": "Activating Your Account"
+    }
+  ],
+  "activation.success.message": [
+    {
+      "type": 0,
+      "value": "Your account has been activated. You can now sign in and start creating mind maps."
+    }
+  ],
+  "activation.success.title": [
+    {
+      "type": 0,
+      "value": "Account Activated Successfully"
+    }
+  ],
   "admin.auth-type": [
     {
       "type": 0,
@@ -393,12 +429,6 @@
       "value": "クリーン"
     }
   ],
-  "admin.status-inactive": [
-    {
-      "type": 0,
-      "value": "非アクティブ"
-    }
-  ],
   "admin.status-suspended": [
     {
       "type": 0,
@@ -499,12 +529,6 @@
     {
       "type": 0,
       "value": "XMLを表示"
-    }
-  ],
-  "changepwd.button": [
-    {
-      "type": 0,
-      "value": "変更"
     }
   ],
   "changepwd.confirm-password": [
@@ -743,6 +767,24 @@
       "value": "問題が発生しました。"
     }
   ],
+  "error.go-back": [
+    {
+      "type": 0,
+      "value": "Go Back"
+    }
+  ],
+  "error.go-home": [
+    {
+      "type": 0,
+      "value": "Go to Home"
+    }
+  ],
+  "error.go-to-login": [
+    {
+      "type": 0,
+      "value": "Sign In"
+    }
+  ],
   "error.map-title-required": [
     {
       "type": 0,
@@ -789,18 +831,6 @@
     {
       "type": 0,
       "value": "このページにアクセスする権限がありません。"
-    }
-  ],
-  "error.security-error": [
-    {
-      "type": 0,
-      "value": "マインドマップを開くことができません。"
-    }
-  ],
-  "error.undexpected-error-msg": [
-    {
-      "type": 0,
-      "value": "Unexpected error opening mindmap. Please, try latter."
     }
   ],
   "expired.description": [
@@ -875,6 +905,18 @@
       "value": "会社"
     }
   ],
+  "footer.col-support": [
+    {
+      "type": 0,
+      "value": "サポート"
+    }
+  ],
+  "footer.contactus": [
+    {
+      "type": 0,
+      "value": "お問い合わせ"
+    }
+  ],
   "footer.copyright": [
     {
       "type": 0,
@@ -889,18 +931,6 @@
       "value": " WiseMapping LLC"
     }
   ],
-  "footer.col-support": [
-    {
-      "type": 0,
-      "value": "サポート"
-    }
-  ],
-  "footer.contactus": [
-    {
-      "type": 0,
-      "value": "お問い合わせ"
-    }
-  ],
   "footer.donations": [
     {
       "type": 0,
@@ -911,12 +941,6 @@
     {
       "type": 0,
       "value": "よくある質問"
-    }
-  ],
-  "footer.faqandhelp": [
-    {
-      "type": 0,
-      "value": "ヘルプとよくある質問"
     }
   ],
   "footer.feedback": [
@@ -937,28 +961,10 @@
       "value": "オープンソース"
     }
   ],
-  "footer.others": [
-    {
-      "type": 0,
-      "value": "その他"
-    }
-  ],
   "footer.privacypolicy": [
     {
       "type": 0,
       "value": "プライバシーポリシー"
-    }
-  ],
-  "footer.support": [
-    {
-      "type": 0,
-      "value": "サポート"
-    }
-  ],
-  "footer.team": [
-    {
-      "type": 0,
-      "value": "チーム"
     }
   ],
   "footer.termsandconditions": [
@@ -1269,10 +1275,22 @@
       "value": "パスワードを忘れましたか？"
     }
   ],
+  "login.generic-error": [
+    {
+      "type": 0,
+      "value": "An error occurred during authentication. Please try again."
+    }
+  ],
   "login.google.button": [
     {
       "type": 0,
       "value": "Googleでサインイン"
+    }
+  ],
+  "login.oauth-error": [
+    {
+      "type": 0,
+      "value": "OAuth authentication failed. Please try again or use a different sign-in method."
     }
   ],
   "login.page-title": [
@@ -1293,10 +1311,10 @@
       "value": "リダイレクト中..."
     }
   ],
-  "login.remberme": [
+  "login.server-error": [
     {
       "type": 0,
-      "value": "ログイン状態を保持"
+      "value": "An unexpected error occurred. Please try again later."
     }
   ],
   "login.shared-map-notice": [
@@ -1357,6 +1375,30 @@
     {
       "type": 0,
       "value": "選択したものにラベルを追加"
+    }
+  ],
+  "maps.auth-required-default-message": [
+    {
+      "type": 0,
+      "value": "You need to sign in to view your maps."
+    }
+  ],
+  "maps.auth-required-heading": [
+    {
+      "type": 0,
+      "value": "Sign in to access your maps"
+    }
+  ],
+  "maps.auth-required-login": [
+    {
+      "type": 0,
+      "value": "Go to login"
+    }
+  ],
+  "maps.auth-required-title": [
+    {
+      "type": 0,
+      "value": "Sign In Required | WiseMapping"
     }
   ],
   "maps.choose-file": [
@@ -1503,12 +1545,6 @@
       "value": "お気に入り"
     }
   ],
-  "maps.untitled": [
-    {
-      "type": 0,
-      "value": "無題"
-    }
-  ],
   "maps.view": [
     {
       "type": 0,
@@ -1537,12 +1573,6 @@
     {
       "type": 0,
       "value": "サインアウト"
-    }
-  ],
-  "publish.button": [
-    {
-      "type": 0,
-      "value": "受け入れる"
     }
   ],
   "publish.checkbox": [
@@ -1591,12 +1621,6 @@
     {
       "type": 0,
       "value": "公開"
-    }
-  ],
-  "registation.callback.error.message": [
-    {
-      "type": 0,
-      "value": "Googleでの身元確認中にエラーが発生しました。ログインページから再試行できます"
     }
   ],
   "registation.success-title": [
@@ -1755,16 +1779,28 @@
       "value": "登録"
     }
   ],
-  "registration.success.desc": [
+  "registration.success.already-activated": [
     {
       "type": 0,
-      "value": "下の「サインイン」ボタンをクリックして、マインドマップの作成を開始してください。"
+      "value": "Already activated your account?"
     }
   ],
-  "registration.termandconditions": [
+  "registration.success.check-spam": [
     {
       "type": 0,
-      "value": "クライアント条件：上記で入力したWiseMappingアカウント情報を確認し、こちらでクライアント条件を確認してください。下の「登録」をクリックすることで、上記のクライアント条件とプライバシーポリシーに同意したことになります"
+      "value": "If you don't see the email, please check your spam folder."
+    }
+  ],
+  "registration.success.email-sent": [
+    {
+      "type": 0,
+      "value": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+    }
+  ],
+  "registration.success.title": [
+    {
+      "type": 0,
+      "value": "Registration Successful!"
     }
   ],
   "registration.title": [
@@ -1785,10 +1821,70 @@
       "value": "名前を変更"
     }
   ],
-  "resetpassword.success.title": [
+  "reset-password.confirm-password": [
     {
       "type": 0,
-      "value": "アカウントが正常に作成されました"
+      "value": "Confirm new password"
+    }
+  ],
+  "reset-password.desc": [
+    {
+      "type": 0,
+      "value": "Enter your new password below."
+    }
+  ],
+  "reset-password.invalid-link": [
+    {
+      "type": 0,
+      "value": "Invalid password reset link. Please request a new one."
+    }
+  ],
+  "reset-password.mismatch": [
+    {
+      "type": 0,
+      "value": "Passwords do not match."
+    }
+  ],
+  "reset-password.page-title": [
+    {
+      "type": 0,
+      "value": "Reset Password | WiseMapping"
+    }
+  ],
+  "reset-password.password": [
+    {
+      "type": 0,
+      "value": "New password"
+    }
+  ],
+  "reset-password.request-new": [
+    {
+      "type": 0,
+      "value": "Request new link"
+    }
+  ],
+  "reset-password.submit": [
+    {
+      "type": 0,
+      "value": "Set new password"
+    }
+  ],
+  "reset-password.title": [
+    {
+      "type": 0,
+      "value": "Set a new password"
+    }
+  ],
+  "reset-password.too-long": [
+    {
+      "type": 0,
+      "value": "Password must be less than 40 characters."
+    }
+  ],
+  "reset-password.too-short": [
+    {
+      "type": 0,
+      "value": "Password must be at least 8 characters."
     }
   ],
   "role.editor": [
@@ -1833,12 +1929,6 @@
       "value": "編集可能"
     }
   ],
-  "share.can-view": [
-    {
-      "type": 0,
-      "value": "閲覧可能"
-    }
-  ],
   "share.delete": [
     {
       "type": 0,
@@ -1861,6 +1951,24 @@
     {
       "type": 0,
       "value": "メッセージ"
+    }
+  ],
+  "share.table.actions": [
+    {
+      "type": 0,
+      "value": "Actions"
+    }
+  ],
+  "share.table.collaborator": [
+    {
+      "type": 0,
+      "value": "Collaborator"
+    }
+  ],
+  "share.table.role": [
+    {
+      "type": 0,
+      "value": "Role"
     }
   ],
   "theme.dark": [

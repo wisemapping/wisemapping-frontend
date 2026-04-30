@@ -83,9 +83,6 @@
   "action.share": {
     "defaultMessage": "Открыть доступ"
   },
-  "changepwd.button": {
-    "defaultMessage": "Изменить"
-  },
   "changepwd.confirm-password": {
     "defaultMessage": "Подтвердить пароль"
   },
@@ -155,17 +152,11 @@
   "footer.faq": {
     "defaultMessage": "F.A.Q."
   },
-  "footer.faqandhelp": {
-    "defaultMessage": "Помощь & FAQ"
-  },
   "footer.feedback": {
     "defaultMessage": "Обратная связь"
   },
   "footer.opensource": {
     "defaultMessage": "Open Source"
-  },
-  "footer.others": {
-    "defaultMessage": "Прочее"
   },
   "footer.termsandconditions": {
     "defaultMessage": "Общие Правила"
@@ -302,9 +293,6 @@
   "login.password": {
     "defaultMessage": "Пароль"
   },
-  "login.remberme": {
-    "defaultMessage": "Запомнить меня"
-  },
   "login.signin": {
     "defaultMessage": "Вход"
   },
@@ -349,9 +337,6 @@
   },
   "maps.copilot-dialog.description": {
     "defaultMessage": "Mind Map Copilot — это помощник для мозгового штурма на базе ChatGPT, который превращает ваши запросы в структурированные майнд-карты. Мы откроем его в новой вкладке, чтобы вы могли развивать идеи, генерировать темы и вернуть лучшее в WiseMapping."
-  },
-  "maps.untitled": {
-    "defaultMessage": "Без названия"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Открыть Копилот"
@@ -416,9 +401,6 @@
   "menu.signout": {
     "defaultMessage": "Выход"
   },
-  "publish.button": {
-    "defaultMessage": "Применить"
-  },
   "publish.checkbox": {
     "defaultMessage": "Включить общий доступ"
   },
@@ -467,12 +449,6 @@
   "registration.register": {
     "defaultMessage": "Регистрация"
   },
-  "registration.success.desc": {
-    "defaultMessage": "Нажмите на кнопку 'Войти' и приступите к созданию майнд-карт."
-  },
-  "registration.termandconditions": {
-    "defaultMessage": "Правила: Пожалуйста, проверьте информацию учетной записи WiseMapping, которую вы указали, и ознакомьтесь с Правилами. По нажатию на кнопку 'Регистрация' вы соглашаетесь с Правилами и Политикой Конфиденциальности"
-  },
   "registration.title": {
     "defaultMessage": "Стать участником"
   },
@@ -481,9 +457,6 @@
   },
   "rename.title": {
     "defaultMessage": "Переименовать"
-  },
-  "resetpassword.success.title": {
-    "defaultMessage": "Аккаунт был успешно создан!"
   },
   "role.editor": {
     "defaultMessage": "Редактор"
@@ -506,9 +479,6 @@
   "share.can-edit": {
     "defaultMessage": "Редактирование"
   },
-  "share.can-view": {
-    "defaultMessage": "Просмотр"
-  },
   "share.delete": {
     "defaultMessage": "Отозвать доступ"
   },
@@ -523,12 +493,6 @@
   },
   "footer.donations": {
     "defaultMessage": "Пожертвования"
-  },
-  "footer.support": {
-    "defaultMessage": "Услуги"
-  },
-  "footer.team": {
-    "defaultMessage": "команда"
   },
   "registration.google.button": {
     "defaultMessage": "Зарегистрируйтесь в Google"
@@ -556,9 +520,6 @@
   },
   "registration.callback.waiting.description": {
     "defaultMessage": "Подождите, пока мы подтвердим вашу личность"
-  },
-  "registation.callback.error.message": {
-    "defaultMessage": "Произошла ошибка при подтверждении вашей личности. Повторите попытку со страницы входа."
   },
   "registration.callback.back": {
     "defaultMessage": "Вернуться на страницу авторизации"
@@ -710,9 +671,6 @@
   "admin.status-active": {
     "defaultMessage": "Активный"
   },
-  "admin.status-inactive": {
-    "defaultMessage": "Неактивный"
-  },
   "common.locale": {
     "defaultMessage": "Язык"
   },
@@ -803,12 +761,6 @@
   "error.map-title-required": {
     "defaultMessage": "Название карты обязательно и не может быть пустым"
   },
-  "error.security-error": {
-    "defaultMessage": "Невозможно открыть майнд-карту."
-  },
-  "error.undexpected-error-msg": {
-    "defaultMessage": "Unexpected error opening mindmap. Please, try latter."
-  },
   "accountinfo.personal-details": {
     "defaultMessage": "Personal Details"
   },
@@ -892,5 +844,107 @@
   },
   "login.redirecting": {
     "defaultMessage": "Перенаправление..."
+  },
+  "share.table.collaborator": {
+    "defaultMessage": "Collaborator"
+  },
+  "share.table.role": {
+    "defaultMessage": "Role"
+  },
+  "share.table.actions": {
+    "defaultMessage": "Actions"
+  },
+  "error.go-home": {
+    "defaultMessage": "Go to Home"
+  },
+  "error.go-back": {
+    "defaultMessage": "Go Back"
+  },
+  "error.go-to-login": {
+    "defaultMessage": "Sign In"
+  },
+  "login.oauth-error": {
+    "defaultMessage": "OAuth authentication failed. Please try again or use a different sign-in method."
+  },
+  "login.server-error": {
+    "defaultMessage": "An unexpected error occurred. Please try again later."
+  },
+  "login.generic-error": {
+    "defaultMessage": "An error occurred during authentication. Please try again."
+  },
+  "registration.success.title": {
+    "defaultMessage": "Registration Successful!"
+  },
+  "registration.success.email-sent": {
+    "defaultMessage": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+  },
+  "registration.success.check-spam": {
+    "defaultMessage": "If you don't see the email, please check your spam folder."
+  },
+  "registration.success.already-activated": {
+    "defaultMessage": "Already activated your account?"
+  },
+  "reset-password.title": {
+    "defaultMessage": "Set a new password"
+  },
+  "reset-password.desc": {
+    "defaultMessage": "Enter your new password below."
+  },
+  "reset-password.invalid-link": {
+    "defaultMessage": "Invalid password reset link. Please request a new one."
+  },
+  "reset-password.request-new": {
+    "defaultMessage": "Request new link"
+  },
+  "reset-password.password": {
+    "defaultMessage": "New password"
+  },
+  "reset-password.confirm-password": {
+    "defaultMessage": "Confirm new password"
+  },
+  "reset-password.submit": {
+    "defaultMessage": "Set new password"
+  },
+  "reset-password.too-short": {
+    "defaultMessage": "Password must be at least 8 characters."
+  },
+  "reset-password.too-long": {
+    "defaultMessage": "Password must be less than 40 characters."
+  },
+  "reset-password.mismatch": {
+    "defaultMessage": "Passwords do not match."
+  },
+  "reset-password.page-title": {
+    "defaultMessage": "Reset Password | WiseMapping"
+  },
+  "maps.auth-required-title": {
+    "defaultMessage": "Sign In Required | WiseMapping"
+  },
+  "maps.auth-required-heading": {
+    "defaultMessage": "Sign in to access your maps"
+  },
+  "maps.auth-required-login": {
+    "defaultMessage": "Go to login"
+  },
+  "maps.auth-required-default-message": {
+    "defaultMessage": "You need to sign in to view your maps."
+  },
+  "activation.error.message": {
+    "defaultMessage": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+  },
+  "activation.error.title": {
+    "defaultMessage": "Activation Failed"
+  },
+  "activation.loading.desc": {
+    "defaultMessage": "Please wait while we activate your account..."
+  },
+  "activation.loading.title": {
+    "defaultMessage": "Activating Your Account"
+  },
+  "activation.success.message": {
+    "defaultMessage": "Your account has been activated. You can now sign in and start creating mind maps."
+  },
+  "activation.success.title": {
+    "defaultMessage": "Account Activated Successfully"
   }
 }

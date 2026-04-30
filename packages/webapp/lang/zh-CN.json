@@ -86,9 +86,6 @@
   "action.share": {
     "defaultMessage": "分享"
   },
-  "changepwd.button": {
-    "defaultMessage": "更改"
-  },
   "changepwd.confirm-password": {
     "defaultMessage": "确认密码"
   },
@@ -167,23 +164,11 @@
   "footer.faq": {
     "defaultMessage": "常见问题"
   },
-  "footer.faqandhelp": {
-    "defaultMessage": "帮助和常见问题"
-  },
   "footer.feedback": {
     "defaultMessage": "反馈"
   },
   "footer.opensource": {
     "defaultMessage": "开源"
-  },
-  "footer.others": {
-    "defaultMessage": "其他"
-  },
-  "footer.support": {
-    "defaultMessage": "支持"
-  },
-  "footer.team": {
-    "defaultMessage": "我们的团队"
   },
   "footer.termsandconditions": {
     "defaultMessage": "条款和条件"
@@ -359,9 +344,6 @@
   "login.password": {
     "defaultMessage": "密码"
   },
-  "login.remberme": {
-    "defaultMessage": "记住我"
-  },
   "login.signin": {
     "defaultMessage": "登录"
   },
@@ -406,9 +388,6 @@
   },
   "maps.copilot-dialog.description": {
     "defaultMessage": "Mind Map Copilot 是由 ChatGPT 驱动的头脑风暴助手，可将你的提示转换成结构化的思维导图。我们会在新标签页中打开它，方便你扩展想法、生成主题，并把最好的成果带回 WiseMapping。"
-  },
-  "maps.untitled": {
-    "defaultMessage": "无标题"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "打开副驾驶"
@@ -473,9 +452,6 @@
   "menu.signout": {
     "defaultMessage": "退出"
   },
-  "publish.button": {
-    "defaultMessage": "接受"
-  },
   "publish.checkbox": {
     "defaultMessage": "启用公开分享"
   },
@@ -499,9 +475,6 @@
   },
   "publish.title": {
     "defaultMessage": "发布"
-  },
-  "registation.callback.error.message": {
-    "defaultMessage": "使用Google验证您的身份时发生错误，您可以从登录页面重试"
   },
   "registation.success-title": {
     "defaultMessage": "注册成功 | WiseMapping"
@@ -557,12 +530,6 @@
   "registration.register": {
     "defaultMessage": "注册"
   },
-  "registration.success.desc": {
-    "defaultMessage": "点击下面的'登录'按钮开始创建思维导图。"
-  },
-  "registration.termandconditions": {
-    "defaultMessage": "客户条款：请检查您在上面输入的WiseMapping账户信息，并在此处查看客户条款。点击下面的'注册'即表示您同意上述客户条款和隐私政策"
-  },
   "registration.title": {
     "defaultMessage": "成为会员"
   },
@@ -571,9 +538,6 @@
   },
   "rename.title": {
     "defaultMessage": "重命名"
-  },
-  "resetpassword.success.title": {
-    "defaultMessage": "您的账户已成功创建"
   },
   "role.editor": {
     "defaultMessage": "编辑者"
@@ -595,9 +559,6 @@
   },
   "share.can-edit": {
     "defaultMessage": "可以编辑"
-  },
-  "share.can-view": {
-    "defaultMessage": "可以查看"
   },
   "share.delete": {
     "defaultMessage": "删除协作者"
@@ -716,9 +677,6 @@
   "admin.status-active": {
     "defaultMessage": "活跃"
   },
-  "admin.status-inactive": {
-    "defaultMessage": "不活跃"
-  },
   "common.locale": {
     "defaultMessage": "语言"
   },
@@ -803,12 +761,6 @@
   "error.map-title-required": {
     "defaultMessage": "地图标题是必需的，不能为空"
   },
-  "error.security-error": {
-    "defaultMessage": "Mindmap cannot be opened."
-  },
-  "error.undexpected-error-msg": {
-    "defaultMessage": "Unexpected error opening mindmap. Please, try latter."
-  },
   "accountinfo.personal-details": {
     "defaultMessage": "Personal Details"
   },
@@ -892,5 +844,107 @@
   },
   "login.redirecting": {
     "defaultMessage": "重定向中..."
+  },
+  "share.table.collaborator": {
+    "defaultMessage": "Collaborator"
+  },
+  "share.table.role": {
+    "defaultMessage": "Role"
+  },
+  "share.table.actions": {
+    "defaultMessage": "Actions"
+  },
+  "error.go-home": {
+    "defaultMessage": "Go to Home"
+  },
+  "error.go-back": {
+    "defaultMessage": "Go Back"
+  },
+  "error.go-to-login": {
+    "defaultMessage": "Sign In"
+  },
+  "login.oauth-error": {
+    "defaultMessage": "OAuth authentication failed. Please try again or use a different sign-in method."
+  },
+  "login.server-error": {
+    "defaultMessage": "An unexpected error occurred. Please try again later."
+  },
+  "login.generic-error": {
+    "defaultMessage": "An error occurred during authentication. Please try again."
+  },
+  "registration.success.title": {
+    "defaultMessage": "Registration Successful!"
+  },
+  "registration.success.email-sent": {
+    "defaultMessage": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+  },
+  "registration.success.check-spam": {
+    "defaultMessage": "If you don't see the email, please check your spam folder."
+  },
+  "registration.success.already-activated": {
+    "defaultMessage": "Already activated your account?"
+  },
+  "reset-password.title": {
+    "defaultMessage": "Set a new password"
+  },
+  "reset-password.desc": {
+    "defaultMessage": "Enter your new password below."
+  },
+  "reset-password.invalid-link": {
+    "defaultMessage": "Invalid password reset link. Please request a new one."
+  },
+  "reset-password.request-new": {
+    "defaultMessage": "Request new link"
+  },
+  "reset-password.password": {
+    "defaultMessage": "New password"
+  },
+  "reset-password.confirm-password": {
+    "defaultMessage": "Confirm new password"
+  },
+  "reset-password.submit": {
+    "defaultMessage": "Set new password"
+  },
+  "reset-password.too-short": {
+    "defaultMessage": "Password must be at least 8 characters."
+  },
+  "reset-password.too-long": {
+    "defaultMessage": "Password must be less than 40 characters."
+  },
+  "reset-password.mismatch": {
+    "defaultMessage": "Passwords do not match."
+  },
+  "reset-password.page-title": {
+    "defaultMessage": "Reset Password | WiseMapping"
+  },
+  "maps.auth-required-title": {
+    "defaultMessage": "Sign In Required | WiseMapping"
+  },
+  "maps.auth-required-heading": {
+    "defaultMessage": "Sign in to access your maps"
+  },
+  "maps.auth-required-login": {
+    "defaultMessage": "Go to login"
+  },
+  "maps.auth-required-default-message": {
+    "defaultMessage": "You need to sign in to view your maps."
+  },
+  "activation.error.message": {
+    "defaultMessage": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+  },
+  "activation.error.title": {
+    "defaultMessage": "Activation Failed"
+  },
+  "activation.loading.desc": {
+    "defaultMessage": "Please wait while we activate your account..."
+  },
+  "activation.loading.title": {
+    "defaultMessage": "Activating Your Account"
+  },
+  "activation.success.message": {
+    "defaultMessage": "Your account has been activated. You can now sign in and start creating mind maps."
+  },
+  "activation.success.title": {
+    "defaultMessage": "Account Activated Successfully"
   }
 }
