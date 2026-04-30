@@ -46,9 +46,10 @@ async function fetchMapMetadataWithCache(
   includeXml = false,
 ): Promise<MapMetadata> {
   const cacheKey = includeXml ? `maps-metadata-xml-${mapId}` : `maps-metadata-${mapId}`;
-  return queryClient.fetchQuery<unknown, ErrorInfo, MapMetadata>(cacheKey, () =>
-    client.fetchMapMetadata(mapId, includeXml),
-  );
+  return queryClient.fetchQuery<MapMetadata, ErrorInfo>({
+    queryKey: [cacheKey],
+    queryFn: () => client.fetchMapMetadata(mapId, includeXml),
+  });
 }
 
 const isErrorInfo = (error: unknown): error is ErrorInfo =>
