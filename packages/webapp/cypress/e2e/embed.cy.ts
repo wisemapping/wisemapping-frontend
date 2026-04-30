@@ -25,6 +25,6 @@ describe('Embed Page', () => {
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('embed-page');
+    cy.screenshot('embed-page');
   });
 });

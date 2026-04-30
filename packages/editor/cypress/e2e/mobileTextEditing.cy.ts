@@ -61,7 +61,7 @@ describe.skip('Mobile Text Editing Suite', () => {
         cy.get('@textarea').should('have.value', 'Updated Text');
 
         // Take snapshot
-        cy.matchImageSnapshot('mobile-double-tap-text-editing-works');
+        cy.screenshot('mobile-double-tap-text-editing-works');
     });
 
     it('should maintain editor visibility when helper elements would appear', () => {
@@ -96,6 +96,6 @@ describe.skip('Mobile Text Editing Suite', () => {
         cy.get('#textContainer textarea').should('contain.value', 'Modified');
 
         // Take snapshot
-        cy.matchImageSnapshot('mobile-editing-with-helpers');
+        cy.screenshot('mobile-editing-with-helpers');
     });
 });

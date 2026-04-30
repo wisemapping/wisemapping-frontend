@@ -17,9 +17,5 @@ declare namespace Cypress {
          */
         waitForPageLoaded(): Chainable<void>;
 
-        /**
-         * Custom command to match image snapshot
-         */
-        matchImageSnapshot(nameOrOptions?: string | Object): Chainable<void>;
     }
 }

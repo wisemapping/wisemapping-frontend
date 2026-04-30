@@ -18,7 +18,11 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import ReCAPTCHA from 'react-google-recaptcha';
+import {
+  GoogleReCaptchaProvider,
+  GoogleReCaptchaCheckbox,
+  useGoogleReCaptcha,
+} from '@google-recaptcha/react';
 import { useNavigate } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
 
@@ -62,11 +66,14 @@ const defaultModel: Model = {
   acceptedTerms: true,
 };
 
-const RegistrationForm = () => {
+const RegistrationFormWithCaptcha = () => {
+  const { reset } = useGoogleReCaptcha();
+  return <RegistrationForm onCaptchaReset={() => reset?.()} />;
+};
+
+const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) => {
   const [model, setModel] = useState<Model>(defaultModel);
   const [error, setError] = useState<ErrorInfo>();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [captcha, setCaptcha] = useState<any>();
   const navigate = useNavigate();
   const intl = useIntl();
 
@@ -77,7 +84,7 @@ const RegistrationForm = () => {
       onSuccess: () => navigate('/c/registration-success'),
       onError: (error) => {
         setError(error);
-        captcha?.reset();
+        onCaptchaReset?.();
       },
     },
   );
@@ -269,14 +276,10 @@ const RegistrationForm = () => {
 
                   {AppConfig.isRecaptcha2Enabled() && (
                     <>
-                      {}
                       <div css={recaptchaContainerStyle}>
-                        <ReCAPTCHA
-                          ref={(el) => setCaptcha(el)}
-                          sitekey={AppConfig.getRecaptcha2SiteKey()}
-                          onChange={(value: string) => {
-                            model.recaptcha = value;
-                            setModel(model);
+                        <GoogleReCaptchaCheckbox
+                          onChange={(token: string) => {
+                            setModel({ ...model, recaptcha: token });
                           }}
                         />
                       </div>
@@ -399,7 +402,16 @@ const RegistationPage = (): React.ReactElement => {
         }}
         showAds
       >
-        <RegistrationForm />
+        {AppConfig.isRecaptcha2Enabled() ? (
+          <GoogleReCaptchaProvider
+            type="v2-checkbox"
+            siteKey={AppConfig.getRecaptcha2SiteKey() || ''}
+          >
+            <RegistrationFormWithCaptcha />
+          </GoogleReCaptchaProvider>
+        ) : (
+          <RegistrationForm />
+        )}
       </AccountAccessLayout>
     </>
   );

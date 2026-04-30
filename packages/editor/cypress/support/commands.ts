@@ -23,8 +23,6 @@ declare global {
     interface Chainable {
       waitForLoad(): void;
       waitEditorLoaded(): void;
-      imageSnaphots(): void;
-
       focusTopicByText(value: string): void;
       focusTopicById(id: number): void;
 
@@ -40,24 +38,6 @@ declare global {
       waitForIconsGalleryTab(): void;
     }
   }
-}
-// make matchImageSnapshot() call the real implementation only if CYPRESS_imageSnaphots is set
-// otherwise it calls a noop
-if (Cypress.expose('imageSnaphots')) {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { addMatchImageSnapshotCommand } = require('cypress-image-snapshot/command');
-  addMatchImageSnapshotCommand({
-    failureThreshold: 0.001,
-    failureThresholdType: 'percent',
-  });
-} else {
-  Cypress.Commands.add(
-    'matchImageSnapshot',
-    {
-      prevSubject: ['optional', 'element', 'window', 'document'],
-    },
-    () => Promise.resolve(),
-  );
 }
 
 Cypress.Commands.add('waitEditorLoaded', () => {

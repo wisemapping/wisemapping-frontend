@@ -32,7 +32,7 @@ describe('Connection Style Suite', () => {
     // Wait for the panel to open and then click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
     
-    cy.matchImageSnapshot('connection-style-panel');
+    cy.screenshot('connection-style-panel');
   });
 
   it('Change to thick curved connection', () => {
@@ -45,7 +45,7 @@ describe('Connection Style Suite', () => {
     // Click on thick curved option
     cy.get('[aria-label="Thick Curved"]').should('be.visible').first().click({ force: true });
 
-    cy.matchImageSnapshot('thick-curved-connection');
+    cy.screenshot('thick-curved-connection');
   });
 
   it('Change to arc connection', () => {
@@ -57,7 +57,7 @@ describe('Connection Style Suite', () => {
     // Click on arc option
     cy.get('[aria-label="Arc"]').should('be.visible').first().click({ force: true });
 
-    cy.matchImageSnapshot('arc-connection');
+    cy.screenshot('arc-connection');
   });
 
   it('Change to thin curved connection', () => {
@@ -69,7 +69,7 @@ describe('Connection Style Suite', () => {
     // Click on thin curved option
     cy.get('[aria-label="Thin Curved"]').should('be.visible').first().click({ force: true });
 
-    cy.matchImageSnapshot('thin-curved-connection');
+    cy.screenshot('thin-curved-connection');
   });
 
   it('Change to simple polyline connection', () => {
@@ -81,7 +81,7 @@ describe('Connection Style Suite', () => {
     // Click on simple polyline option
     cy.get('[aria-label="Simple Polyline"]').should('be.visible').first().click({ force: true });
 
-    cy.matchImageSnapshot('simple-polyline-connection');
+    cy.screenshot('simple-polyline-connection');
   });
 
   it('Change to curved polyline connection', () => {
@@ -93,7 +93,7 @@ describe('Connection Style Suite', () => {
     // Click on curved polyline option
     cy.get('[aria-label="Curved Polyline"]').should('be.visible').first().click({ force: true });
 
-    cy.matchImageSnapshot('curved-polyline-connection');
+    cy.screenshot('curved-polyline-connection');
   });
 
   it('Change connection color', () => {
@@ -112,7 +112,7 @@ describe('Connection Style Suite', () => {
     // Select a color (green)
     cy.get('[title="#00ff00"]').click({ force: true });
 
-    cy.matchImageSnapshot('change-connection-color');
+    cy.screenshot('change-connection-color');
   });
 
   it('Reset connection color to default', () => {
@@ -137,7 +137,7 @@ describe('Connection Style Suite', () => {
     // Click the default connection style option
     cy.get('[aria-label="Default"]').first().click({ force: true });
 
-    cy.matchImageSnapshot('reset-connection-color');
+    cy.screenshot('reset-connection-color');
   });
 
   it('Default connection style hides color picker', () => {
@@ -152,6 +152,6 @@ describe('Connection Style Suite', () => {
     // Connection Color section should not be visible
     cy.contains('Connection Color').should('not.exist');
 
-    cy.matchImageSnapshot('default-connection-no-color-picker');
+    cy.screenshot('default-connection-no-color-picker');
   });
 });

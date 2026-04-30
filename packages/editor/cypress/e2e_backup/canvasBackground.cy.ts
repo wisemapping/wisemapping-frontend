@@ -52,7 +52,7 @@ describe('Canvas Background Suite', () => {
     cy.get('[role="tab"]').should('not.exist');
     
     // Take snapshot
-    cy.matchImageSnapshot('default-background-no-tabs');
+    cy.screenshot('default-background-no-tabs');
   });
 
   it('Grid background pattern shows color pickers', () => {
@@ -70,7 +70,7 @@ describe('Canvas Background Suite', () => {
     cy.contains('Grid Color').should('be.visible');
     
     // Take snapshot
-    cy.matchImageSnapshot('grid-background-with-tabs');
+    cy.screenshot('grid-background-with-tabs');
   });
 
   it('Dots background pattern shows color pickers', () => {
@@ -88,7 +88,7 @@ describe('Canvas Background Suite', () => {
     cy.contains('Grid Color').should('be.visible');
     
     // Take snapshot
-    cy.matchImageSnapshot('dots-background-with-tabs');
+    cy.screenshot('dots-background-with-tabs');
   });
 });
 

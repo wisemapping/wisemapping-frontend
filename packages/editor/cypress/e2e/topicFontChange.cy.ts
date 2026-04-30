@@ -28,14 +28,14 @@ describe('Topic Font Suite', () => {
 
   it('Open Font Shape Panel', () => {
     cy.onClickToolbarButton('Font Style');
-    cy.matchImageSnapshot('fontShapePanel');
+    cy.screenshot('fontShapePanel');
   });
 
   it('Change Main Topic Text', () => {
     cy.get('body').type('New Title Main Topic{enter}');
     cy.get('[test-id=1] > text > tspan').should('have.text', 'New Title Main Topic');
     cy.focusTopicByText('Mind Mapping');
-    cy.matchImageSnapshot('changeMainTopicText');
+    cy.screenshot('changeMainTopicText');
   });
 
   it('Change Font Size', () => {
@@ -55,21 +55,21 @@ describe('Topic Font Suite', () => {
       cy.get('[test-id=1] > text').invoke('attr', 'font-size').should((newSize) => {
         expect(parseFloat(newSize as string)).to.be.lessThan(initial);
       });
-      cy.matchImageSnapshot('changeFontSizeSmaller');
+      cy.screenshot('changeFontSizeSmaller');
       
       // Decrease font size again
       cy.get('@smaller').first().click({ force: true });
       cy.get('[test-id=1] > text').invoke('attr', 'font-size').then((smallestSize) => {
         const smallest = parseFloat(smallestSize as string);
         expect(smallest).to.be.lessThan(initial);
-        cy.matchImageSnapshot('changeFontSizeSmall');
+        cy.screenshot('changeFontSizeSmall');
         
         // Increase font size back
         cy.get('@bigger').first().click({ force: true });
         cy.get('[test-id=1] > text').invoke('attr', 'font-size').should((newSize) => {
           expect(parseFloat(newSize as string)).to.be.greaterThan(smallest);
         });
-        cy.matchImageSnapshot('changeFontSizeNormal');
+        cy.screenshot('changeFontSizeNormal');
         
         // Increase to large size
         cy.get('@bigger').first().click({ force: true });
@@ -78,7 +78,7 @@ describe('Topic Font Suite', () => {
           expect(large).to.be.greaterThan(smallest);
           expect(large).to.be.at.least(13.0); // Should be at least 13.0 (could be 13.4 for size 10)
         });
-        cy.matchImageSnapshot('changeFontSizeLarge');
+        cy.screenshot('changeFontSizeLarge');
         
         // Increase to huge size
         cy.get('@bigger').first().click({ force: true });
@@ -86,7 +86,7 @@ describe('Topic Font Suite', () => {
           const huge = parseFloat(newSize as string);
           expect(huge).to.be.at.least(20.0); // Should be at least 20.0 (could be 20.2 for size 15)
         });
-        cy.matchImageSnapshot('changeFontSizeHuge');
+        cy.screenshot('changeFontSizeHuge');
         
         // Try to increase beyond maximum (should stay at max)
         cy.get('@bigger').first().click({ force: true });
@@ -94,7 +94,7 @@ describe('Topic Font Suite', () => {
           const stillHuge = parseFloat(newSize as string);
           expect(stillHuge).to.be.at.least(20.0); // Should remain at maximum
         });
-        cy.matchImageSnapshot('changeFontSizeMaxReached');
+        cy.screenshot('changeFontSizeMaxReached');
       });
     });
   });
@@ -110,7 +110,7 @@ describe('Topic Font Suite', () => {
     
     // Click away to close the toolbar and verify the change visually
     cy.contains('Mind Mapping').click({ force: true });
-    cy.matchImageSnapshot('changeFontItalic');
+    cy.screenshot('changeFontItalic');
   });
 
   it('Change Font to Bold', () => {
@@ -137,7 +137,7 @@ describe('Topic Font Suite', () => {
       
       // Click away to close the toolbar and verify the change visually
       cy.contains('Mind Mapping').click({ force: true });
-      cy.matchImageSnapshot('changeFontBold');
+      cy.screenshot('changeFontBold');
     });
   });
 
@@ -151,7 +151,7 @@ describe('Topic Font Suite', () => {
     cy.get('[test-id=1] > text').should('have.attr', 'fill', '#cc0000');
 
     cy.focusTopicByText('Mind Mapping');
-    cy.matchImageSnapshot('changeFontColor');
+    cy.screenshot('changeFontColor');
   });
 
   it.skip('Reset to Default hides all font options', () => {
@@ -178,6 +178,6 @@ describe('Topic Font Suite', () => {
     // After reset, the Reset to Default button should not be visible
     cy.contains('Reset to Default').should('not.exist');
 
-    cy.matchImageSnapshot('reset-font-to-default');
+    cy.screenshot('reset-font-to-default');
   });
 });

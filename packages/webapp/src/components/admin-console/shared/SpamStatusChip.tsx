@@ -124,15 +124,17 @@ const SpamStatusChip = ({
             defaultMessage: spam ? 'Mark as not spam' : 'Mark as spam',
           })}
         >
-          <IconButton
-            onClick={handleToggle}
-            aria-label={spam ? 'mark-not-spam' : 'mark-spam'}
-            color={spam ? 'success' : 'warning'}
-            size="small"
-            disabled={loading}
-          >
-            {spam ? <CheckCircleIcon /> : <FlagIcon />}
-          </IconButton>
+          <span>
+            <IconButton
+              onClick={handleToggle}
+              aria-label={spam ? 'mark-not-spam' : 'mark-spam'}
+              color={spam ? 'success' : 'warning'}
+              size="small"
+              disabled={loading}
+            >
+              {spam ? <CheckCircleIcon /> : <FlagIcon />}
+            </IconButton>
+          </span>
         </Tooltip>
       )}
     </Box>

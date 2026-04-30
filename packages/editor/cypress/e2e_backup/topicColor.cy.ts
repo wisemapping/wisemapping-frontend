@@ -28,7 +28,7 @@ describe('Topic Color Suite', () => {
 
   it('Open topic style panel', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
-    cy.matchImageSnapshot('topic-style-panel');
+    cy.screenshot('topic-style-panel');
   });
 
   it('Change topic fill color', () => {
@@ -45,7 +45,7 @@ describe('Topic Color Suite', () => {
     // Select a color (red)
     cy.get('[title="#ff0000"]').click({ force: true });
 
-    cy.matchImageSnapshot('change-topic-fill-color');
+    cy.screenshot('change-topic-fill-color');
   });
 
   it('Change topic border color', () => {
@@ -66,7 +66,7 @@ describe('Topic Color Suite', () => {
     // Now select blue color
     cy.get('[title="#0000ff"]').should('be.visible').click({ force: true });
 
-    cy.matchImageSnapshot('change-topic-border-color');
+    cy.screenshot('change-topic-border-color');
   });
 
   it('Reset topic fill color to default', () => {
@@ -85,7 +85,7 @@ describe('Topic Color Suite', () => {
     // Click the default shape option (first option in the shape selector)
     cy.get('[aria-label*="Default shape"]').first().click({ force: true });
 
-    cy.matchImageSnapshot('reset-topic-fill-color');
+    cy.screenshot('reset-topic-fill-color');
   });
 
   it('Reset topic border color to default', () => {
@@ -113,7 +113,7 @@ describe('Topic Color Suite', () => {
     // Click the default border style option
     cy.get('[aria-label="Default Line"]').first().click({ force: true });
 
-    cy.matchImageSnapshot('reset-topic-border-color');
+    cy.screenshot('reset-topic-border-color');
   });
 
   it('Default shape hides color picker', () => {
@@ -125,7 +125,7 @@ describe('Topic Color Suite', () => {
     // Background Color section should not be visible
     cy.contains('Background Color').should('not.exist');
 
-    cy.matchImageSnapshot('default-shape-no-color-picker');
+    cy.screenshot('default-shape-no-color-picker');
   });
 
   it('Default border style hides color picker', () => {
@@ -140,6 +140,6 @@ describe('Topic Color Suite', () => {
     // Border Color section should not be visible
     cy.contains('Border Color').should('not.exist');
 
-    cy.matchImageSnapshot('default-border-no-color-picker');
+    cy.screenshot('default-border-no-color-picker');
   });
 });

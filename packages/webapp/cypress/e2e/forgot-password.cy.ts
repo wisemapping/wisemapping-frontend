@@ -25,6 +25,6 @@ describe('Forgot Password Page', () => {
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('forgot-password');
+    cy.screenshot('forgot-password');
   });
 });

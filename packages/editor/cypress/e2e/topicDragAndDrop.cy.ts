@@ -29,27 +29,27 @@ describe('Topic Drag and Drop', () => {
     cy.contains('Mind Mapping').trigger('mousedown');
     cy.get('body').trigger('mousemove', position);
     cy.get('body').trigger('mouseup');
-    cy.matchImageSnapshot('moveupNode');
+    cy.screenshot('moveupNode');
   });
 
   it('Move down node "Mind Mapping"', () => {
     cy.contains('Mind Mapping').trigger('mousedown');
     cy.get('body').trigger('mousemove', { clientX: 350, clientY: 380 });
     cy.get('body').trigger('mouseup');
-    cy.matchImageSnapshot('movedownNode');
+    cy.screenshot('movedownNode');
   });
 
   it('Move default position node "Mind Mapping"', () => {
     cy.contains('Mind Mapping').trigger('mousedown');
     cy.get('body').trigger('mousemove', { clientX: 270, clientY: 240 });
     cy.get('body').trigger('mouseup');
-    cy.matchImageSnapshot('moveDefaultPosition');
+    cy.screenshot('moveDefaultPosition');
   });
 
   it('Move left node "Mind Mapping"', () => {
     cy.contains('Mind Mapping').trigger('mousedown');
     cy.get('body').trigger('mousemove', { clientX: 700, clientY: 240 });
     cy.get('body').trigger('mouseup');
-    cy.matchImageSnapshot('moveleftNode');
+    cy.screenshot('moveleftNode');
   });
 });

@@ -761,18 +761,20 @@ const AccountManagement = (): ReactElement => {
                   defaultMessage: 'Refresh Data',
                 })}
               >
-                <Button
-                  variant="outlined"
-                  startIcon={<RefreshIcon />}
-                  onClick={() => refetch()}
-                  disabled={isPending || isFilterLoading}
-                  sx={{ borderRadius: 2 }}
-                >
-                  {intl.formatMessage({
-                    id: 'admin.accounts.refresh',
-                    defaultMessage: 'Refresh',
-                  })}
-                </Button>
+                <span>
+                  <Button
+                    variant="outlined"
+                    startIcon={<RefreshIcon />}
+                    onClick={() => refetch()}
+                    disabled={isPending || isFilterLoading}
+                    sx={{ borderRadius: 2 }}
+                  >
+                    {intl.formatMessage({
+                      id: 'admin.accounts.refresh',
+                      defaultMessage: 'Refresh',
+                    })}
+                  </Button>
+                </span>
               </Tooltip>
               <Tooltip
                 title={intl.formatMessage({

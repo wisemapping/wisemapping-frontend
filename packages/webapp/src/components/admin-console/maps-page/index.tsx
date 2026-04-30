@@ -956,15 +956,17 @@ const MapsManagement = (): ReactElement => {
                           defaultMessage: map.spam ? 'Mark as not spam' : 'Mark as spam',
                         })}
                       >
-                        <IconButton
-                          onClick={() => handleToggleSpamStatus(map.id, map.spam || false)}
-                          aria-label={map.spam ? 'mark-not-spam' : 'mark-spam'}
-                          color={map.spam ? 'success' : 'warning'}
-                          size="small"
-                          disabled={updateSpamStatusMutation.isPending}
-                        >
-                          {map.spam ? <CheckCircleIcon /> : <FlagIcon />}
-                        </IconButton>
+                        <span>
+                          <IconButton
+                            onClick={() => handleToggleSpamStatus(map.id, map.spam || false)}
+                            aria-label={map.spam ? 'mark-not-spam' : 'mark-spam'}
+                            color={map.spam ? 'success' : 'warning'}
+                            size="small"
+                            disabled={updateSpamStatusMutation.isPending}
+                          >
+                            {map.spam ? <CheckCircleIcon /> : <FlagIcon />}
+                          </IconButton>
+                        </span>
                       </Tooltip>
                       {!map.isCreatorSuspended && (
                         <Tooltip
@@ -973,18 +975,20 @@ const MapsManagement = (): ReactElement => {
                             defaultMessage: 'Suspend user account',
                           })}
                         >
-                          <IconButton
-                            onClick={() => handleSuspendUser(map.createdById, map.createdBy)}
-                            aria-label={intl.formatMessage({
-                              id: 'admin.suspend-user',
-                              defaultMessage: 'Suspend user',
-                            })}
-                            color="warning"
-                            size="small"
-                            disabled={suspendUserMutation.isPending}
-                          >
-                            <BlockIcon />
-                          </IconButton>
+                          <span>
+                            <IconButton
+                              onClick={() => handleSuspendUser(map.createdById, map.createdBy)}
+                              aria-label={intl.formatMessage({
+                                id: 'admin.suspend-user',
+                                defaultMessage: 'Suspend user',
+                              })}
+                              color="warning"
+                              size="small"
+                              disabled={suspendUserMutation.isPending}
+                            >
+                              <BlockIcon />
+                            </IconButton>
+                          </span>
                         </Tooltip>
                       )}
                       <Tooltip

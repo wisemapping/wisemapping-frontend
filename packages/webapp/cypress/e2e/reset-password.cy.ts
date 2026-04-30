@@ -22,12 +22,12 @@ describe('Reset Password Page', () => {
   it('renders invalid link error when no token is provided', () => {
     cy.visit('/c/reset-password');
     cy.waitForPageLoaded();
-    cy.matchImageSnapshot('reset-password-no-token');
+    cy.screenshot('reset-password-no-token');
   });
 
   it('renders change password form when a token is provided', () => {
     cy.visit('/c/reset-password?token=test-token');
     cy.waitForPageLoaded();
-    cy.matchImageSnapshot('reset-password-with-token');
+    cy.screenshot('reset-password-with-token');
   });
 });

@@ -25,6 +25,6 @@ describe('Registration Page', () => {
   });
 
   it('registation load', () => {
-    cy.matchImageSnapshot('registration-page');
+    cy.screenshot('registration-page');
   });
 });

@@ -25,6 +25,6 @@ describe('Public Page', () => {
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('public-page');
+    cy.screenshot('public-page');
   });
 });

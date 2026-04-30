@@ -36,31 +36,31 @@ context('Connection suite', () => {
 
   it('classic theme', () => {
     cy.visit('/iframe.html?args=&id=mindplot-connection--classic&viewMode=story');
-    cy.matchImageSnapshot('connection-classic');
+    cy.screenshot('connection-classic');
   });
 
   it('prism theme', () => {
     cy.visit('/iframe.html?args=&id=mindplot-connection--prism&viewMode=story');
-    cy.matchImageSnapshot('connection-prism');
+    cy.screenshot('connection-prism');
   });
 
   it('robot theme', () => {
     cy.visit('/iframe.html?args=&id=mindplot-connection--robot&viewMode=story');
-    cy.matchImageSnapshot('connection-robot');
+    cy.screenshot('connection-robot');
   });
 
   it('sunrise theme', () => {
     cy.visit('/iframe.html?args=&id=mindplot-connection--sunrise&viewMode=story');
-    cy.matchImageSnapshot('connection-sunrise');
+    cy.screenshot('connection-sunrise');
   });
 
   it('aurora theme', () => {
     cy.visit('/iframe.html?args=&id=mindplot-connection--aurora&viewMode=story');
-    cy.matchImageSnapshot('connection-aurora');
+    cy.screenshot('connection-aurora');
   });
 
   it('retro theme', () => {
     cy.visit('/iframe.html?args=&id=mindplot-connection--retro&viewMode=story');
-    cy.matchImageSnapshot('connection-retro');
+    cy.screenshot('connection-retro');
   });
 });

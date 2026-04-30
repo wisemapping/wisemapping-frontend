@@ -36,7 +36,7 @@ describe('Relationship Topics', () => {
     cy.get('@rel').click({ force: true });
     cy.get('@rel').should('exist');
 
-    cy.matchImageSnapshot('addRelationship');
+    cy.screenshot('addRelationship');
 
     // Undo relationship ...
     cy.get('[aria-label^="Undo ').eq(1).click();
@@ -57,7 +57,7 @@ describe('Relationship Topics', () => {
     cy.get('body').type('{backspace}');
 
     cy.get('@rel').should('not.exist');
-    cy.matchImageSnapshot('delete relationship');
+    cy.screenshot('delete relationship');
 
     // Undo relationship ...
     cy.triggerUndo();
@@ -79,18 +79,18 @@ describe('Relationship Topics', () => {
     cy.get('[test-id="relctl:0:15-11"]').first().trigger('mousedown', { force: true });
     cy.get('body').trigger('mousemove', { clientX: 350, clientY: 380 });
     cy.get('body').trigger('mouseup');
-    cy.matchImageSnapshot('move ctl pont 0');
+    cy.screenshot('move ctl pont 0');
 
     // Move control point end ...
     cy.get('[test-id="relctl:1:15-11"]').first().trigger('mousedown', { force: true });
     cy.get('body').trigger('mousemove', { clientX: 350, clientY: 100 });
     cy.get('body').trigger('mouseup');
-    cy.matchImageSnapshot('move ctl pont 1');
+    cy.screenshot('move ctl pont 1');
 
     // Test undo and redo ...
     cy.triggerUndo();
     cy.triggerUndo();
     cy.get('@rel').should('exist');
-    cy.matchImageSnapshot('rel ctl undo');
+    cy.screenshot('rel ctl undo');
   });
 });

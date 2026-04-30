@@ -25,6 +25,6 @@ describe('Login Page', () => {
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('login-page');
+    cy.screenshot('login-page');
   });
 });

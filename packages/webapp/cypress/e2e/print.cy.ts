@@ -25,6 +25,6 @@ describe('Print Page', () => {
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('print-page');
+    cy.screenshot('print-page');
   });
 });

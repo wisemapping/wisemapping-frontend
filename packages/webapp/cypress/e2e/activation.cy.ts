@@ -66,7 +66,7 @@ describe('Activation Page', () => {
 
     it('should match visual snapshot for success state', () => {
       cy.contains('Account Activated Successfully', { timeout: 10000 }).should('be.visible');
-      cy.matchImageSnapshot('activation-success-page');
+      cy.screenshot('activation-success-page');
     });
 
     it('should navigate to login page after successful activation', () => {

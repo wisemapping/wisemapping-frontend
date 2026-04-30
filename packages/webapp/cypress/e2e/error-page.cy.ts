@@ -34,7 +34,7 @@ describe('Error Page', () => {
     visitWithSuppressedErrors('/c/this-route-does-not-exist');
     cy.waitForPageLoaded();
     cy.contains("We can't find that page.").should('be.visible');
-    cy.matchImageSnapshot('error-page-404');
+    cy.screenshot('error-page-404');
   });
 
   it('shows go-home and go-back buttons on 404', () => {

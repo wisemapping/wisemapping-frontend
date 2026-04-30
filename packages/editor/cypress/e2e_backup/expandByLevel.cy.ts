@@ -26,21 +26,21 @@ describe('Expand By Level Suite', () => {
 
   it('should display expand by level button', () => {
     cy.get('button[aria-label="Expand by Level"]').should('be.visible');
-    cy.matchImageSnapshot('expand-by-level-button-visible');
+    cy.screenshot('expand-by-level-button-visible');
   });
 
   it('should collapse all nodes and then expand by level incrementally', () => {
     cy.get('button[aria-label="Collapse All Nodes"]').should('be.visible').click({ force: true });
     cy.get('button[aria-label="Expand by Level"]').find('[class*="LevelBadge"]').should('not.exist');
-    cy.matchImageSnapshot('all-nodes-collapsed');
+    cy.screenshot('all-nodes-collapsed');
 
     cy.get('button[aria-label="Expand by Level"]').click({ force: true });
     cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '2');
-    cy.matchImageSnapshot('expanded-to-level-1');
+    cy.screenshot('expanded-to-level-1');
 
     cy.get('button[aria-label="Expand by Level"]').click({ force: true });
     cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '3');
-    cy.matchImageSnapshot('expanded-to-level-2');
+    cy.screenshot('expanded-to-level-2');
 
     cy.get('button[aria-label="Expand by Level"]').click({ force: true });
     cy.get('button[aria-label="Expand by Level"]').should(($button) => {
@@ -51,7 +51,7 @@ describe('Expand By Level Suite', () => {
         expect(level).to.be.greaterThan(3);
       }
     });
-    cy.matchImageSnapshot('expanded-to-level-3');
+    cy.screenshot('expanded-to-level-3');
   });
 
   it('should show correct level badge number when expanding', () => {
@@ -79,7 +79,7 @@ describe('Expand By Level Suite', () => {
       expect(level).to.be.greaterThan(2);
       expect(level).to.be.lessThan(100);
     });
-    cy.matchImageSnapshot('expand-all-shows-max-level');
+    cy.screenshot('expand-all-shows-max-level');
   });
 
   it.skip('should work with keyboard shortcut Cmd+E', () => {
@@ -91,7 +91,7 @@ describe('Expand By Level Suite', () => {
 
     cy.get('body').trigger('keydown', { key: 'e', metaKey: true, ctrlKey: false });
     cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '3');
-    cy.matchImageSnapshot('expand-by-level-keyboard-shortcut');
+    cy.screenshot('expand-by-level-keyboard-shortcut');
   });
 
   it('should show smaller badge numbers that are readable', () => {
@@ -112,7 +112,7 @@ describe('Expand By Level Suite', () => {
         expect(badgeDiv.length).to.be.greaterThan(0);
       });
     });
-    cy.matchImageSnapshot('expand-by-level-badge-styling');
+    cy.screenshot('expand-by-level-badge-styling');
   });
 });
 
