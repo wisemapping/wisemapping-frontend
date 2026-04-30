@@ -875,6 +875,20 @@
       "value": "Azienda"
     }
   ],
+  "footer.copyright": [
+    {
+      "type": 0,
+      "value": "© "
+    },
+    {
+      "type": 1,
+      "value": "year"
+    },
+    {
+      "type": 0,
+      "value": " WiseMapping LLC"
+    }
+  ],
   "footer.col-support": [
     {
       "type": 0,
