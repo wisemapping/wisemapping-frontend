@@ -23,7 +23,7 @@ import { Importer, TextImporterFactory } from '@wisemapping/editor';
 import React, { useContext } from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { ErrorInfo } from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
@@ -53,19 +53,17 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
   const [errorFile, setErrorFile] = React.useState<ErrorFile>({ error: false, message: '' });
   const intl = useIntl();
 
-  const mutation = useMutation<number, ErrorInfo, ImportModel>(
-    (model: ImportModel) => {
+  const mutation = useMutation<number, ErrorInfo, ImportModel>({
+    mutationFn: (model: ImportModel) => {
       return client.importMap(model);
     },
-    {
-      onSuccess: (mapId: number) => {
-        window.location.href = `/c/maps/${mapId}/edit`;
-      },
-      onError: (error) => {
-        setError(error);
-      },
+    onSuccess: (mapId: number) => {
+      window.location.href = `/c/maps/${mapId}/edit`;
     },
-  );
+    onError: (error) => {
+      setError(error);
+    },
+  });
 
   const handleOnClose = (): void => {
     onClose();
@@ -176,7 +174,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         onClose={handleOnClose}
         onSubmit={handleOnSubmit}
         error={error}
-        isLoading={mutation.isLoading}
+        isLoading={mutation.isPending}
         title={intl.formatMessage({
           id: 'import.title',
           defaultMessage: 'Import existing mindmap',

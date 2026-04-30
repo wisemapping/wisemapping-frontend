@@ -18,7 +18,7 @@
 
 import React, { ErrorInfo, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { ChangeHistory } from '../../../../classes/client';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
@@ -37,15 +37,11 @@ import { StyledTableContainer, StyledHeaderCell, StyledEmptyCell } from './style
 const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const intl = useIntl();
   const client = useContext(ClientContext);
-  const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>(
-    `history-${mapId}`,
-    () => {
-      return client.fetchHistory(mapId);
-    },
-    {
-      cacheTime: 0, // Force reload...
-    },
-  );
+  const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>({
+    queryKey: [`history-${mapId}`],
+    queryFn: () => client.fetchHistory(mapId),
+    gcTime: 0, // Force reload...
+  });
 
   const changeHistory: ChangeHistory[] = data ? data : [];
 

@@ -62,7 +62,7 @@ import TagIcon from '@mui/icons-material/Tag';
 import EmailIcon from '@mui/icons-material/Email';
 import { AdminMapsParams, AdminUser } from '../../../classes/client/admin-client';
 import AppConfig from '../../../classes/app-config';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import UserMapsDialog from '../shared/UserMapsDialog';
 import SpamStatusChip from '../shared/SpamStatusChip';
 
@@ -193,7 +193,7 @@ const MapsManagement = (): ReactElement => {
   const [viewingMap, setViewingMap] = useState<AdminMap | null>(null);
   const [isXmlViewerOpen, setIsXmlViewerOpen] = useState(false);
   const [xmlContent, setXmlContent] = useState<string>('');
-  const [isLoadingXml, setIsLoadingXml] = useState(false);
+  const [isPendingXml, setIsLoadingXml] = useState(false);
 
   // User suspension state
   const [isSuspensionDialogOpen, setIsSuspensionDialogOpen] = useState(false);
@@ -207,8 +207,8 @@ const MapsManagement = (): ReactElement => {
   const [selectedOwnerName, setSelectedOwnerName] = useState<string>('');
   const [selectedOwnerUser, setSelectedOwnerUser] = useState<AdminUser | null>(null);
   const [ownerMaps, setOwnerMaps] = useState<AdminMap[]>([]);
-  const [isLoadingOwnerMaps, setIsLoadingOwnerMaps] = useState(false);
-  const [isLoadingOwnerInfo, setIsLoadingOwnerInfo] = useState(false);
+  const [isPendingOwnerMaps, setIsLoadingOwnerMaps] = useState(false);
+  const [isPendingOwnerInfo, setIsLoadingOwnerInfo] = useState(false);
 
   // Detect search type
   const getSearchType = (term: string): 'id' | 'email' | 'text' | null => {
@@ -236,11 +236,11 @@ const MapsManagement = (): ReactElement => {
   // Fetch maps with pagination and filters
   const {
     data: mapsResponse,
-    isLoading,
+    isPending,
     error,
     refetch,
-  } = useQuery(
-    [
+  } = useQuery({
+    queryKey: [
       'adminMaps',
       currentPage,
       pageSize,
@@ -252,7 +252,7 @@ const MapsManagement = (): ReactElement => {
       filterSpam,
       dateFilter,
     ],
-    () => {
+    queryFn: () => {
       const params: AdminMapsParams = {
         page: currentPage - 1, // Convert to 0-based indexing for backend
         pageSize,
@@ -266,53 +266,45 @@ const MapsManagement = (): ReactElement => {
       };
       return client.getAdminMaps(params);
     },
-    {
-      retry: 1,
-      staleTime: 0, // Always refetch when query key changes
-      keepPreviousData: true,
-      onSettled: () => {
-        // Clear filter and pagination loading states when query completes
-        setIsFilterLoading(false);
-        setIsPaginationLoading(false);
-      },
-    },
-  );
+    retry: 1,
+    staleTime: 0, // Always refetch when query key changes
+  });
 
   const maps = mapsResponse?.data || [];
   const totalPages = mapsResponse?.totalPages || 0;
 
   // Update map mutation
-  const updateMapMutation = useMutation(
-    (mapData: MapFormData & { id: number }) => client.updateAdminMap(mapData.id, mapData),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('adminMaps');
-        setIsEditDialogOpen(false);
-        setEditingMap(null);
-        setFormData({
-          title: '',
-          description: '',
-          public: false,
-          isLocked: false,
-        });
-        setFormErrors({});
-      },
-      onError: (error: Error) => {
-        console.error('Failed to update map:', error);
-        setFormErrors({
-          general: intl.formatMessage({
-            id: 'admin.error.update-map-failed',
-            defaultMessage: 'Failed to update map. Please try again.',
-          }),
-        });
-      },
+  const updateMapMutation = useMutation({
+    mutationFn: (mapData: MapFormData & { id: number }) =>
+      client.updateAdminMap(mapData.id, mapData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
+      setIsEditDialogOpen(false);
+      setEditingMap(null);
+      setFormData({
+        title: '',
+        description: '',
+        public: false,
+        isLocked: false,
+      });
+      setFormErrors({});
     },
-  );
+    onError: (error: Error) => {
+      console.error('Failed to update map:', error);
+      setFormErrors({
+        general: intl.formatMessage({
+          id: 'admin.error.update-map-failed',
+          defaultMessage: 'Failed to update map. Please try again.',
+        }),
+      });
+    },
+  });
 
   // Delete map mutation
-  const deleteMapMutation = useMutation((mapId: number) => client.deleteAdminMap(mapId), {
+  const deleteMapMutation = useMutation({
+    mutationFn: (mapId: number) => client.deleteAdminMap(mapId),
     onSuccess: () => {
-      queryClient.invalidateQueries('adminMaps');
+      queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
     },
     onError: (error: Error) => {
       console.error('Failed to delete map:', error);
@@ -320,22 +312,20 @@ const MapsManagement = (): ReactElement => {
   });
 
   // Update spam status mutation
-  const updateSpamStatusMutation = useMutation(
-    ({ mapId, spam }: { mapId: number; spam: boolean }) =>
+  const updateSpamStatusMutation = useMutation({
+    mutationFn: ({ mapId, spam }: { mapId: number; spam: boolean }) =>
       client.updateMapSpamStatus(mapId, { spam }),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('adminMaps');
-      },
-      onError: (error: Error) => {
-        console.error('Failed to update spam status:', error);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
     },
-  );
+    onError: (error: Error) => {
+      console.error('Failed to update spam status:', error);
+    },
+  });
 
   // Suspend user mutation
-  const suspendUserMutation = useMutation(
-    ({ userId }: { userId: number }) => {
+  const suspendUserMutation = useMutation({
+    mutationFn: ({ userId }: { userId: number }) => {
       const suspensionData: { suspended: boolean; suspensionReason: string } = {
         suspended: true,
         suspensionReason: 'MANUAL_REVIEW',
@@ -343,38 +333,34 @@ const MapsManagement = (): ReactElement => {
 
       return client.updateUserSuspension(userId, suspensionData);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('adminMaps');
-        setIsSuspensionDialogOpen(false);
-        setSuspendingUser(null);
-        // Refresh owner user info if in owner maps dialog
-        if (selectedOwnerId !== null) {
-          loadOwnerInfo(selectedOwnerId);
-        }
-      },
-      onError: (error: Error) => {
-        console.error('Failed to suspend user:', error);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
+      setIsSuspensionDialogOpen(false);
+      setSuspendingUser(null);
+      // Refresh owner user info if in owner maps dialog
+      if (selectedOwnerId !== null) {
+        loadOwnerInfo(selectedOwnerId);
+      }
     },
-  );
+    onError: (error: Error) => {
+      console.error('Failed to suspend user:', error);
+    },
+  });
 
   // Unsuspend user mutation
-  const unsuspendUserMutation = useMutation(
-    ({ userId }: { userId: number }) => client.unsuspendAdminUser(userId),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('adminMaps');
-        // Refresh owner user info if in owner maps dialog
-        if (selectedOwnerId !== null) {
-          loadOwnerInfo(selectedOwnerId);
-        }
-      },
-      onError: (error: Error) => {
-        console.error('Failed to unsuspend user:', error);
-      },
+  const unsuspendUserMutation = useMutation({
+    mutationFn: ({ userId }: { userId: number }) => client.unsuspendAdminUser(userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminMaps'] });
+      // Refresh owner user info if in owner maps dialog
+      if (selectedOwnerId !== null) {
+        loadOwnerInfo(selectedOwnerId);
+      }
     },
-  );
+    onError: (error: Error) => {
+      console.error('Failed to unsuspend user:', error);
+    },
+  });
 
   const handleEditMap = (map: AdminMap) => {
     setEditingMap(map);
@@ -561,7 +547,7 @@ const MapsManagement = (): ReactElement => {
           // But we pass it for consistency with the dialog
         }}
         formatDate={formatDate}
-        loading={updateSpamStatusMutation.isLoading}
+        loading={updateSpamStatusMutation.isPending}
         showToggleButton={false}
       />
     );
@@ -659,7 +645,7 @@ const MapsManagement = (): ReactElement => {
           })}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          disabled={isLoading || isFilterLoading}
+          disabled={isPending || isFilterLoading}
           helperText={
             searchType === 'id'
               ? intl.formatMessage({
@@ -690,7 +676,7 @@ const MapsManagement = (): ReactElement => {
                 )}
               </InputAdornment>
             ),
-            endAdornment: isLoading ? (
+            endAdornment: isPending ? (
               <InputAdornment position="end">
                 <CircularProgress size={20} />
               </InputAdornment>
@@ -705,8 +691,8 @@ const MapsManagement = (): ReactElement => {
             value={filterPublic}
             label={intl.formatMessage({ id: 'admin.public', defaultMessage: 'Public' })}
             onChange={(e) => setFilterPublic(e.target.value)}
-            disabled={isLoading || isFilterLoading}
-            endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
+            disabled={isPending || isFilterLoading}
+            endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="public">Public</MenuItem>
@@ -720,8 +706,8 @@ const MapsManagement = (): ReactElement => {
             value={filterLocked}
             label={intl.formatMessage({ id: 'admin.locked', defaultMessage: 'Locked' })}
             onChange={(e) => setFilterLocked(e.target.value)}
-            disabled={isLoading || isFilterLoading}
-            endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
+            disabled={isPending || isFilterLoading}
+            endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="locked">Locked</MenuItem>
@@ -743,8 +729,8 @@ const MapsManagement = (): ReactElement => {
               defaultMessage: 'Spam',
             })}
             onChange={(e) => setFilterSpam(e.target.value)}
-            disabled={isLoading || isFilterLoading}
-            endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
+            disabled={isPending || isFilterLoading}
+            endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="spam">Spam</MenuItem>
@@ -768,8 +754,8 @@ const MapsManagement = (): ReactElement => {
               defaultMessage: 'Date Range',
             })}
             onChange={(e) => setDateFilter(e.target.value)}
-            disabled={isLoading || isFilterLoading}
-            endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
+            disabled={isPending || isFilterLoading}
+            endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="1">Last 1 Month</MenuItem>
             <MenuItem value="3">Last 3 Months</MenuItem>
@@ -837,7 +823,7 @@ const MapsManagement = (): ReactElement => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {isLoading ? (
+            {isPending ? (
               <TableRow>
                 <TableCell colSpan={10} align="center">
                   <CircularProgress />
@@ -975,7 +961,7 @@ const MapsManagement = (): ReactElement => {
                           aria-label={map.spam ? 'mark-not-spam' : 'mark-spam'}
                           color={map.spam ? 'success' : 'warning'}
                           size="small"
-                          disabled={updateSpamStatusMutation.isLoading}
+                          disabled={updateSpamStatusMutation.isPending}
                         >
                           {map.spam ? <CheckCircleIcon /> : <FlagIcon />}
                         </IconButton>
@@ -995,7 +981,7 @@ const MapsManagement = (): ReactElement => {
                             })}
                             color="warning"
                             size="small"
-                            disabled={suspendUserMutation.isLoading}
+                            disabled={suspendUserMutation.isPending}
                           >
                             <BlockIcon />
                           </IconButton>
@@ -1043,9 +1029,9 @@ const MapsManagement = (): ReactElement => {
             shape="rounded"
             showFirstButton
             showLastButton
-            disabled={isLoading || isFilterLoading || isPaginationLoading}
+            disabled={isPending || isFilterLoading || isPaginationLoading}
           />
-          {(isLoading || isFilterLoading || isPaginationLoading) && <CircularProgress size={24} />}
+          {(isPending || isFilterLoading || isPaginationLoading) && <CircularProgress size={24} />}
         </Box>
       )}
 
@@ -1144,9 +1130,9 @@ const MapsManagement = (): ReactElement => {
           <Button
             onClick={handleSaveMap}
             variant="contained"
-            disabled={updateMapMutation.isLoading}
+            disabled={updateMapMutation.isPending}
           >
-            {updateMapMutation.isLoading ? (
+            {updateMapMutation.isPending ? (
               <CircularProgress size={20} />
             ) : (
               intl.formatMessage({
@@ -1180,7 +1166,7 @@ const MapsManagement = (): ReactElement => {
           )}
         </DialogTitle>
         <DialogContent>
-          {isLoadingXml ? (
+          {isPendingXml ? (
             <Box sx={{ p: 3 }}>
               <LinearProgress sx={{ mb: 2 }} />
               <Typography variant="body2" color="text.secondary">
@@ -1247,7 +1233,7 @@ const MapsManagement = (): ReactElement => {
                 // You could add a snackbar notification here
               }
             }}
-            disabled={!xmlContent || isLoadingXml}
+            disabled={!xmlContent || isPendingXml}
             startIcon={<CodeIcon />}
           >
             {intl.formatMessage({
@@ -1307,10 +1293,10 @@ const MapsManagement = (): ReactElement => {
             variant="contained"
             color="error"
             onClick={handleConfirmSuspension}
-            disabled={suspendUserMutation.isLoading}
+            disabled={suspendUserMutation.isPending}
             startIcon={<BlockIcon />}
           >
-            {suspendUserMutation.isLoading ? (
+            {suspendUserMutation.isPending ? (
               <CircularProgress size={20} />
             ) : (
               intl.formatMessage({
@@ -1328,8 +1314,8 @@ const MapsManagement = (): ReactElement => {
         onClose={() => setIsOwnerMapsDialogOpen(false)}
         user={selectedOwnerUser}
         maps={ownerMaps}
-        isLoadingUser={isLoadingOwnerInfo}
-        isLoadingMaps={isLoadingOwnerMaps}
+        isPendingUser={isPendingOwnerInfo}
+        isPendingMaps={isPendingOwnerMaps}
         onSuspend={() => {
           setIsOwnerMapsDialogOpen(false);
           if (selectedOwnerId !== null) {
@@ -1349,8 +1335,8 @@ const MapsManagement = (): ReactElement => {
         getLockedChip={getLockedChip}
         getSuspendedUserChip={getSuspendedUserChip}
         formatDate={formatDate}
-        updateSpamStatusLoading={updateSpamStatusMutation.isLoading}
-        deleteMapLoading={deleteMapMutation.isLoading}
+        updateSpamStatusLoading={updateSpamStatusMutation.isPending}
+        deleteMapLoading={deleteMapMutation.isPending}
       />
     </Box>
   );

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';

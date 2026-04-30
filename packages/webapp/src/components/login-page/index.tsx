@@ -33,7 +33,7 @@ import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
 import FacebookButton from '../common/facebook-button';
 import AppConfig from '../../classes/app-config';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { ErrorInfo, LoginErrorInfo } from '../../classes/client';
 import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';

@@ -18,7 +18,7 @@
 
 import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { handleOnMutationSuccess, MultiDialogProps } from '..';
 import BaseDialog from '../base-dialog';
 import Alert from '@mui/material/Alert';
@@ -30,7 +30,8 @@ const DeleteMultiselectDialog = ({ onClose, mapsId }: MultiDialogProps): React.R
   const client = useContext(ClientContext);
   const queryClient = useQueryClient();
 
-  const mutation = useMutation((ids: number[]) => client.deleteMaps(ids), {
+  const mutation = useMutation({
+    mutationFn: (ids: number[]) => client.deleteMaps(ids),
     onSuccess: () => handleOnMutationSuccess(() => onClose(true), queryClient),
     onError: (error) => {
       console.error(`Unexpected error ${error}`);
@@ -55,7 +56,7 @@ const DeleteMultiselectDialog = ({ onClose, mapsId }: MultiDialogProps): React.R
           id: 'action.delete-title',
           defaultMessage: 'Delete',
         })}
-        isLoading={mutation.isLoading}
+        isLoading={mutation.isPending}
       >
         <Alert severity="warning">
           <AlertTitle>

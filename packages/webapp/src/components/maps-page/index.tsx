@@ -24,7 +24,7 @@ import IconButton from '@mui/material/IconButton';
 import { useStyles } from './style';
 import { MapsList } from './maps-list';
 import { createIntl, createIntlCache, FormattedMessage, IntlProvider, useIntl } from 'react-intl';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Label } from '../../classes/client';
 import ActionDispatcher from './action-dispatcher';
 import { ActionType } from './action-chooser';
@@ -161,10 +161,11 @@ const MapsPage = (): ReactElement => {
     trackPageView(window.location.pathname, 'Maps List');
   }, []);
 
-  const mutation = useMutation((id: number) => client.deleteLabel(id), {
+  const mutation = useMutation({
+    mutationFn: (id: number) => client.deleteLabel(id),
     onSuccess: () => {
-      queryClient.invalidateQueries('labels');
-      queryClient.invalidateQueries('maps');
+      queryClient.invalidateQueries({ queryKey: ['labels'] });
+      queryClient.invalidateQueries({ queryKey: ['maps'] });
     },
     onError: (error) => {
       console.error(`Unexpected error ${error}`);
@@ -172,7 +173,7 @@ const MapsPage = (): ReactElement => {
   });
 
   const handleMenuClick = (filter: Filter) => {
-    queryClient.invalidateQueries('maps');
+    queryClient.invalidateQueries({ queryKey: ['maps'] });
     setFilter(filter);
     if (mobileDrawerOpen) {
       setMobileDrawerOpen(false);
@@ -183,8 +184,9 @@ const MapsPage = (): ReactElement => {
     mutation.mutate(id);
   };
 
-  const { data } = useQuery<unknown, ErrorInfo, Label[]>('labels', () => {
-    return client.fetchLabels();
+  const { data } = useQuery<unknown, ErrorInfo, Label[]>({
+    queryKey: ['labels'],
+    queryFn: () => client.fetchLabels(),
   });
 
   const labels: Label[] = data ? data : [];

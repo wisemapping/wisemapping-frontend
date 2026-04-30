@@ -24,7 +24,7 @@ import { ErrorInfo } from '../../classes/client';
 
 import AccountAccessLayout from '../layout/AccountAccessLayout';
 
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';

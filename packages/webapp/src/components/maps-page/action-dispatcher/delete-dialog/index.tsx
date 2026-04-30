@@ -18,7 +18,7 @@
 
 import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo } from '../../../../classes/client';
 import { SimpleDialogProps, handleOnMutationSuccess } from '..';
 import BaseDialog from '../base-dialog';
@@ -33,7 +33,8 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
   const queryClient = useQueryClient();
   const [error, setError] = React.useState<ErrorInfo>();
 
-  const mutation = useMutation((id: number) => client.deleteMap(id), {
+  const mutation = useMutation({
+    mutationFn: (id: number) => client.deleteMap(id),
     onSuccess: () => handleOnMutationSuccess(() => onClose(true), queryClient),
     onError: (error: ErrorInfo) => {
       setError(error);
@@ -64,7 +65,7 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
           id: 'action.delete-title',
           defaultMessage: 'Delete',
         })}
-        isLoading={mutation.isLoading}
+        isLoading={mutation.isPending}
       >
         <Alert severity="warning">
           <AlertTitle>{alertTitle}</AlertTitle>

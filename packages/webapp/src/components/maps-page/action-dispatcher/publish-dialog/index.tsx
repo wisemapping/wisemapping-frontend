@@ -18,7 +18,7 @@
 
 import React, { useContext, useEffect, useRef } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo } from '../../../../classes/client';
 import BaseDialog from '../base-dialog';
 import { SimpleDialogProps } from '..';
@@ -63,25 +63,23 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     }
   }, [map?.id, map?.public]);
 
-  const mutation = useMutation<void, ErrorInfo, boolean>(
-    (model: boolean) => {
+  const mutation = useMutation<void, ErrorInfo, boolean>({
+    mutationFn: (model: boolean) => {
       return client.updateMapToPublic(mapId, model);
     },
-    {
-      onSuccess: (_, updatedModel) => {
-        setModel(updatedModel);
-        previousModelRef.current = updatedModel;
-        // Invalidate queries to refresh data, but keep dialog open
-        queryClient.invalidateQueries('maps');
-        queryClient.invalidateQueries(`maps-metadata-${mapId}`);
-      },
-      onError: (error) => {
-        setError(error);
-        // Revert the switch state on error to the previous value
-        setModel(previousModelRef.current);
-      },
+    onSuccess: (_, updatedModel) => {
+      setModel(updatedModel);
+      previousModelRef.current = updatedModel;
+      // Invalidate queries to refresh data, but keep dialog open
+      queryClient.invalidateQueries({ queryKey: ['maps'] });
+      queryClient.invalidateQueries({ queryKey: [`maps-metadata-${mapId}`] });
     },
-  );
+    onError: (error) => {
+      setError(error);
+      // Revert the switch state on error to the previous value
+      setModel(previousModelRef.current);
+    },
+  });
 
   const handleOnClose = (): void => {
     onClose();
@@ -154,9 +152,9 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                     onChange={handleOnChange}
                     name="public"
                     color="primary"
-                    disabled={mutation.isLoading}
+                    disabled={mutation.isPending}
                   />
-                  {mutation.isLoading && (
+                  {mutation.isPending && (
                     <CircularProgress
                       size={24}
                       sx={{

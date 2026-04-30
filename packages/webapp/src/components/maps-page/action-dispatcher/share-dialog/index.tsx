@@ -18,7 +18,7 @@
 
 import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo, Permission } from '../../../../classes/client';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
@@ -58,20 +58,18 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
   const [model, setModel] = React.useState<ShareModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
 
-  const deleteMutation = useMutation(
-    (email: string) => {
+  const deleteMutation = useMutation({
+    mutationFn: (email: string) => {
       return client.deleteMapPermission(mapId, email);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(`perm-${mapId}`);
-        setModel(defaultModel);
-      },
-      onError: (error: ErrorInfo) => {
-        setError(error);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`perm-${mapId}`] });
+      setModel(defaultModel);
     },
-  );
+    onError: (error: ErrorInfo) => {
+      setError(error);
+    },
+  });
 
   const splitEmail = (emails: string): string[] => {
     return emails
@@ -80,28 +78,26 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
       .filter((e) => e.trim().length > 0);
   };
 
-  const addMutation = useMutation(
-    (model: ShareModel) => {
+  const addMutation = useMutation({
+    mutationFn: (model: ShareModel) => {
       const emails = splitEmail(model.emails);
       const permissions = emails.map((email: string) => {
         return { email: email, role: model.canEdit ? ('editor' as const) : ('viewer' as const) };
       });
       return client.addMapPermissions(mapId, model.message, permissions);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(`perm-${mapId}`);
-        setModel(defaultModel);
-      },
-      onError: (error: ErrorInfo) => {
-        setError(error);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`perm-${mapId}`] });
+      setModel(defaultModel);
     },
-  );
+    onError: (error: ErrorInfo) => {
+      setError(error);
+    },
+  });
 
   const handleOnClose = (): void => {
     // Invalidate cache ...
-    queryClient.invalidateQueries(`perm-${mapId}`);
+    queryClient.invalidateQueries({ queryKey: [`perm-${mapId}`] });
     onClose();
   };
 
@@ -129,17 +125,19 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
   ): void => {
     event.stopPropagation();
     // Prevent duplicate requests if already deleting
-    if (!deleteMutation.isLoading) {
+    if (!deleteMutation.isPending) {
       deleteMutation.mutate(email);
     }
   };
 
-  const { isLoading, data: permissions = [] } = useQuery<unknown, ErrorInfo, Permission[]>(
-    `perm-${mapId}`,
-    () => {
-      return client.fetchMapPermissions(mapId);
-    },
-  );
+  const { isPending: isLoading, data: permissions = [] } = useQuery<
+    unknown,
+    ErrorInfo,
+    Permission[]
+  >({
+    queryKey: [`perm-${mapId}`],
+    queryFn: () => client.fetchMapPermissions(mapId),
+  });
 
   const formatName = (perm: Permission): string => {
     return perm.name ? `${perm.name}<${perm.email}>` : perm.email;
@@ -177,7 +175,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             label={intl.formatMessage({ id: 'common.emails', defaultMessage: 'Emails' })}
             onChange={handleOnChange}
             value={model.emails}
-            disabled={addMutation.isLoading}
+            disabled={addMutation.isPending}
             css={[classes.fullWidthInMobile, classes.email]}
           />
 
@@ -188,7 +186,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
                 onChange={handleOnChange}
                 name="canEdit"
                 color="primary"
-                disabled={addMutation.isLoading}
+                disabled={addMutation.isPending}
               />
             }
             label={
@@ -222,7 +220,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             disableElevation={true}
             onClick={handleOnAddClick}
             disabled={!isValid}
-            isLoading={addMutation.isLoading}
+            isLoading={addMutation.isPending}
             loadingText={intl.formatMessage({
               id: 'share.adding-button',
               defaultMessage: 'Sharing...',
@@ -242,7 +240,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               name="message"
               onChange={handleOnChange}
               value={model.message}
-              disabled={addMutation.isLoading}
+              disabled={addMutation.isPending}
               label={intl.formatMessage({
                 id: 'share.message',
                 defaultMessage: 'Message',
@@ -300,7 +298,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
                       >
                         <span>
                           <IconButton
-                            disabled={permission.role === 'owner' || deleteMutation.isLoading}
+                            disabled={permission.role === 'owner' || deleteMutation.isPending}
                             onClick={(e) => handleOnDeleteClick(e, permission.email)}
                             size="small"
                           >

@@ -18,7 +18,7 @@
 
 import React, { useContext, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo } from '../../../../classes/client';
 import { SimpleDialogProps, handleOnMutationSuccess } from '..';
 import Input from '../../../form/input';
@@ -43,20 +43,18 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
   const intl = useIntl();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<RenameModel, ErrorInfo, RenameModel>(
-    (model: RenameModel) => {
+  const mutation = useMutation<RenameModel, ErrorInfo, RenameModel>({
+    mutationFn: (model: RenameModel) => {
       const { id, ...rest } = model;
       return client.renameMap(id, rest).then(() => model);
     },
-    {
-      onSuccess: () => {
-        handleOnMutationSuccess(onClose, queryClient);
-      },
-      onError: (error) => {
-        setError(error);
-      },
+    onSuccess: () => {
+      handleOnMutationSuccess(onClose, queryClient);
     },
-  );
+    onError: (error) => {
+      setError(error);
+    },
+  });
 
   const handleOnClose = (): void => {
     onClose();
@@ -137,7 +135,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
         onClose={handleOnClose}
         onSubmit={handleOnSubmit}
         error={error}
-        isLoading={mutation.isLoading}
+        isLoading={mutation.isPending}
         title={intl.formatMessage({ id: 'rename.title', defaultMessage: 'Rename' })}
         description={intl.formatMessage({
           id: 'rename.description',

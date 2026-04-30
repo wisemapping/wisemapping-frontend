@@ -18,7 +18,7 @@
 
 import React, { useContext, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import FormControl from '@mui/material/FormControl';
 
 import { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
@@ -42,8 +42,8 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
 
   const intl = useIntl();
 
-  const mutation = useMutation<number, ErrorInfo, DuplicateModel>(
-    (model: DuplicateModel) => {
+  const mutation = useMutation<number, ErrorInfo, DuplicateModel>({
+    mutationFn: (model: DuplicateModel) => {
       const { id, title, description } = model;
       // Convert to BasicMapInfo format
       const basicInfo: BasicMapInfo = {
@@ -52,15 +52,13 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
       };
       return client.duplicateMap(id, basicInfo);
     },
-    {
-      onSuccess: (mapId) => {
-        window.location.href = `/c/maps/${mapId}/edit`;
-      },
-      onError: (error) => {
-        setError(error);
-      },
+    onSuccess: (mapId) => {
+      window.location.href = `/c/maps/${mapId}/edit`;
     },
-  );
+    onError: (error) => {
+      setError(error);
+    },
+  });
 
   const handleOnClose = (): void => {
     onClose();
@@ -179,7 +177,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
         onClose={handleOnClose}
         onSubmit={handleOnSubmit}
         error={error}
-        isLoading={mutation.isLoading}
+        isLoading={mutation.isPending}
         title={intl.formatMessage({ id: 'duplicate.title', defaultMessage: 'Duplicate' })}
         description={intl.formatMessage({
           id: 'rename.description',

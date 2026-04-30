@@ -33,7 +33,7 @@ import ResetPasswordPage from './components/reset-password-page';
 import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
 import { ForgotPasswordPage } from './components/forgot-password-page';
-import { QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { createAppTheme } from './theme';
 import AppI18n, { Locales } from './classes/app-i18n';
 import CssBaseline from '@mui/material/CssBaseline';

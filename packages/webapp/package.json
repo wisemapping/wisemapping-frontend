@@ -36,6 +36,7 @@
         "@mui/icons-material": "^7.3.10",
         "@mui/lab": "^7.0.1-beta.24",
         "@mui/material": "^7.3.10",
+        "@tanstack/react-query": "^5.75.5",
         "@wisemapping/editor": "*",
         "axios": "^1.15.2",
         "dayjs": "^1.11.20",
@@ -45,7 +46,6 @@
         "react-google-recaptcha": "^3.1.0",
         "react-helmet-async": "^3.0.0",
         "react-intl": "^10.1.4",
-        "react-query": "^3.39.3",
         "react-router-dom": "^7.14.2",
         "styled-components": "^6.4.1",
         "universal-cookie": "^8.1.2"

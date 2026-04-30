@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { AccountInfo, ErrorInfo, MapInfo, MapMetadata } from '../client';
 import { ClientContext } from '../provider/client-context';
 import { useContext } from 'react';
@@ -30,21 +30,17 @@ type MapLoadResult = {
 
 export const useFetchMapById = (id: number): MapLoadResult => {
   const client = useContext(ClientContext);
-  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapMetadata>(
-    `maps-metadata-${id}`,
-    () => {
-      return client.fetchMapMetadata(id);
-    },
-    {
-      // 0 is a valid map ID, only disable for null/undefined/NaN
-      enabled: id != null && !Number.isNaN(id),
-    },
-  );
+  const { isPending, error, data } = useQuery<MapMetadata, ErrorInfo>({
+    queryKey: [`maps-metadata-${id}`],
+    queryFn: () => client.fetchMapMetadata(id),
+    // 0 is a valid map ID, only disable for null/undefined/NaN
+    enabled: id != null && !Number.isNaN(id),
+  });
 
   // Convert MapMetadata to MapInfo format
   let map: MapInfo | undefined;
   let errorMsg: ErrorInfo | null = error;
-  if (!isLoading && data) {
+  if (!isPending && data) {
     // Convert MapMetadata to MapInfo
     map = {
       id: data.id,
@@ -59,10 +55,10 @@ export const useFetchMapById = (id: number): MapLoadResult => {
       public: data.public ?? false,
       role: data.role,
     };
-  } else if (!isLoading && error) {
+  } else if (!isPending && error) {
     errorMsg = error;
   }
-  return { isLoading: isLoading, error: errorMsg, data: map };
+  return { isLoading: isPending, error: errorMsg, data: map };
 };
 
 type MapMetadataLoadResult = {
@@ -73,26 +69,20 @@ type MapMetadataLoadResult = {
 
 export const useFetchMapMetadata = (id: number): MapMetadataLoadResult => {
   const client = useContext(ClientContext);
-  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapMetadata>(
-    `maps-metadata-${id}`,
-    () => {
-      return client.fetchMapMetadata(id);
-    },
-  );
-  return { isLoading: isLoading, error: error, data: data };
+  const { isPending, error, data } = useQuery<MapMetadata, ErrorInfo>({
+    queryKey: [`maps-metadata-${id}`],
+    queryFn: () => client.fetchMapMetadata(id),
+  });
+  return { isLoading: isPending, error: error, data: data };
 };
 
 export const useFetchAccount = (): AccountInfo | undefined => {
   const client = useContext(ClientContext);
-  const { data } = useQuery<unknown, ErrorInfo, AccountInfo>(
-    'account',
-    () => {
-      return client.fetchAccountInfo();
-    },
-    {
-      enabled: !AppI18n.isPublicPage(),
-    },
-  );
+  const { data } = useQuery<AccountInfo, ErrorInfo>({
+    queryKey: ['account'],
+    queryFn: () => client.fetchAccountInfo(),
+    enabled: !AppI18n.isPublicPage(),
+  });
   return data;
 };
 
@@ -102,14 +92,10 @@ export const useFetchAccountWithState = (): {
   error: ErrorInfo | null;
 } => {
   const client = useContext(ClientContext);
-  const { data, isLoading, error } = useQuery<unknown, ErrorInfo, AccountInfo>(
-    'account',
-    () => {
-      return client.fetchAccountInfo();
-    },
-    {
-      enabled: !AppI18n.isPublicPage(),
-    },
-  );
-  return { data, isLoading, error };
+  const { data, isPending, error } = useQuery<AccountInfo, ErrorInfo>({
+    queryKey: ['account'],
+    queryFn: () => client.fetchAccountInfo(),
+    enabled: !AppI18n.isPublicPage(),
+  });
+  return { data, isLoading: isPending, error };
 };
