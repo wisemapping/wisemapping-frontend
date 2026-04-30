@@ -60,7 +60,6 @@
     "eslint": "^10.2.0",
     "eslint-plugin-storybook": "^10.3.5",
     "jest": "^30.3.0",
-    "mocha": "^11.7.5",
     "raphael": "^2.3.0",
     "storybook": "^10.3.5",
     "typescript": "^6.0.2",
