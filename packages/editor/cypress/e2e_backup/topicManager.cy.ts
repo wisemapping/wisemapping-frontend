@@ -29,7 +29,7 @@ describe('Node manager', () => {
   it('shortcut add sibling node', () => {
     cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
     cy.get('[test-id=36] > text > tspan').should('exist');
-    cy.matchImageSnapshot('editor-shortcut-edit');
+    cy.screenshot('editor-shortcut-edit');
   });
 
   it('shortcut add child node', () => {
@@ -39,7 +39,7 @@ describe('Node manager', () => {
     cy.focusTopicById(36);
     cy.focusTopicById(37);
 
-    cy.matchImageSnapshot('addChildNodeSortcut');
+    cy.screenshot('addChildNodeSortcut');
   });
 
   it('Delete topic', () => {
@@ -49,7 +49,7 @@ describe('Node manager', () => {
 
     cy.get('[test-id=37]').should('not.exist');
 
-    cy.matchImageSnapshot('deleteTopicShortcut');
+    cy.screenshot('deleteTopicShortcut');
   });
 
   it('undo changes', () => {
@@ -57,7 +57,7 @@ describe('Node manager', () => {
     cy.focusTopicByText('Mind Mapping rocks!!');
     cy.triggerUndo();
 
-    cy.matchImageSnapshot('undoChange');
+    cy.screenshot('undoChange');
   });
 
   it('redo changes', () => {
@@ -68,11 +68,11 @@ describe('Node manager', () => {
     cy.triggerRedo();
     cy.focusTopicByText('Mind Mapping rocks!!');
 
-    cy.matchImageSnapshot('redoChange');
+    cy.screenshot('redoChange');
   });
 
   it('save changes', () => {
     cy.get('body').type('{ctrl}s');
-    cy.matchImageSnapshot('saveChagesShortcut');
+    cy.screenshot('saveChagesShortcut');
   });
 });

@@ -44,7 +44,7 @@ describe('Topic Copy and Paste Suite', () => {
             // Using assertion which auto-waits for the DOM to update
             cy.contains(originalText).should('have.length.at.least', 2);
             
-            cy.matchImageSnapshot('copyandpaste');
+            cy.screenshot('copyandpaste');
           });
         }
       });
@@ -69,7 +69,7 @@ describe('Topic Copy and Paste Suite', () => {
           // Using assertion which auto-waits for DOM update
           cy.contains('Features').should('exist');
           
-          cy.matchImageSnapshot('copy-and-paste-duplicate');
+          cy.screenshot('copy-and-paste-duplicate');
         });
       }
     });

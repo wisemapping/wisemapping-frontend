@@ -20,7 +20,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router';
 import { Link as RouterLink } from 'react-router';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';

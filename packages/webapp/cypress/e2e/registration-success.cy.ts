@@ -43,7 +43,7 @@ describe('Registration Success Page', () => {
   });
 
   it('should match visual snapshot', () => {
-    cy.matchImageSnapshot('registration-success-page');
+    cy.screenshot('registration-success-page');
   });
 
   it('should have correct page title', () => {

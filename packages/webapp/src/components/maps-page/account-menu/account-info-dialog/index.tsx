@@ -18,7 +18,7 @@
 
 import React, { useContext, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo } from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../../action-dispatcher/base-dialog';
@@ -80,67 +80,59 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
   const [error, setError] = React.useState<ErrorInfo>();
   const intl = useIntl();
 
-  const mutationChangeName = useMutation<void, ErrorInfo, AccountInfoModel>(
-    (model: AccountInfoModel) => {
+  const mutationChangeName = useMutation<void, ErrorInfo, AccountInfoModel>({
+    mutationFn: (model: AccountInfoModel) => {
       return client.updateAccountInfo(model.firstname, model.lastname);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('account');
-        onClose();
-      },
-      onError: (error) => {
-        setError(error);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['account'] });
+      onClose();
     },
-  );
+    onError: (error) => {
+      setError(error);
+    },
+  });
 
-  const mutationRemove = useMutation<void, ErrorInfo, void>(
-    () => {
+  const mutationRemove = useMutation<void, ErrorInfo, void>({
+    mutationFn: () => {
       return client.deleteAccount();
     },
-    {
-      onSuccess: () => {
-        window.location.href = '/c/login';
-        onClose();
-      },
-      onError: (error) => {
-        setError(error);
-      },
+    onSuccess: () => {
+      window.location.href = '/c/login';
+      onClose();
     },
-  );
+    onError: (error) => {
+      setError(error);
+    },
+  });
 
-  const mutationChangeLanguage = useMutation<void, ErrorInfo, LocaleCode>(
-    (locale: LocaleCode) => {
+  const mutationChangeLanguage = useMutation<void, ErrorInfo, LocaleCode>({
+    mutationFn: (locale: LocaleCode) => {
       return client.updateAccountLanguage(locale);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('account');
-        // Reload the page to apply the new language
-        window.location.reload();
-      },
-      onError: (error) => {
-        setError(error);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['account'] });
+      // Reload the page to apply the new language
+      window.location.reload();
     },
-  );
+    onError: (error) => {
+      setError(error);
+    },
+  });
 
-  const mutationChangePassword = useMutation<void, ErrorInfo, ChangePasswordModel>(
-    (model: ChangePasswordModel) => {
+  const mutationChangePassword = useMutation<void, ErrorInfo, ChangePasswordModel>({
+    mutationFn: (model: ChangePasswordModel) => {
       return client.updateAccountPassword(model.password);
     },
-    {
-      onSuccess: () => {
-        setPasswordModel(defaultPasswordModel);
-        setError(undefined);
-        onClose();
-      },
-      onError: (error) => {
-        setError(error);
-      },
+    onSuccess: () => {
+      setPasswordModel(defaultPasswordModel);
+      setError(undefined);
+      onClose();
     },
-  );
+    onError: (error) => {
+      setError(error);
+    },
+  });
 
   useEffect(() => {
     if (account) {
@@ -425,7 +417,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                         <FormattedMessage id="language.change" defaultMessage="Change Language" />
                       </Box>
                     }
-                    disabled={mutationChangeLanguage.isLoading}
+                    disabled={mutationChangeLanguage.isPending}
                   >
                     {Object.values(Locales).map((locale) => (
                       <MenuItem key={locale.code} value={locale.code}>

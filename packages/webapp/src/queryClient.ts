@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import type { ErrorInfo } from './classes/client';
 
 /**

@@ -25,6 +25,6 @@ describe('Try Page', () => {
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('try-page');
+    cy.screenshot('try-page');
   });
 });

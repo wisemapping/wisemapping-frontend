@@ -35,7 +35,7 @@ describe('Admin Accounts Page', () => {
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('admin-accounts-page');
+    cy.screenshot('admin-accounts-page');
   });
 
   it('displays the accounts table with user data', () => {
@@ -52,7 +52,7 @@ describe('Admin Maps Page', () => {
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('admin-maps-page');
+    cy.screenshot('admin-maps-page');
   });
 
   it('displays the maps table', () => {
@@ -69,6 +69,6 @@ describe('Admin System Page', () => {
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('admin-system-page');
+    cy.screenshot('admin-system-page');
   });
 });

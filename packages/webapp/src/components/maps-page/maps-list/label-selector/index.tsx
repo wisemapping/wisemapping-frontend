@@ -22,7 +22,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import LabelComponent from '../label';
 import { Label, ErrorInfo, MapInfo } from '../../../../classes/client';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import AddLabelDialog from '../../action-dispatcher/add-label-dialog';
 import { LabelListContainer } from './styled';
 import { ClientContext } from '../../../../classes/provider/client-context';
@@ -34,9 +34,10 @@ export type LabelSelectorProps = {
 
 export function LabelSelector({ onChange, maps }: LabelSelectorProps): React.ReactElement {
   const client = useContext(ClientContext);
-  const { data: labels = [] } = useQuery<unknown, ErrorInfo, Label[]>('labels', async () =>
-    client.fetchLabels(),
-  );
+  const { data: labels = [] } = useQuery<unknown, ErrorInfo, Label[]>({
+    queryKey: ['labels'],
+    queryFn: async () => client.fetchLabels(),
+  });
 
   const checkedLabelIds = useMemo(() => {
     return labels

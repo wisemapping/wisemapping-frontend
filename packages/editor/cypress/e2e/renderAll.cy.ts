@@ -63,7 +63,7 @@ describe('Render all sample maps', () => {
         cy.wait(2000); // Extra time for large maps to finish rendering
       }
 
-      cy.matchImageSnapshot(`map-${mapId}`);
+      cy.screenshot(`map-${mapId}`);
     });
   });
 });

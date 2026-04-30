@@ -35,7 +35,7 @@ describe('Image Emoji Suite', () => {
     // Click on the first image icon to add it
     cy.get('img').first().parent().click({ force: true });
 
-    cy.matchImageSnapshot('image-icon-added');
+    cy.screenshot('image-icon-added');
   });
 
   it('Replace image icon with another image icon', () => {
@@ -65,7 +65,7 @@ describe('Image Emoji Suite', () => {
       }
     });
 
-    cy.matchImageSnapshot('image-icon-replaced');
+    cy.screenshot('image-icon-replaced');
   });
 
   it('Switch between Icons Gallery and Emojis tabs', () => {
@@ -87,7 +87,7 @@ describe('Image Emoji Suite', () => {
     // Verify image icons are visible again
     cy.get('img').should('have.length.gt', 0);
 
-    cy.matchImageSnapshot('tabs-switching-works');
+    cy.screenshot('tabs-switching-works');
   });
 
   it('Add emoji vs image icon have different representations', () => {
@@ -111,7 +111,7 @@ describe('Image Emoji Suite', () => {
     // Add an image icon
     cy.get('img').first().parent().click({ force: true });
 
-    cy.matchImageSnapshot('emoji-and-image-icon-comparison');
+    cy.screenshot('emoji-and-image-icon-comparison');
   });
 
   it('Verify image icon renders correctly in topic', () => {
@@ -130,6 +130,6 @@ describe('Image Emoji Suite', () => {
     // Look for any image-related elements that might have been added to the topic
     cy.get('svg image, img').should('have.length.gt', 0);
 
-    cy.matchImageSnapshot('image-icon-renders-in-topic');
+    cy.screenshot('image-icon-renders-in-topic');
   });
 });

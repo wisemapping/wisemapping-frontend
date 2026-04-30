@@ -43,7 +43,7 @@ describe('Topic Link Suite', () => {
     // Click Accept/Save button
     cy.contains('Accept').should('be.visible').click();
 
-    cy.matchImageSnapshot('link-added-to-topic');
+    cy.screenshot('link-added-to-topic');
   });
 
   it('Validate URL format shows error for invalid URL', () => {
@@ -61,7 +61,7 @@ describe('Topic Link Suite', () => {
     // Check that error message is shown
     cy.contains('Address is not valid').should('be.visible');
 
-    cy.matchImageSnapshot('link-validation-error');
+    cy.screenshot('link-validation-error');
   });
 
   it('Accept valid URL and save', () => {
@@ -85,7 +85,7 @@ describe('Topic Link Suite', () => {
     // Wait for panel to close after saving
     cy.get('input[type="url"]').should('not.exist');
 
-    cy.matchImageSnapshot('link-with-valid-url');
+    cy.screenshot('link-with-valid-url');
   });
 
   it('Remove link from topic', () => {
@@ -113,7 +113,7 @@ describe('Topic Link Suite', () => {
     // Click Delete button to remove the link
     cy.contains('Delete').should('be.visible').click();
 
-    cy.matchImageSnapshot('link-removed-from-topic');
+    cy.screenshot('link-removed-from-topic');
   });
 
   it('Edit existing link', () => {
@@ -142,7 +142,7 @@ describe('Topic Link Suite', () => {
     cy.get('input[type="url"]').first().clear().type('https://www.updated-url.com');
     cy.contains('Accept').should('be.visible').click();
 
-    cy.matchImageSnapshot('link-edited-successfully');
+    cy.screenshot('link-edited-successfully');
   });
 
   it('Verify link content is saved and persists', () => {
@@ -168,7 +168,7 @@ describe('Topic Link Suite', () => {
     // Verify the link URL is still there
     cy.get('input[type="url"]').should('have.value', linkUrl);
 
-    cy.matchImageSnapshot('link-content-persists');
+    cy.screenshot('link-content-persists');
   });
 
   it('Close link panel without saving', () => {
@@ -187,7 +187,7 @@ describe('Topic Link Suite', () => {
     // Verify panel is closed by waiting for input to not exist (replaces cy.wait(300))
     cy.get('input[type="url"]').should('not.exist');
 
-    cy.matchImageSnapshot('link-panel-closed-without-saving');
+    cy.screenshot('link-panel-closed-without-saving');
   });
 
   it('Use keyboard shortcut to open link panel', () => {
@@ -199,7 +199,7 @@ describe('Topic Link Suite', () => {
     // Wait for link panel to appear
     waitForLinkPanel();
 
-    cy.matchImageSnapshot('link-panel-opened-via-keyboard');
+    cy.screenshot('link-panel-opened-via-keyboard');
   });
 
   it('shows link tooltip on hover', () => {

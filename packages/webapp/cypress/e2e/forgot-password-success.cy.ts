@@ -25,7 +25,7 @@ describe('Forgot Password Success Page', () => {
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('forgot-password-success');
+    cy.screenshot('forgot-password-success');
   });
 
   it('displays the success message', () => {

@@ -21,7 +21,7 @@ import RenameDialog from './rename-dialog';
 import DeleteDialog from './delete-dialog';
 import { ActionType } from '../action-chooser';
 import { PageModeType } from '../../editor-page/loader';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import DuplicateDialog from './duplicate-dialog';
 import CreateDialog from './create-dialog';
 import HistoryDialog from './history-dialog';
@@ -117,7 +117,7 @@ ActionDispatcher.defaultProps = {
 };
 
 export const handleOnMutationSuccess = (onClose: () => void, queryClient: QueryClient): void => {
-  queryClient.invalidateQueries('maps');
+  queryClient.invalidateQueries({ queryKey: ['maps'] });
   onClose();
 };
 

@@ -72,7 +72,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { AdminUsersParams } from '../../../classes/client/admin-client';
 import { AuthenticationType } from '../../../classes/client';
 import AppConfig from '../../../classes/app-config';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import UserMapsDialog from '../shared/UserMapsDialog';
 import AccountStatusChip, { getSuspensionReasonLabel } from '../shared/AccountStatusChip';
 
@@ -226,11 +226,11 @@ const AccountManagement = (): ReactElement => {
   // Fetch users
   const {
     data: usersResponse,
-    isLoading,
+    isPending,
     error,
     refetch,
-  } = useQuery(
-    [
+  } = useQuery({
+    queryKey: [
       'adminUsers',
       currentPage,
       pageSize,
@@ -241,7 +241,7 @@ const AccountManagement = (): ReactElement => {
       filterSuspended,
       filterAuthType,
     ],
-    () => {
+    queryFn: () => {
       const params: AdminUsersParams = {
         page: currentPage - 1, // Convert to 0-based indexing for backend
         pageSize,
@@ -258,47 +258,37 @@ const AccountManagement = (): ReactElement => {
       console.log('Users Query triggered with params:', params);
       return client.getAdminUsers(params);
     },
-    {
-      retry: 1,
-      staleTime: 0, // Always refetch when query key changes
-      keepPreviousData: true,
-      onSettled: () => {
-        // Clear filter and pagination loading states when query completes
-        setIsFilterLoading(false);
-        setIsPaginationLoading(false);
-      },
-    },
-  );
+    retry: 1,
+    staleTime: 0, // Always refetch when query key changes
+  });
 
   const users = usersResponse?.data || [];
   const totalPages = usersResponse?.totalPages || 0;
 
   // Update user mutation
-  const updateUserMutation = useMutation(
-    ({ userId, userData }: { userId: number; userData: Partial<UserFormData> }) =>
+  const updateUserMutation = useMutation({
+    mutationFn: ({ userId, userData }: { userId: number; userData: Partial<UserFormData> }) =>
       client.updateAdminUser(userId, userData),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('adminUsers');
-        setIsEditDialogOpen(false);
-        setEditingUser(null);
-        setFormErrors({});
-      },
-      onError: (error: Error) => {
-        console.error('Failed to update user:', error);
-        setFormErrors({
-          general: intl.formatMessage({
-            id: 'admin.error.update-user-failed',
-            defaultMessage: 'Failed to update user. Please try again.',
-          }),
-        });
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
+      setIsEditDialogOpen(false);
+      setEditingUser(null);
+      setFormErrors({});
     },
-  );
+    onError: (error: Error) => {
+      console.error('Failed to update user:', error);
+      setFormErrors({
+        general: intl.formatMessage({
+          id: 'admin.error.update-user-failed',
+          defaultMessage: 'Failed to update user. Please try again.',
+        }),
+      });
+    },
+  });
 
   // Create user mutation
-  const createUserMutation = useMutation(
-    (userData: UserFormData & { password: string }) => {
+  const createUserMutation = useMutation({
+    mutationFn: (userData: UserFormData & { password: string }) => {
       const adminUserData = {
         ...userData,
         creationDate: new Date().toISOString(),
@@ -308,35 +298,34 @@ const AccountManagement = (): ReactElement => {
       };
       return client.createAdminUser(adminUserData);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('adminUsers');
-        setIsCreateDialogOpen(false);
-        setFormData({
-          firstname: '',
-          lastname: '',
-          email: '',
-          locale: 'en',
-          allowSendEmail: false,
-        });
-        setFormErrors({});
-      },
-      onError: (error: Error) => {
-        console.error('Failed to create user:', error);
-        setFormErrors({
-          general: intl.formatMessage({
-            id: 'admin.error.create-user-failed',
-            defaultMessage: 'Failed to create user. Please try again.',
-          }),
-        });
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
+      setIsCreateDialogOpen(false);
+      setFormData({
+        firstname: '',
+        lastname: '',
+        email: '',
+        locale: 'en',
+        allowSendEmail: false,
+      });
+      setFormErrors({});
     },
-  );
+    onError: (error: Error) => {
+      console.error('Failed to create user:', error);
+      setFormErrors({
+        general: intl.formatMessage({
+          id: 'admin.error.create-user-failed',
+          defaultMessage: 'Failed to create user. Please try again.',
+        }),
+      });
+    },
+  });
 
   // Delete user mutation
-  const deleteUserMutation = useMutation((userId: number) => client.deleteAdminUser(userId), {
+  const deleteUserMutation = useMutation({
+    mutationFn: (userId: number) => client.deleteAdminUser(userId),
     onSuccess: () => {
-      queryClient.invalidateQueries('adminUsers');
+      queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsDeleteDialogOpen(false);
       setDeletingUser(null);
     },
@@ -346,41 +335,38 @@ const AccountManagement = (): ReactElement => {
   });
 
   // Suspend user mutation
-  const suspendUserMutation = useMutation(
-    ({ userId, reason }: { userId: number; reason?: string }) =>
+  const suspendUserMutation = useMutation({
+    mutationFn: ({ userId, reason }: { userId: number; reason?: string }) =>
       client.updateUserSuspension(userId, { suspended: true, suspensionReason: reason }),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('adminUsers');
-        setIsSuspensionDialogOpen(false);
-        setSuspendingUser(null);
-        setSuspensionReason('');
-      },
-      onError: (error: Error) => {
-        console.error('Failed to suspend user:', error);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
+      setIsSuspensionDialogOpen(false);
+      setSuspendingUser(null);
+      setSuspensionReason('');
     },
-  );
+    onError: (error: Error) => {
+      console.error('Failed to suspend user:', error);
+    },
+  });
 
   // Unsuspend user mutation
-  const unsuspendUserMutation = useMutation(
-    (userId: number) => client.updateUserSuspension(userId, { suspended: false }),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('adminUsers');
-        setIsUnsuspendDialogOpen(false);
-        setUnsuspendingUser(null);
-      },
-      onError: (error: Error) => {
-        console.error('Failed to unsuspend user:', error);
-      },
+  const unsuspendUserMutation = useMutation({
+    mutationFn: (userId: number) => client.updateUserSuspension(userId, { suspended: false }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
+      setIsUnsuspendDialogOpen(false);
+      setUnsuspendingUser(null);
     },
-  );
+    onError: (error: Error) => {
+      console.error('Failed to unsuspend user:', error);
+    },
+  });
 
   // Activate user mutation
-  const activateUserMutation = useMutation((userId: number) => client.activateAdminUser(userId), {
+  const activateUserMutation = useMutation({
+    mutationFn: (userId: number) => client.activateAdminUser(userId),
     onSuccess: () => {
-      queryClient.invalidateQueries('adminUsers');
+      queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
       setIsActivateDialogOpen(false);
       setActivatingUser(null);
     },
@@ -392,32 +378,29 @@ const AccountManagement = (): ReactElement => {
   // Lazy query for user maps (only fetches when enabled)
   const {
     data: userMaps,
-    isLoading: isLoadingUserMaps,
+    isPending: isPendingUserMaps,
     refetch: refetchUserMaps,
-  } = useQuery(['userMaps', viewingMapsUser?.id], () => client.getUserMaps(viewingMapsUser!.id), {
+  } = useQuery({
+    queryKey: ['userMaps', viewingMapsUser?.id],
+    queryFn: () => client.getUserMaps(viewingMapsUser!.id),
     enabled: false, // Lazy loading - only fetch when manually triggered
-    onError: (error: Error) => {
-      console.error('Failed to fetch user maps:', error);
-    },
   });
 
   // Remove Facebook account mutation
-  const removeFacebookAccountMutation = useMutation(
-    (userId: number) => client.removeFacebookAccount(userId),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('adminUsers');
-        setIsRemoveFacebookDialogOpen(false);
-        setRemovingFacebookUser(null);
-        // Clear lookup result since the account changed
-        setFacebookLookupResult(null);
-        setFacebookIdInput('');
-      },
-      onError: (error: Error) => {
-        console.error('Failed to remove Facebook account:', error);
-      },
+  const removeFacebookAccountMutation = useMutation({
+    mutationFn: (userId: number) => client.removeFacebookAccount(userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminUsers'] });
+      setIsRemoveFacebookDialogOpen(false);
+      setRemovingFacebookUser(null);
+      // Clear lookup result since the account changed
+      setFacebookLookupResult(null);
+      setFacebookIdInput('');
     },
-  );
+    onError: (error: Error) => {
+      console.error('Failed to remove Facebook account:', error);
+    },
+  });
 
   const handleFacebookLookup = () => {
     const id = facebookIdInput.trim();
@@ -778,18 +761,20 @@ const AccountManagement = (): ReactElement => {
                   defaultMessage: 'Refresh Data',
                 })}
               >
-                <Button
-                  variant="outlined"
-                  startIcon={<RefreshIcon />}
-                  onClick={() => refetch()}
-                  disabled={isLoading || isFilterLoading}
-                  sx={{ borderRadius: 2 }}
-                >
-                  {intl.formatMessage({
-                    id: 'admin.accounts.refresh',
-                    defaultMessage: 'Refresh',
-                  })}
-                </Button>
+                <span>
+                  <Button
+                    variant="outlined"
+                    startIcon={<RefreshIcon />}
+                    onClick={() => refetch()}
+                    disabled={isPending || isFilterLoading}
+                    sx={{ borderRadius: 2 }}
+                  >
+                    {intl.formatMessage({
+                      id: 'admin.accounts.refresh',
+                      defaultMessage: 'Refresh',
+                    })}
+                  </Button>
+                </span>
               </Tooltip>
               <Tooltip
                 title={intl.formatMessage({
@@ -849,7 +834,7 @@ const AccountManagement = (): ReactElement => {
               })}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              disabled={isLoading || isFilterLoading}
+              disabled={isPending || isFilterLoading}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -857,7 +842,7 @@ const AccountManagement = (): ReactElement => {
                   </InputAdornment>
                 ),
                 endAdornment:
-                  isLoading || isFilterLoading ? (
+                  isPending || isFilterLoading ? (
                     <InputAdornment position="end">
                       <CircularProgress size={20} />
                     </InputAdornment>
@@ -872,8 +857,8 @@ const AccountManagement = (): ReactElement => {
                 value={filterAuthType}
                 label={intl.formatMessage({ id: 'admin.auth-type', defaultMessage: 'Auth Type' })}
                 onChange={(e) => setFilterAuthType(e.target.value)}
-                disabled={isLoading || isFilterLoading}
-                endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
+                disabled={isPending || isFilterLoading}
+                endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
               >
                 <MenuItem value="all">All</MenuItem>
                 <MenuItem value="DATABASE">Database</MenuItem>
@@ -891,8 +876,8 @@ const AccountManagement = (): ReactElement => {
                   defaultMessage: 'Suspension Status',
                 })}
                 onChange={(e) => setFilterSuspended(e.target.value)}
-                disabled={isLoading || isFilterLoading}
-                endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
+                disabled={isPending || isFilterLoading}
+                endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
               >
                 <MenuItem value="all">All (Suspended + Active)</MenuItem>
                 <MenuItem value="not-suspended">Not Suspended</MenuItem>
@@ -1040,7 +1025,7 @@ const AccountManagement = (): ReactElement => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {isLoading ? (
+            {isPending ? (
               <TableRow>
                 <TableCell colSpan={6} align="center">
                   <CircularProgress />
@@ -1199,9 +1184,9 @@ const AccountManagement = (): ReactElement => {
             shape="rounded"
             showFirstButton
             showLastButton
-            disabled={isLoading || isFilterLoading || isPaginationLoading}
+            disabled={isPending || isFilterLoading || isPaginationLoading}
           />
-          {(isLoading || isFilterLoading || isPaginationLoading) && <CircularProgress size={24} />}
+          {(isPending || isFilterLoading || isPaginationLoading) && <CircularProgress size={24} />}
         </Box>
       )}
 
@@ -1287,9 +1272,9 @@ const AccountManagement = (): ReactElement => {
           <Button
             onClick={handleFormSubmit}
             variant="contained"
-            disabled={updateUserMutation.isLoading}
+            disabled={updateUserMutation.isPending}
           >
-            {updateUserMutation.isLoading
+            {updateUserMutation.isPending
               ? intl.formatMessage({ id: 'admin.button.updating', defaultMessage: 'Updating...' })
               : intl.formatMessage({
                   id: 'admin.button.update-user',
@@ -1381,9 +1366,9 @@ const AccountManagement = (): ReactElement => {
           <Button
             onClick={handleFormSubmit}
             variant="contained"
-            disabled={createUserMutation.isLoading}
+            disabled={createUserMutation.isPending}
           >
-            {createUserMutation.isLoading ? 'Creating...' : 'Create User'}
+            {createUserMutation.isPending ? 'Creating...' : 'Create User'}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1391,7 +1376,7 @@ const AccountManagement = (): ReactElement => {
       {/* Suspension Dialog */}
       <Dialog
         open={isSuspensionDialogOpen}
-        onClose={suspendUserMutation.isLoading ? undefined : handleCancelSuspension}
+        onClose={suspendUserMutation.isPending ? undefined : handleCancelSuspension}
         maxWidth="sm"
         fullWidth
       >
@@ -1419,16 +1404,16 @@ const AccountManagement = (): ReactElement => {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelSuspension} disabled={suspendUserMutation.isLoading}>
+          <Button onClick={handleCancelSuspension} disabled={suspendUserMutation.isPending}>
             Cancel
           </Button>
           <Button
             onClick={handleConfirmSuspension}
             color="error"
             variant="contained"
-            disabled={suspendUserMutation.isLoading}
+            disabled={suspendUserMutation.isPending}
           >
-            {suspendUserMutation.isLoading ? 'Suspending...' : 'Suspend User'}
+            {suspendUserMutation.isPending ? 'Suspending...' : 'Suspend User'}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1436,7 +1421,7 @@ const AccountManagement = (): ReactElement => {
       {/* Delete Confirmation Dialog */}
       <Dialog
         open={isDeleteDialogOpen}
-        onClose={deleteUserMutation.isLoading ? undefined : handleCancelDelete}
+        onClose={deleteUserMutation.isPending ? undefined : handleCancelDelete}
         maxWidth="sm"
         fullWidth
       >
@@ -1450,16 +1435,16 @@ const AccountManagement = (): ReactElement => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelDelete} disabled={deleteUserMutation.isLoading}>
+          <Button onClick={handleCancelDelete} disabled={deleteUserMutation.isPending}>
             Cancel
           </Button>
           <Button
             onClick={handleConfirmDelete}
             color="error"
             variant="contained"
-            disabled={deleteUserMutation.isLoading}
+            disabled={deleteUserMutation.isPending}
           >
-            {deleteUserMutation.isLoading ? 'Deleting...' : 'Delete User'}
+            {deleteUserMutation.isPending ? 'Deleting...' : 'Delete User'}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1467,7 +1452,7 @@ const AccountManagement = (): ReactElement => {
       {/* Unsuspend Confirmation Dialog */}
       <Dialog
         open={isUnsuspendDialogOpen}
-        onClose={unsuspendUserMutation.isLoading ? undefined : handleCancelUnsuspend}
+        onClose={unsuspendUserMutation.isPending ? undefined : handleCancelUnsuspend}
         maxWidth="sm"
         fullWidth
       >
@@ -1487,16 +1472,16 @@ const AccountManagement = (): ReactElement => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelUnsuspend} disabled={unsuspendUserMutation.isLoading}>
+          <Button onClick={handleCancelUnsuspend} disabled={unsuspendUserMutation.isPending}>
             Cancel
           </Button>
           <Button
             onClick={handleConfirmUnsuspend}
             color="success"
             variant="contained"
-            disabled={unsuspendUserMutation.isLoading}
+            disabled={unsuspendUserMutation.isPending}
           >
-            {unsuspendUserMutation.isLoading ? 'Unsuspending...' : 'Unsuspend User'}
+            {unsuspendUserMutation.isPending ? 'Unsuspending...' : 'Unsuspend User'}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1504,7 +1489,7 @@ const AccountManagement = (): ReactElement => {
       {/* Activate Confirmation Dialog */}
       <Dialog
         open={isActivateDialogOpen}
-        onClose={activateUserMutation.isLoading ? undefined : handleCancelActivate}
+        onClose={activateUserMutation.isPending ? undefined : handleCancelActivate}
         maxWidth="sm"
         fullWidth
       >
@@ -1518,16 +1503,16 @@ const AccountManagement = (): ReactElement => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelActivate} disabled={activateUserMutation.isLoading}>
+          <Button onClick={handleCancelActivate} disabled={activateUserMutation.isPending}>
             Cancel
           </Button>
           <Button
             onClick={handleConfirmActivate}
             color="primary"
             variant="contained"
-            disabled={activateUserMutation.isLoading}
+            disabled={activateUserMutation.isPending}
           >
-            {activateUserMutation.isLoading ? 'Activating...' : 'Activate User'}
+            {activateUserMutation.isPending ? 'Activating...' : 'Activate User'}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1538,8 +1523,8 @@ const AccountManagement = (): ReactElement => {
         onClose={handleCloseUserMapsDialog}
         user={viewingMapsUser}
         maps={userMaps || []}
-        isLoadingUser={false}
-        isLoadingMaps={isLoadingUserMaps}
+        isPendingUser={false}
+        isPendingMaps={isPendingUserMaps}
         onSuspend={
           viewingMapsUser
             ? () => {
@@ -1651,7 +1636,7 @@ const AccountManagement = (): ReactElement => {
       <Dialog
         open={isRemoveFacebookDialogOpen}
         onClose={
-          removeFacebookAccountMutation.isLoading
+          removeFacebookAccountMutation.isPending
             ? undefined
             : () => setIsRemoveFacebookDialogOpen(false)
         }
@@ -1686,7 +1671,7 @@ const AccountManagement = (): ReactElement => {
         <DialogActions>
           <Button
             onClick={() => setIsRemoveFacebookDialogOpen(false)}
-            disabled={removeFacebookAccountMutation.isLoading}
+            disabled={removeFacebookAccountMutation.isPending}
           >
             {intl.formatMessage({ id: 'admin.cancel', defaultMessage: 'Cancel' })}
           </Button>
@@ -1697,9 +1682,9 @@ const AccountManagement = (): ReactElement => {
             color="error"
             variant="contained"
             startIcon={<LinkOffIcon />}
-            disabled={removeFacebookAccountMutation.isLoading}
+            disabled={removeFacebookAccountMutation.isPending}
           >
-            {removeFacebookAccountMutation.isLoading
+            {removeFacebookAccountMutation.isPending
               ? intl.formatMessage({ id: 'admin.facebook.removing', defaultMessage: 'Removing...' })
               : intl.formatMessage({
                   id: 'admin.facebook.remove-button',

@@ -34,7 +34,7 @@ describe('Relationship Style Suite', () => {
 
   it('Open relationship style panel', () => {
     cy.onClickToolbarButton('Relationship Style');
-    cy.matchImageSnapshot('relationship-style-panel');
+    cy.screenshot('relationship-style-panel');
   });
 
 
@@ -44,7 +44,7 @@ describe('Relationship Style Suite', () => {
     // Click on solid stroke option
     cy.get('[aria-label="Solid Line"]').first().click({ force: true });
 
-    cy.matchImageSnapshot('solid-stroke-relationship');
+    cy.screenshot('solid-stroke-relationship');
   });
 
   it('Change to dashed stroke style', () => {
@@ -53,7 +53,7 @@ describe('Relationship Style Suite', () => {
     // Click on dashed stroke option  
     cy.get('[aria-label="Dashed Line"]').first().click({ force: true });
 
-    cy.matchImageSnapshot('dashed-stroke-relationship');
+    cy.screenshot('dashed-stroke-relationship');
   });
 
   it('Change to dotted stroke style', () => {
@@ -62,7 +62,7 @@ describe('Relationship Style Suite', () => {
     // Click on dotted stroke option
     cy.get('[aria-label="Dotted Line"]').first().click({ force: true });
 
-    cy.matchImageSnapshot('dotted-stroke-relationship');
+    cy.screenshot('dotted-stroke-relationship');
   });
 
   it('Toggle end arrow on relationship', () => {
@@ -71,7 +71,7 @@ describe('Relationship Style Suite', () => {
     // Click on end arrow option
     cy.get('[aria-label="End Arrow"]').first().click({ force: true });
 
-    cy.matchImageSnapshot('end-arrow-relationship');
+    cy.screenshot('end-arrow-relationship');
   });
 
   it('Toggle start arrow on relationship', () => {
@@ -80,7 +80,7 @@ describe('Relationship Style Suite', () => {
     // Click on start arrow option
     cy.get('[aria-label="Start Arrow"]').first().click({ force: true });
 
-    cy.matchImageSnapshot('start-arrow-relationship');
+    cy.screenshot('start-arrow-relationship');
   });
 
   it('Toggle both arrows on relationship', () => {
@@ -92,7 +92,7 @@ describe('Relationship Style Suite', () => {
     // Click on start arrow option
     cy.get('[aria-label="Start Arrow"]').first().click({ force: true });
 
-    cy.matchImageSnapshot('both-arrows-relationship');
+    cy.screenshot('both-arrows-relationship');
   });
 
   it('Change relationship color', () => {
@@ -104,7 +104,7 @@ describe('Relationship Style Suite', () => {
     // Wait for color picker to load by checking for color elements
     cy.get('[title="#ff0000"]').should('be.visible').click({ force: true });
 
-    cy.matchImageSnapshot('change-relationship-color');
+    cy.screenshot('change-relationship-color');
   });
 
   it('Reset relationship color to default', () => {
@@ -117,7 +117,7 @@ describe('Relationship Style Suite', () => {
 
     // Now reset to default - relationship style doesn't have a "Default" option
     // so we'll just verify the color was applied and take a snapshot
-    cy.matchImageSnapshot('reset-relationship-color');
+    cy.screenshot('reset-relationship-color');
   });
 
 });

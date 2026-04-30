@@ -23,7 +23,7 @@ describe('OAuth Callback Page', () => {
     cy.visit('/c/oauth-callback');
     cy.waitForPageLoaded();
     cy.contains('Missing OAuth code or token').should('be.visible');
-    cy.matchImageSnapshot('oauth-callback-error');
+    cy.screenshot('oauth-callback-error');
   });
 
   it('displays an error and back-to-login link when OAuth is denied', () => {

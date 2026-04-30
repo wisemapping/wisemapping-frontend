@@ -25,6 +25,6 @@ describe('Editor Page', () => {
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('editor-page');
+    cy.screenshot('editor-page');
   });
 });

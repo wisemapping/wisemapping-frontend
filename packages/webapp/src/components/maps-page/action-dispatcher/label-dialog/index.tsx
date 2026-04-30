@@ -17,7 +17,7 @@
  */
 import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Typography from '@mui/material/Typography';
 
 import { useStyles } from './style';
@@ -35,8 +35,9 @@ const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement 
   const client = useContext(ClientContext);
   const queryClient = useQueryClient();
 
-  const { data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
-    return client.fetchAllMaps();
+  const { data } = useQuery<unknown, ErrorInfo, MapInfo[]>({
+    queryKey: ['maps'],
+    queryFn: () => client.fetchAllMaps(),
   });
   const [error, setError] = React.useState<ErrorInfo>();
   const maps = data?.filter((m) => mapsId.includes(m.id));
@@ -46,10 +47,11 @@ const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement 
     ErrorInfo,
     ChangeLabelMutationFunctionParam,
     number
-  >(getChangeLabelMutationFunction(client), {
+  >({
+    mutationFn: getChangeLabelMutationFunction(client),
     onSuccess: () => {
-      queryClient.invalidateQueries('maps');
-      queryClient.invalidateQueries('labels');
+      queryClient.invalidateQueries({ queryKey: ['maps'] });
+      queryClient.invalidateQueries({ queryKey: ['labels'] });
     },
     onError: (error) => {
       setError(error);

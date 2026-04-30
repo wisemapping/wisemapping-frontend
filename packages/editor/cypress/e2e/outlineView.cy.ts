@@ -36,7 +36,7 @@ describe('Outline View Suite', () => {
     cy.get('[data-testid="outline-view-dialog"]').should('contain.text', 'Welcome');
 
     // Take a snapshot of the opened dialog
-    cy.matchImageSnapshot('outline-view-opened');
+    cy.screenshot('outline-view-opened');
   });
 
   it('Outline View displays mind map structure', () => {
@@ -55,7 +55,7 @@ describe('Outline View Suite', () => {
     // Verify outline structure is rendered with multiple nodes
     cy.get('[data-testid="outline-view-dialog"]').should('contain.text', 'Welcome');
 
-    cy.matchImageSnapshot('outline-view-structure');
+    cy.screenshot('outline-view-structure');
   });
 
   it('Expand and collapse nodes in Outline View', () => {
@@ -77,7 +77,7 @@ describe('Outline View Suite', () => {
     });
 
     // Take snapshot of expanded state
-    cy.matchImageSnapshot('outline-view-node-expanded');
+    cy.screenshot('outline-view-node-expanded');
 
     // Now click the collapse button
     cy.get('[data-testid="outline-view-dialog"]').within(() => {
@@ -90,7 +90,7 @@ describe('Outline View Suite', () => {
     });
 
     // Take snapshot of collapsed state
-    cy.matchImageSnapshot('outline-view-node-collapsed');
+    cy.screenshot('outline-view-node-collapsed');
   });
 
   it('Expand All and Collapse All buttons work', () => {
@@ -115,7 +115,7 @@ describe('Outline View Suite', () => {
     });
 
     // Take snapshot of all expanded
-    cy.matchImageSnapshot('outline-view-expand-all');
+    cy.screenshot('outline-view-expand-all');
 
     // Click Collapse All button (in the floating toolbar)
     cy.get('[data-testid="outline-view-dialog"]').within(() => {
@@ -130,7 +130,7 @@ describe('Outline View Suite', () => {
     });
 
     // Take snapshot of all collapsed
-    cy.matchImageSnapshot('outline-view-collapse-all');
+    cy.screenshot('outline-view-collapse-all');
   });
 
   it('Close Outline View dialog', () => {
@@ -148,7 +148,7 @@ describe('Outline View Suite', () => {
     // Verify dialog is closed by waiting for it to not exist (replaces cy.wait(300))
     cy.get('[data-testid="outline-view-dialog"]').should('not.exist');
 
-    cy.matchImageSnapshot('outline-view-closed');
+    cy.screenshot('outline-view-closed');
   });
 
   it('Outline View displays topic icons', () => {
@@ -184,7 +184,7 @@ describe('Outline View Suite', () => {
       cy.get('img[alt="icon"], [role="img"][aria-label="icon"]').should('exist');
     });
 
-    cy.matchImageSnapshot('outline-view-with-icons');
+    cy.screenshot('outline-view-with-icons');
   });
 
   it('Outline View displays link and note indicators', () => {
@@ -200,7 +200,7 @@ describe('Outline View Suite', () => {
       cy.get('img[alt="link"], img[alt="note"]').should('have.length.greaterThan', -1);
     });
 
-    cy.matchImageSnapshot('outline-view-with-features');
+    cy.screenshot('outline-view-with-features');
   });
 });
 

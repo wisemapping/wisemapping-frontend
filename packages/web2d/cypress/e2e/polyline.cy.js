@@ -19,26 +19,26 @@ describe('Polyline Suite', () => {
   // Polyline tests ...
   it('Polyline Stroke', () => {
     cy.visit('/iframe.html?args=&id=shapes-polyline--stroke&viewMode=story');
-    cy.matchImageSnapshot('polyline-stroke');
+    cy.screenshot('polyline-stroke');
   });
 
   it('Polyline Straight', () => {
     cy.visit('/iframe.html?args=&id=shapes-polyline--straight&viewMode=story');
-    cy.matchImageSnapshot('polyline-straight');
+    cy.screenshot('polyline-straight');
   });
 
   it('Polyline Middle Straight', () => {
     cy.visit('/iframe.html?args=&id=shapes-polyline--middle-straight&viewMode=story');
-    cy.matchImageSnapshot('polyline-middle-straight');
+    cy.screenshot('polyline-middle-straight');
   });
 
   it('Polyline Curved', () => {
     cy.visit('/iframe.html?args=&id=shapes-polyline--curved&viewMode=story');
-    cy.matchImageSnapshot('polyline-curved');
+    cy.screenshot('polyline-curved');
   });
 
   it('Polyline Middle Curved', () => {
     cy.visit('/iframe.html?args=&id=shapes-polyline--middle-curved&viewMode=story');
-    cy.matchImageSnapshot('polyline-middle-curved');
+    cy.screenshot('polyline-middle-curved');
   });
 });

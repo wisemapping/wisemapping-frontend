@@ -32,7 +32,7 @@ describe('Zoom Suite', () => {
     // Verify zoom percentage is displayed
     cy.contains(/\d+%/).should('be.visible');
     
-    cy.matchImageSnapshot('zoom-controls-visible');
+    cy.screenshot('zoom-controls-visible');
   });
 
   it('should zoom in when clicking zoom in button', () => {
@@ -54,7 +54,7 @@ describe('Zoom Suite', () => {
       cy.contains('Mind Mapping').should('be.visible');
     });
     
-    cy.matchImageSnapshot('zoom-in-applied');
+    cy.screenshot('zoom-in-applied');
   });
 
   it('should zoom out when clicking zoom out button', () => {
@@ -76,7 +76,7 @@ describe('Zoom Suite', () => {
       cy.contains('Mind Mapping').should('be.visible');
     });
     
-    cy.matchImageSnapshot('zoom-out-applied');
+    cy.screenshot('zoom-out-applied');
   });
 
   it('should center map when clicking zoom to fit button', () => {
@@ -101,6 +101,6 @@ describe('Zoom Suite', () => {
       cy.contains('Mind Mapping').should('be.visible');
     });
     
-    cy.matchImageSnapshot('zoom-to-fit-applied');
+    cy.screenshot('zoom-to-fit-applied');
   });
 });

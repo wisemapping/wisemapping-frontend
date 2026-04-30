@@ -17,7 +17,7 @@
  */
 import React, { ReactElement, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import AppConfig from '../../../classes/app-config';
 
 // Material-UI imports with tree shaking

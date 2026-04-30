@@ -19,7 +19,7 @@
 import React, { useEffect, useMemo, CSSProperties, useContext } from 'react';
 
 import { useStyles } from './styled';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Client, { ErrorInfo, Label, MapInfo } from '../../../classes/client';
 import ActionChooser, { ActionType } from '../action-chooser';
 import ActionDispatcher from '../action-dispatcher';
@@ -333,13 +333,10 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     });
   }, [props.filter.type, filterLabelId]);
 
-  const { data: mapsData = [] } = useQuery<unknown, ErrorInfo, MapInfo[]>(
-    'maps',
-    () => {
-      return client.fetchAllMaps();
-    },
-    { suspense: true },
-  );
+  const { data: mapsData = [] } = useQuery<unknown, ErrorInfo, MapInfo[]>({
+    queryKey: ['maps'],
+    queryFn: () => client.fetchAllMaps(),
+  });
 
   const filteredMaps: MapInfo[] = useMemo(() => {
     const predicate = mapsFilter(filter, searchCondition);
@@ -419,13 +416,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     };
   };
 
-  const starredMultation = useMutation<void, ErrorInfo, number>(
-    (id: number) => {
+  const starredMultation = useMutation<void, ErrorInfo, number>({
+    mutationFn: (id: number) => {
       const map = filteredMaps.find((m) => m.id == id);
       const starred = !map?.starred;
 
       // Follow a optimistic update approach ...
-      queryClient.setQueryData<MapInfo[]>('maps', (currentMaps) => {
+      queryClient.setQueryData<MapInfo[]>(['maps'], (currentMaps) => {
         if (map) {
           map.starred = starred;
         }
@@ -433,16 +430,14 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
       });
       return client.updateStarred(id, starred);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('maps');
-      },
-      onError: (error) => {
-        queryClient.invalidateQueries('maps');
-        console.error(error);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['maps'] });
     },
-  );
+    onError: (error) => {
+      queryClient.invalidateQueries({ queryKey: ['maps'] });
+      console.error(error);
+    },
+  });
 
   const handleStarred = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
     event.stopPropagation();
@@ -487,19 +482,17 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     ErrorInfo,
     { mapId: number; labelId: number },
     number
-  >(
-    ({ mapId, labelId }) => {
+  >({
+    mutationFn: ({ mapId, labelId }) => {
       return client.deleteLabelFromMap(labelId, mapId);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('maps');
-      },
-      onError: (error) => {
-        console.error(error);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['maps'] });
     },
-  );
+    onError: (error) => {
+      console.error(error);
+    },
+  });
 
   const handleRemoveLabel = (mapId: number, labelId: number) => {
     removeLabelMultation.mutate({ mapId, labelId });

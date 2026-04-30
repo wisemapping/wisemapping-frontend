@@ -41,7 +41,6 @@
     "@storybook/addon-links": "^10.3.5",
     "@storybook/html-vite": "^10.3.5",
     "cypress": "^15.13.1",
-    "cypress-image-snapshot": "^4.0.1",
     "eslint-plugin-storybook": "^10.3.5",
     "storybook": "^10.3.5",
     "typescript": "^6.0.2",

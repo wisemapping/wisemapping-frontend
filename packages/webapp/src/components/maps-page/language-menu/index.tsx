@@ -18,7 +18,7 @@
 
 import TranslateTwoTone from '@mui/icons-material/TranslateTwoTone';
 import React, { useContext } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 import AppI18n, { LocaleCode, Locales } from '../../../classes/app-i18n';
 import { useFetchAccount } from '../../../classes/middleware';
@@ -48,18 +48,16 @@ const LanguageMenu = (): React.ReactElement => {
   const smMediaQuery = theme.breakpoints.down('sm');
 
   // Todo: For some reasons, in some situations locale is null. More research needed.
-  const mutation = useMutation(
-    (locale: LocaleCode) => client.updateAccountLanguage(locale ? locale : 'en'),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('account');
-        handleClose();
-      },
-      onError: (error) => {
-        console.error(`Unexpected error ${error}`);
-      },
+  const mutation = useMutation({
+    mutationFn: (locale: LocaleCode) => client.updateAccountLanguage(locale ? locale : 'en'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['account'] });
+      handleClose();
     },
-  );
+    onError: (error) => {
+      console.error(`Unexpected error ${error}`);
+    },
+  });
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

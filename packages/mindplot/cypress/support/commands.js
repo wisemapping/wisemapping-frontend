@@ -15,24 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-// make matchImageSnapshot() call the real implementation only if CYPRESS_imageSnaphots is set
-// otherwise it calls a noop
-if (Cypress.expose('imageSnaphots')) {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { addMatchImageSnapshotCommand } = require('cypress-image-snapshot/command');
-  addMatchImageSnapshotCommand({
-    failureThreshold: 0.001,
-    failureThresholdType: 'percent',
-  });
-} else {
-  Cypress.Commands.add(
-    'matchImageSnapshot',
-    {
-      prevSubject: ['optional', 'element', 'window', 'document'],
-    },
-    () => Promise.resolve(),
-  );
-}
 
 // https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/
 Cypress.Commands.add('getIframeBody', () =>

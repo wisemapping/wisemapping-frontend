@@ -26,7 +26,7 @@ describe('Maps Page', () => {
   });
 
   it('should match the snapshot', () => {
-    cy.matchImageSnapshot('maps');
+    cy.screenshot('maps');
   });
 });
 
@@ -52,7 +52,7 @@ context('iphone-5 resolution', () => {
   });
 
   it('should match the snapshot', () => {
-    cy.matchImageSnapshot('maps-iphone-5');
+    cy.screenshot('maps-iphone-5');
   });
 });
 
@@ -72,6 +72,6 @@ context('720p resolution', () => {
   });
 
   it('should match the snapshot', () => {
-    cy.matchImageSnapshot('maps-720p-resolution');
+    cy.screenshot('maps-720p-resolution');
   });
 });

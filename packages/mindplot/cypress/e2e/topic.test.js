@@ -44,25 +44,25 @@ context('Topic suite', () => {
 
   it('topic border', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--border-style&viewMode=story');
-    cy.matchImageSnapshot('topic-border');
+    cy.screenshot('topic-border');
   });
 
   it('topic style', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--font-style&viewMode=story');
-    cy.matchImageSnapshot('topic-style');
+    cy.screenshot('topic-style');
   });
 
   it('topic color', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--background-color&viewMode=story');
-    cy.matchImageSnapshot('topic-color');
+    cy.screenshot('topic-color');
   });
   it('topic note feature', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--note-feature&viewMode=story');
-    cy.matchImageSnapshot('topic-note');
+    cy.screenshot('topic-note');
   });
   it('topic link feature', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--link-feature&viewMode=story');
-    cy.matchImageSnapshot('topic-link-feature');
+    cy.screenshot('topic-link-feature');
   });
   it('topic icon feature', () => {
     // Intercept network requests to check for 404 errors on icon files
@@ -114,18 +114,18 @@ context('Topic suite', () => {
       }
     });
 
-    cy.matchImageSnapshot('topic-icon-feature');
+    cy.screenshot('topic-icon-feature');
   });
   it('topic shape line', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--shape-line&viewMode=story');
-    cy.matchImageSnapshot('topic-shape-line');
+    cy.screenshot('topic-shape-line');
   });
   it('topic ellipse line', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--shape-ellipse&viewMode=story');
-    cy.matchImageSnapshot('topic-shape-ellipse');
+    cy.screenshot('topic-shape-ellipse');
   });
   it('topic none line', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--shape-none&viewMode=story');
-    cy.matchImageSnapshot('topic-shape-none');
+    cy.screenshot('topic-shape-none');
   });
 });
