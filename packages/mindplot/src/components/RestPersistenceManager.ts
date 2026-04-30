@@ -65,12 +65,11 @@ class RESTPersistenceManager extends PersistenceManager {
           if (response.ok) {
             events.onSuccess();
           } else {
-            console.error(`Saving error: ${response.status}`);
-
             let error: PersistenceError;
             switch (response.status) {
               case 401:
               case 403:
+                console.warn(`Saving error: ${response.status} - session expired`);
                 error = {
                   severity: 'FATAL',
                   errorType: 'auth',
@@ -78,6 +77,7 @@ class RESTPersistenceManager extends PersistenceManager {
                 };
                 break;
               default: {
+                console.error(`Saving error: ${response.status}`);
                 error = await this._buildError(response);
               }
             }
