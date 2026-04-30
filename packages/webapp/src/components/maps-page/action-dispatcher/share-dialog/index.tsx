@@ -203,7 +203,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               setShowMessage(value);
             }}
             style={{ fontSize: '5px' }}
-            control={<Checkbox color="primary" disabled={addMutation.isLoading} />}
+            control={<Checkbox color="primary" disabled={addMutation.isPending} />}
             label={
               <Typography variant="subtitle2">
                 <FormattedMessage id="share.add-message" defaultMessage="Customize share message" />

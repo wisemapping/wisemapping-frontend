@@ -50,17 +50,15 @@ const ResetPassword = () => {
   const [validationError, setValidationError] = useState<string | null>(null);
   const [error, setError] = useState<ErrorInfo | undefined>(undefined);
 
-  const mutation = useMutation<void, ErrorInfo, { token: string; password: string }>(
-    ({ token, password }) => client.resetPasswordFromToken(token, password),
-    {
-      onSuccess: () => {
-        navigate('/c/login');
-      },
-      onError: (error) => {
-        setError(error);
-      },
+  const mutation = useMutation<void, ErrorInfo, { token: string; password: string }>({
+    mutationFn: ({ token, password }) => client.resetPasswordFromToken(token, password),
+    onSuccess: () => {
+      navigate('/c/login');
     },
-  );
+    onError: (error) => {
+      setError(error);
+    },
+  });
 
   if (!token) {
     return (
@@ -170,7 +168,7 @@ const ResetPassword = () => {
             id: 'reset-password.submit',
             defaultMessage: 'Set new password',
           })}
-          isLoading={mutation.isLoading}
+          isLoading={mutation.isPending}
         />
       </form>
     </FormContainer>

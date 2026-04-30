@@ -127,22 +127,20 @@ const LoginPage = (): React.ReactElement => {
     checkAuthentication();
   }, [client, location.search]);
 
-  const mutation = useMutation<void, ErrorInfo, Model>(
-    (model: Model) => client.login({ ...model }),
-    {
-      onSuccess: () => {
-        initializeThemeFromSystem();
+  const mutation = useMutation<void, ErrorInfo, Model>({
+    mutationFn: (model: Model) => client.login({ ...model }),
+    onSuccess: () => {
+      initializeThemeFromSystem();
 
-        let redirectUrl = new URLSearchParams(location.search).get('redirect');
-        redirectUrl = redirectUrl ? redirectUrl : '/c/maps/';
+      let redirectUrl = new URLSearchParams(location.search).get('redirect');
+      redirectUrl = redirectUrl ? redirectUrl : '/c/maps/';
 
-        window.location.href = redirectUrl;
-      },
-      onError: (error: LoginErrorInfo) => {
-        setLoginError(error);
-      },
+      window.location.href = redirectUrl;
     },
-  );
+    onError: (error: LoginErrorInfo) => {
+      setLoginError(error);
+    },
+  });
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     mutation.mutate(model);
@@ -298,7 +296,7 @@ const LoginPage = (): React.ReactElement => {
                       id: 'login.signin',
                       defaultMessage: 'Sign In',
                     })}
-                    isLoading={mutation.isLoading}
+                    isLoading={mutation.isPending}
                   />
                 </fieldset>
               </form>

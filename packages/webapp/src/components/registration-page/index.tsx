@@ -78,16 +78,14 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
   const intl = useIntl();
 
   const client = useContext(ClientContext);
-  const mutation = useMutation<void, ErrorInfo, Model>(
-    (model: Model) => client.registerNewUser({ ...model }),
-    {
-      onSuccess: () => navigate('/c/registration-success'),
-      onError: (error) => {
-        setError(error);
-        onCaptchaReset?.();
-      },
+  const mutation = useMutation<void, ErrorInfo, Model>({
+    mutationFn: (model: Model) => client.registerNewUser({ ...model }),
+    onSuccess: () => navigate('/c/registration-success'),
+    onError: (error) => {
+      setError(error);
+      onCaptchaReset?.();
     },
-  );
+  });
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -319,7 +317,7 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
                       id: 'registration.register',
                       defaultMessage: 'Register',
                     })}
-                    isLoading={mutation.isLoading}
+                    isLoading={mutation.isPending}
                   />
                 </fieldset>
               </form>
