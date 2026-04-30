@@ -44,18 +44,16 @@ const ForgotPassword = () => {
   const intl = useIntl();
 
   const client = useContext(ClientContext);
-  const mutation = useMutation<ForgotPasswordResult, ErrorInfo, string>(
-    (email: string) => client.resetPassword(email),
-    {
-      onSuccess: (result) => {
-        if (result.action === 'EMAIL_SENT') navigate('/c/forgot-password-success');
-        if (result.action === 'OAUTH2_USER') setShowOauthMessage(true);
-      },
-      onError: (error) => {
-        setError(error);
-      },
+  const mutation = useMutation<ForgotPasswordResult, ErrorInfo, string>({
+    mutationFn: (email: string) => client.resetPassword(email),
+    onSuccess: (result) => {
+      if (result.action === 'EMAIL_SENT') navigate('/c/forgot-password-success');
+      if (result.action === 'OAUTH2_USER') setShowOauthMessage(true);
     },
-  );
+    onError: (error) => {
+      setError(error);
+    },
+  });
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -115,7 +113,7 @@ const ForgotPassword = () => {
             id: 'forgot.register',
             defaultMessage: 'Send recovery link',
           })}
-          isLoading={mutation.isLoading}
+          isLoading={mutation.isPending}
         />
       </form>
     </FormContainer>
