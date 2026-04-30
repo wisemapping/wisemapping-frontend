@@ -333,6 +333,10 @@ class MockClient implements Client {
 
   fetchAccountInfo(): Promise<AccountInfo> {
     console.log('Fetch account info ...');
+    const token = JwtTokenConfig.retreiveToken();
+    if (!token) {
+      return Promise.reject({ msg: 'User not authenticated', isAuth: true, status: 401 });
+    }
     const locale: LocaleCode | null = localStorage.getItem('locale') as LocaleCode;
     return Promise.resolve({
       firstname: 'Costme',

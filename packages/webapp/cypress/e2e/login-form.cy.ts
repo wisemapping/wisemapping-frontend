@@ -20,6 +20,8 @@
 
 describe('Login Form', () => {
   beforeEach(() => {
+    // Clear auth token so the login page shows the form instead of redirecting
+    cy.clearCookie('jwt-auth-token');
     cy.visit('/c/login');
     cy.waitForPageLoaded();
   });
