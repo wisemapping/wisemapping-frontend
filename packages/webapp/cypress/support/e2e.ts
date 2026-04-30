@@ -18,6 +18,12 @@
 
 import './commands';
 
+// Set a mock JWT token before each test so authenticated pages work.
+// Tests for unauthenticated pages (login, registration) should call cy.clearCookie('jwt-auth-token').
+beforeEach(() => {
+  cy.setCookie('jwt-auth-token', 'mock-test-token', { path: '/' });
+});
+
 Cypress.Commands.add('getMindplotShadowRoot', () =>
   cy.get('mindplot-component', { timeout: 120000 }).shadow(),
 );
