@@ -179,6 +179,9 @@
   "footer.col-company": {
     "defaultMessage": "Компания"
   },
+  "footer.copyright": {
+    "defaultMessage": "© {year} WiseMapping LLC"
+  },
   "footer.news": {
     "defaultMessage": "Новости"
   },

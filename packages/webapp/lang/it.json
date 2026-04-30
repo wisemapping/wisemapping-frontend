@@ -197,6 +197,9 @@
   "footer.col-company": {
     "defaultMessage": "Azienda"
   },
+  "footer.copyright": {
+    "defaultMessage": "© {year} WiseMapping LLC"
+  },
   "footer.news": {
     "defaultMessage": "Novità"
   },
