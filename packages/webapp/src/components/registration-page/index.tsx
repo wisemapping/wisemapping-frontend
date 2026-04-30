@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {
   GoogleReCaptchaProvider,
@@ -99,6 +99,10 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
     const value = event.target.value;
     setModel({ ...model, [name as keyof Model]: value });
   };
+
+  const handleRecaptchaChange = useCallback((token: string) => {
+    setModel((prev) => ({ ...prev, recaptcha: token }));
+  }, []);
 
   const maxFormWidth = 350;
 
@@ -275,11 +279,7 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
                   {AppConfig.isRecaptcha2Enabled() && (
                     <>
                       <div css={recaptchaContainerStyle}>
-                        <GoogleReCaptchaCheckbox
-                          onChange={(token: string) => {
-                            setModel({ ...model, recaptcha: token });
-                          }}
-                        />
+                        <GoogleReCaptchaCheckbox onChange={handleRecaptchaChange} />
                       </div>
                       <Typography
                         variant="body2"
