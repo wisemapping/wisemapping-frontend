@@ -76,8 +76,6 @@
   <!-- Google Consent Mode v2 + Funding Choices CMP + AdSense -->
   <script type="text/javascript">
     if (<%= GOOGLE_ADDS_ENABLED %> && !/\/maps\/[^/]+\/(edit|print|view|public|embed|try)/.test(window.location.pathname)) {
-      var ALL_GRANTED = { analytics_storage: 'granted', ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted' };
-
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', wait_for_update: 500 });
@@ -90,33 +88,40 @@
       fc.async = true;
       document.head.appendChild(fc);
 
-      function grantConsent() { gtag('consent', 'update', ALL_GRANTED); }
-
-      function grantConsentIfNonGdpr() {
-        if (typeof window.__tcfapi === 'function') {
-          window.__tcfapi('getTCData', 2, function(tcData, success) {
-            if (!success || !tcData || !tcData.gdprApplies) grantConsent();
-          });
-        } else {
-          grantConsent();
-        }
-      }
-
+      // AdSense injection — gated by CONSENT_MODE_DATA_READY.
+      // Funding Choices owns consent signals (gtag consent update) — we do NOT
+      // call gtag('consent','update') manually. That was causing a race condition
+      // where __tcfapi.getTCData failed (CMP not ready) and consent was granted
+      // to all users including GDPR.
       var adsenseLoaded = false;
       function loadAdSense() {
         if (adsenseLoaded) return;
         adsenseLoaded = true;
+        console.log('[Ads] loadAdSense(): injecting AdSense script.');
         var s = document.createElement('script');
         s.setAttribute('data-ad-client', 'ca-pub-4996113942657337');
         s.async = true;
         s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+        s.onload = function() { console.log('[Ads] AdSense script loaded successfully.'); };
+        s.onerror = function() { console.warn('[Ads] AdSense script FAILED to load.'); };
         document.body.appendChild(s);
       }
 
-      function onConsentReady() { grantConsentIfNonGdpr(); loadAdSense(); }
+      var consentFired = false;
+      function onConsentReady(source) {
+        if (consentFired) { console.log('[Ads] onConsentReady(' + source + '): already fired, skipping.'); return; }
+        consentFired = true;
+        console.log('[Ads] onConsentReady(' + source + '): loading AdSense. No manual consent override — Funding Choices manages consent.');
+        loadAdSense();
+      }
 
-      window.googlefc.callbackQueue.push({ 'CONSENT_MODE_DATA_READY': onConsentReady });
-      setTimeout(loadAdSense, 3000);
+      window.googlefc.callbackQueue.push({ 'CONSENT_MODE_DATA_READY': function() { onConsentReady('CONSENT_MODE_DATA_READY'); } });
+      // Fallback: if Funding Choices is blocked/slow, load AdSense after 3s.
+      // Consent stays at defaults (denied) — non-personalized ads only.
+      setTimeout(function() {
+        console.log('[Ads] 3s fallback timer fired. CONSENT_MODE_DATA_READY ' + (consentFired ? 'already ran' : 'never fired — loading AdSense with default (denied) consent') + '.');
+        onConsentReady('3s-fallback');
+      }, 3000);
     }
   </script>
 
