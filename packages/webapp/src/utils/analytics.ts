@@ -17,6 +17,7 @@
  */
 
 import ReactGA from 'react-ga4';
+import { analyticsLogger as log } from './logger';
 
 /**
  * Tracks mindmap list toolbar actions in Google Analytics
@@ -37,7 +38,7 @@ export const trackMindmapListAction = (
       nonInteraction: false,
     });
   } catch (error) {
-    console.warn('Failed to track mindmap list action:', error);
+    log.warn('Failed to track mindmap list action:', error);
   }
 };
 
@@ -64,7 +65,7 @@ export const trackExport = (format: string, group: string): void => {
       nonInteraction: false,
     });
   } catch (error) {
-    console.warn('Failed to track export action:', error);
+    log.warn('Failed to track export action:', error);
   }
 };
 
@@ -81,7 +82,7 @@ export const trackPageView = (page: string, title: string): void => {
       title,
     });
   } catch (error) {
-    console.warn('Failed to track page view:', error);
+    log.warn('Failed to track page view:', error);
   }
 };
 
@@ -97,7 +98,7 @@ const setAnalyticsUserId = (userId: string | null): void => {
   try {
     ReactGA.set({ userId: userId ?? undefined });
   } catch (error) {
-    console.warn('Failed to set analytics user ID:', error);
+    log.warn('Failed to set analytics user ID:', error);
   }
 };
 

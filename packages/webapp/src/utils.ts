@@ -23,6 +23,7 @@ declare global {
 }
 
 import { ErrorInfo } from './classes/client';
+import { appLogger as log } from './utils/logger';
 
 export const getCsrfToken = (): string | null => {
   const meta = document.head.querySelector('meta[name="_csrf"]');
@@ -176,6 +177,6 @@ export const logCriticalError = (msg: string, exception: unknown): void => {
   const errorMessage = `${msg}. Exception: ${serializedException}`;
   window.newrelic?.noticeError(errorMessage);
 
-  console.error(errorMessage);
-  console.error('Exception details:', exception);
+  log.error(errorMessage);
+  log.error('Exception details:', exception);
 };

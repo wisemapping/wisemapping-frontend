@@ -21,6 +21,7 @@ import ReactGA from 'react-ga4';
 import { createJsonResponse } from './utils/response';
 import JwtTokenConfig from './classes/jwt-token-config';
 import { setAnalyticsUserEmail } from './utils/analytics';
+import { appLogger as log } from './utils/logger';
 
 export const loader = async (): Promise<Response> => {
   // Ensure configuration is loaded before continuing.
@@ -47,7 +48,7 @@ export const loader = async (): Promise<Response> => {
         })
         .catch((error) => {
           // Don't block app load if analytics fails
-          console.warn('Failed to set analytics user ID on app load:', error);
+          log.warn('Failed to set analytics user ID on app load:', error);
         });
     }
   }
