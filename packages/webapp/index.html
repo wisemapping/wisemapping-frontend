@@ -88,6 +88,14 @@
       fc.async = true;
       document.head.appendChild(fc);
 
+      // Logging gated by loglevel convention. Enable in the console:
+      //   localStorage.setItem('loglevel:ads', 'DEBUG')
+      // then reload. Set to 'WARN' (or remove) to silence.
+      var _adsLevel = 5; // SILENT by default
+      try { var _l = localStorage.getItem('loglevel:ads'); if (_l) { var _m = {TRACE:0,DEBUG:1,INFO:2,WARN:3,ERROR:4,SILENT:5}; _adsLevel = _m[_l.toUpperCase()] !== undefined ? _m[_l.toUpperCase()] : 5; } } catch(e) {}
+      function _adLog() { if (_adsLevel <= 2) console.log.apply(console, ['[Ads]'].concat([].slice.call(arguments))); }
+      function _adWarn() { if (_adsLevel <= 3) console.warn.apply(console, ['[Ads]'].concat([].slice.call(arguments))); }
+
       // AdSense injection — gated by CONSENT_MODE_DATA_READY.
       // Funding Choices owns consent signals (gtag consent update) — we do NOT
       // call gtag('consent','update') manually. That was causing a race condition
@@ -97,21 +105,21 @@
       function loadAdSense() {
         if (adsenseLoaded) return;
         adsenseLoaded = true;
-        console.log('[Ads] loadAdSense(): injecting AdSense script.');
+        _adLog('loadAdSense(): injecting AdSense script.');
         var s = document.createElement('script');
         s.setAttribute('data-ad-client', 'ca-pub-4996113942657337');
         s.async = true;
         s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-        s.onload = function() { console.log('[Ads] AdSense script loaded successfully.'); };
-        s.onerror = function() { console.warn('[Ads] AdSense script FAILED to load.'); };
+        s.onload = function() { _adLog('AdSense script loaded successfully.'); };
+        s.onerror = function() { _adWarn('AdSense script FAILED to load.'); };
         document.body.appendChild(s);
       }
 
       var consentFired = false;
       function onConsentReady(source) {
-        if (consentFired) { console.log('[Ads] onConsentReady(' + source + '): already fired, skipping.'); return; }
+        if (consentFired) { _adLog('onConsentReady(' + source + '): already fired, skipping.'); return; }
         consentFired = true;
-        console.log('[Ads] onConsentReady(' + source + '): loading AdSense. No manual consent override — Funding Choices manages consent.');
+        _adLog('onConsentReady(' + source + '): loading AdSense. Funding Choices manages consent.');
         loadAdSense();
       }
 
@@ -119,7 +127,7 @@
       // Fallback: if Funding Choices is blocked/slow, load AdSense after 3s.
       // Consent stays at defaults (denied) — non-personalized ads only.
       setTimeout(function() {
-        console.log('[Ads] 3s fallback timer fired. CONSENT_MODE_DATA_READY ' + (consentFired ? 'already ran' : 'never fired — loading AdSense with default (denied) consent') + '.');
+        _adLog('3s fallback timer fired.', consentFired ? 'CONSENT_MODE_DATA_READY already ran.' : 'Never fired — loading AdSense with default (denied) consent.');
         onConsentReady('3s-fallback');
       }, 3000);
     }

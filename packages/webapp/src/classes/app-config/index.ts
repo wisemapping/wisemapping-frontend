@@ -21,6 +21,7 @@ import MockClient from '../client/mock-client';
 import RestClient from '../client/rest-client';
 import MockAdminClient from '../client/mock-admin-client';
 import AdminClient, { AdminClientInterface } from '../client/admin-client';
+import { appLogger as log } from '../../utils/logger';
 
 type ConfigContainer = {
   type: 'remote' | 'static';
@@ -102,7 +103,7 @@ class AppConfig {
     }
 
     // Configuration must be fetched externally ...
-    console.log(`Fetching remote config from '${extConfig.url}'`);
+    log.info(`Fetching remote config from '${extConfig.url}'`);
     if (!extConfig.url) {
       throw new Error(`Fetching remote config from ${extConfig.url} can not be empty`);
     }
@@ -192,12 +193,11 @@ class AppConfig {
         result = new RestClient(apiBaseUrl);
       }
     } catch (e) {
-      console.error('Client could not be initialized.');
-      console.error(e);
+      log.error('Client could not be initialized.', e);
     }
 
     if (!result) {
-      console.log('Warning: Service using mock client');
+      log.warn('Service using mock client');
       result = new MockClient();
     }
 
@@ -212,7 +212,7 @@ class AppConfig {
 
     // If we're in mock mode, always use MockAdminClient for admin functionality
     if (this.isMockEnv()) {
-      console.log('Mock environment detected, using MockAdminClient');
+      log.info('Mock environment detected, using MockAdminClient');
       this._adminClient = new MockAdminClient();
       return this._adminClient;
     }
@@ -227,12 +227,11 @@ class AppConfig {
         result = new AdminClient(apiBaseUrl);
       }
     } catch (e) {
-      console.error('Admin client could not be initialized.');
-      console.error(e);
+      log.error('Admin client could not be initialized.', e);
     }
 
     if (!result) {
-      console.log('Warning: Service using mock admin client');
+      log.warn('Service using mock admin client');
       result = new MockAdminClient();
     }
 

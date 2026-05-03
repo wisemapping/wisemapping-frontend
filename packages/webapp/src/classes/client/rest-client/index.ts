@@ -35,6 +35,7 @@ import Client, {
 import AppI18n, { Locale, LocaleCode, localeFromStr } from '../../app-i18n';
 import JwtTokenConfig from '../../jwt-token-config';
 import { setAnalyticsUserEmail, clearAnalyticsUserId } from '../../../utils/analytics';
+import { appLogger as log } from '../../../utils/logger';
 
 export default class RestClient implements Client {
   private baseUrl: string;
@@ -117,7 +118,7 @@ export default class RestClient implements Client {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (e) {
-      console.error('Error logging out from backend', e);
+      log.error('Error logging out from backend', e);
     }
     return Promise.resolve();
   }
@@ -140,13 +141,13 @@ export default class RestClient implements Client {
             })
             .catch((error) => {
               // Don't block login if analytics fails
-              console.warn('Failed to set analytics user ID after login:', error);
+              log.warn('Failed to set analytics user ID after login:', error);
             });
           success();
         })
         .catch((error) => {
           // Handle an expected error ...
-          console.error(error);
+          log.error(error);
           const errorInfo = this.parseResponseOnError(error.response) as LoginErrorInfo;
           errorInfo.code = !error.response || error.response.status !== 403 ? 1 : 3;
 
@@ -817,7 +818,7 @@ export default class RestClient implements Client {
               })
               .catch((error) => {
                 // Don't block OAuth flow if analytics fails
-                console.warn('Failed to set analytics user ID after Google OAuth:', error);
+                log.warn('Failed to set analytics user ID after Google OAuth:', error);
               });
           }
         })
@@ -856,7 +857,7 @@ export default class RestClient implements Client {
               })
               .catch((error) => {
                 // Don't block OAuth flow if analytics fails
-                console.warn('Failed to set analytics user ID after Facebook OAuth:', error);
+                log.warn('Failed to set analytics user ID after Facebook OAuth:', error);
               });
           }
         })
@@ -907,7 +908,7 @@ export default class RestClient implements Client {
               })
               .catch((error) => {
                 // Don't block account sync if analytics fails
-                console.warn('Failed to set analytics user ID after account sync:', error);
+                log.warn('Failed to set analytics user ID after account sync:', error);
               });
           }
         })
@@ -922,7 +923,7 @@ export default class RestClient implements Client {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private parseResponseOnError = (response: any): ErrorInfo => {
     if (response?.status !== 401) {
-      console.error(`Performing backend action error: ${JSON.stringify(response)}`);
+      log.error(`Performing backend action error: ${JSON.stringify(response)}`);
     }
 
     let result: ErrorInfo | undefined;

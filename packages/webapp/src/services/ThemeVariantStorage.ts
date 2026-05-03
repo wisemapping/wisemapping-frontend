@@ -18,6 +18,7 @@
 
 import type { ThemeVariant } from '@wisemapping/mindplot';
 import { ThemeVariantStorage } from '@wisemapping/editor';
+import { appLogger as log } from '../utils/logger';
 
 /**
  * LocalStorage implementation of ThemeVariantStorage.
@@ -38,7 +39,7 @@ export class LocalStorageThemeVariantStorage implements ThemeVariantStorage {
         return stored as ThemeVariant;
       }
     } catch (error) {
-      console.warn('Failed to read theme variant from localStorage:', error);
+      log.warn('Failed to read theme variant from localStorage:', error);
     }
     return 'light';
   }
@@ -49,7 +50,7 @@ export class LocalStorageThemeVariantStorage implements ThemeVariantStorage {
       // Notify all listeners
       this.listeners.forEach((callback) => callback(variant));
     } catch (error) {
-      console.warn('Failed to save theme variant to localStorage:', error);
+      log.warn('Failed to save theme variant to localStorage:', error);
     }
   }
 
