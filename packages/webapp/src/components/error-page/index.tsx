@@ -78,7 +78,13 @@ const ErrorPage = (): React.ReactElement => {
   } else if (routeError?.status === 404) {
     logCriticalError('Page not found error.', '404');
   } else if (error !== undefined && !isAccessError) {
-    logCriticalError('Handling ErrorPage redirect error', safeSerialize(error));
+    const stack = hasMessage(error) && 'stack' in error ? String(error.stack ?? '') : '';
+    const isRecaptchaError =
+      stack.includes('gstatic.com/recaptcha') || stack.includes('recaptcha__');
+    const tag = isRecaptchaError
+      ? 'Handling ErrorPage redirect error (reCAPTCHA origin)'
+      : 'Handling ErrorPage redirect error';
+    logCriticalError(tag, safeSerialize(error));
   }
 
   const headline = (() => {
