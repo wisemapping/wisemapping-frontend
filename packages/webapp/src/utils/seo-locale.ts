@@ -32,6 +32,7 @@ export const SUPPORTED_LOCALES = [
   'pt',
   'it',
   'hi',
+  'ar',
 ] as const;
 
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
@@ -59,7 +60,7 @@ export function getLocaleFromPath(): SupportedLocale | null {
   }
 
   const path = window.location.pathname;
-  const localeMatch = path.match(/^\/(en|es|fr|de|ru|uk|zh|zh-CN|ja|pt|it|hi)\/c\//);
+  const localeMatch = path.match(/^\/(en|es|fr|de|ru|uk|zh|zh-CN|ja|pt|it|hi|ar)\/c\//);
 
   if (localeMatch && localeMatch[1]) {
     const locale = localeMatch[1] as SupportedLocale;

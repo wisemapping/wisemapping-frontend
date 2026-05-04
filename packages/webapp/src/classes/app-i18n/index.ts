@@ -27,6 +27,7 @@ import 'dayjs/locale/ja';
 import 'dayjs/locale/pt';
 import 'dayjs/locale/it';
 import 'dayjs/locale/hi';
+import 'dayjs/locale/ar';
 import enMessages from '../../compiled-lang/en.json';
 import esMessages from '../../compiled-lang/es.json';
 import deMessages from '../../compiled-lang/de.json';
@@ -39,6 +40,7 @@ import jaMessages from '../../compiled-lang/ja.json';
 import ptMessages from '../../compiled-lang/pt.json';
 import itMessages from '../../compiled-lang/it.json';
 import hiMessages from '../../compiled-lang/hi.json';
+import arMessages from '../../compiled-lang/ar.json';
 export class Locale {
   code: LocaleCode;
   label: string;
@@ -72,7 +74,7 @@ export default abstract class AppI18n {
 
     // Check if locale is in the URL path (e.g., /en/c/login, /es/c/registration)
     const localeMatch = path.match(
-      /^\/(en|es|fr|de|ru|uk|zh|zh-CN|ja|pt|it|hi)\/c\/(login|registration|forgot-password)/,
+      /^\/(en|es|fr|de|ru|uk|zh|zh-CN|ja|pt|it|hi|ar)\/c\/(login|registration|forgot-password)/,
     );
     if (localeMatch && localeMatch[1]) {
       try {
@@ -180,7 +182,8 @@ export type LocaleCode =
   | 'ja'
   | 'pt'
   | 'it'
-  | 'hi';
+  | 'hi'
+  | 'ar';
 
 export const Locales = {
   EN: new Locale('en', 'English', enMessages),
@@ -195,6 +198,7 @@ export const Locales = {
   PT: new Locale('pt', 'Português', ptMessages),
   IT: new Locale('it', 'Italiano', itMessages),
   HI: new Locale('hi', 'हिन्दी', hiMessages),
+  AR: new Locale('ar', 'العربية', arMessages),
 };
 
 export const localeFromStr = (code: string): Locale => {

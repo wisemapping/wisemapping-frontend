@@ -18,7 +18,7 @@
 
 /// <reference types="cypress" />
 
-const SUPPORTED_LOCALES = ['en', 'es', 'fr', 'de', 'ru', 'uk', 'zh', 'zh-CN', 'ja', 'pt', 'it', 'hi'];
+const SUPPORTED_LOCALES = ['en', 'es', 'fr', 'de', 'ru', 'uk', 'zh', 'zh-CN', 'ja', 'pt', 'it', 'hi', 'ar'];
 const LOCALIZED_PAGES = ['/c/login', '/c/registration', '/c/forgot-password'];
 
 describe('Sitemap XML', () => {
