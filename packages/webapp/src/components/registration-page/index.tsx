@@ -42,6 +42,7 @@ import FacebookButton from '../common/facebook-button';
 import { Link as RouterLink } from 'react-router';
 import { recaptchaContainerStyle } from './style';
 import { ClientContext } from '../../classes/provider/client-context';
+import { logCriticalError } from '../../utils';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
@@ -67,8 +68,27 @@ const defaultModel: Model = {
 };
 
 const RegistrationFormWithCaptcha = () => {
-  const { reset } = useGoogleReCaptcha();
-  return <RegistrationForm onCaptchaReset={() => reset?.()} />;
+  const { reset, isLoading, instance } = useGoogleReCaptcha();
+  const handleCaptchaReset = useCallback(() => {
+    if (isLoading || !instance) {
+      logCriticalError(
+        'reCAPTCHA reset skipped: widget not ready',
+        JSON.stringify({
+          isLoading,
+          hasInstance: Boolean(instance),
+          hasReset: typeof reset === 'function',
+          locale: typeof navigator !== 'undefined' ? navigator.language : undefined,
+        }),
+      );
+      return;
+    }
+    try {
+      reset?.();
+    } catch (err) {
+      logCriticalError('reCAPTCHA reset() threw', err);
+    }
+  }, [reset, isLoading, instance]);
+  return <RegistrationForm onCaptchaReset={handleCaptchaReset} />;
 };
 
 const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) => {
@@ -102,6 +122,26 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
 
   const handleRecaptchaChange = useCallback((token: string) => {
     setModel((prev) => ({ ...prev, recaptcha: token }));
+  }, []);
+
+  const handleRecaptchaError = useCallback(() => {
+    logCriticalError(
+      'reCAPTCHA widget reported an error',
+      JSON.stringify({
+        locale: typeof navigator !== 'undefined' ? navigator.language : undefined,
+        siteKeyConfigured: Boolean(AppConfig.getRecaptcha2SiteKey()),
+      }),
+    );
+  }, []);
+
+  const handleRecaptchaExpired = useCallback(() => {
+    logCriticalError(
+      'reCAPTCHA token expired',
+      JSON.stringify({
+        locale: typeof navigator !== 'undefined' ? navigator.language : undefined,
+      }),
+    );
+    setModel((prev) => ({ ...prev, recaptcha: '' }));
   }, []);
 
   const maxFormWidth = 350;
@@ -279,7 +319,11 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
                   {AppConfig.isRecaptcha2Enabled() && (
                     <>
                       <div css={recaptchaContainerStyle}>
-                        <GoogleReCaptchaCheckbox onChange={handleRecaptchaChange} />
+                        <GoogleReCaptchaCheckbox
+                          onChange={handleRecaptchaChange}
+                          onError={handleRecaptchaError}
+                          onExpired={handleRecaptchaExpired}
+                        />
                       </div>
                       <Typography
                         variant="body2"
@@ -400,16 +444,24 @@ const RegistationPage = (): React.ReactElement => {
         }}
         showAds
       >
-        {AppConfig.isRecaptcha2Enabled() ? (
-          <GoogleReCaptchaProvider
-            type="v2-checkbox"
-            siteKey={AppConfig.getRecaptcha2SiteKey() || ''}
-          >
-            <RegistrationFormWithCaptcha />
-          </GoogleReCaptchaProvider>
-        ) : (
-          <RegistrationForm />
-        )}
+        {(() => {
+          if (!AppConfig.isRecaptcha2Enabled()) {
+            return <RegistrationForm />;
+          }
+          const siteKey = AppConfig.getRecaptcha2SiteKey();
+          if (!siteKey) {
+            logCriticalError(
+              'reCAPTCHA enabled but siteKey is missing — provider will not render',
+              JSON.stringify({ enabled: true, hasSiteKey: false }),
+            );
+            return <RegistrationForm />;
+          }
+          return (
+            <GoogleReCaptchaProvider type="v2-checkbox" siteKey={siteKey}>
+              <RegistrationFormWithCaptcha />
+            </GoogleReCaptchaProvider>
+          );
+        })()}
       </AccountAccessLayout>
     </>
   );
