@@ -30,6 +30,7 @@ import ja from './../../compiled-lang/ja.json';
 import pt from './../../compiled-lang/pt.json';
 import it from './../../compiled-lang/it.json';
 import hi from './../../compiled-lang/hi.json';
+import ar from './../../compiled-lang/ar.json';
 
 type MessagePart = {
   type: number;
@@ -65,6 +66,8 @@ class I18nMsg {
         return it;
       case 'hi':
         return hi;
+      case 'ar':
+        return ar;
       default:
         return en;
     }

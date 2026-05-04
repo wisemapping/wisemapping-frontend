@@ -47,6 +47,7 @@ const SUPPORTED_LOCALES = [
   'pt',
   'it',
   'hi',
+  'ar',
 ] as const;
 
 // Pages that should have localized versions

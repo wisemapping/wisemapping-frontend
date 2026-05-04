@@ -1,0 +1,950 @@
+{
+  "common.terms-notice": {
+    "defaultMessage": "بمتابعتك، فإنك توافق على <termsLink>شروط الخدمة</termsLink> و<privacyLink>سياسة الخصوصية</privacyLink>."
+  },
+  "account.delete-warning": {
+    "defaultMessage": "ضع في اعتبارك أنك لن تتمكن من استرجاع أي خريطة ذهنية أضفتها. سيتم حذف جميع معلوماتك ولا يمكن استعادتها."
+  },
+  "accountinfo.button": {
+    "defaultMessage": "موافق"
+  },
+  "accountinfo.deleteaccount": {
+    "defaultMessage": "حذف الحساب"
+  },
+  "accountinfo.email": {
+    "defaultMessage": "البريد الإلكتروني"
+  },
+  "accountinfo.firstname": {
+    "defaultMessage": "الاسم الأول"
+  },
+  "accountinfo.lastname": {
+    "defaultMessage": "اسم العائلة"
+  },
+  "accountinfo.title": {
+    "defaultMessage": "معلومات الحساب"
+  },
+  "action.cancel-button": {
+    "defaultMessage": "إلغاء"
+  },
+  "action.close-button": {
+    "defaultMessage": "إغلاق"
+  },
+  "action.delete": {
+    "defaultMessage": "حذف"
+  },
+  "action.delete-description": {
+    "defaultMessage": "لا يمكن استعادة الخريطة الذهنية بعد حذفها. هل تريد المتابعة؟"
+  },
+  "action.delete-title": {
+    "defaultMessage": "حذف"
+  },
+  "action.duplicate": {
+    "defaultMessage": "تكرار"
+  },
+  "action.export": {
+    "defaultMessage": "تصدير"
+  },
+  "action.history": {
+    "defaultMessage": "السجل"
+  },
+  "action.history-description": {
+    "defaultMessage": "قائمة بالتغييرات التي أُجريت خلال آخر 90 يومًا."
+  },
+  "action.history-title": {
+    "defaultMessage": "سجل الإصدارات"
+  },
+  "action.import": {
+    "defaultMessage": "استيراد"
+  },
+  "action.info": {
+    "defaultMessage": "معلومات"
+  },
+  "action.label": {
+    "defaultMessage": "إضافة تسمية"
+  },
+  "action.new": {
+    "defaultMessage": "خريطة جديدة"
+  },
+  "action.open": {
+    "defaultMessage": "فتح"
+  },
+  "action.print": {
+    "defaultMessage": "طباعة"
+  },
+  "action.publish": {
+    "defaultMessage": "نشر"
+  },
+  "action.rename": {
+    "defaultMessage": "إعادة تسمية"
+  },
+  "action.rename-description-placeholder": {
+    "defaultMessage": "الوصف"
+  },
+  "action.rename-name-placeholder": {
+    "defaultMessage": "الاسم"
+  },
+  "action.share": {
+    "defaultMessage": "مشاركة"
+  },
+  "changepwd.confirm-password": {
+    "defaultMessage": "تأكيد كلمة المرور"
+  },
+  "changepwd.description": {
+    "defaultMessage": "يرجى إدخال كلمة المرور الجديدة لحسابك."
+  },
+  "changepwd.password": {
+    "defaultMessage": "كلمة المرور"
+  },
+  "changepwd.password-match": {
+    "defaultMessage": "كلمتا المرور غير متطابقتين. يرجى المحاولة مرة أخرى."
+  },
+  "changepwd.title": {
+    "defaultMessage": "تغيير كلمة المرور"
+  },
+  "common.wait": {
+    "defaultMessage": "يرجى الانتظار..."
+  },
+  "create.button": {
+    "defaultMessage": "إنشاء"
+  },
+  "create.description": {
+    "defaultMessage": "يرجى إدخال اسم الخريطة الجديدة ووصفها."
+  },
+  "create.title": {
+    "defaultMessage": "إنشاء خريطة ذهنية جديدة"
+  },
+  "deletem.title": {
+    "defaultMessage": "سيتم حذف جميع الخرائط المحددة"
+  },
+  "dialog.loading": {
+    "defaultMessage": "جارٍ التحميل..."
+  },
+  "duplicate.copy-prefix": {
+    "defaultMessage": "نسخة من "
+  },
+  "duplicate.title": {
+    "defaultMessage": "تكرار"
+  },
+  "expired.description": {
+    "defaultMessage": "انتهت جلستك الحالية. يرجى تسجيل الدخول والمحاولة مرة أخرى."
+  },
+  "expired.title": {
+    "defaultMessage": "انتهت جلستك"
+  },
+  "export.desc": {
+    "defaultMessage": "صدّر هذه الخريطة بالتنسيق الذي تريده وابدأ باستخدامها في عروضك التقديمية أو شاركها عبر البريد الإلكتروني"
+  },
+  "export.document": {
+    "defaultMessage": "أدوات الخرائط الذهنية: صدّر خريطتك الذهنية بصيغ أدوات الخرائط الذهنية الأخرى"
+  },
+  "export.document-label": {
+    "defaultMessage": "مستند: صدّر خريطتك الذهنية في مستند مستقل جاهز للمشاركة"
+  },
+  "export.image": {
+    "defaultMessage": "صورة: احصل على تمثيل رسومي لخريطتك بكل ألوانها وأشكالها."
+  },
+  "export.img-center": {
+    "defaultMessage": "توسيط وضبط الحجم"
+  },
+  "export.title": {
+    "defaultMessage": "تصدير"
+  },
+  "export.warning": {
+    "defaultMessage": "التصدير إلى صورة (SVG، PNG، JPEG، PDF) متاح فقط من شريط أدوات المحرر."
+  },
+  "footer.aboutus": {
+    "defaultMessage": "من نحن"
+  },
+  "footer.contactus": {
+    "defaultMessage": "اتصل بنا"
+  },
+  "footer.donations": {
+    "defaultMessage": "التبرعات"
+  },
+  "footer.faq": {
+    "defaultMessage": "الأسئلة الشائعة"
+  },
+  "footer.feedback": {
+    "defaultMessage": "ملاحظات"
+  },
+  "footer.opensource": {
+    "defaultMessage": "المصدر المفتوح"
+  },
+  "footer.termsandconditions": {
+    "defaultMessage": "الشروط والأحكام"
+  },
+  "footer.privacypolicy": {
+    "defaultMessage": "سياسة الخصوصية"
+  },
+  "footer.col-support": {
+    "defaultMessage": "الدعم"
+  },
+  "footer.col-community": {
+    "defaultMessage": "المجتمع"
+  },
+  "footer.col-company": {
+    "defaultMessage": "الشركة"
+  },
+  "footer.copyright": {
+    "defaultMessage": "© {year} WiseMapping LLC"
+  },
+  "footer.news": {
+    "defaultMessage": "الأخبار"
+  },
+  "footer.twitter": {
+    "defaultMessage": "X"
+  },
+  "forgot.desc": {
+    "defaultMessage": "سنرسل إليك بريدًا إلكترونيًا لإعادة تعيين كلمة المرور."
+  },
+  "forgot.email": {
+    "defaultMessage": "البريد الإلكتروني"
+  },
+  "forgot.oauth.back": {
+    "defaultMessage": "العودة إلى تسجيل الدخول"
+  },
+  "forgot.oauth.message": {
+    "defaultMessage": "لا تحتاج إلى كلمة مرور، يرجى تسجيل الدخول باستخدام Facebook أو Google."
+  },
+  "forgot.page-title": {
+    "defaultMessage": "نسيت كلمة المرور | WiseMapping"
+  },
+  "forgot.register": {
+    "defaultMessage": "إرسال رابط الاسترداد"
+  },
+  "forgot.success.desc": {
+    "defaultMessage": "أرسلنا رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني. تنتهي صلاحية الرابط خلال ساعة. تظل كلمة المرور الحالية كما هي حتى تستخدم الرابط."
+  },
+  "forgot.success.title": {
+    "defaultMessage": "تحقق من بريدك الإلكتروني."
+  },
+  "forgot.title": {
+    "defaultMessage": "إعادة تعيين كلمة المرور"
+  },
+  "forgotsuccess.page-title": {
+    "defaultMessage": "تم استرداد كلمة المرور | WiseMapping"
+  },
+  "header.donthaveaccount": {
+    "defaultMessage": "ليس لديك حساب؟"
+  },
+  "header.haveaccount": {
+    "defaultMessage": "هل لديك حساب بالفعل؟"
+  },
+  "help.support": {
+    "defaultMessage": "الدعم"
+  },
+  "history.no-changes": {
+    "defaultMessage": "لا توجد تغييرات متاحة"
+  },
+  "import.button": {
+    "defaultMessage": "إنشاء"
+  },
+  "import.description": {
+    "defaultMessage": "يمكنك استيراد خرائط WiseMapping وFreeMind وFreeplane وXMind وMindManager وOPML إلى قائمة خرائطك. اختر الملف الذي تريد استيراده."
+  },
+  "import.error-file": {
+    "defaultMessage": "خطأ في الاستيراد {error}"
+  },
+  "import.title": {
+    "defaultMessage": "استيراد خريطة ذهنية موجودة"
+  },
+  "info.basic-info": {
+    "defaultMessage": "المعلومات الأساسية"
+  },
+  "info.button": {
+    "defaultMessage": "موافق"
+  },
+  "info.creation-time": {
+    "defaultMessage": "تاريخ الإنشاء"
+  },
+  "info.creator": {
+    "defaultMessage": "المُنشئ"
+  },
+  "info.description": {
+    "defaultMessage": "الوصف"
+  },
+  "info.description-msg": {
+    "defaultMessage": "بنشر الخريطة، تجعلها مرئية لجميع مستخدمي الإنترنت."
+  },
+  "info.modified-time": {
+    "defaultMessage": "تاريخ آخر تعديل"
+  },
+  "info.modified-tny": {
+    "defaultMessage": "آخر تعديل بواسطة"
+  },
+  "info.name": {
+    "defaultMessage": "الاسم"
+  },
+  "info.public-visibility": {
+    "defaultMessage": "مرئية للعموم"
+  },
+  "info.sharing": {
+    "defaultMessage": "المشاركة"
+  },
+  "info.starred": {
+    "defaultMessage": "مميزة بنجمة"
+  },
+  "info.title": {
+    "defaultMessage": "معلومات"
+  },
+  "label.add-button": {
+    "defaultMessage": "إضافة تسمية"
+  },
+  "label.add-for": {
+    "defaultMessage": "تعديل التسميات لـ"
+  },
+  "label.add-placeholder": {
+    "defaultMessage": "عنوان التسمية"
+  },
+  "label.change-color": {
+    "defaultMessage": "تغيير لون التسمية"
+  },
+  "label.delete-description": {
+    "defaultMessage": "سيتم حذفها، بما في ذلك ارتباطاتها بجميع الخرائط الموجودة. هل تريد المتابعة؟"
+  },
+  "label.delete-title": {
+    "defaultMessage": "تأكيد حذف التسمية"
+  },
+  "label.description": {
+    "defaultMessage": "استخدم التسميات لتنظيم خرائطك."
+  },
+  "label.maps-count": {
+    "defaultMessage": "{count} خريطة"
+  },
+  "label.title": {
+    "defaultMessage": "إضافة تسمية"
+  },
+  "language.change": {
+    "defaultMessage": "تغيير اللغة"
+  },
+  "language.help": {
+    "defaultMessage": "ساعد في الترجمة"
+  },
+  "login.desc": {
+    "defaultMessage": "تسجيل الدخول إلى حسابك"
+  },
+  "login.division": {
+    "defaultMessage": "أو"
+  },
+  "login.email": {
+    "defaultMessage": "البريد الإلكتروني"
+  },
+  "login.error": {
+    "defaultMessage": "البريد الإلكتروني أو كلمة المرور التي أدخلتها غير صحيحة."
+  },
+  "login.forgotpwd": {
+    "defaultMessage": "نسيت كلمة المرور؟"
+  },
+  "login.google.button": {
+    "defaultMessage": "تسجيل الدخول باستخدام Google"
+  },
+  "login.facebook.button": {
+    "defaultMessage": "تسجيل الدخول باستخدام Facebook"
+  },
+  "login.page-title": {
+    "defaultMessage": "تسجيل الدخول | WiseMapping"
+  },
+  "login.password": {
+    "defaultMessage": "كلمة المرور"
+  },
+  "login.signin": {
+    "defaultMessage": "تسجيل الدخول"
+  },
+  "login.signup": {
+    "defaultMessage": "إنشاء حساب"
+  },
+  "login.title": {
+    "defaultMessage": "أهلًا بك"
+  },
+  "login.shared-map-notice": {
+    "defaultMessage": "تمت مشاركة خريطة ذهنية معك. يرجى تسجيل الدخول للوصول إليها. ليس لديك حساب؟ سجّل مجانًا أو استخدم حساب Google/Facebook الخاص بك."
+  },
+  "login.redirecting": {
+    "defaultMessage": "جارٍ إعادة التوجيه..."
+  },
+  "map.creator": {
+    "defaultMessage": "المُنشئ"
+  },
+  "map.delete-selected": {
+    "defaultMessage": "حذف المحدد"
+  },
+  "map.last-update": {
+    "defaultMessage": "آخر تحديث"
+  },
+  "map.more-actions": {
+    "defaultMessage": "إجراءات إضافية"
+  },
+  "map.name": {
+    "defaultMessage": "الاسم"
+  },
+  "map.tooltip-add": {
+    "defaultMessage": "إضافة تسمية إلى المحدد"
+  },
+  "maps.choose-file": {
+    "defaultMessage": "اختر ملفًا"
+  },
+  "maps.copilot-button": {
+    "defaultMessage": "مساعد الذكاء الاصطناعي"
+  },
+  "maps.copilot-tooltip": {
+    "defaultMessage": "ابدأ خريطة ذهنية بمساعد الذكاء الاصطناعي المدعوم بـ ChatGPT"
+  },
+  "maps.copilot-dialog.title": {
+    "defaultMessage": "مساعد الخرائط الذهنية المدعوم بـ ChatGPT"
+  },
+  "maps.copilot-dialog.description": {
+    "defaultMessage": "مساعد الذكاء الاصطناعي المدعوم بـ ChatGPT هو مساعد للعصف الذهني يحوّل أفكارك إلى خرائط ذهنية منظمة. سنفتحه في علامة تبويب جديدة لتتمكن من توسيع الأفكار وإنشاء المواضيع وإعادة أفضلها إلى WiseMapping."
+  },
+  "maps.copilot-dialog.continue": {
+    "defaultMessage": "فتح المساعد"
+  },
+  "maps.create-tooltip": {
+    "defaultMessage": "إنشاء خريطة ذهنية جديدة"
+  },
+  "maps.empty-result": {
+    "defaultMessage": "لا توجد خرائط ذهنية مطابقة لمعايير التصفية الحالية."
+  },
+  "maps.import-desc": {
+    "defaultMessage": "استيراد من أدوات أخرى"
+  },
+  "maps.modified": {
+    "defaultMessage": "آخر تعديل"
+  },
+  "maps.modified-by": {
+    "defaultMessage": "آخر تعديل بواسطة"
+  },
+  "maps.modified-by-desc": {
+    "defaultMessage": "آخر تعديل بواسطة {by} في {on}"
+  },
+  "maps.nav-all": {
+    "defaultMessage": "الكل"
+  },
+  "maps.nav-onwned": {
+    "defaultMessage": "ملكي"
+  },
+  "maps.nav-public": {
+    "defaultMessage": "عامة"
+  },
+  "maps.nav-shared": {
+    "defaultMessage": "مشاركة معي"
+  },
+  "maps.nav-starred": {
+    "defaultMessage": "مميزة بنجمة"
+  },
+  "maps.page-title": {
+    "defaultMessage": "خرائطي | WiseMapping"
+  },
+  "maps.revert": {
+    "defaultMessage": "تراجع"
+  },
+  "maps.search-action": {
+    "defaultMessage": "بحث..."
+  },
+  "maps.tooltip-open": {
+    "defaultMessage": "فتح للتعديل"
+  },
+  "maps.tooltip-starred": {
+    "defaultMessage": "مميزة بنجمة"
+  },
+  "maps.view": {
+    "defaultMessage": "عرض"
+  },
+  "menu.account": {
+    "defaultMessage": "الحساب"
+  },
+  "menu.change-password": {
+    "defaultMessage": "تغيير كلمة المرور"
+  },
+  "menu.signout": {
+    "defaultMessage": "تسجيل الخروج"
+  },
+  "publish.checkbox": {
+    "defaultMessage": "تفعيل المشاركة العامة"
+  },
+  "publish.copied": {
+    "defaultMessage": "تم النسخ إلى الحافظة!"
+  },
+  "publish.description": {
+    "defaultMessage": "اجعل خريطتك عامة. يمكن لأي شخص لديه الرابط مشاهدتها."
+  },
+  "publish.embedded": {
+    "defaultMessage": "مضمّنة"
+  },
+  "publish.embedded-msg": {
+    "defaultMessage": "انقر على الرمز أدناه لنسخه إلى الحافظة:"
+  },
+  "publish.public-url": {
+    "defaultMessage": "الرابط العام"
+  },
+  "publish.public-url-msg": {
+    "defaultMessage": "انقر على الرابط أدناه لنسخه إلى الحافظة:"
+  },
+  "publish.title": {
+    "defaultMessage": "نشر"
+  },
+  "registation.success-title": {
+    "defaultMessage": "تم التسجيل بنجاح | WiseMapping"
+  },
+  "registration.callback.back": {
+    "defaultMessage": "العودة إلى تسجيل الدخول"
+  },
+  "registration.callback.confirm.description": {
+    "defaultMessage": "تم تسجيل حساب بنفس البريد الإلكتروني سابقًا. هل تريد ربط حساب {provider} بحساب WiseMapping ذاك؟"
+  },
+  "registration.callback.confirm.title": {
+    "defaultMessage": "تأكيد"
+  },
+  "registration.callback.sync": {
+    "defaultMessage": "مزامنة الحساب"
+  },
+  "registration.callback.waiting.description": {
+    "defaultMessage": "يرجى الانتظار بينما نتحقق من هويتك"
+  },
+  "registration.callback.waiting.title": {
+    "defaultMessage": "جارٍ الإنهاء..."
+  },
+  "registration.desc": {
+    "defaultMessage": "التسجيل مجاني ولا يستغرق سوى لحظة"
+  },
+  "registration.division": {
+    "defaultMessage": "أو"
+  },
+  "registration.error.title": {
+    "defaultMessage": "فشل التسجيل"
+  },
+  "registration.email": {
+    "defaultMessage": "البريد الإلكتروني"
+  },
+  "registration.firstname": {
+    "defaultMessage": "الاسم الأول"
+  },
+  "registration.google.button": {
+    "defaultMessage": "التسجيل باستخدام Google"
+  },
+  "registration.facebook.button": {
+    "defaultMessage": "التسجيل باستخدام Facebook"
+  },
+  "registration.lastname": {
+    "defaultMessage": "اسم العائلة"
+  },
+  "registration.page-title": {
+    "defaultMessage": "التسجيل | WiseMapping"
+  },
+  "registration.password": {
+    "defaultMessage": "كلمة المرور"
+  },
+  "registration.recaptcha-notice": {
+    "defaultMessage": "هذا الموقع محمي بـ reCAPTCHA وتنطبق عليه <privacyLink>سياسة الخصوصية</privacyLink> و<termsLink>شروط الخدمة</termsLink> الخاصة بـ Google."
+  },
+  "registration.register": {
+    "defaultMessage": "تسجيل"
+  },
+  "registration.title": {
+    "defaultMessage": "كن عضوًا"
+  },
+  "rename.description": {
+    "defaultMessage": "يرجى إدخال اسم الخريطة الجديدة ووصفها."
+  },
+  "rename.title": {
+    "defaultMessage": "إعادة تسمية"
+  },
+  "role.editor": {
+    "defaultMessage": "محرر"
+  },
+  "role.owner": {
+    "defaultMessage": "المالك"
+  },
+  "role.viewer": {
+    "defaultMessage": "قارئ"
+  },
+  "share.add-button": {
+    "defaultMessage": "مشاركة"
+  },
+  "share.adding-button": {
+    "defaultMessage": "جارٍ المشاركة..."
+  },
+  "share.add-message": {
+    "defaultMessage": "إضافة رسالة"
+  },
+  "share.can-edit": {
+    "defaultMessage": "يمكن التعديل"
+  },
+  "share.delete": {
+    "defaultMessage": "حذف المتعاون"
+  },
+  "share.delete-description": {
+    "defaultMessage": "أضف متعاونين. سيحصلون على وصول فوري عبر البريد الإلكتروني للتعديل المشترك."
+  },
+  "share.delete-title": {
+    "defaultMessage": "المشاركة مع أشخاص"
+  },
+  "share.message": {
+    "defaultMessage": "رسالة"
+  },
+  "theme.dark": {
+    "defaultMessage": "داكن"
+  },
+  "theme.light": {
+    "defaultMessage": "فاتح"
+  },
+  "theme.toggle": {
+    "defaultMessage": "تبديل السمة"
+  },
+  "admin.edit-user": {
+    "defaultMessage": "تعديل المستخدم"
+  },
+  "admin.unsuspend-user": {
+    "defaultMessage": "إلغاء تعليق المستخدم"
+  },
+  "admin.suspend-user": {
+    "defaultMessage": "تعليق المستخدم"
+  },
+  "admin.delete-user": {
+    "defaultMessage": "حذف المستخدم"
+  },
+  "admin.status-active": {
+    "defaultMessage": "نشط"
+  },
+  "admin.status-clean": {
+    "defaultMessage": "نظيف"
+  },
+  "admin.status-suspended": {
+    "defaultMessage": "معلّق"
+  },
+  "admin.public": {
+    "defaultMessage": "عام"
+  },
+  "admin.locked": {
+    "defaultMessage": "مقفل"
+  },
+  "admin.public-access": {
+    "defaultMessage": "الوصول العام"
+  },
+  "admin.lock-status": {
+    "defaultMessage": "حالة القفل"
+  },
+  "admin.view-xml": {
+    "defaultMessage": "عرض XML"
+  },
+  "admin.edit": {
+    "defaultMessage": "تعديل"
+  },
+  "admin.delete": {
+    "defaultMessage": "حذف"
+  },
+  "admin.refresh": {
+    "defaultMessage": "تحديث"
+  },
+  "admin.status": {
+    "defaultMessage": "الحالة"
+  },
+  "admin.auth-type": {
+    "defaultMessage": "نوع المصادقة"
+  },
+  "admin.suspension-status": {
+    "defaultMessage": "حالة التعليق"
+  },
+  "admin.suspension-reason": {
+    "defaultMessage": "سبب التعليق"
+  },
+  "admin.suspension.abuse": {
+    "defaultMessage": "إساءة استخدام"
+  },
+  "admin.suspension.terms-violation": {
+    "defaultMessage": "انتهاك الشروط"
+  },
+  "admin.suspension.security-concern": {
+    "defaultMessage": "مخاوف أمنية"
+  },
+  "admin.suspension.manual-review": {
+    "defaultMessage": "مراجعة يدوية"
+  },
+  "admin.suspension.inactivity": {
+    "defaultMessage": "عدم النشاط"
+  },
+  "admin.suspension.other": {
+    "defaultMessage": "أخرى"
+  },
+  "common.first-name": {
+    "defaultMessage": "الاسم الأول"
+  },
+  "common.last-name": {
+    "defaultMessage": "اسم العائلة"
+  },
+  "common.email": {
+    "defaultMessage": "البريد الإلكتروني"
+  },
+  "common.locale": {
+    "defaultMessage": "اللغة"
+  },
+  "common.allow-email-notifications": {
+    "defaultMessage": "السماح بإشعارات البريد الإلكتروني"
+  },
+  "common.settings": {
+    "defaultMessage": "الإعدادات"
+  },
+  "common.others": {
+    "defaultMessage": "أخرى"
+  },
+  "common.open-drawer": {
+    "defaultMessage": "فتح القائمة الجانبية"
+  },
+  "common.maps-list": {
+    "defaultMessage": "قائمة الخرائط"
+  },
+  "common.delete": {
+    "defaultMessage": "حذف"
+  },
+  "common.delete-tag": {
+    "defaultMessage": "حذف الوسم"
+  },
+  "common.emails": {
+    "defaultMessage": "رسائل البريد الإلكتروني"
+  },
+  "common.registration-form": {
+    "defaultMessage": "نموذج التسجيل"
+  },
+  "common.login-form": {
+    "defaultMessage": "نموذج تسجيل الدخول"
+  },
+  "common.loading": {
+    "defaultMessage": "جارٍ التحميل..."
+  },
+  "common.retry": {
+    "defaultMessage": "إعادة المحاولة"
+  },
+  "admin.system.title": {
+    "defaultMessage": "معلومات النظام"
+  },
+  "admin.system.refresh": {
+    "defaultMessage": "تحديث"
+  },
+  "common.refresh": {
+    "defaultMessage": "تحديث"
+  },
+  "admin.system.memory": {
+    "defaultMessage": "الذاكرة"
+  },
+  "admin.system.db.url": {
+    "defaultMessage": "الرابط"
+  },
+  "admin.system.jvm": {
+    "defaultMessage": "JVM"
+  },
+  "error.page-title": {
+    "defaultMessage": "خطأ غير متوقع | WiseMapping"
+  },
+  "error.generic-title": {
+    "defaultMessage": "عذرًا، لم ينجح ذلك."
+  },
+  "error.contact-support": {
+    "defaultMessage": "هل تحتاج إلى مساعدة؟ تواصل معنا على {support}"
+  },
+  "error.generic-message": {
+    "defaultMessage": "يرجى المحاولة لاحقًا أو التواصل مع الدعم إذا استمرت المشكلة."
+  },
+  "error.permission-denied-title": {
+    "defaultMessage": "ليس لديك صلاحية للوصول إلى هذه الصفحة."
+  },
+  "error.permission-denied-message": {
+    "defaultMessage": "إذا كنت تعتقد أنه ينبغي أن يكون لديك حق الوصول، يرجى التواصل مع المسؤول."
+  },
+  "error.not-found-title": {
+    "defaultMessage": "تعذّر العثور على هذه الصفحة."
+  },
+  "error.not-found-message": {
+    "defaultMessage": "ربما تكون الصفحة التي تبحث عنها قد أُزيلت أو تم تغيير اسمها أو غير متاحة مؤقتًا."
+  },
+  "error.map-unavailable-title": {
+    "defaultMessage": "هذه الخريطة الذهنية غير متاحة للعرض العام."
+  },
+  "error.map-unavailable-message": {
+    "defaultMessage": "هذه الخريطة الذهنية غير متاحة للعرض العام لانتهاكها سياسات الموقع. إذا احتجت إلى مساعدة إضافية، تواصل مع support@wisemapping.com."
+  },
+  "error.map-title-required": {
+    "defaultMessage": "عنوان الخريطة مطلوب ولا يمكن أن يكون فارغًا"
+  },
+  "accountinfo.personal-details": {
+    "defaultMessage": "البيانات الشخصية"
+  },
+  "account.delete-warning-title": {
+    "defaultMessage": "حذف الحساب"
+  },
+  "account.delete-warning-description": {
+    "defaultMessage": "بمجرد حذف حسابك، لا يمكن التراجع. يرجى التأكد قبل المتابعة."
+  },
+  "account.delete-warning-consequences": {
+    "defaultMessage": "سيؤدي ذلك إلى الحذف النهائي لـ:"
+  },
+  "account.delete-warning-mindmaps": {
+    "defaultMessage": "جميع خرائطك الذهنية ومحتواها"
+  },
+  "account.delete-warning-data": {
+    "defaultMessage": "جميع بياناتك الشخصية ومعلومات الحساب"
+  },
+  "account.delete-warning-collaborations": {
+    "defaultMessage": "جميع الخرائط الذهنية المشتركة والتعاونات"
+  },
+  "account.delete-warning-history": {
+    "defaultMessage": "كامل سجل الحساب وسجلات النشاط"
+  },
+  "account.delete-confirmation-title": {
+    "defaultMessage": "هل أنت متأكد تمامًا؟"
+  },
+  "account.delete-confirmation-warning": {
+    "defaultMessage": "لا يمكن التراجع عن هذا الإجراء. سيؤدي إلى حذف حسابك بشكل دائم وإزالة جميع البيانات من خوادمنا."
+  },
+  "account.delete-confirmation-instruction": {
+    "defaultMessage": "يرجى كتابة DELETE MY ACCOUNT للتأكيد:"
+  },
+  "account.delete-confirm": {
+    "defaultMessage": "حذف الحساب"
+  },
+  "activation.loading.title": {
+    "defaultMessage": "جارٍ تفعيل حسابك"
+  },
+  "activation.loading.desc": {
+    "defaultMessage": "يرجى الانتظار بينما نقوم بتفعيل حسابك..."
+  },
+  "activation.success.title": {
+    "defaultMessage": "تم تفعيل الحساب بنجاح"
+  },
+  "activation.success.message": {
+    "defaultMessage": "تم تفعيل حسابك. يمكنك الآن تسجيل الدخول والبدء في إنشاء الخرائط الذهنية."
+  },
+  "activation.error.title": {
+    "defaultMessage": "فشل التفعيل"
+  },
+  "activation.error.message": {
+    "defaultMessage": "تعذّر علينا تفعيل حسابك. قد يكون رابط التفعيل غير صالح أو منتهي الصلاحية. يرجى التواصل مع الدعم للحصول على المساعدة."
+  },
+  "menu.admin-console": {
+    "defaultMessage": "وحدة تحكم المسؤول"
+  },
+  "registration.form-legend": {
+    "defaultMessage": "معلومات الحساب"
+  },
+  "admin.change-password": {
+    "defaultMessage": "تغيير كلمة المرور"
+  },
+  "admin.change-password-title": {
+    "defaultMessage": "تغيير كلمة المرور"
+  },
+  "admin.change-password-description": {
+    "defaultMessage": "تغيير كلمة المرور للمستخدم: {email}"
+  },
+  "admin.new-password": {
+    "defaultMessage": "كلمة المرور الجديدة"
+  },
+  "admin.confirm-password": {
+    "defaultMessage": "تأكيد كلمة المرور"
+  },
+  "admin.change-password-button": {
+    "defaultMessage": "تغيير كلمة المرور"
+  },
+  "admin.password-error-length": {
+    "defaultMessage": "يجب ألا تقل كلمة المرور عن 6 أحرف"
+  },
+  "admin.password-error-mismatch": {
+    "defaultMessage": "كلمتا المرور غير متطابقتين"
+  },
+  "admin.password-error-failed": {
+    "defaultMessage": "فشل تغيير كلمة المرور"
+  },
+  "admin.password-error-google": {
+    "defaultMessage": "هذا المستخدم مُصادَق عليه عبر Google. تغيير كلمة المرور غير متاح لحسابات Google. يرجى مطالبة المستخدم بإدارة كلمة المرور من حساب Google الخاص به."
+  },
+  "admin.password-error-facebook": {
+    "defaultMessage": "هذا المستخدم مُصادَق عليه عبر Facebook. تغيير كلمة المرور غير متاح لحسابات Facebook. يرجى مطالبة المستخدم بإدارة كلمة المرور من حساب Facebook الخاص به."
+  },
+  "admin.close": {
+    "defaultMessage": "إغلاق"
+  },
+  "validation.title-required": {
+    "defaultMessage": "العنوان مطلوب"
+  },
+  "share.table.collaborator": {
+    "defaultMessage": "المتعاون"
+  },
+  "share.table.role": {
+    "defaultMessage": "الدور"
+  },
+  "share.table.actions": {
+    "defaultMessage": "الإجراءات"
+  },
+  "error.go-home": {
+    "defaultMessage": "الذهاب إلى الصفحة الرئيسية"
+  },
+  "error.go-back": {
+    "defaultMessage": "رجوع"
+  },
+  "error.go-to-login": {
+    "defaultMessage": "تسجيل الدخول"
+  },
+  "login.oauth-error": {
+    "defaultMessage": "فشلت مصادقة OAuth. يرجى المحاولة مرة أخرى أو استخدام طريقة تسجيل دخول مختلفة."
+  },
+  "login.server-error": {
+    "defaultMessage": "حدث خطأ غير متوقع. يرجى المحاولة لاحقًا."
+  },
+  "login.generic-error": {
+    "defaultMessage": "حدث خطأ أثناء المصادقة. يرجى المحاولة مرة أخرى."
+  },
+  "registration.success.title": {
+    "defaultMessage": "تم التسجيل بنجاح!"
+  },
+  "registration.success.email-sent": {
+    "defaultMessage": "أرسلنا بريد تفعيل إلى صندوق الوارد لديك. يرجى التحقق من بريدك الإلكتروني والنقر على رابط التفعيل لتفعيل حسابك."
+  },
+  "registration.success.check-spam": {
+    "defaultMessage": "إذا لم تجد البريد، يرجى التحقق من مجلد الرسائل غير المرغوب فيها."
+  },
+  "registration.success.already-activated": {
+    "defaultMessage": "هل سبق وفعّلت حسابك؟"
+  },
+  "reset-password.title": {
+    "defaultMessage": "تعيين كلمة مرور جديدة"
+  },
+  "reset-password.desc": {
+    "defaultMessage": "أدخل كلمة المرور الجديدة أدناه."
+  },
+  "reset-password.invalid-link": {
+    "defaultMessage": "رابط إعادة تعيين كلمة المرور غير صالح. يرجى طلب رابط جديد."
+  },
+  "reset-password.request-new": {
+    "defaultMessage": "طلب رابط جديد"
+  },
+  "reset-password.password": {
+    "defaultMessage": "كلمة المرور الجديدة"
+  },
+  "reset-password.confirm-password": {
+    "defaultMessage": "تأكيد كلمة المرور الجديدة"
+  },
+  "reset-password.submit": {
+    "defaultMessage": "تعيين كلمة المرور الجديدة"
+  },
+  "reset-password.too-short": {
+    "defaultMessage": "يجب ألا تقل كلمة المرور عن 8 أحرف."
+  },
+  "reset-password.too-long": {
+    "defaultMessage": "يجب ألا تتجاوز كلمة المرور 40 حرفًا."
+  },
+  "reset-password.mismatch": {
+    "defaultMessage": "كلمتا المرور غير متطابقتين."
+  },
+  "reset-password.page-title": {
+    "defaultMessage": "إعادة تعيين كلمة المرور | WiseMapping"
+  },
+  "maps.auth-required-title": {
+    "defaultMessage": "يلزم تسجيل الدخول | WiseMapping"
+  },
+  "maps.auth-required-heading": {
+    "defaultMessage": "سجّل الدخول للوصول إلى خرائطك"
+  },
+  "maps.auth-required-login": {
+    "defaultMessage": "الذهاب إلى تسجيل الدخول"
+  },
+  "maps.auth-required-default-message": {
+    "defaultMessage": "تحتاج إلى تسجيل الدخول لعرض خرائطك."
+  }
+}
