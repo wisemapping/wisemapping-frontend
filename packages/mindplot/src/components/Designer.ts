@@ -163,17 +163,29 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   private _registerWheelEvents(): void {
-    const zoomFactor = 1.02;
     this.getContainer().addEventListener(
       'wheel',
       (event: WheelEvent) => {
         // TODO re-do this better. This line avoid manage zoom with mouse wheel if mindplot kb shortcuts are disabled.
         if (DesignerKeyboard.isDisabled()) return;
 
-        if (event.deltaX > 0 || event.deltaY > 0) {
-          this.zoomOut(zoomFactor);
+        // Only the vertical axis drives zoom direction. Using deltaX as a
+        // tiebreaker caused a "bump" on trackpad two-finger gestures because
+        // lateral finger drift could flip the direction at the start of the
+        // gesture before deltaY settled.
+        if (event.deltaY === 0) return;
+
+        // Scale the zoom step by the wheel magnitude so trackpad gestures feel
+        // continuous instead of stepped. exp(-deltaY * k) maps deltaY<0 (scroll
+        // up) to zoom-in and deltaY>0 (scroll down) to zoom-out symmetrically.
+        // Clamp magnitude so a single mouse-wheel notch (deltaY≈100) doesn't
+        // overshoot while keeping trackpad gestures (deltaY≈1–30) smooth.
+        const clamped = Math.max(-50, Math.min(50, event.deltaY));
+        const factor = Math.exp(-clamped * 0.01);
+        if (factor > 1) {
+          this.zoomIn(factor);
         } else {
-          this.zoomIn(zoomFactor);
+          this.zoomOut(1 / factor);
         }
         event.preventDefault();
       },
