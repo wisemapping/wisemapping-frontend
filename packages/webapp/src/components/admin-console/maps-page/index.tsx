@@ -180,6 +180,14 @@ const MapsManagement = (): ReactElement => {
   useEffect(() => {
     setIsFilterLoading(true);
   }, [debouncedSearchTerm, filterPublic, filterLocked, filterSpam, dateFilter]);
+
+  // Clear transient loading flags once the query settles
+  useEffect(() => {
+    if (!isFetching) {
+      setIsFilterLoading(false);
+      setIsPaginationLoading(false);
+    }
+  }, [isFetching]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [formData, setFormData] = useState<MapFormData>({
     title: '',
@@ -237,6 +245,7 @@ const MapsManagement = (): ReactElement => {
   const {
     data: mapsResponse,
     isPending,
+    isFetching,
     error,
     refetch,
   } = useQuery({

@@ -134,6 +134,14 @@ const AccountManagement = (): ReactElement => {
   useEffect(() => {
     setIsFilterLoading(true);
   }, [debouncedSearchTerm, filterAuthType, filterSuspended]);
+
+  // Clear transient loading flags once the query settles
+  useEffect(() => {
+    if (!isFetching) {
+      setIsFilterLoading(false);
+      setIsPaginationLoading(false);
+    }
+  }, [isFetching]);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -227,6 +235,7 @@ const AccountManagement = (): ReactElement => {
   const {
     data: usersResponse,
     isPending,
+    isFetching,
     error,
     refetch,
   } = useQuery({
