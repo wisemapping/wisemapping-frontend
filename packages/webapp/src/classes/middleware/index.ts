@@ -30,7 +30,7 @@ type MapLoadResult = {
 
 export const useFetchMapById = (id: number): MapLoadResult => {
   const client = useContext(ClientContext);
-  const { isPending, error, data } = useQuery<MapMetadata, ErrorInfo>({
+  const { isLoading, error, data } = useQuery<MapMetadata, ErrorInfo>({
     queryKey: [`maps-metadata-${id}`],
     queryFn: () => client.fetchMapMetadata(id),
     // 0 is a valid map ID, only disable for null/undefined/NaN
@@ -38,27 +38,22 @@ export const useFetchMapById = (id: number): MapLoadResult => {
   });
 
   // Convert MapMetadata to MapInfo format
-  let map: MapInfo | undefined;
-  let errorMsg: ErrorInfo | null = error;
-  if (!isPending && data) {
-    // Convert MapMetadata to MapInfo
-    map = {
-      id: data.id,
-      title: data.title,
-      starred: data.starred ?? false,
-      labels: [], // Labels not included in metadata - would need separate call if needed
-      createdBy: data.createdBy ?? data.creatorFullName,
-      creationTime: data.creationTime ?? '',
-      lastModificationBy: data.lastModificationBy ?? '',
-      lastModificationTime: data.lastModificationTime ?? '',
-      description: data.description ?? '',
-      public: data.public ?? false,
-      role: data.role,
-    };
-  } else if (!isPending && error) {
-    errorMsg = error;
-  }
-  return { isLoading: isPending, error: errorMsg, data: map };
+  const map: MapInfo | undefined = data
+    ? {
+        id: data.id,
+        title: data.title,
+        starred: data.starred ?? false,
+        labels: [], // Labels not included in metadata - would need separate call if needed
+        createdBy: data.createdBy ?? data.creatorFullName,
+        creationTime: data.creationTime ?? '',
+        lastModificationBy: data.lastModificationBy ?? '',
+        lastModificationTime: data.lastModificationTime ?? '',
+        description: data.description ?? '',
+        public: data.public ?? false,
+        role: data.role,
+      }
+    : undefined;
+  return { isLoading, error, data: map };
 };
 
 type MapMetadataLoadResult = {
@@ -69,11 +64,11 @@ type MapMetadataLoadResult = {
 
 export const useFetchMapMetadata = (id: number): MapMetadataLoadResult => {
   const client = useContext(ClientContext);
-  const { isPending, error, data } = useQuery<MapMetadata, ErrorInfo>({
+  const { isLoading, error, data } = useQuery<MapMetadata, ErrorInfo>({
     queryKey: [`maps-metadata-${id}`],
     queryFn: () => client.fetchMapMetadata(id),
   });
-  return { isLoading: isPending, error: error, data: data };
+  return { isLoading, error, data };
 };
 
 export const useFetchAccount = (): AccountInfo | undefined => {
@@ -92,10 +87,10 @@ export const useFetchAccountWithState = (): {
   error: ErrorInfo | null;
 } => {
   const client = useContext(ClientContext);
-  const { data, isPending, error } = useQuery<AccountInfo, ErrorInfo>({
+  const { data, isLoading, error } = useQuery<AccountInfo, ErrorInfo>({
     queryKey: ['account'],
     queryFn: () => client.fetchAccountInfo(),
     enabled: !AppI18n.isPublicPage(),
   });
-  return { data, isLoading: isPending, error };
+  return { data, isLoading, error };
 };

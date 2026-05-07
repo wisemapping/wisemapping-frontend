@@ -118,8 +118,6 @@ const AccountManagement = (): ReactElement => {
   const [filterActive] = useState<string>('all');
   const [filterSuspended, setFilterSuspended] = useState<string>('all');
   const [filterAuthType, setFilterAuthType] = useState<string>('all');
-  const [isFilterLoading, setIsFilterLoading] = useState(false);
-  const [isPaginationLoading, setIsPaginationLoading] = useState(false);
 
   // Debounce search term
   useEffect(() => {
@@ -129,19 +127,6 @@ const AccountManagement = (): ReactElement => {
 
     return () => clearTimeout(timer);
   }, [searchTerm]);
-
-  // Set filter loading state when filters change
-  useEffect(() => {
-    setIsFilterLoading(true);
-  }, [debouncedSearchTerm, filterAuthType, filterSuspended]);
-
-  // Clear transient loading flags once the query settles
-  useEffect(() => {
-    if (!isFetching) {
-      setIsFilterLoading(false);
-      setIsPaginationLoading(false);
-    }
-  }, [isFetching]);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -387,7 +372,7 @@ const AccountManagement = (): ReactElement => {
   // Lazy query for user maps (only fetches when enabled)
   const {
     data: userMaps,
-    isPending: isPendingUserMaps,
+    isLoading: isLoadingUserMaps,
     refetch: refetchUserMaps,
   } = useQuery({
     queryKey: ['userMaps', viewingMapsUser?.id],
@@ -775,7 +760,7 @@ const AccountManagement = (): ReactElement => {
                     variant="outlined"
                     startIcon={<RefreshIcon />}
                     onClick={() => refetch()}
-                    disabled={isPending || isFilterLoading}
+                    disabled={isFetching}
                     sx={{ borderRadius: 2 }}
                   >
                     {intl.formatMessage({
@@ -843,19 +828,18 @@ const AccountManagement = (): ReactElement => {
               })}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              disabled={isPending || isFilterLoading}
+              disabled={isFetching}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
                     <SearchIcon />
                   </InputAdornment>
                 ),
-                endAdornment:
-                  isPending || isFilterLoading ? (
-                    <InputAdornment position="end">
-                      <CircularProgress size={20} />
-                    </InputAdornment>
-                  ) : null,
+                endAdornment: isFetching ? (
+                  <InputAdornment position="end">
+                    <CircularProgress size={20} />
+                  </InputAdornment>
+                ) : null,
               }}
               sx={{ minWidth: 250 }}
             />
@@ -866,8 +850,8 @@ const AccountManagement = (): ReactElement => {
                 value={filterAuthType}
                 label={intl.formatMessage({ id: 'admin.auth-type', defaultMessage: 'Auth Type' })}
                 onChange={(e) => setFilterAuthType(e.target.value)}
-                disabled={isPending || isFilterLoading}
-                endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
+                disabled={isFetching}
+                endAdornment={isFetching ? <CircularProgress size={20} /> : null}
               >
                 <MenuItem value="all">All</MenuItem>
                 <MenuItem value="DATABASE">Database</MenuItem>
@@ -885,8 +869,8 @@ const AccountManagement = (): ReactElement => {
                   defaultMessage: 'Suspension Status',
                 })}
                 onChange={(e) => setFilterSuspended(e.target.value)}
-                disabled={isPending || isFilterLoading}
-                endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
+                disabled={isFetching}
+                endAdornment={isFetching ? <CircularProgress size={20} /> : null}
               >
                 <MenuItem value="all">All (Suspended + Active)</MenuItem>
                 <MenuItem value="not-suspended">Not Suspended</MenuItem>
@@ -1183,19 +1167,15 @@ const AccountManagement = (): ReactElement => {
           <Pagination
             count={totalPages}
             page={currentPage}
-            onChange={(event, page) => {
-              console.log('Users Pagination clicked:', { oldPage: currentPage, newPage: page });
-              setIsPaginationLoading(true);
-              setCurrentPage(page);
-            }}
+            onChange={(event, page) => setCurrentPage(page)}
             color="primary"
             variant="outlined"
             shape="rounded"
             showFirstButton
             showLastButton
-            disabled={isPending || isFilterLoading || isPaginationLoading}
+            disabled={isFetching}
           />
-          {(isPending || isFilterLoading || isPaginationLoading) && <CircularProgress size={24} />}
+          {isFetching && <CircularProgress size={24} />}
         </Box>
       )}
 
@@ -1533,7 +1513,7 @@ const AccountManagement = (): ReactElement => {
         user={viewingMapsUser}
         maps={userMaps || []}
         isPendingUser={false}
-        isPendingMaps={isPendingUserMaps}
+        isPendingMaps={isLoadingUserMaps}
         onSuspend={
           viewingMapsUser
             ? () => {
