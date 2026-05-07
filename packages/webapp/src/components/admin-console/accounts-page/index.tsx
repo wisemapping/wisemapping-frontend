@@ -1512,8 +1512,8 @@ const AccountManagement = (): ReactElement => {
         onClose={handleCloseUserMapsDialog}
         user={viewingMapsUser}
         maps={userMaps || []}
-        isPendingUser={false}
-        isPendingMaps={isLoadingUserMaps}
+        isLoadingUser={false}
+        isLoadingMaps={isLoadingUserMaps}
         onSuspend={
           viewingMapsUser
             ? () => {

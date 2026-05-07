@@ -56,7 +56,7 @@ const AccountMenu = (): React.ReactElement => {
     event.preventDefault();
 
     client.logout();
-    queryClient.removeQueries('account');
+    queryClient.removeQueries({ queryKey: ['account'] });
     navigate('/c/login');
   };
 
