@@ -1309,8 +1309,8 @@ const MapsManagement = (): ReactElement => {
         onClose={() => setIsOwnerMapsDialogOpen(false)}
         user={selectedOwnerUser}
         maps={ownerMaps}
-        isPendingUser={isPendingOwnerInfo}
-        isPendingMaps={isPendingOwnerMaps}
+        isLoadingUser={isPendingOwnerInfo}
+        isLoadingMaps={isPendingOwnerMaps}
         onSuspend={() => {
           setIsOwnerMapsDialogOpen(false);
           if (selectedOwnerId !== null) {
