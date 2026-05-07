@@ -163,8 +163,6 @@ const MapsManagement = (): ReactElement => {
   const [filterLocked, setFilterLocked] = useState<string>('all');
   const [filterSpam, setFilterSpam] = useState<string>('all');
   const [dateFilter, setDateFilter] = useState<string>('1');
-  const [isFilterLoading, setIsFilterLoading] = useState(false);
-  const [isPaginationLoading, setIsPaginationLoading] = useState(false);
   const [editingMap, setEditingMap] = useState<AdminMap | null>(null);
 
   // Debounce search term
@@ -175,19 +173,6 @@ const MapsManagement = (): ReactElement => {
 
     return () => clearTimeout(timer);
   }, [searchTerm]);
-
-  // Set filter loading state when filters change
-  useEffect(() => {
-    setIsFilterLoading(true);
-  }, [debouncedSearchTerm, filterPublic, filterLocked, filterSpam, dateFilter]);
-
-  // Clear transient loading flags once the query settles
-  useEffect(() => {
-    if (!isFetching) {
-      setIsFilterLoading(false);
-      setIsPaginationLoading(false);
-    }
-  }, [isFetching]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [formData, setFormData] = useState<MapFormData>({
     title: '',
@@ -654,7 +639,7 @@ const MapsManagement = (): ReactElement => {
           })}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          disabled={isPending || isFilterLoading}
+          disabled={isFetching}
           helperText={
             searchType === 'id'
               ? intl.formatMessage({
@@ -685,7 +670,7 @@ const MapsManagement = (): ReactElement => {
                 )}
               </InputAdornment>
             ),
-            endAdornment: isPending ? (
+            endAdornment: isFetching ? (
               <InputAdornment position="end">
                 <CircularProgress size={20} />
               </InputAdornment>
@@ -700,8 +685,8 @@ const MapsManagement = (): ReactElement => {
             value={filterPublic}
             label={intl.formatMessage({ id: 'admin.public', defaultMessage: 'Public' })}
             onChange={(e) => setFilterPublic(e.target.value)}
-            disabled={isPending || isFilterLoading}
-            endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
+            disabled={isFetching}
+            endAdornment={isFetching ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="public">Public</MenuItem>
@@ -715,8 +700,8 @@ const MapsManagement = (): ReactElement => {
             value={filterLocked}
             label={intl.formatMessage({ id: 'admin.locked', defaultMessage: 'Locked' })}
             onChange={(e) => setFilterLocked(e.target.value)}
-            disabled={isPending || isFilterLoading}
-            endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
+            disabled={isFetching}
+            endAdornment={isFetching ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="locked">Locked</MenuItem>
@@ -738,8 +723,8 @@ const MapsManagement = (): ReactElement => {
               defaultMessage: 'Spam',
             })}
             onChange={(e) => setFilterSpam(e.target.value)}
-            disabled={isPending || isFilterLoading}
-            endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
+            disabled={isFetching}
+            endAdornment={isFetching ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="spam">Spam</MenuItem>
@@ -763,8 +748,8 @@ const MapsManagement = (): ReactElement => {
               defaultMessage: 'Date Range',
             })}
             onChange={(e) => setDateFilter(e.target.value)}
-            disabled={isPending || isFilterLoading}
-            endAdornment={isPending || isFilterLoading ? <CircularProgress size={20} /> : null}
+            disabled={isFetching}
+            endAdornment={isFetching ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="1">Last 1 Month</MenuItem>
             <MenuItem value="3">Last 3 Months</MenuItem>
@@ -1033,18 +1018,15 @@ const MapsManagement = (): ReactElement => {
           <Pagination
             count={totalPages}
             page={currentPage}
-            onChange={(event, page) => {
-              setIsPaginationLoading(true);
-              setCurrentPage(page);
-            }}
+            onChange={(event, page) => setCurrentPage(page)}
             color="primary"
             variant="outlined"
             shape="rounded"
             showFirstButton
             showLastButton
-            disabled={isPending || isFilterLoading || isPaginationLoading}
+            disabled={isFetching}
           />
-          {(isPending || isFilterLoading || isPaginationLoading) && <CircularProgress size={24} />}
+          {isFetching && <CircularProgress size={24} />}
         </Box>
       )}
 
