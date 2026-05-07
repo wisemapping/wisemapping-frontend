@@ -4,7 +4,7 @@
         "clientType": "rest",
         "apiBaseUrl": "http://localhost:3000",
         "uiBaseUrl": "http://localhost:3000",    
-        "analyticsAccount": "G-RSDEJH16YM",
+        "analyticsAccount": "G-XXXXXXXXXX",
         "recaptcha2Enabled": false,
         "recaptcha2SiteKey": "6Lcat08kAAAAAIP-HjhzIa-Yq21PHgGa_ADWc-Ro",
         "registrationEnabled": true,
