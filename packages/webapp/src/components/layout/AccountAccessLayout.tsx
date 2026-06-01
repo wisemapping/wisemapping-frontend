@@ -30,9 +30,9 @@ import AdUnit from '../ads/AdUnit';
 //   - Mobile banner    : 320×100
 // Then paste the slot IDs (the 10-digit number) below.
 const AD_SLOTS = {
-  left: '7031912437',
-  right: '7199433396',
-  mobile: '4501117862',
+  left: '3203964594',
+  right: '6776074174',
+  mobile: '5462992502',
 } as const;
 
 type AccountAccessLayoutProps = {
