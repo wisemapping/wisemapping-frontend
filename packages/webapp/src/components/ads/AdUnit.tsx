@@ -18,7 +18,7 @@
 
 import React, { useEffect, useRef } from 'react';
 
-const ADSENSE_CLIENT = 'ca-pub-4996113942657337';
+const ADSENSE_CLIENT = 'ca-pub-6240866993689964';
 
 type AdUnitProps = {
   slot: string;
