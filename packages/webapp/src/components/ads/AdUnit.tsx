@@ -23,6 +23,15 @@ const ADSENSE_CLIENT = 'ca-pub-6240866993689964';
 type AdUnitProps = {
   slot: string;
   style?: React.CSSProperties;
+  /**
+   * AdSense ad format. Leave undefined for a FIXED-size unit: the `data-ad-format`
+   * attribute is then omitted and the slot is sized from the inline width/height
+   * in `style`. Set to e.g. 'auto' only for responsive units that size from their
+   * parent's width. Using 'auto' on a fixed-size unit makes AdSense ignore the
+   * inline size and read the parent width instead, which fails with
+   * "No slot size for availableWidth=0" when the parent reports zero width at
+   * evaluation time — the cause of the second skyscraper never filling.
+   */
   format?: string;
   fullWidthResponsive?: boolean;
 };
@@ -38,7 +47,7 @@ type AdUnitProps = {
 const AdUnit = ({
   slot,
   style,
-  format = 'auto',
+  format,
   fullWidthResponsive = false,
 }: AdUnitProps): React.ReactElement => {
   const pushed = useRef(false);
@@ -61,7 +70,7 @@ const AdUnit = ({
       style={{ display: 'block', ...style }}
       data-ad-client={ADSENSE_CLIENT}
       data-ad-slot={slot}
-      data-ad-format={format}
+      {...(format ? { 'data-ad-format': format } : {})}
       {...(fullWidthResponsive ? { 'data-full-width-responsive': 'true' } : {})}
     />
   );

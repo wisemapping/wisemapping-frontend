@@ -35,16 +35,16 @@
     "test:integration": "PORT=6106 node ../../scripts/run-storybook-cypress.js"
   },
   "devDependencies": {
-    "@babel/preset-typescript": "^7.28.5",
+    "@babel/preset-typescript": "^7.29.7",
     "@mdx-js/react": "^3.1.1",
-    "@storybook/addon-docs": "^10.3.5",
-    "@storybook/addon-links": "^10.3.5",
-    "@storybook/html-vite": "^10.3.5",
-    "cypress": "^15.13.1",
-    "eslint-plugin-storybook": "^10.3.5",
-    "storybook": "^10.3.5",
-    "typescript": "^6.0.2",
-    "vite": "^8.0.8"
+    "@storybook/addon-docs": "^10.4.3",
+    "@storybook/addon-links": "^10.4.3",
+    "@storybook/html-vite": "^10.4.3",
+    "cypress": "^15.17.0",
+    "eslint-plugin-storybook": "^10.4.3",
+    "storybook": "^10.4.3",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.com"
