@@ -126,13 +126,16 @@ const IconImageTab = ({ iconModel }: IconImageTab): ReactElement => {
           },
         }}
       />
-
       {showFrequentlyUsed && (
         <Box sx={{ mb: 1 }}>
           <Typography
             variant="caption"
-            color="text.secondary"
-            sx={{ display: 'block', mb: 0.5, px: 0.5 }}
+            sx={{
+              color: 'text.secondary',
+              display: 'block',
+              mb: 0.5,
+              px: 0.5,
+            }}
           >
             <FormattedMessage id="icon-picker.frequently-used" defaultMessage="Frequently Used" />
           </Typography>
@@ -147,10 +150,14 @@ const IconImageTab = ({ iconModel }: IconImageTab): ReactElement => {
           </Box>
         </Box>
       )}
-
       {showNoResults ? (
         <Box sx={{ textAlign: 'center', py: 2 }}>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            sx={{
+              color: 'text.secondary',
+            }}
+          >
             <FormattedMessage id="icon-picker.no-results" defaultMessage="No icons found" />
           </Typography>
         </Box>

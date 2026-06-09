@@ -78,8 +78,20 @@ const SpamStatusChip = ({
   };
 
   return (
-    <Box display="flex" alignItems="center" gap={0.5}>
-      <Box display="flex" flexDirection="column" gap={0.5}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 0.5,
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 0.5,
+        }}
+      >
         {/* Spam Status Chip */}
         <Tooltip title={getSpamTooltip()}>
           <Chip
@@ -101,8 +113,8 @@ const SpamStatusChip = ({
           <Tooltip title={spamDescription} arrow>
             <Typography
               variant="caption"
-              color="text.secondary"
               sx={{
+                color: 'text.secondary',
                 fontSize: '0.7rem',
                 maxWidth: '200px',
                 overflow: 'hidden',

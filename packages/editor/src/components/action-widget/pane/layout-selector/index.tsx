@@ -136,11 +136,13 @@ const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps)
       onClose={handleCancel}
       maxWidth="sm"
       fullWidth
-      PaperProps={{
-        sx: {
-          minHeight: '300px',
-          border: '2px solid #ffa800',
-          boxShadow: 'none',
+      slotProps={{
+        paper: {
+          sx: {
+            minHeight: '300px',
+            border: '2px solid #ffa800',
+            boxShadow: 'none',
+          },
         },
       }}
     >
@@ -148,7 +150,14 @@ const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps)
         <FormattedMessage id="layout-selector.title" defaultMessage="Choose Layout" />
       </DialogTitle>
       <DialogContent>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.4 }}>
+        <Typography
+          variant="body2"
+          sx={{
+            color: 'text.secondary',
+            mb: 3,
+            lineHeight: 1.4,
+          }}
+        >
           <FormattedMessage
             id="layout-selector.description"
             defaultMessage="A layout defines how topics are organized and connected in your mind map. Choose a layout that best fits your content structure."
@@ -184,8 +193,11 @@ const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps)
                     </Typography>
                     <Typography
                       variant="body2"
-                      color="text.secondary"
-                      sx={{ lineHeight: 1.2, fontSize: '0.75rem' }}
+                      sx={{
+                        color: 'text.secondary',
+                        lineHeight: 1.2,
+                        fontSize: '0.75rem',
+                      }}
                     >
                       {layoutOption.description}
                     </Typography>

@@ -71,14 +71,23 @@ const RegistrationSuccessPage = (): React.ReactElement => {
             />
           </Typography>
 
-          <Typography paragraph>
+          <Typography
+            sx={{
+              marginBottom: '16px',
+            }}
+          >
             <FormattedMessage
               id="registration.success.email-sent"
               defaultMessage="We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
             />
           </Typography>
 
-          <Typography paragraph style={{ marginBottom: '2rem' }}>
+          <Typography
+            style={{ marginBottom: '2rem' }}
+            sx={{
+              marginBottom: '16px',
+            }}
+          >
             <FormattedMessage
               id="registration.success.check-spam"
               defaultMessage="If you don't see the email, please check your spam folder."

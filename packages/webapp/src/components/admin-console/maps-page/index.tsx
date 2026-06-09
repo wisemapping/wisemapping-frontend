@@ -615,7 +615,14 @@ const MapsManagement = (): ReactElement => {
 
   return (
     <Box>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 3,
+        }}
+      >
         <Typography variant="h5" component="h2">
           {intl.formatMessage({
             id: 'admin.maps.title',
@@ -629,9 +636,15 @@ const MapsManagement = (): ReactElement => {
           <RefreshIcon />
         </IconButton>
       </Box>
-
       {/* Search and Filters */}
-      <Box display="flex" gap={2} mb={3} flexWrap="wrap">
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 2,
+          mb: 3,
+          flexWrap: 'wrap',
+        }}
+      >
         <TextField
           placeholder={intl.formatMessage({
             id: 'admin.maps.search',
@@ -658,25 +671,27 @@ const MapsManagement = (): ReactElement => {
                     })
                   : ' '
           }
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                {searchType === 'id' ? (
-                  <TagIcon color="primary" />
-                ) : searchType === 'email' ? (
-                  <EmailIcon color="primary" />
-                ) : (
-                  <SearchIcon />
-                )}
-              </InputAdornment>
-            ),
-            endAdornment: isFetching ? (
-              <InputAdornment position="end">
-                <CircularProgress size={20} />
-              </InputAdornment>
-            ) : null,
-          }}
           sx={{ minWidth: 300 }}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  {searchType === 'id' ? (
+                    <TagIcon color="primary" />
+                  ) : searchType === 'email' ? (
+                    <EmailIcon color="primary" />
+                  ) : (
+                    <SearchIcon />
+                  )}
+                </InputAdornment>
+              ),
+              endAdornment: isFetching ? (
+                <InputAdornment position="end">
+                  <CircularProgress size={20} />
+                </InputAdornment>
+              ) : null,
+            },
+          }}
         />
 
         <FormControl sx={{ minWidth: 120 }}>
@@ -758,7 +773,6 @@ const MapsManagement = (): ReactElement => {
           </Select>
         </FormControl>
       </Box>
-
       {/* Maps Table */}
       <TableContainer component={Paper}>
         <Table>
@@ -826,7 +840,12 @@ const MapsManagement = (): ReactElement => {
             ) : maps.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={10} align="center">
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: 'text.secondary',
+                    }}
+                  >
                     {intl.formatMessage({
                       id: 'admin.maps.no-maps',
                       defaultMessage: 'No maps found',
@@ -841,14 +860,15 @@ const MapsManagement = (): ReactElement => {
                     <Typography
                       variant="body2"
                       color="primary"
-                      fontWeight="medium"
                       component="a"
                       href={`/c/maps/${map.id}/public`}
                       target="_blank"
                       rel="noopener noreferrer"
                       sx={{
+                        fontWeight: 'medium',
                         textDecoration: 'none',
                         cursor: 'pointer',
+
                         '&:hover': {
                           textDecoration: 'underline',
                         },
@@ -858,15 +878,31 @@ const MapsManagement = (): ReactElement => {
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Box display="flex" alignItems="center" gap={1}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                      }}
+                    >
                       {map.starred && <StarIcon color="primary" fontSize="small" />}
-                      <Typography variant="body2" fontWeight={map.starred ? 'bold' : 'normal'}>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontWeight: map.starred ? 'bold' : 'normal',
+                        }}
+                      >
                         {map.title}
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'text.secondary',
+                      }}
+                    >
                       {map.description || 'No description'}
                     </Typography>
                   </TableCell>
@@ -892,7 +928,13 @@ const MapsManagement = (): ReactElement => {
                   <TableCell>{formatDate(map.creationTime)}</TableCell>
                   <TableCell>{formatDate(map.lastModificationTime)}</TableCell>
                   <TableCell>
-                    <Box display="flex" gap={1} flexWrap="wrap">
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        gap: 1,
+                        flexWrap: 'wrap',
+                      }}
+                    >
                       {getPublicChip(map.public)}
                       {getLockedChip(map.isLocked, map.isLockedBy)}
                       {getSuspendedUserChip(map.isCreatorSuspended || false)}
@@ -907,7 +949,13 @@ const MapsManagement = (): ReactElement => {
                     )}
                   </TableCell>
                   <TableCell align="center">
-                    <Box display="flex" gap={0.5} justifyContent="center">
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        gap: 0.5,
+                        justifyContent: 'center',
+                      }}
+                    >
                       <Tooltip
                         title={intl.formatMessage({
                           id: 'admin.maps.view-xml',
@@ -1011,10 +1059,17 @@ const MapsManagement = (): ReactElement => {
           </TableBody>
         </Table>
       </TableContainer>
-
       {/* Pagination */}
       {totalPages > 1 && (
-        <Box display="flex" justifyContent="center" alignItems="center" mt={3} gap={2}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            mt: 3,
+            gap: 2,
+          }}
+        >
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -1029,7 +1084,6 @@ const MapsManagement = (): ReactElement => {
           {isFetching && <CircularProgress size={24} />}
         </Box>
       )}
-
       {/* Edit Map Dialog */}
       <Dialog
         open={isEditDialogOpen}
@@ -1081,7 +1135,12 @@ const MapsManagement = (): ReactElement => {
             sx={{ mb: 2 }}
           />
 
-          <Box display="flex" gap={2}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 2,
+            }}
+          >
             <FormControl fullWidth>
               <InputLabel>Public Access</InputLabel>
               <Select
@@ -1138,7 +1197,6 @@ const MapsManagement = (): ReactElement => {
           </Button>
         </DialogActions>
       </Dialog>
-
       {/* XML Viewer Dialog */}
       <Dialog
         open={isXmlViewerOpen}
@@ -1147,7 +1205,13 @@ const MapsManagement = (): ReactElement => {
         fullWidth
       >
         <DialogTitle>
-          <Box display="flex" alignItems="center" gap={1}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+            }}
+          >
             <CodeIcon color="primary" />
             {intl.formatMessage({
               id: 'admin.maps.xml-viewer.title',
@@ -1155,7 +1219,13 @@ const MapsManagement = (): ReactElement => {
             })}
           </Box>
           {viewingMap && (
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: 'text.secondary',
+                mt: 1,
+              }}
+            >
               {viewingMap.title} (ID: {viewingMap.id})
             </Typography>
           )}
@@ -1164,7 +1234,12 @@ const MapsManagement = (): ReactElement => {
           {isPendingXml ? (
             <Box sx={{ p: 3 }}>
               <LinearProgress sx={{ mb: 2 }} />
-              <Typography variant="body2" color="text.secondary">
+              <Typography
+                variant="body2"
+                sx={{
+                  color: 'text.secondary',
+                }}
+              >
                 {intl.formatMessage({
                   id: 'admin.maps.xml-viewer.loading',
                   defaultMessage: 'Loading XML content...',
@@ -1189,26 +1264,28 @@ const MapsManagement = (): ReactElement => {
                 fullWidth
                 value={formatXml(xmlContent)}
                 variant="outlined"
-                InputProps={{
-                  readOnly: true,
-                  sx: {
-                    fontFamily: 'monospace',
-                    fontSize: '0.875rem',
-                    backgroundColor: (theme) =>
-                      theme.palette.mode === 'dark'
-                        ? theme.palette.grey[900]
-                        : theme.palette.grey[50],
-                    '& .MuiInputBase-input': {
-                      color: (theme) => theme.palette.text.primary,
-                      whiteSpace: 'pre',
-                      overflow: 'auto',
-                    },
-                  },
-                }}
                 placeholder={intl.formatMessage({
                   id: 'admin.maps.xml-viewer.no-content',
                   defaultMessage: 'No XML content available',
                 })}
+                slotProps={{
+                  input: {
+                    readOnly: true,
+                    sx: {
+                      fontFamily: 'monospace',
+                      fontSize: '0.875rem',
+                      backgroundColor: (theme) =>
+                        theme.palette.mode === 'dark'
+                          ? theme.palette.grey[900]
+                          : theme.palette.grey[50],
+                      '& .MuiInputBase-input': {
+                        color: (theme) => theme.palette.text.primary,
+                        whiteSpace: 'pre',
+                        overflow: 'auto',
+                      },
+                    },
+                  },
+                }}
               />
             </Box>
           )}
@@ -1238,7 +1315,6 @@ const MapsManagement = (): ReactElement => {
           </Button>
         </DialogActions>
       </Dialog>
-
       {/* User Suspension Dialog */}
       <Dialog
         open={isSuspensionDialogOpen}
@@ -1302,7 +1378,6 @@ const MapsManagement = (): ReactElement => {
           </Button>
         </DialogActions>
       </Dialog>
-
       {/* Owner Maps Dialog */}
       <UserMapsDialog
         open={isOwnerMapsDialogOpen}

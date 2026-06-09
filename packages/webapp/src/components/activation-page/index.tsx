@@ -101,7 +101,12 @@ const ActivationPage = (): React.ReactElement => {
                 />
               </Typography>
               <CircularProgress />
-              <Typography paragraph style={{ marginTop: '1rem' }}>
+              <Typography
+                style={{ marginTop: '1rem' }}
+                sx={{
+                  marginBottom: '16px',
+                }}
+              >
                 <FormattedMessage
                   id="activation.loading.desc"
                   defaultMessage="Please wait while we activate your account..."

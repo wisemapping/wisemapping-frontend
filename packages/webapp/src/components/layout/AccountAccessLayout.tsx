@@ -61,7 +61,13 @@ const AccountAccessLayout = ({
   // visible units in the DOM so every push() maps to a real, sized slot.
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   return (
-    <Box minHeight="100vh" display="flex" flexDirection="column">
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <Header type={headerType} />
       <Box
         component="section"

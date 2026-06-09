@@ -170,7 +170,12 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                 </Box>
               }
               label={
-                <Typography variant="body1" fontWeight={500}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: 500,
+                  }}
+                >
                   {intl.formatMessage({
                     id: 'publish.checkbox',
                     defaultMessage: 'Enable public sharing',
@@ -251,13 +256,15 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                 <TextField
                   fullWidth
                   value={publicUrl}
-                  InputProps={{
-                    readOnly: true,
-                  }}
                   onClick={() => handleCopyToClipboard(publicUrl)}
                   css={classes.urlInput}
                   variant="outlined"
                   size="small"
+                  slotProps={{
+                    input: {
+                      readOnly: true,
+                    },
+                  }}
                 />
               </Tooltip>
             </TabPanel>
