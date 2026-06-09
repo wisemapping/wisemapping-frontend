@@ -156,15 +156,37 @@ const RegistrationForm = ({ onCaptchaReset }: { onCaptchaReset?: () => void }) =
   };
 
   return (
-    <Grid container justifyContent="center">
-      <Grid container spacing={0} justifyContent="center" alignItems="scretch" textAlign="center">
-        <Grid size={{ md: 5, xs: 12 }} justifyContent="center">
+    <Grid
+      container
+      sx={{
+        justifyContent: 'center',
+      }}
+    >
+      <Grid
+        container
+        spacing={0}
+        sx={{
+          justifyContent: 'center',
+          alignItems: 'scretch',
+          textAlign: 'center',
+        }}
+      >
+        <Grid
+          size={{ md: 5, xs: 12 }}
+          sx={{
+            justifyContent: 'center',
+          }}
+        >
           <header>
             <Typography variant="h4" component="h1">
               <FormattedMessage id="registration.title" defaultMessage="Become a member" />
             </Typography>
 
-            <Typography paragraph>
+            <Typography
+              sx={{
+                marginBottom: '16px',
+              }}
+            >
               <FormattedMessage
                 id="registration.desc"
                 defaultMessage="Signing up is free and just take a moment "

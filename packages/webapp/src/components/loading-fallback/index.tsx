@@ -38,15 +38,22 @@ const LoadingFallback = (): React.ReactElement => {
 
   return (
     <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="100vh"
-      gap={2}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        gap: 2,
+      }}
     >
       <CircularProgress size={48} />
-      <Typography variant="h6" color="text.secondary">
+      <Typography
+        variant="h6"
+        sx={{
+          color: 'text.secondary',
+        }}
+      >
         <FormattedMessage id="common.loading" defaultMessage="Loading..." />
       </Typography>
     </Box>

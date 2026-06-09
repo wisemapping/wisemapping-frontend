@@ -219,7 +219,6 @@ const AppBar = ({
       value={currentTitle}
       variant="outlined"
       size="small"
-      InputProps={{ readOnly: true }}
       onClick={canRename ? handleTitleClick : undefined}
       data-testid="app-bar-title"
       sx={{
@@ -241,6 +240,9 @@ const AppBar = ({
           padding: '6px 8px',
           cursor: canRename ? 'pointer' : 'default',
         },
+      }}
+      slotProps={{
+        input: { readOnly: true },
       }}
     />
   );

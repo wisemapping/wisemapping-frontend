@@ -735,7 +735,13 @@ const AccountManagement = (): ReactElement => {
       <Card elevation={1} sx={{ mb: 3 }}>
         <CardHeader
           title={
-            <Box display="flex" alignItems="center" gap={1}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+              }}
+            >
               <Avatar sx={{ bgcolor: 'primary.main' }}>
                 <PersonIcon />
               </Avatar>
@@ -791,7 +797,12 @@ const AccountManagement = (): ReactElement => {
             </Stack>
           }
           subheader={
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               {intl.formatMessage({
                 id: 'admin.accounts.subtitle',
                 defaultMessage: 'Manage user accounts, permissions, and settings',
@@ -800,7 +811,6 @@ const AccountManagement = (): ReactElement => {
           }
         />
       </Card>
-
       {/* Filters Section */}
       <Card elevation={1} sx={{ mb: 3 }}>
         <CardContent>
@@ -816,10 +826,12 @@ const AccountManagement = (): ReactElement => {
             })}
           </Typography>
           <Box
-            display="flex"
-            gap={2}
-            mb={facebookEnabled && isFacebookFilterExpanded ? 1 : 2}
-            flexWrap="wrap"
+            sx={{
+              display: 'flex',
+              gap: 2,
+              mb: facebookEnabled && isFacebookFilterExpanded ? 1 : 2,
+              flexWrap: 'wrap',
+            }}
           >
             <TextField
               placeholder={intl.formatMessage({
@@ -829,19 +841,21 @@ const AccountManagement = (): ReactElement => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               disabled={isFetching}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-                endAdornment: isFetching ? (
-                  <InputAdornment position="end">
-                    <CircularProgress size={20} />
-                  </InputAdornment>
-                ) : null,
-              }}
               sx={{ minWidth: 250 }}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: isFetching ? (
+                    <InputAdornment position="end">
+                      <CircularProgress size={20} />
+                    </InputAdornment>
+                  ) : null,
+                },
+              }}
             />
 
             <FormControl sx={{ minWidth: 150 }}>
@@ -907,14 +921,16 @@ const AccountManagement = (): ReactElement => {
           {facebookEnabled && (
             <Collapse in={isFacebookFilterExpanded}>
               <Box
-                display="flex"
-                gap={2}
-                alignItems="flex-start"
-                flexWrap="wrap"
-                pt={1}
-                pb={1}
-                borderTop="1px dashed"
-                borderColor="divider"
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  alignItems: 'flex-start',
+                  flexWrap: 'wrap',
+                  pt: 1,
+                  pb: 1,
+                  borderTop: '1px dashed',
+                  borderColor: 'divider',
+                }}
               >
                 <TextField
                   label="facebookId"
@@ -928,17 +944,19 @@ const AccountManagement = (): ReactElement => {
                   onKeyDown={(e) => e.key === 'Enter' && handleFacebookLookup()}
                   size="small"
                   sx={{ minWidth: 240, fontFamily: 'monospace' }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <FacebookIcon fontSize="small" sx={{ color: '#1877F2' }} />
-                      </InputAdornment>
-                    ),
-                    endAdornment: isFacebookLookupLoading ? (
-                      <InputAdornment position="end">
-                        <CircularProgress size={16} />
-                      </InputAdornment>
-                    ) : null,
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <FacebookIcon fontSize="small" sx={{ color: '#1877F2' }} />
+                        </InputAdornment>
+                      ),
+                      endAdornment: isFacebookLookupLoading ? (
+                        <InputAdornment position="end">
+                          <CircularProgress size={16} />
+                        </InputAdornment>
+                      ) : null,
+                    },
                   }}
                 />
                 <Button
@@ -985,7 +1003,6 @@ const AccountManagement = (): ReactElement => {
           )}
         </CardContent>
       </Card>
-
       {/* Users Table */}
       <TableContainer component={Paper}>
         <Table>
@@ -1027,7 +1044,12 @@ const AccountManagement = (): ReactElement => {
             ) : users.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} align="center">
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: 'text.secondary',
+                    }}
+                  >
                     {intl.formatMessage({
                       id: 'admin.accounts.no-users',
                       defaultMessage: 'No users found',
@@ -1160,10 +1182,17 @@ const AccountManagement = (): ReactElement => {
           </TableBody>
         </Table>
       </TableContainer>
-
       {/* Pagination */}
       {totalPages > 1 && (
-        <Box display="flex" justifyContent="center" alignItems="center" mt={3} gap={2}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            mt: 3,
+            gap: 2,
+          }}
+        >
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -1178,7 +1207,6 @@ const AccountManagement = (): ReactElement => {
           {isFetching && <CircularProgress size={24} />}
         </Box>
       )}
-
       {/* Edit User Dialog */}
       <Dialog
         open={isEditDialogOpen}
@@ -1198,7 +1226,14 @@ const AccountManagement = (): ReactElement => {
               {formErrors.general}
             </Alert>
           )}
-          <Box display="flex" flexDirection="column" gap={2} sx={{ mt: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              mt: 1,
+            }}
+          >
             <TextField
               label={intl.formatMessage({ id: 'common.first-name', defaultMessage: 'First Name' })}
               value={formData.firstname}
@@ -1272,7 +1307,6 @@ const AccountManagement = (): ReactElement => {
           </Button>
         </DialogActions>
       </Dialog>
-
       {/* Create User Dialog */}
       <Dialog
         open={isCreateDialogOpen}
@@ -1292,7 +1326,14 @@ const AccountManagement = (): ReactElement => {
               {formErrors.general}
             </Alert>
           )}
-          <Box display="flex" flexDirection="column" gap={2} sx={{ mt: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              mt: 1,
+            }}
+          >
             <TextField
               label={intl.formatMessage({ id: 'common.first-name', defaultMessage: 'First Name' })}
               value={formData.firstname}
@@ -1361,7 +1402,6 @@ const AccountManagement = (): ReactElement => {
           </Button>
         </DialogActions>
       </Dialog>
-
       {/* Suspension Dialog */}
       <Dialog
         open={isSuspensionDialogOpen}
@@ -1406,7 +1446,6 @@ const AccountManagement = (): ReactElement => {
           </Button>
         </DialogActions>
       </Dialog>
-
       {/* Delete Confirmation Dialog */}
       <Dialog
         open={isDeleteDialogOpen}
@@ -1437,7 +1476,6 @@ const AccountManagement = (): ReactElement => {
           </Button>
         </DialogActions>
       </Dialog>
-
       {/* Unsuspend Confirmation Dialog */}
       <Dialog
         open={isUnsuspendDialogOpen}
@@ -1474,7 +1512,6 @@ const AccountManagement = (): ReactElement => {
           </Button>
         </DialogActions>
       </Dialog>
-
       {/* Activate Confirmation Dialog */}
       <Dialog
         open={isActivateDialogOpen}
@@ -1505,7 +1542,6 @@ const AccountManagement = (): ReactElement => {
           </Button>
         </DialogActions>
       </Dialog>
-
       {/* User Maps Dialog */}
       <UserMapsDialog
         open={isUserMapsDialogOpen}
@@ -1532,7 +1568,6 @@ const AccountManagement = (): ReactElement => {
         }
         formatDate={formatDate}
       />
-
       {/* Change Password Dialog */}
       <Dialog
         open={isPasswordDialogOpen}

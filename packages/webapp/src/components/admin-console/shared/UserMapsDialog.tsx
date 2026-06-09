@@ -114,12 +114,24 @@ const UserMapsDialog = ({
           />
         )}
         {isLoadingUser && (
-          <Box display="flex" justifyContent="center" p={3}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              p: 3,
+            }}
+          >
             <CircularProgress />
           </Box>
         )}
         {isLoadingMaps && !isLoadingUser ? (
-          <Box display="flex" justifyContent="center" p={3}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              p: 3,
+            }}
+          >
             <CircularProgress />
           </Box>
         ) : maps.length === 0 && !isLoadingMaps ? (
@@ -192,14 +204,15 @@ const UserMapsDialog = ({
                         <Typography
                           variant="body2"
                           color="primary"
-                          fontWeight="medium"
                           component="a"
                           href={`/c/maps/${map.id}/public`}
                           target="_blank"
                           rel="noopener noreferrer"
                           sx={{
+                            fontWeight: 'medium',
                             textDecoration: 'none',
                             cursor: 'pointer',
+
                             '&:hover': {
                               textDecoration: 'underline',
                             },
@@ -209,22 +222,45 @@ const UserMapsDialog = ({
                         </Typography>
                       </TableCell>
                       <TableCell>
-                        <Box display="flex" alignItems="center" gap={1}>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1,
+                          }}
+                        >
                           {map.starred && <StarIcon color="primary" fontSize="small" />}
-                          <Typography variant="body2" fontWeight={map.starred ? 'bold' : 'normal'}>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              fontWeight: map.starred ? 'bold' : 'normal',
+                            }}
+                          >
                             {map.title}
                           </Typography>
                         </Box>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="body2" color="text.secondary" noWrap>
+                        <Typography
+                          variant="body2"
+                          noWrap
+                          sx={{
+                            color: 'text.secondary',
+                          }}
+                        >
                           {map.description || 'No description'}
                         </Typography>
                       </TableCell>
                       <TableCell>{formatDate(map.creationTime)}</TableCell>
                       <TableCell>{formatDate(map.lastModificationTime)}</TableCell>
                       <TableCell>
-                        <Box display="flex" gap={1} flexWrap="wrap">
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            gap: 1,
+                            flexWrap: 'wrap',
+                          }}
+                        >
                           {getPublicChip && getPublicChip(map.public)}
                           {getLockedChip && getLockedChip(map.isLocked, map.isLockedBy)}
                           {getSuspendedUserChip &&
@@ -253,7 +289,13 @@ const UserMapsDialog = ({
                         />
                       </TableCell>
                       <TableCell align="center">
-                        <Box display="flex" gap={0.5} justifyContent="center">
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            gap: 0.5,
+                            justifyContent: 'center',
+                          }}
+                        >
                           {onViewXml && (
                             <Tooltip
                               title={intl.formatMessage({

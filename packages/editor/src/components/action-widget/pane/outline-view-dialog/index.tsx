@@ -151,7 +151,6 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
         {node.level > 0 && (
           <VerticalLine level={node.level} hasChildren={hasChildren && node.isExpanded} />
         )}
-
         <OutlineNode level={node.level}>
           {/* Left side: Expand/collapse button */}
           {showExpandButton ? (
@@ -214,7 +213,11 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
             {node.linkUrl && (
               <Tooltip title={node.linkUrl}>
                 <FeatureIcon onMouseEnter={(e) => handleLinkHover(e, node.node)} aria-label="link">
-                  <LinkIcon fontSize="small" />
+                  <LinkIcon
+                    sx={{
+                      fontSize: 'small',
+                    }}
+                  />
                 </FeatureIcon>
               </Tooltip>
             )}
@@ -230,7 +233,6 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
             )}
           </FeatureIconContainer>
         </OutlineNode>
-
         {hasChildren && (
           <Collapse in={node.isExpanded}>
             <Box>{node.children.map((child) => renderNode(child))}</Box>

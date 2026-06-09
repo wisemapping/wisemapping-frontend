@@ -160,7 +160,6 @@ const SystemInformation = (): ReactElement => {
           </Button>
         </Tooltip>
       </Box>
-
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
         {/* System Health */}
         <Box>
@@ -207,7 +206,12 @@ const SystemInformation = (): ReactElement => {
                 </Box>
                 {systemHealth?.memoryUsagePercent && (
                   <Box sx={{ mt: 1 }}>
-                    <Typography variant="caption" color="text.secondary">
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: 'text.secondary',
+                      }}
+                    >
                       {intl.formatMessage({
                         id: 'admin.system.memory.usage',
                         defaultMessage: 'Memory Usage',
@@ -242,7 +246,12 @@ const SystemInformation = (): ReactElement => {
                 {systemInfo?.application && (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.app.name',
                           defaultMessage: 'Name',
@@ -251,7 +260,12 @@ const SystemInformation = (): ReactElement => {
                       <Typography variant="body2">{systemInfo.application.name}</Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.app.port',
                           defaultMessage: 'Port',
@@ -279,7 +293,12 @@ const SystemInformation = (): ReactElement => {
                 {systemInfo?.database && (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.db.driver',
                           defaultMessage: 'Driver',
@@ -293,7 +312,12 @@ const SystemInformation = (): ReactElement => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({ id: 'admin.system.db.url', defaultMessage: 'URL' })}
                       </Typography>
                       <Typography
@@ -304,7 +328,12 @@ const SystemInformation = (): ReactElement => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.db.username',
                           defaultMessage: 'Username',
@@ -313,7 +342,12 @@ const SystemInformation = (): ReactElement => {
                       <Typography variant="body2">{systemInfo.database.username}</Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.db.ddl',
                           defaultMessage: 'Hibernate DDL',
@@ -343,7 +377,12 @@ const SystemInformation = (): ReactElement => {
                 {systemInfo?.jvm && (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.jvm.version',
                           defaultMessage: 'Java Version',
@@ -352,7 +391,12 @@ const SystemInformation = (): ReactElement => {
                       <Typography variant="body2">{systemInfo.jvm.javaVersion}</Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.jvm.vendor',
                           defaultMessage: 'Vendor',
@@ -361,7 +405,12 @@ const SystemInformation = (): ReactElement => {
                       <Typography variant="body2">{systemInfo.jvm.javaVendor}</Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.jvm.uptime',
                           defaultMessage: 'Uptime',
@@ -370,7 +419,12 @@ const SystemInformation = (): ReactElement => {
                       <Typography variant="body2">{formatUptime(systemInfo.jvm.uptime)}</Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.jvm.start',
                           defaultMessage: 'Start Time',
@@ -381,7 +435,12 @@ const SystemInformation = (): ReactElement => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.jvm.processors',
                           defaultMessage: 'Processors',
@@ -390,7 +449,12 @@ const SystemInformation = (): ReactElement => {
                       <Typography variant="body2">{systemInfo.jvm.availableProcessors}</Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.jvm.load',
                           defaultMessage: 'System Load',
@@ -420,7 +484,12 @@ const SystemInformation = (): ReactElement => {
                 {systemInfo?.jvm && (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.memory.max',
                           defaultMessage: 'Max Memory',
@@ -431,7 +500,12 @@ const SystemInformation = (): ReactElement => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.memory.used',
                           defaultMessage: 'Used Memory',
@@ -442,7 +516,12 @@ const SystemInformation = (): ReactElement => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.memory.total',
                           defaultMessage: 'Total Memory',
@@ -453,7 +532,12 @@ const SystemInformation = (): ReactElement => {
                       </Typography>
                     </Box>
                     <Box sx={{ mt: 2 }}>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.memory.usage',
                           defaultMessage: 'Memory Usage',
@@ -466,8 +550,11 @@ const SystemInformation = (): ReactElement => {
                       />
                       <Typography
                         variant="caption"
-                        color="text.secondary"
-                        sx={{ mt: 0.5, display: 'block' }}
+                        sx={{
+                          color: 'text.secondary',
+                          mt: 0.5,
+                          display: 'block',
+                        }}
                       >
                         {((systemInfo.jvm.usedMemory / systemInfo.jvm.maxMemory) * 100).toFixed(1)}%
                       </Typography>
@@ -512,7 +599,12 @@ const SystemInformation = (): ReactElement => {
               )}
 
               {listingMetrics?.enabled && !hasListingSnapshot && (
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
                   {intl.formatMessage({
                     id: 'admin.system.mindmapMetrics.pending',
                     defaultMessage:
@@ -525,7 +617,12 @@ const SystemInformation = (): ReactElement => {
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.mindmapMetrics.lastUpdated',
                           defaultMessage: 'Last Updated',
@@ -538,7 +635,12 @@ const SystemInformation = (): ReactElement => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.mindmapMetrics.totalTime',
                           defaultMessage: 'Total Time (ms)',
@@ -549,7 +651,12 @@ const SystemInformation = (): ReactElement => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.mindmapMetrics.mapCount',
                           defaultMessage: 'Maps Returned',
@@ -560,7 +667,12 @@ const SystemInformation = (): ReactElement => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.mindmapMetrics.collaborations',
                           defaultMessage: 'Collaborations Considered',
@@ -571,7 +683,12 @@ const SystemInformation = (): ReactElement => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.mindmapMetrics.executedStatements',
                           defaultMessage: 'Prepared Statements',
@@ -582,7 +699,12 @@ const SystemInformation = (): ReactElement => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: 'text.secondary',
+                        }}
+                      >
                         {intl.formatMessage({
                           id: 'admin.system.mindmapMetrics.entityLoads',
                           defaultMessage: 'Entity Loads',
@@ -672,7 +794,12 @@ const SystemInformation = (): ReactElement => {
                     <Typography variant="h4" color="primary">
                       {systemInfo.statistics.totalUsers || 0}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'text.secondary',
+                      }}
+                    >
                       {intl.formatMessage({
                         id: 'admin.system.stats.users',
                         defaultMessage: 'Total Users',
@@ -692,7 +819,12 @@ const SystemInformation = (): ReactElement => {
                     <Typography variant="h4" color="primary">
                       {systemInfo.statistics.totalMindmaps || 0}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'text.secondary',
+                      }}
+                    >
                       {intl.formatMessage({
                         id: 'admin.system.stats.mindmaps',
                         defaultMessage: 'Total Mindmaps',
