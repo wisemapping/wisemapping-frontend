@@ -18,6 +18,8 @@
 
 import React from 'react';
 import Box from '@mui/material/Box';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Header from './header';
 import Footer from './footer';
@@ -51,6 +53,13 @@ const AccountAccessLayout = ({
   contentSx,
   showAds = false,
 }: AccountAccessLayoutProps): React.ReactElement => {
+  const theme = useTheme();
+  // Render ad units only at their own breakpoint. CSS `display: none` still
+  // leaves the <ins> in the DOM, and AdSense aborts queue processing when it
+  // hits a hidden, zero-width unit — which would stop later ad units (e.g. the
+  // right skyscraper) from ever filling. Conditional mounting keeps exactly the
+  // visible units in the DOM so every push() maps to a real, sized slot.
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column">
       <Header type={headerType} />
@@ -69,20 +78,23 @@ const AccountAccessLayout = ({
         {showAds ? (
           <>
             {/* Left whitespace column — expands to fill available space,
-                ad floats in the center of it */}
-            <Box
-              sx={{
-                display: { xs: 'none', md: 'flex' },
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <AdUnit
-                slot={AD_SLOTS.left}
-                style={{ display: 'inline-block', width: '160px', height: '600px' }}
-              />
-            </Box>
+                ad floats in the center of it. Mounted only on desktop so the
+                hidden <ins> never enters the DOM (see isDesktop note above). */}
+            {isDesktop && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <AdUnit
+                  slot={AD_SLOTS.left}
+                  style={{ display: 'inline-block', width: '160px', height: '600px' }}
+                />
+              </Box>
+            )}
 
             {/* Center content — natural width, stays centered because
                 left and right columns grow symmetrically */}
@@ -91,29 +103,33 @@ const AccountAccessLayout = ({
             >
               {children}
 
-              {/* Mobile banner — below the card on small screens */}
-              <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'center', mt: 2 }}>
-                <AdUnit
-                  slot={AD_SLOTS.mobile}
-                  style={{ display: 'inline-block', width: '320px', height: '100px' }}
-                />
-              </Box>
+              {/* Mobile banner — below the card on small screens only */}
+              {!isDesktop && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                  <AdUnit
+                    slot={AD_SLOTS.mobile}
+                    style={{ display: 'inline-block', width: '320px', height: '100px' }}
+                  />
+                </Box>
+              )}
             </Box>
 
-            {/* Right whitespace column */}
-            <Box
-              sx={{
-                display: { xs: 'none', md: 'flex' },
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <AdUnit
-                slot={AD_SLOTS.right}
-                style={{ display: 'inline-block', width: '160px', height: '600px' }}
-              />
-            </Box>
+            {/* Right whitespace column — desktop only, mirrors the left. */}
+            {isDesktop && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <AdUnit
+                  slot={AD_SLOTS.right}
+                  style={{ display: 'inline-block', width: '160px', height: '600px' }}
+                />
+              </Box>
+            )}
           </>
         ) : (
           <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>{children}</Box>
