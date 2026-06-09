@@ -223,7 +223,11 @@ const OAuthCallbackPage = (): React.ReactElement => {
             />
           )}
         </Typography>
-        <Typography paragraph>
+        <Typography
+          sx={{
+            marginBottom: '16px',
+          }}
+        >
           {needConfirmLinking ? (
             <FormattedMessage
               id="registration.callback.confirm.description"

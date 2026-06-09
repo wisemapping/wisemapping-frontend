@@ -66,7 +66,9 @@ const Input = ({
       margin="dense"
       disabled={disabled}
       autoComplete={autoComplete}
-      inputProps={{ minLength: minLength, maxLength: maxLength }}
+      slotProps={{
+        htmlInput: { minLength: minLength, maxLength: maxLength },
+      }}
     />
   );
 };

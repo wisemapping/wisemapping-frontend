@@ -130,11 +130,13 @@ const ThemeEditor = (props: {
       onClose={handleCancel}
       maxWidth="sm"
       fullWidth
-      PaperProps={{
-        sx: {
-          minHeight: '350px',
-          border: '2px solid #ffa800',
-          boxShadow: 'none',
+      slotProps={{
+        paper: {
+          sx: {
+            minHeight: '350px',
+            border: '2px solid #ffa800',
+            boxShadow: 'none',
+          },
         },
       }}
     >
@@ -148,7 +150,14 @@ const ThemeEditor = (props: {
           overflowY: 'auto',
         }}
       >
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.4 }}>
+        <Typography
+          variant="body2"
+          sx={{
+            color: 'text.secondary',
+            mb: 3,
+            lineHeight: 1.4,
+          }}
+        >
           <FormattedMessage
             id="theme-editor.description"
             defaultMessage="A theme defines the visual style of your mind map, including colors, fonts, and overall appearance. Choose a theme that best fits your content and audience."
@@ -178,8 +187,11 @@ const ThemeEditor = (props: {
                 </Typography>
                 <Typography
                   variant="body2"
-                  color="text.secondary"
-                  sx={{ lineHeight: 1.2, fontSize: '0.75rem' }}
+                  sx={{
+                    color: 'text.secondary',
+                    lineHeight: 1.2,
+                    fontSize: '0.75rem',
+                  }}
                 >
                   {themeOption.description}
                 </Typography>

@@ -218,7 +218,11 @@ const LoginPage = (): React.ReactElement => {
               <FormattedMessage id="login.title" defaultMessage="Welcome" />
             </Typography>
 
-            <Typography paragraph>
+            <Typography
+              sx={{
+                marginBottom: '16px',
+              }}
+            >
               <FormattedMessage id="login.desc" defaultMessage="Log into your account" />
             </Typography>
           </header>

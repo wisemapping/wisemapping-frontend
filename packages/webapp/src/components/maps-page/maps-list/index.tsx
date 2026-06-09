@@ -171,7 +171,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             size="small"
-            inputProps={{ 'aria-label': 'select all desserts' }}
             sx={(theme) => ({
               color:
                 theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.26)',
@@ -188,6 +187,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                     : 'rgba(0, 0, 0, 0.54)',
               },
             })}
+            slotProps={{
+              input: { 'aria-label': 'select all desserts' },
+            }}
           />
         </TableCell>
 
@@ -508,7 +510,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
           mapId={activeRowAction.mapId}
         />
       )}
-
       <Paper css={classes.paper} elevation={0}>
         <Toolbar css={classes.toolbar} variant="dense" sx={{ backgroundColor: 'transparent' }}>
           <div css={classes.toolbarActions}>
@@ -664,9 +665,10 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           <Typography
                             css={classes.cardTitle}
                             noWrap
-                            color="text.secondary"
                             sx={{
+                              color: 'text.secondary',
                               fontSize: '0.96rem',
+
                               fontFamily:
                                 'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
                             }}
@@ -752,9 +754,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                       <TableCell padding="checkbox" css={classes.bodyCell}>
                         <Checkbox
                           checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': String(labelId),
-                          }}
                           size="small"
                           sx={(theme) => ({
                             color:
@@ -768,9 +767,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                   : 'rgba(0, 0, 0, 0.54)',
                             },
                           })}
+                          slotProps={{
+                            input: {
+                              'aria-labelledby': String(labelId),
+                            },
+                          }}
                         />
                       </TableCell>
-
                       <TableCell css={classes.bodyCell}>
                         <Tooltip
                           arrow={true}
@@ -795,7 +798,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           </Link>
                         </Tooltip>
                       </TableCell>
-
                       <TableCell css={[classes.bodyCell, classes.labelsCell as CSSObject]}>
                         <LabelsCell
                           labels={row.labels}
@@ -804,7 +806,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           }}
                         />
                       </TableCell>
-
                       <TableCell css={classes.bodyCell}>
                         <Typography
                           variant="body2"
@@ -817,7 +818,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           {row.createdBy}
                         </Typography>
                       </TableCell>
-
                       <TableCell css={classes.bodyCell}>
                         <Tooltip
                           arrow={true}
@@ -845,7 +845,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           </Typography>
                         </Tooltip>
                       </TableCell>
-
                       <TableCell padding="checkbox" css={classes.bodyCell}>
                         <Tooltip
                           arrow={true}
@@ -864,7 +863,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           </IconButton>
                         </Tooltip>
                       </TableCell>
-
                       <TableCell css={classes.bodyCell}>
                         <Tooltip
                           arrow={true}
@@ -909,7 +907,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
           </Box>
         )}
       </Paper>
-
       <ActionDispatcher
         action={activeDialog?.actionType}
         onClose={(success) => {

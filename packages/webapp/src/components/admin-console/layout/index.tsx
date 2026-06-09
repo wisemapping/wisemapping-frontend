@@ -96,7 +96,14 @@ const AdminLayout = (): ReactElement => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '400px',
+        }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -136,20 +143,32 @@ const AdminLayout = (): ReactElement => {
           </Typography>
         </Toolbar>
       </AppBar>
-
       {/* Left Navigation Panel */}
       <Drawer variant="permanent" sx={adminConsoleStyles.drawer}>
         <Box sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
             <AdminIcon color="primary" sx={{ mr: 1 }} />
-            <Typography variant="h6" component="h1" color="primary" fontWeight="bold">
+            <Typography
+              variant="h6"
+              component="h1"
+              color="primary"
+              sx={{
+                fontWeight: 'bold',
+              }}
+            >
               {intl.formatMessage({
                 id: 'admin.console.title',
                 defaultMessage: 'Admin Console',
               })}
             </Typography>
           </Box>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: 'text.secondary',
+              mb: 2,
+            }}
+          >
             {intl.formatMessage({
               id: 'admin.console.description',
               defaultMessage: 'Manage users, system settings, and application configuration.',
@@ -169,8 +188,10 @@ const AdminLayout = (): ReactElement => {
                 <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
                 <ListItemText
                   primary={item.label}
-                  primaryTypographyProps={{
-                    fontWeight: location.pathname === item.path ? 'bold' : 'normal',
+                  slotProps={{
+                    primary: {
+                      fontWeight: location.pathname === item.path ? 'bold' : 'normal',
+                    },
                   }}
                 />
               </ListItemButton>
@@ -178,7 +199,6 @@ const AdminLayout = (): ReactElement => {
           ))}
         </List>
       </Drawer>
-
       {/* Main Content Area */}
       <Box
         component="main"

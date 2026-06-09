@@ -84,8 +84,10 @@ const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement 
           <>
             <Typography
               variant="body2"
-              marginTop="10px"
               css={classes.title as Interpolation<Theme>}
+              sx={{
+                marginTop: '10px',
+              }}
             >
               <FormattedMessage id="label.add-for" defaultMessage="Editing labels for " />
               {maps && maps.length > 1 ? (

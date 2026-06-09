@@ -60,7 +60,12 @@ const LabelDeleteConfirm = ({
             })}
           </AlertTitle>
           <span>
-            <Typography fontWeight="bold" component="span">
+            <Typography
+              component="span"
+              sx={{
+                fontWeight: 'bold',
+              }}
+            >
               {label.title}{' '}
             </Typography>
             <FormattedMessage

@@ -110,7 +110,13 @@ const FontFamilySelect = (props: {
             .sort()
             .map((f) => (
               <MenuItem value={f} key={f}>
-                <Typography fontFamily={f}>{f}</Typography>
+                <Typography
+                  sx={{
+                    fontFamily: f,
+                  }}
+                >
+                  {f}
+                </Typography>
               </MenuItem>
             ))}
         </Select>

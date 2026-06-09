@@ -145,34 +145,71 @@ const UserInfoCard = ({
           }}
         >
           <Box>
-            <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+            <Typography
+              variant="caption"
+              gutterBottom
+              sx={{
+                color: 'text.secondary',
+                display: 'block',
+              }}
+            >
               <CalendarTodayIcon sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }} />
               {intl.formatMessage({
                 id: 'admin.user-info.created',
                 defaultMessage: 'Created',
               })}
             </Typography>
-            <Typography variant="body1" fontWeight="medium">
+            <Typography
+              variant="body1"
+              sx={{
+                fontWeight: 'medium',
+              }}
+            >
               {formatDate(user.creationDate)}
             </Typography>
           </Box>
           <Box>
-            <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+            <Typography
+              variant="caption"
+              gutterBottom
+              sx={{
+                color: 'text.secondary',
+                display: 'block',
+              }}
+            >
               <VerifiedUserIcon sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }} />
               {intl.formatMessage({
                 id: 'admin.user-info.auth-type',
                 defaultMessage: 'Authentication',
               })}
             </Typography>
-            <Box display="flex" alignItems="center" gap={1}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+              }}
+            >
               {getAuthIcon(user.authenticationType)}
-              <Typography variant="body1" fontWeight="medium">
+              <Typography
+                variant="body1"
+                sx={{
+                  fontWeight: 'medium',
+                }}
+              >
                 {getAuthLabel(user.authenticationType)}
               </Typography>
             </Box>
           </Box>
           <Box>
-            <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+            <Typography
+              variant="caption"
+              gutterBottom
+              sx={{
+                color: 'text.secondary',
+                display: 'block',
+              }}
+            >
               {intl.formatMessage({
                 id: 'admin.user-info.status',
                 defaultMessage: 'Status',
@@ -192,20 +229,37 @@ const UserInfoCard = ({
             </Box>
           </Box>
           <Box>
-            <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+            <Typography
+              variant="caption"
+              gutterBottom
+              sx={{
+                color: 'text.secondary',
+                display: 'block',
+              }}
+            >
               {intl.formatMessage({
                 id: 'admin.user-info.total-maps',
                 defaultMessage: 'Total Maps',
               })}
             </Typography>
-            <Typography variant="body1" fontWeight="medium">
+            <Typography
+              variant="body1"
+              sx={{
+                fontWeight: 'medium',
+              }}
+            >
               {isLoadingMaps ? <CircularProgress size={16} /> : totalMaps || 0}
             </Typography>
           </Box>
         </Box>
         {user.isSuspended && user.suspensionReason && (
           <Alert severity="warning" sx={{ mt: 2 }}>
-            <Typography variant="body2" fontWeight="medium">
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: 'medium',
+              }}
+            >
               {intl.formatMessage({
                 id: 'admin.user-info.suspension-reason',
                 defaultMessage: 'Suspension Reason:',
@@ -213,7 +267,13 @@ const UserInfoCard = ({
               {getSuspensionReasonLabel(user.suspensionReason, intl)}
             </Typography>
             {user.suspendedDate && (
-              <Typography variant="caption" display="block" sx={{ mt: 0.5 }}>
+              <Typography
+                variant="caption"
+                sx={{
+                  display: 'block',
+                  mt: 0.5,
+                }}
+              >
                 {intl.formatMessage(
                   {
                     id: 'admin.status.suspended-on',

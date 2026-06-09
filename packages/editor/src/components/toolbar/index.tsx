@@ -42,7 +42,12 @@ export const ToolbarButtonOption = (props: { configuration: ActionConfig }): Rea
       arrow={true}
       enterDelay={700}
     >
-      <Box component="span" my="auto">
+      <Box
+        component="span"
+        sx={{
+          my: 'auto',
+        }}
+      >
         <IconButton
           onClick={props.configuration.onClick}
           disabled={props.configuration.disabled && props.configuration.disabled()}
@@ -108,13 +113,15 @@ export const ToolbarSubmenu = ({
   return (
     <Box
       component="span"
-      display="inline-flex"
       role="menuitem"
       ref={itemRef}
       onMouseLeave={() => !hasCustomRender && setOpen(false)}
       onMouseEnter={() => {
         if (configuration.disabled && configuration.disabled()) return;
         if (!hasCustomRender) setOpen(true);
+      }}
+      sx={{
+        display: 'inline-flex',
       }}
     >
       <ToolbarButtonOption
@@ -137,20 +144,22 @@ export const ToolbarSubmenu = ({
         transformOrigin={orientationProps.transformOrigin}
         disableScrollLock={false}
         disablePortal={false}
-        PaperProps={{
-          onMouseLeave: () => !hasCustomRender && setOpen(false),
-          square: true,
-          sx: {
-            backgroundColor: 'transparent',
-            boxShadow: 'none',
-            border: 'none',
-            overflow: 'visible',
-          },
-        }}
         sx={{
           zIndex: hasCustomRender ? '1500' : '-1',
         }}
         elevation={elevation}
+        slotProps={{
+          paper: {
+            onMouseLeave: () => !hasCustomRender && setOpen(false),
+            square: true,
+            sx: {
+              backgroundColor: 'transparent',
+              boxShadow: 'none',
+              border: 'none',
+              overflow: 'visible',
+            },
+          },
+        }}
       >
         <div style={{ display: 'flex' }} onScroll={(e) => e.stopPropagation()}>
           {configuration.options?.map((o, i) => {

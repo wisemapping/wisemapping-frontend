@@ -178,7 +178,6 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
       >
         <CloseIcon />
       </IconButton>
-
       {/* Font Family */}
       <Box sx={{ mb: 2 }}>
         <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
@@ -259,7 +258,12 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
               .sort()
               .map((f) => (
                 <MenuItem value={f} key={f}>
-                  <Typography fontFamily={f} sx={{ fontSize: '0.656rem' }}>
+                  <Typography
+                    sx={{
+                      fontFamily: f,
+                      fontSize: '0.656rem',
+                    }}
+                  >
                     {f}
                   </Typography>
                 </MenuItem>
@@ -267,7 +271,6 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
           </Select>
         </FormControl>
       </Box>
-
       {/* Font Color */}
       <Box sx={{ mb: 2 }}>
         <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
@@ -281,7 +284,6 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
           />
         </Box>
       </Box>
-
       {/* Font Size & Font Style */}
       <Box sx={{ mb: 2 }}>
         <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
@@ -370,7 +372,6 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
           </ActionButton>
         </Box>
       </Box>
-
       {/* Reset to Default Button - At bottom */}
       {hasCustomFont && (
         <Box sx={{ mt: 2, pt: 2, borderTop: '1px solid', borderColor: 'divider' }}>

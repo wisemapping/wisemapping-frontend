@@ -222,7 +222,7 @@ import {
   // 40 New Icons
   AccountBalance,
   BusinessCenter,
-  WorkOutline,
+  WorkOutlined,
   Badge,
   Contacts,
   Store,
@@ -589,7 +589,7 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel }) =>
     // 40 New Icons for enhanced functionality
     { component: AccountBalance, name: 'account-balance', category: 'Business' },
     { component: BusinessCenter, name: 'business-center', category: 'Business' },
-    { component: WorkOutline, name: 'work-outline', category: 'Business' },
+    { component: WorkOutlined, name: 'work-outline', category: 'Business' },
     { component: Badge, name: 'badge', category: 'Business' },
     { component: Contacts, name: 'contacts', category: 'People' },
     { component: Store, name: 'store', category: 'Business' },
@@ -813,23 +813,24 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel }) =>
           placeholder="Search icons..."
           value={searchQuery}
           onChange={handleSearchChange}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon fontSize="small" />
-              </InputAdornment>
-            ),
-            endAdornment: searchQuery && (
-              <InputAdornment position="end">
-                <IconButton size="small" onClick={handleClearSearch}>
-                  <ClearIcon fontSize="small" />
-                </IconButton>
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon fontSize="small" />
+                </InputAdornment>
+              ),
+              endAdornment: searchQuery && (
+                <InputAdornment position="end">
+                  <IconButton size="small" onClick={handleClearSearch}>
+                    <ClearIcon fontSize="small" />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            },
           }}
         />
       </Box>
-
       {/* Category Navigation - Emoji Picker Style */}
       <Box
         sx={{
@@ -894,7 +895,6 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel }) =>
           );
         })}
       </Box>
-
       {/* Icon Grid */}
       <Box sx={{ flex: 1, px: 2, pt: 1, pb: 2, overflowY: 'auto' }}>
         {filteredIcons.length > 0 ? (
@@ -917,7 +917,12 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel }) =>
           </>
         ) : (
           <Box sx={{ textAlign: 'center', py: 4 }}>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               No icons found matching your search
             </Typography>
           </Box>
