@@ -76,7 +76,7 @@
     "jest-transform-stub": "^2.0.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "start-server-and-test": "^3.0.9",
+    "start-server-and-test": "^3.0.10",
     "storybook": "^10.4.3",
     "ts-jest": "^29.4.11",
     "typescript": "^6.0.3",
