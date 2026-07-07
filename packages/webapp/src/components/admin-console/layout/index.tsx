@@ -190,7 +190,7 @@ const AdminLayout = (): ReactElement => {
                   primary={item.label}
                   slotProps={{
                     primary: {
-                      fontWeight: location.pathname === item.path ? 'bold' : 'normal',
+                      sx: { fontWeight: location.pathname === item.path ? 'bold' : 'normal' },
                     },
                   }}
                 />

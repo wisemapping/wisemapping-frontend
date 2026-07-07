@@ -560,6 +560,10 @@ class MockClient implements Client {
     return Promise.resolve({ action: 'EMAIL_SENT' });
   }
 
+  resetPasswordFromToken(_token: string, _newPassword: string): Promise<void> {
+    return Promise.resolve();
+  }
+
   activateAccount(code: string): Promise<void> {
     console.log('Activating account with code:' + code);
     if (code === '999999999') {

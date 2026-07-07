@@ -92,14 +92,19 @@ const createAppTheme = (mode: PaletteMode): Theme => {
             borderRadius: '9px',
             padding: '6px 20px 6px 20px',
           },
-          containedPrimary: ({ theme }) => ({
-            color: theme.palette.primary.contrastText,
-            backgroundColor: theme.palette.primary.main,
-            '&:hover': {
-              backgroundColor: theme.palette.primary.dark,
-            },
-          }),
         },
+        variants: [
+          {
+            props: { variant: 'contained', color: 'primary' },
+            style: ({ theme }) => ({
+              color: theme.palette.primary.contrastText,
+              backgroundColor: theme.palette.primary.main,
+              '&:hover': {
+                backgroundColor: theme.palette.primary.dark,
+              },
+            }),
+          },
+        ],
       },
       MuiAppBar: {
         styleOverrides: {
