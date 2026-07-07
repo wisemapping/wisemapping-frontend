@@ -69,6 +69,11 @@ Cypress.on('window:before:load', (win) => {
     if (warnMessage.includes('content_script.js')) {
       return;
     }
+    // The mock client is the deliberate config for the test suite
+    // (config.mock.json → clientType: 'mock'), so this is expected noise.
+    if (warnMessage.includes('Service using mock client')) {
+      return;
+    }
     originalWarn(...args);
   };
 
