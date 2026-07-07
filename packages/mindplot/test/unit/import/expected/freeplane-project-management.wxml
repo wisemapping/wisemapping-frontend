@@ -51,34 +51,7 @@
           </html>]]></note>
                 </topic>
         </topic>
-        <topic position="-200,0" order="1" text="Define Scope" shape="line" id="6">
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Clearly define project boundaries and deliverables</p>
-            </body>
-          </html>]]></note>
-        </topic>
-        <topic position="300,75" order="2" text="Create Timeline" shape="line" id="7">
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Develop detailed project schedule with milestones</p>
-            </body>
-          </html>]]></note>
-        </topic>
-        <topic position="-300,75" order="3" text="Resource Allocation" shape="line" id="8">
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Assign team members and budget resources</p>
-            </body>
-          </html>]]></note>
-        </topic>
-        <topic position="400,150" order="4" text="Execution Phase" shape="line" id="9">
+        <topic position="-200,0" order="1" text="Execution Phase" shape="line" id="6">
             <eicon id="💡"/>
             <eicon id="💡"/>
             <eicon id="💡"/>
@@ -101,7 +74,7 @@
               <p>Create project documentation and user guides</p>
             </body>
           </html>]]></note>
-                <topic position="200,0" order="0" text="Development" shape="line" id="10">
+                <topic position="200,0" order="0" text="Development" shape="line" id="7">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
             <head/>
@@ -110,7 +83,7 @@
             </body>
           </html>]]></note>
                 </topic>
-                <topic position="-200,0" order="1" text="Testing" shape="line" id="11">
+                <topic position="-200,0" order="1" text="Testing" shape="line" id="8">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
             <head/>
@@ -119,7 +92,7 @@
             </body>
           </html>]]></note>
                 </topic>
-                <topic position="300,75" order="2" text="Documentation" shape="line" id="12">
+                <topic position="300,75" order="2" text="Documentation" shape="line" id="9">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
             <head/>
@@ -129,34 +102,7 @@
           </html>]]></note>
                 </topic>
         </topic>
-        <topic position="-400,150" order="5" text="Development" shape="line" id="13">
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Implement project deliverables</p>
-            </body>
-          </html>]]></note>
-        </topic>
-        <topic position="500,225" order="6" text="Testing" shape="line" id="14">
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Quality assurance and testing procedures</p>
-            </body>
-          </html>]]></note>
-        </topic>
-        <topic position="-500,225" order="7" text="Documentation" shape="line" id="15">
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Create project documentation and user guides</p>
-            </body>
-          </html>]]></note>
-        </topic>
-        <topic position="600,300" order="8" text="Monitoring  Control" shape="line" id="16">
+        <topic position="300,75" order="2" text="Monitoring  Control" shape="line" id="10">
             <eicon id="💡"/>
             <eicon id="💡"/>
             <eicon id="💡"/>
@@ -179,7 +125,7 @@
               <p>Identify and mitigate project risks</p>
             </body>
           </html>]]></note>
-                <topic position="200,0" order="0" text="Progress Tracking" shape="line" id="17">
+                <topic position="200,0" order="0" text="Progress Tracking" shape="line" id="11">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
             <head/>
@@ -188,7 +134,7 @@
             </body>
           </html>]]></note>
                 </topic>
-                <topic position="-200,0" order="1" text="Quality Assurance" shape="line" id="18">
+                <topic position="-200,0" order="1" text="Quality Assurance" shape="line" id="12">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
             <head/>
@@ -197,7 +143,7 @@
             </body>
           </html>]]></note>
                 </topic>
-                <topic position="300,75" order="2" text="Risk Management" shape="line" id="19">
+                <topic position="300,75" order="2" text="Risk Management" shape="line" id="13">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
             <head/>
@@ -207,34 +153,7 @@
           </html>]]></note>
                 </topic>
         </topic>
-        <topic position="-600,300" order="9" text="Progress Tracking" shape="line" id="20">
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Monitor project progress against timeline</p>
-            </body>
-          </html>]]></note>
-        </topic>
-        <topic position="700,375" order="10" text="Quality Assurance" shape="line" id="21">
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Ensure deliverables meet quality standards</p>
-            </body>
-          </html>]]></note>
-        </topic>
-        <topic position="-700,375" order="11" text="Risk Management" shape="line" id="22">
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Identify and mitigate project risks</p>
-            </body>
-          </html>]]></note>
-        </topic>
-        <topic position="800,450" order="12" text="Closure Phase" shape="line" id="23">
+        <topic position="-300,75" order="3" text="Closure Phase" shape="line" id="14">
             <eicon id="💡"/>
             <eicon id="💡"/>
             <eicon id="💡"/>
@@ -257,7 +176,7 @@
               <p>Archive project files and documentation</p>
             </body>
           </html>]]></note>
-                <topic position="200,0" order="0" text="Final Review" shape="line" id="24">
+                <topic position="200,0" order="0" text="Final Review" shape="line" id="15">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
             <head/>
@@ -266,7 +185,7 @@
             </body>
           </html>]]></note>
                 </topic>
-                <topic position="-200,0" order="1" text="Lessons Learned" shape="line" id="25">
+                <topic position="-200,0" order="1" text="Lessons Learned" shape="line" id="16">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
             <head/>
@@ -275,7 +194,7 @@
             </body>
           </html>]]></note>
                 </topic>
-                <topic position="300,75" order="2" text="Project Archive" shape="line" id="26">
+                <topic position="300,75" order="2" text="Project Archive" shape="line" id="17">
                     <eicon id="📁"/>
                     <note><![CDATA[<html>
             <head/>
@@ -284,33 +203,6 @@
             </body>
           </html>]]></note>
                 </topic>
-        </topic>
-        <topic position="-800,450" order="13" text="Final Review" shape="line" id="27">
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Conduct final project review and sign-off</p>
-            </body>
-          </html>]]></note>
-        </topic>
-        <topic position="900,525" order="14" text="Lessons Learned" shape="line" id="28">
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Document lessons learned for future projects</p>
-            </body>
-          </html>]]></note>
-        </topic>
-        <topic position="-900,525" order="15" text="Project Archive" shape="line" id="29">
-            <eicon id="📁"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Archive project files and documentation</p>
-            </body>
-          </html>]]></note>
         </topic>
     </topic>
 </map>
