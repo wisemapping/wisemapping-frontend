@@ -115,14 +115,16 @@ const TopicLinkEditor = (props: {
         size="small"
         type="url"
         onKeyDown={keyDownHandler}
-        InputProps={{
-          endAdornment: (
-            <Link href={isValidUrl ? url : ''} target="_blank">
-              <IconButton disabled={!isValidUrl}>
-                <OpenInNewOutlinedIcon />
-              </IconButton>
-            </Link>
-          ),
+        slotProps={{
+          input: {
+            endAdornment: (
+              <Link href={isValidUrl ? url : ''} target="_blank">
+                <IconButton disabled={!isValidUrl}>
+                  <OpenInNewOutlinedIcon />
+                </IconButton>
+              </Link>
+            ),
+          },
         }}
       />
       <SaveAndDelete

@@ -206,12 +206,14 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
               },
             }}
             MenuProps={{
-              PaperProps: {
-                sx: {
-                  maxHeight: 300,
-                  '& .MuiMenuItem-root': {
-                    py: 1,
-                    px: 2,
+              slotProps: {
+                paper: {
+                  sx: {
+                    maxHeight: 300,
+                    '& .MuiMenuItem-root': {
+                      py: 1,
+                      px: 2,
+                    },
                   },
                 },
               },

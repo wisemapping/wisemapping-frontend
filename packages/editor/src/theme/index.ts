@@ -73,14 +73,19 @@ const createEditorTheme = (mode: PaletteMode): Theme => {
           root: {
             textTransform: 'none',
           },
-          containedPrimary: ({ theme }) => ({
-            backgroundColor: theme.palette.primary.main,
-            color: theme.palette.primary.contrastText,
-            '&:hover': {
-              backgroundColor: theme.palette.primary.dark,
-            },
-          }),
         },
+        variants: [
+          {
+            props: { variant: 'contained', color: 'primary' },
+            style: ({ theme }) => ({
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.contrastText,
+              '&:hover': {
+                backgroundColor: theme.palette.primary.dark,
+              },
+            }),
+          },
+        ],
       },
       MuiIconButton: {
         styleOverrides: {
