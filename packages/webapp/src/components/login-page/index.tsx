@@ -116,8 +116,6 @@ const LoginPage = (): React.ReactElement => {
     const checkAuthentication = async (): Promise<void> => {
       try {
         await client.fetchAccountInfo();
-        // Delay so Google Ads has time to initialize before navigation triggers the vignette.
-        await new Promise((resolve) => setTimeout(resolve, 2500));
         window.location.href = redirectUrl ?? '/c/maps/';
       } catch {
         setIsCheckingAuth(false);
@@ -210,7 +208,6 @@ const LoginPage = (): React.ReactElement => {
         contentSx={{
           padding: { xs: '8px 16px', md: '16px 16px' },
         }}
-        showAds
       >
         <FormContainer>
           <header>
