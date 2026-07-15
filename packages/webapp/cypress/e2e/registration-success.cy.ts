@@ -51,6 +51,9 @@ describe('Registration Success Page', () => {
   });
 
   it('should navigate to login page when clicking Sign In button', () => {
+    // The login page redirects authenticated users to /c/maps/, so drop the
+    // mock auth cookie to land on the login page itself.
+    cy.clearCookie('jwt-auth-token');
     cy.contains('button', 'Sign In').click();
     cy.url().should('include', '/c/login');
   });

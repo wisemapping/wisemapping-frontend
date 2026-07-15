@@ -27,11 +27,15 @@ export const containerStyle = (
     {
       position: 'relative',
       width: '100%',
-      height: '90%',
-      top: '5%',
       display: 'inline-block',
     },
+    // Only the responsive variant is a vertical divider spanning its own grid
+    // column, so only it stretches to the parent's height. Applying this to the
+    // horizontal variant makes it claim 90% of the container and push the
+    // following content out of the layout.
     responsive && {
+      height: '90%',
+      top: '5%',
       [breakPointDownMd]: {
         paddingTop: '25px',
         paddingBottom: '25px',
