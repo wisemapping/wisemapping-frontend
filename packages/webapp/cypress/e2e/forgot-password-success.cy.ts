@@ -33,6 +33,9 @@ describe('Forgot Password Success Page', () => {
   });
 
   it('displays a sign-in link back to login', () => {
+    // The login page redirects authenticated users to /c/maps/, so drop the
+    // mock auth cookie to land on the login page itself.
+    cy.clearCookie('jwt-auth-token');
     cy.contains('Sign In').should('be.visible').click();
     cy.url().should('include', '/c/login');
   });
