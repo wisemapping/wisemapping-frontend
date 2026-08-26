@@ -14,6 +14,7 @@
     ],
     "scripts": {
         "build": "vite build",
+        "build:prod": "APP_CONFIG_TYPE=file:prod vite build",
         "build:analyze": "ANALYZE=true vite build",
         "clean": "rm -rf dist node_modules/.cache cypress/screenshots cypress/videos cypress/downloads debug-storybook.log test-results.json .eslintcache",
         "cy:open": "npx cypress open",
