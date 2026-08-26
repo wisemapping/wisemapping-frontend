@@ -39,8 +39,8 @@ export interface SEOProps {
 }
 
 const SEOHead: React.FC<SEOProps> = ({
-  title = 'WiseMapping - Free & Open-Source Mind Mapping',
-  description = 'WiseMapping is a free, fast and simple online mind mapping editor for individuals and business. Sign up to start organizing and sharing your ideas and thoughts.',
+  title = 'SimpMind - Free & Open-Source Mind Mapping',
+  description = 'SimpMind is a free, fast and simple online mind mapping editor for individuals and business. Sign up to start organizing and sharing your ideas and thoughts.',
   keywords = 'mindmap,mind map,mind maps,mindmaps,ideas,brainstorming,organize,thoughts,structure,collaboration,free,fast,simple,online,tool,knowledge,share,sharing,publish',
   canonicalUrl,
   ogTitle,
@@ -72,8 +72,8 @@ const SEOHead: React.FC<SEOProps> = ({
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <meta name="author" content="WiseMapping" />
-      <meta name="publisher" content="WiseMapping" />
+      <meta name="author" content="SimpMind" />
+      <meta name="publisher" content="SimpMind" />
       <meta name="robots" content={robots} />
 
       {/* Canonical URL */}
@@ -88,7 +88,7 @@ const SEOHead: React.FC<SEOProps> = ({
         content={fullCanonicalUrl || `${baseUrl}${window.location.pathname}`}
       />
       <meta property="og:type" content={ogType} />
-      <meta property="og:site_name" content="WiseMapping" />
+      <meta property="og:site_name" content="SimpMind" />
       <meta property="og:locale" content="en_US" />
 
       {/* Twitter Card Meta Tags */}
@@ -99,8 +99,8 @@ const SEOHead: React.FC<SEOProps> = ({
         content={twitterDescription || ogDescription || description}
       />
       <meta name="twitter:image" content={fullTwitterImage} />
-      <meta name="twitter:site" content="@wisemapping" />
-      <meta name="twitter:creator" content="@wisemapping" />
+      <meta name="twitter:site" content="@simpmind" />
+      <meta name="twitter:creator" content="@simpmind" />
 
       {/* Language and Internationalization */}
       <html lang={language} />
@@ -111,8 +111,8 @@ const SEOHead: React.FC<SEOProps> = ({
       {/* Additional SEO Meta Tags */}
       <meta name="theme-color" content="#000000" />
       <meta name="msapplication-TileColor" content="#000000" />
-      <meta name="apple-mobile-web-app-title" content="WiseMapping" />
-      <meta name="application-name" content="WiseMapping" />
+      <meta name="apple-mobile-web-app-title" content="SimpMind" />
+      <meta name="application-name" content="SimpMind" />
 
       {/* Structured Data */}
       {structuredData && (

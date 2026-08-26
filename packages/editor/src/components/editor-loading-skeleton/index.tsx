@@ -201,18 +201,30 @@ const EditorLoadingSkeleton: React.FC = () => {
         </Box>
       </Box>
 
-      {/* Right Vertical Toolbar Skeleton */}
-      <Box sx={styles.rightToolbar}>
-        {[...Array(8)].map((_, i) => (
-          <Skeleton
-            key={i}
-            animation="wave"
-            variant="rectangular"
-            width={32}
-            height={32}
-            sx={styles.skeletonButton}
-          />
-        ))}
+      {/* Right Inspector Skeleton */}
+      <Box sx={styles.inspector}>
+        <Skeleton animation="wave" variant="text" width="60%" height={24} />
+        <Skeleton
+          animation="wave"
+          variant="rectangular"
+          width="100%"
+          height={36}
+          sx={styles.skeletonButton}
+        />
+        <Skeleton
+          animation="wave"
+          variant="rectangular"
+          width="100%"
+          height={120}
+          sx={styles.skeletonButton}
+        />
+        <Skeleton
+          animation="wave"
+          variant="rectangular"
+          width="100%"
+          height={80}
+          sx={styles.skeletonButton}
+        />
       </Box>
 
       {/* Bottom Visualization Toolbar Skeleton */}

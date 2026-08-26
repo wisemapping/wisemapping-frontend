@@ -29,8 +29,8 @@ import { Notifier } from './warning-dialog/styled';
 import WarningDialog from './warning-dialog';
 import AppBar from './app-bar';
 import { ToolbarActionType } from './toolbar/ToolbarActionType';
-import EditorToolbar from './editor-toolbar';
 import VisualizationToolbar from './visualization-toolbar';
+import Inspector from './inspector';
 import { EditorConfiguration } from '../hooks/useEditor';
 import CreatorInfoPane from './creator-info-pane';
 import { WidgetPopover } from './widgetPopover';
@@ -64,6 +64,8 @@ const EditorContent = ({
 
   // Get the current theme mode from the theme context
   const mode = internalMode;
+
+  const [inspectorOpen, setInspectorOpen] = React.useState(true);
 
   // Memoize default widget builder to avoid recreating on every render
   const defaultWidgetBuilderRef = useRef<DefaultWidgetBuilder | null>(null);
@@ -159,6 +161,18 @@ const EditorContent = ({
               capability={capability}
               onAction={onAction}
               accountConfig={accountConfiguration}
+              lockedByFullName={options.lockedByFullName}
+            />
+          )}
+
+          {model && model.isMapLoadded() && (
+            <Inspector
+              model={model}
+              capability={capability}
+              mapId={mapInfo.getId()}
+              lockedByFullName={options.lockedByFullName}
+              open={inspectorOpen}
+              onToggleOpen={() => setInspectorOpen((prev) => !prev)}
             />
           )}
 
@@ -166,8 +180,11 @@ const EditorContent = ({
 
           {model && (
             <div className="no-print">
-              <EditorToolbar model={model} capability={capability} />
-              <VisualizationToolbar model={model} capability={capability} />
+              <VisualizationToolbar
+                model={model}
+                capability={capability}
+                inspectorOpen={inspectorOpen}
+              />
             </div>
           )}
 

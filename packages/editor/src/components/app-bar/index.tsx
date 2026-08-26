@@ -55,6 +55,9 @@ import { $notify } from '@wisemapping/mindplot';
 import { useTheme } from '../../contexts/ThemeContext';
 import { trackAppBarAction } from '../../utils/analytics';
 import debounce from 'lodash/debounce';
+import Chip from '@mui/material/Chip';
+import PersonIcon from '@mui/icons-material/Person';
+import AppBarOverflowMenu from './overflow-menu';
 
 interface AppBarProps {
   model: Editor | undefined;
@@ -62,6 +65,7 @@ interface AppBarProps {
   capability: Capability;
   onAction: (type: ToolbarActionType) => void;
   accountConfig?;
+  lockedByFullName?: string | null;
 }
 
 const appBarDivisor = {
@@ -87,6 +91,7 @@ const AppBar = ({
   capability,
   onAction,
   accountConfig,
+  lockedByFullName,
 }: AppBarProps): ReactElement => {
   const [isStarred, setStarred] = useState<undefined | boolean>(undefined);
   const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
@@ -325,7 +330,7 @@ const AppBar = ({
           src={mode === 'light' ? LogoTextBlackSvg : LogoTextOrangeSvg}
           aria-label={intl.formatMessage({
             id: 'appbar.logo-aria-label',
-            defaultMessage: 'WiseMapping',
+            defaultMessage: 'SimpMind',
           })}
         />
       ),
@@ -615,6 +620,34 @@ const AppBar = ({
         </Tooltip>
       ),
       visible: !capability.isHidden('sign-up'),
+    },
+    lockedByFullName
+      ? {
+          render: () => (
+            <Chip
+              size="small"
+              icon={<PersonIcon />}
+              label={intl.formatMessage(
+                { id: 'editor.presence.editing', defaultMessage: '{name} is editing' },
+                { name: lockedByFullName },
+              )}
+              color="warning"
+              variant="outlined"
+              sx={{ mx: 1 }}
+            />
+          ),
+        }
+      : undefined,
+    {
+      render: () => (
+        <AppBarOverflowMenu
+          onAction={onAction}
+          isStarred={isStarred}
+          onToggleStar={handleStarredOnClick}
+          readOnly={capability.isHidden('save')}
+        />
+      ),
+      visible: true,
     },
   ];
 

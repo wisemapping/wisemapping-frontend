@@ -824,7 +824,7 @@
   "error.page-title": [
     {
       "type": 0,
-      "value": "Unexpected Error | WiseMapping"
+      "value": "Unexpected Error | SimpMind"
     }
   ],
   "error.permission-denied-message": [
@@ -1012,7 +1012,7 @@
   "forgot.page-title": [
     {
       "type": 0,
-      "value": "Forgot Password | WiseMapping"
+      "value": "Forgot Password | SimpMind"
     }
   ],
   "forgot.register": [
@@ -1042,7 +1042,7 @@
   "forgotsuccess.page-title": [
     {
       "type": 0,
-      "value": "Password Recovered | WiseMapping"
+      "value": "Password Recovered | SimpMind"
     }
   ],
   "header.donthaveaccount": [
@@ -1078,7 +1078,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import."
+      "value": "You can import SimpMind, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import."
     }
   ],
   "import.error-file": [
@@ -1302,7 +1302,7 @@
   "login.page-title": [
     {
       "type": 0,
-      "value": "Login | WiseMapping"
+      "value": "Login | SimpMind"
     }
   ],
   "login.password": [
@@ -1404,7 +1404,7 @@
   "maps.auth-required-title": [
     {
       "type": 0,
-      "value": "Sign In Required | WiseMapping"
+      "value": "Sign In Required | SimpMind"
     }
   ],
   "maps.choose-file": [
@@ -1428,7 +1428,7 @@
   "maps.copilot-dialog.description": [
     {
       "type": 0,
-      "value": "ChatGPT-powered AI Copilot is a brainstorming assistant that turns your prompts into structured mind maps. We'll open it in a new tab so you can expand ideas, generate topics, and bring the best ones back to WiseMapping."
+      "value": "ChatGPT-powered AI Copilot is a brainstorming assistant that turns your prompts into structured mind maps. We'll open it in a new tab so you can expand ideas, generate topics, and bring the best ones back to SimpMind."
     }
   ],
   "maps.copilot-dialog.title": [
@@ -1524,7 +1524,7 @@
   "maps.page-title": [
     {
       "type": 0,
-      "value": "My Maps | WiseMapping"
+      "value": "My Maps | SimpMind"
     }
   ],
   "maps.revert": [
@@ -1632,7 +1632,7 @@
   "registation.success-title": [
     {
       "type": 0,
-      "value": "Registation Success | WiseMapping"
+      "value": "Registation Success | SimpMind"
     }
   ],
   "registration.callback.back": [
@@ -1652,7 +1652,7 @@
     },
     {
       "type": 0,
-      "value": " account to that WiseMapping account?"
+      "value": " account to that SimpMind account?"
     }
   ],
   "registration.callback.confirm.title": [
@@ -1736,7 +1736,7 @@
   "registration.page-title": [
     {
       "type": 0,
-      "value": "Registration | WiseMapping"
+      "value": "Registration | SimpMind"
     }
   ],
   "registration.password": [
@@ -1854,7 +1854,7 @@
   "reset-password.page-title": [
     {
       "type": 0,
-      "value": "Reset Password | WiseMapping"
+      "value": "Reset Password | SimpMind"
     }
   ],
   "reset-password.password": [
@@ -1932,7 +1932,7 @@
   "save-as.destination-internal": [
     {
       "type": 0,
-      "value": "WiseMapping Server"
+      "value": "SimpMind Server"
     }
   ],
   "save-as.gdrive-info": [

@@ -1,91 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   viewBox="11.791 4.244 32.539761 32.18479"
-   width="33.60767"
-   height="24.645821"
-   version="1.1"
-   id="svg20"
-   sodipodi:docname="logo-small.svg"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs24" />
-  <sodipodi:namedview
-     id="namedview22"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="17.164614"
-     inkscape:cx="14.768756"
-     inkscape:cy="15.38048"
-     inkscape:window-width="1366"
-     inkscape:window-height="729"
-     inkscape:window-x="0"
-     inkscape:window-y="18"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg20" />
-  <mask
-     id="i08j30ef6a"
-     fill="#ffffff">
-    <path
-       d="m 32.334,17.911 c 0,2.794 -1.033,5.471 -2.876,7.446 -1.841,1.975 -4.337,3.084 -6.941,3.084 -2.604,0 -5.1,-1.109 -6.941,-3.084 C 13.734,23.382 12.7,20.705 12.7,17.911 Z"
-       id="path2" />
-  </mask>
-  <mask
-     id="1f1ltfoetb"
-     fill="#ffffff">
-    <path
-       d="m 56.588,17.911 c 0,2.794 -1.034,5.471 -2.876,7.446 -1.84,1.975 -4.337,3.084 -6.941,3.084 -2.604,0 -5.101,-1.109 -6.941,-3.084 -1.842,-1.975 -2.876,-4.652 -2.876,-7.446 z"
-       id="path5" />
-  </mask>
-  <g
-     id="g313"
-     transform="translate(2.2745891)">
-    <path
-       fill="#ffcb00"
-       stroke="#000000"
-       stroke-linejoin="round"
-       stroke-width="1.5"
-       d="m 25.786291,35.679 c -1.732,-5.266 -4.041,-4.607 -10.394,-9.215 h 20.212 c -5.529,4.117 -8.662,3.949 -9.818,9.215 z"
-       id="path8" />
-    <path
-       fill="#ffcb00"
-       stroke="#000000"
-       stroke-width="1.5"
-       d="m 41.193291,17.195 c 0,3.219 -1.674,6.245 -4.584,8.508 -2.904,2.261 -6.964,3.691 -11.492,3.691 -4.529,0 -8.59,-1.43 -11.493,-3.691 -2.91,-2.263 -4.5859996,-5.289 -4.5859996,-8.508 0,-3.221 1.6759996,-6.245 4.5859996,-8.509 2.903,-2.261 6.963,-3.692 11.49,-3.692 4.531,0 8.591,1.431 11.495,3.692 2.908,2.264 4.586,5.288 4.586,8.509 z"
-       id="path10" />
-    <path
-       fill="#b3d4ff"
-       stroke="#000000"
-       stroke-width="3"
-       d="m 32.334,17.911 c 0,2.794 -1.034,5.471 -2.875,7.446 -1.841,1.975 -4.339,3.084 -6.942,3.084 -2.603,0 -5.099,-1.109 -6.941,-3.084 C 13.734,23.382 12.7,20.705 12.7,17.911 Z"
-       mask="url(#i08j30ef6a)"
-       id="path12"
-       transform="translate(-8.8577086,-5.924)" />
-    <path
-       fill="#b3d4ff"
-       stroke="#000000"
-       stroke-width="3"
-       d="m 56.588,17.911 c 0,2.794 -1.034,5.471 -2.876,7.446 -1.84,1.975 -4.337,3.084 -6.94,3.084 -2.604,0 -5.101,-1.109 -6.941,-3.084 -1.842,-1.975 -2.877,-4.652 -2.877,-7.446 z"
-       mask="url(#1f1ltfoetb)"
-       id="path14"
-       transform="translate(-8.8577086,-5.924)" />
-    <path
-       stroke="#000000"
-       stroke-width="1.5"
-       d="m 22.321291,13.469 c 2.31,-1.976 4.621,-1.976 6.93,0"
-       id="path16" />
-    <path
-       fill="#ffcb00"
-       d="m 26.001291,34.033 c -1.731,-5.265 -11.764,-7.569 -10.032,-8.884 1.732,-1.316 18.48,-1.973 19.635,-0.658 1.156,1.316 -7.921,3.719 -9.603,9.542 z"
-       id="path18" />
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 36" width="160" height="36" fill="none">
+  <defs>
+    <linearGradient id="sm-grad-mp" x1="2" y1="2" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#c67139" />
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="32" height="32" rx="9" fill="url(#sm-grad-mp)" />
+  <path d="M18 18 C14 18 11 13 8 13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9" />
+  <path d="M18 18 C22 18 25 13 28 13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9" />
+  <path d="M18 18 C14 18 11 23 8 23" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9" />
+  <path d="M18 18 C22 18 25 23 28 23" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9" />
+  <circle cx="8" cy="13" r="2.75" fill="#ffffff" />
+  <circle cx="28" cy="13" r="2.75" fill="#ffffff" />
+  <circle cx="8" cy="23" r="2.75" fill="#ffffff" />
+  <circle cx="28" cy="23" r="2.75" fill="#ffffff" />
+  <circle cx="18" cy="18" r="5" fill="#ffffff" />
+  <circle cx="18" cy="18" r="2.5" fill="#c67139" />
+  <text x="44" y="25" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#1c1917" letter-spacing="-0.5px">Simp<tspan fill="#c67139" font-weight="800">Mind</tspan></text>
 </svg>

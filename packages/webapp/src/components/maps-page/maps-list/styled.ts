@@ -42,15 +42,12 @@ export const useStyles = () => {
       },
     },
     cards: {
-      display: 'none',
-      [smMediaQuery]: {
-        display: 'block',
-      },
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '16px',
+      padding: '8px',
     },
     table: {
-      [smMediaQuery]: {
-        display: 'none',
-      },
       minWidth: 750,
       backgroundColor: theme.palette.background.default,
       '& tbody tr': {

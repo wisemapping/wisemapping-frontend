@@ -17,7 +17,7 @@
  */
 
 import { createTheme, PaletteMode, Theme } from '@mui/material/styles';
-
+import { organicTokens } from './tokens';
 const createAppTheme = (mode: PaletteMode): Theme => {
   const isLight = mode === 'light';
 
@@ -25,9 +25,9 @@ const createAppTheme = (mode: PaletteMode): Theme => {
     palette: {
       mode,
       primary: {
-        light: isLight ? '#ffb74d' : '#cc8500',
-        main: isLight ? '#ffa800' : '#cc8500',
-        dark: isLight ? '#ffcc80' : '#996400',
+        light: isLight ? organicTokens.color.terracotta : organicTokens.color.terracottaDark,
+        main: isLight ? organicTokens.color.terracotta : organicTokens.color.terracottaDark,
+        dark: isLight ? organicTokens.color.terracottaDark : organicTokens.color.terracotta,
         contrastText: '#FFFFFF',
       },
       secondary: {
@@ -37,8 +37,8 @@ const createAppTheme = (mode: PaletteMode): Theme => {
         contrastText: '#FFFFFF',
       },
       background: {
-        default: isLight ? '#fafafa' : '#2a2a2a',
-        paper: isLight ? '#ffffff' : '#1e1e1e',
+        default: isLight ? organicTokens.color.ground : organicTokens.color.groundDark,
+        paper: isLight ? organicTokens.color.sand : organicTokens.color.sandDark,
       },
       text: {
         primary: isLight ? '#333333' : '#ffffff',
@@ -184,7 +184,8 @@ const createAppTheme = (mode: PaletteMode): Theme => {
         ',',
       ),
       h4: {
-        color: isLight ? '#ffa800' : '#cc8500',
+        fontFamily: organicTokens.font.display,
+        color: isLight ? organicTokens.color.terracotta : organicTokens.color.terracottaDark,
         fontWeight: 600,
         marginBottom: '10px',
       },

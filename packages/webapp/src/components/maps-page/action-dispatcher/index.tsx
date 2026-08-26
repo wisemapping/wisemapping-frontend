@@ -17,7 +17,7 @@
  */
 
 import AppConfig from '../../../classes/app-config';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import RenameDialog from './rename-dialog';
 import DeleteDialog from './delete-dialog';
 import { ActionType } from '../action-chooser';
@@ -28,12 +28,12 @@ import SaveAsDialog from './save-as-dialog';
 import CreateDialog from './create-dialog';
 import HistoryDialog from './history-dialog';
 import ImportDialog from './import-dialog';
-import PublishDialog from './publish-dialog';
 import InfoDialog from './info-dialog';
 import DeleteMultiselectDialog from './delete-multiselect-dialog';
 import ExportDialog from './export-dialog';
-import ShareDialog from './share-dialog';
+import ShareSheet from './share-sheet';
 import LabelDialog from './label-dialog';
+import { ClientContext } from '../../../classes/provider/client-context';
 import { trackMindmapListAction } from '../../../utils/analytics';
 
 export type BasicMapInfo = {
@@ -56,6 +56,7 @@ const ActionDispatcher = ({
   fromEditor,
   pageMode,
 }: ActionDialogProps): React.ReactElement => {
+  const client = useContext(ClientContext);
   useEffect(() => {
     if (action) {
       trackMindmapListAction(action, 'map_metadata');
@@ -140,12 +141,13 @@ const ActionDispatcher = ({
       {action === 'duplicate' && <DuplicateDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'history' && <HistoryDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'import' && <ImportDialog onClose={handleOnClose} />}
-      {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'export' && (
         <ExportDialog onClose={handleOnClose} mapId={mapsId[0]} enableImgExport={fromEditor} />
       )}
-      {action === 'share' && <ShareDialog onClose={handleOnClose} mapId={mapsId[0]} />}
+      {(action === 'share' || action === 'publish') && (
+        <ShareSheet onClose={handleOnClose} mapId={mapsId[0]} />
+      )}
       {action === 'label' && <LabelDialog onClose={handleOnClose} mapsId={mapsId} />}
     </span>
   );

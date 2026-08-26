@@ -135,7 +135,7 @@
     "defaultMessage": "Save to"
   },
   "save-as.destination-internal": {
-    "defaultMessage": "WiseMapping Server"
+    "defaultMessage": "SimpMind Server"
   },
   "save-as.destination-gdrive": {
     "defaultMessage": "Google Drive"
@@ -228,7 +228,7 @@
     "defaultMessage": "You dont need password, please login using Facebook or Google."
   },
   "forgot.page-title": {
-    "defaultMessage": "Forgot Password | WiseMapping"
+    "defaultMessage": "Forgot Password | SimpMind"
   },
   "forgot.register": {
     "defaultMessage": "Send recovery link"
@@ -243,7 +243,7 @@
     "defaultMessage": "Reset your password"
   },
   "forgotsuccess.page-title": {
-    "defaultMessage": "Password Recovered | WiseMapping"
+    "defaultMessage": "Password Recovered | SimpMind"
   },
   "header.donthaveaccount": {
     "defaultMessage": "Don't have an account ?"
@@ -261,7 +261,7 @@
     "defaultMessage": "Create"
   },
   "import.description": {
-    "defaultMessage": "You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import."
+    "defaultMessage": "You can import SimpMind, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import."
   },
   "import.error-file": {
     "defaultMessage": "Import error {error}"
@@ -363,7 +363,7 @@
     "defaultMessage": "Sign in with Facebook"
   },
   "login.page-title": {
-    "defaultMessage": "Login | WiseMapping"
+    "defaultMessage": "Login | SimpMind"
   },
   "login.password": {
     "defaultMessage": "Password"
@@ -414,7 +414,7 @@
     "defaultMessage": "ChatGPT-powered Mindmap Copilot"
   },
   "maps.copilot-dialog.description": {
-    "defaultMessage": "ChatGPT-powered AI Copilot is a brainstorming assistant that turns your prompts into structured mind maps. We'll open it in a new tab so you can expand ideas, generate topics, and bring the best ones back to WiseMapping."
+    "defaultMessage": "ChatGPT-powered AI Copilot is a brainstorming assistant that turns your prompts into structured mind maps. We'll open it in a new tab so you can expand ideas, generate topics, and bring the best ones back to SimpMind."
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Open Copilot"
@@ -453,7 +453,7 @@
     "defaultMessage": "Starred"
   },
   "maps.page-title": {
-    "defaultMessage": "My Maps | WiseMapping"
+    "defaultMessage": "My Maps | SimpMind"
   },
   "maps.revert": {
     "defaultMessage": "Revert"
@@ -504,13 +504,13 @@
     "defaultMessage": "Publish"
   },
   "registation.success-title": {
-    "defaultMessage": "Registation Success | WiseMapping"
+    "defaultMessage": "Registation Success | SimpMind"
   },
   "registration.callback.back": {
     "defaultMessage": "Back to login"
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "An account with the same email was previously registered. Do you want to link your {provider} account to that WiseMapping account?"
+    "defaultMessage": "An account with the same email was previously registered. Do you want to link your {provider} account to that SimpMind account?"
   },
   "registration.callback.confirm.title": {
     "defaultMessage": "Confirm"
@@ -549,7 +549,7 @@
     "defaultMessage": "Last Name"
   },
   "registration.page-title": {
-    "defaultMessage": "Registration | WiseMapping"
+    "defaultMessage": "Registration | SimpMind"
   },
   "registration.password": {
     "defaultMessage": "Password"
@@ -753,7 +753,7 @@
     "defaultMessage": "JVM"
   },
   "error.page-title": {
-    "defaultMessage": "Unexpected Error | WiseMapping"
+    "defaultMessage": "Unexpected Error | SimpMind"
   },
   "error.generic-title": {
     "defaultMessage": "Hmm, that didn't work."
@@ -954,10 +954,10 @@
     "defaultMessage": "Passwords do not match."
   },
   "reset-password.page-title": {
-    "defaultMessage": "Reset Password | WiseMapping"
+    "defaultMessage": "Reset Password | SimpMind"
   },
   "maps.auth-required-title": {
-    "defaultMessage": "Sign In Required | WiseMapping"
+    "defaultMessage": "Sign In Required | SimpMind"
   },
   "maps.auth-required-heading": {
     "defaultMessage": "Sign in to access your maps"

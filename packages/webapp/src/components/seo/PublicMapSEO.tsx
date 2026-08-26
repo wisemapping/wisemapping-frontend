@@ -40,10 +40,10 @@ const PublicMapSEO: React.FC<PublicMapSEOProps> = ({
     typeof window !== 'undefined' ? window.location.origin : 'https://app.wisemapping.com';
   const fullMapUrl = mapUrl || `${baseUrl}/c/maps/${mapId}/public`;
 
-  const title = `${mapTitle} | Public Mind Map | WiseMapping`;
+  const title = `${mapTitle} | Public Mind Map | SimpMind`;
   const description =
     mapDescription ||
-    `Explore "${mapTitle}" - a public mind map created with WiseMapping. ${mapCreator ? `Created by ${mapCreator}. ` : ''}View and interact with this visual thinking tool online.`;
+    `Explore "${mapTitle}" - a public mind map created with SimpMind. ${mapCreator ? `Created by ${mapCreator}. ` : ''}View and interact with this visual thinking tool online.`;
   const keywords = `public mind map, ${mapTitle}, visual thinking, brainstorming, ${mapCreator ? `${mapCreator}, ` : ''}collaboration, ideas, organization`;
 
   const structuredData = {
@@ -60,7 +60,7 @@ const PublicMapSEO: React.FC<PublicMapSEOProps> = ({
       : undefined,
     publisher: {
       '@type': 'Organization',
-      name: 'WiseMapping',
+      name: 'SimpMind',
       url: baseUrl,
     },
     applicationCategory: 'ProductivityApplication',
