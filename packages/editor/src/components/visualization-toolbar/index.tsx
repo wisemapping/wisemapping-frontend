@@ -308,9 +308,14 @@ export function buildVisualizationToolbarConfig(
 type VisualizationToolbarProps = {
   model: Model;
   capability: Capability;
+  inspectorOpen?: boolean;
 };
 
-const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps): ReactElement => {
+const VisualizationToolbar = ({
+  model,
+  capability,
+  inspectorOpen = true,
+}: VisualizationToolbarProps): ReactElement => {
   const intl = useIntl();
   const [expandLevel, setExpandLevel] = useState(0);
   const { mode, toggleMode } = useTheme();
@@ -409,7 +414,7 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
       configurations={config}
       position={{
         position: {
-          right: isPublicOrEmbedded ? '5px' : '47px',
+          right: isPublicOrEmbedded ? '5px' : inspectorOpen ? '336px' : '64px',
           top: 'calc(100% - 55px)',
         },
         vertical: false,

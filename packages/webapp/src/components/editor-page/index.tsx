@@ -233,7 +233,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
 
   useEffect(() => {
     if (mapInfo?.getTitle()) {
-      document.title = `${mapInfo.getTitle()} | WiseMapping `;
+      document.title = `${mapInfo.getTitle()} | SimpMind`;
     }
   }, [mapInfo?.getTitle()]);
 
@@ -251,8 +251,8 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
         />
       ) : (
         <SEOHead
-          title={`${mapInfo?.getTitle() || 'Mind Map'} | WiseMapping`}
-          description={`Edit and collaborate on "${mapInfo?.getTitle() || 'Mind Map'}" using WiseMapping's powerful mind mapping editor.`}
+          title={`${mapInfo?.getTitle() || 'Mind Map'} | SimpMind`}
+          description={`Edit and collaborate on "${mapInfo?.getTitle() || 'Mind Map'}" using SimpMind's powerful mind mapping editor.`}
           keywords={`mind map, ${mapInfo?.getTitle() || 'mind map'}, editing, collaboration, visual thinking`}
           canonicalUrl={`/c/maps/${mapId}/edit`}
         />

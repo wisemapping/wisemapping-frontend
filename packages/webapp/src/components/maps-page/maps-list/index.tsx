@@ -42,6 +42,10 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ViewModuleIcon from '@mui/icons-material/ViewModule';
+import ViewListIcon from '@mui/icons-material/ViewList';
 import InputBase from '@mui/material/InputBase';
 import Link from '@mui/material/Link';
 import Chip from '@mui/material/Chip';
@@ -49,13 +53,13 @@ import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 
 import DeleteOutlined from '@mui/icons-material/DeleteOutlined';
 
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import SearchIcon from '@mui/icons-material/Search';
 
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { LabelsCell } from './labels-cell';
+import { MapCard } from './map-card';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import AppI18n from '../../../classes/app-i18n';
 import { useFetchAccount } from '../../../classes/middleware';
@@ -65,8 +69,8 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import CardHeader from '@mui/material/CardHeader';
 import { ClientContext } from '../../../classes/provider/client-context';
+import { getMapEditUrl } from '../../../utils/mapUrls';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
@@ -83,14 +87,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 type Order = 'asc' | 'desc';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key,
-): (
-  a: { [key in Key]: number | string | boolean | Label[] | undefined },
-  b: { [key in Key]: number | string | Label[] | boolean },
-) => number {
+function getComparator<T>(order: Order, orderBy: keyof T): (a: T, b: T) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
@@ -305,6 +302,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [viewMode, setViewMode] = React.useState<'cards' | 'list'>('cards');
   const client = useContext(ClientContext);
   const intl = useIntl();
   const queryClient = useQueryClient();
@@ -348,19 +346,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   }, [mapsData, filter, searchCondition]);
 
   const sortedMaps = useMemo(() => {
-    return stableSort(filteredMaps, getComparator(order, orderBy));
+    return stableSort(filteredMaps, getComparator<MapInfo>(order, orderBy));
   }, [filteredMaps, order, orderBy]);
 
   const pagedMaps = useMemo(() => {
     const start = page * rowsPerPage;
     return sortedMaps.slice(start, start + rowsPerPage);
   }, [sortedMaps, page, rowsPerPage]);
-  const getMapEditUrl = (map: MapInfo): string => {
-    if (map.sourceType === 'gdrive' && map.sourceId) {
-      return `/c/maps/gdrive/${map.sourceId}/edit`;
-    }
-    return `/c/maps/${map.id}/edit`;
-  };
 
   const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(
     undefined,
@@ -606,31 +598,196 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
               </Box>
             )}
           </div>
+          <ToggleButtonGroup
+            value={viewMode}
+            exclusive
+            size="small"
+            onChange={(_event, next: 'cards' | 'list' | null) => {
+              if (next) setViewMode(next);
+            }}
+            sx={{ marginLeft: '10px' }}
+          >
+            <ToggleButton value="cards" data-testid="view-mode-cards" aria-label="Cards">
+              <ViewModuleIcon fontSize="small" />
+            </ToggleButton>
+            <ToggleButton value="list" data-testid="view-mode-list" aria-label="List">
+              <ViewListIcon fontSize="small" />
+            </ToggleButton>
+          </ToggleButtonGroup>
         </Toolbar>
 
         <TableContainer css={classes.tableContainer as Interpolation<Theme>}>
-          <Box css={classes.cards}>
-            {filteredMaps.length === 0 ? (
-              <Card>
-                <CardContent>
-                  <FormattedMessage
-                    id="maps.empty-result"
-                    defaultMessage="No matching mindmap found with the current filter criteria."
+          {viewMode === 'cards' && (
+            <Box css={classes.cards}>
+              {filteredMaps.length === 0 ? (
+                <Card>
+                  <CardContent>
+                    <FormattedMessage
+                      id="maps.empty-result"
+                      defaultMessage="No matching mindmap found with the current filter criteria."
+                    />
+                  </CardContent>
+                </Card>
+              ) : (
+                pagedMaps.map((row: MapInfo) => (
+                  <MapCard
+                    key={row.id}
+                    map={row}
+                    getEditUrl={getMapEditUrl}
+                    onStarToggle={handleStarred}
+                    onOpenActions={handleActionClick}
+                    onRemoveLabel={handleRemoveLabel}
                   />
-                </CardContent>
-              </Card>
-            ) : (
-              pagedMaps.map((row: MapInfo) => {
-                return (
-                  <Card key={row.id} css={{ maxWidth: '94vw', margin: '3vw' }}>
-                    <Link
-                      href={getMapEditUrl(row)}
-                      underline="none"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <CardHeader
-                        css={classes.cardHeader}
-                        avatar={
+                ))
+              )}
+            </Box>
+          )}
+          {viewMode === 'list' && (
+            <Table css={classes.table} size="small" stickyHeader>
+              <EnhancedTableHead
+                classes={classes}
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={filteredMaps.length}
+              />
+
+              <TableBody>
+                {filteredMaps.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={6} style={{ textAlign: 'center' }}>
+                      <FormattedMessage
+                        id="maps.empty-result"
+                        defaultMessage="No matching mindmap found with the current filter criteria."
+                      />
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  pagedMaps.map((row: MapInfo) => {
+                    const isItemSelected = isSelected(row.id);
+                    const labelId = row.id;
+
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleRowClick(event, row.id)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.id}
+                        selected={isItemSelected}
+                        data-testid={`map-row-${row.id}`}
+                      >
+                        <TableCell padding="checkbox" css={classes.bodyCell}>
+                          <Checkbox
+                            checked={isItemSelected}
+                            size="small"
+                            sx={(theme) => ({
+                              color:
+                                theme.palette.mode === 'dark'
+                                  ? 'rgba(255, 255, 255, 0.3)'
+                                  : 'rgba(0, 0, 0, 0.26)',
+                              '&.Mui-checked': {
+                                color:
+                                  theme.palette.mode === 'dark'
+                                    ? 'rgba(255, 255, 255, 0.7)'
+                                    : 'rgba(0, 0, 0, 0.54)',
+                              },
+                            })}
+                            slotProps={{
+                              input: {
+                                'aria-labelledby': String(labelId),
+                              },
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell css={classes.bodyCell}>
+                          <Tooltip
+                            arrow={true}
+                            title={intl.formatMessage({
+                              id: 'maps.tooltip-open',
+                              defaultMessage: 'Open for edition',
+                            })}
+                            placement="bottom-start"
+                          >
+                            <Link
+                              href={getMapEditUrl(row)}
+                              color="textPrimary"
+                              underline="always"
+                              onClick={(e) => e.stopPropagation()}
+                              sx={{
+                                fontSize: '0.96rem',
+                                fontFamily:
+                                  'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: 0.8,
+                              }}
+                            >
+                              {row.title}
+                              {row.sourceType === 'gdrive' && (
+                                <Chip
+                                  size="small"
+                                  icon={<CloudQueueIcon style={{ fontSize: '0.9rem' }} />}
+                                  label="Google Drive"
+                                  variant="outlined"
+                                  color="primary"
+                                  sx={{ height: 20, fontSize: '0.72rem', cursor: 'pointer' }}
+                                />
+                              )}
+                            </Link>
+                          </Tooltip>
+                        </TableCell>
+                        <TableCell css={[classes.bodyCell, classes.labelsCell as CSSObject]}>
+                          <LabelsCell
+                            labels={row.labels}
+                            onDelete={(lbl) => {
+                              handleRemoveLabel(row.id, lbl.id);
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell css={classes.bodyCell}>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              fontSize: '0.96rem',
+                              fontFamily:
+                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                            }}
+                          >
+                            {row.createdBy}
+                          </Typography>
+                        </TableCell>
+                        <TableCell css={classes.bodyCell}>
+                          <Tooltip
+                            arrow={true}
+                            title={intl.formatMessage(
+                              {
+                                id: 'maps.modified-by-desc',
+                                defaultMessage: 'Modified by {by} on {on}',
+                              },
+                              {
+                                by: row.lastModificationBy,
+                                on: dayjs(row.lastModificationTime).format('lll'),
+                              },
+                            )}
+                            placement="bottom-start"
+                          >
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                fontSize: '0.96rem',
+                                fontFamily:
+                                  'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
+                              }}
+                            >
+                              {dayjs(row.lastModificationTime).fromNow()}
+                            </Typography>
+                          </Tooltip>
+                        </TableCell>
+                        <TableCell padding="checkbox" css={classes.bodyCell}>
                           <Tooltip
                             arrow={true}
                             title={intl.formatMessage({
@@ -638,19 +795,17 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                               defaultMessage: 'Starred',
                             })}
                           >
-                            <div className="hola" onClick={(e) => e.stopPropagation()}>
-                              <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
-                                <StarRateRoundedIcon
-                                  color="action"
-                                  style={{
-                                    color: row.starred ? 'yellow' : 'gray',
-                                  }}
-                                />
-                              </IconButton>
-                            </div>
+                            <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
+                              <StarRateRoundedIcon
+                                color="action"
+                                style={{
+                                  color: row.starred ? 'yellow' : 'gray',
+                                }}
+                              />
+                            </IconButton>
                           </Tooltip>
-                        }
-                        action={
+                        </TableCell>
+                        <TableCell css={classes.bodyCell}>
                           <Tooltip
                             arrow={true}
                             title={intl.formatMessage({
@@ -660,256 +815,23 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           >
                             <IconButton
                               aria-label={intl.formatMessage({
-                                id: 'common.settings',
-                                defaultMessage: 'Settings',
+                                id: 'common.others',
+                                defaultMessage: 'Others',
                               })}
+                              size="small"
                               onClick={handleActionClick(row.id)}
                             >
-                              <MoreVertIcon color="action" />
+                              <MoreHorizIcon color="action" />
                             </IconButton>
                           </Tooltip>
-                        }
-                        title={
-                          <Typography
-                            css={classes.cardTitle}
-                            noWrap
-                            sx={{
-                              color: 'text.secondary',
-                              fontSize: '0.96rem',
-
-                              fontFamily:
-                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                            }}
-                          >
-                            {row.title}
-                          </Typography>
-                        }
-                        subheader={
-                          <Typography
-                            variant="subtitle2"
-                            sx={{
-                              fontSize: '0.75rem',
-                              fontFamily:
-                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                            }}
-                          >
-                            {intl.formatMessage({
-                              id: 'map.last-update',
-                              defaultMessage: 'Last Update',
-                            })}
-                            <span>: </span>
-                            <Tooltip
-                              arrow={true}
-                              title={intl.formatMessage(
-                                {
-                                  id: 'maps.modified-by-desc',
-                                  defaultMessage: 'Modified by {by} on {on}',
-                                },
-                                {
-                                  by: row.lastModificationBy,
-                                  on: dayjs(row.lastModificationTime).format('lll'),
-                                },
-                              )}
-                              placement="bottom-start"
-                            >
-                              <span>{dayjs(row.lastModificationTime).fromNow()}</span>
-                            </Tooltip>
-                          </Typography>
-                        }
-                      />
-                    </Link>
-                  </Card>
-                );
-              })
-            )}
-          </Box>
-          <Table css={classes.table} size="small" stickyHeader>
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={filteredMaps.length}
-            />
-
-            <TableBody>
-              {filteredMaps.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={6} style={{ textAlign: 'center' }}>
-                    <FormattedMessage
-                      id="maps.empty-result"
-                      defaultMessage="No matching mindmap found with the current filter criteria."
-                    />
-                  </TableCell>
-                </TableRow>
-              ) : (
-                pagedMaps.map((row: MapInfo) => {
-                  const isItemSelected = isSelected(row.id);
-                  const labelId = row.id;
-
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleRowClick(event, row.id)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.id}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox" css={classes.bodyCell}>
-                        <Checkbox
-                          checked={isItemSelected}
-                          size="small"
-                          sx={(theme) => ({
-                            color:
-                              theme.palette.mode === 'dark'
-                                ? 'rgba(255, 255, 255, 0.3)'
-                                : 'rgba(0, 0, 0, 0.26)',
-                            '&.Mui-checked': {
-                              color:
-                                theme.palette.mode === 'dark'
-                                  ? 'rgba(255, 255, 255, 0.7)'
-                                  : 'rgba(0, 0, 0, 0.54)',
-                            },
-                          })}
-                          slotProps={{
-                            input: {
-                              'aria-labelledby': String(labelId),
-                            },
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell css={classes.bodyCell}>
-                        <Tooltip
-                          arrow={true}
-                          title={intl.formatMessage({
-                            id: 'maps.tooltip-open',
-                            defaultMessage: 'Open for edition',
-                          })}
-                          placement="bottom-start"
-                        >
-                          <Link
-                            href={getMapEditUrl(row)}
-                            color="textPrimary"
-                            underline="always"
-                            onClick={(e) => e.stopPropagation()}
-                            sx={{
-                              fontSize: '0.96rem',
-                              fontFamily:
-                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: 0.8,
-                            }}
-                          >
-                            {row.title}
-                            {row.sourceType === 'gdrive' && (
-                              <Chip
-                                size="small"
-                                icon={<CloudQueueIcon style={{ fontSize: '0.9rem' }} />}
-                                label="Google Drive"
-                                variant="outlined"
-                                color="primary"
-                                sx={{ height: 20, fontSize: '0.72rem', cursor: 'pointer' }}
-                              />
-                            )}
-                          </Link>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell css={[classes.bodyCell, classes.labelsCell as CSSObject]}>
-                        <LabelsCell
-                          labels={row.labels}
-                          onDelete={(lbl) => {
-                            handleRemoveLabel(row.id, lbl.id);
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell css={classes.bodyCell}>
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            fontSize: '0.96rem',
-                            fontFamily:
-                              'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                          }}
-                        >
-                          {row.createdBy}
-                        </Typography>
-                      </TableCell>
-                      <TableCell css={classes.bodyCell}>
-                        <Tooltip
-                          arrow={true}
-                          title={intl.formatMessage(
-                            {
-                              id: 'maps.modified-by-desc',
-                              defaultMessage: 'Modified by {by} on {on}',
-                            },
-                            {
-                              by: row.lastModificationBy,
-                              on: dayjs(row.lastModificationTime).format('lll'),
-                            },
-                          )}
-                          placement="bottom-start"
-                        >
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              fontSize: '0.96rem',
-                              fontFamily:
-                                'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                            }}
-                          >
-                            {dayjs(row.lastModificationTime).fromNow()}
-                          </Typography>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell padding="checkbox" css={classes.bodyCell}>
-                        <Tooltip
-                          arrow={true}
-                          title={intl.formatMessage({
-                            id: 'maps.tooltip-starred',
-                            defaultMessage: 'Starred',
-                          })}
-                        >
-                          <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
-                            <StarRateRoundedIcon
-                              color="action"
-                              style={{
-                                color: row.starred ? 'yellow' : 'gray',
-                              }}
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell css={classes.bodyCell}>
-                        <Tooltip
-                          arrow={true}
-                          title={intl.formatMessage({
-                            id: 'map.more-actions',
-                            defaultMessage: 'More Actions',
-                          })}
-                        >
-                          <IconButton
-                            aria-label={intl.formatMessage({
-                              id: 'common.others',
-                              defaultMessage: 'Others',
-                            })}
-                            size="small"
-                            onClick={handleActionClick(row.id)}
-                          >
-                            <MoreHorizIcon color="action" />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-              )}
-            </TableBody>
-          </Table>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                )}
+              </TableBody>
+            </Table>
+          )}
         </TableContainer>
 
         {/* Pagination on mobile only - below table */}

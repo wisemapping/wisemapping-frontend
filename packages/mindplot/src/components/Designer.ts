@@ -319,8 +319,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     topic.addEvent('ontblur', () => {
       const topics = me.getModel().filterSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
-
-      if (topics.length === 0 || rels.length === 0) {
+      if (topics.length === 0 && rels.length === 0) {
         me.fireEvent('onblur');
       }
 
@@ -331,8 +330,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     topic.addEvent('ontfocus', () => {
       const topics = me.getModel().filterSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
-
-      if (topics.length === 1 || rels.length === 1) {
+      if (topics.length > 0 || rels.length > 0) {
         me.fireEvent('onfocus');
       }
 
@@ -1354,8 +1352,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     result.addEvent('ontblur', () => {
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
-
-      if (topics.length === 0 || rels.length === 0) {
+      if (topics.length === 0 && rels.length === 0) {
         this.fireEvent('onblur');
       }
     });
@@ -1363,8 +1360,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     result.addEvent('ontfocus', () => {
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
-
-      if (topics.length === 1 || rels.length === 1) {
+      if (topics.length > 0 || rels.length > 0) {
         this.fireEvent('onfocus');
       }
     });

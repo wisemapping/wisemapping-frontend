@@ -22,8 +22,6 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Popover from '@mui/material/Popover';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import React, { ReactElement, useState, useCallback, useRef, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -256,282 +254,164 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   return (
     <Box
       sx={{
-        pl: 0,
-        pr: 0,
-        pb: 0.375,
-        width: '650px',
-        height: '470px',
+        width: '100%',
+        maxWidth: '100%',
+        boxSizing: 'border-box',
         backgroundColor: theme.palette.background.paper,
         borderRadius: 2,
-        boxShadow:
-          theme.palette.mode === 'dark'
-            ? '0 4px 12px rgba(255, 255, 255, 0.1)'
-            : '0 4px 12px rgba(0, 0, 0, 0.1)',
         position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
-      <IconButton
-        onClick={closeModal}
-        sx={{
-          position: 'absolute',
-          top: 8,
-          right: 8,
-          zIndex: 10,
-          width: 32,
-          height: 32,
-          backgroundColor: theme.palette.background.paper,
-          '&:hover': {
-            backgroundColor: theme.palette.action.hover,
-          },
-          '& .MuiSvgIcon-root': {
-            fontSize: '20px',
-          },
-        }}
-      >
-        <CloseIcon />
-      </IconButton>
       {/* Toolbar */}
       <Box
         sx={{
-          m: 0,
-          p: 0,
-          minHeight: '60px',
+          p: 0.75,
           display: 'flex',
+          flexWrap: 'wrap',
+          gap: 0.5,
           alignItems: 'center',
-          justifyContent: 'center',
           border: `1px solid ${theme.palette.divider}`,
           borderBottom: 'none',
           borderRadius: '8px 8px 0 0',
           backgroundColor: theme.palette.background.default,
-          boxShadow:
-            theme.palette.mode === 'dark'
-              ? '0 2px 4px rgba(255, 255, 255, 0.05)'
-              : '0 2px 4px rgba(0, 0, 0, 0.05)',
         }}
       >
-        {/* Single Row - All Options */}
-        <Box
-          sx={{
-            display: 'flex',
-            gap: 1,
-            alignItems: 'center',
-            flexWrap: 'nowrap',
-            overflowX: 'auto',
-          }}
-        >
-          <FormControl size="small" sx={{ minWidth: 150, flexShrink: 0 }}>
-            <Select
-              defaultValue="normal"
-              onChange={(e) => setHeader(e.target.value)}
-              displayEmpty
-              sx={{
-                fontSize: '14px',
-                backgroundColor: theme.palette.background.paper,
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                },
-                '&.Mui-focused': {
-                  borderColor: theme.palette.divider,
-                },
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: theme.palette.divider,
-                },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: theme.palette.text.secondary,
-                },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: theme.palette.divider,
-                },
-              }}
-            >
-              <MenuItem value="normal" sx={{ fontSize: '12px' }}>
-                Normal
-              </MenuItem>
-              <MenuItem value="h1" sx={{ fontSize: '18px', fontWeight: 'bold' }}>
-                Heading 1
-              </MenuItem>
-              <MenuItem value="h2" sx={{ fontSize: '16px', fontWeight: 'bold' }}>
-                Heading 2
-              </MenuItem>
-              <MenuItem value="h3" sx={{ fontSize: '15px', fontWeight: 'bold' }}>
-                Heading 3
-              </MenuItem>
-              <MenuItem value="h4" sx={{ fontSize: '14px', fontWeight: 'bold' }}>
-                Heading 4
-              </MenuItem>
-              <MenuItem value="h5" sx={{ fontSize: '13px', fontWeight: 'bold' }}>
-                Heading 5
-              </MenuItem>
-              <MenuItem value="h6" sx={{ fontSize: '12px', fontWeight: 'bold' }}>
-                Heading 6
-              </MenuItem>
-              <MenuItem value="blockquote" sx={{ fontSize: '12px', fontStyle: 'italic' }}>
-                Quote
-              </MenuItem>
-              <MenuItem value="pre" sx={{ fontSize: '10px', fontFamily: 'monospace' }}>
-                Code Block
-              </MenuItem>
-            </Select>
-          </FormControl>
+        <FormControl size="small" sx={{ minWidth: 90, flex: '1 1 90px' }}>
+          <Select
+            defaultValue="normal"
+            onChange={(e) => setHeader(e.target.value)}
+            displayEmpty
+            sx={{
+              fontSize: '13px',
+              height: '32px',
+              backgroundColor: theme.palette.background.paper,
+              '& .MuiSelect-select': {
+                py: '4px',
+                px: '8px',
+              },
+            }}
+          >
+            <MenuItem value="normal" sx={{ fontSize: '12px' }}>
+              Normal
+            </MenuItem>
+            <MenuItem value="h1" sx={{ fontSize: '18px', fontWeight: 'bold' }}>
+              Heading 1
+            </MenuItem>
+            <MenuItem value="h2" sx={{ fontSize: '16px', fontWeight: 'bold' }}>
+              Heading 2
+            </MenuItem>
+            <MenuItem value="h3" sx={{ fontSize: '15px', fontWeight: 'bold' }}>
+              Heading 3
+            </MenuItem>
+            <MenuItem value="h4" sx={{ fontSize: '14px', fontWeight: 'bold' }}>
+              Heading 4
+            </MenuItem>
+            <MenuItem value="h5" sx={{ fontSize: '13px', fontWeight: 'bold' }}>
+              Heading 5
+            </MenuItem>
+            <MenuItem value="h6" sx={{ fontSize: '12px', fontWeight: 'bold' }}>
+              Heading 6
+            </MenuItem>
+            <MenuItem value="blockquote" sx={{ fontSize: '12px', fontStyle: 'italic' }}>
+              Quote
+            </MenuItem>
+            <MenuItem value="pre" sx={{ fontSize: '10px', fontFamily: 'monospace' }}>
+              Code Block
+            </MenuItem>
+          </Select>
+        </FormControl>
 
-          <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
-            <Button
-              onClick={insertLink}
-              title={intl.formatMessage({
-                id: 'rich-text-editor.insert-link',
-                defaultMessage: 'Insert Link',
-              })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
-            >
-              🔗
-            </Button>
-            <Button
-              onClick={handleIconPickerOpen}
-              title={intl.formatMessage({
-                id: 'rich-text-editor.insert-icon',
-                defaultMessage: 'Insert Icon',
-              })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
-            >
-              😀
-            </Button>
-          </ButtonGroup>
-
-          <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
-            <Button
-              onClick={() => execCommand('bold')}
-              title={intl.formatMessage({ id: 'rich-text-editor.bold', defaultMessage: 'Bold' })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
-            >
-              <strong>B</strong>
-            </Button>
-            <Button
-              onClick={() => execCommand('italic')}
-              title={intl.formatMessage({
-                id: 'rich-text-editor.italic',
-                defaultMessage: 'Italic',
-              })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
-            >
-              <em>I</em>
-            </Button>
-            <Button
-              onClick={() => execCommand('underline')}
-              title={intl.formatMessage({
-                id: 'rich-text-editor.underline',
-                defaultMessage: 'Underline',
-              })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
-            >
-              <u>U</u>
-            </Button>
-            <Button
-              onClick={() => execCommand('strikeThrough')}
-              title={intl.formatMessage({
-                id: 'rich-text-editor.strikethrough',
-                defaultMessage: 'Strikethrough',
-              })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
-            >
-              <s>S</s>
-            </Button>
-          </ButtonGroup>
-
-          <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
-            <Button
-              onClick={() => execCommand('insertUnorderedList')}
-              title={intl.formatMessage({
-                id: 'rich-text-editor.bullet-list',
-                defaultMessage: 'Bullet List',
-              })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
-            >
-              •
-            </Button>
-            <Button
-              onClick={() => execCommand('insertOrderedList')}
-              title={intl.formatMessage({
-                id: 'rich-text-editor.numbered-list',
-                defaultMessage: 'Numbered List',
-              })}
-              sx={{
-                minWidth: '36px',
-                borderColor: theme.palette.divider,
-                '&:hover': {
-                  borderColor: theme.palette.text.secondary,
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
-            >
-              1.
-            </Button>
-          </ButtonGroup>
-        </Box>
+        <ButtonGroup size="small" variant="outlined" sx={{ height: '32px', flexShrink: 0 }}>
+          <Button
+            onClick={insertLink}
+            title={intl.formatMessage({
+              id: 'rich-text-editor.insert-link',
+              defaultMessage: 'Insert Link',
+            })}
+            sx={{ minWidth: '28px', px: '6px' }}
+          >
+            🔗
+          </Button>
+          <Button
+            onClick={handleIconPickerOpen}
+            title={intl.formatMessage({
+              id: 'rich-text-editor.insert-icon',
+              defaultMessage: 'Insert Icon',
+            })}
+            sx={{ minWidth: '28px', px: '6px' }}
+          >
+            😀
+          </Button>
+        </ButtonGroup>
+        <ButtonGroup size="small" variant="outlined" sx={{ height: '32px', flexShrink: 0 }}>
+          <Button
+            onClick={() => execCommand('bold')}
+            title={intl.formatMessage({ id: 'rich-text-editor.bold', defaultMessage: 'Bold' })}
+            sx={{ minWidth: '28px', px: '6px' }}
+          >
+            <strong>B</strong>
+          </Button>
+          <Button
+            onClick={() => execCommand('italic')}
+            title={intl.formatMessage({ id: 'rich-text-editor.italic', defaultMessage: 'Italic' })}
+            sx={{ minWidth: '28px', px: '6px' }}
+          >
+            <em>I</em>
+          </Button>
+          <Button
+            onClick={() => execCommand('underline')}
+            title={intl.formatMessage({
+              id: 'rich-text-editor.underline',
+              defaultMessage: 'Underline',
+            })}
+            sx={{ minWidth: '28px', px: '6px' }}
+          >
+            <u>U</u>
+          </Button>
+          <Button
+            onClick={() => execCommand('strikeThrough')}
+            title={intl.formatMessage({
+              id: 'rich-text-editor.strikethrough',
+              defaultMessage: 'Strikethrough',
+            })}
+            sx={{ minWidth: '28px', px: '6px' }}
+          >
+            <s>S</s>
+          </Button>
+        </ButtonGroup>
+        <ButtonGroup size="small" variant="outlined" sx={{ height: '32px', flexShrink: 0 }}>
+          <Button
+            onClick={() => execCommand('insertUnorderedList')}
+            title={intl.formatMessage({
+              id: 'rich-text-editor.bullet-list',
+              defaultMessage: 'Bullet List',
+            })}
+            sx={{ minWidth: '28px', px: '6px' }}
+          >
+            •
+          </Button>
+          <Button
+            onClick={() => execCommand('insertOrderedList')}
+            title={intl.formatMessage({
+              id: 'rich-text-editor.numbered-list',
+              defaultMessage: 'Numbered List',
+            })}
+            sx={{ minWidth: '28px', px: '6px' }}
+          >
+            1.
+          </Button>
+        </ButtonGroup>
       </Box>
 
       {/* Editor */}
       <Box
         sx={{
           position: 'relative',
-          height: '350px',
           border: `1px solid ${theme.palette.divider}`,
           borderTop: 'none',
-          borderRadius: '0 0 8px 8px',
           backgroundColor: theme.palette.background.paper,
-          boxShadow:
-            theme.palette.mode === 'dark'
-              ? 'inset 0 1px 3px rgba(255, 255, 255, 0.1)'
-              : 'inset 0 1px 3px rgba(0, 0, 0, 0.1)',
         }}
       >
         <Box
@@ -544,24 +424,13 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           onKeyPress={(e) => e.stopPropagation()}
           suppressContentEditableWarning={true}
           sx={{
-            height: '100%',
-            p: 2.5,
+            height: '140px',
+            p: 1.5,
             overflow: 'auto',
             fontFamily: 'Arial, sans-serif',
-            fontSize: '14px',
-            '&::-webkit-scrollbar': {
-              width: '8px',
-            },
-            '&::-webkit-scrollbar-track': {
-              backgroundColor: theme.palette.mode === 'dark' ? '#404040' : '#f1f1f1',
-              borderRadius: '4px',
-            },
-            '&::-webkit-scrollbar-thumb': {
-              backgroundColor: theme.palette.mode === 'dark' ? '#606060' : '#c1c1c1',
-              borderRadius: '4px',
-              '&:hover': {
-                backgroundColor: theme.palette.mode === 'dark' ? '#707070' : '#a8a8a8',
-              },
+            fontSize: '13px',
+            '&:focus': {
+              outline: 'none',
             },
           }}
         />
@@ -573,10 +442,11 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          px: 2,
-          py: 1.5,
-          borderTop: '1px solid',
-          borderColor: 'divider',
+          px: 1.5,
+          py: 1,
+          border: `1px solid ${theme.palette.divider}`,
+          borderTop: 'none',
+          borderRadius: '0 0 8px 8px',
           backgroundColor: 'background.default',
         }}
       >

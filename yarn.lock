@@ -5273,6 +5273,7 @@ __metadata:
     jest: "npm:^30.4.2"
     jest-environment-jsdom: "npm:^30.4.1"
     jest-transform-stub: "npm:^2.0.0"
+    lucide-react: "npm:^1.34.0"
     react: "npm:^19.2.7"
     react-color: "npm:^2.19.3"
     react-dom: "npm:^19.2.7"
@@ -5359,6 +5360,7 @@ __metadata:
     eslint: "npm:^10.6.0"
     eslint-plugin-storybook: "npm:^10.4.6"
     loglevel: "npm:^1.9.2"
+    lucide-react: "npm:^1.33.0"
     react: "npm:^19.2.7"
     react-dom: "npm:^19.2.7"
     react-ga4: "npm:^3.0.1"
@@ -11162,6 +11164,24 @@ __metadata:
   dependencies:
     yallist: "npm:^4.0.0"
   checksum: 10/fc1fe2ee205f7c8855fa0f34c1ab0bcf14b6229e35579ec1fd1079f31d6fc8ef8eb6fd17f2f4d99788d7e339f50e047555551ebd5e434dda503696e7c6591825
+  languageName: node
+  linkType: hard
+
+"lucide-react@npm:^1.33.0":
+  version: 1.33.0
+  resolution: "lucide-react@npm:1.33.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/5696bde795e1513f2cd9b018e45465e61a2b582b10024643997ced9d262b34cad4a0b8fb076672dbb7ac9f2cf92484015f6674bc511d40c6883431c44808b86c
+  languageName: node
+  linkType: hard
+
+"lucide-react@npm:^1.34.0":
+  version: 1.34.0
+  resolution: "lucide-react@npm:1.34.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/594cb9730cb53f097af556459bff2f278eb745ecd5b64bba0b1ee7e79a2b4d8da82c912bd67c3a1b74fb02de204980ce6333b235b7ebcc103a7930bb5bf2f9a7
   languageName: node
   linkType: hard
 
