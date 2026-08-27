@@ -81,7 +81,7 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
 
     let bootstrapConfig;
-    const configType = process.env.APP_CONFIG_TYPE || 'file:mock';
+    const configType = process.env.APP_CONFIG_TYPE || 'file:dev';
 
     switch (configType) {
         case 'file:mock':

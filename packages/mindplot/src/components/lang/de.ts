@@ -41,6 +41,9 @@ const DE = {
   ENTER_TO_CREATE_SIBLING: 'um Geschwister zu erstellen',
   PLUS_TOOLTIP_CREATE_CHILD: 'Kind-Thema erstellen',
   PLUS_TOOLTIP_CREATE_SIBLING: 'Geschwister-Thema erstellen',
+  PASTE_AS_CHILD: 'Paste as child of selected topic',
+  CLIPBOARD_NO_SELECTION: 'Select a topic first',
+  DEEPLINK_COPIED: 'Link copied to clipboard',
 };
 
 export default DE;

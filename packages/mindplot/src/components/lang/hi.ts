@@ -42,6 +42,9 @@ interface LanguageStrings {
   ENTER_TO_CREATE_SIBLING: string;
   PLUS_TOOLTIP_CREATE_CHILD: string;
   PLUS_TOOLTIP_CREATE_SIBLING: string;
+  PASTE_AS_CHILD: string;
+  CLIPBOARD_NO_SELECTION: string;
+  DEEPLINK_COPIED: string;
 }
 
 const HI: LanguageStrings = {
@@ -69,6 +72,9 @@ const HI: LanguageStrings = {
   ENTER_TO_CREATE_SIBLING: 'सहोदर बनाने के लिए',
   PLUS_TOOLTIP_CREATE_CHILD: 'बच्चा विषय बनाएं',
   PLUS_TOOLTIP_CREATE_SIBLING: 'सहोदर विषय बनाएं',
+  PASTE_AS_CHILD: 'Paste as child of selected topic',
+  CLIPBOARD_NO_SELECTION: 'Select a topic first',
+  DEEPLINK_COPIED: 'Link copied to clipboard',
 };
 
 export default HI;

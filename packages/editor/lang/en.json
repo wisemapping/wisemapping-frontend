@@ -203,6 +203,15 @@
   "link.placeholder": {
     "defaultMessage": "https://www.example.com"
   },
+  "shortcut-help.copy-topics": {
+    "defaultMessage": "Copy topics"
+  },
+  "shortcut-help.paste-as-child": {
+    "defaultMessage": "Paste topics as child of selected"
+  },
+  "shortcut-help.paste-topics": {
+    "defaultMessage": "Paste topics"
+  },
   "shortcut-help-pane.action": {
     "defaultMessage": "Action"
   },
@@ -928,5 +937,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "No node matches \u201c{query}\u201d."
+  },
+  "inspector.paste-as-child": {
+    "defaultMessage": "Paste as child"
+  },
+  "inspector.copy-link-to-node": {
+    "defaultMessage": "Copy link to node"
   }
 }

@@ -39,6 +39,8 @@ import { EditorThemeProvider, useTheme } from '../contexts/ThemeContext';
 import { createEditorTheme } from '../theme';
 import { ThemeVariantStorage } from '../types/ThemeVariantStorage';
 import EditorLoadingSkeleton from './editor-loading-skeleton';
+import { useDeepLinkFocus } from '../hooks/useDeepLinkFocus';
+import NodeContextMenu from './node-context-menu';
 
 const EMBED_READY_ATTRIBUTE = 'data-wisemapping-embed-loaded';
 
@@ -49,6 +51,8 @@ type EditorProps = {
   config: EditorConfiguration;
   accountConfiguration?: React.ReactElement;
   themeVariantStorage: ThemeVariantStorage; // Theme variant storage for persistence (mandatory)
+  initialSearchParams?: URLSearchParams | null;
+  getDeepLink?: (nodeId: number) => string;
 };
 
 const EditorContent = ({
@@ -56,11 +60,15 @@ const EditorContent = ({
   onAction,
   accountConfiguration,
   themeVariantStorage,
+  initialSearchParams,
+  getDeepLink,
 }: EditorProps): ReactElement => {
   // We can access editor instance and other configuration from editor props
   const { model, mindplotRef, mapInfo, capability, options } = config;
   const designer = model?.getDesigner();
   const { mode: internalMode } = useTheme();
+
+  useDeepLinkFocus(model, initialSearchParams);
 
   // Get the current theme mode from the theme context
   const mode = internalMode;
@@ -173,11 +181,12 @@ const EditorContent = ({
               lockedByFullName={options.lockedByFullName}
               open={inspectorOpen}
               onToggleOpen={() => setInspectorOpen((prev) => !prev)}
+              getDeepLink={getDeepLink}
             />
           )}
 
           <WidgetPopover widgetManager={widgetBulder} />
-
+          <NodeContextMenu designer={designer} capability={capability} getDeepLink={getDeepLink} />
           {model && (
             <div className="no-print">
               <VisualizationToolbar
@@ -219,6 +228,8 @@ const Editor = ({
   onAction,
   accountConfiguration,
   themeVariantStorage,
+  initialSearchParams,
+  getDeepLink,
 }: EditorProps): ReactElement => {
   return (
     <EditorThemeProvider themeVariantStorage={themeVariantStorage}>
@@ -227,6 +238,8 @@ const Editor = ({
         onAction={onAction}
         accountConfiguration={accountConfiguration}
         themeVariantStorage={themeVariantStorage}
+        initialSearchParams={initialSearchParams}
+        getDeepLink={getDeepLink}
       />
     </EditorThemeProvider>
   );

@@ -16,27 +16,14 @@
  *   limitations under the License.
  */
 
-type ActionType =
-  | 'undo-changes'
-  | 'redo-changes'
-  | 'history'
-  | 'save'
-  | 'print'
-  | 'export'
-  | 'publish'
-  | 'share'
-  | 'info'
-  | 'account'
-  | 'edition-toolbar'
-  | 'sign-up'
-  | 'starred'
-  | 'appbar-title'
-  | 'keyboard-shortcuts'
-  | 'theme'
-  | 'layout'
-  | 'rename'
-  | 'outline-view'
-  | 'paste-as-child'
-  | 'copy-link-to-node';
+import AppConfig from '../classes/app-config';
+import { getMapEditUrl, type EditableMapRef } from './mapUrls';
 
-export default ActionType;
+/**
+ * Builds an absolute deeplink pointing at a specific node of a map, so the
+ * editor can focus that node on load.
+ */
+export const getMapNodeDeepLink = (map: EditableMapRef, nodeId: number): string => {
+  const base = AppConfig.getUiBaseUrl();
+  return `${base}${getMapEditUrl(map)}?node=${encodeURIComponent(String(nodeId))}`;
+};

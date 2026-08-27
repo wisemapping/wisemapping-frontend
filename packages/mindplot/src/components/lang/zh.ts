@@ -40,6 +40,9 @@ const ZH = {
   ENTER_TO_CREATE_SIBLING: '创建同级主题',
   PLUS_TOOLTIP_CREATE_CHILD: '创建子主题',
   PLUS_TOOLTIP_CREATE_SIBLING: '创建同级主题',
+  PASTE_AS_CHILD: 'Paste as child of selected topic',
+  CLIPBOARD_NO_SELECTION: 'Select a topic first',
+  DEEPLINK_COPIED: 'Link copied to clipboard',
 };
 
 export default ZH;

@@ -41,6 +41,9 @@ const FR = {
   ENTER_TO_CREATE_SIBLING: 'pour créer un frère',
   PLUS_TOOLTIP_CREATE_CHILD: 'Créer un noeud enfant',
   PLUS_TOOLTIP_CREATE_SIBLING: 'Créer un noeud frère',
+  PASTE_AS_CHILD: 'Paste as child of selected topic',
+  CLIPBOARD_NO_SELECTION: 'Select a topic first',
+  DEEPLINK_COPIED: 'Link copied to clipboard',
 };
 
 export default FR;

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useContext, useEffect, useState, Suspense, useRef } from 'react';
+import React, { useContext, useEffect, useState, Suspense, useRef, useCallback } from 'react';
 import Editor, { useEditor, EditorLoadingSkeleton } from '@wisemapping/editor';
 import type { EditorOptions } from '@wisemapping/editor';
 
@@ -47,6 +47,7 @@ import SessionExpiredDialog from '../common-page/session-expired-dialog';
 import type { EditorConfiguration } from '@wisemapping/editor';
 import { createThemeVariantStorage } from '../../services/createThemeVariantStorage';
 import type { ActionType } from '../maps-page/action-chooser';
+import { getMapNodeDeepLink } from '../../utils/mapNodeLink';
 
 const buildPersistenceManagerForEditor = (
   mode: EditorRenderMode,
@@ -115,7 +116,13 @@ export type EditorPropsType = {
 const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher'));
 const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
-const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.ReactElement => {
+const EditorPage = ({
+  mapId,
+  pageMode,
+  zoom,
+  hid,
+  isGdrive,
+}: EditorPropsType): React.ReactElement => {
   const [activeDialog, setActiveDialog] = useState<ActionType | null>(null);
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
   const mapInfoRef = useRef<MapInfoImpl | undefined>(undefined);
@@ -132,6 +139,18 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   const hideCreatorInfoParam = searchParams.get('hideCreatorInfo');
   const themeParam = searchParams.get('theme');
 
+  const getDeepLink = useCallback(
+    (nodeId: number): string =>
+      getMapNodeDeepLink(
+        {
+          id: typeof mapId === 'number' ? mapId : Number(mapId) || 0,
+          sourceType: isGdrive ? 'gdrive' : 'local',
+          sourceId: editorMetadata?.gdriveFileId ?? null,
+        },
+        nodeId,
+      ),
+    [mapId, isGdrive, editorMetadata?.gdriveFileId],
+  );
   // If zoom has been define, overwrite the stored value.
   if (zoom) {
     editorMetadata.zoom = zoom;
@@ -263,6 +282,8 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
         onAction={setActiveDialog}
         theme={theme}
         themeVariantStorage={createThemeVariantStorage()}
+        initialSearchParams={searchParams}
+        getDeepLink={getDeepLink}
         accountConfiguration={
           // Prevent load on non-authenticated.
           editorOptions.mode !== 'showcase' ? (

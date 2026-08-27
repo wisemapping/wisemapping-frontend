@@ -69,7 +69,8 @@ const FindInMapPanel = ({ designer, closeModal }: FindInMapPanelProps): ReactEle
     setActiveIndex(index);
     const topic = designer.getModel().findTopicById(match.id);
     if (topic) {
-      designer.goToNode(topic);
+      designer.revealNode(topic, true);
+      designer.goToNode(topic, true);
     }
   };
 

@@ -251,20 +251,50 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
 
             <TableRow hover>
               <TableCell>
+                <FormattedMessage id="shortcut-help.copy-topics" defaultMessage="Copy topics" />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                Ctrl + C
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                ⌘ + C
+              </TableCell>
+            </TableRow>
+            <TableRow hover>
+              <TableCell>
+                <FormattedMessage id="shortcut-help.paste-topics" defaultMessage="Paste topics" />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                Ctrl + V
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                ⌘ + V
+              </TableCell>
+            </TableRow>
+            <TableRow hover>
+              <TableCell>
                 <FormattedMessage
-                  id="shortcut-help-pane.copy-and-text"
-                  defaultMessage="Copy and paste topics/Copy mindmap image to clipboard."
+                  id="shortcut-help.paste-as-child"
+                  defaultMessage="Paste topics as child of selected"
                 />
               </TableCell>
               <TableCell
                 sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
               >
-                Ctrl + C / Ctrl + V
+                Ctrl + Shift + V
               </TableCell>
               <TableCell
                 sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
               >
-                ⌘ + C / ⌘ + V
+                ⌘ + Shift + V
               </TableCell>
             </TableRow>
             <TableRow hover>

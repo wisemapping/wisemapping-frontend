@@ -108,7 +108,19 @@ class DesignerKeyboard extends Keyboard {
     });
 
     this.addShortcut(['ctrl+v', 'meta+v'], () => {
-      designer.pasteClipboard();
+      const selected = designer.getModel().selectedTopic();
+      if (selected) {
+        designer.pasteClipboardAsChild(selected.getId());
+      } else {
+        designer.pasteClipboard();
+      }
+    });
+
+    this.addShortcut(['ctrl+shift+v', 'meta+shift+v'], () => {
+      const selected = designer.getModel().selectedTopic();
+      if (selected) {
+        designer.pasteClipboardAsChild(selected.getId());
+      }
     });
 
     this.addShortcut(['ctrl+a', 'meta+a'], () => {

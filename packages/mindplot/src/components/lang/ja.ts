@@ -119,6 +119,9 @@ const JA = {
   ENTER_TO_CREATE_SIBLING: '兄弟トピックを作成',
   PLUS_TOOLTIP_CREATE_CHILD: '子トピックを作成',
   PLUS_TOOLTIP_CREATE_SIBLING: '兄弟トピックを作成',
+  PASTE_AS_CHILD: 'Paste as child of selected topic',
+  CLIPBOARD_NO_SELECTION: 'Select a topic first',
+  DEEPLINK_COPIED: 'Link copied to clipboard',
 };
 
 export default JA;
