@@ -11,6 +11,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Chip from '@mui/material/Chip';
 import Tooltip from '@mui/material/Tooltip';
 import Divider from '@mui/material/Divider';
+import Stack from '@mui/material/Stack';
 import Model from '../../classes/model/editor';
 import Capability from '../../classes/action/capability';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
@@ -23,6 +24,7 @@ import TopicLinkEditor from '../action-widget/pane/topic-link-editor';
 import RelationshipStyleEditor from '../action-widget/pane/relationship-style-editor';
 import CanvasStyleEditor, { CanvasStyle } from '../action-widget/pane/canvas-style-editor';
 import CommentThread from './comment-thread';
+import { buildInspectorTopicActions } from './topic-action-config';
 import {
   InspectorContainer,
   InspectorHeader,
@@ -45,6 +47,7 @@ export interface InspectorProps {
   onToggleOpen?: () => void;
   mapId?: number | string;
   lockedByFullName?: string | null;
+  getDeepLink?: (nodeId: number) => string;
 }
 
 type TabKey = 'style' | 'font' | 'properties' | 'comments';
@@ -57,6 +60,7 @@ export const Inspector = ({
   onToggleOpen,
   mapId,
   lockedByFullName,
+  getDeepLink,
 }: InspectorProps): ReactElement => {
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState<TabKey>('style');
@@ -97,6 +101,13 @@ export const Inspector = ({
   const hasSelection = selectedTopics.length > 0 || selectedRelationships.length > 0;
   const primaryTopic = selectedTopics[0];
   const topicId = primaryTopic?.getId() ? String(primaryTopic.getId()) : undefined;
+  const topicActions = useMemo(
+    () =>
+      primaryTopic && capability && designer
+        ? buildInspectorTopicActions({ designer, intl, getDeepLink, capability })
+        : [],
+    [primaryTopic, capability, designer, intl, getDeepLink],
+  );
 
   const modelBuilder = useMemo(() => {
     return designer ? new NodePropertyValueModelBuilder(designer) : null;
@@ -243,6 +254,42 @@ export const Inspector = ({
               </Tooltip>
             )}
           </InspectorHeader>
+          {topicActions.length > 0 && (
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{
+                px: 1.5,
+                py: 0.75,
+                borderBottom: 1,
+                borderColor: 'divider',
+                alignItems: 'center',
+              }}
+              data-testid="inspector-topic-actions"
+            >
+              {topicActions
+                .filter((a) => a.visible !== false)
+                .map((a) => {
+                  const isDisabled = a.disabled?.() ?? false;
+                  const label = a['aria-label'] || a.ariaLabel || a.tooltip || '';
+                  return (
+                    <Tooltip key={a.id} title={label} placement="bottom">
+                      <span>
+                        <IconButton
+                          size="small"
+                          onClick={a.onClick}
+                          disabled={isDisabled}
+                          aria-label={label}
+                          data-testid={a['data-testid']}
+                        >
+                          {typeof a.icon === 'function' ? a.icon() : a.icon}
+                        </IconButton>
+                      </span>
+                    </Tooltip>
+                  );
+                })}
+            </Stack>
+          )}
 
           <InspectorTabs>
             <InspectorTab

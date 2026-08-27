@@ -24,6 +24,10 @@
  */
 interface ActionConfig {
   /**
+   * optional identifier for the action
+   */
+  id?: string;
+  /**
    * the React element for put in menu entry button
    */
   icon?: React.ReactElement | (() => React.ReactElement);
@@ -35,6 +39,10 @@ interface ActionConfig {
    * text for aria-label (for accessibility and testing). If not provided, tooltip will be used.
    */
   ariaLabel?: string;
+  /**
+   * alternative format for aria-label
+   */
+  'aria-label'?: string;
   /**
    * the event handler for a common button
    */

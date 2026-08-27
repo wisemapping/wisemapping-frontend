@@ -41,6 +41,9 @@ const ES = {
   ENTER_TO_CREATE_SIBLING: 'para crear hermano',
   PLUS_TOOLTIP_CREATE_CHILD: 'Crear tópico hijo',
   PLUS_TOOLTIP_CREATE_SIBLING: 'Crear tópico hermano',
+  PASTE_AS_CHILD: 'Paste as child of selected topic',
+  CLIPBOARD_NO_SELECTION: 'Select a topic first',
+  DEEPLINK_COPIED: 'Link copied to clipboard',
 };
 
 export default ES;

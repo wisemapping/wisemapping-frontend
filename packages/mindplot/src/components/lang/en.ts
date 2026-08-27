@@ -42,6 +42,9 @@ interface LanguageStrings {
   ENTER_TO_CREATE_SIBLING: string;
   PLUS_TOOLTIP_CREATE_CHILD: string;
   PLUS_TOOLTIP_CREATE_SIBLING: string;
+  PASTE_AS_CHILD: string;
+  CLIPBOARD_NO_SELECTION: string;
+  DEEPLINK_COPIED: string;
 }
 
 const EN: LanguageStrings = {
@@ -69,6 +72,9 @@ const EN: LanguageStrings = {
   ENTER_TO_CREATE_SIBLING: 'to create sibling',
   PLUS_TOOLTIP_CREATE_CHILD: 'Create child topic',
   PLUS_TOOLTIP_CREATE_SIBLING: 'Create sibling topic',
+  PASTE_AS_CHILD: 'Paste as child of selected topic',
+  CLIPBOARD_NO_SELECTION: 'Select a topic first',
+  DEEPLINK_COPIED: 'Link copied to clipboard',
 };
 
 export default EN;

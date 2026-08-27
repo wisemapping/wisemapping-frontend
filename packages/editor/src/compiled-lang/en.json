@@ -987,6 +987,18 @@
       "value": "icons found"
     }
   ],
+  "inspector.copy-link-to-node": [
+    {
+      "type": 0,
+      "value": "Copy link to node"
+    }
+  ],
+  "inspector.paste-as-child": [
+    {
+      "type": 0,
+      "value": "Paste as child"
+    }
+  ],
   "layout-selector.accept": [
     {
       "type": 0,
@@ -1475,6 +1487,24 @@
     {
       "type": 0,
       "value": "Zoom to fit"
+    }
+  ],
+  "shortcut-help.copy-topics": [
+    {
+      "type": 0,
+      "value": "Copy topics"
+    }
+  ],
+  "shortcut-help.paste-as-child": [
+    {
+      "type": 0,
+      "value": "Paste topics as child of selected"
+    }
+  ],
+  "shortcut-help.paste-topics": [
+    {
+      "type": 0,
+      "value": "Paste topics"
     }
   ],
   "sunrise": [

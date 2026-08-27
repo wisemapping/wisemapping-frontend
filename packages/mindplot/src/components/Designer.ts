@@ -68,7 +68,8 @@ import Theme, { ThemeVariant } from './theme/Theme';
 import ChangeEvent from './layout/ChangeEvent';
 import HTMLTopicSelected from './HTMLTopicSelected';
 
-type DesignerEventType = 'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess' | 'featureEdit';
+type DesignerEventType =
+  'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess' | 'featureEdit' | 'topicContextMenu';
 
 class Designer extends EventDispispatcher<DesignerEventType> {
   private _mindmap: Mindmap | null;
@@ -662,12 +663,12 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  async pasteClipboard(): Promise<void> {
+  private async _readClipboardText(): Promise<string | null> {
     let text: string | null = null;
 
     // Try to read from system clipboard first
-    try {
-      if (navigator.clipboard && navigator.clipboard.read) {
+    if (typeof navigator !== 'undefined' && navigator.clipboard?.read) {
+      try {
         const type = 'text/plain';
         const clipboardItems = await navigator.clipboard.read();
 
@@ -678,10 +679,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
           text = await blob.text();
           console.log('Paste from system clipboard success');
         }
+      } catch (e) {
+        // System clipboard not available or permission denied
+        console.warn('System clipboard not available for reading, using internal clipboard:', e);
       }
-    } catch (e) {
-      // System clipboard not available or permission denied
-      console.warn('System clipboard not available for reading, using internal clipboard:', e);
     }
 
     // Fall back to internal clipboard if system clipboard is empty or failed
@@ -689,6 +690,18 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       text = this._internalClipboard;
       console.log('Paste from internal clipboard success');
     }
+
+    return text;
+  }
+
+  private _parseClipboardMindmap(text: string): Mindmap {
+    const dom = new DOMParser().parseFromString(text, 'application/xml');
+    const serializer = XMLSerializerFactory.createFromDocument(dom);
+    return serializer.loadFromDom(dom, 'application/xml');
+  }
+
+  async pasteClipboard(): Promise<void> {
+    const text = await this._readClipboardText();
 
     // If we have no text at all, nothing to paste
     if (!text) {
@@ -698,10 +711,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Is a mindmap ?. Try to infer if it's a text or a map...
     if (text.indexOf('</map>') !== -1) {
-      const dom = new DOMParser().parseFromString(text, 'application/xml');
-
-      const serializer = XMLSerializerFactory.createFromDocument(dom);
-      const mindmap = serializer.loadFromDom(dom, 'application/xml');
+      const mindmap = this._parseClipboardMindmap(text);
 
       // Remove reference to the parent mindmap and clean up to support multiple copy of the nodes ...
       const central = mindmap.getBranches()[0];
@@ -724,6 +734,51 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         text.trim(),
       );
     }
+  }
+
+  pasteModelsAsChild(models: NodeModel[], parentId: number): void {
+    const parent = this.getModel().findTopicById(parentId);
+    if (!parent) {
+      console.warn(`pasteModelsAsChild: parent topic ${parentId} not found`);
+      return;
+    }
+    const parentIds = models.map(() => parentId);
+    this._actionDispatcher.addTopics(models, parentIds);
+  }
+
+  async pasteClipboardAsChild(parentId: number): Promise<void> {
+    const parent = this.getModel().findTopicById(parentId);
+    if (!parent) {
+      $notify($msg('ONE_TOPIC_MUST_BE_SELECTED'));
+      return;
+    }
+    // Expand parent if collapsed so pasted topics are visible immediately.
+    if (parent.areChildrenShrunken()) {
+      this._actionDispatcher.shrinkBranch([parentId], false);
+    }
+    const text = await this._readClipboardText();
+    if (!text || text.indexOf('</map>') === -1) {
+      $notify($msg('CLIPBOARD_IS_EMPTY'));
+      return;
+    }
+    const mindmap = this._parseClipboardMindmap(text);
+    const branches = mindmap.getBranches();
+    if (branches.length === 0) {
+      $notify($msg('CLIPBOARD_IS_EMPTY'));
+      return;
+    }
+    const central = branches[0];
+    const children = central.getChildren();
+    const layoutManager = this._eventBussDispatcher.getLayoutManager();
+    const clones = children.map((c) => {
+      c.disconnect();
+      const cloned = c.deepCopy();
+      const predicted = layoutManager.predict(parentId, null, null);
+      cloned.setPosition(predicted.position.x, predicted.position.y);
+      cloned.setOrder(predicted.order);
+      return cloned;
+    });
+    this.pasteModelsAsChild(clones, parentId);
   }
 
   getModel(): DesignerModel {
@@ -1628,10 +1683,18 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  goToNode(node: Topic): void {
+  centerNode(node: Topic): void {
+    this._canvas.centerOnPosition(node.getPosition());
+  }
+
+  goToNode(node: Topic, center = false): void {
     node.setOnFocus(true);
     this.onObjectFocusEvent(node);
-    this.ensureNodeVisible(node);
+    if (center) {
+      this.centerNode(node);
+    } else {
+      this.ensureNodeVisible(node);
+    }
   }
 
   /**
@@ -1640,13 +1703,13 @@ class Designer extends EventDispispatcher<DesignerEventType> {
    * navigation already relies on (via DesignerKeyboard) to reveal a node
    * hidden inside a collapsed branch.
    */
-  revealNode(node: Topic): void {
+  revealNode(node: Topic, center = false): void {
     const collapsedAncestorIds = getCollapsedAncestorIds(node);
     if (collapsedAncestorIds.length > 0) {
       this.getActionDispatcher().shrinkBranch(collapsedAncestorIds, false);
     }
     this.deselectAll();
-    this.goToNode(node);
+    this.goToNode(node, center);
   }
 
   private ensureNodeVisible(node: Topic): void {

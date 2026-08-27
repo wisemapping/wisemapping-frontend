@@ -23,6 +23,8 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Inspector from '../../../src/components/inspector';
+import type Model from '../../../src/classes/model/editor';
+import type Capability from '../../../src/classes/action/capability';
 const theme = createTheme();
 
 const renderWithProviders = (ui: React.ReactElement) => {
@@ -63,5 +65,62 @@ describe('Inspector Collapsible Component', () => {
 
     fireEvent.click(screen.getByTestId('inspector-rail-font'));
     expect(onToggleOpen).toHaveBeenCalledTimes(1);
+  });
+
+  test('renders topic actions when a topic is selected', () => {
+    const selected = {
+      getId: () => 42,
+      getModel: () => ({
+        getShapeType: () => undefined,
+        getBorderColor: () => '#000000',
+        getBorderStyle: () => undefined,
+        getConnectionStyle: () => undefined,
+        getConnectionColor: () => undefined,
+      }),
+      getBackgroundColor: () => '#ffffff',
+      getBorderColor: () => '#000000',
+      getBorderStyle: () => undefined,
+      getConnectionStyle: () => undefined,
+      getConnectionColor: () => undefined,
+    };
+    const mockModel = {
+      getDesigner: () => ({
+        getModel: () => ({
+          selectedTopic: () => selected,
+          filterSelectedTopics: () => [selected],
+          filterSelectedRelationships: () => [],
+        }),
+        getThemeVariant: () => 'light',
+        addEvent: jest.fn(),
+        removeEvent: jest.fn(),
+        changeShapeType: jest.fn(),
+        changeColorBorder: jest.fn(),
+        changeBorderStyle: jest.fn(),
+        changeConnectionStyle: jest.fn(),
+        changeConnectionColor: jest.fn(),
+        changeBackgroundColor: jest.fn(),
+      }),
+      getDesignerModel: () => ({
+        filterSelectedTopics: () => [selected],
+        filterSelectedRelationships: () => [],
+      }),
+    };
+    const mockCapability = {
+      isHidden: jest.fn(() => false),
+      isDisabled: jest.fn(() => false),
+    };
+
+    renderWithProviders(
+      <Inspector
+        open={true}
+        model={mockModel as unknown as Model}
+        capability={mockCapability as unknown as Capability}
+        getDeepLink={(id) => `https://app.test/c/maps/1/edit?node=${id}`}
+      />,
+    );
+
+    expect(screen.getByTestId('inspector-topic-actions')).toBeDefined();
+    expect(screen.getByTestId('inspector-paste-as-child')).toBeDefined();
+    expect(screen.getByTestId('inspector-copy-link-to-node')).toBeDefined();
   });
 });

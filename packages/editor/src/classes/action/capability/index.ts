@@ -64,7 +64,8 @@ class Capability {
         action === 'edition-toolbar' ||
         action === 'publish' ||
         action === 'redo-changes' ||
-        action === 'undo-changes')
+        action === 'undo-changes' ||
+        action === 'paste-as-child')
     ) {
       result = true;
     }
@@ -340,6 +341,16 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
   layout: {
     desktop: {
       hidden: ['showcase', 'viewonly-public', 'viewonly-private', 'edition-viewer', 'desktop'],
+    },
+  },
+  'paste-as-child': {
+    desktop: {
+      hidden: ['viewonly-public', 'viewonly-private', 'edition-viewer'],
+    },
+  },
+  'copy-link-to-node': {
+    desktop: {
+      hidden: ['viewonly-public', 'viewonly-private', 'edition-viewer'],
     },
   },
 };

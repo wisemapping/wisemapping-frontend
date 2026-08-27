@@ -42,6 +42,9 @@ const RU = {
   ENTER_TO_CREATE_SIBLING: 'для создания родственного элемента',
   PLUS_TOOLTIP_CREATE_CHILD: 'Создать дочерний элемент',
   PLUS_TOOLTIP_CREATE_SIBLING: 'Создать родственный элемент',
+  PASTE_AS_CHILD: 'Paste as child of selected topic',
+  CLIPBOARD_NO_SELECTION: 'Select a topic first',
+  DEEPLINK_COPIED: 'Link copied to clipboard',
 };
 
 export default RU;

@@ -41,6 +41,9 @@ const IT = {
   ENTER_TO_CREATE_SIBLING: 'per creare un fratello',
   PLUS_TOOLTIP_CREATE_CHILD: 'Crea argomento figlio',
   PLUS_TOOLTIP_CREATE_SIBLING: 'Crea argomento fratello',
+  PASTE_AS_CHILD: 'Paste as child of selected topic',
+  CLIPBOARD_NO_SELECTION: 'Select a topic first',
+  DEEPLINK_COPIED: 'Link copied to clipboard',
 };
 
 export default IT;

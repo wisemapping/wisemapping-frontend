@@ -675,6 +675,33 @@ abstract class Topic extends NodeGraph {
       eventDispatcher?.process('clicknode', me);
       mouseEvent.stopPropagation();
     });
+
+    // Context menu event ...
+    elem.addEvent('contextmenu', (event: Event) => {
+      const mouseEvent = event as MouseEvent;
+      mouseEvent.preventDefault();
+      mouseEvent.stopPropagation();
+
+      if (!me.isReadOnly()) {
+        me.setOnFocus(true);
+      }
+
+      const globalDesigner = (
+        globalThis as unknown as {
+          designer?: {
+            onObjectFocusEvent: (t: Topic) => void;
+            fireEvent: (name: string, data: unknown) => void;
+          };
+        }
+      ).designer;
+      if (globalDesigner) {
+        globalDesigner.onObjectFocusEvent(me);
+        globalDesigner.fireEvent('topicContextMenu', {
+          topic: me,
+          event: mouseEvent,
+        });
+      }
+    });
   }
 
   setOnFocus(focus: boolean) {

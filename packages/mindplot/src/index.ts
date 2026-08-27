@@ -47,6 +47,7 @@ import NoteModel from './components/model/NoteModel';
 import WidgetBuilder, { type WidgetEventType } from './components/WidgetBuilder';
 import { buildDesigner } from './components/DesignerBuilder';
 import { $notify } from './components/model/ToolbarNotifier';
+import Messages, { $msg } from './components/Messages';
 import XMLSerializerFactory from './components/persistence/XMLSerializerFactory';
 import type { CanvasStyleType, BackgroundPatternType } from './components/model/CanvasStyleType';
 
@@ -94,6 +95,8 @@ export {
   SvgImageIcon,
   Importer,
   $notify,
+  $msg,
+  Messages,
   DesignerKeyboard,
   MindplotWebComponent,
   LinkIcon,

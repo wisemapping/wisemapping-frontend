@@ -19,6 +19,7 @@ import { Workspace as Workspace2D, ElementClass, ElementPeer } from '@wisemappin
 import { $assert } from './util/assert';
 import ScreenManager from './ScreenManager';
 import SizeType from './SizeType';
+import PositionType from './PositionType';
 import CanvasElement from './CanvasElement';
 import LayoutEventBus from './layout/LayoutEventBus';
 
@@ -462,9 +463,19 @@ class Canvas {
     return false;
   }
 
-  getZoom() {
-    return this._zoom;
+  centerOnPosition(position: PositionType): void {
+    const workspace = this._workspace;
+    const coordSize = workspace.getCoordSize();
+    const newOriginX = position.x - coordSize.width / 2;
+    const newOriginY = position.y - coordSize.height / 2;
+
+    workspace.setCoordOrigin(newOriginX, newOriginY);
+    this._screenManager.setOffset(newOriginX, newOriginY);
+    this._screenManager.fireEvent('update');
+    LayoutEventBus.fireEvent('canvasPanned');
   }
+
+  getZoom() {}
 }
 
 export default Canvas;
