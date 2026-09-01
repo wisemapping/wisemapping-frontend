@@ -40,6 +40,9 @@ describe('Activation Page', () => {
 
     it('should navigate to login page when clicking Sign In', () => {
       cy.contains('Activation Failed', { timeout: 10000 }).should('be.visible');
+      // The login page redirects authenticated users to /c/maps/, so drop the
+      // mock auth cookie to land on the login page itself.
+      cy.clearCookie('jwt-auth-token');
       cy.contains('button', 'Sign In').click();
       cy.url().should('include', '/c/login');
     });
@@ -71,6 +74,9 @@ describe('Activation Page', () => {
 
     it('should navigate to login page after successful activation', () => {
       cy.contains('Account Activated Successfully', { timeout: 10000 }).should('be.visible');
+      // The login page redirects authenticated users to /c/maps/, so drop the
+      // mock auth cookie to land on the login page itself.
+      cy.clearCookie('jwt-auth-token');
       cy.contains('button', 'Sign In').click();
       cy.url().should('include', '/c/login');
     });
