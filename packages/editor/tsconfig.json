@@ -2,7 +2,7 @@
   "include": [
     "src/**/*",
     "test/**/*",
-    "vite.config.ts",
+    "vite.config.mts",
     ".storybook/**/*"
   ],
   "compilerOptions": {

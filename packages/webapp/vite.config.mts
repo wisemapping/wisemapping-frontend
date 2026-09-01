@@ -19,6 +19,9 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { buildStaticUrls, generateSitemapXml } from './src/components/sitemap/utils';
+import { createRequire } from 'module';
+
+const requireJson = createRequire(import.meta.url);
 
 const htmlTemplatePlugin = (data: Record<string, unknown>) => ({
     name: 'html-template',
@@ -85,19 +88,19 @@ export default defineConfig(({ mode }) => {
 
     switch (configType) {
         case 'file:mock':
-            bootstrapConfig = require('./config.mock.json');
+            bootstrapConfig = requireJson('./config.mock.json');
             break;
         case 'file:prod':
-            bootstrapConfig = require('./config.prod.json');
+            bootstrapConfig = requireJson('./config.prod.json');
             break;
         case 'file:dev':
-            bootstrapConfig = require('./config.dev.json');
+            bootstrapConfig = requireJson('./config.dev.json');
             break;
         case 'remote':
             bootstrapConfig = process.env.APP_CONFIG_JSON ? JSON.parse(process.env.APP_CONFIG_JSON) : {};
             break;
         default:
-            bootstrapConfig = require('./config.mock.json');
+            bootstrapConfig = requireJson('./config.mock.json');
             break;
     }
 
@@ -114,12 +117,12 @@ export default defineConfig(({ mode }) => {
         resolve: {
             tsconfigPaths: true,
             alias: [
-                { find: /^@wisemapping\/editor\/src\/(.*)/, replacement: path.resolve(__dirname, '../editor/src/$1') },
-                { find: /^@wisemapping\/editor$/, replacement: path.resolve(__dirname, '../editor/src/index.ts') },
-                { find: /^@wisemapping\/mindplot\/src\/(.*)/, replacement: path.resolve(__dirname, '../mindplot/src/$1') },
-                { find: /^@wisemapping\/mindplot$/, replacement: path.resolve(__dirname, '../mindplot/src/index.ts') },
-                { find: /^@wisemapping\/web2d\/src\/(.*)/, replacement: path.resolve(__dirname, '../web2d/src/$1') },
-                { find: /^@wisemapping\/web2d$/, replacement: path.resolve(__dirname, '../web2d/src/index.ts') },
+                { find: /^@wisemapping\/editor\/src\/(.*)/, replacement: path.resolve(import.meta.dirname, '../editor/src/$1') },
+                { find: /^@wisemapping\/editor$/, replacement: path.resolve(import.meta.dirname, '../editor/src/index.ts') },
+                { find: /^@wisemapping\/mindplot\/src\/(.*)/, replacement: path.resolve(import.meta.dirname, '../mindplot/src/$1') },
+                { find: /^@wisemapping\/mindplot$/, replacement: path.resolve(import.meta.dirname, '../mindplot/src/index.ts') },
+                { find: /^@wisemapping\/web2d\/src\/(.*)/, replacement: path.resolve(import.meta.dirname, '../web2d/src/$1') },
+                { find: /^@wisemapping\/web2d$/, replacement: path.resolve(import.meta.dirname, '../web2d/src/index.ts') },
             ]
         },
         define: {
