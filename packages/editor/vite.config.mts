@@ -42,12 +42,12 @@ export default defineConfig(({ command }) => {
         },
         resolve: {
             alias: [
-                { find: /^@wisemapping\/editor\/src\/(.*)/, replacement: path.resolve(__dirname, 'src/$1') },
-                { find: /^@wisemapping\/editor$/, replacement: path.resolve(__dirname, 'src/index.ts') },
-                { find: /^@wisemapping\/mindplot\/src\/(.*)/, replacement: path.resolve(__dirname, '../mindplot/src/$1') },
-                { find: /^@wisemapping\/mindplot$/, replacement: path.resolve(__dirname, '../mindplot/src/index.ts') },
-                { find: /^@wisemapping\/web2d\/src\/(.*)/, replacement: path.resolve(__dirname, '../web2d/src/$1') },
-                { find: /^@wisemapping\/web2d$/, replacement: path.resolve(__dirname, '../web2d/src/index.ts') },
+                { find: /^@wisemapping\/editor\/src\/(.*)/, replacement: path.resolve(import.meta.dirname, 'src/$1') },
+                { find: /^@wisemapping\/editor$/, replacement: path.resolve(import.meta.dirname, 'src/index.ts') },
+                { find: /^@wisemapping\/mindplot\/src\/(.*)/, replacement: path.resolve(import.meta.dirname, '../mindplot/src/$1') },
+                { find: /^@wisemapping\/mindplot$/, replacement: path.resolve(import.meta.dirname, '../mindplot/src/index.ts') },
+                { find: /^@wisemapping\/web2d\/src\/(.*)/, replacement: path.resolve(import.meta.dirname, '../web2d/src/$1') },
+                { find: /^@wisemapping\/web2d$/, replacement: path.resolve(import.meta.dirname, '../web2d/src/index.ts') },
             ]
         },
         assetsInclude: ['**/*.wxml'],  // Include .wxml files as assets
@@ -62,7 +62,7 @@ export default defineConfig(({ command }) => {
             ...config,
             build: {
                 lib: {
-                    entry: path.resolve(__dirname, 'src/index.ts'),
+                    entry: path.resolve(import.meta.dirname, 'src/index.ts'),
                     name: 'Editor',
                     fileName: (format) => `editor.${format}.js`,
                 },

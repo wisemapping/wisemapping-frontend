@@ -27,6 +27,9 @@ describe('OAuth Callback Page', () => {
   });
 
   it('displays an error and back-to-login link when OAuth is denied', () => {
+    // The login page redirects authenticated users to /c/maps/, so drop the
+    // mock auth cookie to land on the login page itself.
+    cy.clearCookie('jwt-auth-token');
     cy.visit('/c/oauth-callback?error=access_denied');
     // access_denied redirects to login immediately
     cy.url().should('include', '/c/login');
