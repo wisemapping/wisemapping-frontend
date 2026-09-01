@@ -3,11 +3,11 @@
   "version": "6.0.1",
   "packageManager": "yarn@4.13.0",
   "private": true,
-  "homepage": "http://localhost:8080/react",
+  "homepage": "https://www.wisemapping.com/opensource/",
   "license": "http://www.wisemapping.org/license",
   "author": {
     "name": "Paulo Veiga",
-    "login.email": "pveiga@wisemapping.com"
+    "email": "pveiga@wisemapping.com"
   },
   "contributors": [
     "Ezequiel Bergamaschi"
@@ -21,16 +21,10 @@
     "lint": "lerna run lint --stream",
     "lint:fix": "lerna run lint:fix --stream",
     "playground": "lerna run playground --stream",
-    "prepare": "husky install",
+    "prepare": "husky",
     "test": "lerna run test --stream",
     "test:integration": "lerna run test:integration --stream",
     "test:unit": "lerna run test:unit --stream"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn lint && yarn test"
-    }
   },
   "lint-staged": {
     "packages/mindplot/src/**/*.{ts,tsx}": [
@@ -93,8 +87,6 @@
     "eslint": "^10.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-nibble": "^9.1.1",
     "eslint-plugin-cypress": "^7.0.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",

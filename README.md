@@ -18,7 +18,6 @@ Make sure you have NodeJs installed (version compatible with `package.json` engi
 ```sh
 nvm use
 yarn install
-export NODE_OPTIONS=--openssl-legacy-provider
 ```
 
 Please refer to each package's Readme.md for anything specific to the package.
