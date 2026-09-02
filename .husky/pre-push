@@ -131,7 +131,7 @@ while IFS= read -r file; do
     add_transitive_deps "editor"
   elif [[ $file == packages/webapp/* ]]; then
     mark_affected "webapp"
-  elif [[ $file == package.json ]] || [[ $file == yarn.lock ]] || [[ $file == webpack.common.js ]] || [[ $file == eslint.config.mjs ]]; then
+  elif [[ $file == package.json ]] || [[ $file == yarn.lock ]] || [[ $file == eslint.config.mjs ]]; then
     # Root-level changes affect all packages
     mark_affected "web2d"
     mark_affected "mindplot"
