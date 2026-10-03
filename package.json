@@ -1,7 +1,7 @@
 {
   "name": "wisemapping-front-end",
   "version": "6.0.1",
-  "packageManager": "yarn@4.13.0",
+  "packageManager": "yarn@4.18.1",
   "private": true,
   "homepage": "https://www.wisemapping.com/opensource/",
   "license": "http://www.wisemapping.org/license",
@@ -109,6 +109,7 @@
     "node": ">=24.0.0"
   },
   "resolutions": {
-    "lerna/js-yaml": "^4.3.2"
+    "lerna/js-yaml": "^4.3.2",
+    "nx/smol-toml": "^1.7.1"
   }
 }
