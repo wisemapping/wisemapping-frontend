@@ -17,3 +17,7 @@
  */
 
 import '@testing-library/cypress/add-commands';
+
+// Registers cy.injectAxe() / cy.configureAxe() / cy.checkA11y(), used by
+// cypress/e2e/accessibility.cy.ts.
+import 'cypress-axe';
