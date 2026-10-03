@@ -1,0 +1,117 @@
+/*
+ *    Copyright [2007-2025] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+import type Topic from '../Topic';
+
+/**
+ * Structural moves available from the keyboard, in outline terms.
+ *
+ * 'up'/'down' reorder a topic among its siblings; 'outdent'/'indent' change
+ * which topic it hangs off. Deliberately not spatial: the layout manager owns
+ * position, so a pixel nudge would simply be laid out away.
+ */
+export type TopicMove = 'up' | 'down' | 'outdent' | 'indent';
+
+/** Where a move wants the topic to end up, in terms the layout can act on. */
+export type ReorderTarget =
+  { kind: 'reorder'; parent: Topic; order: number } | { kind: 'reparent'; parent: Topic };
+
+/**
+ * Siblings of a topic in layout order, the topic itself included.
+ *
+ * `getChildren()` is not guaranteed to be ordered, and `getOrder()` is the
+ * value the layout actually sorts by, so this sorts explicitly rather than
+ * trusting the array. Children whose order is undefined sort last and keep
+ * their relative sequence, which keeps the result stable for a branch that is
+ * mid-construction.
+ */
+export const orderedSiblings = (topic: Topic): Topic[] => {
+  const parent = topic.getParent();
+  if (!parent) {
+    return [topic];
+  }
+  return [...parent.getChildren()].sort((a, b) => {
+    const left = a.getOrder();
+    const right = b.getOrder();
+    if (left === undefined && right === undefined) return 0;
+    if (left === undefined) return 1;
+    if (right === undefined) return -1;
+    return left - right;
+  });
+};
+
+/**
+ * Resolves a requested move into a concrete target, or null when the move is
+ * not available -- the topic is already first among its siblings, say, or is
+ * the central topic, which has nowhere to go.
+ *
+ * Pure, and with only a type-only import of Topic, so the whole decision table
+ * is unit-testable against stubs rather than needing a live Designer.
+ */
+export const resolveTopicMove = (topic: Topic, move: TopicMove): ReorderTarget | null => {
+  // The central topic is the root: it has no siblings to reorder among and no
+  // parent to detach from.
+  if (topic.isCentralTopic()) {
+    return null;
+  }
+
+  const parent = topic.getParent();
+  if (!parent) {
+    return null;
+  }
+
+  switch (move) {
+    case 'up':
+    case 'down': {
+      const siblings = orderedSiblings(topic);
+      const index = siblings.indexOf(topic);
+      const targetIndex = move === 'up' ? index - 1 : index + 1;
+      // Already at the end it is being asked to move towards.
+      if (index < 0 || targetIndex < 0 || targetIndex >= siblings.length) {
+        return null;
+      }
+      return { kind: 'reorder', parent, order: targetIndex };
+    }
+
+    case 'outdent': {
+      // Re-attach to the grandparent, becoming a sibling of the current parent.
+      const grandparent = parent.getParent();
+      if (!grandparent) {
+        // The parent is the central topic, so there is no level to rise to --
+        // detaching here would orphan the topic rather than promote it.
+        return null;
+      }
+      return { kind: 'reparent', parent: grandparent };
+    }
+
+    case 'indent': {
+      // Become a child of the sibling immediately above, the outliner meaning
+      // of indent. The first child has no preceding sibling to attach to.
+      const siblings = orderedSiblings(topic);
+      const index = siblings.indexOf(topic);
+      if (index <= 0) {
+        return null;
+      }
+      return { kind: 'reparent', parent: siblings[index - 1] };
+    }
+
+    default:
+      return null;
+  }
+};
+
+export default resolveTopicMove;

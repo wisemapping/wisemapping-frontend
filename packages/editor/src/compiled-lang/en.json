@@ -1405,6 +1405,24 @@
       "value": "Find node in map"
     }
   ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "Indent topic (attach to sibling above)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "Move topic down among siblings"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "Move topic up among siblings"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1415,6 +1433,12 @@
     {
       "type": 0,
       "value": "Arrow keys"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "Outdent topic (attach to grandparent)"
     }
   ],
   "shortcut-help-pane.outline-view": [

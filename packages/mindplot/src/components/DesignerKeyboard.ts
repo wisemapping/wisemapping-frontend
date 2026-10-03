@@ -20,6 +20,9 @@ import EventManager from './util/EventManager';
 import Keyboard from './Keyboard';
 import { Designer } from '..';
 import Topic from './Topic';
+import { TopicMove } from './util/topicReorder';
+import { $msg } from './Messages';
+import { $notify } from './model/ToolbarNotifier';
 
 export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
@@ -168,6 +171,30 @@ class DesignerKeyboard extends Keyboard {
       me._moveSelection(designer, 'DOWN');
     });
 
+    // Structural moves, on the Word / Google Docs outline bindings:
+    // alt+shift+up/down reorder among siblings, alt+shift+left/right
+    // outdent/indent. Plain arrows are taken by selection navigation, and the
+    // remaining modifier+arrow combinations all collide with something outside
+    // the app -- alt+left/right is browser Back/Forward, ctrl+left/right
+    // collapses onto cmd+left/right which is Safari Back/Forward, and
+    // ctrl+up/down collapses onto the macOS Mission Control keys, which the OS
+    // takes before the page sees them.
+    this.addShortcut(['alt+shift+up'], () => {
+      me._moveTopic(designer, 'up');
+    });
+
+    this.addShortcut(['alt+shift+down'], () => {
+      me._moveTopic(designer, 'down');
+    });
+
+    this.addShortcut(['alt+shift+left'], () => {
+      me._moveTopic(designer, 'outdent');
+    });
+
+    this.addShortcut(['alt+shift+right'], () => {
+      me._moveTopic(designer, 'indent');
+    });
+
     designer.getContainer().addEventListener('mouseenter', () => {
       super.resume();
       DesignerKeyboard.resume();
@@ -201,6 +228,21 @@ class DesignerKeyboard extends Keyboard {
         topic.showTextEditor(keyboardEvent.key);
       }
     });
+  }
+
+  /**
+   * Applies a structural move to the selected topic.
+   *
+   * Note this moves the topic, where `_moveSelection` moves the *selection* --
+   * the two read similarly but do opposite things.
+   */
+  private _moveTopic(designer: Designer, move: TopicMove): void {
+    const topic = designer.getModel().selectedTopic();
+    if (!topic) {
+      $notify($msg('ONE_TOPIC_MUST_BE_SELECTED'));
+      return;
+    }
+    designer.moveTopicInTree(topic, move);
   }
 
   private _moveSelection(designer: Designer, direction: 'LEFT' | 'RIGHT' | 'UP' | 'DOWN'): void {

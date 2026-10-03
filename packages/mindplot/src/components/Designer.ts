@@ -18,6 +18,7 @@
 import { $assert, $defined } from './util/assert';
 import DOMUtils from './util/DOMUtils';
 import getCollapsedAncestorIds from './util/topicVisibility';
+import resolveTopicMove, { TopicMove } from './util/topicReorder';
 import isSelectionEmpty from './util/selectionState';
 import Messages, { $msg } from './Messages';
 
@@ -1746,6 +1747,46 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
     this.deselectAll();
     this.goToNode(node, center);
+  }
+
+  /**
+   * Moves a topic within the tree: 'up'/'down' reorder it among its siblings,
+   * 'outdent'/'indent' change which topic it hangs off.
+   *
+   * Structural rather than spatial, because the layout manager owns position --
+   * nudging coordinates would just be laid out away. Returns false when the
+   * move is unavailable (already first among siblings, no level to rise to,
+   * and so on) so a caller can decide whether that warrants feedback.
+   *
+   * Goes through dragTopic, which is the same path mouse dragging uses, so the
+   * move lands on the undo stack as a single DragTopicCommand.
+   */
+  moveTopicInTree(topic: Topic, move: TopicMove): boolean {
+    if (this.isReadOnly()) {
+      return false;
+    }
+
+    const target = resolveTopicMove(topic, move);
+    if (!target) {
+      return false;
+    }
+
+    const layoutManager = this._eventBussDispatcher.getLayoutManager();
+    const dispatcher = this.getActionDispatcher();
+
+    if (target.kind === 'reorder') {
+      dispatcher.dragTopic(topic.getId(), topic.getPosition(), target.order, target.parent);
+    } else {
+      // Ask the layout where a child of the new parent belongs, rather than
+      // inventing a position the sorter would immediately override.
+      const predicted = layoutManager.predict(target.parent.getId(), null, null);
+      dispatcher.dragTopic(topic.getId(), predicted.position, predicted.order, target.parent);
+    }
+
+    // Indenting under a collapsed sibling would hide the topic the user just
+    // moved, so make sure it stays on screen and selected.
+    this.revealNode(topic);
+    return true;
   }
 
   private ensureNodeVisible(node: Topic): void {
