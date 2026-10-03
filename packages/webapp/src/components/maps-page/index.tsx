@@ -19,11 +19,10 @@ import React, { ErrorInfo, ReactElement, useContext, useEffect } from 'react';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import { useStyles } from './style';
 import { MapsList } from './maps-list';
-import { createIntl, createIntlCache, FormattedMessage, IntlProvider, useIntl } from 'react-intl';
+import { createIntl, createIntlCache, FormattedMessage, IntlProvider } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Label } from '../../classes/client';
 import ActionDispatcher from './action-dispatcher';
@@ -35,16 +34,13 @@ import ThemeToggleButton from '../common/theme-toggle-button';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 import { useFetchAccount } from '../../classes/middleware';
 
-import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowRight from '@mui/icons-material/NavigateNext';
 import ArrowLeft from '@mui/icons-material/NavigateBefore';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 import AddCircleTwoTone from '@mui/icons-material/AddCircleTwoTone';
 import CloudUploadTwoTone from '@mui/icons-material/CloudUploadTwoTone';
-import ClearIcon from '@mui/icons-material/Clear';
 import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 import PersonOutlineTwoTone from '@mui/icons-material/PersonOutlineTwoTone';
 import PublicTwoTone from '@mui/icons-material/PublicTwoTone';
@@ -60,20 +56,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
-
-import logoIconBlack from '../../../images/logo-and-text-black.svg';
-import logoIconWhite from '../../../images/logo-and-text-white.svg';
 import LabelDeleteConfirm from './maps-list/label-delete-confirm';
+import DrawerNav, { ToolbarButtonInfo } from './drawer-nav';
 import { trackMindmapListAction, trackPageView } from '../../utils/analytics';
 import { CSSObject, Interpolation, Theme } from '@emotion/react';
-import { alpha } from '@mui/material/styles';
-import withEmotionStyles from '../HOCs/withEmotionStyles';
 import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
-import { useTheme } from '../../contexts/ThemeContext';
 
 const CHATGPT_COPILOT_URL =
   'https://chatgpt.com/g/g-6908d77ed7988191bb7a62f29fcf0177-mind-map-copilot';
@@ -89,12 +77,6 @@ export interface LabelFilter {
   label: Label;
 }
 
-interface ToolbarButtonInfo {
-  filter: GenericFilter | LabelFilter;
-  label: string;
-  icon: React.ReactElement;
-}
-
 const MapsPage = (): ReactElement => {
   const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
   const client = useContext(ClientContext);
@@ -107,7 +89,6 @@ const MapsPage = (): ReactElement => {
     localStorage.getItem('desktopDrawerOpen') === 'true',
   );
   const classes = useStyles(desktopDrawerOpen);
-  const { mode } = useTheme();
 
   // Get theme-appropriate icon color - match text color
   const getIconColor = () => {
@@ -246,87 +227,14 @@ const MapsPage = (): ReactElement => {
   );
 
   const drawerItemsList = (
-    <>
-      <div
-        style={{
-          padding: '24px 16px 20px 16px',
-          marginBottom: '8px',
-          display: 'flex',
-          alignItems: 'center',
-          position: 'relative',
-          zIndex: 0,
-        }}
-        key="logo"
-      >
-        <img
-          src={mode === 'dark' ? logoIconWhite : logoIconBlack}
-          alt="logo"
-          style={{ height: '32px', width: 'auto' }}
-        />
-      </div>
-
-      {/* User Info Box */}
-      {account && (desktopDrawerOpen || mobileDrawerOpen) && (
-        <Box
-          sx={{
-            padding: '16px',
-            margin: '0 8px 16px 8px',
-            backgroundColor: 'rgba(255, 255, 255, 0.05)',
-            borderRadius: '8px',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-          }}
-        >
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <Typography
-              variant="body2"
-              sx={{
-                color: 'text.primary',
-                fontSize: '16px',
-                fontWeight: 500,
-                fontFamily: 'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {account.firstname && account.lastname
-                ? `${account.firstname} ${account.lastname}`
-                : account.email}
-            </Typography>
-            <Typography
-              variant="caption"
-              sx={{
-                color: 'text.secondary',
-                fontSize: '14px',
-                fontFamily: 'Figtree, "Noto Sans JP", Helvetica, "system-ui", Arial, sans-serif',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                display: 'block',
-              }}
-            >
-              {account.email}
-            </Typography>
-          </Box>
-        </Box>
-      )}
-
-      <List component="nav">
-        {filterButtons.map((buttonInfo) => {
-          return (
-            <StyleListItem
-              icon={buttonInfo.icon}
-              label={buttonInfo.label}
-              filter={buttonInfo.filter}
-              active={filter}
-              onClick={handleMenuClick}
-              onDelete={setLabelToDelete}
-              key={`${buttonInfo.filter.type}:${buttonInfo.label}`}
-            />
-          );
-        })}
-      </List>
-    </>
+    <DrawerNav
+      account={account}
+      drawerOpen={desktopDrawerOpen || mobileDrawerOpen}
+      filterButtons={filterButtons}
+      activeFilter={filter}
+      onFilterClick={handleMenuClick}
+      onLabelDelete={setLabelToDelete}
+    />
   );
 
   const container = document !== undefined ? () => document.body : undefined;
@@ -569,130 +477,6 @@ const MapsPage = (): ReactElement => {
         />
       )}
     </IntlProvider>
-  );
-};
-
-interface ListItemProps {
-  icon: React.ReactElement;
-  label: string;
-  filter: Filter;
-  active?: Filter;
-  onClick: (filter: Filter) => void;
-  onDelete?: (id: number) => void;
-}
-
-// https://stackoverflow.com/questions/61486061/how-to-set-selected-and-hover-color-of-listitem-in-mui
-const CustomListItem = withEmotionStyles((theme) => ({
-  position: 'relative',
-  '&.Mui-selected': {
-    backgroundColor:
-      theme.palette.mode === 'light'
-        ? alpha(theme.palette.common.white, 0.2)
-        : theme.palette.grey[800],
-    color:
-      theme.palette.mode === 'light'
-        ? theme.palette.primary.contrastText
-        : theme.palette.text.primary,
-    '& .MuiListItemIcon-root': {
-      color:
-        theme.palette.mode === 'light'
-          ? theme.palette.primary.contrastText
-          : theme.palette.text.primary,
-    },
-  },
-  '&.Mui-selected:hover': {
-    backgroundColor:
-      theme.palette.mode === 'light'
-        ? alpha(theme.palette.common.white, 0.25)
-        : theme.palette.grey[700],
-    color:
-      theme.palette.mode === 'light'
-        ? theme.palette.primary.contrastText
-        : theme.palette.text.primary,
-    '& .MuiListItemIcon-root': {
-      color:
-        theme.palette.mode === 'light'
-          ? theme.palette.primary.contrastText
-          : theme.palette.text.primary,
-    },
-  },
-  '&:hover ~ .MuiListItemSecondaryAction-root .label-delete-button': {
-    opacity: '1 !important',
-  },
-}))(ListItemButton);
-
-const StyleListItem = (props: ListItemProps) => {
-  const intl = useIntl();
-  const icon = props.icon;
-  const label = props.label;
-  const filter = props.filter;
-  const activeFilter = props.active;
-  const onClick = props.onClick;
-  const onDeleteLabel = props.onDelete;
-  const isSelected =
-    activeFilter &&
-    activeFilter.type == filter.type &&
-    (activeFilter.type != 'label' ||
-      (activeFilter as LabelFilter).label == (filter as LabelFilter).label);
-  const handleOnClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, filter: Filter) => {
-    event.stopPropagation();
-    onClick(filter);
-  };
-
-  const handleOnDelete = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    filter: Filter,
-  ) => {
-    event.stopPropagation();
-    if (!onDeleteLabel) {
-      throw 'Illegal state exeption';
-    }
-    onDeleteLabel((filter as LabelFilter).label.id);
-  };
-
-  return (
-    <Box
-      sx={{
-        position: 'relative',
-        '&:hover .label-delete-button': {
-          opacity: '1 !important',
-        },
-      }}
-    >
-      <CustomListItem selected={isSelected} onClick={(e) => handleOnClick(e, filter)}>
-        <Tooltip title={label} disableInteractive>
-          <ListItemIcon>{icon}</ListItemIcon>
-        </Tooltip>
-        <ListItemText primary={label} />
-        {filter.type == 'label' && (
-          <ListItemSecondaryAction>
-            <IconButton
-              edge="end"
-              aria-label={intl.formatMessage({ id: 'common.delete', defaultMessage: 'Delete' })}
-              onClick={(e) => handleOnDelete(e, filter)}
-              size="small"
-              className="label-delete-button"
-              sx={{
-                opacity: 0,
-                transition: 'opacity 0.2s ease',
-                padding: '4px',
-                '&:hover': {
-                  opacity: 1,
-                },
-              }}
-            >
-              <ClearIcon
-                sx={{
-                  fontSize: '1rem',
-                  color: 'rgba(255, 255, 255, 0.95)',
-                  filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))',
-                }}
-              />
-            </IconButton>
-          </ListItemSecondaryAction>
-        )}
-      </CustomListItem>
-    </Box>
   );
 };
 
