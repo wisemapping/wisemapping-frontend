@@ -173,7 +173,7 @@ describe('Editor Toolbar Submenu', () => {
 
     fireEvent.click(item);
 
-    await screen.findByRole('submenu');
+    await screen.findByRole('menu');
   });
 
   it('Shows a button for each option', async () => {
@@ -210,11 +210,11 @@ describe('Editor Toolbar Submenu', () => {
     const item = screen.getByRole('button');
     fireEvent.click(item);
     const clickeableDiv = await screen.findByTestId('custom-render-div');
-    expect(screen.queryByRole('submenu')).toBeTruthy();
+    expect(screen.queryByRole('menu')).toBeTruthy();
 
     fireEvent.click(clickeableDiv);
 
-    expect(screen.queryByRole('submenu')).toBeFalsy();
+    expect(screen.queryByRole('menu')).toBeFalsy();
   });
 
   it('Given a disabled configuratio when mouse is over, not shows a submenu ', async () => {
@@ -223,7 +223,7 @@ describe('Editor Toolbar Submenu', () => {
 
     fireEvent.click(item);
 
-    expect(screen.queryByRole('submenu')).toBeFalsy();
+    expect(screen.queryByRole('menu')).toBeFalsy();
   });
 
 });

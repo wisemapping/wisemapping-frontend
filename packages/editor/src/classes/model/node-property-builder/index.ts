@@ -25,12 +25,7 @@ import {
   ThemeType,
 } from '@wisemapping/mindplot';
 import NodeProperty from '../node-property';
-import {
-  SwitchValueDirection,
-  fontSizes,
-  getPreviousValue,
-  getNextValue,
-} from '../../../components/toolbar/ToolbarValueModelBuilder';
+import { SwitchValueDirection, fontSizes, getPreviousValue, getNextValue } from '../value-stepper';
 
 /**
  * Value reported by the font size model while nothing is selected. Toolbar

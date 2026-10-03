@@ -33,9 +33,14 @@ import { EDITOR_LAYOUT, EDITOR_Z_INDEX } from '../../theme/layout';
  * @param props.configuration the configuration
  * @returns common button menu entry that uses the onClick of the configuration.
  */
-export const ToolbarButtonOption = (props: { configuration: ActionConfig }): ReactElement => {
+export const ToolbarButtonOption = (props: {
+  configuration: ActionConfig;
+  /** Set when this button opens a submenu, so it reports expanded state. */
+  expanded?: boolean;
+}): ReactElement => {
   const selected = props.configuration.selected && props.configuration.selected();
   const ariaLabel = props.configuration.ariaLabel || props.configuration.tooltip || '';
+  const isDisclosure = props.expanded !== undefined;
   return (
     <Tooltip
       title={props.configuration.tooltip || ''}
@@ -52,7 +57,12 @@ export const ToolbarButtonOption = (props: { configuration: ActionConfig }): Rea
         <IconButton
           onClick={props.configuration.onClick}
           disabled={props.configuration.disabled && props.configuration.disabled()}
-          aria-pressed={selected}
+          // A disclosure reports aria-expanded/aria-haspopup; only a real
+          // toggle reports aria-pressed. Submenu triggers used to claim
+          // aria-pressed, telling screen readers they were toggle buttons.
+          aria-pressed={isDisclosure ? undefined : selected}
+          aria-expanded={isDisclosure ? props.expanded : undefined}
+          aria-haspopup={isDisclosure ? 'menu' : undefined}
           aria-label={ariaLabel}
           data-testid={props.configuration['data-testid']}
           sx={{ overflow: 'visible', position: 'relative' }}
@@ -136,6 +146,7 @@ export const ToolbarSubmenu = ({
       }}
     >
       <ToolbarButtonOption
+        expanded={open}
         configuration={{
           ...configuration,
           onClick: (event) => {
@@ -146,7 +157,8 @@ export const ToolbarSubmenu = ({
         }}
       />
       <Popover
-        role="submenu"
+        // 'submenu' is not an ARIA role; 'menu' is.
+        role="menu"
         open={open}
         onClose={() => setOpen(false)}
         anchorEl={itemRef.current}
@@ -156,7 +168,9 @@ export const ToolbarSubmenu = ({
         disableScrollLock={false}
         disablePortal={false}
         sx={{
-          zIndex: hasCustomRender ? EDITOR_Z_INDEX.submenu : '-1',
+          // Hover submenus used to sit at z-index -1, i.e. painted behind the
+          // page and clickable only by stacking-context luck.
+          zIndex: hasCustomRender ? EDITOR_Z_INDEX.submenu : EDITOR_Z_INDEX.hoverSubmenu,
         }}
         elevation={elevation}
         slotProps={{

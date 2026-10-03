@@ -68,6 +68,11 @@ export const EDITOR_Z_INDEX = {
   canvasChrome: 1000,
   /** Formatting toolbar: above the zoom toolbar when they overlap. */
   formattingToolbar: 1100,
+  /**
+   * Hover-opened submenus of plain buttons. Above the toolbars, below a
+   * click-opened pane. Previously -1, which painted them behind the page.
+   */
+  hoverSubmenu: 1200,
   /** Popovers opened from a toolbar button. */
   submenu: 1500,
 } as const;

@@ -19,7 +19,7 @@
 import {
   getNextValue,
   getPreviousValue,
-} from '../../../src/components/toolbar/ToolbarValueModelBuilder';
+} from '../../../src/classes/model/value-stepper';
 
 describe('getNextValue', () => {
   it('Given an array and the current value it return the next value of the array', () => {
