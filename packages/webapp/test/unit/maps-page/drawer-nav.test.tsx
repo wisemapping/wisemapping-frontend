@@ -17,7 +17,9 @@
  */
 
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render as renderBare, screen, fireEvent } from '@testing-library/react';
+import { ThemeProvider } from '@mui/material/styles';
+import { createAppTheme } from '../../../src/theme';
 
 jest.mock('react-intl', () => {
   const ReactActual = require('react');
@@ -68,6 +70,16 @@ const renderNav = (overrides: Partial<React.ComponentProps<typeof DrawerNav>> = 
       {...overrides}
     />,
   );
+
+// These components style themselves through `withEmotionStyles((theme) => ...)`,
+// which Emotion resolves against the theme in context -- so they have to be
+// mounted under a ThemeProvider. Wrapping via RTL's `wrapper` option keeps the
+// provider in place across `rerender` too.
+const wrapper = ({ children }: { children: React.ReactNode }): React.ReactElement => (
+  <ThemeProvider theme={createAppTheme('light')}>{children}</ThemeProvider>
+);
+
+const render = (ui: React.ReactElement) => renderBare(ui, { wrapper });
 
 describe('DrawerNav', () => {
   test('renders one navigation entry per filter button, in order', () => {

@@ -22,11 +22,14 @@
 import type { IntlShape } from 'react-intl';
 import type ActionConfig from '../../../src/classes/action/action-config';
 import type Editor from '../../../src/classes/model/editor';
+import type { SelectionSnapshot } from '../../../src/hooks/useSelection';
 import { buildEditorPanelConfig } from '../../../src/components/editor-toolbar/configBuilder';
 
 const notify = jest.fn();
 jest.mock('@wisemapping/mindplot', () => ({
   $notify: (msg: string) => notify(msg),
+  // `formatTooltip` reaches for this, so the stand-in has to carry it.
+  isMacPlatform: () => false,
   StrokeStyle: {},
   LineType: {},
 }));
@@ -62,6 +65,20 @@ const makeModel = (selectedIds: number[]): Editor =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }) as any as Editor;
 
+// `buildEditorPanelConfig` takes a useSelection snapshot alongside the model,
+// so the two have to agree on how much is selected.
+const selectionOf = (selectedIds: number[]): SelectionSnapshot => ({
+  topicCount: selectedIds.length,
+  relationshipCount: 0,
+  isMapLoaded: true,
+});
+
+const buildConfig = (
+  selectedIds: number[],
+  getDeepLink?: (nodeId: number) => string,
+): ActionConfig[] =>
+  buildEditorPanelConfig(makeModel(selectedIds), intl, selectionOf(selectedIds), getDeepLink);
+
 const findCopyEntry = (config: ActionConfig[]): ActionConfig => {
   const entry = config.find((c) => c['data-testid'] === 'copy-node-link-button');
   expect(entry).toBeDefined();
@@ -81,7 +98,7 @@ describe('Copy link to node toolbar entry', () => {
   });
 
   it('is hidden when the host does not supply getDeepLink', () => {
-    const entry = findCopyEntry(buildEditorPanelConfig(makeModel([5]), intl));
+    const entry = findCopyEntry(buildConfig([5]));
 
     expect(entry.visible).toBe(false);
     expect(entry.disabled!()).toBe(true);
@@ -89,7 +106,7 @@ describe('Copy link to node toolbar entry', () => {
 
   it('is disabled while nothing is selected', () => {
     const entry = findCopyEntry(
-      buildEditorPanelConfig(makeModel([]), intl, (id) => `https://host/n/${id}`),
+      buildConfig([], (id) => `https://host/n/${id}`),
     );
 
     expect(entry.visible).toBe(true);
@@ -98,7 +115,7 @@ describe('Copy link to node toolbar entry', () => {
 
   it('is disabled for a multi-node selection -- a link names one node', () => {
     const entry = findCopyEntry(
-      buildEditorPanelConfig(makeModel([5, 6]), intl, (id) => `https://host/n/${id}`),
+      buildConfig([5, 6], (id) => `https://host/n/${id}`),
     );
 
     expect(entry.disabled!()).toBe(true);
@@ -106,7 +123,7 @@ describe('Copy link to node toolbar entry', () => {
 
   it('copies the link for the selected node and notifies', async () => {
     const getDeepLink = jest.fn((id: number) => `https://host/c/maps/3/edit?node=${id}`);
-    const entry = findCopyEntry(buildEditorPanelConfig(makeModel([12]), intl, getDeepLink));
+    const entry = findCopyEntry(buildConfig([12], getDeepLink));
 
     expect(entry.disabled!()).toBe(false);
     entry.onClick!(undefined);
@@ -123,7 +140,7 @@ describe('Copy link to node toolbar entry', () => {
     jest.spyOn(console, 'error').mockImplementation();
 
     const entry = findCopyEntry(
-      buildEditorPanelConfig(makeModel([12]), intl, (id) => `https://host/n/${id}`),
+      buildConfig([12], (id) => `https://host/n/${id}`),
     );
     entry.onClick!(undefined);
     await Promise.resolve();
@@ -138,7 +155,7 @@ describe('Copy link to node toolbar entry', () => {
     jest.spyOn(console, 'error').mockImplementation();
 
     const entry = findCopyEntry(
-      buildEditorPanelConfig(makeModel([12]), intl, (id) => `https://host/n/${id}`),
+      buildConfig([12], (id) => `https://host/n/${id}`),
     );
     entry.onClick!(undefined);
 
