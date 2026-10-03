@@ -1341,6 +1341,12 @@
       "value": "ようこそ"
     }
   ],
+  "map.actions": [
+    {
+      "type": 0,
+      "value": "操作"
+    }
+  ],
   "map.creator": [
     {
       "type": 0,
@@ -1351,6 +1357,12 @@
     {
       "type": 0,
       "value": "選択したものを削除"
+    }
+  ],
+  "map.labels": [
+    {
+      "type": 0,
+      "value": "ラベル"
     }
   ],
   "map.last-update": [
@@ -1531,6 +1543,12 @@
     {
       "type": 0,
       "value": "検索..."
+    }
+  ],
+  "maps.select-all": [
+    {
+      "type": 0,
+      "value": "すべて選択"
     }
   ],
   "maps.tooltip-open": [

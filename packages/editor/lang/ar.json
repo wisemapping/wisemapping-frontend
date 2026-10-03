@@ -898,5 +898,53 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "ضبط للملاءمة"
+  },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "تم نسخ رابط الموضوع إلى الحافظة"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "تعذّر نسخ الرابط إلى الحافظة"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "نسخ رابط الموضوع"
+  },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "البحث عن موضوع في الخريطة"
+  },
+  "shortcut-help-pane.pan-canvas": {
+    "defaultMessage": "تحريك مساحة الرسم"
+  },
+  "shortcut-help-pane.pan-canvas-keys": {
+    "defaultMessage": "التمرير بإصبعين أو عجلة الفأرة"
+  },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "لصق كعنصر فرعي للموضوع المحدد"
+  },
+  "shortcut-help-pane.zoom-wheel": {
+    "defaultMessage": "التكبير والتصغير بعجلة الفأرة"
+  },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "البحث في الخريطة"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "البحث عن موضوع..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "محو البحث"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "المطابقة السابقة"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "المطابقة التالية"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "{current} من {total}"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "لا توجد مطابقات"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "لا يوجد موضوع يطابق «{query}»."
   }
 }

@@ -1341,6 +1341,12 @@
       "value": "Ласкаво просимо"
     }
   ],
+  "map.actions": [
+    {
+      "type": 0,
+      "value": "Дії"
+    }
+  ],
   "map.creator": [
     {
       "type": 0,
@@ -1351,6 +1357,12 @@
     {
       "type": 0,
       "value": "Видалити вибрані"
+    }
+  ],
+  "map.labels": [
+    {
+      "type": 0,
+      "value": "Мітки"
     }
   ],
   "map.last-update": [
@@ -1531,6 +1543,12 @@
     {
       "type": 0,
       "value": "Пошук..."
+    }
+  ],
+  "maps.select-all": [
+    {
+      "type": 0,
+      "value": "Вибрати все"
     }
   ],
   "maps.tooltip-open": [

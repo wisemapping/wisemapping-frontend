@@ -347,6 +347,18 @@
       "value": "Fondo"
     }
   ],
+  "editor-panel.deeplink-copied": [
+    {
+      "type": 0,
+      "value": "Enlace al tópico copiado al portapapeles"
+    }
+  ],
+  "editor-panel.deeplink-copy-failed": [
+    {
+      "type": 0,
+      "value": "No se pudo copiar el enlace al portapapeles"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,
@@ -477,6 +489,12 @@
     {
       "type": 0,
       "value": "Polilinea Curva"
+    }
+  ],
+  "editor-panel.tooltip-copy-node-link": [
+    {
+      "type": 0,
+      "value": "Copiar enlace al tópico"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -693,6 +711,64 @@
     {
       "type": 0,
       "value": "Buscar emojis..."
+    }
+  ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "Borrar búsqueda"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "Ningún tópico coincide con “"
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": "”."
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " de "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "Coincidencia siguiente"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "Sin coincidencias"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "Buscar tópico..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "Coincidencia anterior"
     }
   ],
   "headerNotifier": [
@@ -1335,6 +1411,12 @@
       "value": "Expandir/Colapsar todos los temas"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "Buscar tópico en el mapa"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1363,6 +1445,24 @@
     {
       "type": 0,
       "value": "Comenzar a escribir en el tópico seleccionado"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "Desplazar el lienzo"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "Deslizar con dos dedos o rueda del ratón"
+    }
+  ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "Pegar como hijo del tópico seleccionado"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -1417,6 +1517,12 @@
     {
       "type": 0,
       "value": "Ajustar zoom"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "Acercar o alejar con la rueda"
     }
   ],
   "sunrise": [
@@ -1717,6 +1823,12 @@
     {
       "type": 0,
       "value": "Expandir por Nivel"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "Buscar en el mapa"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

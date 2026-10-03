@@ -946,5 +946,14 @@
   },
   "activation.success.title": {
     "defaultMessage": "Account Activated Successfully"
+  },
+  "map.actions": {
+    "defaultMessage": "Действия"
+  },
+  "map.labels": {
+    "defaultMessage": "Метки"
+  },
+  "maps.select-all": {
+    "defaultMessage": "Выбрать все"
   }
 }

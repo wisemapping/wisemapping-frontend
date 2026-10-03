@@ -1341,6 +1341,12 @@
       "value": "أهلًا بك"
     }
   ],
+  "map.actions": [
+    {
+      "type": 0,
+      "value": "إجراءات"
+    }
+  ],
   "map.creator": [
     {
       "type": 0,
@@ -1351,6 +1357,12 @@
     {
       "type": 0,
       "value": "حذف المحدد"
+    }
+  ],
+  "map.labels": [
+    {
+      "type": 0,
+      "value": "التسميات"
     }
   ],
   "map.last-update": [
@@ -1531,6 +1543,12 @@
     {
       "type": 0,
       "value": "بحث..."
+    }
+  ],
+  "maps.select-all": [
+    {
+      "type": 0,
+      "value": "تحديد الكل"
     }
   ],
   "maps.tooltip-open": [

@@ -1341,6 +1341,12 @@
       "value": "स्वागत है"
     }
   ],
+  "map.actions": [
+    {
+      "type": 0,
+      "value": "क्रियाएँ"
+    }
+  ],
   "map.creator": [
     {
       "type": 0,
@@ -1351,6 +1357,12 @@
     {
       "type": 0,
       "value": "चयनित हटाएं"
+    }
+  ],
+  "map.labels": [
+    {
+      "type": 0,
+      "value": "लेबल"
     }
   ],
   "map.last-update": [
@@ -1531,6 +1543,12 @@
     {
       "type": 0,
       "value": "खोजें..."
+    }
+  ],
+  "maps.select-all": [
+    {
+      "type": 0,
+      "value": "सभी चुनें"
     }
   ],
   "maps.tooltip-open": [

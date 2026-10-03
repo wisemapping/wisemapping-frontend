@@ -946,5 +946,14 @@
   },
   "activation.success.title": {
     "defaultMessage": "Account Activated Successfully"
+  },
+  "map.actions": {
+    "defaultMessage": "Aktionen"
+  },
+  "map.labels": {
+    "defaultMessage": "Labels"
+  },
+  "maps.select-all": {
+    "defaultMessage": "Alle auswählen"
   }
 }

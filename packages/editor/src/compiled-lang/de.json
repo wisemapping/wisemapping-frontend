@@ -347,6 +347,18 @@
       "value": "Hintergrund"
     }
   ],
+  "editor-panel.deeplink-copied": [
+    {
+      "type": 0,
+      "value": "Link zum Thema in die Zwischenablage kopiert"
+    }
+  ],
+  "editor-panel.deeplink-copy-failed": [
+    {
+      "type": 0,
+      "value": "Der Link konnte nicht in die Zwischenablage kopiert werden"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,
@@ -477,6 +489,12 @@
     {
       "type": 0,
       "value": "Linie abgeschrägt"
+    }
+  ],
+  "editor-panel.tooltip-copy-node-link": [
+    {
+      "type": 0,
+      "value": "Link zum Thema kopieren"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -693,6 +711,64 @@
     {
       "type": 0,
       "value": "Emojis suchen..."
+    }
+  ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "Suche löschen"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "Kein Thema entspricht „"
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": "“."
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " von "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "Nächster Treffer"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "Keine Treffer"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "Thema suchen..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "Vorheriger Treffer"
     }
   ],
   "headerNotifier": [
@@ -1335,6 +1411,12 @@
       "value": "Alle Themen erweitern/reduzieren"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "Thema in der Map suchen"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1363,6 +1445,24 @@
     {
       "type": 0,
       "value": "Ausgewähltes Thema durch tippen überschreiben"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "Zeichenfläche verschieben"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "Zwei-Finger-Wischen oder Mausrad"
+    }
+  ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "Als Unterthema des ausgewählten Themas einfügen"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -1417,6 +1517,12 @@
     {
       "type": 0,
       "value": "Zoom anpassen"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "Mit dem Mausrad vergrößern/verkleinern"
     }
   ],
   "sunrise": [
@@ -1717,6 +1823,12 @@
     {
       "type": 0,
       "value": "Nach Ebene erweitern"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "In der Map suchen"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

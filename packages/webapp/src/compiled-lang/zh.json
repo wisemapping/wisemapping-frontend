@@ -1341,6 +1341,12 @@
       "value": "欢迎"
     }
   ],
+  "map.actions": [
+    {
+      "type": 0,
+      "value": "操作"
+    }
+  ],
   "map.creator": [
     {
       "type": 0,
@@ -1351,6 +1357,12 @@
     {
       "type": 0,
       "value": "删除选中项"
+    }
+  ],
+  "map.labels": [
+    {
+      "type": 0,
+      "value": "标签"
     }
   ],
   "map.last-update": [
@@ -1531,6 +1543,12 @@
     {
       "type": 0,
       "value": "搜索。。。"
+    }
+  ],
+  "maps.select-all": [
+    {
+      "type": 0,
+      "value": "全选"
     }
   ],
   "maps.tooltip-open": [

@@ -904,5 +904,53 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "फिट करने के लिए ज़ूम"
+  },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "विषय का लिंक क्लिपबोर्ड पर कॉपी किया गया"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "लिंक को क्लिपबोर्ड पर कॉपी नहीं किया जा सका"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "विषय का लिंक कॉपी करें"
+  },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "मैप में विषय खोजें"
+  },
+  "shortcut-help-pane.pan-canvas": {
+    "defaultMessage": "कैनवास को खिसकाएँ"
+  },
+  "shortcut-help-pane.pan-canvas-keys": {
+    "defaultMessage": "दो उंगलियों से स्वाइप या माउस व्हील"
+  },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "चयनित विषय के अधीन पेस्ट करें"
+  },
+  "shortcut-help-pane.zoom-wheel": {
+    "defaultMessage": "व्हील से ज़ूम इन/आउट करें"
+  },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "मैप में खोजें"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "विषय खोजें..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "खोज साफ़ करें"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "पिछला मेल"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "अगला मेल"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "{total} में से {current}"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "कोई मेल नहीं"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "“{query}” से मेल खाने वाला कोई विषय नहीं है।"
   }
 }

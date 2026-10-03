@@ -1341,6 +1341,12 @@
       "value": "Добро пожаловать!"
     }
   ],
+  "map.actions": [
+    {
+      "type": 0,
+      "value": "Действия"
+    }
+  ],
   "map.creator": [
     {
       "type": 0,
@@ -1351,6 +1357,12 @@
     {
       "type": 0,
       "value": "Удалить выбранные"
+    }
+  ],
+  "map.labels": [
+    {
+      "type": 0,
+      "value": "Метки"
     }
   ],
   "map.last-update": [
@@ -1531,6 +1543,12 @@
     {
       "type": 0,
       "value": "Поиск ..."
+    }
+  ],
+  "maps.select-all": [
+    {
+      "type": 0,
+      "value": "Выбрать все"
     }
   ],
   "maps.tooltip-open": [

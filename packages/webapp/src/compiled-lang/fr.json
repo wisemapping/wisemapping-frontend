@@ -1341,6 +1341,12 @@
       "value": "Bienvenue"
     }
   ],
+  "map.actions": [
+    {
+      "type": 0,
+      "value": "Actions"
+    }
+  ],
   "map.creator": [
     {
       "type": 0,
@@ -1351,6 +1357,12 @@
     {
       "type": 0,
       "value": "Supprimer sélectionnée"
+    }
+  ],
+  "map.labels": [
+    {
+      "type": 0,
+      "value": "Étiquettes"
     }
   ],
   "map.last-update": [
@@ -1531,6 +1543,12 @@
     {
       "type": 0,
       "value": "Chercher ..."
+    }
+  ],
+  "maps.select-all": [
+    {
+      "type": 0,
+      "value": "Tout sélectionner"
     }
   ],
   "maps.tooltip-open": [
