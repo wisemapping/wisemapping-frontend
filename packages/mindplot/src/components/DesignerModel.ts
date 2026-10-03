@@ -64,6 +64,31 @@ class DesignerModel {
     return this._topics.filter((t) => t.isOnFocus());
   }
 
+  /**
+   * Case-insensitive substring match over topic text. An empty or
+   * whitespace-only query matches nothing rather than every topic.
+   */
+  findTopicsByText(query: string): Topic[] {
+    const normalizedQuery = query.trim().toLowerCase();
+    if (!normalizedQuery) {
+      return [];
+    }
+    return this._topics.filter((topic) =>
+      DesignerModel._searchableText(topic).toLowerCase().includes(normalizedQuery),
+    );
+  }
+
+  /**
+   * A topic whose text was never edited stores nothing, yet renders the
+   * theme's default label -- "Main Topic" and friends. Search has to match
+   * what is on screen, so fall back to the rendered text in that case. The
+   * model's plain text is preferred because it has HTML markup stripped.
+   */
+  private static _searchableText(topic: Topic): string {
+    const plainText = topic.getModel().getPlainText();
+    return plainText !== '' ? plainText : topic.getText();
+  }
+
   filterSelectedRelationships(): Relationship[] {
     return this._relationships.filter((r) => r.isOnFocus());
   }
