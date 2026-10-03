@@ -79,6 +79,13 @@ const FindInMapPanel = ({ designer, closeModal }: FindInMapPanelProps): ReactEle
     navigateToMatch(0);
   }, [matches]);
 
+  // Picking a result is a terminal action: jump to the node and get the panel
+  // out of the way, which also hands the map's keyboard shortcuts back.
+  const selectMatch = (index: number): void => {
+    navigateToMatch(index);
+    closeModal();
+  };
+
   const goToOffset = (offset: number): void => {
     if (matches.length === 0) {
       return;
@@ -210,7 +217,7 @@ const FindInMapPanel = ({ designer, closeModal }: FindInMapPanelProps): ReactEle
               <ResultItem
                 key={match.id}
                 active={index === activeIndex}
-                onClick={() => navigateToMatch(index)}
+                onClick={() => selectMatch(index)}
                 title={match.text}
               >
                 {renderHighlighted(match.text)}
