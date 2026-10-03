@@ -107,6 +107,9 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 interface HeadCell {
   id: keyof MapInfo;
   label?: string;
+  // Accessible name for a column that shows no visible header text -- without
+  // it the column's sort button is a control with no name at all.
+  ariaLabel?: string;
   numeric: boolean;
   style?: CSSProperties;
 }
@@ -140,6 +143,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
       {
         id: 'labels',
         numeric: false,
+        ariaLabel: intl.formatMessage({ id: 'map.labels', defaultMessage: 'Labels' }),
       },
       {
         id: 'createdBy',
@@ -171,6 +175,14 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             size="small"
+            slotProps={{
+              input: {
+                'aria-label': intl.formatMessage({
+                  id: 'maps.select-all',
+                  defaultMessage: 'Select all',
+                }),
+              },
+            }}
             sx={(theme) => ({
               color:
                 theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.26)',
@@ -187,9 +199,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                     : 'rgba(0, 0, 0, 0.54)',
               },
             })}
-            slotProps={{
-              input: { 'aria-label': 'select all desserts' },
-            }}
           />
         </TableCell>
 
@@ -205,6 +214,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : 'asc'}
                 onClick={createSortHandler(headCell.id)}
+                aria-label={headCell.label ? undefined : headCell.ariaLabel}
               >
                 {headCell.label}
 
@@ -218,8 +228,16 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           );
         })}
 
-        <TableCell padding="checkbox" key="starred" css={classes.headerCell}></TableCell>
-        <TableCell padding="checkbox" key="action" css={classes.headerCell}></TableCell>
+        <TableCell padding="checkbox" key="starred" css={classes.headerCell}>
+          <span css={classes.visuallyHidden as Interpolation<Theme>}>
+            {intl.formatMessage({ id: 'maps.tooltip-starred', defaultMessage: 'Starred' })}
+          </span>
+        </TableCell>
+        <TableCell padding="checkbox" key="action" css={classes.headerCell}>
+          <span css={classes.visuallyHidden as Interpolation<Theme>}>
+            {intl.formatMessage({ id: 'map.actions', defaultMessage: 'Actions' })}
+          </span>
+        </TableCell>
       </TableRow>
     </TableHead>
   );
@@ -745,8 +763,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                     <TableRow
                       hover
                       onClick={(event) => handleRowClick(event, row.id)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.id}
                       selected={isItemSelected}
@@ -769,7 +785,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           })}
                           slotProps={{
                             input: {
-                              'aria-labelledby': String(labelId),
+                              // Points at the title link below; the bare row id
+                              // this used to carry matched no element at all.
+                              'aria-labelledby': `map-title-${labelId}`,
                             },
                           }}
                         />
@@ -784,6 +802,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           placement="bottom-start"
                         >
                           <Link
+                            id={`map-title-${row.id}`}
                             href={`/c/maps/${row.id}/edit`}
                             color="textPrimary"
                             underline="always"

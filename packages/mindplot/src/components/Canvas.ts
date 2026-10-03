@@ -21,6 +21,7 @@ import ScreenManager from './ScreenManager';
 import SizeType from './SizeType';
 import CanvasElement from './CanvasElement';
 import LayoutEventBus from './layout/LayoutEventBus';
+import PositionType from './PositionType';
 
 const DEFAULT_VISIBILITY_PADDING = 80;
 const VISIBILITY_PADDING_RATIO = 0.08;
@@ -263,6 +264,18 @@ class Canvas {
     this._workspace.setCoordOrigin(x, y);
   }
 
+  panBy(deltaX: number, deltaY: number): void {
+    if (deltaX === 0 && deltaY === 0) return;
+    const origin = this._workspace.getCoordOrigin();
+    const newOriginX = origin.x + deltaX * this._zoom;
+    const newOriginY = origin.y + deltaY * this._zoom;
+
+    this._workspace.setCoordOrigin(newOriginX, newOriginY);
+    this._screenManager.setOffset(newOriginX, newOriginY);
+    this._screenManager.fireEvent('update');
+    LayoutEventBus.fireEvent('canvasPanned');
+  }
+
   setCoordSize(width: number, height: number): void {
     this._workspace.setCoordSize(width, height);
   }
@@ -448,6 +461,36 @@ class Canvas {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Pans the viewport so `position` (in workspace coordinates) sits exactly at
+   * the centre of the visible area.
+   *
+   * This is the unconditional counterpart of `ensureVisible()`: that method only
+   * pans when the bounds fall outside the padded viewport and then moves by the
+   * smallest amount that brings them back in, which is the right behaviour for
+   * keyboard navigation. Revealing a deep-linked node instead wants the node
+   * parked in the middle of the screen regardless of where it already was.
+   *
+   * Returns true when the viewport actually moved.
+   */
+  centerOnPosition(position: PositionType): boolean {
+    const workspace = this._workspace;
+    const coordSize = workspace.getCoordSize();
+    const origin = workspace.getCoordOrigin();
+
+    const newOriginX = position.x - coordSize.width / 2;
+    const newOriginY = position.y - coordSize.height / 2;
+    if (newOriginX === origin.x && newOriginY === origin.y) {
+      return false;
+    }
+
+    workspace.setCoordOrigin(newOriginX, newOriginY);
+    this._screenManager.setOffset(newOriginX, newOriginY);
+    this._screenManager.fireEvent('update');
+    LayoutEventBus.fireEvent('canvasPanned');
+    return true;
   }
 
   getZoom() {

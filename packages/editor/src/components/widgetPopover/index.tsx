@@ -25,12 +25,23 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { WidgetBuilder, WidgetEventType } from '@wisemapping/mindplot';
 import { Topic } from '@wisemapping/mindplot';
+import type { Designer } from '@wisemapping/mindplot';
 
 type WidgetPopoverProps = {
   widgetManager: WidgetBuilder;
+  /**
+   * Notified when the popover closes. Previously this component read a bare
+   * `designer` identifier, which resolved to the `globalThis.designer` that
+   * Designer's constructor assigns -- an undeclared dependency TypeScript could
+   * not see, and one rename away from a runtime ReferenceError.
+   */
+  designer?: Designer;
 };
 
-export const WidgetPopover = ({ widgetManager }: WidgetPopoverProps): React.ReactElement => {
+export const WidgetPopover = ({
+  widgetManager,
+  designer,
+}: WidgetPopoverProps): React.ReactElement => {
   const [event, setEvent] = useState<WidgetEventType>('none');
   const [panelTitle, setPanelTitle] = useState<string | undefined>(undefined);
   const [achorElem, setAnchorElem] = useState<Element | undefined>(undefined);
@@ -66,7 +77,7 @@ export const WidgetPopover = ({ widgetManager }: WidgetPopoverProps): React.Reac
           component = widgetManager.buildEditorForLink(topic!);
           break;
         case 'none':
-          designer.fireEvent('featureEdit', { event: 'close' });
+          designer?.fireEvent('featureEdit', { event: 'close' });
           break;
       }
 
@@ -97,7 +108,7 @@ export const WidgetPopover = ({ widgetManager }: WidgetPopoverProps): React.Reac
       setEditorComponent(component);
       setAnchorElem(anchorElement);
     },
-    [widgetManager],
+    [widgetManager, designer],
   );
 
   useEffect(() => {

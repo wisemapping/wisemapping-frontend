@@ -19,7 +19,6 @@ import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
 import Brightness4 from '@mui/icons-material/Brightness4';
 import Brightness7 from '@mui/icons-material/Brightness7';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
-import Typography from '@mui/material/Typography';
 import React, { ReactElement, useState, useEffect, useMemo } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import ActionConfig from '../../classes/action/action-config';
@@ -28,6 +27,8 @@ import Editor from '../../classes/model/editor';
 import Model from '../../classes/model/editor';
 import KeyboardShorcutsHelp from '../action-widget/pane/keyboard-shortcut-help';
 import OutlineViewDialog from '../action-widget/pane/outline-view-dialog';
+import FindInMapPanel from '../action-widget/pane/find-in-map';
+import { DesignerKeyboard, isMacPlatform } from '@wisemapping/mindplot';
 import LayoutSelector from '../action-widget/pane/layout-selector';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import Toolbar from '../toolbar';
@@ -37,10 +38,12 @@ import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrong
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import TocOutlinedIcon from '@mui/icons-material/TocOutlined';
-import Box from '@mui/material/Box';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { trackEditorInteraction } from '../../utils/analytics';
 import { handleExpandByLevel, buildExpandByLevelConfig } from './expand-by-level-icon';
 import { formatTooltip } from './utils';
+import { EDITOR_LAYOUT, EDITOR_Z_INDEX } from '../../theme/layout';
+import ZoomDisplay from './zoom-display';
 import { useTheme } from '../../contexts/ThemeContext';
 
 // Helper function to check if any nodes are currently collapsed
@@ -52,6 +55,11 @@ const areNodesCollapsed = (model: Editor): boolean => {
   );
 };
 
+export type FindInMapState = {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+};
+
 export function buildVisualizationToolbarConfig(
   model: Editor,
   capability: Capability,
@@ -60,6 +68,7 @@ export function buildVisualizationToolbarConfig(
   setExpandLevel: (level: number) => void,
   themeMode?: 'light' | 'dark',
   toggleTheme?: () => void,
+  findInMap?: FindInMapState,
 ): (ActionConfig | undefined)[] {
   const zoomToFitLabel = intl.formatMessage({
     id: 'visualization-toolbar.tooltip-zoom-to-fit',
@@ -98,17 +107,7 @@ export function buildVisualizationToolbarConfig(
       disabled: () => !model?.isMapLoadded(),
     },
     {
-      // visualization value candidate, needs to fix it
-      render: () => (
-        <Box sx={{ p: 0.5 }}>
-          <Typography variant="overline" color="gray">
-            {!model?.isMapLoadded()
-              ? 100
-              : Math.floor((1 / model.getDesigner().getWorkSpace()?.getZoom()) * 100)}
-            %
-          </Typography>
-        </Box>
-      ),
+      render: () => <ZoomDisplay model={model} />,
       disabled: () => !model?.isMapLoadded(),
     },
     {
@@ -131,6 +130,34 @@ export function buildVisualizationToolbarConfig(
       disabled: () => !model?.isMapLoadded(),
     },
     // Separator between zoom controls and outline view
+    undefined as ActionConfig | undefined,
+    {
+      icon: <SearchOutlinedIcon />,
+      tooltip: formatTooltip(
+        intl.formatMessage({
+          id: 'visualization-toolbar.tooltip-find-in-map',
+          defaultMessage: 'Find in Map',
+        }),
+        'F',
+      ),
+      ariaLabel: intl.formatMessage({
+        id: 'visualization-toolbar.tooltip-find-in-map',
+        defaultMessage: 'Find in Map',
+      }),
+      'data-testid': 'find-in-map-button',
+      onClick: () => trackEditorInteraction('find_in_map'),
+      open: findInMap?.open,
+      onOpenChange: findInMap?.setOpen,
+      options: [
+        {
+          render: (closeModal) => (
+            <FindInMapPanel designer={model.getDesigner()} closeModal={closeModal} />
+          ),
+        },
+      ],
+      disabled: () => !model?.isMapLoadded(),
+    },
+    // Separator between find and outline view
     undefined as ActionConfig | undefined,
     {
       icon: <TocOutlinedIcon />,
@@ -285,39 +312,33 @@ type VisualizationToolbarProps = {
 const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps): ReactElement => {
   const intl = useIntl();
   const [expandLevel, setExpandLevel] = useState(0);
+  const [findInMapOpen, setFindInMapOpen] = useState(false);
   const { mode, toggleMode } = useTheme();
 
   // Keyboard shortcuts
   useEffect(() => {
-    if (!model?.isMapLoadded()) return;
-
     const handleKeyDown = (event: KeyboardEvent) => {
-      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      const isModifier = isMac ? event.metaKey : event.ctrlKey;
+      // Checked here (not as an effect-attach guard) because `isMapLoadded()`
+      // reads mutable state on the designer, not a React-tracked value: the
+      // map finishing loading never changes `model`/`expandLevel`, so an
+      // attach-time guard would leave every shortcut in this handler
+      // permanently dead once the map loaded after the first render.
+      if (!model?.isMapLoadded()) return;
+
+      // Share the pause that suppresses canvas shortcuts while a dialog is
+      // open -- this listener sits on `document` and used to fire regardless.
+      if (DesignerKeyboard.isDisabled()) return;
+
+      const isModifier = isMacPlatform() ? event.metaKey : event.ctrlKey;
 
       if (!isModifier) return;
 
+      // Zoom (ctrl/meta with 0, -, =) is owned by DesignerKeyboard, not here.
       switch (event.key.toLowerCase()) {
-        case '0':
+        case 'f':
           event.preventDefault();
-          model.getDesigner().zoomToFit();
-          trackEditorInteraction('zoom_to_fit_keyboard');
-          break;
-        case '-':
-          event.preventDefault();
-          model.getDesigner().zoomOut();
-          trackEditorInteraction('zoom_out_keyboard');
-          break;
-        case '=':
-        case '+':
-          event.preventDefault();
-          model.getDesigner().zoomIn();
-          trackEditorInteraction('zoom_in_keyboard');
-          break;
-        case 'o':
-          event.preventDefault();
-          trackEditorInteraction('outline_view_keyboard');
-          // Outline view will be handled by the toolbar button click
+          trackEditorInteraction('find_in_map_keyboard');
+          setFindInMapOpen(true);
           break;
         case 'e':
           event.preventDefault();
@@ -358,8 +379,9 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
         setExpandLevel,
         mode,
         toggleMode,
+        { open: findInMapOpen, setOpen: setFindInMapOpen },
       ),
-    [model, capability, intl, expandLevel, mode, toggleMode],
+    [model, capability, intl, expandLevel, mode, toggleMode, findInMapOpen],
   );
 
   // Check if we're in public or embedded view
@@ -371,10 +393,13 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
       configurations={config}
       position={{
         position: {
-          right: isPublicOrEmbedded ? '5px' : '47px',
-          top: 'calc(100% - 55px)',
+          right: isPublicOrEmbedded
+            ? EDITOR_LAYOUT.zoomToolbar.rightCompact
+            : EDITOR_LAYOUT.zoomToolbar.right,
+          top: EDITOR_LAYOUT.zoomToolbar.top,
         },
         vertical: false,
+        zIndex: EDITOR_Z_INDEX.canvasChrome,
       }}
     />
   );

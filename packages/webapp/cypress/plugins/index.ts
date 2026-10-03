@@ -22,4 +22,21 @@
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+
+  on('task', {
+    // cy.log() only writes to the in-browser command log, which `cypress run`
+    // does not print. These tasks run in the Node process, so anything they
+    // write lands in the terminal / CI log. Used by the accessibility spec to
+    // report axe violations without failing the run.
+    log(message) {
+      // eslint-disable-next-line no-console
+      console.log(message);
+      return null;
+    },
+    table(rows) {
+      // eslint-disable-next-line no-console
+      console.table(rows);
+      return null;
+    },
+  });
 };

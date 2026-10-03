@@ -17,6 +17,9 @@
  */
 import { $assert, $defined } from './util/assert';
 import DOMUtils from './util/DOMUtils';
+import getCollapsedAncestorIds from './util/topicVisibility';
+import resolveTopicMove, { TopicMove } from './util/topicReorder';
+import isSelectionEmpty from './util/selectionState';
 import Messages, { $msg } from './Messages';
 
 import EventDispispatcher from './EventDispatcher';
@@ -166,26 +169,31 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     this.getContainer().addEventListener(
       'wheel',
       (event: WheelEvent) => {
-        // TODO re-do this better. This line avoid manage zoom with mouse wheel if mindplot kb shortcuts are disabled.
+        // Avoid managing wheel events if mindplot kb shortcuts are disabled.
         if (DesignerKeyboard.isDisabled()) return;
 
-        // Only the vertical axis drives zoom direction. Using deltaX as a
-        // tiebreaker caused a "bump" on trackpad two-finger gestures because
-        // lateral finger drift could flip the direction at the start of the
-        // gesture before deltaY settled.
-        if (event.deltaY === 0) return;
+        const isZoomGesture = event.ctrlKey || event.metaKey || event.altKey;
 
-        // Scale the zoom step by the wheel magnitude so trackpad gestures feel
-        // continuous instead of stepped. exp(-deltaY * k) maps deltaY<0 (scroll
-        // up) to zoom-in and deltaY>0 (scroll down) to zoom-out symmetrically.
-        // Clamp magnitude so a single mouse-wheel notch (deltaY≈100) doesn't
-        // overshoot while keeping trackpad gestures (deltaY≈1–30) smooth.
-        const clamped = Math.max(-50, Math.min(50, event.deltaY));
-        const factor = Math.exp(-clamped * 0.01);
-        if (factor > 1) {
-          this.zoomIn(factor);
+        if (isZoomGesture) {
+          if (event.deltaY === 0) return;
+
+          // Scale the zoom step by the wheel magnitude so trackpad gestures feel
+          // continuous instead of stepped. exp(-deltaY * k) maps deltaY<0 (scroll
+          // up) to zoom-in and deltaY>0 (scroll down) to zoom-out symmetrically.
+          // Clamp magnitude so a single mouse-wheel notch (deltaY≈100) doesn't
+          // overshoot while keeping trackpad gestures (deltaY≈1–30) smooth.
+          const clamped = Math.max(-50, Math.min(50, event.deltaY));
+          const factor = Math.exp(-clamped * 0.01);
+          if (factor > 1) {
+            this.zoomIn(factor);
+          } else {
+            this.zoomOut(1 / factor);
+          }
         } else {
-          this.zoomOut(1 / factor);
+          // No modifier: a two-finger trackpad swipe (or a plain wheel) pans the
+          // canvas instead of zooming it.
+          if (event.deltaX === 0 && event.deltaY === 0) return;
+          this.panBy(event.deltaX, event.deltaY);
         }
         event.preventDefault();
       },
@@ -316,7 +324,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const topics = me.getModel().filterSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
 
-      if (topics.length === 0 || rels.length === 0) {
+      if (isSelectionEmpty(topics.length, rels.length)) {
         me.fireEvent('onblur');
       }
 
@@ -328,7 +336,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const topics = me.getModel().filterSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
 
-      if (topics.length === 1 || rels.length === 1) {
+      if (!isSelectionEmpty(topics.length, rels.length)) {
         me.fireEvent('onfocus');
       }
 
@@ -384,6 +392,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
     this.getModel().setZoom(zoom);
     this._canvas.setZoom(zoom);
+  }
+
+  panBy(deltaX: number, deltaY: number): void {
+    this._canvas.panBy(deltaX, deltaY);
   }
 
   zoomToFit(): void {
@@ -656,12 +668,17 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  async pasteClipboard(): Promise<void> {
+  /**
+   * Reads the system clipboard, falling back to the internal one when the
+   * browser denies access or has nothing of interest. Shared by every paste
+   * flavour so they all agree on where the text comes from.
+   */
+  private async _readClipboardText(): Promise<string | null> {
     let text: string | null = null;
 
     // Try to read from system clipboard first
-    try {
-      if (navigator.clipboard && navigator.clipboard.read) {
+    if (typeof navigator !== 'undefined' && navigator.clipboard?.read) {
+      try {
         const type = 'text/plain';
         const clipboardItems = await navigator.clipboard.read();
 
@@ -672,10 +689,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
           text = await blob.text();
           console.log('Paste from system clipboard success');
         }
+      } catch (e) {
+        // System clipboard not available or permission denied
+        console.warn('System clipboard not available for reading, using internal clipboard:', e);
       }
-    } catch (e) {
-      // System clipboard not available or permission denied
-      console.warn('System clipboard not available for reading, using internal clipboard:', e);
     }
 
     // Fall back to internal clipboard if system clipboard is empty or failed
@@ -683,6 +700,18 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       text = this._internalClipboard;
       console.log('Paste from internal clipboard success');
     }
+
+    return text;
+  }
+
+  private _parseClipboardMindmap(text: string): Mindmap {
+    const dom = new DOMParser().parseFromString(text, 'application/xml');
+    const serializer = XMLSerializerFactory.createFromDocument(dom);
+    return serializer.loadFromDom(dom, 'application/xml');
+  }
+
+  async pasteClipboard(): Promise<void> {
+    const text = await this._readClipboardText();
 
     // If we have no text at all, nothing to paste
     if (!text) {
@@ -692,10 +721,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Is a mindmap ?. Try to infer if it's a text or a map...
     if (text.indexOf('</map>') !== -1) {
-      const dom = new DOMParser().parseFromString(text, 'application/xml');
-
-      const serializer = XMLSerializerFactory.createFromDocument(dom);
-      const mindmap = serializer.loadFromDom(dom, 'application/xml');
+      const mindmap = this._parseClipboardMindmap(text);
 
       // Remove reference to the parent mindmap and clean up to support multiple copy of the nodes ...
       const central = mindmap.getBranches()[0];
@@ -718,6 +744,63 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         text.trim(),
       );
     }
+  }
+
+  /**
+   * Adds every model as a direct child of `parentId`, in a single undoable step.
+   */
+  pasteModelsAsChild(models: NodeModel[], parentId: number): void {
+    const parent = this.getModel().findTopicById(parentId);
+    if (!parent) {
+      console.warn(`pasteModelsAsChild: parent topic ${parentId} not found`);
+      return;
+    }
+
+    const parentIds = models.map(() => parentId);
+    this._actionDispatcher.addTopics(models, parentIds);
+  }
+
+  /**
+   * Pastes the clipboard's topics as children of `parentId` instead of dropping
+   * them loose on the canvas, which is what `pasteClipboard()` does.
+   */
+  async pasteClipboardAsChild(parentId: number): Promise<void> {
+    const parent = this.getModel().findTopicById(parentId);
+    if (!parent) {
+      $notify($msg('ONE_TOPIC_MUST_BE_SELECTED'));
+      return;
+    }
+
+    // Expand the parent if collapsed, so the pasted topics are visible right away ...
+    if (parent.areChildrenShrunken()) {
+      this._actionDispatcher.shrinkBranch([parentId], false);
+    }
+
+    const text = await this._readClipboardText();
+    if (!text || text.indexOf('</map>') === -1) {
+      $notify($msg('CLIPBOARD_IS_EMPTY'));
+      return;
+    }
+
+    const branches = this._parseClipboardMindmap(text).getBranches();
+    if (branches.length === 0) {
+      $notify($msg('CLIPBOARD_IS_EMPTY'));
+      return;
+    }
+
+    // Detach the copied nodes from the clipboard mindmap and let the layout
+    // decide where each one lands under the new parent ...
+    const layoutManager = this._eventBussDispatcher.getLayoutManager();
+    const clones = branches[0].getChildren().map((child) => {
+      child.disconnect();
+      const clone = child.deepCopy();
+      const predicted = layoutManager.predict(parentId, null, null);
+      clone.setPosition(predicted.position.x, predicted.position.y);
+      clone.setOrder(predicted.order);
+      return clone;
+    });
+
+    this.pasteModelsAsChild(clones, parentId);
   }
 
   getModel(): DesignerModel {
@@ -1347,7 +1430,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
 
-      if (topics.length === 0 || rels.length === 0) {
+      if (isSelectionEmpty(topics.length, rels.length)) {
         this.fireEvent('onblur');
       }
     });
@@ -1356,7 +1439,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
 
-      if (topics.length === 1 || rels.length === 1) {
+      if (!isSelectionEmpty(topics.length, rels.length)) {
         this.fireEvent('onfocus');
       }
     });
@@ -1624,10 +1707,86 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  goToNode(node: Topic): void {
+  /**
+   * Focuses the node and brings it into view. By default it pans by the minimum
+   * needed to clear the viewport padding (`ensureVisible`), which is what
+   * keyboard navigation wants. With `center` it instead parks the node in the
+   * middle of the viewport -- used when arriving from a per-node deep link,
+   * where there is no previous viewport worth preserving.
+   */
+  goToNode(node: Topic, center = false): void {
     node.setOnFocus(true);
     this.onObjectFocusEvent(node);
-    this.ensureNodeVisible(node);
+    if (center) {
+      this.centerNode(node);
+    } else {
+      this.ensureNodeVisible(node);
+    }
+  }
+
+  /**
+   * Pans the viewport so the node sits at its centre, without changing focus.
+   */
+  centerNode(node: Topic): void {
+    this._canvas.centerOnPosition(node.getPosition());
+  }
+
+  /**
+   * Expands every collapsed ancestor of the node, deselects the current
+   * selection, then focuses and pans to the node -- the sequence keyboard
+   * navigation already relies on (via DesignerKeyboard) to reveal a node
+   * hidden inside a collapsed branch.
+   *
+   * `center` is forwarded to `goToNode`; it defaults to false so the existing
+   * keyboard-navigation call sites keep their minimal-pan behaviour.
+   */
+  revealNode(node: Topic, center = false): void {
+    const collapsedAncestorIds = getCollapsedAncestorIds(node);
+    if (collapsedAncestorIds.length > 0) {
+      this.getActionDispatcher().shrinkBranch(collapsedAncestorIds, false);
+    }
+    this.deselectAll();
+    this.goToNode(node, center);
+  }
+
+  /**
+   * Moves a topic within the tree: 'up'/'down' reorder it among its siblings,
+   * 'outdent'/'indent' change which topic it hangs off.
+   *
+   * Structural rather than spatial, because the layout manager owns position --
+   * nudging coordinates would just be laid out away. Returns false when the
+   * move is unavailable (already first among siblings, no level to rise to,
+   * and so on) so a caller can decide whether that warrants feedback.
+   *
+   * Goes through dragTopic, which is the same path mouse dragging uses, so the
+   * move lands on the undo stack as a single DragTopicCommand.
+   */
+  moveTopicInTree(topic: Topic, move: TopicMove): boolean {
+    if (this.isReadOnly()) {
+      return false;
+    }
+
+    const target = resolveTopicMove(topic, move);
+    if (!target) {
+      return false;
+    }
+
+    const layoutManager = this._eventBussDispatcher.getLayoutManager();
+    const dispatcher = this.getActionDispatcher();
+
+    if (target.kind === 'reorder') {
+      dispatcher.dragTopic(topic.getId(), topic.getPosition(), target.order, target.parent);
+    } else {
+      // Ask the layout where a child of the new parent belongs, rather than
+      // inventing a position the sorter would immediately override.
+      const predicted = layoutManager.predict(target.parent.getId(), null, null);
+      dispatcher.dragTopic(topic.getId(), predicted.position, predicted.order, target.parent);
+    }
+
+    // Indenting under a collapsed sibling would hide the topic the user just
+    // moved, so make sure it stays on screen and selected.
+    this.revealNode(topic);
+    return true;
   }
 
   private ensureNodeVisible(node: Topic): void {

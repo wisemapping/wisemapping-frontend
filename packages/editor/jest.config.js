@@ -17,13 +17,38 @@
  */
 const config = {
   testEnvironment: 'jsdom',
+  setupFiles: ['<rootDir>/test/jest.setup.js'],
   verbose: true,
   preset: 'ts-jest',
   moduleFileExtensions: ['js', 'ts', 'tsx'],
   transform: {
-    '^.+\\.js?$': 'babel-jest',
+    // Inline preset-env rather than the root babel.config.json, which sets
+    // `modules: false` so that Vite can do its own ESM handling. Jest needs
+    // CommonJS, and without this override react-intl -- shipped ESM-only --
+    // cannot be required at all, which is why anything rendering a
+    // FormattedMessage was previously untestable.
+    '^.+\\.m?js$': [
+      'babel-jest',
+      {
+        presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
+        babelrc: false,
+        configFile: false,
+      },
+    ],
     '.+\\.(svg|css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
   },
+  moduleNameMapper: {
+    '^react-ga4$': '<rootDir>/test/mocks/react-ga4.js',
+    // Before the transform below gets a chance: assets resolve to a placeholder
+    // path rather than jest-transform-stub's empty string, which React rejects
+    // when it lands on an <img src>.
+    '\\.(svg|png|jpg|jpeg|gif)$': '<rootDir>/test/mocks/asset-stub.js',
+  },
+  // react-intl and the @formatjs packages it depends on are ESM-only, so they
+  // have to go through the transform above instead of being skipped.
+  transformIgnorePatterns: [
+    '/node_modules/(?!(react-intl|intl-messageformat|intl-messageformat-parser|@formatjs)/)',
+  ],
 };
 
 module.exports = config;

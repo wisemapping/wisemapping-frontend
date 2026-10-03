@@ -18,7 +18,7 @@
 
 import React, { ReactElement, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, useLocation } from 'react-router';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';

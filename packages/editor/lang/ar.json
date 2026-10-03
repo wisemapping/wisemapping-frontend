@@ -227,6 +227,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "طي العناصر الفرعية"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "زيادة مستوى الموضوع (الإرفاق بالشقيق السابق)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "تحريك الموضوع للأسفل بين الأشقاء"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "تحريك الموضوع للأعلى بين الأشقاء"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "تقليل مستوى الموضوع (الإرفاق بالجدّ)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "نسخ ولصق المواضيع/نسخ صورة الخريطة الذهنية إلى الحافظة."
   },
@@ -898,5 +910,53 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "ضبط للملاءمة"
+  },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "تم نسخ رابط الموضوع إلى الحافظة"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "تعذّر نسخ الرابط إلى الحافظة"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "نسخ رابط الموضوع"
+  },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "البحث عن موضوع في الخريطة"
+  },
+  "shortcut-help-pane.pan-canvas": {
+    "defaultMessage": "تحريك مساحة الرسم"
+  },
+  "shortcut-help-pane.pan-canvas-keys": {
+    "defaultMessage": "التمرير بإصبعين أو عجلة الفأرة"
+  },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "لصق كعنصر فرعي للموضوع المحدد"
+  },
+  "shortcut-help-pane.zoom-wheel": {
+    "defaultMessage": "التكبير والتصغير بعجلة الفأرة"
+  },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "البحث في الخريطة"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "البحث عن موضوع..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "محو البحث"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "المطابقة السابقة"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "المطابقة التالية"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "{current} من {total}"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "لا توجد مطابقات"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "لا يوجد موضوع يطابق «{query}»."
   }
 }

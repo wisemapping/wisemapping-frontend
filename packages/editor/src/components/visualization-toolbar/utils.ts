@@ -16,10 +16,16 @@
  *   limitations under the License.
  */
 
-// Helper function to format tooltip with keyboard shortcut
+import { isMacPlatform } from '@wisemapping/mindplot';
+
+/**
+ * Appends the platform's shortcut modifier to a tooltip, e.g. "Zoom In (⌘+=)".
+ *
+ * The single formatter for the whole editor; `keyTooltip` in the app bar and in
+ * the editor-panel config builder were two further copies of the same logic
+ * with a different separator.
+ */
 export const formatTooltip = (message: string, shortcut: string): string => {
-  const isMac =
-    typeof navigator !== 'undefined' && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  const modifierKey = isMac ? '⌘' : 'Ctrl';
+  const modifierKey = isMacPlatform() ? '⌘' : 'Ctrl';
   return `${message} (${modifierKey}+${shortcut})`;
 };

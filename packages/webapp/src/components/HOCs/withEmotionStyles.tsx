@@ -18,10 +18,19 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { ComponentType } from 'react';
 
-function withEmotionStyles<T>(css) {
+function withEmotionStyles<T>(styles) {
   return (Component: ComponentType<T>) => {
     const WithEmotionStyles = (hocProps): React.ReactElement => {
-      return <Component {...hocProps} css={{ ...css, ...hocProps.papercss }} />;
+      // `styles` may be a `(theme) => ({ ... })` callback. Spreading a function
+      // yields `{}` -- functions carry no own enumerable properties -- so the
+      // callback has to be forwarded for Emotion to resolve against the theme,
+      // not spread into an object literal.
+      const css =
+        typeof styles === 'function'
+          ? (theme) => ({ ...styles(theme), ...hocProps.papercss })
+          : { ...styles, ...hocProps.papercss };
+
+      return <Component {...hocProps} css={css} />;
     };
     WithEmotionStyles.displayName = `withEmotionStyles(${getDisplayName(Component)})`;
     return WithEmotionStyles;

@@ -347,6 +347,18 @@
       "value": "Background"
     }
   ],
+  "editor-panel.deeplink-copied": [
+    {
+      "type": 0,
+      "value": "Link to node copied to clipboard"
+    }
+  ],
+  "editor-panel.deeplink-copy-failed": [
+    {
+      "type": 0,
+      "value": "Could not copy the link to the clipboard"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,
@@ -477,6 +489,12 @@
     {
       "type": 0,
       "value": "Curved Polyline"
+    }
+  ],
+  "editor-panel.tooltip-copy-node-link": [
+    {
+      "type": 0,
+      "value": "Copy Link to Node"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -693,6 +711,64 @@
     {
       "type": 0,
       "value": "Search emojis..."
+    }
+  ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "Clear search"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "No node matches “"
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": "”."
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "Next match"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "No matches"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "Find node..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "Previous match"
     }
   ],
   "headerNotifier": [
@@ -1323,6 +1399,30 @@
       "value": "Expand/Collapse all topics"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "Find node in map"
+    }
+  ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "Indent topic (attach to sibling above)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "Move topic down among siblings"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "Move topic up among siblings"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1333,6 +1433,12 @@
     {
       "type": 0,
       "value": "Arrow keys"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "Outdent topic (attach to grandparent)"
     }
   ],
   "shortcut-help-pane.outline-view": [
@@ -1351,6 +1457,24 @@
     {
       "type": 0,
       "value": "Type on a selected topic"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "Pan the canvas"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "Two-finger swipe or Mouse wheel"
+    }
+  ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "Paste as child of the selected topic"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -1405,6 +1529,12 @@
     {
       "type": 0,
       "value": "Zoom to fit"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "Zoom in/out with the wheel"
     }
   ],
   "sunrise": [
@@ -1705,6 +1835,12 @@
     {
       "type": 0,
       "value": "Expand by Level"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "Find in Map"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

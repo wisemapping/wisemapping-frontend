@@ -19,7 +19,8 @@
 import React, { useContext, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { ErrorInfo } from '../../../../classes/client';
-import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from './style';
+import Dialog from '@mui/material/Dialog';
+import { StyledDialogActions, StyledDialogContent, StyledDialogTitle } from './style';
 import GlobalError from '../../../form/global-error';
 import DialogContentText from '@mui/material/DialogContentText';
 import Button from '@mui/material/Button';
@@ -67,12 +68,16 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
   ) : null;
   return (
     <div>
-      <StyledDialog
+      <Dialog
         open={true}
         onClose={onClose}
         maxWidth={maxWidth}
         fullWidth={!papercss}
-        slotProps={papercss ? { paper: { css: papercss } } : undefined}
+        // `sx` rather than `css`: slotProps are spread onto the Paper as plain
+        // props, and Emotion only processes `css` at a JSX call site -- so the
+        // old spelling type-checked only through the styled wrapper and never
+        // actually sized anything.
+        slotProps={papercss ? { paper: { sx: papercss } } : undefined}
       >
         <form autoComplete="off" onSubmit={handleOnSubmit}>
           <StyledDialogTitle>{props.title}</StyledDialogTitle>
@@ -117,7 +122,7 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
             )}
           </StyledDialogActions>
         </form>
-      </StyledDialog>
+      </Dialog>
     </div>
   );
 };

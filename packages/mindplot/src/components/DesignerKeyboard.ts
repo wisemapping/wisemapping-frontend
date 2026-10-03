@@ -20,6 +20,9 @@ import EventManager from './util/EventManager';
 import Keyboard from './Keyboard';
 import { Designer } from '..';
 import Topic from './Topic';
+import { TopicMove } from './util/topicReorder';
+import { $msg } from './Messages';
+import { $notify } from './model/ToolbarNotifier';
 
 export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
@@ -111,6 +114,15 @@ class DesignerKeyboard extends Keyboard {
       designer.pasteClipboard();
     });
 
+    // Paste as a child of the selection. Deliberately a separate binding: plain
+    // Ctrl/Cmd+V keeps pasting loose on the canvas, selection or not.
+    this.addShortcut(['ctrl+shift+v', 'meta+shift+v'], () => {
+      const selected = designer.getModel().selectedTopic();
+      if (selected) {
+        designer.pasteClipboardAsChild(selected.getId());
+      }
+    });
+
     this.addShortcut(['ctrl+a', 'meta+a'], () => {
       designer.selectAll();
     });
@@ -127,12 +139,20 @@ class DesignerKeyboard extends Keyboard {
       designer.deselectAll();
     });
 
-    this.addShortcut(['meta+=', 'ctrl+='], () => {
+    // Zoom lives here, and only here. The editor's visualization toolbar used to
+    // register ctrl/meta +/- on `document` as well, so a single keypress took
+    // two zoom steps; it also bypassed the pause() that suppresses map
+    // shortcuts while a dialog is open.
+    this.addShortcut(['meta+=', 'ctrl+=', 'meta+plus', 'ctrl+plus'], () => {
       designer.zoomIn();
     });
 
     this.addShortcut(['meta+-', 'ctrl+-'], () => {
       designer.zoomOut();
+    });
+
+    this.addShortcut(['meta+0', 'ctrl+0'], () => {
+      designer.zoomToFit();
     });
 
     const me = this;
@@ -149,6 +169,30 @@ class DesignerKeyboard extends Keyboard {
     });
     this.addShortcut('down', () => {
       me._moveSelection(designer, 'DOWN');
+    });
+
+    // Structural moves, on the Word / Google Docs outline bindings:
+    // alt+shift+up/down reorder among siblings, alt+shift+left/right
+    // outdent/indent. Plain arrows are taken by selection navigation, and the
+    // remaining modifier+arrow combinations all collide with something outside
+    // the app -- alt+left/right is browser Back/Forward, ctrl+left/right
+    // collapses onto cmd+left/right which is Safari Back/Forward, and
+    // ctrl+up/down collapses onto the macOS Mission Control keys, which the OS
+    // takes before the page sees them.
+    this.addShortcut(['alt+shift+up'], () => {
+      me._moveTopic(designer, 'up');
+    });
+
+    this.addShortcut(['alt+shift+down'], () => {
+      me._moveTopic(designer, 'down');
+    });
+
+    this.addShortcut(['alt+shift+left'], () => {
+      me._moveTopic(designer, 'outdent');
+    });
+
+    this.addShortcut(['alt+shift+right'], () => {
+      me._moveTopic(designer, 'indent');
     });
 
     designer.getContainer().addEventListener('mouseenter', () => {
@@ -186,6 +230,21 @@ class DesignerKeyboard extends Keyboard {
     });
   }
 
+  /**
+   * Applies a structural move to the selected topic.
+   *
+   * Note this moves the topic, where `_moveSelection` moves the *selection* --
+   * the two read similarly but do opposite things.
+   */
+  private _moveTopic(designer: Designer, move: TopicMove): void {
+    const topic = designer.getModel().selectedTopic();
+    if (!topic) {
+      $notify($msg('ONE_TOPIC_MUST_BE_SELECTED'));
+      return;
+    }
+    designer.moveTopicInTree(topic, move);
+  }
+
   private _moveSelection(designer: Designer, direction: 'LEFT' | 'RIGHT' | 'UP' | 'DOWN'): void {
     const model = designer.getModel();
     const node = model.selectedTopic();
@@ -213,8 +272,7 @@ class DesignerKeyboard extends Keyboard {
       DesignerKeyboard.ALIGNMENT_TOLERANCE,
     );
     if (fallback) {
-      this._ensureTopicVisible(designer, fallback);
-      this._goToNode(designer, fallback);
+      designer.revealNode(fallback);
     }
   }
 
@@ -346,8 +404,7 @@ class DesignerKeyboard extends Keyboard {
     });
 
     if (target !== node) {
-      this._ensureTopicVisible(designer, target);
-      this._goToNode(designer, target);
+      designer.revealNode(target);
       return true;
     }
     return false;
@@ -368,8 +425,7 @@ class DesignerKeyboard extends Keyboard {
       alignmentAxis,
     );
     if (target) {
-      this._ensureTopicVisible(designer, target);
-      this._goToNode(designer, target);
+      designer.revealNode(target);
       return true;
     }
     return false;
@@ -409,8 +465,7 @@ class DesignerKeyboard extends Keyboard {
   private _goToParent(designer: Designer, node: Topic): boolean {
     const parent = node.getParent();
     if (parent) {
-      this._ensureTopicVisible(designer, parent);
-      this._goToNode(designer, parent);
+      designer.revealNode(parent);
       return true;
     }
     return false;
@@ -450,8 +505,7 @@ class DesignerKeyboard extends Keyboard {
       }
     });
 
-    this._ensureTopicVisible(designer, target);
-    this._goToNode(designer, target);
+    designer.revealNode(target);
     return true;
   }
 
@@ -602,21 +656,6 @@ class DesignerKeyboard extends Keyboard {
     });
 
     return closest;
-  }
-
-  private _ensureTopicVisible(designer: Designer, topic: Topic): void {
-    const toExpand = new Set<number>();
-    let current: Topic | null = topic.getParent();
-    while (current) {
-      if (current.areChildrenShrunken()) {
-        toExpand.add(current.getId());
-      }
-      current = current.getParent();
-    }
-
-    if (toExpand.size > 0) {
-      designer.getActionDispatcher().shrinkBranch(Array.from(toExpand), false);
-    }
   }
 
   private _goToNode(designer: Designer, node: Topic): void {

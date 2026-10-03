@@ -347,6 +347,18 @@
       "value": "背景"
     }
   ],
+  "editor-panel.deeplink-copied": [
+    {
+      "type": 0,
+      "value": "已将主题链接复制到剪贴板"
+    }
+  ],
+  "editor-panel.deeplink-copy-failed": [
+    {
+      "type": 0,
+      "value": "无法将链接复制到剪贴板"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,
@@ -477,6 +489,12 @@
     {
       "type": 0,
       "value": "曲线折线"
+    }
+  ],
+  "editor-panel.tooltip-copy-node-link": [
+    {
+      "type": 0,
+      "value": "复制主题链接"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -693,6 +711,72 @@
     {
       "type": 0,
       "value": "搜索表情..."
+    }
+  ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "清除搜索"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "没有主题匹配“"
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": "”。"
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 0,
+      "value": "第 "
+    },
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " 个，共 "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    },
+    {
+      "type": 0,
+      "value": " 个"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "下一个匹配"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "无匹配项"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "查找主题..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "上一个匹配"
     }
   ],
   "headerNotifier": [
@@ -1335,6 +1419,30 @@
       "value": "展开/折叠所有主题"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "在导图中查找主题"
+    }
+  ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "降低主题层级 (连接到上一个同级节点)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "在同级中下移主题"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "在同级中上移主题"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1345,6 +1453,12 @@
     {
       "type": 0,
       "value": "箭头键"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "提升主题层级 (连接到祖父节点)"
     }
   ],
   "shortcut-help-pane.outline-view": [
@@ -1363,6 +1477,24 @@
     {
       "type": 0,
       "value": "在选定的主题上输入"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "平移画布"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "双指滑动或鼠标滚轮"
+    }
+  ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "粘贴为所选主题的子节点"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -1417,6 +1549,12 @@
     {
       "type": 0,
       "value": "适合缩放"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "用滚轮放大或缩小"
     }
   ],
   "sunrise": [
@@ -1717,6 +1855,12 @@
     {
       "type": 0,
       "value": "按级别展开"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "在导图中查找"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

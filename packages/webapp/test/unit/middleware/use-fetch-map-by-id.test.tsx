@@ -1,0 +1,74 @@
+/*
+ *    Copyright [2007-2025] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+import React from 'react';
+import { renderHook, waitFor } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useFetchMapById } from '../../../src/classes/middleware';
+import Client, { MapMetadata } from '../../../src/classes/client';
+import { ClientContext } from '../../../src/classes/provider/client-context';
+
+const metadata = {
+  id: 7,
+  title: 'A map',
+  description: 'Its description',
+  role: 'owner',
+  starred: false,
+  jsonProps: '{}',
+} as unknown as MapMetadata;
+
+const wrapperFor = (client: Client) => {
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+
+  return ({ children }: { children: React.ReactNode }): React.ReactElement => (
+    <QueryClientProvider client={queryClient}>
+      <ClientContext.Provider value={client}>{children}</ClientContext.Provider>
+    </QueryClientProvider>
+  );
+};
+
+describe('useFetchMapById', () => {
+  it('keeps the same MapInfo reference across re-renders', async () => {
+    const client = { fetchMapMetadata: jest.fn().mockResolvedValue(metadata) } as unknown as Client;
+    const { result, rerender } = renderHook(() => useFetchMapById(7), {
+      wrapper: wrapperFor(client),
+    });
+
+    await waitFor(() => expect(result.current.data).toBeDefined());
+    const first = result.current.data;
+
+    rerender();
+    rerender();
+
+    // Regression guard: this object used to be rebuilt on every render, so any
+    // caller keying an effect on it re-rendered forever once the query resolved.
+    expect(result.current.data).toBe(first);
+  });
+
+  it('maps the metadata onto the MapInfo fields callers read', async () => {
+    const client = { fetchMapMetadata: jest.fn().mockResolvedValue(metadata) } as unknown as Client;
+    const { result } = renderHook(() => useFetchMapById(7), { wrapper: wrapperFor(client) });
+
+    await waitFor(() => expect(result.current.data).toBeDefined());
+
+    expect(result.current.data).toMatchObject({
+      id: 7,
+      title: 'A map',
+      description: 'Its description',
+    });
+  });
+});

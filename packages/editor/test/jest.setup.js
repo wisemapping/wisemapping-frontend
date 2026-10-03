@@ -15,20 +15,15 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import styled from 'styled-components';
 
-export const TitleInput = styled.input`
-  margin: 0;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.5;
-  letter-spacing: 0.00938em;
-  margin-left: 1.3rem;
-  margin-right: 1.3rem;
-  background-color: #f5f5f5;
-  border: 1px gray dashed;
-  &:focus {
-    border: 1px black solid;
-  }
-`;
+// jsdom ships without TextEncoder/TextDecoder. The @wisemapping/mindplot bundle
+// pulls in jspdf, which touches both at module scope, so anything importing
+// mindplot from a jsdom test fails to even load without these.
+const { TextEncoder, TextDecoder } = require('util');
+
+if (typeof global.TextEncoder === 'undefined') {
+  global.TextEncoder = TextEncoder;
+}
+if (typeof global.TextDecoder === 'undefined') {
+  global.TextDecoder = TextDecoder;
+}

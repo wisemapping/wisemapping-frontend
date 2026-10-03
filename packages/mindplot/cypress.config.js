@@ -20,7 +20,6 @@ const { defineConfig } = require('cypress');
 module.exports = defineConfig({
   video: process.env.CYPRESS_VIDEO === 'true',
   projectId: 'it9g7s',
-  allowCypressEnv: false,
   expose: {
     imageSnaphots: !!process.env.CYPRESS_imageSnaphots,
   },

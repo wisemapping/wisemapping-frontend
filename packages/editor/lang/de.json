@@ -191,6 +191,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "Kinder einfalten"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "Thema einrücken (an vorheriges Geschwister anhängen)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "Thema nach unten verschieben"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "Thema nach oben verschieben"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "Thema ausrücken (an Großeltern anhängen)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "Themen kopieren und einfügen/Bild der Mindmap in Zwischenablage kopieren"
   },
@@ -904,5 +916,53 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "Zoom anpassen"
+  },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "Link zum Thema in die Zwischenablage kopiert"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "Der Link konnte nicht in die Zwischenablage kopiert werden"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "Link zum Thema kopieren"
+  },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "Thema in der Map suchen"
+  },
+  "shortcut-help-pane.pan-canvas": {
+    "defaultMessage": "Zeichenfläche verschieben"
+  },
+  "shortcut-help-pane.pan-canvas-keys": {
+    "defaultMessage": "Zwei-Finger-Wischen oder Mausrad"
+  },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "Als Unterthema des ausgewählten Themas einfügen"
+  },
+  "shortcut-help-pane.zoom-wheel": {
+    "defaultMessage": "Mit dem Mausrad vergrößern/verkleinern"
+  },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "In der Map suchen"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "Thema suchen..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "Suche löschen"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "Vorheriger Treffer"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "Nächster Treffer"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "{current} von {total}"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "Keine Treffer"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "Kein Thema entspricht „{query}“."
   }
 }

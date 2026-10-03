@@ -16,9 +16,17 @@
  *   limitations under the License.
  */
 
+/**
+ * Stepping helpers for properties the toolbar cycles rather than sets directly
+ * -- font size, for instance.
+ *
+ * Previously `components/toolbar/ToolbarValueModelBuilder.ts`: a name with no
+ * builder in it, in a location that made `classes/model/` import from
+ * `components/` and invert the layering. Nothing here touches React.
+ */
 export enum SwitchValueDirection {
-  'up',
-  'down',
+  up,
+  down,
 }
 
 export const fontSizes = [6, 8, 10, 15];

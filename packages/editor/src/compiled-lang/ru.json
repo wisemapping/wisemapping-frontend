@@ -347,6 +347,18 @@
       "value": "Фон"
     }
   ],
+  "editor-panel.deeplink-copied": [
+    {
+      "type": 0,
+      "value": "Ссылка на тему скопирована в буфер обмена"
+    }
+  ],
+  "editor-panel.deeplink-copy-failed": [
+    {
+      "type": 0,
+      "value": "Не удалось скопировать ссылку в буфер обмена"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,
@@ -477,6 +489,12 @@
     {
       "type": 0,
       "value": "Изогнутая полилиния"
+    }
+  ],
+  "editor-panel.tooltip-copy-node-link": [
+    {
+      "type": 0,
+      "value": "Копировать ссылку на тему"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -693,6 +711,64 @@
     {
       "type": 0,
       "value": "Поиск эмодзи..."
+    }
+  ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "Очистить поиск"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "Нет тем, соответствующих «"
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": "»."
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " из "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "Следующее совпадение"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "Нет совпадений"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "Найти тему..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "Предыдущее совпадение"
     }
   ],
   "headerNotifier": [
@@ -1335,6 +1411,30 @@
       "value": "Раскрыть/Свернуть все темы"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "Найти тему на карте"
+    }
+  ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "Увеличить уровень темы (присоединить к предыдущей соседней)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "Переместить тему вниз среди соседних"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "Переместить тему вверх среди соседних"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1345,6 +1445,12 @@
     {
       "type": 0,
       "value": "Клавиши со стрелками"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "Уменьшить уровень темы (присоединить к прародителю)"
     }
   ],
   "shortcut-help-pane.outline-view": [
@@ -1363,6 +1469,24 @@
     {
       "type": 0,
       "value": "Печатать на выбранной теме"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "Перемещать полотно"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "Свайп двумя пальцами или колесо мыши"
+    }
+  ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "Вставить дочерним к выбранной теме"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -1417,6 +1541,12 @@
     {
       "type": 0,
       "value": "Подогнать масштаб"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "Масштабирование колесом мыши"
     }
   ],
   "sunrise": [
@@ -1717,6 +1847,12 @@
     {
       "type": 0,
       "value": "Раскрыть по уровню"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "Поиск на карте"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

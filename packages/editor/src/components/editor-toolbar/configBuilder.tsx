@@ -24,6 +24,8 @@ import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import TextureIcon from '@mui/icons-material/Texture';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import { $notify } from '@wisemapping/mindplot';
 
 import ActionConfig from '../../classes/action/action-config';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
@@ -39,14 +41,29 @@ import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
 import { trackRelationshipAction, trackEditorPanelAction } from '../../utils/analytics';
 import CanvasStyleEditor, { CanvasStyle } from '../action-widget/pane/canvas-style-editor';
+import { formatTooltip } from '../visualization-toolbar/utils';
+import type { SelectionSnapshot } from '../../hooks/useSelection';
 
-const keyTooltip = (msg: string, key: string): string => {
-  const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  return `${msg} (${isMac ? '⌘' : 'Ctrl'} + ${key})`;
-};
-
-export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionConfig[] {
+/**
+ * `selection` is a snapshot from useSelection rather than something read off
+ * the designer here: these `disabled` thunks are evaluated during render, and
+ * polling the designer made them correct only when an unrelated re-render
+ * happened to occur after the selection changed.
+ */
+export function buildEditorPanelConfig(
+  model: Editor,
+  intl: IntlShape,
+  selection: SelectionSnapshot,
+  getDeepLink?: (nodeId: number) => string,
+): ActionConfig[] {
   const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
+  const noTopicSelected = selection.topicCount === 0;
+  const noRelationshipSelected = selection.relationshipCount === 0;
+
+  const singleSelectedTopicId = (): number | undefined => {
+    const selected = model.getDesignerModel()!.filterSelectedTopics();
+    return selected.length === 1 ? selected[0].getId() : undefined;
+  };
 
   const styleConfiguration: ActionConfig = {
     icon: <BrushIcon />,
@@ -72,7 +89,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   const relationshipStyleConfiguration: ActionConfig = {
@@ -97,10 +114,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => {
-      const selected = model.getDesignerModel()!.filterSelectedRelationships();
-      return selected.length === 0;
-    },
+    disabled: () => noRelationshipSelected,
   };
 
   /**
@@ -131,7 +145,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   /**
@@ -147,7 +161,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       trackRelationshipAction('show_relationship_pivot');
       model.getDesigner().showRelPivot(e);
     },
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   /**
@@ -155,7 +169,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    */
   const editLinkUrlConfiguration: ActionConfig = {
     icon: <LinkOutlinedIcon />,
-    tooltip: keyTooltip(
+    tooltip: formatTooltip(
       intl.formatMessage({ id: 'editor-panel.tooltip-add-link', defaultMessage: 'Add Link' }),
       'L',
     ),
@@ -167,7 +181,59 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
+  };
+
+  /**
+   * copies a shareable URL that deep-links straight to the selected node
+   */
+  const copyNodeLinkConfiguration: ActionConfig = {
+    icon: <ShareOutlinedIcon />,
+    tooltip: intl.formatMessage({
+      id: 'editor-panel.tooltip-copy-node-link',
+      defaultMessage: 'Copy Link to Node',
+    }),
+    ariaLabel: intl.formatMessage({
+      id: 'editor-panel.tooltip-copy-node-link',
+      defaultMessage: 'Copy Link to Node',
+    }),
+    'data-testid': 'copy-node-link-button',
+    visible: Boolean(getDeepLink),
+    onClick: () => {
+      // The topic id comes from the designer's own selection, never from the
+      // rendered SVG.
+      const nodeId = singleSelectedTopicId();
+      if (nodeId === undefined || !getDeepLink) {
+        return;
+      }
+      trackEditorPanelAction('copy_node_deep_link');
+
+      const notifyFailure = (error: unknown) => {
+        console.error('Could not copy the node link to the clipboard:', error);
+        $notify(
+          intl.formatMessage({
+            id: 'editor-panel.deeplink-copy-failed',
+            defaultMessage: 'Could not copy the link to the clipboard',
+          }),
+        );
+      };
+
+      // navigator.clipboard is undefined outside a secure context.
+      if (!navigator.clipboard) {
+        notifyFailure(new Error('Clipboard API is not available'));
+        return;
+      }
+
+      navigator.clipboard.writeText(getDeepLink(nodeId)).then(() => {
+        $notify(
+          intl.formatMessage({
+            id: 'editor-panel.deeplink-copied',
+            defaultMessage: 'Link to node copied to clipboard',
+          }),
+        );
+      }, notifyFailure);
+    },
+    disabled: () => !getDeepLink || singleSelectedTopicId() === undefined,
   };
 
   /**
@@ -204,7 +270,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    */
   const editNoteConfiguration: ActionConfig = {
     icon: <NoteOutlinedIcon />,
-    tooltip: keyTooltip(
+    tooltip: formatTooltip(
       intl.formatMessage({ id: 'editor-panel.tooltip-add-note', defaultMessage: 'Add Note' }),
       'K',
     ),
@@ -222,7 +288,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   /**
@@ -244,7 +310,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   /**
@@ -274,7 +340,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   return [
@@ -286,6 +352,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     editLinkUrlConfiguration,
     addRelationConfiguration,
     relationshipStyleConfiguration,
+    copyNodeLinkConfiguration,
     editCanvasStyleConfiguration,
   ];
 }

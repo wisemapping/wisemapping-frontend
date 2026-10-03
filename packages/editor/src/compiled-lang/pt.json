@@ -347,6 +347,18 @@
       "value": "Fundo"
     }
   ],
+  "editor-panel.deeplink-copied": [
+    {
+      "type": 0,
+      "value": "Link para o tópico copiado para a área de transferência"
+    }
+  ],
+  "editor-panel.deeplink-copy-failed": [
+    {
+      "type": 0,
+      "value": "Não foi possível copiar o link para a área de transferência"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,
@@ -477,6 +489,12 @@
     {
       "type": 0,
       "value": "Polilinha curva"
+    }
+  ],
+  "editor-panel.tooltip-copy-node-link": [
+    {
+      "type": 0,
+      "value": "Copiar link para o tópico"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -693,6 +711,64 @@
     {
       "type": 0,
       "value": "Pesquisar emojis..."
+    }
+  ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "Limpar pesquisa"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "Nenhum tópico corresponde a “"
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": "”."
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " de "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "Correspondência seguinte"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "Sem correspondências"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "Procurar tópico..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "Correspondência anterior"
     }
   ],
   "headerNotifier": [
@@ -1335,6 +1411,30 @@
       "value": "Expandir/Recolher todos os tópicos"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "Procurar tópico no mapa"
+    }
+  ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "Aumentar nível do tópico (anexar ao irmão anterior)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "Mover tópico para baixo entre irmãos"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "Mover tópico para cima entre irmãos"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1345,6 +1445,12 @@
     {
       "type": 0,
       "value": "Teclas de seta"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "Diminuir nível do tópico (anexar ao avô)"
     }
   ],
   "shortcut-help-pane.outline-view": [
@@ -1363,6 +1469,24 @@
     {
       "type": 0,
       "value": "Digitar em um tópico selecionado"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "Deslocar a tela"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "Deslizar com dois dedos ou roda do rato"
+    }
+  ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "Colar como filho do tópico selecionado"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -1417,6 +1541,12 @@
     {
       "type": 0,
       "value": "Ajustar zoom"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "Ampliar ou reduzir com a roda"
     }
   ],
   "sunrise": [
@@ -1717,6 +1847,12 @@
     {
       "type": 0,
       "value": "Expandir por Nível"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "Procurar no mapa"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

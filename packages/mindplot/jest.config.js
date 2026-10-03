@@ -25,6 +25,7 @@ const config = {
     '^.+\\.(js)$': 'babel-jest',
   },
   moduleNameMapper: {
+    '\\.(svg|png|jpg|jpeg|gif)$': 'jest-transform-stub',
     '^@wisemapping/web2d$': '<rootDir>/../web2d/src/index.ts',
     '^@wisemapping/web2d/(.*)$': '<rootDir>/../web2d/src/$1',
   },

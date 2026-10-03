@@ -25,12 +25,14 @@ import {
   ThemeType,
 } from '@wisemapping/mindplot';
 import NodeProperty from '../node-property';
-import {
-  SwitchValueDirection,
-  fontSizes,
-  getPreviousValue,
-  getNextValue,
-} from '../../../components/toolbar/ToolbarValueModelBuilder';
+import { SwitchValueDirection, fontSizes, getPreviousValue, getNextValue } from '../value-stepper';
+
+/**
+ * Value reported by the font size model while nothing is selected. Toolbar
+ * widgets read their models on every selection change, including the
+ * deselected state, so the getters must stay total.
+ */
+const DEFAULT_FONT_SIZE = 10;
 
 class NodePropertyBuilder {
   designer: Designer;
@@ -62,24 +64,16 @@ class NodePropertyBuilder {
     this.designer = designer;
   }
 
-  private selectedTopic(): Topic {
-    const topic = this.designer.getModel().selectedTopic();
-    if (!topic) {
-      throw new Error('No selected topic');
-    }
-    return topic;
+  private selectedTopic(): Topic | undefined {
+    return this.designer.getModel().selectedTopic() ?? undefined;
   }
 
-  private selectedRelationship(): Relationship {
-    const relationship = this.designer.getModel().selectedRelationship();
-    if (!relationship) {
-      throw new Error('No selected relationship');
-    }
-    return relationship;
+  private selectedRelationship(): Relationship | undefined {
+    return this.designer.getModel().selectedRelationship() ?? undefined;
   }
 
   private getFontSize(): number {
-    return this.selectedTopic().getFontSize();
+    return this.selectedTopic()?.getFontSize() ?? DEFAULT_FONT_SIZE;
   }
 
   private uniqueOrUndefined<T>(propertyGetter: (Topic: Topic) => T | undefined): T | undefined {
@@ -109,6 +103,9 @@ class NodePropertyBuilder {
       this.fontSizeModel = {
         getValue: () => this.getFontSize(),
         switchValue: (direction?) => {
+          if (!this.selectedTopic()) {
+            return;
+          }
           let newValue;
           if (direction === SwitchValueDirection.down) {
             newValue = getPreviousValue(fontSizes, this.getFontSize());
@@ -132,7 +129,7 @@ class NodePropertyBuilder {
       result = {
         getValue: (): string | undefined => {
           const variant = this.designer.getThemeVariant();
-          return this.selectedTopic().getBackgroundColor(variant);
+          return this.selectedTopic()?.getBackgroundColor(variant);
         },
         setValue: (color: string | undefined) => this.designer.changeBackgroundColor(color),
       };
@@ -145,12 +142,12 @@ class NodePropertyBuilder {
     // const selected = this.selectedTopic();
     if (!this.linkModel)
       this.linkModel = {
-        getValue: (): string => this.selectedTopic()?.getLinkValue(),
+        getValue: (): string => this.selectedTopic()?.getLinkValue() ?? '',
         setValue: (value: string) => {
           if (value && value.trim() !== '') {
-            this.selectedTopic().setLinkValue(value);
+            this.selectedTopic()?.setLinkValue(value);
           } else {
-            this.selectedTopic().setLinkValue(undefined);
+            this.selectedTopic()?.setLinkValue(undefined);
           }
         },
       };
@@ -265,12 +262,12 @@ class NodePropertyBuilder {
     if (!this.noteModel)
       this.noteModel = {
         getValue: (): string | undefined => {
-          const value = this.selectedTopic().getNoteValue();
+          const value = this.selectedTopic()?.getNoteValue();
           return value ? value : undefined;
         },
         setValue: (value: string | undefined) => {
           const note = value && value.trim() !== '' ? value : undefined;
-          this.selectedTopic().setNoteValue(note);
+          this.selectedTopic()?.setNoteValue(note);
         },
       };
     return this.noteModel;
@@ -300,7 +297,7 @@ class NodePropertyBuilder {
   getFontStyleModel(): NodeProperty<string> {
     if (!this.fontStyleModel)
       this.fontStyleModel = {
-        getValue: () => this.selectedTopic()?.getFontStyle(),
+        getValue: () => this.selectedTopic()?.getFontStyle() ?? 'normal',
         switchValue: () => this.designer.changeFontStyle(),
       };
     return this.fontStyleModel;
@@ -337,7 +334,8 @@ class NodePropertyBuilder {
   getRelationshipStyleModel(): NodeProperty<LineType> {
     if (!this.relationshipStyleModel)
       this.relationshipStyleModel = {
-        getValue: () => this.selectedRelationship()?.getModel().getLineType(),
+        getValue: () =>
+          this.selectedRelationship()?.getModel().getLineType() ?? LineType.THIN_CURVED,
         setValue: (value: LineType) => this.designer.changeRelationshipStyle(value),
       };
     return this.relationshipStyleModel;
@@ -363,7 +361,8 @@ class NodePropertyBuilder {
   getRelationshipStrokeStyleModel(): NodeProperty<StrokeStyle> {
     if (!this.relationshipStrokeStyleModel)
       this.relationshipStrokeStyleModel = {
-        getValue: () => this.selectedRelationship()?.getModel().getStrokeStyle(),
+        getValue: () =>
+          this.selectedRelationship()?.getModel().getStrokeStyle() ?? StrokeStyle.DASHED,
         setValue: (value: StrokeStyle) => this.designer.changeRelationshipStrokeStyle(value),
       };
     return this.relationshipStrokeStyleModel;

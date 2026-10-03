@@ -347,6 +347,18 @@
       "value": "Arrière-plan"
     }
   ],
+  "editor-panel.deeplink-copied": [
+    {
+      "type": 0,
+      "value": "Lien vers le noeud copié dans le presse-papiers"
+    }
+  ],
+  "editor-panel.deeplink-copy-failed": [
+    {
+      "type": 0,
+      "value": "Impossible de copier le lien dans le presse-papiers"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,
@@ -477,6 +489,12 @@
     {
       "type": 0,
       "value": "Polygonale courbée"
+    }
+  ],
+  "editor-panel.tooltip-copy-node-link": [
+    {
+      "type": 0,
+      "value": "Copier le lien vers le noeud"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -693,6 +711,64 @@
     {
       "type": 0,
       "value": "Rechercher des emojis..."
+    }
+  ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "Effacer la recherche"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "Aucun noeud ne correspond à « "
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": " »."
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " sur "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "Correspondance suivante"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "Aucune correspondance"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "Rechercher un noeud..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "Correspondance précédente"
     }
   ],
   "headerNotifier": [
@@ -1335,6 +1411,30 @@
       "value": "Développer/Réduire tous les sujets"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "Rechercher un noeud dans la carte"
+    }
+  ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "Abaisser le noeud d'un niveau (rattacher au frère précédent)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "Déplacer le noeud vers le bas parmi ses frères"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "Déplacer le noeud vers le haut parmi ses frères"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1345,6 +1445,12 @@
     {
       "type": 0,
       "value": "Touches directionnelles"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "Remonter le noeud d'un niveau (rattacher au grand-parent)"
     }
   ],
   "shortcut-help-pane.outline-view": [
@@ -1363,6 +1469,24 @@
     {
       "type": 0,
       "value": "Ecrire dans le noeud sélectionné"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "Déplacer le canevas"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "Balayage à deux doigts ou molette de la souris"
+    }
+  ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "Coller comme enfant du noeud sélectionné"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -1417,6 +1541,12 @@
     {
       "type": 0,
       "value": "Ajuster le zoom"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "Zoomer ou dézoomer avec la molette"
     }
   ],
   "sunrise": [
@@ -1717,6 +1847,12 @@
     {
       "type": 0,
       "value": "Développer par niveau"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "Rechercher dans la carte"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

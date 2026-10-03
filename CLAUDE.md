@@ -24,7 +24,6 @@ Run from repo root unless noted. `lerna run X` fans out to every package; use `-
 ```sh
 nvm use
 yarn install
-export NODE_OPTIONS=--openssl-legacy-provider   # required for builds
 
 yarn build                                       # build all packages
 yarn lint                                        # eslint across all packages

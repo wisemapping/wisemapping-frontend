@@ -18,15 +18,16 @@
 import styled from 'styled-components';
 import { styled as muiStyled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import { EDITOR_LAYOUT } from '../../theme/layout';
 
 export const CreatorInfoContainer = styled.div`
   display: flex;
   align-items: end;
   position: absolute;
   float: left;
-  top: calc(100% - 47px);
-  left: 7px;
-  height: 40px;
+  top: ${EDITOR_LAYOUT.creatorInfoPane.top};
+  left: ${EDITOR_LAYOUT.creatorInfoPane.left};
+  height: ${EDITOR_LAYOUT.creatorInfoPane.height};
 `;
 
 export const CreatorInfoText = muiStyled(Box)(({ theme }) => ({

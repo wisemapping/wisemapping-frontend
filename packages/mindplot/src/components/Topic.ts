@@ -17,6 +17,7 @@
  */
 import { Text, Group, ElementClass, ElementPeer, Rect } from '@wisemapping/web2d';
 import { $assert, $defined } from './util/assert';
+import isMacPlatform from './util/platform';
 
 import NodeGraph, { NodeOption } from './NodeGraph';
 import TopicFeatureFactory from './TopicFeature';
@@ -659,7 +660,7 @@ abstract class Topic extends NodeGraph {
     // Focus events ...
     elem.addEvent('mousedown', (event: Event) => {
       const mouseEvent = event as MouseEvent;
-      const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const isMac = isMacPlatform();
       if (!me.isReadOnly()) {
         // Disable topic selection of readOnly mode ...
         let value = true;

@@ -347,6 +347,18 @@
       "value": "पृष्ठभूमि"
     }
   ],
+  "editor-panel.deeplink-copied": [
+    {
+      "type": 0,
+      "value": "विषय का लिंक क्लिपबोर्ड पर कॉपी किया गया"
+    }
+  ],
+  "editor-panel.deeplink-copy-failed": [
+    {
+      "type": 0,
+      "value": "लिंक को क्लिपबोर्ड पर कॉपी नहीं किया जा सका"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,
@@ -477,6 +489,12 @@
     {
       "type": 0,
       "value": "घुमावदार पॉलीलाइन"
+    }
+  ],
+  "editor-panel.tooltip-copy-node-link": [
+    {
+      "type": 0,
+      "value": "विषय का लिंक कॉपी करें"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -693,6 +711,64 @@
     {
       "type": 0,
       "value": "इमोजी खोजें..."
+    }
+  ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "खोज साफ़ करें"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "“"
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": "” से मेल खाने वाला कोई विषय नहीं है।"
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 1,
+      "value": "total"
+    },
+    {
+      "type": 0,
+      "value": " में से "
+    },
+    {
+      "type": 1,
+      "value": "current"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "अगला मेल"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "कोई मेल नहीं"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "विषय खोजें..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "पिछला मेल"
     }
   ],
   "headerNotifier": [
@@ -1335,6 +1411,30 @@
       "value": "सभी विषय विस्तार/संकुचित करें"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "मैप में विषय खोजें"
+    }
+  ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "विषय का स्तर बढ़ाएँ (पिछले सहोदर से जोड़ें)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "विषय को सहोदरों में नीचे ले जाएँ"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "विषय को सहोदरों में ऊपर ले जाएँ"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1345,6 +1445,12 @@
     {
       "type": 0,
       "value": "एरो कीज़"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "विषय का स्तर घटाएँ (दादा से जोड़ें)"
     }
   ],
   "shortcut-help-pane.outline-view": [
@@ -1363,6 +1469,24 @@
     {
       "type": 0,
       "value": "चयनित विषय पर टाइप करें"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "कैनवास को खिसकाएँ"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "दो उंगलियों से स्वाइप या माउस व्हील"
+    }
+  ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "चयनित विषय के अधीन पेस्ट करें"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -1417,6 +1541,12 @@
     {
       "type": 0,
       "value": "फिट करने के लिए ज़ूम"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "व्हील से ज़ूम इन/आउट करें"
     }
   ],
   "sunrise": [
@@ -1717,6 +1847,12 @@
     {
       "type": 0,
       "value": "स्तर के अनुसार विस्तार"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "मैप में खोजें"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

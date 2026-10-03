@@ -2,6 +2,28 @@
 
 All notable changes to the Wisemapping Frontend project are documented in this file.
 
+## October 2026
+
+### 🚀 User Experience
+
+- **Find in Map**: New search panel (`Ctrl/⌘ + F`) that lists every node matching what you type, highlights the match, and jumps to it. Clicking a result now also closes the panel, leaving you on the node ready to edit. `Enter` / `Shift + Enter` and the arrow buttons step through matches without closing it.
+- **Share a Link to a Node**: "Copy link to node" in the editor toolbar copies a link that opens the map with that specific node revealed and centred — handy for pointing a colleague at one branch of a large map.
+- **Paste Under a Topic**: `Ctrl/⌘ + Shift + V` pastes copied topics as children of the selected one. Plain `Ctrl/⌘ + V` keeps pasting onto the canvas exactly as before.
+- **Rearrange Topics by Keyboard**: `Alt + Shift + ↑/↓` moves a topic up or down among its siblings, and `Alt + Shift + ←/→` outdents or indents it — the bindings outline editors use. Rearranging a map previously needed the mouse. Each move is a single undo step, just like a drag.
+- **Trackpad Navigation**: A two-finger swipe now pans the canvas instead of zooming it, matching other diagramming tools. Zooming moves to the wheel with `Ctrl`, `⌘` or `Alt` held.
+
+### 🐛 Bug Fixes
+
+- **Dialog and Menu Styling**: Fixed a styling helper that silently discarded theme-dependent rules, so dialogs and the selected item in the map list now render with their intended borders and colours in both light and dark mode.
+- **Selection Events**: Selecting a single topic no longer fires both "focus" and "blur" at once, and multi-selection now reports focus correctly.
+- **Toolbar Stability**: Topic property controls no longer throw when nothing is selected, the zoom readout keeps updating after a map loads, and the duplicated zoom shortcut that jumped two steps per keypress is gone.
+
+### 🔧 Technical Improvements
+
+- **Quality Assurance**: The web application gained its first unit-test harness, plus an automated accessibility scan that reports findings on every integration run. Over 600 unit tests now run across the project.
+- **Editor Internals**: The editor toolbar's selection handling, keyboard-shortcut formatting and layout were reworked, and the map list's navigation drawer moved into its own module — no visible change, less duplication.
+- **Accessibility**: Fixed incorrect ARIA attributes and layering in the editor toolbar.
+
 ## February 2026
 
 ### 🛡️ Security & Reliability

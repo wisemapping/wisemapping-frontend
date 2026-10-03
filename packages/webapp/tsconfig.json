@@ -1,11 +1,13 @@
 {
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
   ],
   "compilerOptions": {
     "jsx": "react-jsx",
     "types": [
       "vite/client",
+      "jest",
       "node",
       "react",
       "react-dom"

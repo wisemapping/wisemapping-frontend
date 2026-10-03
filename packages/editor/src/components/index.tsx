@@ -39,6 +39,7 @@ import { EditorThemeProvider, useTheme } from '../contexts/ThemeContext';
 import { createEditorTheme } from '../theme';
 import { ThemeVariantStorage } from '../types/ThemeVariantStorage';
 import EditorLoadingSkeleton from './editor-loading-skeleton';
+import { useDeepLinkFocus } from '../hooks/useDeepLinkFocus';
 
 const EMBED_READY_ATTRIBUTE = 'data-wisemapping-embed-loaded';
 
@@ -49,6 +50,18 @@ type EditorProps = {
   config: EditorConfiguration;
   accountConfiguration?: React.ReactElement;
   themeVariantStorage: ThemeVariantStorage; // Theme variant storage for persistence (mandatory)
+  /**
+   * Query parameters of the page hosting the editor. `?node=<id>` reveals and
+   * centres that node once the map has loaded. Falls back to
+   * `window.location` when not supplied.
+   */
+  initialSearchParams?: URLSearchParams | null;
+  /**
+   * Builds a shareable URL that deep-links to a single node. Supplied by the
+   * host application, which owns routing. When omitted the "copy link to node"
+   * affordance is hidden.
+   */
+  getDeepLink?: (nodeId: number) => string;
 };
 
 const EditorContent = ({
@@ -56,11 +69,16 @@ const EditorContent = ({
   onAction,
   accountConfiguration,
   themeVariantStorage,
+  initialSearchParams,
+  getDeepLink,
 }: EditorProps): ReactElement => {
   // We can access editor instance and other configuration from editor props
   const { model, mindplotRef, mapInfo, capability, options } = config;
   const designer = model?.getDesigner();
   const { mode: internalMode } = useTheme();
+
+  // Reveal and centre the node named by `?node=<id>`, if any.
+  useDeepLinkFocus(model, initialSearchParams);
 
   // Get the current theme mode from the theme context
   const mode = internalMode;
@@ -162,11 +180,11 @@ const EditorContent = ({
             />
           )}
 
-          <WidgetPopover widgetManager={widgetBulder} />
+          <WidgetPopover widgetManager={widgetBulder} designer={designer} />
 
           {model && (
             <div className="no-print">
-              <EditorToolbar model={model} capability={capability} />
+              <EditorToolbar model={model} capability={capability} getDeepLink={getDeepLink} />
               <VisualizationToolbar model={model} capability={capability} />
             </div>
           )}
@@ -202,6 +220,8 @@ const Editor = ({
   onAction,
   accountConfiguration,
   themeVariantStorage,
+  initialSearchParams,
+  getDeepLink,
 }: EditorProps): ReactElement => {
   return (
     <EditorThemeProvider themeVariantStorage={themeVariantStorage}>
@@ -210,6 +230,8 @@ const Editor = ({
         onAction={onAction}
         accountConfiguration={accountConfiguration}
         themeVariantStorage={themeVariantStorage}
+        initialSearchParams={initialSearchParams}
+        getDeepLink={getDeepLink}
       />
     </EditorThemeProvider>
   );

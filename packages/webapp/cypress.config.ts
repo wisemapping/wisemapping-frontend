@@ -20,7 +20,6 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
   video: process.env.CYPRESS_VIDEO === 'true',
-  allowCypressEnv: false,
   expose: {
     imageSnaphots: !!process.env.CYPRESS_imageSnaphots,
   },

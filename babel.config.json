@@ -4,7 +4,6 @@
       "@babel/preset-env",
       {
         "useBuiltIns": false,
-        "bugfixes": true,
         "modules": false,
         "targets": {
           "esmodules": true
@@ -29,4 +28,3 @@
   ],
   "sourceType": "module"
 }
-

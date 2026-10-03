@@ -29,6 +29,7 @@ import TextImporterFactory from './components/import/TextImporterFactory';
 import Exporter from './components/export/Exporter';
 import Importer from './components/import/Importer';
 import DesignerKeyboard from './components/DesignerKeyboard';
+import isMacPlatform from './components/util/platform';
 import type EditorRenderMode from './components/EditorRenderMode';
 import DesignerModel from './components/DesignerModel';
 
@@ -36,6 +37,7 @@ import SvgImageIcon from './components/SvgImageIcon';
 
 import MindplotWebComponent from './components/MindplotWebComponent';
 import type MindplotWebComponentInterface from './components/MindplotWebComponentInterface';
+import LayoutEventBus from './components/layout/LayoutEventBus';
 import LinkIcon from './components/LinkIcon';
 import NoteIcon from './components/NoteIcon';
 import Topic from './components/Topic';
@@ -70,6 +72,7 @@ export type {
   BackgroundPatternType,
 };
 
+export type { default as LayoutEventBusType } from './components/LayoutEventBusType';
 export type { LayoutType, OrientationType } from './components/layout/LayoutType';
 export type { FontStyleType } from './components/FontStyleType';
 export type { FontWeightType } from './components/FontWeightType';
@@ -93,6 +96,8 @@ export {
   Importer,
   $notify,
   DesignerKeyboard,
+  isMacPlatform,
+  LayoutEventBus,
   MindplotWebComponent,
   LinkIcon,
   LinkModel,

@@ -347,6 +347,18 @@
       "value": "背景"
     }
   ],
+  "editor-panel.deeplink-copied": [
+    {
+      "type": 0,
+      "value": "トピックへのリンクをクリップボードにコピーしました"
+    }
+  ],
+  "editor-panel.deeplink-copy-failed": [
+    {
+      "type": 0,
+      "value": "リンクをクリップボードにコピーできませんでした"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,
@@ -477,6 +489,12 @@
     {
       "type": 0,
       "value": "曲線ポリライン"
+    }
+  ],
+  "editor-panel.tooltip-copy-node-link": [
+    {
+      "type": 0,
+      "value": "トピックへのリンクをコピー"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -693,6 +711,64 @@
     {
       "type": 0,
       "value": "絵文字を検索..."
+    }
+  ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "検索をクリア"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "「"
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": "」に一致するトピックはありません。"
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " / "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "次の一致"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "一致なし"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "トピックを検索..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "前の一致"
     }
   ],
   "headerNotifier": [
@@ -1335,6 +1411,30 @@
       "value": "すべてのトピックを展開/折りたたみ"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "マップ内のトピックを検索"
+    }
+  ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "トピックの階層を下げる (前の兄弟に接続)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "トピックを兄弟間で下に移動"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "トピックを兄弟間で上に移動"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1345,6 +1445,12 @@
     {
       "type": 0,
       "value": "矢印キー"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "トピックの階層を上げる (祖父に接続)"
     }
   ],
   "shortcut-help-pane.outline-view": [
@@ -1363,6 +1469,24 @@
     {
       "type": 0,
       "value": "選択されたトピックで入力"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "キャンバスを移動"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "2本指スワイプまたはマウスホイール"
+    }
+  ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "選択したトピックの子として貼り付け"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -1417,6 +1541,12 @@
     {
       "type": 0,
       "value": "フィットするようにズーム"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "ホイールで拡大・縮小"
     }
   ],
   "sunrise": [
@@ -1717,6 +1847,12 @@
     {
       "type": 0,
       "value": "レベルごとに展開"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "マップ内を検索"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

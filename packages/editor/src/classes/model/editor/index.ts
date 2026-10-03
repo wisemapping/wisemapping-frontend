@@ -105,10 +105,15 @@ class Editor {
       };
 
       // Register events ...
+      //
+      // Deliberately NOT subscribed to the screen manager's 'update': that
+      // fires once per mousemove while the canvas is dragged, and routing it
+      // here re-rendered the entire editor chrome per frame. The one piece of
+      // chrome that needs it -- the zoom percentage -- subscribes directly in
+      // visualization-toolbar/zoom-display.tsx, so only that leaf re-renders.
       designer.addEvent('onblur', onNodeBlurHandler);
       designer.addEvent('onfocus', onNodeFocusHandler);
       designer.addEvent('modelUpdate', onNodeFocusHandler);
-      designer.getWorkSpace().getScreenManager().addEvent('update', onNodeFocusHandler);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

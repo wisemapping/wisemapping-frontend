@@ -212,6 +212,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "子要素を折りたたむ"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "トピックの階層を下げる (前の兄弟に接続)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "トピックを兄弟間で下に移動"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "トピックを兄弟間で上に移動"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "トピックの階層を上げる (祖父に接続)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "トピックをコピー＆ペースト/マインドマップ画像をクリップボードにコピー。"
   },
@@ -904,5 +916,53 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "フィットするようにズーム"
+  },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "トピックへのリンクをクリップボードにコピーしました"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "リンクをクリップボードにコピーできませんでした"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "トピックへのリンクをコピー"
+  },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "マップ内のトピックを検索"
+  },
+  "shortcut-help-pane.pan-canvas": {
+    "defaultMessage": "キャンバスを移動"
+  },
+  "shortcut-help-pane.pan-canvas-keys": {
+    "defaultMessage": "2本指スワイプまたはマウスホイール"
+  },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "選択したトピックの子として貼り付け"
+  },
+  "shortcut-help-pane.zoom-wheel": {
+    "defaultMessage": "ホイールで拡大・縮小"
+  },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "マップ内を検索"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "トピックを検索..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "検索をクリア"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "前の一致"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "次の一致"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "{current} / {total}"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "一致なし"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "「{query}」に一致するトピックはありません。"
   }
 }

@@ -218,6 +218,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "Свернуть дочерние элементы"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "Увеличить уровень темы (присоединить к предыдущей соседней)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "Переместить тему вниз среди соседних"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "Переместить тему вверх среди соседних"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "Уменьшить уровень темы (присоединить к прародителю)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "Копировать и вставлять темы/Копировать изображение карты в буфер обмена."
   },
@@ -904,5 +916,53 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "Подогнать масштаб"
+  },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "Ссылка на тему скопирована в буфер обмена"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "Не удалось скопировать ссылку в буфер обмена"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "Копировать ссылку на тему"
+  },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "Найти тему на карте"
+  },
+  "shortcut-help-pane.pan-canvas": {
+    "defaultMessage": "Перемещать полотно"
+  },
+  "shortcut-help-pane.pan-canvas-keys": {
+    "defaultMessage": "Свайп двумя пальцами или колесо мыши"
+  },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "Вставить дочерним к выбранной теме"
+  },
+  "shortcut-help-pane.zoom-wheel": {
+    "defaultMessage": "Масштабирование колесом мыши"
+  },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "Поиск на карте"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "Найти тему..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "Очистить поиск"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "Предыдущее совпадение"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "Следующее совпадение"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "{current} из {total}"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "Нет совпадений"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "Нет тем, соответствующих «{query}»."
   }
 }

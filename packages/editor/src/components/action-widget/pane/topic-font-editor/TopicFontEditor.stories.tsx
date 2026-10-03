@@ -19,7 +19,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import TopicFontEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
-import { SwitchValueDirection } from '../../../toolbar/ToolbarValueModelBuilder';
+import { SwitchValueDirection } from '../../../../classes/model/value-stepper';
 import React from 'react';
 
 // Wrapper component to expose all setValue and switchValue calls as action-trackable callbacks

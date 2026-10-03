@@ -162,4 +162,43 @@ describe('Canvas', () => {
       expect(layoutEventBus.fireEvent).not.toHaveBeenCalled();
     });
   });
+
+  describe('panBy', () => {
+    beforeEach(() => {
+      workspace.getCoordOrigin.mockReturnValue({ x: 100, y: 200 });
+      workspace.setCoordOrigin.mockClear();
+      mockScreenManager.setOffset.mockClear();
+      mockScreenManager.fireEvent.mockClear();
+      layoutEventBus.fireEvent.mockClear();
+    });
+
+    test('shifts coordinate origin scaled by zoom level 1.0', () => {
+      canvas.setZoomValue(1.0);
+      canvas.panBy(50, -30);
+
+      expect(workspace.setCoordOrigin).toHaveBeenCalledWith(150, 170);
+      expect(mockScreenManager.setOffset).toHaveBeenCalledWith(150, 170);
+      expect(mockScreenManager.fireEvent).toHaveBeenCalledWith('update');
+      expect(layoutEventBus.fireEvent).toHaveBeenCalledWith('canvasPanned');
+    });
+
+    test('shifts coordinate origin scaled by zoom level 0.5', () => {
+      canvas.setZoomValue(0.5);
+      canvas.panBy(40, 60);
+
+      expect(workspace.setCoordOrigin).toHaveBeenCalledWith(120, 230);
+      expect(mockScreenManager.setOffset).toHaveBeenCalledWith(120, 230);
+      expect(mockScreenManager.fireEvent).toHaveBeenCalledWith('update');
+      expect(layoutEventBus.fireEvent).toHaveBeenCalledWith('canvasPanned');
+    });
+
+    test('does nothing when deltas are zero', () => {
+      canvas.panBy(0, 0);
+
+      expect(workspace.setCoordOrigin).not.toHaveBeenCalled();
+      expect(mockScreenManager.setOffset).not.toHaveBeenCalled();
+      expect(mockScreenManager.fireEvent).not.toHaveBeenCalled();
+      expect(layoutEventBus.fireEvent).not.toHaveBeenCalled();
+    });
+  });
 });
