@@ -17,6 +17,7 @@
  */
 import { $assert, $defined } from './util/assert';
 import DOMUtils from './util/DOMUtils';
+import getCollapsedAncestorIds from './util/topicVisibility';
 import Messages, { $msg } from './Messages';
 
 import EventDispispatcher from './EventDispatcher';
@@ -1628,6 +1629,21 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     node.setOnFocus(true);
     this.onObjectFocusEvent(node);
     this.ensureNodeVisible(node);
+  }
+
+  /**
+   * Expands every collapsed ancestor of the node, deselects the current
+   * selection, then focuses and pans to the node -- the sequence keyboard
+   * navigation already relies on (via DesignerKeyboard) to reveal a node
+   * hidden inside a collapsed branch.
+   */
+  revealNode(node: Topic): void {
+    const collapsedAncestorIds = getCollapsedAncestorIds(node);
+    if (collapsedAncestorIds.length > 0) {
+      this.getActionDispatcher().shrinkBranch(collapsedAncestorIds, false);
+    }
+    this.deselectAll();
+    this.goToNode(node);
   }
 
   private ensureNodeVisible(node: Topic): void {
