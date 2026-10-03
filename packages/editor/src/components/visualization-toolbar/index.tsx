@@ -28,6 +28,7 @@ import Editor from '../../classes/model/editor';
 import Model from '../../classes/model/editor';
 import KeyboardShorcutsHelp from '../action-widget/pane/keyboard-shortcut-help';
 import OutlineViewDialog from '../action-widget/pane/outline-view-dialog';
+import FindInMapPanel from '../action-widget/pane/find-in-map';
 import LayoutSelector from '../action-widget/pane/layout-selector';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import Toolbar from '../toolbar';
@@ -37,6 +38,7 @@ import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrong
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import TocOutlinedIcon from '@mui/icons-material/TocOutlined';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Box from '@mui/material/Box';
 import { trackEditorInteraction } from '../../utils/analytics';
 import { handleExpandByLevel, buildExpandByLevelConfig } from './expand-by-level-icon';
@@ -131,6 +133,32 @@ export function buildVisualizationToolbarConfig(
       disabled: () => !model?.isMapLoadded(),
     },
     // Separator between zoom controls and outline view
+    undefined as ActionConfig | undefined,
+    {
+      icon: <SearchOutlinedIcon />,
+      tooltip: formatTooltip(
+        intl.formatMessage({
+          id: 'visualization-toolbar.tooltip-find-in-map',
+          defaultMessage: 'Find in Map',
+        }),
+        'F',
+      ),
+      ariaLabel: intl.formatMessage({
+        id: 'visualization-toolbar.tooltip-find-in-map',
+        defaultMessage: 'Find in Map',
+      }),
+      'data-testid': 'find-in-map-button',
+      onClick: () => trackEditorInteraction('find_in_map'),
+      options: [
+        {
+          render: (closeModal) => (
+            <FindInMapPanel designer={model.getDesigner()} closeModal={closeModal} />
+          ),
+        },
+      ],
+      disabled: () => !model?.isMapLoadded(),
+    },
+    // Separator between find and outline view
     undefined as ActionConfig | undefined,
     {
       icon: <TocOutlinedIcon />,
@@ -289,9 +317,14 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
 
   // Keyboard shortcuts
   useEffect(() => {
-    if (!model?.isMapLoadded()) return;
-
     const handleKeyDown = (event: KeyboardEvent) => {
+      // Checked here (not as an effect-attach guard) because `isMapLoadded()`
+      // reads mutable state on the designer, not a React-tracked value: the
+      // map finishing loading never changes `model`/`expandLevel`, so an
+      // attach-time guard would leave every shortcut in this handler
+      // permanently dead once the map loaded after the first render.
+      if (!model?.isMapLoadded()) return;
+
       const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
       const isModifier = isMac ? event.metaKey : event.ctrlKey;
 
@@ -318,6 +351,11 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
           event.preventDefault();
           trackEditorInteraction('outline_view_keyboard');
           // Outline view will be handled by the toolbar button click
+          break;
+        case 'f':
+          event.preventDefault();
+          trackEditorInteraction('find_in_map_keyboard');
+          document.querySelector<HTMLButtonElement>('[data-testid="find-in-map-button"]')?.click();
           break;
         case 'e':
           event.preventDefault();

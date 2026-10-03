@@ -213,8 +213,7 @@ class DesignerKeyboard extends Keyboard {
       DesignerKeyboard.ALIGNMENT_TOLERANCE,
     );
     if (fallback) {
-      this._ensureTopicVisible(designer, fallback);
-      this._goToNode(designer, fallback);
+      designer.revealNode(fallback);
     }
   }
 
@@ -346,8 +345,7 @@ class DesignerKeyboard extends Keyboard {
     });
 
     if (target !== node) {
-      this._ensureTopicVisible(designer, target);
-      this._goToNode(designer, target);
+      designer.revealNode(target);
       return true;
     }
     return false;
@@ -368,8 +366,7 @@ class DesignerKeyboard extends Keyboard {
       alignmentAxis,
     );
     if (target) {
-      this._ensureTopicVisible(designer, target);
-      this._goToNode(designer, target);
+      designer.revealNode(target);
       return true;
     }
     return false;
@@ -409,8 +406,7 @@ class DesignerKeyboard extends Keyboard {
   private _goToParent(designer: Designer, node: Topic): boolean {
     const parent = node.getParent();
     if (parent) {
-      this._ensureTopicVisible(designer, parent);
-      this._goToNode(designer, parent);
+      designer.revealNode(parent);
       return true;
     }
     return false;
@@ -450,8 +446,7 @@ class DesignerKeyboard extends Keyboard {
       }
     });
 
-    this._ensureTopicVisible(designer, target);
-    this._goToNode(designer, target);
+    designer.revealNode(target);
     return true;
   }
 
@@ -602,21 +597,6 @@ class DesignerKeyboard extends Keyboard {
     });
 
     return closest;
-  }
-
-  private _ensureTopicVisible(designer: Designer, topic: Topic): void {
-    const toExpand = new Set<number>();
-    let current: Topic | null = topic.getParent();
-    while (current) {
-      if (current.areChildrenShrunken()) {
-        toExpand.add(current.getId());
-      }
-      current = current.getParent();
-    }
-
-    if (toExpand.size > 0) {
-      designer.getActionDispatcher().shrinkBranch(Array.from(toExpand), false);
-    }
   }
 
   private _goToNode(designer: Designer, node: Topic): void {
