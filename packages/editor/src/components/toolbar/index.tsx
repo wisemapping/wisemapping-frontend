@@ -285,9 +285,56 @@ type ToolbarProps = {
 const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
   const pos: ToolbarPosition = position || defaultPosition;
   const theme = useTheme();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  /**
+   * Arrow-key navigation across the bar.
+   *
+   * `role="menu"` promises this, but every button was a separate tab stop with
+   * no arrow handling, so the role was a claim the widget did not honour. Keys
+   * follow aria-orientation: Up/Down for a vertical bar, Left/Right for a
+   * horizontal one, with Home/End jumping to either end and wrap-around at the
+   * edges. Tab still moves past the whole bar.
+   */
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    const nextKey = pos.vertical ? 'ArrowDown' : 'ArrowRight';
+    const previousKey = pos.vertical ? 'ArrowUp' : 'ArrowLeft';
+    if (!['Home', 'End', nextKey, previousKey].includes(event.key)) {
+      return;
+    }
+
+    const buttons = Array.from(
+      containerRef.current?.querySelectorAll<HTMLButtonElement>('button:not([disabled])') ?? [],
+    );
+    if (buttons.length === 0) {
+      return;
+    }
+
+    const current = buttons.indexOf(document.activeElement as HTMLButtonElement);
+    let target: number;
+    switch (event.key) {
+      case 'Home':
+        target = 0;
+        break;
+      case 'End':
+        target = buttons.length - 1;
+        break;
+      case nextKey:
+        target = current < 0 ? 0 : (current + 1) % buttons.length;
+        break;
+      default:
+        target = current < 0 ? buttons.length - 1 : (current - 1 + buttons.length) % buttons.length;
+        break;
+    }
+
+    event.preventDefault();
+    buttons[target].focus();
+  };
 
   return (
     <AppBar
+      ref={containerRef}
+      onKeyDown={handleKeyDown}
       position="absolute"
       sx={{
         flexDirection: pos.vertical ? 'column' : 'row',

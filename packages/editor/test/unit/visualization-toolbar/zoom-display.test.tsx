@@ -51,6 +51,7 @@ describe('toZoomPercent', () => {
 type Harness = {
   model: Model;
   setZoom: (zoom: number) => void;
+  finishLoading: () => void;
   fireUpdate: () => void;
   listenerCount: () => number;
 };
@@ -58,6 +59,7 @@ type Harness = {
 const createHarness = (options: { loaded?: boolean; zoom?: number } = {}): Harness => {
   const state = { zoom: options.zoom ?? 1, loaded: options.loaded ?? true };
   let listeners: (() => void)[] = [];
+  let designerListeners: Record<string, (() => void)[]> = {};
 
   const screenManager = {
     addEvent: (_event: string, callback: () => void) => {
@@ -70,7 +72,17 @@ const createHarness = (options: { loaded?: boolean; zoom?: number } = {}): Harne
 
   const model = {
     isMapLoadded: () => state.loaded,
+    getDesignerModel: () => ({
+      filterSelectedTopics: () => [],
+      filterSelectedRelationships: () => [],
+    }),
     getDesigner: () => ({
+      addEvent: (event: string, callback: () => void) => {
+        designerListeners[event] = [...(designerListeners[event] ?? []), callback];
+      },
+      removeEvent: (event: string, callback: () => void) => {
+        designerListeners[event] = (designerListeners[event] ?? []).filter((c) => c !== callback);
+      },
       getWorkSpace: () => ({
         getZoom: () => state.zoom,
         getScreenManager: () => screenManager,
@@ -82,6 +94,12 @@ const createHarness = (options: { loaded?: boolean; zoom?: number } = {}): Harne
     model,
     setZoom: (zoom: number) => {
       state.zoom = zoom;
+    },
+    finishLoading: () => {
+      state.loaded = true;
+      act(() => {
+        (designerListeners['loadSuccess'] ?? []).forEach((c) => c());
+      });
     },
     fireUpdate: () =>
       act(() => {
@@ -127,6 +145,32 @@ describe('ZoomDisplay', () => {
 
     expect(screen.getByTestId('zoom-percent')).toHaveTextContent('100%');
     expect(harness.listenerCount()).toBe(0);
+  });
+
+  it('subscribes once the map finishes loading', () => {
+    // Regression: the effect resolved the screen manager only when the map was
+    // already loaded and depended on [model] alone. Since the component mounts
+    // before the map is ready, it never subscribed, and the zoom readout was
+    // frozen at 100% for the whole session. Caught by zoom.cy.ts, not here --
+    // hence this test.
+    const harness = createHarness({ loaded: false });
+    render(<ZoomDisplay model={harness.model} />);
+    expect(harness.listenerCount()).toBe(0);
+
+    harness.finishLoading();
+
+    expect(harness.listenerCount()).toBe(1);
+  });
+
+  it('tracks zoom changes that happen after the map loads', () => {
+    const harness = createHarness({ loaded: false, zoom: 1 });
+    render(<ZoomDisplay model={harness.model} />);
+
+    harness.finishLoading();
+    harness.setZoom(0.5);
+    harness.fireUpdate();
+
+    expect(screen.getByTestId('zoom-percent')).toHaveTextContent('200%');
   });
 
   it('falls back to 100% when the designer throws', () => {

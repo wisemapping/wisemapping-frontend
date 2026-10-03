@@ -19,6 +19,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Model from '../../classes/model/editor';
+import { useSelection } from '../../hooks/useSelection';
 
 /** The zoom a freshly opened map reports before the canvas exists. */
 const DEFAULT_PERCENT = 100;
@@ -49,11 +50,16 @@ type ZoomDisplayProps = {
  */
 export const ZoomDisplay = ({ model }: ZoomDisplayProps): ReactElement => {
   const [percent, setPercent] = useState(DEFAULT_PERCENT);
+  // The canvas only exists once the map has loaded, and `isMapLoadded()` is
+  // mutable designer state rather than a React value -- so without this as an
+  // effect dependency the subscription below would be attempted once, before
+  // there was anything to subscribe to, and never retried.
+  const { isMapLoaded } = useSelection(model);
 
   useEffect(() => {
     const screenManager = (() => {
       try {
-        return model.isMapLoadded() ? model.getDesigner().getWorkSpace()?.getScreenManager() : null;
+        return isMapLoaded ? model.getDesigner().getWorkSpace()?.getScreenManager() : null;
       } catch {
         return null;
       }
@@ -77,7 +83,7 @@ export const ZoomDisplay = ({ model }: ZoomDisplayProps): ReactElement => {
     return () => {
       screenManager.removeEvent('update', refresh);
     };
-  }, [model]);
+  }, [model, isMapLoaded]);
 
   return (
     <Box sx={{ p: 0.5 }}>

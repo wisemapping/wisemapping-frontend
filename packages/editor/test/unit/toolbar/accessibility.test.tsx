@@ -111,4 +111,111 @@ describe('toolbar accessibility', () => {
       expect(screen.getByRole('menu')).toHaveAttribute('aria-orientation', 'horizontal');
     });
   });
+
+  describe('arrow-key navigation', () => {
+    // role="menu" promises this; previously every button was its own tab stop
+    // with no arrow handling at all.
+    // Distinct tooltip text: getByLabelText also matches a `title` attribute,
+    // and MUI's Tooltip puts the tooltip string on the wrapper.
+    const button = (label: string): ActionConfig => ({
+      icon: <span />,
+      tooltip: `${label} tooltip`,
+      ariaLabel: label,
+      onClick: jest.fn(),
+    });
+
+    const configs = [button('first'), button('second'), button('third')];
+
+    const renderBar = (vertical: boolean) => {
+      render(<Toolbar configurations={configs} position={{ vertical }} />);
+      return {
+        first: screen.getByLabelText('first'),
+        second: screen.getByLabelText('second'),
+        third: screen.getByLabelText('third'),
+        bar: screen.getByRole('menu'),
+      };
+    };
+
+    it('moves down a vertical bar with ArrowDown', () => {
+      const { first, second, bar } = renderBar(true);
+      first.focus();
+
+      fireEvent.keyDown(bar, { key: 'ArrowDown' });
+
+      expect(second).toHaveFocus();
+    });
+
+    it('moves along a horizontal bar with ArrowRight', () => {
+      const { first, second, bar } = renderBar(false);
+      first.focus();
+
+      fireEvent.keyDown(bar, { key: 'ArrowRight' });
+
+      expect(second).toHaveFocus();
+    });
+
+    it('ignores the cross-axis arrow keys', () => {
+      const { first, bar } = renderBar(true);
+      first.focus();
+
+      fireEvent.keyDown(bar, { key: 'ArrowRight' });
+
+      expect(first).toHaveFocus();
+    });
+
+    it('wraps from the last item to the first', () => {
+      const { first, third, bar } = renderBar(true);
+      third.focus();
+
+      fireEvent.keyDown(bar, { key: 'ArrowDown' });
+
+      expect(first).toHaveFocus();
+    });
+
+    it('wraps backwards from the first item to the last', () => {
+      const { first, third, bar } = renderBar(true);
+      first.focus();
+
+      fireEvent.keyDown(bar, { key: 'ArrowUp' });
+
+      expect(third).toHaveFocus();
+    });
+
+    it('jumps to either end with Home and End', () => {
+      const { first, second, third, bar } = renderBar(true);
+      second.focus();
+
+      fireEvent.keyDown(bar, { key: 'End' });
+      expect(third).toHaveFocus();
+
+      fireEvent.keyDown(bar, { key: 'Home' });
+      expect(first).toHaveFocus();
+    });
+
+    it('enters at the first item when nothing in the bar has focus', () => {
+      const { first, bar } = renderBar(true);
+
+      fireEvent.keyDown(bar, { key: 'ArrowDown' });
+
+      expect(first).toHaveFocus();
+    });
+
+    it('skips disabled buttons', () => {
+      render(
+        <Toolbar
+          configurations={[
+            button('first'),
+            { ...button('disabled-one'), disabled: () => true },
+            button('third'),
+          ]}
+          position={{ vertical: true }}
+        />,
+      );
+      screen.getByLabelText('first').focus();
+
+      fireEvent.keyDown(screen.getByRole('menu'), { key: 'ArrowDown' });
+
+      expect(screen.getByLabelText('third')).toHaveFocus();
+    });
+  });
 });

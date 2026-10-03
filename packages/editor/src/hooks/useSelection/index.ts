@@ -43,17 +43,25 @@ const read = (model: Model | undefined): SelectionSnapshot => {
     return EMPTY_SELECTION;
   }
 
-  const isMapLoaded = model.isMapLoadded();
-  if (!isMapLoaded) {
+  // Reading the selection means walking model -> designer -> designer model,
+  // any link of which can be absent while the editor is still coming up.
+  // Reporting "nothing selected" is always a safe answer; throwing from here
+  // would take down whichever toolbar asked.
+  try {
+    const isMapLoaded = model.isMapLoadded();
+    if (!isMapLoaded) {
+      return EMPTY_SELECTION;
+    }
+
+    const designerModel = model.getDesignerModel();
+    return {
+      topicCount: designerModel?.filterSelectedTopics().length ?? 0,
+      relationshipCount: designerModel?.filterSelectedRelationships().length ?? 0,
+      isMapLoaded,
+    };
+  } catch {
     return EMPTY_SELECTION;
   }
-
-  const designerModel = model.getDesignerModel();
-  return {
-    topicCount: designerModel?.filterSelectedTopics().length ?? 0,
-    relationshipCount: designerModel?.filterSelectedRelationships().length ?? 0,
-    isMapLoaded,
-  };
 };
 
 const isSame = (a: SelectionSnapshot, b: SelectionSnapshot): boolean =>
