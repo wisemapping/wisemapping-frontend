@@ -1429,6 +1429,12 @@
       "value": "Two-finger swipe or Mouse wheel"
     }
   ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "Paste as child of the selected topic"
+    }
+  ],
   "shortcut-help-pane.redo": [
     {
       "type": 0,

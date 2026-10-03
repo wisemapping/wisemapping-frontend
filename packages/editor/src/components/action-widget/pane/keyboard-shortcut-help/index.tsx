@@ -270,6 +270,24 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
             <TableRow hover>
               <TableCell>
                 <FormattedMessage
+                  id="shortcut-help-pane.paste-as-child"
+                  defaultMessage="Paste as child of the selected topic"
+                />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                Ctrl + Shift + V
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                ⌘ + ⇧ + V
+              </TableCell>
+            </TableRow>
+            <TableRow hover>
+              <TableCell>
+                <FormattedMessage
                   id="shortcut-help-pane.drag-disconnect"
                   defaultMessage="Disconnect topic"
                 />
