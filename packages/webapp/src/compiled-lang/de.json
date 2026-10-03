@@ -669,28 +669,28 @@
       "value": "By continuing, you agree to our "
     },
     {
+      "type": 8,
+      "value": "termsLink",
       "children": [
         {
           "type": 0,
           "value": "Terms of Service"
         }
-      ],
-      "type": 8,
-      "value": "termsLink"
+      ]
     },
     {
       "type": 0,
       "value": " and "
     },
     {
+      "type": 8,
+      "value": "privacyLink",
       "children": [
         {
           "type": 0,
           "value": "Privacy Policy"
         }
-      ],
-      "type": 8,
-      "value": "privacyLink"
+      ]
     },
     {
       "type": 0,
@@ -1341,6 +1341,12 @@
       "value": "Herzlich willkommen"
     }
   ],
+  "map.actions": [
+    {
+      "type": 0,
+      "value": "Aktionen"
+    }
+  ],
   "map.creator": [
     {
       "type": 0,
@@ -1351,6 +1357,12 @@
     {
       "type": 0,
       "value": "Auswahl löschen"
+    }
+  ],
+  "map.labels": [
+    {
+      "type": 0,
+      "value": "Labels"
     }
   ],
   "map.last-update": [
@@ -1531,6 +1543,12 @@
     {
       "type": 0,
       "value": "Suche ..."
+    }
+  ],
+  "maps.select-all": [
+    {
+      "type": 0,
+      "value": "Alle auswählen"
     }
   ],
   "maps.tooltip-open": [
@@ -1745,28 +1763,28 @@
       "value": "Diese Website ist durch reCAPTCHA geschützt und es gelten die "
     },
     {
+      "type": 8,
+      "value": "privacyLink",
       "children": [
         {
           "type": 0,
           "value": "Datenschutzerklärung"
         }
-      ],
-      "type": 8,
-      "value": "privacyLink"
+      ]
     },
     {
       "type": 0,
       "value": " und die "
     },
     {
+      "type": 8,
+      "value": "termsLink",
       "children": [
         {
           "type": 0,
           "value": "Nutzungsbedingungen"
         }
-      ],
-      "type": 8,
-      "value": "termsLink"
+      ]
     },
     {
       "type": 0,

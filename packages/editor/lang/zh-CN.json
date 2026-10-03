@@ -904,5 +904,53 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "适合缩放"
+  },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "已将主题链接复制到剪贴板"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "无法将链接复制到剪贴板"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "复制主题链接"
+  },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "在导图中查找主题"
+  },
+  "shortcut-help-pane.pan-canvas": {
+    "defaultMessage": "平移画布"
+  },
+  "shortcut-help-pane.pan-canvas-keys": {
+    "defaultMessage": "双指滑动或鼠标滚轮"
+  },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "粘贴为所选主题的子节点"
+  },
+  "shortcut-help-pane.zoom-wheel": {
+    "defaultMessage": "用滚轮放大或缩小"
+  },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "在导图中查找"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "查找主题..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "清除搜索"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "上一个匹配"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "下一个匹配"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "第 {current} 个，共 {total} 个"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "无匹配项"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "没有主题匹配“{query}”。"
   }
 }

@@ -347,6 +347,18 @@
       "value": "الخلفية"
     }
   ],
+  "editor-panel.deeplink-copied": [
+    {
+      "type": 0,
+      "value": "تم نسخ رابط الموضوع إلى الحافظة"
+    }
+  ],
+  "editor-panel.deeplink-copy-failed": [
+    {
+      "type": 0,
+      "value": "تعذّر نسخ الرابط إلى الحافظة"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,
@@ -477,6 +489,12 @@
     {
       "type": 0,
       "value": "خط متعدد منحنٍ"
+    }
+  ],
+  "editor-panel.tooltip-copy-node-link": [
+    {
+      "type": 0,
+      "value": "نسخ رابط الموضوع"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -693,6 +711,64 @@
     {
       "type": 0,
       "value": "ابحث عن الرموز التعبيرية..."
+    }
+  ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "محو البحث"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "لا يوجد موضوع يطابق «"
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": "»."
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " من "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "المطابقة التالية"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "لا توجد مطابقات"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "البحث عن موضوع..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "المطابقة السابقة"
     }
   ],
   "headerNotifier": [
@@ -1323,6 +1399,12 @@
       "value": "توسيع/طي جميع المواضيع"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "البحث عن موضوع في الخريطة"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1351,6 +1433,24 @@
     {
       "type": 0,
       "value": "اكتب على موضوع محدد"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "تحريك مساحة الرسم"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "التمرير بإصبعين أو عجلة الفأرة"
+    }
+  ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "لصق كعنصر فرعي للموضوع المحدد"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -1405,6 +1505,12 @@
     {
       "type": 0,
       "value": "ضبط للملاءمة"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "التكبير والتصغير بعجلة الفأرة"
     }
   ],
   "sunrise": [
@@ -1705,6 +1811,12 @@
     {
       "type": 0,
       "value": "توسيع حسب المستوى"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "البحث في الخريطة"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

@@ -946,5 +946,14 @@
   },
   "activation.success.title": {
     "defaultMessage": "Account Activated Successfully"
+  },
+  "map.actions": {
+    "defaultMessage": "क्रियाएँ"
+  },
+  "map.labels": {
+    "defaultMessage": "लेबल"
+  },
+  "maps.select-all": {
+    "defaultMessage": "सभी चुनें"
   }
 }

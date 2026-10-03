@@ -904,5 +904,53 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "Ajustar Zoom"
+  },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "Enlace al tópico copiado al portapapeles"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "No se pudo copiar el enlace al portapapeles"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "Copiar enlace al tópico"
+  },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "Buscar tópico en el mapa"
+  },
+  "shortcut-help-pane.pan-canvas": {
+    "defaultMessage": "Desplazar el lienzo"
+  },
+  "shortcut-help-pane.pan-canvas-keys": {
+    "defaultMessage": "Deslizar con dos dedos o rueda del ratón"
+  },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "Pegar como hijo del tópico seleccionado"
+  },
+  "shortcut-help-pane.zoom-wheel": {
+    "defaultMessage": "Acercar o alejar con la rueda"
+  },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "Buscar en el mapa"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "Buscar tópico..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "Borrar búsqueda"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "Coincidencia anterior"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "Coincidencia siguiente"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "{current} de {total}"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "Sin coincidencias"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "Ningún tópico coincide con “{query}”."
   }
 }

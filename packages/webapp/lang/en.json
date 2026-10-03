@@ -365,6 +365,12 @@
   "map.creator": {
     "defaultMessage": "Creator"
   },
+  "map.actions": {
+    "defaultMessage": "Actions"
+  },
+  "map.labels": {
+    "defaultMessage": "Labels"
+  },
   "map.delete-selected": {
     "defaultMessage": "Delete selected"
   },
@@ -445,6 +451,9 @@
   },
   "maps.tooltip-starred": {
     "defaultMessage": "Starred"
+  },
+  "maps.select-all": {
+    "defaultMessage": "Select all"
   },
   "maps.view": {
     "defaultMessage": "View"

@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -33,14 +32,3 @@ export const StyledDialogTitle = withEmotionStyles({
 export const StyledDialogActions = withEmotionStyles({
   padding: '39px 39px 39px 39px',
 })(DialogActions);
-
-export const StyledDialog = withEmotionStyles((theme) => ({
-  borderRadius: '9px',
-  '& .MuiPaper-root': {
-    border: '2px solid #ffa800',
-    // Ensure theme background is preserved
-    '&.MuiDialog-paper': {
-      backgroundColor: `${theme.palette.background.paper} !important`,
-    },
-  },
-}))(Dialog);

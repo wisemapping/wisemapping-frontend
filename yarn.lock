@@ -5844,6 +5844,7 @@ __metadata:
     storybook: "npm:^10.6.1"
     styled-components: "npm:^6.5.3"
     ts-jest: "npm:^29.4.14"
+    typescript: "npm:^6.0.3"
     universal-cookie: "npm:^8.1.2"
     vite: "npm:^8.3.2"
   languageName: unknown

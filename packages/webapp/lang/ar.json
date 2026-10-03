@@ -946,5 +946,14 @@
   },
   "maps.auth-required-default-message": {
     "defaultMessage": "تحتاج إلى تسجيل الدخول لعرض خرائطك."
+  },
+  "map.actions": {
+    "defaultMessage": "إجراءات"
+  },
+  "map.labels": {
+    "defaultMessage": "التسميات"
+  },
+  "maps.select-all": {
+    "defaultMessage": "تحديد الكل"
   }
 }

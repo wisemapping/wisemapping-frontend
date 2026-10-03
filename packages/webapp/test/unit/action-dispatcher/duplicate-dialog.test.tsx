@@ -113,6 +113,10 @@ describe('DuplicateDialog', () => {
 
     await waitFor(() => expect(title.value).toBe('   '));
     expect(mockDuplicateMap).not.toHaveBeenCalled();
+    // The field-level message has to reach the user: `ErrorInfo.fields` used to
+    // be declared as a Map while `form/input` indexed it by key, so this text
+    // was set and silently discarded.
+    expect(await screen.findByText('Title is required')).toBeTruthy();
   });
 
   test('surfaces a server error instead of closing the dialog', async () => {

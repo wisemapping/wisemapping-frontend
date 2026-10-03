@@ -347,6 +347,18 @@
       "value": "Sfondo"
     }
   ],
+  "editor-panel.deeplink-copied": [
+    {
+      "type": 0,
+      "value": "Link all’argomento copiato negli appunti"
+    }
+  ],
+  "editor-panel.deeplink-copy-failed": [
+    {
+      "type": 0,
+      "value": "Non è stato possibile copiare il link negli appunti"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,
@@ -477,6 +489,12 @@
     {
       "type": 0,
       "value": "Polilinea curva"
+    }
+  ],
+  "editor-panel.tooltip-copy-node-link": [
+    {
+      "type": 0,
+      "value": "Copia link all’argomento"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -693,6 +711,64 @@
     {
       "type": 0,
       "value": "Cerca emoji..."
+    }
+  ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "Cancella ricerca"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "Nessun argomento corrisponde a “"
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": "”."
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " di "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "Corrispondenza successiva"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "Nessuna corrispondenza"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "Cerca argomento..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "Corrispondenza precedente"
     }
   ],
   "headerNotifier": [
@@ -1335,6 +1411,12 @@
       "value": "Espandi/Comprimi tutti gli argomenti"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "Cerca argomento nella mappa"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1363,6 +1445,24 @@
     {
       "type": 0,
       "value": "Digita su un argomento selezionato"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "Sposta l’area di lavoro"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "Scorrimento con due dita o rotellina del mouse"
+    }
+  ],
+  "shortcut-help-pane.paste-as-child": [
+    {
+      "type": 0,
+      "value": "Incolla come figlio dell’argomento selezionato"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -1417,6 +1517,12 @@
     {
       "type": 0,
       "value": "Adatta zoom"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "Zoom avanti/indietro con la rotellina"
     }
   ],
   "sunrise": [
@@ -1717,6 +1823,12 @@
     {
       "type": 0,
       "value": "Espandi per livello"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "Cerca nella mappa"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

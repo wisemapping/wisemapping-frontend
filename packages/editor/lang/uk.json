@@ -904,5 +904,53 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "Підігнати масштаб"
+  },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "Посилання на тему скопійовано в буфер обміну"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "Не вдалося скопіювати посилання в буфер обміну"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "Копіювати посилання на тему"
+  },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "Знайти тему на карті"
+  },
+  "shortcut-help-pane.pan-canvas": {
+    "defaultMessage": "Переміщати полотно"
+  },
+  "shortcut-help-pane.pan-canvas-keys": {
+    "defaultMessage": "Свайп двома пальцями або коліщатко мишки"
+  },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "Вставити дочірнім до вибраної теми"
+  },
+  "shortcut-help-pane.zoom-wheel": {
+    "defaultMessage": "Масштабування коліщатком"
+  },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "Пошук на карті"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "Знайти тему..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "Очистити пошук"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "Попередній збіг"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "Наступний збіг"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "{current} з {total}"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "Немає збігів"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "Немає тем, що відповідають «{query}»."
   }
 }

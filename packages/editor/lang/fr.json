@@ -904,5 +904,53 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "Ajuster le zoom"
+  },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "Lien vers le noeud copié dans le presse-papiers"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "Impossible de copier le lien dans le presse-papiers"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "Copier le lien vers le noeud"
+  },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "Rechercher un noeud dans la carte"
+  },
+  "shortcut-help-pane.pan-canvas": {
+    "defaultMessage": "Déplacer le canevas"
+  },
+  "shortcut-help-pane.pan-canvas-keys": {
+    "defaultMessage": "Balayage à deux doigts ou molette de la souris"
+  },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "Coller comme enfant du noeud sélectionné"
+  },
+  "shortcut-help-pane.zoom-wheel": {
+    "defaultMessage": "Zoomer ou dézoomer avec la molette"
+  },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "Rechercher dans la carte"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "Rechercher un noeud..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "Effacer la recherche"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "Correspondance précédente"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "Correspondance suivante"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "{current} sur {total}"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "Aucune correspondance"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "Aucun noeud ne correspond à « {query} »."
   }
 }

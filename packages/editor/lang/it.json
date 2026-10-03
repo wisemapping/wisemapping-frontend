@@ -904,5 +904,53 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "Adatta zoom"
+  },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "Link all’argomento copiato negli appunti"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "Non è stato possibile copiare il link negli appunti"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "Copia link all’argomento"
+  },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "Cerca argomento nella mappa"
+  },
+  "shortcut-help-pane.pan-canvas": {
+    "defaultMessage": "Sposta l’area di lavoro"
+  },
+  "shortcut-help-pane.pan-canvas-keys": {
+    "defaultMessage": "Scorrimento con due dita o rotellina del mouse"
+  },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "Incolla come figlio dell’argomento selezionato"
+  },
+  "shortcut-help-pane.zoom-wheel": {
+    "defaultMessage": "Zoom avanti/indietro con la rotellina"
+  },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "Cerca nella mappa"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "Cerca argomento..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "Cancella ricerca"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "Corrispondenza precedente"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "Corrispondenza successiva"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "{current} di {total}"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "Nessuna corrispondenza"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "Nessun argomento corrisponde a “{query}”."
   }
 }

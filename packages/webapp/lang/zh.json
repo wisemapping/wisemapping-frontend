@@ -946,5 +946,14 @@
   },
   "activation.success.title": {
     "defaultMessage": "Account Activated Successfully"
+  },
+  "map.actions": {
+    "defaultMessage": "操作"
+  },
+  "map.labels": {
+    "defaultMessage": "标签"
+  },
+  "maps.select-all": {
+    "defaultMessage": "全选"
   }
 }
