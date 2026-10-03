@@ -26,6 +26,7 @@ import Box from '@mui/material/Box';
 import ToolbarPosition from '../../classes/model/toolbar-position';
 import ActionConfig from '../../classes/action/action-config';
 import { useTheme } from '@mui/material/styles';
+import { EDITOR_LAYOUT, EDITOR_Z_INDEX } from '../../theme/layout';
 
 /**
  * Common button
@@ -155,7 +156,7 @@ export const ToolbarSubmenu = ({
         disableScrollLock={false}
         disablePortal={false}
         sx={{
-          zIndex: hasCustomRender ? '1500' : '-1',
+          zIndex: hasCustomRender ? EDITOR_Z_INDEX.submenu : '-1',
         }}
         elevation={elevation}
         slotProps={{
@@ -251,9 +252,10 @@ export const ToolbarMenuItem = ({
 const defaultPosition: ToolbarPosition = {
   vertical: true,
   position: {
-    right: '7px',
-    top: '150px',
+    right: EDITOR_LAYOUT.formattingToolbar.right,
+    top: EDITOR_LAYOUT.formattingToolbar.top,
   },
+  zIndex: EDITOR_Z_INDEX.formattingToolbar,
 };
 
 type ToolbarProps = {
@@ -270,23 +272,12 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
   const pos: ToolbarPosition = position || defaultPosition;
   const theme = useTheme();
 
-  // Determine z-index based on position - bottom toolbar should be below right toolbar
-  const getZIndex = () => {
-    if (pos.position?.top && pos.position.top.includes('100%')) {
-      // This is the bottom toolbar (zoom panel)
-      return 1000;
-    } else {
-      // This is the right toolbar (editor toolbar)
-      return 1100;
-    }
-  };
-
   return (
     <AppBar
       position="absolute"
       sx={{
         flexDirection: pos.vertical ? 'column' : 'row',
-        width: pos.vertical ? '40px' : 'unset',
+        width: pos.vertical ? EDITOR_LAYOUT.formattingToolbar.width : 'unset',
         right: pos.position?.right,
         top: pos.position?.top,
         marginTop: pos.position?.marginTop,
@@ -297,7 +288,7 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
         borderRadius: '8px',
         alignItems: 'center',
         justifyContent: pos.vertical ? 'center' : 'center',
-        zIndex: getZIndex(),
+        zIndex: pos.zIndex ?? EDITOR_Z_INDEX.formattingToolbar,
       }}
       role="menu"
       aria-orientation={pos.vertical ? 'vertical' : 'horizontal'}

@@ -20,7 +20,8 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen, act, cleanup } from '@testing-library/react';
+import { IntlProvider } from 'react-intl';
 import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
 import Toolbar, {
   ToolbarButtonOption,
@@ -28,6 +29,11 @@ import Toolbar, {
   ToolbarSubmenu,
 } from '../../../src/components/toolbar';
 import ActionConfig from '../../../src/classes/action/action-config';
+import AppBar from '../../../src/components/app-bar';
+import Capability from '../../../src/classes/action/capability';
+import type MapInfo from '../../../src/classes/model/map-info';
+import { EditorThemeProvider } from '../../../src/contexts/ThemeContext';
+import type { ThemeVariantStorage } from '../../../src/types/ThemeVariantStorage';
 
 jest.mock('../../../src/components/app-bar/styles.css', () => '');
 
@@ -287,22 +293,77 @@ describe('Toolbar', () => {
   });
 });
 
-// describe('AppBar', () => {
-//   it('When render it displays a menu', async () => {
-//     const capacity = new Capability('edition-owner', false);
-//     const model = new Editor(null);
+describe('AppBar', () => {
+  // Previously commented out: react-intl is ESM-only and the editor's Jest
+  // transform could not load it, so nothing rendering a FormattedMessage was
+  // testable. The transform now handles it.
+  // `MapInfo` is an interface in this package; the only implementation lives in
+  // the webapp, which is the other reason the original test could not run.
+  const mapInfo: MapInfo = {
+    isStarred: () => Promise.resolve(false),
+    updateStarred: () => Promise.resolve(),
+    getTitle: () => 'Develop Map Title',
+    updateTitle: () => Promise.resolve(),
+    getCreatorFullName: () => 'The Creator',
+    isLocked: () => false,
+    getLockedMessage: () => '',
+    getZoom: () => 1,
+    getId: () => 'welcome',
+  };
 
-//     await act(async () =>
-//       render(
-//         <IntlProvider locale="en">
-//           <AppBar
-//             mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', 'The Creator', false)}
-//             capability={capacity}
-//             model={model}
-//           />
-//         </IntlProvider>,
-//       ),
-//     );
-//     screen.getByRole('menubar');
-//   });
-// });
+  const themeVariantStorage: ThemeVariantStorage = {
+    getThemeVariant: () => 'light',
+    setThemeVariant: () => undefined,
+    subscribe: () => () => undefined,
+  };
+
+  const renderAppBar = async (capability: Capability) => {
+    await act(async () => {
+      render(
+        <IntlProvider locale="en">
+          <EditorThemeProvider themeVariantStorage={themeVariantStorage}>
+            <AppBar
+              mapInfo={mapInfo}
+              capability={capability}
+              model={undefined}
+              onAction={jest.fn()}
+            />
+          </EditorThemeProvider>
+        </IntlProvider>,
+      );
+    });
+  };
+
+  it('renders a menubar for an owner', async () => {
+    await renderAppBar(new Capability('edition-owner', false));
+    expect(screen.getByRole('menubar')).toBeDefined();
+  });
+
+  it('shows the back button, which every mode gets', async () => {
+    await renderAppBar(new Capability('edition-owner', false));
+    expect(screen.getByTestId('app-bar-back-button')).toBeDefined();
+  });
+
+  it('gives an owner more controls than a public viewer', async () => {
+    await renderAppBar(new Capability('edition-owner', false));
+    const ownerButtons = screen.getAllByRole('button').length;
+    cleanup();
+
+    await renderAppBar(new Capability('viewonly-public', false));
+    const viewerButtons = screen.getAllByRole('button').length;
+
+    expect(ownerButtons).toBeGreaterThan(viewerButtons);
+  });
+
+  it('still renders for a public viewer', async () => {
+    await renderAppBar(new Capability('viewonly-public', false));
+    expect(screen.getByRole('menubar')).toBeDefined();
+  });
+
+  it('renders for a locked map without throwing', async () => {
+    // A locked map hides save/undo/redo via Capability; this is the regression
+    // guard for the declarative HIDDEN_WHEN_LOCKED set replacing the old chain.
+    await renderAppBar(new Capability('edition-owner', true));
+    expect(screen.getByRole('menubar')).toBeDefined();
+  });
+});

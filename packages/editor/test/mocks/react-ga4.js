@@ -15,37 +15,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-/**
- * Configure position of a toolbar
- */
-interface ToolbarPosition {
-  /**
-   * if true, first level will be displayed in vertical orientation
-   */
-  vertical?: boolean;
-  position?: {
-    /**
-     * css properties for appbar rigth
-     */
-    right: string;
-    /**
-     * css properties for appbar top
-     */
-    top: string;
-    /**
-     * css transform property for positioning
-     */
-    transform?: string;
-    /**
-     * css marginTop property for positioning
-     */
-    marginTop?: string;
-  };
-  /**
-   * Stacking layer, from EDITOR_Z_INDEX. Declared rather than inferred: the
-   * toolbar used to work out which instance of itself it was by checking
-   * whether its own `top` value contained '100%'.
-   */
-  zIndex?: number;
-}
-export default ToolbarPosition;
+
+// react-ga4 is ESM-only and sends analytics. Neither is wanted under Jest, and
+// src/utils/analytics.ts imports it at module scope, so any component that
+// tracks an interaction would otherwise be unloadable in a test.
+module.exports = {
+  __esModule: true,
+  default: {
+    initialize: () => undefined,
+    send: () => undefined,
+    event: () => undefined,
+    set: () => undefined,
+    gtag: () => undefined,
+  },
+};

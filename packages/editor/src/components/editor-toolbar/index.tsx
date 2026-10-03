@@ -21,6 +21,7 @@ import Capability from '../../classes/action/capability';
 import Model from '../../classes/model/editor';
 import Toolbar from '../toolbar';
 import { buildEditorPanelConfig } from './configBuilder';
+import { useSelection } from '../../hooks/useSelection';
 
 type EditorToolbarProps = {
   model: Model | undefined;
@@ -29,14 +30,14 @@ type EditorToolbarProps = {
 
 const EditorToolbar = ({ model, capability }: EditorToolbarProps): ReactElement => {
   const intl = useIntl();
-  const isMapLoaded = model?.isMapLoadded() ?? false;
+  const selection = useSelection(model);
 
   const config = useMemo(() => {
-    if (capability.isHidden('edition-toolbar') || !model || !isMapLoaded) {
+    if (capability.isHidden('edition-toolbar') || !model || !selection.isMapLoaded) {
       return undefined;
     }
-    return buildEditorPanelConfig(model, intl);
-  }, [capability, intl, isMapLoaded, model]);
+    return buildEditorPanelConfig(model, intl, selection);
+  }, [capability, intl, model, selection]);
 
   return <span>{config ? <Toolbar configurations={config} /> : <></>}</span>;
 };

@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { EDITOR_LAYOUT, EDITOR_Z_INDEX } from '../../theme/layout';
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
 
@@ -32,7 +33,7 @@ export const useEditorLoadingStyles = (): Record<string, React.CSSProperties> =>
       backgroundColor: theme.palette.background.default,
       display: 'flex',
       flexDirection: 'column' as const,
-      zIndex: 1000,
+      zIndex: EDITOR_Z_INDEX.canvasChrome,
     },
     appBar: {
       height: 48,
@@ -61,11 +62,11 @@ export const useEditorLoadingStyles = (): Record<string, React.CSSProperties> =>
     },
     rightToolbar: {
       position: 'absolute' as const,
-      right: '7px',
-      top: '150px',
+      right: EDITOR_LAYOUT.formattingToolbar.right,
+      top: EDITOR_LAYOUT.formattingToolbar.top,
       display: 'flex',
       flexDirection: 'column' as const,
-      width: '40px',
+      width: EDITOR_LAYOUT.formattingToolbar.width,
       gap: theme.spacing(0.5),
       alignItems: 'center',
       justifyContent: 'center',
@@ -73,12 +74,12 @@ export const useEditorLoadingStyles = (): Record<string, React.CSSProperties> =>
       borderRadius: '8px',
       padding: theme.spacing(1),
       boxShadow: `0 2px 8px ${theme.palette.mode === 'light' ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)'}`,
-      zIndex: 1100,
+      zIndex: EDITOR_Z_INDEX.formattingToolbar,
     },
     visualizationToolbar: {
       position: 'absolute' as const,
-      right: '47px',
-      top: 'calc(100% - 55px)',
+      right: EDITOR_LAYOUT.zoomToolbar.right,
+      top: EDITOR_LAYOUT.zoomToolbar.top,
       display: 'flex',
       gap: theme.spacing(1),
       alignItems: 'center',
@@ -86,7 +87,7 @@ export const useEditorLoadingStyles = (): Record<string, React.CSSProperties> =>
       borderRadius: '8px',
       padding: theme.spacing(1),
       boxShadow: `0 2px 8px ${theme.palette.mode === 'light' ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)'}`,
-      zIndex: 1000,
+      zIndex: EDITOR_Z_INDEX.canvasChrome,
     },
     canvas: {
       flex: 1,

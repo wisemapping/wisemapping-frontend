@@ -19,7 +19,6 @@ import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
 import Brightness4 from '@mui/icons-material/Brightness4';
 import Brightness7 from '@mui/icons-material/Brightness7';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
-import Typography from '@mui/material/Typography';
 import React, { ReactElement, useState, useEffect, useMemo } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import ActionConfig from '../../classes/action/action-config';
@@ -40,10 +39,11 @@ import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import TocOutlinedIcon from '@mui/icons-material/TocOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import Box from '@mui/material/Box';
 import { trackEditorInteraction } from '../../utils/analytics';
 import { handleExpandByLevel, buildExpandByLevelConfig } from './expand-by-level-icon';
 import { formatTooltip } from './utils';
+import { EDITOR_LAYOUT, EDITOR_Z_INDEX } from '../../theme/layout';
+import ZoomDisplay from './zoom-display';
 import { useTheme } from '../../contexts/ThemeContext';
 
 // Helper function to check if any nodes are currently collapsed
@@ -107,17 +107,7 @@ export function buildVisualizationToolbarConfig(
       disabled: () => !model?.isMapLoadded(),
     },
     {
-      // visualization value candidate, needs to fix it
-      render: () => (
-        <Box sx={{ p: 0.5 }}>
-          <Typography variant="overline" color="gray">
-            {!model?.isMapLoadded()
-              ? 100
-              : Math.floor((1 / model.getDesigner().getWorkSpace()?.getZoom()) * 100)}
-            %
-          </Typography>
-        </Box>
-      ),
+      render: () => <ZoomDisplay model={model} />,
       disabled: () => !model?.isMapLoadded(),
     },
     {
@@ -403,10 +393,13 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
       configurations={config}
       position={{
         position: {
-          right: isPublicOrEmbedded ? '5px' : '47px',
-          top: 'calc(100% - 55px)',
+          right: isPublicOrEmbedded
+            ? EDITOR_LAYOUT.zoomToolbar.rightCompact
+            : EDITOR_LAYOUT.zoomToolbar.right,
+          top: EDITOR_LAYOUT.zoomToolbar.top,
         },
         vertical: false,
+        zIndex: EDITOR_Z_INDEX.canvasChrome,
       }}
     />
   );
