@@ -18,6 +18,7 @@
 import { $assert, $defined } from './util/assert';
 import DOMUtils from './util/DOMUtils';
 import getCollapsedAncestorIds from './util/topicVisibility';
+import isSelectionEmpty from './util/selectionState';
 import Messages, { $msg } from './Messages';
 
 import EventDispispatcher from './EventDispatcher';
@@ -322,7 +323,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const topics = me.getModel().filterSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
 
-      if (topics.length === 0 || rels.length === 0) {
+      if (isSelectionEmpty(topics.length, rels.length)) {
         me.fireEvent('onblur');
       }
 
@@ -334,7 +335,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const topics = me.getModel().filterSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
 
-      if (topics.length === 1 || rels.length === 1) {
+      if (!isSelectionEmpty(topics.length, rels.length)) {
         me.fireEvent('onfocus');
       }
 
@@ -1357,7 +1358,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
 
-      if (topics.length === 0 || rels.length === 0) {
+      if (isSelectionEmpty(topics.length, rels.length)) {
         this.fireEvent('onblur');
       }
     });
@@ -1366,7 +1367,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
 
-      if (topics.length === 1 || rels.length === 1) {
+      if (!isSelectionEmpty(topics.length, rels.length)) {
         this.fireEvent('onfocus');
       }
     });
