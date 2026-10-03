@@ -695,6 +695,64 @@
       "value": "Search emojis..."
     }
   ],
+  "find-in-map.clear": [
+    {
+      "type": 0,
+      "value": "Clear search"
+    }
+  ],
+  "find-in-map.empty-state": [
+    {
+      "type": 0,
+      "value": "No node matches “"
+    },
+    {
+      "type": 1,
+      "value": "query"
+    },
+    {
+      "type": 0,
+      "value": "”."
+    }
+  ],
+  "find-in-map.match-counter": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
+  "find-in-map.next": [
+    {
+      "type": 0,
+      "value": "Next match"
+    }
+  ],
+  "find-in-map.no-results": [
+    {
+      "type": 0,
+      "value": "No matches"
+    }
+  ],
+  "find-in-map.placeholder": [
+    {
+      "type": 0,
+      "value": "Find node..."
+    }
+  ],
+  "find-in-map.previous": [
+    {
+      "type": 0,
+      "value": "Previous match"
+    }
+  ],
   "headerNotifier": [
     {
       "type": 0,
@@ -1323,6 +1381,12 @@
       "value": "Expand/Collapse all topics"
     }
   ],
+  "shortcut-help-pane.find-in-map": [
+    {
+      "type": 0,
+      "value": "Find node in map"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1705,6 +1769,12 @@
     {
       "type": 0,
       "value": "Expand by Level"
+    }
+  ],
+  "visualization-toolbar.tooltip-find-in-map": [
+    {
+      "type": 0,
+      "value": "Find in Map"
     }
   ],
   "visualization-toolbar.tooltip-keyboard": [

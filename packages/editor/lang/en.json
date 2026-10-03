@@ -830,6 +830,9 @@
   "shortcut-help-pane.expand-collapse-all": {
     "defaultMessage": "Expand/Collapse all topics"
   },
+  "shortcut-help-pane.find-in-map": {
+    "defaultMessage": "Find node in map"
+  },
   "shortcut-help-pane.outline-view": {
     "defaultMessage": "Open outline view"
   },
@@ -878,6 +881,9 @@
   "visualization-toolbar.tooltip-layout": {
     "defaultMessage": "Change Layout"
   },
+  "visualization-toolbar.tooltip-find-in-map": {
+    "defaultMessage": "Find in Map"
+  },
   "visualization-toolbar.tooltip-outline-view": {
     "defaultMessage": "Outline View"
   },
@@ -898,5 +904,26 @@
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
     "defaultMessage": "Zoom to Fit"
+  },
+  "find-in-map.placeholder": {
+    "defaultMessage": "Find node..."
+  },
+  "find-in-map.clear": {
+    "defaultMessage": "Clear search"
+  },
+  "find-in-map.previous": {
+    "defaultMessage": "Previous match"
+  },
+  "find-in-map.next": {
+    "defaultMessage": "Next match"
+  },
+  "find-in-map.match-counter": {
+    "defaultMessage": "{current} of {total}"
+  },
+  "find-in-map.no-results": {
+    "defaultMessage": "No matches"
+  },
+  "find-in-map.empty-state": {
+    "defaultMessage": "No node matches \u201c{query}\u201d."
   }
 }

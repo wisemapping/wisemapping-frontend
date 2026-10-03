@@ -569,6 +569,24 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
             <TableRow hover>
               <TableCell>
                 <FormattedMessage
+                  id="shortcut-help-pane.find-in-map"
+                  defaultMessage="Find node in map"
+                />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                Ctrl + F
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                ⌘ + F
+              </TableCell>
+            </TableRow>
+            <TableRow hover>
+              <TableCell>
+                <FormattedMessage
                   id="shortcut-help-pane.expand-by-level"
                   defaultMessage="Expand topics by level"
                 />
