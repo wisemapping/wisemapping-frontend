@@ -83,15 +83,12 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
     const trimmedTitle = model.title?.trim();
     if (!trimmedTitle || trimmedTitle.length === 0) {
       setError({
-        fields: new Map([
-          [
-            'title',
-            intl.formatMessage({
-              id: 'validation.title-required',
-              defaultMessage: 'Title is required',
-            }),
-          ],
-        ]),
+        fields: {
+          title: intl.formatMessage({
+            id: 'validation.title-required',
+            defaultMessage: 'Title is required',
+          }),
+        },
       });
       return;
     }
