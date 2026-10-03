@@ -109,3 +109,82 @@ describe('DesignerKeyboard zoom shortcuts', () => {
     expect(shortcuts.has('ctrl+0')).toBe(true);
   });
 });
+
+describe('DesignerKeyboard structural move shortcuts', () => {
+  let designer: Designer;
+  let shortcuts: Registered;
+  let moveTopicInTree: jest.Mock;
+  const selected = { getId: () => 42 };
+
+  const build = (hasSelection: boolean) => {
+    moveTopicInTree = jest.fn();
+    designer = {
+      moveTopicInTree,
+      getModel: jest.fn().mockReturnValue({
+        selectedTopic: jest.fn().mockReturnValue(hasSelection ? selected : undefined),
+        filterSelectedTopics: jest.fn().mockReturnValue([]),
+        getTopics: jest.fn().mockReturnValue([]),
+        getCentralTopic: jest.fn().mockReturnValue(selected),
+      }),
+      zoomIn: jest.fn(),
+      zoomOut: jest.fn(),
+      zoomToFit: jest.fn(),
+      getMindmap: jest.fn(),
+      deselectAll: jest.fn(),
+      selectAll: jest.fn(),
+      copyToClipboard: jest.fn(),
+      pasteClipboard: jest.fn(),
+      pasteClipboardAsChild: jest.fn(),
+      undo: jest.fn(),
+      redo: jest.fn(),
+      createSiblingForSelectedNode: jest.fn(),
+      createChildForSelectedNode: jest.fn(),
+      deleteSelectedEntities: jest.fn(),
+      changeFontWeight: jest.fn(),
+      changeFontStyle: jest.fn(),
+      shrinkSelectedBranch: jest.fn(),
+      getWidgetManager: jest.fn().mockReturnValue({ fireEvent: jest.fn() }),
+      getContainer: jest.fn().mockReturnValue(document.createElement('div')),
+    } as unknown as Designer;
+    shortcuts = captureShortcuts(designer);
+  };
+
+  beforeEach(() => build(true));
+
+  it.each([
+    ['alt+shift+up', 'up'],
+    ['alt+shift+down', 'down'],
+    ['alt+shift+left', 'outdent'],
+    ['alt+shift+right', 'indent'],
+  ])('binds %s to the %s move', (key, move) => {
+    const callback = shortcuts.get(key);
+    expect(callback).toBeDefined();
+
+    callback!();
+
+    expect(moveTopicInTree).toHaveBeenCalledWith(selected, move);
+  });
+
+  it('does not claim any plain or single-modifier arrow combination', () => {
+    // Plain arrows navigate the selection; alt+left/right is browser
+    // Back/Forward; ctrl collapses onto meta, so ctrl+left/right would catch
+    // Safari's Back/Forward and ctrl+up/down the macOS Mission Control keys.
+    ['up', 'down', 'left', 'right'].forEach((arrow) => {
+      ['alt', 'ctrl', 'meta', 'shift'].forEach((modifier) => {
+        expect(shortcuts.has(`${modifier}+${arrow}`)).toBe(false);
+      });
+    });
+  });
+
+  it('still binds the plain arrows, which move the selection', () => {
+    ['up', 'down', 'left', 'right'].forEach((arrow) => {
+      expect(shortcuts.has(arrow)).toBe(true);
+    });
+  });
+
+  it('does nothing when no topic is selected', () => {
+    build(false);
+    shortcuts.get('alt+shift+up')!();
+    expect(moveTopicInTree).not.toHaveBeenCalled();
+  });
+});

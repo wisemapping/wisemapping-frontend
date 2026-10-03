@@ -218,6 +218,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "Свернуть дочерние элементы"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "Увеличить уровень темы (присоединить к предыдущей соседней)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "Переместить тему вниз среди соседних"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "Переместить тему вверх среди соседних"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "Уменьшить уровень темы (присоединить к прародителю)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "Копировать и вставлять темы/Копировать изображение карты в буфер обмена."
   },

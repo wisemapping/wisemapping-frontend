@@ -1425,6 +1425,24 @@
       "value": "在导图中查找主题"
     }
   ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "降低主题层级 (连接到上一个同级节点)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "在同级中下移主题"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "在同级中上移主题"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1435,6 +1453,12 @@
     {
       "type": 0,
       "value": "箭头键"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "提升主题层级 (连接到祖父节点)"
     }
   ],
   "shortcut-help-pane.outline-view": [

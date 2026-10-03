@@ -191,6 +191,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "Kinder einfalten"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "Thema einrücken (an vorheriges Geschwister anhängen)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "Thema nach unten verschieben"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "Thema nach oben verschieben"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "Thema ausrücken (an Großeltern anhängen)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "Themen kopieren und einfügen/Bild der Mindmap in Zwischenablage kopieren"
   },

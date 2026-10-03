@@ -1417,6 +1417,24 @@
       "value": "Cerca argomento nella mappa"
     }
   ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "Aumenta livello argomento (collega al fratello precedente)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "Sposta argomento giù tra i fratelli"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "Sposta argomento su tra i fratelli"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1427,6 +1445,12 @@
     {
       "type": 0,
       "value": "Tasti freccia"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "Riduci livello argomento (collega al nonno)"
     }
   ],
   "shortcut-help-pane.outline-view": [

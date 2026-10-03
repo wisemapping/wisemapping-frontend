@@ -212,6 +212,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "折叠子项"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "降低主题层级 (连接到上一个同级节点)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "在同级中下移主题"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "在同级中上移主题"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "提升主题层级 (连接到祖父节点)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "复制和粘贴主题/将思维导图图像复制到剪贴板。"
   },

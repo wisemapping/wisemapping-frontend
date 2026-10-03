@@ -1417,6 +1417,24 @@
       "value": "マップ内のトピックを検索"
     }
   ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "トピックの階層を下げる (前の兄弟に接続)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "トピックを兄弟間で下に移動"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "トピックを兄弟間で上に移動"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1427,6 +1445,12 @@
     {
       "type": 0,
       "value": "矢印キー"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "トピックの階層を上げる (祖父に接続)"
     }
   ],
   "shortcut-help-pane.outline-view": [

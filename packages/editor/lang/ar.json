@@ -227,6 +227,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "طي العناصر الفرعية"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "زيادة مستوى الموضوع (الإرفاق بالشقيق السابق)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "تحريك الموضوع للأسفل بين الأشقاء"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "تحريك الموضوع للأعلى بين الأشقاء"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "تقليل مستوى الموضوع (الإرفاق بالجدّ)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "نسخ ولصق المواضيع/نسخ صورة الخريطة الذهنية إلى الحافظة."
   },

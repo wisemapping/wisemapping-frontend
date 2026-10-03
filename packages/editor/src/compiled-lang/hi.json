@@ -1417,6 +1417,24 @@
       "value": "मैप में विषय खोजें"
     }
   ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "विषय का स्तर बढ़ाएँ (पिछले सहोदर से जोड़ें)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "विषय को सहोदरों में नीचे ले जाएँ"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "विषय को सहोदरों में ऊपर ले जाएँ"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1427,6 +1445,12 @@
     {
       "type": 0,
       "value": "एरो कीज़"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "विषय का स्तर घटाएँ (दादा से जोड़ें)"
     }
   ],
   "shortcut-help-pane.outline-view": [
