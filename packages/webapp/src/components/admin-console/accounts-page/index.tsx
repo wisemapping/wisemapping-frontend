@@ -859,8 +859,9 @@ const AccountManagement = (): ReactElement => {
             />
 
             <FormControl sx={{ minWidth: 150 }}>
-              <InputLabel>Auth Type</InputLabel>
+              <InputLabel id="admin-filter-auth-type-label">Auth Type</InputLabel>
               <Select
+                labelId="admin-filter-auth-type-label"
                 value={filterAuthType}
                 label={intl.formatMessage({ id: 'admin.auth-type', defaultMessage: 'Auth Type' })}
                 onChange={(e) => setFilterAuthType(e.target.value)}
@@ -875,8 +876,9 @@ const AccountManagement = (): ReactElement => {
             </FormControl>
 
             <FormControl sx={{ minWidth: 150 }}>
-              <InputLabel>Suspension Status</InputLabel>
+              <InputLabel id="admin-filter-suspension-label">Suspension Status</InputLabel>
               <Select
+                labelId="admin-filter-suspension-label"
                 value={filterSuspended}
                 label={intl.formatMessage({
                   id: 'admin.suspension-status',

@@ -669,28 +669,28 @@
       "value": "Al continuar, aceptas nuestros "
     },
     {
+      "type": 8,
+      "value": "termsLink",
       "children": [
         {
           "type": 0,
           "value": "Términos de Uso"
         }
-      ],
-      "type": 8,
-      "value": "termsLink"
+      ]
     },
     {
       "type": 0,
       "value": " y "
     },
     {
+      "type": 8,
+      "value": "privacyLink",
       "children": [
         {
           "type": 0,
           "value": "Política de Privacidad"
         }
-      ],
-      "type": 8,
-      "value": "privacyLink"
+      ]
     },
     {
       "type": 0,
@@ -1745,28 +1745,28 @@
       "value": "Este sitio está protegido por reCAPTCHA y se aplican la "
     },
     {
+      "type": 8,
+      "value": "privacyLink",
       "children": [
         {
           "type": 0,
           "value": "Política de Privacidad"
         }
-      ],
-      "type": 8,
-      "value": "privacyLink"
+      ]
     },
     {
       "type": 0,
       "value": " y los "
     },
     {
+      "type": 8,
+      "value": "termsLink",
       "children": [
         {
           "type": 0,
           "value": "Términos de Servicio"
         }
-      ],
-      "type": 8,
-      "value": "termsLink"
+      ]
     },
     {
       "type": 0,

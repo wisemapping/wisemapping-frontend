@@ -669,28 +669,28 @@
       "value": "By continuing, you agree to our "
     },
     {
+      "type": 8,
+      "value": "termsLink",
       "children": [
         {
           "type": 0,
           "value": "Terms of Service"
         }
-      ],
-      "type": 8,
-      "value": "termsLink"
+      ]
     },
     {
       "type": 0,
       "value": " and "
     },
     {
+      "type": 8,
+      "value": "privacyLink",
       "children": [
         {
           "type": 0,
           "value": "Privacy Policy"
         }
-      ],
-      "type": 8,
-      "value": "privacyLink"
+      ]
     },
     {
       "type": 0,
@@ -1745,28 +1745,28 @@
       "value": "Этот сайт защищён reCAPTCHA, и к нему применяются "
     },
     {
+      "type": 8,
+      "value": "privacyLink",
       "children": [
         {
           "type": 0,
           "value": "Политика конфиденциальности"
         }
-      ],
-      "type": 8,
-      "value": "privacyLink"
+      ]
     },
     {
       "type": 0,
       "value": " и "
     },
     {
+      "type": 8,
+      "value": "termsLink",
       "children": [
         {
           "type": 0,
           "value": "Условия использования"
         }
-      ],
-      "type": 8,
-      "value": "termsLink"
+      ]
     },
     {
       "type": 0,

@@ -669,28 +669,28 @@
       "value": "بمتابعتك، فإنك توافق على "
     },
     {
+      "type": 8,
+      "value": "termsLink",
       "children": [
         {
           "type": 0,
           "value": "شروط الخدمة"
         }
-      ],
-      "type": 8,
-      "value": "termsLink"
+      ]
     },
     {
       "type": 0,
       "value": " و"
     },
     {
+      "type": 8,
+      "value": "privacyLink",
       "children": [
         {
           "type": 0,
           "value": "سياسة الخصوصية"
         }
-      ],
-      "type": 8,
-      "value": "privacyLink"
+      ]
     },
     {
       "type": 0,
@@ -1745,28 +1745,28 @@
       "value": "هذا الموقع محمي بـ reCAPTCHA وتنطبق عليه "
     },
     {
+      "type": 8,
+      "value": "privacyLink",
       "children": [
         {
           "type": 0,
           "value": "سياسة الخصوصية"
         }
-      ],
-      "type": 8,
-      "value": "privacyLink"
+      ]
     },
     {
       "type": 0,
       "value": " و"
     },
     {
+      "type": 8,
+      "value": "termsLink",
       "children": [
         {
           "type": 0,
           "value": "شروط الخدمة"
         }
-      ],
-      "type": 8,
-      "value": "termsLink"
+      ]
     },
     {
       "type": 0,
