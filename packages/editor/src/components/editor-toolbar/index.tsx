@@ -26,9 +26,10 @@ import { useSelection } from '../../hooks/useSelection';
 type EditorToolbarProps = {
   model: Model | undefined;
   capability: Capability;
+  getDeepLink?: (nodeId: number) => string;
 };
 
-const EditorToolbar = ({ model, capability }: EditorToolbarProps): ReactElement => {
+const EditorToolbar = ({ model, capability, getDeepLink }: EditorToolbarProps): ReactElement => {
   const intl = useIntl();
   const selection = useSelection(model);
 
@@ -36,8 +37,8 @@ const EditorToolbar = ({ model, capability }: EditorToolbarProps): ReactElement 
     if (capability.isHidden('edition-toolbar') || !model || !selection.isMapLoaded) {
       return undefined;
     }
-    return buildEditorPanelConfig(model, intl, selection);
-  }, [capability, intl, model, selection]);
+    return buildEditorPanelConfig(model, intl, selection, getDeepLink);
+  }, [capability, intl, model, selection, getDeepLink]);
 
   return <span>{config ? <Toolbar configurations={config} /> : <></>}</span>;
 };

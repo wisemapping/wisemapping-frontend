@@ -24,6 +24,8 @@ import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import TextureIcon from '@mui/icons-material/Texture';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import { $notify } from '@wisemapping/mindplot';
 
 import ActionConfig from '../../classes/action/action-config';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
@@ -52,10 +54,16 @@ export function buildEditorPanelConfig(
   model: Editor,
   intl: IntlShape,
   selection: SelectionSnapshot,
+  getDeepLink?: (nodeId: number) => string,
 ): ActionConfig[] {
   const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
   const noTopicSelected = selection.topicCount === 0;
   const noRelationshipSelected = selection.relationshipCount === 0;
+
+  const singleSelectedTopicId = (): number | undefined => {
+    const selected = model.getDesignerModel()!.filterSelectedTopics();
+    return selected.length === 1 ? selected[0].getId() : undefined;
+  };
 
   const styleConfiguration: ActionConfig = {
     icon: <BrushIcon />,
@@ -177,6 +185,58 @@ export function buildEditorPanelConfig(
   };
 
   /**
+   * copies a shareable URL that deep-links straight to the selected node
+   */
+  const copyNodeLinkConfiguration: ActionConfig = {
+    icon: <ShareOutlinedIcon />,
+    tooltip: intl.formatMessage({
+      id: 'editor-panel.tooltip-copy-node-link',
+      defaultMessage: 'Copy Link to Node',
+    }),
+    ariaLabel: intl.formatMessage({
+      id: 'editor-panel.tooltip-copy-node-link',
+      defaultMessage: 'Copy Link to Node',
+    }),
+    'data-testid': 'copy-node-link-button',
+    visible: Boolean(getDeepLink),
+    onClick: () => {
+      // The topic id comes from the designer's own selection, never from the
+      // rendered SVG.
+      const nodeId = singleSelectedTopicId();
+      if (nodeId === undefined || !getDeepLink) {
+        return;
+      }
+      trackEditorPanelAction('copy_node_deep_link');
+
+      const notifyFailure = (error: unknown) => {
+        console.error('Could not copy the node link to the clipboard:', error);
+        $notify(
+          intl.formatMessage({
+            id: 'editor-panel.deeplink-copy-failed',
+            defaultMessage: 'Could not copy the link to the clipboard',
+          }),
+        );
+      };
+
+      // navigator.clipboard is undefined outside a secure context.
+      if (!navigator.clipboard) {
+        notifyFailure(new Error('Clipboard API is not available'));
+        return;
+      }
+
+      navigator.clipboard.writeText(getDeepLink(nodeId)).then(() => {
+        $notify(
+          intl.formatMessage({
+            id: 'editor-panel.deeplink-copied',
+            defaultMessage: 'Link to node copied to clipboard',
+          }),
+        );
+      }, notifyFailure);
+    },
+    disabled: () => !getDeepLink || singleSelectedTopicId() === undefined,
+  };
+
+  /**
    * tool for background customization
    */
   const editCanvasStyleConfiguration: ActionConfig = {
@@ -292,6 +352,7 @@ export function buildEditorPanelConfig(
     editLinkUrlConfiguration,
     addRelationConfiguration,
     relationshipStyleConfiguration,
+    copyNodeLinkConfiguration,
     editCanvasStyleConfiguration,
   ];
 }

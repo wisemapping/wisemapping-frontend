@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useContext, useEffect, useState, Suspense, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useState, Suspense, useRef } from 'react';
 import Editor, { useEditor, EditorLoadingSkeleton } from '@wisemapping/editor';
 import type { EditorOptions } from '@wisemapping/editor';
 
@@ -31,6 +31,7 @@ import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 import { useFetchAccount } from '../../classes/middleware';
 import { trackPageView } from '../../utils/analytics';
+import { getMapNodeDeepLink } from '../../utils/map-urls';
 import { useTheme as useMuiTheme } from '@mui/material/styles';
 import MapInfoImpl from '../../classes/editor-map-info';
 import AppConfig from '../../classes/app-config';
@@ -115,6 +116,11 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   const [searchParams] = useSearchParams();
   const hideCreatorInfoParam = searchParams.get('hideCreatorInfo');
   const themeParam = searchParams.get('theme');
+
+  const getDeepLink = useCallback(
+    (nodeId: number): string => getMapNodeDeepLink(mapId, nodeId),
+    [mapId],
+  );
 
   // If zoom has been define, overwrite the stored value.
   if (zoom) {
@@ -240,6 +246,8 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
         onAction={setActiveDialog}
         theme={theme}
         themeVariantStorage={createThemeVariantStorage()}
+        initialSearchParams={searchParams}
+        getDeepLink={getDeepLink}
         accountConfiguration={
           // Prevent load on non-authenticated.
           editorOptions.mode !== 'showcase' ? (

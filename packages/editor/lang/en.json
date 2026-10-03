@@ -71,6 +71,12 @@
   "outline.note": {
     "defaultMessage": "Note"
   },
+  "editor-panel.deeplink-copied": {
+    "defaultMessage": "Link to node copied to clipboard"
+  },
+  "editor-panel.deeplink-copy-failed": {
+    "defaultMessage": "Could not copy the link to the clipboard"
+  },
   "editor-panel.icon-title": {
     "defaultMessage": "Icon"
   },
@@ -118,6 +124,9 @@
   },
   "editor-panel.tooltip-connection-style-polyline-curved": {
     "defaultMessage": "Curved Polyline"
+  },
+  "editor-panel.tooltip-copy-node-link": {
+    "defaultMessage": "Copy Link to Node"
   },
   "editor-panel.tooltip-delete-topic": {
     "defaultMessage": "Delete Topic"
