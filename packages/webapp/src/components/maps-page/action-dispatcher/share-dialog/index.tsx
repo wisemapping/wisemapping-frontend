@@ -234,7 +234,6 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             <TextField
               multiline
               rows={3}
-              maxRows={3}
               css={classes.textArea}
               variant="filled"
               name="message"
