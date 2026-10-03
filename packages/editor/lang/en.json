@@ -842,6 +842,9 @@
   "shortcut-help-pane.pan-canvas-keys": {
     "defaultMessage": "Two-finger swipe or Mouse wheel"
   },
+  "shortcut-help-pane.paste-as-child": {
+    "defaultMessage": "Paste as child of the selected topic"
+  },
   "shortcut-help-pane.zoom-in": {
     "defaultMessage": "Zoom in"
   },

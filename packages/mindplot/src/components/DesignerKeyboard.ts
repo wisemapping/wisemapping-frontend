@@ -111,6 +111,15 @@ class DesignerKeyboard extends Keyboard {
       designer.pasteClipboard();
     });
 
+    // Paste as a child of the selection. Deliberately a separate binding: plain
+    // Ctrl/Cmd+V keeps pasting loose on the canvas, selection or not.
+    this.addShortcut(['ctrl+shift+v', 'meta+shift+v'], () => {
+      const selected = designer.getModel().selectedTopic();
+      if (selected) {
+        designer.pasteClipboardAsChild(selected.getId());
+      }
+    });
+
     this.addShortcut(['ctrl+a', 'meta+a'], () => {
       designer.selectAll();
     });

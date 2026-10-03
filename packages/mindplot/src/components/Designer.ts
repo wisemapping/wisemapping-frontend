@@ -667,12 +667,17 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  async pasteClipboard(): Promise<void> {
+  /**
+   * Reads the system clipboard, falling back to the internal one when the
+   * browser denies access or has nothing of interest. Shared by every paste
+   * flavour so they all agree on where the text comes from.
+   */
+  private async _readClipboardText(): Promise<string | null> {
     let text: string | null = null;
 
     // Try to read from system clipboard first
-    try {
-      if (navigator.clipboard && navigator.clipboard.read) {
+    if (typeof navigator !== 'undefined' && navigator.clipboard?.read) {
+      try {
         const type = 'text/plain';
         const clipboardItems = await navigator.clipboard.read();
 
@@ -683,10 +688,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
           text = await blob.text();
           console.log('Paste from system clipboard success');
         }
+      } catch (e) {
+        // System clipboard not available or permission denied
+        console.warn('System clipboard not available for reading, using internal clipboard:', e);
       }
-    } catch (e) {
-      // System clipboard not available or permission denied
-      console.warn('System clipboard not available for reading, using internal clipboard:', e);
     }
 
     // Fall back to internal clipboard if system clipboard is empty or failed
@@ -694,6 +699,18 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       text = this._internalClipboard;
       console.log('Paste from internal clipboard success');
     }
+
+    return text;
+  }
+
+  private _parseClipboardMindmap(text: string): Mindmap {
+    const dom = new DOMParser().parseFromString(text, 'application/xml');
+    const serializer = XMLSerializerFactory.createFromDocument(dom);
+    return serializer.loadFromDom(dom, 'application/xml');
+  }
+
+  async pasteClipboard(): Promise<void> {
+    const text = await this._readClipboardText();
 
     // If we have no text at all, nothing to paste
     if (!text) {
@@ -703,10 +720,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Is a mindmap ?. Try to infer if it's a text or a map...
     if (text.indexOf('</map>') !== -1) {
-      const dom = new DOMParser().parseFromString(text, 'application/xml');
-
-      const serializer = XMLSerializerFactory.createFromDocument(dom);
-      const mindmap = serializer.loadFromDom(dom, 'application/xml');
+      const mindmap = this._parseClipboardMindmap(text);
 
       // Remove reference to the parent mindmap and clean up to support multiple copy of the nodes ...
       const central = mindmap.getBranches()[0];
@@ -729,6 +743,63 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         text.trim(),
       );
     }
+  }
+
+  /**
+   * Adds every model as a direct child of `parentId`, in a single undoable step.
+   */
+  pasteModelsAsChild(models: NodeModel[], parentId: number): void {
+    const parent = this.getModel().findTopicById(parentId);
+    if (!parent) {
+      console.warn(`pasteModelsAsChild: parent topic ${parentId} not found`);
+      return;
+    }
+
+    const parentIds = models.map(() => parentId);
+    this._actionDispatcher.addTopics(models, parentIds);
+  }
+
+  /**
+   * Pastes the clipboard's topics as children of `parentId` instead of dropping
+   * them loose on the canvas, which is what `pasteClipboard()` does.
+   */
+  async pasteClipboardAsChild(parentId: number): Promise<void> {
+    const parent = this.getModel().findTopicById(parentId);
+    if (!parent) {
+      $notify($msg('ONE_TOPIC_MUST_BE_SELECTED'));
+      return;
+    }
+
+    // Expand the parent if collapsed, so the pasted topics are visible right away ...
+    if (parent.areChildrenShrunken()) {
+      this._actionDispatcher.shrinkBranch([parentId], false);
+    }
+
+    const text = await this._readClipboardText();
+    if (!text || text.indexOf('</map>') === -1) {
+      $notify($msg('CLIPBOARD_IS_EMPTY'));
+      return;
+    }
+
+    const branches = this._parseClipboardMindmap(text).getBranches();
+    if (branches.length === 0) {
+      $notify($msg('CLIPBOARD_IS_EMPTY'));
+      return;
+    }
+
+    // Detach the copied nodes from the clipboard mindmap and let the layout
+    // decide where each one lands under the new parent ...
+    const layoutManager = this._eventBussDispatcher.getLayoutManager();
+    const clones = branches[0].getChildren().map((child) => {
+      child.disconnect();
+      const clone = child.deepCopy();
+      const predicted = layoutManager.predict(parentId, null, null);
+      clone.setPosition(predicted.position.x, predicted.position.y);
+      clone.setOrder(predicted.order);
+      return clone;
+    });
+
+    this.pasteModelsAsChild(clones, parentId);
   }
 
   getModel(): DesignerModel {
