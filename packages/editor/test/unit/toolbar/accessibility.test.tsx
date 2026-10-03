@@ -16,12 +16,37 @@
  *   limitations under the License.
  */
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { act, render as renderBare, screen, fireEvent } from '@testing-library/react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import '@testing-library/jest-dom';
 import Toolbar, { ToolbarButtonOption, ToolbarSubmenu } from '../../../src/components/toolbar';
 import ActionConfig from '../../../src/classes/action/action-config';
 
 const trigger = (): HTMLElement => screen.getByTestId('trigger');
+
+// ButtonBase's ripple schedules its pulsate state lazily, i.e. outside any
+// act() scope, so every focus in this suite used to emit an "update was not
+// wrapped in act" warning. These tests are about roles and keyboard
+// navigation, so the ripple is simply turned off.
+const theme = createTheme({
+  components: { MuiButtonBase: { defaultProps: { disableRipple: true } } },
+});
+
+const render = (ui: React.ReactElement) =>
+  renderBare(ui, {
+    wrapper: ({ children }: { children: React.ReactNode }) => (
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    ),
+  });
+
+// Focusing also flips ButtonBase's focus-visible state and opens the button's
+// Tooltip, both of which are React updates: act() keeps them inside the scope
+// the runner expects. fireEvent is already wrapped by RTL.
+const focus = (element: HTMLElement): void => {
+  act(() => {
+    element.focus();
+  });
+};
 
 describe('toolbar accessibility', () => {
   describe('plain button', () => {
@@ -138,7 +163,7 @@ describe('toolbar accessibility', () => {
 
     it('moves down a vertical bar with ArrowDown', () => {
       const { first, second, bar } = renderBar(true);
-      first.focus();
+      focus(first);
 
       fireEvent.keyDown(bar, { key: 'ArrowDown' });
 
@@ -147,7 +172,7 @@ describe('toolbar accessibility', () => {
 
     it('moves along a horizontal bar with ArrowRight', () => {
       const { first, second, bar } = renderBar(false);
-      first.focus();
+      focus(first);
 
       fireEvent.keyDown(bar, { key: 'ArrowRight' });
 
@@ -156,7 +181,7 @@ describe('toolbar accessibility', () => {
 
     it('ignores the cross-axis arrow keys', () => {
       const { first, bar } = renderBar(true);
-      first.focus();
+      focus(first);
 
       fireEvent.keyDown(bar, { key: 'ArrowRight' });
 
@@ -165,7 +190,7 @@ describe('toolbar accessibility', () => {
 
     it('wraps from the last item to the first', () => {
       const { first, third, bar } = renderBar(true);
-      third.focus();
+      focus(third);
 
       fireEvent.keyDown(bar, { key: 'ArrowDown' });
 
@@ -174,7 +199,7 @@ describe('toolbar accessibility', () => {
 
     it('wraps backwards from the first item to the last', () => {
       const { first, third, bar } = renderBar(true);
-      first.focus();
+      focus(first);
 
       fireEvent.keyDown(bar, { key: 'ArrowUp' });
 
@@ -183,7 +208,7 @@ describe('toolbar accessibility', () => {
 
     it('jumps to either end with Home and End', () => {
       const { first, second, third, bar } = renderBar(true);
-      second.focus();
+      focus(second);
 
       fireEvent.keyDown(bar, { key: 'End' });
       expect(third).toHaveFocus();
@@ -211,7 +236,7 @@ describe('toolbar accessibility', () => {
           position={{ vertical: true }}
         />,
       );
-      screen.getByLabelText('first').focus();
+      focus(screen.getByLabelText('first'));
 
       fireEvent.keyDown(screen.getByRole('menu'), { key: 'ArrowDown' });
 

@@ -39,6 +39,10 @@ const config = {
   },
   moduleNameMapper: {
     '^react-ga4$': '<rootDir>/test/mocks/react-ga4.js',
+    // Before the transform below gets a chance: assets resolve to a placeholder
+    // path rather than jest-transform-stub's empty string, which React rejects
+    // when it lands on an <img src>.
+    '\\.(svg|png|jpg|jpeg|gif)$': '<rootDir>/test/mocks/asset-stub.js',
   },
   // react-intl and the @formatjs packages it depends on are ESM-only, so they
   // have to go through the transform above instead of being skipped.
