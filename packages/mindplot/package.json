@@ -31,7 +31,7 @@
     "build-storybook": "storybook build",
     "clean": "rm -rf dist node_modules/.cache storybook-static cypress/screenshots cypress/videos debug-storybook.log .eslintcache",
     "cy:open": "cypress open",
-    "cy:run": "cypress run",
+    "cy:run": "cypress run --browser chrome",
     "dev": "vite build --watch",
     "lint": "eslint src --ext js,ts",
     "lint:fix": "eslint src --ext js,ts --fix",
