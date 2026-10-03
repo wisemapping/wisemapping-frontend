@@ -263,6 +263,18 @@ class Canvas {
     this._workspace.setCoordOrigin(x, y);
   }
 
+  panBy(deltaX: number, deltaY: number): void {
+    if (deltaX === 0 && deltaY === 0) return;
+    const origin = this._workspace.getCoordOrigin();
+    const newOriginX = origin.x + deltaX * this._zoom;
+    const newOriginY = origin.y + deltaY * this._zoom;
+
+    this._workspace.setCoordOrigin(newOriginX, newOriginY);
+    this._screenManager.setOffset(newOriginX, newOriginY);
+    this._screenManager.fireEvent('update');
+    LayoutEventBus.fireEvent('canvasPanned');
+  }
+
   setCoordSize(width: number, height: number): void {
     this._workspace.setCoordSize(width, height);
   }

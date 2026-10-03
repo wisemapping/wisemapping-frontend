@@ -5771,6 +5771,7 @@ __metadata:
     globals: "npm:^17.13.0"
     html2canvas: "npm:^1.4.1"
     jest: "npm:^30.5.2"
+    jest-transform-stub: "npm:^2.0.0"
     jspdf: "npm:^4.2.1"
     lodash: "npm:^4.18.1"
     raphael: "npm:^2.3.0"

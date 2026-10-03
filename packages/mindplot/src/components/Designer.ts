@@ -166,26 +166,31 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     this.getContainer().addEventListener(
       'wheel',
       (event: WheelEvent) => {
-        // TODO re-do this better. This line avoid manage zoom with mouse wheel if mindplot kb shortcuts are disabled.
+        // Avoid managing wheel events if mindplot kb shortcuts are disabled.
         if (DesignerKeyboard.isDisabled()) return;
 
-        // Only the vertical axis drives zoom direction. Using deltaX as a
-        // tiebreaker caused a "bump" on trackpad two-finger gestures because
-        // lateral finger drift could flip the direction at the start of the
-        // gesture before deltaY settled.
-        if (event.deltaY === 0) return;
+        const isZoomGesture = event.ctrlKey || event.metaKey || event.altKey;
 
-        // Scale the zoom step by the wheel magnitude so trackpad gestures feel
-        // continuous instead of stepped. exp(-deltaY * k) maps deltaY<0 (scroll
-        // up) to zoom-in and deltaY>0 (scroll down) to zoom-out symmetrically.
-        // Clamp magnitude so a single mouse-wheel notch (deltaY≈100) doesn't
-        // overshoot while keeping trackpad gestures (deltaY≈1–30) smooth.
-        const clamped = Math.max(-50, Math.min(50, event.deltaY));
-        const factor = Math.exp(-clamped * 0.01);
-        if (factor > 1) {
-          this.zoomIn(factor);
+        if (isZoomGesture) {
+          if (event.deltaY === 0) return;
+
+          // Scale the zoom step by the wheel magnitude so trackpad gestures feel
+          // continuous instead of stepped. exp(-deltaY * k) maps deltaY<0 (scroll
+          // up) to zoom-in and deltaY>0 (scroll down) to zoom-out symmetrically.
+          // Clamp magnitude so a single mouse-wheel notch (deltaY≈100) doesn't
+          // overshoot while keeping trackpad gestures (deltaY≈1–30) smooth.
+          const clamped = Math.max(-50, Math.min(50, event.deltaY));
+          const factor = Math.exp(-clamped * 0.01);
+          if (factor > 1) {
+            this.zoomIn(factor);
+          } else {
+            this.zoomOut(1 / factor);
+          }
         } else {
-          this.zoomOut(1 / factor);
+          // No modifier: a two-finger trackpad swipe (or a plain wheel) pans the
+          // canvas instead of zooming it.
+          if (event.deltaX === 0 && event.deltaY === 0) return;
+          this.panBy(event.deltaX, event.deltaY);
         }
         event.preventDefault();
       },
@@ -384,6 +389,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
     this.getModel().setZoom(zoom);
     this._canvas.setZoom(zoom);
+  }
+
+  panBy(deltaX: number, deltaY: number): void {
+    this._canvas.panBy(deltaX, deltaY);
   }
 
   zoomToFit(): void {

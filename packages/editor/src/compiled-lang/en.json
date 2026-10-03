@@ -1353,6 +1353,18 @@
       "value": "Type on a selected topic"
     }
   ],
+  "shortcut-help-pane.pan-canvas": [
+    {
+      "type": 0,
+      "value": "Pan the canvas"
+    }
+  ],
+  "shortcut-help-pane.pan-canvas-keys": [
+    {
+      "type": 0,
+      "value": "Two-finger swipe or Mouse wheel"
+    }
+  ],
   "shortcut-help-pane.redo": [
     {
       "type": 0,
@@ -1405,6 +1417,12 @@
     {
       "type": 0,
       "value": "Zoom to fit"
+    }
+  ],
+  "shortcut-help-pane.zoom-wheel": [
+    {
+      "type": 0,
+      "value": "Zoom in/out with the wheel"
     }
   ],
   "sunrise": [

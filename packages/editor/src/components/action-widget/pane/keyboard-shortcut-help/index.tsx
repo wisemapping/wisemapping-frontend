@@ -551,6 +551,56 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
             <TableRow hover>
               <TableCell>
                 <FormattedMessage
+                  id="shortcut-help-pane.pan-canvas"
+                  defaultMessage="Pan the canvas"
+                />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                <FormattedMessage
+                  id="shortcut-help-pane.pan-canvas-keys"
+                  defaultMessage="Two-finger swipe or Mouse wheel"
+                />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                <FormattedMessage
+                  id="shortcut-help-pane.pan-canvas-keys"
+                  defaultMessage="Two-finger swipe or Mouse wheel"
+                />
+              </TableCell>
+            </TableRow>
+            <TableRow hover>
+              <TableCell>
+                <FormattedMessage
+                  id="shortcut-help-pane.zoom-wheel"
+                  defaultMessage="Zoom in/out with the wheel"
+                />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                Ctrl / Alt +{' '}
+                <FormattedMessage
+                  id="shortcut-help-pane.pan-canvas-keys"
+                  defaultMessage="Two-finger swipe or Mouse wheel"
+                />
+              </TableCell>
+              <TableCell
+                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
+              >
+                ⌘ / ⌥ +{' '}
+                <FormattedMessage
+                  id="shortcut-help-pane.pan-canvas-keys"
+                  defaultMessage="Two-finger swipe or Mouse wheel"
+                />
+              </TableCell>
+            </TableRow>
+            <TableRow hover>
+              <TableCell>
+                <FormattedMessage
                   id="shortcut-help-pane.outline-view"
                   defaultMessage="Open outline view"
                 />

@@ -63,6 +63,7 @@
     "eslint-plugin-storybook": "^10.6.1",
     "globals": "^17.13.0",
     "jest": "^30.5.2",
+    "jest-transform-stub": "^2.0.0",
     "raphael": "^2.3.0",
     "storybook": "^10.6.1",
     "typescript": "^6.0.3",
