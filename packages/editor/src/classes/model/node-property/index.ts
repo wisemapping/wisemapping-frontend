@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { SwitchValueDirection } from '../../../components/toolbar/ToolbarValueModelBuilder';
+import { SwitchValueDirection } from '../value-stepper';
 
 /**
  * Interface to get and set a property of the mindplot selected node

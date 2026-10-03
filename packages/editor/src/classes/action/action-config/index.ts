@@ -63,6 +63,14 @@ interface ActionConfig {
    * For testing purposes, allows selecting specific buttons
    */
   'data-testid'?: string;
+  /**
+   * Makes a submenu controlled by the caller instead of self-managed. Supply
+   * both to own the open state -- needed when something outside the toolbar
+   * (a keyboard shortcut, say) has to open the panel. Omit both for the
+   * default hover/click behaviour.
+   */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export default ActionConfig;

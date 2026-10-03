@@ -36,7 +36,7 @@ import { styled } from '@mui/material/styles';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
 import NodeProperty from '../../../../classes/model/node-property';
-import { SwitchValueDirection } from '../../../toolbar/ToolbarValueModelBuilder';
+import { SwitchValueDirection } from '../../../../classes/model/value-stepper';
 import ColorPicker from '../color-picker';
 import Editor from '../../../../classes/model/editor';
 import { trackFontFormatAction } from '../../../../utils/analytics';

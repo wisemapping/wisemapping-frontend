@@ -39,14 +39,23 @@ import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
 import { trackRelationshipAction, trackEditorPanelAction } from '../../utils/analytics';
 import CanvasStyleEditor, { CanvasStyle } from '../action-widget/pane/canvas-style-editor';
+import { formatTooltip } from '../visualization-toolbar/utils';
+import type { SelectionSnapshot } from '../../hooks/useSelection';
 
-const keyTooltip = (msg: string, key: string): string => {
-  const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  return `${msg} (${isMac ? '⌘' : 'Ctrl'} + ${key})`;
-};
-
-export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionConfig[] {
+/**
+ * `selection` is a snapshot from useSelection rather than something read off
+ * the designer here: these `disabled` thunks are evaluated during render, and
+ * polling the designer made them correct only when an unrelated re-render
+ * happened to occur after the selection changed.
+ */
+export function buildEditorPanelConfig(
+  model: Editor,
+  intl: IntlShape,
+  selection: SelectionSnapshot,
+): ActionConfig[] {
   const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
+  const noTopicSelected = selection.topicCount === 0;
+  const noRelationshipSelected = selection.relationshipCount === 0;
 
   const styleConfiguration: ActionConfig = {
     icon: <BrushIcon />,
@@ -72,7 +81,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   const relationshipStyleConfiguration: ActionConfig = {
@@ -97,10 +106,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => {
-      const selected = model.getDesignerModel()!.filterSelectedRelationships();
-      return selected.length === 0;
-    },
+    disabled: () => noRelationshipSelected,
   };
 
   /**
@@ -131,7 +137,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   /**
@@ -147,7 +153,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       trackRelationshipAction('show_relationship_pivot');
       model.getDesigner().showRelPivot(e);
     },
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   /**
@@ -155,7 +161,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    */
   const editLinkUrlConfiguration: ActionConfig = {
     icon: <LinkOutlinedIcon />,
-    tooltip: keyTooltip(
+    tooltip: formatTooltip(
       intl.formatMessage({ id: 'editor-panel.tooltip-add-link', defaultMessage: 'Add Link' }),
       'L',
     ),
@@ -167,7 +173,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   /**
@@ -204,7 +210,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    */
   const editNoteConfiguration: ActionConfig = {
     icon: <NoteOutlinedIcon />,
-    tooltip: keyTooltip(
+    tooltip: formatTooltip(
       intl.formatMessage({ id: 'editor-panel.tooltip-add-note', defaultMessage: 'Add Note' }),
       'K',
     ),
@@ -222,7 +228,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   /**
@@ -244,7 +250,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   /**
@@ -274,7 +280,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         },
       },
     ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+    disabled: () => noTopicSelected,
   };
 
   return [

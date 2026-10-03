@@ -41,5 +41,11 @@ interface ToolbarPosition {
      */
     marginTop?: string;
   };
+  /**
+   * Stacking layer, from EDITOR_Z_INDEX. Declared rather than inferred: the
+   * toolbar used to work out which instance of itself it was by checking
+   * whether its own `top` value contained '100%'.
+   */
+  zIndex?: number;
 }
 export default ToolbarPosition;

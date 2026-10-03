@@ -162,7 +162,7 @@ const EditorContent = ({
             />
           )}
 
-          <WidgetPopover widgetManager={widgetBulder} />
+          <WidgetPopover widgetManager={widgetBulder} designer={designer} />
 
           {model && (
             <div className="no-print">

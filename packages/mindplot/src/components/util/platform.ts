@@ -15,20 +15,25 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import styled from 'styled-components';
 
-export const TitleInput = styled.input`
-  margin: 0;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.5;
-  letter-spacing: 0.00938em;
-  margin-left: 1.3rem;
-  margin-right: 1.3rem;
-  background-color: #f5f5f5;
-  border: 1px gray dashed;
-  &:focus {
-    border: 1px black solid;
+/**
+ * True on macOS, where the shortcut modifier is Command rather than Control.
+ *
+ * Replaces five copy-pasted `navigator.platform.toUpperCase().indexOf('MAC')`
+ * checks across mindplot and editor. `navigator.platform` is deprecated, so
+ * `userAgentData.platform` is preferred where the browser offers it and the
+ * legacy property is the fallback -- keeping that choice in one place is the
+ * point of this module.
+ */
+export default function isMacPlatform(): boolean {
+  if (typeof navigator === 'undefined') {
+    return false;
   }
-`;
+
+  const platform =
+    (navigator as Navigator & { userAgentData?: { platform?: string } }).userAgentData?.platform ??
+    navigator.platform ??
+    '';
+
+  return platform.toUpperCase().includes('MAC');
+}

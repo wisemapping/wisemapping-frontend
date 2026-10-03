@@ -23,6 +23,5 @@ type EditorRenderMode =
   | 'viewonly-public'
   | 'viewonly-private'
   | 'showcase'
-  | 'edition-locked'
   | 'desktop';
 export default EditorRenderMode;

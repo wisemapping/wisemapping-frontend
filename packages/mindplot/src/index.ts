@@ -29,6 +29,7 @@ import TextImporterFactory from './components/import/TextImporterFactory';
 import Exporter from './components/export/Exporter';
 import Importer from './components/import/Importer';
 import DesignerKeyboard from './components/DesignerKeyboard';
+import isMacPlatform from './components/util/platform';
 import type EditorRenderMode from './components/EditorRenderMode';
 import DesignerModel from './components/DesignerModel';
 
@@ -93,6 +94,7 @@ export {
   Importer,
   $notify,
   DesignerKeyboard,
+  isMacPlatform,
   MindplotWebComponent,
   LinkIcon,
   LinkModel,

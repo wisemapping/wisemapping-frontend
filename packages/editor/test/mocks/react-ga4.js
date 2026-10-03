@@ -15,23 +15,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
-import TopicLinkEditor from '../../components/action-widget/pane/topic-link-editor';
-import TopicNoteEditor from '../../components/action-widget/pane/topic-note-editor';
-import NodeProperty from '../model/node-property';
 
-const linkContent = (
-  linkModel: NodeProperty<string>,
-  closeModal: () => void,
-): React.ReactElement => {
-  return <TopicLinkEditor closeModal={closeModal} urlModel={linkModel}></TopicLinkEditor>;
+// react-ga4 is ESM-only and sends analytics. Neither is wanted under Jest, and
+// src/utils/analytics.ts imports it at module scope, so any component that
+// tracks an interaction would otherwise be unloadable in a test.
+module.exports = {
+  __esModule: true,
+  default: {
+    initialize: () => undefined,
+    send: () => undefined,
+    event: () => undefined,
+    set: () => undefined,
+    gtag: () => undefined,
+  },
 };
-
-const noteContent = (
-  noteModel: NodeProperty<string | undefined>,
-  closeModal: () => void,
-): React.ReactElement => {
-  return <TopicNoteEditor closeModal={closeModal} noteModel={noteModel} />;
-};
-
-export { linkContent, noteContent };

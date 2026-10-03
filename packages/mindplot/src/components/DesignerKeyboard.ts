@@ -127,12 +127,20 @@ class DesignerKeyboard extends Keyboard {
       designer.deselectAll();
     });
 
-    this.addShortcut(['meta+=', 'ctrl+='], () => {
+    // Zoom lives here, and only here. The editor's visualization toolbar used to
+    // register ctrl/meta +/- on `document` as well, so a single keypress took
+    // two zoom steps; it also bypassed the pause() that suppresses map
+    // shortcuts while a dialog is open.
+    this.addShortcut(['meta+=', 'ctrl+=', 'meta+plus', 'ctrl+plus'], () => {
       designer.zoomIn();
     });
 
     this.addShortcut(['meta+-', 'ctrl+-'], () => {
       designer.zoomOut();
+    });
+
+    this.addShortcut(['meta+0', 'ctrl+0'], () => {
+      designer.zoomToFit();
     });
 
     const me = this;

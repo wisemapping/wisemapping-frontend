@@ -16,13 +16,26 @@
  *   limitations under the License.
  */
 
-export type ToolbarActionType =
-  | 'export'
-  | 'publish'
-  | 'history'
-  | 'print'
-  | 'share'
-  | 'info'
-  | 'theme'
-  | 'rename'
-  | 'back';
+import type ActionType from '../../classes/action/action-type';
+
+/**
+ * The actions the editor delegates to its host, via the `onAction` prop.
+ *
+ * Derived from `ActionType` rather than restated, so the two cannot drift: the
+ * eight shared names are checked against the capability vocabulary, and 'back'
+ * is declared separately because navigating away is the host's concern and has
+ * no capability entry.
+ */
+type DelegatedNames =
+  'export' | 'publish' | 'history' | 'print' | 'share' | 'info' | 'theme' | 'rename';
+
+// `Extract` quietly yields `never` for a name that no longer exists in
+// ActionType, which would turn a rename into a silent hole rather than a
+// compile error. This constraint is what makes the drift claim above hold.
+type MustBeActionTypes<T extends ActionType> = T;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- compile-time assertion only
+type _AssertDelegatedNamesExist = MustBeActionTypes<DelegatedNames>;
+
+export type HostDelegatedAction = Extract<ActionType, DelegatedNames>;
+
+export type ToolbarActionType = HostDelegatedAction | 'back';
