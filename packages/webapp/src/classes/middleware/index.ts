@@ -19,7 +19,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AccountInfo, ErrorInfo, MapInfo, MapMetadata } from '../client';
 import { ClientContext } from '../provider/client-context';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import AppI18n from '../app-i18n';
 
 type MapLoadResult = {
@@ -37,22 +37,28 @@ export const useFetchMapById = (id: number): MapLoadResult => {
     enabled: id != null && !Number.isNaN(id),
   });
 
-  // Convert MapMetadata to MapInfo format
-  const map: MapInfo | undefined = data
-    ? {
-        id: data.id,
-        title: data.title,
-        starred: data.starred ?? false,
-        labels: [], // Labels not included in metadata - would need separate call if needed
-        createdBy: data.createdBy ?? data.creatorFullName,
-        creationTime: data.creationTime ?? '',
-        lastModificationBy: data.lastModificationBy ?? '',
-        lastModificationTime: data.lastModificationTime ?? '',
-        description: data.description ?? '',
-        public: data.public ?? false,
-        role: data.role,
-      }
-    : undefined;
+  // Convert MapMetadata to MapInfo format. Memoised on `data`: callers key
+  // effects on this object, and rebuilding it every render made those effects
+  // re-run forever once the query resolved.
+  const map: MapInfo | undefined = useMemo(
+    () =>
+      data
+        ? {
+            id: data.id,
+            title: data.title,
+            starred: data.starred ?? false,
+            labels: [], // Labels not included in metadata - would need separate call if needed
+            createdBy: data.createdBy ?? data.creatorFullName,
+            creationTime: data.creationTime ?? '',
+            lastModificationBy: data.lastModificationBy ?? '',
+            lastModificationTime: data.lastModificationTime ?? '',
+            description: data.description ?? '',
+            public: data.public ?? false,
+            role: data.role,
+          }
+        : undefined,
+    [data],
+  );
   return { isLoading, error, data: map };
 };
 
