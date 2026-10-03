@@ -29,6 +29,7 @@ import Model from '../../classes/model/editor';
 import KeyboardShorcutsHelp from '../action-widget/pane/keyboard-shortcut-help';
 import OutlineViewDialog from '../action-widget/pane/outline-view-dialog';
 import FindInMapPanel from '../action-widget/pane/find-in-map';
+import { DesignerKeyboard, isMacPlatform } from '@wisemapping/mindplot';
 import LayoutSelector from '../action-widget/pane/layout-selector';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import Toolbar from '../toolbar';
@@ -54,6 +55,11 @@ const areNodesCollapsed = (model: Editor): boolean => {
   );
 };
 
+export type FindInMapState = {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+};
+
 export function buildVisualizationToolbarConfig(
   model: Editor,
   capability: Capability,
@@ -62,6 +68,7 @@ export function buildVisualizationToolbarConfig(
   setExpandLevel: (level: number) => void,
   themeMode?: 'light' | 'dark',
   toggleTheme?: () => void,
+  findInMap?: FindInMapState,
 ): (ActionConfig | undefined)[] {
   const zoomToFitLabel = intl.formatMessage({
     id: 'visualization-toolbar.tooltip-zoom-to-fit',
@@ -149,6 +156,8 @@ export function buildVisualizationToolbarConfig(
       }),
       'data-testid': 'find-in-map-button',
       onClick: () => trackEditorInteraction('find_in_map'),
+      open: findInMap?.open,
+      onOpenChange: findInMap?.setOpen,
       options: [
         {
           render: (closeModal) => (
@@ -313,6 +322,7 @@ type VisualizationToolbarProps = {
 const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps): ReactElement => {
   const intl = useIntl();
   const [expandLevel, setExpandLevel] = useState(0);
+  const [findInMapOpen, setFindInMapOpen] = useState(false);
   const { mode, toggleMode } = useTheme();
 
   // Keyboard shortcuts
@@ -325,37 +335,20 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
       // permanently dead once the map loaded after the first render.
       if (!model?.isMapLoadded()) return;
 
-      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      const isModifier = isMac ? event.metaKey : event.ctrlKey;
+      // Share the pause that suppresses canvas shortcuts while a dialog is
+      // open -- this listener sits on `document` and used to fire regardless.
+      if (DesignerKeyboard.isDisabled()) return;
+
+      const isModifier = isMacPlatform() ? event.metaKey : event.ctrlKey;
 
       if (!isModifier) return;
 
+      // Zoom (ctrl/meta with 0, -, =) is owned by DesignerKeyboard, not here.
       switch (event.key.toLowerCase()) {
-        case '0':
-          event.preventDefault();
-          model.getDesigner().zoomToFit();
-          trackEditorInteraction('zoom_to_fit_keyboard');
-          break;
-        case '-':
-          event.preventDefault();
-          model.getDesigner().zoomOut();
-          trackEditorInteraction('zoom_out_keyboard');
-          break;
-        case '=':
-        case '+':
-          event.preventDefault();
-          model.getDesigner().zoomIn();
-          trackEditorInteraction('zoom_in_keyboard');
-          break;
-        case 'o':
-          event.preventDefault();
-          trackEditorInteraction('outline_view_keyboard');
-          // Outline view will be handled by the toolbar button click
-          break;
         case 'f':
           event.preventDefault();
           trackEditorInteraction('find_in_map_keyboard');
-          document.querySelector<HTMLButtonElement>('[data-testid="find-in-map-button"]')?.click();
+          setFindInMapOpen(true);
           break;
         case 'e':
           event.preventDefault();
@@ -396,8 +389,9 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
         setExpandLevel,
         mode,
         toggleMode,
+        { open: findInMapOpen, setOpen: setFindInMapOpen },
       ),
-    [model, capability, intl, expandLevel, mode, toggleMode],
+    [model, capability, intl, expandLevel, mode, toggleMode, findInMapOpen],
   );
 
   // Check if we're in public or embedded view

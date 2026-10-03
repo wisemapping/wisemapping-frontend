@@ -15,23 +15,25 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
-import TopicLinkEditor from '../../components/action-widget/pane/topic-link-editor';
-import TopicNoteEditor from '../../components/action-widget/pane/topic-note-editor';
-import NodeProperty from '../model/node-property';
 
-const linkContent = (
-  linkModel: NodeProperty<string>,
-  closeModal: () => void,
-): React.ReactElement => {
-  return <TopicLinkEditor closeModal={closeModal} urlModel={linkModel}></TopicLinkEditor>;
-};
+/**
+ * True on macOS, where the shortcut modifier is Command rather than Control.
+ *
+ * Replaces five copy-pasted `navigator.platform.toUpperCase().indexOf('MAC')`
+ * checks across mindplot and editor. `navigator.platform` is deprecated, so
+ * `userAgentData.platform` is preferred where the browser offers it and the
+ * legacy property is the fallback -- keeping that choice in one place is the
+ * point of this module.
+ */
+export default function isMacPlatform(): boolean {
+  if (typeof navigator === 'undefined') {
+    return false;
+  }
 
-const noteContent = (
-  noteModel: NodeProperty<string | undefined>,
-  closeModal: () => void,
-): React.ReactElement => {
-  return <TopicNoteEditor closeModal={closeModal} noteModel={noteModel} />;
-};
+  const platform =
+    (navigator as Navigator & { userAgentData?: { platform?: string } }).userAgentData?.platform ??
+    navigator.platform ??
+    '';
 
-export { linkContent, noteContent };
+  return platform.toUpperCase().includes('MAC');
+}

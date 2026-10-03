@@ -39,11 +39,7 @@ import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
 import { trackRelationshipAction, trackEditorPanelAction } from '../../utils/analytics';
 import CanvasStyleEditor, { CanvasStyle } from '../action-widget/pane/canvas-style-editor';
-
-const keyTooltip = (msg: string, key: string): string => {
-  const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  return `${msg} (${isMac ? '⌘' : 'Ctrl'} + ${key})`;
-};
+import { formatTooltip } from '../visualization-toolbar/utils';
 
 export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionConfig[] {
   const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
@@ -155,7 +151,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    */
   const editLinkUrlConfiguration: ActionConfig = {
     icon: <LinkOutlinedIcon />,
-    tooltip: keyTooltip(
+    tooltip: formatTooltip(
       intl.formatMessage({ id: 'editor-panel.tooltip-add-link', defaultMessage: 'Add Link' }),
       'L',
     ),
@@ -204,7 +200,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    */
   const editNoteConfiguration: ActionConfig = {
     icon: <NoteOutlinedIcon />,
-    tooltip: keyTooltip(
+    tooltip: formatTooltip(
       intl.formatMessage({ id: 'editor-panel.tooltip-add-note', defaultMessage: 'Add Note' }),
       'K',
     ),

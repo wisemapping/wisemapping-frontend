@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { formatTooltip } from '../visualization-toolbar/utils';
 import React, { ReactElement, useEffect, useState, useRef, useMemo } from 'react';
 import MaterialToolbar from '@mui/material/Toolbar';
 import MaterialAppBar from '@mui/material/AppBar';
@@ -65,11 +66,6 @@ interface AppBarProps {
 
 const appBarDivisor = {
   render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
-};
-
-const keyTooltip = (msg: string, key: string): string => {
-  const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  return `${msg} (${isMac ? '⌘' : 'Ctrl'} + ${key})`;
 };
 
 const StarredOnStyle = {
@@ -380,7 +376,7 @@ const AppBar = ({
         <UndoAndRedo
           configuration={{
             icon: <UndoOutlinedIcon />,
-            tooltip: keyTooltip(
+            tooltip: formatTooltip(
               intl.formatMessage({ id: 'appbar.tooltip-undo', defaultMessage: 'Undo' }),
               'Z',
             ),
@@ -401,7 +397,7 @@ const AppBar = ({
         <UndoAndRedo
           configuration={{
             icon: <RedoOutlinedIcon />,
-            tooltip: keyTooltip(
+            tooltip: formatTooltip(
               intl.formatMessage({ id: 'appbar.tooltip-redo', defaultMessage: 'Redo' }),
               'Shift + Z',
             ),
@@ -421,7 +417,7 @@ const AppBar = ({
     {
       icon: <SaveOutlinedIcon />,
       onClick: handleDebouncedSave,
-      tooltip: keyTooltip(
+      tooltip: formatTooltip(
         intl.formatMessage({ id: 'appbar.tooltip-save', defaultMessage: 'Save' }),
         'S',
       ),
@@ -600,7 +596,7 @@ const AppBar = ({
         color="default"
         className="material-menubar"
         sx={{
-          '& MuiButtonBase-root': {
+          '& .MuiButtonBase-root': {
             marginX: '1rem',
           },
         }}

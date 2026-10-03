@@ -103,8 +103,18 @@ export const ToolbarSubmenu = ({
   vertical,
   elevation,
 }: ToolbarSubmenuProps): ReactElement => {
-  const [open, setOpen] = useState(false);
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
   const itemRef = useRef(null);
+
+  // A submenu is controlled when the configuration supplies both `open` and
+  // `onOpenChange`; otherwise it owns its own state as before. Controlled mode
+  // is what lets a keyboard shortcut open a panel without reaching into the
+  // DOM for the trigger button.
+  const isControlled = configuration.open !== undefined && Boolean(configuration.onOpenChange);
+  const open = isControlled ? Boolean(configuration.open) : uncontrolledOpen;
+  const setOpen = isControlled
+    ? (value: boolean) => configuration.onOpenChange!(value)
+    : setUncontrolledOpen;
 
   const orientationProps = vertical ? verticalAligment : horizontalAligment;
   // If options has custom render, use click-to-close behavior, otherwise hover

@@ -41,68 +41,45 @@ class Capability {
   };
 
   isHidden(action: ActionType): boolean {
+    // A locked map is somebody else's editing session: everything that mutates
+    // it, or implies it can be mutated, is suppressed whatever the render mode.
+    if (this.isLocked && HIDDEN_WHEN_LOCKED.has(action)) {
+      return true;
+    }
+
     const mapping = ActionConfigByRenderMode[action];
-
-    let result = false;
-    if (mapping) {
-      // Has been marked in desktop ...
-      const desktopCapability: EditorRenderMode[] | undefined = mapping.desktop?.hidden;
-      result = Boolean(desktopCapability?.includes(this.mode)).valueOf();
-
-      // Had been overwrited for mobile ...
-      if (!result && this.isMobile) {
-        const mobileCapability: EditorRenderMode[] | undefined = mapping.mobile?.hidden;
-        result = Boolean(mobileCapability?.includes(this.mode)).valueOf();
-      }
+    if (!mapping) {
+      return false;
     }
 
-    // Todo: Needs to be moved to more declarative ...
-    if (
-      this.isLocked &&
-      (action === 'save' ||
-        action === 'keyboard-shortcuts' ||
-        action === 'edition-toolbar' ||
-        action === 'publish' ||
-        action === 'redo-changes' ||
-        action === 'undo-changes')
-    ) {
-      result = true;
+    if (mapping.desktop?.hidden?.includes(this.mode)) {
+      return true;
     }
-    return Boolean(result);
-  }
-
-  isDisabled(action: ActionType): boolean {
-    let result: boolean = this.isHidden(action);
-
-    // If it was not marked as hidden, it might be marked as disabled ...
-    if (!result) {
-      const mapping = ActionConfigByRenderMode[action];
-
-      if (mapping) {
-        // Has been marked in desktop ...
-        const desktopCapability: EditorRenderMode[] | undefined = mapping.desktop?.hidden;
-        result = Boolean(desktopCapability?.includes(this.mode)).valueOf();
-
-        // Had been overwrited for mobile ...
-        if (!result && this.isMobile) {
-          const mobileCapability: EditorRenderMode[] | undefined = mapping.mobile?.hidden;
-          result = Boolean(mobileCapability?.includes(this.mode)).valueOf();
-        }
-      }
-    }
-
-    return Boolean(result);
+    // Mobile only ever adds exclusions on top of the desktop list.
+    return Boolean(this.isMobile && mapping.mobile?.hidden?.includes(this.mode));
   }
 }
+
+/**
+ * Actions suppressed while the map is locked by another editor. Declarative so
+ * the rule reads as data next to the render-mode table rather than as a chain
+ * of `action === ...` comparisons inside `isHidden`.
+ */
+const HIDDEN_WHEN_LOCKED: ReadonlySet<ActionType> = new Set<ActionType>([
+  'save',
+  'keyboard-shortcuts',
+  'edition-toolbar',
+  'publish',
+  'redo-changes',
+  'undo-changes',
+]);
 
 interface CapabilitySupport {
   mobile?: {
     hidden?: EditorRenderMode[];
-    disabled?: EditorRenderMode[];
   };
   desktop?: {
     hidden?: EditorRenderMode[];
-    disabled?: EditorRenderMode[];
   };
 }
 
