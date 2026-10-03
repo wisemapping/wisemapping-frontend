@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 
 // Redirect /c/admin to /c/admin/accounts by default
 const AdminConsole = (): React.ReactElement => {
