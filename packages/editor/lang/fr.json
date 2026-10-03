@@ -182,6 +182,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "Masquer les noeuds enfants"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "Abaisser le noeud d'un niveau (rattacher au frère précédent)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "Déplacer le noeud vers le bas parmi ses frères"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "Déplacer le noeud vers le haut parmi ses frères"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "Remonter le noeud d'un niveau (rattacher au grand-parent)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "Copier et coller des noeuds"
   },

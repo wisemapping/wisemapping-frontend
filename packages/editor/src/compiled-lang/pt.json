@@ -1417,6 +1417,24 @@
       "value": "Procurar tópico no mapa"
     }
   ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "Aumentar nível do tópico (anexar ao irmão anterior)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "Mover tópico para baixo entre irmãos"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "Mover tópico para cima entre irmãos"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1427,6 +1445,12 @@
     {
       "type": 0,
       "value": "Teclas de seta"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "Diminuir nível do tópico (anexar ao avô)"
     }
   ],
   "shortcut-help-pane.outline-view": [

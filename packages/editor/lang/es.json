@@ -197,6 +197,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "Colapsar hijos"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "Aumentar nivel del tópico (unir al hermano anterior)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "Mover tópico abajo entre hermanos"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "Mover tópico arriba entre hermanos"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "Reducir nivel del tópico (unir al abuelo)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "Copiar y pegar tópicos"
   },

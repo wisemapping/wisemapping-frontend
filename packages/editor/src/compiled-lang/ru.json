@@ -1417,6 +1417,24 @@
       "value": "Найти тему на карте"
     }
   ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "Увеличить уровень темы (присоединить к предыдущей соседней)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "Переместить тему вниз среди соседних"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "Переместить тему вверх среди соседних"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1427,6 +1445,12 @@
     {
       "type": 0,
       "value": "Клавиши со стрелками"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "Уменьшить уровень темы (присоединить к прародителю)"
     }
   ],
   "shortcut-help-pane.outline-view": [

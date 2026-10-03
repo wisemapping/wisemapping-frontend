@@ -1417,6 +1417,24 @@
       "value": "Thema in der Map suchen"
     }
   ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "Thema einrücken (an vorheriges Geschwister anhängen)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "Thema nach unten verschieben"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "Thema nach oben verschieben"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1427,6 +1445,12 @@
     {
       "type": 0,
       "value": "Pfeiltasten"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "Thema ausrücken (an Großeltern anhängen)"
     }
   ],
   "shortcut-help-pane.outline-view": [

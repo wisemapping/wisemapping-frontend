@@ -212,6 +212,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "子要素を折りたたむ"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "トピックの階層を下げる (前の兄弟に接続)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "トピックを兄弟間で下に移動"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "トピックを兄弟間で上に移動"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "トピックの階層を上げる (祖父に接続)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "トピックをコピー＆ペースト/マインドマップ画像をクリップボードにコピー。"
   },

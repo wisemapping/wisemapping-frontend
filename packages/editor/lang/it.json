@@ -212,6 +212,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "Comprimi figli"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "Aumenta livello argomento (collega al fratello precedente)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "Sposta argomento giù tra i fratelli"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "Sposta argomento su tra i fratelli"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "Riduci livello argomento (collega al nonno)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "Copia e incolla argomenti/Copia immagine della mappa mentale negli appunti."
   },

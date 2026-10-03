@@ -215,6 +215,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "Згорнути дочірні елементи"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "Збільшити рівень теми (приєднати до попередньої сусідньої)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "Перемістити тему вниз серед сусідніх"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "Перемістити тему вгору серед сусідніх"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "Зменшити рівень теми (приєднати до прабатька)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "Копіювати та вставляти теми/Копіювати зображення карти розуму в буфер обміну."
   },

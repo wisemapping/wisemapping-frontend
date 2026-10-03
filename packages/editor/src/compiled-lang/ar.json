@@ -1405,6 +1405,24 @@
       "value": "البحث عن موضوع في الخريطة"
     }
   ],
+  "shortcut-help-pane.indent-topic": [
+    {
+      "type": 0,
+      "value": "زيادة مستوى الموضوع (الإرفاق بالشقيق السابق)"
+    }
+  ],
+  "shortcut-help-pane.move-topic-down": [
+    {
+      "type": 0,
+      "value": "تحريك الموضوع للأسفل بين الأشقاء"
+    }
+  ],
+  "shortcut-help-pane.move-topic-up": [
+    {
+      "type": 0,
+      "value": "تحريك الموضوع للأعلى بين الأشقاء"
+    }
+  ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
@@ -1415,6 +1433,12 @@
     {
       "type": 0,
       "value": "مفاتيح الأسهم"
+    }
+  ],
+  "shortcut-help-pane.outdent-topic": [
+    {
+      "type": 0,
+      "value": "تقليل مستوى الموضوع (الإرفاق بالجدّ)"
     }
   ],
   "shortcut-help-pane.outline-view": [

@@ -212,6 +212,18 @@
   "shortcut-help-pane.collapse-children": {
     "defaultMessage": "बच्चों को समेटें"
   },
+  "shortcut-help-pane.indent-topic": {
+    "defaultMessage": "विषय का स्तर बढ़ाएँ (पिछले सहोदर से जोड़ें)"
+  },
+  "shortcut-help-pane.move-topic-down": {
+    "defaultMessage": "विषय को सहोदरों में नीचे ले जाएँ"
+  },
+  "shortcut-help-pane.move-topic-up": {
+    "defaultMessage": "विषय को सहोदरों में ऊपर ले जाएँ"
+  },
+  "shortcut-help-pane.outdent-topic": {
+    "defaultMessage": "विषय का स्तर घटाएँ (दादा से जोड़ें)"
+  },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "कॉपी-पेस्ट/माइंडमैप छवि कॉपी करें"
   },
