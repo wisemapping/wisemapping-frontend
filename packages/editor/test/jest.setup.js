@@ -15,16 +15,15 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const config = {
-  testEnvironment: 'jsdom',
-  setupFiles: ['<rootDir>/test/jest.setup.js'],
-  verbose: true,
-  preset: 'ts-jest',
-  moduleFileExtensions: ['js', 'ts', 'tsx'],
-  transform: {
-    '^.+\\.js?$': 'babel-jest',
-    '.+\\.(svg|css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
-  },
-};
 
-module.exports = config;
+// jsdom ships without TextEncoder/TextDecoder. The @wisemapping/mindplot bundle
+// pulls in jspdf, which touches both at module scope, so anything importing
+// mindplot from a jsdom test fails to even load without these.
+const { TextEncoder, TextDecoder } = require('util');
+
+if (typeof global.TextEncoder === 'undefined') {
+  global.TextEncoder = TextEncoder;
+}
+if (typeof global.TextDecoder === 'undefined') {
+  global.TextDecoder = TextDecoder;
+}
