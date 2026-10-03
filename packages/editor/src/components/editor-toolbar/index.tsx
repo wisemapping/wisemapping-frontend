@@ -25,9 +25,10 @@ import { buildEditorPanelConfig } from './configBuilder';
 type EditorToolbarProps = {
   model: Model | undefined;
   capability: Capability;
+  getDeepLink?: (nodeId: number) => string;
 };
 
-const EditorToolbar = ({ model, capability }: EditorToolbarProps): ReactElement => {
+const EditorToolbar = ({ model, capability, getDeepLink }: EditorToolbarProps): ReactElement => {
   const intl = useIntl();
   const isMapLoaded = model?.isMapLoadded() ?? false;
 
@@ -35,8 +36,8 @@ const EditorToolbar = ({ model, capability }: EditorToolbarProps): ReactElement 
     if (capability.isHidden('edition-toolbar') || !model || !isMapLoaded) {
       return undefined;
     }
-    return buildEditorPanelConfig(model, intl);
-  }, [capability, intl, isMapLoaded, model]);
+    return buildEditorPanelConfig(model, intl, getDeepLink);
+  }, [capability, intl, isMapLoaded, model, getDeepLink]);
 
   return <span>{config ? <Toolbar configurations={config} /> : <></>}</span>;
 };

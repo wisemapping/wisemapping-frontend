@@ -1635,10 +1635,28 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  goToNode(node: Topic): void {
+  /**
+   * Focuses the node and brings it into view. By default it pans by the minimum
+   * needed to clear the viewport padding (`ensureVisible`), which is what
+   * keyboard navigation wants. With `center` it instead parks the node in the
+   * middle of the viewport -- used when arriving from a per-node deep link,
+   * where there is no previous viewport worth preserving.
+   */
+  goToNode(node: Topic, center = false): void {
     node.setOnFocus(true);
     this.onObjectFocusEvent(node);
-    this.ensureNodeVisible(node);
+    if (center) {
+      this.centerNode(node);
+    } else {
+      this.ensureNodeVisible(node);
+    }
+  }
+
+  /**
+   * Pans the viewport so the node sits at its centre, without changing focus.
+   */
+  centerNode(node: Topic): void {
+    this._canvas.centerOnPosition(node.getPosition());
   }
 
   /**
@@ -1646,14 +1664,17 @@ class Designer extends EventDispispatcher<DesignerEventType> {
    * selection, then focuses and pans to the node -- the sequence keyboard
    * navigation already relies on (via DesignerKeyboard) to reveal a node
    * hidden inside a collapsed branch.
+   *
+   * `center` is forwarded to `goToNode`; it defaults to false so the existing
+   * keyboard-navigation call sites keep their minimal-pan behaviour.
    */
-  revealNode(node: Topic): void {
+  revealNode(node: Topic, center = false): void {
     const collapsedAncestorIds = getCollapsedAncestorIds(node);
     if (collapsedAncestorIds.length > 0) {
       this.getActionDispatcher().shrinkBranch(collapsedAncestorIds, false);
     }
     this.deselectAll();
-    this.goToNode(node);
+    this.goToNode(node, center);
   }
 
   private ensureNodeVisible(node: Topic): void {
