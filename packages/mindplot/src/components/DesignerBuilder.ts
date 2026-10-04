@@ -20,13 +20,18 @@ import PersistenceManager from './PersistenceManager';
 import Designer from './Designer';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 
-let designer: Designer;
+let designer: Designer | null = null;
 
 export function buildDesigner(options: DesignerOptions): Designer {
   const containerElem = options.divContainer;
   $assert(containerElem, 'container could not be null');
-  if (designer) {
-    throw new Error('Designer can does not support multiple initializations');
+  if (designer && !designer.isDisposed()) {
+    // A designer whose container left the page is being torn down (MindplotWebComponent disposes
+    // it once disconnected): finish it now. A designer still on the page is in use ...
+    if (designer.getContainer().isConnected) {
+      throw new Error('Designer can does not support multiple initializations');
+    }
+    designer.dispose();
   }
 
   // Register load events ...

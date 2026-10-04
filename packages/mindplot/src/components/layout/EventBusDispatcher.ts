@@ -21,9 +21,15 @@ import SizeType from '../SizeType';
 import Topic from '../Topic';
 import LayoutEventBus from './LayoutEventBus';
 import LayoutManager from './LayoutManager';
+import { LayoutEventBusType } from '../LayoutEventBusType';
+
+type BusHandler = Parameters<typeof LayoutEventBus.addEvent>[1];
 
 class EventBusDispatcher {
   private _layoutManager: LayoutManager | null;
+
+  // LayoutEventBus is module-level: keep the handlers, so that dispose() can remove them ...
+  private _busHandlers: [LayoutEventBusType, BusHandler][] = [];
 
   constructor() {
     this.registerBusEvents();
@@ -35,14 +41,26 @@ class EventBusDispatcher {
   }
 
   registerBusEvents() {
-    LayoutEventBus.addEvent('topicAdded', this._topicAdded.bind(this));
-    LayoutEventBus.addEvent('topicRemoved', this._topicRemoved.bind(this));
-    LayoutEventBus.addEvent('topicResize', this._topicResizeEvent.bind(this));
-    LayoutEventBus.addEvent('topicMoved', this._topicMoved.bind(this));
-    LayoutEventBus.addEvent('topicDisconect', this._topicDisconect.bind(this));
-    LayoutEventBus.addEvent('topicConnected', this._topicConnected.bind(this));
-    LayoutEventBus.addEvent('childShrinked', this._childShrinked.bind(this));
-    LayoutEventBus.addEvent('forceLayout', this._forceLayout.bind(this));
+    this.dispose();
+    this._busHandlers = [
+      ['topicAdded', this._topicAdded.bind(this)],
+      ['topicRemoved', this._topicRemoved.bind(this)],
+      ['topicResize', this._topicResizeEvent.bind(this)],
+      ['topicMoved', this._topicMoved.bind(this)],
+      ['topicDisconect', this._topicDisconect.bind(this)],
+      ['topicConnected', this._topicConnected.bind(this)],
+      ['childShrinked', this._childShrinked.bind(this)],
+      ['forceLayout', this._forceLayout.bind(this)],
+    ];
+    this._busHandlers.forEach(([type, handler]) => LayoutEventBus.addEvent(type, handler));
+  }
+
+  /**
+   * Removes the LayoutEventBus handlers, so that this dispatcher no longer drives its layout.
+   */
+  dispose(): void {
+    this._busHandlers.forEach(([type, handler]) => LayoutEventBus.removeEvent(type, handler));
+    this._busHandlers = [];
   }
 
   private _topicResizeEvent(args: { node: Topic; size: SizeType }) {

@@ -447,7 +447,9 @@ class Canvas {
           window.addEventListener('blur', this._cancelPan);
         }
       } else {
-        this._mouseUpListener!();
+        // A press while a pan is in progress (the release never reached the page, or a second
+        // button or finger): end the pan, but it is not a release, so it must not fire a click.
+        this._cancelPan!();
       }
     };
     this._mouseDownListener = mouseDownListener;

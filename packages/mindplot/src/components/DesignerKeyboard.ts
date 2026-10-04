@@ -17,6 +17,8 @@
  */
 import { $assert } from './util/assert';
 import EventManager from './util/EventManager';
+import KeyboardManager from './util/KeyboardManager';
+import { sideOf } from './util/side';
 import Keyboard from './Keyboard';
 import { Designer } from '..';
 import Topic from './Topic';
@@ -26,10 +28,10 @@ import { $notify } from './model/ToolbarNotifier';
 
 export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
-  private static _instance: DesignerKeyboard;
+  private static _instance: DesignerKeyboard | undefined;
 
   // Paused by the editor (pause()/resume()), e.g. while a dialog is open ...
-  private static _disabled: boolean;
+  private static _disabled = false;
 
   // Paused because the pointer left the canvas. Kept apart from _disabled, so
   // hovering the canvas does not bring the shortcuts back behind a dialog ...
@@ -54,6 +56,17 @@ class DesignerKeyboard extends Keyboard {
     'F12',
   ];
 
+  // Listeners bound to the document and the canvas container, removed by dispose() ...
+  private _container: HTMLElement | null = null;
+
+  private _keypressListener: EventListener | null = null;
+
+  private _mouseEnterListener: EventListener | null = null;
+
+  private _mouseLeaveListener: EventListener | null = null;
+
+  private _disposed = false;
+
   constructor(designer: Designer) {
     super();
     $assert(designer, 'designer can not be null');
@@ -62,11 +75,44 @@ class DesignerKeyboard extends Keyboard {
 
   addShortcut(shortcuts: string[] | string, callback: EventCallback): void {
     super.addShortcut(shortcuts, () => {
-      if (DesignerKeyboard.isDisabled()) {
+      // The shortcuts live in a page-wide registry: a disposed keyboard must not drive its designer.
+      if (this._disposed || DesignerKeyboard.isDisabled()) {
         return;
       }
       callback();
     });
+  }
+
+  /**
+   * Removes the listeners this keyboard bound on the document and the canvas. If it is the
+   * registered keyboard, its shortcuts are dropped as well.
+   */
+  dispose(): void {
+    if (this._disposed) {
+      return;
+    }
+    this._disposed = true;
+
+    if (this._keypressListener) {
+      EventManager.unbind(document, 'keypress', this._keypressListener);
+      this._keypressListener = null;
+    }
+    if (this._container) {
+      if (this._mouseEnterListener) {
+        this._container.removeEventListener('mouseenter', this._mouseEnterListener);
+      }
+      if (this._mouseLeaveListener) {
+        this._container.removeEventListener('mouseleave', this._mouseLeaveListener);
+      }
+    }
+    this._container = null;
+    this._mouseEnterListener = null;
+    this._mouseLeaveListener = null;
+
+    if (DesignerKeyboard._instance === this) {
+      DesignerKeyboard._instance = undefined;
+      KeyboardManager.clearAll();
+    }
   }
 
   private _registerEvents(designer: Designer) {
@@ -200,17 +246,20 @@ class DesignerKeyboard extends Keyboard {
       me._moveTopic(designer, 'indent');
     });
 
-    designer.getContainer().addEventListener('mouseenter', () => {
+    this._container = designer.getContainer();
+    this._mouseEnterListener = () => {
       super.resume();
       DesignerKeyboard._outsideCanvas = false;
-    });
+    };
+    this._container.addEventListener('mouseenter', this._mouseEnterListener);
 
-    designer.getContainer().addEventListener('mouseleave', () => {
+    this._mouseLeaveListener = () => {
       super.pause();
       DesignerKeyboard._outsideCanvas = true;
-    });
+    };
+    this._container.addEventListener('mouseleave', this._mouseLeaveListener);
 
-    EventManager.bind(document, 'keypress', (event: Event) => {
+    this._keypressListener = (event: Event) => {
       // Needs to be ignored ?
       if (
         DesignerKeyboard.isDisabled() ||
@@ -232,7 +281,8 @@ class DesignerKeyboard extends Keyboard {
         event.preventDefault();
         topic.showTextEditor(keyboardEvent.key);
       }
-    });
+    };
+    EventManager.bind(document, 'keypress', this._keypressListener);
   }
 
   /**
@@ -451,11 +501,11 @@ class DesignerKeyboard extends Keyboard {
     let target: Topic | null = null;
     const parentY = node.getPosition().y;
     let minDistance: number | null = null;
+    // A child at the root's x is on the right, the side the layout fills first. Tested as
+    // `x >= 0` for LEFT and `x <= 0` for RIGHT, it was on neither side.
+    const wanted = side === 'RIGHT' ? 1 : -1;
     children.forEach((child) => {
-      if (
-        (side === 'LEFT' && child.getPosition().x >= 0) ||
-        (side === 'RIGHT' && child.getPosition().x <= 0)
-      ) {
+      if (sideOf(child.getPosition().x, node.getPosition().x) !== wanted) {
         return;
       }
       const distance = Math.abs(child.getPosition().y - parentY);
@@ -490,9 +540,9 @@ class DesignerKeyboard extends Keyboard {
 
     let candidates = children;
     if (preferredSide) {
-      candidates = children.filter((child) =>
-        preferredSide === 'RIGHT' ? child.getPosition().x >= 0 : child.getPosition().x <= 0,
-      );
+      // x === 0 is the right half, as in _handleHorizontalBranchMove; it used to count on both.
+      const wanted = preferredSide === 'RIGHT' ? 1 : -1;
+      candidates = children.filter((child) => sideOf(child.getPosition().x) === wanted);
       if (candidates.length === 0) {
         candidates = children;
       }
@@ -677,9 +727,12 @@ class DesignerKeyboard extends Keyboard {
     designer.goToNode(node);
   }
 
+  /**
+   * Builds the keyboard of a designer. A pause() requested before, e.g. by the editor while its
+   * keyboard events are disabled, is kept: only resume() lifts it.
+   */
   static register(designer: Designer) {
     this._instance = new DesignerKeyboard(designer);
-    this._disabled = false;
     this._outsideCanvas = false;
   }
 

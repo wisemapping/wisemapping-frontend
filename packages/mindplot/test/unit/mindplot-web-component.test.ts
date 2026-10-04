@@ -58,6 +58,7 @@ describe('MindplotWebComponent', () => {
   let handlers: Record<string, Array<() => void>>;
   let mindmap: { getId: () => string } | null;
   let persistence: { save: jest.Mock; unlockMap: jest.Mock };
+  let dispose: jest.Mock;
 
   const fire = (type: string): void => {
     (handlers[type] || []).forEach((h) => h());
@@ -79,6 +80,7 @@ describe('MindplotWebComponent', () => {
     handlers = {};
     mindmap = { getId: () => '1' };
     persistence = { save: jest.fn(), unlockMap: jest.fn() };
+    dispose = jest.fn();
     PersistenceManager.init(persistence as unknown as PersistenceManager);
 
     (buildDesigner as jest.Mock).mockReset();
@@ -88,6 +90,7 @@ describe('MindplotWebComponent', () => {
       },
       getMindmap: () => mindmap,
       getMindmapProperties: () => ({}),
+      dispose,
     }));
 
     jest.spyOn(console, 'log').mockImplementation(() => undefined);
@@ -197,6 +200,49 @@ describe('MindplotWebComponent', () => {
       settle();
       await result;
       expect(done).toBe(true);
+    });
+  });
+
+  describe('disconnect (BL-48)', () => {
+    const flushMicrotasks = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+
+    afterEach(() => {
+      component.remove();
+    });
+
+    it('disposes the designer once the element leaves the page', async () => {
+      build('edition-owner');
+      document.body.appendChild(component);
+
+      component.remove();
+      await flushMicrotasks();
+
+      expect(dispose).toHaveBeenCalledTimes(1);
+      // The designer stays reachable, so that pending changes can still be saved ...
+      expect(component.getDesigner()).toBeDefined();
+    });
+
+    it('keeps the designer when the element is only moved', async () => {
+      build('edition-owner');
+      const first = document.createElement('div');
+      const second = document.createElement('div');
+      document.body.append(first, second);
+      first.appendChild(component);
+
+      second.appendChild(component);
+      await flushMicrotasks();
+
+      expect(dispose).not.toHaveBeenCalled();
+      first.remove();
+      second.remove();
+    });
+
+    it('does nothing when no designer was built', async () => {
+      document.body.appendChild(component);
+      component.remove();
+      await flushMicrotasks();
+
+      expect(dispose).not.toHaveBeenCalled();
     });
   });
 });

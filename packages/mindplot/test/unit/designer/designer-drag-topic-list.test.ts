@@ -64,7 +64,7 @@ describe('Designer drag handlers', () => {
     listeners.startdragging();
     expect(addedSpy).toHaveBeenCalledWith(false);
 
-    const dragTopic = { applyChanges: jest.fn() };
+    const dragTopic = { applyChanges: jest.fn(), isCancelled: () => false };
     listeners.enddragging({} as MouseEvent, dragTopic);
     expect(addedSpy).toHaveBeenCalledWith(true);
 

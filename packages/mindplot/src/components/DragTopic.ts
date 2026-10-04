@@ -62,14 +62,6 @@ class DragTopic {
     this._pivot = DragTopic._scopedPivot || DragTopic._defaultPivot();
   }
 
-  /**
-   * Pivot of the most recently initialized workspace.
-   * @deprecated Every workspace has its own pivot: use DragManager.getDragPivot().
-   */
-  static get _dragPivot(): DragPivot | null {
-    return DragTopic._lastPivot;
-  }
-
   private static _defaultPivot(): DragPivot {
     if (!DragTopic._lastPivot) {
       DragTopic._lastPivot = new DragPivot();

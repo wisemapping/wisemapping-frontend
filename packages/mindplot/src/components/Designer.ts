@@ -102,6 +102,17 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   private _selectionShadows: Map<Topic, HTMLTopicSelected> = new Map();
 
+  // Removes the LayoutEventBus handlers of the selection shadows, set once a map is loaded ...
+  private _unsubscribeSelectionShadows: (() => void) | null = null;
+
+  private _autoPanOnFocusListener: ((nodeModel: NodeModel) => void) | null = null;
+
+  private _wheelListener: ((event: WheelEvent) => void) | null = null;
+
+  private _keyboard: DesignerKeyboard | undefined;
+
+  private _disposed = false;
+
   constructor(options: DesignerOptions) {
     super();
     // Set up i18n location ...
@@ -144,6 +155,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
       // Register keyboard events ...
       DesignerKeyboard.register(this);
+      this._keyboard = DesignerKeyboard.getInstance();
 
       this._dragManager = this._buildDragManager(this._canvas);
     }
@@ -166,39 +178,36 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   private _registerWheelEvents(): void {
-    this.getContainer().addEventListener(
-      'wheel',
-      (event: WheelEvent) => {
-        // Avoid managing wheel events if mindplot kb shortcuts are disabled.
-        if (DesignerKeyboard.isDisabled()) return;
+    this._wheelListener = (event: WheelEvent) => {
+      // Avoid managing wheel events if mindplot kb shortcuts are disabled.
+      if (DesignerKeyboard.isDisabled()) return;
 
-        const isZoomGesture = event.ctrlKey || event.metaKey || event.altKey;
+      const isZoomGesture = event.ctrlKey || event.metaKey || event.altKey;
 
-        if (isZoomGesture) {
-          if (event.deltaY === 0) return;
+      if (isZoomGesture) {
+        if (event.deltaY === 0) return;
 
-          // Scale the zoom step by the wheel magnitude so trackpad gestures feel
-          // continuous instead of stepped. exp(-deltaY * k) maps deltaY<0 (scroll
-          // up) to zoom-in and deltaY>0 (scroll down) to zoom-out symmetrically.
-          // Clamp magnitude so a single mouse-wheel notch (deltaY≈100) doesn't
-          // overshoot while keeping trackpad gestures (deltaY≈1–30) smooth.
-          const clamped = Math.max(-50, Math.min(50, event.deltaY));
-          const factor = Math.exp(-clamped * 0.01);
-          if (factor > 1) {
-            this.zoomIn(factor);
-          } else {
-            this.zoomOut(1 / factor);
-          }
+        // Scale the zoom step by the wheel magnitude so trackpad gestures feel
+        // continuous instead of stepped. exp(-deltaY * k) maps deltaY<0 (scroll
+        // up) to zoom-in and deltaY>0 (scroll down) to zoom-out symmetrically.
+        // Clamp magnitude so a single mouse-wheel notch (deltaY≈100) doesn't
+        // overshoot while keeping trackpad gestures (deltaY≈1–30) smooth.
+        const clamped = Math.max(-50, Math.min(50, event.deltaY));
+        const factor = Math.exp(-clamped * 0.01);
+        if (factor > 1) {
+          this.zoomIn(factor);
         } else {
-          // No modifier: a two-finger trackpad swipe (or a plain wheel) pans the
-          // canvas instead of zooming it.
-          if (event.deltaX === 0 && event.deltaY === 0) return;
-          this.panBy(event.deltaX, event.deltaY);
+          this.zoomOut(1 / factor);
         }
-        event.preventDefault();
-      },
-      { passive: false },
-    );
+      } else {
+        // No modifier: a two-finger trackpad swipe (or a plain wheel) pans the
+        // canvas instead of zooming it.
+        if (event.deltaX === 0 && event.deltaY === 0) return;
+        this.panBy(event.deltaX, event.deltaY);
+      }
+      event.preventDefault();
+    };
+    this.getContainer().addEventListener('wheel', this._wheelListener, { passive: false });
   }
 
   getActionDispatcher(): StandaloneActionDispatcher {
@@ -267,9 +276,12 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       }
     });
 
+    // Also fired when the drag is cancelled (Escape, window blur): the topic must then stay put.
     dragManager.addEvent('enddragging', (event: MouseEvent, dragTopic: DragTopic) => {
       designerModel.getTopics().forEach((topic) => topic.setMouseEventsEnabled(true));
-      dragTopic.applyChanges(workspace);
+      if (!dragTopic.isCancelled()) {
+        dragTopic.applyChanges(workspace);
+      }
     });
 
     return dragManager;
@@ -1029,7 +1041,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       this._canvas.registerEvents();
 
       // Initialize selection shadows if enabled
-      HTMLTopicSelected.initializeSelectionShadows(this);
+      this._unsubscribeSelectionShadows = HTMLTopicSelected.initializeSelectionShadows(this);
 
       // Finally, sort the map ...
       LayoutEventBus.fireEvent('forceLayout');
@@ -1081,10 +1093,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         topic.setOrientation(orientation);
       });
 
-    // Reset DragPivot to clear any stale connection state
-    if (DragTopic._dragPivot) {
-      DragTopic._dragPivot.reset();
-    }
+    // Reset this designer's DragPivot to clear any stale connection state (none when read-only)
+    this._dragManager?.getDragPivot().reset();
 
     // Redraw all topics immediately (no queue rendering during editing)
     this.getModel()
@@ -1821,18 +1831,61 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   private _registerAutoPanOnFocus(): void {
-    LayoutEventBus.addEvent(
-      'topicSelected',
-      (nodeModel: NodeModel) => {
-        const topic = this.getModel()
-          .getTopics()
-          .find((candidate) => candidate.getModel() === nodeModel);
-        if (topic) {
-          this.ensureNodeVisible(topic);
-        }
-      },
-      true,
-    );
+    this._autoPanOnFocusListener = (nodeModel: NodeModel) => {
+      const topic = this.getModel()
+        .getTopics()
+        .find((candidate) => candidate.getModel() === nodeModel);
+      if (topic) {
+        this.ensureNodeVisible(topic);
+      }
+    };
+    LayoutEventBus.addEvent('topicSelected', this._autoPanOnFocusListener);
+  }
+
+  /**
+   * Releases what the designer registered outside its own objects: the LayoutEventBus handlers
+   * (a module-level bus shared by every designer), the keyboard, the canvas listeners on the
+   * window and the container, and `globalThis.designer` if it still points at this designer.
+   *
+   * The model is left intact, so that the map can still be read and saved (the editor flushes
+   * pending changes after the component is removed).
+   */
+  dispose(): void {
+    if (this._disposed) {
+      return;
+    }
+    this._disposed = true;
+
+    if (this._unsubscribeSelectionShadows) {
+      this._unsubscribeSelectionShadows();
+      this._unsubscribeSelectionShadows = null;
+    }
+    HTMLTopicSelected.cleanupSelectionShadows(this);
+
+    if (this._autoPanOnFocusListener) {
+      LayoutEventBus.removeEvent('topicSelected', this._autoPanOnFocusListener);
+      this._autoPanOnFocusListener = null;
+    }
+    this._eventBussDispatcher.dispose();
+
+    if (this._keyboard) {
+      this._keyboard.dispose();
+      this._keyboard = undefined;
+    }
+
+    if (this._wheelListener) {
+      this.getContainer().removeEventListener('wheel', this._wheelListener);
+      this._wheelListener = null;
+    }
+    this._canvas.dispose();
+
+    if (globalThis.designer === this) {
+      Reflect.deleteProperty(globalThis, 'designer');
+    }
+  }
+
+  isDisposed(): boolean {
+    return this._disposed;
   }
 
   getWorkSpace(): Canvas {

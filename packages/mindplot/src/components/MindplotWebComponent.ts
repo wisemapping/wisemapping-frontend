@@ -194,6 +194,19 @@ class MindplotWebComponent extends HTMLElement {
     return this._isLoaded;
   }
 
+  /**
+   * Disposes the designer once the element has left the page. A move (removed and inserted
+   * again in the same task) keeps it. The designer stays reachable, so that pending changes can
+   * still be saved.
+   */
+  disconnectedCallback(): void {
+    queueMicrotask(() => {
+      if (!this.isConnected && this._designer) {
+        this._designer.dispose();
+      }
+    });
+  }
+
   private registerShortcuts() {
     const designerKeyboard = DesignerKeyboard.getInstance();
     if (designerKeyboard) {

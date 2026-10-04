@@ -64,6 +64,7 @@ jest.mock('../../src/components/export/PDFExporter', () => ({
 jest.mock('../../src/components/DesignerKeyboard', () => ({
   isDisabled: jest.fn().mockReturnValue(false),
   register: jest.fn(),
+  getInstance: jest.fn(),
 }));
 
 /**

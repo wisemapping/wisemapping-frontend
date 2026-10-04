@@ -93,3 +93,27 @@ describe('DesignerKeyboard pause', () => {
     expect(DesignerKeyboard.isDisabled()).toBe(true);
   });
 });
+
+describe('DesignerKeyboard register (BL-37)', () => {
+  afterEach(() => {
+    DesignerKeyboard.resume();
+  });
+
+  it('keeps a pause requested before the designer was built', () => {
+    const container = document.createElement('div');
+    const designer = {
+      getModel: jest.fn().mockReturnValue({}),
+      getContainer: () => container,
+    } as unknown as Designer;
+
+    // useEditor pauses the keyboard (enableKeyboardEvents=false) in an effect that
+    // can run before the designer exists ...
+    DesignerKeyboard.pause();
+    DesignerKeyboard.register(designer);
+
+    expect(DesignerKeyboard.isDisabled()).toBe(true);
+
+    DesignerKeyboard.resume();
+    expect(DesignerKeyboard.isDisabled()).toBe(false);
+  });
+});

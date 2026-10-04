@@ -195,6 +195,39 @@ describe('Canvas drag (pan) events', () => {
     expect(mockSetCoordOrigin).not.toHaveBeenCalled();
   });
 
+  it('ends a pan on a second mousedown without firing a click (BL-50)', () => {
+    const click = jest.fn();
+    canvas.getScreenManager().addEvent('click', click);
+
+    // The release of the first press never reached the page ...
+    container.dispatchEvent(mouseEvent('mousedown', 10, 10));
+    container.dispatchEvent(mouseEvent('mousedown', 10, 10));
+
+    expect(click).not.toHaveBeenCalled();
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+    expect(listenerCount('touchmove')).toBe(0);
+
+    mockSetCoordOrigin.mockClear();
+    document.body.dispatchEvent(mouseEvent('mousemove', 60, 60));
+    expect(mockSetCoordOrigin).not.toHaveBeenCalled();
+  });
+
+  it('ends a touch pan without a click when a second finger lands (BL-50)', () => {
+    const click = jest.fn();
+    canvas.getScreenManager().addEvent('click', click);
+
+    container.dispatchEvent(touchEvent('touchstart', [{ clientX: 10, clientY: 10 }]));
+    container.dispatchEvent(
+      touchEvent('touchstart', [
+        { clientX: 10, clientY: 10 },
+        { clientX: 50, clientY: 50 },
+      ]),
+    );
+
+    expect(click).not.toHaveBeenCalled();
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+  });
+
   it('ends a touch pan when the touch is cancelled', () => {
     container.dispatchEvent(touchEvent('touchstart', [{ clientX: 10, clientY: 10 }]));
     container.dispatchEvent(touchEvent('touchcancel', []));
