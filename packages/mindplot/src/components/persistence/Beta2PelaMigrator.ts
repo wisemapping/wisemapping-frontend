@@ -18,11 +18,15 @@
 import { $assert, $defined } from '../util/assert';
 import { Mindmap } from '../..';
 import NodeModel from '../model/NodeModel';
+import { sideOf } from '../util/side';
 import ModelCodeName from './ModelCodeName';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import XMLSerializerPela from './XMLSerializerTango';
 
 class Beta2PelaMigrator implements XMLMindmapSerializer {
+  // Vertical gap between the central topic and the top level topics placed below it.
+  private static DETACHED_TOPIC_GAP = 100;
+
   private _betaSerializer: XMLMindmapSerializer;
 
   private _pelaSerializer: XMLSerializerPela;
@@ -44,7 +48,16 @@ class Beta2PelaMigrator implements XMLMindmapSerializer {
     // Beta does not set position on second level nodes ...
     const branches = mindmap.getBranches();
     const me = this;
-    branches.forEach((model) => {
+    branches.forEach((model, index) => {
+      // The central topic is always positioned (see Mindmap.addBranch). Any other top level
+      // topic without position (hand-made maps) is stacked below it.
+      if (!model.hasPosition()) {
+        const centralPos = branches[0].getPositionOrThrow();
+        model.setPosition(
+          centralPos.x,
+          centralPos.y + index * Beta2PelaMigrator.DETACHED_TOPIC_GAP,
+        );
+      }
       me._fixPosition(model);
     });
 
@@ -53,11 +66,12 @@ class Beta2PelaMigrator implements XMLMindmapSerializer {
 
   private _fixPosition(parentModel: NodeModel) {
     const parentPos = parentModel.getPositionOrThrow();
-    const isRight = parentPos.x > 0;
+    // x === 0 counts as the right side, as Pela2TangoMigrator orders the topics.
+    const side = sideOf(parentPos.x);
     const me = this;
     parentModel.getChildren().forEach((child) => {
       if (!child.hasPosition()) {
-        child.setPosition(parentPos.x + (isRight ? 1 : -1), parentPos.y);
+        child.setPosition(parentPos.x + side, parentPos.y);
       }
       me._fixPosition(child);
     });

@@ -45,18 +45,10 @@ class FeatureModel {
     this._type = type;
     this._attributes = {};
     this._changeListener = undefined;
-
-    // Create type method ...
-    (this as unknown as Record<string, () => boolean>)[`is${FeatureModel.capitalize(type)}Model`] =
-      () => true;
   }
 
   getAttributes(): FeatureAttributes {
     return { ...this._attributes };
-  }
-
-  static capitalize(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   /**

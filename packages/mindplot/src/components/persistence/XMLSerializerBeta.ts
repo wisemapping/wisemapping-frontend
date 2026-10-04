@@ -21,9 +21,7 @@ import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import emojiToIconMap from './iconToEmoji.json';
-import { FontWeightType } from '../FontWeightType';
-import { FontStyleType } from '../FontStyleType';
-import { TopicShapeType } from '../model/INodeModel';
+import { isFontStyleType, isFontWeightType, isTopicShapeType } from './TopicAttributeTypes';
 
 class XMLSerializerBeta implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -104,7 +102,11 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     if ($defined(shape)) {
       // Hack for legacy mapping loading ...
       shape = shape === 'rectagle' ? 'rectangle' : shape;
-      topic.setShapeType(shape as TopicShapeType);
+      if (isTopicShapeType(shape)) {
+        topic.setShapeType(shape);
+      } else {
+        console.warn(`Unknown shape '${shape}' for topic ${topic.getId()}, ignoring it.`);
+      }
     }
 
     const isShrink = domElem.getAttribute('shrink');
@@ -129,12 +131,27 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
         topic.setFontColor(font[2]);
       }
 
-      if (font[3]) {
-        topic.setFontWeight(font[3] as FontWeightType);
+      // Unknown values are ignored, so the theme default applies.
+      const fontWeight = font[3];
+      if (fontWeight) {
+        if (isFontWeightType(fontWeight)) {
+          topic.setFontWeight(fontWeight);
+        } else {
+          console.warn(
+            `Unknown font weight '${fontWeight}' for topic ${topic.getId()}, ignoring it.`,
+          );
+        }
       }
 
-      if (font[4]) {
-        topic.setFontStyle(font[4] as FontStyleType);
+      const fontStyleValue = font[4];
+      if (fontStyleValue) {
+        if (isFontStyleType(fontStyleValue)) {
+          topic.setFontStyle(fontStyleValue);
+        } else {
+          console.warn(
+            `Unknown font style '${fontStyleValue}' for topic ${topic.getId()}, ignoring it.`,
+          );
+        }
       }
     }
 

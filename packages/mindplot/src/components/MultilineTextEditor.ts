@@ -48,7 +48,7 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     }
     this.registerEvents(this._containerElem);
     // Use the model text: getText() falls back to the theme placeholder for empty topics ...
-    this._oldText = topic.getModel().getText() ?? undefined;
+    this._oldText = topic.getModel().getText();
     this._onClose = onClose;
   }
 

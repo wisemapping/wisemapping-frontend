@@ -26,10 +26,12 @@ import XMLMindmapSerializer from './XMLMindmapSerializer';
 import ModelCodeName from './ModelCodeName';
 import FeatureType from '../model/FeatureType';
 import emojiToIconMap from './iconToEmoji.json';
-import { LineType } from '../ConnectionLine';
-import { FontWeightType } from '../FontWeightType';
-import { FontStyleType } from '../FontStyleType';
-import { TopicShapeType } from '../model/INodeModel';
+import {
+  isFontStyleType,
+  isFontWeightType,
+  isLineType,
+  isTopicShapeType,
+} from './TopicAttributeTypes';
 import ThemeType from '../model/ThemeType';
 import { CanvasStyleType, BackgroundPatternType } from '../model/CanvasStyleType';
 import { LAYOUT_ORIENTATION, type LayoutType } from '../layout/LayoutType';
@@ -526,14 +528,27 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         topic.setFontColor(fontColor);
       }
 
+      // Unknown values are ignored, so the theme default applies.
       const fontWeight = fontParts[3];
       if (fontWeight) {
-        topic.setFontWeight(fontWeight as FontWeightType);
+        if (isFontWeightType(fontWeight)) {
+          topic.setFontWeight(fontWeight);
+        } else {
+          console.warn(
+            `Unknown font weight '${fontWeight}' for topic ${topic.getId()}, ignoring it.`,
+          );
+        }
       }
 
       const fontStyleValue = fontParts[4];
       if (fontStyleValue) {
-        topic.setFontStyle(fontStyleValue as FontStyleType);
+        if (isFontStyleType(fontStyleValue)) {
+          topic.setFontStyle(fontStyleValue);
+        } else {
+          console.warn(
+            `Unknown font style '${fontStyleValue}' for topic ${topic.getId()}, ignoring it.`,
+          );
+        }
       }
     }
 
@@ -541,7 +556,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if (shape) {
       // Fix typo on serialization....
       shape = shape.replace('rectagle', 'rectangle');
-      topic.setShapeType(shape as TopicShapeType);
+      if (isTopicShapeType(shape)) {
+        topic.setShapeType(shape);
+      } else {
+        console.warn(`Unknown shape '${shape}' for topic ${topic.getId()}, ignoring it.`);
+      }
 
       // Is an image ?
       const image = domElem.getAttribute('image');
@@ -577,8 +596,14 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const connStyle = domElem.getAttribute('connStyle');
     if ($defined(connStyle) && connStyle) {
-      const lineType = Number.parseInt(connStyle, 10) as LineType;
-      topic.setConnectionStyle(lineType);
+      const lineType = Number.parseInt(connStyle, 10);
+      if (isLineType(lineType)) {
+        topic.setConnectionStyle(lineType);
+      } else {
+        console.warn(
+          `Unknown connection style '${connStyle}' for topic ${topic.getId()}, ignoring it.`,
+        );
+      }
     }
 
     const connColor = domElem.getAttribute('connColor');

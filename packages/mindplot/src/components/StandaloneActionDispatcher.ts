@@ -136,7 +136,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic, value: string | undefined) => {
       // Keep the model value (undefined when empty): getText() returns the theme placeholder.
-      const result = topic.getModel().getText() ?? undefined;
+      const result = topic.getModel().getText();
       topic.setText(value);
       return result;
     };
