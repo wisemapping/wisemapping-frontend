@@ -85,8 +85,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const relationships = mindmap.getRelationships();
     relationships.forEach((relationship) => {
       if (
-        mindmap.findNodeById(relationship.getFromNode()) !== null &&
-        mindmap.findNodeById(relationship.getToNode()) !== null
+        mindmap.findNodeById(relationship.getFromNode()) !== undefined &&
+        mindmap.findNodeById(relationship.getToNode()) !== undefined
       ) {
         // Isolated relationships are not persisted ....
         const relationDom = XMLSerializerTango._relationshipToXML(document, relationship);
@@ -278,8 +278,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         const key = attributesKeys[attrIndex];
         const value = attributes[key];
         if (key === 'text') {
-          const cdata = document.createCDATASection(this._rmXmlInv(value));
-          featureDom.appendChild(cdata);
+          XMLSerializerTango._appendCDATA(document, featureDom, this._rmXmlInv(value));
         } else {
           featureDom.setAttribute(key, value);
         }
@@ -302,10 +301,22 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       elem.setAttribute('text', this._rmXmlInv(text));
     } else {
       const textDom = document.createElement('text');
-      const cdata = document.createCDATASection(this._rmXmlInv(text));
-      textDom.appendChild(cdata);
+      XMLSerializerTango._appendCDATA(document, textDom, this._rmXmlInv(text));
       elem.appendChild(textDom);
     }
+  }
+
+  /**
+   * A CDATA section can not contain "]]>", so the text is split after "]]" into
+   * consecutive sections. Readers concatenate all the CDATA sections of the element.
+   */
+  private static _appendCDATA(document: Document, elem: Element, text: string): void {
+    text.split(']]>').forEach((part, index, parts) => {
+      const isLast = index === parts.length - 1;
+      const prefix = index > 0 ? '>' : '';
+      const suffix = isLast ? '' : ']]';
+      elem.appendChild(document.createCDATASection(`${prefix}${part}${suffix}`));
+    });
   }
 
   static _relationshipToXML(document: Document, relationship: RelationshipModel) {
@@ -532,7 +543,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const isShrink = domElem.getAttribute('shrink');
     // Hack: Some production maps has been stored with the central topic collapsed. This is a bug.
     if ($defined(isShrink) && type !== 'CentralTopic') {
-      topic.setChildrenShrunken(Boolean(isShrink));
+      topic.setChildrenShrunken(isShrink === 'true');
     }
 
     const position = domElem.getAttribute('position');
@@ -612,13 +623,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
   static _deserializeTextAttr(domElem: Element): string {
     let value = domElem.getAttribute('text');
     if (!value) {
-      const children = domElem.childNodes;
-      for (let i = 0; i < children.length; i++) {
-        const child = children[i];
-        if (child.nodeType === Node.CDATA_SECTION_NODE) {
-          value = child.nodeValue;
-        }
-      }
+      value = XMLSerializerTango._readCDATA(domElem);
     } else {
       // Notes must be decoded ...
       value = unescape(value);
@@ -636,15 +641,21 @@ class XMLSerializerTango implements XMLMindmapSerializer {
   }
 
   private static _deserializeNodeText(domElem: ChildNode): string {
+    const value = XMLSerializerTango._readCDATA(domElem);
+    return value !== null ? value : '';
+  }
+
+  /** Concatenates the CDATA sections of the element, null if it has none. */
+  private static _readCDATA(domElem: ChildNode): string | null {
     const children = domElem.childNodes;
     let value: string | null = null;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
       if (child.nodeType === Node.CDATA_SECTION_NODE) {
-        value = child.nodeValue;
+        value = (value ?? '') + (child.nodeValue ?? '');
       }
     }
-    return value !== null ? value : '';
+    return value;
   }
 
   private static _deserializeRelationship(
@@ -728,21 +739,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
    * @return The in String, stripped of non-valid characters.
    */
   protected _rmXmlInv(str: string): string {
-    let result = '';
-    for (let i = 0; i < str.length; i++) {
-      const c = str.charCodeAt(i);
-      if (
-        c === 0x9 ||
-        c === 0xa ||
-        c === 0xd ||
-        (c >= 0x20 && c <= 0xd7ff) ||
-        (c >= 0xe000 && c <= 0xfffd) ||
-        (c >= 0x10000 && c <= 0x10ffff)
-      ) {
-        result += str.charAt(i);
-      }
-    }
-    return result;
+    // Matched by code point (u flag), so surrogate pairs are kept and lone surrogates removed.
+    return str.replace(/[^\t\n\r\u{20}-\u{D7FF}\u{E000}-\u{FFFD}\u{10000}-\u{10FFFF}]/gu, '');
   }
 }
 

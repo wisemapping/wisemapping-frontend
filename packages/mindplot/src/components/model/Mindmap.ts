@@ -189,8 +189,8 @@ class Mindmap extends IMindmap {
     this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
-  findNodeById(id: number) {
-    let result;
+  findNodeById(id: number): INodeModel | undefined {
+    let result: INodeModel | undefined;
     for (let i = 0; i < this._branches.length; i++) {
       const branch = this._branches[i];
       result = branch.findNodeById(id);

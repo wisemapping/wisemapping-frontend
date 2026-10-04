@@ -243,7 +243,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
 
     const isShrink = domElem.getAttribute('shrink');
     if ($defined(isShrink)) {
-      topic.setChildrenShrunken(isShrink);
+      topic.setChildrenShrunken(isShrink === 'true');
     }
 
     const fontStyle = domElem.getAttribute('fontStyle');
