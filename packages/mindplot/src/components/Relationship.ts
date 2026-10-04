@@ -126,7 +126,6 @@ class Relationship extends BaseConnectionLine {
 
     // Reposition all nodes ...
     this.updatePositions();
-    this._controlPointsController = new RelationshipControlPoints(this);
 
     // Initialize handler ..
 
@@ -452,63 +451,37 @@ class Relationship extends BaseConnectionLine {
     return Relationship.calculateSnapPoint(topic, otherPos);
   }
 
-  private calculateBestConnectionPoint(topic: Topic, controlPoint: PositionType): PositionType {
-    // Use the shared snap point calculation
-    return Relationship.calculateSnapPoint(topic, controlPoint);
-  }
-
   /**
-   * Recalculates connection points and control points when control points have been customized.
-   * This ensures control points maintain their absolute positions while connection points
-   * are optimized based on the control point directions.
+   * Places the ends of a line whose control points have been customized. A custom control point is
+   * relative to the connection point it was placed from, as the model stores it: the end is placed
+   * as on load (applyModelControlPoint), so the curve keeps its shape relative to its topics when
+   * they move, and is drawn as it is saved. The end being dragged stays where the drag put it, on
+   * the snap point under the cursor.
    *
    * @param line2d The line to update
    * @param sourceTopic Source topic
    * @param targetTopic Target topic
-   * @returns Updated control points relative to new connection points
+   * @returns The control points, relative to the connection points
    */
   private recalculateCustomControlPoints(
     line2d: Line,
     sourceTopic: Topic,
     targetTopic: Topic,
   ): [PositionType, PositionType] {
-    // Get current control points (relative to current line positions)
-    const ctrlPoints = line2d.getControlPoints();
+    const [srcCtrlPoint, destCtrlPoint] = line2d.getControlPoints();
+    const controlPoints = this._controlPointsController;
 
-    // Use CURRENT line positions (what the control points are actually relative to)
-    // NOT freshly calculated positions which may be different
-    const currentFrom = line2d.getFrom();
-    const currentTo = line2d.getTo();
+    const from = controlPoints.isDragging(PivotType.Start)
+      ? line2d.getFrom()
+      : Relationship.calculateConnectionPointFor(sourceTopic, srcCtrlPoint);
+    const to = controlPoints.isDragging(PivotType.End)
+      ? line2d.getTo()
+      : Relationship.calculateConnectionPointFor(targetTopic, destCtrlPoint);
 
-    // Calculate control point absolute positions based on current line positions
-    const srcCtrlAbsolute = {
-      x: currentFrom.x + ctrlPoints[0].x,
-      y: currentFrom.y + ctrlPoints[0].y,
-    };
-    const destCtrlAbsolute = {
-      x: currentTo.x + ctrlPoints[1].x,
-      y: currentTo.y + ctrlPoints[1].y,
-    };
+    line2d.setFrom(from.x, from.y);
+    line2d.setTo(to.x, to.y);
 
-    // Find best connection points based on control point directions
-    const bestSrcPos = this.calculateBestConnectionPoint(sourceTopic, srcCtrlAbsolute);
-    const bestDestPos = this.calculateBestConnectionPoint(targetTopic, destCtrlAbsolute);
-
-    // Update line positions to new connection points
-    line2d.setFrom(bestSrcPos.x, bestSrcPos.y);
-    line2d.setTo(bestDestPos.x, bestDestPos.y);
-
-    // Recalculate control points relative to new connection points
-    return [
-      {
-        x: srcCtrlAbsolute.x - bestSrcPos.x,
-        y: srcCtrlAbsolute.y - bestSrcPos.y,
-      },
-      {
-        x: destCtrlAbsolute.x - bestDestPos.x,
-        y: destCtrlAbsolute.y - bestDestPos.y,
-      },
-    ];
+    return [{ ...srcCtrlPoint }, { ...destCtrlPoint }];
   }
 
   setOnFocus(focus: boolean): void {

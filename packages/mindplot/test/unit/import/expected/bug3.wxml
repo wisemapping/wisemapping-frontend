@@ -890,6 +890,6 @@ international)
             <topic position="-290,100" order="1" text="Innovation investment climate" shape="rounded rectangle" id="76" bgColor="#feffff"/>
         </topic>
     </topic>
-    <relationship srcTopicId="9" destTopicId="76" lineType="0" endArrow="true" startArrow="true" strokeStyle="dashed"/>
-    <relationship srcTopicId="4" destTopicId="114" lineType="0" endArrow="true" startArrow="true" strokeStyle="dashed"/>
+    <relationship srcTopicId="9" destTopicId="76" lineType="3" endArrow="true" startArrow="true" strokeStyle="dashed"/>
+    <relationship srcTopicId="4" destTopicId="114" lineType="3" endArrow="true" startArrow="true" strokeStyle="dashed"/>
 </map>

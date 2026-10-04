@@ -281,6 +281,10 @@ describe('Relationship control points', () => {
       container.dispatchEvent(
         new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
       );
+      // The drag moves the line end to the snap point under the cursor (BL4-30) ...
+      expect(line.setFrom).toHaveBeenLastCalledWith(0, 0);
+      line.setFrom.mockClear();
+
       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true }));
       container.dispatchEvent(
         new MouseEvent('mouseup', { clientX: 40, clientY: 30, bubbles: true }),

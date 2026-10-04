@@ -140,7 +140,9 @@ class ControlPivotLine {
   setVisibility(value: boolean) {
     if (this._isVisible !== value) {
       if (!value) {
+        // Hiding the dot ends a drag ...
         this.removeDragListeners();
+        this._dragStart = null;
         this._dot.removeEvent('mousedown', this._mouseDownHandler);
       } else {
         // Register events ...
@@ -164,6 +166,11 @@ class ControlPivotLine {
   getPosition(): PositionType {
     const line = this._relationship.getLine();
     return line.getControlPoints()[this._pivotType];
+  }
+
+  /** True from the mousedown on the dot until the drag ends. */
+  isDragging(): boolean {
+    return this._dragStart !== null;
   }
 
   redraw(): void {
@@ -195,6 +202,15 @@ class ControlPivotLine {
 
     // Use the shared snap point calculation from Relationship
     const relPos = Relationship.calculateSnapPoint(topic, mousePosition);
+
+    // The control point is relative to that snap point: move the line end there, so that the
+    // handle of the curve is under the cursor ...
+    const line = this._relationship.getLine();
+    if (this._pivotType === PivotType.Start) {
+      line.setFrom(relPos.x, relPos.y);
+    } else {
+      line.setTo(relPos.x, relPos.y);
+    }
 
     const ctlPoint = { x: mousePosition.x - relPos.x, y: mousePosition.y - relPos.y };
     this._moveRelHandler(ctlPoint);
@@ -340,6 +356,11 @@ class RelationshipControlPoints {
 
   getControlPointPosition(pivotType: PivotType): PositionType {
     return this._pivotLines[pivotType].getPosition();
+  }
+
+  /** True while the control point of that end is being dragged. */
+  isDragging(pivotType: PivotType): boolean {
+    return this._pivotLines[pivotType].isDragging();
   }
 }
 

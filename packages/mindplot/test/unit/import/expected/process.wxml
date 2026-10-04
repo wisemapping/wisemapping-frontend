@@ -97,6 +97,6 @@
             </topic>
         </topic>
     </topic>
-    <relationship srcTopicId="27" destTopicId="32" lineType="0" endArrow="true" startArrow="true" strokeStyle="dashed"/>
-    <relationship srcTopicId="27" destTopicId="36" lineType="0" endArrow="true" startArrow="true" strokeStyle="dashed"/>
+    <relationship srcTopicId="27" destTopicId="32" lineType="3" endArrow="true" startArrow="true" strokeStyle="dashed"/>
+    <relationship srcTopicId="27" destTopicId="36" lineType="3" endArrow="true" startArrow="true" strokeStyle="dashed"/>
 </map>

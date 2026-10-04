@@ -98,3 +98,50 @@ describe('AddTopicCommand undo/redo', () => {
     expect(save()).toEqual(before);
   });
 });
+
+/**
+ * A parent that is not on the canvas any more must not fail the whole command: the other topics
+ * are still added, and the one that has lost its parent is added as a floating topic (BL4-07).
+ */
+describe('AddTopicCommand with a missing parent', () => {
+  const createTopic = (
+    designer: Awaited<ReturnType<typeof buildDesigner>>['designer'],
+    text: string,
+  ) => {
+    const model = designer.getMindmap().createNode('MainTopic');
+    model.setText(text);
+    model.setPosition(350, 0);
+    model.setOrder(1);
+    return model;
+  };
+
+  it('adds the topics whose parent exists and the others as floating topics', async () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const { designer, save, topic } = await buildDesigner(MAP);
+    const before = save();
+
+    const child = createTopic(designer, 'Child');
+    const orphan = createTopic(designer, 'Orphan');
+    designer.getActionDispatcher().addTopics([child, orphan], [3, 999]);
+    const after = save();
+
+    expect(topic(child.getId()).getParent()?.getId()).toBe(3);
+    expect(topic(orphan.getId()).getParent()).toBeNull();
+    expect(
+      designer
+        .getMindmap()
+        .getBranches()
+        .map((b) => b.getId()),
+    ).toContain(orphan.getId());
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('999'));
+
+    designer.undo();
+    expect(designer.getModel().findTopicById(child.getId())).toBeUndefined();
+    expect(designer.getModel().findTopicById(orphan.getId())).toBeUndefined();
+    expect(save()).toEqual(before);
+
+    designer.redo();
+    expect(save()).toEqual(after);
+    warn.mockRestore();
+  });
+});

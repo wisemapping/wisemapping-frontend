@@ -360,8 +360,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     result.setAttribute('srcTopicId', relationship.getFromNode().toString());
     result.setAttribute('destTopicId', relationship.getToNode().toString());
 
-    const lineType = relationship.getLineType();
-    result.setAttribute('lineType', lineType.toString());
+    // Relationships are always drawn thin curved, so lineType is not read back. It is still written,
+    // with the value saved maps have always carried: 3, SIMPLE_CURVED in the numbering of the time
+    // (today's LineType would read it as POLYLINE_STRAIGHT). Line types for relationships would
+    // need a new attribute ...
+    result.setAttribute('lineType', '3');
     const strCtrlPoint = relationship.getSrcCtrlPoint();
     if (strCtrlPoint) {
       result.setAttribute(
@@ -762,7 +765,6 @@ class XMLSerializerTango implements XMLMindmapSerializer {
   ): RelationshipModel {
     const srcId = Number.parseInt(domElement.getAttribute('srcTopicId')!, 10);
     const destId = Number.parseInt(domElement.getAttribute('destTopicId')!, 10);
-    const lineType = Number.parseInt(domElement.getAttribute('lineType')!, 10);
     const srcCtrlPoint = domElement.getAttribute('srcCtrlPoint');
     const destCtrlPoint = domElement.getAttribute('destCtrlPoint');
 
@@ -776,8 +778,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       throw new Error('Transition could not created, missing node for relationship');
     }
 
+    // The stored lineType is legacy (see _relationshipToXML): the model keeps its thin curve ...
     const model = mindmap.createRelationship(srcId, destId);
-    model.setLineType(lineType);
     if (srcCtrlPoint) {
       try {
         const spoint = Point.fromString(srcCtrlPoint);

@@ -246,3 +246,104 @@ describe('Relationship control point drag (BL-52)', () => {
     },
   );
 });
+
+describe('Relationship custom curve when a topic moves (BL4-29)', () => {
+  // The relationship goes from B (3) to Floating (5). Floating can be moved freely, so it is
+  // used as the end that moves: the target end as loaded, the source end when swapped.
+  const swapped = (xml: string) =>
+    xml.replace('srcTopicId="3" destTopicId="5"', 'srcTopicId="5" destTopicId="3"');
+
+  it.each([
+    ['target', PivotType.End, withControlPoints('', '110,-116')],
+    ['source', PivotType.Start, swapped(withControlPoints('110,-116', ''))],
+  ])(
+    'keeps the %s control point relative to its topic, as it is saved',
+    async (_end, pivot, xml) => {
+      const { designer, save, topic } = await buildDesigner(xml);
+      const relationship = relationshipOf(designer);
+      expect(
+        pivot === PivotType.Start
+          ? relationship.isSrcControlPointCustom()
+          : relationship.isDestControlPointCustom(),
+      ).toBe(true);
+      const handleBefore = handles(relationship)[pivot];
+
+      const before = topic(5).getPosition();
+      const delta = { x: 300, y: 200 };
+      designer.getActionDispatcher().moveTopic(5, { x: before.x + delta.x, y: before.y + delta.y });
+      // Topic.setPosition does not redraw the relationships of a topic the layout moves ...
+      relationship.redraw();
+
+      // The custom handle moves with its topic: the curve keeps its shape ...
+      const handle = handles(relationship)[pivot];
+      expectPoint(handle, { x: handleBefore.x + delta.x, y: handleBefore.y + delta.y });
+      expectPoint(relationship.getLine().getControlPoints()[pivot], { x: 110, y: -116 });
+
+      // ... and it is where the saved map puts it.
+      const saved = save();
+      expect(saved).toContain(
+        pivot === PivotType.Start ? 'srcCtrlPoint="110,-116"' : 'destCtrlPoint="110,-116"',
+      );
+      const reloaded = relationshipOf((await buildDesigner(saved)).designer);
+      expectPoint(handles(reloaded)[pivot], handle);
+      expectPoint(reloaded.getLine().getControlPoints()[pivot], { x: 110, y: -116 });
+    },
+  );
+});
+
+describe('Relationship control point handle follows the cursor (BL4-30)', () => {
+  type Pivot = { mouseDownHandler(event: Event): void; _dot: { getPosition(): PositionType } };
+  const pivotOf = (relationship: Relationship, type: PivotType): Pivot =>
+    (relationship as unknown as { _controlPointsController: { _pivotLines: Pivot[] } })
+      ._controlPointsController._pivotLines[type];
+
+  it.each([
+    [PivotType.Start, 520, 480],
+    [PivotType.End, 520, 480],
+    [PivotType.Start, 100, 900],
+    [PivotType.End, 900, 100],
+  ])('puts the handle under the cursor while dragging (pivot %s, %s,%s)', async (type, x, y) => {
+    const { designer } = await buildDesigner();
+    const relationship = relationshipOf(designer);
+    relationship.setOnFocus(true);
+    const pivot = pivotOf(relationship, type);
+
+    pivot.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+    const move = new MouseEvent('mousemove', { clientX: x, clientY: y });
+    document.dispatchEvent(move);
+    const cursor = designer.getScreenManager().getWorkspaceMousePosition(move);
+
+    // The curve is drawn with its handle under the cursor, where the dot is ...
+    expectPoint(handles(relationship)[type], cursor);
+    expectPoint(pivot._dot.getPosition(), { x: cursor.x - 5, y: cursor.y - 5 });
+
+    document.dispatchEvent(new MouseEvent('mouseup', { clientX: x, clientY: y }));
+  });
+});
+
+describe('Relationship custom end after an interrupted drag (BL4-30)', () => {
+  type Pivot = { mouseDownHandler(event: Event): void };
+  const pivotOf = (relationship: Relationship, type: PivotType): Pivot =>
+    (relationship as unknown as { _controlPointsController: { _pivotLines: Pivot[] } })
+      ._controlPointsController._pivotLines[type];
+
+  it('follows its topic again once the control points are hidden during a drag', async () => {
+    const { designer, topic } = await buildDesigner(withControlPoints('', '110,-116'));
+    const relationship = relationshipOf(designer);
+    relationship.setOnFocus(true);
+    pivotOf(relationship, PivotType.End).mouseDownHandler(
+      new MouseEvent('mousedown', { cancelable: true }),
+    );
+    relationship.setOnFocus(false);
+    const handleBefore = handles(relationship)[PivotType.End];
+
+    const before = topic(5).getPosition();
+    designer.getActionDispatcher().moveTopic(5, { x: before.x + 300, y: before.y + 200 });
+    relationship.redraw();
+
+    expectPoint(handles(relationship)[PivotType.End], {
+      x: handleBefore.x + 300,
+      y: handleBefore.y + 200,
+    });
+  });
+});

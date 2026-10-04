@@ -99,6 +99,6 @@ Close case]]></text>
 
 ]]></text>
     </topic>
-    <relationship srcTopicId="35" destTopicId="32" lineType="0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
-    <relationship srcTopicId="32" destTopicId="16" lineType="0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
+    <relationship srcTopicId="35" destTopicId="32" lineType="3" endArrow="true" startArrow="false" strokeStyle="dashed"/>
+    <relationship srcTopicId="32" destTopicId="16" lineType="3" endArrow="true" startArrow="false" strokeStyle="dashed"/>
 </map>
