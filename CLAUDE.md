@@ -60,14 +60,21 @@ yarn workspace @wisemapping/editor i18n:compile   # produce compiled-lang/*.json
 
 ## Image-snapshot tests
 
-`cypress-image-snapshot` is host-sensitive (fonts/AA differ between machines). Run snapshot tests via Docker to match CI:
+The mindplot and editor Cypress specs compare their screenshots with committed baselines through `@simonsmith/cypress-image-snapshot` (`cy.matchImageSnapshot('name')`). Baselines live in `packages/{mindplot,editor}/cypress/snapshots/<spec>/<name>.snap.png`; diffs go to `.../__diff_output__/` (git-ignored). Pixels depend on fonts, anti-aliasing and CPU, so **baselines are generated and verified only in Docker** (`Dockerfile.snapshots`: pinned `cypress/included` 16.1.1, `linux/amd64`, MS core fonts and Noto colour emoji). It needs Docker, so it is not part of the pre-push hook.
 
 ```sh
-docker-compose -f docker-compose.snapshots.yml up                # verify
-docker-compose -f docker-compose.snapshots.update.yml up         # accept changes
+docker compose -f docker-compose.snapshots.yml up                # verify mindplot + editor, exits 1 on a diff
+docker compose -f docker-compose.snapshots.update.yml up         # write missing / changed baselines
+VISUAL_SUITES=mindplot docker compose -f docker-compose.snapshots.yml up   # one suite (mindplot | editor)
+
+yarn workspace @wisemapping/mindplot test:visual                 # same, per package (also editor)
+yarn workspace @wisemapping/mindplot test:visual:update
 ```
 
-Commit updated PNGs alongside the code change.
+- The mode comes from `VISUAL_SNAPSHOTS` (set by the compose files): `verify` fails on a diff or a missing baseline, `update` rewrites baselines. Unset (a host `yarn test:integration`) still compares, but only logs differences in the Cypress command log and never writes baselines, since host renders never match the Docker ones.
+- Threshold: a snapshot fails when more than 0.05 % of its pixels differ (`failureThreshold: 0.0005`; per-pixel YIQ tolerance 0.01, which still flags a darker shade of the same colour), set in each package's `cypress/support/commands.*`. Repeated Docker runs are pixel-identical for mindplot and differ by at most ~32 px (0.005 %) for editor, so the threshold only absorbs anti-aliasing. Before capturing, snapshots wait for the story/map to load and its markup to settle, freeze CSS transitions, animations and the caret, hide MUI hover tooltips (timer races), and black out the third-party emoji-picker grid.
+- A rendering change must update the affected baselines in the same commit: run the update compose file, review every changed PNG (`git diff --stat`, open the old and new image), and commit them with the code. To drop obsolete baselines, delete the spec's snapshot folder before updating.
+- The first build downloads the fonts and installs dependencies into the image; later runs rebuild only the source layer.
 
 ## Contributing flow
 
