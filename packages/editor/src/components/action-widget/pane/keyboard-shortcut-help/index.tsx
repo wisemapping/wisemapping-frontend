@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -25,23 +25,54 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import Paper from '@mui/material/Paper';
 import CloseIcon from '@mui/icons-material/Close';
+import ComboList from './key-cap';
+import KeyboardDiagram from './keyboard-diagram';
+import NavigationDiagram from './navigation-diagram';
+import { SHORTCUT_CATEGORIES, keysUsedBy } from './shortcuts';
 
 type KeyboardShorcutsHelpProps = {
   closeModal?: () => void;
 };
 
+const HEADER_CELL_SX = {
+  fontWeight: 600,
+  backgroundColor: 'action.hover',
+  textTransform: 'uppercase',
+  fontSize: '0.65rem',
+  letterSpacing: '0.5px',
+} as const;
+
+/**
+ * The keyboard shortcut reference.
+ *
+ * All 35 shortcuts used to arrive as one flat table in a 60vh scroll, which
+ * made the pane a list to search rather than one to read. They are now grouped
+ * into tabs, and each tab opens with a picture: a keyboard with that group's
+ * keys lit up, plus -- for navigation, where the keys alone genuinely do not
+ * explain the behaviour -- a map showing what each arrow does.
+ *
+ * The rows themselves come from `shortcuts.ts`; this file is layout only.
+ */
 const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactElement => {
+  const [tab, setTab] = useState(0);
+  const category = SHORTCUT_CATEGORIES[tab];
+  const usedKeys = useMemo(() => keysUsedBy(category), [category]);
+
   return (
     <Box
       sx={{
         pt: 1.5,
         px: 1.5,
         pb: 1,
-        width: '500px',
-        maxHeight: '60vh',
-        overflowY: 'auto',
+        width: '560px',
+        maxWidth: '92vw',
+        maxHeight: '70vh',
+        display: 'flex',
+        flexDirection: 'column',
         backgroundColor: 'background.paper',
         borderRadius: '8px',
         border: '1px solid',
@@ -52,6 +83,7 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
       {closeModal && (
         <IconButton
           onClick={closeModal}
+          aria-label="close"
           sx={{
             position: 'absolute',
             top: 4,
@@ -67,703 +99,73 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
           <CloseIcon />
         </IconButton>
       )}
-      <TableContainer component={Paper} sx={{ boxShadow: 'none', border: 'none' }}>
-        <Table size="small" sx={{ width: '100%', fontSize: '0.75rem' }}>
+
+      <Tabs
+        value={tab}
+        onChange={(_event, value: number) => setTab(value)}
+        variant="scrollable"
+        scrollButtons="auto"
+        sx={{
+          minHeight: 32,
+          mr: 3,
+          mb: 1,
+          borderBottom: '1px solid',
+          borderColor: 'divider',
+          '& .MuiTab-root': {
+            minHeight: 32,
+            minWidth: 0,
+            px: 1.5,
+            py: 0.5,
+            fontSize: '0.7rem',
+            textTransform: 'none',
+          },
+        }}
+      >
+        {SHORTCUT_CATEGORIES.map((entry) => (
+          <Tab
+            key={entry.key}
+            label={<FormattedMessage id={entry.labelId} defaultMessage={entry.labelDefault} />}
+          />
+        ))}
+      </Tabs>
+
+      {/* The visualisations: a keyboard for every tab, a map for navigation. */}
+      {category.key === 'navigation' && <NavigationDiagram />}
+      <KeyboardDiagram used={usedKeys} />
+
+      <TableContainer
+        component={Paper}
+        sx={{ boxShadow: 'none', border: 'none', overflowY: 'auto', flex: 1 }}
+      >
+        <Table size="small" stickyHeader sx={{ width: '100%', fontSize: '0.75rem' }}>
           <TableHead>
             <TableRow>
-              <TableCell
-                sx={{
-                  width: '35%',
-                  fontWeight: 600,
-                  backgroundColor: 'action.hover',
-                  textTransform: 'uppercase',
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.5px',
-                }}
-              >
+              <TableCell sx={{ ...HEADER_CELL_SX, width: '38%' }}>
                 <FormattedMessage id="shortcut-help-pane.action" defaultMessage="Action" />
               </TableCell>
-              <TableCell
-                sx={{
-                  width: '32.5%',
-                  fontWeight: 600,
-                  backgroundColor: 'action.hover',
-                  textTransform: 'uppercase',
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.5px',
-                }}
-              >
-                Windows - Linux
-              </TableCell>
-              <TableCell
-                sx={{
-                  width: '32.5%',
-                  fontWeight: 600,
-                  backgroundColor: 'action.hover',
-                  textTransform: 'uppercase',
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.5px',
-                }}
-              >
-                Mac OS X
-              </TableCell>
+              <TableCell sx={{ ...HEADER_CELL_SX, width: '31%' }}>Windows - Linux</TableCell>
+              <TableCell sx={{ ...HEADER_CELL_SX, width: '31%' }}>Mac OS X</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.save-changes"
-                  defaultMessage="Save changes"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + S
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + S
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.add-sibling"
-                  defaultMessage="Add sibling topic"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Enter
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Enter
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.add-child"
-                  defaultMessage="Add child topic"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Insert / Tab
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + Enter / Tab
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.delete-topic"
-                  defaultMessage="Delete topic"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Delete
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Delete
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.edit-topic"
-                  defaultMessage="Edit topic text"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                <FormattedMessage
-                  id="shortcut-help-pane.edit-topic-key"
-                  defaultMessage="F2 or Double Click"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                <FormattedMessage
-                  id="shortcut-help-pane.edit-topic-key"
-                  defaultMessage="F2 or Double Click"
-                />
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.overwrite-edit-topic"
-                  defaultMessage="Overwrite topic text"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                <FormattedMessage
-                  id="shortcut-help-pane.overwrite-edit-topic-key"
-                  defaultMessage="Type on a selected topic"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                <FormattedMessage
-                  id="shortcut-help-pane.overwrite-edit-topic-key"
-                  defaultMessage="Type on a selected topic"
-                />
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.edit-multiline"
-                  defaultMessage="Add multi-line topic text"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + Enter
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + Enter
-              </TableCell>
-            </TableRow>
-
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.copy-and-text"
-                  defaultMessage="Copy and paste topics/Copy mindmap image to clipboard."
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + C / Ctrl + V
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + C / ⌘ + V
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.paste-as-child"
-                  defaultMessage="Paste as child of the selected topic"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + Shift + V
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + ⇧ + V
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.drag-disconnect"
-                  defaultMessage="Disconnect topic"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + drag topic
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + drag topic
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.move-topic-up"
-                  defaultMessage="Move topic up among siblings"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Alt + Shift + Up
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌥ + ⇧ + Up
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.move-topic-down"
-                  defaultMessage="Move topic down among siblings"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Alt + Shift + Down
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌥ + ⇧ + Down
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.outdent-topic"
-                  defaultMessage="Outdent topic (attach to grandparent)"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Alt + Shift + Left
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌥ + ⇧ + Left
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.indent-topic"
-                  defaultMessage="Indent topic (attach to sibling above)"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Alt + Shift + Right
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌥ + ⇧ + Right
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.collapse-children"
-                  defaultMessage="Collpase children"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Spacebar
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Spacebar
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage id="shortcut-help-pane.navigation" defaultMessage="Navigation" />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                <FormattedMessage
-                  id="shortcut-help-pane.navigation-keys"
-                  defaultMessage="Arrow keys"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                <FormattedMessage
-                  id="shortcut-help-pane.navigation-keys"
-                  defaultMessage="Arrow keys"
-                />
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.select-topics"
-                  defaultMessage="Select multiple topics"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl +{' '}
-                <FormattedMessage
-                  id="shortcut-help-pane.select-topics-keys"
-                  defaultMessage="Mouse click"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl +{' '}
-                <FormattedMessage
-                  id="shortcut-help-pane.select-topics-keys"
-                  defaultMessage="Mouse click"
-                />
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage id="shortcut-help-pane.undo" defaultMessage="Undo edition" />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + Z
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + Z
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage id="shortcut-help-pane.redo" defaultMessage="Redo edition" />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + Shift + Z
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + Shift + Z
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.select-all-topics"
-                  defaultMessage="Select all topics"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + A
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + A
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.deselect-all-topics"
-                  defaultMessage="Deselect all topics"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + Shift + A
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + Shift + A
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.cancel-text-changes"
-                  defaultMessage="Cancel text changes"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Esc
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Esc
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.change-font-italic"
-                  defaultMessage="Change text to italic"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + I
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + I
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.change-font-bold"
-                  defaultMessage="Change text to bold"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + B
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + B
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage id="shortcut-help-pane.add-note" defaultMessage="Add note" />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + K
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + K
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage id="shortcut-help-pane.add-link" defaultMessage="Add link" />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + L
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + L
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage id="shortcut-help-pane.zoom-in" defaultMessage="Zoom in" />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + =
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + =
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage id="shortcut-help-pane.zoom-out" defaultMessage="Zoom out" />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + -
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + -
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.zoom-to-fit"
-                  defaultMessage="Zoom to fit"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + 0
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + 0
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.pan-canvas"
-                  defaultMessage="Pan the canvas"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                <FormattedMessage
-                  id="shortcut-help-pane.pan-canvas-keys"
-                  defaultMessage="Two-finger swipe or Mouse wheel"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                <FormattedMessage
-                  id="shortcut-help-pane.pan-canvas-keys"
-                  defaultMessage="Two-finger swipe or Mouse wheel"
-                />
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.zoom-wheel"
-                  defaultMessage="Zoom in/out with the wheel"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl / Alt +{' '}
-                <FormattedMessage
-                  id="shortcut-help-pane.pan-canvas-keys"
-                  defaultMessage="Two-finger swipe or Mouse wheel"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ / ⌥ +{' '}
-                <FormattedMessage
-                  id="shortcut-help-pane.pan-canvas-keys"
-                  defaultMessage="Two-finger swipe or Mouse wheel"
-                />
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.outline-view"
-                  defaultMessage="Open outline view"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + O
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + O
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.find-in-map"
-                  defaultMessage="Find node in map"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + F
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + F
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.expand-by-level"
-                  defaultMessage="Expand topics by level"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + E
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + E
-              </TableCell>
-            </TableRow>
-            <TableRow hover>
-              <TableCell>
-                <FormattedMessage
-                  id="shortcut-help-pane.expand-collapse-all"
-                  defaultMessage="Expand/Collapse all topics"
-                />
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                Ctrl + Shift + E
-              </TableCell>
-              <TableCell
-                sx={{ fontFamily: 'monospace', color: 'primary.main', fontSize: '0.7rem' }}
-              >
-                ⌘ + Shift + E
-              </TableCell>
-            </TableRow>
+            {category.shortcuts.map((shortcut) => (
+              <TableRow hover key={shortcut.id}>
+                <TableCell sx={{ fontSize: '0.72rem' }}>
+                  <FormattedMessage id={shortcut.id} defaultMessage={shortcut.defaultMessage} />
+                </TableCell>
+                <TableCell>
+                  <ComboList combos={shortcut.win} />
+                </TableCell>
+                <TableCell>
+                  <ComboList combos={shortcut.mac} />
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
     </Box>
   );
 };
+
 export default KeyboardShorcutsHelp;
