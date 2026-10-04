@@ -15,55 +15,28 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import fs from 'fs';
-import path from 'path';
-import ts from 'typescript';
+// SvgIconAssets lists the images with Vite's import.meta.glob, which ts-jest (CommonJS) can not
+// compile: use the icon files on disk.
+jest.mock('../../src/components/SvgIconAssets', () => {
+  const fs = require('fs') as typeof import('fs');
+  const path = require('path') as typeof import('path');
+  const files = fs.readdirSync(path.resolve(__dirname, '../../assets/icons'));
+  return {
+    __esModule: true,
+    default: Object.fromEntries(files.map((file) => [file, file])),
+  };
+});
+
 import { Image } from '@wisemapping/web2d';
 import ActionDispatcher from '../../src/components/ActionDispatcher';
+import SvgImageIcon from '../../src/components/SvgImageIcon';
 import Topic from '../../src/components/Topic';
 import SvgIconModel from '../../src/components/model/SvgIconModel';
-import type SvgImageIconType from '../../src/components/SvgImageIcon';
-
-const componentsDir = path.resolve(__dirname, '../../src/components');
-const iconsDir = path.resolve(__dirname, '../../assets/icons');
-
-/**
- * SvgImageIcon lists its images with Vite's import.meta.glob, which ts-jest (CommonJS) can not
- * compile. Load it with the glob replaced by the icon files on disk.
- */
-const loadSvgImageIcon = (): typeof SvgImageIconType => {
-  const source = fs
-    .readFileSync(path.join(componentsDir, 'SvgImageIcon.ts'), 'utf8')
-    .replace(/import\.meta\.glob\([^)]*\)/, '__iconModules');
-  const { outputText } = ts.transpileModule(source, {
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      target: ts.ScriptTarget.ES2020,
-      esModuleInterop: true,
-    },
-  });
-
-  const iconModules = Object.fromEntries(
-    fs.readdirSync(iconsDir).map((file) => [`../../assets/icons/${file}`, { default: file }]),
-  );
-  const localRequire = (id: string) =>
-    require(id.startsWith('.') ? path.join(componentsDir, id) : id);
-  const module = { exports: {} as { default: typeof SvgImageIconType } };
-  new Function('require', 'module', 'exports', '__iconModules', outputText)(
-    localRequire,
-    module,
-    module.exports,
-    iconModules,
-  );
-  return module.exports.default;
-};
-
-const SvgImageIcon = loadSvgImageIcon();
 
 const topic = { getId: () => 7 } as unknown as Topic;
 
-const click = (icon: SvgImageIconType) => icon.getElement().trigger('click', {});
-const href = (icon: SvgImageIconType) => (icon.getElement() as Image).getHref();
+const click = (icon: SvgImageIcon) => icon.getElement().trigger('click', {});
+const href = (icon: SvgImageIcon) => (icon.getElement() as Image).getHref();
 
 describe('SvgImageIcon', () => {
   let changeFeatureToTopic: jest.Mock;

@@ -346,7 +346,7 @@ abstract class Topic extends NodeGraph {
 
     const textHeight = this.getOrBuildTextShape().getFontHeight();
     const iconSize = textHeight * ICON_SCALING_FACTOR;
-    const result = new IconGroup(this.getId(), iconSize);
+    const result = new IconGroup(this.getId(), iconSize, this.getDesigner());
     const padding = theme.getInnerPadding(this);
     result.setPosition(padding, padding);
 
@@ -1061,9 +1061,17 @@ abstract class Topic extends NodeGraph {
   }
 
   setSize(size: SizeType, force?: boolean): void {
+    // A failed measurement (NaN or infinite) would be seen as a change on every redraw
+    // (NaN !== NaN): keep the previous size instead.
+    const isMeasured = Number.isFinite(size.width) && Number.isFinite(size.height);
+    if (!isMeasured && !force) {
+      return;
+    }
+    const newSize = isMeasured ? size : this.getSize();
+
     const roundedSize = {
-      width: Math.ceil(size.width),
-      height: Math.ceil(size.height),
+      width: Math.ceil(newSize.width),
+      height: Math.ceil(newSize.height),
     };
 
     // Note: oldSize is the live size object, so it already holds the new size once

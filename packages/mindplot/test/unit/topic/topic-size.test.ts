@@ -87,3 +87,30 @@ describe('Topic.setSize', () => {
     });
   });
 });
+
+describe('Topic.setSize with a failed measurement (BL-13)', () => {
+  it.each([NaN, Infinity])(
+    'keeps the previous size and does not fire topicResize when the text measures %s',
+    (width) => {
+      const { child } = buildTopics();
+      const before = { ...child.getSize() };
+
+      const spy = jest.spyOn(LayoutEventBus, 'fireEvent');
+      stubSvgMeasurement(width);
+      child.redraw(child.getThemeVariant(), false);
+      child.redraw(child.getThemeVariant(), false);
+
+      expect(resizeEvents(spy)).toHaveLength(0);
+      expect(child.getSize()).toEqual(before);
+    },
+  );
+
+  it('keeps the previous size when forced with a non-finite size', () => {
+    const { child } = buildTopics();
+    const before = { ...child.getSize() };
+
+    child.setSize({ width: NaN, height: before.height }, true);
+
+    expect(child.getSize()).toEqual(before);
+  });
+});

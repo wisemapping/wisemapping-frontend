@@ -24,6 +24,7 @@ import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 import Icon from './Icon';
 import PositionType from './PositionType';
+import type Designer from './Designer';
 
 const ORDER_BY_TYPE = new Map<string, number>();
 // Emoji icons come from the same icon picker as image icons, so they share their slot
@@ -45,7 +46,10 @@ class IconGroup {
 
   private _topicGroup: Group | null = null;
 
-  constructor(topicId: number, iconSize: number) {
+  // Icons added with remove: only these get a delete widget.
+  private _removableIcons = new WeakSet<Icon>();
+
+  constructor(topicId: number, iconSize: number, designer?: Designer) {
     this._topicId = topicId;
     this._icons = [];
     this._group = new Group({
@@ -56,7 +60,7 @@ class IconGroup {
       coordSizeWidth: 0,
       coordSizeHeight: 100,
     });
-    this._removeTip = ElementDeleteWidget.getInstance();
+    this._removeTip = ElementDeleteWidget.getInstance(designer);
     this._iconSize = null;
     this.seIconSize(iconSize, iconSize);
     this._registerListeners();
@@ -113,6 +117,8 @@ class IconGroup {
 
     // Register event for the group ..
     if (remove) {
+      this._removableIcons.add(icon);
+
       // Always use topic group for consistent coordinate system and sizing
       const targetGroup = this._topicGroup;
 
@@ -201,18 +207,15 @@ class IconGroup {
     this._group.moveToFront();
 
     // Set up delete widgets for all existing icons now that we have the topic group
-    this._setupDeleteWidgetsForExistingIcons();
+    this._setupDeleteWidgetsForExistingIcons(group);
   }
 
-  private _setupDeleteWidgetsForExistingIcons(): void {
+  private _setupDeleteWidgetsForExistingIcons(topicGroup: Group): void {
     // Set up delete widgets for all icons that were added before the topic group was available
-    this._icons.forEach((icon) => {
-      const iconWithRemove = icon as Icon & { __remove?: boolean };
-      if (!iconWithRemove.__remove) {
-        // Only set up if not already set up
-        this._removeTip.decorate(this._topicId, icon, this._topicGroup!);
-      }
-    });
+    // decorate() skips the icons it has already decorated.
+    this._icons
+      .filter((icon) => this._removableIcons.has(icon))
+      .forEach((icon) => this._removeTip.decorate(this._topicId, icon, topicGroup));
   }
 
   static ICON_PADDING = 2;

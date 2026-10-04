@@ -48,25 +48,19 @@ class NoteIcon extends ImageIcon {
     const topic = this._topic;
 
     // Hover tooltip ...
-    const designerInstance = (globalThis as Record<string, unknown>).designer as
-      | {
-          getWidgetManager: () => { configureTooltipForNode: (...args: unknown[]) => void };
-          fireEvent: (...args: unknown[]) => void;
-        }
-      | undefined;
-
-    if (!designerInstance) {
+    const designer = topic.getDesigner();
+    if (!designer) {
       console.warn('NoteIcon: designer not provided. Tooltips will be disabled.');
       return;
     }
 
-    const wm = designerInstance.getWidgetManager();
+    const wm = designer.getWidgetManager();
     wm.configureTooltipForNode(this._topic, this._noteModel, this);
 
     // Register edition popup ...
     if (!this._readOnly) {
       this.getElement().addEvent('click', (evt) => {
-        designerInstance.fireEvent('featureEdit', { event: 'note', topic });
+        designer.fireEvent('featureEdit', { event: 'note', topic });
         evt.stopPropagation();
       });
     }

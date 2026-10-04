@@ -25,12 +25,15 @@ import SizeType from './SizeType';
 import PositionType from './PositionType';
 import CanvasElement from './CanvasElement';
 import type TopicEventDispatcher from './TopicEventDispatcher';
+import type Designer from './Designer';
 
 type Web2DListener = (event: Event, detail?: unknown) => void;
 
 export type NodeOption = {
   readOnly: boolean;
   topicEventDispatcher?: TopicEventDispatcher;
+  // The designer the node belongs to. Undefined for nodes built without one (e.g. in tests).
+  designer?: Designer;
 };
 
 abstract class NodeGraph implements CanvasElement {
@@ -62,6 +65,10 @@ abstract class NodeGraph implements CanvasElement {
 
   isReadOnly(): boolean {
     return this._options.readOnly;
+  }
+
+  getDesigner(): Designer | undefined {
+    return this._options.designer;
   }
 
   getType(): string {
@@ -159,8 +166,11 @@ abstract class NodeGraph implements CanvasElement {
   }
 
   createDragNode(layoutManager: LayoutManager): DragTopic {
-    // TODO(typing): CentralTopic has no drag shape, but it is never registered for dragging.
-    const dragShape = this.buildDragShape()!;
+    // CentralTopic has no drag shape: the Designer never registers it for dragging.
+    const dragShape = this.buildDragShape();
+    if (!dragShape) {
+      throw new Error(`${this.getType()} has no drag shape: it can not be dragged`);
+    }
 
     return new DragTopic(dragShape, this, layoutManager);
   }

@@ -280,7 +280,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const orientation = this._eventBussDispatcher.getLayoutManager().getOrientation();
     const topic = TopicFactory.create(
       model,
-      { readOnly, topicEventDispatcher: this._topicEventDispatcher },
+      { readOnly, topicEventDispatcher: this._topicEventDispatcher, designer: this },
       this._themeVariant,
       orientation,
     );

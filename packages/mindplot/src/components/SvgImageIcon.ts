@@ -24,27 +24,7 @@ import iconFamily from './model/SvgIconFamily.json';
 import Topic from './Topic';
 import SvgIconModel from './model/SvgIconModel';
 import { mapIconNameToAsset } from './IconMapping';
-
-// Create icon URL mapping using webpack's require.context
-// This works consistently in both development and production since webpack
-// inlines SVG files as data URLs in both environments
-const images: { [key: string]: string } = {};
-
-// Initialize icon URLs using webpack's require.context
-// Initialize icon URLs using Vite's import.meta.glob
-const initializeIcons = () => {
-  const iconModules = import.meta.glob('../../assets/icons/*.{svg,png}', { eager: true });
-
-  Object.keys(iconModules).forEach((path) => {
-    // path is like "../../assets/icons/iconName.svg"
-    const filenameWithExt = path.split('/').pop();
-    if (filenameWithExt) {
-      const mod = iconModules[path] as { default: string } | string;
-      const url = typeof mod === 'object' && 'default' in mod ? mod.default : (mod as string);
-      images[filenameWithExt] = url;
-    }
-  });
-};
+import images from './SvgIconAssets';
 
 // Get image URL with fallback handling
 const originalGetImageUrl = (iconId: string): string => {
@@ -62,8 +42,6 @@ const originalGetImageUrl = (iconId: string): string => {
 
   return result;
 };
-
-initializeIcons();
 
 class SvgImageIcon extends ImageIcon {
   private _topicId: number;

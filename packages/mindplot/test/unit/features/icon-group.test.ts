@@ -63,6 +63,63 @@ describe('IconGroup', () => {
     });
   });
 
+  describe('delete widgets (BL-11)', () => {
+    const buildListenedIcon = (type: FeatureType, id: number) => {
+      const icon = buildIcon(type, id);
+      const listened: string[] = [];
+      icon.addEvent = (eventType: string) => {
+        listened.push(eventType);
+      };
+      return { icon, listened };
+    };
+
+    it('does not add a delete widget to an icon added without remove before appendTo', () => {
+      const group = new IconGroup(1, 10);
+      const { icon, listened } = buildListenedIcon('link', 1);
+      group.addIcon(icon, false);
+
+      group.appendTo(new Group());
+
+      expect(listened).toEqual([]);
+    });
+
+    it('adds the delete widget to an icon added with remove once the group is appended', () => {
+      const group = new IconGroup(1, 10);
+      const { icon, listened } = buildListenedIcon('note', 1);
+      group.addIcon(icon, true);
+      expect(listened).toEqual([]);
+
+      group.appendTo(new Group());
+
+      expect(listened).toEqual(['mouseover', 'mouseout']);
+    });
+
+    it('shows the delete widget without asking the global designer if it is read-only', () => {
+      // The global designer is the last one built, which may be another, read-only, map.
+      (globalThis as Record<string, unknown>).designer = { isReadOnly: () => true };
+      try {
+        const topicGroup = new Group();
+        const append = jest.spyOn(topicGroup, 'append');
+        const group = new IconGroup(1, 10);
+        group.appendTo(topicGroup);
+        const icon = buildIcon('note', 1);
+        let mouseOver: (() => void) | undefined;
+        icon.addEvent = (eventType: string, fnc: () => void) => {
+          if (eventType === 'mouseover') mouseOver = fnc;
+        };
+        icon.getGroup = () => group;
+        group.addIcon(icon, true);
+        append.mockClear();
+
+        mouseOver!();
+
+        expect(append).toHaveBeenCalledTimes(1);
+      } finally {
+        delete (globalThis as Record<string, unknown>).designer;
+      }
+    });
+  });
+
   describe('icon size from the constructor', () => {
     it('sizes the group for its icons before seIconSize is called again', () => {
       const group = new IconGroup(1, 10);
