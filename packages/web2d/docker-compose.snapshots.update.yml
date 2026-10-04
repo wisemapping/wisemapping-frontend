@@ -1,0 +1,45 @@
+# Regenerates web2d's pixel snapshots (cypress/snapshots/**/*.snap.png); review and commit them.
+#
+#   cd packages/web2d
+#   docker compose -f docker-compose.snapshots.update.yml up --abort-on-container-exit --exit-code-from web2d-snapshots
+#
+# or `yarn test:visual:update`. The image is cypress/included 16.1.1 (the Cypress version in
+# yarn.lock), pinned by digest so that Chrome and the fonts (Liberation and DejaVu, which stand in
+# for Arial, Times, Verdana and Tahoma) never change under the baselines. It runs as linux/amd64,
+# as CI does, also on Apple Silicon.
+name: wisemapping-web2d-snapshots
+services:
+  web2d-snapshots:
+    image: cypress/included:16.1.1@sha256:e652cda84399aaf99c68d1d0322085dc3faa7ca9ace88d9bb4f0f045d2ce6764
+    platform: linux/amd64
+    working_dir: /e2e
+    entrypoint: ['bash', '/e2e/packages/web2d/scripts/docker-snapshots.sh']
+    environment:
+      CI: '1'
+      CYPRESS_imageSnaphots: 'true'
+      CYPRESS_updateSnapshots: 'true'
+      CYPRESS_requireSnapshots: 'false'
+    volumes:
+      - ../..:/e2e
+      - node-modules:/e2e/node_modules
+      - node-modules-web2d:/e2e/packages/web2d/node_modules
+      - node-modules-mindplot:/e2e/packages/mindplot/node_modules
+      - node-modules-editor:/e2e/packages/editor/node_modules
+      - node-modules-webapp:/e2e/packages/webapp/node_modules
+      - yarn-cache:/root/.yarn-cache
+      - yarn-state:/root/.yarn-state
+volumes:
+  node-modules:
+    name: wisemapping-web2d-snapshots-node-modules
+  node-modules-web2d:
+    name: wisemapping-web2d-snapshots-node-modules-web2d
+  node-modules-mindplot:
+    name: wisemapping-web2d-snapshots-node-modules-mindplot
+  node-modules-editor:
+    name: wisemapping-web2d-snapshots-node-modules-editor
+  node-modules-webapp:
+    name: wisemapping-web2d-snapshots-node-modules-webapp
+  yarn-cache:
+    name: wisemapping-web2d-snapshots-yarn-cache
+  yarn-state:
+    name: wisemapping-web2d-snapshots-yarn-state

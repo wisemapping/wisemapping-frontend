@@ -34,7 +34,9 @@
     "test": "yarn test:unit && yarn test:integration",
     "test:integration": "PORT=6106 node ../../scripts/run-storybook-cypress.js",
     "test:unit": "jest ./test/unit --coverage --silent",
-    "test:unit:update-goldens": "UPDATE_GOLDENS=1 jest ./test/unit/goldens.test.ts"
+    "test:unit:update-goldens": "UPDATE_GOLDENS=1 jest ./test/unit/goldens.test.ts",
+    "test:visual": "docker compose -f docker-compose.snapshots.yml up --abort-on-container-exit --exit-code-from web2d-snapshots",
+    "test:visual:update": "docker compose -f docker-compose.snapshots.update.yml up --abort-on-container-exit --exit-code-from web2d-snapshots"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^8.0.1",

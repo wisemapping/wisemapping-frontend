@@ -18,42 +18,46 @@
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/prefer-default-export
 import Arrow from '../../../src/components/Arrow';
-import { addReferencePoints, createCenteredWorkspace } from './Reference';
+import StraightLine from '../../../src/components/StraightLine';
+import Workspace from '../../../src/components/Workspace';
 
-// Eight arrows pointing outwards around the centre, plus the horizontal (y = 0) case on the
-// bottom row, which ArrowPeer draws as y = 1.
+// Eight arrows around the centre, each at the end of a grey shaft that runs along its control
+// point (as mindplot draws relationship ends), plus the horizontal (y = 0) case on the bottom row,
+// which ArrowPeer draws as y = 1. The workspace is zoomed in 2x so the 6 unit wings are visible.
 export const createArrow = ({ strokeColor, strokeWidth, dashed }) => {
   const divElem = document.createElement('div');
-  const workspace = createCenteredWorkspace();
+  const workspace = new Workspace();
+  workspace.setSize('400px', '400px');
+  workspace.setCoordSize(200, 200);
+  workspace.setCoordOrigin(-100, -100);
 
-  const tips = [];
-  for (let i = 0; i < 8; i++) {
-    const angle = (i * Math.PI) / 4;
-    const tip = [Math.round(Math.cos(angle) * 120), Math.round(Math.sin(angle) * 120)];
+  const addArrow = (tip, control, isDashed) => {
+    const shaft = new StraightLine();
+    shaft.setFrom(tip[0], tip[1]);
+    shaft.setTo(tip[0] + control.x, tip[1] + control.y);
+    shaft.setStroke(1, 'solid', '#bbbbbb', 1);
+    workspace.append(shaft);
+
     const arrow = new Arrow();
     arrow.setFrom(tip[0], tip[1]);
-    arrow.setControlPoint({
-      x: Math.round(Math.cos(angle) * 30),
-      y: Math.round(Math.sin(angle) * 30),
-    });
+    arrow.setControlPoint(control);
     arrow.setStrokeColor(strokeColor);
     arrow.setStrokeWidth(strokeWidth);
-    arrow.setDashed(dashed, 3, 3);
+    arrow.setDashed(isDashed, 3, 3);
     workspace.append(arrow);
-    tips.push(tip);
+  };
+
+  for (let i = 0; i < 8; i++) {
+    const angle = (i * Math.PI) / 4;
+    addArrow(
+      [Math.round(Math.cos(angle) * 25), Math.round(Math.sin(angle) * 25) - 10],
+      { x: Math.round(Math.cos(angle) * 40), y: Math.round(Math.sin(angle) * 40) },
+      dashed,
+    );
   }
+  addArrow([-30, 85], { x: -40, y: 0 }, false);
+  addArrow([30, 85], { x: 40, y: 0 }, false);
 
-  [-1, 1].forEach((sign) => {
-    const arrow = new Arrow();
-    arrow.setFrom(sign * 60, 170);
-    arrow.setControlPoint({ x: sign * 30, y: 0 });
-    arrow.setStrokeColor(strokeColor);
-    arrow.setStrokeWidth(strokeWidth);
-    workspace.append(arrow);
-    tips.push([sign * 60, 170]);
-  });
-
-  addReferencePoints(workspace, tips);
   workspace.addItAsChildTo(divElem);
   return divElem;
 };

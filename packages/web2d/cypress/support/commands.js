@@ -36,3 +36,16 @@ if (Cypress.expose('imageSnaphots')) {
     (subject, name) => cy.screenshot(name),
   );
 }
+
+// A story renders asynchronously: wait until Storybook shows it (not the "preparing" spinner),
+// its workspace is in the DOM and the fonts are loaded, so that a snapshot never captures a
+// half-rendered page.
+Cypress.Commands.overwrite('visit', (originalFn, url, options) =>
+  originalFn(url, options).then(() => {
+    if (String(url).includes('iframe.html')) {
+      cy.get('body.sb-show-main', { timeout: 30000 });
+      cy.get('#storybook-root svg', { timeout: 30000 }).should('exist');
+      cy.document().its('fonts.status').should('equal', 'loaded');
+    }
+  }),
+);
