@@ -744,7 +744,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
       // Change position to avoid overlap ...
       children.forEach((m) => {
-        const pos = (m.getPosition() as PositionType | undefined) ?? { x: 0, y: 0 };
+        const pos = m.getPosition() ?? { x: 0, y: 0 };
         m.setPosition(pos.x + Math.random() * 60, pos.y + Math.random() * 30);
       });
 

@@ -180,12 +180,12 @@ export default class FreemindImporter extends Importer {
   ): void {
     // FreeMind measures the inclination away from the node, so it is mirrored for nodes on the left side.
     const srcCtrlPoint = relationship.getSrcCtrlPoint();
-    if (srcCtrlPoint && srcTopic.getPosition().x < 0) {
+    if (srcCtrlPoint && srcTopic.getPositionOrThrow().x < 0) {
       relationship.setSrcCtrlPoint({ x: -srcCtrlPoint.x, y: srcCtrlPoint.y });
     }
 
     const destCtrlPoint = relationship.getDestCtrlPoint();
-    if (destCtrlPoint && destTopic.getPosition().x < 0) {
+    if (destCtrlPoint && destTopic.getPositionOrThrow().x < 0) {
       relationship.setDestCtrlPoint({ x: -destCtrlPoint.x, y: destCtrlPoint.y });
     }
   }
@@ -484,7 +484,7 @@ export default class FreemindImporter extends Importer {
       const side = freeChild.getPosition();
       x *= side && FreemindConstant.POSITION_LEFT === side ? -1 : 1;
     } else {
-      const position = wiseParent.getPosition();
+      const position = wiseParent.getPositionOrThrow();
       x *= position.x < 0 ? -1 : 1;
     }
 
@@ -498,7 +498,7 @@ export default class FreemindImporter extends Importer {
         y = multiplier * FreemindConstant.ROOT_LEVEL_TOPIC_HEIGHT;
       }
     } else {
-      const position = wiseParent.getPosition();
+      const position = wiseParent.getPositionOrThrow();
       y = Math.round(
         position.y -
           ((childrenCount / 2) * FreemindConstant.SECOND_LEVEL_TOPIC_HEIGHT -

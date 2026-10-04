@@ -190,9 +190,12 @@ class Node {
 
   setPosition(position: PositionType): void {
     // This is a performance improvement to avoid movements that really could be avoided.
+    // A current position without finite coordinates compares as NaN: always replace it.
     const currentPos = this.getProperty('position') as PositionType | undefined;
     if (
       !currentPos ||
+      !Number.isFinite(currentPos.x) ||
+      !Number.isFinite(currentPos.y) ||
       Math.abs(currentPos.x - position.x) > 0.5 ||
       Math.abs(currentPos.y - position.y) > 0.5
     ) {

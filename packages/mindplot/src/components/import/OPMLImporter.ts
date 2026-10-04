@@ -139,7 +139,7 @@ class OPMLImporter extends Importer {
     }
 
     // Deeper topics stay on the same side as their parent
-    const parentPosition = parent.getPosition();
+    const parentPosition = parent.getPositionOrThrow();
     const side = parentPosition.x < 0 ? -1 : 1;
     return { x: parentPosition.x + side * 150, y: parentPosition.y + order * 25 };
   }

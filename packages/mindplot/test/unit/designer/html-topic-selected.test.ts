@@ -20,6 +20,7 @@ import HTMLTopicSelected from '../../../src/components/HTMLTopicSelected';
 import ScreenManager from '../../../src/components/ScreenManager';
 import Topic from '../../../src/components/Topic';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
+import type NodeModel from '../../../src/components/model/NodeModel';
 import ColorUtil from '../../../src/components/theme/ColorUtil';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
@@ -244,7 +245,7 @@ describe('HTMLTopicSelected', () => {
       const second = HTMLTopicSelected.initializeSelectionShadows(designer);
       ensure.mockClear();
 
-      LayoutEventBus.fireEvent('topicSelected', topic.getModel());
+      LayoutEventBus.fireEvent('topicSelected', topic.getModel() as NodeModel);
       expect(ensure).toHaveBeenCalledTimes(1);
 
       first();
@@ -260,7 +261,7 @@ describe('HTMLTopicSelected', () => {
       unsubscribe();
       ensure.mockClear();
 
-      LayoutEventBus.fireEvent('topicSelected', topic.getModel());
+      LayoutEventBus.fireEvent('topicSelected', topic.getModel() as NodeModel);
       expect(ensure).not.toHaveBeenCalled();
     });
 
@@ -275,7 +276,7 @@ describe('HTMLTopicSelected', () => {
       const unsubscribeSecond = HTMLTopicSelected.initializeSelectionShadows(second);
       ensure.mockClear();
 
-      LayoutEventBus.fireEvent('topicSelected', b.getModel());
+      LayoutEventBus.fireEvent('topicSelected', b.getModel() as NodeModel);
       expect(ensure).toHaveBeenCalledWith(second, b);
 
       unsubscribeFirst();

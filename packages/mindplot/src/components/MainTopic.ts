@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { Group } from '@wisemapping/web2d';
-import { $assert, $defined } from './util/assert';
+import { $assert } from './util/assert';
 
 import Topic from './Topic';
 import Shape from './util/Shape';
@@ -74,9 +74,9 @@ class MainTopic extends Topic {
   updatePositionOnChangeSize(): void {
     // Re-centre the topic on its model position. The layout manager, which owns
     // positions, moves it if the new size needs it.
-    const pos = this.getPosition();
-    if ($defined(pos)) {
-      this.setPosition(pos);
+    // getPosition() falls back to an ancestor position: only a positioned model is re-centred.
+    if (this.getModel().hasPosition()) {
+      this.setPosition(this.getPosition());
     }
   }
 

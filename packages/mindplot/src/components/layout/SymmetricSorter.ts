@@ -41,7 +41,7 @@ class SymmetricSorter extends AbstractBasicSorter {
       $assert(position, 'position cannot be null for predict in free positioning');
       $assert(node, 'node cannot be null for predict in free positioning');
 
-      const direction = this._getRelativeDirection(rootNode.getPosition(), parent.getPosition());
+      const direction = this._getChildrenDirection(graph, parent);
       const limitXPos =
         parent.getPosition().x +
         direction *
@@ -60,12 +60,7 @@ class SymmetricSorter extends AbstractBasicSorter {
 
     // Its not a dragged node (it is being added)
     if (!node) {
-      // As getChildDirection: the children of an isolated root go to the side of the map the
-      // root is on. Compared with itself, the root would always say "right".
-      const parentDirection =
-        parent === rootNode
-          ? sideOf(rootNode.getPosition().x)
-          : self._getRelativeDirection(rootNode.getPosition(), parent.getPosition());
+      const parentDirection = self._getChildrenDirection(graph, parent);
 
       const result = {
         x:
@@ -90,11 +85,12 @@ class SymmetricSorter extends AbstractBasicSorter {
 
     const parentChildren = graph.getChildren(parent);
     if (parentChildren.length === 0) {
-      // Fit as a child of the parent node...
+      // Fit as a child of the parent node, on the side the layout puts its children, whatever
+      // side the mouse is on ...
       const result = {
         x:
           parent.getPosition().x +
-          positionDirection *
+          this._getChildrenDirection(graph, parent) *
             (parent.getSize().width + SymmetricSorter.INTERNODE_HORIZONTAL_PADDING),
         y: parent.getPosition().y,
       };
@@ -337,6 +333,21 @@ class SymmetricSorter extends AbstractBasicSorter {
       result = sorter.getChildDirection(treeSet, parent);
     }
     return result;
+  }
+
+  /**
+   * The side the layout puts the children of the given node on, as getChildDirection works it
+   * out for them. It does not need a child, so it also answers for a node that has none yet.
+   */
+  private _getChildrenDirection(treeSet: RootedTreeSet, parent: Node): 1 | -1 {
+    const rootNode = treeSet.getRootNode(parent);
+    if (parent === rootNode) {
+      // The children of an isolated root go to the side of the map the root is on. Compared with
+      // itself, the root would always say "right".
+      return sideOf(rootNode.getPosition().x);
+    }
+    const grandParent = treeSet.getParent(parent)!;
+    return grandParent.getSorter().getChildDirection(treeSet, parent);
   }
 
   /** @return {String} the print name of this class */

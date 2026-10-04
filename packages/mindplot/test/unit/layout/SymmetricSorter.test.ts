@@ -17,6 +17,8 @@
  */
 
 import LayoutManager from '../../../src/components/layout/LayoutManager';
+import RootedTreeSet from '../../../src/components/layout/RootedTreeSet';
+import SymmetricSorter from '../../../src/components/layout/SymmetricSorter';
 
 const ROOT_NODE_SIZE = { width: 140, height: 90 };
 const NODE_SIZE = { width: 80, height: 60 };
@@ -45,7 +47,7 @@ describe('SymmetricSorter Layout Tests', () => {
     expect(node4).toBeDefined();
 
     // Check positions are valid numbers
-    [node1, node2, node3, node4].forEach(node => {
+    [node1, node2, node3, node4].forEach((node) => {
       const pos = node.getPosition();
       expect(typeof pos.x).toBe('number');
       expect(typeof pos.y).toBe('number');
@@ -70,7 +72,7 @@ describe('SymmetricSorter Layout Tests', () => {
     for (let i = 1; i <= 4; i++) {
       const node = manager.find(i);
       expect(node).toBeDefined();
-      
+
       const pos = node.getPosition();
       expect(Number.isFinite(pos.x)).toBe(true);
       expect(Number.isFinite(pos.y)).toBe(true);
@@ -122,7 +124,6 @@ describe('SymmetricSorter Layout Tests', () => {
   });
 });
 
-
 describe('SymmetricSorter.predict of a new child of an isolated topic', () => {
   // Topic 5 is not connected to the central topic: it is the root of its own tree.
   const isolatedAt = (x: number): LayoutManager => {
@@ -142,5 +143,58 @@ describe('SymmetricSorter.predict of a new child of an isolated topic', () => {
 
     expect(Math.sign(predicted.position.x - x)).toBe(Math.sign(laidOut.x - x));
     expect(Math.sign(predicted.position.x - x)).toBe(Math.sign(x));
+  });
+});
+
+describe('SymmetricSorter.predict previews the side the layout uses (BL4-36)', () => {
+  const treeSetOf = (manager: LayoutManager): RootedTreeSet =>
+    (manager as unknown as { _treeSet: RootedTreeSet })._treeSet;
+
+  it('drops onto a childless topic on the side of its children, not of the mouse', () => {
+    // Topic 1 is on the right of the central topic and topic 2, which has no children, on the left.
+    const manager = new LayoutManager(0, ROOT_NODE_SIZE);
+    manager.addNode(1, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 1, 0);
+    manager.addNode(2, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 2, 1);
+    manager.addNode(3, NODE_SIZE, { x: 0, y: 0 }).connectNode(1, 3, 0);
+    manager.layout();
+    const parentX = manager.find(2).getPosition().x;
+    expect(parentX).toBeLessThan(0);
+
+    // Topic 3 is dragged onto topic 2 with the mouse on the right of the central topic.
+    const predicted = manager.predict(2, 3, { x: 300, y: 0 });
+
+    manager.disconnectNode(3);
+    manager.connectNode(2, 3, predicted.order);
+    manager.layout();
+    const laidOut = manager.find(3).getPosition();
+
+    expect(Math.sign(laidOut.x - parentX)).toBe(-1);
+    expect(Math.sign(predicted.position.x - parentX)).toBe(Math.sign(laidOut.x - parentX));
+  });
+
+  it.each([-400, 400])('places a free child of an isolated topic at x=%i on its side', (x) => {
+    // Topic 5 is not connected to the central topic: it is the root of its own tree.
+    const manager = new LayoutManager(0, ROOT_NODE_SIZE);
+    manager.addNode(5, NODE_SIZE, { x, y: 300 });
+    manager.addNode(6, NODE_SIZE, { x: 0, y: 0 });
+    manager.layout();
+
+    const sorter = new SymmetricSorter();
+    const treeSet = treeSetOf(manager);
+    // The mouse is far on the other side of the topic.
+    const [, predicted] = sorter.predict(
+      treeSet,
+      manager.find(5),
+      manager.find(6),
+      { x: x - Math.sign(x) * 1000, y: 300 },
+      true,
+    );
+
+    manager.connectNode(5, 6, 0);
+    manager.layout();
+    const laidOut = manager.find(6).getPosition();
+
+    expect(Math.sign(laidOut.x - x)).toBe(Math.sign(x));
+    expect(Math.sign(predicted.x - x)).toBe(Math.sign(laidOut.x - x));
   });
 });

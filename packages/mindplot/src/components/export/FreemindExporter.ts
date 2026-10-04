@@ -202,7 +202,7 @@ class FreemindExporter extends Exporter {
 
       this.addNodeFromTopic(currentTopic, newNode);
 
-      const position: PositionNodeType = currentTopic.getPosition();
+      const position: PositionNodeType | undefined = currentTopic.getPosition();
       if (position) {
         const xPos: number = position.x;
         newNode.setPosition(xPos < 0 ? 'left' : 'right');

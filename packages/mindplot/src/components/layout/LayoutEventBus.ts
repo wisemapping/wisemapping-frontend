@@ -18,6 +18,32 @@
  */
 import EventDispatcher from '../EventDispatcher';
 import { LayoutEventBusType } from '../LayoutEventBusType';
+import type NodeModel from '../model/NodeModel';
+import type PositionType from '../PositionType';
+import type SizeType from '../SizeType';
+
+/** The payload of each event. Topics send their model, not themselves. */
+export type LayoutEventPayloads = {
+  topicResize: { node: NodeModel; size: SizeType };
+  topicMoved: { node: NodeModel; position: PositionType };
+  forceLayout: void;
+  childShrinked: NodeModel;
+  topicConnected: { parentNode: NodeModel; childNode: NodeModel };
+  topicAdded: NodeModel;
+  topicRemoved: NodeModel;
+  topicDisconect: NodeModel;
+  topicSelected: NodeModel;
+  topicUnselected: NodeModel;
+  canvasPanned: void;
+  canvasZoomed: { zoom: number };
+  // Fired by the ActionDispatcher, which shares the event names, never on this bus.
+  modelUpdate: unknown;
+};
+
+/** The arguments fireEvent takes after the event type: none for the events without a payload. */
+type PayloadArgs<T extends LayoutEventBusType> = LayoutEventPayloads[T] extends void
+  ? []
+  : [LayoutEventPayloads[T]];
 
 class LayoutEventBus {
   private _dispatcher: EventDispatcher<LayoutEventBusType>;
@@ -26,8 +52,8 @@ class LayoutEventBus {
     this._dispatcher = new EventDispatcher<LayoutEventBusType>();
   }
 
-  fireEvent(type: LayoutEventBusType, arg?: any): void {
-    this._dispatcher.fireEvent(type, arg);
+  fireEvent<T extends LayoutEventBusType>(type: T, ...args: PayloadArgs<T>): void {
+    this._dispatcher.fireEvent(type, args[0]);
   }
 
   addEvent(type: LayoutEventBusType, fn: (arg?: any) => void, internal?: boolean): void {

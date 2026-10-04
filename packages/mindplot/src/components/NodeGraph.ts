@@ -177,9 +177,21 @@ abstract class NodeGraph implements CanvasElement {
 
   abstract buildDragShape(): Group | undefined;
 
+  /**
+   * A model may have no position yet: a topic gets its own on the first layout. Until then, fall
+   * back as the layout does (EventBusDispatcher._initialPosition): the closest ancestor position,
+   * or the origin.
+   */
   getPosition(): PositionType {
-    const model = this.getModel();
-    return model.getPosition();
+    let model: NodeModel | null = this.getModel();
+    while (model) {
+      const position = model.getPosition();
+      if (position) {
+        return position;
+      }
+      model = model.getParent();
+    }
+    return { x: 0, y: 0 };
   }
 
   isCentralTopic(): boolean {

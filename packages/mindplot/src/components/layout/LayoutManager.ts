@@ -115,10 +115,15 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
    * @param size
    * @param position
    * @throws will throw an error if id is null or undefined
+   * @throws will throw an error if position is missing, or its x or y is not a finite number
    * @return this
    */
   addNode(id: number, size: SizeType, position: PositionType) {
     $assert($defined(id), 'id can not be null');
+    $assert(
+      $defined(position) && Number.isFinite(position.x) && Number.isFinite(position.y),
+      'position must have finite x and y',
+    );
     const result = this._getCurrentLayout().createNode(id, size, position, 'topic');
     this._treeSet.add(result);
 

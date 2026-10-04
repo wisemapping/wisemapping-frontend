@@ -18,12 +18,19 @@
 import PositionType from '../PositionType';
 import INodeModel from '../model/INodeModel';
 import SizeType from '../SizeType';
-import Topic from '../Topic';
-import LayoutEventBus from './LayoutEventBus';
+import LayoutEventBus, { LayoutEventPayloads } from './LayoutEventBus';
 import LayoutManager from './LayoutManager';
 import { LayoutEventBusType } from '../LayoutEventBusType';
 
 type BusHandler = Parameters<typeof LayoutEventBus.addEvent>[1];
+
+/** A handler for one event, typed with the payload the bus sends for it. */
+type EventHandler<T extends LayoutEventBusType> = (arg: LayoutEventPayloads[T]) => void;
+
+const busHandler = <T extends LayoutEventBusType>(
+  type: T,
+  handler: EventHandler<T>,
+): [LayoutEventBusType, BusHandler] => [type, handler as BusHandler];
 
 class EventBusDispatcher {
   private _layoutManager: LayoutManager | null;
@@ -43,14 +50,14 @@ class EventBusDispatcher {
   registerBusEvents() {
     this.dispose();
     this._busHandlers = [
-      ['topicAdded', this._topicAdded.bind(this)],
-      ['topicRemoved', this._topicRemoved.bind(this)],
-      ['topicResize', this._topicResizeEvent.bind(this)],
-      ['topicMoved', this._topicMoved.bind(this)],
-      ['topicDisconect', this._topicDisconect.bind(this)],
-      ['topicConnected', this._topicConnected.bind(this)],
-      ['childShrinked', this._childShrinked.bind(this)],
-      ['forceLayout', this._forceLayout.bind(this)],
+      busHandler('topicAdded', this._topicAdded.bind(this)),
+      busHandler('topicRemoved', this._topicRemoved.bind(this)),
+      busHandler('topicResize', this._topicResizeEvent.bind(this)),
+      busHandler('topicMoved', this._topicMoved.bind(this)),
+      busHandler('topicDisconect', this._topicDisconect.bind(this)),
+      busHandler('topicConnected', this._topicConnected.bind(this)),
+      busHandler('childShrinked', this._childShrinked.bind(this)),
+      busHandler('forceLayout', this._forceLayout.bind(this)),
     ];
     this._busHandlers.forEach(([type, handler]) => LayoutEventBus.addEvent(type, handler));
   }
@@ -63,19 +70,19 @@ class EventBusDispatcher {
     this._busHandlers = [];
   }
 
-  private _topicResizeEvent(args: { node: Topic; size: SizeType }) {
+  private _topicResizeEvent(args: { node: INodeModel; size: SizeType }) {
     this.getLayoutManager().updateNodeSize(args.node.getId(), args.size);
   }
 
-  private _topicMoved(args: { node: Topic; position: PositionType }) {
+  private _topicMoved(args: { node: INodeModel; position: PositionType }) {
     this.getLayoutManager().moveNode(args.node.getId(), args.position);
   }
 
-  private _topicDisconect(node: Topic) {
+  private _topicDisconect(node: INodeModel) {
     this.getLayoutManager().disconnectNode(node.getId());
   }
 
-  private _topicConnected(args: { parentNode: Topic; childNode: Topic }) {
+  private _topicConnected(args: { parentNode: INodeModel; childNode: INodeModel }) {
     // Get the order, handling undefined for topics without order attribute
     let order = args.childNode.getOrder();
     if (order === undefined) {
@@ -102,11 +109,11 @@ class EventBusDispatcher {
     return this._layoutManager;
   }
 
-  private _childShrinked(node: Topic) {
+  private _childShrinked(node: INodeModel) {
     this.getLayoutManager().updateShrinkState(node.getId(), node.areChildrenShrunken());
   }
 
-  // The bus hands over the topic model (Topic.addToWorkspace), not the topic.
+  // The bus hands over topic models (see LayoutEventPayloads), not topics.
   private _topicAdded(node: INodeModel) {
     // Central topic must not be added twice ...
     if (node.getId() !== 0) {
@@ -126,7 +133,7 @@ class EventBusDispatcher {
   private static _initialPosition(node: INodeModel): PositionType {
     let model: INodeModel | null = node;
     while (model) {
-      const position = model.getPosition() as PositionType | undefined;
+      const position = model.getPosition();
       if (position) {
         return position;
       }
@@ -135,7 +142,7 @@ class EventBusDispatcher {
     return { x: 0, y: 0 };
   }
 
-  private _topicRemoved(node: Topic) {
+  private _topicRemoved(node: INodeModel) {
     this.getLayoutManager().removeNode(node.getId());
   }
 
