@@ -1,3 +1,10 @@
 <map name="cdata-support" theme="prism" layout="mindmap" version="tango">
-    <topic central="true" text="Observation" id="1"/>
+    <topic central="true" text="Observation" id="1">
+        <note contentType="html"><![CDATA[
+                
+                
+                    <p>Always ask</p>
+                
+            ]]></note>
+    </topic>
 </map>

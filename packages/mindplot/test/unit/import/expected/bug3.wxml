@@ -43,6 +43,7 @@
                                     <p>product innovation (as a pecentage of total turnover)</p>
                                 
                             ]]></text>
+                        <icon id="sign_warning"/>
                     </topic>
                     <topic position="-470,-250" order="1" shape="line" id="361">
                         <text><![CDATA[
@@ -61,6 +62,7 @@
                                     <p>(international co-authoriship, domestic co-authoriship, single author)</p>
                                 
                             ]]></text>
+                        <icon id="sign_warning"/>
                     </topic>
                     <topic position="-470,-200" order="3" shape="line" id="363">
                         <text><![CDATA[
@@ -70,9 +72,14 @@
                                     <p>innovations in the total amount of regional firms’ expenditures, %</p>
                                 
                             ]]></text>
+                        <icon id="sign_warning"/>
                     </topic>
-                    <topic position="-470,-175" order="4" text="Increase in the number of innovative companies with in-house R&amp;D" shape="line" id="364"/>
-                    <topic position="-470,-150" order="5" text="Increase in th number of innovative companies without in-house R&amp;D" shape="line" id="365"/>
+                    <topic position="-470,-175" order="4" text="Increase in the number of innovative companies with in-house R&amp;D" shape="line" id="364">
+                        <icon id="sign_warning"/>
+                    </topic>
+                    <topic position="-470,-150" order="5" text="Increase in th number of innovative companies without in-house R&amp;D" shape="line" id="365">
+                        <icon id="sign_warning"/>
+                    </topic>
                     <topic position="-470,-125" order="6" shape="line" id="366">
                         <text><![CDATA[
                                 
@@ -81,6 +88,7 @@
                                     <p>international/national collaboration on innovation</p>
                                 
                             ]]></text>
+                        <icon id="sign_warning"/>
                     </topic>
                     <topic position="-470,-100" order="7" shape="line" id="367">
                         <text><![CDATA[
@@ -90,6 +98,7 @@
                                     <p>highly cited scientific article in the whole Federation)</p>
                                 
                             ]]></text>
+                        <icon id="sign_warning"/>
                     </topic>
                     <topic position="-470,-75" order="8" shape="line" id="368">
                         <text><![CDATA[
@@ -99,12 +108,21 @@
                                     <p>(as a percentafe of patent application filed under PCT)</p>
                                 
                             ]]></text>
+                        <icon id="sign_warning"/>
                     </topic>
-                    <topic position="-470,-50" order="9" text="Number of international patents" shape="line" id="369"/>
+                    <topic position="-470,-50" order="9" text="Number of international patents" shape="line" id="369">
+                        <icon id="sign_warning"/>
+                    </topic>
                     <topic position="-470,-25" order="10" text="Start-up activity (as a percentage of start-up activity in the whole Federation)" shape="line" id="370"/>
-                    <topic position="-470,0" order="11" text="Number of innovative companies to the number of students " shape="line" id="393"/>
-                    <topic position="-470,25" order="12" text="Number of innovative companies to the number of researchers  " shape="line" id="394"/>
-                    <topic position="-470,50" order="13" text="Volume of license agreements to the volume of R&amp;D support from the regional budget " shape="line" id="400"/>
+                    <topic position="-470,0" order="11" text="Number of innovative companies to the number of students " shape="line" id="393">
+                        <icon id="sign_warning"/>
+                    </topic>
+                    <topic position="-470,25" order="12" text="Number of innovative companies to the number of researchers  " shape="line" id="394">
+                        <icon id="sign_warning"/>
+                    </topic>
+                    <topic position="-470,50" order="13" text="Volume of license agreements to the volume of R&amp;D support from the regional budget " shape="line" id="400">
+                        <icon id="sign_warning"/>
+                    </topic>
                 </topic>
             </topic>
         </topic>
@@ -127,13 +145,19 @@
                     <topic position="470,-75" order="1" text="Average wage (compare to the Fed)" shape="line" id="14"/>
                 </topic>
                 <topic position="380,-50" order="1" text="Productivity" shape="line" id="86">
-                    <topic position="470,-75" order="0" text="Labor productivity" shape="line" id="190"/>
+                    <topic position="470,-75" order="0" text="Labor productivity" shape="line" id="190">
+                        <icon id="sign_warning"/>
+                    </topic>
                     <topic position="470,-50" order="1" text="Labor productivity growth rate" shape="line" id="191"/>
                 </topic>
                 <topic position="380,-25" order="2" text="Jobs" shape="line" id="87">
-                    <topic position="470,-62" order="0" text="Share of high-productive jobs" shape="line" id="13"/>
+                    <topic position="470,-62" order="0" text="Share of high-productive jobs" shape="line" id="13">
+                        <icon id="sign_warning"/>
+                    </topic>
                     <topic position="470,-37" order="1" text="Share of creative industries jobs" shape="line" id="88"/>
-                    <topic position="470,-12" order="2" text="Uneployment rate of university graduates" shape="line" id="336"/>
+                    <topic position="470,-12" order="2" text="Uneployment rate of university graduates" shape="line" id="336">
+                        <icon id="sign_warning"/>
+                    </topic>
                 </topic>
                 <topic position="380,0" order="3" text="Income" shape="line" id="89">
                     <topic position="470,-12" order="0" text="GRP per capita and its growth rate" shape="line" id="11"/>
@@ -153,7 +177,9 @@
                                     <p>WB</p>
                                 
                             ]]></note>
-                        <topic position="560,-112" order="0" text="Level of administrative barriers (number and cost of administrative procedures) " shape="line" id="412"/>
+                        <topic position="560,-112" order="0" text="Level of administrative barriers (number and cost of administrative procedures) " shape="line" id="412">
+                            <icon id="sign_warning"/>
+                        </topic>
                     </topic>
                     <topic position="470,-75" order="1" text="Competition index" shape="line" id="18">
                         <note contentType="html"><![CDATA[
@@ -171,7 +197,9 @@
                                         <p>GCR</p>
                                     
                                 ]]></note>
-                            <topic position="650,-99" order="0" text="Inrease in the number of International students" shape="line" id="337"/>
+                            <topic position="650,-99" order="0" text="Inrease in the number of International students" shape="line" id="337">
+                                <icon id="sign_warning"/>
+                            </topic>
                         </topic>
                         <topic position="560,-62" order="1" text="Quantity of education" shape="line" id="121">
                             <topic position="650,-149" order="0" text="Participation in life-long learning" shape="line" id="122">
@@ -181,8 +209,11 @@
                                             <p>per 100 population aged 25-64</p>
                                         
                                     ]]></note>
+                                <icon id="sign_warning"/>
                             </topic>
-                            <topic position="650,-124" order="1" text="Increase in literarecy " shape="line" id="333"/>
+                            <topic position="650,-124" order="1" text="Increase in literarecy " shape="line" id="333">
+                                <icon id="sign_warning"/>
+                            </topic>
                             <topic position="650,-99" order="2" shape="line" id="188">
                                 <text><![CDATA[
                                         
@@ -201,9 +232,13 @@
                                         
                                     ]]></text>
                             </topic>
-                            <topic position="650,-49" order="4" text="Increase in University students" shape="line" id="332"/>
+                            <topic position="650,-49" order="4" text="Increase in University students" shape="line" id="332">
+                                <icon id="sign_warning"/>
+                            </topic>
                             <topic position="650,-24" order="5" text="Government expenditure on General University Funding" shape="line" id="351"/>
-                            <topic position="650,1" order="6" text="Access to training, information, and consulting support " shape="line" id="409"/>
+                            <topic position="650,1" order="6" text="Access to training, information, and consulting support " shape="line" id="409">
+                                <icon id="sign_warning"/>
+                            </topic>
                         </topic>
                         <topic position="560,-37" order="2" text="Science &amp; engineering workforce" shape="line" id="285">
                             <topic position="650,-87" order="0" text="Availability of scientists and engineers" shape="line" id="147">
@@ -214,7 +249,9 @@
                                         
                                     ]]></note>
                             </topic>
-                            <topic position="650,-62" order="1" text="Amount of researches per 10 thousands population" shape="line" id="189"/>
+                            <topic position="650,-62" order="1" text="Amount of researches per 10 thousands population" shape="line" id="189">
+                                <icon id="sign_warning"/>
+                            </topic>
                             <topic position="650,-37" order="2" text="Average wage of researches per average wage in the region" shape="line" id="284"/>
                             <topic position="650,-12" order="3" text="Share of researchers in the total number of employees in the region" shape="line" id="286"/>
                         </topic>
@@ -229,7 +266,9 @@
                             <topic position="650,-62" order="1" text="Amounts of business angel, pre-seed, seed and venture financing" shape="line" id="344"/>
                             <topic position="650,-37" order="2" text="Amount of public co-funding of business R&amp;D" shape="line" id="348"/>
                             <topic position="650,-12" order="3" text="Number of startups received venture financing " shape="line" id="385"/>
-                            <topic position="650,13" order="4" text="Number of companies received equity investments " shape="line" id="386"/>
+                            <topic position="650,13" order="4" text="Number of companies received equity investments " shape="line" id="386">
+                                <icon id="sign_warning"/>
+                            </topic>
                         </topic>
                         <topic position="560,0" order="1" text="Available" shape="line" id="388">
                             <topic position="650,-25" order="0" text="Amount of matching grants available in the region for business R&amp;D" shape="line" id="347"/>
@@ -275,6 +314,7 @@
                                             <p>: exports as a share of total output in manufacturing and services [%].</p>
                                         
                                     ]]></note>
+                                <icon id="sign_warning"/>
                             </topic>
                             <topic position="650,-124" order="1" shape="line" id="375">
                                 <text><![CDATA[
@@ -284,6 +324,7 @@
                                             <p>of production of goods, works and services</p>
                                         
                                     ]]></text>
+                                <icon id="sign_warning"/>
                             </topic>
                             <topic position="650,-99" order="2" shape="line" id="377">
                                 <text><![CDATA[
@@ -293,6 +334,7 @@
                                             <p>by zones (EU, US, CIS, other countries</p>
                                         
                                     ]]></text>
+                                <icon id="sign_warning"/>
                             </topic>
                         </topic>
                         <topic position="560,-87" order="2" text="Share of high-technology products in government procurements" shape="line" id="338"/>
@@ -379,7 +421,9 @@
                                     
                                 ]]></text>
                         </topic>
-                        <topic position="560,-75" order="2" text="Number of purchased new technologies" shape="line" id="129"/>
+                        <topic position="560,-75" order="2" text="Number of purchased new technologies" shape="line" id="129">
+                            <icon id="sign_warning"/>
+                        </topic>
                         <topic position="560,-50" order="3" shape="line" id="354">
                             <text><![CDATA[
                                     
@@ -399,8 +443,11 @@
                                         <p>(can be measured by sectors and for the whole region)</p>
                                     
                                 ]]></text>
+                            <icon id="sign_warning"/>
                         </topic>
-                        <topic position="560,50" order="7" text="Share of wastes in the total volume of production (by sector)" shape="line" id="374"/>
+                        <topic position="560,50" order="7" text="Share of wastes in the total volume of production (by sector)" shape="line" id="374">
+                            <icon id="sign_warning"/>
+                        </topic>
                     </topic>
                     <topic position="470,0" order="4" text="Innovation activities in firms" shape="line" id="123">
                         <topic position="560,-87" order="0" text="Share of innovative companies" shape="line" id="35"/>
@@ -418,9 +465,13 @@
                         <topic position="560,38" order="5" text="Growth of the number of innovative companies " shape="line" id="390"/>
                         <topic position="560,63" order="6" text="Outpus" shape="line" id="398">
                             <topic position="650,13" order="0" text="Volume of new to Russian market production per GRP" shape="line" id="124"/>
-                            <topic position="650,38" order="1" text="Volume of new to world market production per total production" shape="line" id="376"/>
+                            <topic position="650,38" order="1" text="Volume of new to world market production per total production" shape="line" id="376">
+                                <icon id="sign_warning"/>
+                            </topic>
                             <topic position="650,63" order="2" text="Growth of the volume of production of innovative companies " shape="line" id="389"/>
-                            <topic position="650,88" order="3" text="Volume of innovation production per capita " shape="line" id="397"/>
+                            <topic position="650,88" order="3" text="Volume of innovation production per capita " shape="line" id="397">
+                                <icon id="sign_warning"/>
+                            </topic>
                         </topic>
                     </topic>
                     <topic position="470,25" order="5" text="Entrepreneurial activities" shape="line" id="148">
@@ -463,6 +514,7 @@
                                             <p>enterprises per 1 mln. population</p>
                                         
                                     ]]></text>
+                                <icon id="sign_warning"/>
                             </topic>
                             <topic position="650,63" order="4" text="Publication activity of regional scientists and researches" shape="line" id="283"/>
                         </topic>
@@ -504,6 +556,7 @@
                                             <p>and large companies  by university size</p>
                                         
                                     ]]></text>
+                                <icon id="sign_warning"/>
                             </topic>
                         </topic>
                         <topic position="560,-49" order="1" text="Resources" shape="line" id="184">
@@ -675,6 +728,7 @@ international)
                                         <p>of level of transparency of support measures in the region</p>
                                     
                                 ]]></text>
+                            <icon id="sign_warning"/>
                         </topic>
                     </topic>
                     <topic position="-470,-37" order="2" shape="line" id="183">
@@ -685,6 +739,7 @@ international)
                                     <p>select and apply for regional and federal support schemes</p>
                                 
                             ]]></text>
+                        <icon id="sign_warning"/>
                     </topic>
                 </topic>
                 <topic position="-380,-25" order="3" text="Number of applicants" shape="line" id="176">
@@ -709,7 +764,9 @@ international)
                 <topic position="-380,-25" order="0" text="Implementation of measure" shape="line" id="47">
                     <topic position="-470,-62" order="0" text="Target vs. actual KPIs" shape="line" id="106"/>
                     <topic position="-470,-37" order="1" text="Intermediate outputs per budget" shape="line" id="287"/>
-                    <topic position="-470,-12" order="2" text="Qualification of staff" shape="line" id="372"/>
+                    <topic position="-470,-12" order="2" text="Qualification of staff" shape="line" id="372">
+                        <icon id="sign_warning"/>
+                    </topic>
                 </topic>
                 <topic position="-380,0" order="1" text="Output of measure" shape="line" id="58">
                     <topic position="-470,-25" order="0" text="Opinion surveys" shape="line" id="101">
@@ -728,8 +785,12 @@ international)
                 </topic>
                 <topic position="-380,-12" order="1" text="Hard metrics" shape="line" id="104">
                     <topic position="-470,-74" order="0" text="Increase in number of small innovation enterprises " shape="line" id="331"/>
-                    <topic position="-470,-49" order="1" text="Growth of the total volume of salary in the supported companies (excluding inflation) " shape="line" id="402"/>
-                    <topic position="-470,-24" order="2" text="Growth of the volume of regional taxes paid by the supported companies " shape="line" id="403"/>
+                    <topic position="-470,-49" order="1" text="Growth of the total volume of salary in the supported companies (excluding inflation) " shape="line" id="402">
+                        <icon id="sign_warning"/>
+                    </topic>
+                    <topic position="-470,-24" order="2" text="Growth of the volume of regional taxes paid by the supported companies " shape="line" id="403">
+                        <icon id="sign_warning"/>
+                    </topic>
                     <topic position="-470,1" order="3" text="Growth of the volume of export at the supported companies " shape="line" id="405"/>
                     <topic position="-470,26" order="4" text="Number of new products/projects at the companies that received support " shape="line" id="406"/>
                 </topic>
@@ -742,6 +803,7 @@ international)
                                 <p>several programs with different leverage)</p>
                             
                         ]]></text>
+                    <icon id="sign_warning"/>
                 </topic>
                 <topic position="-380,63" order="4" shape="line" id="296">
                     <text><![CDATA[
@@ -751,6 +813,7 @@ international)
                                 <p>of regional budget expenditures on innovation projects</p>
                             
                         ]]></text>
+                    <icon id="sign_warning"/>
                 </topic>
             </topic>
         </topic>
@@ -765,7 +828,9 @@ international)
                 <topic position="380,25" order="0" text="Clusters behavior" shape="line" id="59">
                     <topic position="470,-87" order="0" text="Cluster EU star rating" shape="line" id="60"/>
                     <topic position="470,-62" order="1" text="Share of value added of cluster enterprises in GRP" shape="line" id="318"/>
-                    <topic position="470,-37" order="2" text="Share of cluster products in the relevant world market segment " shape="line" id="320"/>
+                    <topic position="470,-37" order="2" text="Share of cluster products in the relevant world market segment " shape="line" id="320">
+                        <icon id="sign_warning"/>
+                    </topic>
                     <topic position="470,-12" order="3" text="Share of export in cluster total volume of sales" shape="line" id="321"/>
                     <topic position="470,13" order="4" text="Growth of the volume of production in the cluster companies" shape="line" id="379"/>
                     <topic position="470,38" order="5" shape="line" id="380">
@@ -825,6 +890,6 @@ international)
             <topic position="-290,100" order="1" text="Innovation investment climate" shape="rounded rectangle" id="76" bgColor="#feffff"/>
         </topic>
     </topic>
-    <relationship srcTopicId="9" destTopicId="76" lineType="3" endArrow="true" startArrow="true" strokeStyle="dashed"/>
-    <relationship srcTopicId="4" destTopicId="114" lineType="3" endArrow="true" startArrow="true" strokeStyle="dashed"/>
+    <relationship srcTopicId="9" destTopicId="76" lineType="0" endArrow="true" startArrow="true" strokeStyle="dashed"/>
+    <relationship srcTopicId="4" destTopicId="114" lineType="0" endArrow="true" startArrow="true" strokeStyle="dashed"/>
 </map>

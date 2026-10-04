@@ -54,4 +54,37 @@ describe('OPMLImporter', () => {
     const mindmap = loadMindmap(xml);
     expect(mindmap.getCentralTopic().getText()).toBe('OPML Import Error');
   });
+
+  test('imports every top-level outline under a central topic named after the OPML title', async () => {
+    const opml = `<?xml version="1.0" encoding="UTF-8"?>
+      <opml version="1.0">
+        <head><title>OPML Root</title></head>
+        <body>
+          <outline text="Child 1"><outline text="Grandchild"/></outline>
+          <outline text="Child 2"/>
+        </body>
+      </opml>`;
+
+    const xml = await new OPMLImporter(opml).import('test');
+
+    const central = loadMindmap(xml).getCentralTopic();
+    expect(central.getText()).toBe('OPML Root');
+    expect(central.getChildren().map((c) => c.getText())).toEqual(['Child 1', 'Child 2']);
+    expect(
+      central
+        .getChildren()[0]
+        .getChildren()
+        .map((c) => c.getText()),
+    ).toEqual(['Grandchild']);
+  });
+
+  test('names the central topic after the map when the OPML has no title', async () => {
+    const opml = `<opml version="2.0"><head/><body><outline text="A"/><outline text="B"/></body></opml>`;
+
+    const xml = await new OPMLImporter(opml).import('My map');
+
+    const central = loadMindmap(xml).getCentralTopic();
+    expect(central.getText()).toBe('My map');
+    expect(central.getChildren().map((c) => c.getText())).toEqual(['A', 'B']);
+  });
 });

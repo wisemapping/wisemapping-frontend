@@ -50,11 +50,22 @@ class OPMLImporter extends Importer {
         this.mindmap.setDescription(description);
       }
 
-      // Find the root outline element
-      const rootOutline = opmlDoc.querySelector('outline');
-      if (rootOutline) {
-        const centralTopic = this.convertOutline(rootOutline, this.mindmap);
+      const topLevelOutlines = opmlDoc.querySelectorAll('body > outline');
+      if (topLevelOutlines.length > 1) {
+        // Several outlines hang from the body, so they become children of a central topic.
+        const title = opmlDoc.querySelector('head > title')?.textContent?.trim();
+        const centralTopic = this.createCentralTopic(title || nameMap);
+        topLevelOutlines.forEach((outline, index) => {
+          centralTopic.append(this.convertOutline(outline, this.mindmap, centralTopic, index));
+        });
         this.mindmap.addBranch(centralTopic);
+      } else {
+        // Find the root outline element
+        const rootOutline = opmlDoc.querySelector('outline');
+        if (rootOutline) {
+          const centralTopic = this.convertOutline(rootOutline, this.mindmap);
+          this.mindmap.addBranch(centralTopic);
+        }
       }
 
       return Promise.resolve(OPMLImporter.toXml(this.mindmap));
@@ -79,6 +90,13 @@ class OPMLImporter extends Importer {
     centralTopic.addFeature(new NoteModel({ text: `OPML import failed: ${error.message}` }));
     mindmap.addBranch(centralTopic);
     return OPMLImporter.toXml(mindmap);
+  }
+
+  private createCentralTopic(text: string): NodeModel {
+    this.idCounter += 1;
+    const node = new NodeModel('CentralTopic', this.mindmap, this.idCounter);
+    node.setText(text);
+    return node;
   }
 
   private convertOutline(

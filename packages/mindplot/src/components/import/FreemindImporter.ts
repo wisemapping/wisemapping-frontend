@@ -37,6 +37,7 @@ import FeatureModel from '../model/FeatureModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import { TopicShapeType } from '../model/INodeModel';
 import ContentType from '../ContentType';
+import { LineType } from '../ConnectionLine';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import SecureXmlParser from '../security/SecureXmlParser';
 
@@ -156,7 +157,7 @@ export default class FreemindImporter extends Importer {
           relationship.setStartArrow(startarrow.toLowerCase() !== 'none');
         }
 
-        relationship.setLineType(3);
+        relationship.setLineType(LineType.THIN_CURVED);
         this.fixRelationshipControlPoints(relationship, source, destNode);
         mindmap.addRelationship(relationship);
       }
@@ -281,7 +282,8 @@ export default class FreemindImporter extends Importer {
       //   }
       // }
 
-      if (child instanceof FreemindEdge) {
+      // The root node has no edge to a parent, its edge only sets the default of its children.
+      if (child instanceof FreemindEdge && depth > 1) {
         const edge: FreemindEdge = child as FreemindEdge;
         wiseParent.setBackgroundColor(edge.getColor());
       }
@@ -290,10 +292,10 @@ export default class FreemindImporter extends Importer {
         const freeIcon: FreemindIcon = child as FreemindIcon;
         const iconId = freeIcon.getBuiltin();
         if (iconId) {
-          const wiseIconId = FreemindIconConverter.toWiseId(iconId);
-          if (wiseIconId) {
-            const mindmapIcon: FeatureModel = FeatureModelFactory.createModel('icon', {
-              id: wiseIconId,
+          const wiseIcon = FreemindIconConverter.toWiseIcon(iconId);
+          if (wiseIcon) {
+            const mindmapIcon: FeatureModel = FeatureModelFactory.createModel(wiseIcon.type, {
+              id: wiseIcon.id,
             });
             wiseParent.addFeature(mindmapIcon);
           }
@@ -301,14 +303,10 @@ export default class FreemindImporter extends Importer {
       }
 
       if (child instanceof FreemindHook) {
-        const hook: FreemindHook = child as FreemindHook;
-        const mindmapNote: NoteModel = new NoteModel({ text: '' });
-
-        let textNote = hook.getText();
-        if (!textNote) {
-          textNote = FreemindConstant.EMPTY_NOTE;
-          mindmapNote.setText(textNote);
-          wiseParent.addFeature(mindmapNote);
+        // FreeMind 0.7 stored notes as hooks with a text. Other hooks (layout, reminders...) are not notes.
+        const textNote = child.getText();
+        if (textNote) {
+          wiseParent.addFeature(new NoteModel({ text: textNote }));
         }
       }
 

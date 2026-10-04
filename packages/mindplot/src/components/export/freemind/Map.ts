@@ -22,6 +22,7 @@ import Arrowlink from './Arrowlink';
 import Cloud from './Cloud';
 import Edge from './Edge';
 import Font from './Font';
+import Hook from './Hook';
 import Icon from './Icon';
 import Node, { Choise } from './Node';
 import Richcontent from './Richcontent';
@@ -93,22 +94,14 @@ export default class Freemap {
     const freemap: Freemap = new Freemap();
     freemap.setVesion(version);
 
-    const mainTopicElement = rootElem.firstElementChild;
+    // Other elements, such as attribute_registry, can precede the root node.
+    const mainTopicElement = Array.from(rootElem.children).find(
+      (child) => child.tagName === 'node',
+    );
     if (mainTopicElement) {
-      const mainTopic: Node = new Node().loadFromElement(mainTopicElement);
+      // The root node keeps its icons, notes, arrowlinks... like any other node.
+      const mainTopic = this.domToNode(mainTopicElement) as Node;
       freemap.setNode(mainTopic);
-
-      const childNodes = Array.from(mainTopicElement.childNodes);
-      const childsNodes = childNodes
-        .filter((child: ChildNode) => child.nodeType === 1 && (child as Element).tagName === 'node')
-        .map((c) => c as Element);
-
-      childsNodes.forEach((child: Element) => {
-        const node = this.domToNode(child);
-        if (node) {
-          mainTopic.setArrowlinkOrCloudOrEdge(node);
-        }
-      });
     }
     return freemap;
   }
@@ -122,8 +115,9 @@ export default class Freemap {
         (child as Element).tagName === 'font' ||
         (child as Element).tagName === 'edge' ||
         (child as Element).tagName === 'arrowlink' ||
-        (child as Element).tagName === 'clud' ||
-        (child as Element).tagName === 'icon'
+        (child as Element).tagName === 'cloud' ||
+        (child as Element).tagName === 'icon' ||
+        (child as Element).tagName === 'hook'
       ) {
         element = child as Element;
       }
@@ -239,6 +233,18 @@ export default class Freemap {
       }
     }
 
+    if (nodeElem.tagName === 'hook') {
+      node = new Hook();
+      const nameAttr = nodeElem.getAttribute('NAME');
+      if (nameAttr) {
+        node.setName(nameAttr);
+      }
+      const textElem = Array.from(nodeElem.children).find((child) => child.tagName === 'text');
+      if (textElem && textElem.textContent) {
+        node.setText(textElem.textContent);
+      }
+    }
+
     if (nodeElem.tagName === 'richcontent') {
       node = new Richcontent();
 
@@ -309,6 +315,13 @@ export default class Freemap {
     }
 
     if (childNode instanceof Richcontent) {
+      const childNodeXml = childNode.toXml(document);
+      parentNode.appendChild(childNodeXml);
+
+      return childNodeXml;
+    }
+
+    if (childNode instanceof Hook) {
       const childNodeXml = childNode.toXml(document);
       parentNode.appendChild(childNodeXml);
 

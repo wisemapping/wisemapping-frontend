@@ -21,6 +21,7 @@ import fs from 'fs';
 import path from 'path';
 import { describe, expect, test } from '@jest/globals';
 import FreemindImporter from '../../../src/components/import/FreemindImporter';
+import { LineType } from '../../../src/components/ConnectionLine';
 
 const importMap = async (mm: string): Promise<Document> => {
   const xml = await new FreemindImporter(mm).import('test', '');
@@ -154,5 +155,110 @@ describe('FreemindImporter', () => {
     const childNote = topicById(doc, '3').querySelector(':scope > note');
     expect(parentNote?.textContent).toContain('Parent note');
     expect(childNote).toBeNull();
+  });
+
+  test('imports FreeMind builtin icons as emoji icons', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" TEXT="Child" POSITION="right">
+          <icon BUILTIN="idea"/>
+          <icon BUILTIN="full-1"/>
+          <icon BUILTIN="button_ok"/>
+          <icon BUILTIN="messagebox_warning"/>
+        </node>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    const icons = Array.from(topicById(doc, '2').querySelectorAll(':scope > eicon'));
+    expect(icons.map((icon) => icon.getAttribute('id'))).toEqual(['💡', '1️⃣', '✅', '⚠️']);
+  });
+
+  test('keeps the WiseMapping icons written by the FreeMind exporter', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" TEXT="Child" POSITION="right">
+          <icon BUILTIN="sign_warning"/>
+          <icon BUILTIN="unknown_icon"/>
+        </node>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    const topic = topicById(doc, '2');
+    const icons = Array.from(topic.querySelectorAll(':scope > icon'));
+    expect(icons.map((icon) => icon.getAttribute('id'))).toEqual(['sign_warning']);
+    expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
+  });
+
+  test('imports the icons, notes and arrowlinks of the root node', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <icon BUILTIN="idea"/>
+        <richcontent TYPE="NOTE"><html><head/><body><p>Root note</p></body></html></richcontent>
+        <arrowlink DESTINATION="ID_2" STARTARROW="None" ENDARROW="Default"/>
+        <node ID="ID_2" TEXT="Child" POSITION="right"/>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    const root = topicById(doc, '1');
+    expect(root.querySelector(':scope > eicon')?.getAttribute('id')).toBe('💡');
+    expect(root.querySelector(':scope > note')?.textContent).toContain('Root note');
+    const relationship = doc.querySelector('relationship');
+    expect(relationship?.getAttribute('srcTopicId')).toBe('1');
+    expect(relationship?.getAttribute('destTopicId')).toBe('2');
+  });
+
+  test('keeps the background color of a root node that has an edge', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root" BACKGROUND_COLOR="#ffcc33"><edge COLOR="#808080"/></node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    expect(topicById(doc, '1').getAttribute('bgColor')).toBe('#ffcc33');
+  });
+
+  test('finds the root node when other elements precede it', async () => {
+    const mm = `<map version="1.0.1">
+      <attribute_registry SHOW_ATTRIBUTES="hide"/>
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" TEXT="Child" POSITION="right"/>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    expect(topicById(doc, '1').getAttribute('text')).toBe('Root');
+    expect(topicById(doc, '2').getAttribute('text')).toBe('Child');
+  });
+
+  test('imports the notes written as FreeMind 0.7 note hooks', async () => {
+    const mm = `<map version="0.7.1">
+      <node ID="ID_1" TEXT="Root">
+        <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
+        <node ID="ID_2" TEXT="Child" POSITION="right">
+          <hook NAME="accessories/plugins/NodeNote.properties"><text>Old note</text></hook>
+        </node>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    expect(topicById(doc, '1').querySelector(':scope > note')).toBeNull();
+    expect(topicById(doc, '2').querySelector(':scope > note')?.textContent).toBe('Old note');
+  });
+
+  test('imports arrowlinks as thin curved relationships', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" TEXT="Source" POSITION="right">
+          <arrowlink DESTINATION="ID_3" STARTARROW="None" ENDARROW="Default"/>
+        </node>
+        <node ID="ID_3" TEXT="Target" POSITION="right"/>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    const relationship = doc.querySelector('relationship')!;
+    expect(relationship.getAttribute('lineType')).toBe(String(LineType.THIN_CURVED));
   });
 });

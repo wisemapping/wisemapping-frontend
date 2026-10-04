@@ -228,7 +228,9 @@ categories.]]></text>
                             <topic position="650,-86" order="2" text="Brief History of Linux, and of Free Software Foundation" shape="line" id="803540039"/>
                         </topic>
                         <topic position="560,-74" order="1" text="Arguments in favour" shape="line" shrink="true" id="1005748831">
-                            <topic position="650,-111" order="0" text="Open Source is More Efficient" shape="line" id="1453575536"/>
+                            <topic position="650,-111" order="0" text="Open Source is More Efficient" shape="line" id="1453575536">
+                                <eicon id="😊"/>
+                            </topic>
                             <topic position="650,-86" order="1" text="Open Source Is More Innovative" shape="line" id="10779073"/>
                             <topic position="650,-61" order="2" text="Sharing Sotware is Good" shape="line" id="490282244"/>
                         </topic>
@@ -493,10 +495,10 @@ essay!)]]></text>
             </topic>
         </topic>
     </topic>
-    <relationship srcTopicId="1963065372" destTopicId="513978291" lineType="3" srcCtrlPoint="20,-58" destCtrlPoint="101,-78" endArrow="true" startArrow="false" strokeStyle="dashed"/>
-    <relationship srcTopicId="1572116478" destTopicId="1" lineType="3" srcCtrlPoint="363,0" destCtrlPoint="363,0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
-    <relationship srcTopicId="98667269" destTopicId="331016293" lineType="3" srcCtrlPoint="332,0" destCtrlPoint="332,0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
-    <relationship srcTopicId="1710214210" destTopicId="341601142" lineType="3" srcCtrlPoint="442,0" destCtrlPoint="442,0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
-    <relationship srcTopicId="1501502447" destTopicId="877777095" lineType="3" srcCtrlPoint="305,0" destCtrlPoint="305,0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
-    <relationship srcTopicId="1494904283" destTopicId="781772166" lineType="3" srcCtrlPoint="382,0" destCtrlPoint="382,0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
+    <relationship srcTopicId="1963065372" destTopicId="513978291" lineType="0" srcCtrlPoint="20,-58" destCtrlPoint="101,-78" endArrow="true" startArrow="false" strokeStyle="dashed"/>
+    <relationship srcTopicId="1572116478" destTopicId="1" lineType="0" srcCtrlPoint="363,0" destCtrlPoint="363,0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
+    <relationship srcTopicId="98667269" destTopicId="331016293" lineType="0" srcCtrlPoint="332,0" destCtrlPoint="332,0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
+    <relationship srcTopicId="1710214210" destTopicId="341601142" lineType="0" srcCtrlPoint="442,0" destCtrlPoint="442,0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
+    <relationship srcTopicId="1501502447" destTopicId="877777095" lineType="0" srcCtrlPoint="305,0" destCtrlPoint="305,0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
+    <relationship srcTopicId="1494904283" destTopicId="781772166" lineType="0" srcCtrlPoint="382,0" destCtrlPoint="382,0" endArrow="true" startArrow="false" strokeStyle="dashed"/>
 </map>

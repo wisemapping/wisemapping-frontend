@@ -1,5 +1,6 @@
 <map name="welcome" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Welcome To WiseMapping" id="1">
+        <icon id="sign_info"/>
         <topic position="200,-100" order="0" shape="line" id="30">
             <text><![CDATA[
                     
@@ -49,6 +50,7 @@
         <topic position="-200,50" order="5" text="Install In Your Server" shape="line" id="27">
             <topic position="-290,25" order="0" text="Open Source" shape="line" id="29">
                 <link url="http://www.wisemapping.org/" urlType="url"/>
+                <icon id="soft_penguin"/>
             </topic>
             <topic position="-290,50" order="1" text="Download" shape="line" id="28">
                 <link url="http://www.wisemapping.com/inyourserver.html" urlType="url"/>
@@ -60,5 +62,5 @@
             <topic position="-290,163" order="2" text="Share for Edition" shape="line" id="35"/>
         </topic>
     </topic>
-    <relationship srcTopicId="30" destTopicId="11" lineType="3" endArrow="true" startArrow="true" strokeStyle="dashed"/>
+    <relationship srcTopicId="30" destTopicId="11" lineType="0" endArrow="true" startArrow="true" strokeStyle="dashed"/>
 </map>
