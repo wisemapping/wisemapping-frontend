@@ -99,6 +99,7 @@ interface XMindTopic {
   };
   labels?: string[];
   icons?: string[];
+  href?: string;
 }
 
 interface XMindExtension {
@@ -128,6 +129,8 @@ interface XMindSheet {
 type XMindRawInput = string | ArrayBuffer | Uint8Array;
 
 type DetectedInput = { kind: 'xml'; xml: string } | { kind: 'json'; sheet: XMindSheet };
+
+const XLINK_NAMESPACE = 'http://www.w3.org/1999/xlink';
 
 class XMindImporter extends Importer {
   private xmindInput: XMindRawInput;
@@ -476,6 +479,17 @@ class XMindImporter extends Importer {
     topic.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
   }
 
+  /**
+   * Topic hyperlinks become links. Links to a topic of the file (xmind:#id) and to files attached
+   * to it (xap:attachments/...) are skipped: they can not be opened from WiseMapping.
+   */
+  private static addLink(topic: NodeModel, href: string | null | undefined): void {
+    const url = href?.trim();
+    if (url && !/^(xmind|xap):/i.test(url)) {
+      topic.addFeature(FeatureModelFactory.createModel('link', { url }));
+    }
+  }
+
   private addRelationship(mindmap: Mindmap, end1: string, end2: string): void {
     // Map XMind topic IDs to WiseMapping topic IDs
     const srcTopicId = this.topicIdMap.get(end1);
@@ -495,6 +509,7 @@ class XMindImporter extends Importer {
     centralTopic.setText(
       XMindImporter.childElement(rootTopic, 'title')?.textContent || 'Central Topic',
     );
+    this.addXMLTopicFeatures(centralTopic, rootTopic);
     mindmap.addBranch(centralTopic);
 
     // Generate child topics recursively
@@ -550,7 +565,16 @@ class XMindImporter extends Importer {
     const xmindTopicId = xmlTopic.getAttribute('id') || `topic${this.idCounter + 1}`;
     const title = XMindImporter.childElement(xmlTopic, 'title')?.textContent || 'Untitled';
     const topic = this.createTopic(mindmap, xmindTopicId, title);
+    this.addXMLTopicFeatures(topic, xmlTopic);
 
+    // Recursively generate child topics
+    this.appendXMLChildTopics(mindmap, topic, xmlTopic, depth + 1);
+
+    return topic;
+  }
+
+  // The icons, note and link of a topic, the central one included.
+  private addXMLTopicFeatures(topic: NodeModel, xmlTopic: Element): void {
     // Add icons if present (from markers)
     const markerRefs = XMindImporter.childElement(xmlTopic, 'marker-refs');
     const markers = markerRefs ? XMindImporter.childElements(markerRefs, 'marker-ref') : [];
@@ -567,10 +591,10 @@ class XMindImporter extends Importer {
       topic.addFeature(new NoteModel({ text: noteContent }));
     }
 
-    // Recursively generate child topics
-    this.appendXMLChildTopics(mindmap, topic, xmlTopic, depth + 1);
-
-    return topic;
+    XMindImporter.addLink(
+      topic,
+      xmlTopic.getAttributeNS(XLINK_NAMESPACE, 'href') || xmlTopic.getAttribute('xlink:href'),
+    );
   }
 
   private addRelationshipsFromXML(mindmap: Mindmap, rootTopic: Element): void {
@@ -602,6 +626,7 @@ class XMindImporter extends Importer {
     const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
     this.topicIdMap.set(rootTopic.id, centralTopic.getId());
     centralTopic.setText(rootTopic.title || 'Central Topic');
+    this.addJsonTopicFeatures(centralTopic, rootTopic);
     mindmap.addBranch(centralTopic);
 
     // Generate child topics recursively
@@ -639,7 +664,16 @@ class XMindImporter extends Importer {
 
   private convertJsonTopic(mindmap: Mindmap, jsonTopic: XMindTopic, depth: number): NodeModel {
     const topic = this.createTopic(mindmap, jsonTopic.id, jsonTopic.title || 'Untitled');
+    this.addJsonTopicFeatures(topic, jsonTopic);
 
+    // Recursively generate child topics
+    this.appendJsonChildTopics(mindmap, topic, jsonTopic.children?.attached ?? [], depth + 1);
+
+    return topic;
+  }
+
+  // The colors, icons, note and link of a topic, the central one included.
+  private addJsonTopicFeatures(topic: NodeModel, jsonTopic: XMindTopic): void {
     const bgColor = this.extractBackgroundColor(jsonTopic);
     if (bgColor) {
       topic.setBackgroundColor(bgColor);
@@ -665,10 +699,7 @@ class XMindImporter extends Importer {
       topic.addFeature(new NoteModel({ text: noteContent }));
     }
 
-    // Recursively generate child topics
-    this.appendJsonChildTopics(mindmap, topic, jsonTopic.children?.attached ?? [], depth + 1);
-
-    return topic;
+    XMindImporter.addLink(topic, jsonTopic.href);
   }
 
   private extractBackgroundColor(topic: XMindTopic): string | null {

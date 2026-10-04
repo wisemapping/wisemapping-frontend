@@ -27,8 +27,10 @@ class SecureXmlParser {
   // Maximum depth for XML parsing to prevent XML bomb attacks
   private static readonly MAX_XML_DEPTH = 100;
 
-  // Maximum number of nodes to prevent DoS
-  private static readonly MAX_XML_NODES = 10000;
+  // Maximum number of elements, to prevent DoS. Entity expansion (billion laughs) is already
+  // blocked, as entity declarations are rejected, so this only has to stop absurd documents:
+  // a large map with rich notes easily has tens of thousands of elements.
+  private static readonly MAX_XML_NODES = 200000;
 
   // Entities every XML parser defines. They can not be used for XXE attacks.
   private static readonly PREDEFINED_ENTITY = /^&(?:amp|lt|gt|quot|apos);$/;

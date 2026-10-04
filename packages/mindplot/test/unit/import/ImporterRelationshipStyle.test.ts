@@ -34,24 +34,32 @@ const loadMindmap = (xml: string): Mindmap => {
 };
 
 describe('FreeplaneImporter relationship style', () => {
+  // DASH holds the dash pattern of Freeplane's Dash enum: none is SOLID, "3 3" CLOSE_DOTS,
+  // "7 7" DASHES, "2 7" DISTANT_DOTS and "2 7 7 7" DOTS_AND_DASHES.
   const freeplane = `<map version="freeplane 1.9.13">
   <node TEXT="Root" ID="ID_1">
     <node TEXT="A" ID="ID_2">
+      <arrowlink DESTINATION="ID_3"/>
       <arrowlink DESTINATION="ID_3" DASH="3 3"/>
-      <arrowlink DESTINATION="ID_4" DASH="5 5"/>
+      <arrowlink DESTINATION="ID_3" DASH="7 7"/>
+      <arrowlink DESTINATION="ID_4" DASH="2 7"/>
+      <arrowlink DESTINATION="ID_4" DASH="2 7 7 7"/>
     </node>
     <node TEXT="B" ID="ID_3"/>
     <node TEXT="C" ID="ID_4"/>
   </node>
 </map>`;
 
-  test('maps DASH to the stroke style and keeps a valid line type', async () => {
+  test('maps DASH to the closest stroke style and keeps a valid line type', async () => {
     const mindmap = loadMindmap(await new FreeplaneImporter(freeplane).import('test'));
 
     const relationships = mindmap.getRelationships();
     expect(relationships.map((r) => r.getStrokeStyle())).toEqual([
+      StrokeStyle.SOLID,
+      StrokeStyle.DOTTED,
       StrokeStyle.DASHED,
       StrokeStyle.DOTTED,
+      StrokeStyle.DASHED,
     ]);
     relationships.forEach((r) => expect(r.getLineType()).toBe(LineType.THIN_CURVED));
   });

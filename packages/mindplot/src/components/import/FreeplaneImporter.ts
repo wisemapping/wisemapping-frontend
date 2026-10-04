@@ -23,6 +23,8 @@ import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import { StrokeStyle } from '../model/RelationshipModel';
+import ContentType from '../ContentType';
+import HtmlSanitizer from '../security/HtmlSanitizer';
 import toWiseMappingXml from './support/MindmapXml';
 
 class FreeplaneImporter extends Importer {
@@ -74,6 +76,7 @@ class FreeplaneImporter extends Importer {
     const rootNodeId = rootNode.getAttribute('ID') || 'ID_1';
     this.topicIdMap.set(rootNodeId, centralTopic.getId());
     centralTopic.setText(centralTitle);
+    this.addFeatures(centralTopic, rootNode);
     mindmap.addBranch(centralTopic);
 
     // Process child nodes
@@ -98,28 +101,7 @@ class FreeplaneImporter extends Importer {
     topic.setPosition(position.x, position.y);
     topic.setOrder(order);
     topic.setShapeType('line');
-
-    // Add icons if present
-    const icons = freeplaneNode.querySelectorAll(':scope > icon');
-    icons.forEach((icon) => {
-      const builtin = icon.getAttribute('BUILTIN');
-      if (builtin) {
-        const emojiIcon = this.mapFreeplaneIconToEmojiIcon(builtin);
-        topic.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
-      }
-    });
-
-    // Add notes if present
-    const noteContent = this.buildNoteContent(freeplaneNode);
-    if (noteContent) {
-      topic.addFeature(new NoteModel({ text: noteContent }));
-    }
-
-    // Add links if present
-    const link = freeplaneNode.getAttribute('LINK');
-    if (link) {
-      topic.addFeature(FeatureModelFactory.createModel('link', { url: link }));
-    }
+    this.addFeatures(topic, freeplaneNode);
 
     // Process child nodes recursively
     const childNodes = freeplaneNode.querySelectorAll(':scope > node');
@@ -130,24 +112,58 @@ class FreeplaneImporter extends Importer {
     return topic;
   }
 
+  // The icons, notes and links of a node, the central one included.
+  private addFeatures(topic: NodeModel, freeplaneNode: Element): void {
+    const icons = freeplaneNode.querySelectorAll(':scope > icon');
+    icons.forEach((icon) => {
+      const builtin = icon.getAttribute('BUILTIN');
+      if (builtin) {
+        const emojiIcon = this.mapFreeplaneIconToEmojiIcon(builtin);
+        topic.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
+      }
+    });
+
+    // Freeplane notes are HTML, as in FreeMind.
+    const noteContent = this.buildNoteContent(freeplaneNode);
+    if (noteContent) {
+      const note = new NoteModel({ text: noteContent });
+      note.setContentType(ContentType.HTML);
+      topic.addFeature(note);
+    }
+
+    const link = freeplaneNode.getAttribute('LINK');
+    if (link) {
+      topic.addFeature(FeatureModelFactory.createModel('link', { url: link }));
+    }
+  }
+
   private buildNoteContent(freeplaneNode: Element): string | null {
     const parts: string[] = [];
 
     // Handle Freeplane notes
     const noteElements = freeplaneNode.querySelectorAll(':scope > richcontent[TYPE="NOTE"]');
     noteElements.forEach((noteElement) => {
-      const htmlContent = noteElement.innerHTML;
+      // Sanitized like FreeMind notes: it drops the <html> and <body> wrappers and any script.
+      const note = noteElement.cloneNode(true) as Element;
+      FreeplaneImporter.cdataToText(note);
+      const htmlContent = HtmlSanitizer.sanitize(note.innerHTML).trim();
       if (htmlContent) {
-        // For simple HTML like <p>text</p>, preserve the original format
-        // Don't sanitize for now to preserve the exact format
-        const trimmedContent = htmlContent.trim();
-        if (trimmedContent) {
-          parts.push(trimmedContent);
-        }
+        parts.push(htmlContent);
       }
     });
 
     return parts.length > 0 ? parts.join('\n') : null;
+  }
+
+  // HTML has no CDATA sections, it would drop them: their text is kept as (escaped) text.
+  private static cdataToText(node: Node): void {
+    Array.from(node.childNodes).forEach((child) => {
+      if (child.nodeType === Node.CDATA_SECTION_NODE) {
+        child.replaceWith(child.ownerDocument!.createTextNode(child.textContent || ''));
+      } else {
+        FreeplaneImporter.cdataToText(child);
+      }
+    });
   }
 
   private mapFreeplaneIconToEmojiIcon(builtin: string): string {
@@ -513,7 +529,6 @@ class FreeplaneImporter extends Importer {
 
   private addRelationship(mindmap: Mindmap, arrowlinkElement: Element): void {
     const destination = arrowlinkElement.getAttribute('DESTINATION');
-    const dash = arrowlinkElement.getAttribute('DASH') || '';
 
     if (!destination) return;
 
@@ -532,14 +547,29 @@ class FreeplaneImporter extends Importer {
 
     const relationship = mindmap.createRelationship(srcTopicId, destTopicId);
 
-    // Map the dash pattern to the stroke style
-    if (dash.includes('3 3')) {
-      relationship.setStrokeStyle(StrokeStyle.DASHED);
-    } else if (dash.includes('5 5')) {
-      relationship.setStrokeStyle(StrokeStyle.DOTTED);
-    }
+    relationship.setStrokeStyle(
+      FreeplaneImporter.strokeStyle(arrowlinkElement.getAttribute('DASH')),
+    );
 
     mindmap.addRelationship(relationship);
+  }
+
+  /**
+   * DASH is the dash pattern of the connector, its lengths separated by spaces. Freeplane writes
+   * those of its Dash enum: none (SOLID), "3 3" (CLOSE_DOTS), "7 7" (DASHES), "2 7" (DISTANT_DOTS)
+   * and "2 7 7 7" (DOTS_AND_DASHES). Short dashes are dots; any longer one makes the line dashed.
+   */
+  private static strokeStyle(dash: string | null): StrokeStyle {
+    const lengths = (dash || '')
+      .trim()
+      .split(/\s+/)
+      .map(Number)
+      .filter((length) => length > 0);
+    if (lengths.length === 0) {
+      return StrokeStyle.SOLID;
+    }
+    const dashLengths = lengths.filter((_, index) => index % 2 === 0);
+    return dashLengths.every((length) => length <= 3) ? StrokeStyle.DOTTED : StrokeStyle.DASHED;
   }
 }
 

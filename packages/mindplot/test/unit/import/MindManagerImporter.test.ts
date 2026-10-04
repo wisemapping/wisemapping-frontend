@@ -126,3 +126,142 @@ describe('MindManagerImporter icons', () => {
     expect((icons[0] as EmojiIconModel).getIconType()).toBe('🅰️');
   });
 });
+
+const iconsOf = (node: NodeModel): string[] =>
+  node.findFeatureByType('eicon').map((icon) => (icon as EmojiIconModel).getIconType());
+
+describe('MindManagerImporter central topic', () => {
+  test('imports the notes, icons and links of the central topic', async () => {
+    const mindManager = `<?xml version="1.0" encoding="UTF-8"?>
+<Map xmlns="http://www.mindjet.com/MindManager/MindMapXML/1.0">
+  <Topic ID="1" Text="Root">
+    <Notes>Root note</Notes>
+    <Hyperlink URL="https://example.com/root"/>
+    <Icon Name="star"/>
+    <Topic ID="2" Text="Child"/>
+  </Topic>
+</Map>`;
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    const central = findByText(mindmap, 'Root');
+    expect((central.findFeatureByType('note')[0] as NoteModel | undefined)?.getText()).toBe(
+      'Root note',
+    );
+    expect((central.findFeatureByType('link')[0] as LinkModel | undefined)?.getUrl()).toBe(
+      'https://example.com/root',
+    );
+    expect(iconsOf(central)).toEqual(['⭐']);
+  });
+});
+
+describe('MindManagerImporter topic ids', () => {
+  test('topics without an id neither shift the ids nor take the id of another topic', async () => {
+    // The second child has no ID: it must not be mistaken for the central topic (ID 1).
+    const mindManager = `<?xml version="1.0" encoding="UTF-8"?>
+<Map xmlns="http://www.mindjet.com/MindManager/MindMapXML/1.0">
+  <Topic ID="1" Text="Root">
+    <Topic Text="No id"/>
+    <Topic ID="3" Text="Three"/>
+  </Topic>
+  <Relationships>
+    <Relationship FromTopicID="1" ToTopicID="3"/>
+  </Relationships>
+</Map>`;
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    const central = findByText(mindmap, 'Root');
+    expect(central.getId()).toBe(1);
+    expect(findByText(mindmap, 'No id').getId()).toBe(2);
+    expect(findByText(mindmap, 'Three').getId()).toBe(3);
+
+    const relationships = mindmap.getRelationships();
+    expect(relationships).toHaveLength(1);
+    expect(relationships[0].getFromNode()).toBe(central.getId());
+    expect(relationships[0].getToNode()).toBe(findByText(mindmap, 'Three').getId());
+  });
+});
+
+// Follows the MindManager Application schema (MindManagerApplication.xsd, 2003 namespace): Topic
+// has SubTopics, FloatingTopics, Text, Color (ARGB FillColor/LineColor), Offset, IconsGroup
+// (Icons/Icon xsi:type="ap:StockIcon" IconType="urn:mindjet:...") and Task (TaskPriority).
+const SCHEMA_DOCUMENT_XML = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ap:Map xmlns:ap="http://schemas.mindjet.com/MindManager/Application/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OId="map">
+  <ap:OneTopic>
+    <ap:Topic OId="root">
+      <ap:SubTopics>
+        <ap:Topic OId="a">
+          <ap:Text PlainText="Colored"/>
+          <ap:Color FillColor="ff96b3df" LineColor="ffc6c6c6"/>
+          <ap:IconsGroup>
+            <ap:Icons>
+              <ap:Icon xsi:type="ap:StockIcon" IconType="urn:mindjet:SmileyHappy"/>
+              <ap:Icon xsi:type="ap:StockIcon" IconType="urn:mindjet:Lightbulb"/>
+            </ap:Icons>
+          </ap:IconsGroup>
+          <ap:Task TaskPriority="urn:mindjet:Prio1"/>
+        </ap:Topic>
+        <ap:Topic OId="b">
+          <ap:Text PlainText="Transparent"/>
+          <ap:Color FillColor="00000000"/>
+        </ap:Topic>
+      </ap:SubTopics>
+      <ap:FloatingTopics>
+        <ap:Topic OId="f">
+          <ap:SubTopics>
+            <ap:Topic OId="fc"><ap:Text PlainText="Floating child"/></ap:Topic>
+          </ap:SubTopics>
+          <ap:Text PlainText="Floating"/>
+          <ap:Offset CX="100" CY="-50"/>
+        </ap:Topic>
+      </ap:FloatingTopics>
+      <ap:Text PlainText="Central"/>
+      <ap:IconsGroup>
+        <ap:Icons><ap:Icon xsi:type="ap:StockIcon" IconType="urn:mindjet:FlagGreen"/></ap:Icons>
+      </ap:IconsGroup>
+    </ap:Topic>
+  </ap:OneTopic>
+  <ap:Relationships>
+    <ap:Relationship OId="r1">
+      <ap:ConnectionGroup Index="0"><ap:Connection><ap:ObjectReference OIdRef="a"/></ap:Connection></ap:ConnectionGroup>
+      <ap:ConnectionGroup Index="1"><ap:Connection><ap:ObjectReference OIdRef="f"/></ap:Connection></ap:ConnectionGroup>
+    </ap:Relationship>
+  </ap:Relationships>
+</ap:Map>`;
+
+describe('MindManagerImporter document schema', () => {
+  test('maps stock icons, the task priority and the icons of the central topic', async () => {
+    const mindmap = loadMindmap(await new MindManagerImporter(SCHEMA_DOCUMENT_XML).import('test'));
+
+    expect(iconsOf(findByText(mindmap, 'Colored'))).toEqual(['😃', '💡', '🔴']);
+    expect(iconsOf(findByText(mindmap, 'Central'))).toEqual(['🟢']);
+  });
+
+  test('maps the ARGB fill and line colors, ignoring transparent ones', async () => {
+    const mindmap = loadMindmap(await new MindManagerImporter(SCHEMA_DOCUMENT_XML).import('test'));
+
+    const colored = findByText(mindmap, 'Colored');
+    expect(colored.getBackgroundColor()).toBe('#96b3df');
+    expect(colored.getBorderColor()).toBe('#c6c6c6');
+
+    const transparent = findByText(mindmap, 'Transparent');
+    expect(transparent.getBackgroundColor()).toBeUndefined();
+    expect(transparent.getBorderColor()).toBeUndefined();
+  });
+
+  test('imports floating topics as isolated topics with their children', async () => {
+    const mindmap = loadMindmap(await new MindManagerImporter(SCHEMA_DOCUMENT_XML).import('test'));
+
+    const floating = findByText(mindmap, 'Floating');
+    expect(mindmap.getBranches()).toContain(floating);
+    expect(floating.getParent()).toBeFalsy();
+    expect(floating.getChildren().map((c) => c.getText())).toEqual(['Floating child']);
+    // Offsets are in millimeters.
+    expect(floating.getPosition()).toEqual({ x: 378, y: -189 });
+
+    const relationships = mindmap.getRelationships();
+    expect(relationships).toHaveLength(1);
+    expect(relationships[0].getToNode()).toBe(floating.getId());
+  });
+});

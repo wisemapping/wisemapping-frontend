@@ -83,4 +83,16 @@ describe('SecureXmlParser', () => {
     expect(SecureXmlParser.isXmlContentSafe('<node TEXT="R&amp;D"/>')).toBe(true);
     expect(SecureXmlParser.isXmlContentSafe('<node TEXT="&xxe;"/>')).toBe(false);
   });
+
+  test('accepts large maps with more than 10000 elements', () => {
+    // 4000 topics with a rich note each: about 20000 elements.
+    const note = '<richcontent TYPE="NOTE"><html><body><p>note</p></body></html></richcontent>';
+    const nodes = Array.from({ length: 4000 }, (_, i) => `<node TEXT="${i}">${note}</node>`);
+    const doc = SecureXmlParser.parseSecureXml(
+      `<map><node TEXT="root">${nodes.join('')}</node></map>`,
+    );
+
+    expect(doc).not.toBeNull();
+    expect(doc!.getElementsByTagName('node')).toHaveLength(4001);
+  });
 });

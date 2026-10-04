@@ -4,156 +4,76 @@
             <eicon id="💡"/>
             <topic position="200,0" order="0" text="Skill Development" shape="line" id="3">
                 <eicon id="💡"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Identify and develop key professional skills</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Identify and develop key professional skills</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Networking" shape="line" id="4">
                 <eicon id="💡"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Build professional network and relationships</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Build professional network and relationships</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Certification" shape="line" id="5">
                 <eicon id="💡"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Obtain relevant professional certifications</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Obtain relevant professional certifications</p>]]></note>
             </topic>
             <topic position="-300,75" order="3" text="Leadership Training" shape="line" id="6">
                 <eicon id="⭐"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Develop leadership and management skills</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Develop leadership and management skills</p>]]></note>
             </topic>
         </topic>
         <topic position="-200,0" order="1" text="Health &amp; Wellness" shape="line" id="7">
             <eicon id="💡"/>
             <topic position="200,0" order="0" text="Physical Fitness" shape="line" id="8">
                 <eicon id="⚽"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Regular exercise and physical activity</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Regular exercise and physical activity</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Nutrition" shape="line" id="9">
                 <eicon id="🍽️"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Healthy eating habits and nutrition plan</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Healthy eating habits and nutrition plan</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Mental Health" shape="line" id="10">
                 <eicon id="❤️"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Stress management and mental wellness</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Stress management and mental wellness</p>]]></note>
             </topic>
             <topic position="-300,75" order="3" text="Sleep Schedule" shape="line" id="11">
                 <eicon id="🕐"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Maintain consistent sleep schedule</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Maintain consistent sleep schedule</p>]]></note>
             </topic>
         </topic>
         <topic position="300,75" order="2" text="Financial Planning" shape="line" id="12">
             <eicon id="💡"/>
             <topic position="200,0" order="0" text="Savings Goals" shape="line" id="13">
                 <eicon id="💰"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Set and achieve savings targets</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Set and achieve savings targets</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Investment Strategy" shape="line" id="14">
                 <eicon id="💡"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Develop investment portfolio and strategy</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Develop investment portfolio and strategy</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Debt Management" shape="line" id="15">
                 <eicon id="⚠️"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Reduce and manage existing debt</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Reduce and manage existing debt</p>]]></note>
             </topic>
             <topic position="-300,75" order="3" text="Emergency Fund" shape="line" id="16">
                 <eicon id="🛡️"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Build emergency fund for financial security</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Build emergency fund for financial security</p>]]></note>
             </topic>
         </topic>
         <topic position="-300,75" order="3" text="Personal Growth" shape="line" id="17">
             <eicon id="💡"/>
             <topic position="200,0" order="0" text="Reading Goals" shape="line" id="18">
                 <eicon id="📚"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Read books for personal and professional growth</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Read books for personal and professional growth</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Learning New Skills" shape="line" id="19">
                 <eicon id="💡"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Acquire new skills and knowledge</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Acquire new skills and knowledge</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Travel &amp; Experiences" shape="line" id="20">
                 <eicon id="💡"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Travel and gain new experiences</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Travel and gain new experiences</p>]]></note>
             </topic>
             <topic position="-300,75" order="3" text="Hobbies &amp; Interests" shape="line" id="21">
                 <eicon id="💡"/>
-                <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Pursue hobbies and personal interests</p>
-            </body>
-          </html>]]></note>
+                <note contentType="html"><![CDATA[<p>Pursue hobbies and personal interests</p>]]></note>
             </topic>
         </topic>
     </topic>

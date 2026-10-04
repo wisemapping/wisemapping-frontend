@@ -19,7 +19,7 @@
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
-import { Importer, TextImporterFactory } from '@wisemapping/editor';
+import { ImportError, Importer, TextImporterFactory } from '@wisemapping/editor';
 import React, { useContext } from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -96,6 +96,14 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
     });
   };
 
+  // An ImportError explains why the file can not be imported. Anything else is unexpected.
+  const showImportError = (e: unknown): void => {
+    if (!(e instanceof ImportError)) {
+      console.error('Unexpected error importing the map:', e);
+    }
+    showFileError(e instanceof Error ? e.message : String(e));
+  };
+
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
 
@@ -157,13 +165,9 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
               model.content = res;
               setModel({ ...model });
             })
-            .catch((e: unknown) => {
-              showFileError(e instanceof Error ? e.message : String(e));
-            });
+            .catch(showImportError);
         } catch (e) {
-          if (e instanceof Error) {
-            showFileError(e.message);
-          }
+          showImportError(e);
         }
       };
 

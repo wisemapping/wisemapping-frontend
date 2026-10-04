@@ -28,6 +28,7 @@ import TextExporterFactory from './components/export/TextExporterFactory';
 import TextImporterFactory from './components/import/TextImporterFactory';
 import Exporter from './components/export/Exporter';
 import Importer from './components/import/Importer';
+import ImportError from './components/import/ImportError';
 import DesignerKeyboard from './components/DesignerKeyboard';
 import isMacPlatform from './components/util/platform';
 import type EditorRenderMode from './components/EditorRenderMode';
@@ -94,6 +95,7 @@ export {
   Exporter,
   SvgImageIcon,
   Importer,
+  ImportError,
   $notify,
   DesignerKeyboard,
   isMacPlatform,

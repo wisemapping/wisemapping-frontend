@@ -29,14 +29,25 @@ import { decodeUtf8 } from './support/Utf8Decoder';
 import toWiseMappingXml from './support/MindmapXml';
 
 interface MindManagerTopic {
-  id: string;
+  // Topics without an ID or OId can not be referenced, so they are not mapped.
+  id?: string;
   text: string;
   notes?: string;
   hyperlink?: string;
-  icon?: string;
-  color?: string;
+  icons: string[];
+  fillColor?: string;
+  lineColor?: string;
+  // Offset from the parent topic, in millimeters.
+  offset?: { x: number; y: number };
   children?: MindManagerTopic[];
+  floating?: MindManagerTopic[];
 }
+
+// The prefix of the MindManager stock icon types (urn:mindjet:SmileyHappy) and task priorities.
+const MINDJET_URN = 'urn:mindjet:';
+
+// Offsets are in millimeters; WiseMapping positions are in pixels (96 dpi).
+const PIXELS_PER_MILLIMETER = 96 / 25.4;
 
 type MindManagerRawInput = string | ArrayBuffer | Uint8Array;
 
@@ -154,6 +165,75 @@ class MindManagerImporter extends Importer {
       email: '📧',
       internet: '🌐',
 
+      // Stock icons of the MindManager document schema (IconType="urn:mindjet:...")
+      SmileyHappy: '😃',
+      SmileyNeutral: '😐',
+      SmileySad: '😢',
+      SmileyAngry: '😠',
+      SmileyScreaming: '😱',
+      Clock: '🕐',
+      Calendar: '📅',
+      Letter: '✉️',
+      Email: '📧',
+      Mailbox: '📫',
+      Megaphone: '📣',
+      House: '🏠',
+      Rolodex: '📇',
+      Dollar: '💲',
+      Euro: '💶',
+      FlagRed: '🔴',
+      FlagBlue: '🔵',
+      FlagGreen: '🟢',
+      FlagBlack: '⚫',
+      FlagOrange: '🟠',
+      FlagYellow: '🟡',
+      FlagPurple: '🟣',
+      TrafficLightsRed: '🚦',
+      PadlockLocked: '🔒',
+      PadlockUnlocked: '🔓',
+      ArrowUp: '⬆️',
+      ArrowDown: '⬇️',
+      ArrowLeft: '⬅️',
+      ArrowRight: '➡️',
+      TwoEndArrow: '↔️',
+      Phone: '📞',
+      Cellphone: '📱',
+      Camera: '📷',
+      Fax: '📠',
+      Stop: '🛑',
+      ExclamationMark: '❗',
+      QuestionMark: '❓',
+      ThumbsUp: '👍',
+      ThumbsDown: '👎',
+      OnHold: '⏸️',
+      Hourglass: '⏳',
+      Emergency: '🚨',
+      NoEntry: '⛔',
+      Bomb: '💣',
+      Key: '🔑',
+      Glasses: '👓',
+      JudgeHammer: '🔨',
+      Rocket: '🚀',
+      Scales: '⚖️',
+      Redo: '🔁',
+      Lightbulb: '💡',
+      CoffeeCup: '☕',
+      TwoFeet: '👣',
+      Meeting: '👥',
+      Check: '✅',
+      Note: '📝',
+      Book: '📖',
+      MagnifyingGlass: '🔍',
+      BrokenConnection: '⛓️',
+      Information: 'ℹ️',
+      Folder: '📁',
+      // Task priorities (TaskPriority="urn:mindjet:Prio1")
+      Prio1: '🔴',
+      Prio2: '🟡',
+      Prio3: '🟢',
+      Prio4: '🔵',
+      Prio5: '🟣',
+
       // Default fallback
     };
 
@@ -166,13 +246,25 @@ class MindManagerImporter extends Importer {
     mindmap.setLayout('mindmap');
 
     const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
-    this.topicIdMap.set(rootTopic.id, centralTopic.getId());
+    this.mapTopicId(rootTopic, centralTopic);
     centralTopic.setText(rootTopic.text);
+    this.addFeatures(centralTopic, rootTopic);
     mindmap.addBranch(centralTopic);
 
     // Generate child topics recursively
     rootTopic.children?.forEach((topic, index) => {
       centralTopic.append(this.convertTopic(mindmap, topic, index));
+    });
+
+    // Floating topics are isolated topics, placed at their offset from the central topic.
+    rootTopic.floating?.forEach((topic, index) => {
+      const node = this.convertTopic(mindmap, topic, index);
+      const offset = topic.offset ?? { x: 0, y: (index + 1) * 100 };
+      node.setPosition(
+        Math.round(offset.x * PIXELS_PER_MILLIMETER),
+        Math.round(offset.y * PIXELS_PER_MILLIMETER),
+      );
+      mindmap.addBranch(node);
     });
 
     this.addRelationships(mindmap, doc);
@@ -182,35 +274,13 @@ class MindManagerImporter extends Importer {
 
   private convertTopic(mindmap: Mindmap, topic: MindManagerTopic, order: number): NodeModel {
     const node = mindmap.createNode('MainTopic', this.generateId());
-    this.topicIdMap.set(topic.id, node.getId());
+    this.mapTopicId(topic, node);
     const position = this.calculatePosition(order);
     node.setText(topic.text);
     node.setPosition(position.x, position.y);
     node.setOrder(order);
     node.setShapeType('line');
-
-    // Add color if present
-    if (topic.color) {
-      node.setBackgroundColor(topic.color);
-      node.setBorderColor(topic.color);
-    }
-
-    // Add icon if present
-    if (topic.icon) {
-      const emojiIcon = this.mapMindManagerIconToEmojiIcon(topic.icon);
-      node.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
-    }
-
-    // Add notes if present
-    const noteContent = this.buildNoteContent(topic.notes);
-    if (noteContent) {
-      node.addFeature(new NoteModel({ text: noteContent }));
-    }
-
-    // Add hyperlink if present
-    if (topic.hyperlink) {
-      node.addFeature(FeatureModelFactory.createModel('link', { url: topic.hyperlink }));
-    }
+    this.addFeatures(node, topic);
 
     // Generate child topics recursively
     topic.children?.forEach((child, index) => {
@@ -218,6 +288,53 @@ class MindManagerImporter extends Importer {
     });
 
     return node;
+  }
+
+  private mapTopicId(topic: MindManagerTopic, node: NodeModel): void {
+    if (topic.id) {
+      this.topicIdMap.set(topic.id, node.getId());
+    }
+  }
+
+  // The colors, icons, notes and link of a topic, the central one included.
+  private addFeatures(node: NodeModel, topic: MindManagerTopic): void {
+    if (topic.fillColor) {
+      node.setBackgroundColor(topic.fillColor);
+    }
+    const borderColor = topic.lineColor || topic.fillColor;
+    if (borderColor) {
+      node.setBorderColor(borderColor);
+    }
+
+    topic.icons.forEach((icon) => {
+      const emojiIcon = this.mapMindManagerIconToEmojiIcon(icon);
+      node.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
+    });
+
+    const noteContent = this.buildNoteContent(topic.notes);
+    if (noteContent) {
+      node.addFeature(new NoteModel({ text: noteContent }));
+    }
+
+    if (topic.hyperlink) {
+      node.addFeature(FeatureModelFactory.createModel('link', { url: topic.hyperlink }));
+    }
+  }
+
+  /**
+   * MindManager colors are 4 bytes in hex, alpha first (ff96b3df). A transparent color is no
+   * color. Colors written as #rrggbb are kept.
+   */
+  private static toColor(color: string | null | undefined): string | undefined {
+    const value = color?.trim();
+    if (!value) {
+      return undefined;
+    }
+    const argb = /^([0-9a-f]{2})([0-9a-f]{6})$/i.exec(value);
+    if (argb) {
+      return argb[1] === '00' ? undefined : `#${argb[2].toLowerCase()}`;
+    }
+    return value;
   }
 
   /**
@@ -302,15 +419,15 @@ class MindManagerImporter extends Importer {
   // Topics are written as <Topic ID Text> or, by MindManager, as <ap:Topic OId> with the text,
   // notes and subtopics in child elements.
   private parseTopic(topicElement: Element): MindManagerTopic {
-    const id =
-      topicElement.getAttribute('ID') || topicElement.getAttribute('OId') || this.generateId();
+    const id = topicElement.getAttribute('ID') || topicElement.getAttribute('OId') || undefined;
     const textElement = this.findChildByTagName(topicElement, 'Text');
     const text =
       topicElement.getAttribute('Text') || textElement?.getAttribute('PlainText') || 'Untitled';
 
     const topic: MindManagerTopic = {
-      id: id.toString(),
+      id,
       text,
+      icons: [],
     };
 
     // Parse notes
@@ -330,16 +447,42 @@ class MindManagerImporter extends Importer {
         hyperlinkElement.getAttribute('URL') || hyperlinkElement.getAttribute('Url') || '';
     }
 
-    // Parse icon
+    // Parse icons: <Icon Name>, or the stock icons of IconsGroup/Icons and the task priority
     const iconElement = this.findChildByTagName(topicElement, 'Icon');
-    if (iconElement) {
-      topic.icon = iconElement.getAttribute('Name') || iconElement.textContent || '';
+    const iconName = iconElement && (iconElement.getAttribute('Name') || iconElement.textContent);
+    if (iconName) {
+      topic.icons.push(iconName);
+    }
+    const iconsGroup = this.findChildByTagName(topicElement, 'IconsGroup');
+    const icons = iconsGroup && this.findChildByTagName(iconsGroup, 'Icons');
+    (icons ? this.findChildrenByTagName(icons, 'Icon') : []).forEach((icon) => {
+      const iconType = icon.getAttribute('IconType');
+      if (iconType) {
+        topic.icons.push(iconType.replace(MINDJET_URN, ''));
+      }
+    });
+    const priority = this.findChildByTagName(topicElement, 'Task')?.getAttribute('TaskPriority');
+    if (priority) {
+      topic.icons.push(priority.replace(MINDJET_URN, ''));
     }
 
-    // Parse color
+    // Parse colors: <Color Value>, or the FillColor and LineColor of the document schema
     const colorElement = this.findChildByTagName(topicElement, 'Color');
     if (colorElement) {
-      topic.color = colorElement.getAttribute('Value') || colorElement.textContent || '';
+      topic.fillColor = MindManagerImporter.toColor(
+        colorElement.getAttribute('FillColor') ||
+          colorElement.getAttribute('Value') ||
+          colorElement.textContent,
+      );
+      topic.lineColor = MindManagerImporter.toColor(colorElement.getAttribute('LineColor'));
+    }
+
+    const offsetElement = this.findChildByTagName(topicElement, 'Offset');
+    if (offsetElement) {
+      topic.offset = {
+        x: Number(offsetElement.getAttribute('CX')) || 0,
+        y: Number(offsetElement.getAttribute('CY')) || 0,
+      };
     }
 
     // Parse child topics: direct Topic children, or the Topics of SubTopics
@@ -351,6 +494,13 @@ class MindManagerImporter extends Importer {
 
     if (childTopics.length > 0) {
       topic.children = childTopics.map((child) => this.parseTopic(child));
+    }
+
+    const floatingTopics = this.findChildByTagName(topicElement, 'FloatingTopics');
+    if (floatingTopics) {
+      topic.floating = this.findChildrenByTagName(floatingTopics, 'Topic').map((child) =>
+        this.parseTopic(child),
+      );
     }
 
     return topic;

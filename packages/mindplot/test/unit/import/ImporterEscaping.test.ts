@@ -123,7 +123,8 @@ describe('FreeplaneImporter escaping', () => {
 
     const mindmap = loadMindmap(xml);
     expect(mapNameOf(xml)).toBe(MAP_NAME);
-    expect(noteOf(findByText(mindmap, `A & 'B'`))).toContain('<p><![CDATA[a < b]]></p>');
+    // The note is HTML: the text of the CDATA section is kept, escaped.
+    expect(noteOf(findByText(mindmap, `A & 'B'`))).toContain('<p>a &lt; b</p>');
   });
 });
 

@@ -24,6 +24,7 @@ import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
 import NoteModel from '../../../src/components/model/NoteModel';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
+import LinkModel from '../../../src/components/model/LinkModel';
 
 const loadMindmap = (xml: string): Mindmap => {
   const doc = new DOMParser().parseFromString(xml, 'text/xml');
@@ -49,6 +50,9 @@ const noteOf = (node: NodeModel): string =>
 
 const iconsOf = (node: NodeModel): string[] =>
   node.findFeatureByType('eicon').map((icon) => (icon as EmojiIconModel).getIconType());
+
+const linkOf = (node: NodeModel): string | undefined =>
+  (node.findFeatureByType('link')[0] as LinkModel | undefined)?.getUrl();
 
 describe('XMindImporter (JSON format) content', () => {
   const sheet = {
@@ -152,5 +156,79 @@ describe('XMindImporter (XML format) content', () => {
     expect(branches[1].getText()).toBe('Floating');
     expect(branches[1].getPosition()).toEqual({ x: 120, y: -80 });
     expect(mindmap.getRelationships()).toHaveLength(1);
+  });
+});
+
+describe('XMindImporter central topic and links (JSON format)', () => {
+  const sheet = {
+    id: 'sheet1',
+    class: 'sheet',
+    rootTopic: {
+      id: 'root',
+      title: 'Root',
+      href: 'https://example.com/root',
+      notes: { plain: { content: 'The note of the root' } },
+      markers: [{ markerId: 'priority-1' }],
+      children: {
+        attached: [
+          { id: 'a', title: 'Linked', href: 'https://example.com/a' },
+          { id: 'b', title: 'Topic link', href: 'xmind:#a' },
+          { id: 'c', title: 'Attachment', href: 'xap:attachments/file.pdf' },
+        ],
+      },
+    },
+  };
+
+  const importSheet = async (): Promise<Mindmap> =>
+    loadMindmap(await new XMindImporter(JSON.stringify([sheet])).import('test'));
+
+  test('imports the notes, icons and link of the central topic', async () => {
+    const central = findByText(await importSheet(), 'Root');
+
+    expect(noteOf(central)).toContain('The note of the root');
+    expect(iconsOf(central)).toEqual(['🔴']);
+    expect(linkOf(central)).toBe('https://example.com/root');
+  });
+
+  test('imports href as a link, except links to topics and attachments of the file', async () => {
+    const mindmap = await importSheet();
+
+    expect(linkOf(findByText(mindmap, 'Linked'))).toBe('https://example.com/a');
+    expect(linkOf(findByText(mindmap, 'Topic link'))).toBeUndefined();
+    expect(linkOf(findByText(mindmap, 'Attachment'))).toBeUndefined();
+  });
+});
+
+describe('XMindImporter central topic and links (XML format)', () => {
+  const xmind = `<?xml version="1.0" encoding="UTF-8"?>
+<xmap-content xmlns="urn:xmind:xmap:xmlns:content:2.0" xmlns:xlink="http://www.w3.org/1999/xlink" version="2.0">
+  <sheet id="sheet1">
+    <topic id="root" xlink:href="https://example.com/root">
+      <title>Root</title>
+      <notes><plain>The note of the root</plain></notes>
+      <marker-refs><marker-ref marker-id="priority-1"/></marker-refs>
+      <children>
+        <topics type="attached">
+          <topic id="a" xlink:href="https://example.com/a"><title>Linked</title></topic>
+          <topic id="b" xlink:href="xmind:#a"><title>Topic link</title></topic>
+        </topics>
+      </children>
+    </topic>
+  </sheet>
+</xmap-content>`;
+
+  test('imports the notes, icons and link of the central topic', async () => {
+    const central = findByText(loadMindmap(await new XMindImporter(xmind).import('test')), 'Root');
+
+    expect(noteOf(central)).toContain('The note of the root');
+    expect(iconsOf(central)).toEqual(['🔴']);
+    expect(linkOf(central)).toBe('https://example.com/root');
+  });
+
+  test('imports xlink:href as a link, except links to topics of the file', async () => {
+    const mindmap = loadMindmap(await new XMindImporter(xmind).import('test'));
+
+    expect(linkOf(findByText(mindmap, 'Linked'))).toBe('https://example.com/a');
+    expect(linkOf(findByText(mindmap, 'Topic link'))).toBeUndefined();
   });
 });
