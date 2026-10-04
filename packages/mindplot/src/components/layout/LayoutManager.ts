@@ -17,7 +17,7 @@
  */
 import { $assert, $defined } from '../util/assert';
 import EventDispispatcher from '../EventDispatcher';
-import RootedTreeSet from './RootedTreeSet';
+import RootedTreeSet, { RaphaelPaper } from './RootedTreeSet';
 import OriginalLayout from './OriginalLayout';
 import TreeLayout from './TreeLayout';
 import ChangeEvent from './ChangeEvent';
@@ -167,13 +167,16 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
   plot(containerId: string, size = { width: 200, height: 200 }) {
     // this method is only used from tests that include Raphael
 
-    if (!globalThis.Raphael) {
+    const global = globalThis as typeof globalThis & {
+      Raphael?: (container: string, width: number, height: number) => RaphaelPaper;
+    };
+    if (!global.Raphael) {
       console.warn('Raphael.js not found, exiting plot()');
       return null;
     }
     $assert(containerId, 'containerId cannot be null');
     const squaresize = 10;
-    const canvas = globalThis.Raphael(containerId, size.width, size.height);
+    const canvas = global.Raphael(containerId, size.width, size.height);
     canvas.drawGrid(
       0,
       0,

@@ -130,7 +130,7 @@ const buildDesigner = (topics: FakeTopic[]) => {
     getSelectionShadows: () => shadows,
     getScreenManager: () => ({}) as ScreenManager,
     getContainer: () => container,
-    onObjectFocusEvent(currentObject?: Topic, event?: Event) {
+    onObjectFocusEvent(currentObject?: Topic, event?: MouseEvent) {
       Designer.prototype.onObjectFocusEvent.call(this, currentObject, event);
     },
   };
@@ -143,7 +143,9 @@ const wireTopic = (topic: FakeTopic, designer: Designer): void => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (Topic.prototype as any).registerDefaultListenersToElement.call(topic, topic, topic);
   // 2. Designer._buildNodeGraph.
-  topic.addEvent('mousedown', (event) => designer.onObjectFocusEvent(asTopic(topic), event));
+  topic.addEvent('mousedown', (event) =>
+    designer.onObjectFocusEvent(asTopic(topic), event as MouseEvent),
+  );
 };
 
 const mousedown = (topic: FakeTopic, init: MouseEventInit = {}): void => {

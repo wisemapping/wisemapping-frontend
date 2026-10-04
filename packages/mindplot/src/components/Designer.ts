@@ -227,7 +227,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Deselect on click ...
     screenManager.addEvent('click', (event: Event) => {
-      me.onObjectFocusEvent(undefined, event);
+      // ScreenManager always dispatches 'click' as a synthetic MouseEvent.
+      me.onObjectFocusEvent(undefined, event as MouseEvent);
     });
 
     // Create nodes on double click...
@@ -288,7 +289,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // Add Topic events ...
     if (!readOnly) {
       // If a node had gained focus, clean the rest of the nodes ...
-      topic.addEvent('mousedown', (event) => {
+      topic.addEvent('mousedown', (event: MouseEvent) => {
         me.onObjectFocusEvent(topic, event);
       });
 
@@ -346,7 +347,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     return topic;
   }
 
-  onObjectFocusEvent(currentObject?: Topic, event?): void {
+  onObjectFocusEvent(currentObject?: Topic, event?: MouseEvent): void {
     // Close node editors ..
     this.closeNodeEditors();
 

@@ -42,7 +42,7 @@ describe('EventDispatcher.fireEvent', () => {
 
   it('still calls the next handler when one removes itself during dispatch', () => {
     const dispatcher = new EventDispispatcher<Events>();
-    const once = jest.fn(() => dispatcher.removeEvent('change', once));
+    const once: jest.Mock<void, []> = jest.fn(() => dispatcher.removeEvent('change', once));
     const next = jest.fn();
     dispatcher.addEvent('change', once);
     dispatcher.addEvent('change', next);

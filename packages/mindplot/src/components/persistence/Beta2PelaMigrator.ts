@@ -27,7 +27,7 @@ class Beta2PelaMigrator implements XMLMindmapSerializer {
 
   private _pelaSerializer: XMLSerializerPela;
 
-  constructor(betaSerializer: XMLSerializerPela) {
+  constructor(betaSerializer: XMLMindmapSerializer) {
     this._betaSerializer = betaSerializer;
     this._pelaSerializer = new XMLSerializerPela();
   }

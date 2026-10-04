@@ -21,7 +21,7 @@ import Topic from './Topic';
 import Shape from './util/Shape';
 
 class CentralTopic extends Topic {
-  buildDragShape() {
+  buildDragShape(): undefined {
     // Ignore ..
   }
 

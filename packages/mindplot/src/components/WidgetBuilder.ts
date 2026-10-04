@@ -17,6 +17,7 @@
  */
 
 import debounce from 'lodash/debounce';
+import { ElementPeer } from '@wisemapping/web2d';
 import DOMUtils from './util/DOMUtils';
 import LinkIcon from './LinkIcon';
 import LinkModel from './model/LinkModel';
@@ -60,7 +61,7 @@ abstract class WidgetBuilder {
   }
 
   private createTooltip(
-    mindmapElement,
+    mindmapElement: ElementPeer,
     title: string,
     linkModel?: LinkModel,
     noteModel?: NoteModel,
@@ -108,7 +109,7 @@ abstract class WidgetBuilder {
       }
     }
 
-    mindmapElement.addEvent('mouseenter', (evt: MouseEvent) => {
+    mindmapElement.addEvent('mouseenter', (evt: Event) => {
       // Cancel any pending hide operation
       this._hideTooltip.cancel();
 
@@ -209,7 +210,7 @@ abstract class WidgetBuilder {
       evt.stopPropagation();
     });
 
-    mindmapElement.addEvent('mouseleave', (evt: MouseEvent) => {
+    mindmapElement.addEvent('mouseleave', (evt: Event) => {
       // Cancel pending show if mouse left before delay completed
       if (this._showTimeout) {
         clearTimeout(this._showTimeout);

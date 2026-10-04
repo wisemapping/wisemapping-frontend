@@ -123,11 +123,12 @@ abstract class INodeModel {
 
   getPosition(): PositionType {
     const value = this.getProperty('position') as string;
-    let result;
+    let result: PositionType | undefined;
     if (value != null) {
       result = parseFiniteObject<PositionType>(value, ['x', 'y']);
     }
-    return result;
+    // TODO(typing): returns undefined when the topic has no position; callers rely on PositionType.
+    return result as PositionType;
   }
 
   setImageSize(width: number, height: number): void {

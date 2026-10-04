@@ -19,6 +19,32 @@ import { $assert } from '../util/assert';
 import PositionType from '../PositionType';
 import Node from './Node';
 
+/** The subset of a Raphael.js element used by plot(). */
+type RaphaelElement = {
+  attr(name: string): number;
+  attr(name: string, value: string): RaphaelElement;
+  click(handler: () => void): RaphaelElement;
+};
+
+/**
+ * The subset of a Raphael.js paper used by plot(). Raphael (and its drawGrid plugin) is only
+ * loaded by the layout stories.
+ */
+export type RaphaelPaper = {
+  width: number;
+  height: number;
+  rect(x: number, y: number, width: number, height: number): RaphaelElement;
+  text(x: number, y: number, text: string): RaphaelElement;
+  drawGrid(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    wv: number,
+    hv: number,
+  ): RaphaelElement;
+};
+
 class RootedTreeSet {
   private _rootNodes: Node[];
 
@@ -178,7 +204,7 @@ class RootedTreeSet {
    * @throws will throw an error if node is null or undefined
    * @return root node or the provided node, if it has no parent
    */
-  getRootNode(node: Node) {
+  getRootNode(node: Node): Node {
     $assert(node, 'node cannot be null');
     const parent = this.getParent(node);
     if (parent) {
@@ -318,7 +344,7 @@ class RootedTreeSet {
    * Plot the tree structure using Raphael.js (for testing/debugging only)
    * @param canvas - Raphael canvas object
    */
-  plot(canvas) {
+  plot(canvas: RaphaelPaper) {
     this.traverse((node, isRoot) => {
       // Calculate position on canvas
       const cx = node.getPosition().x + canvas.width / 2 - node.getSize().width / 2;

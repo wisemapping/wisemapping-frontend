@@ -844,12 +844,13 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     // @param {mindplot.model.LinkModel[]} links
     const links = model.findFeatureByType('link');
-    let result;
+    let result: string | undefined;
     if (links.length > 0) {
       result = (links[0] as LinkModel).getUrl();
     }
 
-    return result;
+    // TODO(typing): returns undefined when the topic has no link; the editor relies on string.
+    return result as string;
   }
 
   setLinkValue(value: string | undefined) {

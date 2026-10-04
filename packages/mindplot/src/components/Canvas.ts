@@ -44,9 +44,9 @@ class Canvas {
 
   private _queueRenderEnabled: boolean;
 
-  private _mouseMoveListener;
+  private _mouseMoveListener: ((event: Event) => void) | null;
 
-  private _mouseUpListener;
+  private _mouseUpListener: (() => void) | null;
 
   // Ends the pan in progress without treating it as a release (window blur, dispose) ...
   private _cancelPan: (() => void) | null;
@@ -165,8 +165,7 @@ class Canvas {
   }
 
   private appendInternal(shape: CanvasElement | ElementClass<ElementPeer>): void {
-    // eslint-disable-next-line dot-notation
-    if (typeof shape['addToWorkspace'] === 'function') {
+    if (typeof (shape as Partial<CanvasElement>).addToWorkspace === 'function') {
       (shape as CanvasElement).addToWorkspace(this);
     } else {
       this._workspace.append(shape as ElementClass<ElementPeer>);
@@ -216,8 +215,7 @@ class Canvas {
   }
 
   removeChild(shape: ElementClass<ElementPeer> | CanvasElement): void {
-    // eslint-disable-next-line dot-notation
-    if (typeof shape['removeFromWorkspace'] === 'function') {
+    if (typeof (shape as Partial<CanvasElement>).removeFromWorkspace === 'function') {
       (shape as CanvasElement).removeFromWorkspace(this);
     } else {
       this._workspace.removeChild(shape as ElementClass<ElementPeer>);
@@ -414,8 +412,9 @@ class Canvas {
           screenManager.addEvent('touchmove', this._mouseMoveListener);
 
           const endPan = (isRelease: boolean) => {
-            const mouseMoveListener = this._mouseMoveListener;
-            const mouseUpListener = this._mouseUpListener;
+            // The listeners are all set together when the pan starts, before it can end.
+            const mouseMoveListener = this._mouseMoveListener!;
+            const mouseUpListener = this._mouseUpListener!;
             const cancelPan = this._cancelPan!;
             window.document.removeEventListener('mousemove', mouseMoveListener);
             window.document.removeEventListener('mouseup', mouseUpListener);
@@ -448,7 +447,7 @@ class Canvas {
           window.addEventListener('blur', this._cancelPan);
         }
       } else {
-        this._mouseUpListener();
+        this._mouseUpListener!();
       }
     };
     this._mouseDownListener = mouseDownListener;

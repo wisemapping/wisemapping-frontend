@@ -60,7 +60,7 @@ abstract class ImageIcon implements Icon {
     return this._image.getPosition();
   }
 
-  addEvent(type: string, fnc): void {
+  addEvent(type: string, fnc: (event: Event) => void): void {
     this._image.addEvent(type, fnc);
   }
 

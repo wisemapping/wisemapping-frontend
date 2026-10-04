@@ -103,7 +103,7 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
     // Capture what Designer registers on the topic instead of building a real one.
     jest
       .spyOn(Topic.prototype, 'addEvent')
-      .mockImplementation((type: string, callback: () => void) => {
+      .mockImplementation((type: string, callback: (...args: never[]) => void) => {
         handlers[type] = callback;
       });
     jest.spyOn(designer, 'fireEvent').mockImplementation((event: string) => {

@@ -20,8 +20,14 @@ import ModelCodeName from './ModelCodeName';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
+import SvgIconModel from '../model/SvgIconModel';
+import LinkModel from '../model/LinkModel';
+import NoteModel from '../model/NoteModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import emojiToIconMap from './iconToEmoji.json';
+import { FontWeightType } from '../FontWeightType';
+import { FontStyleType } from '../FontStyleType';
+import { TopicShapeType } from '../model/INodeModel';
 
 class XMLSerializerBeta implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -126,20 +132,20 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     // ICONS
     const icons = topic.findFeatureByType('icons');
     icons.forEach((icon) => {
-      const iconDom = this._iconToXML(document, icon);
+      const iconDom = this._iconToXML(document, icon as SvgIconModel);
       parentTopic.append(iconDom);
     });
 
     // LINKS
     const links = topic.findFeatureByType('links');
     links.forEach((link) => {
-      const linkDom = this._linkToXML(document, link);
+      const linkDom = this._linkToXML(document, link as LinkModel);
       parentTopic.append(linkDom);
     });
 
     const notes = topic.findFeatureByType('note');
     notes.forEach((note) => {
-      const noteDom = this._noteToXML(document, note);
+      const noteDom = this._noteToXML(document, note as NoteModel);
       parentTopic.append(noteDom);
     });
 
@@ -153,25 +159,25 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     return parentTopic;
   }
 
-  _iconToXML(document, icon) {
+  _iconToXML(document: Document, icon: SvgIconModel) {
     const iconDom = document.createElement('icon');
     iconDom.setAttribute('id', icon.getIconType());
     return iconDom;
   }
 
-  _linkToXML(document, link) {
+  _linkToXML(document: Document, link: LinkModel) {
     const linkDom = document.createElement('link');
     linkDom.setAttribute('url', link.getUrl());
     return linkDom;
   }
 
-  _noteToXML(document, note) {
+  _noteToXML(document: Document, note: NoteModel) {
     const noteDom = document.createElement('note');
     noteDom.setAttribute('text', note.getText());
     return noteDom;
   }
 
-  loadFromDom(dom, mapId) {
+  loadFromDom(dom: Document, mapId: string): Mindmap {
     $assert(dom, 'Dom can not be null');
     $assert(mapId, 'mapId can not be null');
 
@@ -202,7 +208,8 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
 
     const children = documentElement.childNodes;
     for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+      // Only element nodes (nodeType 1) are read.
+      const child = children[i] as Element;
       if (child.nodeType === 1) {
         const topic = this._deserializeNode(child, mindmap);
         mindmap.addBranch(topic);
@@ -212,7 +219,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     return mindmap;
   }
 
-  _deserializeNode(domElem, mindmap) {
+  _deserializeNode(domElem: Element, mindmap: Mindmap): NodeModel {
     const type = domElem.getAttribute('central') != null ? 'CentralTopic' : 'MainTopic';
     const topic = mindmap.createNode(type);
 
@@ -238,7 +245,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     if ($defined(shape)) {
       // Hack for legacy mapping loading ...
       shape = shape === 'rectagle' ? 'rectangle' : shape;
-      topic.setShapeType(shape);
+      topic.setShapeType(shape as TopicShapeType);
     }
 
     const isShrink = domElem.getAttribute('shrink');
@@ -255,7 +262,8 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
       }
 
       if (font[1]) {
-        topic.setFontSize(font[1]);
+        // TODO(typing): the font size is stored as a string, not as a number.
+        topic.setFontSize(font[1] as unknown as number);
       }
 
       if (font[2]) {
@@ -263,11 +271,11 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
       }
 
       if (font[3]) {
-        topic.setFontWeight(font[3]);
+        topic.setFontWeight(font[3] as FontWeightType);
       }
 
       if (font[4]) {
-        topic.setFontStyle(font[4]);
+        topic.setFontStyle(font[4] as FontStyleType);
       }
     }
 
@@ -294,7 +302,8 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     // Creating icons and children nodes
     const children = domElem.childNodes;
     for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+      // Only element nodes (nodeType 1) are read.
+      const child = children[i] as Element;
       if (child.nodeType === 1) {
         $assert(
           child.tagName === 'topic' ||
@@ -330,14 +339,15 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
       return undefined;
     }
     // Same migration as the Tango loader: legacy icons become emojis when there is one.
-    const emoji = emojiToIconMap[id];
+    const emoji = (emojiToIconMap as Record<string, string>)[id];
     return emoji
       ? FeatureModelFactory.createModel('eicon', { id: emoji })
       : FeatureModelFactory.createModel('icon', { id });
   }
 
   _deserializeLink(domElem: Element) {
-    return FeatureModelFactory.createModel('link', { url: domElem.getAttribute('url') });
+    // TODO(typing): a <link> without url makes LinkModel.setUrl throw.
+    return FeatureModelFactory.createModel('link', { url: domElem.getAttribute('url') as string });
   }
 
   _deserializeNote(domElem: Element) {

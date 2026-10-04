@@ -17,7 +17,7 @@
  */
 import Command from '../Command';
 import CommandContext from '../CommandContext';
-import FeatureModel from '../model/FeatureModel';
+import FeatureModel, { FeatureAttributes } from '../model/FeatureModel';
 import FeatureType from '../model/FeatureType';
 
 class AddFeatureToTopicCommand extends Command {
@@ -25,7 +25,7 @@ class AddFeatureToTopicCommand extends Command {
 
   private _featureType: FeatureType;
 
-  private _attributes: object;
+  private _attributes: FeatureAttributes;
 
   // One feature per topic, keyed by topic id. Created on the first execute and reused on redo,
   // so later commands that refer to a feature by id keep working.
@@ -41,7 +41,7 @@ class AddFeatureToTopicCommand extends Command {
    * @extends mindplot.Command
    * @see mindplot.model.FeatureModel and subclasses
    */
-  constructor(topicIds: number[], featureType: FeatureType, attributes: object) {
+  constructor(topicIds: number[], featureType: FeatureType, attributes: FeatureAttributes) {
     super();
     this._topicIds = topicIds;
     this._featureType = featureType;

@@ -27,7 +27,12 @@ class BalancedSorter extends AbstractBasicSorter {
 
   private static INTERNODE_HORIZONTAL_PADDING = 30;
 
-  predict(graph, parent, node: Node, position: PositionType): [number, PositionType] {
+  predict(
+    graph: RootedTreeSet,
+    parent: Node,
+    node: Node | null,
+    position: PositionType | null,
+  ): [number, PositionType] {
     const rootNode = graph.getRootNode(parent);
 
     // If it is a dragged node...

@@ -32,6 +32,11 @@ export type ServerError = {
 
 export type PersistenceErrorCallback = (error: PersistenceError) => void;
 
+export type SaveEvents = {
+  onSuccess: () => void;
+  onError: (error: PersistenceError) => void;
+};
+
 export type SaveOptions = {
   // A flush (e.g. when leaving the editor): sent as soon as no other save is in flight.
   urgent?: boolean;
@@ -42,7 +47,13 @@ abstract class PersistenceManager {
 
   private _errorHandlers: PersistenceErrorCallback[] = [];
 
-  save(mindmap: Mindmap, editorProperties, saveHistory: boolean, events?, options?: SaveOptions) {
+  save(
+    mindmap: Mindmap,
+    editorProperties: object,
+    saveHistory: boolean,
+    events?: SaveEvents,
+    options?: SaveOptions,
+  ): void {
     $assert(mindmap, 'mindmap can not be null');
     $assert(editorProperties, 'editorProperties can not be null');
 
@@ -56,7 +67,8 @@ abstract class PersistenceManager {
       this.saveMapXml(mapId, domMap, pref, saveHistory, events, options);
     } catch (e) {
       console.error(e);
-      events?.onError(e);
+      // TODO(typing): a thrown Error, not a PersistenceError, reaches onError here.
+      events?.onError(e as PersistenceError);
     }
   }
 
@@ -89,14 +101,16 @@ abstract class PersistenceManager {
 
   abstract loadMapDom(mapId: string): Promise<Document>;
 
+  // TODO(typing): events is SaveEvents (as passed by save() and read by every subclass), but the
+  // editor's BootstrapPersistenceManager forwards it typed as unknown, so the base must accept it.
   abstract saveMapXml(
     mapId: string,
     mapXml: Document,
-    pref?,
+    pref?: string,
     saveHistory?: boolean,
-    events?,
+    events?: unknown,
     options?: SaveOptions,
-  );
+  ): void;
 
   abstract unlockMap(mapId: string): void | Promise<void>;
 

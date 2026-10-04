@@ -18,6 +18,9 @@
 import { $assert } from '../util/assert';
 import FeatureType from './FeatureType';
 
+/** Feature attributes as stored in the map XML: attribute name to value. */
+export type FeatureAttributes = Record<string, string>;
+
 class FeatureModel {
   static _nextId = 0;
 
@@ -25,7 +28,7 @@ class FeatureModel {
 
   private _type: FeatureType;
 
-  private _attributes;
+  private _attributes: FeatureAttributes;
 
   private _changeListener: (() => void) | undefined;
 
@@ -44,10 +47,11 @@ class FeatureModel {
     this._changeListener = undefined;
 
     // Create type method ...
-    this[`is${FeatureModel.capitalize(type)}Model`] = () => true;
+    (this as unknown as Record<string, () => boolean>)[`is${FeatureModel.capitalize(type)}Model`] =
+      () => true;
   }
 
-  getAttributes() {
+  getAttributes(): FeatureAttributes {
     return { ...this._attributes };
   }
 
@@ -86,20 +90,21 @@ class FeatureModel {
    */
   applyAttribute(key: string, value: unknown): void {
     const setterName = `set${FeatureModel.capitalize(key)}`;
-    const setter = this[setterName];
+    const setter = (this as unknown as Record<string, unknown>)[setterName];
     if (typeof setter === 'function' && !(setterName in FeatureModel.prototype)) {
       setter.call(this, value);
     } else {
-      this.setAttribute(key, value);
+      // Attribute values are strings (see FeatureAttributes), as the subclasses also assume.
+      this.setAttribute(key, value as string);
     }
   }
 
-  setAttribute(key: string, value: unknown) {
+  setAttribute(key: string, value: string) {
     $assert(key, 'key id can not be null');
     this._attributes[key] = value;
   }
 
-  getAttribute(key: string) {
+  getAttribute(key: string): string {
     $assert(key, 'key id can not be null');
 
     return this._attributes[key];

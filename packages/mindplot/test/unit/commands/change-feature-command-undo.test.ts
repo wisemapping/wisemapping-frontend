@@ -44,8 +44,10 @@ const MAP = [
   '</map>',
 ].join('\n');
 
-const featureId = (topic: ReturnType<Awaited<ReturnType<typeof buildDesigner>>['topic']>, type) =>
-  topic.getModel().findFeatureByType(type)[0].getId();
+const featureId = (
+  topic: ReturnType<Awaited<ReturnType<typeof buildDesigner>>['topic']>,
+  type: string,
+) => topic.getModel().findFeatureByType(type)[0].getId();
 
 describe('ChangeFeatureToTopicCommand undo/redo', () => {
   // The note and link icons register their tooltips on creation.

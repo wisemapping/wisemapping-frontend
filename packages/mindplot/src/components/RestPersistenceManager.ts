@@ -20,14 +20,10 @@ import { $msg } from './Messages';
 import { AjaxUtils } from './util/AjaxUtils';
 import PersistenceManager, {
   PersistenceError,
+  SaveEvents,
   SaveOptions,
   ServerError,
 } from './PersistenceManager';
-
-type SaveEvents = {
-  onSuccess: () => void;
-  onError: (error: PersistenceError) => void;
-};
 
 type PendingSave = {
   mapId: string;
@@ -289,7 +285,7 @@ class RESTPersistenceManager extends PersistenceManager {
   }
 
   private _buildHttpHeader(contentType: string, accept?: string) {
-    const headers = {
+    const headers: Record<string, string> = {
       'Content-Type': contentType,
     };
 

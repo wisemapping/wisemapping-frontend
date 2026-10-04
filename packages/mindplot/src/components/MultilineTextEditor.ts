@@ -273,7 +273,7 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       // No need to assign to itself, just keep the existing value
     }
 
-    const cssStyle = {
+    const cssStyle: Record<string, string> = {
       'font-size': `${fontStyle.size}px`,
       'font-family': fontStyle.fontFamily,
       'font-style': fontStyle.style,

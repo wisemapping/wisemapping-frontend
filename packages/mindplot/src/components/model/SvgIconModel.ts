@@ -16,10 +16,10 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureModel from './FeatureModel';
+import FeatureModel, { FeatureAttributes } from './FeatureModel';
 
 class SvgIconModel extends FeatureModel {
-  constructor(attributes) {
+  constructor(attributes: FeatureAttributes) {
     super('icon');
     this.setIconType(attributes.id);
   }

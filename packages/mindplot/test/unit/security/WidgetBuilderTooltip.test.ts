@@ -93,7 +93,7 @@ describe('WidgetBuilder tooltips', () => {
     const { icon, hover } = fakeIcon();
     new TestWidgetBuilder().configureTooltipForNode(
       topic,
-      new NoteModel({ text, contentType }),
+      new NoteModel(contentType ? { text, contentType } : { text }),
       icon as unknown as NoteIcon,
     );
     hover();

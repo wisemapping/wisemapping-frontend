@@ -33,7 +33,7 @@ abstract class ChildrenSorterStrategy {
     parent: Node,
     node: Node | null,
     position: PositionType | null,
-  ): void;
+  ): [number, PositionType];
 
   abstract verify(treeSet: RootedTreeSet, node: Node): void;
 

@@ -19,7 +19,7 @@ import { $defined } from './util/assert';
 import Bundle from './lang/Bundle';
 
 class Messages {
-  public static __bundle;
+  public static __bundle: Record<string, string> | undefined;
 
   static init(locale: string) {
     const userLocale = $defined(locale) && locale ? locale : 'en';
@@ -34,7 +34,8 @@ const $msg = function $msg(key: string) {
   if (!Messages.__bundle) {
     Messages.init('en');
   }
-  return Messages.__bundle[key] || Bundle.en[key] || key;
+  // init() always sets the bundle.
+  return Messages.__bundle![key] || Bundle.en[key] || key;
 };
 
 export default Messages;

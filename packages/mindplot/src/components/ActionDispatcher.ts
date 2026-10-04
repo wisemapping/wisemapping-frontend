@@ -26,6 +26,7 @@ import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import PositionType from './PositionType';
 import LayoutEventBusType from './LayoutEventBusType';
+import type { FeatureAttributes } from './model/FeatureModel';
 
 abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
   private static _instance: ActionDispatcher;
@@ -97,9 +98,13 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
 
   abstract shrinkBranch(topicsIds: number[], collapse: boolean): void;
 
-  abstract addFeatureToTopic(topicIds: number[], type: string, attributes: object): void;
+  abstract addFeatureToTopic(topicIds: number[], type: string, attributes: FeatureAttributes): void;
 
-  abstract changeFeatureToTopic(topicId: number, featureId: number, attributes: object): void;
+  abstract changeFeatureToTopic(
+    topicId: number,
+    featureId: number,
+    attributes: FeatureAttributes,
+  ): void;
 
   abstract removeFeatureFromTopic(topicId: number, featureId: number): void;
 

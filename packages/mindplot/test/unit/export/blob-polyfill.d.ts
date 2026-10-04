@@ -15,30 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from '../util/assert';
-import FeatureModel, { FeatureAttributes } from './FeatureModel';
-
-class EmojiIconModel extends FeatureModel {
-  constructor(attributes: FeatureAttributes) {
-    super('eicon');
-    this.setIconType(attributes.id);
-  }
-
-  getIconType(): string {
-    return this.getAttribute('id') as string;
-  }
-
-  setIconType(iconType: string): void {
-    $assert(iconType, 'iconType id can not be null');
-    this.setAttribute('id', iconType);
-  }
-
-  applyAttribute(key: string, value: unknown): void {
-    if (key === 'id') {
-      this.setIconType(value as string);
-    } else {
-      super.applyAttribute(key, value);
-    }
-  }
+declare module 'blob-polyfill' {
+  export const Blob: typeof globalThis.Blob;
 }
-export default EmojiIconModel;

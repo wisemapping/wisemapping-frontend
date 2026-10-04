@@ -23,14 +23,26 @@ import XMLSerializerTango from './XMLSerializerTango';
 import Mindmap from '../model/Mindmap';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 
-const codeToSerializer: { codeName: string; serializer; migrator }[] = [
+type SerializerConstructor = new () => XMLMindmapSerializer;
+
+type MigratorConstructor = new (serializer: XMLMindmapSerializer) => XMLMindmapSerializer;
+
+type SerializerEntry = {
+  codeName: string;
+  serializer: SerializerConstructor;
+  migrator: MigratorConstructor;
+};
+
+const codeToSerializer: SerializerEntry[] = [
+  // TODO(typing): BETA's migrator is not a constructor; harmless only because BETA, being the
+  // first version, is never migrated to.
   {
     codeName: ModelCodeName.BETA,
     serializer: XMLSerializerBeta,
     migrator() {
       // Ignore ..
     },
-  },
+  } as unknown as SerializerEntry,
   {
     codeName: ModelCodeName.PELA,
     serializer: XMLSerializerTango,
@@ -74,7 +86,7 @@ class XMLSerializerFactory {
    */
   static getSerializer(version = ModelCodeName.TANGO): XMLMindmapSerializer {
     let found = false;
-    let result = null;
+    let result: XMLMindmapSerializer | null = null;
     for (let i = 0; i < codeToSerializer.length; i++) {
       if (!found) {
         found = codeToSerializer[i].codeName === version;
@@ -83,7 +95,7 @@ class XMLSerializerFactory {
       } else {
         const { migrator } = codeToSerializer[i];
         // eslint-disable-next-line new-cap
-        result = new migrator(result);
+        result = new migrator(result!);
       }
     }
     if (!result) {

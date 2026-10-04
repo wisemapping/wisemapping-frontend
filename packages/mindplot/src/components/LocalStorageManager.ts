@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import PersistenceManager from './PersistenceManager';
+import PersistenceManager, { SaveEvents } from './PersistenceManager';
 import { AjaxUtils } from './util/AjaxUtils';
 
 class LocalStorageManager extends PersistenceManager {
@@ -40,7 +40,13 @@ class LocalStorageManager extends PersistenceManager {
     this.jwtToken = jwtToken;
   }
 
-  saveMapXml(mapId: string, mapDoc: Document, _pref: string, _saveHistory: boolean, events): void {
+  saveMapXml(
+    mapId: string,
+    mapDoc: Document,
+    _pref: string,
+    _saveHistory: boolean,
+    events?: SaveEvents,
+  ): void {
     if (!this.readOnly) {
       const mapXml = new XMLSerializer().serializeToString(mapDoc);
       localStorage.setItem(`${mapId}-xml`, mapXml);
@@ -57,7 +63,7 @@ class LocalStorageManager extends PersistenceManager {
 
   private buildHeader() {
     // const csrfToken = this.getCSRFToken();
-    const result = {
+    const result: Record<string, string> = {
       'Content-Type': 'text/plain',
       Accept: 'application/xml',
     };

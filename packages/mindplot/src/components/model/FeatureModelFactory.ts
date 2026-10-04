@@ -20,13 +20,13 @@ import { $assert } from '../util/assert';
 import SvgIconModel from './SvgIconModel';
 import LinkModel from './LinkModel';
 import NoteModel from './NoteModel';
-import FeatureModel from './FeatureModel';
+import FeatureModel, { FeatureAttributes } from './FeatureModel';
 import FeatureType from './FeatureType';
 import EmojiIconModel from './EmojiIconModel';
 
 interface NodeById {
   id: FeatureType;
-  model: typeof FeatureModel;
+  model: new (attributes: FeatureAttributes) => FeatureModel;
 }
 
 class FeatureModelFactory {
@@ -49,7 +49,7 @@ class FeatureModelFactory {
     },
   ];
 
-  static createModel(type: FeatureType, attributes): FeatureModel {
+  static createModel(type: FeatureType, attributes: FeatureAttributes): FeatureModel {
     $assert(type, 'type can not be null');
     $assert(attributes, 'attributes can not be null');
 

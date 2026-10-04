@@ -37,7 +37,8 @@ const buildIcon = (type: FeatureType, id: number): Icon & { label: string } => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const order = (group: IconGroup): string[] => (group as any)._icons.map((i) => i.label);
+const order = (group: IconGroup): string[] =>
+  (group as any)._icons.map((i: { label: string }) => i.label);
 
 describe('IconGroup', () => {
   describe('icon order (B-EICON)', () => {

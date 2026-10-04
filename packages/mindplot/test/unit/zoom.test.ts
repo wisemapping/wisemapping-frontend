@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import type { Workspace } from '@wisemapping/web2d';
 import Canvas from '../../src/components/Canvas';
 import ScreenManager from '../../src/components/ScreenManager';
 import LayoutEventBus from '../../src/components/layout/LayoutEventBus';
@@ -68,7 +69,7 @@ const layoutEventBus = LayoutEventBus as jest.Mocked<typeof LayoutEventBus>;
 describe('Canvas', () => {
   let canvas: Canvas;
   let mockScreenManager: jest.Mocked<ScreenManager>;
-  let workspace;
+  let workspace: jest.Mocked<Workspace>;
 
   beforeEach(() => {
     MockedScreenManager.mockImplementation(() => {

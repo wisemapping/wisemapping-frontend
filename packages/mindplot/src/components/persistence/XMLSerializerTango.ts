@@ -665,7 +665,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
   }
 
   private static emojiEquivalent(icon: string): string | undefined {
-    return emojiToIconMap[icon];
+    return (emojiToIconMap as Record<string, string>)[icon];
   }
 
   private static _deserializeNodeText(domElem: ChildNode): string {

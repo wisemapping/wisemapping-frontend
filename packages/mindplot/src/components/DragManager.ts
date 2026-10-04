@@ -22,6 +22,10 @@ import EventBusDispatcher from './layout/EventBusDispatcher';
 import Topic from './Topic';
 import Canvas from './Canvas';
 
+type DragEventType = 'startdragging' | 'dragging' | 'enddragging';
+
+type DragListener = (event: MouseEvent, dragTopic: DragTopic) => void;
+
 class DragManager {
   private _workspace: Canvas;
 
@@ -29,11 +33,11 @@ class DragManager {
 
   private _eventDispatcher: EventBusDispatcher;
 
-  private _listeners;
+  private _listeners: Partial<Record<DragEventType, DragListener>>;
 
-  private _mouseMoveListener;
+  private _mouseMoveListener?: ((event: Event) => void) | null;
 
-  private _mouseUpListener;
+  private _mouseUpListener?: ((event: Event) => void) | null;
 
   // Abandons the drag in progress: on window blur or Escape ...
   private _cancelListener: ((event: Event) => void) | null;
@@ -162,8 +166,9 @@ class DragManager {
         }
 
         // Execute Listeners ..
-        const startDragListener = dragManager._listeners.startdragging;
-        startDragListener(event, dragNode);
+        // TODO(typing): called unguarded; throws if no 'startdragging' listener was registered.
+        const startDragListener = dragManager._listeners.startdragging!;
+        startDragListener(event as MouseEvent, dragNode);
 
         // Add shadow node to the workspace.
         workspace.append(dragNode);
@@ -177,7 +182,7 @@ class DragManager {
       // Call mouse move listeners ...
       const dragListener = dragManager._listeners.dragging;
       if (dragListener) {
-        dragListener(event, dragNode);
+        dragListener(event as MouseEvent, dragNode);
       }
 
       event.preventDefault();
@@ -192,7 +197,7 @@ class DragManager {
     workspace: Canvas,
     dragNode: DragTopic,
     dragManager: DragManager,
-  ) {
+  ): (event: Event) => void {
     const result = (event: Event) => {
       dragManager._endDrag(workspace, dragNode, event, false);
     };
@@ -204,9 +209,10 @@ class DragManager {
     $assert(dragNode.isDragTopic, 'dragNode must be an DragTopic');
 
     // Remove all the events.
+    // Both listeners are set when the drag starts, before it can end.
     const { document } = window;
-    document.removeEventListener('mousemove', this._mouseMoveListener);
-    document.removeEventListener('mouseup', this._mouseUpListener);
+    document.removeEventListener('mousemove', this._mouseMoveListener!);
+    document.removeEventListener('mouseup', this._mouseUpListener!);
     if (this._cancelListener) {
       window.removeEventListener('blur', this._cancelListener);
     }
@@ -232,8 +238,9 @@ class DragManager {
       }
 
       // Execute Listeners only if the node has been moved.
-      const endDragListener = this._listeners.enddragging;
-      endDragListener(event, dragNode);
+      // TODO(typing): called unguarded; throws if no 'enddragging' listener was registered.
+      const endDragListener = this._listeners.enddragging!;
+      endDragListener(event as MouseEvent, dragNode);
 
       // Remove drag node from the workspace.
       dragNode.removeFromWorkspace(workspace);
@@ -254,10 +261,7 @@ class DragManager {
    * enddragging is also fired when the drag is cancelled (window blur, Escape). The drag topic is
    * then cancelled: see DragTopic.isCancelled().
    */
-  addEvent(
-    type: 'startdragging' | 'dragging' | 'enddragging',
-    listener: (event: MouseEvent, dragTopic: DragTopic) => void,
-  ) {
+  addEvent(type: DragEventType, listener: DragListener) {
     this._listeners[type] = listener;
   }
 }

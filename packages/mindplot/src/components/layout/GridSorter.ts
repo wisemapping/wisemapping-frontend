@@ -85,7 +85,7 @@ class GridSorter extends AbstractBasicSorter {
     throw new Error('Method not implemented.');
   }
 
-  predict(): void {
+  predict(): [number, PositionType] {
     // Implementation needed
     throw new Error('Method not implemented.');
   }

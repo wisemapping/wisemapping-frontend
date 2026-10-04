@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureModel from './FeatureModel';
+import FeatureModel, { FeatureAttributes } from './FeatureModel';
 
 class LinkModel extends FeatureModel {
   private static readonly ALLOWED_PROTOCOLS = new Set(['http:', 'https:', 'mailto:']);
 
-  constructor(attributes) {
+  constructor(attributes: FeatureAttributes) {
     super('link');
     this.setUrl(attributes.url);
   }
@@ -57,7 +57,7 @@ class LinkModel extends FeatureModel {
    * @param {String} urlType the url type, either 'mail' or 'url'
    * @throws will throw an error if urlType is null or undefined
    */
-  setUrlType(urlType) {
+  setUrlType(urlType: string) {
     $assert(urlType, 'urlType can not be null');
     this.setAttribute('urlType', urlType);
   }

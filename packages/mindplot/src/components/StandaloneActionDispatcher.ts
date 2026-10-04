@@ -34,6 +34,7 @@ import ChangeLayoutCommand from './commands/ChangeLayoutCommand';
 import LayoutEventBus from './layout/LayoutEventBus';
 import type { CanvasStyleType } from './model/CanvasStyleType';
 import CommandContext from './CommandContext';
+import type { FeatureAttributes } from './model/FeatureModel';
 import NodeModel from './model/NodeModel';
 import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
 import Topic from './Topic';
@@ -390,13 +391,13 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  addFeatureToTopic(topicId: number[], featureType: FeatureType, attributes) {
+  addFeatureToTopic(topicId: number[], featureType: FeatureType, attributes: FeatureAttributes) {
     const command = new AddFeatureToTopicCommand(topicId, featureType, attributes);
     this.execute(command);
   }
 
   /** */
-  changeFeatureToTopic(topicId: number, featureId: number, attributes) {
+  changeFeatureToTopic(topicId: number, featureId: number, attributes: FeatureAttributes) {
     const command = new ChangeFeatureToTopicCommand(topicId, featureId, attributes);
     this.execute(command);
   }

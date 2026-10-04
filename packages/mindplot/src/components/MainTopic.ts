@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Group, ElementClass, ElementPeer } from '@wisemapping/web2d';
+import { Group } from '@wisemapping/web2d';
 import { $assert, $defined } from './util/assert';
 
 import Topic from './Topic';
@@ -25,7 +25,7 @@ import PositionType from './PositionType';
 import TopicShapeFactory from './shape/TopicShapeFactory';
 
 class MainTopic extends Topic {
-  buildDragShape(): ElementClass<ElementPeer> {
+  buildDragShape(): Group {
     const shapeType = this.getShapeType();
     const innerShape = TopicShapeFactory.create(shapeType, this);
     const size = this.getSize();

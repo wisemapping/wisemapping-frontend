@@ -70,9 +70,9 @@ abstract class IMindmap {
     this.addBranch(child);
   }
 
-  abstract hasAlreadyAdded(node): boolean;
+  abstract hasAlreadyAdded(node: INodeModel): boolean;
 
-  abstract createNode(type: NodeType, id: number);
+  abstract createNode(type: NodeType, id: number): INodeModel;
 
   abstract createRelationship(fromNodeId: number, toNodeId: number): void;
 
