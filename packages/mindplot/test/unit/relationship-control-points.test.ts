@@ -1,0 +1,171 @@
+/*
+ *    Copyright [2007-2025] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+import ActionDispatcher from '../../src/components/ActionDispatcher';
+import Canvas from '../../src/components/Canvas';
+import Relationship from '../../src/components/Relationship';
+import RelationshipControlPoints, {
+  PivotType,
+} from '../../src/components/RelationshipControlPoints';
+import ScreenManager from '../../src/components/ScreenManager';
+
+jest.mock('../../src/components/SvgImageIcon', () => ({
+  default: jest.fn(),
+}));
+
+jest.mock('../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class {},
+}));
+
+describe('Relationship control points', () => {
+  describe('Relationship.setDestControlPoint', () => {
+    const buildRelationship = () => {
+      const relationship = Object.create(Relationship.prototype);
+      relationship._line = { setSrcControlPoint: jest.fn(), setDestControlPoint: jest.fn() };
+      relationship._focusShape = { setSrcControlPoint: jest.fn(), setDestControlPoint: jest.fn() };
+      relationship._startArrow = { setControlPoint: jest.fn() };
+      relationship._endArrow = { setControlPoint: jest.fn() };
+      return relationship;
+    };
+
+    it('updates the destination control point of the focus shape', () => {
+      const relationship = buildRelationship();
+      const control = { x: 12, y: -7 };
+
+      relationship.setDestControlPoint(control);
+
+      expect(relationship._line.setDestControlPoint).toHaveBeenCalledWith(control);
+      expect(relationship._focusShape.setDestControlPoint).toHaveBeenCalledWith(control);
+      expect(relationship._focusShape.setSrcControlPoint).not.toHaveBeenCalled();
+      expect(relationship._endArrow.setControlPoint).toHaveBeenCalledWith(control);
+    });
+
+    it('updates the source control point of the focus shape', () => {
+      const relationship = buildRelationship();
+      const control = { x: 3, y: 4 };
+
+      relationship.setSrcControlPoint(control);
+
+      expect(relationship._focusShape.setSrcControlPoint).toHaveBeenCalledWith(control);
+      expect(relationship._focusShape.setDestControlPoint).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('dragging a control point', () => {
+    let container: HTMLDivElement;
+    let moveControlPoint: jest.Mock;
+    let controlPoints: RelationshipControlPoints;
+    let line: {
+      getControlPoints: jest.Mock;
+      getFrom: jest.Mock;
+      getTo: jest.Mock;
+      setSrcControlPoint: jest.Mock;
+      setDestControlPoint: jest.Mock;
+      setIsSrcControlPointCustom: jest.Mock;
+      setIsDestControlPointCustom: jest.Mock;
+    };
+
+    const pivot = (type: PivotType) =>
+      (
+        controlPoints as unknown as {
+          _pivotLines: { mouseDownHandler(event: Event): void }[];
+        }
+      )._pivotLines[type];
+
+    beforeEach(() => {
+      container = document.createElement('div');
+      document.body.appendChild(container);
+      const screenManager = new ScreenManager(container);
+
+      moveControlPoint = jest.fn();
+      jest
+        .spyOn(ActionDispatcher, 'getInstance')
+        .mockReturnValue({ moveControlPoint } as unknown as ActionDispatcher);
+      jest.spyOn(Relationship, 'calculateSnapPoint').mockReturnValue({ x: 0, y: 0 });
+
+      line = {
+        getControlPoints: jest.fn().mockReturnValue([
+          { x: 10, y: 10 },
+          { x: -10, y: -10 },
+        ]),
+        getFrom: jest.fn().mockReturnValue({ x: 0, y: 0 }),
+        getTo: jest.fn().mockReturnValue({ x: 100, y: 100 }),
+        setSrcControlPoint: jest.fn(),
+        setDestControlPoint: jest.fn(),
+        setIsSrcControlPointCustom: jest.fn(),
+        setIsDestControlPointCustom: jest.fn(),
+      };
+      const topic = { getId: () => 1 };
+      const relationship = {
+        getSourceTopic: () => topic,
+        getTargetTopic: () => topic,
+        getLine: () => line,
+        getModel: () => ({ getId: () => 7 }),
+        redraw: jest.fn(),
+      } as unknown as Relationship;
+
+      controlPoints = new RelationshipControlPoints(relationship);
+      const canvas = {
+        getScreenManager: () => screenManager,
+        append: (elem: { addToWorkspace?: (c: unknown) => void }) => elem.addToWorkspace?.(canvas),
+      };
+      controlPoints.addToWorkspace(canvas as unknown as Canvas);
+    });
+
+    afterEach(() => {
+      container.remove();
+      jest.restoreAllMocks();
+    });
+
+    it.each([PivotType.Start, PivotType.End])(
+      'does not dispatch a move when the dot is clicked without dragging (pivot %s)',
+      (type) => {
+        pivot(type).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+        container.dispatchEvent(new MouseEvent('mouseup', { clientX: 5, clientY: 5 }));
+
+        expect(moveControlPoint).not.toHaveBeenCalled();
+      },
+    );
+
+    it.each([PivotType.Start, PivotType.End])(
+      'dispatches a move when the dot is dragged (pivot %s)',
+      (type) => {
+        pivot(type).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+        container.dispatchEvent(new MouseEvent('mousemove', { clientX: 40, clientY: 30 }));
+        container.dispatchEvent(new MouseEvent('mouseup', { clientX: 40, clientY: 30 }));
+
+        expect(moveControlPoint).toHaveBeenCalledTimes(1);
+        expect(moveControlPoint.mock.calls[0][2]).toBe(type);
+      },
+    );
+
+    it('does not dispatch again on a later click after a drag', () => {
+      const start = pivot(PivotType.Start);
+      start.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      container.dispatchEvent(new MouseEvent('mousemove', { clientX: 40, clientY: 30 }));
+      container.dispatchEvent(new MouseEvent('mouseup', { clientX: 40, clientY: 30 }));
+      moveControlPoint.mockClear();
+
+      start.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      container.dispatchEvent(new MouseEvent('mouseup', { clientX: 40, clientY: 30 }));
+
+      expect(moveControlPoint).not.toHaveBeenCalled();
+    });
+  });
+});

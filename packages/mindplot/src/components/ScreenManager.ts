@@ -118,8 +118,13 @@ class ScreenManager {
       x = (event as MouseEvent).clientX;
       y = (event as MouseEvent).clientY;
     } else if (this.tocuchEvents.includes(event.type)) {
-      x = (event as TouchEvent).touches[0].clientX;
-      y = (event as TouchEvent).touches[0].clientY;
+      // On touchend the lifted finger is no longer in touches, only in changedTouches.
+      const touchEvent = event as TouchEvent;
+      const touch = touchEvent.touches[0] ?? touchEvent.changedTouches?.[0];
+      if (touch) {
+        x = touch.clientX;
+        y = touch.clientY;
+      }
     }
 
     // if value is zero assert throws error
@@ -127,10 +132,11 @@ class ScreenManager {
       throw new Error(`Coordinated can not be null, eventType= ${event.type}`);
     }
 
-    // Adjust the deviation of the container positioning ...
-    const containerPosition = this.getContainerPosition();
-    x -= containerPosition.left;
-    y -= containerPosition.top;
+    // Adjust the deviation of the container positioning. clientX/clientY and the bounding rect
+    // are both viewport relative, so the page scroll must not be applied here ...
+    const containerRect = this._divContainer.getBoundingClientRect();
+    x -= containerRect.left;
+    y -= containerRect.top;
 
     // Scale coordinate in order to be relative to the workspace. That's coordSize/size;
     x *= this._scale;

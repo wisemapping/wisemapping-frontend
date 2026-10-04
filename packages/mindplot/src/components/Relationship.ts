@@ -594,7 +594,7 @@ class Relationship extends BaseConnectionLine {
 
   setDestControlPoint(control: PositionType) {
     this._line.setDestControlPoint(control);
-    this._focusShape.setSrcControlPoint(control);
+    this._focusShape.setDestControlPoint(control);
     this._endArrow?.setControlPoint(control);
   }
 

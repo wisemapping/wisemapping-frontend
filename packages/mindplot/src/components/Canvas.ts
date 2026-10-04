@@ -319,17 +319,18 @@ class Canvas {
     const mouseDownListener = (event: Event) => {
       if (!this._mouseMoveListener) {
         if (mWorkspace.isWorkspaceEventsEnabled()) {
-          mWorkspace.enableWorkspaceEvents(false);
-
           // Don't prevent default on touchstart to allow node selection
           // Multi-touch (pinch-zoom) should not trigger panning
           if (event.type === 'touchstart') {
             const touchEvent = event as TouchEvent;
             if (touchEvent.touches.length > 1) {
-              // Multi-touch detected (pinch), don't handle it - let browser handle zoom
+              // Multi-touch detected (pinch), don't handle it - let browser handle zoom.
+              // Checked before disabling workspace events, as nothing would re-enable them.
               return;
             }
           }
+
+          mWorkspace.enableWorkspaceEvents(false);
 
           const originalEvent = event;
           const mouseDownPosition = screenManager.getWorkspaceMousePosition(
@@ -377,10 +378,12 @@ class Canvas {
 
           // Register mouse up listeners ...
           this._mouseUpListener = () => {
-            screenManager.removeEvent('mousemove', this._mouseMoveListener);
-            screenManager.removeEvent('mouseup', this._mouseUpListener);
-            screenManager.removeEvent('touchmove', this._mouseUpListener);
-            screenManager.removeEvent('touchend', this._mouseMoveListener);
+            const mouseMoveListener = this._mouseMoveListener;
+            const mouseUpListener = this._mouseUpListener;
+            screenManager.removeEvent('mousemove', mouseMoveListener);
+            screenManager.removeEvent('mouseup', mouseUpListener);
+            screenManager.removeEvent('touchmove', mouseMoveListener);
+            screenManager.removeEvent('touchend', mouseUpListener);
             this._mouseUpListener = null;
             this._mouseMoveListener = null;
             window.document.body.style.cursor = 'default';

@@ -44,6 +44,8 @@ class ControlPivotLine {
 
   private _isVisible: boolean;
 
+  private _wasDragged: boolean;
+
   private _mouseMoveHandler: (e: Event) => void;
 
   private _mouseUpHandler: () => void;
@@ -95,11 +97,13 @@ class ControlPivotLine {
     this._mouseDownHandler = (event: Event) => this.mouseDownHandler(event);
 
     this._isVisible = false;
+    this._wasDragged = false;
     this._canvas = null;
   }
 
   private mouseDownHandler(event: Event) {
     const screenManager = this.getWorkspace().getScreenManager();
+    this._wasDragged = false;
     screenManager.addEvent('mousemove', this._mouseMoveHandler);
     screenManager.addEvent('mouseup', this._mouseUpHandler);
 
@@ -181,6 +185,7 @@ class ControlPivotLine {
         ? this._relationship.getLine().getFrom()
         : this._relationship.getLine().getTo();
     this._line.setFrom(linePos.x, linePos.y);
+    this._wasDragged = true;
   }
 
   private mouseUpHandler() {
@@ -188,7 +193,11 @@ class ControlPivotLine {
     screenManager.removeEvent('mousemove', this._mouseMoveHandler);
     screenManager.removeEvent('mouseup', this._mouseUpHandler);
 
-    this._changeHander();
+    // A plain click on the dot does not move the control point, so there is nothing to record ...
+    if (this._wasDragged) {
+      this._wasDragged = false;
+      this._changeHander();
+    }
   }
 
   addToWorkspace(workspace: Canvas): void {
