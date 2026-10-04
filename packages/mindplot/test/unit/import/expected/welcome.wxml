@@ -10,8 +10,10 @@
                     
                 ]]></text>
             <link url="https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE" urlType="url"/>
+            <eicon id="🖥️"/>
         </topic>
-        <topic position="-200,-150" order="1" text="Try it Now!" shape="line" id="11" bgColor="#080559">
+        <topic position="-200,-150" order="1" text="Try it Now!" shape="line" id="11" connColor="#080559">
+            <eicon id="😮"/>
             <topic position="-290,-187" order="0" text="Double Click" shape="line" id="12"/>
             <topic position="-290,-162" order="1" shape="line" id="13">
                 <text><![CDATA[
@@ -33,21 +35,30 @@
                 <topic position="380,-37" order="1" text="Topic Shapes" shape="line" id="19"/>
                 <topic position="380,-12" order="2" text="Topic Color" shape="line" id="18"/>
             </topic>
-            <topic position="290,0" order="2" text="Icons" shape="line" id="20"/>
-            <topic position="290,25" order="3" text="History Changes" shape="line" id="21"/>
+            <topic position="290,0" order="2" text="Icons" shape="line" id="20">
+                <eicon id="🌈"/>
+            </topic>
+            <topic position="290,25" order="3" text="History Changes" shape="line" id="21">
+                <eicon id="⬅️"/>
+            </topic>
         </topic>
         <topic position="-200,-50" order="3" text="Mind Mapping" shape="line" id="6">
+            <eicon id="👍"/>
             <topic position="-290,-100" order="0" text="Share with Collegues" shape="line" id="7"/>
             <topic position="-290,-75" order="1" text="Online" shape="line" id="8"/>
             <topic position="-290,-50" order="2" text="Anyplace, Anytime" shape="line" id="9"/>
             <topic position="-290,-25" order="3" text="Free!!!" shape="line" id="10"/>
         </topic>
         <topic position="200,100" order="4" text="Productivity" shape="line" id="2">
-            <topic position="290,63" order="0" text="Share your ideas" shape="line" id="3"/>
+            <eicon id="📊"/>
+            <topic position="290,63" order="0" text="Share your ideas" shape="line" id="3">
+                <eicon id="💡"/>
+            </topic>
             <topic position="290,88" order="1" text="Brainstorming" shape="line" id="4"/>
             <topic position="290,113" order="2" text="Visual " shape="line" id="5"/>
         </topic>
         <topic position="-200,50" order="5" text="Install In Your Server" shape="line" id="27">
+            <eicon id="🖥️"/>
             <topic position="-290,25" order="0" text="Open Source" shape="line" id="29">
                 <link url="http://www.wisemapping.org/" urlType="url"/>
                 <icon id="soft_penguin"/>
@@ -57,9 +68,12 @@
             </topic>
         </topic>
         <topic position="-200,150" order="6" text="Collaborate" shape="line" id="32">
+            <eicon id="👨‍👧‍👦"/>
             <topic position="-290,113" order="0" text="Embed" shape="line" id="33"/>
             <topic position="-290,138" order="1" text="Publish" shape="line" id="34"/>
-            <topic position="-290,163" order="2" text="Share for Edition" shape="line" id="35"/>
+            <topic position="-290,163" order="2" text="Share for Edition" shape="line" id="35">
+                <eicon id="✉️"/>
+            </topic>
         </topic>
     </topic>
     <relationship srcTopicId="30" destTopicId="11" lineType="0" endArrow="true" startArrow="true" strokeStyle="dashed"/>

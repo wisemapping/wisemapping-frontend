@@ -18,6 +18,7 @@
 
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import Importer from './Importer';
+import ImportError from './ImportError';
 
 export default class WisemappingImporter extends Importer {
   private wisemappingInput: string;
@@ -28,17 +29,21 @@ export default class WisemappingImporter extends Importer {
   }
 
   import(nameMap: string, description: string): Promise<string> {
-    const parser = new DOMParser();
-    const wiseDoc = parser.parseFromString(this.wisemappingInput, 'application/xml');
+    try {
+      const parser = new DOMParser();
+      const wiseDoc = parser.parseFromString(this.wisemappingInput, 'application/xml');
 
-    const serialize = XMLSerializerFactory.createFromDocument(wiseDoc);
-    const mindmap = serialize.loadFromDom(wiseDoc, nameMap);
+      const serialize = XMLSerializerFactory.createFromDocument(wiseDoc);
+      const mindmap = serialize.loadFromDom(wiseDoc, nameMap);
 
-    mindmap.setDescription(description);
+      mindmap.setDescription(description);
 
-    const mindmapToXml = serialize.toXML(mindmap);
+      const mindmapToXml = serialize.toXML(mindmap);
 
-    const xmlStr = new XMLSerializer().serializeToString(mindmapToXml);
-    return Promise.resolve(xmlStr);
+      const xmlStr = new XMLSerializer().serializeToString(mindmapToXml);
+      return Promise.resolve(xmlStr);
+    } catch (error) {
+      return Promise.reject(ImportError.from(error, 'WiseMapping'));
+    }
   }
 }

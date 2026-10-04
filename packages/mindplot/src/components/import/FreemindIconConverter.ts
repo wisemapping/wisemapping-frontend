@@ -17,6 +17,7 @@
  */
 
 import iconFamily from '../model/SvgIconFamily.json';
+import { legacyIconEmoji } from './support/LegacyIconMap';
 
 export type WiseIcon = { type: 'icon' | 'eicon'; id: string };
 
@@ -101,6 +102,18 @@ const freeIdToEmoji: Record<string, string> = {
   redo: '🔄',
 };
 
+// The same emoji can be written with or without the emoji variation selector (U+FE0F).
+const withoutVariationSelector = (emoji: string): string => emoji.replace(/\uFE0F/g, '');
+
+// Several FreeMind icons share an emoji, the first one listed is the one exported.
+const emojiToFreeId = new Map<string, string>();
+Object.entries(freeIdToEmoji).forEach(([freeId, emoji]) => {
+  const key = withoutVariationSelector(emoji);
+  if (!emojiToFreeId.has(key)) {
+    emojiToFreeId.set(key, freeId);
+  }
+});
+
 // The FreeMind exporter writes WiseMapping SVG icon ids as builtin icons, so they are kept as they are.
 const svgIconIds = new Set<string>(iconFamily.flatMap((family) => family.icons));
 
@@ -112,6 +125,16 @@ export default class FreemindIconConverter {
     if (emoji) {
       return { type: 'eicon', id: emoji };
     }
-    return svgIconIds.has(iconId) ? { type: 'icon', id: iconId } : null;
+    if (svgIconIds.has(iconId)) {
+      return { type: 'icon', id: iconId };
+    }
+    // Maps exported by older WiseMapping versions hold the ids of the icons that became emoji.
+    const legacyEmoji = legacyIconEmoji(iconId);
+    return legacyEmoji ? { type: 'eicon', id: legacyEmoji } : null;
+  }
+
+  /** The FreeMind builtin icon of an emoji icon, null if FreeMind has no equivalent. */
+  public static toFreemindIcon(emoji: string): string | null {
+    return emojiToFreeId.get(withoutVariationSelector(emoji)) ?? null;
   }
 }

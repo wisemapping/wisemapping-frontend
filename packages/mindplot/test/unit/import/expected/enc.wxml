@@ -1,6 +1,6 @@
 <map name="enc" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Artigos GF comentários interessantes" id="1">
-        <topic position="-200,-50" order="0" shape="rectangle" id="5" bgColor="#cccccc">
+        <topic position="-200,-50" order="0" shape="rectangle" id="5" bgColor="#cccccc" connColor="#cccccc">
             <text><![CDATA[Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant
 communities]]></text>
             <topic position="-290,-150" order="0" shape="line" id="6"/>
@@ -79,7 +79,7 @@ tb.]]></text>
                     ]]></note>
             </topic>
         </topic>
-        <topic position="200,0" order="1" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" bgColor="#cccccc">
+        <topic position="200,0" order="1" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" bgColor="#cccccc" connColor="#cccccc">
             <topic position="290,-125" order="0" shape="line" id="22">
                 <text><![CDATA[
                         
@@ -189,7 +189,7 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                     ]]></text>
             </topic>
         </topic>
-        <topic position="-200,50" order="2" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" bgColor="#cccccc">
+        <topic position="-200,50" order="2" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" bgColor="#cccccc" connColor="#cccccc">
             <topic position="-290,38" order="0" text="Espécies pioneiras crescem mais rápido do que as não pioneiras" shape="line" id="3">
                 <topic position="-380,26" order="0" text="Tolerância a sombra está relacionada com persistência e não com crescimento" shape="line" id="4"/>
             </topic>

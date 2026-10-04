@@ -68,7 +68,9 @@ export default class Freemap {
     const childNodes: Array<Choise> = mainNode.getArrowlinkOrCloudOrEdge();
     childNodes.forEach((childNode: Choise) => {
       const node = this.nodeToXml(childNode, mainNodeElem, document);
-      mainNodeElem.appendChild(node);
+      if (node) {
+        mainNodeElem.appendChild(node);
+      }
     });
 
     return document;
@@ -86,7 +88,6 @@ export default class Freemap {
     );
 
     // Verify that the version attribute exists
-    console.log(rootElem.getAttribute('version'));
     $assert(rootElem.getAttribute('version') !== null, 'Freemind version not found');
 
     // Start the loading process...
@@ -262,7 +263,12 @@ export default class Freemap {
     return node;
   }
 
-  private nodeToXml(childNode: Choise, parentNode: HTMLElement, document: Document): HTMLElement {
+  // Returns null for elements of an unknown type, which are skipped.
+  private nodeToXml(
+    childNode: Choise,
+    parentNode: HTMLElement,
+    document: Document,
+  ): HTMLElement | null {
     if (childNode instanceof Node) {
       childNode.setCentralTopic(false);
       const childNodeXml = childNode.toXml(document);
@@ -272,7 +278,9 @@ export default class Freemap {
       if (childrens.length > 0) {
         childrens.forEach((node: Choise) => {
           const nodeXml = this.nodeToXml(node, childNodeXml, document);
-          childNodeXml.appendChild(nodeXml);
+          if (nodeXml) {
+            childNodeXml.appendChild(nodeXml);
+          }
         });
       }
 
@@ -328,6 +336,6 @@ export default class Freemap {
       return childNodeXml;
     }
 
-    return parentNode;
+    return null;
   }
 }

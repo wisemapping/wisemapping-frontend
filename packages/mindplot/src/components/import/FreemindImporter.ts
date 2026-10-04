@@ -18,6 +18,7 @@
 
 import xmlFormatter from 'xml-formatter';
 import Importer from './Importer';
+import ImportError from './ImportError';
 import Mindmap from '../model/Mindmap';
 import RelationshipModel from '../model/RelationshipModel';
 import NodeModel from '../model/NodeModel';
@@ -62,6 +63,14 @@ export default class FreemindImporter extends Importer {
   }
 
   import(nameMap: string, description: string): Promise<string> {
+    try {
+      return Promise.resolve(this.convert(nameMap, description));
+    } catch (error) {
+      return Promise.reject(ImportError.from(error, 'FreeMind'));
+    }
+  }
+
+  private convert(nameMap: string, description: string): string {
     this.mindmap = new Mindmap(nameMap);
     this.nodesmap = new Map<string, NodeModel>();
     this.arrowlinks = [];
@@ -114,7 +123,7 @@ export default class FreemindImporter extends Importer {
       lineSeparator: '\n',
     });
 
-    return Promise.resolve(formatXml);
+    return formatXml;
   }
 
   private addRelationships(mindmap: Mindmap): void {
@@ -282,10 +291,13 @@ export default class FreemindImporter extends Importer {
       //   }
       // }
 
-      // The root node has no edge to a parent, its edge only sets the default of its children.
+      // A FreeMind edge is the line that connects the node to its parent. The root node has no
+      // edge to a parent, its edge only sets the default of its children.
       if (child instanceof FreemindEdge && depth > 1) {
-        const edge: FreemindEdge = child as FreemindEdge;
-        wiseParent.setBackgroundColor(edge.getColor());
+        const edgeColor = child.getColor();
+        if (edgeColor) {
+          wiseParent.setConnectionColor(edgeColor);
+        }
       }
 
       if (child instanceof FreemindIcon) {
@@ -313,7 +325,8 @@ export default class FreemindImporter extends Importer {
       if (child instanceof FreemindRichcontent) {
         const type = child.getType();
         const html = child.getHtml();
-        if (html) {
+        // Notes without any text, such as <p></p>, are skipped.
+        if (html && (type === 'NODE' || !FreemindImporter.isEmptyHtml(html))) {
           // Preserve HTML content instead of converting to plain text
           const cleanHtml = this.cleanHtml(html);
           switch (type) {
@@ -500,6 +513,11 @@ export default class FreemindImporter extends Importer {
       x,
       y,
     };
+  }
+
+  private static isEmptyHtml(html: string): boolean {
+    const { body } = new DOMParser().parseFromString(html, 'text/html');
+    return !body.textContent?.trim() && !body.querySelector('img');
   }
 
   private cleanHtml(content: string): string {

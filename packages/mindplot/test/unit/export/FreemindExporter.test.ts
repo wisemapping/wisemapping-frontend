@@ -23,6 +23,9 @@ import NodeModel from '../../../src/components/model/NodeModel';
 import NoteModel from '../../../src/components/model/NoteModel';
 import ContentType from '../../../src/components/ContentType';
 import FreemindExporter from '../../../src/components/export/FreemindExporter';
+import FreemindImporter from '../../../src/components/import/FreemindImporter';
+import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
+import SvgIconModel from '../../../src/components/model/SvgIconModel';
 
 const buildMindmap = (configure: (topic: NodeModel) => void): Mindmap => {
   const mindmap = new Mindmap('test');
@@ -108,5 +111,55 @@ describe('FreemindExporter', () => {
 
     const richcontent = exportedTopic(doc).querySelector(':scope > richcontent[TYPE="NOTE"]')!;
     expect(richcontent.getElementsByTagName('b')[0].textContent).toBe('world');
+  });
+
+  test('exports emoji icons as FreeMind builtin icons', async () => {
+    const doc = await exportMindmap(
+      buildMindmap((topic) => {
+        topic.addFeature(new EmojiIconModel({ id: '💡' }));
+        topic.addFeature(new EmojiIconModel({ id: '1️⃣' }));
+        topic.addFeature(new EmojiIconModel({ id: '🟢' }));
+        topic.addFeature(new SvgIconModel({ id: 'sign_warning' }));
+      }),
+    );
+
+    const icons = Array.from(exportedTopic(doc).querySelectorAll(':scope > icon'));
+    expect(icons.map((icon) => icon.getAttribute('BUILTIN'))).toEqual([
+      'idea',
+      'full-1',
+      'go',
+      'sign_warning',
+    ]);
+  });
+
+  test('exports emoji icons written without the emoji variation selector', async () => {
+    const doc = await exportMindmap(
+      buildMindmap((topic) => topic.addFeature(new EmojiIconModel({ id: '\u26A0' }))),
+    );
+
+    const icon = exportedTopic(doc).querySelector(':scope > icon');
+    expect(icon?.getAttribute('BUILTIN')).toBe('messagebox_warning');
+  });
+
+  test('skips emoji icons that have no FreeMind builtin equivalent', async () => {
+    const doc = await exportMindmap(
+      buildMindmap((topic) => topic.addFeature(new EmojiIconModel({ id: '🦄' }))),
+    );
+
+    expect(exportedTopic(doc).querySelectorAll(':scope > icon')).toHaveLength(0);
+  });
+
+  test('emoji icons survive a FreeMind export and import round trip', async () => {
+    const mm = await new FreemindExporter(
+      buildMindmap((topic) => {
+        topic.addFeature(new EmojiIconModel({ id: '✅' }));
+        topic.addFeature(new EmojiIconModel({ id: '⚠️' }));
+      }),
+    ).export();
+
+    const xml = await new FreemindImporter(mm).import('test', '');
+    const doc = new DOMParser().parseFromString(xml, 'text/xml');
+    const icons = Array.from(doc.querySelectorAll('topic[id="2"] > eicon'));
+    expect(icons.map((icon) => icon.getAttribute('id'))).toEqual(['✅', '⚠️']);
   });
 });

@@ -14,6 +14,7 @@
             <arrowlink DESTINATION="ID_11" STARTARROW="Default"/>
         </node>
         <node ID="ID_11" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Try it Now!">
+            <icon BUILTIN="smiley-oh"/>
             <edge COLOR="#080559"/>
             <node ID="ID_12" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Double Click"/>
             <node ID="ID_13" POSITION="left" STYLE="fork">
@@ -39,7 +40,9 @@
                 <node ID="ID_18" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Topic Color"/>
             </node>
             <node ID="ID_20" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Icons"/>
-            <node ID="ID_21" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="History Changes"/>
+            <node ID="ID_21" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="History Changes">
+                <icon BUILTIN="back"/>
+            </node>
         </node>
         <node ID="ID_6" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Mind Mapping">
             <node ID="ID_7" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Share with Collegues"/>
@@ -48,7 +51,9 @@
             <node ID="ID_10" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Free!!!"/>
         </node>
         <node ID="ID_2" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Productivity">
-            <node ID="ID_3" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Share your ideas"/>
+            <node ID="ID_3" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Share your ideas">
+                <icon BUILTIN="idea"/>
+            </node>
             <node ID="ID_4" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Brainstorming"/>
             <node ID="ID_5" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Visual "/>
         </node>
@@ -61,7 +66,9 @@
         <node ID="ID_32" POSITION="left" STYLE="fork" TEXT="Collaborate">
             <node ID="ID_33" POSITION="left" STYLE="fork" TEXT="Embed"/>
             <node ID="ID_34" POSITION="left" STYLE="fork" TEXT="Publish"/>
-            <node ID="ID_35" POSITION="left" STYLE="fork" TEXT="Share for Edition"/>
+            <node ID="ID_35" POSITION="left" STYLE="fork" TEXT="Share for Edition">
+                <icon BUILTIN="Mail"/>
+            </node>
         </node>
     </node>
 </map>

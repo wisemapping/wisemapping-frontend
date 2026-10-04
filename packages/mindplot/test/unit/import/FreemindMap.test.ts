@@ -17,8 +17,9 @@
  */
 
 /* eslint-disable import/no-extraneous-dependencies */
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, jest, test } from '@jest/globals';
 import FreemindMap from '../../../src/components/export/freemind/Map';
+import FreemindNode, { Choise } from '../../../src/components/export/freemind/Node';
 
 const roundTrip = (mm: string): Document => {
   const dom = new DOMParser().parseFromString(mm, 'text/xml');
@@ -76,5 +77,35 @@ describe('FreemindMap', () => {
       'accessories/plugins/NodeNote.properties',
     );
     expect(child?.querySelector('hook > text')?.textContent).toBe('Old note');
+  });
+
+  test('does not log while loading a map', () => {
+    const log = jest.spyOn(console, 'log').mockImplementation(() => {});
+    try {
+      roundTrip(`<map version="1.0.1"><node ID="ID_1" TEXT="Root"/></map>`);
+      expect(log).not.toHaveBeenCalled();
+    } finally {
+      log.mockRestore();
+    }
+  });
+
+  test('skips children of an unknown type when writing the XML', () => {
+    const root = new FreemindNode();
+    root.setText('Root');
+    const child = new FreemindNode();
+    child.setText('Child');
+    // A plain JavaScript object that none of the FreeMind element classes match.
+    child.setArrowlinkOrCloudOrEdge({} as unknown as Choise);
+    root.setArrowlinkOrCloudOrEdge(child);
+    root.setArrowlinkOrCloudOrEdge({} as unknown as Choise);
+    const map = new FreemindMap();
+    map.setVesion('1.0.1');
+    map.setNode(root);
+
+    const xml = map.toXml();
+
+    const mainNode = xml.querySelector('map > node');
+    expect(childTags(mainNode)).toEqual(['node']);
+    expect(childTags(mainNode?.querySelector(':scope > node') ?? null)).toEqual([]);
   });
 });

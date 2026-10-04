@@ -21,6 +21,7 @@ import fs from 'fs';
 import path from 'path';
 import { describe, expect, test } from '@jest/globals';
 import FreemindImporter from '../../../src/components/import/FreemindImporter';
+import ImportError from '../../../src/components/import/ImportError';
 import { LineType } from '../../../src/components/ConnectionLine';
 
 const importMap = async (mm: string): Promise<Document> => {
@@ -49,12 +50,27 @@ describe('FreemindImporter', () => {
     expect(topicById(doc, '2').getAttribute('text')).toBe('Child');
   });
 
-  test('rejects maps written by FreeMind versions newer than the supported one', () => {
+  test('rejects maps written by FreeMind versions newer than the supported one', async () => {
     const mm = `<map version="1.1.0"><node ID="ID_1" TEXT="Root"/></map>`;
 
-    expect(() => new FreemindImporter(mm).import('test', '')).toThrow(
-      'FreeMind version 1.1.0 is not supported.',
-    );
+    let result: Promise<string> | undefined;
+    expect(() => {
+      result = new FreemindImporter(mm).import('test', '');
+    }).not.toThrow();
+    await expect(result).rejects.toBeInstanceOf(ImportError);
+    await expect(result).rejects.toThrow('FreeMind version 1.1.0 is not supported.');
+  });
+
+  test.each([
+    ['a file that is not XML', '<map><node TEXT="unclosed"'],
+    ['a Freeplane map', '<map version="freeplane 1.9.13"><node TEXT="Root"/></map>'],
+    ['a file that is not a map', '<other version="1.0.1"/>'],
+  ])('rejects %s with an ImportError instead of throwing', async (_name: string, mm: string) => {
+    let result: Promise<string> | undefined;
+    expect(() => {
+      result = new FreemindImporter(mm).import('test', '');
+    }).not.toThrow();
+    await expect(result).rejects.toBeInstanceOf(ImportError);
   });
 
   test('keeps arrowlinks that point to nodes appearing later in the document', async () => {
@@ -260,5 +276,66 @@ describe('FreemindImporter', () => {
     const doc = await importMap(mm);
     const relationship = doc.querySelector('relationship')!;
     expect(relationship.getAttribute('lineType')).toBe(String(LineType.THIN_CURVED));
+  });
+
+  test('imports the edge color as the connection color, keeping the background color', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" TEXT="Child" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#ffcc33">
+          <edge COLOR="#808080"/>
+          <node ID="ID_3" TEXT="Grandchild" BACKGROUND_COLOR="#ffff33">
+            <edge STYLE="bezier"/>
+          </node>
+        </node>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    const child = topicById(doc, '2');
+    expect(child.getAttribute('bgColor')).toBe('#ffcc33');
+    expect(child.getAttribute('connColor')).toBe('#808080');
+    // An edge without a color does not clear the background color.
+    const grandchild = topicById(doc, '3');
+    expect(grandchild.getAttribute('bgColor')).toBe('#ffff33');
+    expect(grandchild.getAttribute('connColor')).toBeNull();
+  });
+
+  test('skips rich content notes that are effectively empty', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <richcontent TYPE="NOTE"><html><head></head><body><p></p></body></html></richcontent>
+        <node ID="ID_2" TEXT="Whitespace" POSITION="right">
+          <richcontent TYPE="NOTE"><html><head/><body>
+            <p>   </p>
+          </body></html></richcontent>
+        </node>
+        <node ID="ID_3" TEXT="Not empty" POSITION="right">
+          <richcontent TYPE="NOTE"><html><head/><body><p>Text</p></body></html></richcontent>
+        </node>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    expect(topicById(doc, '1').querySelector(':scope > note')).toBeNull();
+    expect(topicById(doc, '2').querySelector(':scope > note')).toBeNull();
+    expect(topicById(doc, '3').querySelector(':scope > note')?.textContent).toContain('Text');
+  });
+
+  test('imports legacy WiseMapping icon ids as emoji icons', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" TEXT="Child" POSITION="right">
+          <icon BUILTIN="face_surprise"/>
+          <icon BUILTIN="bulb_light_on"/>
+          <icon BUILTIN="thumb_thumb_up"/>
+          <icon BUILTIN="object_pencil"/>
+          <icon BUILTIN="hard_computer"/>
+        </node>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    const icons = Array.from(topicById(doc, '2').querySelectorAll(':scope > eicon'));
+    expect(icons.map((icon) => icon.getAttribute('id'))).toEqual(['😮', '💡', '👍', '✏️', '🖥️']);
   });
 });

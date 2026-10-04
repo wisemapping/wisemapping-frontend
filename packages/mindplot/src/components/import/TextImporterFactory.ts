@@ -23,7 +23,6 @@ import XMindImporter from './XMindImporter';
 import MindManagerImporter from './MindManagerImporter';
 import OPMLImporter from './OPMLImporter';
 import Importer from './Importer';
-import ImportError from './ImportError';
 import { decodeUtf8 } from './support/Utf8Decoder';
 
 export default class TextImporterFactory {
@@ -31,19 +30,13 @@ export default class TextImporterFactory {
     const mapAsString = TextImporterFactory.asString(map);
     switch (type) {
       case 'wxml':
-        return TextImporterFactory.rejectWithImportError(
-          new WisemappingImporter(mapAsString),
-          'WiseMapping',
-        );
+        return new WisemappingImporter(mapAsString);
       case 'mm':
         // Check if it's Freeplane or FreeMind
         if (mapAsString.includes('freeplane') || mapAsString.includes('version="freeplane')) {
           return new FreeplaneImporter(mapAsString);
         }
-        return TextImporterFactory.rejectWithImportError(
-          new FreemindImporter(mapAsString),
-          'FreeMind',
-        );
+        return new FreemindImporter(mapAsString);
       case 'mmx':
         return new FreeplaneImporter(mapAsString);
       case 'xmind':
@@ -56,22 +49,6 @@ export default class TextImporterFactory {
       default:
         throw new Error(`Unsupported type ${type}`);
     }
-  }
-
-  /**
-   * The FreeMind and WiseMapping importers throw synchronously. Their import is wrapped so that,
-   * like the other importers, it rejects with an ImportError.
-   */
-  private static rejectWithImportError(importer: Importer, format: string): Importer {
-    const importMap = importer.import.bind(importer);
-    importer.import = async (nameMap: string, description?: string): Promise<string> => {
-      try {
-        return await importMap(nameMap, description);
-      } catch (error) {
-        throw ImportError.from(error, format);
-      }
-    };
-    return importer;
   }
 
   private static asString(map: string | ArrayBuffer | Uint8Array): string {

@@ -20,6 +20,7 @@ import { Mindmap } from '../..';
 import INodeModel, { TopicShapeType } from '../model/INodeModel';
 import RelationshipModel from '../model/RelationshipModel';
 import SvgIconModel from '../model/SvgIconModel';
+import EmojiIconModel from '../model/EmojiIconModel';
 import FeatureModel from '../model/FeatureModel';
 import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
@@ -36,6 +37,7 @@ import Richcontent from './freemind/Richcontent';
 import Icon from './freemind/Icon';
 import Edge from './freemind/Edge';
 import Font from './freemind/Font';
+import FreemindIconConverter from '../import/FreemindIconConverter';
 
 class FreemindExporter extends Exporter {
   private mindmap: Mindmap;
@@ -270,6 +272,17 @@ class FreemindExporter extends Exporter {
         const freemindIcon: Icon = new Icon();
         freemindIcon.setBuiltin(icon.getIconType());
         freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);
+      }
+
+      // Emoji icons are exported as the equivalent FreeMind builtin icon, if there is one.
+      if (type === 'eicon') {
+        const icon = feature as EmojiIconModel;
+        const builtin = FreemindIconConverter.toFreemindIcon(icon.getIconType());
+        if (builtin) {
+          const freemindIcon: Icon = new Icon();
+          freemindIcon.setBuiltin(builtin);
+          freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);
+        }
       }
     });
   }
