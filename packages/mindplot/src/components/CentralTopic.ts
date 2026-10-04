@@ -58,10 +58,6 @@ class CentralTopic extends Topic {
     super.setCursor(type === 'move' ? 'default' : type);
   }
 
-  updateTopicShape(): boolean {
-    return true;
-  }
-
   updatePositionOnChangeSize(): void {
     // Center main topic ...
     const zeroPoint = { x: 0, y: 0 };

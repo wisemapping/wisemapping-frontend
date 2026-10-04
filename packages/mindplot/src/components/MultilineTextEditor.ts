@@ -47,7 +47,8 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       mindmapComp.parentElement.appendChild(this._containerElem);
     }
     this.registerEvents(this._containerElem);
-    this._oldText = topic.getText();
+    // Use the model text: getText() falls back to the theme placeholder for empty topics ...
+    this._oldText = topic.getModel().getText() ?? undefined;
     this._onClose = onClose;
   }
 
@@ -87,13 +88,20 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
   private registerEvents(containerElem: HTMLElement): void {
     const textareaElem = this.getTextareaElem();
     EventManager.bind(textareaElem, 'keydown', (event: Event) => {
-      switch ((event as KeyboardEvent).code) {
+      const keyboardEvent = event as KeyboardEvent;
+
+      // Keys pressed while an IME (zh, ja, ko) is composing belong to the IME ...
+      if (keyboardEvent.isComposing || keyboardEvent.keyCode === 229) {
+        event.stopPropagation();
+        return;
+      }
+
+      switch (keyboardEvent.code) {
         case 'Escape':
           // Revert to previous text ...
           this.close(false);
           break;
         case 'Enter': {
-          const keyboardEvent = event as KeyboardEvent;
           if (keyboardEvent.metaKey || keyboardEvent.ctrlKey) {
             keyboardEvent.preventDefault();
 
@@ -122,24 +130,18 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       event.stopPropagation();
     });
 
+    // The designer opens the editor on keypress, so keep it from reaching the document ...
     EventManager.bind(textareaElem, 'keypress', (event: Event) => {
-      const keyboardEvent = event as KeyboardEvent;
-      const c = keyboardEvent.key;
-
-      // Skip special keys that shouldn't be added to text
-      if (
-        c.length === 1 &&
-        !keyboardEvent.ctrlKey &&
-        !keyboardEvent.metaKey &&
-        !keyboardEvent.altKey
-      ) {
-        const text = DOMUtils.val(this.getTextareaElem()) + c;
-        this._topic.setText(text);
-        this.resize(text);
-
-        this.fireEvent('input', [event, text]);
-      }
       event.stopPropagation();
+    });
+
+    // Sync the topic on every change, including paste, delete and IME input ...
+    EventManager.bind(textareaElem, 'input', (event: Event) => {
+      const text = this.getTextAreaText();
+      this._topic.setText(text);
+      this.resize(text);
+
+      this.fireEvent('input', [event, text]);
     });
 
     // If the user clicks on the input, all event must be ignored ...

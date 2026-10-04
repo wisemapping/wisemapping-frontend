@@ -817,9 +817,12 @@ abstract class Topic extends NodeGraph {
     const dispatcher = ActionDispatcher.getInstance();
     const notes = model.findFeatureByType('note');
 
-    if (!$defined(value) && notes.length > 0) {
-      const featureId = notes[0].getId();
-      dispatcher.removeFeatureFromTopic(topicId, featureId);
+    if (!$defined(value)) {
+      // Nothing to clear when the topic has no note ...
+      if (notes.length > 0) {
+        const featureId = notes[0].getId();
+        dispatcher.removeFeatureFromTopic(topicId, featureId);
+      }
     } else if (notes.length > 0) {
       dispatcher.changeFeatureToTopic(topicId, notes[0].getId(), {
         text: value,
@@ -852,8 +855,11 @@ abstract class Topic extends NodeGraph {
     const links = model.findFeatureByType('link');
 
     if (!$defined(value)) {
-      const featureId = links[0].getId();
-      dispatcher.removeFeatureFromTopic(topicId, featureId);
+      // Nothing to clear when the topic has no link ...
+      if (links.length > 0) {
+        const featureId = links[0].getId();
+        dispatcher.removeFeatureFromTopic(topicId, featureId);
+      }
     } else if (links.length > 0) {
       dispatcher.changeFeatureToTopic(topicId, links[0].getId(), {
         url: value,
@@ -1055,24 +1061,27 @@ abstract class Topic extends NodeGraph {
       height: Math.ceil(size.height),
     };
 
+    // Note: oldSize is the live size object, so it already holds the new size once
+    // super.setSize() runs. Topics are re-centred on their model position and the
+    // layout manager, which owns positions, moves them if needed.
     const oldSize = this.getSize();
     const hasSizeChanged =
       oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;
     if (hasSizeChanged || force) {
-      super.setSize(size);
+      super.setSize(roundedSize);
 
       const outerShape = this.getOuterShape();
       const innerShape = this.getInnerShape();
-      outerShape.setSize(size.width + 6, size.height + 6);
-      innerShape.setSize(size.width, size.height);
+      outerShape.setSize(roundedSize.width + 6, roundedSize.height + 6);
+      innerShape.setSize(roundedSize.width, roundedSize.height);
 
       // Update the figure position(ej: central topic must be centered) and children position.
-      this.updatePositionOnChangeSize(oldSize, size);
+      this.updatePositionOnChangeSize(oldSize, roundedSize);
 
       if (hasSizeChanged) {
         LayoutEventBus.fireEvent('topicResize', {
           node: this.getModel(),
-          size,
+          size: roundedSize,
         });
       }
     }
