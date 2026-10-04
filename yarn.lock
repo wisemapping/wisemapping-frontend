@@ -5128,6 +5128,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4.17.25":
+  version: 4.17.25
+  resolution: "@types/lodash@npm:4.17.25"
+  checksum: 10/f786e05664439cc8d327fd97c62c060d81b3c4ed52127d01fbc926139e1a669c1554bf3cd0dbb43f8fcc7d9b5c6c23c543cc36de8dc815c9f289ea852b26ebd6
+  languageName: node
+  linkType: hard
+
 "@types/mdx@npm:^2.0.0":
   version: 2.0.14
   resolution: "@types/mdx@npm:2.0.14"
@@ -5691,6 +5698,7 @@ __metadata:
     "@storybook/addon-links": "npm:^10.6.1"
     "@storybook/html": "npm:^10.6.1"
     "@storybook/html-vite": "npm:^10.6.1"
+    "@types/lodash": "npm:^4.17.25"
     "@wisemapping/web2d": "npm:*"
     blob-polyfill: "npm:^9.0.20240710"
     cypress: "npm:^16.1.1"

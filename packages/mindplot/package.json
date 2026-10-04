@@ -57,6 +57,7 @@
     "@storybook/addon-links": "^10.6.1",
     "@storybook/html": "^10.6.1",
     "@storybook/html-vite": "^10.6.1",
+    "@types/lodash": "^4.17.25",
     "blob-polyfill": "^9.0.20240710",
     "cypress": "^16.1.1",
     "eslint": "^10.12.0",
