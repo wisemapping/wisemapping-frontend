@@ -68,10 +68,34 @@ class MDExporter extends Exporter {
     return Promise.resolve(result);
   }
 
+  private nodeText(node: INodeModel): string {
+    return this.normalizeText(
+      (node.getContentType() === ContentType.HTML ? node.getPlainText() : node.getText()) || '',
+    );
+  }
+
+  // Markdown link destinations end at a space or an unbalanced ')' ...
+  private static encodeUrl(url: string): string {
+    return url.replace(/[\s()<>]/g, (c) => {
+      if (c === '(') return '%28';
+      if (c === ')') return '%29';
+      return encodeURIComponent(c);
+    });
+  }
+
+  // Topics without text are skipped, unless they hold something to export (children, icons, links or notes) ...
+  private isExportable(node: INodeModel): boolean {
+    return (
+      this.nodeText(node) !== '' ||
+      node.getFeatures().some((f) => ['eicon', 'link', 'note'].includes(f.getType())) ||
+      node.getChildren().some((n) => this.isExportable(n))
+    );
+  }
+
   private traverseBranch(prefix: string, branches: Array<INodeModel>) {
     let result = '';
     branches
-      .filter((n) => n.getText() !== undefined)
+      .filter((n) => this.isExportable(n))
       .forEach((node) => {
         // Convert icons to list ...
         const icons = node.getFeatures().filter((f) => f.getType() === 'eicon');
@@ -80,15 +104,13 @@ class MDExporter extends Exporter {
           iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
         }
 
-        const nodeText = this.normalizeText(
-          (node.getContentType() === ContentType.HTML ? node.getPlainText() : node.getText()) || '',
-        );
+        const nodeText = this.nodeText(node);
         result = `${result}${prefix}-${iconStr}${nodeText}`;
         node.getFeatures().forEach((f) => {
           const type = f.getType();
           // Dump all features ...
           if (type === 'link') {
-            result = `${result} ( [link](${(f as LinkModel).getUrl()}) )`;
+            result = `${result} ( [link](${MDExporter.encodeUrl((f as LinkModel).getUrl())}) )`;
           }
 
           if (type === 'note') {
@@ -100,10 +122,7 @@ class MDExporter extends Exporter {
           }
         });
         result = `${result}\n`;
-
-        if (node.getChildren().filter((n) => n.getText() !== null).length > 0) {
-          result += this.traverseBranch(`${prefix}\t`, node.getChildren());
-        }
+        result += this.traverseBranch(`${prefix}\t`, node.getChildren());
       });
     return result;
   }

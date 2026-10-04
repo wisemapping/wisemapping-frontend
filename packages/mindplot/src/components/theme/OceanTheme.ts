@@ -53,7 +53,8 @@ class OceanTheme extends DefaultTheme {
     const model = topic.getModel();
     let result = model.getBorderColor();
 
-    // If border color has not been defined, use the connection color for the border ...
+    // If border color has not been defined, use the one picked on an ancestor, or else the theme
+    // border color. The dark variant has its own palette, so it is not lightened as in Prism ...
     if (!result) {
       let colors: string[] = [];
       colors = colors.concat(this.resolve('borderColor', topic) as string[] | string);
