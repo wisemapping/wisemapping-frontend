@@ -21,6 +21,17 @@
 import { addMatchImageSnapshotCommand } from '@simonsmith/cypress-image-snapshot/command';
 
 declare global {
+  /** A viewport (client) coordinate of the application under test. */
+  type PointerPosition = { clientX: number; clientY: number };
+
+  type PointerDragOptions = {
+    /**
+     * Fire the mousedown at this element instead of at the element under `from`: for a handle
+     * that another element covers (as `force: true` does for cy.trigger()).
+     */
+    pressOn?: Element;
+  };
+
   namespace Cypress {
     interface Chainable {
       waitForLoad(): void;
@@ -28,14 +39,28 @@ declare global {
       focusTopicByText(value: string): void;
       focusTopicById(id: number): void;
 
-      onMouseOverToolbarButton(value: 'Style Topic & Connections' | 'Font Style' | 'Connection Style' | 'Relationship Style'): void;
+      onMouseOverToolbarButton(
+        value:
+          'Style Topic & Connections' | 'Font Style' | 'Connection Style' | 'Relationship Style',
+      ): void;
       onClickToolbarButton(
-        value: 'Add Relationship' | 'Add Icon' | 'Add Link' | 'Add Note' | 'Add Topic Image' | 'Theme' | 'Connection Style' | 'Relationship Style' | 'Font Style' | 'Style Topic & Connections',
+        value:
+          | 'Add Relationship'
+          | 'Add Icon'
+          | 'Add Link'
+          | 'Add Note'
+          | 'Add Topic Image'
+          | 'Theme'
+          | 'Connection Style'
+          | 'Relationship Style'
+          | 'Font Style'
+          | 'Style Topic & Connections',
       ): void;
 
       triggerUndo(): void;
       triggerRedo(): void;
       getEmoji(): Chainable<JQuery<HTMLElement>>;
+      pointerDrag(from: PointerPosition, to: PointerPosition, options?: PointerDragOptions): void;
       waitForEmojiTab(): void;
       waitForIconsGalleryTab(): void;
     }
@@ -107,7 +132,10 @@ const waitForStablePage = (previous = '', stableChecks = 0, attempts = 0): void 
       return;
     }
     if (attempts > 60) {
-      Cypress.log({ name: 'matchImageSnapshot', message: 'page markup did not settle, capturing anyway' });
+      Cypress.log({
+        name: 'matchImageSnapshot',
+        message: 'page markup did not settle, capturing anyway',
+      });
       return;
     }
     cy.wait(150, { log: false });
@@ -178,7 +206,9 @@ Cypress.Commands.add('focusTopicByText', (text: string) => {
 
 Cypress.Commands.add(
   'onMouseOverToolbarButton',
-  (button: 'Style Topic & Connections' | 'Font Style' | 'Connection Style' | 'Relationship Style') => {
+  (
+    button: 'Style Topic & Connections' | 'Font Style' | 'Connection Style' | 'Relationship Style',
+  ) => {
     // For buttons with custom panels (like Style Topic & Connections), we need to click instead of hover
     // because the toolbar requires click-to-open for items with custom render
     cy.get(`[aria-label="${button}"]`).first().click({ force: true });
@@ -220,6 +250,71 @@ Cypress.Commands.add('triggerUndo', () => {
 Cypress.Commands.add('triggerRedo', () => {
   cy.get('[aria-label^="Redo ').eq(1).click();
 });
+
+// The element a real pointer at (clientX, clientY) would hit, looking inside open shadow roots
+// (the mindplot canvas lives in the shadow root of <mindplot-component>).
+const elementUnderPointer = (doc: Document, { clientX, clientY }: PointerPosition): Element => {
+  let target = doc.elementFromPoint(clientX, clientY);
+  while (target?.shadowRoot) {
+    const inner = target.shadowRoot.elementFromPoint(clientX, clientY);
+    if (!inner || inner === target) {
+      break;
+    }
+    target = inner;
+  }
+  return target ?? doc.body;
+};
+
+const dispatchPointerEvent = (
+  win: Cypress.AUTWindow,
+  type: 'mousedown' | 'mousemove' | 'mouseup',
+  position: PointerPosition,
+  target: Element = elementUnderPointer(win.document, position),
+): void => {
+  target.dispatchEvent(
+    new win.MouseEvent(type, {
+      bubbles: true,
+      cancelable: true,
+      // Events from a real pointer are composed: they cross the shadow root and reach the document.
+      composed: true,
+      view: win,
+      clientX: position.clientX,
+      clientY: position.clientY,
+      button: 0,
+      buttons: type === 'mouseup' ? 0 : 1,
+    }),
+  );
+};
+
+/**
+ * Drags with the left button the way a real pointer does: mousedown on the element under `from`,
+ * a few mousemoves on the way to `to`, and the mouseup on the element under `to`. Each event is a
+ * bubbling, composed MouseEvent fired at the element under the pointer (see `options.pressOn`).
+ *
+ * Do not use `cy.get('body').trigger('mousemove')` for drags: trigger() dispatches a plain,
+ * non-composed Event at the element in the middle of the body, which here is inside the mindplot
+ * shadow root, so it never reaches the drag listeners on the document.
+ */
+Cypress.Commands.add(
+  'pointerDrag',
+  (from: PointerPosition, to: PointerPosition, options: PointerDragOptions = {}) => {
+    cy.window({ log: false }).then((win) => {
+      Cypress.log({
+        name: 'pointerDrag',
+        message: `(${from.clientX}, ${from.clientY}) -> (${to.clientX}, ${to.clientY})`,
+      });
+      dispatchPointerEvent(win, 'mousedown', from, options.pressOn);
+      const steps = 4;
+      for (let step = 1; step <= steps; step++) {
+        dispatchPointerEvent(win, 'mousemove', {
+          clientX: from.clientX + ((to.clientX - from.clientX) * step) / steps,
+          clientY: from.clientY + ((to.clientY - from.clientY) * step) / steps,
+        });
+      }
+      dispatchPointerEvent(win, 'mouseup', to);
+    });
+  },
+);
 
 Cypress.Commands.add('getEmoji', () => {
   return cy.get('button.epr-emoji:visible');

@@ -294,6 +294,80 @@ describe('DragManager', () => {
   });
 });
 
+// <mindplot-component> renders the canvas inside its shadow root. The browser fires pointer
+// events composed, so they leave the shadow root and reach the drag listeners on the document.
+// (A synthetic event that is not composed, as Cypress' trigger() fires, stops at the shadow root.)
+describe('DragManager with the canvas in a shadow root', () => {
+  let host: HTMLElement;
+  let container: HTMLDivElement;
+  let inner: HTMLElement;
+  let dragTopicAction: jest.Mock;
+  let dragging: jest.Mock;
+  let endDragging: jest.Mock;
+  let pressMouse: (x: number, y: number) => void;
+
+  const pointerEvent = (type: string, clientX: number, clientY: number): MouseEvent =>
+    new MouseEvent(type, { clientX, clientY, bubbles: true, cancelable: true, composed: true });
+
+  beforeEach(() => {
+    host = document.createElement('div');
+    document.body.appendChild(host);
+    const shadowRoot = host.attachShadow({ mode: 'open' });
+    container = document.createElement('div');
+    shadowRoot.appendChild(container);
+    // An element of the map under the pointer ...
+    inner = document.createElement('span');
+    container.appendChild(inner);
+
+    const { canvas } = buildCanvas(container);
+    dragTopicAction = jest.fn();
+    jest.spyOn(ActionDispatcher, 'getInstance').mockReturnValue({
+      dragTopic: dragTopicAction,
+      moveTopic: jest.fn(),
+    } as unknown as ActionDispatcher);
+
+    const dragManager = new DragManager(canvas, {
+      getLayoutManager: () => layoutManager,
+    } as unknown as EventBusDispatcher);
+    dragging = jest.fn();
+    endDragging = jest.fn((_event: MouseEvent, dragTopic: DragTopic) =>
+      dragTopic.applyChanges(canvas),
+    );
+    dragManager.addEvent('dragging', dragging);
+    dragManager.addEvent('enddragging', endDragging);
+
+    const draggable = buildTopic();
+    dragManager.add(draggable.topic);
+    ({ pressMouse } = draggable);
+  });
+
+  afterEach(() => {
+    window.dispatchEvent(new Event('blur'));
+    host.remove();
+    document.body.style.cursor = '';
+    jest.restoreAllMocks();
+  });
+
+  it('drags and drops with the events a real pointer fires over the map', () => {
+    pressMouse(10, 10);
+    inner.dispatchEvent(pointerEvent('mousemove', 40, 40));
+    inner.dispatchEvent(pointerEvent('mouseup', 40, 40));
+
+    expect(dragging).toHaveBeenCalledTimes(1);
+    expect(endDragging).toHaveBeenCalledTimes(1);
+    expect(dragTopicAction).toHaveBeenCalledTimes(1);
+  });
+
+  it('ends the drag when the pointer is released outside the map', () => {
+    pressMouse(10, 10);
+    inner.dispatchEvent(pointerEvent('mousemove', 40, 40));
+    document.body.dispatchEvent(pointerEvent('mouseup', 900, 900));
+
+    expect(endDragging).toHaveBeenCalledTimes(1);
+    expect(dragTopicAction).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe('DragManager drag pivot', () => {
   const containers: HTMLDivElement[] = [];
 
