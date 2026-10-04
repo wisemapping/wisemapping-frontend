@@ -41,7 +41,13 @@ class ChangeFeatureToTopicCommand extends Command {
     const topic = commandContext.findTopics([this._topicId])[0];
     const feature = topic.findFeatureById(this._featureId);
 
-    const oldAttributes = feature.getAttributes();
+    // Snapshot every attribute the change can touch, including the ones the feature lacks
+    // (as undefined), so undo removes what the change added.
+    const current = feature.getAttributes();
+    const oldAttributes = {};
+    new Set([...Object.keys(current), ...Object.keys(this._attributes)]).forEach((key) => {
+      oldAttributes[key] = current[key];
+    });
     feature.setAttributes(this._attributes);
     this._attributes = oldAttributes;
   }

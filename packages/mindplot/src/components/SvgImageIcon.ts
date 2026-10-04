@@ -82,16 +82,22 @@ class SvgImageIcon extends ImageIcon {
     this._topicId = topic.getId();
     this._featureModel = iconModel;
 
+    // Follow the icon type when a command changes it, e.g. on click or undo.
+    iconModel.setChangeListener(() => {
+      const url = SvgImageIcon.getImageUrl(iconModel.getIconType());
+      (this.getElement() as Image).setHref(url);
+    });
+
     if (!readOnly) {
       // Icon
       const image = this.getElement();
       image.addEvent('click', () => {
         const iconTypeClick = iconModel.getIconType();
         const newIconType = SvgImageIcon._getNextFamilyIconId(iconTypeClick);
-        iconModel.setIconType(newIconType);
-
-        const url = SvgImageIcon.getImageUrl(newIconType);
-        (this.getElement() as Image).setHref(url);
+        // Through the dispatcher, so it can be undone and the map is saved.
+        ActionDispatcher.getInstance().changeFeatureToTopic(this._topicId, iconModel.getId(), {
+          id: newIconType,
+        });
       });
       this.getElement().setCursor('pointer');
     }
@@ -107,7 +113,9 @@ class SvgImageIcon extends ImageIcon {
     return this._featureModel;
   }
 
-  private static _getNextFamilyIconId(iconId: string): string {
+  private static _getNextFamilyIconId(storedIconId: string): string {
+    // Icons can be stored with a descriptive name (e.g. 'home'): cycle from the icon it shows.
+    const iconId = mapIconNameToAsset(storedIconId.toLowerCase());
     const familyIcons = SvgImageIcon._getFamilyIcons(iconId);
     $assert(familyIcons !== null, `Family Icon not found: ${iconId}`);
 

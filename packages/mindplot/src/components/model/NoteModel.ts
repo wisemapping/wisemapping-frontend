@@ -59,6 +59,16 @@ class NoteModel extends FeatureModel {
   getContentType(): ContentType {
     return (this.getAttribute('contentType') as ContentType) || ContentType.PLAIN;
   }
+
+  applyAttribute(key: string, value: unknown): void {
+    if (key === 'text') {
+      this.setText(value as string);
+    } else if (key === 'contentType') {
+      this.setContentType(value as ContentType);
+    } else {
+      super.applyAttribute(key, value);
+    }
+  }
 }
 
 export default NoteModel;

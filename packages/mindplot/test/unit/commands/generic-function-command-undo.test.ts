@@ -152,3 +152,27 @@ describe('shrinkBranch undo', () => {
     expect(save()).toEqual(after);
   });
 });
+
+describe('changeTextToTopic undo', () => {
+  // A1 has no text of its own: the canvas shows the theme placeholder.
+  const map = SAMPLE_MAP.replace(' text="A1"', '');
+
+  it('leaves a topic without text empty after undo, instead of storing the placeholder', async () => {
+    const { designer, save, topic } = await buildDesigner(map);
+    const before = save();
+    expect(topic(2).getModel().getText()).toBeUndefined();
+    const placeholder = topic(2).getText();
+
+    designer.getActionDispatcher().changeTextToTopic([2], 'Edited');
+    const after = save();
+    expect(topic(2).getModel().getText()).toBe('Edited');
+
+    designer.undo();
+    expect(topic(2).getModel().getText()).toBeUndefined();
+    expect(topic(2).getText()).toBe(placeholder);
+    expect(save()).toEqual(before);
+
+    designer.redo();
+    expect(save()).toEqual(after);
+  });
+});

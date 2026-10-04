@@ -27,6 +27,8 @@ class FeatureModel {
 
   private _attributes;
 
+  private _changeListener: (() => void) | undefined;
+
   /**
    * @constructs
    * @param type
@@ -39,6 +41,7 @@ class FeatureModel {
 
     this._type = type;
     this._attributes = {};
+    this._changeListener = undefined;
 
     // Create type method ...
     this[`is${FeatureModel.capitalize(type)}Model`] = () => true;
@@ -52,12 +55,43 @@ class FeatureModel {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  setAttributes(attributes) {
-    Object.keys(attributes).forEach((attr) => {
-      const funName = `set${FeatureModel.capitalize(attr)}`;
-      const value = attributes[attr];
-      this[funName](value);
+  /**
+   * Applies the given attributes. An undefined value removes the attribute, so a snapshot that
+   * also lists the keys the feature lacked restores it exactly.
+   */
+  setAttributes(attributes: Record<string, unknown>): void {
+    Object.keys(attributes).forEach((key) => {
+      const value = attributes[key];
+      if (value === undefined) {
+        delete this._attributes[key];
+      } else {
+        this.applyAttribute(key, value);
+      }
     });
+    this._changeListener?.();
+  }
+
+  /**
+   * Sets the function called after setAttributes, so the icon showing the feature can follow
+   * changes made by commands (e.g. an undo).
+   */
+  setChangeListener(listener: (() => void) | undefined): void {
+    this._changeListener = listener;
+  }
+
+  /**
+   * Sets one attribute. Subclasses map their attributes to their setters, so values are
+   * validated and normalized. Otherwise, a set<Key> setter declared by the subclass is used,
+   * never FeatureModel's own (the 'id' attribute is not the feature id), else the raw value is stored.
+   */
+  applyAttribute(key: string, value: unknown): void {
+    const setterName = `set${FeatureModel.capitalize(key)}`;
+    const setter = this[setterName];
+    if (typeof setter === 'function' && !(setterName in FeatureModel.prototype)) {
+      setter.call(this, value);
+    } else {
+      this.setAttribute(key, value);
+    }
   }
 
   setAttribute(key: string, value: unknown) {

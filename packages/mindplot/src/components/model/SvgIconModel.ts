@@ -32,6 +32,14 @@ class SvgIconModel extends FeatureModel {
     $assert(iconType, 'iconType id can not be null');
     this.setAttribute('id', iconType);
   }
+
+  applyAttribute(key: string, value: unknown): void {
+    if (key === 'id') {
+      this.setIconType(value as string);
+    } else {
+      super.applyAttribute(key, value);
+    }
+  }
 }
 
 export default SvgIconModel;
