@@ -105,14 +105,12 @@ abstract class PersistenceManager {
 
   abstract loadMapDom(mapId: string): Promise<Document>;
 
-  // TODO(typing): events is SaveEvents (as passed by save() and read by every subclass), but the
-  // editor's BootstrapPersistenceManager forwards it typed as unknown, so the base must accept it.
   abstract saveMapXml(
     mapId: string,
     mapXml: Document,
     pref?: string,
     saveHistory?: boolean,
-    events?: unknown,
+    events?: SaveEvents,
     options?: SaveOptions,
   ): void;
 

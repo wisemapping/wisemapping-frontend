@@ -1,12 +1,12 @@
 # WiseMapping Mindplot
 
-WiseMapping Mindplot module is the core mind map rerendering of WiseMapping. This lighway library allows eithe edition and visualization of saved mindmaps.
+WiseMapping Mindplot module is the core mind map rendering of WiseMapping. This lightweight library allows either editing or visualization of saved mindmaps.
 
 ## Usage
 
 A WebComponent implementation for mindplot designer is available.
 This component is registered as mindplot-component in customElements API. (see https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define)
-For use it you need to import minplot.js and put in your DOM a <mindplot-component id="mindplot-comp"/> tag. In order to create a Designer on it you need to call its buildDesigner method. Maps can be loaded through loadMap method.
+To use it you need to import mindplot.js and put in your DOM a <mindplot-component id="mindplot-comp"/> tag. In order to create a Designer on it you need to call its buildDesigner method. Maps can be loaded through loadMap method.
 
 #### Code example
 
@@ -17,7 +17,7 @@ For use it you need to import minplot.js and put in your DOM a <mindplot-compone
     <script src="mindplot.js"></script>
   </head>
   <body>
-    <mindmap-comp id="mindmap-comp" mode="viewonly-private"></mindmap-comp>
+    <mindplot-component id="mindmap-comp" mode="viewonly-private"></mindplot-component>
     <script>
       var webComponent = document.getElementById('mindmap-comp');
       webComponent.buildDesigner(persistence, widget);
@@ -27,11 +27,11 @@ For use it you need to import minplot.js and put in your DOM a <mindplot-compone
 </html>
 ```
 
-Optionaly you can use your own presistence manager and widget manager.
+Optionally you can use your own persistence manager and widget manager.
 If you don't have special requirements you can use the defaults.
 
 ```ts
-var persistence = new LocalStorageManager('map.xml', false, false);
+var persistence = new LocalStorageManager('map.xml', false, undefined, false);
 var widget = new MyAwesomeWidgetManager();
 // then build the designer with these params
 webComponent.buildDesigner(persistence, widget);

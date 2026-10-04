@@ -87,7 +87,87 @@ describe('Editor save', () => {
     await editor.flushPendingChanges();
 
     expect(component.save).toHaveBeenCalledTimes(1);
-    expect(component.save).toHaveBeenCalledWith(false);
+    expect(component.save).toHaveBeenCalledWith(false, { urgent: true });
     expect(component.unlockMap).toHaveBeenCalled();
+  });
+});
+
+describe('Editor flush when leaving', () => {
+  it('flushes as an urgent save, so the save rate limit is skipped', async () => {
+    const { component } = buildComponent();
+    const editor = new Editor(component as unknown as MindplotWebComponent);
+
+    await editor.flushPendingChanges();
+
+    expect(component.save).toHaveBeenCalledWith(false, { urgent: true });
+  });
+
+  it('unlocks only after the save completes while the page stays open', async () => {
+    const { component } = buildComponent();
+    let resolveSave: () => void = () => undefined;
+    component.save.mockImplementation(
+      () =>
+        new Promise<void>((resolve) => {
+          resolveSave = resolve;
+        }),
+    );
+    const editor = new Editor(component as unknown as MindplotWebComponent);
+
+    const flushed = editor.flushPendingChanges();
+    await Promise.resolve();
+    expect(component.unlockMap).not.toHaveBeenCalled();
+
+    resolveSave();
+    await flushed;
+    expect(component.unlockMap).toHaveBeenCalledTimes(1);
+  });
+
+  it('unlocks right away on beforeunload, without waiting for the save response', () => {
+    const { component } = buildComponent();
+    // The page is gone before the response arrives.
+    component.save.mockImplementation(() => new Promise<void>(() => undefined));
+    const editor = new Editor(component as unknown as MindplotWebComponent);
+    const capability = { isHidden: () => false } as unknown as Capability;
+    editor.registerEvents(jest.fn(), capability, {} as WidgetBuilder);
+
+    window.dispatchEvent(new Event('beforeunload'));
+
+    expect(component.save).toHaveBeenCalledWith(false, { urgent: true });
+    expect(component.unlockMap).toHaveBeenCalledTimes(1);
+    editor.dispose();
+  });
+
+  it('removes the beforeunload listener when disposed', () => {
+    const { component } = buildComponent();
+    const editor = new Editor(component as unknown as MindplotWebComponent);
+    const capability = { isHidden: () => false } as unknown as Capability;
+    editor.registerEvents(jest.fn(), capability, {} as WidgetBuilder);
+
+    editor.dispose();
+    window.dispatchEvent(new Event('beforeunload'));
+
+    expect(component.save).not.toHaveBeenCalled();
+    expect(component.unlockMap).not.toHaveBeenCalled();
+  });
+
+  it('keeps a single beforeunload listener when events are registered again', () => {
+    const addSpy = jest.spyOn(window, 'addEventListener');
+    const removeSpy = jest.spyOn(window, 'removeEventListener');
+    const { component } = buildComponent();
+    const editor = new Editor(component as unknown as MindplotWebComponent);
+    const capability = { isHidden: () => false } as unknown as Capability;
+
+    editor.registerEvents(jest.fn(), capability, {} as WidgetBuilder);
+    editor.registerEvents(jest.fn(), capability, {} as WidgetBuilder);
+    editor.dispose();
+
+    const added = addSpy.mock.calls.filter(([type]) => type === 'beforeunload').map((c) => c[1]);
+    const removed = removeSpy.mock.calls
+      .filter(([type]) => type === 'beforeunload')
+      .map((c) => c[1]);
+    expect(added).toHaveLength(2);
+    expect(removed).toEqual(expect.arrayContaining(added));
+    addSpy.mockRestore();
+    removeSpy.mockRestore();
   });
 });

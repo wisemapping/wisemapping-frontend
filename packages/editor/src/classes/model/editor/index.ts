@@ -32,6 +32,8 @@ class Editor {
 
   private pendingFlushPromise: Promise<void> | null = null;
 
+  private beforeUnloadHandler: (() => void) | null = null;
+
   constructor(component: MindplotWebComponent) {
     this.component = component;
   }
@@ -126,11 +128,13 @@ class Editor {
       // Is the save action enabled ... ?
       if (!capability.isHidden('save')) {
         // Register unload save ...
-        window.addEventListener('beforeunload', () => {
-          this.flushPendingChangesOnce().catch((error) => {
+        this.removeBeforeUnloadHandler();
+        this.beforeUnloadHandler = () => {
+          this.flushPendingChangesOnce(true).catch((error) => {
             console.error('Save failed on beforeunload:', error);
           });
-        });
+        };
+        window.addEventListener('beforeunload', this.beforeUnloadHandler);
 
         // Debounced autosave triggered by model updates
         // Waits 15 seconds after the last change before saving
@@ -146,33 +150,62 @@ class Editor {
     }
   }
 
-  async flushPendingChanges(): Promise<void> {
+  /**
+   * Saves the pending changes and unlocks the map.
+   * @param unloading the page is unloading: the save response would arrive after the page is gone,
+   * so the unlock is sent right away instead of after the save.
+   */
+  async flushPendingChanges(unloading = false): Promise<void> {
     // If the map is not loaded, there is no need to flush or unlock
     if (!this.isMapLoadded()) {
       return;
     }
 
+    let unlocked = false;
     try {
-      await this.save(false);
+      const saved = this.component.save(false, { urgent: true });
+      if (unloading) {
+        this.unlockMap();
+        unlocked = true;
+      }
+      await saved;
     } catch (error) {
       console.error('Save failed while leaving editor:', error);
       // We don't rethrow here to ensure unlocking happens (if possible) and cleanup continues
     } finally {
-      try {
-        this.component.unlockMap();
-      } catch (e) {
-        console.warn('Failed to unlock map:', e);
+      if (!unlocked) {
+        this.unlockMap();
       }
     }
   }
 
-  flushPendingChangesOnce(): Promise<void> {
+  flushPendingChangesOnce(unloading = false): Promise<void> {
     if (!this.pendingFlushPromise) {
-      this.pendingFlushPromise = this.flushPendingChanges().finally(() => {
+      this.pendingFlushPromise = this.flushPendingChanges(unloading).finally(() => {
         this.pendingFlushPromise = null;
       });
     }
     return this.pendingFlushPromise;
+  }
+
+  /** Releases the window listeners added by registerEvents. */
+  dispose(): void {
+    this.removeBeforeUnloadHandler();
+  }
+
+  private removeBeforeUnloadHandler(): void {
+    if (this.beforeUnloadHandler) {
+      window.removeEventListener('beforeunload', this.beforeUnloadHandler);
+      this.beforeUnloadHandler = null;
+    }
+  }
+
+  private unlockMap(): void {
+    try {
+      this.component.unlockMap();
+    } catch (e) {
+      console.warn('Failed to unlock map:', e);
+    }
   }
 }
 

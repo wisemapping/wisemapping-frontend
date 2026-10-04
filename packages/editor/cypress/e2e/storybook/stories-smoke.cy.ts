@@ -331,24 +331,28 @@ describe('Storybook Editor Components - Tests', () => {
   });
 
   describe('KeyboardShortcutHelp', () => {
+    // The story iframe also holds Storybook's hidden args table
+    // (table.sb-argstableBlock), so every table query is scoped to the story.
+    const story = '#storybook-root';
+
     it('should render keyboard shortcuts list', () => {
       visitStory('editor-keyboardshortcuthelp--default');
 
       // Should have a table with keyboard shortcuts
-      cy.get('table', { timeout: 10000 }).should('be.visible');
+      cy.get(`${story} table`, { timeout: 10000 }).should('be.visible');
 
       // Action plus one key column. Windows/Linux and Mac used to be shown side
       // by side, so half the table was always for someone else's keyboard.
-      cy.get('table thead tr th').should('have.length', 2);
+      cy.get(`${story} table thead tr th`).should('have.length', 2);
 
       // Verify Action header exists
-      cy.get('table thead').should('contain.text', 'Action');
+      cy.get(`${story} table thead`).should('contain.text', 'Action');
     });
 
     it('should render only the running platform column', () => {
       visitStory('editor-keyboardshortcuthelp--default');
 
-      cy.get('table thead', { timeout: 10000 }).should('be.visible');
+      cy.get(`${story} table thead`, { timeout: 10000 }).should('be.visible');
       cy.window().then((win) => {
         const platform =
           (win.navigator as Navigator & { userAgentData?: { platform?: string } }).userAgentData
@@ -357,10 +361,12 @@ describe('Storybook Editor Components - Tests', () => {
           '';
         const isMac = platform.toUpperCase().includes('MAC');
 
-        cy.get('table thead').should('contain.text', isMac ? 'Mac OS X' : 'Windows - Linux');
-        cy.get('table thead').should('not.contain.text', isMac ? 'Windows - Linux' : 'Mac OS X');
+        const shown = isMac ? 'Mac OS X' : 'Windows - Linux';
+        const hidden = isMac ? 'Windows - Linux' : 'Mac OS X';
+        cy.get(`${story} table thead`).should('contain.text', shown);
+        cy.get(`${story} table thead`).should('not.contain.text', hidden);
         // Select-all is Ctrl+A or Cmd+A, so the modifier tracks the platform.
-        cy.get('table tbody').should('contain.text', isMac ? '\u2318' : 'Ctrl');
+        cy.get(`${story} table tbody`).should('contain.text', isMac ? '\u2318' : 'Ctrl');
       });
     });
 
@@ -375,7 +381,7 @@ describe('Storybook Editor Components - Tests', () => {
       const counted: number[] = [];
       cy.get('[role="tab"]').each(($tab) => {
         cy.wrap($tab).click();
-        cy.get('table tbody tr').then(($rows) => {
+        cy.get(`${story} table tbody tr`).then(($rows) => {
           expect($rows.length, 'every category lists at least one shortcut').to.be.at.least(1);
           counted.push($rows.length);
         });
@@ -393,7 +399,11 @@ describe('Storybook Editor Components - Tests', () => {
       visitStory('editor-keyboardshortcuthelp--default');
 
       // Combinations render one <kbd> per key rather than as 'Ctrl + Shift + A'.
-      cy.get('kbd', { timeout: 10000 }).should('have.length.at.least', 10);
+      // Only the open tab is mounted, so check one combination (Ctrl/Cmd + Shift
+      // + A on either platform) instead of counting caps across the whole list.
+      cy.contains(`${story} table tbody tr`, 'Deselect all topics', { timeout: 10000 })
+        .find('kbd')
+        .should('have.length', 3);
     });
 
     it('should illustrate arrow-key navigation with a map', () => {

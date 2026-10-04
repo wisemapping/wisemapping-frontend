@@ -119,6 +119,7 @@ export const useEditor = ({
       model.flushPendingChangesOnce().catch((error) => {
         logCriticalError('Unexpected error saving map before leaving editor', error);
       });
+      model.dispose();
     };
   }, [model]);
 
