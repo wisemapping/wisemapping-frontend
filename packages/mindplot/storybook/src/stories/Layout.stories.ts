@@ -245,7 +245,7 @@ const ensureMindmapStory = (): HTMLDivElement => {
       'mindplot-component',
     ) as MindplotWebComponent;
     mindplotElement.id = 'mindmap-comp';
-    mindplotElement.setAttribute('mode', 'viewonly');
+    mindplotElement.setAttribute('mode', 'viewonly-private');
     mindplotElement.style.width = '100%';
     mindplotElement.style.height = '100%';
     container.appendChild(mindplotElement);

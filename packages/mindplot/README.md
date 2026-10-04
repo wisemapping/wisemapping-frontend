@@ -17,7 +17,7 @@ For use it you need to import minplot.js and put in your DOM a <mindplot-compone
     <script src="mindplot.js"></script>
   </head>
   <body>
-    <mindmap-comp id="mindmap-comp" mode="viewonly"></mindmap-comp>
+    <mindmap-comp id="mindmap-comp" mode="viewonly-private"></mindmap-comp>
     <script>
       var webComponent = document.getElementById('mindmap-comp');
       webComponent.buildDesigner(persistence, widget);

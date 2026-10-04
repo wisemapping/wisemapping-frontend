@@ -82,7 +82,7 @@ abstract class WidgetBuilder {
       const tooltipHTML =
         '<div id="mindplot-svg-tooltip" class="mindplot-svg-tooltip">' +
         '<div id="mindplot-svg-tooltip-content" class="mindplot-svg-tooltip-content">' +
-        '<a id="mindplot-svg-tooltip-content-link" alt="Open in new window ..." class="mindplot-svg-tooltip-content-link" target="_blank" rel="nofollow"></a>' +
+        '<a id="mindplot-svg-tooltip-content-link" alt="Open in new window ..." class="mindplot-svg-tooltip-content-link" target="_blank" rel="nofollow noopener noreferrer"></a>' +
         '<p id="mindplot-svg-tooltip-content-note" class="mindplot-svg-tooltip-content-note"></p>' +
         '</div>' +
         '<div id="mindplot-svg-tooltip-title" class="mindplot-svg-tooltip-title"></div>' +
@@ -126,7 +126,7 @@ abstract class WidgetBuilder {
             'mindplot-svg-tooltip-content-link',
           )! as HTMLAnchorElement;
           DOMUtils.attr(tooltipLink, 'href', linkModel.getUrl());
-          DOMUtils.attr(tooltipLink, 'rel', 'nofollow');
+          DOMUtils.attr(tooltipLink, 'rel', 'nofollow noopener noreferrer');
           DOMUtils.text(tooltipLink, linkModel.getUrl());
           DOMUtils.css(tooltipLink, 'display', 'block');
 

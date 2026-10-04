@@ -40,11 +40,15 @@ class Editor {
     return this.component.isLoaded();
   }
 
-  save(minor: boolean): Promise<void> {
+  /**
+   * @param saveHistory true for an explicit save that records a history entry;
+   * false for a minor save (autosave, flush), skipped when nothing changed.
+   */
+  save(saveHistory: boolean): Promise<void> {
     if (!this.component) {
       throw new Error('Designer object has not been initialized.');
     }
-    return this.component.save(minor);
+    return this.component.save(saveHistory);
   }
 
   getDesigner(): Designer {

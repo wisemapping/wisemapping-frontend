@@ -116,6 +116,14 @@ describe('WidgetBuilder tooltips', () => {
     expect(link.getAttribute('href')).not.toMatch(/^\s*javascript:/i);
   });
 
+  it('opens the link in a new window without giving it the opener', () => {
+    const link = showLink('https://example.org');
+
+    expect(link.getAttribute('target')).toBe('_blank');
+    const rel = (link.getAttribute('rel') || '').split(/\s+/);
+    expect(rel).toEqual(expect.arrayContaining(['noopener', 'noreferrer', 'nofollow']));
+  });
+
   it('renders a plain note as text', () => {
     const hook = installXssHook();
     const text = `a < b & ${IMG_ONERROR_PAYLOAD}`;
