@@ -33,7 +33,8 @@ class DeleteCommand extends Command {
 
   private _deletedRelModel: RelationshipModel[];
 
-  private _parentTopicIds: number[];
+  // One entry per deleted topic model, null for a floating topic.
+  private _parentTopicIds: (number | null)[];
 
   constructor(topicIds: number[], relIds: number[]) {
     $assert($defined(relIds), 'topicIds can not be null');
@@ -74,12 +75,7 @@ class DeleteCommand extends Command {
         const clonedModel = model.clone();
         this._deletedTopicModels.push(clonedModel);
         const outTopic = topic.getOutgoingConnectedTopic();
-
-        let outTopicId: number | null = null;
-        if (outTopic != null) {
-          outTopicId = outTopic.getId();
-          this._parentTopicIds.push(outTopicId);
-        }
+        this._parentTopicIds.push(outTopic != null ? outTopic.getId() : null);
 
         // Finally, delete the topic from the workspace...
         commandContext.deleteTopic(topic);
@@ -100,6 +96,10 @@ class DeleteCommand extends Command {
    * @see {@link mindplot.Command.undoExecute}
    */
   undoExecute(commandContext: CommandContext) {
+    // Building a topic with children runs a layout pass before the topic itself is
+    // reconnected, and that pass clears its order. Keep it to restore it on connect ...
+    const orders = this._deletedTopicModels.map((model) => model.getOrder());
+
     // Add all the topics ...
     this._deletedTopicModels.forEach((model) => {
       commandContext.createTopic(model);
@@ -110,9 +110,13 @@ class DeleteCommand extends Command {
       const topics = commandContext.findTopics([topicModel.getId()]);
 
       const parentId = this._parentTopicIds[index];
-      if (parentId) {
+      if (parentId !== null) {
         const parentTopics = commandContext.findTopics([parentId]);
+        topicModel.setOrder(orders[index]);
         commandContext.connect(topics[0], parentTopics[0]);
+      } else {
+        // A floating topic is a branch of the mindmap, put it back there ...
+        commandContext.addTopic(topics[0]);
       }
     });
 

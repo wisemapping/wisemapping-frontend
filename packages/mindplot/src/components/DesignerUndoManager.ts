@@ -37,10 +37,13 @@ class DesignerUndoManager {
 
     const { length } = this._undoQueue;
     if (command.getDiscardDuplicated() && length > 0) {
-      // Skip duplicated events only if they are truly identical
+      // Successive changes of the same kind (e.g. picking colors) collapse into one undo step,
+      // but only when the new command can take over the previous one (same targets) ...
       const lastItem = this._undoQueue[length - 1];
-      if (lastItem.getDiscardDuplicated() === command.getDiscardDuplicated()) {
-        // Replace the last command with the new one instead of discarding
+      if (
+        lastItem.getDiscardDuplicated() === command.getDiscardDuplicated() &&
+        command.mergeWith(lastItem)
+      ) {
         this._undoQueue[length - 1] = command;
       } else {
         this._undoQueue.push(command);
@@ -69,6 +72,14 @@ class DesignerUndoManager {
         command.execute(commandContext);
       }
     }
+  }
+
+  canUndo(): boolean {
+    return this._undoQueue.length > 0;
+  }
+
+  canRedo(): boolean {
+    return this._redoQueue.length > 0;
   }
 
   buildEvent() {

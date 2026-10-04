@@ -26,7 +26,8 @@ class GenericFunctionCommand<T> extends Command {
 
   private _commandFunc: (topic: Topic, value: T) => T;
 
-  private _oldValues: T[];
+  // Keyed by topic id: findTopics returns topics in model order, which can change between execute and undo.
+  private _oldValues: Map<number, T>;
 
   private _applied: boolean;
 
@@ -35,7 +36,7 @@ class GenericFunctionCommand<T> extends Command {
     this._value = value;
     this._topicsIds = topicsIds;
     this._commandFunc = commandFunc;
-    this._oldValues = [];
+    this._oldValues = new Map();
     this._applied = false;
   }
 
@@ -49,7 +50,7 @@ class GenericFunctionCommand<T> extends Command {
       if (topics != null) {
         topics.forEach((topic: Topic) => {
           const oldValue = this._commandFunc(topic, this._value);
-          this._oldValues.push(oldValue);
+          this._oldValues.set(topic.getId(), oldValue);
         });
       }
       this._applied = true;
@@ -62,15 +63,32 @@ class GenericFunctionCommand<T> extends Command {
     if (this._applied) {
       const topics = commandContext.findTopics(this._topicsIds);
 
-      topics.forEach((topic: Topic, index: number) => {
-        this._commandFunc(topic, this._oldValues[index]);
+      topics.forEach((topic: Topic) => {
+        this._commandFunc(topic, this._oldValues.get(topic.getId()) as T);
       });
 
       this._applied = false;
-      this._oldValues = [];
+      this._oldValues = new Map();
     } else {
       throw new Error('undo can not be applied.');
     }
+  }
+
+  mergeWith(previous: Command): boolean {
+    if (!(previous instanceof GenericFunctionCommand) || !this._applied || !previous._applied) {
+      return false;
+    }
+
+    const sameTargets =
+      previous._topicsIds.length === this._topicsIds.length &&
+      this._topicsIds.every((id) => previous._topicsIds.includes(id));
+    if (!sameTargets) {
+      return false;
+    }
+
+    // Undo must go back to the values before the first of the merged changes ...
+    this._oldValues = new Map(previous._oldValues as Map<number, T>);
+    return true;
   }
 }
 
