@@ -347,11 +347,42 @@ describe('Storybook Editor Components - Tests', () => {
     it('should display multiple shortcuts', () => {
       visitStory('editor-keyboardshortcuthelp--default');
 
-      // Should have multiple shortcut entries in table rows
-      cy.get('table tbody tr', { timeout: 10000 }).should('have.length.at.least', 15);
+      // Shortcuts are grouped into category tabs, so only one category's rows
+      // are mounted at a time -- this used to assert 15 rows against a single
+      // flat table. Walk the tabs and total them instead.
+      cy.get('[role="tab"]', { timeout: 10000 }).should('have.length.at.least', 2);
+
+      const counted: number[] = [];
+      cy.get('[role="tab"]').each(($tab) => {
+        cy.wrap($tab).click();
+        cy.get('table tbody tr').then(($rows) => {
+          expect($rows.length, 'every category lists at least one shortcut').to.be.at.least(1);
+          counted.push($rows.length);
+        });
+      });
+      cy.then(() => {
+        const total = counted.reduce((sum, count) => sum + count, 0);
+        expect(total, 'shortcuts across all categories').to.be.at.least(15);
+      });
 
       // Verify some shortcut content is visible (e.g., "Ctrl" or "⌘")
       cy.get('table tbody').should('contain.text', 'Ctrl');
+    });
+
+    it('should draw each key as its own cap', () => {
+      visitStory('editor-keyboardshortcuthelp--default');
+
+      // Combinations render one <kbd> per key rather than as 'Ctrl + Shift + A'.
+      cy.get('kbd', { timeout: 10000 }).should('have.length.at.least', 10);
+    });
+
+    it('should illustrate arrow-key navigation with a map', () => {
+      visitStory('editor-keyboardshortcuthelp--default');
+
+      // Navigation is the default tab, and the one group that gets a schematic.
+      cy.get('svg[role="img"]', { timeout: 10000 }).should('exist');
+      cy.get('svg[role="img"]').should('contain.text', 'Parent');
+      cy.get('svg[role="img"]').should('contain.text', 'Selected');
     });
   });
 
