@@ -17,7 +17,7 @@
  */
 
 class Events {
-  private _handlerByType;
+  private _handlerByType: Record<string, ((...args: unknown[]) => void)[]>;
 
   constructor() {
     this._handlerByType = {};
@@ -44,8 +44,7 @@ class Events {
     return this;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  fireEvent(typeName: string, eventArgs?): Events {
+  fireEvent(typeName: string, eventArgs?: unknown): Events {
     const type = Events._normalizeEventName(typeName);
     const events = this._handlerByType[type];
     if (!events) return this;
@@ -64,7 +63,7 @@ class Events {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (events && !fn.internal) {
-      const index = events.indexOf(fn);
+      const index = events.indexOf(fn as () => void);
       if (index !== -1) events.splice(index, 1);
     }
     return this;

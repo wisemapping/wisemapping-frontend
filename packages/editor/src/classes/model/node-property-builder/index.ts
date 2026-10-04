@@ -106,7 +106,7 @@ class NodePropertyBuilder {
           if (!this.selectedTopic()) {
             return;
           }
-          let newValue;
+          let newValue = this.getFontSize();
           if (direction === SwitchValueDirection.down) {
             newValue = getPreviousValue(fontSizes, this.getFontSize());
           }

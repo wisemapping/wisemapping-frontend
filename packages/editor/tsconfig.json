@@ -17,7 +17,7 @@
     "outDir": "./dist/",
     "rootDir": "..",
     "sourceMap": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "module": "es2020",
     "moduleResolution": "bundler",
     "strict": true,

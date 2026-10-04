@@ -20,9 +20,12 @@ import ActionConfig from '../../../../classes/action/action-config';
 import Editor from '../../../../classes/model/editor';
 import { ToolbarMenuItem } from '../../../toolbar';
 
+// The designer's modelUpdate event (DesignerUndoManager.buildEvent).
+type UndoRedoEvent = { undoSteps: number; redoSteps: number };
+
 type UndoAndRedo = {
   configuration: ActionConfig;
-  disabledCondition: (event) => boolean;
+  disabledCondition: (event: UndoRedoEvent) => boolean;
   model: Editor | undefined;
 };
 
@@ -31,8 +34,8 @@ const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo): 
 
   useEffect(() => {
     if (model?.isMapLoadded()) {
-      const handleUpdate = (event) => {
-        const isDisabled = disabledCondition(event);
+      const handleUpdate = (event?: unknown) => {
+        const isDisabled = disabledCondition(event as UndoRedoEvent);
         setDisabled(!isDisabled);
 
         return () => {

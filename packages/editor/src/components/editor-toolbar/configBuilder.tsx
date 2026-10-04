@@ -159,7 +159,7 @@ export function buildEditorPanelConfig(
     }),
     onClick: (e) => {
       trackRelationshipAction('show_relationship_pivot');
-      model.getDesigner().showRelPivot(e);
+      model.getDesigner().showRelPivot(e.nativeEvent);
     },
     disabled: () => noTopicSelected,
   };

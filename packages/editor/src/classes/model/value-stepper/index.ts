@@ -37,10 +37,7 @@ export const fontSizes = [6, 8, 10, 15];
  * @param current the current vaule
  * @returns the next vaule in the array or same if is the last
  */
-export function getNextValue(
-  values: (string | number)[],
-  current: string | number,
-): string | number {
+export function getNextValue<T extends string | number>(values: T[], current: T): T {
   const nextIndex = values.indexOf(current) + 1;
   if (nextIndex === values.length) return current;
   return values[nextIndex];
@@ -52,10 +49,7 @@ export function getNextValue(
  * @param current the current vaule
  * @returns the previous vaule in the array or same if is the first
  */
-export function getPreviousValue(
-  values: (string | number)[],
-  current: string | number,
-): string | number {
+export function getPreviousValue<T extends string | number>(values: T[], current: T): T {
   const currentIndex = values.indexOf(current);
   if (currentIndex === 0) return current;
   if (currentIndex === -1) return values[values.length - 1];
