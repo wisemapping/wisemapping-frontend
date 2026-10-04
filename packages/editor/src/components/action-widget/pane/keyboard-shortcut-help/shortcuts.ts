@@ -1,0 +1,381 @@
+/*
+ *    Copyright [2007-2025] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+/**
+ * The shortcut table as data rather than markup.
+ *
+ * It used to be 35 hand-written `<TableRow>` blocks -- three cells each,
+ * repeating the same five `sx` objects -- which is why the pane ran to 769
+ * lines for what is a list of key combinations. Nothing could group, filter or
+ * highlight them, so the whole set arrived as one 60vh scroll.
+ *
+ * Keys are kept as tokens, not as pre-joined strings like 'Ctrl + Shift + V',
+ * so a renderer can draw each one as its own key cap and the keyboard diagram
+ * can ask which keys a category actually uses.
+ */
+
+/** A key name as it appears on a cap. Matched against the diagram's layout. */
+export type KeyToken = string;
+
+/**
+ * One way to invoke an action.
+ *
+ * `keys` are pressed together. `noteId`/`noteDefault` carry the combinations
+ * that are not keystrokes at all -- 'Double Click', 'Mouse click',
+ * 'Two-finger swipe' -- which previously sat in nested `<FormattedMessage>`
+ * elements inside the cell. Their message ids are preserved verbatim so the
+ * existing translations keep resolving.
+ */
+export type Combo = {
+  keys?: KeyToken[];
+  noteId?: string;
+  noteDefault?: string;
+};
+
+export type Shortcut = {
+  /** Message id for the action description. Unchanged from the old markup. */
+  id: string;
+  defaultMessage: string;
+  /** Alternative ways to invoke it, rendered separated by '/'. */
+  win: Combo[];
+  mac: Combo[];
+};
+
+export type ShortcutCategory = {
+  /** Stable key, used for the tab value and for diagram lookups. */
+  key: string;
+  labelId: string;
+  labelDefault: string;
+  shortcuts: Shortcut[];
+};
+
+const EDIT_TOPIC_NOTE = {
+  noteId: 'shortcut-help-pane.edit-topic-key',
+  noteDefault: 'F2 or Double Click',
+};
+
+const OVERWRITE_NOTE = {
+  noteId: 'shortcut-help-pane.overwrite-edit-topic-key',
+  noteDefault: 'Type on a selected topic',
+};
+
+const ARROW_KEYS_NOTE = {
+  noteId: 'shortcut-help-pane.navigation-keys',
+  noteDefault: 'Arrow keys',
+};
+
+const MOUSE_CLICK_NOTE = {
+  noteId: 'shortcut-help-pane.select-topics-keys',
+  noteDefault: 'Mouse click',
+};
+
+const WHEEL_NOTE = {
+  noteId: 'shortcut-help-pane.pan-canvas-keys',
+  noteDefault: 'Two-finger swipe or Mouse wheel',
+};
+
+export const SHORTCUT_CATEGORIES: ShortcutCategory[] = [
+  {
+    key: 'navigation',
+    labelId: 'shortcut-help-pane.category-navigation',
+    labelDefault: 'Navigate',
+    shortcuts: [
+      {
+        id: 'shortcut-help-pane.navigation',
+        defaultMessage: 'Navigation',
+        win: [{ ...ARROW_KEYS_NOTE }],
+        mac: [{ ...ARROW_KEYS_NOTE }],
+      },
+      {
+        id: 'shortcut-help-pane.select-topics',
+        defaultMessage: 'Select multiple topics',
+        win: [{ keys: ['Ctrl'], ...MOUSE_CLICK_NOTE }],
+        mac: [{ keys: ['Ctrl'], ...MOUSE_CLICK_NOTE }],
+      },
+      {
+        id: 'shortcut-help-pane.select-all-topics',
+        defaultMessage: 'Select all topics',
+        win: [{ keys: ['Ctrl', 'A'] }],
+        mac: [{ keys: ['⌘', 'A'] }],
+      },
+      {
+        id: 'shortcut-help-pane.deselect-all-topics',
+        defaultMessage: 'Deselect all topics',
+        win: [{ keys: ['Ctrl', 'Shift', 'A'] }],
+        mac: [{ keys: ['⌘', 'Shift', 'A'] }],
+      },
+      {
+        id: 'shortcut-help-pane.find-in-map',
+        defaultMessage: 'Find node in map',
+        win: [{ keys: ['Ctrl', 'F'] }],
+        mac: [{ keys: ['⌘', 'F'] }],
+      },
+      {
+        id: 'shortcut-help-pane.collapse-children',
+        defaultMessage: 'Collpase children',
+        win: [{ keys: ['Space'] }],
+        mac: [{ keys: ['Space'] }],
+      },
+    ],
+  },
+  {
+    key: 'editing',
+    labelId: 'shortcut-help-pane.category-editing',
+    labelDefault: 'Edit',
+    shortcuts: [
+      {
+        id: 'shortcut-help-pane.add-sibling',
+        defaultMessage: 'Add sibling topic',
+        win: [{ keys: ['Enter'] }],
+        mac: [{ keys: ['Enter'] }],
+      },
+      {
+        id: 'shortcut-help-pane.add-child',
+        defaultMessage: 'Add child topic',
+        win: [{ keys: ['Insert'] }, { keys: ['Tab'] }],
+        mac: [{ keys: ['⌘', 'Enter'] }, { keys: ['Tab'] }],
+      },
+      {
+        id: 'shortcut-help-pane.delete-topic',
+        defaultMessage: 'Delete topic',
+        win: [{ keys: ['Delete'] }],
+        mac: [{ keys: ['Delete'] }],
+      },
+      {
+        id: 'shortcut-help-pane.edit-topic',
+        defaultMessage: 'Edit topic text',
+        win: [{ ...EDIT_TOPIC_NOTE }],
+        mac: [{ ...EDIT_TOPIC_NOTE }],
+      },
+      {
+        id: 'shortcut-help-pane.overwrite-edit-topic',
+        defaultMessage: 'Overwrite topic text',
+        win: [{ ...OVERWRITE_NOTE }],
+        mac: [{ ...OVERWRITE_NOTE }],
+      },
+      {
+        id: 'shortcut-help-pane.edit-multiline',
+        defaultMessage: 'Add multi-line topic text',
+        win: [{ keys: ['Ctrl', 'Enter'] }],
+        mac: [{ keys: ['⌘', 'Enter'] }],
+      },
+      {
+        id: 'shortcut-help-pane.copy-and-text',
+        defaultMessage: 'Copy and paste topics/Copy mindmap image to clipboard.',
+        win: [{ keys: ['Ctrl', 'C'] }, { keys: ['Ctrl', 'V'] }],
+        mac: [{ keys: ['⌘', 'C'] }, { keys: ['⌘', 'V'] }],
+      },
+      {
+        id: 'shortcut-help-pane.paste-as-child',
+        defaultMessage: 'Paste as child of the selected topic',
+        win: [{ keys: ['Ctrl', 'Shift', 'V'] }],
+        mac: [{ keys: ['⌘', '⇧', 'V'] }],
+      },
+      {
+        id: 'shortcut-help-pane.drag-disconnect',
+        defaultMessage: 'Disconnect topic',
+        win: [
+          {
+            keys: ['Ctrl'],
+            noteId: 'shortcut-help-pane.drag-disconnect-key',
+            noteDefault: 'drag topic',
+          },
+        ],
+        mac: [
+          {
+            keys: ['⌘'],
+            noteId: 'shortcut-help-pane.drag-disconnect-key',
+            noteDefault: 'drag topic',
+          },
+        ],
+      },
+      {
+        id: 'shortcut-help-pane.move-topic-up',
+        defaultMessage: 'Move topic up among siblings',
+        win: [{ keys: ['Alt', 'Shift', 'Up'] }],
+        mac: [{ keys: ['⌥', '⇧', 'Up'] }],
+      },
+      {
+        id: 'shortcut-help-pane.move-topic-down',
+        defaultMessage: 'Move topic down among siblings',
+        win: [{ keys: ['Alt', 'Shift', 'Down'] }],
+        mac: [{ keys: ['⌥', '⇧', 'Down'] }],
+      },
+      {
+        id: 'shortcut-help-pane.outdent-topic',
+        defaultMessage: 'Outdent topic (attach to grandparent)',
+        win: [{ keys: ['Alt', 'Shift', 'Left'] }],
+        mac: [{ keys: ['⌥', '⇧', 'Left'] }],
+      },
+      {
+        id: 'shortcut-help-pane.indent-topic',
+        defaultMessage: 'Indent topic (attach to sibling above)',
+        win: [{ keys: ['Alt', 'Shift', 'Right'] }],
+        mac: [{ keys: ['⌥', '⇧', 'Right'] }],
+      },
+      {
+        id: 'shortcut-help-pane.undo',
+        defaultMessage: 'Undo edition',
+        win: [{ keys: ['Ctrl', 'Z'] }],
+        mac: [{ keys: ['⌘', 'Z'] }],
+      },
+      {
+        id: 'shortcut-help-pane.redo',
+        defaultMessage: 'Redo edition',
+        win: [{ keys: ['Ctrl', 'Shift', 'Z'] }],
+        mac: [{ keys: ['⌘', 'Shift', 'Z'] }],
+      },
+      {
+        id: 'shortcut-help-pane.cancel-text-changes',
+        defaultMessage: 'Cancel text changes',
+        win: [{ keys: ['Esc'] }],
+        mac: [{ keys: ['Esc'] }],
+      },
+      {
+        id: 'shortcut-help-pane.save-changes',
+        defaultMessage: 'Save changes',
+        win: [{ keys: ['Ctrl', 'S'] }],
+        mac: [{ keys: ['⌘', 'S'] }],
+      },
+    ],
+  },
+  {
+    key: 'format',
+    labelId: 'shortcut-help-pane.category-format',
+    labelDefault: 'Format',
+    shortcuts: [
+      {
+        id: 'shortcut-help-pane.change-font-bold',
+        defaultMessage: 'Change text to bold',
+        win: [{ keys: ['Ctrl', 'B'] }],
+        mac: [{ keys: ['⌘', 'B'] }],
+      },
+      {
+        id: 'shortcut-help-pane.change-font-italic',
+        defaultMessage: 'Change text to italic',
+        win: [{ keys: ['Ctrl', 'I'] }],
+        mac: [{ keys: ['⌘', 'I'] }],
+      },
+      {
+        id: 'shortcut-help-pane.add-note',
+        defaultMessage: 'Add note',
+        win: [{ keys: ['Ctrl', 'K'] }],
+        mac: [{ keys: ['⌘', 'K'] }],
+      },
+      {
+        id: 'shortcut-help-pane.add-link',
+        defaultMessage: 'Add link',
+        win: [{ keys: ['Ctrl', 'L'] }],
+        mac: [{ keys: ['⌘', 'L'] }],
+      },
+    ],
+  },
+  {
+    key: 'view',
+    labelId: 'shortcut-help-pane.category-view',
+    labelDefault: 'View',
+    shortcuts: [
+      {
+        id: 'shortcut-help-pane.zoom-in',
+        defaultMessage: 'Zoom in',
+        win: [{ keys: ['Ctrl', '='] }],
+        mac: [{ keys: ['⌘', '='] }],
+      },
+      {
+        id: 'shortcut-help-pane.zoom-out',
+        defaultMessage: 'Zoom out',
+        win: [{ keys: ['Ctrl', '-'] }],
+        mac: [{ keys: ['⌘', '-'] }],
+      },
+      {
+        id: 'shortcut-help-pane.zoom-to-fit',
+        defaultMessage: 'Zoom to fit',
+        win: [{ keys: ['Ctrl', '0'] }],
+        mac: [{ keys: ['⌘', '0'] }],
+      },
+      {
+        id: 'shortcut-help-pane.pan-canvas',
+        defaultMessage: 'Pan the canvas',
+        win: [{ ...WHEEL_NOTE }],
+        mac: [{ ...WHEEL_NOTE }],
+      },
+      {
+        id: 'shortcut-help-pane.zoom-wheel',
+        defaultMessage: 'Zoom in/out with the wheel',
+        win: [
+          { keys: ['Ctrl'], ...WHEEL_NOTE },
+          { keys: ['Alt'], ...WHEEL_NOTE },
+        ],
+        mac: [
+          { keys: ['⌘'], ...WHEEL_NOTE },
+          { keys: ['⌥'], ...WHEEL_NOTE },
+        ],
+      },
+      {
+        id: 'shortcut-help-pane.outline-view',
+        defaultMessage: 'Open outline view',
+        win: [{ keys: ['Ctrl', 'O'] }],
+        mac: [{ keys: ['⌘', 'O'] }],
+      },
+      {
+        id: 'shortcut-help-pane.expand-by-level',
+        defaultMessage: 'Expand topics by level',
+        win: [{ keys: ['Ctrl', 'E'] }],
+        mac: [{ keys: ['⌘', 'E'] }],
+      },
+      {
+        id: 'shortcut-help-pane.expand-collapse-all',
+        defaultMessage: 'Expand/Collapse all topics',
+        win: [{ keys: ['Ctrl', 'Shift', 'E'] }],
+        mac: [{ keys: ['⌘', 'Shift', 'E'] }],
+      },
+    ],
+  },
+];
+
+/**
+ * Every key cap a category touches, for highlighting on the diagram.
+ *
+ * Mac glyphs are folded onto their Windows equivalents, since one diagram
+ * serves both columns: ⌘ and ⌥ would otherwise highlight nothing on a layout
+ * labelled Ctrl/Alt.
+ */
+const MAC_TO_WIN: Record<string, string> = {
+  '⌘': 'Ctrl',
+  '⌥': 'Alt',
+  '⇧': 'Shift',
+};
+
+export const keysUsedBy = (category: ShortcutCategory): Set<string> => {
+  const used = new Set<string>();
+  category.shortcuts.forEach((shortcut) => {
+    [...shortcut.win, ...shortcut.mac].forEach((combo) => {
+      combo.keys?.forEach((key) => used.add(MAC_TO_WIN[key] ?? key));
+    });
+    // 'Navigation' is the arrow keys, but says so in prose rather than tokens.
+    if (shortcut.id === 'shortcut-help-pane.navigation') {
+      ['Up', 'Down', 'Left', 'Right'].forEach((key) => used.add(key));
+    }
+    if (shortcut.id === 'shortcut-help-pane.edit-topic') {
+      used.add('F2');
+    }
+  });
+  return used;
+};
+
+export default SHORTCUT_CATEGORIES;

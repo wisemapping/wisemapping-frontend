@@ -1327,6 +1327,30 @@
       "value": "Cancel text changes"
     }
   ],
+  "shortcut-help-pane.category-editing": [
+    {
+      "type": 0,
+      "value": "Edit"
+    }
+  ],
+  "shortcut-help-pane.category-format": [
+    {
+      "type": 0,
+      "value": "Format"
+    }
+  ],
+  "shortcut-help-pane.category-navigation": [
+    {
+      "type": 0,
+      "value": "Navigate"
+    }
+  ],
+  "shortcut-help-pane.category-view": [
+    {
+      "type": 0,
+      "value": "View"
+    }
+  ],
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
@@ -1363,10 +1387,52 @@
       "value": "Deselect all topics"
     }
   ],
+  "shortcut-help-pane.diagram-aria": [
+    {
+      "type": 0,
+      "value": "Left arrow moves to the parent topic, right arrow to a child, up and down between siblings."
+    }
+  ],
+  "shortcut-help-pane.diagram-caption": [
+    {
+      "type": 0,
+      "value": "On the left half of the map, ← and → swap roles."
+    }
+  ],
+  "shortcut-help-pane.diagram-child": [
+    {
+      "type": 0,
+      "value": "Child"
+    }
+  ],
+  "shortcut-help-pane.diagram-parent": [
+    {
+      "type": 0,
+      "value": "Parent"
+    }
+  ],
+  "shortcut-help-pane.diagram-selected": [
+    {
+      "type": 0,
+      "value": "Selected"
+    }
+  ],
+  "shortcut-help-pane.diagram-sibling": [
+    {
+      "type": 0,
+      "value": "Sibling"
+    }
+  ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
       "value": "Disconnect topic"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect-key": [
+    {
+      "type": 0,
+      "value": "drag topic"
     }
   ],
   "shortcut-help-pane.edit-multiline": [

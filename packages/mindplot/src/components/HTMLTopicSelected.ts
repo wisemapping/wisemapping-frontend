@@ -26,6 +26,19 @@ import { $msg } from './Messages';
 import LayoutEventBus from './layout/LayoutEventBus';
 import NodeModel from './model/NodeModel';
 
+/**
+ * Stacking layer for the canvas affordances appended straight to the container
+ * (the create-child plus buttons), rather than into `_overlayContainer`.
+ *
+ * Those are siblings of the SVG in the root stacking context, so their z-index
+ * competes with the editor's floating chrome -- toolbars and the panes they
+ * open. It has to stay below the editor's lowest chrome layer (1000), or a plus
+ * button paints over an open toolbar pane: a toolbar is a positioned element
+ * with a z-index of its own, so a pane portalled inside one is clamped to the
+ * toolbar's layer no matter how high the pane's own z-index is.
+ */
+const CANVAS_AFFORDANCE_Z_INDEX = '999';
+
 type HelperElements = {
   container: HTMLDivElement;
   tabRow: HTMLDivElement;
@@ -793,7 +806,7 @@ class HTMLTopicSelected {
       rightPlus.style.boxSizing = 'border-box';
       rightPlus.style.pointerEvents = 'auto';
       rightPlus.style.cursor = 'pointer';
-      rightPlus.style.zIndex = '1001';
+      rightPlus.style.zIndex = CANVAS_AFFORDANCE_Z_INDEX;
       rightPlus.style.transformOrigin = 'center center';
       rightPlus.style.transform = 'translate(-50%, -50%)';
       this.addPlusButtonHandlers(rightPlus, () => {
@@ -830,7 +843,7 @@ class HTMLTopicSelected {
       bottomPlus.style.boxSizing = 'border-box';
       bottomPlus.style.pointerEvents = 'auto';
       bottomPlus.style.cursor = 'pointer';
-      bottomPlus.style.zIndex = '1001';
+      bottomPlus.style.zIndex = CANVAS_AFFORDANCE_Z_INDEX;
       bottomPlus.style.transformOrigin = 'center center';
       bottomPlus.style.transform = 'translateX(-50%)';
       this.addPlusButtonHandlers(bottomPlus, () => {

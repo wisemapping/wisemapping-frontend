@@ -878,6 +878,39 @@
   "shortcut-help-pane.zoom-wheel": {
     "defaultMessage": "Zoom in/out with the wheel"
   },
+  "shortcut-help-pane.category-navigation": {
+    "defaultMessage": "Navigate"
+  },
+  "shortcut-help-pane.category-editing": {
+    "defaultMessage": "Edit"
+  },
+  "shortcut-help-pane.category-format": {
+    "defaultMessage": "Format"
+  },
+  "shortcut-help-pane.category-view": {
+    "defaultMessage": "View"
+  },
+  "shortcut-help-pane.drag-disconnect-key": {
+    "defaultMessage": "drag topic"
+  },
+  "shortcut-help-pane.diagram-parent": {
+    "defaultMessage": "Parent"
+  },
+  "shortcut-help-pane.diagram-selected": {
+    "defaultMessage": "Selected"
+  },
+  "shortcut-help-pane.diagram-sibling": {
+    "defaultMessage": "Sibling"
+  },
+  "shortcut-help-pane.diagram-child": {
+    "defaultMessage": "Child"
+  },
+  "shortcut-help-pane.diagram-aria": {
+    "defaultMessage": "Left arrow moves to the parent topic, right arrow to a child, up and down between siblings."
+  },
+  "shortcut-help-pane.diagram-caption": {
+    "defaultMessage": "On the left half of the map, \u2190 and \u2192 swap roles."
+  },
   "unified-styling.border-color": {
     "defaultMessage": "Border Color"
   },
