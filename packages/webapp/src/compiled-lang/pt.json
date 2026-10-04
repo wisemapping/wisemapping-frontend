@@ -1085,6 +1085,12 @@
       "value": "error"
     }
   ],
+  "import.error-unsupported-file": [
+    {
+      "type": 0,
+      "value": "O tipo de arquivo não é suportado. Você pode importar mapas do WiseMapping, FreeMind, Freeplane, XMind, MindManager e OPML."
+    }
+  ],
   "import.title": [
     {
       "type": 0,

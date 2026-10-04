@@ -26,6 +26,7 @@ import { StrokeStyle } from '../model/RelationshipModel';
 import ContentType from '../ContentType';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import toWiseMappingXml from './support/MindmapXml';
+import { legacyIconEmoji } from './support/LegacyIconMap';
 
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
@@ -73,8 +74,7 @@ class FreeplaneImporter extends Importer {
 
     const centralTitle = rootNode.getAttribute('TEXT') || 'Central Topic';
     const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
-    const rootNodeId = rootNode.getAttribute('ID') || 'ID_1';
-    this.topicIdMap.set(rootNodeId, centralTopic.getId());
+    this.mapNodeId(rootNode, centralTopic);
     centralTopic.setText(centralTitle);
     this.addFeatures(centralTopic, rootNode);
     mindmap.addBranch(centralTopic);
@@ -92,8 +92,7 @@ class FreeplaneImporter extends Importer {
 
   private convertNode(mindmap: Mindmap, freeplaneNode: Element, order: number): NodeModel {
     const topic = mindmap.createNode('MainTopic', this.generateId());
-    const freeplaneNodeId = freeplaneNode.getAttribute('ID') || `ID_${this.idCounter}`;
-    this.topicIdMap.set(freeplaneNodeId, topic.getId());
+    this.mapNodeId(freeplaneNode, topic);
 
     const title = freeplaneNode.getAttribute('TEXT') || 'Untitled';
     const position = this.calculatePosition(order);
@@ -110,6 +109,15 @@ class FreeplaneImporter extends Importer {
     });
 
     return topic;
+  }
+
+  // Nodes without an ID can not be the end of an arrowlink, so they are not mapped. A made up key
+  // could be the ID of another node.
+  private mapNodeId(freeplaneNode: Element, topic: NodeModel): void {
+    const freeplaneNodeId = freeplaneNode.getAttribute('ID');
+    if (freeplaneNodeId) {
+      this.topicIdMap.set(freeplaneNodeId, topic.getId());
+    }
   }
 
   // The icons, notes and links of a node, the central one included.
@@ -498,8 +506,8 @@ class FreeplaneImporter extends Importer {
       graduation: '🎓',
     };
 
-    // Return mapped emoji or default if not found
-    return iconMap[builtin.toLowerCase()] || '💡'; // Default to lightbulb
+    // Return mapped emoji, the emoji of a legacy WiseMapping icon id, or default if not found
+    return iconMap[builtin.toLowerCase()] || legacyIconEmoji(builtin) || '💡'; // Default to lightbulb
   }
 
   private generateId(): number {

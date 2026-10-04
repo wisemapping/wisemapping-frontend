@@ -1085,6 +1085,12 @@
       "value": "error"
     }
   ],
+  "import.error-unsupported-file": [
+    {
+      "type": 0,
+      "value": "यह फ़ाइल प्रकार समर्थित नहीं है। आप WiseMapping, FreeMind, Freeplane, XMind, MindManager और OPML मैप आयात कर सकते हैं।"
+    }
+  ],
   "import.title": [
     {
       "type": 0,

@@ -25,7 +25,7 @@ import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import ModelCodeName from './ModelCodeName';
 import FeatureType from '../model/FeatureType';
-import emojiToIconMap from './iconToEmoji.json';
+import { legacyIconEmoji } from '../import/support/LegacyIconMap';
 import {
   isFontStyleType,
   isFontWeightType,
@@ -729,7 +729,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
   }
 
   private static emojiEquivalent(icon: string): string | undefined {
-    return (emojiToIconMap as Record<string, string>)[icon];
+    return legacyIconEmoji(icon);
   }
 
   private static _deserializeNodeText(domElem: ChildNode): string {

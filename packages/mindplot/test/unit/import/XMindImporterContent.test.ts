@@ -18,6 +18,7 @@
 
 /* eslint-disable import/no-extraneous-dependencies */
 import { describe, expect, test } from '@jest/globals';
+import { strToU8, zipSync } from 'fflate';
 import XMindImporter from '../../../src/components/import/XMindImporter';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import Mindmap from '../../../src/components/model/Mindmap';
@@ -230,5 +231,31 @@ describe('XMindImporter central topic and links (XML format)', () => {
 
     expect(linkOf(findByText(mindmap, 'Linked'))).toBe('https://example.com/a');
     expect(linkOf(findByText(mindmap, 'Topic link'))).toBeUndefined();
+  });
+});
+
+describe('XMindImporter (XML format) security', () => {
+  // Billion laughs: each entity expands to ten of the previous one.
+  const entityBomb = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xmap-content [
+  <!ENTITY lol "lol">
+  <!ENTITY lol1 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
+  <!ENTITY lol2 "&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;">
+  <!ENTITY lol3 "&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;">
+]>
+<xmap-content xmlns="urn:xmind:xmap:xmlns:content:2.0" version="2.0">
+  <sheet id="sheet1">
+    <topic id="root"><title>&lol3;</title></topic>
+  </sheet>
+</xmap-content>`;
+
+  test('rejects a content.xml declaring entities, as every other importer does', async () => {
+    const archive = zipSync({ 'content.xml': strToU8(entityBomb) });
+
+    await expect(new XMindImporter(archive).import('test')).rejects.toThrow(/unsafe/);
+  });
+
+  test('rejects a plain XML document declaring entities', async () => {
+    await expect(new XMindImporter(entityBomb).import('test')).rejects.toThrow(/unsafe/);
   });
 });

@@ -69,6 +69,7 @@ import { unzipSync } from 'fflate';
 import type { LayoutType } from '../layout/LayoutType';
 import Importer from './Importer';
 import ImportError from './ImportError';
+import SecureXmlParser from '../security/SecureXmlParser';
 import Mindmap from '../model/Mindmap';
 import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
@@ -174,11 +175,10 @@ class XMindImporter extends Importer {
   }
 
   private importXMLFormat(xmlContent: string, nameMap: string): Mindmap {
-    // Parse XML content
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(xmlContent, 'text/xml');
-    if (doc.getElementsByTagName('parsererror').length > 0) {
-      throw new Error('The XMind content is not well-formed XML');
+    // Use secure XML parser to prevent XXE attacks, as the other importers do
+    const doc = SecureXmlParser.parseSecureXml(xmlContent);
+    if (!doc) {
+      throw new Error('Failed to parse XMind XML - content may be unsafe or not well-formed');
     }
 
     // Find the root topic (within sheet element) - handle namespaces

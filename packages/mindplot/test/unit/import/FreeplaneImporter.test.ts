@@ -83,3 +83,70 @@ describe('FreeplaneImporter central topic', () => {
     );
   });
 });
+
+const iconsOf = (node: NodeModel): string[] =>
+  node.findFeatureByType('eicon').map((icon) => (icon as EmojiIconModel).getIconType());
+
+describe('FreeplaneImporter legacy WiseMapping icons', () => {
+  // Maps exported by older WiseMapping versions, then saved by Freeplane, keep the legacy ids.
+  const freeplane = `<map version="freeplane 1.9.13">
+  <node TEXT="Root" ID="ID_1">
+    <node TEXT="A" ID="ID_2">
+      <icon BUILTIN="face_smile"/>
+      <icon BUILTIN="thumb_thumb_up"/>
+      <icon BUILTIN="idea"/>
+      <icon BUILTIN="unknown-icon"/>
+    </node>
+  </node>
+</map>`;
+
+  test('maps the legacy ids to the emoji that replaced them', async () => {
+    const mindmap = loadMindmap(await new FreeplaneImporter(freeplane).import('test'));
+
+    expect(iconsOf(centralOf(mindmap).getChildren()[0])).toEqual(['😃', '👍', '💡', '💡']);
+  });
+});
+
+describe('FreeplaneImporter node ids', () => {
+  test('a node without an ID does not take the place of a node with a real ID', async () => {
+    // "No id" is the third topic: the old fallback key was ID_4, the ID of "Target".
+    const freeplane = `<map version="freeplane 1.9.13">
+  <node TEXT="Root" ID="ID_1">
+    <node TEXT="Target" ID="ID_4"/>
+    <node TEXT="No id"/>
+    <node TEXT="Source" ID="ID_9">
+      <arrowlink DESTINATION="ID_4"/>
+    </node>
+  </node>
+</map>`;
+
+    const mindmap = loadMindmap(await new FreeplaneImporter(freeplane).import('test'));
+
+    const byText = (text: string): NodeModel =>
+      centralOf(mindmap)
+        .getChildren()
+        .find((node) => node.getText() === text)!;
+    const relationships = mindmap.getRelationships();
+    expect(relationships).toHaveLength(1);
+    expect(relationships[0].getFromNode()).toBe(byText('Source').getId());
+    expect(relationships[0].getToNode()).toBe(byText('Target').getId());
+  });
+
+  test('a central node without an ID does not take the place of a node with ID_1', async () => {
+    const freeplane = `<map version="freeplane 1.9.13">
+  <node TEXT="Root">
+    <node TEXT="Target" ID="ID_1"/>
+    <node TEXT="Source" ID="ID_2">
+      <arrowlink DESTINATION="ID_1"/>
+    </node>
+  </node>
+</map>`;
+
+    const mindmap = loadMindmap(await new FreeplaneImporter(freeplane).import('test'));
+
+    const target = centralOf(mindmap)
+      .getChildren()
+      .find((node) => node.getText() === 'Target')!;
+    expect(mindmap.getRelationships().map((r) => r.getToNode())).toEqual([target.getId()]);
+  });
+});

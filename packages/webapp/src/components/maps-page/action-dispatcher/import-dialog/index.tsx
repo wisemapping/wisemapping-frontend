@@ -137,9 +137,15 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         const extensionAccept = ['wxml', 'mm', 'mmx', 'xmind', 'mmap', 'opml'];
 
         if (!extensionFile || !extensionAccept.includes(extensionFile)) {
-          showFileError(
-            'You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import.',
-          );
+          setErrorFile({
+            error: true,
+            message: intl.formatMessage({
+              id: 'import.error-unsupported-file',
+              defaultMessage:
+                'The file type is not supported. You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps.',
+            }),
+          });
+          return;
         }
 
         model.contentType =

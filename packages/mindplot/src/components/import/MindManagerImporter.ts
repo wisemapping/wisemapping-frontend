@@ -25,6 +25,8 @@ import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import { StrokeStyle } from '../model/RelationshipModel';
+import ContentType from '../ContentType';
+import HtmlSanitizer from '../security/HtmlSanitizer';
 import { decodeUtf8 } from './support/Utf8Decoder';
 import toWiseMappingXml from './support/MindmapXml';
 
@@ -33,6 +35,8 @@ interface MindManagerTopic {
   id?: string;
   text: string;
   notes?: string;
+  // The XHTML of the note, sanitized. Preferred to the plain text notes.
+  notesHtml?: string;
   hyperlink?: string;
   icons: string[];
   fillColor?: string;
@@ -233,6 +237,10 @@ class MindManagerImporter extends Importer {
       Prio3: '🟢',
       Prio4: '🔵',
       Prio5: '🟣',
+      Prio6: '6️⃣',
+      Prio7: '7️⃣',
+      Prio8: '8️⃣',
+      Prio9: '9️⃣',
 
       // Default fallback
     };
@@ -287,6 +295,13 @@ class MindManagerImporter extends Importer {
       node.append(this.convertTopic(mindmap, child, index));
     });
 
+    // The floating topics of a topic are callouts attached to it: they are imported as its last
+    // children.
+    const childCount = topic.children?.length ?? 0;
+    topic.floating?.forEach((callout, index) => {
+      node.append(this.convertTopic(mindmap, callout, childCount + index));
+    });
+
     return node;
   }
 
@@ -311,9 +326,15 @@ class MindManagerImporter extends Importer {
       node.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
     });
 
-    const noteContent = this.buildNoteContent(topic.notes);
-    if (noteContent) {
-      node.addFeature(new NoteModel({ text: noteContent }));
+    if (topic.notesHtml) {
+      const note = new NoteModel({ text: topic.notesHtml });
+      note.setContentType(ContentType.HTML);
+      node.addFeature(note);
+    } else {
+      const noteContent = this.buildNoteContent(topic.notes);
+      if (noteContent) {
+        node.addFeature(new NoteModel({ text: noteContent }));
+      }
     }
 
     if (topic.hyperlink) {
@@ -437,6 +458,7 @@ class MindManagerImporter extends Importer {
     if (notesElement) {
       topic.notes = notesElement.textContent || '';
     } else if (notesData) {
+      topic.notesHtml = MindManagerImporter.notesHtml(notesData);
       topic.notes = notesData.getAttribute('PreviewPlainText') || '';
     }
 
@@ -506,13 +528,60 @@ class MindManagerImporter extends Importer {
     return topic;
   }
 
+  /**
+   * NotesXhtmlData holds the note as an XHTML document (<html xmlns="http://www.w3.org/1999/xhtml">).
+   * It is sanitized like FreeMind notes, which drops the <html> and <body> wrappers and any script.
+   * Undefined if there is no XHTML, or it can not be sanitized: the preview text is used instead.
+   */
+  private static notesHtml(notesData: Element): string | undefined {
+    if (notesData.children.length === 0) {
+      return undefined;
+    }
+    try {
+      return HtmlSanitizer.sanitize(notesData.innerHTML).trim() || undefined;
+    } catch (error) {
+      console.warn('MindManager note could not be imported as HTML:', error);
+      return undefined;
+    }
+  }
+
   private addRelationships(mindmap: Mindmap, doc: Document): void {
     const relationshipsElement = this.findElementByTagName(doc, 'Relationships');
     if (!relationshipsElement) return;
 
+    // The style of the relationships that do not have their own (StyleGroup/RelationshipDefaultsGroup)
+    const defaults = this.findElementByTagName(doc, 'RelationshipDefaultsGroup');
+    const defaultLineStyle = defaults && this.findChildByTagName(defaults, 'DefaultLineStyle');
+    const defaultStrokeStyle =
+      MindManagerImporter.toStrokeStyle(defaultLineStyle?.getAttribute('LineDashStyle')) ??
+      // MindManager draws relationships dashed by default.
+      StrokeStyle.DASHED;
+
     this.findChildrenByTagName(relationshipsElement, 'Relationship').forEach((rel) => {
-      this.addRelationship(mindmap, rel);
+      this.addRelationship(mindmap, rel, defaultStrokeStyle);
     });
+  }
+
+  /**
+   * The stroke style of a LineDashStyle (urn:mindjet:Solid, RoundDot, SquareDot, Dash, DashDot,
+   * LongDash, LongDashDot, LongDashDotDot), undefined if it is not one.
+   */
+  private static toStrokeStyle(lineDashStyle: string | null | undefined): StrokeStyle | undefined {
+    switch (lineDashStyle?.replace(MINDJET_URN, '')) {
+      case 'Solid':
+        return StrokeStyle.SOLID;
+      case 'RoundDot':
+      case 'SquareDot':
+        return StrokeStyle.DOTTED;
+      case 'Dash':
+      case 'DashDot':
+      case 'LongDash':
+      case 'LongDashDot':
+      case 'LongDashDotDot':
+        return StrokeStyle.DASHED;
+      default:
+        return undefined;
+    }
   }
 
   // MindManager writes the ends of a relationship as ConnectionGroups (Index 0 and 1) that
@@ -526,7 +595,11 @@ class MindManagerImporter extends Importer {
     return reference ? reference.getAttribute('OIdRef') : null;
   }
 
-  private addRelationship(mindmap: Mindmap, relationshipElement: Element): void {
+  private addRelationship(
+    mindmap: Mindmap,
+    relationshipElement: Element,
+    defaultStrokeStyle: StrokeStyle,
+  ): void {
     const fromTopicId =
       relationshipElement.getAttribute('FromTopicID') ||
       this.connectionEnd(relationshipElement, '0');
@@ -544,13 +617,20 @@ class MindManagerImporter extends Importer {
 
     const relationship = mindmap.createRelationship(srcTopicId, destTopicId);
 
-    // Map line style
+    // Map line style: the LineStyle attribute, or the LineDashStyle of the LineStyle element of
+    // the document schema
+    const lineStyleElement = this.findChildByTagName(relationshipElement, 'LineStyle');
     if (lineStyle === 'Dashed') {
       relationship.setStrokeStyle(StrokeStyle.DASHED);
     } else if (lineStyle === 'Dotted') {
       relationship.setStrokeStyle(StrokeStyle.DOTTED);
     } else if (lineStyle === 'Solid') {
       relationship.setStrokeStyle(StrokeStyle.SOLID);
+    } else {
+      relationship.setStrokeStyle(
+        MindManagerImporter.toStrokeStyle(lineStyleElement?.getAttribute('LineDashStyle')) ??
+          defaultStrokeStyle,
+      );
     }
 
     mindmap.addRelationship(relationship);

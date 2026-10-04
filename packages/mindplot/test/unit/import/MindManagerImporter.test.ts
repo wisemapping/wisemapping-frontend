@@ -27,6 +27,8 @@ import NodeModel from '../../../src/components/model/NodeModel';
 import NoteModel from '../../../src/components/model/NoteModel';
 import LinkModel from '../../../src/components/model/LinkModel';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
+import { StrokeStyle } from '../../../src/components/model/RelationshipModel';
+import ContentType from '../../../src/components/ContentType';
 
 const loadMindmap = (xml: string): Mindmap => {
   const doc = new DOMParser().parseFromString(xml, 'text/xml');
@@ -263,5 +265,149 @@ describe('MindManagerImporter document schema', () => {
     const relationships = mindmap.getRelationships();
     expect(relationships).toHaveLength(1);
     expect(relationships[0].getToNode()).toBe(floating.getId());
+  });
+});
+
+const schemaMap = (topics: string, rest = ''): string =>
+  `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ap:Map xmlns:ap="http://schemas.mindjet.com/MindManager/Application/2003" OId="map">
+  <ap:OneTopic>
+    <ap:Topic OId="root">
+      <ap:SubTopics>${topics}</ap:SubTopics>
+      <ap:Text PlainText="Central"/>
+    </ap:Topic>
+  </ap:OneTopic>
+  ${rest}
+</ap:Map>`;
+
+describe('MindManagerImporter XHTML notes', () => {
+  test('imports the XHTML body of the note as sanitized HTML', async () => {
+    const mindManager = schemaMap(`
+        <ap:Topic OId="a">
+          <ap:Text PlainText="Rich"/>
+          <ap:NotesGroup>
+            <ap:NotesXhtmlData PreviewPlainText="Hello world">
+              <html xmlns="http://www.w3.org/1999/xhtml"><body><p>Hello <b>world</b></p><img src="x" onerror="alert(1)"/></body></html>
+            </ap:NotesXhtmlData>
+          </ap:NotesGroup>
+        </ap:Topic>`);
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    const note = findByText(mindmap, 'Rich').findFeatureByType('note')[0] as NoteModel;
+    expect(note.getContentType()).toBe(ContentType.HTML);
+    expect(note.getText()).toContain('<p>Hello <b>world</b></p>');
+    expect(note.getText()).not.toContain('onerror');
+    expect(note.getText()).not.toContain('xmlns');
+    expect(note.getText()).not.toContain('<html');
+  });
+
+  test('falls back to the preview text when the note has no XHTML body', async () => {
+    const mindManager = schemaMap(`
+        <ap:Topic OId="a">
+          <ap:Text PlainText="Plain"/>
+          <ap:NotesGroup><ap:NotesXhtmlData PreviewPlainText="Only a preview"/></ap:NotesGroup>
+        </ap:Topic>`);
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    const note = findByText(mindmap, 'Plain').findFeatureByType('note')[0] as NoteModel;
+    expect(note.getText()).toBe('Only a preview');
+    expect(note.getContentType()).not.toBe(ContentType.HTML);
+  });
+});
+
+describe('MindManagerImporter floating topics and priorities', () => {
+  test('imports the floating (callout) topics of any topic, not only the central one', async () => {
+    const mindManager = schemaMap(`
+        <ap:Topic OId="a">
+          <ap:SubTopics><ap:Topic OId="a1"><ap:Text PlainText="Sub"/></ap:Topic></ap:SubTopics>
+          <ap:FloatingTopics>
+            <ap:Topic OId="c"><ap:Text PlainText="Callout"/></ap:Topic>
+          </ap:FloatingTopics>
+          <ap:Text PlainText="Parent"/>
+        </ap:Topic>`);
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    const callout = findByText(mindmap, 'Callout');
+    expect(findByText(mindmap, 'Parent').getChildren()).toContain(callout);
+    expect(
+      findByText(mindmap, 'Parent')
+        .getChildren()
+        .map((c) => c.getText()),
+    ).toEqual(['Sub', 'Callout']);
+  });
+
+  test('maps each task priority to its own emoji', async () => {
+    const topics = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      .map(
+        (prio) =>
+          `<ap:Topic OId="p${prio}"><ap:Text PlainText="P${prio}"/><ap:Task TaskPriority="urn:mindjet:Prio${prio}"/></ap:Topic>`,
+      )
+      .join('');
+
+    const mindmap = loadMindmap(await new MindManagerImporter(schemaMap(topics)).import('test'));
+
+    const emojis = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(
+      (prio) => iconsOf(findByText(mindmap, `P${prio}`))[0],
+    );
+    expect(emojis).toEqual(['🔴', '🟡', '🟢', '🔵', '🟣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']);
+  });
+});
+
+describe('MindManagerImporter relationship line style', () => {
+  const relationship = (oid: string, from: string, to: string, style = ''): string => `
+    <ap:Relationship OId="${oid}">
+      <ap:ConnectionGroup Index="0"><ap:Connection><ap:ObjectReference OIdRef="${from}"/></ap:Connection></ap:ConnectionGroup>
+      <ap:ConnectionGroup Index="1"><ap:Connection><ap:ObjectReference OIdRef="${to}"/></ap:Connection></ap:ConnectionGroup>
+      ${style}
+    </ap:Relationship>`;
+  const topics = `<ap:Topic OId="a"><ap:Text PlainText="A"/></ap:Topic><ap:Topic OId="b"><ap:Text PlainText="B"/></ap:Topic>`;
+
+  test('reads the LineDashStyle of the LineStyle element', async () => {
+    const mindManager = schemaMap(
+      topics,
+      `<ap:Relationships>
+        ${relationship('r1', 'a', 'b', '<ap:LineStyle LineDashStyle="urn:mindjet:Solid" LineWidth="1.5"/>')}
+        ${relationship('r2', 'a', 'b', '<ap:LineStyle LineDashStyle="urn:mindjet:RoundDot"/>')}
+        ${relationship('r3', 'a', 'b', '<ap:LineStyle LineDashStyle="urn:mindjet:LongDashDot"/>')}
+      </ap:Relationships>`,
+    );
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    expect(mindmap.getRelationships().map((r) => r.getStrokeStyle())).toEqual([
+      StrokeStyle.SOLID,
+      StrokeStyle.DOTTED,
+      StrokeStyle.DASHED,
+    ]);
+  });
+
+  test('uses the relationship defaults of the document when the relationship has no style', async () => {
+    const mindManager = schemaMap(
+      topics,
+      `<ap:Relationships>${relationship('r1', 'a', 'b')}</ap:Relationships>
+      <ap:StyleGroup>
+        <ap:RelationshipDefaultsGroup>
+          <ap:DefaultLineStyle LineDashStyle="urn:mindjet:Solid" LineWidth="1.5"/>
+        </ap:RelationshipDefaultsGroup>
+      </ap:StyleGroup>`,
+    );
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    expect(mindmap.getRelationships().map((r) => r.getStrokeStyle())).toEqual([StrokeStyle.SOLID]);
+  });
+
+  test('falls back to dashed, the MindManager default, without any style', async () => {
+    const mindManager = schemaMap(
+      topics,
+      `<ap:Relationships>${relationship('r1', 'a', 'b')}</ap:Relationships>`,
+    );
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    expect(mindmap.getRelationships().map((r) => r.getStrokeStyle())).toEqual([StrokeStyle.DASHED]);
   });
 });

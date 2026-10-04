@@ -1085,6 +1085,12 @@
       "value": "error"
     }
   ],
+  "import.error-unsupported-file": [
+    {
+      "type": 0,
+      "value": "Этот тип файла не поддерживается. Вы можете импортировать карты WiseMapping, FreeMind, Freeplane, XMind, MindManager и OPML."
+    }
+  ],
   "import.title": [
     {
       "type": 0,

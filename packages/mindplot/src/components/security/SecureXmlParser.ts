@@ -55,6 +55,12 @@ class SecureXmlParser {
       // Remove potential XXE attacks before parsing
       const sanitizedXml = this.sanitizeXmlContent(xmlContent);
 
+      // The element count is checked again on the DOM, but building it is the expensive part:
+      // reject documents that obviously have too many elements before parsing them.
+      if (this.estimateElementCount(sanitizedXml) > this.MAX_XML_NODES) {
+        throw new Error('Too many XML nodes');
+      }
+
       // Create parser with security restrictions
       const parser = new DOMParser();
 
@@ -106,6 +112,26 @@ class SecureXmlParser {
       // Remove DOCTYPE declarations, processing instructions and comments
       return '';
     });
+  }
+
+  /**
+   * Rough upper bound of the number of elements: every "<" outside CDATA sections that does not
+   * open an end tag, a declaration or a processing instruction. Comments have already been
+   * removed. Stops counting once the cap is exceeded.
+   * @param xmlContent - The sanitized XML content
+   * @returns Estimated number of elements
+   */
+  private static estimateElementCount(xmlContent: string): number {
+    const tokens = /<!\[CDATA\[[\s\S]*?\]\]>|<[^/!?]/g;
+    let count = 0;
+    let match = tokens.exec(xmlContent);
+    while (match && count <= this.MAX_XML_NODES) {
+      if (!match[0].startsWith('<![CDATA[')) {
+        count += 1;
+      }
+      match = tokens.exec(xmlContent);
+    }
+    return count;
   }
 
   /**

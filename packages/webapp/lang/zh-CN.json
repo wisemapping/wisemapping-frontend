@@ -245,6 +245,9 @@
   "import.error-file": {
     "defaultMessage": "导入错误 {error}"
   },
+  "import.error-unsupported-file": {
+    "defaultMessage": "不支持此文件类型。您可以导入 WiseMapping、FreeMind、Freeplane、XMind、MindManager 和 OPML 导图。"
+  },
   "import.title": {
     "defaultMessage": "导入现有思维导图"
   },

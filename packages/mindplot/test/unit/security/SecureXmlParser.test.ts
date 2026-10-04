@@ -95,4 +95,34 @@ describe('SecureXmlParser', () => {
     expect(doc).not.toBeNull();
     expect(doc!.getElementsByTagName('node')).toHaveLength(4001);
   });
+  describe('element cap', () => {
+    // MAX_XML_NODES is 200000.
+    const elements = (count: number): string => `<r>${'<a/>'.repeat(count - 1)}</r>`;
+
+    test('rejects a document with too many elements before building its DOM', () => {
+      const parse = jest.spyOn(DOMParser.prototype, 'parseFromString');
+      const error = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+      try {
+        expect(SecureXmlParser.parseSecureXml(elements(200001))).toBeNull();
+        expect(parse).not.toHaveBeenCalled();
+        expect(error).toHaveBeenCalledWith(
+          'Secure XML parsing failed:',
+          new Error('Too many XML nodes'),
+        );
+      } finally {
+        parse.mockRestore();
+        error.mockRestore();
+      }
+    });
+
+    test('does not count markup inside CDATA sections or comments as elements', () => {
+      const markup = '<b/>'.repeat(200001);
+      const doc = SecureXmlParser.parseSecureXml(
+        `<r><!-- ${markup} --><note><![CDATA[${markup}]]></note></r>`,
+      );
+
+      expect(doc).not.toBeNull();
+      expect(doc!.documentElement.textContent).toBe(markup);
+    });
+  });
 });

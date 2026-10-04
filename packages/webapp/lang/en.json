@@ -245,6 +245,9 @@
   "import.error-file": {
     "defaultMessage": "Import error {error}"
   },
+  "import.error-unsupported-file": {
+    "defaultMessage": "The file type is not supported. You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps."
+  },
   "import.title": {
     "defaultMessage": "Import existing mindmap"
   },
