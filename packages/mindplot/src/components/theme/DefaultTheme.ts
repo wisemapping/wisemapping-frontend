@@ -49,6 +49,11 @@ const keyToModel = new Map<keyof TopicStyleType, (model: NodeModel) => StyleType
   ['fontStyle', (m: NodeModel) => m.getFontStyle()],
 ]);
 
+// Some style values are numeric enums whose first member is 0 (LineType.THIN_CURVED),
+// so "not set" must be checked explicitly rather than by truthiness.
+const isUnset = (value: StyleType): boolean =>
+  value === undefined || value === null || value === '';
+
 class DefaultTheme implements Theme {
   private _themeStyle: ThemeStyle;
 
@@ -72,7 +77,7 @@ class DefaultTheme implements Theme {
 
   getCanvasOpacity(): number {
     const canvasStyle = this._themeStyle.getCanvasStyle();
-    return canvasStyle.opacity || 1;
+    return canvasStyle.opacity ?? 1;
   }
 
   getCanvasShowGrid(): boolean {
@@ -92,7 +97,7 @@ class DefaultTheme implements Theme {
       let result: StyleType = keyToModel.get(key)!(model);
 
       const parent = t.getParent();
-      if (!result && parent) {
+      if (isUnset(result) && parent) {
         result = recurviveModelStrategy(value, parent);
       }
       return result;
@@ -100,7 +105,7 @@ class DefaultTheme implements Theme {
 
     // Can be found in the model or parent  ?
     let result = recurviveModelStrategy(key, topic);
-    if (!result && resolveDefault) {
+    if (isUnset(result) && resolveDefault) {
       result = this.getStyles(topic)[key];
     }
     return result;

@@ -16,6 +16,9 @@
  *   limitations under the License.
  */
 
+// Canonical modifier order for shortcut strings (meta/cmd folds into ctrl).
+const MODIFIER_ORDER = ['ctrl', 'alt', 'shift'];
+
 /**
  * Keyboard shortcut manager to replace jQuery hotkeys plugin
  * Handles complex key combinations and cross-browser compatibility
@@ -114,18 +117,22 @@ class KeyboardManager {
    * Convert keyboard event to shortcut string
    */
   private static getEventShortcut(event: KeyboardEvent): string {
-    const parts: string[] = [];
+    // ctrl and meta (cmd on macOS) are treated as the same modifier.
+    const modifiers = new Set<string>();
+    if (event.ctrlKey || event.metaKey) modifiers.add('ctrl');
+    if (event.altKey) modifiers.add('alt');
+    if (event.shiftKey) modifiers.add('shift');
 
-    // Add modifiers in consistent order
-    if (event.ctrlKey || event.metaKey) parts.push('ctrl');
-    if (event.altKey) parts.push('alt');
-    if (event.shiftKey) parts.push('shift');
+    return this.buildShortcut(modifiers, this.normalizeKey(event.key, event.keyCode));
+  }
 
-    // Add the main key
-    const key = this.normalizeKey(event.key, event.keyCode);
-    if (key) parts.push(key);
-
-    return parts.join('+');
+  /**
+   * Single canonical form shared by registration and event matching, so both
+   * sides always emit the modifiers in the same order.
+   */
+  private static buildShortcut(modifiers: Set<string>, key: string): string {
+    const ordered = MODIFIER_ORDER.filter((modifier) => modifiers.has(modifier));
+    return [...ordered, key].filter(Boolean).join('+');
   }
 
   /**
@@ -136,7 +143,7 @@ class KeyboardManager {
       .toLowerCase()
       .split('+')
       .map((part) => part.trim());
-    const modifiers: string[] = [];
+    const modifiers = new Set<string>();
     let key = '';
 
     parts.forEach((part) => {
@@ -144,24 +151,21 @@ class KeyboardManager {
         case 'ctrl':
         case 'cmd':
         case 'meta':
-          modifiers.push('ctrl');
+          modifiers.add('ctrl');
           break;
         case 'alt':
         case 'option':
-          modifiers.push('alt');
+          modifiers.add('alt');
           break;
         case 'shift':
-          modifiers.push('shift');
+          modifiers.add('shift');
           break;
         default:
           key = this.normalizeKey(part);
       }
     });
 
-    // Remove duplicates and sort modifiers
-    const uniqueModifiers = [...new Set(modifiers)].sort();
-
-    return [...uniqueModifiers, key].filter(Boolean).join('+');
+    return this.buildShortcut(modifiers, key);
   }
 
   /**
@@ -188,6 +192,8 @@ class KeyboardManager {
       end: 'end',
       tab: 'tab',
       backspace: 'backspace',
+      // '+' is the shortcut separator, so bindings spell it 'plus'.
+      '+': 'plus',
     };
 
     if (keyMap[keyLower]) {

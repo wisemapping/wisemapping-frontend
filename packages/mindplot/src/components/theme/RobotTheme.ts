@@ -52,8 +52,15 @@ class RobotTheme extends DefaultTheme {
       return result;
     }
 
-    // Use theme colors from style system
-    result = this.resolve('backgroundColor', topic) as string;
+    // Use theme colors from style system. Palettes are arrays, so use topic order to decide color ..
+    let colors: string[] = [];
+    colors = colors.concat(this.resolve('backgroundColor', topic) as string[] | string);
+
+    let order = topic.getOrder();
+    order = order || 0;
+
+    const index = order % colors.length;
+    result = colors[index];
     return result;
   }
 

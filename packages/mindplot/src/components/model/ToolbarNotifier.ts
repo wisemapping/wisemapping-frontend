@@ -27,6 +27,13 @@ class ToolbarNotifier {
     DOMUtils.css(container, 'transition', '');
   }, 3100);
 
+  private static hideNonFadingNotification = debounce((container: HTMLElement) => {
+    DOMUtils.hide(container);
+    DOMUtils.css(container, 'opacity', '');
+  }, 2000);
+
+  private static fadeOutTimer: number | undefined;
+
   static get container(): HTMLElement | null {
     return document.getElementById('headerNotifier');
   }
@@ -41,8 +48,11 @@ class ToolbarNotifier {
   static show(msg: string, fade: boolean) {
     $assert(msg, 'msg can not be null');
 
-    // Cancel any pending hide
+    // Cancel any pending hide or fade-out from a previous notification
     this.hideNotification.cancel();
+    this.hideNonFadingNotification.cancel();
+    window.clearTimeout(this.fadeOutTimer);
+    this.fadeOutTimer = undefined;
 
     // Reset the container state before showing new notification
     const { container } = this;
@@ -78,7 +88,7 @@ class ToolbarNotifier {
         DOMUtils.css(container, 'transition', 'opacity 3000ms');
 
         // Start fade out after a brief delay to ensure visibility
-        window.setTimeout(() => {
+        this.fadeOutTimer = window.setTimeout(() => {
           DOMUtils.css(container, 'opacity', '0');
         }, 100);
 
@@ -89,11 +99,7 @@ class ToolbarNotifier {
         DOMUtils.css(container, 'opacity', '1');
 
         // Hide after a short time (use debounce with shorter delay)
-        const hideNonFading = debounce((c: HTMLElement) => {
-          DOMUtils.hide(c);
-          DOMUtils.css(c, 'opacity', '');
-        }, 2000);
-        hideNonFading(container);
+        this.hideNonFadingNotification(container);
       }
     }
   }
