@@ -165,6 +165,12 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     return parent.getSorter().getOrderAfter(order);
   }
 
+  /** Orders for `count` new children of `parentId` added in one go (see the sorter). */
+  getOrdersForNewChildren(parentId: number, count: number): number[] {
+    const parent = this._treeSet.find(parentId);
+    return parent.getSorter().getOrdersForNewChildren(this._treeSet, parent, count);
+  }
+
   dump() {
     console.log(this._treeSet.dump());
   }

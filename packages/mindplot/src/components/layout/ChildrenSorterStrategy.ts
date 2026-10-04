@@ -47,6 +47,22 @@ abstract class ChildrenSorterStrategy {
     return order + 1;
   }
 
+  /**
+   * Orders for `count` new children appended to `parent` in one go, before any is inserted.
+   * By default they follow each other, after the slot the layout predicts for the first.
+   */
+  getOrdersForNewChildren(treeSet: RootedTreeSet, parent: Node, count: number): number[] {
+    const orders: number[] = [];
+    let [order] = this.predict(treeSet, parent, null, null);
+    for (let i = 0; i < count; i++) {
+      if (i > 0) {
+        order = this.getOrderAfter(order);
+      }
+      orders.push(order);
+    }
+    return orders;
+  }
+
   abstract toString(): string;
 
   abstract getVerticalPadding(): number;

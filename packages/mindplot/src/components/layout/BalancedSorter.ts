@@ -251,6 +251,27 @@ class BalancedSorter extends AbstractBasicSorter {
     return order + 2;
   }
 
+  /**
+   * Spreads the new children over both sides, as adding them one by one would: each goes to
+   * the side with fewer children (the right one on a tie, as predict does), after the
+   * children already there.
+   */
+  override getOrdersForNewChildren(graph: RootedTreeSet, parent: Node, count: number): number[] {
+    let right = this._getChildrenForOrder(parent, graph, 0).length;
+    let left = this._getChildrenForOrder(parent, graph, 1).length;
+    const orders: number[] = [];
+    for (let i = 0; i < count; i++) {
+      if (right - left > 0) {
+        orders.push(left * 2 + 1);
+        left++;
+      } else {
+        orders.push(right * 2);
+        right++;
+      }
+    }
+    return orders;
+  }
+
   toString(): string {
     return 'Balanced Sorter';
   }

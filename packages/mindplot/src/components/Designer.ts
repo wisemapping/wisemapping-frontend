@@ -799,21 +799,21 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // A collapsed parent is expanded by AddTopicCommand, in the same undo step as the paste.
     // Collapsed children keep their place in the layout, so predict is not affected.
     //
-    // Detach the copied nodes from the clipboard mindmap and let the layout
-    // decide where the first one lands under the new parent. None is inserted
-    // yet, so the rest follow it in clipboard order: given the same order, each
-    // insert would push the previous ones down and reverse them ...
+    // Detach the copied nodes from the clipboard mindmap and let the layout give
+    // each one its own order up front, as none is inserted yet: given the same
+    // order, each insert would push the previous ones down and reverse them.
+    // Under the central topic of a mindmap layout they are spread over both
+    // sides, as adding them one by one would; elsewhere they follow each other
+    // in clipboard order ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
     const predicted = layoutManager.predict(parentId, null, null);
-    let { order } = predicted;
-    const clones = branches[0].getChildren().map((child, index) => {
+    const children = branches[0].getChildren();
+    const orders = layoutManager.getOrdersForNewChildren(parentId, children.length);
+    const clones = children.map((child, index) => {
       child.disconnect();
       const clone = child.deepCopy();
-      if (index > 0) {
-        order = layoutManager.getOrderAfter(parentId, order);
-      }
       clone.setPosition(predicted.position.x, predicted.position.y);
-      clone.setOrder(order);
+      clone.setOrder(orders[index]);
       return clone;
     });
 

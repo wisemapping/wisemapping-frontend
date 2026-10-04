@@ -80,21 +80,42 @@ describe('Designer.pasteClipboardAsChild on a loaded map', () => {
     expect(childrenTextByOrder(topic(1))).toEqual(['A1', 'P1', 'P2', 'P3']);
   });
 
-  it('keeps the copied topics in clipboard order under the central topic', async () => {
+  it('spreads the copied topics over both sides of the central topic (BL-35)', async () => {
     const { designer, topic } = await buildDesigner();
-    setClipboard(designer, clipboardWith('P1', 'P2'));
+    const central = topic(0);
+    const sideCount = (side: number) =>
+      central.getChildren().filter((child) => (child.getOrder() ?? 0) % 2 === side).length;
+    const before = Math.abs(sideCount(0) - sideCount(1));
+    setClipboard(designer, clipboardWith('P1', 'P2', 'P3', 'P4'));
 
     await designer.pasteClipboardAsChild(0);
 
-    const central = topic(0);
     const pasted = central
       .getChildren()
       .filter((child) => (child.getModel().getText() ?? '').startsWith('P'));
-    const side = (pasted[0].getOrder() ?? 0) % 2;
-    expect(childrenTextByOrder(central, side).filter((text) => text.startsWith('P'))).toEqual([
-      'P1',
-      'P2',
-    ]);
+    const sides = new Set(pasted.map((child) => (child.getOrder() ?? 0) % 2));
+    expect(pasted).toHaveLength(4);
+    expect(sides).toEqual(new Set([0, 1]));
+    // As balanced as adding them one by one ...
+    expect(Math.abs(sideCount(0) - sideCount(1))).toBeLessThanOrEqual(Math.max(before, 1));
+    // ... and in clipboard order on each side.
+    [0, 1].forEach((side) => {
+      const onSide = childrenTextByOrder(central, side).filter((text) => text.startsWith('P'));
+      expect(onSide).toEqual([...onSide].sort());
+    });
+  });
+
+  it('removes every topic pasted under the central topic with one undo (BL-35)', async () => {
+    const { designer, topic } = await buildDesigner();
+    const central = topic(0);
+    const childrenBefore = central.getChildren().length;
+    setClipboard(designer, clipboardWith('P1', 'P2', 'P3'));
+
+    await designer.pasteClipboardAsChild(0);
+    expect(central.getChildren()).toHaveLength(childrenBefore + 3);
+
+    designer.undo();
+    expect(central.getChildren()).toHaveLength(childrenBefore);
   });
 
   it('pushes no undo step when the clipboard is empty, even on a collapsed parent', async () => {
