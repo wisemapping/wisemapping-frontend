@@ -411,3 +411,33 @@ describe('MindManagerImporter relationship line style', () => {
     expect(mindmap.getRelationships().map((r) => r.getStrokeStyle())).toEqual([StrokeStyle.DASHED]);
   });
 });
+
+describe('MindManagerImporter default topic texts', () => {
+  test('takes the text of a topic without ap:Text from the StyleGroup of its level', async () => {
+    const level = (n: number, text: string) =>
+      `<ap:RootSubTopicDefaultsGroup Level="${n}"><ap:DefaultText PlainText="${text}"/></ap:RootSubTopicDefaultsGroup>`;
+    const xml = `<ap:Map xmlns:ap="http://schemas.mindjet.com/MindManager/Application/2003">
+      <ap:OneTopic><ap:Topic OId="t1"><ap:SubTopics>
+        <ap:Topic OId="t2"><ap:SubTopics>
+          <ap:Topic OId="t3"><ap:SubTopics><ap:Topic OId="t4"/></ap:SubTopics></ap:Topic>
+        </ap:SubTopics></ap:Topic>
+        <ap:Topic OId="t5"><ap:Text PlainText="Own text"/></ap:Topic>
+      </ap:SubTopics></ap:Topic></ap:OneTopic>
+      <ap:StyleGroup>
+        <ap:RootTopicDefaultsGroup><ap:DefaultText PlainText="Central Topic"/></ap:RootTopicDefaultsGroup>
+        ${level(1, 'Subtopic')}${level(0, 'Main Topic')}
+      </ap:StyleGroup>
+    </ap:Map>`;
+
+    const mindmap = loadMindmap(await new MindManagerImporter(xml).import('test', ''));
+
+    const central = mindmap.getCentralTopic();
+    expect(central.getText()).toBe('Central Topic');
+    const [main, own] = central.getChildren();
+    expect([main.getText(), own.getText()]).toEqual(['Main Topic', 'Own text']);
+    const sub = main.getChildren()[0];
+    expect(sub.getText()).toBe('Subtopic');
+    // Below the deepest level of the StyleGroup, the deepest one applies.
+    expect(sub.getChildren()[0].getText()).toBe('Subtopic');
+  });
+});

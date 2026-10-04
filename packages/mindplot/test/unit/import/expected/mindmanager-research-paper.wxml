@@ -7,15 +7,15 @@
                 <eicon id="💡"/>
                 <note><![CDATA[Provide background information and context]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Problem Statement" shape="line" id="4">
+            <topic position="300,75" order="1" text="Problem Statement" shape="line" id="4">
                 <eicon id="💡"/>
                 <note><![CDATA[Define the research problem and questions]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Objectives" shape="line" id="5">
+            <topic position="400,150" order="2" text="Objectives" shape="line" id="5">
                 <eicon id="⭐"/>
                 <note><![CDATA[State research objectives and goals]]></note>
             </topic>
-            <topic position="-300,75" order="3" text="Significance" shape="line" id="6">
+            <topic position="500,225" order="3" text="Significance" shape="line" id="6">
                 <eicon id="💡"/>
                 <note><![CDATA[Explain the significance of the research]]></note>
             </topic>
@@ -23,19 +23,19 @@
         <topic position="-200,0" order="1" text="Literature Review" shape="line" id="7">
             <eicon id="💡"/>
             <note><![CDATA[Review existing literature and research]]></note>
-            <topic position="200,0" order="0" text="Theoretical Framework" shape="line" id="8">
+            <topic position="-200,0" order="0" text="Theoretical Framework" shape="line" id="8">
                 <eicon id="💡"/>
                 <note><![CDATA[Present theoretical foundation]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Previous Studies" shape="line" id="9">
+            <topic position="-300,75" order="1" text="Previous Studies" shape="line" id="9">
                 <eicon id="💡"/>
                 <note><![CDATA[Review relevant previous studies]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Research Gaps" shape="line" id="10">
+            <topic position="-400,150" order="2" text="Research Gaps" shape="line" id="10">
                 <eicon id="💡"/>
                 <note><![CDATA[Identify gaps in existing research]]></note>
             </topic>
-            <topic position="-300,75" order="3" text="Hypothesis" shape="line" id="11">
+            <topic position="-500,225" order="3" text="Hypothesis" shape="line" id="11">
                 <eicon id="💡"/>
                 <note><![CDATA[Formulate research hypotheses]]></note>
             </topic>
@@ -47,15 +47,15 @@
                 <eicon id="💻"/>
                 <note><![CDATA[Explain research design and approach]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Data Collection" shape="line" id="14">
+            <topic position="300,75" order="1" text="Data Collection" shape="line" id="14">
                 <eicon id="💡"/>
                 <note><![CDATA[Describe data collection methods]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Sample Selection" shape="line" id="15">
+            <topic position="400,150" order="2" text="Sample Selection" shape="line" id="15">
                 <eicon id="💡"/>
                 <note><![CDATA[Explain sampling strategy and criteria]]></note>
             </topic>
-            <topic position="-300,75" order="3" text="Data Analysis" shape="line" id="16">
+            <topic position="500,225" order="3" text="Data Analysis" shape="line" id="16">
                 <eicon id="💡"/>
                 <note><![CDATA[Describe data analysis methods]]></note>
             </topic>
@@ -63,19 +63,19 @@
         <topic position="-300,75" order="3" text="Results" shape="line" id="17">
             <eicon id="💡"/>
             <note><![CDATA[Present research findings and results]]></note>
-            <topic position="200,0" order="0" text="Data Presentation" shape="line" id="18">
+            <topic position="-200,0" order="0" text="Data Presentation" shape="line" id="18">
                 <eicon id="💡"/>
                 <note><![CDATA[Present data in tables and figures]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Statistical Analysis" shape="line" id="19">
+            <topic position="-300,75" order="1" text="Statistical Analysis" shape="line" id="19">
                 <eicon id="💻"/>
                 <note><![CDATA[Present statistical analysis results]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Key Findings" shape="line" id="20">
+            <topic position="-400,150" order="2" text="Key Findings" shape="line" id="20">
                 <eicon id="⭐"/>
                 <note><![CDATA[Highlight key research findings]]></note>
             </topic>
-            <topic position="-300,75" order="3" text="Patterns" shape="line" id="21">
+            <topic position="-500,225" order="3" text="Patterns" shape="line" id="21">
                 <eicon id="💡"/>
                 <note><![CDATA[Identify patterns and trends]]></note>
             </topic>
@@ -87,15 +87,15 @@
                 <eicon id="💡"/>
                 <note><![CDATA[Interpret the research findings]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Implications" shape="line" id="24">
+            <topic position="300,75" order="1" text="Implications" shape="line" id="24">
                 <eicon id="➡️"/>
                 <note><![CDATA[Discuss implications of findings]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Limitations" shape="line" id="25">
+            <topic position="400,150" order="2" text="Limitations" shape="line" id="25">
                 <eicon id="💡"/>
                 <note><![CDATA[Acknowledge research limitations]]></note>
             </topic>
-            <topic position="-300,75" order="3" text="Future Research" shape="line" id="26">
+            <topic position="500,225" order="3" text="Future Research" shape="line" id="26">
                 <eicon id="💡"/>
                 <note><![CDATA[Suggest directions for future research]]></note>
             </topic>
@@ -103,15 +103,15 @@
         <topic position="-400,150" order="5" text="Conclusion" shape="line" id="27">
             <eicon id="💡"/>
             <note><![CDATA[Conclude the research and summarize findings]]></note>
-            <topic position="200,0" order="0" text="Summary" shape="line" id="28">
+            <topic position="-200,0" order="0" text="Summary" shape="line" id="28">
                 <eicon id="💡"/>
                 <note><![CDATA[Summarize key findings and contributions]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Recommendations" shape="line" id="29">
+            <topic position="-300,75" order="1" text="Recommendations" shape="line" id="29">
                 <eicon id="⭐"/>
                 <note><![CDATA[Provide recommendations based on findings]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Final Thoughts" shape="line" id="30">
+            <topic position="-400,150" order="2" text="Final Thoughts" shape="line" id="30">
                 <eicon id="💡"/>
                 <note><![CDATA[Concluding thoughts and reflections]]></note>
             </topic>
@@ -123,11 +123,11 @@
                 <eicon id="💡"/>
                 <note><![CDATA[Academic journals and publications]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Books" shape="line" id="33">
+            <topic position="300,75" order="1" text="Books" shape="line" id="33">
                 <eicon id="💡"/>
                 <note><![CDATA[Books and monographs]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Web Sources" shape="line" id="34">
+            <topic position="400,150" order="2" text="Web Sources" shape="line" id="34">
                 <eicon id="💻"/>
                 <note><![CDATA[Online sources and websites]]></note>
             </topic>

@@ -1,0 +1,12 @@
+<map name="mindmanager-real-mmap2json-2017" theme="prism" layout="mindmap" version="tango">
+    <topic central="true" text="A" id="1">
+        <topic position="200,0" order="0" text="B" shape="line" id="2">
+            <topic position="200,0" order="0" text="D" shape="line" id="3"/>
+            <topic position="300,75" order="1" text="E" shape="line" id="4">
+                <topic position="200,0" order="0" text="G" shape="line" id="5"/>
+            </topic>
+            <topic position="400,150" order="2" text="F" shape="line" id="6"/>
+        </topic>
+        <topic position="300,75" order="2" text="C" shape="line" id="7"/>
+    </topic>
+</map>

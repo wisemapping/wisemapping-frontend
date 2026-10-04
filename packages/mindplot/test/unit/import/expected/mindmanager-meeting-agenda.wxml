@@ -7,11 +7,11 @@
                 <eicon id="💡"/>
                 <note><![CDATA[Welcome attendees and introductions]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Agenda Review" shape="line" id="4">
+            <topic position="300,75" order="1" text="Agenda Review" shape="line" id="4">
                 <eicon id="💡"/>
                 <note><![CDATA[Review meeting agenda and objectives]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Ground Rules" shape="line" id="5">
+            <topic position="400,150" order="2" text="Ground Rules" shape="line" id="5">
                 <eicon id="💡"/>
                 <note><![CDATA[Establish meeting ground rules]]></note>
             </topic>
@@ -19,15 +19,15 @@
         <topic position="-200,0" order="1" text="Previous Meeting" shape="line" id="6">
             <eicon id="💡"/>
             <note><![CDATA[Review previous meeting outcomes]]></note>
-            <topic position="200,0" order="0" text="Action Items" shape="line" id="7">
+            <topic position="-200,0" order="0" text="Action Items" shape="line" id="7">
                 <eicon id="✅"/>
                 <note><![CDATA[Review completed action items]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Outstanding Items" shape="line" id="8">
+            <topic position="-300,75" order="1" text="Outstanding Items" shape="line" id="8">
                 <eicon id="🟡"/>
                 <note><![CDATA[Discuss outstanding action items]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Follow-up" shape="line" id="9">
+            <topic position="-400,150" order="2" text="Follow-up" shape="line" id="9">
                 <eicon id="➡️"/>
                 <note><![CDATA[Follow-up on previous decisions]]></note>
             </topic>
@@ -39,15 +39,15 @@
                 <eicon id="💡"/>
                 <note><![CDATA[Update on current project status]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Budget Review" shape="line" id="12">
+            <topic position="300,75" order="1" text="Budget Review" shape="line" id="12">
                 <eicon id="💡"/>
                 <note><![CDATA[Review budget status and allocations]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Resource Planning" shape="line" id="13">
+            <topic position="400,150" order="2" text="Resource Planning" shape="line" id="13">
                 <eicon id="💡"/>
                 <note><![CDATA[Plan resource allocation and needs]]></note>
             </topic>
-            <topic position="-300,75" order="3" text="Risk Assessment" shape="line" id="14">
+            <topic position="500,225" order="3" text="Risk Assessment" shape="line" id="14">
                 <eicon id="💡"/>
                 <note><![CDATA[Assess and discuss project risks]]></note>
             </topic>
@@ -55,15 +55,15 @@
         <topic position="-300,75" order="3" text="Decision Making" shape="line" id="15">
             <eicon id="💡"/>
             <note><![CDATA[Make decisions on key issues]]></note>
-            <topic position="200,0" order="0" text="Proposals" shape="line" id="16">
+            <topic position="-200,0" order="0" text="Proposals" shape="line" id="16">
                 <eicon id="💡"/>
                 <note><![CDATA[Present and discuss proposals]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Voting" shape="line" id="17">
+            <topic position="-300,75" order="1" text="Voting" shape="line" id="17">
                 <eicon id="💡"/>
                 <note><![CDATA[Vote on key decisions]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Consensus" shape="line" id="18">
+            <topic position="-400,150" order="2" text="Consensus" shape="line" id="18">
                 <eicon id="💡"/>
                 <note><![CDATA[Reach consensus on important matters]]></note>
             </topic>
@@ -75,11 +75,11 @@
                 <eicon id="🟡"/>
                 <note><![CDATA[Assign new action items and responsibilities]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Timeline" shape="line" id="21">
+            <topic position="300,75" order="1" text="Timeline" shape="line" id="21">
                 <eicon id="💡"/>
                 <note><![CDATA[Set timelines and deadlines]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Next Meeting" shape="line" id="22">
+            <topic position="400,150" order="2" text="Next Meeting" shape="line" id="22">
                 <eicon id="💡"/>
                 <note><![CDATA[Schedule next meeting and agenda]]></note>
             </topic>
@@ -87,15 +87,15 @@
         <topic position="-400,150" order="5" text="Closing" shape="line" id="23">
             <eicon id="💡"/>
             <note><![CDATA[Meeting wrap-up and conclusion]]></note>
-            <topic position="200,0" order="0" text="Summary" shape="line" id="24">
+            <topic position="-200,0" order="0" text="Summary" shape="line" id="24">
                 <eicon id="💡"/>
                 <note><![CDATA[Summarize key decisions and outcomes]]></note>
             </topic>
-            <topic position="-200,0" order="1" text="Action Items Review" shape="line" id="25">
+            <topic position="-300,75" order="1" text="Action Items Review" shape="line" id="25">
                 <eicon id="🟡"/>
                 <note><![CDATA[Review all action items and assignments]]></note>
             </topic>
-            <topic position="300,75" order="2" text="Meeting Notes" shape="line" id="26">
+            <topic position="-400,150" order="2" text="Meeting Notes" shape="line" id="26">
                 <eicon id="💡"/>
                 <note><![CDATA[Distribute meeting notes and minutes]]></note>
             </topic>

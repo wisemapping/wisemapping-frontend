@@ -41,7 +41,8 @@ interface MindManagerTopic {
   icons: string[];
   fillColor?: string;
   lineColor?: string;
-  // Offset from the parent topic, in millimeters.
+  // In millimeters. For a floating topic, its position from the central topic. For a subtopic, a
+  // layout hint: CX is the distance from the parent, its sign the side; CY is not a position.
   offset?: { x: number; y: number };
   children?: MindManagerTopic[];
   floating?: MindManagerTopic[];
@@ -55,12 +56,18 @@ const PIXELS_PER_MILLIMETER = 96 / 25.4;
 
 type MindManagerRawInput = string | ArrayBuffer | Uint8Array;
 
+// The style defaults of a topic: those of the central topic and its subtopics, of the floating
+// topics of the map or of the callouts of a topic (StyleGroup/RootTopicDefaultsGroup, ...).
+type TopicKind = 'Root' | 'Label' | 'Callout';
+
 class MindManagerImporter extends Importer {
   private mindManagerInput: MindManagerRawInput;
 
   private idCounter: number = 1;
 
   private topicIdMap: Map<string, number>;
+
+  private styleGroup: Element | null = null;
 
   constructor(map: MindManagerRawInput) {
     super();
@@ -72,11 +79,9 @@ class MindManagerImporter extends Importer {
     return this.idCounter++;
   }
 
-  private calculatePosition(order: number): { x: number; y: number } {
-    // Even orders go to the right, odd orders go to the left
-    const side = order % 2 === 0 ? 1 : -1;
-    const sideIndex = Math.floor(order / 2);
-
+  // The initial position of the topic at the given index among the siblings on its side. The
+  // layout places the topics by their order.
+  private calculatePosition(sideIndex: number, side: number): { x: number; y: number } {
     const x = side * (200 + sideIndex * 100);
     const y = sideIndex * 75;
 
@@ -259,14 +264,20 @@ class MindManagerImporter extends Importer {
     this.addFeatures(centralTopic, rootTopic);
     mindmap.addBranch(centralTopic);
 
-    // Generate child topics recursively
-    rootTopic.children?.forEach((topic, index) => {
-      centralTopic.append(this.convertTopic(mindmap, topic, index));
+    // The main topics go on the side of their offset or, without one, on the side with fewer
+    // topics. Even orders are on the right, odd ones on the left, in document order on each side.
+    let right = 0;
+    let left = 0;
+    rootTopic.children?.forEach((topic) => {
+      const atLeft = topic.offset ? topic.offset.x < 0 : left < right;
+      const sideIndex = atLeft ? left++ : right++;
+      const order = atLeft ? 2 * sideIndex + 1 : 2 * sideIndex;
+      centralTopic.append(this.convertTopic(mindmap, topic, order, sideIndex, atLeft ? -1 : 1));
     });
 
     // Floating topics are isolated topics, placed at their offset from the central topic.
     rootTopic.floating?.forEach((topic, index) => {
-      const node = this.convertTopic(mindmap, topic, index);
+      const node = this.convertTopic(mindmap, topic, index, index, 1);
       const offset = topic.offset ?? { x: 0, y: (index + 1) * 100 };
       node.setPosition(
         Math.round(offset.x * PIXELS_PER_MILLIMETER),
@@ -280,26 +291,33 @@ class MindManagerImporter extends Importer {
     return mindmap;
   }
 
-  private convertTopic(mindmap: Mindmap, topic: MindManagerTopic, order: number): NodeModel {
+  private convertTopic(
+    mindmap: Mindmap,
+    topic: MindManagerTopic,
+    order: number,
+    sideIndex: number,
+    side: number,
+  ): NodeModel {
     const node = mindmap.createNode('MainTopic', this.generateId());
     this.mapTopicId(topic, node);
-    const position = this.calculatePosition(order);
+    const position = this.calculatePosition(sideIndex, side);
     node.setText(topic.text);
     node.setPosition(position.x, position.y);
     node.setOrder(order);
     node.setShapeType('line');
     this.addFeatures(node, topic);
 
-    // Generate child topics recursively
+    // Generate child topics recursively. They are on the side of their parent.
     topic.children?.forEach((child, index) => {
-      node.append(this.convertTopic(mindmap, child, index));
+      node.append(this.convertTopic(mindmap, child, index, index, side));
     });
 
     // The floating topics of a topic are callouts attached to it: they are imported as its last
     // children.
     const childCount = topic.children?.length ?? 0;
     topic.floating?.forEach((callout, index) => {
-      node.append(this.convertTopic(mindmap, callout, childCount + index));
+      const calloutOrder = childCount + index;
+      node.append(this.convertTopic(mindmap, callout, calloutOrder, calloutOrder, side));
     });
 
     return node;
@@ -403,7 +421,32 @@ class MindManagerImporter extends Importer {
       throw new Error('Invalid MindManager XML: missing root Topic');
     }
 
-    return this.parseTopic(rootTopic);
+    this.styleGroup = this.findChildByTagName(mapElement, 'StyleGroup');
+    return this.parseTopic(rootTopic, 'Root', 0);
+  }
+
+  /**
+   * MindManager does not write the text of a topic that keeps the default one of its level, for
+   * example "Main Topic". The default is the PlainText of the DefaultText of the StyleGroup:
+   * RootTopicDefaultsGroup for the central topic, and the RootSubTopicDefaultsGroup of the Level
+   * (depth - 1) for its subtopics. The deepest level that is defined applies below it.
+   */
+  private defaultText(kind: TopicKind, depth: number): string | undefined {
+    if (!this.styleGroup) {
+      return undefined;
+    }
+    let defaults: Element | null;
+    if (depth === 0) {
+      defaults = this.findChildByTagName(this.styleGroup, `${kind}TopicDefaultsGroup`);
+    } else {
+      const levels = this.findChildrenByTagName(this.styleGroup, `${kind}SubTopicDefaultsGroup`)
+        .map((group) => ({ group, level: Number(group.getAttribute('Level')) }))
+        .filter(({ level }) => Number.isInteger(level) && level <= depth - 1)
+        .sort((a, b) => b.level - a.level);
+      defaults = levels.length > 0 ? levels[0].group : null;
+    }
+    const text = defaults && this.findChildByTagName(defaults, 'DefaultText');
+    return text?.getAttribute('PlainText') || undefined;
   }
 
   private findElementByTagName(parent: Element | Document, tagName: string): Element | null {
@@ -439,11 +482,14 @@ class MindManagerImporter extends Importer {
 
   // Topics are written as <Topic ID Text> or, by MindManager, as <ap:Topic OId> with the text,
   // notes and subtopics in child elements.
-  private parseTopic(topicElement: Element): MindManagerTopic {
+  private parseTopic(topicElement: Element, kind: TopicKind, depth: number): MindManagerTopic {
     const id = topicElement.getAttribute('ID') || topicElement.getAttribute('OId') || undefined;
     const textElement = this.findChildByTagName(topicElement, 'Text');
     const text =
-      topicElement.getAttribute('Text') || textElement?.getAttribute('PlainText') || 'Untitled';
+      topicElement.getAttribute('Text') ||
+      textElement?.getAttribute('PlainText') ||
+      this.defaultText(kind, depth) ||
+      'Untitled';
 
     const topic: MindManagerTopic = {
       id,
@@ -515,13 +561,16 @@ class MindManagerImporter extends Importer {
     ];
 
     if (childTopics.length > 0) {
-      topic.children = childTopics.map((child) => this.parseTopic(child));
+      topic.children = childTopics.map((child) => this.parseTopic(child, kind, depth + 1));
     }
 
+    // The floating topics of the central topic are the floating topics of the map; those of any
+    // other topic are its callouts.
     const floatingTopics = this.findChildByTagName(topicElement, 'FloatingTopics');
     if (floatingTopics) {
+      const floatingKind = kind === 'Root' && depth === 0 ? 'Label' : 'Callout';
       topic.floating = this.findChildrenByTagName(floatingTopics, 'Topic').map((child) =>
-        this.parseTopic(child),
+        this.parseTopic(child, floatingKind, 0),
       );
     }
 
