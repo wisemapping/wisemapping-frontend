@@ -80,13 +80,18 @@ describe('mmap2json-2017 laid out', () => {
    * topics high and C's one, so B and C sit lower than in MindManager. That is the layout
    * (BalancedSorter.computeOffsets sums the branch heights), not the import.
    */
-  it.failing('centres B and C on A, as MindManager draws them', async () => {
+  // Decided: WiseMapping centres the block of B (with its subtree) and C on A, not B and C
+  // themselves as MindManager does; centring the topics would unbalance maps with uneven
+  // subtrees. So B, whose branch is taller, sits closer to A than C.
+  it('centres the block of B (with its subtree) and C on A, so B sits closer to A', async () => {
     const harness = await importedDesigner();
     const a = byText(harness, 'A').getPosition();
     const b = byText(harness, 'B').getPosition();
     const c = byText(harness, 'C').getPosition();
+    const d = byText(harness, 'D').getPosition();
 
-    expect((b.y + c.y) / 2).toBeCloseTo(a.y);
+    expect(a.y - b.y).toBeLessThan(c.y - a.y);
+    expect((d.y + c.y) / 2).toBeCloseTo(a.y);
   });
 
   it('centres D, E and F on B: E is at the height of B', async () => {
