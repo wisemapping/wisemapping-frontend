@@ -96,10 +96,6 @@ class DeleteCommand extends Command {
    * @see {@link mindplot.Command.undoExecute}
    */
   undoExecute(commandContext: CommandContext) {
-    // Building a topic with children runs a layout pass before the topic itself is
-    // reconnected, and that pass clears its order. Keep it to restore it on connect ...
-    const orders = this._deletedTopicModels.map((model) => model.getOrder());
-
     // Add all the topics ...
     this._deletedTopicModels.forEach((model) => {
       commandContext.createTopic(model);
@@ -112,7 +108,6 @@ class DeleteCommand extends Command {
       const parentId = this._parentTopicIds[index];
       if (parentId !== null) {
         const parentTopics = commandContext.findTopics([parentId]);
-        topicModel.setOrder(orders[index]);
         commandContext.connect(topics[0], parentTopics[0]);
       } else {
         // A floating topic is a branch of the mindmap, put it back there ...

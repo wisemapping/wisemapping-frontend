@@ -24,8 +24,12 @@
  * (jest.mock is hoisted per file), as the other designer tests do.
  */
 import Designer from '../../../src/components/Designer';
+import LinkIcon from '../../../src/components/LinkIcon';
+import NoteIcon from '../../../src/components/NoteIcon';
 import Topic from '../../../src/components/Topic';
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
+import LinkModel from '../../../src/components/model/LinkModel';
+import NoteModel from '../../../src/components/model/NoteModel';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
@@ -38,6 +42,28 @@ const svgPrototype = (window as unknown as { SVGElement: { prototype: SVGElement
   .SVGElement.prototype;
 svgPrototype.getBBox = () => ({ x: 0, y: 0, width: 60, height: 14 });
 svgPrototype.getComputedTextLength = () => 60;
+
+/**
+ * A widget manager with no UI: note and link icons register their tooltips on
+ * it when a topic is rendered, and there is no web component to show them in.
+ */
+export class StubWidgetManager extends WidgetBuilder {
+  createTooltipForLink(_topic: Topic, _linkModel: LinkModel, _linkIcon: LinkIcon): void {
+    // No tooltips in tests.
+  }
+
+  configureTooltipForNode(_topic: Topic, _noteModel: NoteModel, _noteIcon: NoteIcon): void {
+    // No tooltips in tests.
+  }
+
+  buildEditorForLink(): React.ReactElement {
+    throw new Error('The link editor is not available in tests');
+  }
+
+  buidEditorForNote(): React.ReactElement {
+    throw new Error('The note editor is not available in tests');
+  }
+}
 
 /**
  * Central (0)
@@ -100,7 +126,7 @@ export const buildDesigner = async (xml: string = SAMPLE_MAP): Promise<Harness> 
     zoom: 1,
     mode: 'edition-owner',
     divContainer: container,
-    widgetManager: {} as WidgetBuilder,
+    widgetManager: new StubWidgetManager(),
   });
 
   const document_ = new DOMParser().parseFromString(xml, 'text/xml');

@@ -25,8 +25,6 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
   default: class MockPDFExporter {},
 }));
 
-import Designer from '../../../src/components/Designer';
-import WidgetBuilder from '../../../src/components/WidgetBuilder';
 import SvgIconModel from '../../../src/components/model/SvgIconModel';
 import NoteModel from '../../../src/components/model/NoteModel';
 import { buildDesigner } from './designer-harness';
@@ -50,18 +48,6 @@ const featureId = (
 ) => topic.getModel().findFeatureByType(type)[0].getId();
 
 describe('ChangeFeatureToTopicCommand undo/redo', () => {
-  // The note and link icons register their tooltips on creation.
-  beforeEach(() => {
-    jest.spyOn(Designer.prototype, 'getWidgetManager').mockReturnValue({
-      configureTooltipForNode: jest.fn(),
-      createTooltipForLink: jest.fn(),
-    } as unknown as WidgetBuilder);
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   it('restores an icon type', async () => {
     const { designer, save, topic } = await buildDesigner(MAP);
     const before = save();

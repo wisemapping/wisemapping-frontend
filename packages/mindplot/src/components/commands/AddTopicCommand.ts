@@ -25,6 +25,9 @@ class AddTopicCommand extends Command {
 
   private _parentsIds: number[] | null;
 
+  // Parents that were collapsed and this command expanded, to collapse them again on undo.
+  private _expandedParentIds: number[];
+
   /**
    * @classdesc This command class handles do/undo of adding one or multiple topics to
    * the mindmap.
@@ -38,9 +41,22 @@ class AddTopicCommand extends Command {
     super();
     this._models = models;
     this._parentsIds = parentTopicsId;
+    this._expandedParentIds = [];
   }
 
   execute(commandContext: CommandContext) {
+    // A collapsed parent would hide the new topics: expand it as part of this same undo step ...
+    this._expandedParentIds = [];
+    if (this._parentsIds) {
+      const parentIds = this._parentsIds.filter((id): id is number => $defined(id));
+      commandContext.findTopics(Array.from(new Set(parentIds))).forEach((parentTopic) => {
+        if (parentTopic.areChildrenShrunken()) {
+          parentTopic.setChildrenShrunken(false);
+          this._expandedParentIds.push(parentTopic.getId());
+        }
+      });
+    }
+
     this._models.forEach((model, index) => {
       // Add a new topic ...
       const topic = commandContext.createTopic(model);
@@ -79,6 +95,12 @@ class AddTopicCommand extends Command {
       const topic = commandContext.findTopics([topicId])[0];
       commandContext.deleteTopic(topic);
     });
+
+    // Collapse back the parents that were collapsed before ...
+    commandContext.findTopics(this._expandedParentIds).forEach((parentTopic) => {
+      parentTopic.setChildrenShrunken(true);
+    });
+    this._expandedParentIds = [];
 
     this._models = clonedModel;
   }
