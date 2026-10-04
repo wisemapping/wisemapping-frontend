@@ -142,6 +142,12 @@ describe('MindplotWebComponent', () => {
       await second.promise;
       expect(component.getSaveRequired()).toBe(false);
     });
+
+    it('passes the urgent flag of a flush to the persistence manager (B-FIREFORGET)', () => {
+      component.save(false, { urgent: true });
+      const { calls } = persistence.save.mock;
+      expect(calls[calls.length - 1][4]).toEqual({ urgent: true });
+    });
   });
 
   describe('render mode (B-MODE)', () => {
@@ -171,6 +177,26 @@ describe('MindplotWebComponent', () => {
 
       component.unlockMap();
       expect(persistence.unlockMap).toHaveBeenCalledWith('1');
+    });
+
+    it('returns the unlock request so a caller can wait for it (B-FIREFORGET)', async () => {
+      build('edition-owner');
+      let settle: () => void = () => undefined;
+      persistence.unlockMap.mockReturnValue(
+        new Promise<void>((resolve) => {
+          settle = resolve;
+        }),
+      );
+
+      let done = false;
+      const result = component.unlockMap().then(() => {
+        done = true;
+      });
+      await Promise.resolve();
+      expect(done).toBe(false);
+      settle();
+      await result;
+      expect(done).toBe(true);
     });
   });
 });

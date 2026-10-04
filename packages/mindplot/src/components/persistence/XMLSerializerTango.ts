@@ -23,6 +23,7 @@ import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
 import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
+import ModelCodeName from './ModelCodeName';
 import FeatureType from '../model/FeatureType';
 import emojiToIconMap from './iconToEmoji.json';
 import { LineType } from '../ConnectionLine';
@@ -164,8 +165,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if (topic.getType() === 'CentralTopic') {
       parentTopic.setAttribute('central', 'true');
     } else {
+      // getPosition() reports a missing or corrupted position as undefined: leave it out.
       const pos = topic.getPosition();
-      parentTopic.setAttribute('position', `${Math.ceil(pos.x)},${Math.ceil(pos.y)}`);
+      if (pos) {
+        parentTopic.setAttribute('position', `${Math.ceil(pos.x)},${Math.ceil(pos.y)}`);
+      }
 
       const order = topic.getOrder();
       if (typeof order === 'number' && Number.isFinite(order)) {
@@ -414,10 +418,25 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       }
     });
 
+    // Older versions synthesize missing positions in their migrator. Tango requires one, so a
+    // missing or corrupted position (e.g. "NaN,NaN") falls back to the parent position.
+    if (version === ModelCodeName.TANGO) {
+      mindmap.getBranches().forEach((branch) => XMLSerializerTango._fixMissingPositions(branch));
+    }
+
     // Clean up from the recursion ...
     this._idsMap = {};
     mindmap.setId(mapId);
     return mindmap;
+  }
+
+  private static _fixMissingPositions(node: NodeModel, parentPosition = { x: 0, y: 0 }): void {
+    let position = node.getPosition();
+    if (!position) {
+      position = parentPosition;
+      node.setPosition(position.x, position.y);
+    }
+    node.getChildren().forEach((child) => XMLSerializerTango._fixMissingPositions(child, position));
   }
 
   protected _deserializeNode(domElem: Element, mindmap: Mindmap): NodeModel {
@@ -493,7 +512,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         topic.setImageUrl(url);
 
         const split = size.split(',');
-        topic.setImageSize(Number.parseInt(split[0], 10), Number.parseInt(split[1], 10));
+        const width = Number.parseInt(split[0], 10);
+        const height = Number.parseInt(split[1], 10);
+        if (Number.isFinite(width) && Number.isFinite(height)) {
+          topic.setImageSize(width, height);
+        }
       }
     }
     // Deserialize image emoji as a separate attribute (feature)
@@ -549,7 +572,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const position = domElem.getAttribute('position');
     if (position !== null) {
       const pos = position.split(',');
-      topic.setPosition(Number.parseInt(pos[0], 10), Number.parseInt(pos[1], 10));
+      const x = Number.parseInt(pos[0], 10);
+      const y = Number.parseInt(pos[1], 10);
+      // A corrupted position (e.g. "NaN,NaN") is treated as missing.
+      if (Number.isFinite(x) && Number.isFinite(y)) {
+        topic.setPosition(x, y);
+      }
     }
 
     const metadata = domElem.getAttribute('metadata');

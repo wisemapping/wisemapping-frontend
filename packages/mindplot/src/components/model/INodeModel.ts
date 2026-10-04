@@ -34,6 +34,16 @@ export type TopicShapeType =
 const parseJsObject = (str: string) =>
   JSON.parse(str.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": '));
 
+// Parses a stored {key:number,...} value. Corrupted values (e.g. NaN) are reported as missing.
+const parseFiniteObject = <T>(str: string, keys: string[]): T | undefined => {
+  try {
+    const result = parseJsObject(str);
+    return keys.every((key) => Number.isFinite(result?.[key])) ? result : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
 abstract class INodeModel {
   static MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE = 220;
 
@@ -104,6 +114,10 @@ abstract class INodeModel {
   }
 
   setPosition(x: number, y: number): void {
+    if (!Number.isFinite(x) || !Number.isFinite(y)) {
+      console.warn(`Ignoring invalid position (${x},${y}) for topic ${this.getId()}`);
+      return;
+    }
     this.putProperty('position', `{x:${x},y:${y}}`);
   }
 
@@ -111,12 +125,16 @@ abstract class INodeModel {
     const value = this.getProperty('position') as string;
     let result;
     if (value != null) {
-      result = parseJsObject(value);
+      result = parseFiniteObject<PositionType>(value, ['x', 'y']);
     }
     return result;
   }
 
   setImageSize(width: number, height: number): void {
+    if (!Number.isFinite(width) || !Number.isFinite(height)) {
+      console.warn(`Ignoring invalid image size (${width},${height}) for topic ${this.getId()}`);
+      return;
+    }
     this.putProperty('imageSize', `{width:${width},height:${height}}`);
   }
 
@@ -124,7 +142,7 @@ abstract class INodeModel {
     const value = this.getProperty('imageSize') as string;
     let result: SizeType | undefined;
     if (value) {
-      result = parseJsObject(value);
+      result = parseFiniteObject<SizeType>(value, ['width', 'height']);
     }
     return result;
   }

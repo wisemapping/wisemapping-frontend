@@ -18,7 +18,11 @@
 import { $assert } from './util/assert';
 import { $msg } from './Messages';
 import { AjaxUtils } from './util/AjaxUtils';
-import PersistenceManager, { PersistenceError, ServerError } from './PersistenceManager';
+import PersistenceManager, {
+  PersistenceError,
+  SaveOptions,
+  ServerError,
+} from './PersistenceManager';
 
 type SaveEvents = {
   onSuccess: () => void;
@@ -29,6 +33,7 @@ type PendingSave = {
   mapId: string;
   data: { id: string; xml: string; properties: string };
   saveHistory: boolean;
+  urgent: boolean;
   events: SaveEvents[];
 };
 
@@ -61,7 +66,13 @@ class RESTPersistenceManager extends PersistenceManager {
   // Server writes are rate limited: one request in flight and at most one request every
   // MIN_SAVE_INTERVAL_MS. Saves requested in between are coalesced per map into a single
   // pending save of the latest payload; every caller is notified when that save completes.
+  // An urgent save (a flush, e.g. when leaving the editor) skips the interval, but still never
+  // overlaps the request in flight.
   private static readonly MIN_SAVE_INTERVAL_MS = 10000;
+
+  // Browsers cap the bodies of all the in flight keepalive requests at 64 KB. Leave some room for
+  // the unlock request; larger saves are sent as regular requests.
+  private static readonly KEEPALIVE_MAX_BODY_BYTES = 60 * 1024;
 
   private _saveInFlight = false;
 
@@ -72,39 +83,49 @@ class RESTPersistenceManager extends PersistenceManager {
   private _pendingSaves = new Map<string, PendingSave>();
 
   private _scheduleNextSave(): void {
-    if (this._saveInFlight || this._saveTimer || this._pendingSaves.size === 0) {
+    if (this._saveInFlight || this._pendingSaves.size === 0) {
       return;
     }
 
+    const pendingSaves = Array.from(this._pendingSaves.values());
+    const next = pendingSaves.find((p) => p.urgent) ?? pendingSaves[0];
     const wait =
-      this._lastSaveStartedAt === undefined
+      next.urgent || this._lastSaveStartedAt === undefined
         ? 0
         : this._lastSaveStartedAt + RESTPersistenceManager.MIN_SAVE_INTERVAL_MS - Date.now();
     if (wait > 0) {
-      this._saveTimer = setTimeout(() => {
-        this._saveTimer = undefined;
-        this._scheduleNextSave();
-      }, wait);
+      if (!this._saveTimer) {
+        this._saveTimer = setTimeout(() => {
+          this._saveTimer = undefined;
+          this._scheduleNextSave();
+        }, wait);
+      }
       return;
     }
 
-    const [mapId, pending] = this._pendingSaves.entries().next().value as [string, PendingSave];
-    this._pendingSaves.delete(mapId);
-    this._sendSave(pending);
+    if (this._saveTimer) {
+      clearTimeout(this._saveTimer);
+      this._saveTimer = undefined;
+    }
+    this._pendingSaves.delete(next.mapId);
+    this._sendSave(next);
   }
 
   private _sendSave(pending: PendingSave): void {
     this._saveInFlight = true;
     this._lastSaveStartedAt = Date.now();
 
-    const { mapId, data, saveHistory, events } = pending;
+    const { mapId, data, saveHistory, urgent, events } = pending;
     const query = `minor=${!saveHistory}`;
     const headers = this._buildHttpHeader('application/json; charset=utf-8', 'application/json');
+    // Blob helps to reduce the memory on large payload.
+    const body = new Blob([JSON.stringify(data)], { type: 'text/plain' });
     fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
       method: 'PUT',
-      // Blob helps to reduce the memory on large payload.
-      body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
+      body,
       headers,
+      // An urgent save may be sent while the page unloads: keepalive lets it outlive the page.
+      keepalive: urgent && body.size <= RESTPersistenceManager.KEEPALIVE_MAX_BODY_BYTES,
     })
       .then(async (response: Response): Promise<PersistenceError | undefined> => {
         if (response.ok) {
@@ -150,7 +171,9 @@ class RESTPersistenceManager extends PersistenceManager {
     pref: string,
     saveHistory: boolean,
     events?: SaveEvents,
+    options?: SaveOptions,
   ): void {
+    const urgent = Boolean(options?.urgent);
     const data = {
       id: mapId,
       xml: new XMLSerializer().serializeToString(mapXml),
@@ -161,6 +184,7 @@ class RESTPersistenceManager extends PersistenceManager {
     if (pending) {
       pending.data = data;
       pending.saveHistory = pending.saveHistory || saveHistory;
+      pending.urgent = pending.urgent || urgent;
       if (events) {
         pending.events.push(events);
       }
@@ -169,27 +193,49 @@ class RESTPersistenceManager extends PersistenceManager {
         mapId,
         data,
         saveHistory,
+        urgent,
         events: events ? [events] : [],
       });
     }
     this._scheduleNextSave();
   }
 
-  discardChanges(mapId: string): void {
+  discardChanges(mapId: string): Promise<void> {
     const headers = this._buildHttpHeader('application/json; charset=utf-8');
-    fetch(this.revertUrl.replace('{id}', mapId), {
-      method: 'POST',
-      headers,
-    });
+    return RESTPersistenceManager._settle(
+      'Discard changes',
+      fetch(this.revertUrl.replace('{id}', mapId), {
+        method: 'POST',
+        headers,
+      }),
+    );
   }
 
-  unlockMap(mapId: string): void {
+  unlockMap(mapId: string): Promise<void> {
     const headers = this._buildHttpHeader('text/plain; charset=utf-8');
-    fetch(this.lockUrl.replace('{id}', mapId), {
-      method: 'PUT',
-      headers,
-      body: 'false',
-    });
+    return RESTPersistenceManager._settle(
+      'Unlock',
+      fetch(this.lockUrl.replace('{id}', mapId), {
+        method: 'PUT',
+        headers,
+        body: 'false',
+        // Usually sent while leaving the editor: keepalive lets it outlive the page.
+        keepalive: true,
+      }),
+    );
+  }
+
+  // Best effort requests: failures are logged, the returned promise never rejects.
+  private static _settle(action: string, request: Promise<Response>): Promise<void> {
+    return request
+      .then((response) => {
+        if (!response.ok) {
+          console.error(`${action} error: ${response.status}`);
+        }
+      })
+      .catch((error) => {
+        console.error(`${action} could not be completed:`, error);
+      });
   }
 
   private async _buildError(response: Response): Promise<PersistenceError> {

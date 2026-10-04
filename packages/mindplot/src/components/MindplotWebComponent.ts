@@ -20,7 +20,7 @@ import Designer from './Designer';
 import buildDesigner from './DesignerBuilder';
 import DesignerOptionsBuilder from './DesignerOptionsBuilder';
 import EditorRenderMode from './EditorRenderMode';
-import PersistenceManager from './PersistenceManager';
+import PersistenceManager, { SaveOptions } from './PersistenceManager';
 import WidgetBuilder from './WidgetBuilder';
 import mindplotStyles from './styles/mindplot-styles';
 import { $notify } from './model/ToolbarNotifier';
@@ -221,7 +221,10 @@ class MindplotWebComponent extends HTMLElement {
     return instance.load(id).then((mindmap) => this._designer!.loadMap(mindmap));
   }
 
-  save(saveHistory: boolean): Promise<void> {
+  /**
+   * @param options.urgent a flush (e.g. when leaving the editor): skips the save rate limit.
+   */
+  save(saveHistory: boolean, options?: SaveOptions): Promise<void> {
     if (!saveHistory && !this.getSaveRequired()) {
       return Promise.resolve();
     }
@@ -240,36 +243,43 @@ class MindplotWebComponent extends HTMLElement {
     // The map is serialized synchronously by save(), so this is the revision being sent.
     const savedRevision = this._revision;
     return new Promise<void>((resolve, reject) => {
-      persistenceManager.save(mindmap, mindmapProp, saveHistory, {
-        onSuccess: () => {
-          if (saveHistory) {
-            $notify($msg('SAVE_COMPLETE'));
-          }
-          // Changes made while the save was in flight are not included, keep them pending.
-          if (this._revision === savedRevision) {
-            this.setSaveRequired(false);
-          }
-          resolve();
+      persistenceManager.save(
+        mindmap,
+        mindmapProp,
+        saveHistory,
+        {
+          onSuccess: () => {
+            if (saveHistory) {
+              $notify($msg('SAVE_COMPLETE'));
+            }
+            // Changes made while the save was in flight are not included, keep them pending.
+            if (this._revision === savedRevision) {
+              this.setSaveRequired(false);
+            }
+            resolve();
+          },
+          onError: (error) => {
+            if (saveHistory) {
+              $notify(error.message);
+            }
+            reject(error);
+          },
         },
-        onError: (error) => {
-          if (saveHistory) {
-            $notify(error.message);
-          }
-          reject(error);
-        },
-      });
+        options,
+      );
     });
   }
 
-  unlockMap() {
+  unlockMap(): Promise<void> {
     const mindmap = this._designer!.getMindmap();
     const persistenceManager = PersistenceManager.getInstance();
 
     // If the map could not be loaded, partial map load could happen.
     const mapId = mindmap?.getId();
     if (mapId) {
-      persistenceManager.unlockMap(mapId);
+      return Promise.resolve(persistenceManager.unlockMap(mapId));
     }
+    return Promise.resolve();
   }
 }
 

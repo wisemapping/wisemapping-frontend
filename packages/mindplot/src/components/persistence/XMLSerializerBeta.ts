@@ -21,6 +21,7 @@ import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
+import emojiToIconMap from './iconToEmoji.json';
 
 class XMLSerializerBeta implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -174,20 +175,19 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     $assert(dom, 'Dom can not be null');
     $assert(mapId, 'mapId can not be null');
 
-    // Is a valid object ?
+    // Is a valid object ? The messages are only built on failure: they are expensive.
     const { documentElement } = dom;
-    $assert(
-      documentElement.nodeName !== 'parsererror',
-      `Error while parsing: '${documentElement.childNodes[0].nodeValue}`,
-    );
+    if (documentElement.nodeName === 'parsererror') {
+      $assert(false, `Error while parsing: '${documentElement.textContent}`);
+    }
 
     // Is a wisemap?.
-    $assert(
-      documentElement.tagName === XMLSerializerBeta.MAP_ROOT_NODE,
-      `This seem not to be a map document. Root Tag: '${documentElement.tagName}',HTML:${
-        dom.innerHTML
-      }, XML:,${new XMLSerializer().serializeToString(dom)}`,
-    );
+    if (documentElement.tagName !== XMLSerializerBeta.MAP_ROOT_NODE) {
+      $assert(
+        false,
+        `This seem not to be a map document. Root Tag: '${documentElement.tagName}', XML:${new XMLSerializer().serializeToString(dom)}`,
+      );
+    }
 
     // Start the loading process ...
     let version = documentElement.getAttribute('version');
@@ -284,7 +284,11 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     const position = domElem.getAttribute('position');
     if ($defined(position)) {
       const pos = position.split(',');
-      topic.setPosition(pos[0], pos[1]);
+      const x = Number.parseInt(pos[0], 10);
+      const y = Number.parseInt(pos[1], 10);
+      if (Number.isFinite(x) && Number.isFinite(y)) {
+        topic.setPosition(x, y);
+      }
     }
 
     // Creating icons and children nodes
@@ -302,6 +306,11 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
         if (child.tagName === 'topic') {
           const childTopic = this._deserializeNode(child, mindmap);
           childTopic.connectTo(topic);
+        } else if (child.tagName === 'icon') {
+          const icon = this._deserializeIcon(child);
+          if (icon) {
+            topic.addFeature(icon);
+          }
         } else if (child.tagName === 'link') {
           const link = this._deserializeLink(child);
           topic.addFeature(link);
@@ -313,6 +322,18 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     return topic;
+  }
+
+  _deserializeIcon(domElem: Element) {
+    const id = domElem.getAttribute('id');
+    if (!id) {
+      return undefined;
+    }
+    // Same migration as the Tango loader: legacy icons become emojis when there is one.
+    const emoji = emojiToIconMap[id];
+    return emoji
+      ? FeatureModelFactory.createModel('eicon', { id: emoji })
+      : FeatureModelFactory.createModel('icon', { id });
   }
 
   _deserializeLink(domElem: Element) {

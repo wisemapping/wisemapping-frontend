@@ -40,8 +40,9 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
     $assert($defined(mapId), 'mapId can not be null');
     const mindmap = this._pelaSerializer.loadFromDom(dom, mapId);
     mindmap.setVersion(ModelCodeName.TANGO);
-    this._fixOrder(mindmap);
+    // Positions first: the order fix reads them to tell the left and right sides apart.
     this._fixPosition(mindmap);
+    this._fixOrder(mindmap);
     return mindmap;
   }
 
@@ -78,8 +79,10 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
     const children = centralNode.getChildren();
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
-      const position = child.getPosition();
-      this._fixNodePosition(child, position);
+      if (!child.getPosition()) {
+        child.setPosition(0, 0);
+      }
+      this._fixNodePosition(child, child.getPosition());
     }
   }
 

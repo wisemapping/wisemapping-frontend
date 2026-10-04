@@ -78,8 +78,11 @@ describe('RESTPersistenceManager', () => {
     global.Blob = class {
       __json: string;
 
+      size: number;
+
       constructor(parts: string[]) {
         this.__json = parts.join('');
+        this.size = this.__json.length;
       }
     } as unknown as typeof Blob;
 
@@ -189,6 +192,102 @@ describe('RESTPersistenceManager', () => {
       expect(third.onError).toHaveBeenCalledTimes(1);
       expect(second.onError.mock.calls[0][0].errorType).toBe('unexpected');
       expect(errorHandler).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('unload and flush (B-FIREFORGET)', () => {
+    const requestInit = (index: number): RequestInit => fetchMock.mock.calls[index][1];
+
+    it('sends the unlock with keepalive and settles without throwing when the server fails', async () => {
+      const result = manager.unlockMap('1');
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      expect(fetchMock.mock.calls[0][0]).toBe('/maps/1/lock');
+      expect(requestInit(0).keepalive).toBe(true);
+
+      pending[0].resolve(buildResponse(500));
+      await expect(result).resolves.toBeUndefined();
+      expect(console.error).toHaveBeenCalled();
+    });
+
+    it('handles a network failure of the unlock', async () => {
+      const result = manager.unlockMap('1');
+      pending[0].reject(new Error('network down'));
+      await expect(result).resolves.toBeUndefined();
+      expect(console.error).toHaveBeenCalled();
+    });
+
+    it('handles the result of discardChanges', async () => {
+      const result = manager.discardChanges('1');
+      expect(fetchMock.mock.calls[0][0]).toBe('/maps/1/revert');
+      pending[0].resolve(buildResponse(403));
+      await expect(result).resolves.toBeUndefined();
+      expect(console.error).toHaveBeenCalled();
+
+      const failed = manager.discardChanges('1');
+      pending[1].reject(new Error('network down'));
+      await expect(failed).resolves.toBeUndefined();
+    });
+
+    it('sends an urgent save right after the previous one, without waiting the interval', async () => {
+      manager.saveMapXml('1', buildDoc('autosave'), '{}', false, buildEvents());
+      pending[0].resolve(buildResponse(200));
+      await flushPromises();
+
+      const flush = buildEvents();
+      manager.saveMapXml('1', buildDoc('flush'), '{}', false, flush, { urgent: true });
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(JSON.parse(sentXml(fetchMock.mock.calls[1])).xml).toContain('flush');
+      expect(requestInit(1).keepalive).toBe(true);
+
+      pending[1].resolve(buildResponse(200));
+      await flushPromises();
+      expect(flush.onSuccess).toHaveBeenCalledTimes(1);
+    });
+
+    it('never overlaps an urgent save with the request in flight', async () => {
+      manager.saveMapXml('1', buildDoc('autosave'), '{}', false, buildEvents());
+      manager.saveMapXml('1', buildDoc('flush'), '{}', false, buildEvents(), { urgent: true });
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+
+      pending[0].resolve(buildResponse(200));
+      await flushPromises();
+      // No 10 second wait once the in flight request is done.
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(JSON.parse(sentXml(fetchMock.mock.calls[1])).xml).toContain('flush');
+    });
+
+    it('promotes a save already waiting for the interval when a flush arrives', async () => {
+      manager.saveMapXml('1', buildDoc('first'), '{}', false, buildEvents());
+      pending[0].resolve(buildResponse(200));
+      await flushPromises();
+
+      const waiting = buildEvents();
+      manager.saveMapXml('1', buildDoc('second'), '{}', false, waiting);
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+
+      manager.saveMapXml('1', buildDoc('third'), '{}', false, buildEvents(), { urgent: true });
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(JSON.parse(sentXml(fetchMock.mock.calls[1])).xml).toContain('third');
+      pending[1].resolve(buildResponse(200));
+      await flushPromises();
+      expect(waiting.onSuccess).toHaveBeenCalledTimes(1);
+
+      // The cancelled interval timer does not send anything else.
+      jest.advanceTimersByTime(60000);
+      await flushPromises();
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+    });
+
+    it('does not use keepalive for an urgent save above the keepalive body limit', () => {
+      manager.saveMapXml('1', buildDoc('x'.repeat(70 * 1024)), '{}', false, buildEvents(), {
+        urgent: true,
+      });
+      expect(requestInit(0).keepalive).toBeFalsy();
+    });
+
+    it('does not use keepalive for regular saves', () => {
+      manager.saveMapXml('1', buildDoc('x'), '{}', false, buildEvents());
+      expect(requestInit(0).keepalive).toBeFalsy();
     });
   });
 
