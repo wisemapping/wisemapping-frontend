@@ -343,10 +343,13 @@ class DesignerKeyboard extends Keyboard {
       return this._goToSideChild(designer, node, side);
     }
 
-    if (
-      (side === 'LEFT' && node.getPosition().x > 0) ||
-      (side === 'RIGHT' && node.getPosition().x < 0)
-    ) {
+    // Which arrow points back towards the root depends on the half of the map
+    // the node sits on. `isOnRightHalf` counts x === 0 as the right half rather
+    // than as neither: tested as `x > 0` and `x < 0`, a node at exactly zero
+    // matched no case, fell through to the go-to-child branch below, and -- as a
+    // leaf -- left its parent unreachable by either arrow.
+    const isOnRightHalf = node.getPosition().x >= 0;
+    if ((side === 'LEFT' && isOnRightHalf) || (side === 'RIGHT' && !isOnRightHalf)) {
       return this._goToParent(designer, node);
     }
 
@@ -381,7 +384,10 @@ class DesignerKeyboard extends Keyboard {
         return;
       }
       if (enforceSameSide) {
-        const sameSide = node.getPosition().x * brother.getPosition().x >= 0;
+        // Compared as a product `>= 0`, a sibling at x === 0 read as same-side as
+        // both halves, so a left-hand node's Up/Down could land on it. Compare
+        // the halves instead, with zero on the right as above.
+        const sameSide = node.getPosition().x >= 0 === brother.getPosition().x >= 0;
         if (!sameSide) {
           return;
         }
