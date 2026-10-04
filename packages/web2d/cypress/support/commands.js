@@ -15,3 +15,24 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+
+// matchImageSnapshot compares with cypress/snapshots/<spec>/<name>.snap.png only when
+// CYPRESS_imageSnaphots is set (the Docker runner). Elsewhere it just takes the screenshot, as
+// rendering differs between hosts.
+if (Cypress.expose('imageSnaphots')) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { addMatchImageSnapshotCommand } = require('@simonsmith/cypress-image-snapshot/command');
+  addMatchImageSnapshotCommand({
+    // Docker rendering is deterministic, so the threshold is tight: 0.01 % of the page
+    // (66 pixels at 1000x660), with pixelmatch's default per-pixel colour tolerance.
+    failureThreshold: 0.0001,
+    failureThresholdType: 'percent',
+    customDiffConfig: { threshold: 0.1 },
+  });
+} else {
+  Cypress.Commands.add(
+    'matchImageSnapshot',
+    { prevSubject: ['optional', 'element', 'window', 'document'] },
+    (subject, name) => cy.screenshot(name),
+  );
+}

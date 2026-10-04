@@ -15,10 +15,22 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-describe('Element Opacity Suite', () => {
-  // Rect tests ...
-  it('Element Opacity', () => {
-    cy.visit('/iframe.html?args=&id=shapes-element--opacity&viewMode=story');
-    cy.matchImageSnapshot('element-opacity');
+describe('Element Visibility Suite', () => {
+  it('Element Visibility visible', () => {
+    cy.visit(
+      '/iframe.html?args=visibility:!true;visibilityDelay:0&id=shapes-element--visibility&viewMode=story',
+    );
+    cy.get('rect').should('have.attr', 'visibility', 'visible');
+    cy.get('ellipse').should('have.attr', 'visibility', 'visible');
+    cy.matchImageSnapshot('element-visibility-visible');
+  });
+
+  it('Element Visibility hidden', () => {
+    cy.visit(
+      '/iframe.html?args=visibility:!false;visibilityDelay:0&id=shapes-element--visibility&viewMode=story',
+    );
+    cy.get('rect').should('have.attr', 'visibility', 'hidden');
+    cy.get('ellipse').should('have.attr', 'visibility', 'hidden');
+    cy.matchImageSnapshot('element-visibility-hidden');
   });
 });

@@ -17,6 +17,7 @@
  */
 import Workspace from '../../../src/components/Workspace';
 import Ellipse from '../../../src/components/Ellipse';
+import Rect from '../../../src/components/Rect';
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
@@ -231,5 +232,34 @@ export const CoordsOrigin = (args) => {
   4) Workspace animation changing the coordorigin from (0,0) to (50,50)<br />`;
   container.append(span);
 
+  return container;
+};
+
+// W-VIEWBOX (BL-71): a fractional zoom and origin, as mindplot's ScreenManager sets them, and an
+// origin moved by ten 0.3 unit pans. Each workspace shows a 50x50 square centred on (0, 0).
+export const FractionalCoords = () => {
+  const container = document.createElement('div');
+  const div = document.createElement('div');
+  container.append(div);
+
+  const build = (coordSize, origin) => {
+    const workspace = new Workspace();
+    workspace.setSize('200px', '200px');
+    workspace.setCoordSize(coordSize, coordSize);
+    workspace.setCoordOrigin(origin, origin);
+    const rect = new Rect(0, { width: 50, height: 50, x: -25, y: -25, fillColor: '#88cc88' });
+    workspace.append(rect);
+    const center = new Ellipse({ width: 6, height: 6, x: 0, y: 0, fillColor: 'red' });
+    workspace.append(center);
+    workspace.addItAsChildTo(div);
+    return workspace;
+  };
+
+  build(137.3, -68.65);
+  const panned = build(120, -60);
+  for (let i = 0; i < 10; i++) {
+    const { x, y } = panned.getCoordOrigin();
+    panned.setCoordOrigin(x + 0.3, y + 0.3);
+  }
   return container;
 };

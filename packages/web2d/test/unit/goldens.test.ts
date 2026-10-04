@@ -146,7 +146,7 @@ const WAVE_SHORT: [number, number, number, number][] = [
   [-150, -150, -149, -150], // length 1
   [-100, -100, -97, -96], // length 5
   [0, 0, 20, 0], // length 20
-  [100, 100, 100, 100], // zero length: nothing drawn
+  [100, 100, 100, 100], // zero length: W-STALEPATH keeps the path drawn after setFrom
 ];
 
 const WAVE_STROKES: [number, number, number, number][] = [

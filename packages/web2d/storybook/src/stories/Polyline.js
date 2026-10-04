@@ -27,6 +27,7 @@ export const createPolyline = ({
   strokeWidth,
   strokeStyle,
   style,
+  orientation = 'horizontal',
 }) => {
   const divElem = document.createElement('div');
 
@@ -66,6 +67,7 @@ export const createPolyline = ({
   line1.setFrom(0, 0);
   line1.setTo(100, 100);
   line1.setStyle(style);
+  line1.setOrientation(orientation);
   line1.setStroke(strokeWidth, strokeStyle, strokeColor, 1);
   line1.setFill(fillColor, 1);
   workspace.append(line1);
@@ -74,6 +76,7 @@ export const createPolyline = ({
   line2.setFrom(0, 0);
   line2.setTo(-100, -100);
   line2.setStyle(style);
+  line2.setOrientation(orientation);
   line2.setStroke(strokeWidth, strokeStyle, strokeColor, 1);
   line2.setFill(fillColor, 1);
   workspace.append(line2);
@@ -82,6 +85,7 @@ export const createPolyline = ({
   line3.setFrom(0, 0);
   line3.setTo(100, -100);
   line3.setStyle(style);
+  line3.setOrientation(orientation);
   line3.setStroke(strokeWidth, strokeStyle, strokeColor, 1);
   line3.setFill(fillColor, 1);
   workspace.append(line3);
@@ -90,6 +94,7 @@ export const createPolyline = ({
   line4.setFrom(0, 0);
   line4.setTo(-100, 100);
   line4.setStyle(style);
+  line4.setOrientation(orientation);
   line4.setStroke(strokeWidth, strokeStyle, strokeColor, 1);
   line4.setFill(fillColor, 1);
   workspace.append(line4);

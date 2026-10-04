@@ -15,10 +15,23 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-describe('Element Opacity Suite', () => {
-  // Rect tests ...
-  it('Element Opacity', () => {
-    cy.visit('/iframe.html?args=&id=shapes-element--opacity&viewMode=story');
-    cy.matchImageSnapshot('element-opacity');
+describe('Image Suite', () => {
+  it('Image Size', () => {
+    cy.visit('/iframe.html?args=&id=shapes-image--size&viewMode=story');
+    cy.get('image').should('have.length', 6);
+    cy.get('image').eq(3).should('have.attr', 'width', '128');
+    cy.matchImageSnapshot('image-size');
+  });
+
+  it('Image Position', () => {
+    cy.visit('/iframe.html?args=&id=shapes-image--position&viewMode=story');
+    cy.get('image').eq(1).should('have.attr', 'x', '175');
+    cy.matchImageSnapshot('image-position');
+  });
+
+  it('Image Zoomed', () => {
+    cy.visit('/iframe.html?args=&id=shapes-image--zoomed&viewMode=story');
+    cy.get('svg').first().should('have.attr', 'viewBox', '0 0 800 800');
+    cy.matchImageSnapshot('image-zoomed');
   });
 });

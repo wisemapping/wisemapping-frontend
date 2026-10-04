@@ -15,10 +15,24 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-describe('Element Opacity Suite', () => {
-  // Rect tests ...
-  it('Element Opacity', () => {
-    cy.visit('/iframe.html?args=&id=shapes-element--opacity&viewMode=story');
-    cy.matchImageSnapshot('element-opacity');
+describe('Arrow Suite', () => {
+  it('Arrow Default', () => {
+    cy.visit('/iframe.html?args=&id=shapes-arrow--default&viewMode=story');
+    // 8 directions plus the two y = 0 arrows.
+    cy.get('path').should('have.length', 10);
+    cy.matchImageSnapshot('arrow-default');
+  });
+
+  it('Arrow Thick', () => {
+    cy.visit('/iframe.html?args=&id=shapes-arrow--thick&viewMode=story');
+    cy.get('path').first().should('have.attr', 'stroke-width', '5');
+    cy.matchImageSnapshot('arrow-thick');
+  });
+
+  it('Arrow Dashed', () => {
+    cy.visit('/iframe.html?args=&id=shapes-arrow--dashed&viewMode=story');
+    // W-ARROWDASH: setDashed(true, 3, 3) writes "33" today.
+    cy.get('path').first().should('have.attr', 'stroke-dasharray');
+    cy.matchImageSnapshot('arrow-dashed');
   });
 });

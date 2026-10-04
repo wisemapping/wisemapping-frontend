@@ -15,10 +15,15 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-describe('Element Opacity Suite', () => {
-  // Rect tests ...
-  it('Element Opacity', () => {
-    cy.visit('/iframe.html?args=&id=shapes-element--opacity&viewMode=story');
-    cy.matchImageSnapshot('element-opacity');
+describe('HeartbeatLine Suite', () => {
+  ['default', 'thin', 'thick', 'dashed'].forEach((story) => {
+    it(`HeartbeatLine ${story}`, () => {
+      cy.visit(`/iframe.html?args=&id=shapes-heartbeatline--${story}&viewMode=story`);
+      // 8 lines. W-STALEPATH: the zero-length one keeps the path drawn when only its source was
+      // set (to the origin), because collapsing the ends does not clear it.
+      cy.get('path').should('have.length', 8);
+      cy.get('path[d]').should('have.length', 8);
+      cy.matchImageSnapshot(`heartbeatline-${story}`);
+    });
   });
 });

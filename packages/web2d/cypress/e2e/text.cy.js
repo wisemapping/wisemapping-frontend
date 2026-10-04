@@ -19,6 +19,36 @@ describe('Text Suite', () => {
   // Rect tests ...
   it('Text Multiline', () => {
     cy.visit('/iframe.html?args=&id=shapes-text--multiline&viewMode=story');
-    cy.screenshot('text-multiline');
+    cy.matchImageSnapshot('text-multiline');
+  });
+
+  it('Text Empty Lines', () => {
+    cy.visit('/iframe.html?args=&id=shapes-text--empty-lines&viewMode=story');
+    cy.get('text').first().find('tspan').should('have.length', 3);
+    cy.matchImageSnapshot('text-empty-lines');
+  });
+
+  it('Text Trailing Newline', () => {
+    cy.visit('/iframe.html?args=&id=shapes-text--trailing-newline&viewMode=story');
+    cy.get('text').first().find('tspan').should('have.length', 2);
+    cy.matchImageSnapshot('text-trailing-newline');
+  });
+
+  it('Text CRLF', () => {
+    cy.visit('/iframe.html?args=&id=shapes-text--crlf&viewMode=story');
+    cy.get('text').first().find('tspan').should('have.length', 2);
+    cy.matchImageSnapshot('text-crlf');
+  });
+
+  it('Text Empty', () => {
+    cy.visit('/iframe.html?args=&id=shapes-text--empty&viewMode=story');
+    cy.get('tspan').should('have.length', 0);
+    cy.matchImageSnapshot('text-empty');
+  });
+
+  it('Text Bold Italic', () => {
+    cy.visit('/iframe.html?args=&id=shapes-text--bold-italic&viewMode=story');
+    cy.get('text').first().should('have.attr', 'font-weight', '900');
+    cy.matchImageSnapshot('text-bold-italic');
   });
 });

@@ -27,9 +27,12 @@ export default {
     onMouseMove: { action: 'onMouseMove' },
     onMouseOut: { action: 'onMouseOut' },
     onDblClick: { action: 'onDblClick' },
+    eventLog: { control: 'boolean' },
   },
 };
 
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
 export const Events = (({ label, ...args }) => createElement({ label, ...args })).bind({});
-Events.args = {};
+Events.args = {
+  eventLog: true,
+};

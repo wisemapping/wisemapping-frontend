@@ -15,10 +15,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-describe('Element Opacity Suite', () => {
-  // Rect tests ...
-  it('Element Opacity', () => {
-    cy.visit('/iframe.html?args=&id=shapes-element--opacity&viewMode=story');
-    cy.matchImageSnapshot('element-opacity');
+describe('ArcLine Suite', () => {
+  it('ArcLine Width', () => {
+    cy.visit('/iframe.html?args=&id=shapes-arcline--width&viewMode=story');
+    cy.get('path').should('have.length', 6);
+    cy.matchImageSnapshot('arcline-width');
+  });
+
+  it('ArcLine Stroke', () => {
+    cy.visit('/iframe.html?args=&id=shapes-arcline--stroke&viewMode=story');
+    cy.get('path').first().should('have.attr', 'stroke-dasharray', '10 5 2');
+    cy.matchImageSnapshot('arcline-stroke');
   });
 });

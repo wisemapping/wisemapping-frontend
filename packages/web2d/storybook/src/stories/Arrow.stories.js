@@ -15,10 +15,37 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-describe('Element Opacity Suite', () => {
-  // Rect tests ...
-  it('Element Opacity', () => {
-    cy.visit('/iframe.html?args=&id=shapes-element--opacity&viewMode=story');
-    cy.matchImageSnapshot('element-opacity');
-  });
-});
+import { createArrow } from './Arrow';
+
+export default {
+  title: 'Shapes/Arrow',
+  argTypes: {
+    strokeColor: { control: 'color' },
+    strokeWidth: { control: { type: 'number', min: 1, max: 10, step: 1 } },
+    dashed: { control: 'boolean' },
+  },
+};
+
+const Template = ({ label, ...args }) => createArrow({ label, ...args });
+
+export const Default = Template.bind({});
+Default.args = {
+  strokeColor: 'black',
+  strokeWidth: 1,
+  dashed: false,
+};
+
+export const Thick = Template.bind({});
+Thick.args = {
+  strokeColor: '#3366cc',
+  strokeWidth: 5,
+  dashed: false,
+};
+
+// W-ARROWDASH: setDashed(true, 3, 3) writes stroke-dasharray "33".
+export const Dashed = Template.bind({});
+Dashed.args = {
+  strokeColor: 'red',
+  strokeWidth: 2,
+  dashed: true,
+};

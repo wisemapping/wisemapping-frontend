@@ -21,6 +21,31 @@ import Rect from '../../../src/components/Rect';
 import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
 
+// Optional on-page log of the events received, as "<element>:<type>" items, so Cypress can assert
+// the event wiring (Storybook actions are only visible in the manager UI).
+const createEventLog = (divElem, enabled) => {
+  if (!enabled) {
+    return () => {};
+  }
+  const list = document.createElement('ol');
+  list.setAttribute('data-testid', 'event-log');
+  list.style.fontFamily = 'monospace';
+  list.style.fontSize = '12px';
+  divElem.append(list);
+  return (entry) => {
+    const item = document.createElement('li');
+    item.textContent = entry;
+    list.append(item);
+  };
+};
+
+const logged = (log, name, action) => (event) => {
+  log(`${name}:${event.type}`);
+  if (action) {
+    action(event);
+  }
+};
+
 export const createElement = ({
   visibility = true,
   visibilityDelay = 0,
@@ -30,6 +55,7 @@ export const createElement = ({
   onMouseOver,
   onMouseOut,
   onDblClick,
+  eventLog = false,
 }) => {
   const divElem = document.createElement('div');
 
@@ -44,11 +70,13 @@ export const createElement = ({
   rect.setVisibility(visibility, visibilityDelay);
   rect.setStroke(2, 'solid', 'red', strokeOpacity);
   rect.setFill('gray', fillOpacity);
+  const logContainer = document.createElement('div');
+  const log = createEventLog(logContainer, eventLog);
 
-  rect.addEvent('click', onClick);
-  rect.addEvent('mouseover', onMouseOver);
-  rect.addEvent('mouseout', onMouseOut);
-  rect.addEvent('dblclick', onDblClick);
+  rect.addEvent('click', logged(log, 'rect', onClick));
+  rect.addEvent('mouseover', logged(log, 'rect', onMouseOver));
+  rect.addEvent('mouseout', logged(log, 'rect', onMouseOut));
+  rect.addEvent('dblclick', logged(log, 'rect', onDblClick));
 
   // Add referene point ...
   const e1 = new Ellipse();
@@ -58,14 +86,16 @@ export const createElement = ({
   e1.setStroke(2, 'solid', 'blue', strokeOpacity);
   e1.setVisibility(visibility, visibilityDelay);
 
-  e1.addEvent('click', onClick);
-  e1.addEvent('mouseover', onMouseOver);
-  e1.addEvent('mouseout', onMouseOut);
-  e1.addEvent('dblclick', onDblClick);
+  e1.addEvent('click', logged(log, 'ellipse', onClick));
+  e1.addEvent('mouseover', logged(log, 'ellipse', onMouseOver));
+  e1.addEvent('mouseout', logged(log, 'ellipse', onMouseOut));
+  e1.addEvent('dblclick', logged(log, 'ellipse', onDblClick));
 
   workspace.append(rect);
   workspace.append(e1);
   workspace.addItAsChildTo(divElem);
+  // The log goes below the workspace.
+  divElem.append(logContainer);
 
   return divElem;
 };
@@ -79,10 +109,16 @@ export const createEventRegistration = ({
   onMouseOver,
   onMouseOut,
   onDblClick,
+  eventLog = false,
 }) => {
-  const registerEvent = (type, elem, action) => {
+  const logContainer = document.createElement('div');
+  const log = createEventLog(logContainer, eventLog);
+  const registerEvent = (type, elem, action, name) => {
     elem.addEvent(type, (event) => {
-      action(event);
+      log(`${name}:${event.type}`);
+      if (action) {
+        action(event);
+      }
       if (stopEventPropagation) {
         event.stopPropagation();
       }
@@ -108,26 +144,27 @@ export const createEventRegistration = ({
   workspace.append(smallElipse);
 
   if (enableForWorkspace) {
-    registerEvent('click', workspace, onClick);
-    registerEvent('mouseover', workspace, onMouseOver);
-    registerEvent('mouseout', workspace, onMouseOut);
-    registerEvent('dblclick', workspace, onDblClick);
+    registerEvent('click', workspace, onClick, 'workspace');
+    registerEvent('mouseover', workspace, onMouseOver, 'workspace');
+    registerEvent('mouseout', workspace, onMouseOut, 'workspace');
+    registerEvent('dblclick', workspace, onDblClick, 'workspace');
   }
 
   if (enableForInnerCircle) {
-    registerEvent('click', smallElipse, onClick);
-    registerEvent('mouseover', smallElipse, onMouseOver);
-    registerEvent('mouseout', smallElipse, onMouseOut);
-    registerEvent('dblclick', smallElipse, onDblClick);
+    registerEvent('click', smallElipse, onClick, 'inner');
+    registerEvent('mouseover', smallElipse, onMouseOver, 'inner');
+    registerEvent('mouseout', smallElipse, onMouseOut, 'inner');
+    registerEvent('dblclick', smallElipse, onDblClick, 'inner');
   }
 
   if (enableForOuterCircle) {
-    registerEvent('click', bigElipse, onClick);
-    registerEvent('mouseover', bigElipse, onMouseOver);
-    registerEvent('mouseout', bigElipse, onMouseOut);
-    registerEvent('dblclick', bigElipse, onDblClick);
+    registerEvent('click', bigElipse, onClick, 'outer');
+    registerEvent('mouseover', bigElipse, onMouseOver, 'outer');
+    registerEvent('mouseout', bigElipse, onMouseOut, 'outer');
+    registerEvent('dblclick', bigElipse, onDblClick, 'outer');
   }
 
   workspace.addItAsChildTo(divElem);
+  divElem.append(logContainer);
   return divElem;
 };
