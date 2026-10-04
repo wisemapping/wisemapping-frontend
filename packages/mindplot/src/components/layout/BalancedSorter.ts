@@ -73,6 +73,10 @@ class BalancedSorter extends AbstractBasicSorter {
       ];
     }
 
+    // Order of the dragged node among these children, if it is one of them. Detaching it
+    // shifts the later siblings on its own side up by two (see detach) ...
+    const nodeOrder = node && graph.getParent(node) === parent ? node.getOrder() : undefined;
+
     // Try to fit within ...
     let result: [number, PositionType] | null = null;
     const last = children[children.length - 1];
@@ -84,7 +88,10 @@ class BalancedSorter extends AbstractBasicSorter {
           child === last
             ? child.getSize().height + BalancedSorter.INTERNODE_VERTICAL_PADDING * 2
             : (children[index + 1].getPosition().y - child.getPosition().y) / 2;
-        result = [(child.getOrder() ?? 0) + 2, { x: cpos.x, y: cpos.y + yOffset }];
+        const childOrder = child.getOrder() ?? 0;
+        const shifted =
+          nodeOrder !== undefined && nodeOrder % 2 === childOrder % 2 && childOrder > nodeOrder;
+        result = [shifted ? childOrder : childOrder + 2, { x: cpos.x, y: cpos.y + yOffset }];
       }
     });
 
@@ -212,26 +219,28 @@ class BalancedSorter extends AbstractBasicSorter {
 
   verify(treeSet: RootedTreeSet, node: Node): void {
     // Check that all is consistent ...
-    const nodeOrder = node.getOrder() ?? 0;
-    const children = this._getChildrenForOrder(node, treeSet, nodeOrder);
-
-    // All odd ordered nodes should be "continuous" by themselves
-    // All even numbered nodes should be "continuous" by themselves
-    const factor = nodeOrder % 2 === 0 ? 2 : 1;
-    for (let i = 0; i < children.length; i++) {
-      const order = i === 0 && factor === 1 ? 1 : factor * i;
-      const childOrder = children[i].getOrder() ?? 0;
-      $assert(
-        childOrder === order,
-        `Missing order elements. Missing order: ${
-          i * factor
-        }. Parent:${node.getId()},Node:${children[i].getId()}`,
-      );
-    }
+    // All even ordered nodes (right side) should be "continuous" by themselves: 0, 2, 4 ...
+    // All odd ordered nodes (left side) should be "continuous" by themselves: 1, 3, 5 ...
+    [0, 1].forEach((side) => {
+      const children = this._getChildrenForOrder(node, treeSet, side);
+      for (let i = 0; i < children.length; i++) {
+        const order = 2 * i + side;
+        const childOrder = children[i].getOrder() ?? 0;
+        $assert(
+          childOrder === order,
+          `Missing order elements. Missing order: ${order}. Parent:${node.getId()},Node:${children[i].getId()}`,
+        );
+      }
+    });
   }
 
   getChildDirection(treeSet: RootedTreeSet, child: Node): 1 | -1 {
     return (child.getOrder() ?? 0) % 2 === 0 ? 1 : -1;
+  }
+
+  getOrderAfter(order: number): number {
+    // The order parity is the side, so the next slot on the same side is two away.
+    return order + 2;
   }
 
   toString(): string {

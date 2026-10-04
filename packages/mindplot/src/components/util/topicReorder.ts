@@ -55,6 +55,28 @@ export const orderedSiblings = (topic: Topic): Topic[] => {
 };
 
 /**
+ * The central topic in the mindmap layout sorts its children with the balanced
+ * sorter, whose order parity is the side: even orders on the right, odd on the
+ * left. Elsewhere orders are contiguous and side-free.
+ */
+const isBalancedParent = (parent: Topic): boolean =>
+  parent.isCentralTopic() && parent.getModel().getMindmap().getLayout() === 'mindmap';
+
+/**
+ * The siblings a topic moves among, in layout order and including the topic:
+ * all of them, or only those on its own side when the parent is balanced, so
+ * that moving up or down never flips a topic to the other side of the map.
+ */
+const moveSiblings = (topic: Topic, parent: Topic): Topic[] => {
+  const siblings = orderedSiblings(topic);
+  if (!isBalancedParent(parent)) {
+    return siblings;
+  }
+  const side = (topic.getOrder() ?? 0) % 2;
+  return siblings.filter((sibling) => (sibling.getOrder() ?? 0) % 2 === side);
+};
+
+/**
  * Resolves a requested move into a concrete target, or null when the move is
  * not available -- the topic is already first among its siblings, say, or is
  * the central topic, which has nowhere to go.
@@ -77,14 +99,18 @@ export const resolveTopicMove = (topic: Topic, move: TopicMove): ReorderTarget |
   switch (move) {
     case 'up':
     case 'down': {
-      const siblings = orderedSiblings(topic);
+      const siblings = moveSiblings(topic, parent);
       const index = siblings.indexOf(topic);
       const targetIndex = move === 'up' ? index - 1 : index + 1;
       // Already at the end it is being asked to move towards.
       if (index < 0 || targetIndex < 0 || targetIndex >= siblings.length) {
         return null;
       }
-      return { kind: 'reorder', parent, order: targetIndex };
+      // Take the neighbour's order: the topic is detached and re-inserted with it,
+      // which lands it just past the neighbour. Orders are not always the index
+      // (the balanced sorter steps by two per side).
+      const order = siblings[targetIndex].getOrder() ?? targetIndex;
+      return { kind: 'reorder', parent, order };
     }
 
     case 'outdent': {
@@ -101,7 +127,7 @@ export const resolveTopicMove = (topic: Topic, move: TopicMove): ReorderTarget |
     case 'indent': {
       // Become a child of the sibling immediately above, the outliner meaning
       // of indent. The first child has no preceding sibling to attach to.
-      const siblings = orderedSiblings(topic);
+      const siblings = moveSiblings(topic, parent);
       const index = siblings.indexOf(topic);
       if (index <= 0) {
         return null;

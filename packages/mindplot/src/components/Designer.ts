@@ -892,25 +892,26 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       result = mindmap.createNode();
 
       // Get the current topic's order to insert right after it
+      const layoutManager = this._eventBussDispatcher.getLayoutManager();
       const currentOrder = topic.getOrder();
       let newOrder: number;
 
       if (currentOrder !== undefined) {
-        // Insert right after the current topic (currentOrder + 1)
-        // The layout manager's insert method will automatically shift
-        // all siblings with order >= (currentOrder + 1) by incrementing their order
-        newOrder = currentOrder + 1;
+        // Insert right after the current topic. The parent's sorter decides what that
+        // order is: usually currentOrder + 1, but the central topic's balanced sorter
+        // encodes the side in the order parity, so there it is currentOrder + 2.
+        // The layout manager's insert method will shift the siblings from there on.
+        newOrder = layoutManager.getOrderAfter(parentTopic.getId(), currentOrder);
       } else {
         // If current topic has no order, fall back to layout manager prediction
         // This should not happen in normal cases, but handle it gracefully
-        const layoutManager = this._eventBussDispatcher.getLayoutManager();
         const prediction = layoutManager.predict(parentTopic.getId(), null, null);
         newOrder = prediction.order;
       }
 
       // Set the order on the new sibling
       // When the topic is connected, the layout manager's insert method will:
-      // 1. Shift all siblings with order >= newOrder by incrementing their order
+      // 1. Shift the siblings at or after newOrder
       // 2. Set the new sibling's order to newOrder
       result.setOrder(newOrder);
 
@@ -918,7 +919,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       // The position will be recalculated during layout after connection,
       // but we need an initial position. The layout system will position it
       // correctly based on the order we set.
-      const layoutManager = this._eventBussDispatcher.getLayoutManager();
       // Predict position - the layout system will use the order to position it correctly
       const prediction = layoutManager.predict(parentTopic.getId(), null, null);
       result.setPosition(prediction.position.x, prediction.position.y);

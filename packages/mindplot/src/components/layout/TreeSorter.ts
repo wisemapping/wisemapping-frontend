@@ -49,8 +49,13 @@ class TreeSorter extends AbstractBasicSorter {
       return [node.getOrder() ?? 0, node.getPosition()];
     }
 
-    // Node is being dragged - determine order based on horizontal position
-    const parentChildren = graph.getChildren(parent).filter((child) => child !== node);
+    // Node is being dragged - determine order based on horizontal position.
+    // Once the node is detached its remaining siblings are renumbered 0..n-1 in this
+    // sorted order, so an index into this array is also the order to insert at.
+    const parentChildren = graph
+      .getChildren(parent)
+      .filter((child) => child !== node)
+      .sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
 
     if (parentChildren.length === 0) {
       const result = {
@@ -65,7 +70,7 @@ class TreeSorter extends AbstractBasicSorter {
     for (let i = 0; i < parentChildren.length; i++) {
       const child = parentChildren[i];
       if (position.x > child.getPosition().x) {
-        order = (child.getOrder() ?? 0) + 1;
+        order = i + 1;
       }
     }
 

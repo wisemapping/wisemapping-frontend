@@ -39,6 +39,14 @@ abstract class ChildrenSorterStrategy {
 
   abstract getChildDirection(treeSet: RootedTreeSet, node: Node): 1 | -1;
 
+  /**
+   * Order a new child must be inserted with to sit right after the sibling with the given
+   * order. Children orders are contiguous by default, so it is the next one.
+   */
+  getOrderAfter(order: number): number {
+    return order + 1;
+  }
+
   abstract toString(): string;
 
   abstract getVerticalPadding(): number;

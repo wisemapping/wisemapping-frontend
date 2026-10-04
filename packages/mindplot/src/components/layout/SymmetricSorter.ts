@@ -132,8 +132,11 @@ class SymmetricSorter extends AbstractBasicSorter {
         if (nodeAfter.getId() === node.getId() || parentChild.getId() === node.getId()) {
           return [node.getOrder() ?? 0, node.getPosition()];
         }
+        // Moving down within the same parent: detaching the node first shifts the
+        // siblings below it up by one, so the slot is one less than nodeAfter's order.
+        // A node coming from another parent shifts nothing here.
         const orderResult =
-          position.y > node.getPosition().y
+          sameParent && position.y > node.getPosition().y
             ? (nodeAfter.getOrder() ?? 0) - 1
             : (parentChild.getOrder() ?? 0) + 1;
 

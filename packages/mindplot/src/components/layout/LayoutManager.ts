@@ -152,6 +152,14 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     return { order: result[0], position: result[1] };
   }
 
+  /**
+   * Order that inserts a new child of the parent right after its child with the given order.
+   */
+  getOrderAfter(parentId: number, order: number): number {
+    const parent = this._treeSet.find(parentId);
+    return parent.getSorter().getOrderAfter(order);
+  }
+
   dump() {
     console.log(this._treeSet.dump());
   }

@@ -20,6 +20,8 @@ import resolveTopicMove, {
   TopicMove,
 } from '../../../src/components/util/topicReorder';
 import type Topic from '../../../src/components/Topic';
+import type { LayoutType } from '../../../src/components/layout/LayoutType';
+import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 type Stub = {
   id: number;
@@ -27,25 +29,38 @@ type Stub = {
   parent: Stub | null;
   children: Stub[];
   central: boolean;
+  layout: LayoutType;
   getId(): number;
   getOrder(): number | undefined;
   getParent(): Topic | null;
   getChildren(): Topic[];
   isCentralTopic(): boolean;
+  getModel(): { getMindmap(): { getLayout(): LayoutType } };
 };
 
-const node = (id: number, options: { order?: number; central?: boolean } = {}): Stub => {
+/**
+ * Stubs default to the tree layout, where every parent (the central topic
+ * included) keeps its children in contiguous orders 0, 1, 2 ... The mindmap
+ * layout is opted into explicitly, since there the central topic's children
+ * encode their side in the order parity.
+ */
+const node = (
+  id: number,
+  options: { order?: number; central?: boolean; layout?: LayoutType } = {},
+): Stub => {
   const self: Stub = {
     id,
     order: options.order,
     parent: null,
     children: [],
     central: options.central ?? false,
+    layout: options.layout ?? 'tree',
     getId: () => self.id,
     getOrder: () => self.order,
     getParent: () => self.parent as unknown as Topic | null,
     getChildren: () => self.children as unknown as Topic[],
     isCentralTopic: () => self.central,
+    getModel: () => ({ getMindmap: () => ({ getLayout: () => self.layout }) }),
   };
   return self;
 };
@@ -217,6 +232,115 @@ describe('resolveTopicMove', () => {
     it.each(['up', 'down', 'outdent', 'indent'] as TopicMove[])('refuses %s', (move) => {
       const orphan = node(99);
       expect(resolve(orphan, move)).toBeNull();
+    });
+  });
+
+  describe('first-level topics in the mindmap layout', () => {
+    /**
+     * The central topic's balanced sorter puts even orders on the right and odd
+     * orders on the left, so siblings are only those on the topic's own side:
+     *
+     *   left (odd)     root     right (even)
+     *   l0 (1)          |          r0 (0)
+     *   l1 (3)          |          r1 (2)
+     *                   |          r2 (4)
+     */
+    const buildMindmap = () => {
+      const root = node(1, { central: true, layout: 'mindmap' });
+      const r0 = node(10, { order: 0 });
+      const l0 = node(11, { order: 1 });
+      const r1 = node(12, { order: 2 });
+      const l1 = node(13, { order: 3 });
+      const r2 = node(14, { order: 4 });
+      attach(root, r0, l0, r1, l1, r2);
+      return { root, r0, l0, r1, l1, r2 };
+    };
+
+    it('moves up to the order of the sibling above on the same side', () => {
+      const { root, r1 } = buildMindmap();
+      expect(resolve(r1, 'up')).toEqual({ kind: 'reorder', parent: root, order: 0 });
+    });
+
+    it('moves down to the order of the sibling below on the same side', () => {
+      const { root, r1, l0 } = buildMindmap();
+      expect(resolve(r1, 'down')).toEqual({ kind: 'reorder', parent: root, order: 4 });
+      expect(resolve(l0, 'down')).toEqual({ kind: 'reorder', parent: root, order: 3 });
+    });
+
+    it('keeps an even (right-side) order when moving a right-side topic', () => {
+      const { r0, r1, r2 } = buildMindmap();
+      [resolve(r0, 'down'), resolve(r1, 'up'), resolve(r1, 'down'), resolve(r2, 'up')].forEach(
+        (target) => {
+          expect(target).not.toBeNull();
+          expect((target as { order: number }).order % 2).toBe(0);
+        },
+      );
+    });
+
+    it('refuses to move past the end of its own side', () => {
+      const { l0, l1, r0, r2 } = buildMindmap();
+      expect(resolve(l0, 'up')).toBeNull();
+      expect(resolve(l1, 'down')).toBeNull();
+      expect(resolve(r0, 'up')).toBeNull();
+      expect(resolve(r2, 'down')).toBeNull();
+    });
+
+    it('indents under the sibling above on the same side', () => {
+      const { r1, r0, l1, l0 } = buildMindmap();
+      expect(resolve(r1, 'indent')).toEqual({ kind: 'reparent', parent: r0 });
+      expect(resolve(l1, 'indent')).toEqual({ kind: 'reparent', parent: l0 });
+    });
+
+    it('refuses to indent the first topic on a side', () => {
+      const { l0 } = buildMindmap();
+      expect(resolve(l0, 'indent')).toBeNull();
+    });
+
+    it.each([
+      // [topic, move, expected ids top to bottom on its side afterwards]
+      [12, 'up', [12, 10, 14]],
+      [12, 'down', [10, 14, 12]],
+      [10, 'down', [12, 10, 14]],
+      [13, 'up', [13, 11]],
+    ] as [number, TopicMove, number[]][])(
+      'lands %d one step %s on its own side once the layout applies it',
+      (id, move, expected) => {
+        const tree = buildMindmap();
+        const stubs = [tree.r0, tree.l0, tree.r1, tree.l1, tree.r2];
+        const manager = new LayoutManager(1, { width: 140, height: 90 });
+        stubs.forEach((stub) => {
+          manager.addNode(stub.id, { width: 80, height: 60 }, { x: 0, y: 0 });
+          manager.connectNode(1, stub.id, stub.order!);
+        });
+        manager.layout();
+
+        const target = resolve(stubs.find((s) => s.id === id)!, move);
+        expect(target?.kind).toBe('reorder');
+
+        // What DragTopicCommand does with the target: detach, then connect with its order.
+        manager.disconnectNode(id);
+        manager.connectNode(1, id, (target as { order: number }).order);
+        manager.layout();
+
+        const side = Math.sign(manager.find(expected[0]).getPosition().x);
+        expected.forEach((sameSide) => {
+          expect(Math.sign(manager.find(sameSide).getPosition().x)).toBe(side);
+        });
+        const topToBottom = [...expected].sort(
+          (a, b) => manager.find(a).getPosition().y - manager.find(b).getPosition().y,
+        );
+        expect(topToBottom).toEqual(expected);
+      },
+    );
+
+    it('reorders deeper levels by contiguous order as usual', () => {
+      const { r0 } = buildMindmap();
+      const x = node(20);
+      const y = node(21);
+      const z = node(22);
+      attach(r0, x, y, z);
+      expect(resolve(y, 'up')).toEqual({ kind: 'reorder', parent: r0, order: 0 });
+      expect(resolve(y, 'down')).toEqual({ kind: 'reorder', parent: r0, order: 2 });
     });
   });
 
