@@ -25,11 +25,10 @@
  * highlight them, so the whole set arrived as one 60vh scroll.
  *
  * Keys are kept as tokens, not as pre-joined strings like 'Ctrl + Shift + V',
- * so a renderer can draw each one as its own key cap and the keyboard diagram
- * can ask which keys a category actually uses.
+ * so a renderer can draw each one as its own key cap.
  */
 
-/** A key name as it appears on a cap. Matched against the diagram's layout. */
+/** A key name as it appears on a cap. */
 export type KeyToken = string;
 
 /**
@@ -347,35 +346,5 @@ export const SHORTCUT_CATEGORIES: ShortcutCategory[] = [
     ],
   },
 ];
-
-/**
- * Every key cap a category touches, for highlighting on the diagram.
- *
- * Mac glyphs are folded onto their Windows equivalents, since one diagram
- * serves both columns: ⌘ and ⌥ would otherwise highlight nothing on a layout
- * labelled Ctrl/Alt.
- */
-const MAC_TO_WIN: Record<string, string> = {
-  '⌘': 'Ctrl',
-  '⌥': 'Alt',
-  '⇧': 'Shift',
-};
-
-export const keysUsedBy = (category: ShortcutCategory): Set<string> => {
-  const used = new Set<string>();
-  category.shortcuts.forEach((shortcut) => {
-    [...shortcut.win, ...shortcut.mac].forEach((combo) => {
-      combo.keys?.forEach((key) => used.add(MAC_TO_WIN[key] ?? key));
-    });
-    // 'Navigation' is the arrow keys, but says so in prose rather than tokens.
-    if (shortcut.id === 'shortcut-help-pane.navigation') {
-      ['Up', 'Down', 'Left', 'Right'].forEach((key) => used.add(key));
-    }
-    if (shortcut.id === 'shortcut-help-pane.edit-topic') {
-      used.add('F2');
-    }
-  });
-  return used;
-};
 
 export default SHORTCUT_CATEGORIES;

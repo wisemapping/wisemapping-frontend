@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, useMemo, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -29,18 +29,30 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Paper from '@mui/material/Paper';
 import CloseIcon from '@mui/icons-material/Close';
+import type { Theme } from '@mui/material/styles';
 import ComboList from './key-cap';
-import KeyboardDiagram from './keyboard-diagram';
 import NavigationDiagram from './navigation-diagram';
-import { SHORTCUT_CATEGORIES, keysUsedBy } from './shortcuts';
+import { SHORTCUT_CATEGORIES } from './shortcuts';
 
 type KeyboardShorcutsHelpProps = {
   closeModal?: () => void;
 };
 
+/**
+ * The sticky header's cells.
+ *
+ * `action.hover` is a ~4% alpha tint, which was the header's only background:
+ * with `stickyHeader` the rows scrolled visibly through it. The tint now sits
+ * on an opaque base, layered the way MUI paints its own Paper overlays, and a
+ * bottom border separates it from the first row it covers.
+ */
 const HEADER_CELL_SX = {
   fontWeight: 600,
-  backgroundColor: 'action.hover',
+  backgroundColor: 'background.paper',
+  backgroundImage: (theme: Theme) =>
+    `linear-gradient(${theme.palette.action.hover}, ${theme.palette.action.hover})`,
+  borderBottom: '1px solid',
+  borderBottomColor: 'divider',
   textTransform: 'uppercase',
   fontSize: '0.65rem',
   letterSpacing: '0.5px',
@@ -51,16 +63,14 @@ const HEADER_CELL_SX = {
  *
  * All 35 shortcuts used to arrive as one flat table in a 60vh scroll, which
  * made the pane a list to search rather than one to read. They are now grouped
- * into tabs, and each tab opens with a picture: a keyboard with that group's
- * keys lit up, plus -- for navigation, where the keys alone genuinely do not
- * explain the behaviour -- a map showing what each arrow does.
+ * into tabs, and the navigation tab opens with a map showing what each arrow
+ * key does -- the one group whose key names genuinely do not explain it.
  *
  * The rows themselves come from `shortcuts.ts`; this file is layout only.
  */
 const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactElement => {
   const [tab, setTab] = useState(0);
   const category = SHORTCUT_CATEGORIES[tab];
-  const usedKeys = useMemo(() => keysUsedBy(category), [category]);
 
   return (
     <Box
@@ -129,9 +139,8 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
         ))}
       </Tabs>
 
-      {/* The visualisations: a keyboard for every tab, a map for navigation. */}
+      {/* Navigation is the one group the key names alone do not explain. */}
       {category.key === 'navigation' && <NavigationDiagram />}
-      <KeyboardDiagram used={usedKeys} />
 
       <TableContainer
         component={Paper}

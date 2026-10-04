@@ -25,15 +25,9 @@ import type { Combo } from './shortcuts';
  *
  * The table used to render 'Ctrl + Shift + V' as a single string, which left
  * the reader parsing where one key ended and the next began. Caps make the
- * count obvious at a glance, and give the diagram something to match.
+ * count obvious at a glance.
  */
-export const KeyCap = ({
-  children,
-  highlighted = false,
-}: {
-  children: React.ReactNode;
-  highlighted?: boolean;
-}): ReactElement => (
+const KeyCap = ({ children }: { children: React.ReactNode }): ReactElement => (
   <Box
     component="kbd"
     sx={{
@@ -48,10 +42,10 @@ export const KeyCap = ({
       fontWeight: 600,
       lineHeight: 1.5,
       whiteSpace: 'nowrap',
-      color: highlighted ? 'primary.contrastText' : 'text.primary',
-      backgroundColor: highlighted ? 'primary.main' : 'action.hover',
+      color: 'text.primary',
+      backgroundColor: 'action.hover',
       border: '1px solid',
-      borderColor: highlighted ? 'primary.main' : 'divider',
+      borderColor: 'divider',
       borderBottomWidth: '2px',
       borderRadius: '4px',
     }}
