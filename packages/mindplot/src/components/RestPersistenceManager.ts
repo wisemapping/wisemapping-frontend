@@ -15,10 +15,22 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import throttle from 'lodash/throttle';
 import { $assert } from './util/assert';
 import { $msg } from './Messages';
+import { AjaxUtils } from './util/AjaxUtils';
 import PersistenceManager, { PersistenceError, ServerError } from './PersistenceManager';
+
+type SaveEvents = {
+  onSuccess: () => void;
+  onError: (error: PersistenceError) => void;
+};
+
+type PendingSave = {
+  mapId: string;
+  data: { id: string; xml: string; properties: string };
+  saveHistory: boolean;
+  events: SaveEvents[];
+};
 
 class RESTPersistenceManager extends PersistenceManager {
   private documentUrl: string;
@@ -41,71 +53,126 @@ class RESTPersistenceManager extends PersistenceManager {
     this.jwt = options.jwt;
   }
 
-  private _handleError(error: PersistenceError, events): void {
+  private _handleError(error: PersistenceError, events: SaveEvents[]): void {
     this.triggerError(error);
-    events.onError(error);
+    events.forEach((e) => e.onError(error));
   }
 
-  // Throttle saves to prevent multiple saves within 10 seconds
-  private _throttledSave = throttle(
-    (
-      mapId: string,
-      data: { id: string; xml: string; properties: string },
-      query: string,
-      events,
-    ) => {
-      const headers = this._buildHttpHeader('application/json; charset=utf-8', 'application/json');
-      fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
-        method: 'PUT',
-        // Blob helps to reduce the memory on large payload.
-        body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
-        headers,
-      })
-        .then(async (response: Response) => {
-          if (response.ok) {
-            events.onSuccess();
-          } else {
-            let error: PersistenceError;
-            switch (response.status) {
-              case 401:
-              case 403:
-                console.warn(`Saving error: ${response.status} - session expired`);
-                error = {
-                  severity: 'FATAL',
-                  errorType: 'auth',
-                  message: $msg('SESSION_EXPIRED'),
-                };
-                break;
-              default: {
-                console.error(`Saving error: ${response.status}`);
-                error = await this._buildError(response);
-              }
-            }
-            this._handleError(error, events);
-          }
-        })
-        .catch(() => {
-          const error: PersistenceError = {
-            severity: 'SEVERE',
-            errorType: 'unexpected',
-            message: $msg('SAVE_COULD_NOT_BE_COMPLETED'),
-          };
-          this._handleError(error, events);
-        });
-    },
-    10000,
-    { leading: true, trailing: false },
-  );
+  // Server writes are rate limited: one request in flight and at most one request every
+  // MIN_SAVE_INTERVAL_MS. Saves requested in between are coalesced per map into a single
+  // pending save of the latest payload; every caller is notified when that save completes.
+  private static readonly MIN_SAVE_INTERVAL_MS = 10000;
 
-  saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events): void {
+  private _saveInFlight = false;
+
+  private _lastSaveStartedAt: number | undefined;
+
+  private _saveTimer: ReturnType<typeof setTimeout> | undefined;
+
+  private _pendingSaves = new Map<string, PendingSave>();
+
+  private _scheduleNextSave(): void {
+    if (this._saveInFlight || this._saveTimer || this._pendingSaves.size === 0) {
+      return;
+    }
+
+    const wait =
+      this._lastSaveStartedAt === undefined
+        ? 0
+        : this._lastSaveStartedAt + RESTPersistenceManager.MIN_SAVE_INTERVAL_MS - Date.now();
+    if (wait > 0) {
+      this._saveTimer = setTimeout(() => {
+        this._saveTimer = undefined;
+        this._scheduleNextSave();
+      }, wait);
+      return;
+    }
+
+    const [mapId, pending] = this._pendingSaves.entries().next().value as [string, PendingSave];
+    this._pendingSaves.delete(mapId);
+    this._sendSave(pending);
+  }
+
+  private _sendSave(pending: PendingSave): void {
+    this._saveInFlight = true;
+    this._lastSaveStartedAt = Date.now();
+
+    const { mapId, data, saveHistory, events } = pending;
+    const query = `minor=${!saveHistory}`;
+    const headers = this._buildHttpHeader('application/json; charset=utf-8', 'application/json');
+    fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
+      method: 'PUT',
+      // Blob helps to reduce the memory on large payload.
+      body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
+      headers,
+    })
+      .then(async (response: Response): Promise<PersistenceError | undefined> => {
+        if (response.ok) {
+          return undefined;
+        }
+        switch (response.status) {
+          case 401:
+          case 403:
+            console.warn(`Saving error: ${response.status} - session expired`);
+            return {
+              severity: 'FATAL',
+              errorType: 'auth',
+              message: $msg('SESSION_EXPIRED'),
+            };
+          default: {
+            console.error(`Saving error: ${response.status}`);
+            return this._buildError(response);
+          }
+        }
+      })
+      .catch((): PersistenceError => ({
+        severity: 'SEVERE',
+        errorType: 'unexpected',
+        message: $msg('SAVE_COULD_NOT_BE_COMPLETED'),
+      }))
+      .then((error) => {
+        this._saveInFlight = false;
+        try {
+          if (error) {
+            this._handleError(error, events);
+          } else {
+            events.forEach((e) => e.onSuccess());
+          }
+        } finally {
+          this._scheduleNextSave();
+        }
+      });
+  }
+
+  saveMapXml(
+    mapId: string,
+    mapXml: Document,
+    pref: string,
+    saveHistory: boolean,
+    events?: SaveEvents,
+  ): void {
     const data = {
       id: mapId,
       xml: new XMLSerializer().serializeToString(mapXml),
       properties: pref,
     };
 
-    const query = `minor=${!saveHistory}`;
-    this._throttledSave(mapId, data, query, events);
+    const pending = this._pendingSaves.get(mapId);
+    if (pending) {
+      pending.data = data;
+      pending.saveHistory = pending.saveHistory || saveHistory;
+      if (events) {
+        pending.events.push(events);
+      }
+    } else {
+      this._pendingSaves.set(mapId, {
+        mapId,
+        data,
+        saveHistory,
+        events: events ? [events] : [],
+      });
+    }
+    this._scheduleNextSave();
   }
 
   discardChanges(mapId: string): void {
@@ -128,15 +195,23 @@ class RESTPersistenceManager extends PersistenceManager {
   private async _buildError(response: Response): Promise<PersistenceError> {
     let result: PersistenceError;
     const responseText = await response.text();
-    const contentType = response.headers['Content-Type'];
+    const contentType = response.headers.get('Content-Type');
+
+    let serverError: ServerError | undefined;
+    if (contentType?.includes('application/json')) {
+      try {
+        serverError = JSON.parse(responseText);
+      } catch {
+        serverError = undefined;
+      }
+    }
 
     // This is a wise client server error ...
-    if (contentType?.indexOf('application/json') !== -1) {
-      const serverError: ServerError = JSON.parse(responseText);
+    if (serverError) {
       result = {
         severity: serverError.globalSeverity,
         errorType: 'expected',
-        message: serverError.globalErrors[0],
+        message: serverError.globalErrors?.[0] ?? $msg('SAVE_COULD_NOT_BE_COMPLETED'),
       };
     } else {
       // Unexpected error from the server ...
@@ -164,7 +239,7 @@ class RESTPersistenceManager extends PersistenceManager {
         }
         return response.text();
       })
-      .then((xmlStr) => new DOMParser().parseFromString(xmlStr, 'text/xml'));
+      .then((xmlStr) => AjaxUtils.parseXML(xmlStr));
   }
 
   private _buildHttpHeader(contentType: string, accept?: string) {

@@ -41,6 +41,10 @@ class MindplotWebComponent extends HTMLElement {
 
   private _saveRequired: boolean;
 
+  // Incremented on every model change, so a save can tell whether the model changed
+  // after it was serialized.
+  private _revision: number;
+
   private _isLoaded: boolean;
 
   private loadMaterialIconsFont(): void {
@@ -125,6 +129,7 @@ class MindplotWebComponent extends HTMLElement {
     this._shadowRoot.appendChild(wrapper);
     this._isLoaded = false;
     this._saveRequired = false;
+    this._revision = 0;
   }
 
   /**
@@ -153,7 +158,7 @@ class MindplotWebComponent extends HTMLElement {
 
     const persistenceManager =
       persistence || new LocalStorageManager('map.xml', false, undefined, false);
-    const mode = editorRenderMode || 'viewonly';
+    const mode: EditorRenderMode = editorRenderMode || 'viewonly-private';
 
     const mindplodElem = this._shadowRoot.getElementById('mindplot-canvas');
     $assert(mindplodElem, 'Root mindplot element could not be loaded');
@@ -170,6 +175,7 @@ class MindplotWebComponent extends HTMLElement {
     this._designer = buildDesigner(options);
     this._designer.addEvent('modelUpdate', () => {
       if (this._isLoaded) {
+        this._revision += 1;
         this.setSaveRequired(true);
       }
     });
@@ -231,13 +237,18 @@ class MindplotWebComponent extends HTMLElement {
 
     // Call persistence manager for saving ...
     const persistenceManager = PersistenceManager.getInstance();
+    // The map is serialized synchronously by save(), so this is the revision being sent.
+    const savedRevision = this._revision;
     return new Promise<void>((resolve, reject) => {
       persistenceManager.save(mindmap, mindmapProp, saveHistory, {
         onSuccess: () => {
           if (saveHistory) {
             $notify($msg('SAVE_COMPLETE'));
           }
-          this.setSaveRequired(false);
+          // Changes made while the save was in flight are not included, keep them pending.
+          if (this._revision === savedRevision) {
+            this.setSaveRequired(false);
+          }
           resolve();
         },
         onError: (error) => {
@@ -255,8 +266,8 @@ class MindplotWebComponent extends HTMLElement {
     const persistenceManager = PersistenceManager.getInstance();
 
     // If the map could not be loaded, partial map load could happen.
-    const mapId = mindmap.getId();
-    if (mindmap && mapId) {
+    const mapId = mindmap?.getId();
+    if (mapId) {
       persistenceManager.unlockMap(mapId);
     }
   }

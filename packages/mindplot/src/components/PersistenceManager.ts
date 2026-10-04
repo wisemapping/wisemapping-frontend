@@ -51,7 +51,7 @@ abstract class PersistenceManager {
       this.saveMapXml(mapId, domMap, pref, saveHistory, events);
     } catch (e) {
       console.error(e);
-      events.onError(e);
+      events?.onError(e);
     }
   }
 
