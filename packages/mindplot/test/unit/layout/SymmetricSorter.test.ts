@@ -122,3 +122,25 @@ describe('SymmetricSorter Layout Tests', () => {
   });
 });
 
+
+describe('SymmetricSorter.predict of a new child of an isolated topic', () => {
+  // Topic 5 is not connected to the central topic: it is the root of its own tree.
+  const isolatedAt = (x: number): LayoutManager => {
+    const manager = new LayoutManager(0, ROOT_NODE_SIZE);
+    manager.addNode(5, NODE_SIZE, { x, y: 300 });
+    manager.layout();
+    return manager;
+  };
+
+  it.each([-400, 400])('previews the side the layout uses for a topic at x=%i', (x) => {
+    const manager = isolatedAt(x);
+    const predicted = manager.predict(5, null, null);
+
+    manager.addNode(6, NODE_SIZE, { x: 0, y: 0 }).connectNode(5, 6, predicted.order);
+    manager.layout();
+    const laidOut = manager.find(6).getPosition();
+
+    expect(Math.sign(predicted.position.x - x)).toBe(Math.sign(laidOut.x - x));
+    expect(Math.sign(predicted.position.x - x)).toBe(Math.sign(x));
+  });
+});

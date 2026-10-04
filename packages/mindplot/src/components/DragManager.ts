@@ -166,9 +166,10 @@ class DragManager {
         }
 
         // Execute Listeners ..
-        // TODO(typing): called unguarded; throws if no 'startdragging' listener was registered.
-        const startDragListener = dragManager._listeners.startdragging!;
-        startDragListener(event as MouseEvent, dragNode);
+        const startDragListener = dragManager._listeners.startdragging;
+        if (startDragListener) {
+          startDragListener(event as MouseEvent, dragNode);
+        }
 
         // Add shadow node to the workspace.
         workspace.append(dragNode);
@@ -238,9 +239,10 @@ class DragManager {
       }
 
       // Execute Listeners only if the node has been moved.
-      // TODO(typing): called unguarded; throws if no 'enddragging' listener was registered.
-      const endDragListener = this._listeners.enddragging!;
-      endDragListener(event as MouseEvent, dragNode);
+      const endDragListener = this._listeners.enddragging;
+      if (endDragListener) {
+        endDragListener(event as MouseEvent, dragNode);
+      }
 
       // Remove drag node from the workspace.
       dragNode.removeFromWorkspace(workspace);

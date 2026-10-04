@@ -123,7 +123,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
    * they are simple numbers, not CSS length quantities.
    */
   setCoordSize(width: number | string, height: number | string): void {
-    this.peer.setCoordSize(Number.parseInt(String(width), 10), Number.parseInt(String(height), 10));
+    this.peer.setCoordSize(Number.parseFloat(String(width)), Number.parseFloat(String(height)));
   }
 
   setCoordOrigin(x: number, y: number): void {

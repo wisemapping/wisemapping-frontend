@@ -60,10 +60,12 @@ class SymmetricSorter extends AbstractBasicSorter {
 
     // Its not a dragged node (it is being added)
     if (!node) {
-      const parentDirection = self._getRelativeDirection(
-        rootNode.getPosition(),
-        parent.getPosition(),
-      );
+      // As getChildDirection: the children of an isolated root go to the side of the map the
+      // root is on. Compared with itself, the root would always say "right".
+      const parentDirection =
+        parent === rootNode
+          ? sideOf(rootNode.getPosition().x)
+          : self._getRelativeDirection(rootNode.getPosition(), parent.getPosition());
 
       const result = {
         x:

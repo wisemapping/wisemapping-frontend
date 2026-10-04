@@ -414,7 +414,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     let maxY = -Infinity;
 
     topics.forEach((topic) => {
-      const position = topic.getPosition();
+      // A topic without a position yet sits at the origin, as the layout places it.
+      const position = (topic.getPosition() as PositionType | undefined) ?? { x: 0, y: 0 };
       const size = topic.getSize();
 
       // Topic position is the center, so calculate bounds
@@ -731,7 +732,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
       // Change position to avoid overlap ...
       children.forEach((m) => {
-        const pos = m.getPosition();
+        const pos = (m.getPosition() as PositionType | undefined) ?? { x: 0, y: 0 };
         m.setPosition(pos.x + Math.random() * 60, pos.y + Math.random() * 30);
       });
 

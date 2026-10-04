@@ -51,6 +51,8 @@ class WorkspacePeer extends ElementPeer {
    * A negative value for <width> or <height> is an error (see Error processing).
    * A value of zero disables rendering of the element.
    *
+   * Values are kept at full precision: mindplot maps the mouse with the exact origin and
+   * scale, so rounding them here makes slow pans stall and the mouse mapping drift.
    */
 
   setCoordSize(width: number, height: number) {
@@ -61,7 +63,7 @@ class WorkspacePeer extends ElementPeer {
     }
     coords[2] = width;
     coords[3] = height;
-    this._native.setAttribute('viewBox', coords.map((e: number) => e.toFixed(0)).join(' '));
+    this._native.setAttribute('viewBox', coords.join(' '));
     this._native.setAttribute('preserveAspectRatio', 'none');
     EventUtils.broadcastChangeEvent(this, 'strokeStyle');
   }
@@ -70,7 +72,7 @@ class WorkspacePeer extends ElementPeer {
     const viewBox = this._native.getAttribute('viewBox');
     let coords = [1, 1, 1, 1];
     if (viewBox != null) {
-      coords = viewBox.split(/ /).map((e) => Number.parseInt(e, 10));
+      coords = viewBox.split(/ /).map((e) => Number.parseFloat(e));
     }
     return { width: coords[2]!, height: coords[3]! };
   }
@@ -92,7 +94,7 @@ class WorkspacePeer extends ElementPeer {
       coords[1] = y;
     }
 
-    this._native.setAttribute('viewBox', coords.map((e: number) => e.toFixed(0)).join(' '));
+    this._native.setAttribute('viewBox', coords.join(' '));
   }
 
   append(child: ElementPeer): void {

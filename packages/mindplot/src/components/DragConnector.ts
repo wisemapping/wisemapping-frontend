@@ -62,11 +62,7 @@ class DragConnector {
     // Get orientation from topic - it should be updated when layout changes
     const orientation = draggedNode.getOrientation();
 
-    // Drag node connects to the border ...
-    // const dragTopicWidth = dragTopic.getSize ? dragTopic.getSize().width : 0; // Hack...
-    const dragTopicWidth = 0;
-    const xMouseGap = dragTopic.getPosition().x > 0 ? 0 : dragTopicWidth;
-    const sPos = { x: dragTopic.getPosition().x - xMouseGap, y: dragTopic.getPosition().y };
+    const sPos = dragTopic.getPosition();
 
     // Perform a initial filter to discard topics:
     //  - Exclude dragged topic

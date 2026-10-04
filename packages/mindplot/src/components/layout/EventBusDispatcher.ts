@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import PositionType from '../PositionType';
+import INodeModel from '../model/INodeModel';
 import SizeType from '../SizeType';
 import Topic from '../Topic';
 import LayoutEventBus from './LayoutEventBus';
@@ -87,12 +88,33 @@ class EventBusDispatcher {
     this.getLayoutManager().updateShrinkState(node.getId(), node.areChildrenShrunken());
   }
 
-  private _topicAdded(node: Topic) {
+  // The bus hands over the topic model (Topic.addToWorkspace), not the topic.
+  private _topicAdded(node: INodeModel) {
     // Central topic must not be added twice ...
     if (node.getId() !== 0) {
-      this.getLayoutManager().addNode(node.getId(), { width: 10, height: 10 }, node.getPosition());
+      this.getLayoutManager().addNode(
+        node.getId(),
+        { width: 10, height: 10 },
+        EventBusDispatcher._initialPosition(node),
+      );
       this.getLayoutManager().updateShrinkState(node.getId(), node.areChildrenShrunken());
     }
+  }
+
+  /**
+   * A model may have no position (getPosition() is then undefined). As the Tango loader does,
+   * fall back to the closest ancestor position, or the origin, so the layout gets real numbers.
+   */
+  private static _initialPosition(node: INodeModel): PositionType {
+    let model: INodeModel | null = node;
+    while (model) {
+      const position = model.getPosition() as PositionType | undefined;
+      if (position) {
+        return position;
+      }
+      model = model.getParent();
+    }
+    return { x: 0, y: 0 };
   }
 
   private _topicRemoved(node: Topic) {

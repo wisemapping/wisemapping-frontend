@@ -296,3 +296,48 @@ describe('DragManager drag pivot', () => {
     expect(secondManager.getDragPivot().getTargetTopic()).toBeNull();
   });
 });
+
+describe('DragManager without listeners', () => {
+  let container: HTMLDivElement;
+
+  afterEach(() => {
+    window.dispatchEvent(new Event('blur'));
+    container.remove();
+    jest.restoreAllMocks();
+  });
+
+  it('drags and drops when no startdragging or enddragging listener is registered', () => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    const { canvas, appended } = buildCanvas(container);
+    const eventDispatcher = {
+      getLayoutManager: () => layoutManager,
+    } as unknown as EventBusDispatcher;
+    const dragManager = new DragManager(canvas, eventDispatcher);
+    const draggable = buildTopic();
+    dragManager.add(draggable.topic);
+
+    // jsdom reports a listener that throws as a window error instead of rethrowing it.
+    const errors: unknown[] = [];
+    const onError = (event: ErrorEvent) => {
+      errors.push(event.error);
+      event.preventDefault();
+    };
+    window.addEventListener('error', onError);
+    try {
+      draggable.pressMouse(10, 10);
+      container.dispatchEvent(mouseEvent('mousemove', 40, 40));
+      const dragTopic = appended.find((e) => e instanceof DragTopic) as DragTopic | undefined;
+      expect(dragTopic?.isInWorkspace()).toBe(true);
+
+      container.dispatchEvent(mouseEvent('mouseup', 40, 40));
+      expect(dragTopic?.isInWorkspace()).toBe(false);
+    } finally {
+      window.removeEventListener('error', onError);
+    }
+
+    expect(errors).toEqual([]);
+    expect((dragManager as unknown as { _isDragInProcess: boolean })._isDragInProcess).toBe(false);
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+  });
+});

@@ -22,14 +22,17 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
   default: class {},
 }));
 
+import { Group } from '@wisemapping/web2d';
 import Canvas from '../../../src/components/Canvas';
 import DesignerModel from '../../../src/components/DesignerModel';
 import DragConnector from '../../../src/components/DragConnector';
+import DragPivot from '../../../src/components/DragPivot';
 import DragTopic from '../../../src/components/DragTopic';
 import Topic from '../../../src/components/Topic';
 import TopicConfig from '../../../src/components/TopicConfig';
 import TopicConnection from '../../../src/components/TopicConnection';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
+import NodeGraph from '../../../src/components/NodeGraph';
 import { sideOf } from '../../../src/components/util/side';
 
 /**
@@ -185,5 +188,25 @@ describe('DragConnector: dragging at x === 0', () => {
 
   it('does not connect to a topic on its right', () => {
     expect(candidatesAt(0, [fakeTopic(100, 0)])).toEqual([]);
+  });
+});
+
+describe('DragTopic: drag shadow at x === 0', () => {
+  const shadowXAt = (x: number): number => {
+    const setPosition = jest.fn();
+    const shape = { setPosition } as unknown as Group;
+    const dragged = { getSize: () => ({ width: 80, height: 30 }) } as unknown as NodeGraph;
+    const layout = { getOrientation: () => 'horizontal' } as unknown as LayoutManager;
+    const pivot = { getTargetTopic: () => null } as unknown as DragPivot;
+
+    const dragTopic = DragTopic.withPivot(pivot, () => new DragTopic(shape, dragged, layout));
+    dragTopic.setPosition(x, 0);
+    return setPosition.mock.calls[0][0];
+  };
+
+  it('extends to the right, the side the layout and DragConnector use there', () => {
+    expect(shadowXAt(1)).toBe(1);
+    expect(shadowXAt(0)).toBe(0);
+    expect(shadowXAt(-1)).toBe(-81);
   });
 });

@@ -25,6 +25,7 @@ import NodeGraph from './NodeGraph';
 import PositionType from './PositionType';
 import Topic from './Topic';
 import Canvas from './Canvas';
+import { sideOf } from './util/side';
 
 class DragTopic {
   private _elem2d: Group;
@@ -102,7 +103,7 @@ class DragTopic {
       cy = y - size.height / 2;
     } else {
       // Mindmap layout: handle left/right positioning, center vertically
-      cx = x - (x > 0 ? 0 : size.width);
+      cx = x - (sideOf(x) === 1 ? 0 : size.width);
       cy = Math.ceil(y - size.height / 2);
     }
 
