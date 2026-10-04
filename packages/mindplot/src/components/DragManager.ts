@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
+import DragPivot from './DragPivot';
 import DragTopic from './DragTopic';
 import EventBusDispatcher from './layout/EventBusDispatcher';
 import Topic from './Topic';
@@ -34,6 +35,13 @@ class DragManager {
 
   private _mouseUpListener;
 
+  // Abandons the drag in progress: on window blur or Escape ...
+  private _cancelListener: ((event: Event) => void) | null;
+
+  private _keyDownListener: ((event: KeyboardEvent) => void) | null;
+
+  private _dragPivot: DragPivot;
+
   private _mouseDownTime: number | null;
 
   private _mouseDownPosition: { x: number; y: number } | null;
@@ -51,7 +59,13 @@ class DragManager {
     this._eventDispatcher = eventDispatcher;
     this._mouseDownTime = null;
     this._mouseDownPosition = null;
-    DragTopic.init(this._workspace);
+    this._cancelListener = null;
+    this._keyDownListener = null;
+    this._dragPivot = DragTopic.init(this._workspace);
+  }
+
+  getDragPivot(): DragPivot {
+    return this._dragPivot;
   }
 
   add(topic: Topic) {
@@ -72,7 +86,13 @@ class DragManager {
 
         // Set initial position.
         const layoutManager = me._eventDispatcher.getLayoutManager();
-        const dragNode: DragTopic = topic.createDragNode(layoutManager);
+        const dragNode: DragTopic = DragTopic.withPivot(me._dragPivot, () =>
+          topic.createDragNode(layoutManager),
+        );
+
+        // Mouse events are listened on the document, so that a release outside the container
+        // still ends the drag ...
+        const { document } = window;
 
         // Register mouse move listener ...
         const mouseMoveListener = dragManager.buildMouseMoveListener(
@@ -80,11 +100,24 @@ class DragManager {
           dragNode,
           dragManager,
         );
-        screen.addEvent('mousemove', mouseMoveListener);
+        document.addEventListener('mousemove', mouseMoveListener);
 
         // Register mouse up listeners ...
         const mouseUpListener = dragManager._buildMouseUpListener(workspace, dragNode, dragManager);
-        screen.addEvent('mouseup', mouseUpListener);
+        document.addEventListener('mouseup', mouseUpListener);
+
+        // The release may never reach the page if the window loses focus, and Escape abandons the
+        // drag. Both leave the topic where it was ...
+        const cancelListener = (cancelEvent: Event) =>
+          me._endDrag(workspace, dragNode, cancelEvent, true);
+        me._cancelListener = cancelListener;
+        window.addEventListener('blur', cancelListener);
+        me._keyDownListener = (keyEvent: KeyboardEvent) => {
+          if (keyEvent.key === 'Escape') {
+            cancelListener(keyEvent);
+          }
+        };
+        document.addEventListener('keydown', me._keyDownListener);
 
         // Change cursor.
         window.document.body.style.cursor = 'move';
@@ -160,46 +193,67 @@ class DragManager {
     dragNode: DragTopic,
     dragManager: DragManager,
   ) {
-    const screen = workspace.getScreenManager();
     const result = (event: Event) => {
-      $assert(dragNode.isDragTopic, 'dragNode must be an DragTopic');
-
-      // Remove all the events.
-      screen.removeEvent('mousemove', dragManager._mouseMoveListener);
-      screen.removeEvent('mouseup', dragManager._mouseUpListener);
-
-      // Help GC
-      // allowed param reassign to avoid risks of existing code relying in this side-effect
-      dragManager._mouseMoveListener = null;
-      dragManager._mouseUpListener = null;
-
-      workspace.enableWorkspaceEvents(true);
-      // Change the cursor to the default.
-      window.document.body.style.cursor = 'default';
-
-      if (this._isDragInProcess) {
-        // Execute Listeners only if the node has been moved.
-        const endDragListener = dragManager._listeners.enddragging;
-        endDragListener(event, dragNode);
-
-        // Remove drag node from the workspace.
-        dragNode.removeFromWorkspace(workspace);
-
-        this._isDragInProcess = false;
-      } else {
-        // Even if drag didn't fully start, ensure drag pivot is hidden
-        // This handles cases where mouse up happens before threshold is met
-        dragNode.setVisibility(false);
-      }
-
-      // Reset drag threshold trackers
-      this._mouseDownTime = null;
-      this._mouseDownPosition = null;
+      dragManager._endDrag(workspace, dragNode, event, false);
     };
     dragManager._mouseUpListener = result;
     return result;
   }
 
+  private _endDrag(workspace: Canvas, dragNode: DragTopic, event: Event, cancel: boolean) {
+    $assert(dragNode.isDragTopic, 'dragNode must be an DragTopic');
+
+    // Remove all the events.
+    const { document } = window;
+    document.removeEventListener('mousemove', this._mouseMoveListener);
+    document.removeEventListener('mouseup', this._mouseUpListener);
+    if (this._cancelListener) {
+      window.removeEventListener('blur', this._cancelListener);
+    }
+    if (this._keyDownListener) {
+      document.removeEventListener('keydown', this._keyDownListener);
+    }
+
+    // Help GC
+    this._mouseMoveListener = null;
+    this._mouseUpListener = null;
+    this._cancelListener = null;
+    this._keyDownListener = null;
+
+    workspace.enableWorkspaceEvents(true);
+    // Change the cursor to the default.
+    window.document.body.style.cursor = 'default';
+
+    if (this._isDragInProcess) {
+      // A cancelled drag still ends, so that listeners can restore their state, but it does not
+      // move the topic ...
+      if (cancel) {
+        dragNode.cancel();
+      }
+
+      // Execute Listeners only if the node has been moved.
+      const endDragListener = this._listeners.enddragging;
+      endDragListener(event, dragNode);
+
+      // Remove drag node from the workspace.
+      dragNode.removeFromWorkspace(workspace);
+
+      this._isDragInProcess = false;
+    } else {
+      // Even if drag didn't fully start, ensure drag pivot is hidden
+      // This handles cases where mouse up happens before threshold is met
+      dragNode.setVisibility(false);
+    }
+
+    // Reset drag threshold trackers
+    this._mouseDownTime = null;
+    this._mouseDownPosition = null;
+  }
+
+  /**
+   * enddragging is also fired when the drag is cancelled (window blur, Escape). The drag topic is
+   * then cancelled: see DragTopic.isCancelled().
+   */
   addEvent(
     type: 'startdragging' | 'dragging' | 'enddragging',
     listener: (event: MouseEvent, dragTopic: DragTopic) => void,

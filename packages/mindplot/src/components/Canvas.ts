@@ -48,6 +48,13 @@ class Canvas {
 
   private _mouseUpListener;
 
+  // Ends the pan in progress without treating it as a release (window blur, dispose) ...
+  private _cancelPan: (() => void) | null;
+
+  private _mouseDownListener: ((event: Event) => void) | null;
+
+  private _resizeListener: (() => void) | null;
+
   constructor(
     screenManager: ScreenManager,
     zoom: number,
@@ -80,6 +87,9 @@ class Canvas {
     this._queueRenderEnabled = delayRenderQueue;
     this._mouseMoveListener = null;
     this._mouseUpListener = null;
+    this._cancelPan = null;
+    this._mouseDownListener = null;
+    this._resizeListener = null;
   }
 
   private _adjustWorkspace(): void {
@@ -87,14 +97,39 @@ class Canvas {
   }
 
   registerEvents() {
-    // Register drag events ...
-    this._registerDragEvents();
-    this._eventsEnabled = true;
+    // Called on every map load: the listeners must be registered only once ...
+    if (!this._mouseDownListener) {
+      // Register drag events ...
+      this._registerDragEvents();
 
-    // Readjust if the window is resized ...
-    window.addEventListener('resize', () => {
-      this._adjustWorkspace();
-    });
+      // Readjust if the window is resized ...
+      this._resizeListener = () => {
+        this._adjustWorkspace();
+      };
+      window.addEventListener('resize', this._resizeListener);
+    }
+    this._eventsEnabled = true;
+  }
+
+  /**
+   * Removes the listeners registered on the window and the container, ending any pan in progress.
+   */
+  dispose(): void {
+    if (this._cancelPan) {
+      this._cancelPan();
+    }
+
+    if (this._resizeListener) {
+      window.removeEventListener('resize', this._resizeListener);
+      this._resizeListener = null;
+    }
+
+    if (this._mouseDownListener) {
+      this._screenManager.removeEvent('mousedown', this._mouseDownListener);
+      this._screenManager.removeEvent('touchstart', this._mouseDownListener);
+      this._mouseDownListener = null;
+    }
+    this._eventsEnabled = false;
   }
 
   isReadOnly(): boolean {
@@ -373,19 +408,24 @@ class Canvas {
             schedulePanUpdate();
             wasDragged = true;
           };
-          screenManager.addEvent('mousemove', this._mouseMoveListener);
+          // Mouse events are listened on the document, so that a release outside the container
+          // still ends the pan. Touch events always go to the element the touch started on.
+          window.document.addEventListener('mousemove', this._mouseMoveListener);
           screenManager.addEvent('touchmove', this._mouseMoveListener);
 
-          // Register mouse up listeners ...
-          this._mouseUpListener = () => {
+          const endPan = (isRelease: boolean) => {
             const mouseMoveListener = this._mouseMoveListener;
             const mouseUpListener = this._mouseUpListener;
-            screenManager.removeEvent('mousemove', mouseMoveListener);
-            screenManager.removeEvent('mouseup', mouseUpListener);
+            const cancelPan = this._cancelPan!;
+            window.document.removeEventListener('mousemove', mouseMoveListener);
+            window.document.removeEventListener('mouseup', mouseUpListener);
             screenManager.removeEvent('touchmove', mouseMoveListener);
             screenManager.removeEvent('touchend', mouseUpListener);
+            screenManager.removeEvent('touchcancel', cancelPan);
+            window.removeEventListener('blur', cancelPan);
             this._mouseUpListener = null;
             this._mouseMoveListener = null;
+            this._cancelPan = null;
             window.document.body.style.cursor = 'default';
 
             // Update screen manager offset.
@@ -393,17 +433,25 @@ class Canvas {
             screenManager.setOffset(coordOrigin.x, coordOrigin.y);
             mWorkspace.enableWorkspaceEvents(true);
 
-            if (!wasDragged) {
+            if (isRelease && !wasDragged) {
               screenManager.fireEvent('click');
             }
           };
-          screenManager.addEvent('mouseup', this._mouseUpListener);
+          // The button can be released where no mouseup reaches the page (another window) ...
+          this._cancelPan = () => endPan(false);
+
+          // Register mouse up listeners ...
+          this._mouseUpListener = () => endPan(true);
+          window.document.addEventListener('mouseup', this._mouseUpListener);
           screenManager.addEvent('touchend', this._mouseUpListener);
+          screenManager.addEvent('touchcancel', this._cancelPan);
+          window.addEventListener('blur', this._cancelPan);
         }
       } else {
         this._mouseUpListener();
       }
     };
+    this._mouseDownListener = mouseDownListener;
     screenManager.addEvent('mousedown', mouseDownListener);
     screenManager.addEvent('touchstart', mouseDownListener);
   }

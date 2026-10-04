@@ -137,7 +137,9 @@ describe('Relationship control points', () => {
       'does not dispatch a move when the dot is clicked without dragging (pivot %s)',
       (type) => {
         pivot(type).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
-        container.dispatchEvent(new MouseEvent('mouseup', { clientX: 5, clientY: 5 }));
+        container.dispatchEvent(
+          new MouseEvent('mouseup', { clientX: 5, clientY: 5, bubbles: true }),
+        );
 
         expect(moveControlPoint).not.toHaveBeenCalled();
       },
@@ -147,8 +149,12 @@ describe('Relationship control points', () => {
       'dispatches a move when the dot is dragged (pivot %s)',
       (type) => {
         pivot(type).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
-        container.dispatchEvent(new MouseEvent('mousemove', { clientX: 40, clientY: 30 }));
-        container.dispatchEvent(new MouseEvent('mouseup', { clientX: 40, clientY: 30 }));
+        container.dispatchEvent(
+          new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
+        );
+        container.dispatchEvent(
+          new MouseEvent('mouseup', { clientX: 40, clientY: 30, bubbles: true }),
+        );
 
         expect(moveControlPoint).toHaveBeenCalledTimes(1);
         expect(moveControlPoint.mock.calls[0][2]).toBe(type);
@@ -158,14 +164,68 @@ describe('Relationship control points', () => {
     it('does not dispatch again on a later click after a drag', () => {
       const start = pivot(PivotType.Start);
       start.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
-      container.dispatchEvent(new MouseEvent('mousemove', { clientX: 40, clientY: 30 }));
-      container.dispatchEvent(new MouseEvent('mouseup', { clientX: 40, clientY: 30 }));
+      container.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
+      );
+      container.dispatchEvent(
+        new MouseEvent('mouseup', { clientX: 40, clientY: 30, bubbles: true }),
+      );
       moveControlPoint.mockClear();
 
       start.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
-      container.dispatchEvent(new MouseEvent('mouseup', { clientX: 40, clientY: 30 }));
+      container.dispatchEvent(
+        new MouseEvent('mouseup', { clientX: 40, clientY: 30, bubbles: true }),
+      );
 
       expect(moveControlPoint).not.toHaveBeenCalled();
+    });
+
+    it('ends the drag when the button is released outside the container', () => {
+      pivot(PivotType.Start).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      container.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
+      );
+      document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+
+      expect(moveControlPoint).toHaveBeenCalledTimes(1);
+
+      // With the button up the control point must no longer follow the cursor ...
+      line.setSrcControlPoint.mockClear();
+      container.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 60, clientY: 60, bubbles: true }),
+      );
+      expect(line.setSrcControlPoint).not.toHaveBeenCalled();
+    });
+
+    it('keeps following the cursor while it is outside the container', () => {
+      pivot(PivotType.End).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      document.body.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 900, clientY: 900, bubbles: true }),
+      );
+
+      expect(line.setDestControlPoint).toHaveBeenCalledWith({ x: 900, y: 900 });
+      document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    });
+
+    it('ends the drag when the window loses focus', () => {
+      pivot(PivotType.Start).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      container.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
+      );
+      window.dispatchEvent(new Event('blur'));
+
+      // The line already shows the new control point, so it is recorded as on a release ...
+      expect(moveControlPoint).toHaveBeenCalledTimes(1);
+
+      line.setSrcControlPoint.mockClear();
+      container.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 60, clientY: 60, bubbles: true }),
+      );
+      container.dispatchEvent(
+        new MouseEvent('mouseup', { clientX: 60, clientY: 60, bubbles: true }),
+      );
+      expect(line.setSrcControlPoint).not.toHaveBeenCalled();
+      expect(moveControlPoint).toHaveBeenCalledTimes(1);
     });
   });
 });

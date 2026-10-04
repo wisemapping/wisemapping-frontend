@@ -1,0 +1,298 @@
+/*
+ *    Copyright [2007-2025] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+import { Group } from '@wisemapping/web2d';
+import ActionDispatcher from '../../src/components/ActionDispatcher';
+import Canvas from '../../src/components/Canvas';
+import DragManager from '../../src/components/DragManager';
+import DragPivot from '../../src/components/DragPivot';
+import DragTopic from '../../src/components/DragTopic';
+import EventBusDispatcher from '../../src/components/layout/EventBusDispatcher';
+import LayoutManager from '../../src/components/layout/LayoutManager';
+import NodeGraph from '../../src/components/NodeGraph';
+import ScreenManager from '../../src/components/ScreenManager';
+import Topic from '../../src/components/Topic';
+
+jest.mock('../../src/components/SvgImageIcon', () => ({
+  default: jest.fn(),
+}));
+
+jest.mock('../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class {},
+}));
+
+type CanvasElementLike = {
+  addToWorkspace?: (canvas: Canvas) => void;
+  removeFromWorkspace?: (canvas: Canvas) => void;
+};
+
+const mouseEvent = (type: string, clientX = 0, clientY = 0): MouseEvent =>
+  new MouseEvent(type, { clientX, clientY, bubbles: true, cancelable: true });
+
+// A workspace double that only records what is appended to it.
+const buildCanvas = (container: HTMLDivElement) => {
+  const screenManager = new ScreenManager(container);
+  let eventsEnabled = true;
+  const appended: unknown[] = [];
+  const root = new Group();
+  const canvas = {
+    getScreenManager: () => screenManager,
+    isWorkspaceEventsEnabled: () => eventsEnabled,
+    enableWorkspaceEvents: (value: boolean) => {
+      eventsEnabled = value;
+    },
+    append: (elem: CanvasElementLike) => {
+      appended.push(elem);
+      if (elem.addToWorkspace) {
+        elem.addToWorkspace(canvas as unknown as Canvas);
+      } else {
+        root.append(elem as never);
+      }
+    },
+    removeChild: (elem: CanvasElementLike) => {
+      if (elem.removeFromWorkspace) {
+        elem.removeFromWorkspace(canvas as unknown as Canvas);
+      } else {
+        root.removeChild(elem as never);
+      }
+    },
+  };
+  return { canvas: canvas as unknown as Canvas, appended };
+};
+
+const layoutManager = {
+  getOrientation: () => 'horizontal',
+  predict: () => ({ order: 0, position: { x: 0, y: 0 } }),
+} as unknown as LayoutManager;
+
+// A draggable topic double: it keeps the mousedown listener the DragManager registers.
+const buildTopic = () => {
+  let mouseDown: ((event: Event) => void) | null = null;
+  const node = {
+    getId: () => 3,
+    getSize: () => ({ width: 40, height: 20 }),
+    addEvent: (type: string, listener: (event: Event) => void) => {
+      if (type === 'mousedown') mouseDown = listener;
+    },
+    createDragNode: (manager: LayoutManager) => {
+      const shape = new Group();
+      return new DragTopic(shape, node as unknown as NodeGraph, manager);
+    },
+  };
+  return {
+    topic: node as unknown as Topic,
+    pressMouse: (x: number, y: number) => mouseDown!(mouseEvent('mousedown', x, y)),
+  };
+};
+
+describe('DragManager', () => {
+  let container: HTMLDivElement;
+  let canvas: Canvas;
+  let dragManager: DragManager;
+  let dragTopicAction: jest.Mock;
+  let startDragging: jest.Mock;
+  let dragging: jest.Mock;
+  let endDragging: jest.Mock;
+  let pressMouse: (x: number, y: number) => void;
+
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    ({ canvas } = buildCanvas(container));
+
+    dragTopicAction = jest.fn();
+    jest.spyOn(ActionDispatcher, 'getInstance').mockReturnValue({
+      dragTopic: dragTopicAction,
+      moveTopic: jest.fn(),
+    } as unknown as ActionDispatcher);
+
+    const eventDispatcher = {
+      getLayoutManager: () => layoutManager,
+    } as unknown as EventBusDispatcher;
+    dragManager = new DragManager(canvas, eventDispatcher);
+
+    // Mirror what Designer registers: the drop applies the drag node changes.
+    startDragging = jest.fn();
+    dragging = jest.fn();
+    endDragging = jest.fn((_event: MouseEvent, dragTopic: DragTopic) =>
+      dragTopic.applyChanges(canvas),
+    );
+    dragManager.addEvent('startdragging', startDragging);
+    dragManager.addEvent('dragging', dragging);
+    dragManager.addEvent('enddragging', endDragging);
+
+    const draggable = buildTopic();
+    dragManager.add(draggable.topic);
+    ({ pressMouse } = draggable);
+  });
+
+  afterEach(() => {
+    // Leave no drag hanging around between tests.
+    window.dispatchEvent(new Event('blur'));
+    container.remove();
+    document.body.style.cursor = '';
+    jest.restoreAllMocks();
+  });
+
+  const startDrag = () => {
+    pressMouse(10, 10);
+    container.dispatchEvent(mouseEvent('mousemove', 40, 40));
+    expect(startDragging).toHaveBeenCalledTimes(1);
+    expect(dragging).toHaveBeenCalledTimes(1);
+  };
+
+  it('drops the topic when the button is released inside the container', () => {
+    startDrag();
+    container.dispatchEvent(mouseEvent('mouseup', 40, 40));
+
+    expect(endDragging).toHaveBeenCalledTimes(1);
+    expect(dragTopicAction).toHaveBeenCalledTimes(1);
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+  });
+
+  it('ends the drag when the button is released outside the container', () => {
+    startDrag();
+    document.body.dispatchEvent(mouseEvent('mouseup', 900, 900));
+
+    expect(endDragging).toHaveBeenCalledTimes(1);
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+    expect(document.body.style.cursor).toBe('default');
+
+    // With the button up the topic must no longer follow the cursor ...
+    container.dispatchEvent(mouseEvent('mousemove', 60, 60));
+    expect(dragging).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps following the cursor while it is outside the container', () => {
+    startDrag();
+    document.body.dispatchEvent(mouseEvent('mousemove', 900, 900));
+
+    expect(dragging).toHaveBeenCalledTimes(2);
+  });
+
+  it.each([
+    ['the window loses focus', () => window.dispatchEvent(new Event('blur'))],
+    [
+      'Escape is pressed',
+      () =>
+        document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })),
+    ],
+  ])('cancels the drag without moving the topic when %s', (_label, cancel) => {
+    startDrag();
+    cancel();
+
+    expect(dragTopicAction).not.toHaveBeenCalled();
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+    expect(document.body.style.cursor).toBe('default');
+    expect((dragManager as unknown as { _isDragInProcess: boolean })._isDragInProcess).toBe(false);
+
+    // Nothing follows the cursor, and the next release does not drop the topic ...
+    container.dispatchEvent(mouseEvent('mousemove', 60, 60));
+    container.dispatchEvent(mouseEvent('mouseup', 60, 60));
+    expect(dragging).toHaveBeenCalledTimes(1);
+    expect(dragTopicAction).not.toHaveBeenCalled();
+  });
+
+  it('cancels cleanly when the window loses focus before the drag threshold is met', () => {
+    pressMouse(10, 10);
+    window.dispatchEvent(new Event('blur'));
+
+    expect(startDragging).not.toHaveBeenCalled();
+    expect(endDragging).not.toHaveBeenCalled();
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+
+    container.dispatchEvent(mouseEvent('mousemove', 60, 60));
+    expect(startDragging).not.toHaveBeenCalled();
+  });
+
+  it('ignores keys other than Escape during a drag', () => {
+    startDrag();
+    document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true }));
+
+    container.dispatchEvent(mouseEvent('mousemove', 50, 50));
+    expect(dragging).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('DragManager drag pivot', () => {
+  const containers: HTMLDivElement[] = [];
+
+  const buildWorkspace = () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    containers.push(container);
+    return { container, ...buildCanvas(container) };
+  };
+
+  afterEach(() => {
+    window.dispatchEvent(new Event('blur'));
+    containers.splice(0).forEach((c) => c.remove());
+    jest.restoreAllMocks();
+  });
+
+  const eventDispatcher = {
+    getLayoutManager: () => layoutManager,
+  } as unknown as EventBusDispatcher;
+
+  it('gives every workspace its own drag pivot', () => {
+    const first = buildWorkspace();
+    const second = buildWorkspace();
+    const firstManager = new DragManager(first.canvas, eventDispatcher);
+    const secondManager = new DragManager(second.canvas, eventDispatcher);
+
+    const firstPivots = first.appended.filter((e) => e instanceof DragPivot);
+    const secondPivots = second.appended.filter((e) => e instanceof DragPivot);
+    expect(firstPivots).toHaveLength(1);
+    expect(secondPivots).toHaveLength(1);
+    expect(firstPivots[0] === secondPivots[0]).toBe(false);
+    expect(firstManager.getDragPivot() === firstPivots[0]).toBe(true);
+    expect(secondManager.getDragPivot() === secondPivots[0]).toBe(true);
+  });
+
+  it('connects a drag node to the pivot of the workspace it is dragged in', () => {
+    const first = buildWorkspace();
+    const second = buildWorkspace();
+    const firstManager = new DragManager(first.canvas, eventDispatcher);
+    const secondManager = new DragManager(second.canvas, eventDispatcher);
+
+    let dragNode: DragTopic | null = null;
+    firstManager.addEvent('startdragging', (_event, node) => {
+      dragNode = node;
+    });
+    firstManager.addEvent('dragging', jest.fn());
+    firstManager.addEvent('enddragging', jest.fn());
+    const draggable = buildTopic();
+    firstManager.add(draggable.topic);
+
+    draggable.pressMouse(10, 10);
+    first.container.dispatchEvent(mouseEvent('mousemove', 40, 40));
+
+    const parent = { getId: () => 1 } as unknown as Topic;
+    jest.spyOn(DragPivot.prototype, 'connectTo').mockImplementation(function connectTo(
+      this: DragPivot,
+      target: Topic,
+    ) {
+      (this as unknown as { _targetTopic: Topic })._targetTopic = target;
+    });
+    dragNode!.connectTo(parent);
+
+    expect(firstManager.getDragPivot().getTargetTopic()).toBe(parent);
+    expect(secondManager.getDragPivot().getTargetTopic()).toBeNull();
+  });
+});

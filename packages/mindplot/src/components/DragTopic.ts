@@ -25,7 +25,6 @@ import NodeGraph from './NodeGraph';
 import PositionType from './PositionType';
 import Topic from './Topic';
 import Canvas from './Canvas';
-import CanvasElement from './CanvasElement';
 
 class DragTopic {
   private _elem2d: Group;
@@ -40,7 +39,16 @@ class DragTopic {
 
   private _isInWorkspace: boolean;
 
-  static _dragPivot: DragPivot = new DragPivot();
+  private _isCancelled: boolean;
+
+  private _pivot: DragPivot;
+
+  // Every workspace has its own pivot. They are built on demand, never when the module is loaded,
+  // as building one creates SVG elements ...
+  private static _lastPivot: DragPivot | null = null;
+
+  // Pivot handed to the drag topics built inside DragTopic.withPivot() ...
+  private static _scopedPivot: DragPivot | null = null;
 
   constructor(dragShape: Group, draggedNode: NodeGraph, layoutManger: LayoutManager) {
     this._elem2d = dragShape;
@@ -48,7 +56,24 @@ class DragTopic {
     this._draggedNode = draggedNode;
     this._layoutManager = layoutManger;
     this._isInWorkspace = false;
+    this._isCancelled = false;
     this._position = { x: 0, y: 0 };
+    this._pivot = DragTopic._scopedPivot || DragTopic._defaultPivot();
+  }
+
+  /**
+   * Pivot of the most recently initialized workspace.
+   * @deprecated Every workspace has its own pivot: use DragManager.getDragPivot().
+   */
+  static get _dragPivot(): DragPivot | null {
+    return DragTopic._lastPivot;
+  }
+
+  private static _defaultPivot(): DragPivot {
+    if (!DragTopic._lastPivot) {
+      DragTopic._lastPivot = new DragPivot();
+    }
+    return DragTopic._lastPivot;
   }
 
   setOrder(order: number): void {
@@ -174,7 +199,7 @@ class DragTopic {
   }
 
   private _getDragPivot(): DragPivot {
-    return DragTopic._dragPivot;
+    return this._pivot;
   }
 
   getPosition(): PositionType {
@@ -185,8 +210,22 @@ class DragTopic {
     return true;
   }
 
+  /**
+   * Marks the drag as abandoned: applying its changes will not move the topic.
+   */
+  cancel(): void {
+    this._isCancelled = true;
+  }
+
+  isCancelled(): boolean {
+    return this._isCancelled;
+  }
+
   applyChanges(workspace: Canvas) {
     $assert(workspace, 'workspace can not be null');
+    if (this._isCancelled) {
+      return;
+    }
 
     const actionDispatcher = ActionDispatcher.getInstance();
     const draggedTopic = this.getDraggedTopic();
@@ -223,10 +262,28 @@ class DragTopic {
     return false;
   }
 
-  static init(workspace: Canvas) {
+  /**
+   * Builds the drag pivot of a workspace and adds it to it.
+   */
+  static init(workspace: Canvas): DragPivot {
     $assert(workspace, 'workspace can not be null');
-    const pivot: CanvasElement = DragTopic._dragPivot;
+    const pivot = new DragPivot();
     workspace.append(pivot);
+    DragTopic._lastPivot = pivot;
+    return pivot;
+  }
+
+  /**
+   * Runs the build of drag topics so that they use the given pivot.
+   */
+  static withPivot<T>(pivot: DragPivot, build: () => T): T {
+    const previous = DragTopic._scopedPivot;
+    DragTopic._scopedPivot = pivot;
+    try {
+      return build();
+    } finally {
+      DragTopic._scopedPivot = previous;
+    }
   }
 }
 

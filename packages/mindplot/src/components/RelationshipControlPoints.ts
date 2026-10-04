@@ -102,10 +102,12 @@ class ControlPivotLine {
   }
 
   private mouseDownHandler(event: Event) {
-    const screenManager = this.getWorkspace().getScreenManager();
     this._wasDragged = false;
-    screenManager.addEvent('mousemove', this._mouseMoveHandler);
-    screenManager.addEvent('mouseup', this._mouseUpHandler);
+    // Listen on the document, so that a release outside the container still ends the drag. If the
+    // window loses focus the release may never reach the page, so the drag ends there too ...
+    window.document.addEventListener('mousemove', this._mouseMoveHandler);
+    window.document.addEventListener('mouseup', this._mouseUpHandler);
+    window.addEventListener('blur', this._mouseUpHandler);
 
     event.preventDefault();
     event.stopPropagation();
@@ -113,10 +115,8 @@ class ControlPivotLine {
 
   setVisibility(value: boolean) {
     if (this._isVisible !== value) {
-      const screenManager = this.getWorkspace().getScreenManager();
       if (!value) {
-        screenManager.removeEvent('mousemove', this._mouseMoveHandler);
-        screenManager.removeEvent('mouseup', this._mouseUpHandler);
+        this.removeDragListeners();
         this._dot.removeEvent('mousedown', this._mouseDownHandler);
       } else {
         // Register events ...
@@ -188,10 +188,14 @@ class ControlPivotLine {
     this._wasDragged = true;
   }
 
+  private removeDragListeners(): void {
+    window.document.removeEventListener('mousemove', this._mouseMoveHandler);
+    window.document.removeEventListener('mouseup', this._mouseUpHandler);
+    window.removeEventListener('blur', this._mouseUpHandler);
+  }
+
   private mouseUpHandler() {
-    const screenManager = this.getWorkspace().getScreenManager();
-    screenManager.removeEvent('mousemove', this._mouseMoveHandler);
-    screenManager.removeEvent('mouseup', this._mouseUpHandler);
+    this.removeDragListeners();
 
     // A plain click on the dot does not move the control point, so there is nothing to record ...
     if (this._wasDragged) {
@@ -214,10 +218,6 @@ class ControlPivotLine {
     // Remove elements ...
     workspace.removeChild(this._line);
     workspace.removeChild(this._dot);
-  }
-
-  private getWorkspace(): Canvas {
-    return this._canvas!;
   }
 }
 
