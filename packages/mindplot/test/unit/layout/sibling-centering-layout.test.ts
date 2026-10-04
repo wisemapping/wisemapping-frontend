@@ -116,13 +116,16 @@ describe('Layout of a map with centred siblings (MindManager mmap2json sample)',
     expect(pos(c).y).toBeGreaterThan(pos(a).y);
   });
 
-  // Pending a layout decision: today the block of B (with D, E, F) and C is centred on A, so B,
-  // which has the taller subtree, ends up closer to A than C (23.5 vs 70.5 here).
-  it.failing('places B and C at the same vertical distance from A', async () => {
+  // Decided: the whole block (B with its subtree, then C) is centred on A, not B and C
+  // themselves. Centring the topics would unbalance maps where one sibling has a much taller
+  // subtree, so B, which has one, sits closer to A than C does.
+  it('centres the block of B (with its subtree) and C on A, so B sits closer to A', async () => {
     const { topic } = await buildDesigner(mapWith());
-    const [a, b, c] = [topic(0), topic(1), topic(2)];
+    const [a, b, c, d] = [topic(0), topic(1), topic(2), topic(3)];
 
-    expect(pos(a).y - pos(b).y).toBeCloseTo(pos(c).y - pos(a).y, 5);
+    expect(pos(a).y - pos(b).y).toBeLessThan(pos(c).y - pos(a).y);
+    // D is the top of the block and C its bottom.
+    expect((pos(d).y + pos(c).y) / 2).toBeCloseTo(pos(a).y, 5);
   });
 
   it('centres D, E and F on B, with E at the height of B', async () => {
