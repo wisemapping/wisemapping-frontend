@@ -68,7 +68,7 @@ const LanguageMenu = (): React.ReactElement => {
   };
 
   const handleOnClick = (event: React.MouseEvent<HTMLElement>) => {
-    const localeCode = event.target['id'];
+    const localeCode = (event.target as HTMLElement).id as LocaleCode;
     mutation.mutate(localeCode);
   };
 

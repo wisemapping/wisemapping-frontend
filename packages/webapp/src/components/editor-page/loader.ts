@@ -18,6 +18,7 @@
 
 import { ErrorInfo, MapMetadata } from '../../classes/client';
 import type { EditorRenderMode } from '@wisemapping/mindplot';
+import type { LoaderFunctionArgs } from 'react-router';
 import AppConfig from '../../classes/app-config';
 import queryClient from '../../queryClient';
 import Client from '../../classes/client';
@@ -60,8 +61,7 @@ const isErrorInfo = (error: unknown): error is ErrorInfo =>
 const PUBLIC_MAP_REMOVED_MESSAGE = 'The map you are looking for is no longer available.';
 
 export const loader = (pageMode: PageModeType, bootstrap = false) => {
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  return async ({ params }): Promise<Response> => {
+  return async ({ params }: LoaderFunctionArgs): Promise<Response> => {
     const client = AppConfig.getClient();
     let result: Response | undefined;
 

@@ -116,7 +116,10 @@ const StyleListItem = (props: ListItemProps): ReactElement => {
         },
       }}
     >
-      <CustomListItem selected={isSelected} onClick={(e) => handleOnClick(e, filter)}>
+      <CustomListItem
+        selected={isSelected}
+        onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => handleOnClick(e, filter)}
+      >
         <Tooltip title={label} disableInteractive>
           <ListItemIcon>{icon}</ListItemIcon>
         </Tooltip>

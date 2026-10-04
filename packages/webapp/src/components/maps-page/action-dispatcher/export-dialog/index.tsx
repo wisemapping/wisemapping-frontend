@@ -25,7 +25,7 @@ import FormControl from '@mui/material/FormControl';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import {
   Designer,
@@ -73,12 +73,12 @@ const ExportDialog = ({
 
   const classes = useStyles();
 
-  const handleOnExportFormatChange = (event) => {
+  const handleOnExportFormatChange = (event: SelectChangeEvent<ExportFormat>) => {
     setExportFormat(event.target.value);
   };
 
-  const handleOnGroupChange = (event) => {
-    const value: ExportGroup = event.target.value;
+  const handleOnGroupChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value as ExportGroup;
     setExportGroup(value);
 
     let defaultFormat: ExportFormat;
