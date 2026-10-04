@@ -117,6 +117,25 @@ Object.entries(freeIdToEmoji).forEach(([freeId, emoji]) => {
 // The FreeMind exporter writes WiseMapping SVG icon ids as builtin icons, so they are kept as they are.
 const svgIconIds = new Set<string>(iconFamily.flatMap((family) => family.icons));
 
+// WiseMapping SVG icons that have an equivalent FreeMind builtin icon, which FreeMind can display.
+const svgIdToFreeId: Record<string, string> = {
+  sign_warning: 'messagebox_warning',
+  sign_info: 'info',
+  sign_help: 'help',
+  sign_cancel: 'button_cancel',
+  time_calendar: 'calendar',
+  time_clock: 'clock',
+  things_address_book: 'kaddressbook',
+  soft_penguin: 'penguin',
+  soft_folder_explore: 'folder',
+  flag_blue: 'flag-blue',
+  flag_green: 'flag-green',
+  flag_orange: 'flag-orange',
+  flag_pink: 'flag-pink',
+  flag_yellow: 'flag-yellow',
+  object_music: 'knotify',
+};
+
 export default class FreemindIconConverter {
   public static toWiseIcon(iconId: string): WiseIcon | null {
     const emoji = Object.prototype.hasOwnProperty.call(freeIdToEmoji, iconId)
@@ -131,6 +150,16 @@ export default class FreemindIconConverter {
     // Maps exported by older WiseMapping versions hold the ids of the icons that became emoji.
     const legacyEmoji = legacyIconEmoji(iconId);
     return legacyEmoji ? { type: 'eicon', id: legacyEmoji } : null;
+  }
+
+  /**
+   * The FreeMind builtin icon of a WiseMapping SVG icon. Icons without an equivalent keep their id:
+   * FreeMind can not display them, but they are imported back as the same WiseMapping icon.
+   */
+  public static svgToFreemindIcon(iconId: string): string {
+    return Object.prototype.hasOwnProperty.call(svgIdToFreeId, iconId)
+      ? svgIdToFreeId[iconId]
+      : iconId;
   }
 
   /** The FreeMind builtin icon of an emoji icon, null if FreeMind has no equivalent. */

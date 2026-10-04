@@ -89,6 +89,32 @@ describe('FreemindMap', () => {
     }
   });
 
+  test('appends each element once when writing the XML', () => {
+    const dom = new DOMParser().parseFromString(
+      `<map version="1.0.1">
+        <node ID="ID_1" TEXT="Root">
+          <icon BUILTIN="idea"/>
+          <node ID="ID_2" TEXT="Child" POSITION="right">
+            <edge COLOR="#808080"/>
+            <node ID="ID_3" TEXT="Grandchild"/>
+          </node>
+        </node>
+      </map>`,
+      'text/xml',
+    );
+    const map = new FreemindMap().loadFromDom(dom);
+    const appendChild = jest.spyOn(Node.prototype, 'appendChild');
+    try {
+      const xml = map.toXml();
+
+      const appended = appendChild.mock.calls.map(([child]) => (child as Element).tagName);
+      expect(appended.sort()).toEqual(['edge', 'icon', 'map', 'node', 'node', 'node'].sort());
+      expect(childTags(xml.querySelector('node[ID="ID_2"]'))).toEqual(['edge', 'node']);
+    } finally {
+      appendChild.mockRestore();
+    }
+  });
+
   test('skips children of an unknown type when writing the XML', () => {
     const root = new FreemindNode();
     root.setText('Root');

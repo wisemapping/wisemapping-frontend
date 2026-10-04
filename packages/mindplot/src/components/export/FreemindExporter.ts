@@ -206,7 +206,7 @@ class FreemindExporter extends Exporter {
       if (position) {
         const xPos: number = position.x;
         newNode.setPosition(xPos < 0 ? 'left' : 'right');
-      } else newNode.setPosition('left');
+      } else newNode.setPosition('right');
     });
   }
 
@@ -270,7 +270,7 @@ class FreemindExporter extends Exporter {
       if (type === 'icon') {
         const icon = feature as SvgIconModel;
         const freemindIcon: Icon = new Icon();
-        freemindIcon.setBuiltin(icon.getIconType());
+        freemindIcon.setBuiltin(FreemindIconConverter.svgToFreemindIcon(icon.getIconType()));
         freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);
       }
 
@@ -287,13 +287,13 @@ class FreemindExporter extends Exporter {
     });
   }
 
+  // A FreeMind edge is the line that connects the node to its parent, the WiseMapping connection.
+  // FreeMind has no border color, so it is not exported.
   private addEdgeNode(freemainMap: FreeminNode, mindmapTopic: INodeModel): void {
-    if (mindmapTopic.getBorderColor()) {
+    const color = mindmapTopic.getConnectionColor();
+    if (color) {
       const edgeNode: Edge = this.objectFactory.createEdge();
-      const color = mindmapTopic.getBorderColor();
-      if (color) {
-        edgeNode.setColor(this.rgbToHex(color));
-      }
+      edgeNode.setColor(this.rgbToHex(color));
       freemainMap.setArrowlinkOrCloudOrEdge(edgeNode);
     }
   }

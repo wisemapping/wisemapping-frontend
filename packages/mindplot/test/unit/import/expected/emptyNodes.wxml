@@ -1,5 +1,5 @@
 <map name="emptyNodes" theme="prism" layout="mindmap" version="tango">
-    <topic central="true" id="0" bgColor="#ffcc33">
+    <topic central="true" id="0" bgColor="#ffcc33" connColor="#808080">
         <topic position="200,-50" order="0" text="objectifs journée" shape="rounded rectangle" id="1" bgColor="#ffcc33" connColor="#808080">
             <topic position="290,-87" order="0" text="&quot;business plan&quot; associatif ?" shape="rounded rectangle" id="2" bgColor="#ffff33" connColor="#808080"/>
             <topic position="290,-62" order="1" text="modèle / activités responsabilités" shape="rounded rectangle" id="3" bgColor="#ffff33" connColor="#808080"/>

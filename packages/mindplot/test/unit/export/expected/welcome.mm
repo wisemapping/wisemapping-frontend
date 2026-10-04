@@ -1,6 +1,6 @@
 <map version="1.0.1">
     <node ID="ID_1" TEXT="Welcome To WiseMapping" COLOR="#ffffff">
-        <icon BUILTIN="sign_info"/>
+        <icon BUILTIN="info"/>
         <node ID="ID_30" POSITION="right" STYLE="fork" LINK="https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE">
             <richcontent TYPE="NODE">
                 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -15,7 +15,6 @@
         </node>
         <node ID="ID_11" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Try it Now!">
             <icon BUILTIN="smiley-oh"/>
-            <edge COLOR="#080559"/>
             <node ID="ID_12" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Double Click"/>
             <node ID="ID_13" POSITION="left" STYLE="fork">
                 <richcontent TYPE="NODE">
@@ -59,7 +58,7 @@
         </node>
         <node ID="ID_27" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Install In Your Server">
             <node ID="ID_29" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Open Source" LINK="http://www.wisemapping.org/">
-                <icon BUILTIN="soft_penguin"/>
+                <icon BUILTIN="penguin"/>
             </node>
             <node ID="ID_28" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Download" LINK="http://www.wisemapping.com/inyourserver.html"/>
         </node>

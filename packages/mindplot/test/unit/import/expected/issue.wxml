@@ -1,5 +1,5 @@
 <map name="issue" theme="prism" layout="mindmap" version="tango">
-    <topic central="true" text="La computadora" id="1" bgColor="#cc0000">
+    <topic central="true" text="La computadora" id="1" bgColor="#cc0000" connColor="#660000">
         <topic position="200,0" order="0" shape="rounded rectangle" id="21" bgColor="#a64d79" connColor="#4c1130">
             <text><![CDATA[
                     

@@ -235,6 +235,43 @@ describe('FreemindImporter', () => {
     expect(topicById(doc, '1').getAttribute('bgColor')).toBe('#ffcc33');
   });
 
+  test('imports the edge color of the root node as its connection color', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <edge COLOR="#808080"/>
+        <node ID="ID_2" TEXT="Child" POSITION="right"/>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    expect(topicById(doc, '1').getAttribute('connColor')).toBe('#808080');
+    // Children inherit it from the root, so it is not copied to them.
+    expect(topicById(doc, '2').getAttribute('connColor')).toBeNull();
+  });
+
+  test('gives a numeric id to nodes whose FreeMind id does not end in a number', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="root" TEXT="Root">
+        <node ID="ID_abc" TEXT="Child" POSITION="right"/>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    const ids = Array.from(doc.querySelectorAll('topic')).map((topic) => topic.getAttribute('id'));
+    expect(ids).toHaveLength(2);
+    ids.forEach((id) => expect(Number.isInteger(Number(id))).toBe(true));
+  });
+
+  test('keeps the text of CDATA sections in rich content notes', async () => {
+    const mm = fs.readFileSync(path.resolve(__dirname, './input/cdata-note.mm'), 'utf-8');
+
+    const doc = await importMap(mm);
+    const note = topicById(doc, '2').querySelector(':scope > note')!;
+    const html = new DOMParser().parseFromString(note.textContent || '', 'text/html');
+    expect(html.body.textContent).toContain('if (a < b && c) { run(); }');
+    expect(html.querySelector('script')).toBeNull();
+  });
+
   test('finds the root node when other elements precede it', async () => {
     const mm = `<map version="1.0.1">
       <attribute_registry SHOW_ATTRIBUTES="hide"/>

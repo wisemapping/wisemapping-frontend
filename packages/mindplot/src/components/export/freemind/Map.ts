@@ -67,10 +67,7 @@ export default class Freemap {
 
     const childNodes: Array<Choise> = mainNode.getArrowlinkOrCloudOrEdge();
     childNodes.forEach((childNode: Choise) => {
-      const node = this.nodeToXml(childNode, mainNodeElem, document);
-      if (node) {
-        mainNodeElem.appendChild(node);
-      }
+      this.nodeToXml(childNode, mainNodeElem, document);
     });
 
     return document;
@@ -255,7 +252,12 @@ export default class Freemap {
       }
       if (nodeElem.firstChild && nodeElem.getElementsByTagName('html')) {
         const content = nodeElem.getElementsByTagName('html');
-        const html = content[0] ? content[0].outerHTML : '';
+        let html = '';
+        if (content[0]) {
+          const htmlElem = content[0].cloneNode(true) as Element;
+          Freemap.cdataToText(htmlElem);
+          html = htmlElem.outerHTML;
+        }
         node.setHtml(html);
       }
     }
@@ -263,7 +265,21 @@ export default class Freemap {
     return node;
   }
 
-  // Returns null for elements of an unknown type, which are skipped.
+  // The content is read as HTML, which has no CDATA sections and would drop them: their text is
+  // kept as (escaped) text.
+  private static cdataToText(node: ChildNode): void {
+    Array.from(node.childNodes).forEach((child) => {
+      // 4 is Node.CDATA_SECTION_NODE (Node is the FreeMind node here).
+      if (child.nodeType === 4) {
+        child.replaceWith(child.ownerDocument!.createTextNode(child.textContent || ''));
+      } else {
+        Freemap.cdataToText(child);
+      }
+    });
+  }
+
+  // Appends the element to its parent and returns it. Returns null for elements of an unknown type,
+  // which are skipped.
   private nodeToXml(
     childNode: Choise,
     parentNode: HTMLElement,
@@ -277,10 +293,7 @@ export default class Freemap {
       const childrens = childNode.getArrowlinkOrCloudOrEdge();
       if (childrens.length > 0) {
         childrens.forEach((node: Choise) => {
-          const nodeXml = this.nodeToXml(node, childNodeXml, document);
-          if (nodeXml) {
-            childNodeXml.appendChild(nodeXml);
-          }
+          this.nodeToXml(node, childNodeXml, document);
         });
       }
 

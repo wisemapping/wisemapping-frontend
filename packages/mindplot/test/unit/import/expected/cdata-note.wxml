@@ -1,0 +1,13 @@
+<map name="cdata-note" theme="prism" layout="mindmap" version="tango">
+    <topic central="true" text="CDATA in notes" id="1">
+        <topic position="200,0" order="0" text="Code sample" shape="line" id="2">
+            <note contentType="html"><![CDATA[
+                    
+                    
+                        <p>Guard: if (a &lt; b &amp;&amp; c) { run(); }</p>
+                        <p>&lt;script&gt;alert(1)&lt;/script&gt;</p>
+                    
+                ]]></note>
+        </topic>
+    </topic>
+</map>

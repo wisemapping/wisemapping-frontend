@@ -56,13 +56,80 @@ describe('FreemindExporter', () => {
       buildMindmap((topic) => {
         topic.setShapeType('rectangle');
         topic.setBackgroundColor('rgb(255, 0, 128)');
-        topic.setBorderColor('rgb(16,32,48)');
+        topic.setConnectionColor('rgb(16,32,48)');
       }),
     );
 
     const node = exportedTopic(doc);
     expect(node.getAttribute('BACKGROUND_COLOR')).toBe('#ff0080');
     expect(node.querySelector(':scope > edge')!.getAttribute('COLOR')).toBe('#102030');
+  });
+
+  test('exports the connection color as the edge color, not the border color', async () => {
+    const doc = await exportMindmap(
+      buildMindmap((topic) => {
+        topic.setShapeType('rectangle');
+        topic.setBorderColor('#00ff00');
+        topic.setConnectionColor('#ff0000');
+      }),
+    );
+
+    const edges = Array.from(exportedTopic(doc).querySelectorAll(':scope > edge'));
+    expect(edges.map((edge) => edge.getAttribute('COLOR'))).toEqual(['#ff0000']);
+  });
+
+  test('does not export the border color, FreeMind has no equivalent', async () => {
+    const doc = await exportMindmap(
+      buildMindmap((topic) => {
+        topic.setShapeType('rectangle');
+        topic.setBorderColor('#00ff00');
+      }),
+    );
+
+    expect(exportedTopic(doc).querySelectorAll(':scope > edge')).toHaveLength(0);
+  });
+
+  test('connection colors survive a FreeMind export and import round trip', async () => {
+    const mindmap = buildMindmap((topic) => {
+      topic.setShapeType('rectangle');
+      topic.setBorderColor('#00ff00');
+      topic.setConnectionColor('#ff0000');
+    });
+    mindmap.getBranches()[0].setConnectionColor('#0000ff');
+    const mm = await new FreemindExporter(mindmap).export();
+
+    const xml = await new FreemindImporter(mm).import('test', '');
+    const doc = new DOMParser().parseFromString(xml, 'text/xml');
+    const central = doc.querySelector('topic[id="1"]')!;
+    const topic = doc.querySelector('topic[id="2"]')!;
+    expect(central.getAttribute('connColor')).toBe('#0000ff');
+    expect(topic.getAttribute('connColor')).toBe('#ff0000');
+    expect(topic.getAttribute('brColor')).toBeNull();
+  });
+
+  test('exports topics without a position on the right side', async () => {
+    const mindmap = new Mindmap('test');
+    const central = mindmap.createNode('CentralTopic', 1);
+    central.setText('Central');
+    const topic = mindmap.createNode('MainTopic', 2);
+    topic.setText('Topic');
+    central.append(topic);
+    mindmap.addBranch(central);
+
+    const doc = await exportMindmap(mindmap);
+    expect(exportedTopic(doc).getAttribute('POSITION')).toBe('right');
+  });
+
+  test('exports topics at x = 0 on the right side, like the layout does', async () => {
+    const doc = await exportMindmap(buildMindmap((topic) => topic.setPosition(0, 50)));
+
+    expect(exportedTopic(doc).getAttribute('POSITION')).toBe('right');
+  });
+
+  test('exports topics with a negative x on the left side', async () => {
+    const doc = await exportMindmap(buildMindmap((topic) => topic.setPosition(-200, 0)));
+
+    expect(exportedTopic(doc).getAttribute('POSITION')).toBe('left');
   });
 
   test('does not export normal font weight as bold', async () => {
@@ -119,17 +186,49 @@ describe('FreemindExporter', () => {
         topic.addFeature(new EmojiIconModel({ id: '💡' }));
         topic.addFeature(new EmojiIconModel({ id: '1️⃣' }));
         topic.addFeature(new EmojiIconModel({ id: '🟢' }));
+      }),
+    );
+
+    const icons = Array.from(exportedTopic(doc).querySelectorAll(':scope > icon'));
+    expect(icons.map((icon) => icon.getAttribute('BUILTIN'))).toEqual(['idea', 'full-1', 'go']);
+  });
+
+  test('exports WiseMapping icons as the equivalent FreeMind builtin icon', async () => {
+    const doc = await exportMindmap(
+      buildMindmap((topic) => {
         topic.addFeature(new SvgIconModel({ id: 'sign_warning' }));
+        topic.addFeature(new SvgIconModel({ id: 'sign_info' }));
+        topic.addFeature(new SvgIconModel({ id: 'time_clock' }));
+        topic.addFeature(new SvgIconModel({ id: 'flag_blue' }));
       }),
     );
 
     const icons = Array.from(exportedTopic(doc).querySelectorAll(':scope > icon'));
     expect(icons.map((icon) => icon.getAttribute('BUILTIN'))).toEqual([
-      'idea',
-      'full-1',
-      'go',
-      'sign_warning',
+      'messagebox_warning',
+      'info',
+      'clock',
+      'flag-blue',
     ]);
+  });
+
+  test('keeps the id of WiseMapping icons that have no FreeMind builtin equivalent', async () => {
+    const mm = await new FreemindExporter(
+      buildMindmap((topic) => {
+        topic.addFeature(new SvgIconModel({ id: 'tag_blue' }));
+        topic.addFeature(new SvgIconModel({ id: 'flag_purple' }));
+      }),
+    ).export();
+
+    const exported = new DOMParser().parseFromString(mm, 'text/xml');
+    const icons = Array.from(exportedTopic(exported).querySelectorAll(':scope > icon'));
+    expect(icons.map((icon) => icon.getAttribute('BUILTIN'))).toEqual(['tag_blue', 'flag_purple']);
+
+    // They are imported back as the same WiseMapping icons.
+    const xml = await new FreemindImporter(mm).import('test', '');
+    const doc = new DOMParser().parseFromString(xml, 'text/xml');
+    const imported = Array.from(doc.querySelectorAll('topic[id="2"] > icon'));
+    expect(imported.map((icon) => icon.getAttribute('id'))).toEqual(['tag_blue', 'flag_purple']);
   });
 
   test('exports emoji icons written without the emoji variation selector', async () => {

@@ -291,9 +291,9 @@ export default class FreemindImporter extends Importer {
       //   }
       // }
 
-      // A FreeMind edge is the line that connects the node to its parent. The root node has no
-      // edge to a parent, its edge only sets the default of its children.
-      if (child instanceof FreemindEdge && depth > 1) {
+      // A FreeMind edge is the line that connects the node to its parent, and the default of its
+      // children. The root node has no edge to a parent, but its children inherit its color.
+      if (child instanceof FreemindEdge) {
         const edgeColor = child.getColor();
         if (edgeColor) {
           wiseParent.setConnectionColor(edgeColor);
@@ -370,18 +370,15 @@ export default class FreemindImporter extends Importer {
 
   private getIdNode(node: FreemindNode): number {
     const id = node.getId();
+    // FreeMind ids look like ID_1234. Ids that do not end in a number get a generated one.
+    const idNumber = id !== undefined ? parseInt(id.split('_').pop()!, 10) : NaN;
     let idFreeToIdWise: number;
 
-    if (id !== undefined && id !== undefined) {
-      if (id === '_') {
-        this.idDefault++;
-        idFreeToIdWise = this.idDefault;
-      } else {
-        idFreeToIdWise = parseInt(id.split('_').pop()!, 10);
-      }
-    } else {
+    if (Number.isNaN(idNumber)) {
       this.idDefault++;
       idFreeToIdWise = this.idDefault;
+    } else {
+      idFreeToIdWise = idNumber;
     }
 
     return idFreeToIdWise;

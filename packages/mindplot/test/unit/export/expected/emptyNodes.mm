@@ -9,29 +9,22 @@
             </html>
         </richcontent>
         <font SIZE="12" BOLD="true" NAME="Arial"/>
-        <edge COLOR="#808080"/>
         <node ID="ID_1" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#ffcc33" COLOR="#0000cc" TEXT="objectifs journée">
             <font SIZE="12" BOLD="true" NAME="Arial"/>
-            <edge COLOR="#808080"/>
             <node ID="ID_2" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#ffff33" COLOR="#0000cc" TEXT="&quot;business plan&quot; associatif ?">
                 <font SIZE="12" BOLD="true" NAME="Arial"/>
-                <edge COLOR="#808080"/>
             </node>
             <node ID="ID_3" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#ffff33" COLOR="#0000cc" TEXT="modèle / activités responsabilités">
                 <font SIZE="12" BOLD="true" NAME="Arial"/>
-                <edge COLOR="#808080"/>
             </node>
             <node ID="ID_4" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#ffff33" COLOR="#0000cc" TEXT="articulations / LOG">
                 <font SIZE="12" BOLD="true" NAME="Arial"/>
-                <edge COLOR="#808080"/>
             </node>
         </node>
         <node ID="ID_5" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#ffcc33" COLOR="#0000cc" TEXT="SWOT">
             <font SIZE="12" BOLD="true" NAME="Arial"/>
-            <edge COLOR="#808080"/>
             <node ID="ID_6" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#ffff33" COLOR="#0000cc">
                 <font SIZE="12" BOLD="true" NAME="Arial"/>
-                <edge COLOR="#808080"/>
                 <node ID="ID_7" POSITION="right" TEXT="l'entreprise a aujourd'hui un potentiel important">
                     <node ID="ID_8" POSITION="right" TEXT="compétences professionnel"/>
                     <node ID="ID_9" POSITION="right" TEXT="citoyen"/>
@@ -77,7 +70,6 @@
             </node>
             <node ID="ID_46" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#ffff33" COLOR="#0000cc" TEXT="Risques : cauchemars, dangers">
                 <font SIZE="12" BOLD="true" NAME="Arial"/>
-                <edge COLOR="#808080"/>
                 <node ID="ID_47" POSITION="right" TEXT="disparition des forces vives, départ de membres actuels"/>
                 <node ID="ID_48" POSITION="right" TEXT="opportunités atteignables mais difficile"/>
                 <node ID="ID_49" POSITION="right" TEXT="difficultés de travailler ensemble dans la durée"/>
