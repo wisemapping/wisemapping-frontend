@@ -33,9 +33,9 @@ const config = {
   testPathIgnorePatterns: ['/node_modules/', '/dist/', '/cypress/', '/__tests__/'],
   collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts', '!src/index.ts'],
   coverageReporters: ['text-summary', 'lcov', 'json-summary'],
-  // Baseline as of 2026-10-04. Ratchet these up as coverage improves; never lower them.
+  // Ratchet these up as coverage improves; never lower them.
   coverageThreshold: {
-    global: { statements: 38, branches: 33, functions: 34, lines: 37 },
+    global: { statements: 66, branches: 56, functions: 64, lines: 66 },
   },
 };
 
