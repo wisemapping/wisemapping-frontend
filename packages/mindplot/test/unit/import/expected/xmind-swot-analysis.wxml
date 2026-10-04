@@ -1,64 +1,64 @@
-<map name='xmind-swot-analysis' version='tango' theme='prism' layout='mindmap'>
-    <topic central='true' text='SWOT Analysis' id='1'>
-        <topic position='200,0' order='0' text='Strengths' shape='line' id='2'>
-            <eicon id='🟢'/>
-        <topic position='200,0' order='0' text='Strong Brand' shape='line' id='3'>
-            <eicon id='⭐'/>
+<map name="xmind-swot-analysis" theme="prism" layout="mindmap" version="tango">
+    <topic central="true" text="SWOT Analysis" id="1">
+        <topic position="200,0" order="0" text="Strengths" shape="line" id="2">
+            <eicon id="🟢"/>
+            <topic position="200,0" order="0" text="Strong Brand" shape="line" id="3">
+                <eicon id="⭐"/>
+            </topic>
+            <topic position="-200,0" order="1" text="Experienced Team" shape="line" id="4">
+                <eicon id="👥"/>
+            </topic>
+            <topic position="300,75" order="2" text="Financial Stability" shape="line" id="5">
+                <eicon id="💰"/>
+            </topic>
+            <topic position="-300,75" order="3" text="Innovation" shape="line" id="6">
+                <eicon id="💡"/>
+            </topic>
         </topic>
-        <topic position='-200,0' order='1' text='Experienced Team' shape='line' id='4'>
-            <eicon id='👥'/>
+        <topic position="-200,0" order="1" text="Weaknesses" shape="line" id="7">
+            <eicon id="🚩"/>
+            <topic position="200,0" order="0" text="Limited Resources" shape="line" id="8">
+                <eicon id="⚠️"/>
+            </topic>
+            <topic position="-200,0" order="1" text="Market Share" shape="line" id="9">
+                <eicon id="💡"/>
+            </topic>
+            <topic position="300,75" order="2" text="Technology Gap" shape="line" id="10">
+                <eicon id="💻"/>
+            </topic>
+            <topic position="-300,75" order="3" text="Process Inefficiency" shape="line" id="11">
+                <eicon id="🕐"/>
+            </topic>
         </topic>
-        <topic position='300,75' order='2' text='Financial Stability' shape='line' id='5'>
-            <eicon id='💰'/>
+        <topic position="300,75" order="2" text="Opportunities" shape="line" id="12">
+            <eicon id="🟡"/>
+            <topic position="200,0" order="0" text="Market Expansion" shape="line" id="13">
+                <eicon id="🌍"/>
+            </topic>
+            <topic position="-200,0" order="1" text="New Technology" shape="line" id="14">
+                <eicon id="💻"/>
+            </topic>
+            <topic position="300,75" order="2" text="Partnerships" shape="line" id="15">
+                <eicon id="👥"/>
+            </topic>
+            <topic position="-300,75" order="3" text="Digital Transformation" shape="line" id="16">
+                <eicon id="➡️"/>
+            </topic>
         </topic>
-        <topic position='-300,75' order='3' text='Innovation' shape='line' id='6'>
-            <eicon id='💡'/>
-        </topic>
-        </topic>
-        <topic position='-200,0' order='1' text='Weaknesses' shape='line' id='7'>
-            <eicon id='🚩'/>
-        <topic position='200,0' order='0' text='Limited Resources' shape='line' id='8'>
-            <eicon id='⚠️'/>
-        </topic>
-        <topic position='-200,0' order='1' text='Market Share' shape='line' id='9'>
-            <eicon id='💡'/>
-        </topic>
-        <topic position='300,75' order='2' text='Technology Gap' shape='line' id='10'>
-            <eicon id='💻'/>
-        </topic>
-        <topic position='-300,75' order='3' text='Process Inefficiency' shape='line' id='11'>
-            <eicon id='🕐'/>
-        </topic>
-        </topic>
-        <topic position='300,75' order='2' text='Opportunities' shape='line' id='12'>
-            <eicon id='🟡'/>
-        <topic position='200,0' order='0' text='Market Expansion' shape='line' id='13'>
-            <eicon id='🌍'/>
-        </topic>
-        <topic position='-200,0' order='1' text='New Technology' shape='line' id='14'>
-            <eicon id='💻'/>
-        </topic>
-        <topic position='300,75' order='2' text='Partnerships' shape='line' id='15'>
-            <eicon id='👥'/>
-        </topic>
-        <topic position='-300,75' order='3' text='Digital Transformation' shape='line' id='16'>
-            <eicon id='➡️'/>
-        </topic>
-        </topic>
-        <topic position='-300,75' order='3' text='Threats' shape='line' id='17'>
-            <eicon id='🚩'/>
-        <topic position='200,0' order='0' text='Competition' shape='line' id='18'>
-            <eicon id='⚠️'/>
-        </topic>
-        <topic position='-200,0' order='1' text='Economic Changes' shape='line' id='19'>
-            <eicon id='💡'/>
-        </topic>
-        <topic position='300,75' order='2' text='Regulatory Changes' shape='line' id='20'>
-            <eicon id='💡'/>
-        </topic>
-        <topic position='-300,75' order='3' text='Technology Disruption' shape='line' id='21'>
-            <eicon id='💻'/>
-        </topic>
+        <topic position="-300,75" order="3" text="Threats" shape="line" id="17">
+            <eicon id="🚩"/>
+            <topic position="200,0" order="0" text="Competition" shape="line" id="18">
+                <eicon id="⚠️"/>
+            </topic>
+            <topic position="-200,0" order="1" text="Economic Changes" shape="line" id="19">
+                <eicon id="💡"/>
+            </topic>
+            <topic position="300,75" order="2" text="Regulatory Changes" shape="line" id="20">
+                <eicon id="💡"/>
+            </topic>
+            <topic position="-300,75" order="3" text="Technology Disruption" shape="line" id="21">
+                <eicon id="💻"/>
+            </topic>
         </topic>
     </topic>
 </map>

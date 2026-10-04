@@ -1,10 +1,8 @@
-<map name="freeplane-simple" version="tango" theme="prism" layout="mindmap">
+<map name="freeplane-simple" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Central Topic" id="1">
         <topic position="200,0" order="0" text="Child 1" shape="line" id="2">
-                <topic position="200,0" order="0" text="Grandchild 1" shape="line" id="3">
-                </topic>
-                <topic position="-200,0" order="1" text="Grandchild 2" shape="line" id="4">
-                </topic>
+            <topic position="200,0" order="0" text="Grandchild 1" shape="line" id="3"/>
+            <topic position="-200,0" order="1" text="Grandchild 2" shape="line" id="4"/>
         </topic>
         <topic position="-200,0" order="1" text="Child 2" shape="line" id="5">
             <note><![CDATA[<html>
@@ -16,8 +14,7 @@
         </topic>
         <topic position="300,75" order="2" text="Child 3" shape="line" id="6">
             <eicon id="🔴"/>
-                <topic position="200,0" order="0" text="Subchild" shape="line" id="7">
-                </topic>
+            <topic position="200,0" order="0" text="Subchild" shape="line" id="7"/>
         </topic>
     </topic>
 </map>

@@ -16,14 +16,21 @@
  *   limitations under the License.
  */
 import Importer from './Importer';
+import ImportError from './ImportError';
 import SecureXmlParser from '../security/SecureXmlParser';
+import Mindmap from '../model/Mindmap';
+import NodeModel from '../model/NodeModel';
+import NoteModel from '../model/NoteModel';
+import FeatureModelFactory from '../model/FeatureModelFactory';
+import { StrokeStyle } from '../model/RelationshipModel';
+import toWiseMappingXml from './support/MindmapXml';
 
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
 
   private idCounter: number = 1;
 
-  private topicIdMap: Map<string, string>;
+  private topicIdMap: Map<string, number>;
 
   constructor(map: string) {
     super();
@@ -49,89 +56,78 @@ class FreeplaneImporter extends Importer {
       this.idCounter = 1;
       this.topicIdMap.clear();
 
-      // Generate WiseMapping XML directly
-      const wiseMappingXML = this.generateWiseMappingXML(rootNode, nameMap);
-
-      return Promise.resolve(wiseMappingXML);
+      const mindmap = this.buildMindmap(rootNode, nameMap);
+      return Promise.resolve(toWiseMappingXml(mindmap));
     } catch (error) {
       console.error('Error importing Freeplane map:', error);
-      // Fallback to basic map
-      return Promise.resolve(this.createFallbackMap(nameMap, error as Error));
+      return Promise.reject(ImportError.from(error, 'Freeplane'));
     }
   }
 
-  private generateWiseMappingXML(rootNode: Element, mapName: string): string {
-    const centralTitle = rootNode.getAttribute('TEXT') || 'Central Topic';
-    const centralId = this.generateId();
-    const rootNodeId = rootNode.getAttribute('ID') || 'ID_1';
-    this.topicIdMap.set(rootNodeId, centralId.toString());
+  private buildMindmap(rootNode: Element, mapName: string): Mindmap {
+    const mindmap = new Mindmap(mapName);
+    mindmap.setTheme('prism');
+    mindmap.setLayout('mindmap');
 
-    let xml = `<map name="${this.escapeXml(mapName)}" version="tango" theme="prism" layout="mindmap">\n`;
-    xml += `    <topic central="true" text="${this.escapeXml(centralTitle)}" id="${centralId}">\n`;
+    const centralTitle = rootNode.getAttribute('TEXT') || 'Central Topic';
+    const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
+    const rootNodeId = rootNode.getAttribute('ID') || 'ID_1';
+    this.topicIdMap.set(rootNodeId, centralTopic.getId());
+    centralTopic.setText(centralTitle);
+    mindmap.addBranch(centralTopic);
 
     // Process child nodes
     const childNodes = rootNode.querySelectorAll(':scope > node');
     childNodes.forEach((childNode, index) => {
-      xml += this.generateChildTopicXML(childNode as Element, index);
+      centralTopic.append(this.convertNode(mindmap, childNode as Element, index));
     });
 
-    xml += '    </topic>\n';
+    this.addRelationships(mindmap, rootNode);
 
-    // Add relationships if present
-    const relationshipsXML = this.generateRelationshipsXML(rootNode);
-    if (relationshipsXML) {
-      xml += relationshipsXML;
-    }
-
-    xml += '</map>';
-
-    return xml;
+    return mindmap;
   }
 
-  private generateChildTopicXML(freeplaneNode: Element, order: number, depth: number = 0): string {
-    const topicId = this.generateId();
+  private convertNode(mindmap: Mindmap, freeplaneNode: Element, order: number): NodeModel {
+    const topic = mindmap.createNode('MainTopic', this.generateId());
     const freeplaneNodeId = freeplaneNode.getAttribute('ID') || `ID_${this.idCounter}`;
-    this.topicIdMap.set(freeplaneNodeId, topicId.toString());
+    this.topicIdMap.set(freeplaneNodeId, topic.getId());
 
     const title = freeplaneNode.getAttribute('TEXT') || 'Untitled';
     const position = this.calculatePosition(order);
-
-    const indent = '        '.repeat(depth + 1);
-    let xml = `${indent}<topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(title)}" shape="line" id="${topicId}">\n`;
+    topic.setText(title);
+    topic.setPosition(position.x, position.y);
+    topic.setOrder(order);
+    topic.setShapeType('line');
 
     // Add icons if present
     const icons = freeplaneNode.querySelectorAll(':scope > icon');
-    if (icons.length > 0) {
-      icons.forEach((icon) => {
-        const builtin = icon.getAttribute('BUILTIN');
-        if (builtin) {
-          const emojiIcon = this.mapFreeplaneIconToEmojiIcon(builtin);
-          xml += `${indent}    <eicon id="${emojiIcon}"/>\n`;
-        }
-      });
-    }
+    icons.forEach((icon) => {
+      const builtin = icon.getAttribute('BUILTIN');
+      if (builtin) {
+        const emojiIcon = this.mapFreeplaneIconToEmojiIcon(builtin);
+        topic.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
+      }
+    });
 
     // Add notes if present
     const noteContent = this.buildNoteContent(freeplaneNode);
     if (noteContent) {
-      xml += `${indent}    <note><![CDATA[${noteContent}]]></note>\n`;
+      topic.addFeature(new NoteModel({ text: noteContent }));
     }
 
     // Add links if present
     const link = freeplaneNode.getAttribute('LINK');
     if (link) {
-      xml += `${indent}    <link url="${this.escapeXml(link)}" urlType="url"/>\n`;
+      topic.addFeature(FeatureModelFactory.createModel('link', { url: link }));
     }
 
     // Process child nodes recursively
     const childNodes = freeplaneNode.querySelectorAll(':scope > node');
     childNodes.forEach((childNode, childIndex) => {
-      xml += this.generateChildTopicXML(childNode as Element, childIndex, depth + 1);
+      topic.append(this.convertNode(mindmap, childNode as Element, childIndex));
     });
 
-    xml += `${indent}</topic>\n`;
-
-    return xml;
+    return topic;
   }
 
   private buildNoteContent(freeplaneNode: Element): string | null {
@@ -490,8 +486,8 @@ class FreeplaneImporter extends Importer {
     return iconMap[builtin.toLowerCase()] || '💡'; // Default to lightbulb
   }
 
-  private generateId(): string {
-    return (this.idCounter++).toString();
+  private generateId(): number {
+    return this.idCounter++;
   }
 
   private calculatePosition(order: number): { x: number; y: number } {
@@ -507,69 +503,43 @@ class FreeplaneImporter extends Importer {
     return { x, y };
   }
 
-  private generateRelationshipsXML(rootNode: Element): string {
+  private addRelationships(mindmap: Mindmap, rootNode: Element): void {
     // Find all arrowlink elements in the document
     const arrowlinks = rootNode.ownerDocument?.querySelectorAll('arrowlink') || [];
-    if (arrowlinks.length === 0) return '';
-
-    let relationshipsXML = '';
     arrowlinks.forEach((arrowlink) => {
-      relationshipsXML += this.generateRelationshipXML(arrowlink as Element);
+      this.addRelationship(mindmap, arrowlink as Element);
     });
-
-    return relationshipsXML;
   }
 
-  private generateRelationshipXML(arrowlinkElement: Element): string {
+  private addRelationship(mindmap: Mindmap, arrowlinkElement: Element): void {
     const destination = arrowlinkElement.getAttribute('DESTINATION');
     const dash = arrowlinkElement.getAttribute('DASH') || '';
 
-    if (!destination) return '';
+    if (!destination) return;
 
     // Find the source node (parent of the arrowlink)
     const sourceNode = arrowlinkElement.parentElement;
-    if (!sourceNode) return '';
+    if (!sourceNode) return;
 
     const sourceId = sourceNode.getAttribute('ID');
-    const destId = destination;
-
-    if (!sourceId) return '';
+    if (!sourceId) return;
 
     // Map Freeplane IDs to WiseMapping IDs
     const srcTopicId = this.topicIdMap.get(sourceId);
-    const destTopicId = this.topicIdMap.get(destId);
+    const destTopicId = this.topicIdMap.get(destination);
 
-    if (!srcTopicId || !destTopicId) return '';
+    if (!srcTopicId || !destTopicId) return;
 
-    let relationshipXML = `    <relationship srcTopicId='${srcTopicId}' destTopicId='${destTopicId}'`;
+    const relationship = mindmap.createRelationship(srcTopicId, destTopicId);
 
-    // Map line style based on dash pattern
+    // Map the dash pattern to the stroke style
     if (dash.includes('3 3')) {
-      relationshipXML += " lineType='1'"; // Dashed
+      relationship.setStrokeStyle(StrokeStyle.DASHED);
     } else if (dash.includes('5 5')) {
-      relationshipXML += " lineType='2'"; // Dotted
+      relationship.setStrokeStyle(StrokeStyle.DOTTED);
     }
 
-    relationshipXML += '/>\n';
-    return relationshipXML;
-  }
-
-  private escapeXml(text: string): string {
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
-  private createFallbackMap(nameMap: string, error: Error): string {
-    return `<map name="${this.escapeXml(nameMap)}" version="tango" layout="mindmap">
-        <topic central="true" text="Freeplane Import Error" id="1">
-            <note><![CDATA[Freeplane import failed: ${this.escapeXml(error.message)}
-Please check the file format and try again.]]></note>
-        </topic>
-    </map>`;
+    mindmap.addRelationship(relationship);
   }
 }
 

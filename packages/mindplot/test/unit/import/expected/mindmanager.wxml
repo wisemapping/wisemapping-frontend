@@ -1,5 +1,0 @@
-<map name="MindManager Import" version="tango" theme="prism" layout="mindmap">
-    <topic central="true" text="Import Error" id="1">
-      <note><![CDATA[MindManager import failed: Invalid MindManager XML: missing Map element]]></note>
-    </topic>
-</map>

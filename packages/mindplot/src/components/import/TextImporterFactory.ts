@@ -23,39 +23,55 @@ import XMindImporter from './XMindImporter';
 import MindManagerImporter from './MindManagerImporter';
 import OPMLImporter from './OPMLImporter';
 import Importer from './Importer';
+import ImportError from './ImportError';
 import { decodeUtf8 } from './support/Utf8Decoder';
 
 export default class TextImporterFactory {
   static create(type: string | undefined, map: string | ArrayBuffer | Uint8Array): Importer {
-    let result: Importer;
     const mapAsString = TextImporterFactory.asString(map);
     switch (type) {
       case 'wxml':
-        result = new WisemappingImporter(mapAsString);
-        return result;
+        return TextImporterFactory.rejectWithImportError(
+          new WisemappingImporter(mapAsString),
+          'WiseMapping',
+        );
       case 'mm':
         // Check if it's Freeplane or FreeMind
         if (mapAsString.includes('freeplane') || mapAsString.includes('version="freeplane')) {
-          result = new FreeplaneImporter(mapAsString);
-        } else {
-          result = new FreemindImporter(mapAsString);
+          return new FreeplaneImporter(mapAsString);
         }
-        return result;
+        return TextImporterFactory.rejectWithImportError(
+          new FreemindImporter(mapAsString),
+          'FreeMind',
+        );
       case 'mmx':
-        result = new FreeplaneImporter(mapAsString);
-        return result;
+        return new FreeplaneImporter(mapAsString);
       case 'xmind':
-        result = new XMindImporter(map);
-        return result;
+        return new XMindImporter(map);
       case 'mmap':
-        result = new MindManagerImporter(mapAsString);
-        return result;
+        // A .mmap file is usually a ZIP archive, so it is passed as it was read.
+        return new MindManagerImporter(map);
       case 'opml':
-        result = new OPMLImporter(mapAsString);
-        return result;
+        return new OPMLImporter(mapAsString);
       default:
         throw new Error(`Unsupported type ${type}`);
     }
+  }
+
+  /**
+   * The FreeMind and WiseMapping importers throw synchronously. Their import is wrapped so that,
+   * like the other importers, it rejects with an ImportError.
+   */
+  private static rejectWithImportError(importer: Importer, format: string): Importer {
+    const importMap = importer.import.bind(importer);
+    importer.import = async (nameMap: string, description?: string): Promise<string> => {
+      try {
+        return await importMap(nameMap, description);
+      } catch (error) {
+        throw ImportError.from(error, format);
+      }
+    };
+    return importer;
   }
 
   private static asString(map: string | ArrayBuffer | Uint8Array): string {

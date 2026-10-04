@@ -16,8 +16,17 @@
  *   limitations under the License.
  */
 
+import { unzipSync } from 'fflate';
 import Importer from './Importer';
+import ImportError from './ImportError';
 import SecureXmlParser from '../security/SecureXmlParser';
+import Mindmap from '../model/Mindmap';
+import NodeModel from '../model/NodeModel';
+import NoteModel from '../model/NoteModel';
+import FeatureModelFactory from '../model/FeatureModelFactory';
+import { StrokeStyle } from '../model/RelationshipModel';
+import { decodeUtf8 } from './support/Utf8Decoder';
+import toWiseMappingXml from './support/MindmapXml';
 
 interface MindManagerTopic {
   id: string;
@@ -29,21 +38,23 @@ interface MindManagerTopic {
   children?: MindManagerTopic[];
 }
 
+type MindManagerRawInput = string | ArrayBuffer | Uint8Array;
+
 class MindManagerImporter extends Importer {
-  private mindManagerInput: string;
+  private mindManagerInput: MindManagerRawInput;
 
   private idCounter: number = 1;
 
-  private topicIdMap: Map<string, string>;
+  private topicIdMap: Map<string, number>;
 
-  constructor(map: string) {
+  constructor(map: MindManagerRawInput) {
     super();
     this.mindManagerInput = map;
     this.topicIdMap = new Map();
   }
 
-  private generateId(): string {
-    return (this.idCounter++).toString();
+  private generateId(): number {
+    return this.idCounter++;
   }
 
   private calculatePosition(order: number): { x: number; y: number } {
@@ -55,15 +66,6 @@ class MindManagerImporter extends Importer {
     const y = sideIndex * 75;
 
     return { x, y };
-  }
-
-  private escapeXml(text: string): string {
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
   }
 
   private buildNoteContent(notes?: string): string {
@@ -155,99 +157,110 @@ class MindManagerImporter extends Importer {
       // Default fallback
     };
 
-    return iconMappings[iconId.toLowerCase()] || '💡';
+    return iconMappings[iconId] || iconMappings[iconId.toLowerCase()] || '💡';
   }
 
-  private generateWiseMappingXML(
-    rootTopic: MindManagerTopic,
-    nameMap: string,
-    _description?: string,
-  ): string {
-    const centralId = this.generateId();
-    this.topicIdMap.set(rootTopic.id, centralId.toString());
+  private buildMindmap(rootTopic: MindManagerTopic, nameMap: string, doc: Document): Mindmap {
+    const mindmap = new Mindmap(nameMap);
+    mindmap.setTheme('prism');
+    mindmap.setLayout('mindmap');
 
-    let xml = `<map name='${nameMap}' version='tango' theme='prism' layout='mindmap'>\n`;
-
-    // Generate central topic
-    xml += `    <topic central='true' text='${this.escapeXml(rootTopic.text)}' id='${centralId}'>\n`;
+    const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
+    this.topicIdMap.set(rootTopic.id, centralTopic.getId());
+    centralTopic.setText(rootTopic.text);
+    mindmap.addBranch(centralTopic);
 
     // Generate child topics recursively
-    if (rootTopic.children && rootTopic.children.length > 0) {
-      xml += this.generateChildTopicsXML(rootTopic.children, 0);
-    }
-
-    xml += '    </topic>\n';
-
-    // Add relationships if present
-    const relationshipsXML = this.generateRelationshipsXML();
-    if (relationshipsXML) {
-      xml += relationshipsXML;
-    }
-
-    xml += '</map>';
-
-    return xml;
-  }
-
-  private generateChildTopicsXML(topics: MindManagerTopic[], depth: number): string {
-    let xml = '';
-
-    topics.forEach((topic, index) => {
-      const topicId = this.generateId();
-      this.topicIdMap.set(topic.id, topicId.toString());
-      const position = this.calculatePosition(index);
-
-      xml += `        <topic position='${position.x},${position.y}' order='${index}' text='${this.escapeXml(topic.text)}' shape='line' id='${topicId}'`;
-
-      // Add color if present
-      if (topic.color) {
-        xml += ` bgColor='${topic.color}' brColor='${topic.color}'`;
-      }
-
-      xml += '>\n';
-
-      // Add icon if present
-      if (topic.icon) {
-        const emojiIcon = this.mapMindManagerIconToEmojiIcon(topic.icon);
-        xml += `            <eicon id='${emojiIcon}'/>\n`;
-      }
-
-      // Add notes if present
-      const noteContent = this.buildNoteContent(topic.notes);
-      if (noteContent) {
-        xml += `            <note><![CDATA[${noteContent}]]></note>\n`;
-      }
-
-      // Add hyperlink if present
-      if (topic.hyperlink) {
-        xml += `            <link url='${this.escapeXml(topic.hyperlink)}'/>\n`;
-      }
-
-      // Generate child topics recursively
-      if (topic.children && topic.children.length > 0) {
-        xml += this.generateChildTopicsXML(topic.children, depth + 1);
-      }
-
-      xml += '        </topic>\n';
+    rootTopic.children?.forEach((topic, index) => {
+      centralTopic.append(this.convertTopic(mindmap, topic, index));
     });
 
-    return xml;
+    this.addRelationships(mindmap, doc);
+
+    return mindmap;
   }
 
-  private parseMindManagerXML(xmlContent: string): MindManagerTopic {
-    const doc = SecureXmlParser.parseSecureXml(xmlContent);
-    if (!doc) {
-      throw new Error('Failed to parse MindManager XML - content may be unsafe');
+  private convertTopic(mindmap: Mindmap, topic: MindManagerTopic, order: number): NodeModel {
+    const node = mindmap.createNode('MainTopic', this.generateId());
+    this.topicIdMap.set(topic.id, node.getId());
+    const position = this.calculatePosition(order);
+    node.setText(topic.text);
+    node.setPosition(position.x, position.y);
+    node.setOrder(order);
+    node.setShapeType('line');
+
+    // Add color if present
+    if (topic.color) {
+      node.setBackgroundColor(topic.color);
+      node.setBorderColor(topic.color);
     }
 
+    // Add icon if present
+    if (topic.icon) {
+      const emojiIcon = this.mapMindManagerIconToEmojiIcon(topic.icon);
+      node.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
+    }
+
+    // Add notes if present
+    const noteContent = this.buildNoteContent(topic.notes);
+    if (noteContent) {
+      node.addFeature(new NoteModel({ text: noteContent }));
+    }
+
+    // Add hyperlink if present
+    if (topic.hyperlink) {
+      node.addFeature(FeatureModelFactory.createModel('link', { url: topic.hyperlink }));
+    }
+
+    // Generate child topics recursively
+    topic.children?.forEach((child, index) => {
+      node.append(this.convertTopic(mindmap, child, index));
+    });
+
+    return node;
+  }
+
+  /**
+   * MindManager saves .mmap files as ZIP archives whose map is Document.xml. Plain XML is
+   * accepted too.
+   */
+  private static readDocument(input: MindManagerRawInput): string {
+    let bytes: Uint8Array;
+    if (typeof input === 'string') {
+      if (!input.startsWith('PK')) {
+        return input;
+      }
+      // A binary string, as read by FileReader.readAsBinaryString.
+      bytes = Uint8Array.from(input, (char) => char.charCodeAt(0) % 0x100);
+    } else {
+      bytes = input instanceof Uint8Array ? input : new Uint8Array(input);
+      const isZip = bytes.length > 1 && bytes[0] === 0x50 && bytes[1] === 0x4b; // "PK"
+      if (!isZip) {
+        return decodeUtf8(bytes);
+      }
+    }
+
+    const isDocument = (name: string): boolean => name.toLowerCase() === 'document.xml';
+    const files = unzipSync(bytes, { filter: (file) => isDocument(file.name) });
+    const entry = Object.keys(files).find(isDocument);
+    if (!entry) {
+      throw new Error('The MindManager archive does not contain Document.xml');
+    }
+    return decodeUtf8(files[entry]);
+  }
+
+  private parseMindManagerXML(doc: Document): MindManagerTopic {
     // Find Map element by tag name (ignoring namespace)
     const mapElement = this.findElementByTagName(doc, 'Map');
     if (!mapElement) {
       throw new Error('Invalid MindManager XML: missing Map element');
     }
 
-    // Find root Topic element
-    const rootTopic = this.findElementByTagName(mapElement, 'Topic');
+    // Find root Topic element. MindManager documents keep it in OneTopic.
+    const oneTopic = this.findChildByTagName(mapElement, 'OneTopic');
+    const rootTopic =
+      (oneTopic && this.findChildByTagName(oneTopic, 'Topic')) ||
+      this.findElementByTagName(mapElement, 'Topic');
     if (!rootTopic) {
       throw new Error('Invalid MindManager XML: missing root Topic');
     }
@@ -280,25 +293,41 @@ class MindManagerImporter extends Importer {
     );
   }
 
+  private findChildrenByTagName(parent: Element, tagName: string): Element[] {
+    return Array.from(parent.children).filter(
+      (child) => child.localName === tagName || child.tagName === tagName,
+    );
+  }
+
+  // Topics are written as <Topic ID Text> or, by MindManager, as <ap:Topic OId> with the text,
+  // notes and subtopics in child elements.
   private parseTopic(topicElement: Element): MindManagerTopic {
-    const id = topicElement.getAttribute('ID') || this.generateId();
-    const text = topicElement.getAttribute('Text') || 'Untitled';
+    const id =
+      topicElement.getAttribute('ID') || topicElement.getAttribute('OId') || this.generateId();
+    const textElement = this.findChildByTagName(topicElement, 'Text');
+    const text =
+      topicElement.getAttribute('Text') || textElement?.getAttribute('PlainText') || 'Untitled';
 
     const topic: MindManagerTopic = {
-      id,
+      id: id.toString(),
       text,
     };
 
     // Parse notes
     const notesElement = this.findChildByTagName(topicElement, 'Notes');
+    const notesGroup = this.findChildByTagName(topicElement, 'NotesGroup');
+    const notesData = notesGroup && this.findChildByTagName(notesGroup, 'NotesXhtmlData');
     if (notesElement) {
       topic.notes = notesElement.textContent || '';
+    } else if (notesData) {
+      topic.notes = notesData.getAttribute('PreviewPlainText') || '';
     }
 
     // Parse hyperlink
     const hyperlinkElement = this.findChildByTagName(topicElement, 'Hyperlink');
     if (hyperlinkElement) {
-      topic.hyperlink = hyperlinkElement.getAttribute('URL') || '';
+      topic.hyperlink =
+        hyperlinkElement.getAttribute('URL') || hyperlinkElement.getAttribute('Url') || '';
     }
 
     // Parse icon
@@ -313,15 +342,12 @@ class MindManagerImporter extends Importer {
       topic.color = colorElement.getAttribute('Value') || colorElement.textContent || '';
     }
 
-    // Parse child topics - find direct child Topic elements
-    const childTopics: Element[] = [];
-    const allChildren = topicElement.children;
-    for (let i = 0; i < allChildren.length; i++) {
-      const child = allChildren[i];
-      if (child.localName === 'Topic' || child.tagName === 'Topic') {
-        childTopics.push(child);
-      }
-    }
+    // Parse child topics: direct Topic children, or the Topics of SubTopics
+    const subTopics = this.findChildByTagName(topicElement, 'SubTopics');
+    const childTopics = [
+      ...this.findChildrenByTagName(topicElement, 'Topic'),
+      ...(subTopics ? this.findChildrenByTagName(subTopics, 'Topic') : []),
+    ];
 
     if (childTopics.length > 0) {
       topic.children = childTopics.map((child) => this.parseTopic(child));
@@ -330,53 +356,54 @@ class MindManagerImporter extends Importer {
     return topic;
   }
 
-  private generateRelationshipsXML(): string {
-    // Parse the XML to find relationships
-    const doc = SecureXmlParser.parseSecureXml(this.mindManagerInput);
-    if (!doc) return '';
-
+  private addRelationships(mindmap: Mindmap, doc: Document): void {
     const relationshipsElement = this.findElementByTagName(doc, 'Relationships');
-    if (!relationshipsElement) return '';
+    if (!relationshipsElement) return;
 
-    let relationshipsXML = '';
-    const relationshipElements = relationshipsElement.getElementsByTagName('Relationship');
-
-    Array.from(relationshipElements).forEach((rel) => {
-      relationshipsXML += this.generateRelationshipXML(rel as Element);
+    this.findChildrenByTagName(relationshipsElement, 'Relationship').forEach((rel) => {
+      this.addRelationship(mindmap, rel);
     });
-
-    return relationshipsXML;
   }
 
-  private generateRelationshipXML(relationshipElement: Element): string {
-    const fromTopicId = relationshipElement.getAttribute('FromTopicID');
-    const toTopicId = relationshipElement.getAttribute('ToTopicID');
-    const label = relationshipElement.getAttribute('Label') || '';
+  // MindManager writes the ends of a relationship as ConnectionGroups (Index 0 and 1) that
+  // reference the topic OIds.
+  private connectionEnd(relationshipElement: Element, index: string): string | null {
+    const group = this.findChildrenByTagName(relationshipElement, 'ConnectionGroup').find(
+      (candidate) => candidate.getAttribute('Index') === index,
+    );
+    const connection = group && this.findChildByTagName(group, 'Connection');
+    const reference = connection && this.findChildByTagName(connection, 'ObjectReference');
+    return reference ? reference.getAttribute('OIdRef') : null;
+  }
+
+  private addRelationship(mindmap: Mindmap, relationshipElement: Element): void {
+    const fromTopicId =
+      relationshipElement.getAttribute('FromTopicID') ||
+      this.connectionEnd(relationshipElement, '0');
+    const toTopicId =
+      relationshipElement.getAttribute('ToTopicID') || this.connectionEnd(relationshipElement, '1');
     const lineStyle = relationshipElement.getAttribute('LineStyle') || '';
 
-    if (!fromTopicId || !toTopicId) return '';
+    if (!fromTopicId || !toTopicId) return;
 
     // Map MindManager IDs to WiseMapping IDs
     const srcTopicId = this.topicIdMap.get(fromTopicId);
     const destTopicId = this.topicIdMap.get(toTopicId);
 
-    if (!srcTopicId || !destTopicId) return '';
+    if (!srcTopicId || !destTopicId) return;
 
-    let relationshipXML = `    <relationship srcTopicId='${srcTopicId}' destTopicId='${destTopicId}'`;
-
-    if (label) {
-      relationshipXML += ` label='${this.escapeXml(label)}'`;
-    }
+    const relationship = mindmap.createRelationship(srcTopicId, destTopicId);
 
     // Map line style
     if (lineStyle === 'Dashed') {
-      relationshipXML += " lineType='1'";
+      relationship.setStrokeStyle(StrokeStyle.DASHED);
     } else if (lineStyle === 'Dotted') {
-      relationshipXML += " lineType='2'";
+      relationship.setStrokeStyle(StrokeStyle.DOTTED);
+    } else if (lineStyle === 'Solid') {
+      relationship.setStrokeStyle(StrokeStyle.SOLID);
     }
 
-    relationshipXML += '/>\n';
-    return relationshipXML;
+    mindmap.addRelationship(relationship);
   }
 
   public import(nameMap: string, _description?: string): Promise<string> {
@@ -387,19 +414,19 @@ class MindManagerImporter extends Importer {
       this.idCounter = 1;
       this.topicIdMap.clear();
 
-      const rootTopic = this.parseMindManagerXML(this.mindManagerInput);
-      const xml = this.generateWiseMappingXML(rootTopic, nameMap, _description);
+      const xmlContent = MindManagerImporter.readDocument(this.mindManagerInput);
+      const doc = SecureXmlParser.parseSecureXml(xmlContent);
+      if (!doc) {
+        throw new Error('Failed to parse MindManager XML - content may be unsafe');
+      }
 
-      return Promise.resolve(xml);
+      const rootTopic = this.parseMindManagerXML(doc);
+      const mindmap = this.buildMindmap(rootTopic, nameMap, doc);
+
+      return Promise.resolve(toWiseMappingXml(mindmap));
     } catch (error) {
       console.error('MindManager import failed:', error);
-      return Promise.resolve(
-        '<map name="MindManager Import" version="tango" theme="prism" layout="mindmap">\n' +
-          '    <topic central="true" text="Import Error" id="1">\n' +
-          `      <note><![CDATA[MindManager import failed: ${(error as Error).message}]]></note>\n` +
-          '    </topic>\n' +
-          '</map>',
-      );
+      return Promise.reject(ImportError.from(error, 'MindManager'));
     }
   }
 }

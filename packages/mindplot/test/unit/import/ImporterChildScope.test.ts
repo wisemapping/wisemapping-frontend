@@ -192,10 +192,13 @@ describe('XMindImporter (XML format) relationships', () => {
 
     const doc = parse(await new XMindImporter(xmind).import('test'));
 
-    expect(doc.querySelectorAll('topic[text="A"]')).toHaveLength(1);
+    const a = topicByText(doc, 'A').getAttribute('id');
+    const b = topicByText(doc, 'B').getAttribute('id');
     const relationships = Array.from(doc.getElementsByTagName('relationship'));
     expect(relationships).toHaveLength(2);
-    expect(relationships[0].getAttribute('label')).toBeNull();
-    expect(relationships[1].getAttribute('label')).toBe('Labelled');
+    expect(relationships[0].getAttribute('srcTopicId')).toBe(a);
+    expect(relationships[0].getAttribute('destTopicId')).toBe(b);
+    expect(relationships[1].getAttribute('srcTopicId')).toBe(b);
+    expect(relationships[1].getAttribute('destTopicId')).toBe(a);
   });
 });

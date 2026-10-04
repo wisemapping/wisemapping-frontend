@@ -19,9 +19,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
 import fs from 'fs';
-import { test } from '@jest/globals';
+import { expect, test } from '@jest/globals';
 import { exporterAssert } from './Helper';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
+import ImportError from '../../../src/components/import/ImportError';
+
+// These files are not well-formed XML (an unescaped "&" in a title), so they can not be imported.
+const malformed = ['event-planning', 'personal-goals', 'project-management'];
 
 const testNames = fs
   .readdirSync(path.resolve(__dirname, './input/xmind/'))
@@ -41,6 +45,10 @@ describe('XMind Importer Test Suite', () => {
 
     const importer = TextImporterFactory.create('xmind', xmindContent);
 
-    await exporterAssert(`xmind-${testName}`, importer);
+    if (malformed.includes(testName)) {
+      await expect(importer.import(testName, '')).rejects.toBeInstanceOf(ImportError);
+    } else {
+      await exporterAssert(`xmind-${testName}`, importer);
+    }
   });
 });

@@ -74,7 +74,26 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     setError(undefined);
+    // Nothing to save until a file has been imported.
+    if (errorFile.error || !model.content) {
+      return;
+    }
     mutation.mutate(model);
+  };
+
+  const showFileError = (message: string): void => {
+    setErrorFile({
+      error: true,
+      message: intl.formatMessage(
+        {
+          id: 'import.error-file',
+          defaultMessage: 'Import error {error}',
+        },
+        {
+          error: message,
+        },
+      ),
+    });
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -94,6 +113,10 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
       const extensionFile = file.name.split('.').pop()?.toLowerCase();
       // Closure to capture the file information.
       reader.onload = (event) => {
+        // Forget the previous file.
+        model.content = undefined;
+        setErrorFile({ error: false, message: '' });
+
         // Suggest file name ...
         const fileName = file.name;
         if (fileName) {
@@ -106,19 +129,9 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         const extensionAccept = ['wxml', 'mm', 'mmx', 'xmind', 'mmap', 'opml'];
 
         if (!extensionFile || !extensionAccept.includes(extensionFile)) {
-          setErrorFile({
-            error: true,
-            message: intl.formatMessage(
-              {
-                id: 'import.error-file',
-                defaultMessage: 'Import error {error}',
-              },
-              {
-                error:
-                  'You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import.',
-              },
-            ),
-          });
+          showFileError(
+            'You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import.',
+          );
         }
 
         model.contentType =
@@ -137,30 +150,25 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         try {
           const importer: Importer = TextImporterFactory.create(extensionFile, mapContent);
 
-          importer.import(model.title, model.description).then((res) => {
-            model.content = res;
-            setModel({ ...model });
-          });
+          // A file that can not be imported rejects with an ImportError: show it, never save it.
+          importer
+            .import(model.title, model.description)
+            .then((res) => {
+              model.content = res;
+              setModel({ ...model });
+            })
+            .catch((e: unknown) => {
+              showFileError(e instanceof Error ? e.message : String(e));
+            });
         } catch (e) {
           if (e instanceof Error) {
-            setErrorFile({
-              error: true,
-              message: intl.formatMessage(
-                {
-                  id: 'import.error-file',
-                  defaultMessage: 'Import error {error}',
-                },
-                {
-                  error: e.message,
-                },
-              ),
-            });
+            showFileError(e.message);
           }
         }
       };
 
-      // Read in the image file as a data URL.
-      if (extensionFile === 'xmind') {
+      // XMind and MindManager (.mmap) files are ZIP archives.
+      if (extensionFile === 'xmind' || extensionFile === 'mmap') {
         reader.readAsArrayBuffer(file);
       } else {
         reader.readAsText(file);

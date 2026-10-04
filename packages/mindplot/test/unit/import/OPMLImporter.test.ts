@@ -19,6 +19,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { describe, expect, test } from '@jest/globals';
 import OPMLImporter from '../../../src/components/import/OPMLImporter';
+import ImportError from '../../../src/components/import/ImportError';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
 const loadMindmap = (xml: string) => {
@@ -48,11 +49,10 @@ describe('OPMLImporter', () => {
     expect(central.getChildren().map((c) => c.getText())).toEqual(['Child 1', 'Child 2']);
   });
 
-  test('falls back to a valid WiseMapping map when the OPML cannot be parsed', async () => {
-    const xml = await new OPMLImporter('<opml><body><outline').import('test & "map"');
+  test('rejects with an ImportError when the OPML cannot be parsed', async () => {
+    const result = new OPMLImporter('<opml><body><outline').import('test & "map"');
 
-    const mindmap = loadMindmap(xml);
-    expect(mindmap.getCentralTopic().getText()).toBe('OPML Import Error');
+    await expect(result).rejects.toBeInstanceOf(ImportError);
   });
 
   test('imports every top-level outline under a central topic named after the OPML title', async () => {

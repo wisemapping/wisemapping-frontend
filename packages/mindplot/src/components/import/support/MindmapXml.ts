@@ -16,12 +16,18 @@
  *   limitations under the License.
  */
 
-export default abstract class Importer {
-  /**
-   * Converts the file into a WiseMapping map.
-   *
-   * @returns the map XML. When the file can not be imported, the promise rejects with an
-   * ImportError whose message can be shown to the user. It never resolves to a placeholder map.
-   */
-  abstract import(nameMap: string, description?: string): Promise<string>;
-}
+import xmlFormatter from 'xml-formatter';
+import Mindmap from '../../model/Mindmap';
+import XMLSerializerFactory from '../../persistence/XMLSerializerFactory';
+
+/**
+ * Serializes an imported map with the WiseMapping serializer, so that names, texts, notes and
+ * colors read from the file are always escaped.
+ */
+const toWiseMappingXml = (mindmap: Mindmap): string => {
+  const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
+  const xml = new XMLSerializer().serializeToString(serializer.toXML(mindmap));
+  return xmlFormatter(xml, { indentation: '    ', collapseContent: true, lineSeparator: '\n' });
+};
+
+export default toWiseMappingXml;

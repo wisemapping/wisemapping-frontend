@@ -16,12 +16,26 @@
  *   limitations under the License.
  */
 
-export default abstract class Importer {
-  /**
-   * Converts the file into a WiseMapping map.
-   *
-   * @returns the map XML. When the file can not be imported, the promise rejects with an
-   * ImportError whose message can be shown to the user. It never resolves to a placeholder map.
-   */
-  abstract import(nameMap: string, description?: string): Promise<string>;
+/**
+ * The error an importer rejects with when a file can not be imported. Its message can be shown to
+ * the user. The original error, if any, is kept as the cause.
+ */
+class ImportError extends Error {
+  constructor(message: string, options?: { cause?: unknown }) {
+    super(message, options);
+    this.name = 'ImportError';
+  }
+
+  /** Wraps any error thrown while importing a file of the given format (XMind, FreeMind...). */
+  static from(error: unknown, format: string): ImportError {
+    if (error instanceof ImportError) {
+      return error;
+    }
+    const detail = error instanceof Error ? error.message : String(error);
+    return new ImportError(`The ${format} file could not be imported: ${detail}`, {
+      cause: error,
+    });
+  }
 }
+
+export default ImportError;

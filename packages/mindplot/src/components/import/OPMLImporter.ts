@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import Importer from './Importer';
+import ImportError from './ImportError';
 import Mindmap from '../model/Mindmap';
 import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
@@ -71,8 +72,7 @@ class OPMLImporter extends Importer {
       return Promise.resolve(OPMLImporter.toXml(this.mindmap));
     } catch (error) {
       console.error('Error importing OPML map:', error);
-      // Fallback to basic map
-      return Promise.resolve(OPMLImporter.createFallbackMap(nameMap, error as Error));
+      return Promise.reject(ImportError.from(error, 'OPML'));
     }
   }
 
@@ -81,15 +81,6 @@ class OPMLImporter extends Importer {
     const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
     const mindmapToXml = serializer.toXML(mindmap);
     return new XMLSerializer().serializeToString(mindmapToXml);
-  }
-
-  private static createFallbackMap(nameMap: string, error: Error): string {
-    const mindmap = new Mindmap(nameMap);
-    const centralTopic = mindmap.createNode('CentralTopic', 1);
-    centralTopic.setText('OPML Import Error');
-    centralTopic.addFeature(new NoteModel({ text: `OPML import failed: ${error.message}` }));
-    mindmap.addBranch(centralTopic);
-    return OPMLImporter.toXml(mindmap);
   }
 
   private createCentralTopic(text: string): NodeModel {
