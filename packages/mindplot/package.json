@@ -53,6 +53,7 @@
     "@babel/preset-typescript": "^8.0.1",
     "@jest/globals": "^30.5.2",
     "@mdx-js/react": "^3.1.1",
+    "@simonsmith/cypress-image-snapshot": "^11.0.0",
     "@storybook/addon-docs": "^10.6.1",
     "@storybook/addon-links": "^10.6.1",
     "@storybook/html": "^10.6.1",

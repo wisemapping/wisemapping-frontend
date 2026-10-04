@@ -4589,6 +4589,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@simonsmith/cypress-image-snapshot@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "@simonsmith/cypress-image-snapshot@npm:11.0.0"
+  dependencies:
+    "@types/pixelmatch": "npm:^5.2.6"
+    chalk: "npm:^4.1.2"
+    jest-image-snapshot: "npm:^6.5.2"
+    ssim.js: "npm:^3.5.0"
+  peerDependencies:
+    cypress: ">=15.10.0"
+  checksum: 10/8e7695f955d05af85ec2811b34e251080831e0d853741e8351544c284741e233b2d14a7b3613f63b4d8a9fbc632d1679e65c88eaf617cb71877fd4ea878aa0e0
+  languageName: node
+  linkType: hard
+
 "@simple-libs/child-process-utils@npm:^2.0.0":
   version: 2.0.0
   resolution: "@simple-libs/child-process-utils@npm:2.0.0"
@@ -5165,6 +5179,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/pixelmatch@npm:^5.2.6":
+  version: 5.2.6
+  resolution: "@types/pixelmatch@npm:5.2.6"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10/8299207286913414bfd95ac980418342f58e7bc93dc78befbd48ccab110b0341b400712f89fea2b0f0a3a4ad0b1aed18e98e26100b529abe60d4bcc14e11d2e3
+  languageName: node
+  linkType: hard
+
 "@types/prop-types@npm:^15.7.15":
   version: 15.7.15
   resolution: "@types/prop-types@npm:15.7.15"
@@ -5652,6 +5675,7 @@ __metadata:
     "@mdx-js/react": "npm:^3.1.1"
     "@mui/icons-material": "npm:^9.4.0"
     "@mui/material": "npm:^9.4.0"
+    "@simonsmith/cypress-image-snapshot": "npm:^11.0.0"
     "@storybook/addon-docs": "npm:^10.6.1"
     "@storybook/addon-links": "npm:^10.6.1"
     "@storybook/react": "npm:^10.6.1"
@@ -5694,6 +5718,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^8.0.1"
     "@jest/globals": "npm:^30.5.2"
     "@mdx-js/react": "npm:^3.1.1"
+    "@simonsmith/cypress-image-snapshot": "npm:^11.0.0"
     "@storybook/addon-docs": "npm:^10.6.1"
     "@storybook/addon-links": "npm:^10.6.1"
     "@storybook/html": "npm:^10.6.1"
@@ -5725,13 +5750,18 @@ __metadata:
   dependencies:
     "@babel/preset-typescript": "npm:^8.0.1"
     "@mdx-js/react": "npm:^3.1.1"
+    "@simonsmith/cypress-image-snapshot": "npm:^11.0.0"
     "@storybook/addon-docs": "npm:^10.6.1"
     "@storybook/addon-links": "npm:^10.6.1"
     "@storybook/html-vite": "npm:^10.6.1"
+    "@types/jest": "npm:^30.0.0"
     cypress: "npm:^16.1.1"
     eslint-plugin-storybook: "npm:^10.6.1"
     globals: "npm:^17.13.0"
+    jest: "npm:^30.5.2"
+    jest-environment-jsdom: "npm:^30.5.2"
     storybook: "npm:^10.6.1"
+    ts-jest: "npm:^29.4.14"
     typescript: "npm:^6.0.3"
     vite: "npm:^8.3.2"
   languageName: unknown
@@ -6699,7 +6729,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:4.1.2, chalk@npm:^4.1.0, chalk@npm:^4.1.2":
+"chalk@npm:4.1.2, chalk@npm:^4.0.0, chalk@npm:^4.1.0, chalk@npm:^4.1.2":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -8923,6 +8953,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"get-stdin@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "get-stdin@npm:5.0.1"
+  checksum: 10/f9784638ad3e68a0a8bdc031aedf0fca749843cd134956fbd4f3bbac17c359e0fb9210343fcbed72ee79fb19d8e4c49b7a6e742cc5d44e94ac1405e9371d4b3e
+  languageName: node
+  linkType: hard
+
 "get-stream@npm:^5.0.0":
   version: 5.2.0
   resolution: "get-stream@npm:5.2.0"
@@ -9060,6 +9097,13 @@ __metadata:
     define-properties: "npm:^1.2.1"
     gopd: "npm:^1.0.1"
   checksum: 10/1f1fd078fb2f7296306ef9dd51019491044ccf17a59ed49d375b576ca108ff37e47f3d29aead7add40763574a992f16a5367dd1e2173b8634ef18556ab719ac4
+  languageName: node
+  linkType: hard
+
+"glur@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "glur@npm:1.1.2"
+  checksum: 10/3d991f38cb352886723a84b00310673312c01573c928ef49a52e74ec693cedaa95117ef6f7e0dd5167b40a3383355042ed721cfaabd54b0e9532d01d7ff72861
   languageName: node
   linkType: hard
 
@@ -10244,6 +10288,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jest-image-snapshot@npm:^6.5.2":
+  version: 6.5.2
+  resolution: "jest-image-snapshot@npm:6.5.2"
+  dependencies:
+    chalk: "npm:^4.0.0"
+    get-stdin: "npm:^5.0.1"
+    glur: "npm:^1.1.2"
+    lodash: "npm:^4.17.4"
+    pixelmatch: "npm:^5.1.0"
+    pngjs: "npm:^3.4.0"
+    ssim.js: "npm:^3.1.1"
+  peerDependencies:
+    jest: ">=20 <31"
+  peerDependenciesMeta:
+    jest:
+      optional: true
+  checksum: 10/7e2270bb76e2cd95e1bffd13bab0bfafc0163e7b237fc02bc337b8d23dbaa3c408cff8eef10368378ef026c7cb45b17e2e3e9f2bfc912ce54e4823f2d3423874
+  languageName: node
+  linkType: hard
+
 "jest-leak-detector@npm:30.5.1":
   version: 30.5.1
   resolution: "jest-leak-detector@npm:30.5.1"
@@ -11108,7 +11172,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.23, lodash@npm:^4.18.1":
+"lodash@npm:^4.17.23, lodash@npm:^4.17.4, lodash@npm:^4.18.1":
   version: 4.18.1
   resolution: "lodash@npm:4.18.1"
   checksum: 10/306fea53dfd39dad1f03d45ba654a2405aebd35797b673077f401edb7df2543623dc44b9effbb98f69b32152295fff725a4cec99c684098947430600c6af0c3f
@@ -12626,12 +12690,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pixelmatch@npm:^5.1.0":
+  version: 5.3.0
+  resolution: "pixelmatch@npm:5.3.0"
+  dependencies:
+    pngjs: "npm:^6.0.0"
+  bin:
+    pixelmatch: bin/pixelmatch
+  checksum: 10/10778aaa432211253ab0ae9160233d8aa56769ab6312b6bf8375100b67aaa126821626a0c3b433fb2a977864a8d2d145d754d4afa9ac14b84fcb1a0bdf98a4ae
+  languageName: node
+  linkType: hard
+
 "pkg-dir@npm:^4.2.0":
   version: 4.2.0
   resolution: "pkg-dir@npm:4.2.0"
   dependencies:
     find-up: "npm:^4.0.0"
   checksum: 10/9863e3f35132bf99ae1636d31ff1e1e3501251d480336edb1c211133c8d58906bed80f154a1d723652df1fda91e01c7442c2eeaf9dc83157c7ae89087e43c8d6
+  languageName: node
+  linkType: hard
+
+"pngjs@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "pngjs@npm:3.4.0"
+  checksum: 10/0e9227a413ce4b4f5ebae4465b366efc9ca545c74304f3cc30ba2075159eb12f01a6a821c4f61f2b048bd85356abbe6d2109df7052a9030ef4d7a42d99760af6
+  languageName: node
+  linkType: hard
+
+"pngjs@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "pngjs@npm:6.0.0"
+  checksum: 10/692751ccd5e762623103900922caac982caa90258d9c6c04a6e2bc3397b1dedbaf9db826fc0fa068a29d607cad3df1d1eded0dec2ee35a0015c65cb5ef33ad18
   languageName: node
   linkType: hard
 
@@ -13803,6 +13892,13 @@ __metadata:
     sshpk-sign: bin/sshpk-sign
     sshpk-verify: bin/sshpk-verify
   checksum: 10/858339d43e3c6b6a848772a66f69442ce74f1a37655d9f35ba9d1f85329499ff0000af9f8ab83dbb39ad24c0c370edabe0be1e39863f70c6cded9924b8458c34
+  languageName: node
+  linkType: hard
+
+"ssim.js@npm:^3.1.1, ssim.js@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "ssim.js@npm:3.5.0"
+  checksum: 10/fface2e7f0317a4a612d5d00c82ff3c92d4a45638457468be1775bdf77a3d8d9453d457373af9700978f66ecc9fc56237c4b1379246d86b3af7276ab63c8dec3
   languageName: node
   linkType: hard
 
