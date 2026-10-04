@@ -1,0 +1,20 @@
+# Visual regression: UPDATE the mindplot and editor image-snapshot baselines. Writes missing
+# baselines and overwrites the ones that differ, in packages/{mindplot,editor}/cypress/snapshots.
+# Review every changed PNG before committing it. See "Image-snapshot tests" in CLAUDE.md.
+#
+#   docker compose -f docker-compose.snapshots.update.yml up
+#   VISUAL_SUITES=editor docker compose -f docker-compose.snapshots.update.yml up
+name: wisemapping-visual-update
+
+services:
+  visual:
+    extends:
+      file: docker-compose.snapshots.yml
+      service: visual
+    environment:
+      VISUAL_SNAPSHOTS: update
+
+  result:
+    extends:
+      file: docker-compose.snapshots.yml
+      service: result

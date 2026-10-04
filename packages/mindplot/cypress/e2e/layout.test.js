@@ -27,7 +27,7 @@ context('Layout suite', () => {
       expect(svgContent).to.not.be.empty;
       expect(svgContent.length).to.be.greaterThan(100); // Ensure substantial content
     });
-    cy.screenshot('layout-suite');
+    cy.matchImageSnapshot('layout-suite');
   });
 
   it('renders a full mindmap with distinct node positions', () => {

@@ -16,23 +16,44 @@
  *   limitations under the License.
  */
 /// <reference types="cypress" />
-// ***********************************************************
-// This example plugins/index.js can be used to load plugins
-//
-// You can change the location of this file or turn off loading
-// the plugins file with the 'pluginsFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/plugins-guide
-// ***********************************************************
+const { addMatchImageSnapshotPlugin } = require('@simonsmith/cypress-image-snapshot/plugin');
 
-// This function is called when a project is opened or re-opened (e.g. due to
-// the project's config changing)
+/**
+ * Visual regression mode, read from the VISUAL_SNAPSHOTS environment variable.
+ * See the "Image-snapshot tests" section of the repository CLAUDE.md.
+ *
+ * - `verify`: compare every `cy.matchImageSnapshot()` with its committed baseline and fail
+ *   on a difference or on a missing baseline. Used by docker-compose.snapshots.yml.
+ * - `update`: write missing baselines and overwrite the ones that differ. Used by
+ *   docker-compose.snapshots.update.yml.
+ * - unset (host runs): compare and only log differences in the command log. Baselines are
+ *   never written, because fonts and anti-aliasing on a developer machine differ from the
+ *   pinned Docker image the baselines come from.
+ */
+const visualSnapshotMode = () => {
+  const mode = (process.env.VISUAL_SNAPSHOTS || '').trim().toLowerCase();
+  if (mode !== '' && mode !== 'verify' && mode !== 'update') {
+    throw new Error(`VISUAL_SNAPSHOTS must be 'verify', 'update' or unset, got '${mode}'`);
+  }
+  return mode;
+};
+
+/** `expose` values read by @simonsmith/cypress-image-snapshot and cypress/support/commands.js. */
+const visualSnapshotExpose = () => {
+  const mode = visualSnapshotMode();
+  return {
+    visualSnapshots: mode || 'log',
+    updateSnapshots: mode === 'update',
+    failOnSnapshotDiff: mode !== '',
+    requireSnapshots: mode !== 'update',
+  };
+};
 
 /**
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+  addMatchImageSnapshotPlugin(on);
+  return config;
 };
+module.exports.visualSnapshotExpose = visualSnapshotExpose;

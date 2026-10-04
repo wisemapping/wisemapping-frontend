@@ -1,0 +1,58 @@
+# Visual regression: VERIFY the mindplot and editor image snapshots against the committed
+# baselines (packages/{mindplot,editor}/cypress/snapshots). See "Image-snapshot tests" in CLAUDE.md.
+#
+#   docker compose -f docker-compose.snapshots.yml up            # both suites
+#   VISUAL_SUITES=mindplot docker compose -f docker-compose.snapshots.yml up
+#
+# `up` exits non-zero when a suite fails (through the `result` service). Diffs are written to
+# packages/<pkg>/cypress/snapshots/<spec>/__diff_output__/ (git-ignored).
+name: wisemapping-visual
+
+services:
+  visual:
+    build:
+      context: .
+      dockerfile: Dockerfile.snapshots
+    image: wisemapping-visual-snapshots:local
+    # Rebuild on every run so the image always holds the current sources (the dependency
+    # layer stays cached until a package.json or yarn.lock changes).
+    pull_policy: build
+    platform: linux/amd64
+    shm_size: 2gb
+    environment:
+      VISUAL_SNAPSHOTS: verify
+      VISUAL_SUITES: ${VISUAL_SUITES:-mindplot editor}
+      CYPRESS_VIDEO: 'false'
+    volumes:
+      - ./packages/mindplot/cypress/snapshots:/e2e/packages/mindplot/cypress/snapshots
+      - ./packages/mindplot/cypress/screenshots:/e2e/packages/mindplot/cypress/screenshots
+      - ./packages/editor/cypress/snapshots:/e2e/packages/editor/cypress/snapshots
+      - ./packages/editor/cypress/screenshots:/e2e/packages/editor/cypress/screenshots
+    # Runs every requested suite, then exits 1 if any of them failed.
+    command:
+      - |
+        set -u
+        failed=""
+        for suite in $${VISUAL_SUITES}; do
+          echo "=== visual suite: $${suite} (VISUAL_SNAPSHOTS=$${VISUAL_SNAPSHOTS})"
+          case "$${suite}" in
+            mindplot) yarn workspace @wisemapping/mindplot test:integration ;;
+            editor) yarn workspace @wisemapping/editor test:integration:playground ;;
+            *) echo "unknown suite '$${suite}' (expected: mindplot editor)"; false ;;
+          esac || failed="$${failed} $${suite}"
+        done
+        if [ -n "$${failed}" ]; then
+          echo "=== visual suites FAILED:$${failed}"
+          exit 1
+        fi
+        echo "=== visual suites passed"
+
+  # Makes `docker compose up` exit non-zero when `visual` fails (plain `up` always exits 0).
+  result:
+    image: wisemapping-visual-snapshots:local
+    pull_policy: never
+    platform: linux/amd64
+    command: ['true']
+    depends_on:
+      visual:
+        condition: service_completed_successfully

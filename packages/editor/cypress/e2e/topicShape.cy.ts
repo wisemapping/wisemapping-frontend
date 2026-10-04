@@ -30,7 +30,7 @@ describe('Topic Shape Suite', () => {
 
   it('open shape', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
-    cy.screenshot('topicShapePanel');
+    cy.matchImageSnapshot('topicShapePanel');
   });
 
   it('change to square shape', () => {
@@ -68,7 +68,7 @@ describe('Topic Shape Suite', () => {
     });
 
     cy.focusTopicByText('Mind Mapping');
-    cy.screenshot('changeToSquareShape');
+    cy.matchImageSnapshot('changeToSquareShape');
   });
 
   it('change to rounded rectangle', () => {
@@ -108,7 +108,7 @@ describe('Topic Shape Suite', () => {
     });
 
     cy.focusTopicByText('Mind Mapping');
-    cy.screenshot('changeToRoundedRectangle');
+    cy.matchImageSnapshot('changeToRoundedRectangle');
   });
 
   it('change to line', () => {
@@ -119,7 +119,7 @@ describe('Topic Shape Suite', () => {
     cy.get(`[aria-label="Line shape"]`).first().click({ force: true });
 
     cy.focusTopicByText('Mind Mapping');
-    cy.screenshot('changeToLine');
+    cy.matchImageSnapshot('changeToLine');
   });
 
   it('change to ellipse shape', () => {
@@ -162,6 +162,6 @@ describe('Topic Shape Suite', () => {
     });
 
     cy.focusTopicByText('Mind Mapping');
-    cy.screenshot('changeToEllipseShape');
+    cy.matchImageSnapshot('changeToEllipseShape');
   });
 });

@@ -18,6 +18,8 @@
 
 /* eslint-disable @typescript-eslint/no-namespace */
 /// <reference types="cypress" />
+import { addMatchImageSnapshotCommand } from '@simonsmith/cypress-image-snapshot/command';
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -39,6 +41,105 @@ declare global {
     }
   }
 }
+
+// Visual regression (see cypress/plugins/index.ts and the "Image-snapshot tests" section of CLAUDE.md).
+// Baselines live in cypress/snapshots/<spec>/<name>.snap.png and are generated in Docker.
+// failureThreshold is a ratio of the image's pixels (0.0005 = 0.05 %, 330 px of a 1000x660
+// viewport). Repeated Docker runs were pixel-identical for mindplot and differed by at most
+// 32 px (0.005 %) for editor, so this only absorbs isolated anti-aliasing pixels; a moved
+// line, a colour change or a text change is well above it.
+const snapshotDefaults = {
+  failureThreshold: 0.0005,
+  failureThresholdType: 'percent' as const,
+  // Per-pixel colour distance (pixelmatch YIQ, 0..1) below which two pixels count as equal.
+  // 0.01 (the jest-image-snapshot default) flags a darker shade of the same hue; 0.1 does not.
+  customDiffConfig: { threshold: 0.01 },
+  capture: 'fullPage' as const,
+  // The emoji-picker-react grid (third-party) lands on a different sub-pixel scroll offset
+  // after a pick from run to run; black it out instead of comparing it.
+  blackout: ['.epr-body'],
+  // Full-page captures of long stories (layout-suite is ~44k px tall) are slow under the
+  // emulated linux/amd64 image on Apple Silicon.
+  timeout: 180000,
+};
+addMatchImageSnapshotCommand(snapshotDefaults);
+
+const FREEZE_STYLE_ID = 'cypress-visual-freeze';
+// Hover tooltips open after a timer, so whether one is on screen at capture time is a race.
+const FREEZE_CSS = `*, *::before, *::after {
+  transition: none !important;
+  animation: none !important;
+  caret-color: transparent !important;
+  scroll-behavior: auto !important;
+}
+.MuiTooltip-popper {
+  visibility: hidden !important;
+}`;
+
+// Signature of the rendered page: the markup, including open shadow roots (the mindplot
+// canvas and the emoji picker live in one), plus every non-zero scroll offset, so that a
+// smooth scroll still in progress (e.g. the emoji picker list) counts as a change.
+const collectSignature = (root: Document | ShadowRoot, parts: string[]): void => {
+  root.querySelectorAll('*').forEach((el) => {
+    if (el.scrollTop || el.scrollLeft) {
+      parts.push(`${el.scrollTop},${el.scrollLeft}`);
+    }
+    if (el.shadowRoot) {
+      parts.push(el.shadowRoot.innerHTML);
+      collectSignature(el.shadowRoot, parts);
+    }
+  });
+};
+
+const pageMarkup = (doc: Document): string => {
+  const parts = [doc.body.innerHTML];
+  collectSignature(doc, parts);
+  return parts.join('\n');
+};
+
+// Waits until the page markup stops changing (topics laid out, panels mounted). Gives up
+// quietly after ~10 s, so a page with a live element (a timer, a spinner) is still captured.
+const waitForStablePage = (previous = '', stableChecks = 0, attempts = 0): void => {
+  cy.document({ log: false }).then((doc) => {
+    const markup = pageMarkup(doc);
+    const settled = markup === previous ? stableChecks + 1 : 0;
+    if (settled >= 2) {
+      return;
+    }
+    if (attempts > 60) {
+      Cypress.log({ name: 'matchImageSnapshot', message: 'page markup did not settle, capturing anyway' });
+      return;
+    }
+    cy.wait(150, { log: false });
+    waitForStablePage(markup, settled, attempts + 1);
+  });
+};
+
+// Make every snapshot wait for a stable frame: the map loaded (the MUI loading skeleton is
+// gone) and its markup settled, web fonts loaded, CSS transitions and animations (MUI fades,
+// ripples, the caret) at their end state, hover tooltips hidden, and two animation frames painted.
+Cypress.Commands.overwrite('matchImageSnapshot', (originalFn, subject, ...args) => {
+  cy.get('.MuiSkeleton-root', { log: false, timeout: 240000 }).should('not.exist');
+  cy.document({ log: false }).then((doc) => {
+    if (!doc.getElementById(FREEZE_STYLE_ID)) {
+      const style = doc.createElement('style');
+      style.id = FREEZE_STYLE_ID;
+      style.textContent = FREEZE_CSS;
+      doc.head.appendChild(style);
+    }
+  });
+  waitForStablePage();
+  cy.document({ log: false }).its('fonts.status', { log: false }).should('equal', 'loaded');
+  cy.window({ log: false }).then(
+    (win) =>
+      new Cypress.Promise<void>((resolve) => {
+        win.requestAnimationFrame(() => win.requestAnimationFrame(() => resolve()));
+      }),
+  );
+  return originalFn(subject, ...args).then(() => {
+    cy.document({ log: false }).then((doc) => doc.getElementById(FREEZE_STYLE_ID)?.remove());
+  });
+});
 
 Cypress.Commands.add('waitEditorLoaded', () => {
   // Wait for loading spinner to disappear

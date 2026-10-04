@@ -28,7 +28,7 @@ describe('Topic Icon Suite', () => {
   it('Open panel with emojis tab', () => {
     cy.onClickToolbarButton('Add Icon');
     cy.waitForEmojiTab();
-    cy.screenshot('icons-panel-emojis');
+    cy.matchImageSnapshot('icons-panel-emojis');
   });
 
   it('Add new emoji icon', () => {
@@ -37,7 +37,7 @@ describe('Topic Icon Suite', () => {
 
     cy.waitForEmojiTab();
     cy.getEmoji().first().should('be.visible').click();
-    cy.screenshot('add-new-emoji-icon');
+    cy.matchImageSnapshot('add-new-emoji-icon');
   });
 
   it('Switch to Icons Gallery tab and verify images load', () => {
@@ -53,7 +53,7 @@ describe('Topic Icon Suite', () => {
     // Verify image icons load correctly
     cy.waitForIconsGalleryTab();
 
-    cy.screenshot('icons-gallery-tab-loaded');
+    cy.matchImageSnapshot('icons-gallery-tab-loaded');
   });
 
   it('Add image icon from Icons Gallery tab', () => {
@@ -78,7 +78,7 @@ describe('Topic Icon Suite', () => {
     // Test clicking on an image icon to verify functionality
     cy.get('img').first().parent().click({ force: true });
 
-    cy.screenshot('image-icon-added-from-gallery');
+    cy.matchImageSnapshot('image-icon-added-from-gallery');
   });
 
   it('Verify no network errors when loading image icons from Icons Gallery', () => {
@@ -111,7 +111,7 @@ describe('Topic Icon Suite', () => {
       cy.wrap($img).should('have.attr', 'src').and('not.be.empty');
     });
 
-    cy.screenshot('no-network-errors-icons-gallery');
+    cy.matchImageSnapshot('no-network-errors-icons-gallery');
   });
 
   it('Replace emoji icon with image icon', () => {
@@ -135,7 +135,7 @@ describe('Topic Icon Suite', () => {
     // Add an image icon to replace the emoji
     cy.get('img').first().parent().click({ force: true });
 
-    cy.screenshot('emoji-replaced-with-image-icon');
+    cy.matchImageSnapshot('emoji-replaced-with-image-icon');
   });
 
   it('Replace emoji with different emoji', () => {
@@ -154,6 +154,6 @@ describe('Topic Icon Suite', () => {
     // Click a different emoji (force in case of backdrop overlay)
     cy.getEmoji().eq(1).click({ force: true });
 
-    cy.screenshot('emoji-replaced-with-different-emoji');
+    cy.matchImageSnapshot('emoji-replaced-with-different-emoji');
   });
 });

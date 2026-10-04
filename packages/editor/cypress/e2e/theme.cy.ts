@@ -40,7 +40,7 @@ describe('Theme Suite', () => {
     cy.contains('Apply Theme').should('be.visible').click({ force: true });
     
     // Take snapshot
-    cy.screenshot('select-summer-theme');
+    cy.matchImageSnapshot('select-summer-theme');
   });
 
   it('should select Ocean theme', () => {
@@ -54,7 +54,7 @@ describe('Theme Suite', () => {
     cy.contains('Apply Theme').click({ force: true });
     
     // Take snapshot
-    cy.screenshot('select-ocean-theme');
+    cy.matchImageSnapshot('select-ocean-theme');
   });
 
   it('should select Classic theme', () => {
@@ -68,7 +68,7 @@ describe('Theme Suite', () => {
     cy.contains('Apply Theme').click({ force: true });
     
     // Take snapshot
-    cy.screenshot('select-classic-theme');
+    cy.matchImageSnapshot('select-classic-theme');
   });
 
   it('should show theme descriptions when hovering', () => {
@@ -82,7 +82,7 @@ describe('Theme Suite', () => {
     cy.contains('Ocean').trigger('mouseover');
     
     // Take snapshot
-    cy.screenshot('theme-descriptions-dialog');
+    cy.matchImageSnapshot('theme-descriptions-dialog');
   });
 
   it('should close theme dialog when clicking outside', () => {
@@ -99,7 +99,7 @@ describe('Theme Suite', () => {
     cy.get('[role="dialog"]').should('not.exist');
     
     // Take snapshot
-    cy.screenshot('theme-dialog-backdrop-close');
+    cy.matchImageSnapshot('theme-dialog-backdrop-close');
   });
 });
 

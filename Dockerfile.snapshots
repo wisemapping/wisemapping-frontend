@@ -1,0 +1,47 @@
+# syntax=docker/dockerfile:1
+#
+# Pinned environment for the visual-regression (image-snapshot) suites of mindplot and
+# editor. Used by docker-compose.snapshots.yml (verify) and
+# docker-compose.snapshots.update.yml (update). See "Image-snapshot tests" in CLAUDE.md.
+#
+# The Cypress version must match packages/{mindplot,editor}/package.json (16.1.1). The
+# digest pins the multi-arch index; the compose files pin the platform to linux/amd64 so
+# that every host (Apple Silicon included, through emulation) renders the same pixels.
+FROM cypress/included:cypress-16.1.1-node-24.21.0-chrome-154.0.8037.92-1-ff-157.0-edge-154.0.4258.48-1@sha256:e652cda84399aaf99c68d1d0322085dc3faa7ca9ace88d9bb4f0f045d2ce6764
+
+# Fonts. The base image ships DejaVu and Liberation only, and Chrome does not accept DejaVu
+# as a substitute for Verdana (the mind map themes' font), so without it every topic falls
+# back to the default serif face. Install:
+# - ttf-mscorefonts-installer (Debian contrib): Verdana, Arial, Times New Roman, ... It
+#   downloads the fonts at build time, so this layer needs network access once.
+# - fonts-noto-color-emoji: colour emoji used by the sample maps and the icon picker.
+RUN sed -i 's/^Components: main$/Components: main contrib/' /etc/apt/sources.list.d/debian.sources \
+    && echo 'ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true' | debconf-set-selections \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        fontconfig fonts-noto-color-emoji ttf-mscorefonts-installer \
+    && rm -rf /var/lib/apt/lists/* \
+    && fc-cache -f \
+    && fc-match Verdana | grep -q '"Verdana"'
+
+ENV CI=1 \
+    HUSKY=0 \
+    CYPRESS_INSTALL_BINARY=0 \
+    COREPACK_ENABLE_DOWNLOAD_PROMPT=0 \
+    STORYBOOK_DISABLE_TELEMETRY=1
+
+WORKDIR /e2e
+RUN corepack enable
+
+# Dependencies first, so that the install layer is cached until a manifest changes.
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY packages/web2d/package.json packages/web2d/
+COPY packages/mindplot/package.json packages/mindplot/
+COPY packages/editor/package.json packages/editor/
+COPY packages/webapp/package.json packages/webapp/
+RUN yarn install --immutable
+
+COPY . .
+
+# Baselines and screenshots are bind-mounted by the compose files.
+ENTRYPOINT ["/bin/bash", "-c"]
