@@ -199,8 +199,8 @@ class ImageEmojiFeature {
 
   setupDeleteWidget(): void {
     if (!this._topic.isReadOnly() && this.hasEmoji()) {
-      // Get singleton instance of remove tip
-      this._emojiRemoveTip = ElementDeleteWidget.getInstance();
+      // The remove tip of the topic's designer
+      this._emojiRemoveTip = ElementDeleteWidget.getInstance(this._topic.getDesigner());
 
       // Build the icon once per emoji text (it is rebuilt when the emoji is removed and
       // re-added), so decorate() recognizes it and doesn't add listeners on every redraw

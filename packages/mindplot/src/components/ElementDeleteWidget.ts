@@ -37,11 +37,15 @@ class ElementDeleteWidget {
 
   private _debouncedClose: ReturnType<typeof debounce>;
 
+  // Icons that already show this widget on hover.
+  private _decoratedIcons: WeakSet<Icon>;
+
   private constructor() {
     this._activeIcon = null;
     this._widget = null;
     this._widgetGroup = null;
     this._debouncedClose = debounce(() => this._closeNow(), 200);
+    this._decoratedIcons = new WeakSet<Icon>();
   }
 
   /**
@@ -264,8 +268,7 @@ class ElementDeleteWidget {
   }
 
   decorate(topicId: number, icon: Icon, group: Group) {
-    const iconWithRemove = icon as Icon & { __remove?: boolean };
-    if (!iconWithRemove.__remove) {
+    if (!this._decoratedIcons.has(icon)) {
       icon.addEvent('mouseover', () => {
         this.show(topicId, icon, group);
       });
@@ -274,7 +277,7 @@ class ElementDeleteWidget {
         this.hide();
       });
 
-      iconWithRemove.__remove = true;
+      this._decoratedIcons.add(icon);
     }
   }
 }

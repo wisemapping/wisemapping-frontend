@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/SvgImageIcon', () => ({
-  __esModule: true,
-  default: class MockSvgImageIcon {},
-}));
-
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import Topic from '../../../src/components/Topic';

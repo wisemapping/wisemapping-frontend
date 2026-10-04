@@ -28,10 +28,6 @@ import NodeGraph from '../../src/components/NodeGraph';
 import ScreenManager from '../../src/components/ScreenManager';
 import Topic from '../../src/components/Topic';
 
-jest.mock('../../src/components/SvgImageIcon', () => ({
-  default: jest.fn(),
-}));
-
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class {},

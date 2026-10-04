@@ -24,10 +24,6 @@ import RelationshipControlPoints, {
 } from '../../src/components/RelationshipControlPoints';
 import ScreenManager from '../../src/components/ScreenManager';
 
-jest.mock('../../src/components/SvgImageIcon', () => ({
-  default: jest.fn(),
-}));
-
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class {},

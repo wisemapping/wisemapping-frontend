@@ -20,8 +20,8 @@
  * Builds a real Designer on a jsdom container so commands can be exercised
  * end to end: through the action dispatcher, the undo manager and the layout.
  *
- * Test files using it must mock SvgImageIcon and PDFExporter themselves
- * (jest.mock is hoisted per file), as the other designer tests do.
+ * Test files using it must mock PDFExporter themselves (jest.mock is hoisted
+ * per file), as the other designer tests do.
  */
 import Designer from '../../../src/components/Designer';
 import LinkIcon from '../../../src/components/LinkIcon';

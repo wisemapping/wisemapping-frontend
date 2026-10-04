@@ -15,26 +15,19 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import type Topic from '../Topic';
+import fs from 'fs';
+import path from 'path';
 
 /**
- * Walks a topic's ancestor chain and returns the ids of every ancestor
- * whose children are currently shrunken (collapsed), nearest first.
- *
- * Pure and dependency-free (a type-only import of Topic) so it is
- * independently unit-testable without constructing a Designer or Topic --
- * unlike Designer.ts, this file has no transitive import that pulls in
- * DOM/Vite-only code (e.g. SvgImageIcon -> SvgIconAssets' `import.meta.glob`),
- * so it loads cleanly under Jest.
+ * Replaces src/components/SvgIconAssets in every unit test (see moduleNameMapper in
+ * jest.config.js): it lists the icons with Vite's import.meta.glob, which ts-jest (CommonJS)
+ * can not compile. Lists the same icon files from disk, each mapped to its own file name as URL.
  */
-export default function getCollapsedAncestorIds(topic: Topic): number[] {
-  const ids: number[] = [];
-  let current: Topic | null = topic.getParent();
-  while (current) {
-    if (current.areChildrenShrunken()) {
-      ids.push(current.getId());
-    }
-    current = current.getParent();
-  }
-  return ids;
-}
+const SvgIconAssets: Record<string, string> = {};
+fs.readdirSync(path.resolve(__dirname, '../../../assets/icons'))
+  .filter((file) => /\.(svg|png)$/.test(file))
+  .forEach((file) => {
+    SvgIconAssets[file] = file;
+  });
+
+export default SvgIconAssets;

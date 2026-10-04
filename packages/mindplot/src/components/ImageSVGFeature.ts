@@ -676,8 +676,8 @@ class ImageSVGFeature {
 
   buildRemoveTip(): void {
     if (!this._topic.isReadOnly() && this.hasSVG()) {
-      // Get singleton instance of remove tip
-      this._svgRemoveTip = ElementDeleteWidget.getInstance();
+      // The remove tip of the topic's designer
+      this._svgRemoveTip = ElementDeleteWidget.getInstance(this._topic.getDesigner());
 
       // Build the icon once per SVG text (it is rebuilt when the icon is removed and
       // re-added), so decorate() recognizes it and doesn't add listeners on every redraw

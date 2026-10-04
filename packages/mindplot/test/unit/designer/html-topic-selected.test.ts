@@ -22,8 +22,6 @@ import Topic from '../../../src/components/Topic';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import ColorUtil from '../../../src/components/theme/ColorUtil';
 
-jest.mock('../../../src/components/SvgImageIcon', () => ({ default: jest.fn() }));
-
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class {},

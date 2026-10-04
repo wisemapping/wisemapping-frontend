@@ -57,10 +57,6 @@ jest.mock('../../src/components/layout/LayoutEventBus', () => ({
   },
 }));
 
-jest.mock('../../src/components/SvgImageIcon', () => ({
-  default: jest.fn(),
-}));
-
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class {},

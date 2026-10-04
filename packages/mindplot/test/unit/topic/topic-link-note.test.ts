@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/SvgImageIcon', () => ({
-  __esModule: true,
-  default: class MockSvgImageIcon {},
-}));
-
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import { buildTopics, stubSvgMeasurement } from './Helper';
 
@@ -71,6 +66,27 @@ describe('Topic.setLinkValue', () => {
     expect(dispatcher.addFeatureToTopic).toHaveBeenCalledWith([child.getId()], 'link', {
       url: 'https://example.com',
     });
+  });
+});
+
+describe('Topic.getLinkValue (BL4-56)', () => {
+  it('is typed and returns undefined when the topic has no link', () => {
+    const { child } = buildTopics();
+
+    // Compile-time check: the declared type must admit undefined.
+    const typed: [string | undefined] extends [ReturnType<typeof child.getLinkValue>]
+      ? true
+      : false = true;
+    expect(typed).toBe(true);
+    expect(child.getLinkValue()).toBeUndefined();
+  });
+
+  it('returns the url of the link', () => {
+    const { child } = buildTopics();
+    const model = child.getModel();
+    model.addFeature(model.createFeature('link', { url: 'https://example.com' }));
+
+    expect(child.getLinkValue()).toBe('https://example.com');
   });
 });
 

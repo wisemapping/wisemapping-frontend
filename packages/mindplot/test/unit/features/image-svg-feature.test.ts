@@ -19,13 +19,11 @@ import { Group, Text } from '@wisemapping/web2d';
 import ImageSVGFeature from '../../../src/components/ImageSVGFeature';
 import Topic from '../../../src/components/Topic';
 
-jest.mock('../../../src/components/SvgImageIcon', () => ({ default: jest.fn() }));
-
 /**
  * Minimal topic: a real web2d group plus a redraw that runs the gallery icon
  * steps of Topic.redraw (add the glyph to the group, then build its delete tip).
  */
-const buildTopic = (initialIcon: string | undefined) => {
+const buildTopic = (initialIcon: string | undefined, designer?: object) => {
   let iconName = initialIcon;
   const group = new Group();
   const model = {
@@ -40,6 +38,7 @@ const buildTopic = (initialIcon: string | undefined) => {
     get2DElement: () => group,
     isReadOnly: () => false,
     getId: () => 1,
+    getDesigner: () => designer,
     getFontStyle: () => 'normal',
     // 'line' keeps the icon color out of the theme lookup.
     getShapeType: () => 'line',
@@ -52,7 +51,7 @@ const buildTopic = (initialIcon: string | undefined) => {
     },
   };
   feature = new ImageSVGFeature(topic as unknown as Topic);
-  return { feature, topic };
+  return { feature, group, topic };
 };
 
 describe('ImageSVGFeature delete widget (B-EMOJIWIDGET)', () => {
@@ -93,5 +92,36 @@ describe('ImageSVGFeature delete widget (B-EMOJIWIDGET)', () => {
     expect(after).not.toBe(before);
     expect(eventsOn(before)).toEqual(['mouseover', 'mouseout']);
     expect(eventsOn(after)).toEqual(['mouseover', 'mouseout']);
+  });
+});
+
+describe('ImageSVGFeature delete widget with two designers on the page (BL4-23)', () => {
+  // jsdom does not lay out SVG text.
+  beforeEach(() => {
+    jest.spyOn(Text.prototype, 'getShapeWidth').mockReturnValue(30);
+    jest.spyOn(Text.prototype, 'getShapeHeight').mockReturnValue(30);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('hovering the icon on one map does not close the delete widget on the other', () => {
+    const first = buildTopic('star', {});
+    const second = buildTopic('star', {});
+    first.topic.redraw();
+    second.topic.redraw();
+    const append = jest.spyOn(first.group, 'append');
+    const removeChild = jest.spyOn(first.group, 'removeChild');
+
+    // Hovering the icon shows its delete widget in the topic ...
+    first.feature.getOrBuildSVGElement()!.trigger('mouseover', {});
+    expect(append).toHaveBeenCalledTimes(1);
+    const widget = append.mock.calls[0][0];
+
+    // ... and hovering the icon on the other map must not close it.
+    second.feature.getOrBuildSVGElement()!.trigger('mouseover', {});
+
+    expect(removeChild).not.toHaveBeenCalledWith(widget);
   });
 });

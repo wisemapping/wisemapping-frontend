@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/SvgImageIcon', () => ({
-  __esModule: true,
-  default: class MockSvgImageIcon {},
-}));
-
 import MainTopic from '../../../src/components/MainTopic';
 import { buildTopics, stubSvgMeasurement } from './Helper';
 

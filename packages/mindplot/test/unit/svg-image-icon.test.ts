@@ -15,18 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-// SvgIconAssets lists the images with Vite's import.meta.glob, which ts-jest (CommonJS) can not
-// compile: use the icon files on disk.
-jest.mock('../../src/components/SvgIconAssets', () => {
-  const fs = require('fs') as typeof import('fs');
-  const path = require('path') as typeof import('path');
-  const files = fs.readdirSync(path.resolve(__dirname, '../../assets/icons'));
-  return {
-    __esModule: true,
-    default: Object.fromEntries(files.map((file) => [file, file])),
-  };
-});
-
+// SvgIconAssets is mapped to test/unit/__mocks__/SvgIconAssets.ts (jest.config.js), which
+// lists the icon files on disk.
 import { Image } from '@wisemapping/web2d';
 import ActionDispatcher from '../../src/components/ActionDispatcher';
 import SvgImageIcon from '../../src/components/SvgImageIcon';

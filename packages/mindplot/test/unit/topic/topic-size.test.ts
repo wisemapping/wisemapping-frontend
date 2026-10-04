@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/SvgImageIcon', () => ({
-  __esModule: true,
-  default: class MockSvgImageIcon {},
-}));
-
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import { buildTopics, stubSvgMeasurement, TEXT_WIDTH } from './Helper';
 

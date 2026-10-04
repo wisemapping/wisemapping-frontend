@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/SvgImageIcon', () => ({
-  __esModule: true,
-  default: class MockSvgImageIcon {},
-}));
-
 // jspdf pulls in a TextEncoder that jsdom does not provide, and nothing here exports.
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

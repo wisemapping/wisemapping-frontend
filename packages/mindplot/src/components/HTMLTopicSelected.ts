@@ -1059,8 +1059,8 @@ class HTMLTopicSelected {
   }
 
   private _createSibling(): void {
-    // Get Designer instance (either passed or from globalThis)
-    const designer = this._designer || (globalThis as { designer?: Designer }).designer;
+    // The designer passed in, or else the one the topic was built with
+    const designer = this._designer || this._topic.getDesigner();
     if (!designer) {
       console.warn('Designer instance not available for creating sibling');
       return;
@@ -1081,8 +1081,8 @@ class HTMLTopicSelected {
   }
 
   private _createChild(): void {
-    // Get Designer instance (either passed or from globalThis)
-    const designer = this._designer || (globalThis as { designer?: Designer }).designer;
+    // The designer passed in, or else the one the topic was built with
+    const designer = this._designer || this._topic.getDesigner();
     if (!designer) {
       console.warn('Designer instance not available for creating child');
       return;

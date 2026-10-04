@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/SvgImageIcon', () => ({
-  __esModule: true,
-  default: class MockSvgImageIcon {},
-}));
-
 import DragTopic from '../../../src/components/DragTopic';
 import MainTopic from '../../../src/components/MainTopic';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
