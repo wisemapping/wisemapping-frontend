@@ -1,0 +1,97 @@
+/*
+ *    Copyright [2007-2025] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+import { Group, Text } from '@wisemapping/web2d';
+import ImageSVGFeature from '../../../src/components/ImageSVGFeature';
+import Topic from '../../../src/components/Topic';
+
+jest.mock('../../../src/components/SvgImageIcon', () => ({ default: jest.fn() }));
+
+/**
+ * Minimal topic: a real web2d group plus a redraw that runs the gallery icon
+ * steps of Topic.redraw (add the glyph to the group, then build its delete tip).
+ */
+const buildTopic = (initialIcon: string | undefined) => {
+  let iconName = initialIcon;
+  const group = new Group();
+  const model = {
+    getImageGalleryIconName: () => iconName,
+    setImageGalleryIconName: (value: string | undefined) => {
+      iconName = value;
+    },
+  };
+  let feature: ImageSVGFeature | undefined;
+  const topic = {
+    getModel: () => model,
+    get2DElement: () => group,
+    isReadOnly: () => false,
+    getId: () => 1,
+    getFontStyle: () => 'normal',
+    // 'line' keeps the icon color out of the theme lookup.
+    getShapeType: () => 'line',
+    getThemeVariant: () => 'light',
+    redraw: () => {
+      if (feature!.hasSVG()) {
+        feature!.addToGroup(group);
+        feature!.buildRemoveTip();
+      }
+    },
+  };
+  feature = new ImageSVGFeature(topic as unknown as Topic);
+  return { feature, topic };
+};
+
+describe('ImageSVGFeature delete widget (B-EMOJIWIDGET)', () => {
+  let addEvent: jest.SpyInstance;
+
+  // Events registered on one glyph, in order.
+  const eventsOn = (text: Text): string[] =>
+    addEvent.mock.calls.filter((_, i) => addEvent.mock.contexts[i] === text).map((c) => c[0]);
+
+  beforeEach(() => {
+    addEvent = jest.spyOn(Text.prototype, 'addEvent');
+  });
+
+  afterEach(() => {
+    addEvent.mockRestore();
+  });
+
+  it('registers a single mouseover/mouseout pair however many redraws happen', () => {
+    const { feature, topic } = buildTopic('star');
+    for (let i = 0; i < 5; i++) {
+      topic.redraw();
+    }
+
+    expect(eventsOn(feature.getOrBuildSVGElement()!)).toEqual(['mouseover', 'mouseout']);
+  });
+
+  it('decorates the new glyph once after the icon changes', () => {
+    const { feature, topic } = buildTopic('star');
+    topic.redraw();
+    const before = feature.getOrBuildSVGElement()!;
+
+    feature.setGalleryIconName('favorite');
+    for (let i = 0; i < 3; i++) {
+      topic.redraw();
+    }
+
+    const after = feature.getOrBuildSVGElement()!;
+    expect(after).not.toBe(before);
+    expect(eventsOn(before)).toEqual(['mouseover', 'mouseout']);
+    expect(eventsOn(after)).toEqual(['mouseover', 'mouseout']);
+  });
+});

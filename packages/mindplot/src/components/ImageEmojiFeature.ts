@@ -35,11 +35,19 @@ class ImageEmojiFeature {
 
   private _emojiRemoveTip: ElementDeleteWidget | undefined;
 
+  // Delete-widget icon of the current _emojiText. Reused across redraws, as
+  // ElementDeleteWidget.decorate only skips icons it has already decorated.
+  private _emojiIcon: Icon | undefined;
+
+  private _emojiIconText: Text | undefined;
+
   constructor(topic: Topic) {
     $assert(topic, 'topic can not be null');
     this._topic = topic;
     this._emojiText = undefined;
     this._emojiRemoveTip = undefined;
+    this._emojiIcon = undefined;
+    this._emojiIconText = undefined;
   }
 
   getEmojiChar(): string | undefined {
@@ -51,15 +59,12 @@ class ImageEmojiFeature {
     const model = this._topic.getModel();
     model.setImageEmojiChar(emojiChar);
 
-    // If removing emoji, properly clean up the visual elements
-    if (!emojiChar && this._emojiText) {
-      // Remove emoji text from DOM
-      const group = this._topic.get2DElement();
-      group.removeChild(this._emojiText);
-      this._emojiText = undefined;
-    } else {
-      this._emojiText = undefined; // Clear to force rebuild
+    // Remove the current emoji text from DOM, whether the emoji is being removed
+    // or replaced, and clear it to force a rebuild
+    if (this._emojiText) {
+      this.removeFromGroup(this._topic.get2DElement());
     }
+    this._emojiText = undefined;
 
     this._emojiRemoveTip = undefined; // Clear remove tip
     this._topic.redraw(this._topic.getThemeVariant(), false);
@@ -197,9 +202,17 @@ class ImageEmojiFeature {
       // Get singleton instance of remove tip
       this._emojiRemoveTip = ElementDeleteWidget.getInstance();
 
-      // Always create and decorate emoji icon (in case it was removed and re-added)
-      const emojiIcon = this._createEmojiIcon();
-      this._emojiRemoveTip.decorate(this._topic.getId(), emojiIcon, this._topic.get2DElement());
+      // Build the icon once per emoji text (it is rebuilt when the emoji is removed and
+      // re-added), so decorate() recognizes it and doesn't add listeners on every redraw
+      if (!this._emojiIcon || this._emojiIconText !== this._emojiText) {
+        this._emojiIcon = this._createEmojiIcon();
+        this._emojiIconText = this._emojiText;
+      }
+      this._emojiRemoveTip.decorate(
+        this._topic.getId(),
+        this._emojiIcon,
+        this._topic.get2DElement(),
+      );
     }
   }
 

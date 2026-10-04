@@ -39,11 +39,19 @@ class ImageSVGFeature {
 
   private _svgRemoveTip: ElementDeleteWidget | undefined;
 
+  // Delete-widget icon of the current _svgText. Reused across redraws, as
+  // ElementDeleteWidget.decorate only skips icons it has already decorated.
+  private _svgIcon: Icon | undefined;
+
+  private _svgIconText: Text | undefined;
+
   constructor(topic: Topic) {
     $assert(topic, 'topic can not be null');
     this._topic = topic;
     this._svgText = undefined;
     this._svgRemoveTip = undefined;
+    this._svgIcon = undefined;
+    this._svgIconText = undefined;
   }
 
   getGalleryIconName(): string | undefined {
@@ -671,10 +679,15 @@ class ImageSVGFeature {
       // Get singleton instance of remove tip
       this._svgRemoveTip = ElementDeleteWidget.getInstance();
 
-      // Always create and decorate SVG icon (in case it was removed and re-added)
-      const svgIcon = this._createSVGIcon();
-      if (svgIcon) {
-        this._svgRemoveTip.decorate(this._topic.getId(), svgIcon, this._topic.get2DElement());
+      // Build the icon once per SVG text (it is rebuilt when the icon is removed and
+      // re-added), so decorate() recognizes it and doesn't add listeners on every redraw
+      const svgText = this.getOrBuildSVGElement();
+      if (!this._svgIcon || this._svgIconText !== svgText) {
+        this._svgIcon = this._createSVGIcon() || undefined;
+        this._svgIconText = svgText;
+      }
+      if (this._svgIcon) {
+        this._svgRemoveTip.decorate(this._topic.getId(), this._svgIcon, this._topic.get2DElement());
       }
     }
   }

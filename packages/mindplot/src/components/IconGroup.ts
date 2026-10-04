@@ -26,7 +26,9 @@ import Icon from './Icon';
 import PositionType from './PositionType';
 
 const ORDER_BY_TYPE = new Map<string, number>();
+// Emoji icons come from the same icon picker as image icons, so they share their slot
 ORDER_BY_TYPE.set('icon', 0);
+ORDER_BY_TYPE.set('eicon', 0);
 ORDER_BY_TYPE.set('note', 1);
 ORDER_BY_TYPE.set('link', 2);
 
@@ -55,9 +57,9 @@ class IconGroup {
       coordSizeHeight: 100,
     });
     this._removeTip = ElementDeleteWidget.getInstance();
+    this._iconSize = null;
     this.seIconSize(iconSize, iconSize);
     this._registerListeners();
-    this._iconSize = null;
   }
 
   setPosition(x: number, y: number): void {

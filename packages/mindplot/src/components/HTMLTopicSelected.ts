@@ -24,6 +24,7 @@ import type { ThemeVariant } from './theme/Theme';
 import type { OrientationType } from './layout/LayoutType';
 import { $msg } from './Messages';
 import LayoutEventBus from './layout/LayoutEventBus';
+import { LayoutEventBusType } from './LayoutEventBusType';
 import NodeModel from './model/NodeModel';
 
 /**
@@ -38,6 +39,11 @@ import NodeModel from './model/NodeModel';
  * toolbar's layer no matter how high the pane's own z-index is.
  */
 const CANVAS_AFFORDANCE_Z_INDEX = '999';
+
+type Unsubscribe = () => void;
+
+/** LayoutEventBus registration made by initializeSelectionShadows, per designer. */
+const unsubscribeByDesigner = new WeakMap<Designer, Unsubscribe>();
 
 type HelperElements = {
   container: HTMLDivElement;
@@ -87,6 +93,10 @@ class HTMLTopicSelected {
   private _topic: Topic;
 
   private _designer: Designer | null;
+
+  private _onTopicFocus: (() => void) | null;
+
+  private _onTopicBlur: (() => void) | null;
 
   constructor(
     topic: Topic,
@@ -173,27 +183,16 @@ class HTMLTopicSelected {
       this.show();
     };
 
-    // Listen to focus events to update shadow visibility
-    topic.addEvent('ontfocus', () => {
-      updateShadowVisibility();
-    });
-
-    // Listen to blur events to update shadow visibility
-    topic.addEvent('ontblur', () => {
-      updateShadowVisibility();
-    });
-
-    // Also listen to mousedown to ensure focus is set when clicking
-    // (onObjectFocusEvent only deselects others, doesn't select the clicked topic)
-    topic.addEvent('mousedown', () => {
-      // Check if this topic is not already focused, then focus it
-      if (!topic.isOnFocus()) {
-        topic.setOnFocus(true);
-        if (designer) {
-          designer.onObjectFocusEvent(topic);
-        }
-      }
-    });
+    // Listen to focus and blur events to update shadow visibility. Each event
+    // gets its own function: web2d tracks listeners by function, so sharing one
+    // between two event types would leave one of them behind on removeEvent.
+    // Clicks need no listener of their own: Topic's mousedown handler selects
+    // the topic (or toggles it on ctrl/meta) and the Designer's deselects the
+    // others, so both end up firing ontfocus/ontblur here.
+    this._onTopicFocus = () => updateShadowVisibility();
+    this._onTopicBlur = () => updateShadowVisibility();
+    topic.addEvent('ontfocus', this._onTopicFocus);
+    topic.addEvent('ontblur', this._onTopicBlur);
 
     // Check initial state - if topic is already selected, show shadow
     updateShadowVisibility();
@@ -691,13 +690,19 @@ class HTMLTopicSelected {
     buttonWithColors._baseColor = baseColor;
     buttonWithColors._hoverColor = hoverColor;
 
+    // Read the colors on every event: later calls (e.g. after a theme change)
+    // only update the stored values.
     button.addEventListener('mouseenter', () => {
-      button.style.backgroundColor = hoverColor;
+      if (buttonWithColors._hoverColor) {
+        button.style.backgroundColor = buttonWithColors._hoverColor;
+      }
       button.style.transition = 'background-color 0.2s ease';
     });
 
     button.addEventListener('mouseleave', () => {
-      button.style.backgroundColor = baseColor;
+      if (buttonWithColors._baseColor) {
+        button.style.backgroundColor = buttonWithColors._baseColor;
+      }
     });
 
     button.dataset.hoverSetup = 'true';
@@ -1098,6 +1103,22 @@ class HTMLTopicSelected {
   }
 
   dispose(): void {
+    // Remove the listeners added to the topic, so a re-created shadow doesn't stack them
+    const onTopicFocus = this._onTopicFocus;
+    const onTopicBlur = this._onTopicBlur;
+    this._onTopicFocus = null;
+    this._onTopicBlur = null;
+    try {
+      if (onTopicFocus) {
+        this._topic.removeEvent('ontfocus', onTopicFocus);
+      }
+      if (onTopicBlur) {
+        this._topic.removeEvent('ontblur', onTopicBlur);
+      }
+    } catch {
+      // Topic may have been removed along with its element
+    }
+
     // Remove all elements in the same lifecycle
     if (this._overlayContainer && this._overlayContainer.parentElement) {
       this._overlayContainer.parentElement.removeChild(this._overlayContainer);
@@ -1150,12 +1171,17 @@ class HTMLTopicSelected {
 
   /**
    * Initialize selection shadows for a designer instance
-   * Sets up event listeners and creates shadows for already-selected topics
+   * Sets up event listeners and creates shadows for already-selected topics.
+   * Calling it again for the same designer replaces the previous registration.
+   * Returns a function that removes the LayoutEventBus handlers it registered.
    */
-  static initializeSelectionShadows(designer: Designer): void {
+  static initializeSelectionShadows(designer: Designer): Unsubscribe {
+    // LayoutEventBus is module-level, so drop the handlers of a previous call first
+    unsubscribeByDesigner.get(designer)?.();
+
     // Don't initialize selection shadows in read-only mode
     if (designer.isReadOnly()) {
-      return;
+      return () => undefined;
     }
 
     // Selection assistance is enabled by default
@@ -1190,38 +1216,50 @@ class HTMLTopicSelected {
     };
 
     // Lifecycle hooks: create shadow when topic is selected
-    LayoutEventBus.addEvent('topicSelected', (nodeModel: NodeModel) => {
+    const onTopicSelected = (nodeModel: NodeModel) => {
       const topic = findTopicByModel(nodeModel);
       if (topic) {
         HTMLTopicSelected.ensureTopicShadow(designer, topic);
       }
       // Update all shadows to handle multiple selection (hide shadows if multiple topics selected)
       updateShadows();
-    });
+    };
 
     // Lifecycle hooks: hide shadows when topic is unselected (may reveal single selection)
-    LayoutEventBus.addEvent('topicUnselected', () => {
-      // Update all shadows to handle selection count changes
-      updateShadows();
-    });
+    // Update all shadows to handle selection count changes
+    const onTopicUnselected = () => updateShadows();
 
     // Lifecycle hooks: dispose shadow when topic is removed
-    LayoutEventBus.addEvent('topicRemoved', (nodeModel: NodeModel) => {
+    const onTopicRemoved = (nodeModel: NodeModel) => {
       const topic = findTopicByModel(nodeModel);
       if (topic && selectionShadows.has(topic)) {
         selectionShadows.get(topic)?.dispose();
         selectionShadows.delete(topic);
       }
-    });
+    };
 
-    LayoutEventBus.addEvent('forceLayout', updateShadows);
-    LayoutEventBus.addEvent('topicResize', updateShadows);
-    LayoutEventBus.addEvent('topicMoved', updateShadows);
-    LayoutEventBus.addEvent('topicConnected', updateShadows);
+    const handlers: [LayoutEventBusType, (nodeModel: NodeModel) => void][] = [
+      ['topicSelected', onTopicSelected],
+      ['topicUnselected', onTopicUnselected],
+      ['topicRemoved', onTopicRemoved],
+      ['forceLayout', updateShadows],
+      ['topicResize', updateShadows],
+      ['topicMoved', updateShadows],
+      ['topicConnected', updateShadows],
+      // Update shadows when canvas is panned/dragged or zoomed
+      ['canvasPanned', updateShadows],
+      ['canvasZoomed', updateShadows],
+    ];
+    handlers.forEach(([type, handler]) => LayoutEventBus.addEvent(type, handler));
 
-    // Update shadows when canvas is panned/dragged or zoomed
-    LayoutEventBus.addEvent('canvasPanned', updateShadows);
-    LayoutEventBus.addEvent('canvasZoomed', updateShadows);
+    const unsubscribe: Unsubscribe = () => {
+      handlers.forEach(([type, handler]) => LayoutEventBus.removeEvent(type, handler));
+      if (unsubscribeByDesigner.get(designer) === unsubscribe) {
+        unsubscribeByDesigner.delete(designer);
+      }
+    };
+    unsubscribeByDesigner.set(designer, unsubscribe);
+    return unsubscribe;
   }
 }
 
