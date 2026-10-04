@@ -60,4 +60,17 @@ describe('MD export newlines', () => {
 
     expect(result.split('\n')[0]).toBe('# one two three');
   });
+
+  it('flattens every newline of a multi-line topic into its list item', async () => {
+    const mindmap = buildMindmap('Central', []);
+    const central = mindmap.getCentralTopic();
+    const topic = mindmap.createNode('MainTopic', 1);
+    topic.setText('first line\nsecond line\r\nthird line');
+    central.append(topic);
+
+    const lines = (await exportMd(mindmap)).split('\n');
+
+    expect(lines).toContain('- first line second line third line');
+    expect(lines).not.toContain('second line');
+  });
 });

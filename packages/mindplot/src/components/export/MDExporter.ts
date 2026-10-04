@@ -80,8 +80,9 @@ class MDExporter extends Exporter {
           iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
         }
 
-        const nodeText =
-          node.getContentType() === ContentType.HTML ? node.getPlainText() : node.getText();
+        const nodeText = this.normalizeText(
+          (node.getContentType() === ContentType.HTML ? node.getPlainText() : node.getText()) || '',
+        );
         result = `${result}${prefix}-${iconStr}${nodeText}`;
         node.getFeatures().forEach((f) => {
           const type = f.getType();

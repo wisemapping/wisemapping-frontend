@@ -70,6 +70,18 @@ describe('PDFExporter', () => {
     expect(document.body.childElementCount).toBe(before);
   });
 
+  it('keeps the original error as the cause of the failure', async () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    const original = new Error('boom');
+    html2canvasMock.mockRejectedValue(original);
+
+    const error = (await new PDFExporter(svg()).export().catch((e: unknown) => e)) as Error;
+
+    expect(error.message).toBe('Failed to generate PDF');
+    expect(error.cause).toBe(original);
+    expect(consoleError).toHaveBeenCalledWith('Error generating PDF:', original);
+  });
+
   it('does not allow tainting the canvas it has to read back', async () => {
     html2canvasMock.mockResolvedValue(fakeCanvas(800, 400));
 

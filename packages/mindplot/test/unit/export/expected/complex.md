@@ -1,6 +1,6 @@
 # PPM Plan
 
-- Business Development 
+- Business Development
 - Backlog Management ( [link](https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit) )
 - Freeform IT
 - Client Project Management

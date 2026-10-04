@@ -92,7 +92,7 @@ class PDFExporter extends Exporter {
       return pdf.output('datauristring');
     } catch (error) {
       console.error('Error generating PDF:', error);
-      throw new Error('Failed to generate PDF');
+      throw new Error('Failed to generate PDF', { cause: error });
     } finally {
       // Clean up temporary container
       tempContainer.remove();

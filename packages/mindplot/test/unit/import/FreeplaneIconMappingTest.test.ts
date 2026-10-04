@@ -28,7 +28,7 @@ describe('Freeplane Icon Mapping Tests', () => {
   describe('Icon Mapping Functionality', () => {
     test('should map priority and status icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('flag_red')).toBe('🔴'); // 🔴
       expect(mapIcon('flag_yellow')).toBe('🟡'); // 🟡
       expect(mapIcon('flag_green')).toBe('🟢'); // 🟢
@@ -40,7 +40,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map star and rating icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('star')).toBe('⭐'); // ⭐
       expect(mapIcon('star_yellow')).toBe('⭐'); // ⭐
       expect(mapIcon('star_red')).toBe('⭐'); // ⭐
@@ -50,7 +50,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map task and completion icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('task')).toBe('📋'); // 📋
       expect(mapIcon('task_done')).toBe('✅'); // ✅
       expect(mapIcon('task_start')).toBe('🟡'); // 🟡
@@ -60,7 +60,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map arrow and direction icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('arrow_up')).toBe('⬆️'); // ⬆️
       expect(mapIcon('arrow_down')).toBe('⬇️'); // ⬇️
       expect(mapIcon('arrow_left')).toBe('⬅️'); // ⬅️
@@ -73,7 +73,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map emotion icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('smile')).toBe('😊'); // 😊
       expect(mapIcon('sad')).toBe('😢'); // 😢
       expect(mapIcon('angry')).toBe('😠'); // 😠
@@ -97,7 +97,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map number icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('number_1')).toBe('1️⃣'); // 1️⃣
       expect(mapIcon('number_2')).toBe('2️⃣'); // 2️⃣
       expect(mapIcon('number_3')).toBe('3️⃣'); // 3️⃣
@@ -112,7 +112,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map letter icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('letter_a')).toBe('🅰️'); // 🅰️
       expect(mapIcon('letter_b')).toBe('🅱️'); // 🅱️
       expect(mapIcon('letter_c')).toBe('🅲'); // 🅲
@@ -143,7 +143,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map people icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('people')).toBe('👥'); // 👥
       expect(mapIcon('person')).toBe('👤'); // 👤
       expect(mapIcon('person_1')).toBe('👤'); // 👤
@@ -153,7 +153,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map time and calendar icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('clock')).toBe('🕐'); // 🕐
       expect(mapIcon('calendar')).toBe('📅'); // 📅
       expect(mapIcon('time')).toBe('⏰'); // ⏰
@@ -165,7 +165,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map file and document icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('file')).toBe('📄'); // 📄
       expect(mapIcon('folder')).toBe('📁'); // 📁
       expect(mapIcon('attachment')).toBe('📎'); // 📎
@@ -174,7 +174,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map warning and info icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('warning')).toBe('⚠️'); // ⚠️
       expect(mapIcon('info')).toBe('ℹ️'); // ℹ️
       expect(mapIcon('question')).toBe('❓'); // ❓
@@ -183,7 +183,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map heart and like icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('heart')).toBe('❤️'); // ❤️
       expect(mapIcon('like')).toBe('👍'); // 👍
       expect(mapIcon('dislike')).toBe('👎'); // 👎
@@ -191,7 +191,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map idea and lightbulb icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('lightbulb')).toBe('💡'); // 💡
       expect(mapIcon('idea')).toBe('💡'); // 💡
       expect(mapIcon('bulb')).toBe('💡'); // 💡
@@ -199,7 +199,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map money and currency icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('money')).toBe('💰'); // 💰
       expect(mapIcon('dollar')).toBe('💲'); // 💲
       expect(mapIcon('euro')).toBe('💶'); // 💶
@@ -208,7 +208,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map location and building icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('location')).toBe('📍'); // 📍
       expect(mapIcon('home')).toBe('🏠'); // 🏠
       expect(mapIcon('building')).toBe('🏢'); // 🏢
@@ -217,7 +217,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map technology icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('computer')).toBe('💻'); // 💻
       expect(mapIcon('laptop')).toBe('💻'); // 💻
       expect(mapIcon('phone_mobile')).toBe('📱'); // 📱
@@ -226,7 +226,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map weather icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('sun')).toBe('☀️'); // ☀️
       expect(mapIcon('cloud')).toBe('☁️'); // ☁️
       expect(mapIcon('rain')).toBe('🌧️'); // 🌧️
@@ -245,7 +245,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map animal icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('dog')).toBe('🐶'); // 🐶
       expect(mapIcon('cat')).toBe('🐱'); // 🐱
       expect(mapIcon('mouse')).toBe('🐭'); // 🐭
@@ -281,7 +281,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map food and drink icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('coffee')).toBe('☕'); // ☕
       expect(mapIcon('food')).toBe('🍽️'); // 🍽️
       expect(mapIcon('pizza')).toBe('🍕'); // 🍕
@@ -314,7 +314,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map sports and activity icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('sports')).toBe('⚽'); // ⚽
       expect(mapIcon('football')).toBe('⚽'); // ⚽
       expect(mapIcon('basketball')).toBe('🏀'); // 🏀
@@ -354,7 +354,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map music and entertainment icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('music')).toBe('🎵'); // 🎵
       expect(mapIcon('movie')).toBe('🎬'); // 🎬
       expect(mapIcon('game')).toBe('🎮'); // 🎮
@@ -363,7 +363,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map travel and transport icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('car')).toBe('🚗'); // 🚗
       expect(mapIcon('plane')).toBe('✈️'); // ✈️
       expect(mapIcon('train')).toBe('🚂'); // 🚂
@@ -373,7 +373,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map nature icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('tree')).toBe('🌳'); // 🌳
       expect(mapIcon('flower')).toBe('🌸'); // 🌸
       expect(mapIcon('leaf')).toBe('🍃'); // 🍃
@@ -383,7 +383,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map holiday and celebration icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('gift')).toBe('🎁'); // 🎁
       expect(mapIcon('cake')).toBe('🎂'); // 🎂
       expect(mapIcon('party')).toBe('🎉'); // 🎉
@@ -394,7 +394,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map tools and work icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('tool')).toBe('🔧'); // 🔧
       expect(mapIcon('wrench')).toBe('🔧'); // 🔧
       expect(mapIcon('hammer')).toBe('🔨'); // 🔨
@@ -405,7 +405,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map medical and health icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('medical')).toBe('🏥'); // 🏥
       expect(mapIcon('health')).toBe('💊'); // 💊
       expect(mapIcon('pill')).toBe('💊'); // 💊
@@ -415,7 +415,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map shopping and commerce icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('shopping')).toBe('🛒'); // 🛒
       expect(mapIcon('cart')).toBe('🛒'); // 🛒
       expect(mapIcon('bag')).toBe('👜'); // 👜
@@ -424,7 +424,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map security and safety icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('security')).toBe('🔒'); // 🔒
       expect(mapIcon('shield')).toBe('🛡️'); // 🛡️
       expect(mapIcon('lock_closed')).toBe('🔒'); // 🔒
@@ -433,7 +433,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should map science and education icons correctly', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('science')).toBe('🔬'); // 🔬
       expect(mapIcon('microscope')).toBe('🔬'); // 🔬
       expect(mapIcon('telescope')).toBe('🔭'); // 🔭
@@ -444,7 +444,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should handle case insensitive mapping', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('FLAG_RED')).toBe('🔴'); // 🔴
       expect(mapIcon('STAR')).toBe('⭐'); // ⭐
       expect(mapIcon('SMILE')).toBe('😊'); // 😊
@@ -452,7 +452,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should return default icon for unknown icons', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('unknown-icon')).toBe('💡'); // 💡 (default)
       expect(mapIcon('non-existent')).toBe('💡'); // 💡 (default)
       expect(mapIcon('')).toBe('💡'); // 💡 (default)
@@ -460,7 +460,7 @@ describe('Freeplane Icon Mapping Tests', () => {
 
     test('should handle edge cases', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('flag_0')).toBe('💡'); // 💡 (default)
       expect(mapIcon('flag_8')).toBe('💡'); // 💡 (default)
       expect(mapIcon('star_5')).toBe('💡'); // 💡 (default)
@@ -470,72 +470,159 @@ describe('Freeplane Icon Mapping Tests', () => {
   describe('Icon Mapping Coverage', () => {
     test('should have comprehensive icon coverage', () => {
       const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
-      
+
       // Test a representative sample from each category
       const testIcons = [
         // Priority and status
-        'flag_red', 'flag_yellow', 'flag_green', 'flag_blue',
+        'flag_red',
+        'flag_yellow',
+        'flag_green',
+        'flag_blue',
         // Stars and ratings
-        'star', 'star_yellow', 'star_red',
+        'star',
+        'star_yellow',
+        'star_red',
         // Tasks
-        'task', 'task_done', 'task_start',
+        'task',
+        'task_done',
+        'task_start',
         // Arrows
-        'arrow_up', 'arrow_down', 'arrow_left', 'arrow_right',
+        'arrow_up',
+        'arrow_down',
+        'arrow_left',
+        'arrow_right',
         // Emotions
-        'smile', 'sad', 'angry', 'happy', 'thinking',
+        'smile',
+        'sad',
+        'angry',
+        'happy',
+        'thinking',
         // Numbers
-        'number_1', 'number_2', 'number_3', 'number_10',
+        'number_1',
+        'number_2',
+        'number_3',
+        'number_10',
         // Letters
-        'letter_a', 'letter_b', 'letter_c', 'letter_z',
+        'letter_a',
+        'letter_b',
+        'letter_c',
+        'letter_z',
         // People
-        'people', 'person', 'person_1',
+        'people',
+        'person',
+        'person_1',
         // Time
-        'clock', 'calendar', 'time', 'phone', 'email',
+        'clock',
+        'calendar',
+        'time',
+        'phone',
+        'email',
         // Files
-        'file', 'folder', 'attachment', 'link',
+        'file',
+        'folder',
+        'attachment',
+        'link',
         // Warnings
-        'warning', 'info', 'question', 'exclamation',
+        'warning',
+        'info',
+        'question',
+        'exclamation',
         // Hearts
-        'heart', 'like', 'dislike',
+        'heart',
+        'like',
+        'dislike',
         // Ideas
-        'lightbulb', 'idea', 'bulb',
+        'lightbulb',
+        'idea',
+        'bulb',
         // Money
-        'money', 'dollar', 'euro', 'pound',
+        'money',
+        'dollar',
+        'euro',
+        'pound',
         // Location
-        'location', 'home', 'building', 'school',
+        'location',
+        'home',
+        'building',
+        'school',
         // Technology
-        'computer', 'laptop', 'phone_mobile', 'tablet',
+        'computer',
+        'laptop',
+        'phone_mobile',
+        'tablet',
         // Weather
-        'sun', 'cloud', 'rain', 'snow', 'storm',
+        'sun',
+        'cloud',
+        'rain',
+        'snow',
+        'storm',
         // Animals
-        'dog', 'cat', 'bird', 'fish', 'butterfly',
+        'dog',
+        'cat',
+        'bird',
+        'fish',
+        'butterfly',
         // Food
-        'coffee', 'pizza', 'apple', 'cake',
+        'coffee',
+        'pizza',
+        'apple',
+        'cake',
         // Sports
-        'football', 'basketball', 'tennis', 'swimming',
+        'football',
+        'basketball',
+        'tennis',
+        'swimming',
         // Music
-        'music', 'movie', 'game', 'book',
+        'music',
+        'movie',
+        'game',
+        'book',
         // Travel
-        'car', 'plane', 'train', 'bus', 'bike',
+        'car',
+        'plane',
+        'train',
+        'bus',
+        'bike',
         // Nature
-        'tree', 'flower', 'mountain', 'ocean',
+        'tree',
+        'flower',
+        'mountain',
+        'ocean',
         // Holidays
-        'gift', 'cake', 'party', 'fireworks',
+        'gift',
+        'cake',
+        'party',
+        'fireworks',
         // Tools
-        'tool', 'hammer', 'key', 'lock',
+        'tool',
+        'hammer',
+        'key',
+        'lock',
         // Medical
-        'medical', 'health', 'pill', 'heartbeat',
+        'medical',
+        'health',
+        'pill',
+        'heartbeat',
         // Shopping
-        'shopping', 'cart', 'bag', 'credit_card',
+        'shopping',
+        'cart',
+        'bag',
+        'credit_card',
         // Security
-        'security', 'shield', 'lock_closed', 'lock_open',
+        'security',
+        'shield',
+        'lock_closed',
+        'lock_open',
         // Science
-        'science', 'microscope', 'telescope', 'atom',
+        'science',
+        'microscope',
+        'telescope',
+        'atom',
       ];
 
       // Test that most icons map to valid emojis (some may return default)
       let mappedCount = 0;
-      testIcons.forEach(icon => {
+      testIcons.forEach((icon) => {
         const result = mapIcon(icon);
         expect(result.length).toBeGreaterThan(0); // Should not be empty
         expect(typeof result).toBe('string'); // Should be a string
