@@ -16,26 +16,19 @@
  *   limitations under the License.
  */
 
-// matchImageSnapshot compares with cypress/snapshots/<spec>/<name>.snap.png only when
-// CYPRESS_imageSnaphots is set (the Docker runner). Elsewhere it just takes the screenshot, as
-// rendering differs between hosts.
-if (Cypress.expose('imageSnaphots')) {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { addMatchImageSnapshotCommand } = require('@simonsmith/cypress-image-snapshot/command');
-  addMatchImageSnapshotCommand({
-    // Docker rendering is deterministic, so the threshold is tight: 0.01 % of the page
-    // (66 pixels at 1000x660), with pixelmatch's default per-pixel colour tolerance.
-    failureThreshold: 0.0001,
-    failureThresholdType: 'percent',
-    customDiffConfig: { threshold: 0.1 },
-  });
-} else {
-  Cypress.Commands.add(
-    'matchImageSnapshot',
-    { prevSubject: ['optional', 'element', 'window', 'document'] },
-    (subject, name) => cy.screenshot(name),
-  );
-}
+// Visual regression (see cypress/plugins/index.js and the "Image-snapshot tests" section of CLAUDE.md).
+// matchImageSnapshot compares with cypress/snapshots/<spec>/<name>.snap.png, rendered natively on
+// macOS (headless Chrome). A snapshot fails when more than 10 pixels differ: repeated native runs
+// are pixel-identical, so this only leaves room for an isolated anti-aliasing pixel.
+import { addMatchImageSnapshotCommand } from '@simonsmith/cypress-image-snapshot/command';
+
+addMatchImageSnapshotCommand({
+  failureThreshold: 10,
+  failureThresholdType: 'pixel',
+  // Per-pixel colour distance (pixelmatch YIQ, 0..1) below which two pixels count as equal.
+  // 0.01 (the jest-image-snapshot default) flags a darker shade of the same hue; 0.1 does not.
+  customDiffConfig: { threshold: 0.01 },
+});
 
 // A story renders asynchronously: wait until Storybook shows it (not the "preparing" spinner),
 // its workspace is in the DOM and the fonts are loaded, so that a snapshot never captures a

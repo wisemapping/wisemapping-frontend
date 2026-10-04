@@ -68,14 +68,13 @@ declare global {
 }
 
 // Visual regression (see cypress/plugins/index.ts and the "Image-snapshot tests" section of CLAUDE.md).
-// Baselines live in cypress/snapshots/<spec>/<name>.snap.png and are generated in Docker.
-// failureThreshold is a ratio of the image's pixels (0.0005 = 0.05 %, 330 px of a 1000x660
-// viewport). Repeated Docker runs were pixel-identical for mindplot and differed by at most
-// 32 px (0.005 %) for editor, so this only absorbs isolated anti-aliasing pixels; a moved
-// line, a colour change or a text change is well above it.
+// Baselines live in cypress/snapshots/<spec>/<name>.snap.png and are rendered natively on macOS
+// (headless Chrome). A snapshot fails when more than 50 pixels differ. Two native runs differed
+// in 7 of 128 snapshots, by 1 to 21 px, all on the active MUI toggle button of an open panel; a
+// moved line, a colour change or a text change is far above the threshold.
 const snapshotDefaults = {
-  failureThreshold: 0.0005,
-  failureThresholdType: 'percent' as const,
+  failureThreshold: 50,
+  failureThresholdType: 'pixel' as const,
   // Per-pixel colour distance (pixelmatch YIQ, 0..1) below which two pixels count as equal.
   // 0.01 (the jest-image-snapshot default) flags a darker shade of the same hue; 0.1 does not.
   customDiffConfig: { threshold: 0.01 },
@@ -83,8 +82,7 @@ const snapshotDefaults = {
   // The emoji-picker-react grid (third-party) lands on a different sub-pixel scroll offset
   // after a pick from run to run; black it out instead of comparing it.
   blackout: ['.epr-body'],
-  // Full-page captures of long stories (layout-suite is ~44k px tall) are slow under the
-  // emulated linux/amd64 image on Apple Silicon.
+  // Full-page captures of the largest maps (huge2) take a while.
   timeout: 180000,
 };
 addMatchImageSnapshotCommand(snapshotDefaults);

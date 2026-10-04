@@ -22,30 +22,30 @@ const { addMatchImageSnapshotPlugin } = require('@simonsmith/cypress-image-snaps
  * Visual regression mode, read from the VISUAL_SNAPSHOTS environment variable.
  * See the "Image-snapshot tests" section of the repository CLAUDE.md.
  *
- * - `verify`: compare every `cy.matchImageSnapshot()` with its committed baseline and fail
- *   on a difference or on a missing baseline. Used by docker-compose.snapshots.yml.
- * - `update`: write missing baselines and overwrite the ones that differ. Used by
- *   docker-compose.snapshots.update.yml.
- * - unset (host runs): compare and only log differences in the command log. Baselines are
- *   never written, because fonts and anti-aliasing on a developer machine differ from the
- *   pinned Docker image the baselines come from.
+ * - `verify` (the default, also when unset): compare every `cy.matchImageSnapshot()` with its
+ *   committed baseline and fail on a difference or on a missing baseline. `test:integration`,
+ *   and so `yarn test` and the pre-push hook, run in this mode; `test:visual` sets it explicitly.
+ * - `update`: write missing baselines and overwrite the ones that differ (`test:visual:update`).
+ *
+ * The baselines are rendered natively on macOS (headless Chrome): another OS renders fonts and
+ * anti-aliasing differently and does not match them.
  */
 const visualSnapshotMode = () => {
-  const mode = (process.env.VISUAL_SNAPSHOTS || '').trim().toLowerCase();
-  if (mode !== '' && mode !== 'verify' && mode !== 'update') {
-    throw new Error(`VISUAL_SNAPSHOTS must be 'verify', 'update' or unset, got '${mode}'`);
+  const mode = (process.env.VISUAL_SNAPSHOTS || 'verify').trim().toLowerCase();
+  if (mode !== 'verify' && mode !== 'update') {
+    throw new Error(`VISUAL_SNAPSHOTS must be 'verify' or 'update', got '${mode}'`);
   }
   return mode;
 };
 
-/** `expose` values read by @simonsmith/cypress-image-snapshot and cypress/support/commands.js. */
+/** `expose` values read by @simonsmith/cypress-image-snapshot. */
 const visualSnapshotExpose = () => {
   const mode = visualSnapshotMode();
   return {
-    visualSnapshots: mode || 'log',
+    visualSnapshots: mode,
     updateSnapshots: mode === 'update',
-    failOnSnapshotDiff: mode !== '',
-    requireSnapshots: mode !== 'update',
+    failOnSnapshotDiff: true,
+    requireSnapshots: mode === 'verify',
   };
 };
 

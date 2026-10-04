@@ -16,19 +16,12 @@
  *   limitations under the License.
  */
 const { defineConfig } = require('cypress');
+const { visualSnapshotExpose } = require('./cypress/plugins/index.js');
 
 module.exports = defineConfig({
   video: process.env.CYPRESS_VIDEO === 'true',
-  // Pixel snapshots (cypress/snapshots) are compared only when CYPRESS_imageSnaphots is set,
-  // which the Docker runner does (docker-compose.snapshots*.yml); elsewhere fonts and
-  // anti-aliasing differ, so matchImageSnapshot only takes a screenshot.
-  expose: {
-    imageSnaphots: !!process.env.CYPRESS_imageSnaphots,
-    // Read by @simonsmith/cypress-image-snapshot.
-    updateSnapshots: process.env.CYPRESS_updateSnapshots === 'true',
-    requireSnapshots: process.env.CYPRESS_requireSnapshots === 'true',
-    failOnSnapshotDiff: process.env.CYPRESS_failOnSnapshotDiff !== 'false',
-  },
+  // Image-snapshot mode (VISUAL_SNAPSHOTS=verify, the default, or update), see cypress/plugins/index.js.
+  expose: visualSnapshotExpose(),
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

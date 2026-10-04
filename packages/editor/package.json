@@ -38,11 +38,11 @@
     "storybook": "STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p ${PORT:-6008} --quiet",
     "test": "yarn test:unit && yarn test:integration",
     "test:integration": "yarn test:integration:playground && yarn test:integration:storybook",
-    "test:integration:playground": "rm -rf node_modules/.vite && PORT=8081 CYPRESS_BASE_URL=http://127.0.0.1:8081 npx start-server-and-test 'vite --port 8081 --host 127.0.0.1' http-get://127.0.0.1:8081 cy:run",
-    "test:integration:storybook": "PORT=6008 CYPRESS_BASE_URL=http://localhost:6008 STORYBOOK_DISABLE_TELEMETRY=1 npx start-server-and-test 'storybook dev -p 6008 --quiet --ci' http-get://localhost:6008 cy:storybook:run",
+    "test:integration:playground": "rm -rf node_modules/.vite && PORT=8081 node ../../scripts/run-storybook-cypress.js --server 'vite --port 8081 --host 127.0.0.1'",
+    "test:integration:storybook": "PORT=6008 node ../../scripts/run-storybook-cypress.js --server 'storybook dev -p 6008 --quiet --ci' --test 'yarn cy:storybook:run'",
     "test:unit": "jest ./test/unit/* --detectOpenHandles",
-    "test:visual": "cd ../.. && VISUAL_SUITES=editor docker compose -f docker-compose.snapshots.yml run --rm visual",
-    "test:visual:update": "cd ../.. && VISUAL_SUITES=editor docker compose -f docker-compose.snapshots.update.yml run --rm visual"
+    "test:visual": "VISUAL_SNAPSHOTS=verify yarn test:integration:playground",
+    "test:visual:update": "VISUAL_SNAPSHOTS=update yarn test:integration:playground"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

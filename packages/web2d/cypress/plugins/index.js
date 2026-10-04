@@ -32,6 +32,37 @@
 const { addMatchImageSnapshotPlugin } = require('@simonsmith/cypress-image-snapshot/plugin');
 
 /**
+ * Visual regression mode, read from the VISUAL_SNAPSHOTS environment variable.
+ * See the "Image-snapshot tests" section of the repository CLAUDE.md.
+ *
+ * - `verify` (the default, also when unset): compare every `cy.matchImageSnapshot()` with its
+ *   committed baseline and fail on a difference or on a missing baseline. `test:integration`,
+ *   and so `yarn test` and the pre-push hook, run in this mode; `test:visual` sets it explicitly.
+ * - `update`: write missing baselines and overwrite the ones that differ (`test:visual:update`).
+ *
+ * The baselines are rendered natively on macOS (headless Chrome): another OS renders fonts and
+ * anti-aliasing differently and does not match them.
+ */
+const visualSnapshotMode = () => {
+  const mode = (process.env.VISUAL_SNAPSHOTS || 'verify').trim().toLowerCase();
+  if (mode !== 'verify' && mode !== 'update') {
+    throw new Error(`VISUAL_SNAPSHOTS must be 'verify' or 'update', got '${mode}'`);
+  }
+  return mode;
+};
+
+/** `expose` values read by @simonsmith/cypress-image-snapshot. */
+const visualSnapshotExpose = () => {
+  const mode = visualSnapshotMode();
+  return {
+    visualSnapshots: mode,
+    updateSnapshots: mode === 'update',
+    failOnSnapshotDiff: true,
+    requireSnapshots: mode === 'verify',
+  };
+};
+
+/**
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
@@ -40,3 +71,4 @@ module.exports = (on, config) => {
   // `config` is the resolved Cypress config
   addMatchImageSnapshotPlugin(on);
 };
+module.exports.visualSnapshotExpose = visualSnapshotExpose;

@@ -21,7 +21,7 @@ const { visualSnapshotExpose } = require('./cypress/plugins/index.js');
 module.exports = defineConfig({
   video: process.env.CYPRESS_VIDEO === 'true',
   projectId: 'it9g7s',
-  // Image-snapshot mode (VISUAL_SNAPSHOTS=verify|update|unset), see cypress/plugins/index.js.
+  // Image-snapshot mode (VISUAL_SNAPSHOTS=verify, the default, or update), see cypress/plugins/index.js.
   expose: visualSnapshotExpose(),
   viewportWidth: 1000,
   viewportHeight: 660,
