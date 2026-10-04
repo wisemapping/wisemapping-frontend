@@ -52,11 +52,11 @@ class Beta2PelaMigrator implements XMLMindmapSerializer {
   }
 
   private _fixPosition(parentModel: NodeModel) {
-    const parentPos = parentModel.getPosition();
+    const parentPos = parentModel.getPositionOrThrow();
     const isRight = parentPos.x > 0;
     const me = this;
     parentModel.getChildren().forEach((child) => {
-      if (!child.getPosition()) {
+      if (!child.hasPosition()) {
         child.setPosition(parentPos.x + (isRight ? 1 : -1), parentPos.y);
       }
       me._fixPosition(child);

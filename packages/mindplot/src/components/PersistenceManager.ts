@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
+import { $msg } from './Messages';
 import { Mindmap } from '..';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
@@ -67,8 +68,11 @@ abstract class PersistenceManager {
       this.saveMapXml(mapId, domMap, pref, saveHistory, events, options);
     } catch (e) {
       console.error(e);
-      // TODO(typing): a thrown Error, not a PersistenceError, reaches onError here.
-      events?.onError(e as PersistenceError);
+      events?.onError({
+        severity: 'SEVERE',
+        errorType: 'unexpected',
+        message: $msg('SAVE_COULD_NOT_BE_COMPLETED'),
+      });
     }
   }
 

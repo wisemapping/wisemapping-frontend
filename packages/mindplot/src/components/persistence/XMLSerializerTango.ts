@@ -32,7 +32,33 @@ import { FontStyleType } from '../FontStyleType';
 import { TopicShapeType } from '../model/INodeModel';
 import ThemeType from '../model/ThemeType';
 import { CanvasStyleType, BackgroundPatternType } from '../model/CanvasStyleType';
-import type { LayoutType } from '../layout/LayoutType';
+import { LAYOUT_ORIENTATION, type LayoutType } from '../layout/LayoutType';
+
+// Keyed by the union, so the compiler reports a theme or pattern added to the type but not here.
+const THEME_TYPES: Record<ThemeType, true> = {
+  classic: true,
+  prism: true,
+  robot: true,
+  sunrise: true,
+  ocean: true,
+  aurora: true,
+  retro: true,
+};
+
+const BACKGROUND_PATTERN_TYPES: Record<BackgroundPatternType, true> = {
+  solid: true,
+  grid: true,
+  dots: true,
+};
+
+const isThemeType = (value: string): value is ThemeType =>
+  Object.prototype.hasOwnProperty.call(THEME_TYPES, value);
+
+const isLayoutType = (value: string): value is LayoutType =>
+  Object.prototype.hasOwnProperty.call(LAYOUT_ORIENTATION, value);
+
+const isBackgroundPatternType = (value: string): value is BackgroundPatternType =>
+  Object.prototype.hasOwnProperty.call(BACKGROUND_PATTERN_TYPES, value);
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -140,7 +166,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
     if (backgroundPatternAttr != null && backgroundPatternAttr !== 'none') {
       // Ignore legacy 'none' value for backward compatibility
-      canvasStyle.backgroundPattern = backgroundPatternAttr as BackgroundPatternType;
+      if (isBackgroundPatternType(backgroundPatternAttr)) {
+        canvasStyle.backgroundPattern = backgroundPatternAttr;
+      } else {
+        console.warn(`Unknown background pattern '${backgroundPatternAttr}', ignoring it.`);
+      }
     }
     if (gridSizeAttr != null) {
       const parsed = Number.parseInt(gridSizeAttr, 10);
@@ -376,19 +406,28 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const mindmap = new Mindmap(mapId, version);
 
     const theme = rootElem.getAttribute('theme');
-    if (theme) {
-      // Map dark-prism to prism for backward compatibility
-      const mappedTheme = theme === 'dark-prism' ? 'prism' : theme;
-      mindmap.setTheme(mappedTheme as ThemeType);
+    // Map dark-prism to prism for backward compatibility
+    const mappedTheme = theme === 'dark-prism' ? 'prism' : theme;
+    if (mappedTheme && isThemeType(mappedTheme)) {
+      mindmap.setTheme(mappedTheme);
     } else {
-      // Default to classic theme if no theme is specified
+      // Default to classic theme if no theme is specified, or it is not a known one
+      if (mappedTheme) {
+        console.warn(`Unknown theme '${mappedTheme}', falling back to 'classic'.`);
+      }
       mindmap.setTheme('classic');
     }
 
-    // Load layout attribute
+    // Load layout attribute, defaulting to mindmap
     const layoutAttr = rootElem.getAttribute('layout');
-    const layout = layoutAttr || 'mindmap'; // Default to mindmap
-    mindmap.setLayout(layout as LayoutType);
+    if (layoutAttr && isLayoutType(layoutAttr)) {
+      mindmap.setLayout(layoutAttr);
+    } else {
+      if (layoutAttr) {
+        console.warn(`Unknown layout '${layoutAttr}', falling back to 'mindmap'.`);
+      }
+      mindmap.setLayout('mindmap');
+    }
 
     // Load canvas style attributes
     this._loadCanvasStyle(rootElem, mindmap);
@@ -673,14 +712,20 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     return value !== null ? value : '';
   }
 
-  /** Concatenates the CDATA sections of the element, null if it has none. */
+  /**
+   * Concatenates the CDATA sections and the text of the element, null if it has none. The writer
+   * always uses CDATA, but plain text content (e.g. a hand-edited or third-party map) is read too.
+   * Whitespace-only text is skipped: it is the indentation of a pretty-printed document.
+   */
   private static _readCDATA(domElem: ChildNode): string | null {
     const children = domElem.childNodes;
     let value: string | null = null;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
-      if (child.nodeType === Node.CDATA_SECTION_NODE) {
-        value = (value ?? '') + (child.nodeValue ?? '');
+      const content = child.nodeValue ?? '';
+      const isText = child.nodeType === Node.TEXT_NODE && content.trim() !== '';
+      if (child.nodeType === Node.CDATA_SECTION_NODE || isText) {
+        value = (value ?? '') + content;
       }
     }
     return value;

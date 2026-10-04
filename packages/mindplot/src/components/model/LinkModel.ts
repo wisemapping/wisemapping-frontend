@@ -61,5 +61,15 @@ class LinkModel extends FeatureModel {
     $assert(urlType, 'urlType can not be null');
     this.setAttribute('urlType', urlType);
   }
+
+  applyAttribute(key: string, value: unknown): void {
+    if (key === 'url') {
+      this.setUrl(value as string);
+    } else if (key === 'urlType') {
+      this.setUrlType(value as string);
+    } else {
+      super.applyAttribute(key, value);
+    }
+  }
 }
 export default LinkModel;

@@ -88,7 +88,7 @@ abstract class INodeModel {
     this.putProperty('text', text);
   }
 
-  getText(): string | null {
+  getText(): string | undefined {
     return this.getProperty('text') as string;
   }
 
@@ -121,14 +121,36 @@ abstract class INodeModel {
     this.putProperty('position', `{x:${x},y:${y}}`);
   }
 
+  /**
+   * Returns undefined when the topic has no position, or a corrupted one. Prefer hasPosition and
+   * getPositionOrThrow, which make that explicit.
+   */
   getPosition(): PositionType {
     const value = this.getProperty('position') as string;
     let result: PositionType | undefined;
     if (value != null) {
       result = parseFiniteObject<PositionType>(value, ['x', 'y']);
     }
-    // TODO(typing): returns undefined when the topic has no position; callers rely on PositionType.
+    // TODO(typing): should be PositionType | undefined once its callers outside persistence
+    // (Designer, NodeGraph, the Freemind and OPML importers, FreemindExporter) handle a missing one.
     return result as PositionType;
+  }
+
+  /** @return true if the topic has a valid position */
+  hasPosition(): boolean {
+    return this.getPosition() !== undefined;
+  }
+
+  /**
+   * @return the position of the topic
+   * @throws will throw an error if the topic has no position, or a corrupted one
+   */
+  getPositionOrThrow(): PositionType {
+    const result = this.getPosition();
+    if (result === undefined) {
+      throw new Error(`Topic ${this.getId()} has no position`);
+    }
+    return result;
   }
 
   setImageSize(width: number, height: number): void {

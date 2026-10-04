@@ -30,19 +30,15 @@ type MigratorConstructor = new (serializer: XMLMindmapSerializer) => XMLMindmapS
 type SerializerEntry = {
   codeName: string;
   serializer: SerializerConstructor;
-  migrator: MigratorConstructor;
+  // Migrates the maps of the previous version. The first version (BETA) has none.
+  migrator?: MigratorConstructor;
 };
 
 const codeToSerializer: SerializerEntry[] = [
-  // TODO(typing): BETA's migrator is not a constructor; harmless only because BETA, being the
-  // first version, is never migrated to.
   {
     codeName: ModelCodeName.BETA,
     serializer: XMLSerializerBeta,
-    migrator() {
-      // Ignore ..
-    },
-  } as unknown as SerializerEntry,
+  },
   {
     codeName: ModelCodeName.PELA,
     serializer: XMLSerializerTango,
@@ -93,9 +89,12 @@ class XMLSerializerFactory {
         // eslint-disable-next-line new-cap
         if (found) result = new codeToSerializer[i].serializer();
       } else {
-        const { migrator } = codeToSerializer[i];
+        const { codeName, migrator } = codeToSerializer[i];
+        if (!migrator || !result) {
+          throw new Error(`Missing migrator to ${codeName}`);
+        }
         // eslint-disable-next-line new-cap
-        result = new migrator(result!);
+        result = new migrator(result);
       }
     }
     if (!result) {

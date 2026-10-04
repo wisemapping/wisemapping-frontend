@@ -84,19 +84,12 @@ class FeatureModel {
   }
 
   /**
-   * Sets one attribute. Subclasses map their attributes to their setters, so values are
-   * validated and normalized. Otherwise, a set<Key> setter declared by the subclass is used,
-   * never FeatureModel's own (the 'id' attribute is not the feature id), else the raw value is stored.
+   * Sets one attribute. Subclasses override it to map their attributes to their setters, so values
+   * are validated and normalized. Any other attribute is stored as it is.
    */
   applyAttribute(key: string, value: unknown): void {
-    const setterName = `set${FeatureModel.capitalize(key)}`;
-    const setter = (this as unknown as Record<string, unknown>)[setterName];
-    if (typeof setter === 'function' && !(setterName in FeatureModel.prototype)) {
-      setter.call(this, value);
-    } else {
-      // Attribute values are strings (see FeatureAttributes), as the subclasses also assume.
-      this.setAttribute(key, value as string);
-    }
+    // Attribute values are strings (see FeatureAttributes), as the subclasses also assume.
+    this.setAttribute(key, value as string);
   }
 
   setAttribute(key: string, value: string) {
