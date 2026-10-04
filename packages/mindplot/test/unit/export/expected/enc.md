@@ -137,4 +137,5 @@ J. Integr. Plant Biol. 50: 547–558.
 
 
 
-[^1]: Isso significa que estudos de característica de história de vida compensam? Ver nos m&m.[^2]: Falar que isso corrobora nossa sugestão de utilizar poucas medidas, mas que elas sejam confiáveis.
+[^1]: Isso significa que estudos de característica de história de vida compensam? Ver nos m&m.
+[^2]: Falar que isso corrobora nossa sugestão de utilizar poucas medidas, mas que elas sejam confiáveis.

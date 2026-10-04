@@ -20,6 +20,11 @@ import html2canvas from 'html2canvas';
 import Exporter from './Exporter';
 
 class PDFExporter extends Exporter {
+  private static RENDER_SCALE = 2;
+
+  // CSS pixels are 1/96 inch ...
+  private static MM_PER_PX = 25.4 / 96;
+
   private svgElement: Element;
 
   private adjustToFit: boolean;
@@ -34,28 +39,26 @@ class PDFExporter extends Exporter {
   }
 
   async export(): Promise<string> {
-    try {
-      // Create a temporary container for the SVG
-      const tempContainer = document.createElement('div');
-      tempContainer.style.position = 'absolute';
-      tempContainer.style.left = '-9999px';
-      tempContainer.style.top = '-9999px';
-      tempContainer.style.width = '100%';
-      tempContainer.style.height = '100%';
-      tempContainer.appendChild(this.svgElement.cloneNode(true));
-      document.body.appendChild(tempContainer);
+    // Create a temporary container for the SVG
+    const tempContainer = document.createElement('div');
+    tempContainer.style.position = 'absolute';
+    tempContainer.style.left = '-9999px';
+    tempContainer.style.top = '-9999px';
+    tempContainer.style.width = '100%';
+    tempContainer.style.height = '100%';
+    tempContainer.appendChild(this.svgElement.cloneNode(true));
+    document.body.appendChild(tempContainer);
 
-      // Convert SVG to canvas using html2canvas
+    try {
+      // Convert SVG to canvas using html2canvas. The canvas is read back with toDataURL,
+      // so it must not be tainted: cross-origin images without CORS are skipped instead.
       const canvas = await html2canvas(tempContainer, {
         backgroundColor: this.backgroundColor,
-        scale: 2, // Higher resolution
+        scale: PDFExporter.RENDER_SCALE, // Higher resolution
         useCORS: true,
-        allowTaint: true,
+        allowTaint: false,
         logging: false,
       });
-
-      // Clean up temporary container
-      document.body.removeChild(tempContainer);
 
       // Create PDF
       // eslint-disable-next-line new-cap
@@ -65,42 +68,34 @@ class PDFExporter extends Exporter {
         format: 'a4',
       });
 
-      // Calculate dimensions
+      // Calculate dimensions. The page is in mm, the canvas in pixels at RENDER_SCALE.
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
-      const canvasWidth = canvas.width;
-      const canvasHeight = canvas.height;
+      const imgWidth = (canvas.width / PDFExporter.RENDER_SCALE) * PDFExporter.MM_PER_PX;
+      const imgHeight = (canvas.height / PDFExporter.RENDER_SCALE) * PDFExporter.MM_PER_PX;
 
       // Calculate scaling to fit the page
-      let scale = 1;
-      let x = 0;
-      let y = 0;
+      const maxScale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const scale = this.adjustToFit
+        ? maxScale * 0.95 // 95% to leave some margin
+        : Math.min(1, maxScale); // Use original size, but ensure it fits on the page
 
-      if (this.adjustToFit) {
-        const scaleX = pdfWidth / canvasWidth;
-        const scaleY = pdfHeight / canvasHeight;
-        scale = Math.min(scaleX, scaleY) * 0.95; // 95% to leave some margin
-
-        // Calculate centered position
-        x = (pdfWidth - canvasWidth * scale) / 2;
-        y = (pdfHeight - canvasHeight * scale) / 2;
-      } else {
-        // Use original size, but ensure it fits on the page
-        const maxScale = Math.min(pdfWidth / canvasWidth, pdfHeight / canvasHeight);
-        scale = Math.min(1, maxScale);
-        x = (pdfWidth - canvasWidth * scale) / 2;
-        y = (pdfHeight - canvasHeight * scale) / 2;
-      }
+      // Calculate centered position
+      const x = (pdfWidth - imgWidth * scale) / 2;
+      const y = (pdfHeight - imgHeight * scale) / 2;
 
       // Add the image to PDF
       const imgData = canvas.toDataURL('image/png');
-      pdf.addImage(imgData, 'PNG', x, y, canvasWidth * scale, canvasHeight * scale);
+      pdf.addImage(imgData, 'PNG', x, y, imgWidth * scale, imgHeight * scale);
 
       // Return the PDF as base64 string
       return pdf.output('datauristring');
     } catch (error) {
       console.error('Error generating PDF:', error);
       throw new Error('Failed to generate PDF');
+    } finally {
+      // Clean up temporary container
+      tempContainer.remove();
     }
   }
 

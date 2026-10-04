@@ -17,4 +17,4 @@
 
 
 
-[^1]: HR Vision: Freeform Solutions is successful at its mission, sustainable as an organization AND is a great place to work.HR Mission: To provide a positive HR service experience for applicants and employees, and  collaborate with departments to recruit, develop, support, and retain diverse and talented employees who are the key to Freeform’s  reputation and success.
+[^1]: HR Vision: Freeform Solutions is successful at its mission, sustainable as an organization AND is a great place to work. HR Mission: To provide a positive HR service experience for applicants and employees, and  collaborate with departments to recruit, develop, support, and retain diverse and talented employees who are the key to Freeform’s  reputation and success.

@@ -33,8 +33,4 @@
 
 
 
-[^1]: Todos los contenidos de los talleres están relacionados con el currículo de la enseñanza básica.A diferencia de la práctica tradicional, pretendemos ahondar en el conocimiento partiendo de lo que realmente interesa al niño o niña,
-ayudándole a que encuentre respuesta a las preguntas que él o ella se plantea.
-
-Por ese motivo, SaberMás proyecta estar al lado de los niños que necesitan una motivación extra para entender la escuela y fluir en ella,
- y también al lado de aquellos a quienes la curiosidad y las ganas de saber les lleva más allá.
+[^1]: Todos los contenidos de los talleres están relacionados con el currículo de la enseñanza básica. A diferencia de la práctica tradicional, pretendemos ahondar en el conocimiento partiendo de lo que realmente interesa al niño o niña, ayudándole a que encuentre respuesta a las preguntas que él o ella se plantea. Por ese motivo, SaberMás proyecta estar al lado de los niños que necesitan una motivación extra para entender la escuela y fluir en ella, y también al lado de aquellos a quienes la curiosidad y las ganas de saber les lleva más allá.

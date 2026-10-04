@@ -317,4 +317,32 @@ by the FASIE per 1,000 workers [awards/worker]
 
 
 
-[^1]: Identifying new measures or investments that should be implemented.[^2]: Number of different innovations policy instruments existing  in the region as a share of a total number representing a full typology of instruments[^3]: Understanding how to design the details of a particular measure and how to implement them.[^4]: Understanding the level of effort the region needs to take to compete on innovation and where to put this effort[^5]: This is what policy makers care about in the end[^6]: WB[^7]: GCR[^8]: GCR[^9]: per 100 population aged 25-64[^10]: GCR[^11]: GCR[^12]: : the percentage of the workforce employed by foreign companies [%]. [^13]: : exports as a share of total output in manufacturing and services [%].[^14]: GEM[^15]: GEM[^16]: GEM[^17]: UNESCO[^18]: CIS[^19]: GCR[^20]: CIS, BEEPS[^21]: Number of new organizations per thousand working age population (WBI)[^22]: (as a percentage of all registered corporations)[^23]: Number of measures offered by the unversity within a preset range (NCET2 survey)[^24]:  (design firms, IP consultants, etc.)[^25]: (e.g. accelerators, incubators)[^26]: Understanding which measures should be strengthened, dropped or improved, and how.[^27]: WIPO SURVEY OF INTELLECTUAL PROPERTY SERVICES OFEUROPEAN TECHNOLOGY INCUBATORS[^28]: JL: not sure how this would be measured[^29]: Understanding what investments should be made in innovative projects.
+[^1]: Identifying new measures or investments that should be implemented.
+[^2]: Number of different innovations policy instruments existing  in the region as a share of a total number representing a full typology of instruments
+[^3]: Understanding how to design the details of a particular measure and how to implement them.
+[^4]: Understanding the level of effort the region needs to take to compete on innovation and where to put this effort
+[^5]: This is what policy makers care about in the end
+[^6]: WB
+[^7]: GCR
+[^8]: GCR
+[^9]: per 100 population aged 25-64
+[^10]: GCR
+[^11]: GCR
+[^12]: : the percentage of the workforce employed by foreign companies [%].
+[^13]: : exports as a share of total output in manufacturing and services [%].
+[^14]: GEM
+[^15]: GEM
+[^16]: GEM
+[^17]: UNESCO
+[^18]: CIS
+[^19]: GCR
+[^20]: CIS, BEEPS
+[^21]: Number of new organizations per thousand working age population (WBI)
+[^22]: (as a percentage of all registered corporations)
+[^23]: Number of measures offered by the unversity within a preset range (NCET2 survey)
+[^24]: (design firms, IP consultants, etc.)
+[^25]: (e.g. accelerators, incubators)
+[^26]: Understanding which measures should be strengthened, dropped or improved, and how.
+[^27]: WIPO SURVEY OF INTELLECTUAL PROPERTY SERVICES OF EUROPEAN TECHNOLOGY INCUBATORS
+[^28]: JL: not sure how this would be measured
+[^29]: Understanding what investments should be made in innovative projects.

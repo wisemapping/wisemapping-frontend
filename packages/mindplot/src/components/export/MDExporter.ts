@@ -34,7 +34,8 @@ class MDExporter extends Exporter {
   }
 
   private normalizeText(value: string): string {
-    return value.replace('\n', '');
+    // Markdown headings and footnote definitions must stay on a single line ...
+    return value.replace(/\s*\r?\n\s*/g, ' ').trim();
   }
 
   export(): Promise<string> {
@@ -58,9 +59,9 @@ class MDExporter extends Exporter {
       // White footnotes:
       if (this.footNotes.length > 0) {
         result += '\n\n\n';
-        this.footNotes.forEach((note, index) => {
-          result += `[^${index + 1}]: ${this.normalizeText(note)}`;
-        });
+        result += this.footNotes
+          .map((note, index) => `[^${index + 1}]: ${this.normalizeText(note)}`)
+          .join('\n');
       }
       result += '\n';
     }
