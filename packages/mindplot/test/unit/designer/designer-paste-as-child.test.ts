@@ -157,7 +157,8 @@ describe('Designer.pasteClipboardAsChild', () => {
     expect(actionDispatcher.addTopics).not.toHaveBeenCalled();
   });
 
-  it('expands the parent branch when the parent is collapsed', async () => {
+  // AddTopicCommand expands it, in the same undo step as the paste (BL4-06).
+  it('leaves expanding a collapsed parent to addTopics', async () => {
     const { designer, actionDispatcher } = designerWith({
       topics: [topicStub(20, { shrunken: true })],
       internalClipboard: mapWith('    <topic id="2" text="A" position="100,50" order="0" />'),
@@ -165,7 +166,8 @@ describe('Designer.pasteClipboardAsChild', () => {
 
     await designer.pasteClipboardAsChild(20);
 
-    expect(actionDispatcher.shrinkBranch).toHaveBeenCalledWith([20], false);
+    expect(actionDispatcher.shrinkBranch).not.toHaveBeenCalled();
+    expect(actionDispatcher.addTopics).toHaveBeenCalledWith([expect.anything()], [20]);
   });
 
   it('leaves a collapsed parent alone when there is nothing to paste', async () => {

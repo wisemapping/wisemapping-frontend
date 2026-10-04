@@ -134,4 +134,62 @@ describe('Designer.createChildForSelectedNode on a collapsed topic', () => {
     expect(parent.getChildren()).toHaveLength(1);
     expect(parent.areChildrenShrunken()).toBe(true);
   });
+
+  // BL4-06: AddTopicCommand expands the parent itself, so the add is a single undo step.
+  it('reverts the add and the expand with one undo', async () => {
+    const { designer, topic, save } = await buildDesigner();
+    const parent = topic(1);
+    parent.setChildrenShrunken(true);
+    const before = save();
+    designer.deselectAll();
+    parent.setOnFocus(true);
+
+    designer.createChildForSelectedNode();
+    expect(parent.areChildrenShrunken()).toBe(false);
+    expect(parent.getChildren()).toHaveLength(2);
+
+    designer.undo();
+
+    expect(parent.getChildren()).toHaveLength(1);
+    expect(parent.areChildrenShrunken()).toBe(true);
+    expect(save()).toEqual(before);
+    expect(canUndo(designer)).toBe(false);
+  });
+
+  it('places the new child after the hidden ones, as on an expanded parent', async () => {
+    const { designer, topic } = await buildDesigner();
+    const parent = topic(1);
+    parent.setChildrenShrunken(true);
+    designer.deselectAll();
+    parent.setOnFocus(true);
+
+    designer.createChildForSelectedNode();
+
+    expect(childrenTextByOrder(parent)).toEqual(['A1', '']);
+    const [hidden, added] = parent
+      .getChildren()
+      .sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
+    expect(added.getPosition().x).toBe(hidden.getPosition().x);
+    expect(added.getPosition().y).toBeGreaterThan(hidden.getPosition().y);
+  });
+});
+
+describe('Designer.pasteClipboardAsChild on a collapsed topic (BL4-06)', () => {
+  it('reverts the paste and the expand with one undo', async () => {
+    const { designer, topic, save } = await buildDesigner();
+    const parent = topic(1);
+    parent.setChildrenShrunken(true);
+    const before = save();
+    setClipboard(designer, clipboardWith('P1', 'P2'));
+
+    await designer.pasteClipboardAsChild(1);
+    expect(parent.areChildrenShrunken()).toBe(false);
+    expect(childrenTextByOrder(parent)).toEqual(['A1', 'P1', 'P2']);
+
+    designer.undo();
+
+    expect(parent.areChildrenShrunken()).toBe(true);
+    expect(save()).toEqual(before);
+    expect(canUndo(designer)).toBe(false);
+  });
 });

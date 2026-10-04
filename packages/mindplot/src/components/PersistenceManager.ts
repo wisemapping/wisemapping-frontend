@@ -61,10 +61,11 @@ abstract class PersistenceManager {
     const mapId = mindmap.getId() || 'WiseMapping';
     $assert(mapId, 'mapId can not be null');
 
-    const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
-    const domMap = serializer.toXML(mindmap);
-    const pref = JSON.stringify(editorProperties);
     try {
+      // A map that can not be serialized is a failed save too, reported through onError ...
+      const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
+      const domMap = serializer.toXML(mindmap);
+      const pref = JSON.stringify(editorProperties);
       this.saveMapXml(mapId, domMap, pref, saveHistory, events, options);
     } catch (e) {
       console.error(e);

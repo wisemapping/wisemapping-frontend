@@ -73,6 +73,11 @@ class DragManager {
   }
 
   add(topic: Topic) {
+    // The central topic has no drag shape (createDragNode throws for it): it can not be dragged ...
+    if (topic.isCentralTopic()) {
+      return;
+    }
+
     // Add behaviour ...
     const workspace = this._workspace;
     const screen = workspace.getScreenManager();
@@ -128,6 +133,16 @@ class DragManager {
       }
     };
     topic.addEvent('mousedown', mouseDownListener);
+  }
+
+  /**
+   * Abandons the drag in progress, if any, as Escape does: the topic stays where it was and the
+   * document and window listeners are released. Called when the designer is disposed.
+   */
+  cancel(): void {
+    if (this._cancelListener) {
+      this._cancelListener(new Event('cancel'));
+    }
   }
 
   remove() {

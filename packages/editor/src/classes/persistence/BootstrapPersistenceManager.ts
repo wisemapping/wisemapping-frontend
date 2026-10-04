@@ -17,11 +17,7 @@
  */
 
 import { PersistenceManager } from '@wisemapping/mindplot';
-import type { PersistenceErrorCallback } from '@wisemapping/mindplot';
-
-// SaveEvents and SaveOptions of mindplot's PersistenceManager, which @wisemapping/mindplot doesn't export yet.
-type SaveEvents = NonNullable<Parameters<PersistenceManager['save']>[3]>;
-type SaveOptions = NonNullable<Parameters<PersistenceManager['save']>[4]>;
+import type { PersistenceErrorCallback, SaveEvents, SaveOptions } from '@wisemapping/mindplot';
 
 /**
  * A PersistenceManager wrapper that uses bootstrap XML instead of fetching from server.

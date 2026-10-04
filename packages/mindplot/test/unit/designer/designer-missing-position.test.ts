@@ -110,4 +110,23 @@ describe('Topics without a position', () => {
     // A and its child A1 are pasted.
     expect(designer.getModel().getTopics()).toHaveLength(before + 2);
   });
+
+  // BL4-33: AddTopicCommand focuses the new topic before the layout places it, and focusing
+  // pans the canvas to it.
+  it.each([
+    ['under a parent', [1]],
+    ['floating', null],
+  ])(
+    'can be added %s: focusing one does not pan to an undefined position',
+    async (_label, parents) => {
+      const { designer, topic } = await buildDesigner();
+      const model = designer.getMindmap().createNode('MainTopic');
+      model.setText('No position');
+      expect(model.getPosition()).toBeUndefined();
+
+      expect(() => designer.getActionDispatcher().addTopics([model], parents)).not.toThrow();
+
+      expect(topic(model.getId()).isOnFocus()).toBe(true);
+    },
+  );
 });

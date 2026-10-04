@@ -82,6 +82,7 @@ const buildTopic = () => {
   let mouseDown: ((event: Event) => void) | null = null;
   const node = {
     getId: () => 3,
+    isCentralTopic: () => false,
     getSize: () => ({ width: 40, height: 20 }),
     addEvent: (type: string, listener: (event: Event) => void) => {
       if (type === 'mousedown') mouseDown = listener;
@@ -215,6 +216,73 @@ describe('DragManager', () => {
 
     container.dispatchEvent(mouseEvent('mousemove', 60, 60));
     expect(startDragging).not.toHaveBeenCalled();
+  });
+
+  // BL4-48: Designer.dispose() cancels a drag in progress.
+  it('cancel() abandons the drag in progress and releases its listeners', () => {
+    startDrag();
+    const removeDocumentListener = jest.spyOn(document, 'removeEventListener');
+    const removeWindowListener = jest.spyOn(window, 'removeEventListener');
+
+    dragManager.cancel();
+
+    expect(endDragging).toHaveBeenCalledTimes(1);
+    expect(dragTopicAction).not.toHaveBeenCalled();
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+    expect(document.body.style.cursor).toBe('default');
+    const documentTypes = removeDocumentListener.mock.calls.map(([type]) => type);
+    expect(documentTypes).toEqual(expect.arrayContaining(['mousemove', 'mouseup', 'keydown']));
+    expect(removeWindowListener.mock.calls.map(([type]) => type)).toContain('blur');
+
+    container.dispatchEvent(mouseEvent('mousemove', 60, 60));
+    container.dispatchEvent(mouseEvent('mouseup', 60, 60));
+    expect(dragging).toHaveBeenCalledTimes(1);
+    expect(dragTopicAction).not.toHaveBeenCalled();
+  });
+
+  it('cancel() before the drag threshold is met releases the listeners', () => {
+    pressMouse(10, 10);
+
+    dragManager.cancel();
+
+    expect(endDragging).not.toHaveBeenCalled();
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+    container.dispatchEvent(mouseEvent('mousemove', 60, 60));
+    expect(startDragging).not.toHaveBeenCalled();
+  });
+
+  it('cancel() without a drag in progress does nothing', () => {
+    expect(() => dragManager.cancel()).not.toThrow();
+    expect(endDragging).not.toHaveBeenCalled();
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+  });
+
+  // BL4-24: the central topic has no drag shape, and createDragNode throws for it.
+  it('ignores a mousedown on a topic that can not be dragged', () => {
+    const mouseDownListeners: ((event: Event) => void)[] = [];
+    const central = {
+      getId: () => 0,
+      isCentralTopic: () => true,
+      addEvent: (type: string, listener: (event: Event) => void) => {
+        if (type === 'mousedown') mouseDownListeners.push(listener);
+      },
+      createDragNode: () => {
+        throw new Error('CentralTopic has no drag shape: it can not be dragged');
+      },
+    } as unknown as Topic;
+    dragManager.add(central);
+
+    expect(() =>
+      mouseDownListeners.forEach((listener) => listener(mouseEvent('mousedown', 10, 10))),
+    ).not.toThrow();
+
+    // The workspace is not left disabled, and nothing follows the cursor ...
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+    container.dispatchEvent(mouseEvent('mousemove', 60, 60));
+    expect(startDragging).not.toHaveBeenCalled();
+
+    // ... so a draggable topic can still be dragged.
+    startDrag();
   });
 
   it('ignores keys other than Escape during a drag', () => {

@@ -20,6 +20,7 @@ import Canvas from '../../src/components/Canvas';
 import ScreenManager from '../../src/components/ScreenManager';
 
 const mockSetCoordOrigin = jest.fn();
+const mockRemoveHtmlContainer = jest.fn();
 
 jest.mock('@wisemapping/web2d', () => ({
   Workspace: jest.fn().mockImplementation(() => ({
@@ -29,6 +30,7 @@ jest.mock('@wisemapping/web2d', () => ({
     setCoordSize: jest.fn(),
     getCoordSize: jest.fn().mockReturnValue({ width: 1000, height: 800 }),
     getSVGElement: jest.fn(),
+    _getHtmlContainer: jest.fn().mockReturnValue({ remove: mockRemoveHtmlContainer }),
   })),
 }));
 
@@ -302,6 +304,15 @@ describe('Canvas window listeners', () => {
     container.dispatchEvent(mouseEvent('mousemove', 40, 25));
     window.dispatchEvent(new Event('resize'));
     expect(mockSetCoordOrigin).not.toHaveBeenCalled();
+  });
+
+  it('removes its workspace from the container on dispose (BL4-49)', () => {
+    const canvas = buildCanvas();
+    mockRemoveHtmlContainer.mockClear();
+
+    canvas.dispose();
+
+    expect(mockRemoveHtmlContainer).toHaveBeenCalledTimes(1);
   });
 
   it('ends a pan in progress on dispose', () => {

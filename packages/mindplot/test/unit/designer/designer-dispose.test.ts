@@ -25,6 +25,7 @@ import { SAMPLE_MAP, buildDesigner as buildHarness } from '../commands/designer-
 import buildDesigner from '../../../src/components/DesignerBuilder';
 import Designer from '../../../src/components/Designer';
 import DesignerKeyboard from '../../../src/components/DesignerKeyboard';
+import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import DragManager from '../../../src/components/DragManager';
 import DragTopic from '../../../src/components/DragTopic';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
@@ -192,6 +193,59 @@ describe('Designer dispose (BL-48)', () => {
 
     second.designer.dispose();
     expect(globalDesigner()).toBeUndefined();
+  });
+
+  it('removes its SVG from the container (BL4-49)', async () => {
+    const designer = await build();
+    const container = designer.getContainer();
+    const svg = designer.getWorkSpace().getSVGElement();
+    expect(container.contains(svg)).toBe(true);
+
+    designer.dispose();
+
+    // A designer built again on the same container would otherwise stack a second SVG ...
+    expect(container.contains(svg)).toBe(false);
+  });
+
+  it('cancels a topic drag in progress (BL4-48)', async () => {
+    const designer = await build();
+    const dragManager = internals(designer)._dragManager;
+    const dragListeners = dragManager as unknown as {
+      _mouseMoveListener: EventListener | null;
+      _mouseUpListener: EventListener | null;
+    };
+    const removeDocumentListener = jest.spyOn(document, 'removeEventListener');
+
+    // Press the mouse on a draggable topic: the drag listeners go on the document ...
+    const topic = designer.getModel().findTopicById(1)!;
+    topic.fireEvent('mousedown', new MouseEvent('mousedown', { clientX: 10, clientY: 10 }));
+    const { _mouseMoveListener: mouseMove, _mouseUpListener: mouseUp } = dragListeners;
+    expect(mouseMove).not.toBeNull();
+
+    designer.dispose();
+
+    expect(removeDocumentListener).toHaveBeenCalledWith('mousemove', mouseMove);
+    expect(removeDocumentListener).toHaveBeenCalledWith('mouseup', mouseUp);
+    expect(dragListeners._mouseMoveListener).toBeNull();
+  });
+
+  it('stops being the ActionDispatcher instance (BL4-50)', async () => {
+    const designer = await build();
+    expect(ActionDispatcher.getInstance()).toBe(designer.getActionDispatcher());
+
+    designer.dispose();
+
+    expect(() => ActionDispatcher.getInstance()).toThrow();
+  });
+
+  it('leaves the ActionDispatcher of a newer designer alone (BL4-50)', async () => {
+    const first = await build();
+    const second = await buildHarness();
+    built.push(second.designer);
+
+    first.dispose();
+
+    expect(ActionDispatcher.getInstance()).toBe(second.designer.getActionDispatcher());
   });
 
   it('can be disposed twice', async () => {

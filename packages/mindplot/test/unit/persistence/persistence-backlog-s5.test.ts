@@ -201,6 +201,27 @@ describe('PersistenceManager.save errors (BL-54)', () => {
       message: expect.any(String),
     });
   });
+
+  test('reports a serialization error as a PersistenceError (BL4-17)', () => {
+    const mindmap = load('<map version="tango"><topic central="true" id="1" text="c"/></map>');
+    const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
+    jest.spyOn(XMLSerializerFactory, 'createFromMindmap').mockReturnValue(serializer);
+    jest.spyOn(serializer, 'toXML').mockImplementation(() => {
+      throw new Error('corrupted topic');
+    });
+    const onError = jest.fn();
+
+    expect(() =>
+      new FailingManager().save(mindmap, {}, false, { onSuccess: jest.fn(), onError }),
+    ).not.toThrow();
+
+    expect(onError).toHaveBeenCalledTimes(1);
+    expect(onError.mock.calls[0][0]).toEqual({
+      severity: 'SEVERE',
+      errorType: 'unexpected',
+      message: expect.any(String),
+    });
+  });
 });
 
 describe('node model (BL-17, BL-75)', () => {

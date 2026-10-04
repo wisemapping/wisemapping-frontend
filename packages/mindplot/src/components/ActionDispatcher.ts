@@ -29,7 +29,7 @@ import LayoutEventBusType from './LayoutEventBusType';
 import type { FeatureAttributes } from './model/FeatureModel';
 
 abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
-  private static _instance: ActionDispatcher;
+  private static _instance: ActionDispatcher | undefined;
 
   private _commandContext: CommandContext;
 
@@ -112,7 +112,21 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
     this._instance = dispatcher;
   };
 
-  static getInstance = (): ActionDispatcher => ActionDispatcher._instance;
+  /** Drops the instance if it is still the given one: a newer designer may have replaced it. */
+  static clearInstance = (dispatcher: ActionDispatcher) => {
+    if (this._instance === dispatcher) {
+      this._instance = undefined;
+    }
+  };
+
+  static getInstance = (): ActionDispatcher => {
+    if (!ActionDispatcher._instance) {
+      throw new Error(
+        'There is no ActionDispatcher: no designer has been built, or it was disposed',
+      );
+    }
+    return ActionDispatcher._instance;
+  };
 }
 
 export default ActionDispatcher;

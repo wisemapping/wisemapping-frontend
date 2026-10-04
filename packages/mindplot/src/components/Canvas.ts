@@ -112,7 +112,8 @@ class Canvas {
   }
 
   /**
-   * Removes the listeners registered on the window and the container, ending any pan in progress.
+   * Removes the listeners registered on the window and the container, ending any pan in progress,
+   * and the workspace SVG from the container: a designer built again on it adds its own.
    */
   dispose(): void {
     if (this._cancelPan) {
@@ -130,6 +131,8 @@ class Canvas {
       this._mouseDownListener = null;
     }
     this._eventsEnabled = false;
+
+    this._workspace._getHtmlContainer().remove();
   }
 
   isReadOnly(): boolean {

@@ -115,7 +115,7 @@ const ExportDialog = ({
     let originalTheme: ThemeType | undefined;
     let backgroundColor = '#ffffff';
 
-    const designer: Designer = globalThis.designer;
+    const designer: Designer | undefined = globalThis.designer;
     // exporting from editor toolbar action
 
     if (designer != null) {

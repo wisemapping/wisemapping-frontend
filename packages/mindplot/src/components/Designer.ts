@@ -796,11 +796,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       return;
     }
 
-    // Expand the parent if collapsed, so the pasted topics are visible right away ...
-    if (parent.areChildrenShrunken()) {
-      this._actionDispatcher.shrinkBranch([parentId], false);
-    }
-
+    // A collapsed parent is expanded by AddTopicCommand, in the same undo step as the paste.
+    // Collapsed children keep their place in the layout, so predict is not affected.
+    //
     // Detach the copied nodes from the clipboard mindmap and let the layout
     // decide where the first one lands under the new parent. None is inserted
     // yet, so the rest follow it in clipboard order: given the same order, each
@@ -854,10 +852,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const mindmap = parentModel.getMindmap();
     const childModel = mindmap.createNode();
 
-    // If node is shink, expand. Through a command, so undo collapses it again ...
-    if (topic.areChildrenShrunken()) {
-      this._actionDispatcher.shrinkBranch([topic.getId()], false);
-    }
+    // A collapsed parent is expanded by AddTopicCommand, in the same undo step as the add.
+    // Collapsed children keep their place in the layout, so predict is not affected.
 
     // Create a new node ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
@@ -1818,7 +1814,11 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       return;
     }
 
-    const position = node.getPosition();
+    // A topic focused before the layout places it (AddTopicCommand) may have no position yet ...
+    const position = node.getPosition() as PositionType | undefined;
+    if (!position) {
+      return;
+    }
     const size = node.getSize();
     const bounds = {
       left: position.x - size.width / 2,
@@ -1844,8 +1844,12 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   /**
    * Releases what the designer registered outside its own objects: the LayoutEventBus handlers
-   * (a module-level bus shared by every designer), the keyboard, the canvas listeners on the
-   * window and the container, and `globalThis.designer` if it still points at this designer.
+   * (a module-level bus shared by every designer), the keyboard, a topic drag in progress, the
+   * canvas listeners on the window and the container, the canvas SVG, and the ActionDispatcher
+   * instance and `globalThis.designer` if they still point at this designer.
+   *
+   * The PersistenceManager instance is kept: MindplotWebComponent saves and unlocks the map
+   * through it after the designer is disposed.
    *
    * The model is left intact, so that the map can still be read and saved (the editor flushes
    * pending changes after the component is removed).
@@ -1877,8 +1881,12 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       this.getContainer().removeEventListener('wheel', this._wheelListener);
       this._wheelListener = null;
     }
+
+    // Read-only designers have no drag manager ...
+    this._dragManager?.cancel();
     this._canvas.dispose();
 
+    ActionDispatcher.clearInstance(this._actionDispatcher);
     if (globalThis.designer === this) {
       Reflect.deleteProperty(globalThis, 'designer');
     }

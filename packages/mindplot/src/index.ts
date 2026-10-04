@@ -54,8 +54,9 @@ import type { CanvasStyleType, BackgroundPatternType } from './components/model/
 
 declare global {
   // Todo: There are some global references that needs to be removed inside mindplot.
+  // Undefined until a designer is built, and again once it is disposed.
   // eslint-disable-next-line vars-on-top
-  var designer: Designer;
+  var designer: Designer | undefined;
 }
 
 // jQuery has been removed - no longer needed
@@ -120,5 +121,10 @@ export { default as SvgIconModel } from './components/model/SvgIconModel';
 export { default as Relationship } from './components/Relationship';
 export type { default as ThemeType } from './components/model/ThemeType';
 export type { ThemeVariant } from './components/theme/Theme';
-export type { PersistenceError, PersistenceErrorCallback } from './components/PersistenceManager';
+export type {
+  PersistenceError,
+  PersistenceErrorCallback,
+  SaveEvents,
+  SaveOptions,
+} from './components/PersistenceManager';
 export type { default as SizeType } from './components/SizeType';
