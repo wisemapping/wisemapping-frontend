@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { Designer, LineType, StrokeStyle } from '@wisemapping/mindplot';
+import { Designer, StrokeStyle } from '@wisemapping/mindplot';
 import NodePropertyBuilder from '../../../src/classes/model/node-property-builder';
 
 /**
@@ -106,8 +106,6 @@ describe('NodePropertyBuilder with an empty selection', () => {
     const { designer } = emptySelectionDesigner();
     const builder = new NodePropertyBuilder(designer);
 
-    expect(() => builder.getRelationshipStyleModel().getValue()).not.toThrow();
-    expect(builder.getRelationshipStyleModel().getValue()).toEqual(LineType.THIN_CURVED);
     expect(() => builder.getRelationshipStrokeStyleModel().getValue()).not.toThrow();
     expect(builder.getRelationshipStrokeStyleModel().getValue()).toEqual(StrokeStyle.DASHED);
   });

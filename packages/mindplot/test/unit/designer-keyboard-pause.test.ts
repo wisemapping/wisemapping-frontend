@@ -41,6 +41,13 @@ const registerOnContainer = (): HTMLDivElement => {
   return container;
 };
 
+/** Drops every pause the previous test left behind: pauses are counted, and nest. */
+const resetPause = (): void => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (DesignerKeyboard as any)._pauseCount = 0;
+  DesignerKeyboard.resume();
+};
+
 const hover = (container: HTMLElement, type: 'mouseenter' | 'mouseleave') =>
   container.dispatchEvent(new MouseEvent(type));
 
@@ -56,7 +63,7 @@ describe('DesignerKeyboard pause', () => {
   beforeEach(() => {
     container = registerOnContainer();
     hover(container, 'mouseenter');
-    DesignerKeyboard.resume();
+    resetPause();
   });
 
   it('stays paused when the pointer enters the canvas while a dialog is open', () => {
@@ -93,9 +100,59 @@ describe('DesignerKeyboard pause', () => {
   });
 });
 
+/**
+ * pause() and resume() come in pairs, and the pairs nest: a pane pauses the
+ * shortcuts and a text field inside it pauses them again while focused. The
+ * field's resume must not bring the shortcuts back while the pane is open.
+ */
+describe('DesignerKeyboard nested pause (BL-36)', () => {
+  let container: HTMLDivElement;
+
+  beforeEach(() => {
+    container = registerOnContainer();
+    hover(container, 'mouseenter');
+    resetPause();
+  });
+
+  it('stays paused until every pause is resumed', () => {
+    DesignerKeyboard.pause(); // the pane opens
+    DesignerKeyboard.pause(); // a text field in it gets the focus
+
+    DesignerKeyboard.resume(); // the text field loses the focus
+    expect(DesignerKeyboard.isDisabled()).toBe(true);
+
+    DesignerKeyboard.resume(); // the pane closes
+    expect(DesignerKeyboard.isDisabled()).toBe(false);
+  });
+
+  it('does not let an extra resume cancel a later pause', () => {
+    DesignerKeyboard.resume();
+    DesignerKeyboard.resume();
+
+    DesignerKeyboard.pause();
+    expect(DesignerKeyboard.isDisabled()).toBe(true);
+
+    DesignerKeyboard.resume();
+    expect(DesignerKeyboard.isDisabled()).toBe(false);
+  });
+
+  it('keeps the hover pause while an outer pause is still held', () => {
+    DesignerKeyboard.pause();
+    DesignerKeyboard.pause();
+    hover(container, 'mouseleave');
+
+    DesignerKeyboard.resume();
+    expect(DesignerKeyboard.isDisabled()).toBe(true);
+
+    // The last resume lifts the hover pause too, as a single resume always did.
+    DesignerKeyboard.resume();
+    expect(DesignerKeyboard.isDisabled()).toBe(false);
+  });
+});
+
 describe('DesignerKeyboard register (BL-37)', () => {
   afterEach(() => {
-    DesignerKeyboard.resume();
+    resetPause();
   });
 
   it('keeps a pause requested before the designer was built', () => {

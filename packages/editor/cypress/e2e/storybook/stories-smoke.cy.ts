@@ -94,9 +94,7 @@ describe('Storybook Editor Components - Tests', () => {
         .click({ force: true });
 
       // Verify bold button reacts to click (toggle state or remains clickable)
-      cy.get('[aria-label*="Bold"]')
-        .first()
-        .should('exist'); // Verifies component is interactive
+      cy.get('[aria-label*="Bold"]').first().should('exist'); // Verifies component is interactive
     });
   });
 
@@ -105,7 +103,9 @@ describe('Storybook Editor Components - Tests', () => {
       visitStory('editor-topiclinkeditor--default');
 
       // Check URL input exists
-      cy.get('input[type="url"], input[placeholder*="URL"], input[placeholder*="url"]').should('exist');
+      cy.get('input[type="url"], input[placeholder*="URL"], input[placeholder*="url"]').should(
+        'exist',
+      );
     });
 
     it('should render with existing URL variant', () => {
@@ -119,13 +119,14 @@ describe('Storybook Editor Components - Tests', () => {
       visitStory('editor-topiclinkeditor--default');
 
       // Type in URL input and verify it accepts input
-      cy.get('input[type="url"], input[placeholder*="URL"], input[placeholder*="url"]', { timeout: 10000 })
+      cy.get('input[type="url"], input[placeholder*="URL"], input[placeholder*="url"]', {
+        timeout: 10000,
+      })
         .first()
         .should('be.visible')
-        .type('https://example.com')
-        .should('have.value', 'https://example.com');
+        .type('https://example.com');
 
-      // Verify the input maintains the value
+      // Verify the input took the value (a new query: chaining after type() is unsafe)
       cy.get('input[type="url"], input[placeholder*="URL"], input[placeholder*="url"]')
         .first()
         .should('have.value', 'https://example.com');
@@ -156,8 +157,10 @@ describe('Storybook Editor Components - Tests', () => {
       cy.get('[role="tablist"]', { timeout: 10000 }).should('be.visible');
 
       // Emoji picker should be rendered by default (first tab)
-      cy.get('.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]', { timeout: 5000 })
-        .should('exist');
+      cy.get(
+        '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
+        { timeout: 5000 },
+      ).should('exist');
     });
 
     it('should display emoji variant', () => {
@@ -167,8 +170,10 @@ describe('Storybook Editor Components - Tests', () => {
       cy.get('[role="tablist"]', { timeout: 10000 }).should('be.visible');
 
       // Emoji tab should be active - look for emoji picker elements
-      cy.get('.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]', { timeout: 5000 })
-        .should('exist');
+      cy.get(
+        '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
+        { timeout: 5000 },
+      ).should('exist');
     });
 
     it('should display image variant', () => {
@@ -226,16 +231,20 @@ describe('Storybook Editor Components - Tests', () => {
       visitStory('editor-iconpicker--default');
 
       // Should have emoji picker visible by default
-      cy.get('.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]', { timeout: 10000 })
-        .should('exist');
+      cy.get(
+        '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
+        { timeout: 10000 },
+      ).should('exist');
     });
 
     it('should display emoji picker variant', () => {
       visitStory('editor-iconpicker--with-emoji');
 
       // Emoji picker should be visible
-      cy.get('.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]', { timeout: 10000 })
-        .should('exist');
+      cy.get(
+        '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
+        { timeout: 10000 },
+      ).should('exist');
     });
 
     it('should trigger action when icon is selected', () => {
@@ -245,9 +254,7 @@ describe('Storybook Editor Components - Tests', () => {
       cy.get('.epr-emoji-category-label, .epr-search', { timeout: 10000 }).should('exist');
 
       // Toggle to show images using the switch (force click because input has opacity: 0)
-      cy.contains('Show images', { timeout: 5000 })
-        .should('exist')
-        .click({ force: true });
+      cy.contains('Show images', { timeout: 5000 }).should('exist').click({ force: true });
 
       // Verify that the emoji picker is no longer visible (switched to images)
       cy.get('.epr-emoji-category-label').should('not.exist');

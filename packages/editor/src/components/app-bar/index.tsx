@@ -566,7 +566,7 @@ const AppBar = ({
     },
     {
       // Renders nothing when no account configuration is provided.
-      render: () => accountConfig as React.ReactElement,
+      render: () => accountConfig,
       visible: !capability.isHidden('account'),
     },
     {

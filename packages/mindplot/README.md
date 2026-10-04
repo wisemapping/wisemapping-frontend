@@ -39,14 +39,20 @@ webComponent.buildDesigner(persistence, widget);
 
 ## Usage with React framework
 
-To use the web component in your JSX code, first you need to register it in the IntrinsicElements interface using provided MindplotWebComponentInterface
+To use the web component in your JSX code, first you need to register it in React's JSX.IntrinsicElements interface using provided MindplotWebComponentInterface
 
 #### TypeScript example
 
-```ts
-import { MindplotWebComponentInterface } from '@wisemapping/mindplot';
+```tsx
+import { useEffect, useRef } from 'react';
+import {
+  LocalStorageManager,
+  MindplotWebComponent,
+  MindplotWebComponentInterface,
+  WidgetBuilder,
+} from '@wisemapping/mindplot';
 
-declare global {
+declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
       ['mindplot-component']: MindplotWebComponentInterface;
@@ -54,22 +60,28 @@ declare global {
   }
 }
 
-const App = ()=>{
-  const mindplotComponent: any = useRef();
+// Your WidgetBuilder subclass, which builds the link and note editors.
+declare const widgetBuilder: WidgetBuilder;
 
-  useEffect(()=>{
-    mindplotComponent.current.buildDesigner();
-    mindplotComponent.current.loadMap("map_id");
-  }, [])
+const App = () => {
+  const mindplotComponent = useRef<MindplotWebComponent>(null);
 
-  return (<div>
-    <mindplot-component
-        ref={mindplotComponent}
-        id="mindmap-comp"
-        mode={options.mode}
-      ></mindplot-component>
-  </div>);
-}
+  useEffect(() => {
+    const component = mindplotComponent.current!;
+    // Loads the map from /maps/<id>.wxml; {id} is replaced by the map id.
+    const persistence = new LocalStorageManager('/maps/{id}.wxml', false, undefined, false);
+    component.buildDesigner(persistence, widgetBuilder);
+    component.loadMap('map_id');
+  }, []);
+
+  // mode is an EditorRenderMode: 'edition-owner', 'edition-editor', 'edition-viewer',
+  // 'viewonly-public', 'viewonly-private' (the default), 'showcase' or 'desktop'.
+  return (
+    <div>
+      <mindplot-component ref={mindplotComponent} id="mindmap-comp" mode="edition-owner" />
+    </div>
+  );
+};
 ```
 
 Check out the examples located in `test/playground/map-render/js` for some hints on high level usage. You can browse them by running `yarn playground`.

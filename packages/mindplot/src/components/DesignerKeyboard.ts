@@ -30,10 +30,12 @@ export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
   private static _instance: DesignerKeyboard | undefined;
 
-  // Paused by the editor (pause()/resume()), e.g. while a dialog is open ...
-  private static _disabled = false;
+  // Pauses held by the editor (pause()/resume()), e.g. while a dialog is open. A count,
+  // not a flag: pauses nest (a text field inside a pane), and the inner resume must not
+  // bring the shortcuts back while the outer pause is still held ...
+  private static _pauseCount = 0;
 
-  // Paused because the pointer left the canvas. Kept apart from _disabled, so
+  // Paused because the pointer left the canvas. Kept apart from _pauseCount, so
   // hovering the canvas does not bring the shortcuts back behind a dialog ...
   private static _outsideCanvas = false;
 
@@ -736,21 +738,27 @@ class DesignerKeyboard extends Keyboard {
     this._outsideCanvas = false;
   }
 
+  /**
+   * Pauses the shortcuts until the matching resume(). Pauses nest: each one must be resumed.
+   */
   static pause() {
-    this._disabled = true;
+    this._pauseCount += 1;
   }
 
   /**
-   * Lifts the editor's pause. As it always did, it lifts the hover pause too, so
-   * the shortcuts work right after a dialog closes, before the pointer moves.
+   * Lifts one pause. When the last one is lifted, as it always did, it lifts the hover pause
+   * too, so the shortcuts work right after a dialog closes, before the pointer moves. An extra
+   * resume() is ignored.
    */
   static resume() {
-    this._disabled = false;
-    this._outsideCanvas = false;
+    this._pauseCount = Math.max(0, this._pauseCount - 1);
+    if (this._pauseCount === 0) {
+      this._outsideCanvas = false;
+    }
   }
 
   static isDisabled() {
-    return this._disabled || this._outsideCanvas;
+    return this._pauseCount > 0 || this._outsideCanvas;
   }
 
   static getInstance() {

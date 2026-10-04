@@ -39,6 +39,9 @@ const buildComponent = () => {
     addEvent: (type: string, handler: Handler) => {
       handlers[type] = [...(handlers[type] || []), handler];
     },
+    removeEvent: (type: string, handler: Handler) => {
+      handlers[type] = (handlers[type] || []).filter((h) => h !== handler);
+    },
     getModel: () => ({ selectedTopic: () => undefined }),
   };
   const component = {
@@ -78,6 +81,34 @@ describe('Editor save', () => {
 
     expect(component.save).toHaveBeenCalledTimes(1);
     expect(component.save).toHaveBeenCalledWith(false);
+  });
+
+  it('cancels a pending autosave when disposed (BL4-57)', () => {
+    jest.useFakeTimers();
+    const { component, fire } = buildComponent();
+    const editor = new Editor(component as unknown as MindplotWebComponent);
+    const capability = { isHidden: () => false } as unknown as Capability;
+
+    editor.registerEvents(jest.fn(), capability, {} as WidgetBuilder);
+    fire('modelUpdate');
+    editor.dispose();
+    jest.advanceTimersByTime(15000);
+
+    expect(component.save).not.toHaveBeenCalled();
+  });
+
+  it('does not autosave on a model update after it is disposed (BL4-57)', () => {
+    jest.useFakeTimers();
+    const { component, fire } = buildComponent();
+    const editor = new Editor(component as unknown as MindplotWebComponent);
+    const capability = { isHidden: () => false } as unknown as Capability;
+
+    editor.registerEvents(jest.fn(), capability, {} as WidgetBuilder);
+    editor.dispose();
+    fire('modelUpdate');
+    jest.advanceTimersByTime(15000);
+
+    expect(component.save).not.toHaveBeenCalled();
   });
 
   it('flushes pending changes as a minor save', async () => {

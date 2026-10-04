@@ -34,6 +34,10 @@ class Editor {
 
   private beforeUnloadHandler: (() => void) | null = null;
 
+  // The debounced autosave and the designer it listens on, released by dispose() ...
+  private autoSave: { designer: Designer; save: (() => void) & { cancel: () => void } } | null =
+    null;
+
   constructor(component: MindplotWebComponent) {
     this.component = component;
   }
@@ -138,6 +142,7 @@ class Editor {
 
         // Debounced autosave triggered by model updates
         // Waits 15 seconds after the last change before saving
+        this.removeAutoSave();
         const debouncedAutoSave = debounce(() => {
           component.save(false).catch((error) => {
             console.error('Autosave failed:', error);
@@ -146,6 +151,7 @@ class Editor {
 
         // Trigger autosave on model updates
         designer.addEvent('modelUpdate', debouncedAutoSave);
+        this.autoSave = { designer, save: debouncedAutoSave };
       }
     }
   }
@@ -188,9 +194,21 @@ class Editor {
     return this.pendingFlushPromise;
   }
 
-  /** Releases the window listeners added by registerEvents. */
+  /**
+   * Releases the listeners added by registerEvents. A pending autosave is dropped, not run: the
+   * caller flushes the pending changes before disposing.
+   */
   dispose(): void {
     this.removeBeforeUnloadHandler();
+    this.removeAutoSave();
+  }
+
+  private removeAutoSave(): void {
+    if (this.autoSave) {
+      this.autoSave.save.cancel();
+      this.autoSave.designer.removeEvent('modelUpdate', this.autoSave.save);
+      this.autoSave = null;
+    }
   }
 
   private removeBeforeUnloadHandler(): void {
