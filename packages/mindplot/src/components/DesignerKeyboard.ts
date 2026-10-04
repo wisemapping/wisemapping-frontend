@@ -28,7 +28,12 @@ export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
   private static _instance: DesignerKeyboard;
 
+  // Paused by the editor (pause()/resume()), e.g. while a dialog is open ...
   private static _disabled: boolean;
+
+  // Paused because the pointer left the canvas. Kept apart from _disabled, so
+  // hovering the canvas does not bring the shortcuts back behind a dialog ...
+  private static _outsideCanvas = false;
 
   private static ALIGNMENT_TOLERANCE = 30;
 
@@ -197,12 +202,12 @@ class DesignerKeyboard extends Keyboard {
 
     designer.getContainer().addEventListener('mouseenter', () => {
       super.resume();
-      DesignerKeyboard.resume();
+      DesignerKeyboard._outsideCanvas = false;
     });
 
     designer.getContainer().addEventListener('mouseleave', () => {
       super.pause();
-      DesignerKeyboard.pause();
+      DesignerKeyboard._outsideCanvas = true;
     });
 
     EventManager.bind(document, 'keypress', (event: Event) => {
@@ -675,18 +680,24 @@ class DesignerKeyboard extends Keyboard {
   static register(designer: Designer) {
     this._instance = new DesignerKeyboard(designer);
     this._disabled = false;
+    this._outsideCanvas = false;
   }
 
   static pause() {
     this._disabled = true;
   }
 
+  /**
+   * Lifts the editor's pause. As it always did, it lifts the hover pause too, so
+   * the shortcuts work right after a dialog closes, before the pointer moves.
+   */
   static resume() {
     this._disabled = false;
+    this._outsideCanvas = false;
   }
 
   static isDisabled() {
-    return this._disabled;
+    return this._disabled || this._outsideCanvas;
   }
 
   static getInstance() {

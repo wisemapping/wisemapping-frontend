@@ -251,11 +251,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const designerModel = this.getModel();
     const dragConnector = new DragConnector(designerModel, this._canvas);
     const dragManager = new DragManager(workspace, this._eventBussDispatcher);
-    const topics = designerModel.getTopics();
 
-    // Enable all mouse events.
+    // Enable all mouse events. Read the topics on each drag: the list changes as topics come and go.
     dragManager.addEvent('startdragging', () => {
-      topics.forEach((topic) => topic.setMouseEventsEnabled(false));
+      designerModel.getTopics().forEach((topic) => topic.setMouseEventsEnabled(false));
     });
 
     dragManager.addEvent('dragging', (event: MouseEvent, dragTopic: DragTopic) => {
@@ -268,7 +267,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     });
 
     dragManager.addEvent('enddragging', (event: MouseEvent, dragTopic: DragTopic) => {
-      topics.forEach((topic) => topic.setMouseEventsEnabled(true));
+      designerModel.getTopics().forEach((topic) => topic.setMouseEventsEnabled(true));
       dragTopic.applyChanges(workspace);
     });
 
@@ -771,11 +770,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       return;
     }
 
-    // Expand the parent if collapsed, so the pasted topics are visible right away ...
-    if (parent.areChildrenShrunken()) {
-      this._actionDispatcher.shrinkBranch([parentId], false);
-    }
-
     const text = await this._readClipboardText();
     if (!text || text.indexOf('</map>') === -1) {
       $notify($msg('CLIPBOARD_IS_EMPTY'));
@@ -788,15 +782,26 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       return;
     }
 
+    // Expand the parent if collapsed, so the pasted topics are visible right away ...
+    if (parent.areChildrenShrunken()) {
+      this._actionDispatcher.shrinkBranch([parentId], false);
+    }
+
     // Detach the copied nodes from the clipboard mindmap and let the layout
-    // decide where each one lands under the new parent ...
+    // decide where the first one lands under the new parent. None is inserted
+    // yet, so the rest follow it in clipboard order: given the same order, each
+    // insert would push the previous ones down and reverse them ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
-    const clones = branches[0].getChildren().map((child) => {
+    const predicted = layoutManager.predict(parentId, null, null);
+    let { order } = predicted;
+    const clones = branches[0].getChildren().map((child, index) => {
       child.disconnect();
       const clone = child.deepCopy();
-      const predicted = layoutManager.predict(parentId, null, null);
+      if (index > 0) {
+        order = layoutManager.getOrderAfter(parentId, order);
+      }
       clone.setPosition(predicted.position.x, predicted.position.y);
-      clone.setOrder(predicted.order);
+      clone.setOrder(order);
       return clone;
     });
 
@@ -835,9 +840,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const mindmap = parentModel.getMindmap();
     const childModel = mindmap.createNode();
 
-    // If node is shink, expand ...
+    // If node is shink, expand. Through a command, so undo collapses it again ...
     if (topic.areChildrenShrunken()) {
-      topic.setChildrenShrunken(false);
+      this._actionDispatcher.shrinkBranch([topic.getId()], false);
     }
 
     // Create a new node ...
@@ -972,7 +977,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         if (position) {
           topic.setPosition(position);
         }
-        if (order !== null) {
+        // No order means the layout does not order this topic: keep the one it has.
+        if (order !== undefined) {
           topic.setOrder(order);
         }
       }
@@ -1460,28 +1466,33 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   removeTopic(node: Topic): void {
     if (!node.isCentralTopic()) {
-      this._clearFocusRecursively(node);
       const parent = node.getParent();
-      // Ensure any inline editors bound to this topic or its descendants are closed before removal
-      node.closeEditors();
-      node.disconnect(this._canvas);
+      this._removeTopicTree(node);
 
-      // remove children
-      while (node.getChildren().length > 0) {
-        this.removeTopic(node.getChildren()[0]);
-      }
-
-      this._canvas.removeChild(node);
-      this.getModel().removeTopic(node);
-
-      // Delete this node from the model...
-      const model = node.getModel();
-      model.deleteNode();
-
+      // Only the removed topic hands the focus over: its descendants are gone with it.
       if (parent) {
         this.goToNode(parent);
       }
     }
+  }
+
+  private _removeTopicTree(node: Topic): void {
+    this._clearFocusRecursively(node);
+    // Ensure any inline editors bound to this topic or its descendants are closed before removal
+    node.closeEditors();
+    node.disconnect(this._canvas);
+
+    // remove children
+    while (node.getChildren().length > 0) {
+      this._removeTopicTree(node.getChildren()[0]);
+    }
+
+    this._canvas.removeChild(node);
+    this.getModel().removeTopic(node);
+
+    // Delete this node from the model...
+    const model = node.getModel();
+    model.deleteNode();
   }
 
   private _resetEdition() {

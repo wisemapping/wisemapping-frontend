@@ -99,9 +99,10 @@ const designerWith = (
   const internals = designer as unknown as DesignerInternals;
   internals._model = model;
   internals._actionDispatcher = actionDispatcher as unknown as StandaloneActionDispatcher;
-  // predict() is the only layout call these paths make.
+  // predict() and getOrderAfter() are the only layout calls these paths make.
+  const getOrderAfter = jest.fn((_parentId: number, order: number) => order + 1);
   internals._eventBussDispatcher = {
-    getLayoutManager: () => ({ predict }) as unknown as LayoutManager,
+    getLayoutManager: () => ({ predict, getOrderAfter }) as unknown as LayoutManager,
   } as unknown as EventBusDispatcher;
   internals._internalClipboard = options.internalClipboard ?? null;
 
@@ -172,6 +173,16 @@ describe('Designer.pasteClipboardAsChild', () => {
     expect(actionDispatcher.shrinkBranch).toHaveBeenCalledWith([20], false);
   });
 
+  it('leaves a collapsed parent alone when there is nothing to paste', async () => {
+    const { designer, actionDispatcher } = designerWith({
+      topics: [topicStub(22, { shrunken: true })],
+    });
+
+    await designer.pasteClipboardAsChild(22);
+
+    expect(actionDispatcher.shrinkBranch).not.toHaveBeenCalled();
+  });
+
   it('leaves an already expanded parent alone', async () => {
     const { designer, actionDispatcher } = designerWith({
       topics: [topicStub(21)],
@@ -218,6 +229,7 @@ describe('Designer.pasteClipboardAsChild', () => {
 
     await designer.pasteClipboardAsChild(40);
 
+    expect(predict).toHaveBeenCalledTimes(1);
     expect(predict).toHaveBeenCalledWith(40, null, null);
     expect(actionDispatcher.addTopics).toHaveBeenCalledTimes(1);
 
@@ -225,8 +237,9 @@ describe('Designer.pasteClipboardAsChild', () => {
     expect(parentIds).toEqual([40, 40]);
     expect(clones).toHaveLength(2);
     expect(clones.map((c) => c.getText())).toEqual(['Copied Node A', 'Copied Node B']);
+    // The first takes the predicted order, the next one the order right after it.
+    expect(clones.map((c) => c.getOrder())).toEqual([5, 6]);
     clones.forEach((clone) => {
-      expect(clone.getOrder()).toBe(5);
       expect(clone.getPosition()).toEqual(predictedPosition);
     });
   });

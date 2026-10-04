@@ -43,6 +43,9 @@ class DesignerModel {
     this._zoom = zoom;
   }
 
+  /**
+   * removeTopic replaces this array, so read it when needed instead of keeping it.
+   */
   getTopics(): Topic[] {
     return this._topics;
   }
