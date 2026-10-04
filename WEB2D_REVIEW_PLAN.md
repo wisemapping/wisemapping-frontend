@@ -297,19 +297,60 @@ module.exports = config;
 
 Expected result: the code is small and mostly pure, so **≥ 85 % lines / 75 % branches** is realistic after targets 1–11. That is about 25 suites and 1–2 days of work.
 
+### 7.3 Visual regression: currently not enforced (added 2026-10-04)
+
+**Finding.** No package compares rendered output today:
+
+- web2d (29 calls), mindplot (16) and editor (234) only call `cy.screenshot(...)`. There are 0 `matchImageSnapshot` calls. The comparison was removed in `4ba7298f` ("Migrate several unmaintained libraries…").
+- The committed `.snap.png` files (web2d 30, mindplot 28, editor 73) are stale baselines that nothing reads.
+- `docker-compose.snapshots.yml`, which `CLAUDE.md` documents, no longer exists.
+- So a Cypress run only proves that a story renders without throwing, plus whatever DOM assertions the spec makes. A visual regression passes.
+
+The "snapshots identical" and "snapshots reviewed" gates in sections 6 and 8 cannot be met until this is fixed. **This is a W0 prerequisite for any web2d code change.**
+
+**Plan (two layers):**
+
+| Layer                                       | What                                                                                                                                                                                                                                                                                                                    | Why                                                                                                                                                                                                               |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. SVG golden tests (Jest, primary)**     | For each element, style and orientation, render with web2d into jsdom, serialize the resulting `<svg>` with sorted attributes and numbers rounded to 2 decimals, and compare with a committed `.svg` golden file (`toMatchSnapshot` or `__goldens__/*.svg`).                                                            | Deterministic and host-independent. It runs in `yarn test:unit` and catches any change to paths, attributes, transforms or viewBox. A diff is readable markup, and the golden files open in a browser for review. |
+| **2. Pixel snapshots (Cypress, secondary)** | Restore image comparison: a maintained plugin (`@simonsmith/cypress-image-snapshot`) with a small threshold, run in a pinned Docker image (Cypress base image with fixed fonts). Recreate `docker-compose.snapshots.yml` (verify + update) and regenerate all baselines once from the current `develop`. Gate CI on it. | Catches what markup can't: fonts, anti-aliasing, CSS, and the mindplot/editor integration. Docker removes host font differences.                                                                                  |
+
+**Missing render examples** (each needs a story, a Cypress spec, and SVG golden cases):
+
+| Element / case                                                                     | Story   | Cypress spec | Notes                                                           |
+| ---------------------------------------------------------------------------------- | ------- | ------------ | --------------------------------------------------------------- |
+| `Arrow`                                                                            | missing | missing      | W-ARROWDASH; wings at ±45°; `y = 0` case                        |
+| `HeartbeatLine`, `NeuronLine`                                                      | missing | missing      | Short and zero length; width change (W-STALEPATH)               |
+| `Image`                                                                            | missing | missing      | Size, href, positioning                                         |
+| `ArcLine`                                                                          | exists  | missing      |                                                                 |
+| `CurvedLine` vertical / near-vertical, widths ≥ 1                                  | partial | partial      | W-TAPER, W-DEFCP, W-CTRLFLAG (custom vs default control points) |
+| `PolyLine` vertical orientation, all styles                                        | partial | partial      | W-VCURVE, W-HCURVE                                              |
+| `Text`: CRLF, empty, trailing newline, fonts and weights, after a workspace resize | partial | partial      | W-HTMLFONT and the text rows                                    |
+| `Workspace`: fractional zoom and origin, pan accumulation                          | partial | partial      | W-VIEWBOX                                                       |
+| Element events, visibility                                                         | exists  | missing      | W-EVTMAP                                                        |
+
+**Gate.**
+
+- W0 is done when:
+  - every row above has golden cases;
+  - pixel snapshots run in Docker and pass on `develop`;
+  - `yarn test:unit` includes the golden suite.
+- From W1 on, every PR that changes rendering must update the golden files and the pixel baselines in the same commit, with the diff reviewed.
+- W2 (VML clean-up) must leave **both** layers unchanged.
+
 ---
 
 ## 8. Suggested rollout
 
-| Phase                                | Scope                                                                                                                                                                   | Size | Gate                                                                                                            |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- | --------------------------------------------------------------------------------------------------------------- |
-| **W0: Tooling**                      | Jest config, `test/setup.ts`, scripts, devDependencies, delete `__tests__`, characterization suite, thresholds at the measured baseline                                 | XS   | `yarn test:unit` runs web2d in pre-push and CI                                                                  |
-| **W1: Bugs**                         | W-CTRLFLAG (with the mindplot `Relationship` change), W-VIEWBOX, W-EVTMAP, W-HTMLFONT, W-VCURVE, W-TAPER, then the L rows in 3.3–3.5. Each has a test that fails first. | S    | mindplot unit and Cypress green; changed snapshots reviewed one by one                                          |
-| **W2: Performance and VML clean-up** | Delete the broadcast, `Toolkit`, meaningless attributes and dead APIs; `attr()` cache, tspan reuse, measurement cache, path dirty-flag                                  | S    | Benchmark: 1000-group build visits 6 M → 0; 0 attribute writes on an unchanged text redraw; snapshots identical |
-| **W3: Geometry module**              | Extract `geometry/` as pure functions; peers delegate to it                                                                                                             | S    | Characterization tests identical; geometry ≥ 95 % covered                                                       |
-| **W4: Typing and collapse**          | T1–T8; collapse Element/Peer class by class with a `peer` compatibility getter; migrate mindplot's 6 `.peer` sites and 13 stroke strings                                | M    | `noImplicitOverride` and `verbatimModuleSyntax` on; mindplot `tsc` green; `.d.ts` diff reviewed                 |
-| **W5: Modern APIs**                  | `dispose()`/`AbortController`, `ResizeObserver`, `getScreenCTM`-based `clientToWorld()`, a Pointer Events pass-through, CSS classes for states                          | M    | mindplot Cypress green; Designer dispose unblocked                                                              |
-| **W6: Optional**                     | `isolatedDeclarations`, Storybook stories in TypeScript (`checkJs` 116), camera-`<g>` zoom redesign together with mindplot                                              | M    | —                                                                                                               |
+| Phase                                | Scope                                                                                                                                                                                                                                        | Size | Gate                                                                                                            |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- | --------------------------------------------------------------------------------------------------------------- |
+| **W0: Tooling**                      | Jest config, `test/setup.ts`, scripts, devDependencies, delete `__tests__`, characterization suite, thresholds at the measured baseline, **SVG golden tests and restored pixel snapshots in Docker, plus the missing render examples (7.3)** | M    | `yarn test:unit` green with the golden suite; pixel snapshots in Docker pass on `develop`                       |
+| **W1: Bugs**                         | W-CTRLFLAG (with the mindplot `Relationship` change), W-VIEWBOX, W-EVTMAP, W-HTMLFONT, W-VCURVE, W-TAPER, then the L rows in 3.3–3.5. Each has a test that fails first.                                                                      | S    | mindplot unit and Cypress green; changed snapshots reviewed one by one                                          |
+| **W2: Performance and VML clean-up** | Delete the broadcast, `Toolkit`, meaningless attributes and dead APIs; `attr()` cache, tspan reuse, measurement cache, path dirty-flag                                                                                                       | S    | Benchmark: 1000-group build visits 6 M → 0; 0 attribute writes on an unchanged text redraw; snapshots identical |
+| **W3: Geometry module**              | Extract `geometry/` as pure functions; peers delegate to it                                                                                                                                                                                  | S    | Characterization tests identical; geometry ≥ 95 % covered                                                       |
+| **W4: Typing and collapse**          | T1–T8; collapse Element/Peer class by class with a `peer` compatibility getter; migrate mindplot's 6 `.peer` sites and 13 stroke strings                                                                                                     | M    | `noImplicitOverride` and `verbatimModuleSyntax` on; mindplot `tsc` green; `.d.ts` diff reviewed                 |
+| **W5: Modern APIs**                  | `dispose()`/`AbortController`, `ResizeObserver`, `getScreenCTM`-based `clientToWorld()`, a Pointer Events pass-through, CSS classes for states                                                                                               | M    | mindplot Cypress green; Designer dispose unblocked                                                              |
+| **W6: Optional**                     | `isolatedDeclarations`, Storybook stories in TypeScript (`checkJs` 116), camera-`<g>` zoom redesign together with mindplot                                                                                                                   | M    | —                                                                                                               |
 
 W0 must come first. W1 and W2 can run in parallel. W3 must come before W4, because collapsing the classes is easier once the math is out. W-CTRLFLAG must land together with its mindplot counterpart.
 
