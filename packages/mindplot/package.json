@@ -38,7 +38,7 @@
     "storybook": "STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p ${PORT:-6006} --quiet",
     "test": "yarn test:unit && yarn test:integration",
     "test:integration": "PORT=6107 node ../../scripts/run-storybook-cypress.js",
-    "test:unit": "jest ./test/unit/**/*.test.ts --verbose --silent --detectOpenHandles"
+    "test:unit": "jest ./test/unit --coverage --silent --detectOpenHandles"
   },
   "dependencies": {
     "@wisemapping/web2d": "*",

@@ -29,6 +29,14 @@ const config = {
     '^@wisemapping/web2d$': '<rootDir>/../web2d/src/index.ts',
     '^@wisemapping/web2d/(.*)$': '<rootDir>/../web2d/src/$1',
   },
+  // Unit tests only: Cypress specs and the legacy bundle test run elsewhere.
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/cypress/', '/__tests__/'],
+  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts', '!src/index.ts'],
+  coverageReporters: ['text-summary', 'lcov', 'json-summary'],
+  // Baseline as of 2026-10-04. Ratchet these up as coverage improves; never lower them.
+  coverageThreshold: {
+    global: { statements: 38, branches: 33, functions: 34, lines: 37 },
+  },
 };
 
 module.exports = config;

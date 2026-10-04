@@ -51,3 +51,6 @@ packages/**/yalc.lock
 
 # Yarn pack
 *.tgz
+
+# Test coverage reports
+coverage/
