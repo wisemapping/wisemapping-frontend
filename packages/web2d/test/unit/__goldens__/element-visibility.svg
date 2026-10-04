@@ -1,0 +1,7 @@
+<svg focusable="true" height="400" preserveAspectRatio="none" viewBox="-200 -200 400 400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rect fill="green" height="60" rx="0" ry="0" stroke="black" stroke-dasharray="" stroke-linecap="" stroke-width="1" style="opacity: 0; transition: visibility 300ms, opacity 300ms;" visibility="hidden" width="60" x="-150" y="-150"/>
+  <ellipse cx="0" cy="0" fill="blue" height="60" rx="30" ry="30" stroke="black" stroke-dasharray="" stroke-linecap="" stroke-width="1" style="opacity: 1;" visibility="visible" width="60"/>
+  <g focusable="true" height="100" opacity="0.5" preserveAspectRatio="none" style="opacity: 1;" transform="translate(50,50) scale(1,1)" visibility="visible" width="100">
+    <rect fill="green" height="100" rx="0" ry="0" stroke="black" stroke-dasharray="" stroke-linecap="" stroke-width="1" width="100" x="0" y="0"/>
+  </g>
+</svg>

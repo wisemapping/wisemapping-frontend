@@ -1,0 +1,8 @@
+<svg focusable="true" height="400" preserveAspectRatio="none" viewBox="-200 -200 400 400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M0,0  C12.5,0 ,100,0  100,100 " fill="none" fill-opacity="0" stroke="blue" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="2"/>
+  <path d="M0,0  C-12.5,0 ,-100,0  -100,-100 " fill="none" fill-opacity="0" stroke="blue" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="2"/>
+  <path d="M0,0  C12.5,0 ,100,0  100,-100 " fill="none" fill-opacity="0" stroke="blue" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="2"/>
+  <path d="M0,0  C-12.5,0 ,-100,0  -100,100 " fill="none" fill-opacity="0" stroke="blue" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="2"/>
+  <path d="M0,0  C-12.5,0 ,-100,0  -100,0 " fill="none" fill-opacity="0" stroke="blue" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="2"/>
+  <path d="M0,0  C12.5,0 ,100,0  100,0 " fill="none" fill-opacity="0" stroke="blue" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="2"/>
+</svg>

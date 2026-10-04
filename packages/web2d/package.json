@@ -33,7 +33,8 @@
     "storybook": "STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p ${PORT:-6006} --quiet",
     "test": "yarn test:unit && yarn test:integration",
     "test:integration": "PORT=6106 node ../../scripts/run-storybook-cypress.js",
-    "test:unit": "jest ./test/unit --coverage --silent"
+    "test:unit": "jest ./test/unit --coverage --silent",
+    "test:unit:update-goldens": "UPDATE_GOLDENS=1 jest ./test/unit/goldens.test.ts"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^8.0.1",
