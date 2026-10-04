@@ -83,3 +83,26 @@ describe('CentralTopic.updateTopicShape', () => {
     expect(spy).toHaveBeenCalled();
   });
 });
+
+describe('Topic.updateTopicShape for legacy image topics', () => {
+  it("reports the 'image' type, so a redraw keeps the same inner shape", () => {
+    const { mindmap, child, canvas } = buildTopics();
+    child.setShapeType('image');
+    expect(child.getShapeType()).toBe('image');
+
+    const innerShape = child.getInnerShape();
+    expect(innerShape.getShapeType()).toBe('image');
+    expect(child.updateTopicShape()).toBe(false);
+
+    const grandChildModel = mindmap.createNode('MainTopic', 3);
+    grandChildModel.setPosition(350, 0);
+    const grandChild = new MainTopic(grandChildModel, { readOnly: true }, 'light');
+    grandChild.addToWorkspace(canvas);
+    grandChild.connectTo(child, canvas);
+
+    const spy = jest.spyOn(grandChild, 'redraw');
+    child.redraw(child.getThemeVariant(), false);
+    expect(child.getInnerShape()).toBe(innerShape);
+    expect(spy).not.toHaveBeenCalled();
+  });
+});

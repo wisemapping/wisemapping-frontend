@@ -22,6 +22,14 @@ import TopicShape from './TopicShape';
 class NoneTopicShape implements TopicShape {
   private _size: SizeType | undefined;
 
+  private _shapeType: TopicShapeType;
+
+  // Legacy 'image' topics draw no shape either, but must report their own type:
+  // Topic.updateTopicShape rebuilds the shape whenever the types differ.
+  constructor(shapeType: TopicShapeType = 'none') {
+    this._shapeType = shapeType;
+  }
+
   setSize(width: number, height: number): void {
     // Ignore ...
     this._size = { width, height };
@@ -64,7 +72,7 @@ class NoneTopicShape implements TopicShape {
   }
 
   getShapeType(): TopicShapeType {
-    return 'none';
+    return this._shapeType;
   }
 }
 

@@ -21,7 +21,6 @@ import { $assert, $defined } from './util/assert';
 import Topic from './Topic';
 import Shape from './util/Shape';
 import Canvas from './Canvas';
-import SizeType from './SizeType';
 import PositionType from './PositionType';
 import TopicShapeFactory from './shape/TopicShapeFactory';
 
@@ -72,15 +71,11 @@ class MainTopic extends Topic {
     innerShape.setVisibility(true);
   }
 
-  updatePositionOnChangeSize(oldSize: SizeType, newSize: SizeType) {
-    const xOffset = Math.round((newSize.width - oldSize.width) / 2);
+  updatePositionOnChangeSize(): void {
+    // Re-centre the topic on its model position. The layout manager, which owns
+    // positions, moves it if the new size needs it.
     const pos = this.getPosition();
     if ($defined(pos)) {
-      if (pos.x > 0) {
-        pos.x += xOffset;
-      } else {
-        pos.x -= xOffset;
-      }
       this.setPosition(pos);
     }
   }

@@ -634,7 +634,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
           if (enableImageSupport) {
             // Create image blob ...
-            const workspace = globalThis.designer.getWorkSpace();
+            const workspace = this.getWorkSpace();
             const svgElement = workspace.getSVGElement();
             const size = { width: window.innerWidth, height: window.innerHeight };
 

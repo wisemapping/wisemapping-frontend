@@ -66,6 +66,9 @@ abstract class Topic extends NodeGraph {
 
   private _isInWorkspace: boolean;
 
+  /** The canvas the topic was added to. Each Designer has its own. */
+  private _workspace: Canvas | null;
+
   private _children: Topic[];
 
   private _parent: Topic | null;
@@ -101,6 +104,7 @@ abstract class Topic extends NodeGraph {
     this._parent = null;
     this._relationships = [];
     this._isInWorkspace = false;
+    this._workspace = null;
     this._innerShape = null;
     this._themeVariant = themeVariant;
     this._orientation = orientation;
@@ -1062,8 +1066,8 @@ abstract class Topic extends NodeGraph {
     };
 
     // Note: oldSize is the live size object, so it already holds the new size once
-    // super.setSize() runs. Topics are re-centred on their model position and the
-    // layout manager, which owns positions, moves them if needed.
+    // super.setSize() runs. Read it only before that. Topics are re-centred on their
+    // model position and the layout manager, which owns positions, moves them if needed.
     const oldSize = this.getSize();
     const hasSizeChanged =
       oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;
@@ -1076,7 +1080,7 @@ abstract class Topic extends NodeGraph {
       innerShape.setSize(roundedSize.width, roundedSize.height);
 
       // Update the figure position(ej: central topic must be centered) and children position.
-      this.updatePositionOnChangeSize(oldSize, roundedSize);
+      this.updatePositionOnChangeSize();
 
       if (hasSizeChanged) {
         LayoutEventBus.fireEvent('topicResize', {
@@ -1217,6 +1221,7 @@ abstract class Topic extends NodeGraph {
       workspace.removeChild(line);
     }
     this._isInWorkspace = false;
+    this._workspace = null;
     LayoutEventBus.fireEvent('topicRemoved', this.getModel());
   }
 
@@ -1237,6 +1242,7 @@ abstract class Topic extends NodeGraph {
       }
     }
     this._isInWorkspace = true;
+    this._workspace = workspace;
     this.redraw(this.getThemeVariant(), false);
   }
 
@@ -1258,14 +1264,14 @@ abstract class Topic extends NodeGraph {
 
   private updateConnection(): boolean {
     let result = false;
-    if (this._isInWorkspace) {
+    const workspace = this._workspace;
+    if (this._isInWorkspace && workspace) {
       if (this._outgoingLine) {
         // Has the style change ?
         const connStyleChanged =
           this._outgoingLine.getLineType() !== this.getParent()!.getConnectionStyle();
 
         if (connStyleChanged) {
-          const workspace = designer.getWorkSpace();
           this._outgoingLine.removeFromWorkspace(workspace);
 
           const targetTopic = this.getOutgoingConnectedTopic()!;
@@ -1541,7 +1547,7 @@ abstract class Topic extends NodeGraph {
 
   abstract workoutIncomingConnectionPoint(position: PositionType): PositionType;
 
-  protected abstract updatePositionOnChangeSize(oldSize: SizeType, roundedSize: SizeType): void;
+  protected abstract updatePositionOnChangeSize(): void;
 }
 
 export default Topic;
