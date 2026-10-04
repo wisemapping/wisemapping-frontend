@@ -31,8 +31,9 @@
     "dev": "vite build --watch",
     "lint": "npx eslint src --ext js,ts",
     "storybook": "STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p ${PORT:-6006} --quiet",
-    "test": "yarn test:integration",
-    "test:integration": "PORT=6106 node ../../scripts/run-storybook-cypress.js"
+    "test": "yarn test:unit && yarn test:integration",
+    "test:integration": "PORT=6106 node ../../scripts/run-storybook-cypress.js",
+    "test:unit": "jest ./test/unit --coverage --silent"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^8.0.1",
