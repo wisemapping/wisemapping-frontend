@@ -337,11 +337,31 @@ describe('Storybook Editor Components - Tests', () => {
       // Should have a table with keyboard shortcuts
       cy.get('table', { timeout: 10000 }).should('be.visible');
 
-      // Table should have headers - at least 3 (Action, Windows/Linux, Mac OS X)
-      cy.get('table thead tr th').should('have.length.at.least', 3);
+      // Action plus one key column. Windows/Linux and Mac used to be shown side
+      // by side, so half the table was always for someone else's keyboard.
+      cy.get('table thead tr th').should('have.length', 2);
 
       // Verify Action header exists
       cy.get('table thead').should('contain.text', 'Action');
+    });
+
+    it('should render only the running platform column', () => {
+      visitStory('editor-keyboardshortcuthelp--default');
+
+      cy.get('table thead', { timeout: 10000 }).should('be.visible');
+      cy.window().then((win) => {
+        const platform =
+          (win.navigator as Navigator & { userAgentData?: { platform?: string } }).userAgentData
+            ?.platform ??
+          win.navigator.platform ??
+          '';
+        const isMac = platform.toUpperCase().includes('MAC');
+
+        cy.get('table thead').should('contain.text', isMac ? 'Mac OS X' : 'Windows - Linux');
+        cy.get('table thead').should('not.contain.text', isMac ? 'Windows - Linux' : 'Mac OS X');
+        // Select-all is Ctrl+A or Cmd+A, so the modifier tracks the platform.
+        cy.get('table tbody').should('contain.text', isMac ? '\u2318' : 'Ctrl');
+      });
     });
 
     it('should display multiple shortcuts', () => {
@@ -365,8 +385,8 @@ describe('Storybook Editor Components - Tests', () => {
         expect(total, 'shortcuts across all categories').to.be.at.least(15);
       });
 
-      // Verify some shortcut content is visible (e.g., "Ctrl" or "⌘")
-      cy.get('table tbody').should('contain.text', 'Ctrl');
+      // The modifier shown depends on the platform, so it is asserted in the
+      // platform-column test rather than pinned to 'Ctrl' here.
     });
 
     it('should draw each key as its own cap', () => {
