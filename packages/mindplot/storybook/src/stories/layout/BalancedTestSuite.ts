@@ -454,7 +454,9 @@ class BalancedTestSuite extends TestSuite {
         prediction3a.position.y > manager.find(2).getPosition().y,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction3a.order === 4, 'Prediction order should be 4');
+    // Node 1 is detached before it is connected again, so node 2 shifts to order 0 and
+    // order 2 places node 1 right after it.
+    $assert(prediction3a.order === 2, 'Prediction order should be 2');
 
     const prediction3b = manager.predict(0, 1, { x: 50, y: -50 });
     this._plotPrediction(graph3, prediction3b);
