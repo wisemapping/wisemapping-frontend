@@ -25,6 +25,7 @@ import TopicConfig from './TopicConfig';
 import ArcLine from './model/ArcLine';
 import BaseConnectionLine, { LineType } from './BaseConnectionLine';
 import Canvas from './Canvas';
+import { sideOf } from './util/side';
 
 export { LineType };
 
@@ -262,7 +263,8 @@ class TopicConnection extends BaseConnectionLine {
       }
       y -= offset;
 
-      if (Math.sign(parentPosition.x) > 0) {
+      // A parent at x === 0 lays its children out on the right, so the connector goes there too.
+      if (sideOf(parentPosition.x) > 0) {
         x = parentTopicSize.width;
       } else {
         x = -TopicConfig.CONNECTOR_WIDTH;

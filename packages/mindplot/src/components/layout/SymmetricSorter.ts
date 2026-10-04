@@ -20,6 +20,7 @@ import AbstractBasicSorter from './AbstractBasicSorter';
 import RootedTreeSet from './RootedTreeSet';
 import Node from './Node';
 import PositionType from '../PositionType';
+import { sideOf } from '../util/side';
 
 class SymmetricSorter extends AbstractBasicSorter {
   /**
@@ -316,15 +317,16 @@ class SymmetricSorter extends AbstractBasicSorter {
    * @param treeSet
    * @param child
    * @return direction of the given child from its parent or from the root node, if isolated */
-  getChildDirection(treeSet: RootedTreeSet, child: Node) {
+  getChildDirection(treeSet: RootedTreeSet, child: Node): 1 | -1 {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(treeSet.getParent(child), 'This should not happen');
 
-    let result;
+    let result: 1 | -1;
     const rootNode = treeSet.getRootNode(child);
     if (treeSet.getParent(child) === rootNode) {
       // This is the case of a isolated child ... In this case, the directions is based on the root.
-      result = Math.sign(rootNode.getPosition().x);
+      // Not Math.sign: it is 0 for a root at x === 0, which stacked its children on top of it.
+      result = sideOf(rootNode.getPosition().x);
     } else {
       // if this is not the case, honor the direction of the parent ...
       const parent = treeSet.getParent(child)!;

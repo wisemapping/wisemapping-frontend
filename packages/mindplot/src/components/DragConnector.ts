@@ -22,6 +22,7 @@ import SizeType from './SizeType';
 import Topic from './Topic';
 import Canvas from './Canvas';
 import PositionType from './PositionType';
+import { sideOf } from './util/side';
 
 class DragConnector {
   private _designerModel: DesignerModel;
@@ -95,12 +96,14 @@ class DragConnector {
       // Filter all the nodes that are outside the horizontal boundary:
       //  * The node is to out of the x scope
       //  * The x distance greater the tolerated distance
+      // Not Math.sign: at x === 0 it zeroed the distance and left no candidates.
+      const side = sideOf(sPos.x);
       topics = topics.filter((topic: Topic) => {
         const tpos = topic.getPosition();
         // Center topic has different alignment than the rest of the nodes.
         // That's why i need to divide it by two...
-        const txborder = tpos.x + (topic.getSize().width / 2) * Math.sign(sPos.x);
-        const distance = (sPos.x - txborder) * Math.sign(sPos.x);
+        const txborder = tpos.x + (topic.getSize().width / 2) * side;
+        const distance = (sPos.x - txborder) * side;
         return distance > 0 && distance < DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE;
       });
     }

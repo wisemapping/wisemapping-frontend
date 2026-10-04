@@ -86,12 +86,8 @@ class Relationship extends BaseConnectionLine {
     this._focusShape.setIsSrcControlPointCustom(false);
     this._focusShape.setIsDestControlPointCustom(false);
     // Focus shape is barely visible but always present for event handling
-    this._focusShape.setVisibility(true);
-    this._focusShape.setOpacity(0.01); // Barely visible so it gets rendered
+    this.showHitShape();
     this._focusShape.setCursor('pointer');
-
-    // Critical: Use thick stroke (12px) to ensure coverage of gaps in dotted line
-    this._focusShape.setStroke(12, 'solid', '#3f96ff');
     this._focusShape.setFill('none', 1);
     this._focusShape.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
 
@@ -217,14 +213,15 @@ class Relationship extends BaseConnectionLine {
     // Apply stroke style only once at the end of redraw
     this._applyStrokeStyle(this._model.getStrokeStyle());
 
-    this._line.moveToFront();
+    // Relationships are kept below topics (see addToWorkspace). Raising the line or
+    // the focus shape here would put them on top of every topic on each redraw, and
+    // a relationship crossing a topic would then take the topic's clicks.
     this._startArrow.moveToBack();
     this._endArrow.moveToBack();
 
     this._endArrow.setVisibility(this.isVisible() && this._showEndArrow);
     this._startArrow.setVisibility(this.isVisible() && this._showStartArrow);
 
-    this._focusShape.moveToFront();
     this._controlPointsController.redraw();
   }
 
@@ -262,6 +259,7 @@ class Relationship extends BaseConnectionLine {
 
     if (workspace.isReadOnly()) {
       this._line.setCursor('default');
+      this._focusShape.setCursor('default');
     } else {
       this._line.addEvent('click', this._onFocusHandler);
       this._focusShape.addEvent('click', this._onFocusHandler);
@@ -465,9 +463,9 @@ class Relationship extends BaseConnectionLine {
         this._focusStartArrow.moveToBack();
         this._focusEndArrow.moveToBack();
       } else {
-        // Completely hide focus shape when unfocusing
-        this._focusShape.setVisibility(false);
-        this._focusShape.setOpacity(0);
+        // Back to the barely visible hit shape: hiding it would leave only the 2px
+        // line clickable.
+        this.showHitShape();
 
         // Hide focus arrows
         this._focusStartArrow.setVisibility(false);
@@ -478,6 +476,18 @@ class Relationship extends BaseConnectionLine {
       this._onFocus = focus;
       this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
     }
+  }
+
+  /**
+   * Puts the focus shape in its unfocused state: a 12px stroke, barely visible but
+   * rendered, so that clicks near the line (or in the gaps of a dashed or dotted
+   * stroke) still reach the relationship.
+   */
+  private showHitShape(): void {
+    this._focusShape.setVisibility(true);
+    this._focusShape.setOpacity(0.01); // Barely visible so it gets rendered
+    // Critical: Use thick stroke (12px) to ensure coverage of gaps in dotted line
+    this._focusShape.setStroke(12, 'solid', '#3f96ff');
   }
 
   private positionRefreshShape(): void {
@@ -544,8 +554,9 @@ class Relationship extends BaseConnectionLine {
     // Hide on focus shade when relationship is hidden
     this._endArrow.setVisibility(this._showEndArrow && value);
     this._startArrow.setVisibility(this._showStartArrow && value, fade);
-    // Focus shape should only be visible when focused AND relationship is visible
-    this._focusShape.setVisibility(false);
+    // The focus shape is the hit area of the relationship: present whenever the
+    // relationship is visible.
+    this._focusShape.setVisibility(value);
   }
 
   setOpacity(opacity: number): void {

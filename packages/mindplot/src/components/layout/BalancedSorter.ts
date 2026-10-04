@@ -20,6 +20,7 @@ import PositionType from '../PositionType';
 import AbstractBasicSorter from './AbstractBasicSorter';
 import Node from './Node';
 import RootedTreeSet from './RootedTreeSet';
+import { sideOf } from '../util/side';
 
 class BalancedSorter extends AbstractBasicSorter {
   private static INTERNODE_VERTICAL_PADDING = 5;
@@ -49,7 +50,8 @@ class BalancedSorter extends AbstractBasicSorter {
       const left = this._getChildrenForOrder(parent, graph, 1);
       order = right.length - left.length > 0 ? 1 : 0;
     } else {
-      order = position.x > rootNode.getPosition().x ? 0 : 1;
+      // Same rule as _getRelativeDirection above: the root's own x is the right side.
+      order = sideOf(position.x, rootNode.getPosition().x) > 0 ? 0 : 1;
     }
 
     const direction = order % 2 === 0 ? 1 : -1;
@@ -95,11 +97,12 @@ class BalancedSorter extends AbstractBasicSorter {
       }
     });
 
-    // Position wasn't below any node, so it must be inserted above
+    // Position wasn't below any node, so it must be inserted above. On the side
+    // computed above (against the root, not the origin), which `children` are from.
     if (!result) {
       const first = children[0];
       result = [
-        position.x > 0 ? 0 : 1,
+        order,
         {
           x: first.getPosition().x,
           y:

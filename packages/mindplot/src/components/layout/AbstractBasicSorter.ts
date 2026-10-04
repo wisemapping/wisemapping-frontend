@@ -19,6 +19,7 @@ import PositionType from '../PositionType';
 import ChildrenSorterStrategy from './ChildrenSorterStrategy';
 import Node from './Node';
 import RootedTreeSet from './RootedTreeSet';
+import { sideOf } from '../util/side';
 
 abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
   private INTERNODE_VERTICAL_PADDING = 5;
@@ -67,8 +68,7 @@ abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
   }
 
   protected _getRelativeDirection(reference: PositionType, position: PositionType): 1 | -1 {
-    const offset = position.x - reference.x;
-    return offset >= 0 ? 1 : -1;
+    return sideOf(position.x, reference.x);
   }
 }
 
