@@ -20,9 +20,17 @@ import PositionType from '../../PositionType';
 import ElementPeer from './ElementPeer';
 
 class CurvedLinePeer extends ElementPeer {
+  // Whether the user placed the control point. Only set through setIs*ControlPointCustom: the
+  // setters below also take default points, which must not be reported as custom ...
   private _customControlPoint_1: boolean;
 
   private _customControlPoint_2: boolean;
+
+  // Whether the control point was given through a setter. Until then it is worked out from the
+  // ends of the line ...
+  private _fixedControlPoint_1: boolean;
+
+  private _fixedControlPoint_2: boolean;
 
   private _control1: PositionType;
 
@@ -47,6 +55,8 @@ class CurvedLinePeer extends ElementPeer {
     super(svgElement);
     this._customControlPoint_1 = false;
     this._customControlPoint_2 = false;
+    this._fixedControlPoint_1 = false;
+    this._fixedControlPoint_2 = false;
     this._control1 = { x: 0, y: 0 };
     this._control2 = { x: 0, y: 0 };
     this._showEndArrow = false;
@@ -60,7 +70,7 @@ class CurvedLinePeer extends ElementPeer {
   }
 
   setSrcControlPoint(control: PositionType): void {
-    this._customControlPoint_1 = true;
+    this._fixedControlPoint_1 = true;
     const change = this._control1.x !== control.x || this._control1.y !== control.y;
     if (control) {
       this._control1 = { ...control };
@@ -71,7 +81,7 @@ class CurvedLinePeer extends ElementPeer {
   }
 
   setDestControlPoint(control: PositionType): void {
-    this._customControlPoint_2 = true;
+    this._fixedControlPoint_2 = true;
     const change = this._control2.x !== control.x || this._control2.y !== control.y;
     if (control) {
       this._control2 = { ...control };
@@ -236,11 +246,11 @@ class CurvedLinePeer extends ElementPeer {
       { x: this._x1, y: this._y1 },
       { x: this._x2, y: this._y2 },
     );
-    if (!this._customControlPoint_1 && !avoidControlPointFix) {
+    if (!this._customControlPoint_1 && !this._fixedControlPoint_1 && !avoidControlPointFix) {
       this._control1.x = defaultpoints[0]!.x;
       this._control1.y = defaultpoints[0]!.y;
     }
-    if (!this._customControlPoint_2 && !avoidControlPointFix) {
+    if (!this._customControlPoint_2 && !this._fixedControlPoint_2 && !avoidControlPointFix) {
       this._control2.x = defaultpoints[1]!.x;
       this._control2.y = defaultpoints[1]!.y;
     }

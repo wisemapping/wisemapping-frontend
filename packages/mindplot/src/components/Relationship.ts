@@ -19,7 +19,7 @@ import { Arrow, CurvedLine } from '@wisemapping/web2d';
 import type { Line } from '@wisemapping/web2d';
 import BaseConnectionLine, { LineType } from './BaseConnectionLine';
 import ArcLine from './model/ArcLine';
-import RelationshipControlPoints from './RelationshipControlPoints';
+import RelationshipControlPoints, { PivotType } from './RelationshipControlPoints';
 import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
 import PositionType from './PositionType';
 import Topic from './Topic';
@@ -121,10 +121,8 @@ class Relationship extends BaseConnectionLine {
     this._isInWorkspace = false;
     this._controlPointsController = new RelationshipControlPoints(this);
 
-    // For all relationships, use default curved behavior to apply new pattern
-    // This ensures both new and existing relationships follow the new control point pattern
-    this._line.setIsSrcControlPointCustom(false);
-    this._line.setIsDestControlPointCustom(false);
+    // Control points placed by the user are stored in the model. The others follow the topics ...
+    this.applyModelControlPoints();
 
     // Reposition all nodes ...
     this.updatePositions();
@@ -186,7 +184,9 @@ class Relationship extends BaseConnectionLine {
     let ctrlPoints: [PositionType, PositionType];
 
     // Position line ...
-    if (!line2d.isDestControlPointCustom() && !line2d.isSrcControlPointCustom()) {
+    const srcCustom = line2d.isSrcControlPointCustom();
+    const destCustom = line2d.isDestControlPointCustom();
+    if (!destCustom && !srcCustom) {
       // Use default control points and basic connection points
       ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos) as [PositionType, PositionType];
       line2d.setFrom(sPos.x, sPos.y);
@@ -194,6 +194,19 @@ class Relationship extends BaseConnectionLine {
     } else {
       // Control points have been manually moved - recalculate best connection points
       ctrlPoints = this.recalculateCustomControlPoints(line2d, sourceTopic, targetTopic);
+
+      // An end the user did not shape keeps following its topic, with a default control point ...
+      if (!srcCustom || !destCustom) {
+        const from = srcCustom ? line2d.getFrom() : sPos;
+        const to = destCustom ? line2d.getTo() : tPos;
+        line2d.setFrom(from.x, from.y);
+        line2d.setTo(to.x, to.y);
+        const defaults = Shape.calculateDefaultControlPoints(from, to);
+        ctrlPoints = [
+          srcCustom ? ctrlPoints[0] : defaults[0],
+          destCustom ? ctrlPoints[1] : defaults[1],
+        ];
+      }
     }
 
     // Apply control points to create curved line
@@ -372,6 +385,61 @@ class Relationship extends BaseConnectionLine {
     );
 
     return { x: closest.x, y: closest.y };
+  }
+
+  /**
+   * Applies the control points stored in the model, and marks them as custom. A stored point is
+   * relative to the connection point it was placed from, the snap point facing it.
+   */
+  private applyModelControlPoints(): void {
+    this.applyModelControlPoint(PivotType.Start);
+    this.applyModelControlPoint(PivotType.End);
+  }
+
+  /**
+   * Applies the control point stored in the model for one end: custom if there is one, default
+   * otherwise. Call redraw afterwards.
+   */
+  applyModelControlPoint(pivot: PivotType): void {
+    const line = this._line;
+    if (pivot === PivotType.Start) {
+      const srcCtrlPoint = this._model.getSrcCtrlPoint();
+      if (srcCtrlPoint) {
+        const from = Relationship.calculateConnectionPointFor(this._sourceTopic, srcCtrlPoint);
+        line.setFrom(from.x, from.y);
+        line.setSrcControlPoint({ ...srcCtrlPoint });
+      }
+      line.setIsSrcControlPointCustom(Boolean(srcCtrlPoint));
+    } else {
+      const destCtrlPoint = this._model.getDestCtrlPoint();
+      if (destCtrlPoint) {
+        const to = Relationship.calculateConnectionPointFor(this._targetTopic, destCtrlPoint);
+        line.setTo(to.x, to.y);
+        line.setDestControlPoint({ ...destCtrlPoint });
+      }
+      line.setIsDestControlPointCustom(Boolean(destCtrlPoint));
+    }
+  }
+
+  /**
+   * Finds the snap point a control point is relative to: the one facing the control point
+   * placed from it.
+   */
+  private static calculateConnectionPointFor(topic: Topic, ctrlPoint: PositionType): PositionType {
+    let result = topic.getPosition();
+    // The snap point depends on where the control point lands, which depends on the snap point.
+    // Starting from the center of the topic, it settles in a step or two ...
+    for (let i = 0; i < 3; i++) {
+      const next = Relationship.calculateSnapPoint(topic, {
+        x: result.x + ctrlPoint.x,
+        y: result.y + ctrlPoint.y,
+      });
+      if (next.x === result.x && next.y === result.y) {
+        break;
+      }
+      result = next;
+    }
+    return result;
   }
 
   private calculateRelationshipConnectionPoint(topic: Topic): PositionType {

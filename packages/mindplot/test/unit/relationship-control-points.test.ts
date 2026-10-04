@@ -79,7 +79,12 @@ describe('Relationship control points', () => {
       setDestControlPoint: jest.Mock;
       setIsSrcControlPointCustom: jest.Mock;
       setIsDestControlPointCustom: jest.Mock;
+      isSrcControlPointCustom: jest.Mock;
+      isDestControlPointCustom: jest.Mock;
+      setFrom: jest.Mock;
+      setTo: jest.Mock;
     };
+    let redraw: jest.Mock;
 
     const pivot = (type: PivotType) =>
       (
@@ -110,14 +115,19 @@ describe('Relationship control points', () => {
         setDestControlPoint: jest.fn(),
         setIsSrcControlPointCustom: jest.fn(),
         setIsDestControlPointCustom: jest.fn(),
+        isSrcControlPointCustom: jest.fn().mockReturnValue(false),
+        isDestControlPointCustom: jest.fn().mockReturnValue(true),
+        setFrom: jest.fn(),
+        setTo: jest.fn(),
       };
+      redraw = jest.fn();
       const topic = { getId: () => 1 };
       const relationship = {
         getSourceTopic: () => topic,
         getTargetTopic: () => topic,
         getLine: () => line,
         getModel: () => ({ getId: () => 7 }),
-        redraw: jest.fn(),
+        redraw,
       } as unknown as Relationship;
 
       controlPoints = new RelationshipControlPoints(relationship);
@@ -225,6 +235,62 @@ describe('Relationship control points', () => {
         new MouseEvent('mouseup', { clientX: 60, clientY: 60, bubbles: true }),
       );
       expect(line.setSrcControlPoint).not.toHaveBeenCalled();
+      expect(moveControlPoint).toHaveBeenCalledTimes(1);
+    });
+
+    it('puts the start control point back when Escape abandons the drag', () => {
+      pivot(PivotType.Start).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      container.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
+      );
+      expect(line.setIsSrcControlPointCustom).toHaveBeenLastCalledWith(true);
+      redraw.mockClear();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+
+      expect(line.setFrom).toHaveBeenLastCalledWith(0, 0);
+      expect(line.setSrcControlPoint).toHaveBeenLastCalledWith({ x: 10, y: 10 });
+      expect(line.setIsSrcControlPointCustom).toHaveBeenLastCalledWith(false);
+      expect(redraw).toHaveBeenCalled();
+      expect(moveControlPoint).not.toHaveBeenCalled();
+
+      // The drag is over: neither moving nor releasing the button records anything ...
+      line.setSrcControlPoint.mockClear();
+      container.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 60, clientY: 60, bubbles: true }),
+      );
+      container.dispatchEvent(
+        new MouseEvent('mouseup', { clientX: 60, clientY: 60, bubbles: true }),
+      );
+      expect(line.setSrcControlPoint).not.toHaveBeenCalled();
+      expect(moveControlPoint).not.toHaveBeenCalled();
+    });
+
+    it('puts a custom end control point back as custom when Escape abandons the drag', () => {
+      pivot(PivotType.End).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      container.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
+      );
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+
+      expect(line.setTo).toHaveBeenLastCalledWith(100, 100);
+      expect(line.setDestControlPoint).toHaveBeenLastCalledWith({ x: -10, y: -10 });
+      expect(line.setIsDestControlPointCustom).toHaveBeenLastCalledWith(true);
+      expect(moveControlPoint).not.toHaveBeenCalled();
+    });
+
+    it('ignores other keys during the drag', () => {
+      pivot(PivotType.Start).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      container.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
+      );
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true }));
+      container.dispatchEvent(
+        new MouseEvent('mouseup', { clientX: 40, clientY: 30, bubbles: true }),
+      );
+
+      expect(line.setFrom).not.toHaveBeenCalled();
       expect(moveControlPoint).toHaveBeenCalledTimes(1);
     });
   });

@@ -83,10 +83,18 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
     return this.peer.isShowStartArrow();
   }
 
+  /**
+   * Sets the control point, relative to the start of the line. Whether it is a custom (user
+   * placed) or a default point is set apart, with setIsSrcControlPointCustom.
+   */
   setSrcControlPoint(control: PositionType) {
     this.peer.setSrcControlPoint(control);
   }
 
+  /**
+   * Sets the control point, relative to the end of the line. Whether it is a custom (user placed)
+   * or a default point is set apart, with setIsDestControlPointCustom.
+   */
   setDestControlPoint(control: PositionType) {
     this.peer.setDestControlPoint(control);
   }

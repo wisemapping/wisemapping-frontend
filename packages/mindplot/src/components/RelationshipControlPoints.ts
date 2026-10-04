@@ -52,6 +52,15 @@ class ControlPivotLine {
 
   private _mouseDownHandler: (event: Event) => void;
 
+  private _keyDownHandler: (event: KeyboardEvent) => void;
+
+  // The control point as it was when the drag started, put back if Escape abandons the drag ...
+  private _dragStart: {
+    controlPoint: PositionType;
+    isCustom: boolean;
+    linePosition: PositionType;
+  } | null;
+
   constructor(
     pivotType: PivotType,
     relationship: Relationship,
@@ -95,6 +104,12 @@ class ControlPivotLine {
     };
     this._mouseUpHandler = () => this.mouseUpHandler();
     this._mouseDownHandler = (event: Event) => this.mouseDownHandler(event);
+    this._keyDownHandler = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        this.cancelDrag();
+      }
+    };
+    this._dragStart = null;
 
     this._isVisible = false;
     this._wasDragged = false;
@@ -103,11 +118,20 @@ class ControlPivotLine {
 
   private mouseDownHandler(event: Event) {
     this._wasDragged = false;
+    const line = this._relationship.getLine();
+    const isStart = this._pivotType === PivotType.Start;
+    this._dragStart = {
+      controlPoint: line.getControlPoints()[this._pivotType],
+      isCustom: isStart ? line.isSrcControlPointCustom() : line.isDestControlPointCustom(),
+      linePosition: isStart ? line.getFrom() : line.getTo(),
+    };
     // Listen on the document, so that a release outside the container still ends the drag. If the
     // window loses focus the release may never reach the page, so the drag ends there too ...
     window.document.addEventListener('mousemove', this._mouseMoveHandler);
     window.document.addEventListener('mouseup', this._mouseUpHandler);
     window.addEventListener('blur', this._mouseUpHandler);
+    // ... and Escape abandons it, leaving the control point where it was.
+    window.document.addEventListener('keydown', this._keyDownHandler);
 
     event.preventDefault();
     event.stopPropagation();
@@ -192,10 +216,35 @@ class ControlPivotLine {
     window.document.removeEventListener('mousemove', this._mouseMoveHandler);
     window.document.removeEventListener('mouseup', this._mouseUpHandler);
     window.removeEventListener('blur', this._mouseUpHandler);
+    window.document.removeEventListener('keydown', this._keyDownHandler);
+  }
+
+  private cancelDrag() {
+    this.removeDragListeners();
+
+    const dragStart = this._dragStart;
+    if (this._wasDragged && dragStart) {
+      // Put the control point back, without recording a move ...
+      const line = this._relationship.getLine();
+      const { controlPoint, isCustom, linePosition } = dragStart;
+      if (this._pivotType === PivotType.Start) {
+        line.setFrom(linePosition.x, linePosition.y);
+        line.setSrcControlPoint(controlPoint);
+        line.setIsSrcControlPointCustom(isCustom);
+      } else {
+        line.setTo(linePosition.x, linePosition.y);
+        line.setDestControlPoint(controlPoint);
+        line.setIsDestControlPointCustom(isCustom);
+      }
+      this._relationship.redraw();
+    }
+    this._wasDragged = false;
+    this._dragStart = null;
   }
 
   private mouseUpHandler() {
     this.removeDragListeners();
+    this._dragStart = null;
 
     // A plain click on the dot does not move the control point, so there is nothing to record ...
     if (this._wasDragged) {
