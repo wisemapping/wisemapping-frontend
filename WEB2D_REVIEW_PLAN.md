@@ -338,13 +338,36 @@ The "snapshots identical" and "snapshots reviewed" gates in sections 6 and 8 can
 - From W1 on, every PR that changes rendering must update the golden files and the pixel baselines in the same commit, with the diff reviewed.
 - W2 (VML clean-up) must leave **both** layers unchanged.
 
+### 7.4 W0 status: done (2026-10-04, branch `bugfix/r4-w0-web2d`)
+
+No `src/` change. All of it is tooling and tests.
+
+- **Jest harness.** `jest.config.js` (jsdom + ts-jest), `test/setup.ts` (deterministic `getBBox`, `getScreenCTM`, `getComputedTextLength` and `ResizeObserver` fakes), and `tsconfig.test.json`, because TypeScript 6 no longer loads `@types` by default. `test` runs `test:unit && test:integration`, and `test:unit` is `jest ./test/unit --coverage --silent`, so the root `yarn test:unit` (lerna) and the pre-push hook now run web2d. The `__tests__` stub is deleted.
+- **Tests.** 15 suites and 376 tests cover targets 1–12 of 7.2.
+- **Coverage.** Before: no direct coverage (61.8 % lines from mindplot's tests, indirectly). After: **99.04 % lines, 91.71 % branches, 99.76 % functions, 99.05 % statements**. The threshold is 99/91/99/99 global, plus 98 % lines and 93 % branches for `peer/utils/`.
+- **SVG goldens (layer 1).** 38 files in `test/unit/__goldens__/`, covering every row of the 7.3 table. Update with `yarn jest test/unit -u` or `UPDATE_GOLDENS=1 yarn test:unit`. A missing golden fails under `CI`.
+- **Render examples.** New stories: Arrow, HeartbeatLine, NeuronLine and Image. New variants: vertical, near-vertical and default-control-point CurvedLine; vertical PolyLine for every style; five Text edge cases; and a fractional Workspace. The Element stories take an opt-in event log. New specs: arcline, arrow, heartbeatline, neuronline, image, element.events and element.visibility.
+- **Pixel snapshots (layer 2).** `@simonsmith/cypress-image-snapshot` compares when `CYPRESS_imageSnaphots` is set. `packages/web2d/docker-compose.snapshots{,.update}.yml` run it in `cypress/included:16.1.1`, pinned by digest, on port 6106. Use `yarn test:visual` to verify and `yarn test:visual:update` to update. There are 63 baselines, regenerated in Docker. A second run passes, and a one-line stroke colour change fails it (1330 px).
+- **Old baselines.** All 29 failed on size (1000×660 versus 1000×633 now, a runner change). On the common area, 24 differ by under 300 px (font anti-aliasing and sub-pixel ellipse edges). Five are expected changes: the 4 Polyline stories have broken at 50 % of the distance since `4b501e31`, and Text has rendered heavier since `e4e0602b` (weight 600/900). None looked like a regression.
+- **`it.failing`.** 44 tests, which W1 flips:
+  - W-EVTMAP ×3, W-DISPOSE, W-RMCHILD
+  - W-DEFCP ×2, W-TAPER, `setSrcControlPoint(null)`
+  - W-HCURVE ×3, W-VCURVE ×2, W-MIDCURVE ×3
+  - W-ARROWDASH, Arrow mutating its input
+  - W-STALEPATH ×2, and **W-NEURONEND** (new: NeuronLine's last segment does not end at the target, for example 199.2,2.1 instead of 200,0)
+  - W-GTRANSFORM ×3, W-GDEFAULTS
+  - W-DASH ×2, `solid` writing empty attributes, the `getFill` default, W-OPACITY
+  - W-HTMLFONT, CRLF lines, `setFont` reset, the 42/32 versus 43/32 font ratio, `getFontHeight('')`
+  - W-ATTRBAG ×3, Liskov ×3 (`Group({fillColor})`, `Workspace.setStroke`, `Workspace.setFill`), `RectPeer.getPosition` NaN, the Point y message
+- **Already fixed.** W-CTRLFLAG (BL-69) and W-VIEWBOX (BL-71) pass their tests.
+
 ---
 
 ## 8. Suggested rollout
 
 | Phase                                | Scope                                                                                                                                                                                                                                        | Size | Gate                                                                                                            |
 | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- | --------------------------------------------------------------------------------------------------------------- |
-| **W0: Tooling**                      | Jest config, `test/setup.ts`, scripts, devDependencies, delete `__tests__`, characterization suite, thresholds at the measured baseline, **SVG golden tests and restored pixel snapshots in Docker, plus the missing render examples (7.3)** | M    | `yarn test:unit` green with the golden suite; pixel snapshots in Docker pass on `develop`                       |
+| **W0: Tooling**                      | Jest config, `test/setup.ts`, scripts, devDependencies, delete `__tests__`, characterization suite, thresholds at the measured baseline, **SVG golden tests and restored pixel snapshots in Docker, plus the missing render examples (7.3)** | M    | `yarn test:unit` green with the golden suite; pixel snapshots in Docker pass on `develop` (**done, see 7.4**)   |
 | **W1: Bugs**                         | W-CTRLFLAG (with the mindplot `Relationship` change), W-VIEWBOX, W-EVTMAP, W-HTMLFONT, W-VCURVE, W-TAPER, then the L rows in 3.3–3.5. Each has a test that fails first.                                                                      | S    | mindplot unit and Cypress green; changed snapshots reviewed one by one                                          |
 | **W2: Performance and VML clean-up** | Delete the broadcast, `Toolkit`, meaningless attributes and dead APIs; `attr()` cache, tspan reuse, measurement cache, path dirty-flag                                                                                                       | S    | Benchmark: 1000-group build visits 6 M → 0; 0 attribute writes on an unchanged text redraw; snapshots identical |
 | **W3: Geometry module**              | Extract `geometry/` as pure functions; peers delegate to it                                                                                                                                                                                  | S    | Characterization tests identical; geometry ≥ 95 % covered                                                       |
