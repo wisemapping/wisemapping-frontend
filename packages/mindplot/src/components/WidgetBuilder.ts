@@ -24,6 +24,8 @@ import NoteModel from './model/NoteModel';
 import NoteIcon from './NoteIcon';
 import Topic from './Topic';
 import { $msg } from './Messages';
+import ContentType from './ContentType';
+import HtmlSanitizer from './security/HtmlSanitizer';
 
 export type WidgetEventType = 'none' | 'link' | 'note';
 
@@ -116,7 +118,7 @@ abstract class WidgetBuilder {
       // Delay showing tooltip to avoid flashing on quick hover
       this._showTimeout = window.setTimeout(() => {
         const tooltipTitle = webcomponentShadowRoot.getElementById('mindplot-svg-tooltip-title')!;
-        DOMUtils.html(tooltipTitle, title);
+        DOMUtils.text(tooltipTitle, title);
 
         // Configure content based on tooltip type
         if (linkModel) {
@@ -125,7 +127,7 @@ abstract class WidgetBuilder {
           )! as HTMLAnchorElement;
           DOMUtils.attr(tooltipLink, 'href', linkModel.getUrl());
           DOMUtils.attr(tooltipLink, 'rel', 'nofollow');
-          DOMUtils.html(tooltipLink, linkModel.getUrl());
+          DOMUtils.text(tooltipLink, linkModel.getUrl());
           DOMUtils.css(tooltipLink, 'display', 'block');
 
           const tooltipNote = webcomponentShadowRoot.getElementById(
@@ -138,7 +140,16 @@ abstract class WidgetBuilder {
           const tooltipNote = webcomponentShadowRoot.getElementById(
             'mindplot-svg-tooltip-content-note',
           )!;
-          DOMUtils.html(tooltipNote, noteModel.getText());
+          if (noteModel.getContentType() === ContentType.HTML) {
+            try {
+              DOMUtils.html(tooltipNote, HtmlSanitizer.sanitize(noteModel.getText()));
+            } catch {
+              // Too large to sanitize: show its text instead.
+              DOMUtils.text(tooltipNote, noteModel.getPlainText());
+            }
+          } else {
+            DOMUtils.text(tooltipNote, noteModel.getText());
+          }
           DOMUtils.css(tooltipNote, 'display', 'block');
 
           const tooltipLink = webcomponentShadowRoot.getElementById(

@@ -19,6 +19,8 @@ import { $assert } from '../util/assert';
 import FeatureModel from './FeatureModel';
 
 class LinkModel extends FeatureModel {
+  private static readonly ALLOWED_PROTOCOLS = new Set(['http:', 'https:', 'mailto:']);
+
   constructor(attributes) {
     super('link');
     this.setUrl(attributes.url);
@@ -40,15 +42,15 @@ class LinkModel extends FeatureModel {
 
   // url format is already checked in LinkEditor.checkUrl
   static _fixUrl(url: string): string {
-    let result = url;
-    if (
-      !result.includes('http://') &&
-      !result.includes('https://') &&
-      !result.includes('mailto://')
-    ) {
-      result = `http://${result}`;
+    // Keep urls whose scheme is allowed. Anything else (no scheme, or a scheme such as
+    // javascript:) gets the http:// prefix, so the resulting href can never run script.
+    let protocol: string | null = null;
+    try {
+      protocol = new URL(url).protocol;
+    } catch {
+      // Not an absolute url, so it has no scheme yet.
     }
-    return result;
+    return protocol && LinkModel.ALLOWED_PROTOCOLS.has(protocol) ? url : `http://${url}`;
   }
 
   /**

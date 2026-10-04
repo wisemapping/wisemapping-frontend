@@ -197,14 +197,13 @@ class HtmlSanitizer {
     }
 
     try {
-      // Create a temporary DOM element to parse and clean the HTML
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = htmlContent;
+      // Parse in an inert document so nothing (e.g. <img onerror>) runs while parsing
+      const container = this.parseInert(htmlContent);
 
       // Sanitize the DOM tree
-      this.sanitizeNode(tempDiv);
+      Array.from(container.childNodes).forEach((child) => this.sanitizeNode(child));
 
-      return tempDiv.innerHTML;
+      return container.innerHTML;
     } catch (error) {
       console.warn('HTML sanitization failed:', error);
       // Return plain text if sanitization fails
@@ -230,11 +229,14 @@ class HtmlSanitizer {
       // Remove tags not in allowed list
       if (!this.ALLOWED_TAGS.has(tagName)) {
         // Replace with span to preserve text content
-        const span = document.createElement('span');
+        const span = element.ownerDocument.createElement('span');
         while (element.firstChild) {
           span.appendChild(element.firstChild);
         }
         element.parentNode?.replaceChild(span, element);
+
+        // The moved children still need to be sanitized
+        Array.from(span.childNodes).forEach((child) => this.sanitizeNode(child));
         return;
       }
 
@@ -364,9 +366,20 @@ class HtmlSanitizer {
    * @returns Plain text content
    */
   private static stripHtmlTags(content: string): string {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = content;
-    return tempDiv.textContent || tempDiv.innerText || '';
+    const container = this.parseInert(content);
+    return container.textContent || '';
+  }
+
+  /**
+   * Parses HTML into a document without a browsing context, so no resources are
+   * loaded and no event handlers run while the content is being inspected.
+   * @param content - The HTML content to parse
+   * @returns The element holding the parsed content
+   */
+  private static parseInert(content: string): HTMLElement {
+    const inertDocument = document.implementation.createHTMLDocument('');
+    inertDocument.body.innerHTML = content;
+    return inertDocument.body;
   }
 }
 

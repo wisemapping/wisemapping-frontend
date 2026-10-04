@@ -45,10 +45,9 @@ class NoteModel extends FeatureModel {
   /** */
   getPlainText(): string {
     const htmlContent = this.getText();
-    // Create a temporary DOM element to strip HTML tags
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-    return tempDiv.textContent || tempDiv.innerText || '';
+    // Parse in an inert document so embedded markup (e.g. <img onerror>) never runs
+    const parsed = new DOMParser().parseFromString(htmlContent, 'text/html');
+    return parsed.body.textContent || '';
   }
 
   /** */

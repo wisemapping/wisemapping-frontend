@@ -129,7 +129,7 @@ menu.]]></text>
  plus the person's email
 address.]]></text>
                         <topic position="-1190,27" order="0" text="Here's an example email address!" shape="line" id="433629028">
-                            <link url="http://mailto:%20president@whitehouse.gov" urlType="mail"/>
+                            <link url="mailto:%20president@whitehouse.gov" urlType="mail"/>
                         </topic>
                     </topic>
                 </topic>
@@ -446,7 +446,7 @@ essay!)]]></text>
         <topic position="-560,38" order="4" text="About this map" shape="line" shrink="true" id="854745518">
             <topic position="560,1" order="0" text="Version 0.1, Jan 2 2008" shape="line" id="1464926185"/>
             <topic position="650,26" order="1" text="James Wilson" shape="line" id="1351075037">
-                <link url="http://mailto:j.g.wilson@peak.keele.ac.uk" urlType="mail"/>
+                <link url="mailto:j.g.wilson@peak.keele.ac.uk" urlType="mail"/>
             </topic>
             <topic position="740,51" order="2" text="Notes on this map" shape="line" id="1843583599">
                 <note contentType="html"><![CDATA[

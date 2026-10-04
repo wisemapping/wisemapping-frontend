@@ -28,12 +28,7 @@ import ContentType from '../ContentType';
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
 
 export type TopicShapeType =
-  | 'rectangle'
-  | 'rounded rectangle'
-  | 'elipse'
-  | 'line'
-  | 'none'
-  | 'image';
+  'rectangle' | 'rounded rectangle' | 'elipse' | 'line' | 'none' | 'image';
 
 // regex taken from https://stackoverflow.com/a/34763398/58128
 const parseJsObject = (str: string) =>
@@ -100,10 +95,9 @@ abstract class INodeModel {
     if (!text) return '';
 
     if (this.getContentType() === ContentType.HTML) {
-      // Create a temporary DOM element to strip HTML tags
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = text;
-      return tempDiv.textContent || tempDiv.innerText || '';
+      // Parse in an inert document so embedded markup (e.g. <img onerror>) never runs
+      const parsed = new DOMParser().parseFromString(text, 'text/html');
+      return parsed.body.textContent || '';
     }
 
     return text;
