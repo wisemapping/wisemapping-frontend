@@ -702,7 +702,13 @@
                             <node ID="ID_309" POSITION="right" STYLE="fork" TEXT="Spin-offs">
                                 <node ID="ID_300" POSITION="right" STYLE="fork">
                                     <richcontent TYPE="NODE">
-                                        <parsererror xmlns="http://www.mozilla.org/newlayout/xml/parsererror.xml">1:146: unclosed tag: p</parsererror>
+                                        <html xmlns="http://www.w3.org/1999/xhtml">
+                                            <head></head>
+                                            <body>
+                                                <p>Number of spin-offs with external private financing</p>
+                                                <p>as a share of the institution's R&amp;D budget</p>
+                                            </body>
+                                        </html>
                                     </richcontent>
                                 </node>
                             </node>
@@ -723,7 +729,13 @@
                                 <node ID="ID_307" POSITION="right" STYLE="fork" TEXT="Share of industry income from foreign companies"/>
                                 <node ID="ID_90" POSITION="right" STYLE="fork">
                                     <richcontent TYPE="NODE">
-                                        <parsererror xmlns="http://www.mozilla.org/newlayout/xml/parsererror.xml">1:142: unclosed tag: p</parsererror>
+                                        <html xmlns="http://www.w3.org/1999/xhtml">
+                                            <head></head>
+                                            <body>
+                                                <p>Revenue raised from industry R&amp;D as a fraction</p>
+                                                <p>of total institutional budget (up to a cap)</p>
+                                            </body>
+                                        </html>
                                     </richcontent>
                                 </node>
                                 <node ID="ID_311" POSITION="right" STYLE="fork" TEXT="Difficulties faced by research organization in collaborating with SMEs"/>

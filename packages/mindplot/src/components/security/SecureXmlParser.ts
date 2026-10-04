@@ -30,6 +30,9 @@ class SecureXmlParser {
   // Maximum number of nodes to prevent DoS
   private static readonly MAX_XML_NODES = 10000;
 
+  // Entities every XML parser defines. They can not be used for XXE attacks.
+  private static readonly PREDEFINED_ENTITY = /^&(?:amp|lt|gt|quot|apos);$/;
+
   /**
    * Safely parse XML content with security protections
    * @param xmlContent - The XML content to parse
@@ -78,24 +81,29 @@ class SecureXmlParser {
    * @returns Sanitized XML content
    */
   private static sanitizeXmlContent(xmlContent: string): string {
-    let sanitized = xmlContent;
+    // Tokens are matched in document order, so markup inside CDATA sections is left untouched.
+    const tokens =
+      /<!\[CDATA\[[\s\S]*?\]\]>|<!--[\s\S]*?-->|<\?[\s\S]*?\?>|<!DOCTYPE(?:[^[>]|\[[\s\S]*?\])*>|<!ENTITY[^>]*>|&[a-zA-Z][a-zA-Z0-9]*;/gi;
 
-    // Remove DOCTYPE declarations that could contain external entities
-    sanitized = sanitized.replace(/<!DOCTYPE[^>]*>/gi, '');
+    return xmlContent.replace(tokens, (token: string) => {
+      if (token.startsWith('<![CDATA[')) {
+        return token;
+      }
 
-    // Remove any remaining ENTITY declarations
-    sanitized = sanitized.replace(/<!ENTITY[^>]*>/gi, '');
+      // Entity declarations enable XXE and entity expansion (billion laughs) attacks: reject them.
+      if (/<!ENTITY/i.test(token)) {
+        throw new Error('XML entity declarations are not allowed');
+      }
 
-    // Remove external entity references
-    sanitized = sanitized.replace(/&[a-zA-Z][a-zA-Z0-9]*;/g, '');
+      // Keep the predefined XML entities. References to any other entity are removed, as
+      // they can not be declared and would make the document invalid.
+      if (token.startsWith('&')) {
+        return this.PREDEFINED_ENTITY.test(token) ? token : '';
+      }
 
-    // Remove processing instructions that could be dangerous
-    sanitized = sanitized.replace(/<\?[^>]*\?>/g, '');
-
-    // Remove comments that might contain malicious content
-    sanitized = sanitized.replace(/<!--[\s\S]*?-->/g, '');
-
-    return sanitized;
+      // Remove DOCTYPE declarations, processing instructions and comments
+      return '';
+    });
   }
 
   /**
@@ -210,7 +218,7 @@ class SecureXmlParser {
     const dangerousPatterns = [
       /<!DOCTYPE[^>]*\[[^\]]*ENTITY[^\]]*\]/gi,
       /<!ENTITY[^>]*>/gi,
-      /&[a-zA-Z][a-zA-Z0-9]*;/g,
+      /&(?!(?:amp|lt|gt|quot|apos);)[a-zA-Z][a-zA-Z0-9]*;/g,
       /<\?xml-stylesheet[^>]*>/gi,
       /<\?xml-stylesheet[^>]*>/gi,
       /<script[^>]*>/gi,

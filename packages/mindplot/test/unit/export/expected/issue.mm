@@ -98,7 +98,7 @@
                         </body>
                     </html>
                 </richcontent>
-                <font SIZE="12" BOLD="true"/>
+                <font SIZE="12"/>
                 <edge COLOR="#7f6000"/>
                 <node ID="ID_101" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Microsoft Windows">
                     <font SIZE="12"/>

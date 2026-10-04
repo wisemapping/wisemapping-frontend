@@ -271,6 +271,15 @@ class MindManagerImporter extends Importer {
     return null;
   }
 
+  // Only direct children: a descendant search would pick up the data of nested topics.
+  private findChildByTagName(parent: Element, tagName: string): Element | null {
+    return (
+      Array.from(parent.children).find(
+        (child) => child.localName === tagName || child.tagName === tagName,
+      ) || null
+    );
+  }
+
   private parseTopic(topicElement: Element): MindManagerTopic {
     const id = topicElement.getAttribute('ID') || this.generateId();
     const text = topicElement.getAttribute('Text') || 'Untitled';
@@ -281,25 +290,25 @@ class MindManagerImporter extends Importer {
     };
 
     // Parse notes
-    const notesElement = this.findElementByTagName(topicElement, 'Notes');
+    const notesElement = this.findChildByTagName(topicElement, 'Notes');
     if (notesElement) {
       topic.notes = notesElement.textContent || '';
     }
 
     // Parse hyperlink
-    const hyperlinkElement = this.findElementByTagName(topicElement, 'Hyperlink');
+    const hyperlinkElement = this.findChildByTagName(topicElement, 'Hyperlink');
     if (hyperlinkElement) {
       topic.hyperlink = hyperlinkElement.getAttribute('URL') || '';
     }
 
     // Parse icon
-    const iconElement = this.findElementByTagName(topicElement, 'Icon');
+    const iconElement = this.findChildByTagName(topicElement, 'Icon');
     if (iconElement) {
       topic.icon = iconElement.getAttribute('Name') || iconElement.textContent || '';
     }
 
     // Parse color
-    const colorElement = this.findElementByTagName(topicElement, 'Color');
+    const colorElement = this.findChildByTagName(topicElement, 'Color');
     if (colorElement) {
       topic.color = colorElement.getAttribute('Value') || colorElement.textContent || '';
     }

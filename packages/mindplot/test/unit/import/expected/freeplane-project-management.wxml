@@ -2,27 +2,6 @@
     <topic central="true" text="Project Management Plan" id="1">
         <topic position="200,0" order="0" text="Planning Phase" shape="line" id="2">
             <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Clearly define project boundaries and deliverables</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Develop detailed project schedule with milestones</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Assign team members and budget resources</p>
-            </body>
-          </html>]]></note>
                 <topic position="200,0" order="0" text="Define Scope" shape="line" id="3">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
@@ -53,27 +32,6 @@
         </topic>
         <topic position="-200,0" order="1" text="Execution Phase" shape="line" id="6">
             <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Implement project deliverables</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Quality assurance and testing procedures</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Create project documentation and user guides</p>
-            </body>
-          </html>]]></note>
                 <topic position="200,0" order="0" text="Development" shape="line" id="7">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
@@ -102,29 +60,8 @@
           </html>]]></note>
                 </topic>
         </topic>
-        <topic position="300,75" order="2" text="Monitoring  Control" shape="line" id="10">
+        <topic position="300,75" order="2" text="Monitoring &amp; Control" shape="line" id="10">
             <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Monitor project progress against timeline</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Ensure deliverables meet quality standards</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Identify and mitigate project risks</p>
-            </body>
-          </html>]]></note>
                 <topic position="200,0" order="0" text="Progress Tracking" shape="line" id="11">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
@@ -155,27 +92,6 @@
         </topic>
         <topic position="-300,75" order="3" text="Closure Phase" shape="line" id="14">
             <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="📁"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Conduct final project review and sign-off</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Document lessons learned for future projects</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Archive project files and documentation</p>
-            </body>
-          </html>]]></note>
                 <topic position="200,0" order="0" text="Final Review" shape="line" id="15">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>

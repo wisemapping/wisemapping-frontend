@@ -465,11 +465,8 @@ class XMindImporter extends Importer {
     const rootTopicId = rootTopic.getAttribute('id') || 'topic1';
     this.topicIdMap.set(rootTopicId, centralId.toString());
 
-    let centralTitle = rootTopic.querySelector('title')?.textContent;
-    if (!centralTitle) {
-      const titles = rootTopic.getElementsByTagName('title');
-      centralTitle = titles.length > 0 ? titles[0].textContent : 'Central Topic';
-    }
+    const centralTitle =
+      XMindImporter.childElement(rootTopic, 'title')?.textContent || 'Central Topic';
 
     let xml = `<map name='${nameMap}' version='tango' theme='prism' layout='${this.currentLayout}'>\n`;
 
@@ -526,26 +523,16 @@ class XMindImporter extends Importer {
     this.topicIdMap.set(xmindTopicId, topicId.toString());
 
     const position = this.calculatePosition(order, depth, siblingCount);
-    let title = xmlTopic.querySelector('title')?.textContent;
-    if (!title) {
-      const titles = xmlTopic.getElementsByTagName('title');
-      title = titles.length > 0 ? titles[0].textContent : 'Untitled';
-    }
+    const title = XMindImporter.childElement(xmlTopic, 'title')?.textContent || 'Untitled';
 
     let xml = `        <topic position='${position.x},${position.y}' order='${order}' text='${this.escapeXml(title)}' shape='line' id='${topicId}'>\n`;
 
     // Add icons if present (from markers)
-    let markers = xmlTopic.querySelectorAll('marker-refs > marker-ref');
-    if (markers.length === 0) {
-      const markerRefs = xmlTopic.getElementsByTagName('marker-refs');
-      if (markerRefs.length > 0) {
-        const markerElements = markerRefs[0].getElementsByTagName('marker-ref');
-        markers = Array.from(markerElements) as unknown as NodeListOf<Element>;
-      }
-    }
+    const markerRefs = XMindImporter.childElement(xmlTopic, 'marker-refs');
+    const markers = markerRefs ? XMindImporter.childElements(markerRefs, 'marker-ref') : [];
 
     if (markers.length > 0) {
-      Array.from(markers).forEach((marker) => {
+      markers.forEach((marker) => {
         const markerId = marker.getAttribute('marker-id');
         if (markerId) {
           const emojiIcon = this.mapXMindIconToEmojiIcon(markerId);
@@ -653,10 +640,7 @@ class XMindImporter extends Importer {
   private generateRelationshipXML(relationshipElement: Element): string {
     const end1 = relationshipElement.getAttribute('end1');
     const end2 = relationshipElement.getAttribute('end2');
-    const title =
-      relationshipElement.querySelector('title')?.textContent ||
-      relationshipElement.querySelector('[local-name()="title"]')?.textContent ||
-      '';
+    const title = XMindImporter.childElement(relationshipElement, 'title')?.textContent ?? '';
 
     if (!end1 || !end2) return '';
 
@@ -804,7 +788,8 @@ class XMindImporter extends Importer {
     const parts: string[] = [];
 
     // Handle XMind notes (main content at the top)
-    const notes = xmlTopic.querySelector('notes > plain');
+    const notesElement = XMindImporter.childElement(xmlTopic, 'notes');
+    const notes = notesElement ? XMindImporter.childElement(notesElement, 'plain') : undefined;
     if (notes) {
       const noteText = notes.textContent || '';
       if (noteText.trim()) {
@@ -813,11 +798,10 @@ class XMindImporter extends Importer {
     }
 
     // Handle XMind markers (middle)
-    const markers = xmlTopic.querySelectorAll('markers > marker');
+    const markersElement = XMindImporter.childElement(xmlTopic, 'markers');
+    const markers = markersElement ? XMindImporter.childElements(markersElement, 'marker') : [];
     if (markers.length > 0) {
-      const markerTexts = Array.from(markers).map(
-        (marker) => marker.getAttribute('marker-id') || 'unknown',
-      );
+      const markerTexts = markers.map((marker) => marker.getAttribute('marker-id') || 'unknown');
       const formattedMarkers = markerTexts.map((marker) => `🔖 ${marker}`).join(', ');
       parts.push(formattedMarkers);
     }
@@ -1335,6 +1319,15 @@ class XMindImporter extends Importer {
 
     // Return mapped EmojiIcon ID or default if not found
     return allMappings[iconId.toLowerCase()] || '💡'; // Default to lightbulb
+  }
+
+  // Only direct children: descendant queries would pick up the data of nested topics.
+  private static childElements(parent: Element, localName: string): Element[] {
+    return Array.from(parent.children).filter((child) => child.localName === localName);
+  }
+
+  private static childElement(parent: Element, localName: string): Element | undefined {
+    return Array.from(parent.children).find((child) => child.localName === localName);
   }
 
   private escapeXml(text: string): string {

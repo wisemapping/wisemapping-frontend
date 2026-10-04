@@ -49,6 +49,10 @@ export default class FreemindImporter extends Importer {
 
   private nodesmap!: Map<string, NodeModel>;
 
+  // Arrowlinks can point to nodes that have not been converted yet, so they are resolved once
+  // the whole tree has been walked.
+  private arrowlinks!: Array<{ source: NodeModel; arrowlink: FreemindArrowlink }>;
+
   private idDefault = 0;
 
   constructor(map: string) {
@@ -59,6 +63,7 @@ export default class FreemindImporter extends Importer {
   import(nameMap: string, description: string): Promise<string> {
     this.mindmap = new Mindmap(nameMap);
     this.nodesmap = new Map<string, NodeModel>();
+    this.arrowlinks = [];
 
     // Use secure XML parser to prevent XXE attacks
     const freemindDoc = SecureXmlParser.parseSecureXml(this.freemindInput);
@@ -94,7 +99,7 @@ export default class FreemindImporter extends Importer {
     this.nodesmap.set(freeNode.getId()!, wiseTopic);
 
     this.convertChildNodes(freeNode, wiseTopic, this.mindmap, 1);
-    this.addRelationship(this.mindmap);
+    this.addRelationships(this.mindmap);
 
     this.mindmap.setDescription(description);
     this.mindmap.addBranch(wiseTopic);
@@ -111,68 +116,67 @@ export default class FreemindImporter extends Importer {
     return Promise.resolve(formatXml);
   }
 
-  private addRelationship(mindmap: Mindmap): void {
-    const mapRelaitonship: Array<RelationshipModel> = mindmap.getRelationships();
+  private addRelationships(mindmap: Mindmap): void {
+    this.arrowlinks.forEach(({ source, arrowlink }) => {
+      const destId = arrowlink.getDestination();
+      const destNode = destId ? this.nodesmap.get(destId) : undefined;
+      if (destNode) {
+        const relationship = new RelationshipModel(source.getId(), destNode.getId());
 
-    mapRelaitonship.forEach((relationship: RelationshipModel) => {
-      this.fixRelationshipControlPoints(relationship);
+        // Set control points if available
+        const endinclination = arrowlink.getEndInclination();
+        if (endinclination) {
+          const inclination: Array<string> = endinclination.split(';');
+          if (inclination.length >= 2) {
+            relationship.setDestCtrlPoint({
+              x: parseFloat(inclination[0]),
+              y: parseFloat(inclination[1]),
+            });
+          }
+        }
 
-      // // Fix dest ID
-      // const destId: string = relationship.getDestCtrlPoint();
-      // const destTopic: NodeModel | undefined = this.nodesmap.get(destId);
-      // if (destTopic) {
-      //   relationship.setDestCtrlPoint(destTopic.getId());
-      // }
+        const startinclination = arrowlink.getStartinclination();
+        if (startinclination) {
+          const inclination: Array<string> = startinclination.split(';');
+          if (inclination.length >= 2) {
+            relationship.setSrcCtrlPoint({
+              x: parseFloat(inclination[0]),
+              y: parseFloat(inclination[1]),
+            });
+          }
+        }
 
-      // // Fix src ID
-      // const srcId: string = relationship.getSrcCtrlPoint();
-      // const srcTopic: NodeModel | undefined = this.nodesmap.get(srcId);
-      // if (srcTopic) {
-      //   relationship.setSrcCtrlPoint(srcTopic.getId());
-      // }
+        const endarrow = arrowlink.getEndarrow();
+        if (endarrow) {
+          relationship.setEndArrow(endarrow.toLowerCase() !== 'none');
+        }
 
-      mapRelaitonship.push(relationship);
+        const startarrow = arrowlink.getStartarrow();
+        if (startarrow) {
+          relationship.setStartArrow(startarrow.toLowerCase() !== 'none');
+        }
+
+        relationship.setLineType(3);
+        this.fixRelationshipControlPoints(relationship, source, destNode);
+        mindmap.addRelationship(relationship);
+      }
     });
   }
 
-  private fixRelationshipControlPoints(relationship: RelationshipModel): void {
-    const srcTopic: NodeModel | undefined = this.nodesmap.get(relationship.getToNode().toString());
-    const destNode: NodeModel | undefined = this.nodesmap.get(
-      relationship.getFromNode().toString(),
-    );
-    if (srcTopic && destNode) {
-      // Fix x coord
-      const srcCtrlPoint = relationship.getSrcCtrlPoint();
-      if (srcCtrlPoint) {
-        const coords = srcTopic.getPosition();
-        if (coords.x < 0) {
-          const x = coords.x * -1;
-          relationship.setSrcCtrlPoint({ x, y: coords.y });
+  private fixRelationshipControlPoints(
+    relationship: RelationshipModel,
+    srcTopic: NodeModel,
+    destTopic: NodeModel,
+  ): void {
+    // FreeMind measures the inclination away from the node, so it is mirrored for nodes on the left side.
+    const srcCtrlPoint = relationship.getSrcCtrlPoint();
+    if (srcCtrlPoint && srcTopic.getPosition().x < 0) {
+      relationship.setSrcCtrlPoint({ x: -srcCtrlPoint.x, y: srcCtrlPoint.y });
+    }
 
-          // Fix coord
-          const order = srcTopic.getOrder();
-          if (order !== undefined && order % 2 !== 0) {
-            const y = coords.y * -1;
-            relationship.setSrcCtrlPoint({ x: coords.x, y });
-          }
-        }
-      }
-
-      const destCtrlPoint = relationship.getDestCtrlPoint();
-      if (destCtrlPoint) {
-        const coords = destNode.getPosition();
-
-        if (coords.x < 0) {
-          const x = coords.x * -1;
-          relationship.setDestCtrlPoint({ x, y: coords.y });
-        }
-
-        const order = destNode.getOrder();
-        if (order !== undefined && order % 2 !== 0) {
-          const y = coords.y * -1;
-          relationship.setDestCtrlPoint({ x: coords.x, y });
-        }
-      }
+    const destCtrlPoint = relationship.getDestCtrlPoint();
+    if (destCtrlPoint && destTopic.getPosition().x < 0) {
+      relationship.setDestCtrlPoint({ x: -destCtrlPoint.x, y: destCtrlPoint.y });
     }
   }
 
@@ -226,7 +230,6 @@ export default class FreemindImporter extends Importer {
     depth: number,
   ): void {
     const freeChilden = freeParent.getArrowlinkOrCloudOrEdge();
-    let currentWiseTopic: NodeModel = wiseParent;
     let order = 0;
 
     freeChilden.forEach((child) => {
@@ -263,26 +266,24 @@ export default class FreemindImporter extends Importer {
         // Convert the rest of the node properties...
         this.convertNodeProperties(child, wiseChild, false);
 
-        this.convertChildNodes(child, wiseChild, mindmap, depth++);
+        this.convertChildNodes(child, wiseChild, mindmap, depth + 1);
 
         if (wiseChild !== wiseParent) {
           wiseParent.append(wiseChild);
         }
-
-        currentWiseTopic = wiseChild;
       }
 
       // if (child instanceof FreemindFont) {
       //   const font: FreemindFont = child as FreemindFont;
       //   const fontStyle: string = this.generateFontStyle(freeParent, font);
       //   if (fontStyle) {
-      //     currentWiseTopic.setFontStyle(fontStyle);
+      //     wiseParent.setFontStyle(fontStyle);
       //   }
       // }
 
       if (child instanceof FreemindEdge) {
         const edge: FreemindEdge = child as FreemindEdge;
-        currentWiseTopic.setBackgroundColor(edge.getColor());
+        wiseParent.setBackgroundColor(edge.getColor());
       }
 
       if (child instanceof FreemindIcon) {
@@ -294,7 +295,7 @@ export default class FreemindImporter extends Importer {
             const mindmapIcon: FeatureModel = FeatureModelFactory.createModel('icon', {
               id: wiseIconId,
             });
-            currentWiseTopic.addFeature(mindmapIcon);
+            wiseParent.addFeature(mindmapIcon);
           }
         }
       }
@@ -307,7 +308,7 @@ export default class FreemindImporter extends Importer {
         if (!textNote) {
           textNote = FreemindConstant.EMPTY_NOTE;
           mindmapNote.setText(textNote);
-          currentWiseTopic.addFeature(mindmapNote);
+          wiseParent.addFeature(mindmapNote);
         }
       }
 
@@ -326,12 +327,12 @@ export default class FreemindImporter extends Importer {
               if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
                 (noteModel as NoteModel).setContentType(ContentType.HTML);
               }
-              currentWiseTopic.addFeature(noteModel);
+              wiseParent.addFeature(noteModel);
               break;
             }
 
             case 'NODE': {
-              currentWiseTopic.setText(cleanHtml);
+              wiseParent.setText(cleanHtml);
               // Topic text is always plain, no contentType needed
               break;
             }
@@ -344,62 +345,14 @@ export default class FreemindImporter extends Importer {
               if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
                 (noteModel as NoteModel).setContentType(ContentType.HTML);
               }
-              currentWiseTopic.addFeature(noteModel);
+              wiseParent.addFeature(noteModel);
             }
           }
         }
       }
 
       if (child instanceof FreemindArrowlink) {
-        const arrow: FreemindArrowlink = child as FreemindArrowlink;
-        const destId = arrow.getDestination();
-
-        if (destId) {
-          // Find the source and destination nodes
-          const sourceNode = this.nodesmap.get(freeParent.getId()!);
-          const destNode = this.nodesmap.get(destId);
-
-          if (sourceNode && destNode) {
-            // Create a new relationship with the correct node IDs
-            const newRelationship = new RelationshipModel(sourceNode.getId(), destNode.getId());
-
-            // Set control points if available
-            const endinclination = arrow.getEndInclination();
-            if (endinclination) {
-              const inclination: Array<string> = endinclination.split(';');
-              if (inclination.length >= 2) {
-                newRelationship.setDestCtrlPoint({
-                  x: parseFloat(inclination[0]),
-                  y: parseFloat(inclination[1]),
-                });
-              }
-            }
-
-            const startinclination = arrow.getStartinclination();
-            if (startinclination) {
-              const inclination: Array<string> = startinclination.split(';');
-              if (inclination.length >= 2) {
-                newRelationship.setSrcCtrlPoint({
-                  x: parseFloat(inclination[0]),
-                  y: parseFloat(inclination[1]),
-                });
-              }
-            }
-
-            const endarrow = arrow.getEndarrow();
-            if (endarrow) {
-              newRelationship.setEndArrow(endarrow.toLowerCase() !== 'none');
-            }
-
-            const startarrow = arrow.getStartarrow();
-            if (startarrow) {
-              newRelationship.setStartArrow(startarrow.toLowerCase() !== 'none');
-            }
-
-            newRelationship.setLineType(3);
-            mindmap.addRelationship(newRelationship);
-          }
-        }
+        this.arrowlinks.push({ source: wiseParent, arrowlink: child });
       }
     });
   }
@@ -524,7 +477,7 @@ export default class FreemindImporter extends Importer {
       x *= side && FreemindConstant.POSITION_LEFT === side ? -1 : 1;
     } else {
       const position = wiseParent.getPosition();
-      x *= position.x < 0 ? 1 : -1;
+      x *= position.x < 0 ? -1 : 1;
     }
 
     let y: number;

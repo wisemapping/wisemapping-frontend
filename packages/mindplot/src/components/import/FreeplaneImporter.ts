@@ -100,7 +100,7 @@ class FreeplaneImporter extends Importer {
     let xml = `${indent}<topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(title)}" shape="line" id="${topicId}">\n`;
 
     // Add icons if present
-    const icons = freeplaneNode.querySelectorAll('icon');
+    const icons = freeplaneNode.querySelectorAll(':scope > icon');
     if (icons.length > 0) {
       icons.forEach((icon) => {
         const builtin = icon.getAttribute('BUILTIN');
@@ -138,7 +138,7 @@ class FreeplaneImporter extends Importer {
     const parts: string[] = [];
 
     // Handle Freeplane notes
-    const noteElements = freeplaneNode.querySelectorAll('richcontent[TYPE="NOTE"]');
+    const noteElements = freeplaneNode.querySelectorAll(':scope > richcontent[TYPE="NOTE"]');
     noteElements.forEach((noteElement) => {
       const htmlContent = noteElement.innerHTML;
       if (htmlContent) {

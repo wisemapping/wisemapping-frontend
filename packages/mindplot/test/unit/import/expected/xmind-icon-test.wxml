@@ -1,7 +1,7 @@
 <map name='xmind-icon-test' version='tango' theme='prism' layout='mindmap'>
     <topic central='true' text='Icon Test Map' id='1'>
         <topic position='200,0' order='0' text='Priority Icons' shape='line' id='2'>
-            <note><![CDATA[🔖 priority-1, 🔖 priority-2, 🔖 priority-3]]></note>
+            <note><![CDATA[🔖 priority-1]]></note>
         <topic position='200,0' order='0' text='Priority 2' shape='line' id='3'>
             <note><![CDATA[🔖 priority-2]]></note>
         </topic>
@@ -13,13 +13,13 @@
             <note><![CDATA[🔖 star]]></note>
         </topic>
         <topic position='300,75' order='2' text='Task Management' shape='line' id='6'>
-            <note><![CDATA[🔖 task-done, 🔖 task-start]]></note>
+            <note><![CDATA[🔖 task-done]]></note>
         <topic position='200,0' order='0' text='In Progress' shape='line' id='7'>
             <note><![CDATA[🔖 task-start]]></note>
         </topic>
         </topic>
         <topic position='-300,75' order='3' text='Emotions' shape='line' id='8'>
-            <note><![CDATA[🔖 smile, 🔖 happy, 🔖 thinking]]></note>
+            <note><![CDATA[🔖 smile]]></note>
         <topic position='200,0' order='0' text='Happy' shape='line' id='9'>
             <note><![CDATA[🔖 happy]]></note>
         </topic>
@@ -28,7 +28,7 @@
         </topic>
         </topic>
         <topic position='400,150' order='4' text='Technology' shape='line' id='11'>
-            <note><![CDATA[🔖 computer, 🔖 phone-mobile]]></note>
+            <note><![CDATA[🔖 computer]]></note>
         <topic position='200,0' order='0' text='Mobile' shape='line' id='12'>
             <note><![CDATA[🔖 phone-mobile]]></note>
         </topic>

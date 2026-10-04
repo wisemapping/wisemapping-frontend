@@ -29,6 +29,8 @@ class OPMLImporter extends Importer {
 
   private mindmap!: Mindmap;
 
+  private idCounter = 0;
+
   constructor(map: string) {
     super();
     this.opmlInput = map;
@@ -43,6 +45,7 @@ class OPMLImporter extends Importer {
       }
 
       this.mindmap = new Mindmap(nameMap);
+      this.idCounter = 0;
       if (description) {
         this.mindmap.setDescription(description);
       }
@@ -50,30 +53,52 @@ class OPMLImporter extends Importer {
       // Find the root outline element
       const rootOutline = opmlDoc.querySelector('outline');
       if (rootOutline) {
-        const centralTopic = this.convertOutline(rootOutline, this.mindmap, true);
+        const centralTopic = this.convertOutline(rootOutline, this.mindmap);
         this.mindmap.addBranch(centralTopic);
       }
 
-      // Serialize to WiseMapping format
-      const serializer = XMLSerializerFactory.createFromDocument(opmlDoc);
-      const mindmapToXml = serializer.toXML(this.mindmap);
-      const xmlStr = new XMLSerializer().serializeToString(mindmapToXml);
-
-      return Promise.resolve(xmlStr);
+      return Promise.resolve(OPMLImporter.toXml(this.mindmap));
     } catch (error) {
       console.error('Error importing OPML map:', error);
       // Fallback to basic map
-      return Promise.resolve(
-        `<map name="${nameMap}"><node TEXT="OPML Map Import Error"></node></map>`,
-      );
+      return Promise.resolve(OPMLImporter.createFallbackMap(nameMap, error as Error));
     }
   }
 
-  private convertOutline(outlineElement: Element, mindmap: Mindmap, isCentral: boolean): NodeModel {
+  private static toXml(mindmap: Mindmap): string {
+    // The OPML document version is not a WiseMapping one, so serialize using the mindmap version.
+    const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
+    const mindmapToXml = serializer.toXML(mindmap);
+    return new XMLSerializer().serializeToString(mindmapToXml);
+  }
+
+  private static createFallbackMap(nameMap: string, error: Error): string {
+    const mindmap = new Mindmap(nameMap);
+    const centralTopic = mindmap.createNode('CentralTopic', 1);
+    centralTopic.setText('OPML Import Error');
+    centralTopic.addFeature(new NoteModel({ text: `OPML import failed: ${error.message}` }));
+    mindmap.addBranch(centralTopic);
+    return OPMLImporter.toXml(mindmap);
+  }
+
+  private convertOutline(
+    outlineElement: Element,
+    mindmap: Mindmap,
+    parent?: NodeModel,
+    order = 0,
+  ): NodeModel {
     const text = outlineElement.getAttribute('text') || outlineElement.getAttribute('title') || '';
-    const nodeType = isCentral ? 'CentralTopic' : 'MainTopic';
-    const node = new NodeModel(nodeType, mindmap);
+    const nodeType = parent ? 'MainTopic' : 'CentralTopic';
+    this.idCounter += 1;
+    const node = new NodeModel(nodeType, mindmap, this.idCounter);
     node.setText(text);
+
+    // Non central topics require an order and a position to be serialized
+    if (parent) {
+      node.setOrder(order);
+      const position = OPMLImporter.calculatePosition(parent, order);
+      node.setPosition(position.x, position.y);
+    }
 
     // Handle rich text content if present
     const htmlContent = outlineElement.getAttribute('_note') || outlineElement.getAttribute('note');
@@ -89,12 +114,25 @@ class OPMLImporter extends Importer {
 
     // Handle child outlines
     const childOutlines = outlineElement.querySelectorAll(':scope > outline');
-    childOutlines.forEach((childOutline) => {
-      const childWiseNode = this.convertOutline(childOutline as Element, mindmap, false);
+    childOutlines.forEach((childOutline, index) => {
+      const childWiseNode = this.convertOutline(childOutline as Element, mindmap, node, index);
       node.append(childWiseNode);
     });
 
     return node;
+  }
+
+  private static calculatePosition(parent: NodeModel, order: number): { x: number; y: number } {
+    if (parent.getType() === 'CentralTopic') {
+      // Even orders go to the right, odd orders go to the left
+      const side = order % 2 === 0 ? 1 : -1;
+      return { x: side * 200, y: Math.floor(order / 2) * 50 };
+    }
+
+    // Deeper topics stay on the same side as their parent
+    const parentPosition = parent.getPosition();
+    const side = parentPosition.x < 0 ? -1 : 1;
+    return { x: parentPosition.x + side * 150, y: parentPosition.y + order * 25 };
   }
 
   private cleanHtml(content: string): string {

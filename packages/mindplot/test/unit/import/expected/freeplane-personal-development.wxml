@@ -2,34 +2,6 @@
     <topic central="true" text="Personal Development Plan" id="1">
         <topic position="200,0" order="0" text="Career Goals" shape="line" id="2">
             <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="⭐"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Identify and develop key professional skills</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Build professional network and relationships</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Obtain relevant professional certifications</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Develop leadership and management skills</p>
-            </body>
-          </html>]]></note>
                 <topic position="200,0" order="0" text="Skill Development" shape="line" id="3">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
@@ -67,36 +39,8 @@
           </html>]]></note>
                 </topic>
         </topic>
-        <topic position="-200,0" order="1" text="Health  Wellness" shape="line" id="7">
+        <topic position="-200,0" order="1" text="Health &amp; Wellness" shape="line" id="7">
             <eicon id="💡"/>
-            <eicon id="⚽"/>
-            <eicon id="🍽️"/>
-            <eicon id="❤️"/>
-            <eicon id="🕐"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Regular exercise and physical activity</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Healthy eating habits and nutrition plan</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Stress management and mental wellness</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Maintain consistent sleep schedule</p>
-            </body>
-          </html>]]></note>
                 <topic position="200,0" order="0" text="Physical Fitness" shape="line" id="8">
                     <eicon id="⚽"/>
                     <note><![CDATA[<html>
@@ -136,34 +80,6 @@
         </topic>
         <topic position="300,75" order="2" text="Financial Planning" shape="line" id="12">
             <eicon id="💡"/>
-            <eicon id="💰"/>
-            <eicon id="💡"/>
-            <eicon id="⚠️"/>
-            <eicon id="🛡️"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Set and achieve savings targets</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Develop investment portfolio and strategy</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Reduce and manage existing debt</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Build emergency fund for financial security</p>
-            </body>
-          </html>]]></note>
                 <topic position="200,0" order="0" text="Savings Goals" shape="line" id="13">
                     <eicon id="💰"/>
                     <note><![CDATA[<html>
@@ -203,34 +119,6 @@
         </topic>
         <topic position="-300,75" order="3" text="Personal Growth" shape="line" id="17">
             <eicon id="💡"/>
-            <eicon id="📚"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Read books for personal and professional growth</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Acquire new skills and knowledge</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Travel and gain new experiences</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Pursue hobbies and personal interests</p>
-            </body>
-          </html>]]></note>
                 <topic position="200,0" order="0" text="Reading Goals" shape="line" id="18">
                     <eicon id="📚"/>
                     <note><![CDATA[<html>
@@ -249,7 +137,7 @@
             </body>
           </html>]]></note>
                 </topic>
-                <topic position="300,75" order="2" text="Travel  Experiences" shape="line" id="20">
+                <topic position="300,75" order="2" text="Travel &amp; Experiences" shape="line" id="20">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
             <head/>
@@ -258,7 +146,7 @@
             </body>
           </html>]]></note>
                 </topic>
-                <topic position="-300,75" order="3" text="Hobbies  Interests" shape="line" id="21">
+                <topic position="-300,75" order="3" text="Hobbies &amp; Interests" shape="line" id="21">
                     <eicon id="💡"/>
                     <note><![CDATA[<html>
             <head/>
