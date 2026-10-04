@@ -117,7 +117,7 @@ class RootedTreeSet {
     const node = this.find(nodeId);
     $assert(node._parent, 'Node is not connected');
 
-    node._parent!._children = node._parent!._children.filter((n) => node !== n);
+    node._parent._children = node._parent._children.filter((n) => node !== n);
     this._rootNodes.push(node);
     node._parent = null;
   }

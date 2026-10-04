@@ -167,7 +167,7 @@ class MindplotWebComponent extends HTMLElement {
       persistenceManager,
       mode,
       widgetManager,
-      divContainer: mindplodElem!,
+      divContainer: mindplodElem,
       zoom: zoom ? Number.parseFloat(zoom) : 1,
       locale: locale || 'en',
     });

@@ -58,7 +58,7 @@ class PrismTheme extends DefaultTheme {
       }
     }
 
-    return result!;
+    return result;
   }
 
   getBorderColor(topic: Topic): string {

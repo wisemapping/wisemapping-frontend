@@ -98,7 +98,7 @@ class RobotTheme extends DefaultTheme {
       const index = order % colors.length;
       result = colors[index];
     }
-    return result!;
+    return result;
   }
 
   getBorderColor(topic: Topic): string {

@@ -140,7 +140,7 @@ class Node {
     // Position is always set in constructor, but TypeScript can't verify this
     // Use assertion since we know it's always defined
     $assert(position !== undefined, 'Position should always be defined');
-    return position!;
+    return position;
   }
 
   setSize(size: SizeType): void {
@@ -165,7 +165,7 @@ class Node {
     // Size is always set in constructor, but TypeScript can't verify this
     // Use assertion since we know it's always defined
     $assert(size !== undefined, 'Size should always be defined');
-    return size!;
+    return size;
   }
 
   setFreeDisplacement(displacement: PositionType): void {

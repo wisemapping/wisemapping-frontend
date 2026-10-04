@@ -280,7 +280,7 @@ class DefaultTheme implements Theme {
       const index = order % colors.length;
       result = colors[index];
     }
-    return result!;
+    return result;
   }
 }
 export default DefaultTheme;

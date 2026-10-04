@@ -1431,7 +1431,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     );
 
     // Build relationship line (sourceTopic and targetTopic are guaranteed non-null by asserts above)
-    const result = new Relationship(sourceTopic!, targetTopic!, model);
+    const result = new Relationship(sourceTopic, targetTopic, model);
     result.addEvent('ontblur', () => {
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();

@@ -239,11 +239,11 @@ class SymmetricSorter extends AbstractBasicSorter {
   detach(treeSet: RootedTreeSet, node: Node) {
     const parent = treeSet.getParent(node);
     $assert(parent != null, 'can not detach null parent');
-    const children = this._getSortedChildren(treeSet, parent!);
+    const children = this._getSortedChildren(treeSet, parent);
     const order = node.getOrder();
     $assert(order !== undefined, 'Node must have an order to be detached');
     // TypeScript doesn't understand $assert narrows the type, so we use non-null assertion
-    $assert(children[order!] === node, 'Node seems not to be in the right position');
+    $assert(children[order] === node, 'Node seems not to be in the right position');
 
     // Shift all the nodes ...
     const nodeOrder = node.getOrder();

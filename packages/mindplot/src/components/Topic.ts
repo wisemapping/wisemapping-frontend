@@ -1289,7 +1289,7 @@ abstract class Topic extends NodeGraph {
 
         // Force the repaint in case that the main topic color has changed.
         const borderColor = this.getBorderColor(this.getThemeVariant());
-        this._connector!.setColor(borderColor);
+        this._connector.setColor(borderColor);
 
         this._outgoingLine.redraw();
       }
