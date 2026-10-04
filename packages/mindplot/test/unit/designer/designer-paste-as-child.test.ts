@@ -94,10 +94,15 @@ const designerWith = (
   const internals = designer as unknown as DesignerInternals;
   internals._model = model;
   internals._actionDispatcher = actionDispatcher as unknown as StandaloneActionDispatcher;
-  // predict() and getOrderAfter() are the only layout calls these paths make.
+  // predict(), getOrderAfter() and getOrdersForNewChildren() are the only layout calls these
+  // paths make. The orders follow each other from the predicted one, as for a non-root parent.
   const getOrderAfter = jest.fn((_parentId: number, order: number) => order + 1);
+  const getOrdersForNewChildren = jest.fn((_parentId: number, count: number) =>
+    Array.from({ length: count }, (_, i) => (options.predictedOrder ?? 2) + i),
+  );
   internals._eventBussDispatcher = {
-    getLayoutManager: () => ({ predict, getOrderAfter }) as unknown as LayoutManager,
+    getLayoutManager: () =>
+      ({ predict, getOrderAfter, getOrdersForNewChildren }) as unknown as LayoutManager,
   } as unknown as EventBusDispatcher;
   internals._internalClipboard = options.internalClipboard ?? null;
 
