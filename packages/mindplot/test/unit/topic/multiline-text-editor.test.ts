@@ -134,6 +134,30 @@ describe('MultilineTextEditor IME composition', () => {
     expect(editor().isActive()).toBe(false);
     expect(changeTextToTopic).toHaveBeenCalledWith([child.getId()], 'New text');
   });
+
+  it('keeps the Enter that commits from adding a new line to the topic', () => {
+    const { child } = buildTopics();
+    topics = [child];
+
+    openEditor(child);
+    const textareaElem = textarea();
+    textareaElem.value = 'New text';
+    const enter = new KeyboardEvent('keydown', {
+      bubbles: true,
+      cancelable: true,
+      code: 'Enter',
+      key: 'Enter',
+    });
+    textareaElem.dispatchEvent(enter);
+
+    // Browsers insert the new line as the default action of the keydown ...
+    expect(enter.defaultPrevented).toBe(true);
+
+    // ... and an input event that still arrives after closing must not touch the topic.
+    textareaElem.value = 'New text\n';
+    textareaElem.dispatchEvent(new Event('input', { bubbles: true }));
+    expect(child.getModel().getText()).not.toBe('New text\n');
+  });
 });
 
 describe('MultilineTextEditor input', () => {

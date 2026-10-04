@@ -119,6 +119,9 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
             const newCursorPosition = selectionStart + 1;
             textareaElem.setSelectionRange(newCursorPosition, newCursorPosition);
           } else {
+            // Without this, the browser adds the new line to the textarea after closing,
+            // and the input listener would write it into the topic ...
+            keyboardEvent.preventDefault();
             this.close(true);
           }
           break;
@@ -137,6 +140,10 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 
     // Sync the topic on every change, including paste, delete and IME input ...
     EventManager.bind(textareaElem, 'input', (event: Event) => {
+      // Once closed, the text has been committed and the editor is gone ...
+      if (!containerElem.isConnected) {
+        return;
+      }
       const text = this.getTextAreaText();
       this._topic.setText(text);
       this.resize(text);
