@@ -110,9 +110,14 @@ describe('Designer dispose (BL-48)', () => {
     expect(listener).not.toHaveBeenCalled();
   });
 
-  it('still refuses a second designer while the first one is live', async () => {
-    await build();
-    await expect(build()).rejects.toThrow('multiple initializations');
+  // BL5-179: two maps on one page, each in its own web component.
+  it('builds a second designer while the first one is live', async () => {
+    const first = await build();
+    const second = await build();
+
+    expect(second).not.toBe(first);
+    expect(first.isDisposed()).toBe(false);
+    expect(second.isDisposed()).toBe(false);
   });
 
   it('stops the disposed designer from handling layout bus events', async () => {
