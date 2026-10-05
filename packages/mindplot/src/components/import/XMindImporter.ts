@@ -133,6 +133,15 @@ type DetectedInput = { kind: 'xml'; xml: string } | { kind: 'json'; sheet: XMind
 
 const XLINK_NAMESPACE = 'http://www.w3.org/1999/xlink';
 
+// Cap on the uncompressed size of the archive entries that are inflated. A content.json of a map
+// with thousands of topics is a few MB; anything bigger is rejected rather than inflated.
+const MAX_XMIND_CONTENT_BYTES = 50 * 1024 * 1024;
+
+// The only archive entries the importer reads. Thumbnails, attachments and other resources are
+// never inflated.
+const isXMindContentEntry = (name: string): boolean =>
+  name.endsWith('content.json') || name.endsWith('content.xml');
+
 // XMind icons (marker ids) and the WiseMapping EmojiIcon ids they map to. Built once: the
 // tables are hundreds of entries long.
 const XMIND_ICONS: Readonly<Record<string, string>> = {
@@ -859,9 +868,28 @@ class XMindImporter extends Importer {
     }
 
     let files: Record<string, Uint8Array>;
+    let inflatedBytes = 0;
     try {
-      files = unzipSync(data);
+      // The filter sees each entry's declared size before it is inflated. fflate inflates into a
+      // buffer of exactly that size, so an entry that under-declares can not exceed it either.
+      files = unzipSync(data, {
+        filter: (file) => {
+          if (!isXMindContentEntry(file.name)) {
+            return false;
+          }
+          inflatedBytes += file.originalSize;
+          if (inflatedBytes > MAX_XMIND_CONTENT_BYTES) {
+            throw new ImportError(
+              `The XMind file is too large: its content exceeds ${MAX_XMIND_CONTENT_BYTES / (1024 * 1024)} MB uncompressed.`,
+            );
+          }
+          return true;
+        },
+      });
     } catch (error) {
+      if (error instanceof ImportError) {
+        throw error;
+      }
       throw new Error(`Failed to unzip XMind archive: ${(error as Error).message}`);
     }
 
