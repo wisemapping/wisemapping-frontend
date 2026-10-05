@@ -57,10 +57,10 @@
     "defaultMessage": "折叠"
   },
   "outline.expand-all": {
-    "defaultMessage": "全部展開"
+    "defaultMessage": "全部展开"
   },
   "outline.collapse-all": {
-    "defaultMessage": "全部折疊"
+    "defaultMessage": "全部折叠"
   },
   "outline.has-note": {
     "defaultMessage": "有笔记"
@@ -114,7 +114,7 @@
     "defaultMessage": "极小"
   },
   "canvas-style.grid-style": {
-    "defaultMessage": "網格大小"
+    "defaultMessage": "网格大小"
   },
   "canvas-style.pattern-dots": {
     "defaultMessage": "点"
@@ -165,13 +165,13 @@
     "defaultMessage": "搜索表情..."
   },
   "icon-picker.search-placeholder": {
-    "defaultMessage": "搜尋圖示..."
+    "defaultMessage": "搜索图标..."
   },
   "icon-picker.frequently-used": {
     "defaultMessage": "常用"
   },
   "icon-picker.no-results": {
-    "defaultMessage": "找不到圖示"
+    "defaultMessage": "找不到图标"
   },
   "icon-picker.show-images": {
     "defaultMessage": "显示图像"
@@ -222,16 +222,16 @@
     "defaultMessage": "折叠子项"
   },
   "shortcut-help-pane.indent-topic": {
-    "defaultMessage": "降低主題層級 (連接到上一個同級節點)"
+    "defaultMessage": "降低主题层级 (连接到上一个同级节点)"
   },
   "shortcut-help-pane.move-topic-down": {
-    "defaultMessage": "在同級中下移主題"
+    "defaultMessage": "在同级中下移主题"
   },
   "shortcut-help-pane.move-topic-up": {
-    "defaultMessage": "在同級中上移主題"
+    "defaultMessage": "在同级中上移主题"
   },
   "shortcut-help-pane.outdent-topic": {
-    "defaultMessage": "提升主題層級 (連接到祖父節點)"
+    "defaultMessage": "提升主题层级 (连接到祖父节点)"
   },
   "shortcut-help-pane.copy-and-text": {
     "defaultMessage": "复制和粘贴主题/将思维导图图像复制到剪贴板。"
@@ -465,16 +465,16 @@
     "defaultMessage": "粗曲线"
   },
   "icon-collection.connection.arc": {
-    "defaultMessage": "弧線"
+    "defaultMessage": "弧线"
   },
   "icon-collection.connection.arc-tooltip": {
-    "defaultMessage": "圓形弧線連接 - 非常適合放射狀佈局和有機流動"
+    "defaultMessage": "圆形弧线连接 - 非常适合放射状布局和有机流动"
   },
   "icon-collection.connection.heartbeat": {
     "defaultMessage": "心跳"
   },
   "icon-collection.connection.heartbeat-tooltip": {
-    "defaultMessage": "受心電圖啟發的波形，具有尖銳的峰值 - 非常適合傳達能量、緊迫感或生命信號"
+    "defaultMessage": "受心电图启发的波形，具有尖锐的峰值 - 非常适合传达能量、紧迫感或生命信号"
   },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "细曲线"
@@ -579,13 +579,13 @@
     "defaultMessage": "默认"
   },
   "icon-collection.border.default-tooltip": {
-    "defaultMessage": "預設 - 顏色將根據所選主題自動設定"
+    "defaultMessage": "默认 - 颜色将根据所选主题自动设置"
   },
   "icon-collection.connection.default": {
     "defaultMessage": "默认"
   },
   "icon-collection.default-tooltip": {
-    "defaultMessage": "預設 - 所有樣式將根據主題自動選擇"
+    "defaultMessage": "默认 - 所有样式将根据主题自动选择"
   },
   "unified-styling.shape-type": {
     "defaultMessage": "形状类型"
@@ -597,127 +597,127 @@
     "defaultMessage": "恢复默认"
   },
   "appbar.tooltip-change-layout": {
-    "defaultMessage": "更改佈局"
+    "defaultMessage": "更改布局"
   },
   "appbar.tooltip-theme-toggle": {
-    "defaultMessage": "切換主題"
+    "defaultMessage": "切换主题"
   },
   "icon-collection.connection.curved-polyline-tooltip": {
-    "defaultMessage": "具有平滑角的多段線 - 最適合結構化佈局和清晰路徑"
+    "defaultMessage": "具有平滑角的多段线 - 最适合结构化布局和清晰路径"
   },
   "icon-collection.connection.default-tooltip": {
-    "defaultMessage": "預設 - 連接樣式將根據主題自動選擇"
+    "defaultMessage": "默认 - 连接样式将根据主题自动选择"
   },
   "icon-collection.connection.neuron": {
-    "defaultMessage": "神經元"
+    "defaultMessage": "神经元"
   },
   "icon-collection.connection.neuron-tooltip": {
-    "defaultMessage": "具有分支脈衝的有機脈衝線 - 適合科學、神經網絡或未來主義主題"
+    "defaultMessage": "具有分支脉冲的有机脉冲线 - 适合科学、神经网络或未来主义主题"
   },
   "icon-collection.connection.thick-curved-tooltip": {
-    "defaultMessage": "具有平滑貝塞爾曲線的粗曲線 - 非常適合強調主要分支"
+    "defaultMessage": "具有平滑贝塞尔曲线的粗曲线 - 非常适合强调主要分支"
   },
   "icon-collection.connection.thin-curved-tooltip": {
-    "defaultMessage": "具有優雅貝塞爾曲線的細曲線 - 適合詳細或密集的心智圖"
+    "defaultMessage": "具有优雅贝塞尔曲线的细曲线 - 适合详细或密集的心智图"
   },
   "layout-selector.accept": {
-    "defaultMessage": "確認"
+    "defaultMessage": "确认"
   },
   "layout-selector.cancel": {
     "defaultMessage": "取消"
   },
   "layout-selector.description": {
-    "defaultMessage": "選擇佈局樣式"
+    "defaultMessage": "选择布局样式"
   },
   "layout-selector.title": {
-    "defaultMessage": "選擇佈局"
+    "defaultMessage": "选择布局"
   },
   "layout.mindmap.description": {
-    "defaultMessage": "兩側具有均衡分支的水平佈局。最適合傳統心智圖和頭腦風暴。"
+    "defaultMessage": "两侧具有均衡分支的水平布局。最适合传统心智图和头脑风暴。"
   },
   "layout.mindmap.name": {
-    "defaultMessage": "心智圖"
+    "defaultMessage": "心智图"
   },
   "layout.tree.description": {
-    "defaultMessage": "從上到下的垂直層次結構。非常適合組織架構圖和層次結構。"
+    "defaultMessage": "从上到下的垂直层次结构。非常适合组织架构图和层次结构。"
   },
   "layout.tree.name": {
-    "defaultMessage": "樹形"
+    "defaultMessage": "树形"
   },
   "shortcut-help-pane.expand-by-level": {
-    "defaultMessage": "按級別展開主題"
+    "defaultMessage": "按级别展开主题"
   },
   "shortcut-help-pane.expand-collapse-all": {
-    "defaultMessage": "展開/折疊所有主題"
+    "defaultMessage": "展开/折叠所有主题"
   },
   "shortcut-help-pane.outline-view": {
-    "defaultMessage": "開啟大綱視圖"
+    "defaultMessage": "开启大纲视图"
   },
   "shortcut-help-pane.zoom-in": {
     "defaultMessage": "放大"
   },
   "shortcut-help-pane.zoom-out": {
-    "defaultMessage": "縮小"
+    "defaultMessage": "缩小"
   },
   "shortcut-help-pane.zoom-to-fit": {
-    "defaultMessage": "適合縮放"
+    "defaultMessage": "适合缩放"
   },
   "unified-styling.border-color": {
-    "defaultMessage": "邊框顏色"
+    "defaultMessage": "边框颜色"
   },
   "unified-styling.border-style": {
-    "defaultMessage": "邊框樣式"
+    "defaultMessage": "边框样式"
   },
   "unified-styling.connection-style": {
-    "defaultMessage": "連接樣式"
+    "defaultMessage": "连接样式"
   },
   "unified-styling.connector-style": {
-    "defaultMessage": "連接器樣式"
+    "defaultMessage": "连接器样式"
   },
   "unified-styling.tab.border": {
-    "defaultMessage": "邊框"
+    "defaultMessage": "边框"
   },
   "unified-styling.tab.connector": {
-    "defaultMessage": "連接器"
+    "defaultMessage": "连接器"
   },
   "unified-styling.tab.shape": {
-    "defaultMessage": "形狀"
+    "defaultMessage": "形状"
   },
   "visualization-toolbar.tooltip-collapse-all": {
-    "defaultMessage": "折疊所有節點"
+    "defaultMessage": "折叠所有节点"
   },
   "visualization-toolbar.tooltip-expand-all": {
-    "defaultMessage": "展開所有節點"
+    "defaultMessage": "展开所有节点"
   },
   "visualization-toolbar.tooltip-expand-level": {
-    "defaultMessage": "按級別展開"
+    "defaultMessage": "按级别展开"
   },
   "visualization-toolbar.tooltip-expand-level-current": {
-    "defaultMessage": "按級別展開（級別 {level}）"
+    "defaultMessage": "按级别展开（级别 {level}）"
   },
   "visualization-toolbar.tooltip-keyboard": {
-    "defaultMessage": "鍵盤快捷鍵"
+    "defaultMessage": "键盘快捷键"
   },
   "visualization-toolbar.tooltip-outline-view": {
-    "defaultMessage": "大綱視圖"
+    "defaultMessage": "大纲视图"
   },
   "visualization-toolbar.tooltip-theme-toggle": {
-    "defaultMessage": "切換主題"
+    "defaultMessage": "切换主题"
   },
   "visualization-toolbar.tooltip-switch-to-dark": {
-    "defaultMessage": "切換至深色模式"
+    "defaultMessage": "切换至深色模式"
   },
   "visualization-toolbar.tooltip-switch-to-light": {
-    "defaultMessage": "切換至淺色模式"
+    "defaultMessage": "切换至浅色模式"
   },
   "visualization-toolbar.tooltip-zoom-in": {
     "defaultMessage": "放大"
   },
   "visualization-toolbar.tooltip-zoom-out": {
-    "defaultMessage": "縮小"
+    "defaultMessage": "缩小"
   },
   "visualization-toolbar.tooltip-zoom-to-fit": {
-    "defaultMessage": "適合縮放"
+    "defaultMessage": "适合缩放"
   },
   "editor-panel.deeplink-copied": {
     "defaultMessage": "已将主题链接复制到剪贴板"

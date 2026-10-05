@@ -106,3 +106,18 @@ describe.each(locales)('%s messages', (lang) => {
     expect(messages['canvas-style.grid-style'].defaultMessage).not.toBe(before[lang]);
   });
 });
+
+// Common characters only Traditional Chinese uses: their Simplified forms differ.
+const TRADITIONAL_ONLY =
+  /[預設體開關點擊選擇編輯檔圖畫線顏網頁樣題節級層連適佈視縮鍵刪註認們為個這與對時後從進]/;
+
+// BL5-194: zh, Simplified Chinese, mixed in Traditional characters.
+describe.each(['zh', 'zh-CN'])('%s messages', (lang) => {
+  test('are written in Simplified characters', () => {
+    const messages = readLang(lang);
+    const traditional = Object.keys(messages)
+      .filter((id) => TRADITIONAL_ONLY.test(messages[id].defaultMessage))
+      .map((id) => `${id}: ${messages[id].defaultMessage}`);
+    expect(traditional).toEqual([]);
+  });
+});

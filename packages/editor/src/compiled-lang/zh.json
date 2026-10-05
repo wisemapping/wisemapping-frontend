@@ -50,7 +50,7 @@
   "appbar.tooltip-change-layout": [
     {
       "type": 0,
-      "value": "更改佈局"
+      "value": "更改布局"
     }
   ],
   "appbar.tooltip-export": [
@@ -128,7 +128,7 @@
   "appbar.tooltip-theme-toggle": [
     {
       "type": 0,
-      "value": "切換主題"
+      "value": "切换主题"
     }
   ],
   "appbar.tooltip-undo": [
@@ -188,7 +188,7 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "網格大小"
+      "value": "网格大小"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
@@ -470,7 +470,7 @@
   "icon-collection.border.default-tooltip": [
     {
       "type": 0,
-      "value": "預設 - 顏色將根據所選主題自動設定"
+      "value": "默认 - 颜色将根据所选主题自动设置"
     }
   ],
   "icon-collection.border.dotted": [
@@ -488,13 +488,13 @@
   "icon-collection.connection.arc": [
     {
       "type": 0,
-      "value": "弧線"
+      "value": "弧线"
     }
   ],
   "icon-collection.connection.arc-tooltip": [
     {
       "type": 0,
-      "value": "圓形弧線連接 - 非常適合放射狀佈局和有機流動"
+      "value": "圆形弧线连接 - 非常适合放射状布局和有机流动"
     }
   ],
   "icon-collection.connection.curved-polyline": [
@@ -506,7 +506,7 @@
   "icon-collection.connection.curved-polyline-tooltip": [
     {
       "type": 0,
-      "value": "具有平滑角的多段線 - 最適合結構化佈局和清晰路徑"
+      "value": "具有平滑角的多段线 - 最适合结构化布局和清晰路径"
     }
   ],
   "icon-collection.connection.default": [
@@ -518,7 +518,7 @@
   "icon-collection.connection.default-tooltip": [
     {
       "type": 0,
-      "value": "預設 - 連接樣式將根據主題自動選擇"
+      "value": "默认 - 连接样式将根据主题自动选择"
     }
   ],
   "icon-collection.connection.heartbeat": [
@@ -530,19 +530,19 @@
   "icon-collection.connection.heartbeat-tooltip": [
     {
       "type": 0,
-      "value": "受心電圖啟發的波形，具有尖銳的峰值 - 非常適合傳達能量、緊迫感或生命信號"
+      "value": "受心电图启发的波形，具有尖锐的峰值 - 非常适合传达能量、紧迫感或生命信号"
     }
   ],
   "icon-collection.connection.neuron": [
     {
       "type": 0,
-      "value": "神經元"
+      "value": "神经元"
     }
   ],
   "icon-collection.connection.neuron-tooltip": [
     {
       "type": 0,
-      "value": "具有分支脈衝的有機脈衝線 - 適合科學、神經網絡或未來主義主題"
+      "value": "具有分支脉冲的有机脉冲线 - 适合科学、神经网络或未来主义主题"
     }
   ],
   "icon-collection.connection.simple-polyline": [
@@ -566,7 +566,7 @@
   "icon-collection.connection.thick-curved-tooltip": [
     {
       "type": 0,
-      "value": "具有平滑貝塞爾曲線的粗曲線 - 非常適合強調主要分支"
+      "value": "具有平滑贝塞尔曲线的粗曲线 - 非常适合强调主要分支"
     }
   ],
   "icon-collection.connection.thin-curved": [
@@ -578,13 +578,13 @@
   "icon-collection.connection.thin-curved-tooltip": [
     {
       "type": 0,
-      "value": "具有優雅貝塞爾曲線的細曲線 - 適合詳細或密集的心智圖"
+      "value": "具有优雅贝塞尔曲线的细曲线 - 适合详细或密集的心智图"
     }
   ],
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "預設 - 所有樣式將根據主題自動選擇"
+      "value": "默认 - 所有样式将根据主题自动选择"
     }
   ],
   "icon-collection.shape.default": [
@@ -650,13 +650,13 @@
   "icon-picker.no-results": [
     {
       "type": 0,
-      "value": "找不到圖示"
+      "value": "找不到图标"
     }
   ],
   "icon-picker.search-placeholder": [
     {
       "type": 0,
-      "value": "搜尋圖示..."
+      "value": "搜索图标..."
     }
   ],
   "icon-picker.show-images": [
@@ -668,7 +668,7 @@
   "layout-selector.accept": [
     {
       "type": 0,
-      "value": "確認"
+      "value": "确认"
     }
   ],
   "layout-selector.cancel": [
@@ -680,37 +680,37 @@
   "layout-selector.description": [
     {
       "type": 0,
-      "value": "選擇佈局樣式"
+      "value": "选择布局样式"
     }
   ],
   "layout-selector.title": [
     {
       "type": 0,
-      "value": "選擇佈局"
+      "value": "选择布局"
     }
   ],
   "layout.mindmap.description": [
     {
       "type": 0,
-      "value": "兩側具有均衡分支的水平佈局。最適合傳統心智圖和頭腦風暴。"
+      "value": "两侧具有均衡分支的水平布局。最适合传统心智图和头脑风暴。"
     }
   ],
   "layout.mindmap.name": [
     {
       "type": 0,
-      "value": "心智圖"
+      "value": "心智图"
     }
   ],
   "layout.tree.description": [
     {
       "type": 0,
-      "value": "從上到下的垂直層次結構。非常適合組織架構圖和層次結構。"
+      "value": "从上到下的垂直层次结构。非常适合组织架构图和层次结构。"
     }
   ],
   "layout.tree.name": [
     {
       "type": 0,
-      "value": "樹形"
+      "value": "树形"
     }
   ],
   "link.help_text": [
@@ -750,7 +750,7 @@
   "outline.collapse-all": [
     {
       "type": 0,
-      "value": "全部折疊"
+      "value": "全部折叠"
     }
   ],
   "outline.empty": [
@@ -768,7 +768,7 @@
   "outline.expand-all": [
     {
       "type": 0,
-      "value": "全部展開"
+      "value": "全部展开"
     }
   ],
   "outline.has-note": [
@@ -1074,13 +1074,13 @@
   "shortcut-help-pane.expand-by-level": [
     {
       "type": 0,
-      "value": "按級別展開主題"
+      "value": "按级别展开主题"
     }
   ],
   "shortcut-help-pane.expand-collapse-all": [
     {
       "type": 0,
-      "value": "展開/折疊所有主題"
+      "value": "展开/折叠所有主题"
     }
   ],
   "shortcut-help-pane.find-in-map": [
@@ -1092,19 +1092,19 @@
   "shortcut-help-pane.indent-topic": [
     {
       "type": 0,
-      "value": "降低主題層級 (連接到上一個同級節點)"
+      "value": "降低主题层级 (连接到上一个同级节点)"
     }
   ],
   "shortcut-help-pane.move-topic-down": [
     {
       "type": 0,
-      "value": "在同級中下移主題"
+      "value": "在同级中下移主题"
     }
   ],
   "shortcut-help-pane.move-topic-up": [
     {
       "type": 0,
-      "value": "在同級中上移主題"
+      "value": "在同级中上移主题"
     }
   ],
   "shortcut-help-pane.navigation": [
@@ -1122,13 +1122,13 @@
   "shortcut-help-pane.outdent-topic": [
     {
       "type": 0,
-      "value": "提升主題層級 (連接到祖父節點)"
+      "value": "提升主题层级 (连接到祖父节点)"
     }
   ],
   "shortcut-help-pane.outline-view": [
     {
       "type": 0,
-      "value": "開啟大綱視圖"
+      "value": "开启大纲视图"
     }
   ],
   "shortcut-help-pane.overwrite-edit-topic": [
@@ -1206,13 +1206,13 @@
   "shortcut-help-pane.zoom-out": [
     {
       "type": 0,
-      "value": "縮小"
+      "value": "缩小"
     }
   ],
   "shortcut-help-pane.zoom-to-fit": [
     {
       "type": 0,
-      "value": "適合縮放"
+      "value": "适合缩放"
     }
   ],
   "shortcut-help-pane.zoom-wheel": [
@@ -1440,25 +1440,25 @@
   "unified-styling.border-color": [
     {
       "type": 0,
-      "value": "邊框顏色"
+      "value": "边框颜色"
     }
   ],
   "unified-styling.border-style": [
     {
       "type": 0,
-      "value": "邊框樣式"
+      "value": "边框样式"
     }
   ],
   "unified-styling.connection-style": [
     {
       "type": 0,
-      "value": "連接樣式"
+      "value": "连接样式"
     }
   ],
   "unified-styling.connector-style": [
     {
       "type": 0,
-      "value": "連接器樣式"
+      "value": "连接器样式"
     }
   ],
   "unified-styling.shape-type": [
@@ -1470,43 +1470,43 @@
   "unified-styling.tab.border": [
     {
       "type": 0,
-      "value": "邊框"
+      "value": "边框"
     }
   ],
   "unified-styling.tab.connector": [
     {
       "type": 0,
-      "value": "連接器"
+      "value": "连接器"
     }
   ],
   "unified-styling.tab.shape": [
     {
       "type": 0,
-      "value": "形狀"
+      "value": "形状"
     }
   ],
   "visualization-toolbar.tooltip-collapse-all": [
     {
       "type": 0,
-      "value": "折疊所有節點"
+      "value": "折叠所有节点"
     }
   ],
   "visualization-toolbar.tooltip-expand-all": [
     {
       "type": 0,
-      "value": "展開所有節點"
+      "value": "展开所有节点"
     }
   ],
   "visualization-toolbar.tooltip-expand-level": [
     {
       "type": 0,
-      "value": "按級別展開"
+      "value": "按级别展开"
     }
   ],
   "visualization-toolbar.tooltip-expand-level-current": [
     {
       "type": 0,
-      "value": "按級別展開（級別 "
+      "value": "按级别展开（级别 "
     },
     {
       "type": 1,
@@ -1526,31 +1526,31 @@
   "visualization-toolbar.tooltip-keyboard": [
     {
       "type": 0,
-      "value": "鍵盤快捷鍵"
+      "value": "键盘快捷键"
     }
   ],
   "visualization-toolbar.tooltip-outline-view": [
     {
       "type": 0,
-      "value": "大綱視圖"
+      "value": "大纲视图"
     }
   ],
   "visualization-toolbar.tooltip-switch-to-dark": [
     {
       "type": 0,
-      "value": "切換至深色模式"
+      "value": "切换至深色模式"
     }
   ],
   "visualization-toolbar.tooltip-switch-to-light": [
     {
       "type": 0,
-      "value": "切換至淺色模式"
+      "value": "切换至浅色模式"
     }
   ],
   "visualization-toolbar.tooltip-theme-toggle": [
     {
       "type": 0,
-      "value": "切換主題"
+      "value": "切换主题"
     }
   ],
   "visualization-toolbar.tooltip-zoom-in": [
@@ -1562,13 +1562,13 @@
   "visualization-toolbar.tooltip-zoom-out": [
     {
       "type": 0,
-      "value": "縮小"
+      "value": "缩小"
     }
   ],
   "visualization-toolbar.tooltip-zoom-to-fit": [
     {
       "type": 0,
-      "value": "適合縮放"
+      "value": "适合缩放"
     }
   ]
 }
