@@ -40,7 +40,7 @@
     "test:integration": "yarn test:integration:playground && yarn test:integration:storybook",
     "test:integration:playground": "rm -rf node_modules/.vite && PORT=8081 node ../../scripts/run-storybook-cypress.js --server 'vite --port 8081 --host 127.0.0.1'",
     "test:integration:storybook": "PORT=6008 node ../../scripts/run-storybook-cypress.js --server 'storybook dev -p 6008 --quiet --ci' --test 'yarn cy:storybook:run'",
-    "test:unit": "jest ./test/unit/* --detectOpenHandles",
+    "test:unit": "jest ./test/unit/* --coverage --silent --detectOpenHandles",
     "test:visual": "VISUAL_SNAPSHOTS=verify yarn test:integration:playground",
     "test:visual:update": "VISUAL_SNAPSHOTS=update yarn test:integration:playground",
     "typecheck:cypress": "tsc --noEmit -p cypress"
