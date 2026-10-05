@@ -131,4 +131,56 @@ describe('SecureXmlParser', () => {
       expect(doc!.documentElement.textContent).toBe(markup);
     });
   });
+
+  describe('DOM validation', () => {
+    test('walks the elements once to count them and check their attributes', () => {
+      const select = jest.spyOn(Document.prototype, 'querySelectorAll');
+      try {
+        const doc = SecureXmlParser.parseSecureXml(
+          '<map><node TEXT="a"><node TEXT="b"/></node></map>',
+        );
+
+        expect(doc).not.toBeNull();
+        expect(select.mock.calls.filter(([selector]) => selector === '*')).toHaveLength(1);
+      } finally {
+        select.mockRestore();
+      }
+    });
+
+    test('rejects an attribute value longer than 10000 characters', () => {
+      const error = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+      try {
+        const ok = SecureXmlParser.parseSecureXml(`<map><node TEXT="${'a'.repeat(10000)}"/></map>`);
+        const tooLong = SecureXmlParser.parseSecureXml(
+          `<map><node TEXT="${'a'.repeat(10001)}"/></map>`,
+        );
+
+        expect(ok).not.toBeNull();
+        expect(tooLong).toBeNull();
+        expect(error).toHaveBeenCalledWith(
+          'Secure XML parsing failed:',
+          new Error('Attribute value too long'),
+        );
+      } finally {
+        error.mockRestore();
+      }
+    });
+
+    test('rejects a document nested deeper than the depth cap', () => {
+      const error = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+      try {
+        // MAX_XML_DEPTH is 100 and the root element is at depth 0.
+        const depth = 102;
+        const xml = `${'<a>'.repeat(depth)}${'</a>'.repeat(depth)}`;
+
+        expect(SecureXmlParser.parseSecureXml(xml)).toBeNull();
+        expect(error).toHaveBeenCalledWith(
+          'Secure XML parsing failed:',
+          new Error('XML nesting too deep'),
+        );
+      } finally {
+        error.mockRestore();
+      }
+    });
+  });
 });
