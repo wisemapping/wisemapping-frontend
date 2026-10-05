@@ -15,15 +15,19 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import type MindplotWebComponentInterface from '../../src/components/MindplotWebComponentInterface';
 
-import type EditorRenderMode from './EditorRenderMode';
+/**
+ * The `mode` attribute of `<mindplot-component>` is an EditorRenderMode: the type
+ * rejects a mode the designer does not know (checked by ts-jest when it compiles this file).
+ */
+describe('MindplotWebComponentInterface (BL5-28)', () => {
+  it('accepts an EditorRenderMode and rejects any other mode', () => {
+    const valid: MindplotWebComponentInterface = { id: 'mindmap-comp', mode: 'edition-owner' };
+    // @ts-expect-error 'edit' is not an EditorRenderMode
+    const invalid: MindplotWebComponentInterface = { id: 'mindmap-comp', mode: 'edit' };
 
-type MindplotWebComponentInterface = {
-  id: string;
-  mode: EditorRenderMode;
-  ref?: React.Ref<unknown>;
-  locale?: string;
-  zoom?: number;
-};
-
-export default MindplotWebComponentInterface;
+    expect(valid.mode).toBe('edition-owner');
+    expect(invalid.mode).toBe('edit');
+  });
+});
