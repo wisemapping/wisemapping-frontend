@@ -150,3 +150,46 @@ describe('ImageEmojiFeature delete widget with two designers on the page (BL4-23
     expect(removeChild).not.toHaveBeenCalledWith(widget);
   });
 });
+
+// BL5-160: the emoji size read the text box twice (getShapeWidth, then getShapeHeight).
+describe('ImageEmojiFeature size', () => {
+  let measure: jest.SpyInstance;
+  let width: jest.SpyInstance;
+  let height: jest.SpyInstance;
+
+  beforeEach(() => {
+    measure = jest.spyOn(Text.prototype, 'measure').mockReturnValue({ width: 30, height: 36 });
+    width = jest.spyOn(Text.prototype, 'getShapeWidth');
+    height = jest.spyOn(Text.prototype, 'getShapeHeight');
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('measures the glyph once', () => {
+    const { feature, topic } = buildTopic('😀');
+    topic.redraw();
+    measure.mockClear();
+
+    expect(feature.getSize()).toEqual({ width: 30, height: 36 });
+    expect(measure).toHaveBeenCalledTimes(1);
+    expect(width).not.toHaveBeenCalled();
+    expect(height).not.toHaveBeenCalled();
+  });
+
+  it('measures the glyph once for its delete widget', () => {
+    const { feature, group, topic } = buildTopic('😀', {});
+    topic.redraw();
+    const append = jest.spyOn(group, 'append');
+    measure.mockClear();
+
+    // Hovering the emoji shows its delete widget, placed from the glyph size.
+    feature.getEmojiTextShape()!.trigger('mouseover', {});
+
+    expect(append).toHaveBeenCalledTimes(1);
+    expect(measure).toHaveBeenCalledTimes(1);
+    expect(width).not.toHaveBeenCalled();
+    expect(height).not.toHaveBeenCalled();
+  });
+});

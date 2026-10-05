@@ -150,13 +150,8 @@ class ImageEmojiFeature {
   }
 
   getSize(): SizeType | undefined {
-    if (this._emojiText) {
-      return {
-        width: this._emojiText.getShapeWidth(),
-        height: this._emojiText.getShapeHeight(),
-      };
-    }
-    return undefined;
+    // Measured once: the width and the height come from one text box.
+    return this._emojiText?.measure();
   }
 
   addToGroup(group: Group): void {
@@ -203,10 +198,7 @@ class ImageEmojiFeature {
         return null;
       },
       getSize(): SizeType | undefined {
-        return {
-          width: emojiTextShape.getShapeWidth(),
-          height: emojiTextShape.getShapeHeight(),
-        };
+        return emojiTextShape.measure();
       },
       getPosition(): PositionType {
         return emojiTextShape.getPosition();
