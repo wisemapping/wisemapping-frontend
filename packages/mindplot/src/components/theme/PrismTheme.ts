@@ -74,31 +74,6 @@ class PrismTheme extends DefaultTheme {
     return result;
   }
 
-  getBackgroundColor(topic: Topic): string {
-    const model = topic.getModel();
-    let result = model.getBackgroundColor();
-
-    // If topic has a custom background color, always use it
-    if (result) {
-      return result;
-    }
-
-    if (!topic.isCentralTopic()) {
-      // Be sure that not override default background color ...
-      const borderColor = model.getBorderColor();
-      if (borderColor) {
-        result = ColorUtil.lightenColor(borderColor, 40);
-      }
-    }
-
-    if (!result) {
-      const colors = this.resolve('backgroundColor', topic);
-      result = pickByOrder(colors, topic.getOrder());
-    }
-
-    return result;
-  }
-
   getFontColor(topic: Topic): string {
     // A color picked by the user (on the topic or an ancestor) is used as is ...
     const picked = this.resolve('fontColor', topic, false) as string | undefined;
