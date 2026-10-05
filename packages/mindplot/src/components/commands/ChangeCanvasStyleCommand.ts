@@ -46,6 +46,8 @@ class ChangeCanvasStyleCommand extends Command {
 
       // Re-render (reads from model + merges with theme defaults)
       designer.applyCanvasStyle();
+      // The topic text colour contrasts with the canvas colour (BL5-58)
+      designer.redrawAllTopics();
 
       this._applied = true;
     } else {
@@ -63,6 +65,8 @@ class ChangeCanvasStyleCommand extends Command {
 
       // Re-render (reads from model + merges with theme defaults)
       designer.applyCanvasStyle();
+      // The topic text colour contrasts with the canvas colour (BL5-58)
+      designer.redrawAllTopics();
 
       this._applied = false;
       this._oldStyle = undefined;

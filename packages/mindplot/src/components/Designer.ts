@@ -1099,6 +1099,15 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // Redraw all topics immediately (no queue rendering during editing). Each topic is
     // redrawn once, parents before children: redrawing every topic with its subtree
     // redrew each one once per ancestor.
+    this.redrawAllTopics();
+  }
+
+  /**
+   * Redraws every topic once, floating ones included, parents first, with the current theme
+   * variant. It lays nothing out.
+   * @internal
+   */
+  redrawAllTopics(): void {
     const variant = this.getThemeVariant();
     this.getModel()
       .getTopics()
