@@ -66,7 +66,7 @@ const serializeElement = (el: Element, depth: number, isRoot: boolean): string[]
   if (isRoot) {
     attrs.push(['xmlns', SVG_NS], ['xmlns:xlink', XLINK_NS]);
   }
-  attrs.sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+  attrs.sort(([a], [b]) => Number(a > b) - Number(a < b));
   const open = `${indent}<${el.localName}${attrs.map(([n, v]) => ` ${n}="${escapeAttr(v)}"`).join('')}`;
 
   const children = Array.from(el.childNodes);

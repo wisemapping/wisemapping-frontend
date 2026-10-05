@@ -166,7 +166,7 @@ describe('Text redraw', () => {
   it('an unchanged redraw makes 0 DOM writes', () => {
     const text = setup();
     const writes = countWrites(text.peer._native);
-    const opacity = text.peer._native.style.opacity;
+    const { opacity } = text.peer._native.style;
     try {
       redrawTopicText(text, 'Hello\nworld');
     } finally {

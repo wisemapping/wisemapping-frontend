@@ -74,8 +74,10 @@ describe('assert', () => {
 
 describe('DomUtils', () => {
   const mockRect = (el: Element, top: number, left: number) => {
-    el.getClientRects = () => [{}] as unknown as DOMRectList;
-    el.getBoundingClientRect = () => ({ top, left }) as DOMRect;
+    Object.assign(el, {
+      getClientRects: () => [{}] as unknown as DOMRectList,
+      getBoundingClientRect: () => ({ top, left }) as DOMRect,
+    });
   };
 
   it('getStyle parses px values, stringifies others', () => {

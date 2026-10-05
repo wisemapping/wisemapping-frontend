@@ -474,7 +474,7 @@ describe('Text measurement cache', () => {
     Object.defineProperty(document, 'fonts', { value: fonts, configurable: true });
     try {
       jest.isolateModules(() => {
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        // eslint-disable-next-line @typescript-eslint/no-require-imports, global-require
         const IsolatedText = require('../../src/components/Text').default as typeof Text;
         const text = new IsolatedText();
         document.body.append(text.peer._native);

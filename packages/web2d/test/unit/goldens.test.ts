@@ -186,6 +186,12 @@ const textScene = (texts: [string, (t: Text) => void][]): Element => {
   return workspace.getSVGElement();
 };
 
+/** Connection width by the sign of its offset from the centre: 1 before it, 10 on it, 20 after it. */
+const widthBySign = (offset: number): number => {
+  if (offset < 0) return 1;
+  return offset === 0 ? 10 : 20;
+};
+
 const SCENARIOS: Record<string, Scenario> = {
   // PolyLine: every style × orientation (W-VCURVE, W-HCURVE, W-MIDCURVE).
   ...Object.fromEntries(
@@ -239,7 +245,7 @@ const SCENARIOS: Record<string, Scenario> = {
         const { y } = line.getFrom();
         line.setSrcControlPoint({ x: 100, y: 0 });
         line.setDestControlPoint({ x: -100, y: 0 });
-        line.setWidth(y < 0 ? 1 : y === 0 ? 10 : 20);
+        line.setWidth(widthBySign(y));
         line.setFill('#3366cc', 1);
         line.setStroke(1, 'solid', '#3366cc', 1);
       },
@@ -256,7 +262,7 @@ const SCENARIOS: Record<string, Scenario> = {
         const { x } = line.getFrom();
         line.setSrcControlPoint({ x: 0, y: 100 });
         line.setDestControlPoint({ x: 0, y: -100 });
-        line.setWidth(x < 0 ? 1 : x === 0 ? 10 : 20);
+        line.setWidth(widthBySign(x));
         line.setFill('#3366cc', 1);
         line.setStroke(1, 'solid', '#3366cc', 1);
       },

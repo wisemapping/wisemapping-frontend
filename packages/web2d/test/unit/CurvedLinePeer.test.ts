@@ -262,12 +262,12 @@ describe('CurvedLinePeer width (taper)', () => {
   it('setFill does not rebuild the path', () => {
     const peer = line(0, 0, 90, 0);
     peer.setWidth(10);
-    const d = peer._native.getAttribute('d');
+    const before = d(peer);
     const spy = jest.spyOn(peer._native, 'setAttribute');
     peer.setFill('red', 1);
     expect(peer._native.getAttribute('fill')).toBe('red');
     expect(spy).not.toHaveBeenCalledWith('d', expect.any(String));
-    expect(peer._native.getAttribute('d')).toBe(d);
+    expect(d(peer)).toBe(before);
   });
 
   it('setWidth rebuilds the path only when the width changes', () => {

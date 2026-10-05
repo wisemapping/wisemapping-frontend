@@ -39,7 +39,7 @@
       "cd packages/webapp && eslint --fix",
       "prettier --write"
     ],
-    "packages/web2d/src/**/*.{ts,tsx}": [
+    "packages/web2d/{src,test}/**/*.{ts,tsx}": [
       "cd packages/web2d && eslint --fix",
       "prettier --write"
     ],
