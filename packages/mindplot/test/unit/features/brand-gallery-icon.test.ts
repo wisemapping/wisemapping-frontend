@@ -73,8 +73,8 @@ describe('brand gallery icons', () => {
       expect(path.getAttribute('d')).toBe(BRAND_ICON_PATHS[brand]);
       expect(path.getAttribute('fill')).toBe(topic.getFontColor(topic.getThemeVariant()));
       // In the topic, above its text, like a glyph icon.
-      expect(image.peer._native.parentNode).toBe(topic.get2DElement().peer._native);
-      expect(Number(image.peer._native.getAttribute('y'))).toBeLessThan(
+      expect(image.getNode().parentNode).toBe(topic.get2DElement().getNode());
+      expect(Number(image.getNode().getAttribute('y'))).toBeLessThan(
         topic.getOrBuildTextShape().getPosition().y,
       );
     });

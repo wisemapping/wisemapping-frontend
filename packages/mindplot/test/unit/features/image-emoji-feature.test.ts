@@ -54,7 +54,7 @@ const buildTopic = (initialEmoji: string | undefined, designer?: object) => {
 };
 
 const glyphs = (group: Group): string[] =>
-  Array.from(group.peer._native.querySelectorAll('text')).map((t) => t.textContent || '');
+  Array.from(group.getNode().querySelectorAll('text')).map((t) => t.textContent || '');
 
 describe('ImageEmojiFeature', () => {
   describe('delete widget (B-EMOJIWIDGET)', () => {

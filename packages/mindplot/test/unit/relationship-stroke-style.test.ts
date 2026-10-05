@@ -25,8 +25,7 @@ jest.mock('../../src/components/export/PDFExporter', () => ({
   default: class MockPDFExporter {},
 }));
 
-const lineOf = (relationship: Relationship): SVGElement =>
-  (relationship as unknown as { _line: { peer: { _native: SVGElement } } })._line.peer._native;
+const lineOf = (relationship: Relationship): SVGElement => relationship.getLine().getNode();
 
 describe('Relationship stroke style (BL5-121)', () => {
   it('draws a solid relationship without a dash array, also after a dashed one', async () => {

@@ -36,7 +36,7 @@ const MAP = SAMPLE_MAP.replace(
   '  <relationship id="11" srcTopicId="2" destTopicId="4" lineType="3" endArrow="true" startArrow="true"/>\n</map>',
 );
 
-type Part = { peer: { _native: Element } };
+type Part = { getNode: () => Element };
 
 /** The parts of a relationship, by name, from the bottom one to the top one. */
 const PARTS = ['focusEndArrow', 'focusStartArrow', 'focusShape', 'endArrow', 'startArrow', 'line'];
@@ -48,7 +48,7 @@ const partsOf = (relationship: Relationship, label: string): Map<Element, string
     PARTS.map((name) => {
       const field = fields[`_${name}`];
       const element = field.getElementClass ? field.getElementClass() : field;
-      return [element.peer._native, `${label} ${name}`];
+      return [element.getNode(), `${label} ${name}`];
     }),
   );
 };
@@ -69,7 +69,7 @@ const stacking = (harness: Harness): { parts: string[]; firstTopic: number } => 
     harness.designer
       .getModel()
       .getTopics()
-      .map((topic) => topic.get2DElement().peer._native as Element),
+      .map((topic) => topic.get2DElement().getNode() as Element),
   );
   return {
     parts: children.filter((el) => names.has(el)).map((el) => names.get(el)!),

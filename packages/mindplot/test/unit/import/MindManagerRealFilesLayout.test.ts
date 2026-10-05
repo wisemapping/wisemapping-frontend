@@ -117,9 +117,7 @@ describe('mmap2json-2017 laid out', () => {
 
     const line = connection!.getLine();
     expect(line.getFrom().y).toBeCloseTo(line.getTo().y);
-    const d = (line as unknown as { peer: { _native: SVGPathElement } }).peer._native.getAttribute(
-      'd',
-    );
+    const d = line.getElementClass().getNode().getAttribute('d');
     const ys = pathYs(d!);
     expect(ys.length).toBeGreaterThanOrEqual(4);
     ys.forEach((y) => expect(y).toBeCloseTo(ys[0]));

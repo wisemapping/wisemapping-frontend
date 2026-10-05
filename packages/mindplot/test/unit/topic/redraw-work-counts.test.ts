@@ -231,7 +231,7 @@ describe('Topic.redraw of an unchanged topic', () => {
   // web2d caches text measurements by text and font (W2), so an unchanged redraw measures nothing.
   it('does not measure the unchanged text again', () => {
     const topic = harness.topic(2);
-    const textNative = topic.getOrBuildTextShape().peer._native;
+    const textNative = topic.getOrBuildTextShape().getNode();
     const proto = (window as unknown as { SVGElement: { prototype: { getBBox: () => DOMRect } } })
       .SVGElement.prototype;
     const measures = countCalls(

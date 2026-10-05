@@ -55,7 +55,7 @@ const MAP = [
 /** Where a relationship is drawn: its line, its ends and control points. */
 const drawn = (relationship: Relationship) => {
   const line = relationship.getLine();
-  const element = (line as unknown as { peer: { _native: Element } }).peer._native;
+  const element = line.getNode();
   return {
     from: line.getFrom(),
     to: line.getTo(),

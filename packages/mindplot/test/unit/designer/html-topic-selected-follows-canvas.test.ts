@@ -45,7 +45,7 @@ const afterAnimationFrames = () =>
 /** The topic's screen rectangle, which the test moves as the canvas would. */
 const mockTopicRect = (topic: Topic, initial: DOMRect) => {
   let current = initial;
-  const group = (topic.get2DElement() as unknown as { peer: { _native: Element } }).peer._native;
+  const group = topic.get2DElement().getNode();
   jest.spyOn(group, 'getBoundingClientRect').mockImplementation(() => current);
   return (next: DOMRect) => {
     current = next;

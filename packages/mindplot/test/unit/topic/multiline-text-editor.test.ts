@@ -194,7 +194,7 @@ describe('MultilineTextEditor position', () => {
         return this.parentElement;
       });
     wrapper.getBoundingClientRect = () => ({ top: 100, left: 20, width: 800 }) as DOMRect;
-    const textNode = child.getOrBuildTextShape().peer._native;
+    const textNode = child.getOrBuildTextShape().getNode();
     textNode.getClientRects = () => [{}] as unknown as DOMRectList;
     textNode.getBoundingClientRect = () => ({ top: 130, left: 60 }) as DOMRect;
 
