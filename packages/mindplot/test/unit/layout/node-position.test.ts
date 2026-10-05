@@ -23,19 +23,21 @@ import PositionType from '../../../src/components/PositionType';
 
 const SIZE = { width: 80, height: 60 };
 
-describe('layout Node.setPosition (BL4-37)', () => {
-  it.each([{}, { x: Number.NaN, y: 20 }, { x: 10 }])(
-    'replaces an incomplete current position %p',
-    (current) => {
-      const node = new Node(1, SIZE, current as PositionType, new SymmetricSorter());
-      node.resetPositionState();
+describe('layout Node.setPosition (BL4-37, BL5-35)', () => {
+  const invalid = [{}, { x: Number.NaN, y: 20 }, { x: 10 }, { x: 0, y: Number.POSITIVE_INFINITY }];
 
-      node.setPosition({ x: 10, y: 20 });
+  it.each(invalid)('does not create a node at the invalid position %p', (position) => {
+    expect(() => new Node(1, SIZE, position as PositionType, new SymmetricSorter())).toThrow(
+      /position/,
+    );
+  });
 
-      expect(node.getPosition()).toEqual({ x: 10, y: 20 });
-      expect(node.hasPositionChanged()).toBe(true);
-    },
-  );
+  it.each(invalid)('does not move a node to the invalid position %p', (position) => {
+    const node = new Node(1, SIZE, { x: 10, y: 20 }, new SymmetricSorter());
+
+    expect(() => node.setPosition(position as PositionType)).toThrow(/position/);
+    expect(node.getPosition()).toEqual({ x: 10, y: 20 });
+  });
 
   it('still skips moves of half a pixel or less', () => {
     const node = new Node(1, SIZE, { x: 10, y: 20 }, new SymmetricSorter());
