@@ -218,11 +218,8 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
 
   // Markdown, nested lists, line breaks and links (see note-editing).
   useEffect(() => {
-    const editor = editorRef.current;
-    if (!editor) {
-      return undefined;
-    }
-    const editing = attachNoteEditing(editor, { onChange: handleContentChange });
+    // The editor element is rendered with the component.
+    const editing = attachNoteEditing(editorRef.current!, { onChange: handleContentChange });
     editingRef.current = editing;
     return () => {
       editing.detach();

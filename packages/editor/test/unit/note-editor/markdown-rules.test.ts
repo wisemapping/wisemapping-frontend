@@ -207,3 +207,23 @@ describe('looksLikeMarkdown', () => {
     },
   );
 });
+
+describe('Markdown edge cases', () => {
+  test('refuses an address whose scheme is not followed by //', () => {
+    expect(safeLinkUrl('http:example.org')).toBeNull();
+  });
+
+  test('keeps an unsafe link of pasted text as text', () => {
+    expect(markdownToHtml('[bad](javascript:void0)')).toBe('<div>[bad](javascript:void0)</div>');
+  });
+
+  test('keeps an empty item', () => {
+    expect(markdownToHtml('- \n- b')).toBe('<ul><li><br></li><li>b</li></ul>');
+  });
+
+  test('puts a sub-list of the other kind next to the current one', () => {
+    expect(markdownToHtml('- a\n  - b\n  1. c')).toBe(
+      '<ul><li>a<ul><li>b</li></ul><ol><li>c</li></ol></li></ul>',
+    );
+  });
+});

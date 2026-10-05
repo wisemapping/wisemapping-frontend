@@ -80,7 +80,7 @@ const closest = (
 };
 
 const selectionIn = (root: HTMLElement): Selection | null => {
-  const selection = root.ownerDocument.defaultView?.getSelection() ?? null;
+  const selection = root.ownerDocument.getSelection();
   if (!selection || selection.rangeCount === 0) {
     return null;
   }
@@ -100,10 +100,8 @@ const collapsedCaret = (root: HTMLElement): Caret | null => {
 };
 
 const setCaret = (root: HTMLElement, node: Node, offset: number): void => {
-  const selection = root.ownerDocument.defaultView?.getSelection();
-  if (!selection) {
-    return;
-  }
+  // The note is in the page, so its document has a selection.
+  const selection = root.ownerDocument.getSelection()!;
   const range = root.ownerDocument.createRange();
   range.setStart(node, offset);
   range.collapse(true);
@@ -213,12 +211,12 @@ const isEmptyItem = (li: HTMLElement): boolean =>
       isList(child) ||
       (!(isElement(child) && child.querySelector('img')) &&
         !(isElement(child) && child.tagName === 'IMG') &&
-        (child.textContent ?? '').replace(/[\s\u00a0\u200b]/g, '') === ''),
+        String(child.textContent).replace(/[\s\u00a0\u200b]/g, '') === ''),
   );
 
 /** Appends a <br> to an element left without content, so the browser can place the caret in it. */
 const fillEmpty = (el: HTMLElement): void => {
-  if ((el.textContent ?? '') === '' && !el.querySelector('br, img')) {
+  if (el.textContent === '' && !el.querySelector('br, img')) {
     el.appendChild(el.ownerDocument.createElement('br'));
   }
 };

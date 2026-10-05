@@ -538,3 +538,232 @@ test('detach removes the behaviour', () => {
   expect(key('Tab').defaultPrevented).toBe(false);
   editing = attachNoteEditing(root, { onChange });
 });
+
+describe('Caret and structure edge cases', () => {
+  const input = (inputType = 'insertText', data = ' '): void => {
+    root.dispatchEvent(new InputEvent('input', { inputType, data, bubbles: true }));
+  };
+
+  const beforeInput = (data: string): InputEvent => {
+    const event = new InputEvent('beforeinput', {
+      inputType: 'insertText',
+      data,
+      cancelable: true,
+      bubbles: true,
+    });
+    root.dispatchEvent(event);
+    return event;
+  };
+
+  const select = (start: Node, startOffset: number, end: Node, endOffset: number): void => {
+    const range = document.createRange();
+    range.setStart(start, startOffset);
+    range.setEnd(end, endOffset);
+    window.getSelection()!.removeAllRanges();
+    window.getSelection()!.addRange(range);
+  };
+
+  test('converts a line when the caret is between the elements of its block', () => {
+    root.innerHTML = '<div>-&nbsp;</div>';
+    caretAt(root.firstChild!, 1);
+    input();
+    expect(root.innerHTML).toBe('<ul><li><br></li></ul>');
+  });
+
+  test('converts a line of the note when the caret is after it', () => {
+    root.innerHTML = '-&nbsp;';
+    caretAt(root, 1);
+    input();
+    expect(root.innerHTML).toBe('<ul><li><br></li></ul>');
+  });
+
+  test('does nothing on an empty line', () => {
+    root.innerHTML = '<div><br></div>';
+    caretAt(root.firstChild!, 0);
+    input();
+    expect(root.innerHTML).toBe('<div><br></div>');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  test('converts only what was typed, not pasted or deleted text', () => {
+    root.innerHTML = '**b**';
+    caretAt(root.firstChild!, 5);
+    input('insertFromPaste', '');
+    input('deleteContentBackward', '');
+    expect(root.innerHTML).toBe('**b**');
+  });
+
+  test('ignores a selection outside the note', () => {
+    const outside = document.createElement('p');
+    outside.textContent = '- ';
+    document.body.appendChild(outside);
+    caretAt(outside.firstChild!, 2);
+    input();
+    expect(outside.innerHTML).toBe('- ');
+  });
+
+  test('writes after a span when the caret is at its end, inside it', () => {
+    caretAt(root, 0);
+    type('**b**');
+    caretAt(root.querySelector('strong')!.firstChild!, 1);
+    expect(beforeInput('x').defaultPrevented).toBe(true);
+    expect(root.innerHTML).toBe('<strong>b</strong>x');
+  });
+
+  test('types in the span once the caret moved away from its end', () => {
+    caretAt(root, 0);
+    type('**bc**');
+    caretAt(root.querySelector('strong')!.firstChild!, 1);
+    expect(beforeInput('x').defaultPrevented).toBe(false);
+  });
+
+  test('types normally when the span is gone', () => {
+    caretAt(root, 0);
+    type('**b**');
+    root.innerHTML = 'x';
+    caretAt(root.firstChild!, 1);
+    expect(beforeInput('y').defaultPrevented).toBe(false);
+  });
+
+  test('leaves Tab with a modifier, Alt or while composing to the browser', () => {
+    root.innerHTML = '<ul><li>a</li><li>b</li></ul>';
+    caretIn('b');
+    expect(key('Tab', { ctrlKey: true }).defaultPrevented).toBe(false);
+    expect(key('Tab', { altKey: true }).defaultPrevented).toBe(false);
+    expect(key('Tab', { isComposing: true }).defaultPrevented).toBe(false);
+    expect(root.innerHTML).toBe('<ul><li>a</li><li>b</li></ul>');
+  });
+
+  test('leaves Enter with a selection to the browser', () => {
+    root.innerHTML = '<ul><li>ab</li></ul>';
+    const text = root.querySelector('li')!.firstChild!;
+    select(text, 0, text, 2);
+    expect(key('Enter').defaultPrevented).toBe(false);
+  });
+
+  test('indents the items of a selection with a sub-list between them', () => {
+    root.innerHTML = '<ul><li>a</li><li>b</li><ul><li>x</li></ul><li>c</li><li>d</li></ul>';
+    const items = root.querySelectorAll(':scope > ul > li');
+    select(items[1].firstChild!, 0, items[2].firstChild!, 1);
+
+    key('Tab');
+
+    expect(root.innerHTML).toBe(
+      // b and c, not d; c joins the sub-list next to it.
+      '<ul><li>a<ul><li>b</li></ul></li><ul><li>x</li><li>c</li></ul><li>d</li></ul>',
+    );
+  });
+
+  test('Tab puts an item into a sub-list written next to the items', () => {
+    root.innerHTML = '<ul><li>a</li><ul><li>b</li></ul><li>c</li></ul>';
+    caretIn('c');
+    key('Tab');
+    expect(root.innerHTML).toBe('<ul><li>a</li><ul><li>b</li><li>c</li></ul></ul>');
+  });
+
+  test('Shift+Tab adds the items after an item to its own sub-list', () => {
+    root.innerHTML = '<ul><li>a<ul><li>b<ul><li>b1</li></ul></li><li>c</li></ul></li></ul>';
+    caretIn('b');
+    key('Tab', { shiftKey: true });
+    expect(root.innerHTML).toBe('<ul><li>a</li><li>b<ul><li>b1</li><li>c</li></ul></li></ul>');
+  });
+
+  test('Shift+Tab on the only item removes the list', () => {
+    root.innerHTML = '<ul><li>a</li></ul>';
+    caretIn('a');
+    key('Tab', { shiftKey: true });
+    expect(root.innerHTML).toBe('<div>a</div>');
+  });
+
+  test('leaves an item that is not in a list as it is', () => {
+    root.innerHTML = '<div><li><br></li></div>';
+    caretAt(root.querySelector('li')!, 0);
+    expect(key('Enter').defaultPrevented).toBe(true);
+    expect(key('Tab').defaultPrevented).toBe(true);
+    expect(root.innerHTML).toBe('<div><li><br></li></div>');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  test('the toolbar does nothing without a selection', () => {
+    root.innerHTML = '<ul><li>a</li><li>b</li></ul>';
+    window.getSelection()!.removeAllRanges();
+    expect(editing.indent(false)).toBe(false);
+  });
+
+  test('undo after indenting a selection puts the content back', () => {
+    root.innerHTML = '<ul><li>a</li><li>b</li><li>c</li></ul>';
+    const items = root.querySelectorAll('li');
+    select(items[1].firstChild!, 0, items[2].firstChild!, 1);
+    key('Tab');
+
+    expect(key('z', { ctrlKey: true }).defaultPrevented).toBe(true);
+
+    expect(root.innerHTML).toBe('<ul><li>a</li><li>b</li><li>c</li></ul>');
+  });
+
+  describe('with the browser editing commands', () => {
+    let execCommand: jest.Mock;
+
+    beforeEach(() => {
+      execCommand = jest.fn(() => true);
+      Object.defineProperty(document, 'execCommand', { value: execCommand, configurable: true });
+    });
+
+    afterEach(() => {
+      delete (document as unknown as { execCommand?: unknown }).execCommand;
+    });
+
+    test('Shift+Enter uses the browser line break', () => {
+      root.innerHTML = '<ul><li>ab</li></ul>';
+      caretIn('ab', true);
+      key('Enter', { shiftKey: true });
+      expect(execCommand).toHaveBeenCalledWith('insertLineBreak');
+    });
+
+    test('pasted Markdown is inserted with the browser command', () => {
+      caretAt(root, 0);
+      const event = new Event('paste', { bubbles: true, cancelable: true });
+      Object.defineProperty(event, 'clipboardData', {
+        value: { getData: (type: string) => (type === 'text/plain' ? '- a' : '') },
+      });
+      root.dispatchEvent(event);
+      expect(execCommand).toHaveBeenCalledWith('insertHTML', false, '<ul><li>a</li></ul>');
+    });
+
+    test('a failing browser command falls back to the DOM', () => {
+      execCommand.mockImplementation(() => {
+        throw new Error('not supported');
+      });
+      root.innerHTML = '<ul><li>ab</li></ul>';
+      caretIn('ab', true);
+      key('Enter', { shiftKey: true });
+      expect(root.innerHTML).toBe('<ul><li>ab<br><br></li></ul>');
+    });
+  });
+
+  describe('links', () => {
+    const click = (target: Element): MouseEvent => {
+      const event = new MouseEvent('click', { bubbles: true, cancelable: true, ctrlKey: true });
+      target.dispatchEvent(event);
+      return event;
+    };
+
+    test('a Ctrl+click outside a link is the browser one', () => {
+      root.innerHTML = '<div>text</div>';
+      expect(click(root.firstElementChild!).defaultPrevented).toBe(false);
+      expect(openLink).not.toHaveBeenCalled();
+    });
+
+    test('a link without a destination is not opened', () => {
+      root.innerHTML = '<a>x</a>';
+      expect(click(root.firstElementChild!).defaultPrevented).toBe(true);
+      expect(openLink).not.toHaveBeenCalled();
+    });
+  });
+
+  test('paste without clipboard data is the browser one', () => {
+    const event = new Event('paste', { bubbles: true, cancelable: true });
+    root.dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(false);
+  });
+});
