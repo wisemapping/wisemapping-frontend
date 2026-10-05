@@ -41,7 +41,6 @@
   "include": [
     "src/**/*",
     "libraries",
-    "src/@types/**/*",
     "test/**/*"
   ],
   "exclude": [

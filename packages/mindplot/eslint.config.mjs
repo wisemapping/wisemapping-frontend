@@ -27,7 +27,6 @@ export default defineConfig([
             "coverage/**",
             "*.min.js",
             "**/*.d.ts",
-            "src/@types/**",
             "cypress/**",
             "storybook/**"
         ]
