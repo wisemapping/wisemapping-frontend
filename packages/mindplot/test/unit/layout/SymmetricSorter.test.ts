@@ -198,3 +198,32 @@ describe('sorter predict signatures (BL5-33, BL5-34)', () => {
     expect(() => manager.predict(1, 3, null)).toThrow(/position cannot be null/);
   });
 });
+
+describe('SymmetricSorter.predict reads the children by order (BL5-81)', () => {
+  it('predicts the same slot whether or not a layout sorted the children', () => {
+    // Topic 1 gets children 3 then 4, inserted first: their array is [3, 4], their orders [1, 0].
+    const build = () => {
+      const manager = new LayoutManager(0, ROOT_NODE_SIZE);
+      manager.addNode(1, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 1, 0);
+      manager.addNode(2, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 2, 1);
+      manager.addNode(3, NODE_SIZE, { x: 0, y: 0 }).connectNode(1, 3, 0);
+      manager.addNode(4, NODE_SIZE, { x: 0, y: 0 }).connectNode(1, 4, 0);
+      manager.layout();
+      return manager;
+    };
+    const unsorted = build();
+    const sorted = build();
+    // Undo the sort the layout did as a side effect, in one of them.
+    const parent = unsorted.find(1) as unknown as { _children: { getId(): number }[] };
+    parent._children.sort((a, b) => a.getId() - b.getId());
+    expect(parent._children.map((child) => child.getId())).toEqual([3, 4]);
+
+    // Topic 2 is dragged between the two children of topic 1.
+    const between = {
+      x: unsorted.find(4).getPosition().x,
+      y: (unsorted.find(3).getPosition().y + unsorted.find(4).getPosition().y) / 2,
+    };
+    expect(unsorted.predict(1, 2, between)).toEqual(sorted.predict(1, 2, between));
+    expect(sorted.predict(1, 2, between).order).toBe(1);
+  });
+});

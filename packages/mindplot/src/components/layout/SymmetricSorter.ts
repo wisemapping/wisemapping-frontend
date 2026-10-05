@@ -60,7 +60,10 @@ class SymmetricSorter extends AbstractBasicSorter {
       return [node.getOrder() ?? 0, node.getPosition()];
     }
 
-    const parentChildren = graph.getChildren(parent);
+    // By order, top to bottom. A copy: the children array is in whatever order a layout last left.
+    const parentChildren = [...graph.getChildren(parent)].sort(
+      (a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0),
+    );
     if (parentChildren.length === 0) {
       // Fit as a child of the parent node, on the side the layout puts its children, whatever
       // side the mouse is on ...
