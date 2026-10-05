@@ -154,6 +154,7 @@ describe('TopicConnection: shrink connector of a parent at x === 0', () => {
 describe('DragConnector: dragging at x === 0', () => {
   const fakeTopic = (x: number, y: number, width = 60): Topic =>
     ({
+      getId: () => 100 + x,
       getPosition: () => ({ x, y }),
       getSize: () => ({ width, height: 30 }),
       areChildrenShrunken: () => false,
@@ -162,8 +163,9 @@ describe('DragConnector: dragging at x === 0', () => {
 
   const candidatesAt = (x: number, topics: Topic[]): Topic[] => {
     const dragged = {
+      getId: () => 1,
       getOrientation: () => 'horizontal',
-      isChildTopic: () => false,
+      getChildren: () => [],
     };
     const dragTopic = {
       getPosition: () => ({ x, y: 0 }),
