@@ -62,6 +62,32 @@ class FreemindExporter extends Exporter {
     return parser.parseFromString(xmlStr, mimeType);
   }
 
+  /** Copies an HTML node to an XML document, without the XHTML namespace. */
+  private static htmlToXml(doc: Document, node: Node): Node | null {
+    if (node.nodeType === Node.TEXT_NODE) {
+      return doc.createTextNode(node.textContent || '');
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return null;
+    }
+    const source = node as Element;
+    const element = doc.createElement(source.tagName.toLowerCase());
+    Array.from(source.attributes).forEach((attr) => {
+      try {
+        element.setAttribute(attr.name, attr.value);
+      } catch {
+        // Not a valid XML attribute name: dropped.
+      }
+    });
+    Array.from(source.childNodes).forEach((child) => {
+      const copy = FreemindExporter.htmlToXml(doc, child);
+      if (copy) {
+        element.appendChild(copy);
+      }
+    });
+    return element;
+  }
+
   private static hasParserError(xmlDoc: Document): boolean {
     return xmlDoc.getElementsByTagName('parsererror').length > 0;
   }
@@ -210,7 +236,7 @@ class FreemindExporter extends Exporter {
     );
     const body = richconentDocument.getElementsByTagName('body')[0];
 
-    // Well formed rich text is kept as markup. Anything else is added as text, so it is escaped.
+    // Rich text is kept as markup. Plain text is added as text, so it is escaped.
     const markup = isHtml
       ? FreemindExporter.parserXMLString(`<body>${text}</body>`, 'application/xml')
       : undefined;
@@ -218,11 +244,18 @@ class FreemindExporter extends Exporter {
       Array.from(markup.documentElement.childNodes).forEach((node) => {
         body.appendChild(richconentDocument.importNode(node, true));
       });
+    } else if (isHtml) {
+      // HTML that is not well formed XML, such as <br> or &nbsp;, is read as HTML and written as
+      // XML, so its structure (nested lists, links...) is kept.
+      const html = new DOMParser().parseFromString(text, 'text/html').body;
+      Array.from(html.childNodes).forEach((node) => {
+        const copy = FreemindExporter.htmlToXml(richconentDocument, node);
+        if (copy) {
+          body.appendChild(copy);
+        }
+      });
     } else {
-      const plainText = isHtml
-        ? new DOMParser().parseFromString(text, 'text/html').body.textContent || ''
-        : text;
-      plainText.split('\n').forEach((line: string) => {
+      text.split('\n').forEach((line: string) => {
         const paragraph = richconentDocument.createElement('p');
         paragraph.textContent = line.trim();
         body.appendChild(paragraph);
