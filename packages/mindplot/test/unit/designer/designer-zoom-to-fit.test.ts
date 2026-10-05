@@ -370,21 +370,88 @@ describe('Designer.zoomToFit edge cases', () => {
     expect(designer.getModel().getZoom()).toBe(1);
     expect(viewportOf(designer).origin).toEqual({ x: -500, y: -400 });
   });
+});
 
-  it('keeps the fitted zoom when the container is resized afterwards', async () => {
+/**
+ * BL5-68: a container resize re-fits the map when the view is still the one zoomToFit left
+ * (the user asked to see the whole map, with the insets clear). Once the user zoomed or panned,
+ * the view is theirs: the resize keeps the zoom and the point at the centre of the view.
+ */
+describe('Designer container resize', () => {
+  const resize = (designer: Designer, width: number, height: number): void => {
+    sizeContainer(designer, width, height);
+    window.dispatchEvent(new Event('resize'));
+  };
+
+  /** The viewport and zoom zoomToFit gives at a size, on a fresh designer. */
+  const fittedAt = async (width: number, height: number, top: number) => {
+    const designer = await build(width, height);
+    designer.zoomToFit({ insets: { top } });
+    return { viewport: viewportOf(designer), zoom: designer.getModel().getZoom() };
+  };
+
+  it('re-fits a fitted map, with its insets', async () => {
+    const designer = await build(400, 300);
+    designer.setViewportInsets({ top: 64 });
+    designer.zoomToFit();
+
+    resize(designer, 800, 500);
+
+    const expected = await fittedAt(800, 500, 64);
+    expect(viewportOf(designer).origin.x).toBeCloseTo(expected.viewport.origin.x, 6);
+    expect(viewportOf(designer).origin.y).toBeCloseTo(expected.viewport.origin.y, 6);
+    expect(viewportOf(designer).size.width).toBeCloseTo(expected.viewport.size.width, 6);
+    expect(designer.getModel().getZoom()).toBeCloseTo(expected.zoom, 6);
+    expect(designer.getWorkSpace().getZoom()).toBeCloseTo(expected.zoom, 6);
+    expect(scaleOf(designer)).toBeCloseTo(expected.zoom, 6);
+    const center = toScreen(designer, contentCenterOf(designer));
+    expect(center.y).toBeCloseTo(64 + (500 - 64) / 2, 6);
+  });
+
+  it('keeps re-fitting through several resizes', async () => {
     const designer = await build(400, 300);
     designer.zoomToFit();
-    const k = viewportOf(designer).size.width / 400;
 
-    sizeContainer(designer, 800, 500);
-    window.dispatchEvent(new Event('resize'));
+    resize(designer, 800, 500);
+    resize(designer, 300, 200);
 
-    const viewport = viewportOf(designer);
-    expect(viewport.svgWidth).toBe(800);
-    expect(viewport.size.width).toBeCloseTo(800 * k, 6);
-    expect(viewport.size.height).toBeCloseTo(500 * k, 6);
+    const expected = await fittedAt(300, 200, 0);
+    expect(designer.getModel().getZoom()).toBeCloseTo(expected.zoom, 6);
+  });
+
+  it.each([
+    ['zoomed', (designer: Designer) => designer.zoomIn()],
+    ['panned', (designer: Designer) => designer.panBy(30, -20)],
+  ])('keeps the zoom and the centre of a fitted map the user %s since', async (_label, change) => {
+    const designer = await build(400, 300);
+    designer.zoomToFit();
+    change(designer);
+    const before = viewportOf(designer);
+    const k = before.size.width / 400;
+    const centre = {
+      x: before.origin.x + before.size.width / 2,
+      y: before.origin.y + before.size.height / 2,
+    };
+
+    resize(designer, 800, 500);
+
+    const after = viewportOf(designer);
+    expect(after.svgWidth).toBe(800);
+    expect(after.size.width).toBeCloseTo(800 * k, 6);
+    expect(after.size.height).toBeCloseTo(500 * k, 6);
     expect(designer.getWorkSpace().getZoom()).toBeCloseTo(k, 6);
     expect(scaleOf(designer)).toBeCloseTo(k, 6);
+    expect(after.origin.x + after.size.width / 2).toBeCloseTo(centre.x, 6);
+    expect(after.origin.y + after.size.height / 2).toBeCloseTo(centre.y, 6);
+  });
+
+  it('keeps the zoom of a map that was never fitted', async () => {
+    const designer = await build(400, 300);
+
+    resize(designer, 800, 500);
+
+    expect(designer.getModel().getZoom()).toBe(1);
+    expect(viewportOf(designer).size).toEqual({ width: 800, height: 500 });
   });
 });
 

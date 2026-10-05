@@ -55,6 +55,8 @@ class Canvas {
 
   private _resizeListener: (() => void) | null;
 
+  private _resizeHandler: (() => void) | null = null;
+
   constructor(
     screenManager: ScreenManager,
     zoom: number,
@@ -92,8 +94,14 @@ class Canvas {
     this._resizeListener = null;
   }
 
-  private _adjustWorkspace(): void {
+  /** Fits the viewport to the container's new size, keeping the zoom and the centre of the view. */
+  adjustToContainer(): void {
     this.setZoom(this._zoom, false);
+  }
+
+  /** Handles a container resize instead of adjustToContainer(), or null for the default. */
+  setResizeHandler(handler: (() => void) | null): void {
+    this._resizeHandler = handler;
   }
 
   registerEvents() {
@@ -104,7 +112,11 @@ class Canvas {
 
       // Readjust if the window is resized ...
       this._resizeListener = () => {
-        this._adjustWorkspace();
+        if (this._resizeHandler) {
+          this._resizeHandler();
+        } else {
+          this.adjustToContainer();
+        }
       };
       window.addEventListener('resize', this._resizeListener);
     }
@@ -317,6 +329,10 @@ class Canvas {
 
   setCoordOrigin(x: number, y: number): void {
     this._workspace.setCoordOrigin(x, y);
+  }
+
+  getCoordOrigin(): PositionType {
+    return this._workspace.getCoordOrigin();
   }
 
   panBy(deltaX: number, deltaY: number): void {

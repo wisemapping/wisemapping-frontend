@@ -126,6 +126,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   private _viewportInsets: ViewportInsets | (() => ViewportInsets) = {};
 
+  // The last zoomToFit: its options and the viewport it left, to re-fit on a container resize ...
+  private _lastFit: { options?: ZoomToFitOptions; zoom: number; origin: PositionType } | null =
+    null;
+
   constructor(options: DesignerOptions) {
     super();
     // Set up i18n location ...
@@ -157,6 +161,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     this._canvas = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly(), false);
 
     this._registerAutoPanOnFocus();
+    this._canvas.setResizeHandler(() => this._onContainerResize());
 
     // Init layout manager ...
     this._eventBussDispatcher = new EventBusDispatcher();
@@ -494,6 +499,30 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       x: left + visibleWidth / 2,
       y: top + visibleHeight / 2,
     });
+    this._lastFit = { options, zoom, origin: { ...this._canvas.getCoordOrigin() } };
+  }
+
+  /**
+   * A container resize re-fits the map while the view is still the one zoomToFit left: the user
+   * asked to see the whole map clear of the insets, and that still holds at the new size. Once
+   * they zoomed or panned (wheel, keyboard, drag, auto-pan to a topic), the view is theirs:
+   * re-fitting would throw it away, so the zoom and the point at the centre of the view are kept.
+   * Comparing the viewport catches every way it can change without hooking each one.
+   */
+  private _onContainerResize(): void {
+    const fit = this._lastFit;
+    const origin = this._canvas.getCoordOrigin();
+    if (
+      fit &&
+      fit.zoom === this._canvas.getZoom() &&
+      fit.origin.x === origin.x &&
+      fit.origin.y === origin.y
+    ) {
+      this.zoomToFit(fit.options);
+    } else {
+      this._lastFit = null;
+      this._canvas.adjustToContainer();
+    }
   }
 
   zoomOut(factor = 1.2) {
