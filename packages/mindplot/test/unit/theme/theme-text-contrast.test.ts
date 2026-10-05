@@ -41,15 +41,25 @@ describe('ColorUtil contrast', () => {
   });
 
   it('cannot compare a colour it does not parse', () => {
-    expect(ColorUtil.contrastRatio('rgb(0,0,0)', '#ffffff')).toBeUndefined();
+    expect(ColorUtil.contrastRatio('red', '#ffffff')).toBeUndefined();
     expect(ColorUtil.parse('red')).toBeUndefined();
+    expect(ColorUtil.parse('rgb(1,2)')).toBeUndefined();
+  });
+
+  // The colour picker saves rgb(...) colours, so they must be compared too.
+  it('parses rgb() and rgba() colours', () => {
+    expect(ColorUtil.parse('rgb(224,229,239)')).toEqual({ r: 224, g: 229, b: 239, a: 1 });
+    expect(ColorUtil.parse('rgba(0, 0, 0, 0.5)')).toEqual({ r: 0, g: 0, b: 0, a: 0.5 });
+    expect(ColorUtil.parse('rgb(10 20 30 / 50%)')).toEqual({ r: 10, g: 20, b: 30, a: 0.5 });
+    expect(ColorUtil.contrastRatio('rgb(0,0,0)', '#ffffff')).toBeCloseTo(21, 5);
   });
 
   it('paints a see-through colour over its backdrop', () => {
     expect(ColorUtil.over('#123456', '#ffffff')).toBe('#123456');
     expect(ColorUtil.over('transparent', '#f2f2f2')).toBe('#f2f2f2');
     expect(ColorUtil.over('#00000080', '#ffffff')).toBe('#7f7f7f');
-    expect(ColorUtil.over('rgb(0,0,0)', '#ffffff')).toBeUndefined();
+    expect(ColorUtil.over('rgba(0,0,0,0.5)', '#ffffff')).toBe('#808080');
+    expect(ColorUtil.over('red', '#ffffff')).toBeUndefined();
   });
 });
 
@@ -81,6 +91,11 @@ describe('theme text colour contrast', () => {
 
     it('keeps white for a line main topic on the dark canvas', () => {
       expect(prism('dark').getFontColor(main({ shapeType: 'line' }))).toBe(WHITE);
+    });
+
+    // welcome-prism: "5 min tutorial video ?" has a light fill picked by the user, saved as rgb().
+    it('turns white text black on a light rgb() fill the user picked', () => {
+      expect(prism('light').getFontColor(main({ backgroundColor: 'rgb(224,229,239)' }))).toBe(BLACK);
     });
 
     it('measures against the canvas colour the map sets', () => {

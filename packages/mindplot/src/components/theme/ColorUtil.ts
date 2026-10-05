@@ -64,14 +64,27 @@ class ColorUtil {
 
   /**
    * The RGB channels (0-255) and alpha (0-1) of a hex colour (#RGB, #RGBA, #RRGGBB or
-   * #RRGGBBAA, pound optional), 'transparent' as a fully transparent black, or undefined for
-   * anything else.
+   * #RRGGBBAA, pound optional), an rgb()/rgba() colour (what the colour picker saves),
+   * 'transparent' as a fully transparent black, or undefined for anything else.
    */
   static parse(col: string): Rgba | undefined {
-    if (col.trim().toLowerCase() === 'transparent') {
+    const value = col.trim().toLowerCase();
+    if (value === 'transparent') {
       return { r: 0, g: 0, b: 0, a: 0 };
     }
-    let hex = col[0] === '#' ? col.slice(1) : col;
+    const fn =
+      /^rgba?\(\s*([\d.]+)\s*[,\s]\s*([\d.]+)\s*[,\s]\s*([\d.]+)\s*(?:[,/]\s*([\d.]+)(%?)\s*)?\)$/.exec(
+        value,
+      );
+    if (fn) {
+      const [r, g, b] = [fn[1], fn[2], fn[3]].map((c) => clampChannel(Math.round(Number(c))));
+      let a = fn[4] === undefined ? 1 : Number(fn[4]);
+      if (fn[5] === '%') {
+        a /= 100;
+      }
+      return { r, g, b, a: Math.min(1, Math.max(0, a)) };
+    }
+    let hex = value[0] === '#' ? value.slice(1) : value;
     if (!/^([0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(hex)) {
       return undefined;
     }

@@ -490,10 +490,12 @@ class BalancedTestSuite extends TestSuite {
 
     const prediction3e = manager.predict(0, 1, { x: 50, y: 0 });
     this._plotPrediction(graph3, prediction3e);
+    // Same slot as 3b: the pivot sits half a sibling gap before the first child (option b).
     $assert(
       prediction3e.position.x === manager.find(1).getPosition().x &&
-        prediction3e.position.y === manager.find(1).getPosition().y,
-      'Prediction position should be the same as node 1',
+        prediction3e.position.y >= manager.find(1).getPosition().y &&
+        prediction3e.position.y < manager.find(2).getPosition().y,
+      'Prediction position should be half a gap before the first child, in the column of node 1',
     );
     $assert(
       prediction3e.order === manager.find(1).getOrder(),
