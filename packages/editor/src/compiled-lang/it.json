@@ -230,7 +230,7 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "Stile griglia"
+      "value": "Dimensione griglia"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
@@ -789,6 +789,12 @@
       "value": "Default"
     }
   ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "Predefinito - I colori verranno presi automaticamente dal tema selezionato"
+    }
+  ],
   "icon-collection.border.dotted": [
     {
       "type": 0,
@@ -912,7 +918,7 @@
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "Predefinito - Tutti gli stili verranno selezionati automaticamente in base al tema"
     }
   ],
   "icon-collection.shape.default": [

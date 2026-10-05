@@ -378,7 +378,7 @@
     "defaultMessage": "بدون"
   },
   "canvas-style.grid-style": {
-    "defaultMessage": "نمط الشبكة"
+    "defaultMessage": "حجم الشبكة"
   },
   "canvas-style.grid-size-xs": {
     "defaultMessage": "صغير جدًا"
@@ -802,6 +802,9 @@
   },
   "icon-collection.border.default": {
     "defaultMessage": "افتراضي"
+  },
+  "icon-collection.border.default-tooltip": {
+    "defaultMessage": "افتراضي - سيتم أخذ الألوان تلقائيًا بناءً على السمة المحددة"
   },
   "icon-collection.connection.default": {
     "defaultMessage": "افتراضي"

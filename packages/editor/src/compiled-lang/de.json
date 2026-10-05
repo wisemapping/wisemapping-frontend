@@ -230,7 +230,7 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "Rasterstil"
+      "value": "Rastergröße"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
@@ -789,6 +789,12 @@
       "value": "Default"
     }
   ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "Standard - Die Farben werden automatisch aus dem ausgewählten Thema übernommen"
+    }
+  ],
   "icon-collection.border.dotted": [
     {
       "type": 0,
@@ -912,7 +918,7 @@
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "Standard - Alle Stile werden automatisch basierend auf dem Thema ausgewählt"
     }
   ],
   "icon-collection.shape.default": [

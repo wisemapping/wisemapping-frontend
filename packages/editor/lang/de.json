@@ -339,7 +339,7 @@
     "defaultMessage": "Keine"
   },
   "canvas-style.grid-style": {
-    "defaultMessage": "Rasterstil"
+    "defaultMessage": "Rastergröße"
   },
   "canvas-style.grid-size-xs": {
     "defaultMessage": "Sehr Klein"
@@ -764,11 +764,14 @@
   "icon-collection.border.default": {
     "defaultMessage": "Default"
   },
+  "icon-collection.border.default-tooltip": {
+    "defaultMessage": "Standard - Die Farben werden automatisch aus dem ausgewählten Thema übernommen"
+  },
   "icon-collection.connection.default": {
     "defaultMessage": "Default"
   },
   "icon-collection.default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "Standard - Alle Stile werden automatisch basierend auf dem Thema ausgewählt"
   },
   "unified-styling.shape-type": {
     "defaultMessage": "Shape Type"

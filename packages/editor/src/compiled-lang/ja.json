@@ -230,7 +230,7 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "グリッドスタイル"
+      "value": "グリッドサイズ"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
@@ -789,6 +789,12 @@
       "value": "Default"
     }
   ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "デフォルト - 選択したテーマに基づいて色が自動的に設定されます"
+    }
+  ],
   "icon-collection.border.dotted": [
     {
       "type": 0,
@@ -912,7 +918,7 @@
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "デフォルト - テーマに基づいてすべてのスタイルが自動的に選択されます"
     }
   ],
   "icon-collection.shape.default": [

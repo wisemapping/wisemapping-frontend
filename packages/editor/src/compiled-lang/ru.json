@@ -230,7 +230,7 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "Стиль сетки"
+      "value": "Размер сетки"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
@@ -789,6 +789,12 @@
       "value": "Default"
     }
   ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "По умолчанию - Цвета будут автоматически взяты из выбранной темы"
+    }
+  ],
   "icon-collection.border.dotted": [
     {
       "type": 0,
@@ -912,7 +918,7 @@
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "По умолчанию - Все стили будут автоматически выбраны на основе темы"
     }
   ],
   "icon-collection.shape.default": [

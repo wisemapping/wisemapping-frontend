@@ -230,7 +230,7 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "网格样式"
+      "value": "网格大小"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
@@ -797,6 +797,12 @@
       "value": "Default"
     }
   ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "默认 - 颜色将根据所选主题自动设置"
+    }
+  ],
   "icon-collection.border.dotted": [
     {
       "type": 0,
@@ -920,7 +926,7 @@
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "默认 - 所有样式将根据主题自动选择"
     }
   ],
   "icon-collection.shape.default": [

@@ -230,7 +230,7 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "ग्रिड शैली"
+      "value": "ग्रिड आकार"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
@@ -789,6 +789,12 @@
       "value": "Default"
     }
   ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "डिफ़ॉल्ट - चयनित थीम के आधार पर रंग स्वचालित रूप से लिए जाएँगे"
+    }
+  ],
   "icon-collection.border.dotted": [
     {
       "type": 0,
@@ -912,7 +918,7 @@
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "डिफ़ॉल्ट - थीम के आधार पर सभी शैलियाँ स्वचालित रूप से चुनी जाएँगी"
     }
   ],
   "icon-collection.shape.default": [

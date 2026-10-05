@@ -372,7 +372,7 @@
     "defaultMessage": "अतिरिक्त छोटा"
   },
   "canvas-style.grid-style": {
-    "defaultMessage": "ग्रिड शैली"
+    "defaultMessage": "ग्रिड आकार"
   },
   "canvas-style.pattern-dots": {
     "defaultMessage": "बिंदु"
@@ -764,11 +764,14 @@
   "icon-collection.border.default": {
     "defaultMessage": "Default"
   },
+  "icon-collection.border.default-tooltip": {
+    "defaultMessage": "डिफ़ॉल्ट - चयनित थीम के आधार पर रंग स्वचालित रूप से लिए जाएँगे"
+  },
   "icon-collection.connection.default": {
     "defaultMessage": "Default"
   },
   "icon-collection.default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "डिफ़ॉल्ट - थीम के आधार पर सभी शैलियाँ स्वचालित रूप से चुनी जाएँगी"
   },
   "unified-styling.shape-type": {
     "defaultMessage": "Shape Type"

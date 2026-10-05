@@ -372,7 +372,7 @@
     "defaultMessage": "极小"
   },
   "canvas-style.grid-style": {
-    "defaultMessage": "网格样式"
+    "defaultMessage": "网格大小"
   },
   "canvas-style.pattern-dots": {
     "defaultMessage": "点"
@@ -764,11 +764,14 @@
   "icon-collection.border.default": {
     "defaultMessage": "Default"
   },
+  "icon-collection.border.default-tooltip": {
+    "defaultMessage": "默认 - 颜色将根据所选主题自动设置"
+  },
   "icon-collection.connection.default": {
     "defaultMessage": "Default"
   },
   "icon-collection.default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "默认 - 所有样式将根据主题自动选择"
   },
   "unified-styling.shape-type": {
     "defaultMessage": "Shape Type"

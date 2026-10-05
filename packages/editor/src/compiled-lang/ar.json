@@ -230,7 +230,7 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "نمط الشبكة"
+      "value": "حجم الشبكة"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
@@ -787,6 +787,12 @@
     {
       "type": 0,
       "value": "افتراضي"
+    }
+  ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "افتراضي - سيتم أخذ الألوان تلقائيًا بناءً على السمة المحددة"
     }
   ],
   "icon-collection.border.dotted": [
