@@ -83,8 +83,14 @@ const toScreen = (designer: Designer, position: PositionType): PositionType => {
 const screenManagerOf = (designer: Designer): ScreenManager =>
   designer.getWorkSpace().getScreenManager();
 
-const scaleOf = (designer: Designer): number =>
-  (screenManagerOf(designer) as unknown as { _scale: number })._scale;
+/** The workspace units a pixel of mouse movement is mapped to: the zoom of the mouse positions. */
+const scaleOf = (designer: Designer): number => {
+  const at = (clientX: number) =>
+    screenManagerOf(designer).getWorkspaceMousePosition(
+      new MouseEvent('mousemove', { clientX, clientY: 0 }),
+    ).x;
+  return (at(100) - at(0)) / 100;
+};
 
 /** The bounding box of every topic. */
 const boundsOf = (designer: Designer) => {

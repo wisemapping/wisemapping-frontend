@@ -35,6 +35,7 @@ const touchEvent = (
   return event as TouchEvent;
 };
 
+// Without a workspace, positions are mapped from the container.
 describe('ScreenManager.getWorkspaceMousePosition', () => {
   let container: HTMLDivElement;
   let screenManager: ScreenManager;
@@ -77,15 +78,6 @@ describe('ScreenManager.getWorkspaceMousePosition', () => {
     expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: 50, y: 30 });
   });
 
-  it('applies scale and offset after the container adjustment', () => {
-    setWindowScroll(200, 300);
-    screenManager.setScale(2);
-    screenManager.setOffset(-400, -300);
-    const event = new MouseEvent('mousemove', { clientX: 150, clientY: 80 });
-
-    expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: -300, y: -240 });
-  });
-
   it('uses the active touch for touchmove', () => {
     const event = touchEvent('touchmove', [{ clientX: 120, clientY: 70 }], []);
 
@@ -105,8 +97,9 @@ describe('ScreenManager.getWorkspaceMousePosition', () => {
   });
 });
 
-// W5: positions go through the SVG screen matrix (Workspace.clientToWorld) where the browser has
-// one. jsdom has none, so the tests below give the SVG a getScreenCTM.
+// W5: positions go through the SVG screen matrix (Workspace.clientToWorld), which applies the zoom
+// and the pan. jsdom has no getScreenCTM, so the tests below give the SVG one.
+// BL5-190: the zoom and pan the screen manager kept for jsdom (setScale/setOffset) are gone.
 describe('ScreenManager.getWorkspaceMousePosition through the workspace screen matrix (W5)', () => {
   let container: HTMLDivElement;
   let screenManager: ScreenManager;
@@ -125,8 +118,6 @@ describe('ScreenManager.getWorkspaceMousePosition through the workspace screen m
     workspace.addItAsChildTo(container);
     workspace.setCoordSize(1600, 1200);
     workspace.setCoordOrigin(-400, -300);
-    screenManager.setScale(2);
-    screenManager.setOffset(-400, -300);
   });
 
   afterEach(() => {
@@ -141,14 +132,12 @@ describe('ScreenManager.getWorkspaceMousePosition through the workspace screen m
       ({ a: 0.5, b: 0, c: 0, d: 0.5, e: left - x * 0.5, f: top - y * 0.5 }) as DOMMatrix;
   };
 
-  it('gives what the container maths gave, for an SVG at the container corner', () => {
-    const event = new MouseEvent('mousemove', { clientX: 150, clientY: 80 });
-    const fromContainer = screenManager.getWorkspaceMousePosition(event);
-
+  it('applies the zoom and the pan, for an SVG at the container corner', () => {
     screenManager.setWorkspace(workspace);
     svgAt(100, 50);
+    const event = new MouseEvent('mousemove', { clientX: 150, clientY: 80 });
 
-    expect(fromContainer).toEqual({ x: -300, y: -240 });
+    // 50 and 30 pixels into the container: 100 and 60 units at zoom 2, from (-400, -300).
     expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: -300, y: -240 });
   });
 
@@ -169,13 +158,23 @@ describe('ScreenManager.getWorkspaceMousePosition through the workspace screen m
     expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: -300, y: -240 });
   });
 
-  it('uses the container maths without a screen matrix (jsdom) or a workspace', () => {
-    const event = new MouseEvent('mousemove', { clientX: 150, clientY: 80 });
+  it('maps from the SVG rect and its viewBox without a screen matrix', () => {
+    // As jsdom: no getScreenCTM. The workspace maps from where the SVG is and what it shows.
+    jest
+      .spyOn(workspace.getSVGElement(), 'getBoundingClientRect')
+      .mockReturnValue({ left: 100, top: 50, width: 800, height: 600 } as DOMRect);
     screenManager.setWorkspace(workspace);
-    expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: -300, y: -240 });
+    const event = new MouseEvent('mousemove', { clientX: 150, clientY: 80 });
 
+    expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: -300, y: -240 });
+  });
+
+  it('maps from the container once the workspace is gone', () => {
+    screenManager.setWorkspace(workspace);
     svgAt(110, 60);
     screenManager.setWorkspace(null);
-    expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: -300, y: -240 });
+    const event = new MouseEvent('mousemove', { clientX: 150, clientY: 80 });
+
+    expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: 50, y: 30 });
   });
 });

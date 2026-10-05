@@ -78,8 +78,6 @@ describe('Canvas Background Style Tests', () => {
           setAttribute: jest.fn(),
           getAttribute: jest.fn(),
         }),
-        setOffset: jest.fn(),
-        setScale: jest.fn(),
         setWorkspace: jest.fn(),
         fireEvent: jest.fn(),
         addEvent: jest.fn(),

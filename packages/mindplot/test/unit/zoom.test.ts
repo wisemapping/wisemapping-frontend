@@ -79,8 +79,6 @@ describe('Canvas', () => {
           setAttribute: jest.fn(),
           getAttribute: jest.fn(),
         }),
-        setOffset: jest.fn(),
-        setScale: jest.fn(),
         setWorkspace: jest.fn(),
         fireEvent: jest.fn(),
         addEvent: jest.fn(),
@@ -134,7 +132,6 @@ describe('Canvas', () => {
       workspace.getCoordOrigin.mockReturnValue({ x: 0, y: 0 });
       workspace.getCoordSize.mockReturnValue({ width: 1000, height: 800 });
       workspace.setCoordOrigin.mockClear();
-      mockScreenManager.setOffset.mockClear();
       mockScreenManager.fireEvent.mockClear();
       layoutEventBus.fireEvent.mockClear();
     });
@@ -144,7 +141,6 @@ describe('Canvas', () => {
 
       expect(result).toBe(true);
       expect(workspace.setCoordOrigin).toHaveBeenCalledWith(330, 0);
-      expect(mockScreenManager.setOffset).toHaveBeenCalledWith(330, 0);
       expect(mockScreenManager.fireEvent).toHaveBeenCalledWith('update');
       expect(layoutEventBus.fireEvent).toHaveBeenCalledWith('canvasPanned');
     });
@@ -154,7 +150,6 @@ describe('Canvas', () => {
 
       expect(result).toBe(true);
       expect(workspace.setCoordOrigin).toHaveBeenCalledWith(-40, -70);
-      expect(mockScreenManager.setOffset).toHaveBeenCalledWith(-40, -70);
       expect(layoutEventBus.fireEvent).toHaveBeenCalledWith('canvasPanned');
     });
 
@@ -163,7 +158,6 @@ describe('Canvas', () => {
 
       expect(result).toBe(false);
       expect(workspace.setCoordOrigin).not.toHaveBeenCalled();
-      expect(mockScreenManager.setOffset).not.toHaveBeenCalled();
       expect(layoutEventBus.fireEvent).not.toHaveBeenCalled();
     });
   });
@@ -172,7 +166,6 @@ describe('Canvas', () => {
     beforeEach(() => {
       workspace.getCoordOrigin.mockReturnValue({ x: 100, y: 200 });
       workspace.setCoordOrigin.mockClear();
-      mockScreenManager.setOffset.mockClear();
       mockScreenManager.fireEvent.mockClear();
       layoutEventBus.fireEvent.mockClear();
     });
@@ -182,7 +175,6 @@ describe('Canvas', () => {
       canvas.panBy(50, -30);
 
       expect(workspace.setCoordOrigin).toHaveBeenCalledWith(150, 170);
-      expect(mockScreenManager.setOffset).toHaveBeenCalledWith(150, 170);
       expect(mockScreenManager.fireEvent).toHaveBeenCalledWith('update');
       expect(layoutEventBus.fireEvent).toHaveBeenCalledWith('canvasPanned');
     });
@@ -192,7 +184,6 @@ describe('Canvas', () => {
       canvas.panBy(40, 60);
 
       expect(workspace.setCoordOrigin).toHaveBeenCalledWith(120, 230);
-      expect(mockScreenManager.setOffset).toHaveBeenCalledWith(120, 230);
       expect(mockScreenManager.fireEvent).toHaveBeenCalledWith('update');
       expect(layoutEventBus.fireEvent).toHaveBeenCalledWith('canvasPanned');
     });
@@ -201,7 +192,6 @@ describe('Canvas', () => {
       canvas.panBy(0, 0);
 
       expect(workspace.setCoordOrigin).not.toHaveBeenCalled();
-      expect(mockScreenManager.setOffset).not.toHaveBeenCalled();
       expect(mockScreenManager.fireEvent).not.toHaveBeenCalled();
       expect(layoutEventBus.fireEvent).not.toHaveBeenCalled();
     });

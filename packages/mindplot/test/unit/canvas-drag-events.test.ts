@@ -35,6 +35,8 @@ jest.mock('@wisemapping/web2d', () => ({
     setCoordSize: jest.fn(),
     getCoordSize: jest.fn().mockReturnValue({ width: 1000, height: 800 }),
     getSVGElement: jest.fn(),
+    // Zoom 1, no pan: a client point is the same workspace point.
+    clientToWorld: (x: number, y: number) => ({ x, y }),
     _getHtmlContainer: jest.fn().mockReturnValue({ remove: mockRemoveHtmlContainer }),
     observeResize: mockObserveResize,
     dispose: mockDisposeWorkspace,

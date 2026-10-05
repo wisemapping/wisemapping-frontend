@@ -349,10 +349,6 @@ class Canvas {
     workspace.setCoordOrigin(coordOriginX, coordOriginY);
     workspace.setCoordSize(containerWidth * zoom, containerHeight * zoom);
 
-    // Update screen.
-    this._screenManager.setOffset(coordOriginX, coordOriginY);
-    this._screenManager.setScale(zoom);
-
     // Some changes in the screen. Let's fire an update event...
     this._screenManager.fireEvent('update');
     // Also fire LayoutEventBus event for canvas zooming
@@ -378,7 +374,6 @@ class Canvas {
     const newOriginY = origin.y + deltaY * this._zoom;
 
     this._workspace.setCoordOrigin(newOriginX, newOriginY);
-    this._screenManager.setOffset(newOriginX, newOriginY);
     this._screenManager.fireEvent('update');
     this._layoutEventBus.fireEvent('canvasPanned');
   }
@@ -501,9 +496,6 @@ class Canvas {
             this._cancelPan = null;
             window.document.body.style.cursor = 'default';
 
-            // Update screen manager offset.
-            const coordOrigin = workspace.getCoordOrigin();
-            screenManager.setOffset(coordOrigin.x, coordOrigin.y);
             mWorkspace.enableWorkspaceEvents(true);
 
             if (isRelease && !wasDragged) {
@@ -581,7 +573,6 @@ class Canvas {
 
     if (newOriginX !== origin.x || newOriginY !== origin.y) {
       workspace.setCoordOrigin(newOriginX, newOriginY);
-      this._screenManager.setOffset(newOriginX, newOriginY);
       this._screenManager.fireEvent('update');
       this._layoutEventBus.fireEvent('canvasPanned');
       return true;
@@ -613,7 +604,6 @@ class Canvas {
     }
 
     workspace.setCoordOrigin(newOriginX, newOriginY);
-    this._screenManager.setOffset(newOriginX, newOriginY);
     this._screenManager.fireEvent('update');
     this._layoutEventBus.fireEvent('canvasPanned');
     return true;

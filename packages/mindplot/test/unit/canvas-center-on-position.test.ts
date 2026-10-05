@@ -61,14 +61,12 @@ jest.mock('@wisemapping/web2d', () => ({
 describe('Canvas.centerOnPosition', () => {
   let canvas: Canvas;
   let mockScreenManager: jest.Mocked<ScreenManager>;
-  let setOffset: jest.Mock;
   let fireEvent: jest.Mock;
   let busFireEvent: jest.SpyInstance;
 
   beforeEach(() => {
     coordOrigin = { x: 0, y: 0 };
     mockSetCoordOrigin.mockClear();
-    setOffset = jest.fn();
     fireEvent = jest.fn();
 
     MockedScreenManager.mockImplementation(
@@ -82,8 +80,6 @@ describe('Canvas.centerOnPosition', () => {
             setAttribute: jest.fn(),
             getAttribute: jest.fn(),
           }),
-          setOffset,
-          setScale: jest.fn(),
           setWorkspace: jest.fn(),
           fireEvent,
           addEvent: jest.fn(),
@@ -100,7 +96,6 @@ describe('Canvas.centerOnPosition', () => {
     // The constructor calls setZoom(zoom, true), which already moved the origin.
     coordOrigin = { x: 0, y: 0 };
     mockSetCoordOrigin.mockClear();
-    setOffset.mockClear();
     fireEvent.mockClear();
     busFireEvent = jest.spyOn(bus, 'fireEvent').mockImplementation();
   });
@@ -115,14 +110,12 @@ describe('Canvas.centerOnPosition', () => {
     // A 1000x800 viewport centred on (500, 300) starts at (0, -100).
     expect(moved).toBe(true);
     expect(mockSetCoordOrigin).toHaveBeenCalledWith(0, -100);
-    expect(setOffset).toHaveBeenCalledWith(0, -100);
   });
 
   it('handles negative coordinates', () => {
     canvas.centerOnPosition({ x: -250, y: -600 });
 
     expect(mockSetCoordOrigin).toHaveBeenCalledWith(-750, -1000);
-    expect(setOffset).toHaveBeenCalledWith(-750, -1000);
   });
 
   it('notifies listeners that the canvas moved so they can re-sync overlays', () => {
@@ -138,7 +131,6 @@ describe('Canvas.centerOnPosition', () => {
 
     expect(moved).toBe(false);
     expect(mockSetCoordOrigin).not.toHaveBeenCalled();
-    expect(setOffset).not.toHaveBeenCalled();
     expect(busFireEvent).not.toHaveBeenCalled();
   });
 
