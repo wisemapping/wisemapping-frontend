@@ -224,7 +224,8 @@ describe('Topic.redraw of an unchanged topic', () => {
     expect(setterCalls).toBe(0);
   });
 
-  it('measures the text once for its width and once for its height', () => {
+  // web2d caches text measurements by text and font (W2), so an unchanged redraw measures nothing.
+  it('does not measure the unchanged text again', () => {
     const topic = harness.topic(2);
     const textNative = topic.getOrBuildTextShape().peer._native;
     const proto = (window as unknown as { SVGElement: { prototype: { getBBox: () => DOMRect } } })
@@ -236,7 +237,7 @@ describe('Topic.redraw of an unchanged topic', () => {
       (self) => self === textNative,
     );
     console.info(`redraw: ${measures} text getBBox calls`);
-    expect(measures).toBe(2);
+    expect(measures).toBe(0);
   });
 });
 
