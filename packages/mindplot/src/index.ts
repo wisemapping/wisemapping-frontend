@@ -74,7 +74,9 @@ export type {
   BackgroundPatternType,
 };
 
-export type { default as LayoutEventBusType } from './components/LayoutEventBusType';
+export type { default as LayoutEventBusType, LayoutEvents } from './components/LayoutEventBusType';
+export type { DesignerEvents, FeatureEditEvent } from './components/Designer';
+export type { ModelUpdateEvent } from './components/DesignerUndoManager';
 export type { LayoutType, OrientationType } from './components/layout/LayoutType';
 export type { FontStyleType } from './components/FontStyleType';
 export type { FontWeightType } from './components/FontWeightType';

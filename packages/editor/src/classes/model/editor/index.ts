@@ -21,14 +21,11 @@ import {
   PersistenceManager,
   DesignerModel,
   WidgetBuilder,
-  Topic,
 } from '@wisemapping/mindplot';
+import type { DesignerEvents, FeatureEditEvent } from '@wisemapping/mindplot';
 import Capability from '../../action/capability';
 import { trackEditorInteraction } from '../../../utils/analytics';
 import debounce from 'lodash/debounce';
-
-type DesignerEventType = Parameters<Designer['addEvent']>[0];
-type DesignerHandler = Parameters<Designer['addEvent']>[1];
 
 class Editor {
   private component: MindplotWebComponent;
@@ -41,11 +38,8 @@ class Editor {
   private autoSave: { designer: Designer; save: (() => void) & { cancel: () => void } } | null =
     null;
 
-  // The designer handlers added by registerEvents, removed by dispose() ...
-  private designerHandlers: {
-    designer: Designer;
-    handlers: [DesignerEventType, DesignerHandler][];
-  } | null = null;
+  // Removes the designer handlers added by registerEvents; called by dispose() ...
+  private removeDesignerHandlersFn: (() => void) | null = null;
 
   constructor(component: MindplotWebComponent) {
     this.component = component;
@@ -106,17 +100,16 @@ class Editor {
         canvasUpdate(Date.now());
       };
 
-      const featureEdition = (value: { event: 'note' | 'link' | 'close'; topic: Topic }): void => {
-        const { event, topic } = value;
-        switch (event) {
+      const featureEdition = (value: FeatureEditEvent): void => {
+        switch (value.event) {
           case 'note': {
             trackEditorInteraction('note_editor_open');
-            widgetBuilder.fireEvent('note', topic);
+            widgetBuilder.fireEvent('note', value.topic);
             break;
           }
           case 'link': {
             trackEditorInteraction('link_editor_open');
-            widgetBuilder.fireEvent('link', topic);
+            widgetBuilder.fireEvent('link', value.topic);
             break;
           }
         }
@@ -131,14 +124,20 @@ class Editor {
       // chrome that needs it -- the zoom percentage -- subscribes directly in
       // visualization-toolbar/zoom-display.tsx, so only that leaf re-renders.
       this.removeDesignerHandlers();
-      const handlers: [DesignerEventType, DesignerHandler][] = [
-        ['onblur', onNodeBlurHandler],
-        ['onfocus', onNodeFocusHandler],
-        ['modelUpdate', onNodeFocusHandler],
-        ['featureEdit', featureEdition as DesignerHandler],
-      ];
-      handlers.forEach(([type, handler]) => designer.addEvent(type, handler));
-      this.designerHandlers = { designer, handlers };
+      const removals: (() => void)[] = [];
+      // Each handler is checked against the payload of its event.
+      const on = <K extends keyof DesignerEvents>(
+        type: K,
+        handler: (payload: DesignerEvents[K]) => void,
+      ): void => {
+        designer.addEvent(type, handler);
+        removals.push(() => designer.removeEvent(type, handler));
+      };
+      on('onblur', onNodeBlurHandler);
+      on('onfocus', onNodeFocusHandler);
+      on('modelUpdate', onNodeFocusHandler);
+      on('featureEdit', featureEdition);
+      this.removeDesignerHandlersFn = () => removals.forEach((remove) => remove());
 
       // Is the save action enabled ... ?
       if (!capability.isHidden('save')) {
@@ -216,10 +215,9 @@ class Editor {
   }
 
   private removeDesignerHandlers(): void {
-    if (this.designerHandlers) {
-      const { designer, handlers } = this.designerHandlers;
-      handlers.forEach(([type, handler]) => designer.removeEvent(type, handler));
-      this.designerHandlers = null;
+    if (this.removeDesignerHandlersFn) {
+      this.removeDesignerHandlersFn();
+      this.removeDesignerHandlersFn = null;
     }
   }
 

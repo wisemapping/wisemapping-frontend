@@ -18,25 +18,15 @@
 import PositionType from '../PositionType';
 import INodeModel from '../model/INodeModel';
 import SizeType from '../SizeType';
-import LayoutEventBus, { LayoutEventPayloads } from './LayoutEventBus';
+import LayoutEventBus from './LayoutEventBus';
 import LayoutManager from './LayoutManager';
-import { LayoutEventBusType } from '../LayoutEventBusType';
-
-type BusHandler = Parameters<typeof LayoutEventBus.addEvent>[1];
-
-/** A handler for one event, typed with the payload the bus sends for it. */
-type EventHandler<T extends LayoutEventBusType> = (arg: LayoutEventPayloads[T]) => void;
-
-const busHandler = <T extends LayoutEventBusType>(
-  type: T,
-  handler: EventHandler<T>,
-): [LayoutEventBusType, BusHandler] => [type, handler as BusHandler];
+import { LayoutEventBusType, LayoutEvents } from '../LayoutEventBusType';
 
 class EventBusDispatcher {
   private _layoutManager: LayoutManager | null;
 
-  // LayoutEventBus is module-level: keep the handlers, so that dispose() can remove them ...
-  private _busHandlers: [LayoutEventBusType, BusHandler][] = [];
+  // Removes the LayoutEventBus handlers registerBusEvents added; called by dispose() ...
+  private _busRemovals: (() => void)[] = [];
 
   // A connection asks for a layout, which is run once for a run of them (see _requestLayout).
   private _layoutPending = false;
@@ -84,25 +74,28 @@ class EventBusDispatcher {
 
   registerBusEvents() {
     this.dispose();
-    this._busHandlers = [
-      busHandler('topicAdded', this._topicAdded.bind(this)),
-      busHandler('topicRemoved', this._topicRemoved.bind(this)),
-      busHandler('topicResize', this._topicResizeEvent.bind(this)),
-      busHandler('topicMoved', this._topicMoved.bind(this)),
-      busHandler('topicDisconect', this._topicDisconect.bind(this)),
-      busHandler('topicConnected', this._topicConnected.bind(this)),
-      busHandler('childShrinked', this._childShrinked.bind(this)),
-      busHandler('forceLayout', this._forceLayout.bind(this)),
-    ];
-    this._busHandlers.forEach(([type, handler]) => LayoutEventBus.addEvent(type, handler));
+    this._on('topicAdded', this._topicAdded.bind(this));
+    this._on('topicRemoved', this._topicRemoved.bind(this));
+    this._on('topicResize', this._topicResizeEvent.bind(this));
+    this._on('topicMoved', this._topicMoved.bind(this));
+    this._on('topicDisconect', this._topicDisconect.bind(this));
+    this._on('topicConnected', this._topicConnected.bind(this));
+    this._on('childShrinked', this._childShrinked.bind(this));
+    this._on('forceLayout', this._forceLayout.bind(this));
+  }
+
+  /** Adds a handler, checked against the payload of its event, and keeps how to remove it. */
+  private _on<T extends LayoutEventBusType>(type: T, handler: (payload: LayoutEvents[T]) => void) {
+    LayoutEventBus.addEvent(type, handler);
+    this._busRemovals.push(() => LayoutEventBus.removeEvent(type, handler));
   }
 
   /**
    * Removes the LayoutEventBus handlers, so that this dispatcher no longer drives its layout.
    */
   dispose(): void {
-    this._busHandlers.forEach(([type, handler]) => LayoutEventBus.removeEvent(type, handler));
-    this._busHandlers = [];
+    this._busRemovals.forEach((remove) => remove());
+    this._busRemovals = [];
     this._layoutPending = false;
     this._batchDepth = 0;
   }
