@@ -42,6 +42,11 @@ class Mindmap extends IMindmap {
 
   private _layout: LayoutType;
 
+  /** The nodes by id, as of INodeModel.getTreeVersion() _indexVersion (see findNodeById). */
+  private _nodeIndex: Map<number, NodeModel> | undefined;
+
+  private _indexVersion = -1;
+
   constructor(id?: string, version: string = ModelCodeName.TANGO) {
     super();
     this._branches = [];
@@ -132,6 +137,7 @@ class Mindmap extends IMindmap {
     }
 
     this._branches.push(nodeModel as NodeModel);
+    INodeModel.treeChanged();
   }
 
   /**
@@ -140,6 +146,7 @@ class Mindmap extends IMindmap {
   removeBranch(nodeModel: INodeModel): void {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Remove node must be invoked with model objects');
     this._branches = this._branches.filter((b) => b !== nodeModel);
+    INodeModel.treeChanged();
   }
 
   getBranches(): NodeModel[] {
@@ -189,15 +196,32 @@ class Mindmap extends IMindmap {
     this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
+  /**
+   * The node with the given id, from an index of the map's nodes. The index is rebuilt, in one
+   * walk, on the first lookup after any id or tree changed (INodeModel.treeChanged), so many
+   * lookups cost one walk, not one each.
+   */
   findNodeById(id: number): NodeModel | undefined {
-    let result: NodeModel | undefined;
-    for (let i = 0; i < this._branches.length; i++) {
-      const branch = this._branches[i];
-      result = branch.findNodeById(id);
-      if (result) {
-        break;
-      }
+    const version = INodeModel.getTreeVersion();
+    if (!this._nodeIndex || this._indexVersion !== version) {
+      this._nodeIndex = this.buildNodeIndex();
+      this._indexVersion = version;
     }
+    return this._nodeIndex.get(id);
+  }
+
+  // Branch by branch, a node before its children: with two nodes of the same id, the first one
+  // found, as the walk of NodeModel.findNodeById. A Map finds NaN, which === does not: left out.
+  private buildNodeIndex(): Map<number, NodeModel> {
+    const result = new Map<number, NodeModel>();
+    const add = (node: NodeModel): void => {
+      const id = node.getId();
+      if (!Number.isNaN(id) && !result.has(id)) {
+        result.set(id, node);
+      }
+      node.getChildren().forEach(add);
+    };
+    this._branches.forEach(add);
     return result;
   }
 

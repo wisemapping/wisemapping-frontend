@@ -76,6 +76,20 @@ abstract class INodeModel {
 
   private static _nextUuid = 0;
 
+  private static _treeVersion = 0;
+
+  /**
+   * Notes that a node's id or the shape of a tree changed (a child appended or removed, a branch
+   * added or removed). Mindmap.findNodeById rebuilds its id index when this has moved on.
+   */
+  static treeChanged(): void {
+    INodeModel._treeVersion += 1;
+  }
+
+  static getTreeVersion(): number {
+    return INodeModel._treeVersion;
+  }
+
   protected _mindmap: Mindmap;
 
   constructor(mindmap: Mindmap) {

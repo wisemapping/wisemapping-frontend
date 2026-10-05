@@ -102,6 +102,9 @@ class NodeModel extends INodeModel {
 
   putProperty<K extends NodePropKey>(key: K, value: NodeProps[K]): void {
     this._properties[key] = value;
+    if (key === 'id') {
+      INodeModel.treeChanged();
+    }
   }
 
   getProperties(): Readonly<Partial<NodeProps>> {
@@ -146,12 +149,14 @@ class NodeModel extends INodeModel {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object');
     this._children.push(child);
     child._parent = this;
+    INodeModel.treeChanged();
   }
 
   removeChild(child: NodeModel): void {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object.');
     this._children = this._children.filter((c) => c !== child);
     child._parent = null;
+    INodeModel.treeChanged();
   }
 
   findNodeById(id: number): NodeModel | undefined {
