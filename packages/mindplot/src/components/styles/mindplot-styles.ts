@@ -96,6 +96,40 @@ const mindplotStyles: string = `
     border-radius: 12px 12px 0 0;
 }
 
+.mindplot-svg-tooltip-content-note ul,
+.mindplot-svg-tooltip-content-note ol {
+    margin: 4px 0;
+    padding-left: 24px;
+    white-space: normal;
+}
+
+.mindplot-svg-tooltip-content-note li > ul,
+.mindplot-svg-tooltip-content-note li > ol {
+    margin: 0;
+}
+
+.mindplot-svg-tooltip-content-note ul ul {
+    list-style-type: circle;
+}
+
+.mindplot-svg-tooltip-content-note ul ul ul {
+    list-style-type: square;
+}
+
+.mindplot-svg-tooltip-content-note ol ol {
+    list-style-type: lower-alpha;
+}
+
+.mindplot-svg-tooltip-content-note ol ol ol {
+    list-style-type: lower-roman;
+}
+
+.mindplot-svg-tooltip-content-note a {
+    color: #1a73e8;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .mindplot-svg-tooltip-content-link {
     display: inline-block;
     padding: 10px 14px;

@@ -147,4 +147,26 @@ describe('WidgetBuilder tooltips', () => {
     expect(note.innerHTML).not.toMatch(/onerror/i);
     expect(hook).not.toHaveBeenCalled();
   });
+
+  it('renders the nested lists of an html note', () => {
+    const note = showNote(
+      '<ul><li>a<ul><li>b<ol><li>c</li></ol></li></ul></li></ul>',
+      ContentType.HTML,
+    );
+
+    expect(note.querySelector('ul > li > ul > li > ol > li')?.textContent).toBe('c');
+  });
+
+  it('opens the links of an html note in a new tab without the opener', () => {
+    const note = showNote(
+      '<p>see <a href="https://example.org">site</a> and <a href="javascript:alert(1)">bad</a></p>',
+      ContentType.HTML,
+    );
+
+    const [site, bad] = Array.from(note.querySelectorAll('a'));
+    expect(site.getAttribute('href')).toBe('https://example.org');
+    expect(site.getAttribute('target')).toBe('_blank');
+    expect(site.getAttribute('rel')).toBe('noopener noreferrer');
+    expect(bad.hasAttribute('href')).toBe(false);
+  });
 });

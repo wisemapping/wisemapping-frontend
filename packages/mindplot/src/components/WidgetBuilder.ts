@@ -139,7 +139,8 @@ abstract class WidgetBuilder {
           )!;
           if (noteModel.getContentType() === ContentType.HTML) {
             try {
-              DOMUtils.html(tooltipNote, HtmlSanitizer.sanitize(noteModel.getText()));
+              // Its links open in a new tab, so the map stays open.
+              DOMUtils.html(tooltipNote, HtmlSanitizer.sanitizeForDisplay(noteModel.getText()));
             } catch {
               // Too large to sanitize: show its text instead.
               DOMUtils.text(tooltipNote, noteModel.getPlainText());

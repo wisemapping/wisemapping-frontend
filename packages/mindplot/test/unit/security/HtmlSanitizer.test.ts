@@ -123,3 +123,55 @@ describe('HtmlSanitizer.sanitize', () => {
     expect(result).toBe('a'.repeat(99_999));
   });
 });
+
+describe('HtmlSanitizer with notes edited as Markdown', () => {
+  it('keeps nested lists, in items and next to them', () => {
+    const html =
+      '<ul><li>a<ul><li>b<ol><li>c</li></ol></li></ul></li><li>d</li></ul>' +
+      '<ol><li>x</li><ul><li>y</li></ul></ol>';
+    expect(HtmlSanitizer.sanitize(html)).toBe(html);
+  });
+
+  it.each(['https://x.org/a', 'http://x.org', 'mailto:a@x.org'])('keeps a link to %s', (href) => {
+    const html = `<a href="${href}">x</a>`;
+    expect(HtmlSanitizer.sanitize(html)).toBe(html);
+  });
+
+  it.each([
+    'javascript:alert(1)',
+    ' JavaScript:alert(1)',
+    'java&#x09;script:alert(1)',
+    'data:text/html,<script>alert(1)</script>',
+    'vbscript:msgbox(1)',
+  ])('drops the unsafe link %s', (href) => {
+    expect(HtmlSanitizer.sanitize(`<a href="${href}">x</a>`)).toBe('<a>x</a>');
+  });
+});
+
+describe('HtmlSanitizer.sanitizeForDisplay', () => {
+  it('opens every link in a new tab without the opener', () => {
+    const result = HtmlSanitizer.sanitizeForDisplay(
+      '<ul><li><a href="https://x.org" target="_self">x</a><ul><li><a href="mailto:a@x.org">m</a></li></ul></li></ul>',
+    );
+    const container = document.createElement('div');
+    container.innerHTML = result;
+
+    const links = Array.from(container.querySelectorAll('a'));
+    expect(links).toHaveLength(2);
+    links.forEach((link) => {
+      expect(link.getAttribute('target')).toBe('_blank');
+      expect(link.getAttribute('rel')).toBe('noopener noreferrer');
+    });
+    expect(container.querySelector('li li a')?.getAttribute('href')).toBe('mailto:a@x.org');
+  });
+
+  it('sanitizes before adding the attributes', () => {
+    const result = HtmlSanitizer.sanitizeForDisplay(
+      '<a href="javascript:alert(1)" onclick="alert(1)">x</a><img src=x onerror=alert(1)>',
+    );
+    expect(findUnsafe(result)).toEqual([]);
+    expect(result).not.toMatch(/javascript:|onclick|onerror/i);
+    // A link without a destination is left as it is.
+    expect(result).toBe('<a>x</a><img src="x">');
+  });
+});

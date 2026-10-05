@@ -209,6 +209,25 @@ class HtmlSanitizer {
     }
   }
 
+  /**
+   * Sanitizes HTML content to be shown read only, such as a note in a tooltip: its links open in
+   * a new tab, without giving it the opener or the referrer.
+   * @param htmlContent - The HTML content to sanitize
+   * @returns Sanitized HTML content safe for display
+   */
+  static sanitizeForDisplay(htmlContent: string): string {
+    const sanitized = this.sanitize(htmlContent);
+    if (!/<a\s/i.test(sanitized)) {
+      return sanitized;
+    }
+    const container = this.parseInert(sanitized);
+    container.querySelectorAll('a[href]').forEach((link) => {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    });
+    return container.innerHTML;
+  }
+
   // 100KB limit
   private static readonly MAX_CONTENT_LENGTH = 100000;
 
