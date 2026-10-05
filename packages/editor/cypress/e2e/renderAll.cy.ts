@@ -18,8 +18,7 @@
 
 /// <reference types="cypress" />
 
-// A module, so that the types and helpers below stay local to this spec.
-export {};
+import { designerOf } from '../support/designer';
 
 type DesignerHandle = {
   getMindmap(): { getId(): string | undefined };
@@ -34,7 +33,7 @@ const assertMapLoaded = (mapId: string, timeout: number) => {
   cy.readFile(`test/playground/map-render/samples/${mapId}.wxml`).then((xml: string) => {
     const topicsInFile = (xml.match(/<topic[\s>]/g) || []).length;
     cy.window({ timeout }).should((win) => {
-      const designer = (win as unknown as { designer?: DesignerHandle }).designer;
+      const designer = designerOf<DesignerHandle>(win);
       expect(designer, 'designer').to.not.equal(undefined);
       expect(designer?.getMindmap().getId(), 'loaded map').to.equal(mapId);
       expect(designer?.getModel().getTopics(), 'topics').to.have.length(topicsInFile);

@@ -35,7 +35,7 @@ describe('HTMLTopicSelected with two designers on the page (BL4-22)', () => {
     'a shadow built without a designer adds the %s on the map of its topic, not the last one built',
     async (kind) => {
       const first = await buildDesigner();
-      // The last designer built is the one in globalThis.designer.
+      // The last designer built is the one the old global designer pointed at.
       const second = await buildDesigner();
       const firstCreate = spyCreate(first);
       const secondCreate = spyCreate(second);

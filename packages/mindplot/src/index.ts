@@ -52,13 +52,6 @@ import { $notify } from './components/model/ToolbarNotifier';
 import XMLSerializerFactory from './components/persistence/XMLSerializerFactory';
 import type { CanvasStyleType, BackgroundPatternType } from './components/model/CanvasStyleType';
 
-declare global {
-  // Todo: There are some global references that needs to be removed inside mindplot.
-  // Undefined until a designer is built, and again once it is disposed.
-  // eslint-disable-next-line vars-on-top
-  var designer: Designer | undefined;
-}
-
 // jQuery has been removed - no longer needed
 // WebComponent registration
 // The if statement is the fix for doble registration problem. Can be deleted wen webapp-mindplot dependency be dead.

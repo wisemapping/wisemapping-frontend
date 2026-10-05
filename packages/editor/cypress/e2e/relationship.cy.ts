@@ -18,8 +18,7 @@
 
 /// <reference types="cypress" />
 
-// A module, so that the types and helpers below stay local to this spec.
-export {};
+import { designerIn } from '../support/designer';
 
 type RelationshipHandle = {
   getModel(): {
@@ -37,7 +36,7 @@ type DesignerHandle = {
 /** The control points the model holds for the "Features" -> "Try it Now!" relationship. */
 const controlPoints = () =>
   cy.window().then((win) => {
-    const relationship = (win as unknown as { designer: DesignerHandle }).designer
+    const relationship = designerIn<DesignerHandle>(win)
       .getModel()
       .getRelationships()
       .find((r) => r.getModel().getFromNode() === 15 && r.getModel().getToNode() === 11);

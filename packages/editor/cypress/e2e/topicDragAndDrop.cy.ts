@@ -18,8 +18,7 @@
 
 /// <reference types="cypress" />
 
-// A module, so that the types and helpers below stay local to this spec.
-export {};
+import { designerIn } from '../support/designer';
 
 /**
  * Drags "Mind Mapping" (a child of the central topic on its left side, under "Try it Now!") with
@@ -40,8 +39,7 @@ type DesignerHandle = {
   getModel(): { getTopics(): TopicHandle[] };
 };
 
-const designer = (win: Cypress.AUTWindow): DesignerHandle =>
-  (win as unknown as { designer: DesignerHandle }).designer;
+const designer = (win: Cypress.AUTWindow): DesignerHandle => designerIn<DesignerHandle>(win);
 
 const topicByText = (win: Cypress.AUTWindow, text: string): TopicHandle => {
   const topic = designer(win)

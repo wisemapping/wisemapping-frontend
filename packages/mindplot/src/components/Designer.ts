@@ -212,8 +212,6 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     this._topicEventDispatcher = new TopicEventDispatcher(this.isReadOnly());
 
-    // Hack: There are static reference to designer variable. Needs to be reviewed.
-    globalThis.designer = this;
     this._mindmap = null;
 
     // If not manager was specifed, use the readonly one.
@@ -1904,7 +1902,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * Releases what the designer registered outside its own objects: the handlers on its
    * LayoutEventBus (a topic or the host may still hold the bus), the keyboard, a topic drag in
    * progress, the canvas listeners on the window and the container, the canvas SVG, and the
-   * ActionDispatcher instance and `globalThis.designer` if they still point at this designer.
+   * ActionDispatcher instance if it still points at this designer.
    *
    * The PersistenceManager instance is kept: MindplotWebComponent saves and unlocks the map
    * through it after the designer is disposed.
@@ -1958,9 +1956,6 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     this._canvas.dispose();
 
     ActionDispatcher.clearInstance(this._actionDispatcher);
-    if (globalThis.designer === this) {
-      Reflect.deleteProperty(globalThis, 'designer');
-    }
   }
 
   isDisposed(): boolean {
