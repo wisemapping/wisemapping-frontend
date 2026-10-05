@@ -231,11 +231,8 @@ class Relationship extends BaseConnectionLine {
     // Apply stroke style only once at the end of redraw
     this._applyStrokeStyle(this._model.getStrokeStyle());
 
-    // Relationships are kept below topics (see addToWorkspace). Raising the line or
-    // the focus shape here would put them on top of every topic on each redraw, and
-    // a relationship crossing a topic would then take the topic's clicks.
-    this._startArrow.moveToBack();
-    this._endArrow.moveToBack();
+    // The stacking is set once, by addToWorkspace: moving a part here would make the order of
+    // the relationships depend on the order they are redrawn in (BL5-145).
 
     this._endArrow.setVisibility(this.isVisible() && this._showEndArrow);
     this._startArrow.setVisibility(this.isVisible() && this._showStartArrow);
@@ -291,11 +288,14 @@ class Relationship extends BaseConnectionLine {
 
     super.addToWorkspace(workspace);
 
-    // Ensure all relationship components are rendered below topics
+    // Below the topics, so that a relationship crossing a topic does not take its clicks, and
+    // below the relationships already there: the stacking follows the order relationships are
+    // added in, not the order they are redrawn or focused in (BL5-145). From the top: the line,
+    // its arrows, then the focus shape and arrows, which highlight them from behind.
     this.moveToBack(); // Main relationship line
-    this._focusShape.getElementClass().moveToBack();
     this._startArrow.moveToBack();
     this._endArrow.moveToBack();
+    this._focusShape.getElementClass().moveToBack();
     this._focusStartArrow.moveToBack();
     this._focusEndArrow.moveToBack();
 
@@ -544,15 +544,13 @@ class Relationship extends BaseConnectionLine {
         // Show focus shape when focusing
         this._focusShape.setVisibility(true);
         this._focusShape.setOpacity(1);
+        // The focus shape and arrows are below the line and its arrows (see addToWorkspace),
+        // so that style changes stay visible.
         this._focusShape.setStroke(5, 'solid', '#3f96ff');
-        // Move focus shape below the main line so style changes are visible
-        this._focusShape.moveToBack();
 
         // Show focus arrows if corresponding arrows are enabled
         this._focusStartArrow.setVisibility(this._showStartArrow);
         this._focusEndArrow.setVisibility(this._showEndArrow);
-        this._focusStartArrow.moveToBack();
-        this._focusEndArrow.moveToBack();
       } else {
         // Back to the barely visible hit shape: hiding it would leave only the 2px
         // line clickable.

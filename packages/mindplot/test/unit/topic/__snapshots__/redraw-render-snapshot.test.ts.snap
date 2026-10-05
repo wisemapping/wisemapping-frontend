@@ -2,7 +2,7 @@
 
 exports[`redraw render snapshot of a medium map renders the loaded map 1`] = `
 {
-  "canvas": "bff82675d8eb",
+  "canvas": "ee261e35c91e",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=74ec918771de line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=162c190a3cd4 line=14465d00ae9e",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=a88d627b1c49 line=ca9c29b657b7",
@@ -84,7 +84,7 @@ exports[`redraw render snapshot of a medium map renders the loaded map 1`] = `
 
 exports[`redraw render snapshot of a medium map renders the same after changing the theme: prism 1`] = `
 {
-  "canvas": "58d0ef430260",
+  "canvas": "f9fc800f499d",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=cda20a02aff1 line=da39a3ee5e6b",
   "topic 1": "pos=154.5,-358.5 size=126x68 order=0 group=46a0f173670d line=6ea12aa97c6d",
   "topic 10": "pos=572.5,-315.5 size=272x68 order=0 group=badf85dc8482 line=cae3f994797b",
@@ -166,7 +166,7 @@ exports[`redraw render snapshot of a medium map renders the same after changing 
 
 exports[`redraw render snapshot of a medium map renders the same after changing the theme: prism dark 1`] = `
 {
-  "canvas": "5d10e234a6f6",
+  "canvas": "35088518b778",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=8e1842952861 line=da39a3ee5e6b",
   "topic 1": "pos=154.5,-358.5 size=126x68 order=0 group=46a0f173670d line=b9142a0a1086",
   "topic 10": "pos=572.5,-315.5 size=272x68 order=0 group=548fe05b357a line=968f6abeb8e8",
@@ -248,7 +248,7 @@ exports[`redraw render snapshot of a medium map renders the same after changing 
 
 exports[`redraw render snapshot of a medium map renders the same after style, feature and image changes: styled 1`] = `
 {
-  "canvas": "8e61104a08c7",
+  "canvas": "5e65821a4e3c",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=74ec918771de line=da39a3ee5e6b",
   "topic 1": "pos=154.5,-358.5 size=126x68 order=0 group=047f3b3311d0 line=ea72607da671",
   "topic 10": "pos=572.5,-315.5 size=272x68 order=0 group=e883f7ffebb2 line=44d42bcc4659",
@@ -330,7 +330,7 @@ exports[`redraw render snapshot of a medium map renders the same after style, fe
 
 exports[`redraw render snapshot of a medium map renders the same after switching to the tree layout and back: mindmap 1`] = `
 {
-  "canvas": "da4c05ace311",
+  "canvas": "1daf6c910262",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=74ec918771de line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=162c190a3cd4 line=14465d00ae9e",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=a88d627b1c49 line=ca9c29b657b7",
@@ -412,7 +412,7 @@ exports[`redraw render snapshot of a medium map renders the same after switching
 
 exports[`redraw render snapshot of a medium map renders the same after switching to the tree layout and back: tree 1`] = `
 {
-  "canvas": "8feaa43722dd",
+  "canvas": "e65c579d565f",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=74ec918771de line=da39a3ee5e6b",
   "topic 1": "pos=-2021.5,110 size=71x38 order=0 group=3945da139168 line=b387428a7c74",
   "topic 10": "pos=-2035.5,350 size=86x34 order=0 group=bf8cb20c4d55 line=7248c51e0a08",
@@ -494,7 +494,7 @@ exports[`redraw render snapshot of a medium map renders the same after switching
 
 exports[`redraw render snapshot of a medium map renders the same after toggling the theme variant: dark 1`] = `
 {
-  "canvas": "335f46b3b604",
+  "canvas": "184c3ac08f73",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=74ec918771de line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=e5cf0ec018d4 line=14465d00ae9e",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=5cd9a62c2a50 line=ca9c29b657b7",
@@ -576,7 +576,7 @@ exports[`redraw render snapshot of a medium map renders the same after toggling 
 
 exports[`redraw render snapshot of a medium map renders the same after toggling the theme variant: initialized dark 1`] = `
 {
-  "canvas": "335f46b3b604",
+  "canvas": "184c3ac08f73",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=74ec918771de line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=e5cf0ec018d4 line=14465d00ae9e",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=5cd9a62c2a50 line=ca9c29b657b7",
@@ -658,7 +658,7 @@ exports[`redraw render snapshot of a medium map renders the same after toggling 
 
 exports[`redraw render snapshot of a medium map renders the same after toggling the theme variant: light 1`] = `
 {
-  "canvas": "da4c05ace311",
+  "canvas": "1daf6c910262",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=74ec918771de line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=162c190a3cd4 line=14465d00ae9e",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=a88d627b1c49 line=ca9c29b657b7",
@@ -740,7 +740,7 @@ exports[`redraw render snapshot of a medium map renders the same after toggling 
 
 exports[`redraw render snapshot of a medium map renders the same while typing in the text editor and after committing: committed 1`] = `
 {
-  "canvas": "b27971a9b89a",
+  "canvas": "12fae89b5889",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=74ec918771de line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=162c190a3cd4 line=14465d00ae9e",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=a88d627b1c49 line=ca9c29b657b7",
@@ -822,7 +822,7 @@ exports[`redraw render snapshot of a medium map renders the same while typing in
 
 exports[`redraw render snapshot of a medium map renders the same while typing in the text editor and after committing: typing 1`] = `
 {
-  "canvas": "92f654fbc539",
+  "canvas": "617ef8903dfb",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=74ec918771de line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=162c190a3cd4 line=14465d00ae9e",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=a88d627b1c49 line=ca9c29b657b7",

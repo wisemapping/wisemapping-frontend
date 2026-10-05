@@ -1400,9 +1400,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     result.setVisibility(sourceTopic.isVisible() && targetTopic.isVisible());
 
+    // Relationship.addToWorkspace puts it below the topics and the relationships already there
     this._canvas.append(result);
-    // Ensure relationships are rendered below topics
-    result.moveToBack();
     return result;
   }
 

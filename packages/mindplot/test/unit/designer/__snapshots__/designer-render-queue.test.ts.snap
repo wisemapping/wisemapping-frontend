@@ -7,4 +7,4 @@ exports[`Map load render queue adds the queued elements, and what they add, to t
 }
 `;
 
-exports[`Map load render queue leaves the same canvas 1`] = `"fcd4fc3566dc"`;
+exports[`Map load render queue leaves the same canvas 1`] = `"761a77d5db22"`;
