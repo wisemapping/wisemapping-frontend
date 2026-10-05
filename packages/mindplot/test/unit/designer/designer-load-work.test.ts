@@ -1,0 +1,185 @@
+/*
+ *    Copyright [2007-2025] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
+
+import { buildDesigner } from '../commands/designer-harness';
+import { buildMediumMap, useTextSizedBoxes } from './medium-map';
+import Designer from '../../../src/components/Designer';
+import NodeGraph from '../../../src/components/NodeGraph';
+import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
+import LayoutManager from '../../../src/components/layout/LayoutManager';
+import RootedTreeSet from '../../../src/components/layout/RootedTreeSet';
+
+/*
+ * Loading a map must not do work that grows with the square of its size. These tests count the
+ * work (layout passes, tree visits, lookups) a 500-topic map costs, never the time it takes.
+ * Every bound fails on the code from before the map load was optimised; the counts it had are
+ * noted next to each one.
+ */
+
+const TOPICS = 500;
+
+const layoutManagerOf = (designer: Designer): LayoutManager =>
+  (
+    designer as unknown as { _eventBussDispatcher: EventBusDispatcher }
+  )._eventBussDispatcher.getLayoutManager();
+
+const microtasks = () => new Promise<void>((resolve) => queueMicrotask(resolve));
+
+/** The tree visits RootedTreeSet.find makes: its private depth-first search. */
+const spyOnTreeVisits = () =>
+  jest.spyOn(
+    RootedTreeSet.prototype as unknown as { _find: (id: number, node: unknown) => unknown },
+    '_find',
+  );
+
+describe('Map load work', () => {
+  let restoreBoxes: () => void;
+
+  beforeAll(() => {
+    restoreBoxes = useTextSizedBoxes();
+  });
+
+  afterAll(() => {
+    restoreBoxes();
+  });
+
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    jest.spyOn(console, 'log').mockImplementation(() => undefined);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('lays a map out once, not once per topic', async () => {
+    const layout = jest.spyOn(LayoutManager.prototype, 'layout');
+
+    const { designer } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+
+    expect(designer.getModel().getTopics()).toHaveLength(TOPICS);
+    // Before: 497, one per connected topic plus the final one.
+    expect(layout.mock.calls.length).toBeLessThanOrEqual(2);
+  });
+
+  it('finds layout nodes without walking the tree', async () => {
+    const visits = spyOnTreeVisits();
+
+    await buildDesigner(buildMediumMap({ topics: TOPICS }));
+
+    // Before: 829,445 visits.
+    expect(visits.mock.calls.length).toBe(0);
+  });
+
+  it('finds topics without scanning them all', async () => {
+    const getId = jest.spyOn(NodeGraph.prototype, 'getId');
+    const getModel = jest.spyOn(NodeGraph.prototype, 'getModel');
+    const { designer } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    const loadGetId = getId.mock.calls.length;
+    const loadGetModel = getModel.mock.calls.length;
+
+    // Before: 5,879,359 getId calls (the change handler scanned the topics for each change of
+    // each of the 497 layouts) and 4,572,378 getModel calls (each child also scanned them for its
+    // parent's topic). Now about 15,000 and 254,000, most of them from rendering.
+    expect(loadGetId).toBeLessThan(40 * TOPICS);
+    expect(loadGetModel).toBeLessThan(1000 * TOPICS);
+
+    getId.mockClear();
+    for (let id = 0; id < TOPICS; id++) {
+      expect(designer.getModel().findTopicById(id)?.getId()).toBe(id);
+    }
+    // Before: a scan each, 125,250 calls. Now the check of the topic found, and the call above.
+    expect(getId.mock.calls.length).toBeLessThanOrEqual(2 * TOPICS);
+  });
+
+  it('lays out an interactive connect once, then once more for the command', async () => {
+    const { designer } = await buildDesigner(buildMediumMap({ topics: 50 }));
+    const layout = jest.spyOn(LayoutManager.prototype, 'layout');
+
+    const model = designer.getMindmap().createNode('MainTopic');
+    model.setText('Added');
+    model.setPosition(0, 0);
+    model.setOrder(0);
+    designer.getActionDispatcher().addTopics([model], [7]);
+
+    // Before: 3, as connecting laid out twice before the command's own layout.
+    expect(layout.mock.calls.length).toBe(2);
+
+    // ... and the new topic is laid out when the command returns, not later.
+    const added = designer.getModel().findTopicById(model.getId())!;
+    expect(added.getPosition()).toEqual(
+      layoutManagerOf(designer).find(model.getId()).getPosition(),
+    );
+    await microtasks();
+    expect(layout.mock.calls.length).toBe(2);
+  });
+
+  it('settles the layout of an undone delete when the undo returns', async () => {
+    const { designer } = await buildDesigner(buildMediumMap({ topics: 200 }));
+    const dispatcher = designer.getActionDispatcher();
+    const branch = designer
+      .getModel()
+      .getTopics()
+      .find((topic) => topic.getChildren().length > 2 && topic.getId() > 10)!;
+    const placed = () =>
+      designer
+        .getModel()
+        .getTopics()
+        .map((topic) => `${topic.getId()}:${topic.getPosition().x},${topic.getPosition().y}`)
+        .sort();
+    const before = placed();
+    dispatcher.deleteEntities([branch.getId(), 3], []);
+
+    const layout = jest.spyOn(LayoutManager.prototype, 'layout');
+    designer.undo();
+    const undone = placed();
+    expect(undone).toEqual(before);
+
+    // Rebuilding the branches connected each of their topics: one layout for the connection of
+    // the branch, one for the command. Nothing is left for later.
+    const calls = layout.mock.calls.length;
+    expect(calls).toBeLessThanOrEqual(2);
+    await microtasks();
+    expect(layout.mock.calls.length).toBe(calls);
+    expect(placed()).toEqual(undone);
+  });
+
+  it('draws relationships where their topics end up', async () => {
+    const { designer } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    const relationships = designer.getModel().getRelationships();
+    expect(relationships.length).toBeGreaterThan(0);
+    // The relationship lines: where they start and end.
+    const drawn = () =>
+      Array.from(designer.getContainer().querySelectorAll('[test-id$="-relationship"]')).map(
+        (line) => `${line.getAttribute('test-id')} ${line.getAttribute('d')}`,
+      );
+
+    const loaded = drawn();
+    expect(loaded.length).toBeGreaterThanOrEqual(relationships.length);
+    relationships.forEach((relationship) => relationship.redraw());
+
+    // Before, the relationships were drawn before the final layout moved some of their topics.
+    expect(drawn()).toEqual(loaded);
+  });
+});

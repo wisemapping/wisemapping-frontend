@@ -964,20 +964,30 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     this._eventBussDispatcher.setLayoutManager(layoutManager);
 
-    // Building node graph ...
+    // Building node graph. The render queue adds the topics to the canvas, which connects each
+    // one to the layout: lay the map out once, when they all are, not once per connection ...
     const branches = mindmap.getBranches();
+    const dispatcher = this._eventBussDispatcher;
+    dispatcher.beginBatch();
 
     const nodesGraph: Topic[] = [];
-    branches.forEach((branch) => {
-      const nodeGraph = this.nodeModelToTopic(branch);
-      nodesGraph.push(nodeGraph);
-    });
+    let centralTopic: Topic;
+    try {
+      branches.forEach((branch) => {
+        const nodeGraph = this.nodeModelToTopic(branch);
+        nodesGraph.push(nodeGraph);
+      });
 
-    // Place the focus on the Central Topic
-    const centralTopic = this.getModel().getCentralTopic();
+      // Place the focus on the Central Topic
+      centralTopic = this.getModel().getCentralTopic();
+    } catch (e) {
+      dispatcher.endBatch();
+      throw e;
+    }
     this.goToNode(centralTopic);
 
-    return this._canvas.enableQueueRender(false).then(() => {
+    const rendered = this._canvas.enableQueueRender(false).finally(() => dispatcher.endBatch());
+    return rendered.then(() => {
       // Connect relationships ...
       const relationships = mindmap.getRelationships();
       relationships.forEach((relationship) => {

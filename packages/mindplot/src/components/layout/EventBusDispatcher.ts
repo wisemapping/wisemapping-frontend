@@ -38,6 +38,13 @@ class EventBusDispatcher {
   // LayoutEventBus is module-level: keep the handlers, so that dispose() can remove them ...
   private _busHandlers: [LayoutEventBusType, BusHandler][] = [];
 
+  // A connection asks for a layout, which is run once for a run of them (see _requestLayout).
+  private _layoutPending = false;
+
+  private _flushScheduled = false;
+
+  private _batchDepth = 0;
+
   constructor() {
     this.registerBusEvents();
     this._layoutManager = null;
@@ -45,6 +52,34 @@ class EventBusDispatcher {
 
   setLayoutManager(layoutManager: LayoutManager) {
     this._layoutManager = layoutManager;
+    this._layoutPending = false;
+  }
+
+  /**
+   * Holds back the layouts that connections ask for until the matching endBatch(), which lays out
+   * once if any was asked for. Loading a map connects every topic: laying out after each one made
+   * the load quadratic. Batches nest.
+   */
+  beginBatch(): void {
+    this._batchDepth += 1;
+  }
+
+  endBatch(): void {
+    if (this._batchDepth === 0) {
+      return;
+    }
+    this._batchDepth -= 1;
+    if (this._batchDepth === 0) {
+      this.flushPendingLayout();
+    }
+  }
+
+  /** Runs the layout that connections asked for, if it has not run yet. */
+  flushPendingLayout(): void {
+    if (this._layoutPending && this._layoutManager) {
+      this._layoutPending = false;
+      this._layoutManager.layout(true);
+    }
   }
 
   registerBusEvents() {
@@ -68,6 +103,25 @@ class EventBusDispatcher {
   dispose(): void {
     this._busHandlers.forEach(([type, handler]) => LayoutEventBus.removeEvent(type, handler));
     this._busHandlers = [];
+    this._layoutPending = false;
+    this._batchDepth = 0;
+  }
+
+  /**
+   * A connection needs a layout, but not one each: Topic.connectTo fires forceLayout right after
+   * topicConnected, the commands that rebuild branches end with forceLayout, and a map load is a
+   * batch. So the layout waits for the next forceLayout or the end of the batch, and at the
+   * latest runs in a microtask, so that a connection made anywhere else is still laid out.
+   */
+  private _requestLayout(): void {
+    this._layoutPending = true;
+    if (this._batchDepth === 0 && !this._flushScheduled) {
+      this._flushScheduled = true;
+      queueMicrotask(() => {
+        this._flushScheduled = false;
+        this.flushPendingLayout();
+      });
+    }
   }
 
   private _topicResizeEvent(args: { node: INodeModel; size: SizeType }) {
@@ -99,7 +153,7 @@ class EventBusDispatcher {
     this._layoutManager!.connectNode(args.parentNode.getId(), args.childNode.getId(), order);
 
     // Recalculate layout after connection to update positions
-    this.getLayoutManager().layout(true);
+    this._requestLayout();
   }
 
   getLayoutManager(): LayoutManager {
@@ -147,6 +201,8 @@ class EventBusDispatcher {
   }
 
   private _forceLayout(): void {
+    // This layout includes any a connection asked for ...
+    this._layoutPending = false;
     this.getLayoutManager().layout(true);
   }
 }
