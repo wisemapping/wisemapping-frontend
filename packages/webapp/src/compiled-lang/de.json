@@ -1,4 +1,24 @@
 {
+  "account.delete-challenge": [
+    {
+      "type": 0,
+      "value": "MEIN KONTO LÖSCHEN"
+    }
+  ],
+  "account.delete-challenge-error": [
+    {
+      "type": 0,
+      "value": "Bitte geben Sie „"
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "“ ein, um die Löschung des Kontos zu bestätigen."
+    }
+  ],
   "account.delete-confirm": [
     {
       "type": 0,
@@ -8,7 +28,29 @@
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
-      "value": "Bitte geben Sie MEIN KONTO LÖSCHEN zur Bestätigung ein:"
+      "value": "Bitte geben Sie "
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": " zur Bestätigung ein:"
+    }
+  ],
+  "account.delete-confirmation-label": [
+    {
+      "type": 0,
+      "value": "Geben Sie „"
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "“ zur Bestätigung ein"
     }
   ],
   "account.delete-confirmation-title": [

@@ -64,7 +64,8 @@ const defaultModel: AccountInfoModel = { firstname: '', lastname: '', email: '' 
 const defaultPasswordModel: ChangePasswordModel = { password: '', retryPassword: '' };
 
 // The phrase the user types to confirm deleting the account. The form submit and the
-// confirm button both check it, and the instruction above the field shows it.
+// confirm button both check it, and the instruction, the field label and the error show it
+// through {challengePhrase}: every locale translates it once, so what is shown is what is checked.
 const messages = defineMessages({
   deleteChallenge: { id: 'account.delete-challenge', defaultMessage: 'DELETE MY ACCOUNT' },
 });
@@ -513,7 +514,8 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
                       <FormattedMessage
                         id="account.delete-confirmation-instruction"
-                        defaultMessage="Please type DELETE MY ACCOUNT to confirm:"
+                        defaultMessage="Please type {challengePhrase} to confirm:"
+                        values={{ challengePhrase: deleteChallenge }}
                       />
                     </Typography>
                   </Alert>
@@ -521,10 +523,13 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                   <Input
                     name="deleteConfirmation"
                     type="text"
-                    label={intl.formatMessage({
-                      id: 'account.delete-confirmation-label',
-                      defaultMessage: 'Type "DELETE MY ACCOUNT" to confirm',
-                    })}
+                    label={intl.formatMessage(
+                      {
+                        id: 'account.delete-confirmation-label',
+                        defaultMessage: 'Type "{challengePhrase}" to confirm',
+                      },
+                      { challengePhrase: deleteChallenge },
+                    )}
                     value={deleteConfirmationText}
                     onChange={handleDeleteConfirmationChange}
                     error={error}

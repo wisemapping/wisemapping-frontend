@@ -9,10 +9,10 @@
     "defaultMessage": "Delete Account"
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+    "defaultMessage": "Please type {challengePhrase} to confirm:"
   },
   "account.delete-confirmation-label": {
-    "defaultMessage": "Type \"DELETE MY ACCOUNT\" to confirm"
+    "defaultMessage": "Type \"{challengePhrase}\" to confirm"
   },
   "account.delete-confirmation-title": {
     "defaultMessage": "Are you absolutely sure?"

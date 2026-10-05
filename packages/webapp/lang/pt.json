@@ -795,7 +795,16 @@
     "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+    "defaultMessage": "Digite {challengePhrase} para confirmar:"
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "Digite \"{challengePhrase}\" para confirmar"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "EXCLUIR MINHA CONTA"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "Digite \"{challengePhrase}\" para confirmar a exclusão da conta."
   },
   "account.delete-confirm": {
     "defaultMessage": "Delete Account"

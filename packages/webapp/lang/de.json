@@ -795,7 +795,16 @@
     "defaultMessage": "Diese Aktion kann nicht rückgängig gemacht werden. Dies wird Ihr Konto dauerhaft löschen und alle Daten von unseren Servern entfernen."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Bitte geben Sie MEIN KONTO LÖSCHEN zur Bestätigung ein:"
+    "defaultMessage": "Bitte geben Sie {challengePhrase} zur Bestätigung ein:"
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "Geben Sie „{challengePhrase}“ zur Bestätigung ein"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "MEIN KONTO LÖSCHEN"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "Bitte geben Sie „{challengePhrase}“ ein, um die Löschung des Kontos zu bestätigen."
   },
   "account.delete-confirm": {
     "defaultMessage": "Konto löschen"

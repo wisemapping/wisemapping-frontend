@@ -1,4 +1,24 @@
 {
+  "account.delete-challenge": [
+    {
+      "type": 0,
+      "value": "EXCLUIR MINHA CONTA"
+    }
+  ],
+  "account.delete-challenge-error": [
+    {
+      "type": 0,
+      "value": "Digite \""
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "\" para confirmar a exclusão da conta."
+    }
+  ],
   "account.delete-confirm": [
     {
       "type": 0,
@@ -8,7 +28,29 @@
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
-      "value": "Please type DELETE MY ACCOUNT to confirm:"
+      "value": "Digite "
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": " para confirmar:"
+    }
+  ],
+  "account.delete-confirmation-label": [
+    {
+      "type": 0,
+      "value": "Digite \""
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "\" para confirmar"
     }
   ],
   "account.delete-confirmation-title": [

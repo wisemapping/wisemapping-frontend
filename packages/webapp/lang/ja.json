@@ -795,7 +795,16 @@
     "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+    "defaultMessage": "確認のため「{challengePhrase}」と入力してください："
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "確認のため「{challengePhrase}」と入力"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "アカウントを削除"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "アカウントの削除を確認するには「{challengePhrase}」と入力してください。"
   },
   "account.delete-confirm": {
     "defaultMessage": "Delete Account"

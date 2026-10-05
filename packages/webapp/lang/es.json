@@ -795,7 +795,16 @@
     "defaultMessage": "Esta acción no se puede deshacer. Esto eliminará permanentemente tu cuenta y removerá todos los datos de nuestros servidores."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Por favor, escribe ELIMINAR MI CUENTA para confirmar:"
+    "defaultMessage": "Por favor, escribe {challengePhrase} para confirmar:"
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "Escribe \"{challengePhrase}\" para confirmar"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "ELIMINAR MI CUENTA"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "Por favor, escribe \"{challengePhrase}\" para confirmar la eliminación de la cuenta."
   },
   "account.delete-confirm": {
     "defaultMessage": "Eliminar Cuenta"

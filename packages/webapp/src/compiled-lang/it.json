@@ -1,4 +1,24 @@
 {
+  "account.delete-challenge": [
+    {
+      "type": 0,
+      "value": "ELIMINA IL MIO ACCOUNT"
+    }
+  ],
+  "account.delete-challenge-error": [
+    {
+      "type": 0,
+      "value": "Digita \""
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "\" per confermare l'eliminazione dell'account."
+    }
+  ],
   "account.delete-confirm": [
     {
       "type": 0,
@@ -8,7 +28,29 @@
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
-      "value": "Digita ELIMINA IL MIO ACCOUNT per confermare:"
+      "value": "Digita "
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": " per confermare:"
+    }
+  ],
+  "account.delete-confirmation-label": [
+    {
+      "type": 0,
+      "value": "Digita \""
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "\" per confermare"
     }
   ],
   "account.delete-confirmation-title": [

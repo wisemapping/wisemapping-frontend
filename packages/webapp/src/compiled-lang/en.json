@@ -28,13 +28,29 @@
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
-      "value": "Please type DELETE MY ACCOUNT to confirm:"
+      "value": "Please type "
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": " to confirm:"
     }
   ],
   "account.delete-confirmation-label": [
     {
       "type": 0,
-      "value": "Type \"DELETE MY ACCOUNT\" to confirm"
+      "value": "Type \""
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "\" to confirm"
     }
   ],
   "account.delete-confirmation-title": [

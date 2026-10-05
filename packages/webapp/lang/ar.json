@@ -798,7 +798,16 @@
     "defaultMessage": "لا يمكن التراجع عن هذا الإجراء. سيؤدي إلى حذف حسابك بشكل دائم وإزالة جميع البيانات من خوادمنا."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "يرجى كتابة DELETE MY ACCOUNT للتأكيد:"
+    "defaultMessage": "يرجى كتابة {challengePhrase} للتأكيد:"
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "اكتب \"{challengePhrase}\" للتأكيد"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "حذف حسابي"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "يرجى كتابة \"{challengePhrase}\" لتأكيد حذف الحساب."
   },
   "account.delete-confirm": {
     "defaultMessage": "حذف الحساب"

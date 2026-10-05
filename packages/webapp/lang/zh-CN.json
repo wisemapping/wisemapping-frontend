@@ -795,7 +795,16 @@
     "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+    "defaultMessage": "请输入 {challengePhrase} 以确认："
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "输入“{challengePhrase}”以确认"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "删除我的账户"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "请输入“{challengePhrase}”以确认删除账户。"
   },
   "account.delete-confirm": {
     "defaultMessage": "Delete Account"

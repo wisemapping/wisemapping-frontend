@@ -795,7 +795,16 @@
     "defaultMessage": "Cette action ne peut pas être annulée. Cela supprimera définitivement votre compte et supprimera toutes les données de nos serveurs."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Veuillez taper SUPPRIMER MON COMPTE pour confirmer :"
+    "defaultMessage": "Veuillez taper {challengePhrase} pour confirmer :"
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "Tapez « {challengePhrase} » pour confirmer"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "SUPPRIMER MON COMPTE"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "Veuillez taper « {challengePhrase} » pour confirmer la suppression du compte."
   },
   "account.delete-confirm": {
     "defaultMessage": "Supprimer le Compte"

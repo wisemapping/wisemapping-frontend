@@ -795,7 +795,16 @@
     "defaultMessage": "Questa azione non può essere annullata. Il tuo account verrà eliminato definitivamente e tutti i dati verranno rimossi dai nostri server."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Digita ELIMINA IL MIO ACCOUNT per confermare:"
+    "defaultMessage": "Digita {challengePhrase} per confermare:"
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "Digita \"{challengePhrase}\" per confermare"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "ELIMINA IL MIO ACCOUNT"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "Digita \"{challengePhrase}\" per confermare l'eliminazione dell'account."
   },
   "account.delete-confirm": {
     "defaultMessage": "Elimina Account"

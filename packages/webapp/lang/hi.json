@@ -795,7 +795,16 @@
     "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+    "defaultMessage": "पुष्टि करने के लिए कृपया {challengePhrase} टाइप करें:"
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "पुष्टि करने के लिए \"{challengePhrase}\" टाइप करें"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "मेरा खाता हटाएं"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "खाता हटाने की पुष्टि करने के लिए कृपया \"{challengePhrase}\" टाइप करें।"
   },
   "account.delete-confirm": {
     "defaultMessage": "Delete Account"
