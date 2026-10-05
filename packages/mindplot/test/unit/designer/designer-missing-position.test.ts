@@ -23,7 +23,6 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
 
 import { buildDesigner } from '../commands/designer-harness';
 import Designer from '../../../src/components/Designer';
-import PositionType from '../../../src/components/PositionType';
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import Mindmap from '../../../src/components/model/Mindmap';
@@ -88,9 +87,20 @@ describe('Topics without a position', () => {
 
   it('do not break zoom to fit', async () => {
     const { designer, topic } = await buildDesigner();
-    jest.spyOn(topic(5), 'getPosition').mockReturnValue(undefined as unknown as PositionType);
+    jest.spyOn(topic(5).getModel(), 'getPosition').mockReturnValue(undefined);
 
     expect(() => designer.zoomToFit()).not.toThrow();
+  });
+
+  // BL5-37: a deep link may centre on a topic the layout has not placed yet.
+  it('can be centred on: the view centres on the closest positioned ancestor', async () => {
+    const { designer, topic } = await buildDesigner();
+    jest.spyOn(topic(2).getModel(), 'getPosition').mockReturnValue(undefined);
+    const center = jest.spyOn(designer.getWorkSpace(), 'centerOnPosition');
+
+    designer.centerNode(topic(2));
+
+    expect(center).toHaveBeenCalledWith(topic(1).getPosition());
   });
 
   it('can be pasted from a clipboard map', async () => {

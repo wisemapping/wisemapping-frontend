@@ -468,8 +468,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     this.getModel()
       .getTopics()
       .forEach((topic) => {
-        // A topic without a position yet sits at the origin, as the layout places it.
-        const position = (topic.getPosition() as PositionType | undefined) ?? { x: 0, y: 0 };
+        const position = topic.getPosition();
         const size = topic.getSize();
         minX = Math.min(minX, position.x - size.width / 2);
         maxX = Math.max(maxX, position.x + size.width / 2);
@@ -1771,11 +1770,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       return;
     }
 
-    // A topic focused before the layout places it (AddTopicCommand) may have no position yet ...
-    const position = node.getPosition() as PositionType | undefined;
-    if (!position) {
-      return;
-    }
+    // A topic focused before the layout places it (AddTopicCommand) has its parent's position.
+    const position = node.getPosition();
     const size = node.getSize();
     const bounds = {
       left: position.x - size.width / 2,
