@@ -43,11 +43,8 @@ class DragTopic {
 
   private _pivot: DragPivot;
 
-  // Every workspace has its own pivot. They are built on demand, never when the module is loaded,
-  // as building one creates SVG elements ...
-  private static _lastPivot: DragPivot | null = null;
-
-  // Pivot handed to the drag topics built inside DragTopic.withPivot() ...
+  // Every workspace has its own pivot (DragTopic.init), handed to the drag topics its DragManager
+  // builds inside DragTopic.withPivot() ...
   private static _scopedPivot: DragPivot | null = null;
 
   constructor(dragShape: Group, draggedNode: NodeGraph, layoutManger: LayoutManager) {
@@ -58,14 +55,9 @@ class DragTopic {
     this._isInWorkspace = false;
     this._isCancelled = false;
     this._position = { x: 0, y: 0 };
-    this._pivot = DragTopic._scopedPivot || DragTopic._defaultPivot();
-  }
-
-  private static _defaultPivot(): DragPivot {
-    if (!DragTopic._lastPivot) {
-      DragTopic._lastPivot = new DragPivot();
-    }
-    return DragTopic._lastPivot;
+    // A drag topic built outside a DragManager gets a pivot of its own, on no workspace: no
+    // static keeps the pivot of another (possibly disposed) workspace alive.
+    this._pivot = DragTopic._scopedPivot || new DragPivot();
   }
 
   setOrder(order: number): void {
@@ -261,7 +253,6 @@ class DragTopic {
     $assert(workspace, 'workspace can not be null');
     const pivot = new DragPivot();
     workspace.append(pivot);
-    DragTopic._lastPivot = pivot;
     return pivot;
   }
 

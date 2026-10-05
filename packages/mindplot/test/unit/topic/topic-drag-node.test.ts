@@ -20,6 +20,14 @@ import DragTopic from '../../../src/components/DragTopic';
 import MainTopic from '../../../src/components/MainTopic';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import { buildTopics, stubSvgMeasurement } from './Helper';
+import { buildDesigner } from '../commands/designer-harness';
+import type DragManager from '../../../src/components/DragManager';
+import type DragPivot from '../../../src/components/DragPivot';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 const layoutManager = {
   getOrientation: () => 'horizontal',
@@ -51,5 +59,30 @@ describe('NodeGraph.createDragNode (BL-74)', () => {
     expect(() => central.createDragNode(layoutManager)).toThrow(
       'CentralTopic has no drag shape: it can not be dragged',
     );
+  });
+});
+
+// BL5-184: a drag node built outside a DragManager fell back to the pivot of the last workspace
+// built, which a static kept alive after its designer was disposed.
+describe('DragTopic pivot', () => {
+  const pivotOf = (dragNode: DragTopic): DragPivot =>
+    (dragNode as unknown as { _pivot: DragPivot })._pivot;
+
+  it('does not use the pivot of a disposed designer', async () => {
+    const { designer } = await buildDesigner();
+    const designerPivot = (
+      designer as unknown as { _dragManager: DragManager }
+    )._dragManager.getDragPivot();
+    designer.dispose();
+
+    const { mindmap } = buildTopics();
+    const floating = new MainTopic(
+      mindmap.createNode('MainTopic', 3),
+      { readOnly: false },
+      'light',
+    );
+    const dragNode = floating.createDragNode(layoutManager);
+
+    expect(pivotOf(dragNode)).not.toBe(designerPivot);
   });
 });
