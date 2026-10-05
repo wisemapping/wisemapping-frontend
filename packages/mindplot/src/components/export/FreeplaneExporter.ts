@@ -20,9 +20,7 @@ import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
 import FeatureModel from '../model/FeatureModel';
 import ContentType from '../ContentType';
 import FreemindExporter from './FreemindExporter';
-import FreeminNode from './freemind/Node';
-import Arrowlink from './freemind/Arrowlink';
-import FreeplaneArrowlink from './freeplane/FreeplaneArrowlink';
+import { FreemindArrowlink, FreemindNode } from './freemind/FreemindModel';
 
 /**
  * Freeplane maps (.mm). Freeplane reads the FreeMind format, so the FreeMind exporter writes the
@@ -48,19 +46,19 @@ class FreeplaneExporter extends FreemindExporter {
   }
 
   protected setTopicPropertiesToNode(args: {
-    freemindNode: FreeminNode;
+    freemindNode: FreemindNode;
     mindmapTopic: INodeModel;
     isRoot: boolean;
   }): void {
     super.setTopicPropertiesToNode(args);
     const { freemindNode, mindmapTopic } = args;
     if (mindmapTopic.areChildrenShrunken() && mindmapTopic.getChildren().length > 0) {
-      freemindNode.setFolded('true');
+      freemindNode.FOLDED = 'true';
     }
   }
 
   // Rich text is kept as html, with its plain text as TEXT. Freeplane keeps line breaks in TEXT.
-  protected addTextNode(freemindNode: FreeminNode, mindmapTopic: INodeModel): void {
+  protected addTextNode(freemindNode: FreemindNode, mindmapTopic: INodeModel): void {
     const text = mindmapTopic.getText();
     if (!text) {
       return;
@@ -68,11 +66,11 @@ class FreeplaneExporter extends FreemindExporter {
     if (mindmapTopic.getContentType() === ContentType.HTML) {
       const plainText = mindmapTopic.getPlainText().trim();
       if (plainText) {
-        freemindNode.setText(plainText);
+        freemindNode.TEXT = plainText;
       }
-      freemindNode.setArrowlinkOrCloudOrEdge(this.buildRichcontent(text, 'NODE', true));
+      freemindNode.children.push(this.buildRichcontent(text, 'NODE', true));
     } else {
-      freemindNode.setText(text);
+      freemindNode.TEXT = text;
     }
   }
 
@@ -110,25 +108,21 @@ class FreeplaneExporter extends FreemindExporter {
     return codePoints.length > 0 ? `emoji-${codePoints.join('-')}` : null;
   }
 
-  protected buildArrowlink(relationship: RelationshipModel, destNode: FreeminNode): Arrowlink {
-    const arrowlink = new FreeplaneArrowlink();
-    const destination = destNode.getId();
-    if (destination) {
-      arrowlink.setDestination(destination);
-    }
-    // Freeplane draws an end arrow when ENDARROW is missing, so both are always written.
-    arrowlink.setStartarrow(relationship.getStartArrow() ? 'Default' : 'None');
-    arrowlink.setEndarrow(relationship.getEndArrow() ? 'Default' : 'None');
-
+  protected buildArrowlink(
+    relationship: RelationshipModel,
+    destNode: FreemindNode,
+  ): FreemindArrowlink {
     const color = relationship.getStrokeColor();
-    if (color) {
-      arrowlink.setColor(this.rgbToHex(color));
-    }
-    const dash = FreeplaneExporter.DASHES[relationship.getStrokeStyle()];
-    if (dash) {
-      arrowlink.setDash(dash);
-    }
-    return arrowlink;
+    return {
+      kind: 'arrowlink',
+      DESTINATION: destNode.ID,
+      // Freeplane draws an end arrow when ENDARROW is missing, so both are always written.
+      STARTARROW: relationship.getStartArrow() ? 'Default' : 'None',
+      ENDARROW: relationship.getEndArrow() ? 'Default' : 'None',
+      COLOR: color ? this.rgbToHex(color) : undefined,
+      // Freeplane arrowlinks also have a dash pattern, its lengths separated by spaces.
+      DASH: FreeplaneExporter.DASHES[relationship.getStrokeStyle()],
+    };
   }
 }
 

@@ -17,12 +17,18 @@
  */
 
 import { describe, expect, jest, test } from '@jest/globals';
-import FreemindMap from '../../../src/components/export/freemind/Map';
-import FreemindNode, { Choise } from '../../../src/components/export/freemind/Node';
+import {
+  createFreemindNode,
+  FreemindElement,
+} from '../../../src/components/export/freemind/FreemindModel';
+import {
+  freemindMapToXml,
+  loadFreemindMap,
+} from '../../../src/components/export/freemind/FreemindXml';
 
 const roundTrip = (mm: string): Document => {
   const dom = new DOMParser().parseFromString(mm, 'text/xml');
-  const xml = new FreemindMap().loadFromDom(dom).toXml();
+  const xml = freemindMapToXml(loadFreemindMap(dom));
   return new DOMParser().parseFromString(new XMLSerializer().serializeToString(xml), 'text/xml');
 };
 
@@ -172,10 +178,10 @@ describe('FreemindMap', () => {
       </map>`,
       'text/xml',
     );
-    const map = new FreemindMap().loadFromDom(dom);
+    const map = loadFreemindMap(dom);
     const appendChild = jest.spyOn(Node.prototype, 'appendChild');
     try {
-      const xml = map.toXml();
+      const xml = freemindMapToXml(map);
 
       const appended = appendChild.mock.calls.map(([child]) => (child as Element).tagName);
       expect(appended.sort()).toEqual(['edge', 'icon', 'map', 'node', 'node', 'node'].sort());
@@ -186,19 +192,13 @@ describe('FreemindMap', () => {
   });
 
   test('skips children of an unknown type when writing the XML', () => {
-    const root = new FreemindNode();
-    root.setText('Root');
-    const child = new FreemindNode();
-    child.setText('Child');
-    // A plain JavaScript object that none of the FreeMind element classes match.
-    child.setArrowlinkOrCloudOrEdge({} as unknown as Choise);
-    root.setArrowlinkOrCloudOrEdge(child);
-    root.setArrowlinkOrCloudOrEdge({} as unknown as Choise);
-    const map = new FreemindMap();
-    map.setVesion('1.0.1');
-    map.setNode(root);
+    const root = { ...createFreemindNode(), TEXT: 'Root' };
+    const child = { ...createFreemindNode(), TEXT: 'Child' };
+    // A plain JavaScript object of none of the FreeMind element kinds.
+    child.children.push({ kind: 'unknown' } as unknown as FreemindElement);
+    root.children.push(child, {} as unknown as FreemindElement);
 
-    const xml = map.toXml();
+    const xml = freemindMapToXml({ version: '1.0.1', node: root });
 
     const mainNode = xml.querySelector('map > node');
     expect(childTags(mainNode)).toEqual(['node']);
