@@ -325,3 +325,31 @@ describe('ElementPeer tree', () => {
     expect(a.peer._native.getAttribute('test-id')).toBe('node-1');
   });
 });
+
+// Typing T6: a listener gets the event type its event name implies. The assignments below are
+// checked by tsc (tsconfig.test.json); the runtime part checks what the listeners receive.
+describe('typed element events (typing T6)', () => {
+  it('a native event type gives its DOM event', () => {
+    const rect = new Rect(0);
+    const seen: number[] = [];
+    rect.addEvent('click', (event) => {
+      const mouse: MouseEvent = event;
+      seen.push(mouse.clientX);
+    });
+    rect.peer._native.dispatchEvent(new MouseEvent('click', { clientX: 12 }));
+    expect(seen).toEqual([12]);
+  });
+
+  it('a custom event of a typed map gives a CustomEvent of its detail', () => {
+    const group = new Group<{ moved: { dx: number } }>();
+    const seen: number[] = [];
+    const listener = (event: CustomEvent<{ dx: number }>, detail?: { dx: number }) => {
+      seen.push(event.detail.dx, detail?.dx ?? -1);
+    };
+    group.addEvent('moved', listener);
+    group.trigger('moved', { dx: 3 });
+    group.removeEvent('moved', listener);
+    group.trigger('moved', { dx: 4 });
+    expect(seen).toEqual([3, 3]);
+  });
+});

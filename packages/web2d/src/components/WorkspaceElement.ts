@@ -16,7 +16,12 @@
  *   limitations under the License.
  */
 
-import ElementPeer, { CustomEventMap, ElementListener, EventDetail } from './peer/svg/ElementPeer';
+import ElementPeer, {
+  CustomEventMap,
+  ElementEvent,
+  ElementListener,
+  EventDetail,
+} from './peer/svg/ElementPeer';
 import StyleAttributes, {
   collectAttributeCalls,
   toNumber,
@@ -25,6 +30,15 @@ import StyleAttributes, {
   type AttributeSetter,
 } from './StyleAttributes';
 import { isStrokeStyle, type ElementType } from './types';
+
+/**
+ * A listener of the `type` event of an element: it gets the typed event (see ElementEvent) and,
+ * for a custom event, its detail as a second argument.
+ */
+export type ElementEventListener<M extends CustomEventMap, K extends string> = (
+  event: ElementEvent<M, K>,
+  detail?: EventDetail<M, K>,
+) => void;
 
 /**
  * `M` maps the element's custom event names to their detail type (see CustomEventMap).
@@ -97,15 +111,13 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
    * The following events types are supported:
    *
    */
-  addEvent<K extends string>(
-    type: K,
-    listener: (event: Event, detail?: EventDetail<M, K>) => void,
-  ) {
+  addEvent<K extends string>(type: K, listener: ElementEventListener<M, K>): void {
+    // The DOM boundary: the peer dispatches plain Events, of the type K names.
     this.peer.addEvent(type, listener as ElementListener);
   }
 
   /** Fires a custom event of the element's map: listeners get `detail` as their second argument. */
-  trigger<K extends keyof M & string>(type: K, detail?: M[K]) {
+  trigger<K extends keyof M & string>(type: K, detail?: M[K]): void {
     this.peer.trigger(type, detail);
   }
 
@@ -131,10 +143,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
    *     This interace will be invoked passing an event as argument and
    * the 'this' referece in the function will be the element.
    */
-  removeEvent<K extends string>(
-    type: K,
-    listener: (event: Event, detail?: EventDetail<M, K>) => void,
-  ) {
+  removeEvent<K extends string>(type: K, listener: ElementEventListener<M, K>): void {
     this.peer.removeEvent(type, listener as ElementListener);
   }
 

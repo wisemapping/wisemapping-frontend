@@ -28,6 +28,22 @@ export type ElementListener = (event: Event, detail?: unknown) => void;
  */
 export type CustomEventMap = Record<string, unknown>;
 
+/**
+ * The event a listener of `type` receives: a CustomEvent for a custom event of a specific map `M`
+ * (fired with trigger()), the DOM event for a native type ('click' gets a MouseEvent), else an
+ * Event.
+ */
+export type ElementEvent<M extends CustomEventMap, K extends string> = string extends keyof M
+  ? NativeEvent<K>
+  : K extends keyof M
+    ? CustomEvent<M[K]>
+    : NativeEvent<K>;
+
+/** The DOM event of a native event type, or Event for any other type. */
+type NativeEvent<K extends string> = K extends keyof SVGElementEventMap
+  ? SVGElementEventMap[K]
+  : Event;
+
 /** The detail a listener of `type` receives: the mapped type of a custom event, else unknown. */
 export type EventDetail<M extends CustomEventMap, K extends string> = K extends keyof M
   ? M[K]
