@@ -17,21 +17,10 @@
  */
 import { $defined } from '../utils/assert';
 import PositionType from '../../PositionType';
-import {
-  TAPER_AT_DEST_CONTROL,
-  TAPER_AT_SRC_CONTROL,
-  curvePathData,
-  defaultControlPoints,
-} from '../../geometry/curve';
+import { curvePathData, defaultControlPoints } from '../../geometry/curve';
 import ElementPeer from './ElementPeer';
 
 class CurvedLinePeer extends ElementPeer {
-  /** Half the thickness of a tapered line at its source control point, as a share of the width. */
-  static readonly TAPER_AT_SRC_CONTROL = TAPER_AT_SRC_CONTROL;
-
-  /** Half the thickness of a tapered line at its target control point, as a share of the width. */
-  static readonly TAPER_AT_DEST_CONTROL = TAPER_AT_DEST_CONTROL;
-
   // Whether the user placed the control point. Only set through setIs*ControlPointCustom: the
   // setters below also take default points, which must not be reported as custom ...
   private _customControlPoint_1: boolean;

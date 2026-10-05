@@ -351,3 +351,9 @@ describe('CurvedLine', () => {
     expect(() => curve.setTo(0, Number.NaN)).toThrow();
   });
 });
+
+describe('CurvedLinePeer taper constants (BL5-147)', () => {
+  it('does not re-export the taper constants: geometry/curve owns them', () => {
+    expect(Object.keys(CurvedLinePeer).filter((key) => key.startsWith('TAPER_'))).toEqual([]);
+  });
+});
