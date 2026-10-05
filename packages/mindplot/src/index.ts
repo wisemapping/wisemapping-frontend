@@ -52,10 +52,9 @@ import { $notify } from './components/model/ToolbarNotifier';
 import XMLSerializerFactory from './components/persistence/XMLSerializerFactory';
 import type { CanvasStyleType, BackgroundPatternType } from './components/model/CanvasStyleType';
 
-// jQuery has been removed - no longer needed
-// WebComponent registration
-// The if statement is the fix for doble registration problem. Can be deleted wen webapp-mindplot dependency be dead.
-if (!customElements.get('mindplot-component')) {
+// Registers <mindplot-component>. Skipped without a DOM (a server render or a worker), and when
+// another copy of mindplot on the page already registered it.
+if (typeof window !== 'undefined' && !customElements.get('mindplot-component')) {
   customElements.define('mindplot-component', MindplotWebComponent);
 }
 

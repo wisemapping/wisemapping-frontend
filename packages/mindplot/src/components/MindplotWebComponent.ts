@@ -28,12 +28,17 @@ import { $msg } from './Messages';
 import LocalStorageManager from './LocalStorageManager';
 import ThemeFactory from './theme/ThemeFactory';
 
+// Without a DOM (a server render or a worker importing mindplot) there is no HTMLElement to
+// extend: the class then extends Object, and is never registered or instantiated.
+const HTMLElementBase: typeof HTMLElement =
+  typeof HTMLElement !== 'undefined' ? HTMLElement : (Object as unknown as typeof HTMLElement);
+
 /**
  * WebComponent implementation for the mindplot designer.
  * This component is registered as mindplot-component in customElements api. (see https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define)
  * To use it, import @wisemapping/mindplot (its entry point registers the element) and put a <mindplot-component/> tag in your DOM. To create a Designer on it, call its buildDesigner method. Maps are loaded through the loadMap method.
  */
-class MindplotWebComponent extends HTMLElement {
+class MindplotWebComponent extends HTMLElementBase {
   private _shadowRoot: ShadowRoot;
 
   private _designer: Designer | undefined;

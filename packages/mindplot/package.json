@@ -17,6 +17,11 @@
       "require": "./dist/index.cjs"
     }
   },
+  "sideEffects": [
+    "./src/index.ts",
+    "./dist/index.js",
+    "./dist/index.cjs"
+  ],
   "directories": {
     "lib": "src",
     "test": "__tests__"
