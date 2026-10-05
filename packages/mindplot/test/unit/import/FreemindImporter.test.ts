@@ -201,6 +201,33 @@ describe('FreemindImporter', () => {
     expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
   });
 
+  test('imports the rich content of a node as its plain text, one line per paragraph (BL5-114)', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" POSITION="right">
+          <richcontent TYPE="NODE">
+            <html>
+              <head></head>
+              <body>
+                <p>First   <b>bold</b>
+                  line</p>
+                <p><![CDATA[Fish & <Chips>]]></p>
+                <p></p>
+                <p>After a blank<br/>and a break</p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+      </node>
+    </map>`;
+
+    const topic = topicById(await importMap(mm), '2');
+    const text = topic.getAttribute('text') ?? topic.querySelector(':scope > text')?.textContent;
+    expect(text).toBe('First bold line\nFish & <Chips>\n\nAfter a blank\nand a break');
+    // Topic text is plain: the model does not keep a content type for it.
+    expect(topic.getAttribute('contentType')).toBeNull();
+  });
+
   test('imports the colored flags as the WiseMapping flag icons, not circles (BL5-113)', async () => {
     const mm = `<map version="1.0.1">
       <node ID="ID_1" TEXT="Root">

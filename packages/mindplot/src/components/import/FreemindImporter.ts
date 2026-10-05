@@ -40,6 +40,7 @@ import { TopicShapeType } from '../model/INodeModel';
 import ContentType from '../ContentType';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import SecureXmlParser from '../security/SecureXmlParser';
+import { htmlToPlainText } from './support/HtmlText';
 
 export default class FreemindImporter extends Importer {
   private mindmap!: Mindmap;
@@ -346,8 +347,9 @@ export default class FreemindImporter extends Importer {
             }
 
             case 'NODE': {
-              wiseParent.setText(cleanHtml);
-              // Topic text is always plain, no contentType needed
+              // Topic text is plain (the model does not persist a content type for it), so the
+              // rich text is kept as its text, one line per paragraph.
+              wiseParent.setText(htmlToPlainText(cleanHtml));
               break;
             }
 
