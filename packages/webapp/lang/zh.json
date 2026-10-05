@@ -183,7 +183,7 @@
     "defaultMessage": "X"
   },
   "footer.privacypolicy": {
-    "defaultMessage": "隱私政策"
+    "defaultMessage": "隐私政策"
   },
   "forgot.desc": {
     "defaultMessage": "我们将向您发送电子邮件以重置您的密码。"
@@ -576,19 +576,19 @@
     "defaultMessage": "切换主题"
   },
   "admin.delete-user": {
-    "defaultMessage": "刪除用戶"
+    "defaultMessage": "删除用户"
   },
   "common.maps-list": {
-    "defaultMessage": "地圖列表"
+    "defaultMessage": "地图列表"
   },
   "admin.status-clean": {
     "defaultMessage": "清除"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "允許郵件通知"
+    "defaultMessage": "允许邮件通知"
   },
   "admin.public": {
-    "defaultMessage": "公開"
+    "defaultMessage": "公开"
   },
   "common.others": {
     "defaultMessage": "其他"
@@ -597,115 +597,115 @@
     "defaultMessage": "查看 XML"
   },
   "registration.facebook.button": {
-    "defaultMessage": "使用 Facebook 註冊"
+    "defaultMessage": "使用 Facebook 注册"
   },
   "common.registration-form": {
-    "defaultMessage": "註冊表單"
+    "defaultMessage": "注册表单"
   },
   "common.first-name": {
     "defaultMessage": "名"
   },
   "admin.auth-type": {
-    "defaultMessage": "認證類型"
+    "defaultMessage": "认证类型"
   },
   "common.delete": {
-    "defaultMessage": "刪除"
+    "defaultMessage": "删除"
   },
   "admin.suspend-user": {
-    "defaultMessage": "暫停用戶"
+    "defaultMessage": "暂停用户"
   },
   "admin.suspension-status": {
-    "defaultMessage": "暫停狀態"
+    "defaultMessage": "暂停状态"
   },
   "admin.edit-user": {
-    "defaultMessage": "編輯用戶"
+    "defaultMessage": "编辑用户"
   },
   "admin.refresh": {
     "defaultMessage": "刷新"
   },
   "common.login-form": {
-    "defaultMessage": "登錄表單"
+    "defaultMessage": "登录表单"
   },
   "admin.lock-status": {
-    "defaultMessage": "鎖定狀態"
+    "defaultMessage": "锁定状态"
   },
   "common.emails": {
-    "defaultMessage": "電子郵件"
+    "defaultMessage": "电子邮件"
   },
   "admin.suspension-reason": {
-    "defaultMessage": "暫停原因"
+    "defaultMessage": "暂停原因"
   },
   "admin.suspension.abuse": {
-    "defaultMessage": "濫用"
+    "defaultMessage": "滥用"
   },
   "admin.suspension.terms-violation": {
-    "defaultMessage": "違反條款"
+    "defaultMessage": "违反条款"
   },
   "admin.suspension.security-concern": {
-    "defaultMessage": "安全問題"
+    "defaultMessage": "安全问题"
   },
   "admin.suspension.manual-review": {
-    "defaultMessage": "人工審核"
+    "defaultMessage": "人工审核"
   },
   "admin.suspension.inactivity": {
-    "defaultMessage": "不活躍"
+    "defaultMessage": "不活跃"
   },
   "admin.suspension.other": {
     "defaultMessage": "其他"
   },
   "admin.status-suspended": {
-    "defaultMessage": "已暫停"
+    "defaultMessage": "已暂停"
   },
   "label.maps-count": {
-    "defaultMessage": "{count} 個地圖"
+    "defaultMessage": "{count} 个地图"
   },
   "admin.delete": {
-    "defaultMessage": "刪除"
+    "defaultMessage": "删除"
   },
   "common.last-name": {
     "defaultMessage": "姓"
   },
   "admin.public-access": {
-    "defaultMessage": "公開訪問"
+    "defaultMessage": "公开访问"
   },
   "admin.status-active": {
-    "defaultMessage": "活躍"
+    "defaultMessage": "活跃"
   },
   "common.locale": {
-    "defaultMessage": "語言"
+    "defaultMessage": "语言"
   },
   "login.facebook.button": {
-    "defaultMessage": "使用 Facebook 登錄"
+    "defaultMessage": "使用 Facebook 登录"
   },
   "common.email": {
-    "defaultMessage": "電子郵件"
+    "defaultMessage": "电子邮件"
   },
   "admin.unsuspend-user": {
-    "defaultMessage": "恢復用戶"
+    "defaultMessage": "恢复用户"
   },
   "common.delete-tag": {
-    "defaultMessage": "刪除標籤"
+    "defaultMessage": "删除标签"
   },
   "admin.edit": {
-    "defaultMessage": "編輯"
+    "defaultMessage": "编辑"
   },
   "common.open-drawer": {
-    "defaultMessage": "打開菜單"
+    "defaultMessage": "打开菜单"
   },
   "admin.locked": {
-    "defaultMessage": "已鎖定"
+    "defaultMessage": "已锁定"
   },
   "common.settings": {
-    "defaultMessage": "設置"
+    "defaultMessage": "设置"
   },
   "common.loading": {
-    "defaultMessage": "加載中..."
+    "defaultMessage": "加载中..."
   },
   "common.retry": {
-    "defaultMessage": "重試"
+    "defaultMessage": "重试"
   },
   "admin.system.title": {
-    "defaultMessage": "系統信息"
+    "defaultMessage": "系统信息"
   },
   "admin.system.refresh": {
     "defaultMessage": "刷新"
@@ -714,7 +714,7 @@
     "defaultMessage": "刷新"
   },
   "admin.system.memory": {
-    "defaultMessage": "內存"
+    "defaultMessage": "内存"
   },
   "admin.system.db.url": {
     "defaultMessage": "URL"
@@ -726,34 +726,34 @@
     "defaultMessage": "意外错误 | WiseMapping"
   },
   "error.generic-title": {
-    "defaultMessage": "我們遇到了一個問題。"
+    "defaultMessage": "我们遇到了一个问题。"
   },
   "error.contact-support": {
-    "defaultMessage": "需要幫助？請聯絡我們：{support}"
+    "defaultMessage": "需要帮助？请联系我们：{support}"
   },
   "error.generic-message": {
-    "defaultMessage": "請稍後再試，若問題持續發生，請聯絡技術支援。"
+    "defaultMessage": "请稍后再试，若问题持续发生，请联系技术支持。"
   },
   "error.permission-denied-title": {
-    "defaultMessage": "您沒有存取此頁面的權限。"
+    "defaultMessage": "您没有访问此页面的权限。"
   },
   "error.permission-denied-message": {
-    "defaultMessage": "如果您認為應該擁有存取權限，請聯絡您的管理員。"
+    "defaultMessage": "如果您认为应该拥有访问权限，请联系您的管理员。"
   },
   "error.not-found-title": {
-    "defaultMessage": "我們找不到該頁面。"
+    "defaultMessage": "我们找不到该页面。"
   },
   "error.not-found-message": {
-    "defaultMessage": "您要尋找的頁面可能已被刪除、重新命名，或暫時無法使用。"
+    "defaultMessage": "您要寻找的页面可能已被删除、重新命名，或暂时无法使用。"
   },
   "error.map-unavailable-title": {
-    "defaultMessage": "此思維導圖不提供公開顯示。"
+    "defaultMessage": "此思维导图不提供公开显示。"
   },
   "error.map-unavailable-message": {
-    "defaultMessage": "此思維導圖不提供公開顯示，因為它違反了我們的網站政策。如果您需要進一步協助，請聯繫 support@wisemapping.com。"
+    "defaultMessage": "此思维导图不提供公开显示，因为它违反了我们的网站政策。如果您需要进一步协助，请联系 support@wisemapping.com。"
   },
   "error.map-title-required": {
-    "defaultMessage": "地圖標題是必需的，不能為空"
+    "defaultMessage": "地图标题是必需的，不能为空"
   },
   "accountinfo.personal-details": {
     "defaultMessage": "Personal Details"
@@ -843,7 +843,7 @@
     "defaultMessage": "Close"
   },
   "validation.title-required": {
-    "defaultMessage": "標題是必需的"
+    "defaultMessage": "标题是必需的"
   },
   "login.redirecting": {
     "defaultMessage": "重定向中..."
