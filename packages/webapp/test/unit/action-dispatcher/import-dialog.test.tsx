@@ -209,6 +209,97 @@ describe('ImportDialog', () => {
     });
   });
 
+  describe('the title and description given to the importer', () => {
+    const importedWith = () => {
+      const calls: [string, string | undefined][] = [];
+      mockCreateImporter.mockImplementation(() => ({
+        import: (title: string, description?: string) => {
+          calls.push([title, description]);
+          return Promise.resolve(`<map name="${title}"/>`);
+        },
+      }));
+      return calls;
+    };
+
+    test('a second file suggests its own name, not the first one', async () => {
+      const calls = importedWith();
+      renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+
+      selectFile(new File(['<map/>'], 'alpha.wxml', { type: 'text/xml' }));
+      await waitFor(() => expect(screen.getByLabelText(/Name/)).toHaveProperty('value', 'alpha'));
+      selectFile(new File(['<map/>'], 'beta.wxml', { type: 'text/xml' }));
+      await waitFor(() => expect(calls).toHaveLength(2));
+
+      expect(calls[1][0]).toBe('beta');
+      expect(screen.getByLabelText(/Name/)).toHaveProperty('value', 'beta');
+    });
+
+    test('a title the user typed is kept for every file', async () => {
+      const calls = importedWith();
+      renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+
+      fireEvent.change(screen.getByLabelText(/Name/), {
+        target: { name: 'title', value: 'My map' },
+      });
+      selectFile(new File(['<map/>'], 'alpha.wxml', { type: 'text/xml' }));
+      await waitFor(() => expect(calls).toHaveLength(1));
+      selectFile(new File(['<map/>'], 'beta.wxml', { type: 'text/xml' }));
+      await waitFor(() => expect(calls).toHaveLength(2));
+
+      expect(calls).toEqual([
+        ['My map', ''],
+        ['My map', ''],
+      ]);
+      expect(screen.getByLabelText(/Name/)).toHaveProperty('value', 'My map');
+    });
+
+    test('a title typed after a suggestion is kept for the next file', async () => {
+      const calls = importedWith();
+      renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+
+      selectFile(new File(['<map/>'], 'alpha.wxml', { type: 'text/xml' }));
+      await waitFor(() => expect(screen.getByLabelText(/Name/)).toHaveProperty('value', 'alpha'));
+      fireEvent.change(screen.getByLabelText(/Name/), {
+        target: { name: 'title', value: 'My map' },
+      });
+      selectFile(new File(['<map/>'], 'beta.wxml', { type: 'text/xml' }));
+      await waitFor(() => expect(calls).toHaveLength(2));
+
+      expect(calls[1][0]).toBe('My map');
+      expect(screen.getByLabelText(/Name/)).toHaveProperty('value', 'My map');
+    });
+
+    test('a description typed before the pick is passed to the importer', async () => {
+      const calls = importedWith();
+      renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+
+      fireEvent.change(screen.getByLabelText(/Description/), {
+        target: { name: 'description', value: 'My notes' },
+      });
+      selectFile(new File(['<map/>'], 'alpha.wxml', { type: 'text/xml' }));
+      await waitFor(() => expect(calls).toHaveLength(1));
+
+      expect(calls[0]).toEqual(['alpha', 'My notes']);
+    });
+
+    test('what is typed while the file is read is passed to the importer', async () => {
+      const calls = importedWith();
+      renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+
+      // The file is read asynchronously: these land before it has been read.
+      selectFile(new File(['<map/>'], 'alpha.wxml', { type: 'text/xml' }));
+      fireEvent.change(screen.getByLabelText(/Name/), {
+        target: { name: 'title', value: 'My map' },
+      });
+      fireEvent.change(screen.getByLabelText(/Description/), {
+        target: { name: 'description', value: 'My notes' },
+      });
+      await waitFor(() => expect(calls).toHaveLength(1));
+
+      expect(calls[0]).toEqual(['My map', 'My notes']);
+    });
+  });
+
   test('a change with no file picked is ignored', async () => {
     const errors: unknown[] = [];
     const onError = (event: ErrorEvent) => {

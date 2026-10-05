@@ -20,7 +20,7 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import { ImportError, Importer, TextImporterFactory } from '@wisemapping/editor';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation } from '@tanstack/react-query';
@@ -53,6 +53,14 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
   const [errorFile, setErrorFile] = React.useState<ErrorFile>({ error: false, message: '' });
   // Counts the files picked: a read or import started for an earlier file is stale and ignored.
   const fileRequest = React.useRef(0);
+  // A file is read asynchronously: its read needs what the user has typed by then, not what the
+  // form held when the file was picked.
+  const latestModel = React.useRef(model);
+  useEffect(() => {
+    latestModel.current = model;
+  }, [model]);
+  // The title last suggested from a file name: the next file replaces it, a typed title is kept.
+  const suggestedTitle = React.useRef('');
   const intl = useIntl();
 
   const mutation = useMutation<number, ErrorInfo, ImportModel>({
@@ -133,10 +141,16 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         }
         setErrorFile({ error: false, message: '' });
 
-        // Forget the previous file and suggest its name as the title. The updates are functional
-        // (never a mutation of `model`) so that what the user types meanwhile is kept.
-        const title = model.title || file.name.split('.')[0];
-        setModel((current) => ({ ...current, title: current.title || title, content: undefined }));
+        // Forget the previous file and suggest its name as the title, unless the user typed one.
+        // The updates are functional (never a mutation of `model`) so that what the user types
+        // meanwhile is kept.
+        const { title: typedTitle, description } = latestModel.current;
+        const keepTitle = typedTitle !== '' && typedTitle !== suggestedTitle.current;
+        const title = keepTitle ? typedTitle : file.name.split('.')[0];
+        if (!keepTitle) {
+          suggestedTitle.current = title;
+        }
+        setModel((current) => ({ ...current, title, content: undefined }));
 
         const extensionAccept = ['wxml', 'mm', 'mmx', 'xmind', 'mmap', 'opml'];
 
@@ -171,7 +185,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
 
           // A file that can not be imported rejects with an ImportError: show it, never save it.
           importer
-            .import(title, model.description)
+            .import(title, description)
             .then((content) => {
               if (!isStale()) {
                 setModel((current) => ({ ...current, content }));
