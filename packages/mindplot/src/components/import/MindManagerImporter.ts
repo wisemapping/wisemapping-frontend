@@ -25,6 +25,7 @@ import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import { StrokeStyle } from '../model/RelationshipModel';
+import { TopicShapeType } from '../model/INodeModel';
 import ContentType from '../ContentType';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import { decodeUtf8 } from './support/Utf8Decoder';
@@ -41,6 +42,7 @@ interface MindManagerTopic {
   icons: string[];
   fillColor?: string;
   lineColor?: string;
+  shape?: TopicShapeType;
   // In millimeters. For a floating topic, its position from the central topic. For a subtopic, a
   // layout hint: CX is the distance from the parent, its sign the side; CY is not a position.
   offset?: { x: number; y: number };
@@ -312,7 +314,8 @@ class MindManagerImporter extends Importer {
     node.setText(topic.text);
     node.setPosition(position.x, position.y);
     node.setOrder(order);
-    node.setShapeType('line');
+    // Without a StyleGroup, topics are lines.
+    node.setShapeType(topic.shape ?? 'line');
     this.addFeatures(node, topic);
 
     // Generate child topics recursively. They are on the side of their parent.
@@ -438,27 +441,92 @@ class MindManagerImporter extends Importer {
   }
 
   /**
+   * The style defaults of a topic in the StyleGroup: the ${kind}TopicDefaultsGroup for a topic
+   * at depth 0 (the central topic, a floating topic or a callout), and the
+   * ${kind}SubTopicDefaultsGroup of the Level (depth - 1) for its subtopics. The deepest level
+   * that is defined applies below it.
+   */
+  private defaultsGroup(kind: TopicKind, depth: number): Element | null {
+    if (!this.styleGroup) {
+      return null;
+    }
+    if (depth === 0) {
+      return this.findChildByTagName(this.styleGroup, `${kind}TopicDefaultsGroup`);
+    }
+    const levels = this.findChildrenByTagName(this.styleGroup, `${kind}SubTopicDefaultsGroup`)
+      .map((group) => ({ group, level: Number(group.getAttribute('Level')) }))
+      .filter(({ level }) => Number.isInteger(level) && level <= depth - 1)
+      .sort((a, b) => b.level - a.level);
+    return levels.length > 0 ? levels[0].group : null;
+  }
+
+  /**
    * MindManager does not write the text of a topic that keeps the default one of its level, for
-   * example "Main Topic". The default is the PlainText of the DefaultText of the StyleGroup:
-   * RootTopicDefaultsGroup for the central topic, and the RootSubTopicDefaultsGroup of the Level
-   * (depth - 1) for its subtopics. The deepest level that is defined applies below it.
+   * example "Main Topic". The default is the PlainText of the DefaultText of the defaults group
+   * of the topic.
    */
   private defaultText(kind: TopicKind, depth: number): string | undefined {
-    if (!this.styleGroup) {
-      return undefined;
-    }
-    let defaults: Element | null;
-    if (depth === 0) {
-      defaults = this.findChildByTagName(this.styleGroup, `${kind}TopicDefaultsGroup`);
-    } else {
-      const levels = this.findChildrenByTagName(this.styleGroup, `${kind}SubTopicDefaultsGroup`)
-        .map((group) => ({ group, level: Number(group.getAttribute('Level')) }))
-        .filter(({ level }) => Number.isInteger(level) && level <= depth - 1)
-        .sort((a, b) => b.level - a.level);
-      defaults = levels.length > 0 ? levels[0].group : null;
-    }
+    const defaults = this.defaultsGroup(kind, depth);
     const text = defaults && this.findChildByTagName(defaults, 'DefaultText');
     return text?.getAttribute('PlainText') || undefined;
+  }
+
+  /**
+   * The shape of a topic: its own SubTopicShape, or the DefaultSubTopicShape of the defaults group
+   * of its level. Floating topics and callouts have a LabelFloatingTopicShape or a
+   * CalloutFloatingTopicShape, by default the one of the RootTopicDefaultsGroup. Undefined for the
+   * central topic, which keeps the shape of the theme, or when there is no shape that maps.
+   */
+  private topicShape(
+    topicElement: Element,
+    kind: TopicKind,
+    depth: number,
+  ): TopicShapeType | undefined {
+    if (depth === 0 && kind === 'Root') {
+      return undefined;
+    }
+    const name = depth === 0 ? `${kind}FloatingTopicShape` : 'SubTopicShape';
+    const defaults = depth === 0 ? this.defaultsGroup('Root', 0) : this.defaultsGroup(kind, depth);
+    const own = this.findChildByTagName(topicElement, name)?.getAttribute(name);
+    const byDefault = defaults && this.findChildByTagName(defaults, `Default${name}`);
+    return (
+      MindManagerImporter.toShapeType(own) ??
+      MindManagerImporter.toShapeType(byDefault?.getAttribute(name))
+    );
+  }
+
+  // The shape of a SubTopicShape, LabelFloatingTopicShape or CalloutFloatingTopicShape
+  // (urn:mindjet:RoundedRectangle, ...), undefined if it is not one.
+  private static toShapeType(shape: string | null | undefined): TopicShapeType | undefined {
+    switch (shape?.replace(MINDJET_URN, '')) {
+      case 'None':
+        return 'none';
+      case 'Line':
+      case 'CalloutLine':
+        return 'line';
+      case 'RoundedRectangle':
+      case 'RoundedRectangleBalloon':
+      case 'Capsule':
+        return 'rounded rectangle';
+      case 'Circle':
+      case 'Oval':
+      case 'OvalBalloon':
+      case 'ThoughtBubble':
+        return 'elipse';
+      case 'Rectangle':
+      case 'RectangleBalloon':
+      case 'Highlight':
+      case 'Hexagon':
+      case 'Octagon':
+      case 'Diamond':
+      case 'Data':
+      case 'Database':
+      case 'PredefinedProcess':
+      case 'Document':
+        return 'rectangle';
+      default:
+        return undefined;
+    }
   }
 
   private findElementByTagName(parent: Element | Document, tagName: string): Element | null {
@@ -507,6 +575,7 @@ class MindManagerImporter extends Importer {
       id,
       text,
       icons: [],
+      shape: this.topicShape(topicElement, kind, depth),
     };
 
     // Parse notes

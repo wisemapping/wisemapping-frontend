@@ -1,11 +1,11 @@
 <map name="mindmanager-real-blumind-mm8" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Central Topic" id="1">
         <eicon id="🟢"/>
-        <topic position="200,0" order="0" text="Main Topic" shape="line" id="2">
+        <topic position="200,0" order="0" text="Main Topic" shape="rounded rectangle" id="2">
             <note contentType="html"><![CDATA[<p>Hello, World</p>]]></note>
         </topic>
-        <topic position="300,75" order="2" text="Main Topic" shape="line" id="3"/>
-        <topic position="-200,0" order="1" text="Main Topic" shape="line" id="4">
+        <topic position="300,75" order="2" text="Main Topic" shape="rounded rectangle" id="3"/>
+        <topic position="-200,0" order="1" text="Main Topic" shape="rounded rectangle" id="4">
             <eicon id="😃"/>
         </topic>
     </topic>

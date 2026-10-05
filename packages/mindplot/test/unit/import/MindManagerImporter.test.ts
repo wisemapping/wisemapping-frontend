@@ -503,3 +503,57 @@ describe('MindManagerImporter default topic texts', () => {
     expect(sub.getChildren()[0].getText()).toBe('Subtopic');
   });
 });
+
+describe('MindManagerImporter topic shapes', () => {
+  const styleGroup = `<ap:StyleGroup>
+      <ap:RootTopicDefaultsGroup>
+        <ap:DefaultSubTopicShape SubTopicShape="urn:mindjet:Hexagon"/>
+        <ap:DefaultLabelFloatingTopicShape LabelFloatingTopicShape="urn:mindjet:None"/>
+        <ap:DefaultCalloutFloatingTopicShape CalloutFloatingTopicShape="urn:mindjet:RoundedRectangleBalloon"/>
+      </ap:RootTopicDefaultsGroup>
+      <ap:RootSubTopicDefaultsGroup Level="0"><ap:DefaultSubTopicShape SubTopicShape="urn:mindjet:RoundedRectangle"/></ap:RootSubTopicDefaultsGroup>
+      <ap:RootSubTopicDefaultsGroup Level="1"><ap:DefaultSubTopicShape SubTopicShape="urn:mindjet:Rectangle"/></ap:RootSubTopicDefaultsGroup>
+      <ap:RootSubTopicDefaultsGroup Level="2"><ap:DefaultSubTopicShape SubTopicShape="urn:mindjet:Line"/></ap:RootSubTopicDefaultsGroup>
+    </ap:StyleGroup>`;
+  const topics = `
+    <ap:Topic OId="main"><ap:Text PlainText="Main"/>
+      <ap:SubTopics>
+        <ap:Topic OId="sub"><ap:Text PlainText="Sub"/>
+          <ap:SubTopics><ap:Topic OId="deep"><ap:Text PlainText="Deep"/></ap:Topic></ap:SubTopics>
+        </ap:Topic>
+        <ap:Topic OId="own"><ap:Text PlainText="Own"/><ap:SubTopicShape SubTopicShape="urn:mindjet:Oval"/></ap:Topic>
+      </ap:SubTopics>
+      <ap:FloatingTopics><ap:Topic OId="callout"><ap:Text PlainText="Callout"/></ap:Topic></ap:FloatingTopics>
+    </ap:Topic>`;
+  const withFloating = (rest: string): string =>
+    schemaMap(topics, rest).replace(
+      '<ap:Text PlainText="Central"/>',
+      '<ap:Text PlainText="Central"/><ap:FloatingTopics><ap:Topic OId="label"><ap:Text PlainText="Label"/></ap:Topic></ap:FloatingTopics>',
+    );
+
+  test('each level takes the DefaultSubTopicShape of the StyleGroup, unless it has its own', async () => {
+    const mindmap = loadMindmap(
+      await new MindManagerImporter(withFloating(styleGroup)).import('test'),
+    );
+    const shape = (text: string) => findByText(mindmap, text).getShapeType();
+
+    expect(shape('Main')).toBe('rounded rectangle');
+    expect(shape('Sub')).toBe('rectangle');
+    expect(shape('Deep')).toBe('line');
+    expect(shape('Own')).toBe('elipse');
+    // The floating topics and callouts take the shapes of the RootTopicDefaultsGroup.
+    expect(shape('Label')).toBe('none');
+    expect(shape('Callout')).toBe('rounded rectangle');
+    // The central topic keeps the shape of the theme.
+    expect(mindmap.getCentralTopic().getShapeType()).toBeUndefined();
+  });
+
+  test('without a StyleGroup, the topics are lines', async () => {
+    const mindmap = loadMindmap(await new MindManagerImporter(withFloating('')).import('test'));
+
+    ['Main', 'Sub', 'Deep', 'Label', 'Callout'].forEach((text) =>
+      expect(findByText(mindmap, text).getShapeType()).toBe('line'),
+    );
+    expect(findByText(mindmap, 'Own').getShapeType()).toBe('elipse');
+  });
+});
