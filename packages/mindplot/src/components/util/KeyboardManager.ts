@@ -143,7 +143,12 @@ class KeyboardManager {
    * Check if the user is currently typing in an input field or contentEditable element
    */
   private static isTypingInInputField(): boolean {
-    const { activeElement } = document;
+    // With the focus inside a shadow root, the document's active element is its host: go down to
+    // the element that has it.
+    let { activeElement } = document;
+    while (activeElement?.shadowRoot?.activeElement) {
+      activeElement = activeElement.shadowRoot.activeElement;
+    }
 
     if (!activeElement) {
       return false;
