@@ -27,6 +27,7 @@ jest.mock('@wisemapping/web2d', () => ({
     addItAsChildTo: jest.fn(),
     getCoordOrigin: jest.fn().mockReturnValue({ x: 0, y: 0 }),
     setCoordOrigin: mockSetCoordOrigin,
+    setSize: jest.fn(),
     setCoordSize: jest.fn(),
     getCoordSize: jest.fn().mockReturnValue({ width: 1000, height: 800 }),
     getSVGElement: jest.fn(),

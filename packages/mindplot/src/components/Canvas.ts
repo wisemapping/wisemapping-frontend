@@ -246,12 +246,9 @@ class Canvas {
     const containerHeight = this._screenManager.getContainerHeight();
     const newVisibleAreaSize = { width: containerWidth, height: containerHeight };
 
-    // - svg must fit container size
-    const svgElement = this._screenManager.findInContainer('svg');
-    if (svgElement) {
-      svgElement.setAttribute('width', containerWidth.toString());
-      svgElement.setAttribute('height', containerHeight.toString());
-    }
+    // - svg must fit container size. Go through the workspace so its size stays in sync: the inline
+    // editor's font size is scaled by it (W-HTMLFONT).
+    workspace.setSize(`${containerWidth}px`, `${containerHeight}px`);
     // - svg viewPort must fit container size with zoom adjustment
     const newCoordWidth = containerWidth * zoom;
     const newCoordHeight = containerHeight * zoom;
