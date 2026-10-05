@@ -119,3 +119,21 @@ describe('Topic.setNoteValue', () => {
     });
   });
 });
+
+// BL5-38: clearing a value the topic doesn't have needs no dispatcher, so it must not
+// fail when there is none (no live designer).
+describe('Clearing a missing link or note without an ActionDispatcher', () => {
+  beforeEach(() => {
+    ActionDispatcher.clearInstance(dispatcher as unknown as ActionDispatcher);
+  });
+
+  it('setLinkValue(undefined) does nothing', () => {
+    const { child } = buildTopics();
+    expect(() => child.setLinkValue(undefined)).not.toThrow();
+  });
+
+  it('setNoteValue(undefined) does nothing', () => {
+    const { child } = buildTopics();
+    expect(() => child.setNoteValue(undefined)).not.toThrow();
+  });
+});

@@ -872,22 +872,23 @@ abstract class Topic extends NodeGraph {
   setNoteValue(value: string | undefined): void {
     const topicId = this.getId();
     const model = this.getModel();
-    const dispatcher = ActionDispatcher.getInstance();
+    // Fetched only when there is something to dispatch: clearing a missing note needs none.
+    const dispatcher = () => ActionDispatcher.getInstance();
     const notes = model.findFeatureByType('note');
 
     if (!$defined(value)) {
       // Nothing to clear when the topic has no note ...
       if (notes.length > 0) {
         const featureId = notes[0].getId();
-        dispatcher.removeFeatureFromTopic(topicId, featureId);
+        dispatcher().removeFeatureFromTopic(topicId, featureId);
       }
     } else if (notes.length > 0) {
-      dispatcher.changeFeatureToTopic(topicId, notes[0].getId(), {
+      dispatcher().changeFeatureToTopic(topicId, notes[0].getId(), {
         text: value,
         contentType: 'html', // Rich text editor always saves HTML
       });
     } else {
-      dispatcher.addFeatureToTopic([topicId], 'note', {
+      dispatcher().addFeatureToTopic([topicId], 'note', {
         text: value,
         contentType: 'html', // Rich text editor always saves HTML
       });
@@ -908,21 +909,22 @@ abstract class Topic extends NodeGraph {
   setLinkValue(value: string | undefined) {
     const topicId = this.getId();
     const model = this.getModel();
-    const dispatcher = ActionDispatcher.getInstance();
+    // Fetched only when there is something to dispatch: clearing a missing link needs none.
+    const dispatcher = () => ActionDispatcher.getInstance();
     const links = model.findFeatureByType('link');
 
     if (!$defined(value)) {
       // Nothing to clear when the topic has no link ...
       if (links.length > 0) {
         const featureId = links[0].getId();
-        dispatcher.removeFeatureFromTopic(topicId, featureId);
+        dispatcher().removeFeatureFromTopic(topicId, featureId);
       }
     } else if (links.length > 0) {
-      dispatcher.changeFeatureToTopic(topicId, links[0].getId(), {
+      dispatcher().changeFeatureToTopic(topicId, links[0].getId(), {
         url: value,
       });
     } else {
-      dispatcher.addFeatureToTopic([topicId], 'link', {
+      dispatcher().addFeatureToTopic([topicId], 'link', {
         url: value,
       });
     }
