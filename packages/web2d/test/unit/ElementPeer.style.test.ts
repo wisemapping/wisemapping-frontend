@@ -34,27 +34,20 @@ describe('ElementPeer stroke', () => {
   });
 
   it.each([
-    ['dash', '5 5', ''],
+    ['dash', '5 5', null],
     ['dot', '1 8', 'round'],
-    ['dashdot', '10 5 2', 'round'],
-    ['longdash', '10 5 2', 'round'],
-  ])('characterization: style %s uses dash array "%s"', (style, dash, cap) => {
+    ['dashdot', '10 5 1 5', 'round'],
+    ['longdash', '10 5', 'round'],
+  ])('style %s uses dash array "%s"', (style, dash, cap) => {
     const p = peer();
+    p.setStroke(1, 'dot');
     p.setStroke(1, style);
     expect(attr(p, 'stroke-dasharray')).toBe(dash);
     expect(attr(p, 'stroke-linecap')).toBe(cap);
   });
 
-  it('characterization: solid writes empty dash array and line cap', () => {
-    const p = peer();
-    p.setStroke(1, 'dash');
-    p.setStroke(1, 'solid');
-    expect(attr(p, 'stroke-dasharray')).toBe('');
-    expect(attr(p, 'stroke-linecap')).toBe('');
-  });
-
-  // Section 3.4: 'solid' writes invalid empty values instead of removing the attributes.
-  it.failing('solid removes the dash array and line cap', () => {
+  // Section 3.4: 'solid' wrote invalid empty values instead of removing the attributes.
+  it('solid removes the dash array and line cap', () => {
     const p = peer();
     p.setStroke(1, 'dash');
     p.setStroke(1, 'solid');
@@ -62,8 +55,8 @@ describe('ElementPeer stroke', () => {
     expect(p._native.hasAttribute('stroke-linecap')).toBe(false);
   });
 
-  // W-DASH: dashdot and longdash are both "10 5 2".
-  it.failing('W-DASH: dashdot and longdash differ', () => {
+  // W-DASH: dashdot and longdash were both "10 5 2".
+  it('W-DASH: dashdot and longdash differ', () => {
     const a = peer();
     const b = peer();
     a.setStroke(1, 'dashdot');
@@ -71,8 +64,8 @@ describe('ElementPeer stroke', () => {
     expect(attr(a, 'stroke-dasharray')).not.toBe(attr(b, 'stroke-dasharray'));
   });
 
-  // W-DASH: there are two dash tables, so the same style renders differently per line type.
-  it.failing('W-DASH: the same style gives the same dash array on every element type', () => {
+  // W-DASH: there were two dash tables, so the same style rendered differently per line type.
+  it('W-DASH: the same style gives the same dash array on every element type', () => {
     ['dash', 'dot', 'dashdot', 'longdash'].forEach((style) => {
       const rect = peer();
       const heartbeat = new HeartbeatLinePeer();
@@ -87,10 +80,20 @@ describe('ElementPeer stroke', () => {
     expect(() => new Rect(0).setStroke(1, 'wavy')).toThrow("Unsupported stroke style: 'wavy'");
   });
 
-  it('characterization: getStroke returns strings', () => {
+  it('getStroke returns numbers, like getFill', () => {
     const p = peer();
     p.setStroke(2, 'dot', 'red', 0.5);
-    expect(p.getStroke()).toEqual({ color: 'red', style: 'dot', opacity: '0.5', width: '2' });
+    expect(p.getStroke()).toEqual({ color: 'red', style: 'dot', opacity: 0.5, width: 2 });
+  });
+
+  it('getStroke defaults: no width, opacity 1', () => {
+    expect(peer().getStroke()).toEqual({ color: null, style: null, opacity: 1, width: null });
+  });
+
+  it('the dash table getter returns a copy', () => {
+    const table = ElementPeer.stokeStyleToStrokDasharray();
+    table.dash.push(99);
+    expect(ElementPeer.stokeStyleToStrokDasharray().dash).toEqual([5, 5]);
   });
 
   it('updateStrokeStyle re-applies a non-solid style once attached', () => {
@@ -120,8 +123,8 @@ describe('ElementPeer fill', () => {
     expect(attr(p, 'fill')).toBe('green');
   });
 
-  // Section 3.4: getFill reports opacity 0 when fill-opacity is unset.
-  it.failing('getFill defaults the opacity to 1', () => {
+  // Section 3.4: getFill reported opacity 0 when fill-opacity was unset.
+  it('getFill defaults the opacity to 1', () => {
     const p = peer();
     p.setFill('green');
     expect(p.getFill()).toEqual({ color: 'green', opacity: 1 });
@@ -129,21 +132,38 @@ describe('ElementPeer fill', () => {
 });
 
 describe('ElementPeer size', () => {
-  it('writes rounded width and height, keeps the exact cache', () => {
+  it('writes width and height with at most 2 decimals, keeps the exact cache', () => {
     const p = peer();
-    p.setSize(10.6, 20.2);
-    expect(attr(p, 'width')).toBe('11');
-    expect(attr(p, 'height')).toBe('20');
-    expect(p.getSize()).toEqual({ width: 10.6, height: 20.2 });
+    p.setSize(10.6, 20.256);
+    expect(attr(p, 'width')).toBe('10.6');
+    expect(attr(p, 'height')).toBe('20.26');
+    expect(p.getSize()).toEqual({ width: 10.6, height: 20.256 });
+    p.setSize(-0.001, 40);
+    expect(attr(p, 'width')).toBe('0');
+    expect(attr(p, 'height')).toBe('40');
   });
 });
 
 describe('opacity and visibility', () => {
-  it('WorkspaceElement.setOpacity writes fill-opacity and stroke-opacity', () => {
+  it('WorkspaceElement.setOpacity sets the element opacity, not the fill and stroke ones', () => {
     const rect = new Rect(0);
     rect.setOpacity(0.25);
-    expect(attr(rect.peer, 'fill-opacity')).toBe('0.25');
-    expect(attr(rect.peer, 'stroke-opacity')).toBe('0.25');
+    expect(rect.peer._native.style.opacity).toBe('0.25');
+    expect(rect.peer.getOpacity()).toBe(0.25);
+    expect(attr(rect.peer, 'fill-opacity')).toBeNull();
+    expect(attr(rect.peer, 'stroke-opacity')).toBeNull();
+    // A later stroke opacity does not undo it.
+    rect.setStroke(1, 'solid', 'red', 1);
+    expect(rect.peer._native.style.opacity).toBe('0.25');
+  });
+
+  it('setOpacity on a hidden element is applied when it is shown', () => {
+    const rect = new Rect(0);
+    rect.setVisibility(false);
+    rect.setOpacity(0.4);
+    expect(rect.peer._native.style.opacity).toBe('0');
+    rect.setVisibility(true);
+    expect(rect.peer._native.style.opacity).toBe('0.4');
   });
 
   it('setVisibility(false) hides through the attribute and style opacity', () => {
@@ -168,8 +188,8 @@ describe('opacity and visibility', () => {
     expect(new Rect(0).isVisible()).toBe(true);
   });
 
-  // W-OPACITY: setVisibility writes inline style.opacity, which overrides Group.setOpacity.
-  it.failing('W-OPACITY: setVisibility(true) keeps the opacity set before', () => {
+  // W-OPACITY: setVisibility wrote inline style.opacity 1, which overrode Group.setOpacity.
+  it('W-OPACITY: setVisibility(true) keeps the opacity set before', () => {
     const workspace = new Workspace();
     const group = new Group();
     workspace.append(group);

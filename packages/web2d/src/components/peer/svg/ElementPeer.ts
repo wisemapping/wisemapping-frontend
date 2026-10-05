@@ -19,6 +19,13 @@ import { $assert, $defined } from '../utils/assert';
 import SizeType from '../../SizeType';
 import EventUtils from '../utils/EventUtils';
 
+export type ElementListener = (event: Event, detail?: unknown) => void;
+
+export type StrokeStyle = 'solid' | 'dot' | 'dash' | 'dashdot' | 'longdash';
+
+/** Formats a coordinate or length with at most 2 decimals and no trailing zeros. */
+export const formatLength = (value: number): string => String(Math.round(value * 100) / 100 || 0);
+
 class ElementPeer {
   _native: SVGElement;
 
@@ -28,11 +35,16 @@ class ElementPeer {
 
   private _changeListeners: Record<string, unknown>;
 
-  private __handlers: Map<(event: Event, detail?: unknown) => void, EventListener>;
+  // Native wrappers, by event type and then by listener, so that one listener can be registered
+  // for several types and removed from each of them.
+  private _handlers: Map<string, Map<ElementListener, EventListener>>;
 
   private _children: ElementPeer[];
 
   private _stokeStyle: string | null;
+
+  // Opacity set with setOpacity(). setVisibility() shows the element at this opacity.
+  private _opacity: number;
 
   constructor(svgElement: SVGElement) {
     this._native = svgElement;
@@ -40,11 +52,11 @@ class ElementPeer {
     this._changeListeners = {};
     // http://support.adobe.com/devsup/devsup.nsf/docs/50493.htm
 
-    // __handlers stores handlers references so they can be removed afterwards
-    this.__handlers = new Map();
+    this._handlers = new Map();
     this._children = [];
     this._parent = null;
     this._stokeStyle = null;
+    this._opacity = 1;
   }
 
   setChildren(children: ElementPeer[]): void {
@@ -77,19 +89,12 @@ class ElementPeer {
   }
 
   removeChild(elementPeer: ElementPeer): void {
-    // Store parent and child relationship.
+    // Check first, so that a failed removal leaves both elements untouched.
+    const children = this.getChildren();
+    $assert(children.includes(elementPeer), `element could not be removed:${elementPeer}`);
+
     elementPeer.setParent(null);
-    let children = this.getChildren();
-
-    // Remove from children array ...
-    const oldLength = children.length;
-
-    children = children.filter((c) => c !== elementPeer);
-    this.setChildren(children);
-
-    $assert(children.length < oldLength, `element could not be removed:${elementPeer}`);
-
-    // Append element as a child.
+    this.setChildren(children.filter((c) => c !== elementPeer));
     this._native.removeChild(elementPeer._native);
   }
 
@@ -97,35 +102,60 @@ class ElementPeer {
    * http://www.w3.org/TR/DOM-Level-3-Events/events.html
    * http://developer.mozilla.org/en/docs/addEvent
    */
-  addEvent(type: string, listener: (event: Event, detail?: unknown) => void) {
-    // wrap it so it can be ~backward compatible with jQuery.trigger
-    const wrappedListener = (e: Event) => listener(e, (e as CustomEvent).detail);
-    this.__handlers.set(listener, wrappedListener);
+  addEvent(type: string, listener: ElementListener): void {
+    let byListener = this._handlers.get(type);
+    if (!byListener) {
+      byListener = new Map();
+      this._handlers.set(type, byListener);
+    }
+    // Like addEventListener, adding the same listener twice to one type is a no-op.
+    if (byListener.has(listener)) {
+      return;
+    }
+
+    // The listener gets the event and, for an event fired with trigger(), its payload.
+    const wrappedListener = (e: Event) =>
+      listener(e, e instanceof CustomEvent ? (e.detail as unknown) : undefined);
+    byListener.set(listener, wrappedListener);
     this._native.addEventListener(type, wrappedListener);
   }
 
-  trigger(type: string, event: unknown) {
-    // TODO: check this for correctness and for real jQuery.trigger replacement
-    this._native.dispatchEvent(new CustomEvent(type, { detail: event }));
+  /** Fires a (non-bubbling) custom event: listeners get `detail` as their second argument. */
+  trigger<D = unknown>(type: string, detail?: D): void {
+    this._native.dispatchEvent(new CustomEvent(type, { detail }));
   }
 
-  removeEvent(type: string, listener: (event: Event, detail?: unknown) => void) {
-    const eventListener = this.__handlers.get(listener);
-    if (eventListener) {
+  removeEvent(type: string, listener: ElementListener): void {
+    const byListener = this._handlers.get(type);
+    const eventListener = byListener?.get(listener);
+    if (byListener && eventListener) {
       this._native.removeEventListener(type, eventListener);
+      byListener.delete(listener);
+      if (byListener.size === 0) {
+        this._handlers.delete(type);
+      }
     }
-    this.__handlers.delete(listener);
+  }
+
+  /** Removes every listener added with addEvent(). The element can still be used afterwards. */
+  dispose(): void {
+    this._handlers.forEach((byListener, type) => {
+      byListener.forEach((eventListener) => {
+        this._native.removeEventListener(type, eventListener);
+      });
+    });
+    this._handlers.clear();
   }
 
   setSize(width: number, height: number): void {
     if ($defined(width) && this._size.width !== width) {
       this._size.width = width;
-      this._native.setAttribute('width', width.toFixed(0));
+      this._native.setAttribute('width', formatLength(width));
     }
 
     if ($defined(height) && this._size.height !== height) {
       this._size.height = height;
-      this._native.setAttribute('height', height.toFixed(0));
+      this._native.setAttribute('height', formatLength(height));
     }
 
     EventUtils.broadcastChangeEvent(this, 'strokeStyle');
@@ -144,23 +174,28 @@ class ElementPeer {
     }
   }
 
-  getFill() {
+  getFill(): { color: string | null; opacity: number } {
     const color = this._native.getAttribute('fill');
     const opacity = this._native.getAttribute('fill-opacity');
-    return { color, opacity: Number(opacity) };
+    // An unset fill-opacity is 1 (SVG initial value).
+    return { color, opacity: opacity === null ? 1 : Number(opacity) };
   }
 
-  getStroke() {
+  getStroke(): {
+    color: string | null;
+    style: string | null;
+    opacity: number;
+    width: number | null;
+  } {
     const stoke = this._native;
-    const color = stoke.getAttribute('stroke');
-    const dashstyle = this._stokeStyle;
     const opacity = stoke.getAttribute('stroke-opacity');
     const width = stoke.getAttribute('stroke-width');
     return {
-      color,
-      style: dashstyle,
-      opacity,
-      width,
+      color: stoke.getAttribute('stroke'),
+      style: this._stokeStyle,
+      // An unset stroke-opacity is 1 (SVG initial value).
+      opacity: opacity === null ? 1 : Number(opacity),
+      width: width === null ? null : Number.parseFloat(width),
     };
   }
 
@@ -174,27 +209,22 @@ class ElementPeer {
     }
 
     if (style) {
+      if (!Object.prototype.hasOwnProperty.call(ElementPeer.DASH_ARRAYS, style)) {
+        throw new Error(`Unsupported style: ${style}`);
+      }
       this._stokeStyle = style;
-      switch (style) {
-        case 'dash':
-          this._native.setAttribute('stroke-dasharray', '5 5');
-          this._native.setAttribute('stroke-linecap', '');
-          break;
-        case 'dot':
-          this._native.setAttribute('stroke-dasharray', '1 8');
-          this._native.setAttribute('stroke-linecap', 'round');
-          break;
-        case 'dashdot':
-        case 'longdash':
-          this._native.setAttribute('stroke-dasharray', '10 5 2');
-          this._native.setAttribute('stroke-linecap', 'round');
-          break;
-        case 'solid':
-          this._native.setAttribute('stroke-dasharray', '');
-          this._native.setAttribute('stroke-linecap', '');
-          break;
-        default:
-          throw new Error(`Unsupported style: ${style}`);
+      const dashArray = ElementPeer.DASH_ARRAYS[style as StrokeStyle];
+      // Solid removes the attributes: an empty value is invalid SVG.
+      if (dashArray.length > 0) {
+        this._native.setAttribute('stroke-dasharray', dashArray.join(' '));
+      } else {
+        this._native.removeAttribute('stroke-dasharray');
+      }
+      const lineCap = ElementPeer.DASH_LINE_CAPS[style as StrokeStyle];
+      if (lineCap) {
+        this._native.setAttribute('stroke-linecap', lineCap);
+      } else {
+        this._native.removeAttribute('stroke-linecap');
       }
     }
 
@@ -203,9 +233,23 @@ class ElementPeer {
     }
   }
 
+  /**
+   * Sets the opacity of the whole element (fill, stroke and children). It is kept across
+   * setVisibility() calls, which share the same channel (the inline style) so they can fade.
+   */
+  setOpacity(value: number): void {
+    this._opacity = value;
+    this._native.style.opacity = String(this.isVisible() ? value : 0);
+  }
+
+  getOpacity(): number {
+    return this._opacity;
+  }
+
   setVisibility(value: boolean, fade?: number) {
     this._native.setAttribute('visibility', value ? 'visible' : 'hidden');
-    this._native.style.opacity = String(value ? 1 : 0);
+    // Shown at the opacity set with setOpacity(), and faded through the same property.
+    this._native.style.opacity = String(value ? this._opacity : 0);
     if (fade) {
       this._native.style.transition = `visibility ${fade}ms, opacity ${fade}ms`;
     } else {
@@ -268,13 +312,31 @@ class ElementPeer {
     this._native.style.cursor = type;
   }
 
-  static stokeStyleToStrokDasharray() {
+  /** The single dash table, shared by every element type. */
+  static readonly DASH_ARRAYS: Readonly<Record<StrokeStyle, readonly number[]>> = {
+    solid: [],
+    dot: [1, 8],
+    dash: [5, 5],
+    longdash: [10, 5],
+    dashdot: [10, 5, 1, 5],
+  };
+
+  private static readonly DASH_LINE_CAPS: Readonly<Record<StrokeStyle, string | null>> = {
+    solid: null,
+    dot: 'round',
+    dash: null,
+    longdash: 'round',
+    dashdot: 'round',
+  };
+
+  static stokeStyleToStrokDasharray(): Record<StrokeStyle, number[]> {
+    const { solid, dot, dash, longdash, dashdot } = ElementPeer.DASH_ARRAYS;
     return {
-      solid: [],
-      dot: [1, 3],
-      dash: [4, 3],
-      longdash: [10, 2],
-      dashdot: [5, 3, 1, 3],
+      solid: [...solid],
+      dot: [...dot],
+      dash: [...dash],
+      longdash: [...longdash],
+      dashdot: [...dashdot],
     };
   }
 

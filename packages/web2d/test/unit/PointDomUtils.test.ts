@@ -16,7 +16,12 @@
  *   limitations under the License.
  */
 import Point from '../../src/components/Point';
-import { getOffset, getPosition, getStyle } from '../../src/components/peer/utils/DomUtils';
+import {
+  getOffset,
+  getPosition,
+  getPositionIn,
+  getStyle,
+} from '../../src/components/peer/utils/DomUtils';
 import { $assert, $defined } from '../../src/components/peer/utils/assert';
 
 describe('Point', () => {
@@ -47,8 +52,8 @@ describe('Point', () => {
     expect(() => new Point('1' as unknown as number, 2)).toThrow('x is not a number');
   });
 
-  // Point.ts:26-27: the assert message for y says "x is not a number".
-  it.failing('names y in the y assert message', () => {
+  // Point.ts:26-27: the assert message for y said "x is not a number".
+  it('names y in the y assert message', () => {
     expect(() => new Point(1, '2' as unknown as number)).toThrow('y is not a number');
   });
 });
@@ -116,5 +121,40 @@ describe('DomUtils', () => {
     mockRect(child, 130, 90);
     expect(getPosition(child)).toEqual({ top: 28, left: 37 });
     parent.remove();
+  });
+
+  // W-NATIVEPOS: an 'auto' margin or a non-length border gave NaN.
+  it('getPosition treats non-length margins and borders as 0', () => {
+    const parent = document.createElement('div');
+    parent.style.position = 'relative';
+    parent.style.borderTopWidth = 'medium';
+    const child = document.createElement('div');
+    child.style.marginTop = 'auto';
+    parent.append(child);
+    document.body.append(parent);
+    Object.defineProperty(child, 'offsetParent', { value: parent });
+    mockRect(parent, 100, 50);
+    mockRect(child, 130, 90);
+    const { top, left } = getPosition(child);
+    expect(Number.isNaN(top)).toBe(false);
+    expect(left).toBe(40);
+    parent.remove();
+  });
+
+  // W-NATIVEPOS: an SVG element has no offsetParent, so getPosition gave document coordinates.
+  it('getPosition of an SVG element is relative to the container passed in', () => {
+    const container = document.createElement('div');
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    container.append(svg);
+    document.body.append(container);
+    container.getBoundingClientRect = () => ({ top: 100, left: 50 }) as DOMRect;
+    Object.defineProperty(container, 'clientTop', { value: 2 });
+    Object.defineProperty(container, 'clientLeft', { value: 3 });
+    Object.defineProperty(container, 'scrollTop', { value: 10 });
+    Object.defineProperty(container, 'scrollLeft', { value: 0 });
+    svg.getBoundingClientRect = () => ({ top: 130, left: 90 }) as DOMRect;
+    expect(getPosition(svg, container)).toEqual({ top: 38, left: 37 });
+    expect(getPositionIn(svg, container)).toEqual({ top: 38, left: 37 });
+    container.remove();
   });
 });

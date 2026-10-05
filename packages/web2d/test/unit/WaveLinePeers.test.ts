@@ -93,11 +93,11 @@ describe.each(KINDS)('%s', (_name, create) => {
   });
 
   it.each([
-    ['dash', '4 3'],
-    ['dot', '1 3'],
-    ['longdash', '10 2'],
-    ['dashdot', '5 3 1 3'],
-  ])('characterization: style %s uses dash array "%s"', (style, expected) => {
+    ['dash', '5 5'],
+    ['dot', '1 8'],
+    ['longdash', '10 5'],
+    ['dashdot', '10 5 1 5'],
+  ])('style %s uses the shared dash array "%s" (W-DASH)', (style, expected) => {
     const peer = create();
     peer.setStroke(null, style);
     expect(peer._native.getAttribute('stroke-dasharray')).toBe(expected);

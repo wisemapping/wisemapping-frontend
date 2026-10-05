@@ -39,19 +39,17 @@ const transform = (peer: GroupPeer) => peer._native.getAttribute('transform');
 
 describe('GroupPeer.updateTransform', () => {
   it('scales by size / coordSize', () => {
-    expect(transform(group([100, 50], [50, 100]))).toBe('translate(0.00,0.00) scale(2.00,0.50)');
+    expect(transform(group([100, 50], [50, 100]))).toBe('translate(0.00,0.00) scale(2,0.5)');
   });
 
   it('translates by position minus origin × scale', () => {
     expect(transform(group([100, 100], [50, 50], [10, 20], [5, 5]))).toBe(
-      'translate(0.00,10.00) scale(2.00,2.00)',
+      'translate(0.00,10.00) scale(2,2)',
     );
   });
 
   it('an identity group only translates', () => {
-    expect(transform(group([10, 10], [10, 10], [3, 4]))).toBe(
-      'translate(3.00,4.00) scale(1.00,1.00)',
-    );
+    expect(transform(group([10, 10], [10, 10], [3, 4]))).toBe('translate(3.00,4.00) scale(1,1)');
   });
 
   it('does not rewrite the transform when nothing changes', () => {
@@ -73,44 +71,41 @@ describe('GroupPeer.updateTransform', () => {
     expect(peer.getPosition().x).toBe(1);
   });
 
-  it('characterization: a coordinate width of 0 removes the transform', () => {
-    expect(transform(group([10, 10], [0, 10], [5, 5]))).toBeNull();
+  // W-GTRANSFORM: only coordSize.width > 0 was checked.
+  it('W-GTRANSFORM: a coordinate height of 0 gives no NaN or Infinity', () => {
+    const value = transform(group([50, 50], [150, 0], [50, 0]));
+    expect(hasNaN(value)).toBe(false);
+    expect(value).not.toContain('Infinity');
+    expect(value).toBe('translate(50.00,0.00) scale(0.333333,1)');
   });
 
-  // W-GTRANSFORM: only coordSize.width > 0 is checked.
-  it.failing('W-GTRANSFORM: a coordinate height of 0 gives no NaN or Infinity', () => {
-    expect(hasNaN(transform(group([50, 50], [150, 0], [50, 0])))).toBe(false);
+  it('W-GTRANSFORM: a coordinate width of 0 keeps the translate', () => {
+    expect(transform(group([10, 10], [0, 10], [5, 5]))).toBe('translate(5.00,5.00) scale(1,1)');
   });
 
-  it.failing('W-GTRANSFORM: a coordinate width of 0 keeps the translate', () => {
-    expect(transform(group([10, 10], [0, 10], [5, 5]))).toContain('translate(5');
-  });
-
-  it.failing('W-GTRANSFORM: the scale is not rounded to 2 decimals', () => {
+  it('W-GTRANSFORM: the scale is not rounded to 2 decimals', () => {
     // 16.8 / 100 = 0.168, written as 0.17 (a 1.2 % error on icons).
     expect(transform(group([16.8, 16.8], [100, 100]))).toContain('0.168');
   });
 
-  it('setOpacity writes the opacity attribute', () => {
+  it('setOpacity sets the element opacity, like every element', () => {
     const peer = new GroupPeer();
     peer.setOpacity(0.4);
-    expect(peer._native.getAttribute('opacity')).toBe('0.4');
+    expect(peer._native.style.opacity).toBe('0.4');
   });
 });
 
 describe('Group', () => {
-  it('characterization: default attributes', () => {
+  it('default attributes: 50×50 at the origin', () => {
     const g = new Group();
     expect(g.getType()).toBe('Group');
     expect(g.getSize()).toEqual({ width: 50, height: 50 });
-    expect(g.getPosition()).toEqual({ x: 50, y: 50 });
-    expect(g.peer._native.getAttribute('transform')).toBe(
-      'translate(50.00,50.00) scale(1.00,1.00)',
-    );
+    expect(g.getPosition()).toEqual({ x: 0, y: 0 });
+    expect(g.peer._native.getAttribute('transform')).toBe('translate(0.00,0.00) scale(1,1)');
   });
 
-  // W-GDEFAULTS: the defaults 'coordSize: 50 50' and 'coordOrigin: 0 0' are split into strings.
-  it.failing('W-GDEFAULTS: default coordSize and coordOrigin are numbers', () => {
+  // W-GDEFAULTS: the defaults 'coordSize: 50 50' and 'coordOrigin: 0 0' were split into strings.
+  it('W-GDEFAULTS: default coordSize and coordOrigin are numbers', () => {
     const g = new Group();
     expect(g.getCoordSize()).toStrictEqual({ width: 50, height: 50 });
     expect(g.getCoordOrigin()).toStrictEqual({ x: 0, y: 0 });
@@ -125,7 +120,7 @@ describe('Group', () => {
     expect(g.getCoordSize()).toEqual({ width: 25, height: 25 });
     expect(g.getCoordOrigin()).toEqual({ x: 1, y: 2 });
     expect(g.getPosition()).toEqual({ x: 3, y: 4 });
-    expect(g.peer._native.getAttribute('opacity')).toBe('0.5');
+    expect(g.peer._native.style.opacity).toBe('0.5');
   });
 
   it('appends and removes children', () => {
@@ -154,13 +149,15 @@ describe('Group', () => {
     expect(() => g.removeChild(null as unknown as Rect)).toThrow();
   });
 
-  it('characterization: fill and stroke throw (Liskov, section 3.4)', () => {
+  it('Liskov: fill and stroke are no-ops on a group (section 3.4)', () => {
     const g = new Group();
-    expect(() => g.setFill()).toThrow();
-    expect(() => g.setStroke()).toThrow();
+    expect(() => g.setFill('red', 0.5)).not.toThrow();
+    expect(() => g.setStroke(1, 'dash', 'red', 0.5)).not.toThrow();
+    expect(g.peer._native.hasAttribute('fill')).toBe(false);
+    expect(g.peer._native.hasAttribute('stroke')).toBe(false);
   });
 
-  it.failing('Liskov: new Group({ fillColor }) does not throw', () => {
-    expect(() => new Group({ fillColor: 'red' })).not.toThrow();
+  it('Liskov: new Group({ fillColor }) does not throw', () => {
+    expect(() => new Group({ fillColor: 'red', strokeWidth: 1 })).not.toThrow();
   });
 });

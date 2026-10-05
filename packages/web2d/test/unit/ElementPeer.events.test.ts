@@ -91,9 +91,18 @@ describe('ElementPeer events', () => {
     expect(b).toHaveBeenCalledTimes(1);
   });
 
-  // W-EVTMAP: wrappers are keyed only by the listener, so registering one function for two types
-  // overwrites the first wrapper.
-  it.failing('W-EVTMAP: one listener on click and dblclick can be removed from click', () => {
+  // W-TRIGGER: a native event has no payload, even though UIEvent.detail is the click count.
+  it('W-TRIGGER: native events pass no detail', () => {
+    const peer = new ElementPeer(svgNode());
+    const fn = jest.fn();
+    peer.addEvent('click', fn);
+    peer._native.dispatchEvent(new MouseEvent('click', { detail: 2 }));
+    expect(fn.mock.calls[0]![1]).toBeUndefined();
+  });
+
+  // W-EVTMAP: wrappers were keyed only by the listener, so registering one function for two
+  // types overwrote the first wrapper.
+  it('W-EVTMAP: one listener on click and dblclick can be removed from click', () => {
     const peer = new ElementPeer(svgNode());
     const fn = jest.fn();
     peer.addEvent('click', fn);
@@ -101,9 +110,11 @@ describe('ElementPeer events', () => {
     peer.removeEvent('click', fn);
     click(peer, 'click');
     expect(fn).not.toHaveBeenCalled();
+    click(peer, 'dblclick');
+    expect(fn).toHaveBeenCalledTimes(1);
   });
 
-  it.failing('W-EVTMAP: one listener on click and dblclick can be removed from both', () => {
+  it('W-EVTMAP: one listener on click and dblclick can be removed from both', () => {
     const peer = new ElementPeer(svgNode());
     const fn = jest.fn();
     peer.addEvent('click', fn);
@@ -115,7 +126,7 @@ describe('ElementPeer events', () => {
     expect(fn).not.toHaveBeenCalled();
   });
 
-  it.failing('W-EVTMAP: adding the same listener twice fires it once', () => {
+  it('W-EVTMAP: adding the same listener twice fires it once', () => {
     const peer = new ElementPeer(svgNode());
     const fn = jest.fn();
     peer.addEvent('click', fn);
@@ -124,14 +135,37 @@ describe('ElementPeer events', () => {
     expect(fn).toHaveBeenCalledTimes(1);
   });
 
-  // W-DISPOSE: there is no way to remove all of an element's listeners.
-  it.failing('W-DISPOSE: dispose() removes every listener', () => {
-    const peer = new ElementPeer(svgNode()) as ElementPeer & { dispose: () => void };
+  it('removing a listener from a type it was never added to is a no-op', () => {
+    const peer = new ElementPeer(svgNode());
+    const fn = jest.fn();
+    peer.addEvent('click', fn);
+    peer.removeEvent('dblclick', fn);
+    click(peer);
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  // W-DISPOSE: there was no way to remove all of an element's listeners.
+  it('W-DISPOSE: dispose() removes every listener', () => {
+    const peer = new ElementPeer(svgNode());
     const fn = jest.fn();
     peer.addEvent('click', fn);
     peer.addEvent('mouseover', fn);
     peer.dispose();
     click(peer);
+    click(peer, 'mouseover');
+    expect(fn).not.toHaveBeenCalled();
+    // The element is still usable.
+    peer.addEvent('click', fn);
+    click(peer);
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  it('WorkspaceElement.dispose() removes every listener', () => {
+    const rect = new Rect(0);
+    const fn = jest.fn();
+    rect.addEvent('click', fn);
+    rect.dispose();
+    click(rect.peer);
     expect(fn).not.toHaveBeenCalled();
   });
 
@@ -172,8 +206,8 @@ describe('ElementPeer tree', () => {
     expect(() => parent.removeChild(new ElementPeer(svgNode()))).toThrow();
   });
 
-  // W-RMCHILD: removeChild clears the parent before asserting that the element is a child.
-  it.failing('W-RMCHILD: a failed removeChild leaves the element parent untouched', () => {
+  // W-RMCHILD: removeChild cleared the parent before asserting that the element is a child.
+  it('W-RMCHILD: a failed removeChild leaves the element parent untouched', () => {
     const parent = new ElementPeer(svgNode('g'));
     const other = new ElementPeer(svgNode('g'));
     const child = new ElementPeer(svgNode());

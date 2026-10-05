@@ -35,8 +35,6 @@ describe('WorkspaceElement._initialize (attribute bag)', () => {
       fill: 'green',
       stroke: 'black',
       'stroke-width': '1',
-      'stroke-dasharray': '',
-      'stroke-linecap': '',
     });
   });
 
@@ -65,7 +63,18 @@ describe('WorkspaceElement._initialize (attribute bag)', () => {
   it('applies visibility and opacity', () => {
     const rect = new Rect(0, { visibility: false, opacity: 0.5 });
     expect(rect.isVisible()).toBe(false);
-    expect(rect.peer._native.getAttribute('fill-opacity')).toBe('0.5');
+    expect(rect.peer.getOpacity()).toBe(0.5);
+    rect.setVisibility(true);
+    expect(rect.peer._native.style.opacity).toBe('0.5');
+  });
+
+  it('a combined key keeps the positions it does not cover', () => {
+    const rect = new Rect(0, { strokeOpacity: 0.5, stroke: '3 dot blue' });
+    expect(rect.getStroke()).toEqual({ color: 'blue', style: 'dot', opacity: 0.5, width: 3 });
+  });
+
+  it('a specific key given after its combined key wins', () => {
+    expect(new Rect(0, { stroke: '1 dot blue', strokeWidth: 3 }).getStroke().width).toBe(3);
   });
 
   it('rejects unsupported attributes', () => {
@@ -78,16 +87,18 @@ describe('WorkspaceElement._initialize (attribute bag)', () => {
     expect(() => new Ellipse({ coordSizeWidth: 1 })).toThrow('Could not find function');
   });
 
-  // W-ATTRBAG: multi-argument strings reach number APIs unparsed.
-  it.failing('W-ATTRBAG: size "10 10" is accepted', () => {
-    expect(() => new Rect(0, { size: '10 10' } as unknown as StyleAttributes)).not.toThrow();
+  // W-ATTRBAG: multi-argument strings reached number APIs unparsed.
+  it('W-ATTRBAG: size "10 10" is accepted', () => {
+    const rect = new Rect(0, { size: '10 10' } as unknown as StyleAttributes);
+    expect(rect.getSize()).toEqual({ width: 10, height: 10 });
   });
 
-  it.failing('W-ATTRBAG: position "3 4" is accepted', () => {
-    expect(() => new Rect(0, { position: '3 4' } as unknown as StyleAttributes)).not.toThrow();
+  it('W-ATTRBAG: position "3 4" is accepted', () => {
+    const rect = new Rect(0, { position: '3 4' } as unknown as StyleAttributes);
+    expect(rect.getPosition()).toEqual({ x: 3, y: 4 });
   });
 
-  it.failing('W-ATTRBAG: the stroke width from a string is a number', () => {
+  it('W-ATTRBAG: the stroke width from a string is a number', () => {
     const rect = new Rect(0, { stroke: '1 solid black' });
     expect(typeof rect.getStroke().width).toBe('number');
   });
@@ -107,7 +118,7 @@ describe('WorkspaceElement.setAttribute / getAttribute', () => {
   it('sets multi-argument attributes from strings', () => {
     const rect = new Rect(0);
     rect.setAttribute('stroke', '4 dash red');
-    expect(rect.getAttribute('strokeWidth')).toBe('4');
+    expect(rect.getAttribute('strokeWidth')).toBe(4);
     expect(rect.getAttribute('strokeStyle')).toBe('dash');
   });
 

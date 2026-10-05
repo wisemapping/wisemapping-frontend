@@ -127,29 +127,55 @@ describe('Workspace', () => {
 
   it('fill sets the container background; stroke its border', () => {
     const workspace = new Workspace();
-    workspace.setFill('red', undefined as unknown as number);
-    workspace.setStroke(
-      '2px' as unknown as number,
-      'solid',
-      'blue',
-      undefined as unknown as number,
-    );
-    expect(workspace._getHtmlContainer().style.backgroundColor).toBe('red');
-    expect(workspace._getHtmlContainer().style.border).toBe('2px solid blue');
-    // characterization: a unitless width gives an invalid border, which the browser ignores.
-    workspace.setStroke(4, 'solid', 'green', undefined as unknown as number);
-    expect(workspace._getHtmlContainer().style.border).toBe('2px solid blue');
+    const container = workspace._getHtmlContainer();
+    workspace.setFill('red');
+    workspace.setStroke('2px', 'solid', 'blue');
+    expect(container.style.backgroundColor).toBe('red');
+    expect(container.style.border).toBe('2px solid blue');
+    // A number width is in pixels.
+    workspace.setStroke(4, 'solid', 'green');
+    expect(container.style.border).toBe('4px solid green');
   });
 
-  // Section 3.4 (Liskov): Workspace.setStroke(0) throws "style:undefined".
-  it.failing('Liskov: setStroke(width) without a style does not throw', () => {
+  it.each([
+    ['dash', 'dashed'],
+    ['longdash', 'dashed'],
+    ['dashdot', 'dashed'],
+    ['dot', 'dotted'],
+  ])('maps the stroke style %s to the CSS border style %s', (style, css) => {
     const workspace = new Workspace();
-    expect(() => workspace.setStroke(0, undefined as unknown as string, 'red', 1)).not.toThrow();
+    workspace.setStroke(1, style, 'red');
+    expect(workspace._getHtmlContainer().style.border).toBe(`1px ${css} red`);
   });
 
-  it.failing('Liskov: setFill(color, opacity) does not throw', () => {
+  it('rejects unknown stroke styles', () => {
+    expect(() => new Workspace().setStroke(1, 'wavy', 'red')).toThrow(
+      "Unsupported stroke style: 'wavy'",
+    );
+  });
+
+  it('has no debug border or height of its own', () => {
+    const container = Workspace._createDivContainer();
+    expect(container.style.border).toBe('');
+    expect(container.style.height).toBe('');
+  });
+
+  it('strokeWidth wins over the default stroke, whatever the key order', () => {
+    const workspace = new Workspace({ strokeWidth: 0 });
+    expect(workspace._getHtmlContainer().style.border).toBe('0px solid rgb(237, 241, 190)');
+  });
+
+  // Section 3.4 (Liskov): Workspace.setStroke(0) threw "style:undefined".
+  it('Liskov: setStroke(width) without a style does not throw', () => {
+    const workspace = new Workspace();
+    expect(() => workspace.setStroke(0, undefined, 'red', 1)).not.toThrow();
+    expect(workspace._getHtmlContainer().style.border).toBe('0px solid red');
+  });
+
+  it('Liskov: setFill(color, opacity) does not throw', () => {
     const workspace = new Workspace();
     expect(() => workspace.setFill('red', 0.5)).not.toThrow();
+    expect(workspace._getHtmlContainer().style.backgroundColor).toBe('red');
   });
 
   it('nests groups', () => {

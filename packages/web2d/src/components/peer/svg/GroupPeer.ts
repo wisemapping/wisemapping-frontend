@@ -98,23 +98,22 @@ class GroupPeer extends ElementPeer {
    * */
 
   updateTransform() {
-    if (this._coordSize.width > 0) {
-      const sx = this._size.width / this._coordSize.width;
-      const sy = this._size.height / this._coordSize.height;
+    // An empty coordinate axis has no scale: keep 1 there, so the group is still translated
+    // and never gets NaN or Infinity.
+    const sx = this._coordSize.width > 0 ? this._size.width / this._coordSize.width : 1;
+    const sy = this._coordSize.height > 0 ? this._size.height / this._coordSize.height : 1;
 
-      const cx = this._position.x - this._coordOrigin.x * sx;
-      const cy = this._position.y - this._coordOrigin.y * sy;
-      this._native.setAttribute(
-        'transform',
-        `translate(${cx.toFixed(2)},${cy.toFixed(2)}) scale(${sx.toFixed(2)},${sy.toFixed(2)})`,
-      );
-    } else {
-      this._native.removeAttribute('transform');
-    }
+    const cx = this._position.x - this._coordOrigin.x * sx;
+    const cy = this._position.y - this._coordOrigin.y * sy;
+    // The scale is not rounded: 16.8 / 100 must stay 0.168, not 0.17.
+    this._native.setAttribute(
+      'transform',
+      `translate(${cx.toFixed(2)},${cy.toFixed(2)}) scale(${GroupPeer.formatScale(sx)},${GroupPeer.formatScale(sy)})`,
+    );
   }
 
-  setOpacity(value: number) {
-    this._native.setAttribute('opacity', String(value));
+  private static formatScale(value: number): string {
+    return String(Number(value.toFixed(6)));
   }
 
   setCoordOrigin(x: number, y: number) {

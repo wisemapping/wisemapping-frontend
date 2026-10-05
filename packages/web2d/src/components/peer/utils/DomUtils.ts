@@ -25,6 +25,12 @@ export const getStyle = (elem: Element, prop: string): string | number => {
   return String(result || '');
 };
 
+// A length style in pixels; 0 for values that are not lengths ('auto', 'medium', '').
+const getPixels = (elem: Element, prop: string): number => {
+  const value = getStyle(elem, prop);
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
+};
+
 // offset and position utils extracted and adapted from jquery source
 // https://github.com/jquery/jquery/blob/main/src/offset.js
 export const getOffset = (elem: Element | null): { top: number; left: number } => {
@@ -40,7 +46,32 @@ export const getOffset = (elem: Element | null): { top: number; left: number } =
   };
 };
 
-export const getPosition = (elem: Element): { top: number; left: number } => {
+/**
+ * Position of `elem` in the coordinates of an absolutely positioned child of `container`: its
+ * border box minus the container's border box and border, plus the container's scroll. This
+ * works for SVG elements, which have no offsetParent.
+ */
+export const getPositionIn = (elem: Element, container: Element): { top: number; left: number } => {
+  const rect = elem.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+  return {
+    top: rect.top - containerRect.top - container.clientTop + container.scrollTop,
+    left: rect.left - containerRect.left - container.clientLeft + container.scrollLeft,
+  };
+};
+
+/**
+ * jQuery's position(). With a `container`, the position is relative to it (see getPositionIn).
+ * Without one, an SVG element (no offsetParent) gets document coordinates.
+ */
+export const getPosition = (
+  elem: Element,
+  container?: Element | null,
+): { top: number; left: number } => {
+  if (container) {
+    return getPositionIn(elem, container);
+  }
+
   let offsetParent: Element | null;
   let offset: { top: number; left: number };
   let doc: Document;
@@ -68,14 +99,14 @@ export const getPosition = (elem: Element): { top: number; left: number } => {
     if (offsetParent && offsetParent !== elem && offsetParent.nodeType === 1) {
       // Incorporate borders into its offset, since they are outside its content origin
       parentOffset = getOffset(offsetParent);
-      parentOffset.top += getStyle(offsetParent, 'borderTopWidth') as number;
-      parentOffset.left += getStyle(offsetParent, 'borderLeftWidth') as number;
+      parentOffset.top += getPixels(offsetParent, 'borderTopWidth');
+      parentOffset.left += getPixels(offsetParent, 'borderLeftWidth');
     }
   }
 
   // Subtract parent offsets and element margins
   return {
-    top: offset.top - parentOffset.top - (getStyle(elem, 'marginTop') as number),
-    left: offset.left - parentOffset.left - (getStyle(elem, 'marginLeft') as number),
+    top: offset.top - parentOffset.top - getPixels(elem, 'marginTop'),
+    left: offset.left - parentOffset.left - getPixels(elem, 'marginLeft'),
   };
 };

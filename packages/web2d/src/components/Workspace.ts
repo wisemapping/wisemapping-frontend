@@ -86,8 +86,6 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     container.style.position = 'relative';
     container.style.top = '0px';
     container.style.left = '0px';
-    container.style.height = '688px';
-    container.style.border = '1px solid red';
 
     return container;
   }
@@ -145,10 +143,11 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     return this._htmlContainer;
   }
 
-  setFill(color: string, opacity: number) {
-    this._htmlContainer.style.backgroundColor = color;
-    if (opacity || opacity === 0) {
-      throw new Error('Unsupported operation. Opacity not supported.');
+  /** Sets the container background. The opacity is not supported and is ignored. */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setFill(color: string, _opacity?: number) {
+    if (color) {
+      this._htmlContainer.style.backgroundColor = color;
     }
   }
 
@@ -157,16 +156,28 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     return { width, height };
   }
 
-  setStroke(width: number, style: string, color: string, opacity: number) {
-    if (style !== 'solid') {
-      throw new Error(`Not supported style stroke style:${style}`);
+  /**
+   * Sets the container border. A number width is in pixels; a missing style is solid. The dash
+   * styles map to the closest CSS border style, and the opacity is not supported and is ignored.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setStroke(width: number | string | null, style?: string, color?: string, _opacity?: number) {
+    const borderWidth = typeof width === 'number' ? `${width}px` : width;
+    const borderStyle = Workspace._BORDER_STYLES[style || 'solid'];
+    if (!borderStyle) {
+      throw new Error(`Unsupported stroke style: '${style}'`);
     }
-    this._htmlContainer.style.border = `${width} ${style} ${color}`;
-
-    if (opacity || opacity === 0) {
-      throw new Error('Unsupported operation. Opacity not supported.');
-    }
+    const border = [borderWidth, borderStyle, color].filter((part) => part).join(' ');
+    this._htmlContainer.style.border = border;
   }
+
+  private static _BORDER_STYLES: Record<string, string> = {
+    solid: 'solid',
+    dash: 'dashed',
+    longdash: 'dashed',
+    dashdot: 'dashed',
+    dot: 'dotted',
+  };
 
   getCoordSize(): { width: number; height: number } {
     return this.peer.getCoordSize();

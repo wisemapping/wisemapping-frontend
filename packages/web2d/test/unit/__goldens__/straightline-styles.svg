@@ -1,7 +1,7 @@
 <svg focusable="true" height="400" preserveAspectRatio="none" viewBox="-200 -200 400 400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <line stroke="black" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="3" x1="-150" x2="150" y1="-150" y2="-150"/>
-  <line stroke="black" stroke-dasharray="5 5" stroke-linecap="" stroke-opacity="1" stroke-width="3" x1="-150" x2="150" y1="-90" y2="-90"/>
+  <line stroke="black" stroke-opacity="1" stroke-width="3" x1="-150" x2="150" y1="-150" y2="-150"/>
+  <line stroke="black" stroke-dasharray="5 5" stroke-opacity="1" stroke-width="3" x1="-150" x2="150" y1="-90" y2="-90"/>
   <line stroke="black" stroke-dasharray="1 8" stroke-linecap="round" stroke-opacity="1" stroke-width="3" x1="-150" x2="150" y1="-30" y2="-30"/>
-  <line stroke="black" stroke-dasharray="10 5 2" stroke-linecap="round" stroke-opacity="1" stroke-width="3" x1="-150" x2="150" y1="30" y2="30"/>
-  <line stroke="black" stroke-dasharray="10 5 2" stroke-linecap="round" stroke-opacity="1" stroke-width="3" x1="-150" x2="150" y1="90" y2="90"/>
+  <line stroke="black" stroke-dasharray="10 5 1 5" stroke-linecap="round" stroke-opacity="1" stroke-width="3" x1="-150" x2="150" y1="30" y2="30"/>
+  <line stroke="black" stroke-dasharray="10 5" stroke-linecap="round" stroke-opacity="1" stroke-width="3" x1="-150" x2="150" y1="90" y2="90"/>
 </svg>

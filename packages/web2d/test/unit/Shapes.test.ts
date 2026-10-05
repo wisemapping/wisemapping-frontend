@@ -23,40 +23,49 @@ import ImagePeer from '../../src/components/peer/svg/ImagePeer';
 const XLINK = 'http://www.w3.org/1999/xlink';
 
 describe('Rect', () => {
-  it('rounds the position and size; rx/ry from the arc', () => {
-    const rect = new Rect(0.5, { width: 100, height: 40 });
-    rect.setPosition(1.4, 2.6);
+  it('keeps 2 decimals for the position and size, like lines; rx/ry from the arc', () => {
+    const rect = new Rect(0.5, { width: 100, height: 41 });
+    rect.setPosition(1.4, 2.666);
+    const node = rect.peer._native;
     expect(rect.getType()).toBe('Rect');
-    expect(rect.getPosition()).toEqual({ x: 1, y: 3 });
-    expect(rect.getSize()).toEqual({ width: 100, height: 40 });
-    expect(rect.peer._native.getAttribute('rx')).toBe('10');
-    expect(rect.peer._native.getAttribute('ry')).toBe('10');
+    expect(rect.getPosition()).toEqual({ x: 1.4, y: 2.666 });
+    expect(node.getAttribute('x')).toBe('1.4');
+    expect(node.getAttribute('y')).toBe('2.67');
+    expect(rect.getSize()).toEqual({ width: 100, height: 41 });
+    expect(node.getAttribute('rx')).toBe('10.25');
+    expect(node.getAttribute('ry')).toBe('10.25');
   });
 
   it('rejects an arc above 1', () => {
     expect(() => new Rect(2)).toThrow('Arc must be 0<=arc<=1');
   });
 
-  // Section 3.4: RectPeer.getPosition parses the attribute and returns NaN when it is unset.
-  it.failing('getPosition of a rect without a position is a number', () => {
+  // Section 3.4: RectPeer.getPosition parsed the attribute and returned NaN when it was unset.
+  it('getPosition of a rect without a position is a number', () => {
     const rect = new Rect(0, {});
     rect.peer._native.removeAttribute('x');
     rect.peer._native.removeAttribute('y');
     expect(Number.isNaN(rect.getPosition().x)).toBe(false);
   });
+
+  it('getPosition of a new rect peer is the origin, and a copy', () => {
+    const rect = new Rect(0, { x: 7, y: 8 });
+    rect.getPosition().x = 99;
+    expect(rect.getPosition()).toEqual({ x: 7, y: 8 });
+  });
 });
 
 describe('Ellipse', () => {
-  it('writes centre and radii, rounded', () => {
+  it('writes centre and radii with 2 decimals', () => {
     const ellipse = new Ellipse();
     ellipse.setPosition(10.4, 20.6);
     ellipse.setSize(30, 11);
     const node = ellipse.peer._native;
     expect(ellipse.getType()).toBe('Ellipse');
-    expect(node.getAttribute('cx')).toBe('10');
-    expect(node.getAttribute('cy')).toBe('21');
+    expect(node.getAttribute('cx')).toBe('10.4');
+    expect(node.getAttribute('cy')).toBe('20.6');
     expect(node.getAttribute('rx')).toBe('15');
-    expect(node.getAttribute('ry')).toBe('6');
+    expect(node.getAttribute('ry')).toBe('5.5');
     expect(ellipse.getPosition()).toEqual({ x: 10.4, y: 20.6 });
     expect(ellipse.getSize()).toEqual({ width: 30, height: 11 });
   });

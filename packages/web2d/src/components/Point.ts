@@ -24,7 +24,7 @@ class Point {
 
   constructor(x: number, y: number) {
     $assert(typeof x === 'number', `x is not a number: ${x}`);
-    $assert(typeof y === 'number', `x is not a number: ${y}`);
+    $assert(typeof y === 'number', `y is not a number: ${y}`);
 
     this.x = x;
     this.y = y;

@@ -31,13 +31,15 @@ import PositionType from './PositionType';
 class Group extends WorkspaceElement<GroupPeer> {
   constructor(attributes?: StyleAttributes) {
     const peer = Toolkit.createGroup();
-    const defaultAttributes = {
+    const defaultAttributes: StyleAttributes = {
       width: 50,
       height: 50,
-      x: 50,
-      y: 50,
-      coordOrigin: '0 0',
-      coordSize: '50 50',
+      x: 0,
+      y: 0,
+      coordOriginX: 0,
+      coordOriginY: 0,
+      coordSizeWidth: 50,
+      coordSizeHeight: 50,
     };
 
     const mergedAttr = { ...defaultAttributes, ...attributes };
@@ -118,12 +120,16 @@ class Group extends WorkspaceElement<GroupPeer> {
     return this.peer.getSize();
   }
 
-  setFill() {
-    throw new Error('Unsupported operation. Fill can not be set to a group');
+  /** A group has no fill of its own: this is a no-op (fill its children instead). */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setFill(_color?: string, _opacity?: number): void {
+    // No-op.
   }
 
-  setStroke() {
-    throw new Error('Unsupported operation. Stroke can not be set to a group');
+  /** A group has no stroke of its own: this is a no-op (stroke its children instead). */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setStroke(_width?: number | null, _style?: string, _color?: string, _opacity?: number): void {
+    // No-op.
   }
 
   getCoordSize() {
@@ -138,10 +144,6 @@ class Group extends WorkspaceElement<GroupPeer> {
     // Type guard to prevent adding itself
     // Note: DomElement is a DOM Node/Element, while this is a Group instance
     this.peer._native.append(DomElement);
-  }
-
-  setOpacity(value: number) {
-    this.peer.setOpacity(value);
   }
 
   getPosition(): PositionType {

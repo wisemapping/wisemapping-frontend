@@ -1,5 +1,5 @@
 <svg focusable="true" height="400" preserveAspectRatio="none" viewBox="-200 -200 400 400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <path d="M-119.5,-150 C-119.7,-50 -59.8,50 -60,150 C-60.2,50 -120.3,-50 -120.5,-150 Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="1"/>
-  <path d="M5,-150 C3.5,-50 62,50 60,150 C58,50 -3.5,-50 -5,-150 Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="1"/>
-  <path d="M130,-150 C127,-50 184,50 180,150 C176,50 113,-50 110,-150 Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="1"/>
+  <path d="M-119.5,-150 C-119.7,-50 -59.8,50 -60,150 C-60.2,50 -120.3,-50 -120.5,-150 Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-opacity="1" stroke-width="1"/>
+  <path d="M5,-150 C3.5,-50 62,50 60,150 C58,50 -3.5,-50 -5,-150 Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-opacity="1" stroke-width="1"/>
+  <path d="M130,-150 C127,-50 184,50 180,150 C176,50 113,-50 110,-150 Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-opacity="1" stroke-width="1"/>
 </svg>

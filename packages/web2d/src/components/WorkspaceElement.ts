@@ -17,7 +17,7 @@
  */
 
 import { $defined } from './peer/utils/assert';
-import ElementPeer from './peer/svg/ElementPeer';
+import ElementPeer, { ElementListener } from './peer/svg/ElementPeer';
 import StyleAttributes from './StyleAttributes';
 
 abstract class WorkspaceElement<T extends ElementPeer> {
@@ -66,7 +66,12 @@ abstract class WorkspaceElement<T extends ElementPeer> {
         } else {
           const attrValue = attributes[key as keyof StyleAttributes];
           if (typeof attrValue === 'string') {
-            funcArgs = attrValue.split(' ');
+            // The later key wins, as for single keys; the positions the combined key does not
+            // cover (strokeOpacity after '1 solid black') are kept.
+            const combined = WorkspaceElement._parseArguments(attrValue);
+            combined.forEach((arg, i) => {
+              funcArgs![i] = arg;
+            });
             batchExecute[funcName] = funcArgs;
           }
         }
@@ -103,12 +108,18 @@ abstract class WorkspaceElement<T extends ElementPeer> {
    * The following events types are supported:
    *
    */
-  addEvent(type: string, listener: (event: Event, detail?: unknown) => void) {
+  addEvent(type: string, listener: ElementListener) {
     this.peer.addEvent(type, listener);
   }
 
-  trigger(type: string, event: unknown) {
-    this.peer.trigger(type, event);
+  /** Fires a custom event: listeners get `detail` as their second argument. */
+  trigger<D = unknown>(type: string, detail?: D) {
+    this.peer.trigger(type, detail);
+  }
+
+  /** Removes every listener added with addEvent(). */
+  dispose(): void {
+    this.peer.dispose();
   }
 
   // cloneEvents(from) {
@@ -128,7 +139,7 @@ abstract class WorkspaceElement<T extends ElementPeer> {
    *     This interace will be invoked passing an event as argument and
    * the 'this' referece in the function will be the element.
    */
-  removeEvent(type: string, listener: (event: Event, detail?: unknown) => void) {
+  removeEvent(type: string, listener: ElementListener) {
     this.peer.removeEvent(type, listener);
   }
 
@@ -222,8 +233,7 @@ abstract class WorkspaceElement<T extends ElementPeer> {
     ) {
       args[argPositions] = value;
     } else {
-      const strValue = String(value);
-      args = strValue.split(' ');
+      args = WorkspaceElement._parseArguments(String(value));
     }
 
     // Look up method ...
@@ -274,13 +284,11 @@ abstract class WorkspaceElement<T extends ElementPeer> {
   }
 
   /**
-   * Defines the element opacity.
-   * Parameters:
-   *   opacity: A value between 0 and 1.
+   * Defines the opacity of the whole element (the CSS opacity property), between 0 and 1. It
+   * is independent of the fill and stroke opacities, and kept by setVisibility().
    */
   setOpacity(opacity: number): void {
-    this.peer.setStroke(null, null, null, opacity);
-    this.peer.setFill(null, opacity);
+    this.peer.setOpacity(opacity);
   }
 
   setVisibility(value: boolean, fade?: number): void {
@@ -319,15 +327,13 @@ abstract class WorkspaceElement<T extends ElementPeer> {
 
   static _SIGNATURE_MULTIPLE_ARGUMENTS = -1;
 
-  static _supportedEvents = [
-    'click',
-    'dblclick',
-    'mousemove',
-    'mouseout',
-    'mouseover',
-    'mousedown',
-    'mouseup',
-  ];
+  /** Splits a combined attribute ('1 solid black'): numeric parts become numbers. */
+  private static _parseArguments(value: string): (string | number)[] {
+    return value
+      .split(' ')
+      .filter((arg) => arg !== '')
+      .map((arg) => (Number.isFinite(Number(arg)) ? Number(arg) : arg));
+  }
 
   private static _propertyNameToSignature = {
     // Format: [attribute name, argument position on setter, attribute name on getter]
