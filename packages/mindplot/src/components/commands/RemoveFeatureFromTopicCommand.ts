@@ -33,7 +33,7 @@ class RemoveFeatureFromTopicCommand extends Command {
    */
   constructor(topicId: number, featureId: number) {
     $assert($defined(topicId), 'topicId can not be null');
-    $assert(featureId, 'iconModel can not be null');
+    $assert(featureId != null, 'featureId can not be null');
 
     super();
     this._topicId = topicId;
