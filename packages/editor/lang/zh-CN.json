@@ -56,6 +56,12 @@
   "outline.collapse": {
     "defaultMessage": "折叠"
   },
+  "outline.expand-all": {
+    "defaultMessage": "全部展开"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "全部折叠"
+  },
   "outline.has-note": {
     "defaultMessage": "有笔记"
   },
@@ -889,6 +895,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "按级别展开"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "按级别展开（级别 {level}）"
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "键盘快捷键"

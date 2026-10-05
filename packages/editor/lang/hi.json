@@ -56,6 +56,12 @@
   "outline.collapse": {
     "defaultMessage": "संक्षिप्त करें"
   },
+  "outline.expand-all": {
+    "defaultMessage": "सभी विस्तार करें"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "सभी संक्षिप्त करें"
+  },
   "outline.has-note": {
     "defaultMessage": "नोट है"
   },
@@ -889,6 +895,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "स्तर के अनुसार विस्तार"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "स्तर के अनुसार विस्तार (स्तर {level})"
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "कीबोर्ड शॉर्टकट"

@@ -158,10 +158,7 @@ const LayoutSelector = ({ closeModal, layoutModel, model }: LayoutSelectorProps)
             lineHeight: 1.4,
           }}
         >
-          <FormattedMessage
-            id="layout-selector.description"
-            defaultMessage="A layout defines how topics are organized and connected in your mind map. Choose a layout that best fits your content structure."
-          />
+          <FormattedMessage id="layout-selector.description" defaultMessage="Choose layout style" />
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           {layouts.map((layoutOption) => (

@@ -26,7 +26,13 @@
  *
  * Keys are kept as tokens, not as pre-joined strings like 'Ctrl + Shift + V',
  * so a renderer can draw each one as its own key cap.
+ *
+ * Every message is written as a literal `defineMessage` call so that
+ * `i18n:extract` can find it; an id or text passed through a variable is
+ * invisible to it and drops out of lang/en.json.
  */
+import { defineMessage } from 'react-intl';
+import type { MessageDescriptor } from 'react-intl';
 
 /** A key name as it appears on a cap. */
 export type KeyToken = string;
@@ -34,7 +40,7 @@ export type KeyToken = string;
 /**
  * One way to invoke an action.
  *
- * `keys` are pressed together. `noteId`/`noteDefault` carry the combinations
+ * `keys` are pressed together. `note` carries the combinations
  * that are not keystrokes at all -- 'Double Click', 'Mouse click',
  * 'Two-finger swipe' -- which previously sat in nested `<FormattedMessage>`
  * elements inside the cell. Their message ids are preserved verbatim so the
@@ -42,14 +48,12 @@ export type KeyToken = string;
  */
 export type Combo = {
   keys?: KeyToken[];
-  noteId?: string;
-  noteDefault?: string;
+  note?: MessageDescriptor;
 };
 
 export type Shortcut = {
-  /** Message id for the action description. Unchanged from the old markup. */
-  id: string;
-  defaultMessage: string;
+  /** The action description. Its id is unchanged from the old markup. */
+  message: MessageDescriptor;
   /** Alternative ways to invoke it, rendered separated by '/'. */
   win: Combo[];
   mac: Combo[];
@@ -58,75 +62,95 @@ export type Shortcut = {
 export type ShortcutCategory = {
   /** Stable key, used for the tab value and for diagram lookups. */
   key: string;
-  labelId: string;
-  labelDefault: string;
+  label: MessageDescriptor;
   shortcuts: Shortcut[];
 };
 
 const EDIT_TOPIC_NOTE = {
-  noteId: 'shortcut-help-pane.edit-topic-key',
-  noteDefault: 'F2 or Double Click',
+  note: defineMessage({
+    id: 'shortcut-help-pane.edit-topic-key',
+    defaultMessage: 'F2 or Double Click',
+  }),
 };
 
 const OVERWRITE_NOTE = {
-  noteId: 'shortcut-help-pane.overwrite-edit-topic-key',
-  noteDefault: 'Type on a selected topic',
+  note: defineMessage({
+    id: 'shortcut-help-pane.overwrite-edit-topic-key',
+    defaultMessage: 'Type on a selected topic',
+  }),
 };
 
 const ARROW_KEYS_NOTE = {
-  noteId: 'shortcut-help-pane.navigation-keys',
-  noteDefault: 'Arrow keys',
+  note: defineMessage({ id: 'shortcut-help-pane.navigation-keys', defaultMessage: 'Arrow keys' }),
 };
 
 const MOUSE_CLICK_NOTE = {
-  noteId: 'shortcut-help-pane.select-topics-keys',
-  noteDefault: 'Mouse click',
+  note: defineMessage({
+    id: 'shortcut-help-pane.select-topics-keys',
+    defaultMessage: 'Mouse click',
+  }),
 };
 
 const WHEEL_NOTE = {
-  noteId: 'shortcut-help-pane.pan-canvas-keys',
-  noteDefault: 'Two-finger swipe or Mouse wheel',
+  note: defineMessage({
+    id: 'shortcut-help-pane.pan-canvas-keys',
+    defaultMessage: 'Two-finger swipe or Mouse wheel',
+  }),
 };
 
 export const SHORTCUT_CATEGORIES: ShortcutCategory[] = [
   {
     key: 'navigation',
-    labelId: 'shortcut-help-pane.category-navigation',
-    labelDefault: 'Navigate',
+    label: defineMessage({
+      id: 'shortcut-help-pane.category-navigation',
+      defaultMessage: 'Navigate',
+    }),
     shortcuts: [
       {
-        id: 'shortcut-help-pane.navigation',
-        defaultMessage: 'Navigation',
+        message: defineMessage({
+          id: 'shortcut-help-pane.navigation',
+          defaultMessage: 'Navigation',
+        }),
         win: [{ ...ARROW_KEYS_NOTE }],
         mac: [{ ...ARROW_KEYS_NOTE }],
       },
       {
-        id: 'shortcut-help-pane.select-topics',
-        defaultMessage: 'Select multiple topics',
+        message: defineMessage({
+          id: 'shortcut-help-pane.select-topics',
+          defaultMessage: 'Select multiple topics',
+        }),
         win: [{ keys: ['Ctrl'], ...MOUSE_CLICK_NOTE }],
         mac: [{ keys: ['Ctrl'], ...MOUSE_CLICK_NOTE }],
       },
       {
-        id: 'shortcut-help-pane.select-all-topics',
-        defaultMessage: 'Select all topics',
+        message: defineMessage({
+          id: 'shortcut-help-pane.select-all-topics',
+          defaultMessage: 'Select all topics',
+        }),
         win: [{ keys: ['Ctrl', 'A'] }],
         mac: [{ keys: ['⌘', 'A'] }],
       },
       {
-        id: 'shortcut-help-pane.deselect-all-topics',
-        defaultMessage: 'Deselect all topics',
+        message: defineMessage({
+          id: 'shortcut-help-pane.deselect-all-topics',
+          defaultMessage: 'Deselect all topics',
+        }),
         win: [{ keys: ['Ctrl', 'Shift', 'A'] }],
         mac: [{ keys: ['⌘', 'Shift', 'A'] }],
       },
       {
-        id: 'shortcut-help-pane.find-in-map',
-        defaultMessage: 'Find node in map',
+        message: defineMessage({
+          id: 'shortcut-help-pane.find-in-map',
+          defaultMessage: 'Find node in map',
+        }),
         win: [{ keys: ['Ctrl', 'F'] }],
         mac: [{ keys: ['⌘', 'F'] }],
       },
       {
-        id: 'shortcut-help-pane.collapse-children',
-        defaultMessage: 'Collpase children',
+        message: defineMessage({
+          id: 'shortcut-help-pane.collapse-children',
+          defaultMessage: 'Collpase children',
+        }),
         win: [{ keys: ['Space'] }],
         mac: [{ keys: ['Space'] }],
       },
@@ -134,120 +158,151 @@ export const SHORTCUT_CATEGORIES: ShortcutCategory[] = [
   },
   {
     key: 'editing',
-    labelId: 'shortcut-help-pane.category-editing',
-    labelDefault: 'Edit',
+    label: defineMessage({ id: 'shortcut-help-pane.category-editing', defaultMessage: 'Edit' }),
     shortcuts: [
       {
-        id: 'shortcut-help-pane.add-sibling',
-        defaultMessage: 'Add sibling topic',
+        message: defineMessage({
+          id: 'shortcut-help-pane.add-sibling',
+          defaultMessage: 'Add sibling topic',
+        }),
         win: [{ keys: ['Enter'] }],
         mac: [{ keys: ['Enter'] }],
       },
       {
-        id: 'shortcut-help-pane.add-child',
-        defaultMessage: 'Add child topic',
+        message: defineMessage({
+          id: 'shortcut-help-pane.add-child',
+          defaultMessage: 'Add child topic',
+        }),
         win: [{ keys: ['Insert'] }, { keys: ['Tab'] }],
         mac: [{ keys: ['⌘', 'Enter'] }, { keys: ['Tab'] }],
       },
       {
-        id: 'shortcut-help-pane.delete-topic',
-        defaultMessage: 'Delete topic',
+        message: defineMessage({
+          id: 'shortcut-help-pane.delete-topic',
+          defaultMessage: 'Delete topic',
+        }),
         win: [{ keys: ['Delete'] }],
         mac: [{ keys: ['Delete'] }],
       },
       {
-        id: 'shortcut-help-pane.edit-topic',
-        defaultMessage: 'Edit topic text',
+        message: defineMessage({
+          id: 'shortcut-help-pane.edit-topic',
+          defaultMessage: 'Edit topic text',
+        }),
         win: [{ ...EDIT_TOPIC_NOTE }],
         mac: [{ ...EDIT_TOPIC_NOTE }],
       },
       {
-        id: 'shortcut-help-pane.overwrite-edit-topic',
-        defaultMessage: 'Overwrite topic text',
+        message: defineMessage({
+          id: 'shortcut-help-pane.overwrite-edit-topic',
+          defaultMessage: 'Overwrite topic text',
+        }),
         win: [{ ...OVERWRITE_NOTE }],
         mac: [{ ...OVERWRITE_NOTE }],
       },
       {
-        id: 'shortcut-help-pane.edit-multiline',
-        defaultMessage: 'Add multi-line topic text',
+        message: defineMessage({
+          id: 'shortcut-help-pane.edit-multiline',
+          defaultMessage: 'Add multi-line topic text',
+        }),
         win: [{ keys: ['Ctrl', 'Enter'] }],
         mac: [{ keys: ['⌘', 'Enter'] }],
       },
       {
-        id: 'shortcut-help-pane.copy-and-text',
-        defaultMessage: 'Copy and paste topics/Copy mindmap image to clipboard.',
+        message: defineMessage({
+          id: 'shortcut-help-pane.copy-and-text',
+          defaultMessage: 'Copy and paste topics/Copy mindmap image to clipboard.',
+        }),
         win: [{ keys: ['Ctrl', 'C'] }, { keys: ['Ctrl', 'V'] }],
         mac: [{ keys: ['⌘', 'C'] }, { keys: ['⌘', 'V'] }],
       },
       {
-        id: 'shortcut-help-pane.paste-as-child',
-        defaultMessage: 'Paste as child of the selected topic',
+        message: defineMessage({
+          id: 'shortcut-help-pane.paste-as-child',
+          defaultMessage: 'Paste as child of the selected topic',
+        }),
         win: [{ keys: ['Ctrl', 'Shift', 'V'] }],
         mac: [{ keys: ['⌘', '⇧', 'V'] }],
       },
       {
-        id: 'shortcut-help-pane.drag-disconnect',
-        defaultMessage: 'Disconnect topic',
+        message: defineMessage({
+          id: 'shortcut-help-pane.drag-disconnect',
+          defaultMessage: 'Disconnect topic',
+        }),
         win: [
           {
             keys: ['Ctrl'],
-            noteId: 'shortcut-help-pane.drag-disconnect-key',
-            noteDefault: 'drag topic',
+            note: defineMessage({
+              id: 'shortcut-help-pane.drag-disconnect-key',
+              defaultMessage: 'drag topic',
+            }),
           },
         ],
         mac: [
           {
             keys: ['⌘'],
-            noteId: 'shortcut-help-pane.drag-disconnect-key',
-            noteDefault: 'drag topic',
+            note: defineMessage({
+              id: 'shortcut-help-pane.drag-disconnect-key',
+              defaultMessage: 'drag topic',
+            }),
           },
         ],
       },
       {
-        id: 'shortcut-help-pane.move-topic-up',
-        defaultMessage: 'Move topic up among siblings',
+        message: defineMessage({
+          id: 'shortcut-help-pane.move-topic-up',
+          defaultMessage: 'Move topic up among siblings',
+        }),
         win: [{ keys: ['Alt', 'Shift', 'Up'] }],
         mac: [{ keys: ['⌥', '⇧', 'Up'] }],
       },
       {
-        id: 'shortcut-help-pane.move-topic-down',
-        defaultMessage: 'Move topic down among siblings',
+        message: defineMessage({
+          id: 'shortcut-help-pane.move-topic-down',
+          defaultMessage: 'Move topic down among siblings',
+        }),
         win: [{ keys: ['Alt', 'Shift', 'Down'] }],
         mac: [{ keys: ['⌥', '⇧', 'Down'] }],
       },
       {
-        id: 'shortcut-help-pane.outdent-topic',
-        defaultMessage: 'Outdent topic (attach to grandparent)',
+        message: defineMessage({
+          id: 'shortcut-help-pane.outdent-topic',
+          defaultMessage: 'Outdent topic (attach to grandparent)',
+        }),
         win: [{ keys: ['Alt', 'Shift', 'Left'] }],
         mac: [{ keys: ['⌥', '⇧', 'Left'] }],
       },
       {
-        id: 'shortcut-help-pane.indent-topic',
-        defaultMessage: 'Indent topic (attach to sibling above)',
+        message: defineMessage({
+          id: 'shortcut-help-pane.indent-topic',
+          defaultMessage: 'Indent topic (attach to sibling above)',
+        }),
         win: [{ keys: ['Alt', 'Shift', 'Right'] }],
         mac: [{ keys: ['⌥', '⇧', 'Right'] }],
       },
       {
-        id: 'shortcut-help-pane.undo',
-        defaultMessage: 'Undo edition',
+        message: defineMessage({ id: 'shortcut-help-pane.undo', defaultMessage: 'Undo edition' }),
         win: [{ keys: ['Ctrl', 'Z'] }],
         mac: [{ keys: ['⌘', 'Z'] }],
       },
       {
-        id: 'shortcut-help-pane.redo',
-        defaultMessage: 'Redo edition',
+        message: defineMessage({ id: 'shortcut-help-pane.redo', defaultMessage: 'Redo edition' }),
         win: [{ keys: ['Ctrl', 'Shift', 'Z'] }],
         mac: [{ keys: ['⌘', 'Shift', 'Z'] }],
       },
       {
-        id: 'shortcut-help-pane.cancel-text-changes',
-        defaultMessage: 'Cancel text changes',
+        message: defineMessage({
+          id: 'shortcut-help-pane.cancel-text-changes',
+          defaultMessage: 'Cancel text changes',
+        }),
         win: [{ keys: ['Esc'] }],
         mac: [{ keys: ['Esc'] }],
       },
       {
-        id: 'shortcut-help-pane.save-changes',
-        defaultMessage: 'Save changes',
+        message: defineMessage({
+          id: 'shortcut-help-pane.save-changes',
+          defaultMessage: 'Save changes',
+        }),
         win: [{ keys: ['Ctrl', 'S'] }],
         mac: [{ keys: ['⌘', 'S'] }],
       },
@@ -255,30 +310,31 @@ export const SHORTCUT_CATEGORIES: ShortcutCategory[] = [
   },
   {
     key: 'format',
-    labelId: 'shortcut-help-pane.category-format',
-    labelDefault: 'Format',
+    label: defineMessage({ id: 'shortcut-help-pane.category-format', defaultMessage: 'Format' }),
     shortcuts: [
       {
-        id: 'shortcut-help-pane.change-font-bold',
-        defaultMessage: 'Change text to bold',
+        message: defineMessage({
+          id: 'shortcut-help-pane.change-font-bold',
+          defaultMessage: 'Change text to bold',
+        }),
         win: [{ keys: ['Ctrl', 'B'] }],
         mac: [{ keys: ['⌘', 'B'] }],
       },
       {
-        id: 'shortcut-help-pane.change-font-italic',
-        defaultMessage: 'Change text to italic',
+        message: defineMessage({
+          id: 'shortcut-help-pane.change-font-italic',
+          defaultMessage: 'Change text to italic',
+        }),
         win: [{ keys: ['Ctrl', 'I'] }],
         mac: [{ keys: ['⌘', 'I'] }],
       },
       {
-        id: 'shortcut-help-pane.add-note',
-        defaultMessage: 'Add note',
+        message: defineMessage({ id: 'shortcut-help-pane.add-note', defaultMessage: 'Add note' }),
         win: [{ keys: ['Ctrl', 'K'] }],
         mac: [{ keys: ['⌘', 'K'] }],
       },
       {
-        id: 'shortcut-help-pane.add-link',
-        defaultMessage: 'Add link',
+        message: defineMessage({ id: 'shortcut-help-pane.add-link', defaultMessage: 'Add link' }),
         win: [{ keys: ['Ctrl', 'L'] }],
         mac: [{ keys: ['⌘', 'L'] }],
       },
@@ -286,36 +342,39 @@ export const SHORTCUT_CATEGORIES: ShortcutCategory[] = [
   },
   {
     key: 'view',
-    labelId: 'shortcut-help-pane.category-view',
-    labelDefault: 'View',
+    label: defineMessage({ id: 'shortcut-help-pane.category-view', defaultMessage: 'View' }),
     shortcuts: [
       {
-        id: 'shortcut-help-pane.zoom-in',
-        defaultMessage: 'Zoom in',
+        message: defineMessage({ id: 'shortcut-help-pane.zoom-in', defaultMessage: 'Zoom in' }),
         win: [{ keys: ['Ctrl', '='] }],
         mac: [{ keys: ['⌘', '='] }],
       },
       {
-        id: 'shortcut-help-pane.zoom-out',
-        defaultMessage: 'Zoom out',
+        message: defineMessage({ id: 'shortcut-help-pane.zoom-out', defaultMessage: 'Zoom out' }),
         win: [{ keys: ['Ctrl', '-'] }],
         mac: [{ keys: ['⌘', '-'] }],
       },
       {
-        id: 'shortcut-help-pane.zoom-to-fit',
-        defaultMessage: 'Zoom to fit',
+        message: defineMessage({
+          id: 'shortcut-help-pane.zoom-to-fit',
+          defaultMessage: 'Zoom to fit',
+        }),
         win: [{ keys: ['Ctrl', '0'] }],
         mac: [{ keys: ['⌘', '0'] }],
       },
       {
-        id: 'shortcut-help-pane.pan-canvas',
-        defaultMessage: 'Pan the canvas',
+        message: defineMessage({
+          id: 'shortcut-help-pane.pan-canvas',
+          defaultMessage: 'Pan the canvas',
+        }),
         win: [{ ...WHEEL_NOTE }],
         mac: [{ ...WHEEL_NOTE }],
       },
       {
-        id: 'shortcut-help-pane.zoom-wheel',
-        defaultMessage: 'Zoom in/out with the wheel',
+        message: defineMessage({
+          id: 'shortcut-help-pane.zoom-wheel',
+          defaultMessage: 'Zoom in/out with the wheel',
+        }),
         win: [
           { keys: ['Ctrl'], ...WHEEL_NOTE },
           { keys: ['Alt'], ...WHEEL_NOTE },
@@ -326,20 +385,26 @@ export const SHORTCUT_CATEGORIES: ShortcutCategory[] = [
         ],
       },
       {
-        id: 'shortcut-help-pane.outline-view',
-        defaultMessage: 'Open outline view',
+        message: defineMessage({
+          id: 'shortcut-help-pane.outline-view',
+          defaultMessage: 'Open outline view',
+        }),
         win: [{ keys: ['Ctrl', 'O'] }],
         mac: [{ keys: ['⌘', 'O'] }],
       },
       {
-        id: 'shortcut-help-pane.expand-by-level',
-        defaultMessage: 'Expand topics by level',
+        message: defineMessage({
+          id: 'shortcut-help-pane.expand-by-level',
+          defaultMessage: 'Expand topics by level',
+        }),
         win: [{ keys: ['Ctrl', 'E'] }],
         mac: [{ keys: ['⌘', 'E'] }],
       },
       {
-        id: 'shortcut-help-pane.expand-collapse-all',
-        defaultMessage: 'Expand/Collapse all topics',
+        message: defineMessage({
+          id: 'shortcut-help-pane.expand-collapse-all',
+          defaultMessage: 'Expand/Collapse all topics',
+        }),
         win: [{ keys: ['Ctrl', 'Shift', 'E'] }],
         mac: [{ keys: ['⌘', 'Shift', 'E'] }],
       },

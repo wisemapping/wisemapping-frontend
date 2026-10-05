@@ -68,6 +68,12 @@
   "outline.collapse": {
     "defaultMessage": "Contraer"
   },
+  "outline.expand-all": {
+    "defaultMessage": "Expandir todo"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "Contraer todo"
+  },
   "outline.has-note": {
     "defaultMessage": "Tiene nota"
   },
@@ -775,6 +781,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "Expandir por Nivel"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "Expandir por Nivel (Nivel {level})"
   },
   "appbar.tooltip-change-layout": {
     "defaultMessage": "Cambiar Diseño"

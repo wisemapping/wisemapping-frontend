@@ -56,6 +56,12 @@
   "outline.collapse": {
     "defaultMessage": "Comprimi"
   },
+  "outline.expand-all": {
+    "defaultMessage": "Espandi tutto"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "Comprimi tutto"
+  },
   "outline.has-note": {
     "defaultMessage": "Ha nota"
   },
@@ -889,6 +895,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "Espandi per livello"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "Espandi per livello (livello {level})"
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "Scorciatoie da tastiera"

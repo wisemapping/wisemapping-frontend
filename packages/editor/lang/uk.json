@@ -56,6 +56,12 @@
   "outline.collapse": {
     "defaultMessage": "Згорнути"
   },
+  "outline.expand-all": {
+    "defaultMessage": "Розгорнути все"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "Згорнути все"
+  },
   "outline.has-note": {
     "defaultMessage": "Має нотатку"
   },
@@ -889,6 +895,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "Розгорнути за рівнем"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "Розгорнути за рівнем (рівень {level})"
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "Комбінації клавіш"

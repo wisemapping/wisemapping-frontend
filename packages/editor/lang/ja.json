@@ -56,6 +56,12 @@
   "outline.collapse": {
     "defaultMessage": "折りたたむ"
   },
+  "outline.expand-all": {
+    "defaultMessage": "すべて展開"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "すべて折りたたむ"
+  },
   "outline.has-note": {
     "defaultMessage": "ノートがあります"
   },
@@ -889,6 +895,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "レベルごとに展開"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "レベルごとに展開（レベル {level}）"
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "キーボードショートカット"

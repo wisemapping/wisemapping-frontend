@@ -107,6 +107,12 @@
   "outline.collapse": {
     "defaultMessage": "Свернуть"
   },
+  "outline.expand-all": {
+    "defaultMessage": "Развернуть все"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "Свернуть все"
+  },
   "outline.has-note": {
     "defaultMessage": "Есть заметка"
   },
@@ -889,6 +895,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "Раскрыть по уровню"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "Раскрыть по уровню (уровень {level})"
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "Сочетания клавиш"

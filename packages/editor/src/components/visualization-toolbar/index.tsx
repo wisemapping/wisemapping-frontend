@@ -248,17 +248,16 @@ export function buildVisualizationToolbarConfig(
       ? [
           {
             icon: themeMode === 'light' ? <Brightness4 /> : <Brightness7 />,
-            tooltip: intl.formatMessage(
+            tooltip:
               themeMode === 'light'
-                ? {
+                ? intl.formatMessage({
                     id: 'visualization-toolbar.tooltip-switch-to-dark',
                     defaultMessage: 'Switch to dark mode',
-                  }
-                : {
+                  })
+                : intl.formatMessage({
                     id: 'visualization-toolbar.tooltip-switch-to-light',
                     defaultMessage: 'Switch to light mode',
-                  },
-            ),
+                  }),
             ariaLabel: intl.formatMessage({
               id: 'visualization-toolbar.tooltip-theme-toggle',
               defaultMessage: 'Toggle theme',

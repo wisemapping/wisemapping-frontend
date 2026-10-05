@@ -68,6 +68,12 @@
   "outline.collapse": {
     "defaultMessage": "Einklappen"
   },
+  "outline.expand-all": {
+    "defaultMessage": "Alle erweitern"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "Alle einklappen"
+  },
   "outline.has-note": {
     "defaultMessage": "Hat Notiz"
   },
@@ -889,6 +895,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "Nach Ebene erweitern"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "Nach Ebene erweitern (Ebene {level})"
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "Tastenkürzel"

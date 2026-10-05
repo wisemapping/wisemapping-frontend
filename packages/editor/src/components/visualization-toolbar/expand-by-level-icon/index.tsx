@@ -104,10 +104,18 @@ export const buildExpandByLevelConfig = (
       </IconWithBadgeContainer>
     ),
     tooltip: formatTooltip(
-      intl.formatMessage({
-        id: 'visualization-toolbar.tooltip-expand-level',
-        defaultMessage: `Expand by Level${currentExpandLevel > 0 ? ` (Level ${getVisibleLevelCount(currentExpandLevel)})` : ''}`,
-      }),
+      currentExpandLevel > 0
+        ? intl.formatMessage(
+            {
+              id: 'visualization-toolbar.tooltip-expand-level-current',
+              defaultMessage: 'Expand by Level (Level {level})',
+            },
+            { level: getVisibleLevelCount(currentExpandLevel) },
+          )
+        : intl.formatMessage({
+            id: 'visualization-toolbar.tooltip-expand-level',
+            defaultMessage: 'Expand by Level',
+          }),
       'E',
     ),
     ariaLabel: intl.formatMessage({

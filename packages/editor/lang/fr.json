@@ -68,6 +68,12 @@
   "outline.collapse": {
     "defaultMessage": "Réduire"
   },
+  "outline.expand-all": {
+    "defaultMessage": "Tout développer"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "Tout réduire"
+  },
   "outline.has-note": {
     "defaultMessage": "A une note"
   },
@@ -889,6 +895,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "Développer par niveau"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "Développer par niveau (niveau {level})"
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "Raccourcis clavier"

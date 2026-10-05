@@ -71,3 +71,5 @@ export const FormattedMessage = ({
 );
 
 export const defineMessages = <T,>(messages: T): T => messages;
+
+export const defineMessage = <T,>(message: T): T => message;

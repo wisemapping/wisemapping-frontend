@@ -56,6 +56,12 @@
   "outline.collapse": {
     "defaultMessage": "Recolher"
   },
+  "outline.expand-all": {
+    "defaultMessage": "Expandir tudo"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "Recolher tudo"
+  },
   "outline.has-note": {
     "defaultMessage": "Tem nota"
   },
@@ -889,6 +895,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "Expandir por Nível"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "Expandir por Nível (Nível {level})"
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "Atalhos de Teclado"

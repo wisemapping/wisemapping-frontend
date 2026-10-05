@@ -275,12 +275,14 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
 
           {/* Floating Toolbar for Expand/Collapse All */}
           <FloatingToolbar>
-            <Tooltip title={<FormattedMessage id="outline.expand" defaultMessage="Expand All" />}>
+            <Tooltip
+              title={<FormattedMessage id="outline.expand-all" defaultMessage="Expand All" />}
+            >
               <ToolbarButton
                 size="small"
                 onClick={expandAll}
                 aria-label={intl.formatMessage({
-                  id: 'outline.expand',
+                  id: 'outline.expand-all',
                   defaultMessage: 'Expand All',
                 })}
               >
@@ -288,13 +290,13 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
               </ToolbarButton>
             </Tooltip>
             <Tooltip
-              title={<FormattedMessage id="outline.collapse" defaultMessage="Collapse All" />}
+              title={<FormattedMessage id="outline.collapse-all" defaultMessage="Collapse All" />}
             >
               <ToolbarButton
                 size="small"
                 onClick={collapseAll}
                 aria-label={intl.formatMessage({
-                  id: 'outline.collapse',
+                  id: 'outline.collapse-all',
                   defaultMessage: 'Collapse All',
                 })}
               >

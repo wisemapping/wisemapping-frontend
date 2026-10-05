@@ -77,11 +77,11 @@ const ComboList = ({ combos }: { combos: Combo[] }): ReactElement => (
             <KeyCap>{key}</KeyCap>
           </React.Fragment>
         ))}
-        {combo.noteId && (
+        {combo.note && (
           <>
             {combo.keys && combo.keys.length > 0 && <Joiner>+</Joiner>}
             <Box component="span" sx={{ fontSize: '0.68rem', color: 'text.secondary' }}>
-              <FormattedMessage id={combo.noteId} defaultMessage={combo.noteDefault} />
+              <FormattedMessage {...combo.note} />
             </Box>
           </>
         )}

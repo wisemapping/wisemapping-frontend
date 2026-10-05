@@ -207,7 +207,9 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
             </ActionButton>
           </Tooltip>
           <Tooltip
-            title={<FormattedMessage id="canvas-style.pattern-solid" defaultMessage="Solid" />}
+            title={
+              <FormattedMessage id="canvas-style.pattern-solid" defaultMessage="Solid Color" />
+            }
           >
             <ActionButton
               selected={style.backgroundPattern === 'solid'}
@@ -217,7 +219,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
             </ActionButton>
           </Tooltip>
           <Tooltip
-            title={<FormattedMessage id="canvas-style.pattern-grid" defaultMessage="Grid" />}
+            title={<FormattedMessage id="canvas-style.pattern-grid" defaultMessage="Grid Lines" />}
           >
             <ActionButton
               selected={style.backgroundPattern === 'grid'}

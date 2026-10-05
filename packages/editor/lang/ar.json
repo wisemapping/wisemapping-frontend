@@ -62,6 +62,12 @@
   "outline.collapse": {
     "defaultMessage": "طي"
   },
+  "outline.expand-all": {
+    "defaultMessage": "توسيع الكل"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "طي الكل"
+  },
   "outline.has-note": {
     "defaultMessage": "يحتوي على ملاحظة"
   },
@@ -883,6 +889,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "توسيع حسب المستوى"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "توسيع حسب المستوى (المستوى {level})"
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "اختصارات لوحة المفاتيح"

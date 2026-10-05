@@ -126,14 +126,14 @@ const AppBar = ({
       $notify(
         intl.formatMessage({
           id: 'appbar.title-renamed',
-          defaultMessage: 'Mind map has been renamed',
+          defaultMessage: 'Mindmap renamed',
         }),
       );
     } catch (error) {
       console.error(
         intl.formatMessage({
           id: 'appbar.error-saving-title',
-          defaultMessage: 'Error saving title:',
+          defaultMessage: 'Error saving',
         }),
         error,
       );
@@ -330,7 +330,7 @@ const AppBar = ({
           src={mode === 'light' ? LogoTextBlackSvg : LogoTextOrangeSvg}
           aria-label={intl.formatMessage({
             id: 'appbar.logo-aria-label',
-            defaultMessage: 'WiseMapping',
+            defaultMessage: 'WiseMapping Logo',
           })}
         />
       ),
@@ -493,7 +493,10 @@ const AppBar = ({
     },
     {
       icon: <AccountTreeIcon />,
-      tooltip: intl.formatMessage({ id: 'appbar.tooltip-change-layout', defaultMessage: 'Layout' }),
+      tooltip: intl.formatMessage({
+        id: 'appbar.tooltip-change-layout',
+        defaultMessage: 'Change Layout',
+      }),
       options: [
         {
           render: (closeModal) => {
