@@ -112,45 +112,6 @@ export class AjaxUtils {
   }
 
   /**
-   * Make GET request
-   * Replaces: $.get(url, data, callback, dataType)
-   */
-  static async get(
-    url: string,
-    data?: unknown,
-    dataType: 'json' | 'text' | 'xml' = 'json',
-  ): Promise<unknown> {
-    let fullUrl = url;
-
-    if (data && typeof data === 'object') {
-      const params = new URLSearchParams(data as Record<string, string>);
-      fullUrl += (url.includes('?') ? '&' : '?') + params.toString();
-    }
-
-    return this.ajax({ url: fullUrl, method: 'GET', dataType });
-  }
-
-  /**
-   * Make POST request
-   * Replaces: $.post(url, data, callback, dataType)
-   */
-  static async post(
-    url: string,
-    data?: unknown,
-    dataType: 'json' | 'text' | 'xml' = 'json',
-  ): Promise<unknown> {
-    return this.ajax({ url, method: 'POST', data, dataType });
-  }
-
-  /**
-   * Load JSON data
-   * Replaces: $.getJSON(url, data, callback)
-   */
-  static async getJSON(url: string, data?: unknown): Promise<unknown> {
-    return this.get(url, data, 'json');
-  }
-
-  /**
    * Parse XML string to Document
    * Replaces: $.parseXML(xmlString)
    */
@@ -165,52 +126,5 @@ export class AjaxUtils {
     }
 
     return xmlDoc;
-  }
-
-  /**
-   * Load external script
-   * Replaces: $.getScript(url, callback)
-   */
-  static async loadScript(url: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = url;
-      script.onload = () => resolve();
-      script.onerror = () => reject(new Error(`Failed to load script: ${url}`));
-      document.head.appendChild(script);
-    });
-  }
-
-  /**
-   * Serialize form data
-   * Replaces: $(form).serialize()
-   */
-  static serialize(form: HTMLFormElement): string {
-    const formData = new FormData(form);
-    return new URLSearchParams(formData as unknown as Record<string, string>).toString();
-  }
-
-  /**
-   * Serialize form data to object
-   * Replaces: $(form).serializeArray()
-   */
-  static serializeObject(form: HTMLFormElement): { [key: string]: unknown } {
-    const formData = new FormData(form);
-    const result: { [key: string]: unknown } = {};
-
-    formData.forEach((value, key) => {
-      if (result[key]) {
-        // Handle multiple values for same key
-        if (Array.isArray(result[key])) {
-          result[key].push(value);
-        } else {
-          result[key] = [result[key], value];
-        }
-      } else {
-        result[key] = value;
-      }
-    });
-
-    return result;
   }
 }

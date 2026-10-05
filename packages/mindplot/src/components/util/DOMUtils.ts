@@ -22,69 +22,35 @@
 /* eslint-disable consistent-return */
 class DOMUtils {
   /**
-   * Set or get CSS styles on an element
-   * Replaces: $(element).css(property, value) or $(element).css(property)
+   * Set a CSS style on an element
+   * Replaces: $(element).css(property, value)
    */
-  static css(element: HTMLElement, property: string, value: string): void;
-
-  static css(element: HTMLElement, property: string): string;
-
-  static css(element: HTMLElement, property: string, value?: string): string | void {
-    if (value !== undefined) {
-      // Set CSS property
-      (element.style as unknown as Record<string, string>)[property] = value;
-      return;
-    }
-    // Get CSS property
-    return getComputedStyle(element).getPropertyValue(property);
+  static css(element: HTMLElement, property: string, value: string): void {
+    (element.style as unknown as Record<string, string>)[property] = value;
   }
 
   /**
-   * Set or get HTML content of an element
-   * Replaces: $(element).html(content) or $(element).html()
+   * Set the HTML content of an element
+   * Replaces: $(element).html(content)
    */
-  static html(element: HTMLElement, content: string): void;
-
-  static html(element: HTMLElement): string;
-
-  static html(element: HTMLElement, content?: string): string | void {
-    if (content !== undefined) {
-      element.innerHTML = content;
-      return;
-    }
-    return element.innerHTML;
+  static html(element: HTMLElement, content: string): void {
+    element.innerHTML = content;
   }
 
   /**
-   * Set or get text content of an element
-   * Replaces: $(element).text(content) or $(element).text()
+   * Set the text content of an element
+   * Replaces: $(element).text(content)
    */
-  static text(element: HTMLElement, content: string): void;
-
-  static text(element: HTMLElement): string;
-
-  static text(element: HTMLElement, content?: string): string | void {
-    if (content !== undefined) {
-      element.textContent = content;
-      return;
-    }
-    return element.textContent || '';
+  static text(element: HTMLElement, content: string): void {
+    element.textContent = content;
   }
 
   /**
-   * Set or get attribute value
-   * Replaces: $(element).attr(name, value) or $(element).attr(name)
+   * Set an attribute value
+   * Replaces: $(element).attr(name, value)
    */
-  static attr(element: HTMLElement, name: string, value: string): void;
-
-  static attr(element: HTMLElement, name: string): string;
-
-  static attr(element: HTMLElement, name: string, value?: string): string | void {
-    if (value !== undefined) {
-      element.setAttribute(name, value);
-      return;
-    }
-    return element.getAttribute(name) || '';
+  static attr(element: HTMLElement, name: string, value: string): void {
+    element.setAttribute(name, value);
   }
 
   /**
@@ -144,52 +110,6 @@ class DOMUtils {
   }
 
   /**
-   * Get window height
-   * Replaces: $(window).height()
-   */
-  static windowHeight(): number {
-    return window.innerHeight;
-  }
-
-  /**
-   * Get element position relative to document
-   * Replaces: $(element).offset()
-   */
-  static offset(element: HTMLElement, coords: { top: number; left: number }): void;
-
-  static offset(element: HTMLElement): { top: number; left: number };
-
-  static offset(
-    element: HTMLElement,
-    coords?: { top: number; left: number },
-  ): { top: number; left: number } | void {
-    if (coords !== undefined) {
-      // Set position
-      element.style.position = 'absolute';
-      element.style.top = `${coords.top}px`;
-      element.style.left = `${coords.left}px`;
-      return;
-    }
-    // Get position
-    const rect = element.getBoundingClientRect();
-    return {
-      top: rect.top + window.pageYOffset,
-      left: rect.left + window.pageXOffset,
-    };
-  }
-
-  /**
-   * Get element position relative to parent
-   * Replaces: $(element).position()
-   */
-  static position(element: HTMLElement): { top: number; left: number } {
-    return {
-      top: element.offsetTop,
-      left: element.offsetLeft,
-    };
-  }
-
-  /**
    * Append child element
    * Replaces: $(parent).append(child)
    */
@@ -216,14 +136,6 @@ class DOMUtils {
   }
 
   /**
-   * Get parent element
-   * Replaces: $(element).parent()
-   */
-  static parent(element: HTMLElement): HTMLElement | null {
-    return element.parentElement;
-  }
-
-  /**
    * Create DOM element
    * Replaces: $('<div></div>')
    */
@@ -231,21 +143,6 @@ class DOMUtils {
     tagName: K,
   ): HTMLElementTagNameMap[K] {
     return document.createElement(tagName);
-  }
-
-  /**
-   * Simple fade out effect
-   * Replaces: $(element).fadeOut(duration)
-   */
-  static fadeOut(element: HTMLElement, duration: number = 400): void {
-    element.style.transition = `opacity ${duration}ms`;
-    element.style.opacity = '0';
-
-    setTimeout(() => {
-      element.style.display = 'none';
-      element.style.transition = '';
-      element.style.opacity = '';
-    }, duration);
   }
 
   /**
