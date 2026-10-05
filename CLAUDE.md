@@ -60,21 +60,19 @@ yarn workspace @wisemapping/editor i18n:compile   # produce compiled-lang/*.json
 
 ## Image-snapshot tests
 
-The mindplot and editor Cypress specs compare their screenshots with committed baselines through `@simonsmith/cypress-image-snapshot` (`cy.matchImageSnapshot('name')`). Baselines live in `packages/{mindplot,editor}/cypress/snapshots/<spec>/<name>.snap.png`; diffs go to `.../__diff_output__/` (git-ignored). Pixels depend on fonts, anti-aliasing and CPU, so **baselines are generated and verified only in Docker** (`Dockerfile.snapshots`: pinned `cypress/included` 16.1.1, `linux/amd64`, MS core fonts and Noto colour emoji). It needs Docker, so it is not part of the pre-push hook.
+The web2d, mindplot and editor Cypress specs compare their screenshots with committed baselines through `@simonsmith/cypress-image-snapshot` (`cy.matchImageSnapshot('name')`). Baselines live in `packages/{web2d,mindplot,editor}/cypress/snapshots/<spec>/<name>.snap.png`; diffs go to `.../__diff_output__/` (git-ignored). **Baselines are rendered natively on macOS** (headless Chrome, via Cypress). Fonts and anti-aliasing differ between operating systems, so another OS does not match them.
 
 ```sh
-docker compose -f docker-compose.snapshots.yml up                # verify mindplot + editor, exits 1 on a diff
-docker compose -f docker-compose.snapshots.update.yml up         # write missing / changed baselines
-VISUAL_SUITES=mindplot docker compose -f docker-compose.snapshots.yml up   # one suite (mindplot | editor)
-
-yarn workspace @wisemapping/mindplot test:visual                 # same, per package (also editor)
-yarn workspace @wisemapping/mindplot test:visual:update
+yarn workspace @wisemapping/editor test:visual          # verify: fails on a diff or a missing baseline
+yarn workspace @wisemapping/editor test:visual:update   # write missing / changed baselines
+# same for @wisemapping/web2d and @wisemapping/mindplot
 ```
 
-- The mode comes from `VISUAL_SNAPSHOTS` (set by the compose files): `verify` fails on a diff or a missing baseline, `update` rewrites baselines. Unset (a host `yarn test:integration`) still compares, but only logs differences in the Cypress command log and never writes baselines, since host renders never match the Docker ones.
-- Threshold: a snapshot fails when more than 0.05 % of its pixels differ (`failureThreshold: 0.0005`; per-pixel YIQ tolerance 0.01, which still flags a darker shade of the same colour), set in each package's `cypress/support/commands.*`. Repeated Docker runs are pixel-identical for mindplot and differ by at most ~32 px (0.005 %) for editor, so the threshold only absorbs anti-aliasing. Before capturing, snapshots wait for the story/map to load and its markup to settle, freeze CSS transitions, animations and the caret, hide MUI hover tooltips (timer races), and black out the third-party emoji-picker grid.
-- A rendering change must update the affected baselines in the same commit: run the update compose file, review every changed PNG (`git diff --stat`, open the old and new image), and commit them with the code. To drop obsolete baselines, delete the spec's snapshot folder before updating.
-- The first build downloads the fonts and installs dependencies into the image; later runs rebuild only the source layer.
+- Visual regression is part of the normal run: `test:integration` (and so `yarn test` and the pre-push hook) compares in `verify` mode. `test:visual` runs the same Storybook (web2d, mindplot) or playground (editor) + Cypress flow with `VISUAL_SNAPSHOTS=verify`; `test:visual:update` with `VISUAL_SNAPSHOTS=update`. The editor's visual suite is the playground one (`test:integration:playground`); its Storybook smoke specs take no snapshots.
+- The flow is `scripts/run-storybook-cypress.js`: it starts the server, runs `cypress run --browser chrome` and stops it. It unsets `ELECTRON_RUN_AS_NODE`, which Electron-based hosts set and which keeps the Cypress binary from starting. Each package's `cypress/plugins` launches headless Chrome with a 1600x1200 window, so screenshots are taken at the configured 1000x660 viewport: with the default 1280x720 window, Cypress shrinks the page while it captures, and the resize lands in the middle of the capture.
+- After an intended visual change, regenerate the affected baselines with `test:visual:update`, review every changed PNG (`git status`, open the old and new image, or the `__diff_output__` diff from the failing verify run) and commit them with the code. `update` only rewrites the baselines that differ; to drop obsolete ones, delete the spec's snapshot folder before updating.
+- Threshold (each package's `cypress/support/commands.*`): a snapshot fails when more than 10 pixels differ, with a per-pixel YIQ tolerance of 0.01, which still flags a darker shade of the same colour. Repeated native runs are pixel-identical for web2d and mindplot; for the editor 3 of 128 snapshots differed by 2 px. Before capturing, snapshots wait for the story/map to load and its markup to settle, freeze CSS transitions, animations and the caret, hide MUI hover tooltips (timer races) and click ripples (frozen mid-animation), and black out the third-party emoji-picker grid.
+- The specs also fail on `console.error` (web2d, editor) and `console.warn` (web2d, mindplot). The checks keep their own reference to the spies, because the Vite dev client wraps the console when it forwards it to the terminal (`server.forwardConsole`, on by default under AI agents).
 
 ## Contributing flow
 

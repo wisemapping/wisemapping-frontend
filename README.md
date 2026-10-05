@@ -69,13 +69,11 @@ We use [cypress-image-snapshot](https://www.npmjs.com/package/cypress-image-snap
 
 When a test that contains a `matchImageSnapshot` call is run, it compares the snapshot to the corresponding one in the `snapshots` directory. If Any change is detected, the test will fail, and the diff can be found in the `cypress/snapshots/*/__diff_output__` folder. If the change is intentional, we should "accept" those changes by updating the snapshot and include it in the commit.
 
-There is a [caveat](https://github.com/jaredpalmer/cypress-image-snapshot/issues/98) where colors, fonts or ui may differ depending on the host machine running the tests.
+Colors, fonts and anti-aliasing differ between operating systems ([caveat](https://github.com/jaredpalmer/cypress-image-snapshot/issues/98)), so the baselines are rendered natively on macOS (headless Chrome) and only macOS matches them. The comparison runs with every `yarn test` (`test:integration` compares in verify mode).
 
-A workaround for this is to run the tests using docker. Make sure you have docker and docker-compose installed.
-
-Run snapshot tests: `docker-compose -f docker-compose.snapshots.yml up`  
-If anything changed, and the change was intentional, update the snapshots and then commit the new images to source control.  
-Update snapshots: `docker-compose -f docker-compose.snapshots.update.yml up`
+Run snapshot tests: `yarn workspace @wisemapping/editor test:visual` (also `@wisemapping/web2d` and `@wisemapping/mindplot`)  
+If anything changed, and the change was intentional, update the snapshots, review the changed images and commit them to source control.  
+Update snapshots: `yarn workspace @wisemapping/editor test:visual:update`
 
 # Members
 
