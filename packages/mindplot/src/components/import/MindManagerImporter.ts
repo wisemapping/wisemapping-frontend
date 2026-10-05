@@ -32,6 +32,7 @@ import { decodeUtf8 } from './support/Utf8Decoder';
 import { normalizeHtmlWhitespace } from './support/HtmlText';
 import toWiseMappingXml from './support/MindmapXml';
 import TopicIdSequence from './support/TopicIdSequence';
+import { LETTER_EMOJIS, NUMBER_EMOJIS, ownEntry, PRIORITY_EMOJIS } from './support/IconEmoji';
 import { sidePosition } from './support/MainTopicPosition';
 
 interface MindManagerTopic {
@@ -71,12 +72,7 @@ type TopicKind = 'Root' | 'Label' | 'Callout';
 
 // MindManager icon ids and the WiseMapping EmojiIcons they map to.
 const MINDMANAGER_ICONS: Readonly<Record<string, string>> = {
-  // Priority icons
-  'priority-1': '🔴',
-  'priority-2': '🟡',
-  'priority-3': '🟢',
-  'priority-4': '🔵',
-  'priority-5': '🟣',
+  ...PRIORITY_EMOJIS,
 
   // Task icons
   'task-start': '🟡',
@@ -95,45 +91,9 @@ const MINDMANAGER_ICONS: Readonly<Record<string, string>> = {
   'arrow-left': '⬅️',
   'arrow-right': '➡️',
 
-  // Number icons
-  1: '1️⃣',
-  2: '2️⃣',
-  3: '3️⃣',
-  4: '4️⃣',
-  5: '5️⃣',
-  6: '6️⃣',
-  7: '7️⃣',
-  8: '8️⃣',
-  9: '9️⃣',
-  10: '🔟',
-
-  // Letter icons
-  A: '🅰️',
-  B: '🅱️',
-  C: '🅲',
-  D: '🅳',
-  E: '🅴',
-  F: '🅵',
-  G: '🅶',
-  H: '🅷',
-  I: '🅸',
-  J: '🅹',
-  K: '🅺',
-  L: '🅻',
-  M: '🅼',
-  N: '🅽',
-  O: '🅾️',
-  P: '🅿️',
-  Q: '🆀',
-  R: '🆁',
-  S: '🆂',
-  T: '🆃',
-  U: '🆄',
-  V: '🆅',
-  W: '🆆',
-  X: '🆇',
-  Y: '🆈',
-  Z: '🆉',
+  // Number and letter icons, the letters matched in any case (A or a)
+  ...NUMBER_EMOJIS,
+  ...LETTER_EMOJIS,
 
   // Emotion icons
   smile: '😊',
@@ -255,9 +215,10 @@ class MindManagerImporter extends Importer {
   // The emoji of a MindManager icon id, its own or the one of its id in another case. Undefined
   // for an unknown icon.
   private static mapMindManagerIconToEmojiIcon(iconId: string): string | undefined {
-    return Object.prototype.hasOwnProperty.call(MINDMANAGER_ICONS, iconId)
-      ? MINDMANAGER_ICONS[iconId]
-      : MINDMANAGER_ICONS_BY_LOWER_CASE.get(iconId.toLowerCase());
+    return (
+      ownEntry(MINDMANAGER_ICONS, iconId) ??
+      MINDMANAGER_ICONS_BY_LOWER_CASE.get(iconId.toLowerCase())
+    );
   }
 
   private buildMindmap(rootTopic: MindManagerTopic, nameMap: string, doc: Document): Mindmap {

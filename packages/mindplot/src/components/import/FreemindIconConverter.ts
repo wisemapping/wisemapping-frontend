@@ -18,6 +18,7 @@
 
 import iconFamily from '../model/SvgIconFamily.json';
 import { legacyIconEmoji } from './support/LegacyIconMap';
+import { ownEntry } from './support/IconEmoji';
 
 export type WiseIcon = { type: 'icon' | 'eicon'; id: string };
 
@@ -149,12 +150,11 @@ const svgIdToFreeId: Record<string, string> = {
 
 export default class FreemindIconConverter {
   public static toWiseIcon(iconId: string): WiseIcon | null {
-    if (Object.prototype.hasOwnProperty.call(freeIdToSvgId, iconId)) {
-      return { type: 'icon', id: freeIdToSvgId[iconId] };
+    const svgId = ownEntry(freeIdToSvgId, iconId);
+    if (svgId) {
+      return { type: 'icon', id: svgId };
     }
-    const emoji = Object.prototype.hasOwnProperty.call(freeIdToEmoji, iconId)
-      ? freeIdToEmoji[iconId]
-      : undefined;
+    const emoji = ownEntry(freeIdToEmoji, iconId);
     if (emoji) {
       return { type: 'eicon', id: emoji };
     }
@@ -171,9 +171,7 @@ export default class FreemindIconConverter {
    * FreeMind can not display them, but they are imported back as the same WiseMapping icon.
    */
   public static svgToFreemindIcon(iconId: string): string {
-    return Object.prototype.hasOwnProperty.call(svgIdToFreeId, iconId)
-      ? svgIdToFreeId[iconId]
-      : iconId;
+    return ownEntry(svgIdToFreeId, iconId) ?? iconId;
   }
 
   /** The FreeMind builtin icon of an emoji icon, null if FreeMind has no equivalent. */

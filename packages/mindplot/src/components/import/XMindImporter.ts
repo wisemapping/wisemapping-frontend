@@ -77,6 +77,13 @@ import FeatureModelFactory from '../model/FeatureModelFactory';
 import { decodeUtf8, tryDecodeUtf8 } from './support/Utf8Decoder';
 import toWiseMappingXml from './support/MindmapXml';
 import TopicIdSequence from './support/TopicIdSequence';
+import {
+  LETTER_EMOJIS,
+  NAMED_ICON_EMOJIS,
+  NUMBER_EMOJIS,
+  ownEntry,
+  PRIORITY_EMOJIS,
+} from './support/IconEmoji';
 import { alternatingSidePosition } from './support/MainTopicPosition';
 import PositionType from '../PositionType';
 
@@ -145,384 +152,23 @@ const MAX_XMIND_CONTENT_BYTES = 50 * 1024 * 1024;
 const isXMindContentEntry = (name: string): boolean =>
   name.endsWith('content.json') || name.endsWith('content.xml');
 
-// XMind icons (marker ids) and the WiseMapping EmojiIcon ids they map to. Built once: the
-// tables are hundreds of entries long.
-const XMIND_ICONS: Readonly<Record<string, string>> = {
-  // Priority icons
-  'priority-1': '🔴', // Red circle
-  'priority-2': '🟡', // Yellow circle
-  'priority-3': '🟢', // Green circle
-  'priority-4': '🔵', // Blue circle
-  'priority-5': '🟣', // Purple circle
+// XMind marker ids and the WiseMapping emoji icons they map to.
+const XMIND_ICON_EMOJIS: Readonly<Record<string, string>> = {
+  ...NAMED_ICON_EMOJIS,
+  ...NUMBER_EMOJIS,
+  ...LETTER_EMOJIS,
+  ...PRIORITY_EMOJIS,
 
   // Star and rating icons
-  star: '⭐', // Star
-  'star-1': '⭐', // Star
-  'star-2': '⭐', // Star
-  'star-3': '⭐', // Star
-
-  // Task and completion icons
-  task: '📋', // Clipboard
-  'task-done': '✅', // Check mark
-  'task-start': '🟡', // Yellow circle
-  'task-pause': '⏸️', // Pause button
-  'task-stop': '⏹️', // Stop button
-
-  // Arrow and direction icons
-  'arrow-up': '⬆️', // ⬆️
-  'arrow-down': '⬇️', // ⬇️
-  'arrow-left': '⬅️', // ⬅️
-  'arrow-right': '➡️', // ➡️
-  'arrow-up-right': '↗️', // ↗️
-  'arrow-down-right': '↘️', // ↘️
-  'arrow-down-left': '↙️', // ↙️
-  'arrow-up-left': '↖️', // ↖️
-
-  // Symbol icons
-  smile: '😊', // 😊
-  sad: '😢', // 😢
-  angry: '😠', // 😠
-  surprised: '😲', // 😲
-  confused: '😕', // 😕
-  thinking: '🤔', // 🤔
-  happy: '😃', // 😃
-  laughing: '😂', // 😂
-  wink: '😉', // 😉
-  kiss: '😘', // 😘
-  love: '😍', // 😍
-  cool: '😎', // 😎
-  sleepy: '😪', // 😪
-  tired: '😴', // 😴
-  worried: '😟', // 😟
-  crying: '😭', // 😭
-  screaming: '😱', // 😱
-  neutral: '😐', // 😐
-  expressionless: '😑', // 😑
-
-  // Numbers (1-10)
-  'number-1': '1️⃣', // 1️⃣
-  'number-2': '2️⃣', // 2️⃣
-  'number-3': '3️⃣', // 3️⃣
-  'number-4': '4️⃣', // 4️⃣
-  'number-5': '5️⃣', // 5️⃣
-  'number-6': '6️⃣', // 6️⃣
-  'number-7': '7️⃣', // 7️⃣
-  'number-8': '8️⃣', // 8️⃣
-  'number-9': '9️⃣', // 9️⃣
-  'number-10': '🔟', // 🔟
-  1: '1️⃣', // 1️⃣
-  2: '2️⃣', // 2️⃣
-  3: '3️⃣', // 3️⃣
-  4: '4️⃣', // 4️⃣
-  5: '5️⃣', // 5️⃣
-  6: '6️⃣', // 6️⃣
-  7: '7️⃣', // 7️⃣
-  8: '8️⃣', // 8️⃣
-  9: '9️⃣', // 9️⃣
-  10: '🔟', // 🔟
-
-  // Letters (A-Z)
-  'letter-a': '🅰️', // 🅰️
-  'letter-b': '🅱️', // 🅱️
-  'letter-c': '🅲', // 🅲
-  'letter-d': '🅳', // 🅳
-  'letter-e': '🅴', // 🅴
-  'letter-f': '🅵', // 🅵
-  'letter-g': '🅶', // 🅶
-  'letter-h': '🅷', // 🅷
-  'letter-i': '🅸', // 🅸
-  'letter-j': '🅹', // 🅹
-  'letter-k': '🅺', // 🅺
-  'letter-l': '🅻', // 🅻
-  'letter-m': '🅼', // 🅼
-  'letter-n': '🅽', // 🅽
-  'letter-o': '🅾️', // 🅾️
-  'letter-p': '🅿️', // 🅿️
-  'letter-q': '🆀', // 🆀
-  'letter-r': '🆁', // 🆁
-  'letter-s': '🆂', // 🆂
-  'letter-t': '🆃', // 🆃
-  'letter-u': '🆄', // 🆄
-  'letter-v': '🆅', // 🆅
-  'letter-w': '🆆', // 🆆
-  'letter-x': '🆇', // 🆇
-  'letter-y': '🆈', // 🆈
-  'letter-z': '🆉', // 🆉
-  a: '🅰️', // 🅰️
-  b: '🅱️', // 🅱️
-  c: '🅲', // 🅲
-  d: '🅳', // 🅳
-  e: '🅴', // 🅴
-  f: '🅵', // 🅵
-  g: '🅶', // 🅶
-  h: '🅷', // 🅷
-  i: '🅸', // 🅸
-  j: '🅹', // 🅹
-  k: '🅺', // 🅺
-  l: '🅻', // 🅻
-  m: '🅼', // 🅼
-  n: '🅽', // 🅽
-  o: '🅾️', // 🅾️
-  p: '🅿️', // 🅿️
-  q: '🆀', // 🆀
-  r: '🆁', // 🆁
-  s: '🆂', // 🆂
-  t: '🆃', // 🆃
-  u: '🆄', // 🆄
-  v: '🆅', // 🆅
-  w: '🆆', // 🆆
-  x: '🆇', // 🆇
-  y: '🆈', // 🆈
-  z: '🆉', // 🆉
+  'star-1': '⭐',
+  'star-2': '⭐',
+  'star-3': '⭐',
 
   // Flag icons
-  flag: '🚩', // 🚩
-  'flag-red': '🚩', // 🚩
-  'flag-yellow': '🟡', // 🟡
-  'flag-green': '🟢', // 🟢
-  'flag-blue': '🔵', // 🔵
+  flag: '🚩',
+  'flag-red': '🚩',
 
-  // People icons
-  people: '👥', // 👥
-  person: '👤', // 👤
-  'person-1': '👤', // 👤
-  'person-2': '👥', // 👥
-  'person-3': '👥', // 👥
-
-  // Time and date icons
-  clock: '🕐', // 🕐
-  calendar: '📅', // 📅
-  time: '⏰', // ⏰
-
-  // Communication icons
-  phone: '📞', // 📞
-  email: '📧', // 📧
-  message: '💬', // 💬
-  chat: '💬', // 💬
-
-  // File and document icons
-  file: '📄', // 📄
-  folder: '📁', // 📁
-  attachment: '📎', // 📎
-  link: '🔗', // 🔗
-
-  // Warning and info icons
-  warning: '⚠️', // ⚠️
-  info: 'ℹ️', // ℹ️
-  question: '❓', // ❓
-  exclamation: '❗', // ❗
-
-  // Heart and like icons
-  heart: '❤️', // ❤️
-  like: '👍', // 👍
-  dislike: '👎', // 👎
-
-  // Lightbulb and idea icons
-  lightbulb: '💡', // 💡
-  idea: '💡', // 💡
-  bulb: '💡', // 💡
-
-  // Money and business icons
-  money: '💰', // 💰
-  dollar: '💲', // 💲
-  euro: '💶', // 💶
-  pound: '💷', // 💷
-
-  // Location icons
-  location: '📍', // 📍
-  home: '🏠', // 🏠
-  building: '🏢', // 🏢
-  school: '🏫', // 🏫
-
-  // Technology icons
-  computer: '💻', // 💻
-  laptop: '💻', // 💻
-  'phone-mobile': '📱', // 📱
-  tablet: '📱', // 📱
-
-  // Weather icons
-  sun: '☀️', // ☀️
-  cloud: '☁️', // ☁️
-  rain: '🌧️', // 🌧️
-  snow: '❄️', // ❄️
-  storm: '⛈️', // ⛈️
-  rainbow: '🌈', // 🌈
-  sunny: '🌞', // 🌞
-  'partly-cloudy': '⛅', // ⛅
-  cloudy: '🌥️', // 🌥️
-  lightning: '⚡', // ⚡
-  tornado: '🌪️', // 🌪️
-  fog: '🌫️', // 🌫️
-  wind: '🌬️', // 🌬️
-  thermometer: '🌡️', // 🌡️
-
-  // Animals
-  dog: '🐶', // 🐶
-  cat: '🐱', // 🐱
-  mouse: '🐭', // 🐭
-  hamster: '🐹', // 🐹
-  rabbit: '🐰', // 🐰
-  fox: '🦊', // 🦊
-  bear: '🐻', // 🐻
-  panda: '🐼', // 🐼
-  koala: '🐨', // 🐨
-  lion: '🦁', // 🦁
-  tiger: '🐯', // 🐯
-  cow: '🐮', // 🐮
-  pig: '🐷', // 🐷
-  frog: '🐸', // 🐸
-  monkey: '🐵', // 🐵
-  chicken: '🐔', // 🐔
-  penguin: '🐧', // 🐧
-  bird: '🐦', // 🐦
-  fish: '🐟', // 🐟
-  whale: '🐳', // 🐳
-  dolphin: '🐬', // 🐬
-  octopus: '🐙', // 🐙
-  spider: '🕷️', // 🕷️
-  bug: '🐛', // 🐛
-  bee: '🐝', // 🐝
-  butterfly: '🦋', // 🦋
-  snail: '🐌', // 🐌
-  turtle: '🐢', // 🐢
-  snake: '🐍', // 🐍
-  dragon: '🐉', // 🐉
-  unicorn: '🦄', // 🦄
-
-  // Food and drink icons
-  coffee: '☕', // ☕
-  food: '🍽️', // 🍽️
-  pizza: '🍕', // 🍕
-  burger: '🍔', // 🍔
-  apple: '🍎', // 🍎
-  orange: '🍊', // 🍊
-  banana: '🍌', // 🍌
-  grapes: '🍇', // 🍇
-  strawberry: '🍓', // 🍓
-  kiwi: '🥝', // 🥝
-  peach: '🍑', // 🍑
-  coconut: '🥥', // 🥥
-  cherry: '🍒', // 🍒
-  lemon: '🍋', // 🍋
-  watermelon: '🍉', // 🍉
-  pineapple: '🍍', // 🍍
-  bread: '🍞', // 🍞
-  cookie: '🍪', // 🍪
-  candy: '🍬', // 🍬
-  chocolate: '🍫', // 🍫
-  'ice-cream': '🍦', // 🍦
-  popcorn: '🍿', // 🍿
-  beer: '🍺', // 🍺
-  wine: '🍷', // 🍷
-  cocktail: '🍸', // 🍸
-  tea: '🍵', // 🍵
-  milk: '🥛', // 🥛
-  water: '💧', // 💧
-
-  // Sports and activity icons
-  sports: '⚽', // ⚽
-  football: '⚽', // ⚽
-  basketball: '🏀', // 🏀
-  tennis: '🎾', // 🎾
-  swimming: '🏊', // 🏊
-  soccer: '⚽', // ⚽
-  baseball: '⚾', // ⚾
-  volleyball: '🏐', // 🏐
-  rugby: '🏈', // 🏈
-  golf: '⛳', // ⛳
-  bowling: '🎳', // 🎳
-  running: '🏃', // 🏃
-  cycling: '🚴', // 🚴
-  skiing: '⛷️', // ⛷️
-  snowboarding: '🏂', // 🏂
-  surfing: '🏄', // 🏄
-  climbing: '🧗', // 🧗
-  yoga: '🧘', // 🧘
-  dancing: '💃', // 💃
-  gym: '🏋️', // 🏋️
-  weightlifting: '🏋️', // 🏋️
-  boxing: '🥊', // 🥊
-  'martial-arts': '🥋', // 🥋
-  archery: '🏹', // 🏹
-  fishing: '🎣', // 🎣
-  hiking: '🧖', // 🧖
-  camping: '🏕️', // 🏕️
-  picnic: '🍽️', // 🍽️
-  barbecue: '🍳', // 🍳
-  target: '🎯', // 🎯
-  trophy: '🏆', // 🏆
-  medal: '🏅', // 🏅
-  'first-place': '🥇', // 🥇
-  'second-place': '🥈', // 🥈
-  'third-place': '🥉', // 🥉
-
-  // Music and entertainment icons
-  music: '🎵', // 🎵
-  movie: '🎬', // 🎬
-  game: '🎮', // 🎮
-  book: '📚', // 📚
-
-  // Travel and transport icons
-  car: '🚗', // 🚗
-  plane: '✈️', // ✈️
-  train: '🚂', // 🚂
-  bus: '🚌', // 🚌
-  bike: '🚲', // 🚲
-
-  // Nature icons
-  tree: '🌳', // 🌳
-  flower: '🌸', // 🌸
-  leaf: '🍃', // 🍃
-  mountain: '⛰️', // ⛰️
-  ocean: '🌊', // 🌊
-
-  // Holiday and celebration icons
-  gift: '🎁', // 🎁
-  cake: '🎂', // 🎂
-  party: '🎉', // 🎉
-  fireworks: '🎆', // 🎆
-  christmas: '🎄', // 🎄
-  halloween: '🎃', // 🎃
-
-  // Tools and work icons
-  tool: '🔧', // 🔧
-  wrench: '🔧', // 🔧
-  hammer: '🔨', // 🔨
-  screwdriver: '🔩', // 🔩
-  key: '🔑', // 🔑
-  lock: '🔒', // 🔒
-
-  // Medical and health icons
-  medical: '🏥', // 🏥
-  health: '💊', // 💊
-  pill: '💊', // 💊
-  heartbeat: '💓', // 💓
-  cross: '➕', // ➕
-
-  // Shopping and commerce icons
-  shopping: '🛒', // 🛒
-  cart: '🛒', // 🛒
-  bag: '👜', // 👜
-  'credit-card': '💳', // 💳
-
-  // Security and safety icons
-  security: '🔒', // 🔒
-  shield: '🛡️', // 🛡️
-  'lock-closed': '🔒', // 🔒
-  'lock-open': '🔓', // 🔓
-
-  // Science and education icons
-  science: '🔬', // 🔬
-  microscope: '🔬', // 🔬
-  telescope: '🔭', // 🔭
-  atom: '⚛️', // ⚛️
-  'book-open': '📖', // 📖
-  graduation: '🎓', // 🎓
-};
-
-// Additional comprehensive mappings for common XMind icons
-const XMIND_ADDITIONAL_ICONS: Readonly<Record<string, string>> = {
-  // More entertainment
+  // Entertainment
   tv: '📺',
   radio: '📻',
   camera: '📷',
@@ -536,7 +182,7 @@ const XMIND_ADDITIONAL_ICONS: Readonly<Record<string, string>> = {
   violin: '🎻',
   saxophone: '🎷',
 
-  // More symbols and objects
+  // Symbols and objects
   fire: '🔥',
   bomb: '💣',
   diamond: '💎',
@@ -546,7 +192,7 @@ const XMIND_ADDITIONAL_ICONS: Readonly<Record<string, string>> = {
   confetti: '🎊',
   celebration: '🎆',
 
-  // More transport
+  // Transport
   helicopter: '🚁',
   rocket: '🚀',
   satellite: '🛰️',
@@ -560,12 +206,11 @@ const XMIND_ADDITIONAL_ICONS: Readonly<Record<string, string>> = {
   circus: '🎪',
   tent: '⛺',
 
-  // More nature and environment
+  // Nature and environment
   desert: '🏜️',
   volcano: '🌋',
   island: '🏝️',
   beach: '🏖️',
-  camping: '🏕️',
   'national-park': '🏞️',
   stadium: '🏟️',
   bridge: '🌉',
@@ -574,7 +219,7 @@ const XMIND_ADDITIONAL_ICONS: Readonly<Record<string, string>> = {
   sunrise: '🌅',
   sunset: '🌇',
 
-  // More technology and gadgets
+  // Technology and gadgets
   keyboard: '⌨️',
   'mouse-computer': '🖱️',
   printer: '🖨️',
@@ -588,21 +233,20 @@ const XMIND_ADDITIONAL_ICONS: Readonly<Record<string, string>> = {
   'satellite-antenna': '📡',
   'radio-signal': '📡',
 
-  // More business and office
+  // Business and office
   briefcase: '💼',
   'office-building': '🏢',
   factory: '🏭',
   warehouse: '🏭',
   bank: '🏦',
   hospital: '🏥',
-  school: '🏫',
   university: '🏫',
   library: '🏛️',
   museum: '🏟️',
   theater: '🎭',
   cinema: '🎬',
 
-  // More household items
+  // Household items
   bed: '🛏️',
   couch: '🛋️',
   chair: 'emoji-1f6c0',
@@ -612,11 +256,9 @@ const XMIND_ADDITIONAL_ICONS: Readonly<Record<string, string>> = {
   mirror: '🪞',
   window: '🪟',
   door: '🚪',
-  key: '🔑',
-  lock: '🔒',
   unlock: '🔓',
 
-  // More clothing and accessories
+  // Clothing and accessories
   shirt: '👕',
   jeans: '👖',
   dress: '👗',
@@ -632,24 +274,16 @@ const XMIND_ADDITIONAL_ICONS: Readonly<Record<string, string>> = {
   'top-hat': '🎩',
   'military-helmet': '🪖',
 
-  // More miscellaneous
+  // Miscellaneous
   hourglass: '⏳',
   stopwatch: '⏱️',
   'alarm-clock': '⏰',
   timer: 'emoji-23f2',
   'magnifying-glass': '🔍',
-  microscope: '🔬',
-  telescope: '🔭',
   compass: '🧭',
   globe: '🌍',
   'world-map': '🗺️',
-  flag: '🚩',
   pennant: 'emoji-1f3f1',
-};
-
-const XMIND_ICON_EMOJIS: Readonly<Record<string, string>> = {
-  ...XMIND_ICONS,
-  ...XMIND_ADDITIONAL_ICONS,
 };
 
 class XMindImporter extends Importer {
@@ -1292,13 +926,7 @@ class XMindImporter extends Importer {
   }
 
   private mapXMindIconToEmojiIcon(iconId: string): string {
-    // Return mapped EmojiIcon ID or default if not found. Only own entries:
-    // XMIND_ICON_EMOJIS.constructor is the Object function.
-    const key = iconId.toLowerCase();
-    const mapped = Object.prototype.hasOwnProperty.call(XMIND_ICON_EMOJIS, key)
-      ? XMIND_ICON_EMOJIS[key]
-      : undefined;
-    return mapped || '💡'; // Default to lightbulb
+    return ownEntry(XMIND_ICON_EMOJIS, iconId.toLowerCase()) || '💡'; // Default to lightbulb
   }
 
   // Only direct children: descendant queries would pick up the data of nested topics.
