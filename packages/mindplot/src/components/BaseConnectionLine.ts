@@ -20,16 +20,20 @@ import { CurvedLine, PolyLine, HeartbeatLine, NeuronLine } from '@wisemapping/we
 import type { Line, StrokeStyle } from '@wisemapping/web2d';
 import Canvas from './Canvas';
 
+/**
+ * The values are persisted (a topic's connStyle="N"), so each one is pinned: reordering the
+ * members, or inserting one, must not renumber them.
+ */
 export enum LineType {
-  THIN_CURVED,
-  POLYLINE_MIDDLE,
-  POLYLINE_CURVED,
-  POLYLINE_STRAIGHT,
-  THICK_CURVED,
-  THICK_CURVED_ORGANIC,
-  ARC,
-  HEARTBEAT,
-  NEURON,
+  THIN_CURVED = 0,
+  POLYLINE_MIDDLE = 1,
+  POLYLINE_CURVED = 2,
+  POLYLINE_STRAIGHT = 3,
+  THICK_CURVED = 4,
+  THICK_CURVED_ORGANIC = 5,
+  ARC = 6,
+  HEARTBEAT = 7,
+  NEURON = 8,
 }
 
 /**
