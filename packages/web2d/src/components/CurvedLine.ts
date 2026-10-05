@@ -107,7 +107,8 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements ControlPoin
     return this.peer.updateLine(Boolean(avoidControlPointFix));
   }
 
-  setDashed(length: number, spacing: number) {
+  /** Dashes the line; called without a length and a spacing, it draws it solid again. */
+  setDashed(length?: number, spacing?: number) {
     this.peer.setDashed(length, spacing);
   }
 

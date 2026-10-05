@@ -725,8 +725,8 @@ class Relationship extends BaseConnectionLine {
   private _applyStrokeStyle(strokeStyle: StrokeStyle): void {
     switch (strokeStyle) {
       case StrokeStyle.SOLID:
-        // Remove any dashed pattern for solid lines
-        this._line.setDashed(0, 0);
+        // Removes the dash array (a '0,0' one would be a dash of zero length)
+        (this._line as CurvedLine).setDashed();
         break;
       case StrokeStyle.DASHED:
         // 8px dashes, 4px gaps

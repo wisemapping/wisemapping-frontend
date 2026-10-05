@@ -192,7 +192,7 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
     }
   }
 
-  setDashed(length: number, spacing: number) {
+  setDashed(length?: number, spacing?: number) {
     if ($defined(length) && $defined(spacing)) {
       this.attr('stroke-dasharray', `${length},${spacing}`);
     } else {
