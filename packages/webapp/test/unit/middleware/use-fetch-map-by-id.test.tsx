@@ -34,11 +34,12 @@ const metadata = {
 const wrapperFor = (client: Client) => {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 
-  return ({ children }: { children: React.ReactNode }): React.ReactElement => (
+  const Wrapper = ({ children }: { children: React.ReactNode }): React.ReactElement => (
     <QueryClientProvider client={queryClient}>
       <ClientContext.Provider value={client}>{children}</ClientContext.Provider>
     </QueryClientProvider>
   );
+  return Wrapper;
 };
 
 describe('useFetchMapById', () => {

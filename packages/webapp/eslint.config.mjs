@@ -79,4 +79,19 @@ export default defineConfig([globalIgnores(["**/packages/mindplot/**/*", "**/dis
             ignore: ["css"],
         }],
     },
+}, {
+    // The Jest environment and the CommonJS module mocks run in Node, not through the bundler.
+    files: ["test/**/*.js"],
+
+    languageOptions: {
+        globals: {
+            ...globals.node,
+        },
+
+        sourceType: "commonjs",
+    },
+
+    rules: {
+        "@typescript-eslint/no-require-imports": "off",
+    },
 }]);

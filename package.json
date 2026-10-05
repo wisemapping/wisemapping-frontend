@@ -39,7 +39,7 @@
       "cd packages/editor && eslint --fix",
       "prettier --write"
     ],
-    "packages/webapp/src/**/*.{ts,tsx}": [
+    "packages/webapp/{src,test}/**/*.{ts,tsx}": [
       "cd packages/webapp && eslint --fix",
       "prettier --write"
     ],

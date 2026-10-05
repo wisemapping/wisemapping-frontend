@@ -47,9 +47,9 @@ const formatMessage = (descriptor: Descriptor, values?: Values): string =>
 export const intl = {
   locale: 'en',
   formatMessage,
-  formatDate: (value: Date | number | string) => new Date(value).toISOString(),
-  formatNumber: (value: number) => String(value),
-  formatPlural: (value: number) => (value === 1 ? 'one' : 'other'),
+  formatDate: (value: Date | number | string): string => new Date(value).toISOString(),
+  formatNumber: (value: number): string => String(value),
+  formatPlural: (value: number): string => (value === 1 ? 'one' : 'other'),
 };
 
 export const useIntl = (): typeof intl => intl;
