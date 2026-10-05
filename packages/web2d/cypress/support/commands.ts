@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-// Visual regression (see cypress/plugins/index.js and the "Image-snapshot tests" section of CLAUDE.md).
+// Visual regression (see cypress/plugins/index.ts and the "Image-snapshot tests" section of CLAUDE.md).
 // matchImageSnapshot compares with cypress/snapshots/<spec>/<name>.snap.png, rendered natively on
 // macOS (headless Chrome). A snapshot fails when more than 10 pixels differ: repeated native runs
 // are pixel-identical, so this only leaves room for an isolated anti-aliasing pixel.
@@ -33,9 +33,10 @@ addMatchImageSnapshotCommand({
 // A story renders asynchronously: wait until Storybook shows it (not the "preparing" spinner),
 // its workspace is in the DOM and the fonts are loaded, so that a snapshot never captures a
 // half-rendered page.
-Cypress.Commands.overwrite('visit', (originalFn, url, options) =>
-  originalFn(url, options).then(() => {
-    if (String(url).includes('iframe.html')) {
+// The specs call cy.visit(url), so the first argument is the URL string.
+Cypress.Commands.overwrite('visit', (originalFn, ...args) =>
+  originalFn(...args).then(() => {
+    if (String(args[0]).includes('iframe.html')) {
       cy.get('body.sb-show-main', { timeout: 30000 });
       cy.get('#storybook-root svg', { timeout: 30000 }).should('exist');
       cy.document().its('fonts.status').should('equal', 'loaded');

@@ -15,25 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const { defineConfig } = require('cypress');
-const { visualSnapshotExpose } = require('./cypress/plugins/index.js');
+import { defineConfig } from 'cypress';
+import setupNodeEvents, { visualSnapshotExpose } from './cypress/plugins';
 
-module.exports = defineConfig({
+export default defineConfig({
   video: process.env.CYPRESS_VIDEO === 'true',
-  // Image-snapshot mode (VISUAL_SNAPSHOTS=verify, the default, or update), see cypress/plugins/index.js.
+  // Image-snapshot mode (VISUAL_SNAPSHOTS=verify, the default, or update), see cypress/plugins/index.ts.
   expose: visualSnapshotExpose(),
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config);
-    },
+    setupNodeEvents,
     baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:6006',
-    // Add macOS compatibility options
+    specPattern: 'cypress/e2e/**/*.cy.ts',
+    supportFile: 'cypress/support/e2e.ts',
     chromeWebSecurity: false,
-  },
-  // Add browser launch options for macOS compatibility
-  chrome: {
-    args: ['--no-sandbox', '--disable-web-security', '--disable-features=VizDisplayCompositor'],
   },
 });

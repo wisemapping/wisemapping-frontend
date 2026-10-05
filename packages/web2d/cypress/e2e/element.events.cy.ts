@@ -41,7 +41,7 @@ describe('Element Events Suite', () => {
 });
 
 describe('Element Events Registration Suite', () => {
-  const visit = (args) =>
+  const visit = (args: string) =>
     cy.visit(`/iframe.html?args=${args}&id=shapes-element--events-registration&viewMode=story`);
 
   it('Element Events Registration', () => {

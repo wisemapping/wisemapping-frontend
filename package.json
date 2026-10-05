@@ -47,6 +47,9 @@
       "cd packages/web2d && eslint --fix",
       "prettier --write"
     ],
+    "packages/web2d/{storybook/**/*,cypress/**/*,cypress.config}.ts": [
+      "prettier --write"
+    ],
     "**/*.{js,jsx}": [
       "prettier --write"
     ],

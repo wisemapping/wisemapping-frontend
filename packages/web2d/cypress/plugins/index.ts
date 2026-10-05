@@ -16,20 +16,7 @@
  *   limitations under the License.
  */
 /// <reference types="cypress" />
-// ***********************************************************
-// This example plugins/index.js can be used to load plugins
-//
-// You can change the location of this file or turn off loading
-// the plugins file with the 'pluginsFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/plugins-guide
-// ***********************************************************
-
-// This function is called when a project is opened or re-opened (e.g. due to
-// the project's config changing)
-
-const { addMatchImageSnapshotPlugin } = require('@simonsmith/cypress-image-snapshot/plugin');
+import { addMatchImageSnapshotPlugin } from '@simonsmith/cypress-image-snapshot/plugin';
 
 /**
  * Visual regression mode, read from the VISUAL_SNAPSHOTS environment variable.
@@ -43,7 +30,7 @@ const { addMatchImageSnapshotPlugin } = require('@simonsmith/cypress-image-snaps
  * The baselines are rendered natively on macOS (headless Chrome): another OS renders fonts and
  * anti-aliasing differently and does not match them.
  */
-const visualSnapshotMode = () => {
+const visualSnapshotMode = (): string => {
   const mode = (process.env.VISUAL_SNAPSHOTS || 'verify').trim().toLowerCase();
   if (mode !== 'verify' && mode !== 'update') {
     throw new Error(`VISUAL_SNAPSHOTS must be 'verify' or 'update', got '${mode}'`);
@@ -52,7 +39,7 @@ const visualSnapshotMode = () => {
 };
 
 /** `expose` values read by @simonsmith/cypress-image-snapshot. */
-const visualSnapshotExpose = () => {
+export const visualSnapshotExpose = (): Record<string, string | boolean> => {
   const mode = visualSnapshotMode();
   return {
     visualSnapshots: mode,
@@ -62,13 +49,11 @@ const visualSnapshotExpose = () => {
   };
 };
 
-/**
- * @type {Cypress.PluginConfig}
- */
-// eslint-disable-next-line no-unused-vars
-module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+/** The `setupNodeEvents` of the Cypress config. */
+const setupNodeEvents = (
+  on: Cypress.PluginEvents,
+  config: Cypress.PluginConfigOptions,
+): Cypress.PluginConfigOptions => {
   addMatchImageSnapshotPlugin(on);
   // Headless Chrome opens a 1280x720 window, too small for the 1000x660 viewport and the Cypress
   // runner around it: Cypress then shrinks the page to 1000x633 while it takes a screenshot, and
@@ -80,5 +65,7 @@ module.exports = (on, config) => {
     }
     return launchOptions;
   });
+  return config;
 };
-module.exports.visualSnapshotExpose = visualSnapshotExpose;
+
+export default setupNodeEvents;

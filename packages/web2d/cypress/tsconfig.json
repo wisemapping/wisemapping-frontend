@@ -1,0 +1,14 @@
+{
+  // Type checks the Cypress specs, support files and config (`tsc -p cypress`, part of `yarn lint`).
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "types": ["cypress", "node"]
+  },
+  "include": ["**/*", "../cypress.config.ts"]
+}

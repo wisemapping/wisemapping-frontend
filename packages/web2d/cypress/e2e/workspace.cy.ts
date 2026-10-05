@@ -43,7 +43,7 @@ describe('Workspace Suite', () => {
       .eq(1)
       .invoke('attr', 'viewBox')
       .then((viewBox) => {
-        const [x, y] = viewBox.split(' ').map(Number);
+        const [x, y] = String(viewBox).split(' ').map(Number);
         expect(x).to.be.closeTo(-57, 0.0001);
         expect(y).to.be.closeTo(-57, 0.0001);
       });

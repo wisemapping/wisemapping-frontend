@@ -30,14 +30,13 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
 import './commands';
 
 // The spies are kept here, not read back from win.console: the Vite dev client wraps
 // console.error/warn after the page starts loading when it forwards the browser console to the
 // terminal (server.forwardConsole, on by default under AI agents). The wrapper still calls the
 // spy, but win.console.warn is then no longer the spy.
-const consoleSpies = new WeakMap();
+const consoleSpies = new WeakMap<Window, { error: sinon.SinonSpy; warn: sinon.SinonSpy }>();
 
 Cypress.on('window:before:load', (win) => {
   consoleSpies.set(win, {
