@@ -74,32 +74,21 @@ describe('Outline View Suite', () => {
     // Wait for dialog to be visible (replaces cy.wait(500))
     cy.get('[data-testid="outline-view-dialog"]').should('be.visible');
 
-    // Find a node that is currently collapsed (has "Expand" aria-label)
+    // The first two levels start expanded, so every node with children shows a "Collapse" button.
+    // Collapse the first one: it turns into an "Expand" button ...
     cy.get('[data-testid="outline-view-dialog"]').within(() => {
-      // Look for expand button (aria-label="Expand")
-      cy.get('button[aria-label="Expand"]').first().should('be.visible').click();
-    });
-
-    // Wait for expand animation by checking that Collapse button appears (replaces cy.wait(500))
-    cy.get('[data-testid="outline-view-dialog"]').within(() => {
-      cy.get('button[aria-label="Collapse"]').first().should('be.visible');
-    });
-
-    // Take snapshot of expanded state
-    cy.matchImageSnapshot('outline-view-node-expanded');
-
-    // Now click the collapse button
-    cy.get('[data-testid="outline-view-dialog"]').within(() => {
+      cy.get('button[aria-label="Expand"]').should('not.exist');
       cy.get('button[aria-label="Collapse"]').first().should('be.visible').click();
+      cy.get('button[aria-label="Expand"]').should('have.length', 1);
     });
-
-    // Wait for collapse animation by checking that Expand button appears (replaces cy.wait(500))
-    cy.get('[data-testid="outline-view-dialog"]').within(() => {
-      cy.get('button[aria-label="Expand"]').first().should('be.visible');
-    });
-
-    // Take snapshot of collapsed state
     cy.matchImageSnapshot('outline-view-node-collapsed');
+
+    // ... and expanding it again leaves no collapsed node.
+    cy.get('[data-testid="outline-view-dialog"]').within(() => {
+      cy.get('button[aria-label="Expand"]').should('be.visible').click();
+      cy.get('button[aria-label="Expand"]').should('not.exist');
+    });
+    cy.matchImageSnapshot('outline-view-node-expanded');
   });
 
   it('Expand All and Collapse All buttons work', () => {
@@ -112,37 +101,21 @@ describe('Outline View Suite', () => {
     // Wait for dialog to be visible (replaces cy.wait(500))
     cy.get('[data-testid="outline-view-dialog"]').should('be.visible');
 
-    // Click Expand All button (in the floating toolbar at bottom-left)
-    // Note: The aria-label will be just "Expand" from the i18n key
+    // Collapse All (floating toolbar): no node shows a "Collapse" button any more ...
     cy.get('[data-testid="outline-view-dialog"]').within(() => {
-      // Look for the Expand All button by its tooltip content or position (bottom-left toolbar)
-      cy.get('button').filter('[aria-label="Expand"]').last().should('be.visible').click();
-    });
-
-    // Wait for all expansions to complete by checking there are no more Expand buttons (replaces cy.wait(800))
-    // After expanding all, all individual expand buttons should become collapse buttons
-    cy.get('[data-testid="outline-view-dialog"]').within(() => {
-      // Check that the content has updated (wait for DOM changes to settle)
-      cy.get('button[aria-label="Collapse"]').should('have.length.at.least', 1);
-    });
-
-    // Take snapshot of all expanded
-    cy.matchImageSnapshot('outline-view-expand-all');
-
-    // Click Collapse All button (in the floating toolbar)
-    cy.get('[data-testid="outline-view-dialog"]').within(() => {
-      // Look for the Collapse All button (should be in the floating toolbar)
-      cy.get('button').filter('[aria-label="Collapse"]').last().should('be.visible').click();
-    });
-
-    // Wait for all collapses to complete by checking expand buttons reappear (replaces cy.wait(800))
-    cy.get('[data-testid="outline-view-dialog"]').within(() => {
-      // After collapsing all, expand buttons should be present
+      cy.get('button[aria-label="Collapse All"]').should('be.visible').click();
+      cy.get('button[aria-label="Collapse"]').should('not.exist');
       cy.get('button[aria-label="Expand"]').should('have.length.at.least', 1);
     });
-
-    // Take snapshot of all collapsed
     cy.matchImageSnapshot('outline-view-collapse-all');
+
+    // ... and Expand All opens every node again.
+    cy.get('[data-testid="outline-view-dialog"]').within(() => {
+      cy.get('button[aria-label="Expand All"]').should('be.visible').click();
+      cy.get('button[aria-label="Expand"]').should('not.exist');
+      cy.get('button[aria-label="Collapse"]').should('have.length.at.least', 1);
+    });
+    cy.matchImageSnapshot('outline-view-expand-all');
   });
 
   it('Close Outline View dialog', () => {
