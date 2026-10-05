@@ -158,7 +158,7 @@ class DefaultTheme implements Theme {
   }
 
   getInnerPadding(topic: Topic): number {
-    return topic.getOrBuildTextShape().getFontHeight() * 0.8;
+    return topic.getTextFontHeight() * 0.8;
   }
 
   getText(topic: Topic): string {
@@ -168,7 +168,7 @@ class DefaultTheme implements Theme {
 
   getEmojiSpacing(topic: Topic): number {
     // Default spacing: central topics get more spacing than main topics
-    const fontHeight = topic.getOrBuildTextShape().getFontHeight();
+    const fontHeight = topic.getTextFontHeight();
     return topic.isCentralTopic() ? fontHeight * 1.0 : fontHeight * 0.7;
   }
 

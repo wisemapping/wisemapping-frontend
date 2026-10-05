@@ -26,6 +26,7 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
   default: class MockPDFExporter {},
 }));
 
+import { Text } from '@wisemapping/web2d';
 import { buildDesigner, Harness } from '../commands/designer-harness';
 import Topic from '../../../src/components/Topic';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
@@ -74,6 +75,9 @@ const depthOf = (topic: Topic): number => {
 
 const subtreeSize = (topic: Topic): number =>
   1 + topic.getChildren().reduce((sum, child) => sum + subtreeSize(child), 0);
+
+const isTextOf = (topic: Topic) => (self: unknown) =>
+  self === topic.getOrBuildTextShape() || self === topic.getOrBuildTextShape().peer;
 
 let harness: Harness;
 let topics: Topic[];
@@ -188,5 +192,46 @@ describe('text editor', () => {
 
     console.info(`5 keystrokes in a frame: ${layouts} layouts`);
     expect(layouts).toBe(1);
+  });
+});
+
+describe('Topic.redraw of an unchanged topic', () => {
+  const textSetters: (keyof Text)[] = [
+    'setText',
+    'setColor',
+    'setFontSize',
+    'setWeight',
+    'setStyle',
+    'setFontName',
+  ];
+
+  it('calls no text setter and does not rebuild the tspans', () => {
+    const topic = harness.topic(2);
+    let setterCalls = 0;
+    textSetters.forEach((setter) => {
+      setterCalls += countCalls(
+        Text.prototype,
+        setter,
+        () => topic.redraw(topic.getThemeVariant(), false),
+        isTextOf(topic),
+      );
+    });
+    console.info(`unchanged redraw: ${setterCalls} text setter calls`);
+    expect(setterCalls).toBe(0);
+  });
+
+  it('measures the text once for its width and once for its height', () => {
+    const topic = harness.topic(2);
+    const textNative = topic.getOrBuildTextShape().peer._native;
+    const proto = (window as unknown as { SVGElement: { prototype: { getBBox: () => DOMRect } } })
+      .SVGElement.prototype;
+    const measures = countCalls(
+      proto,
+      'getBBox',
+      () => topic.redraw(topic.getThemeVariant(), false),
+      (self) => self === textNative,
+    );
+    console.info(`redraw: ${measures} text getBBox calls`);
+    expect(measures).toBe(2);
   });
 });

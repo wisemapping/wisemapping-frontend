@@ -52,6 +52,16 @@ import type { OrientationType } from './layout/LayoutType';
 
 const ICON_SCALING_FACTOR = 1.3;
 
+/** The text values last applied to a topic text shape. */
+type AppliedTextValues = {
+  color?: string;
+  size?: number;
+  weight?: string;
+  style?: string;
+  family?: string;
+  text?: string;
+};
+
 export type TopicCornerCoordinates = {
   topLeft: PositionType;
   topRight: PositionType;
@@ -92,6 +102,13 @@ abstract class Topic extends NodeGraph {
   private _orientation: OrientationType;
 
   private _topicEventDispatcher?: TopicEventDispatcher;
+
+  // Values last applied to the text shape: a redraw skips the setters of unchanged ones,
+  // as setting the text rebuilds its tspans. Only the topic sets them.
+  private _appliedText: AppliedTextValues = {};
+
+  // Font height measured by the redraw in progress, so the text is measured once per redraw.
+  private _measuredFontHeight: number | undefined;
 
   constructor(
     model: NodeModel,
@@ -312,9 +329,18 @@ abstract class Topic extends NodeGraph {
       // @todo: Review this. Get should not modify the state ....
       const text = this.getText();
       this._text.setText(text);
+      this._appliedText = { text };
     }
 
     return this._text;
+  }
+
+  /**
+   * The height of a line of the topic text. During a redraw, it is the one the redraw
+   * measured, so that the theme and the features do not measure the text again.
+   */
+  getTextFontHeight(): number {
+    return this._measuredFontHeight ?? this.getOrBuildTextShape().getFontHeight();
   }
 
   getOrBuildImageEmojiTextShape(): Text | undefined {
@@ -344,7 +370,7 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     const theme = ThemeFactory.create(model, this.getThemeVariant());
 
-    const textHeight = this.getOrBuildTextShape().getFontHeight();
+    const textHeight = this.getTextFontHeight();
     const iconSize = textHeight * ICON_SCALING_FACTOR;
     const result = new IconGroup(this.getId(), iconSize, this.getDesigner());
     const padding = theme.getInnerPadding(this);
@@ -1331,6 +1357,7 @@ abstract class Topic extends NodeGraph {
 
   redraw(variant: ThemeVariant, redrawChildren = false): void {
     if (this._isInWorkspace) {
+      this._measuredFontHeight = undefined;
       const theme = ThemeFactory.create(this.getModel(), variant);
       const textShape = this.getOrBuildTextShape();
 
@@ -1339,24 +1366,21 @@ abstract class Topic extends NodeGraph {
 
       // Update font ...
       const fontColor = this.getFontColor(variant);
-      textShape.setColor(fontColor);
-
       const fontSize = this.getFontSize();
-      textShape.setFontSize(fontSize);
-
       const fontWeight = this.getFontWeight();
       // Map theme weight '600' to a concrete weight for rendering
       const web2dWeight = fontWeight === '600' ? 'bold' : fontWeight;
-      textShape.setWeight(web2dWeight as 'normal' | 'bold');
-
       const fontStyle = this.getFontStyle();
-      textShape.setStyle(fontStyle);
-
       const fontFamily = this.getFontFamily();
-      textShape.setFontName(fontFamily);
-
       const text = this.getText();
-      textShape.setText(text);
+      this.applyTextValues(textShape, {
+        color: fontColor,
+        size: fontSize,
+        weight: web2dWeight,
+        style: fontStyle,
+        family: fontFamily,
+        text,
+      });
 
       // Update outer shape style ...
       const outerShape = this.getOuterShape();
@@ -1366,14 +1390,16 @@ abstract class Topic extends NodeGraph {
       outerShape.setFill(outerFillColor);
       outerShape.setStroke(1, 'solid', outerBorderColor);
 
-      // Calculate topic size and adjust elements ...
+      // Calculate topic size and adjust elements. The text is measured once: the font
+      // height is the height of one of its lines (Text.getFontHeight) ...
       const textWidth = textShape.getShapeWidth();
       const textHeight = textShape.getShapeHeight();
+      const fontHeight = textHeight / textShape.peer.getTextLines().length;
+      this._measuredFontHeight = fontHeight;
       const padding = theme.getInnerPadding(this);
 
       // Adjust icons group based on the font size ...
       const iconGroup = this.getOrBuildIconGroup();
-      const fontHeight = textShape.getFontHeight();
       const iconHeight = ICON_SCALING_FACTOR * fontHeight;
       iconGroup.seIconSize(iconHeight, iconHeight);
 
@@ -1519,10 +1545,40 @@ abstract class Topic extends NodeGraph {
       const bgColor = this.getBackgroundColor(variant);
       innerShape.setFill(bgColor);
 
+      // The measurement is only valid until the text changes ...
+      this._measuredFontHeight = undefined;
+
       if ((redrawChildren || shapeChanged || connectionChanged) && !this.areChildrenShrunken()) {
         this.getChildren().forEach((t) => t.redraw(variant, true));
       }
     }
+  }
+
+  /**
+   * Applies the text values that changed since the last redraw, in the order the redraw
+   * always set them. The text shape keeps the others.
+   */
+  private applyTextValues(textShape: Text, values: Required<AppliedTextValues>): void {
+    const applied = this._appliedText;
+    if (applied.color !== values.color) {
+      textShape.setColor(values.color);
+    }
+    if (applied.size !== values.size) {
+      textShape.setFontSize(values.size);
+    }
+    if (applied.weight !== values.weight) {
+      textShape.setWeight(values.weight as 'normal' | 'bold');
+    }
+    if (applied.style !== values.style) {
+      textShape.setStyle(values.style);
+    }
+    if (applied.family !== values.family) {
+      textShape.setFontName(values.family);
+    }
+    if (applied.text !== values.text) {
+      textShape.setText(values.text);
+    }
+    this._appliedText = { ...values };
   }
 
   private flatten2DElements(topic: Topic): (Topic | Relationship | TopicConnection)[] {
