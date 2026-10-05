@@ -285,6 +285,14 @@ describe('DragManager', () => {
     startDrag();
   });
 
+  // BL5-39: Designer adds every topic it builds and relies on this to skip the central one.
+  it('registers no listener on the central topic', () => {
+    const addEvent = jest.fn();
+    dragManager.add({ getId: () => 0, isCentralTopic: () => true, addEvent } as unknown as Topic);
+
+    expect(addEvent).not.toHaveBeenCalled();
+  });
+
   it('ignores keys other than Escape during a drag', () => {
     startDrag();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true }));

@@ -318,11 +318,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         me.onObjectFocusEvent(topic, event);
       });
 
-      // Register node listeners ...
-      if (topic.getType() !== 'CentralTopic') {
-        // Central Topic doesn't support to be dragged
-        this._dragManager.add(topic);
-      }
+      // Register node listeners (the drag manager skips the central topic) ...
+      this._dragManager.add(topic);
     }
 
     // Connect Topic ...
