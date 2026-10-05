@@ -128,11 +128,9 @@ describe('Image URL Validation Suite', () => {
     });
   });
 
-  // Skipped on a mindplot bug: SvgImageIcon.getImageUrl warns and returns '' for an unknown
-  // icon, but the ImageIcon constructor then fails its $assert(url) ("image url can not be
-  // null"), so adding the icon throws (Topic.buildIconGroup takes the same path for a loaded
-  // map with one). Enable it once an unknown icon renders as an empty image.
-  it.skip('An unknown icon renders without an image and warns', () => {
+  // SvgImageIcon.getImageUrl warns and returns '' for an unknown icon, and ImageIcon draws it as
+  // an empty image instead of throwing (a map with one used to fail to load).
+  it('An unknown icon renders without an image and warns', () => {
     const iconName = 'nonexistent_icon_12345';
     cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
