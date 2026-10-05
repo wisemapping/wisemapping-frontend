@@ -865,6 +865,12 @@
       "value": "Lista com Marcadores"
     }
   ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "Aumentar recuo (Tab)"
+    }
+  ],
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
@@ -887,6 +893,12 @@
     {
       "type": 0,
       "value": "Lista Numerada"
+    }
+  ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "Diminuir recuo (Shift+Tab)"
     }
   ],
   "rich-text-editor.strikethrough": [

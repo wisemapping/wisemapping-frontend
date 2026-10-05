@@ -766,5 +766,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "“{query}” से मेल खाने वाला कोई विषय नहीं है।"
+  },
+  "rich-text-editor.indent": {
+    "defaultMessage": "इंडेंट बढ़ाएँ (Tab)"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "इंडेंट घटाएँ (Shift+Tab)"
   }
 }

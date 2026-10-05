@@ -865,6 +865,12 @@
       "value": "Bullet List"
     }
   ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "Increase Indent (Tab)"
+    }
+  ],
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
@@ -887,6 +893,12 @@
     {
       "type": 0,
       "value": "Numbered List"
+    }
+  ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "Decrease Indent (Shift+Tab)"
     }
   ],
   "rich-text-editor.strikethrough": [

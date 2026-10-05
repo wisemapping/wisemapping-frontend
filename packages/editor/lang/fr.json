@@ -766,5 +766,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "Aucun noeud ne correspond à « {query} »."
+  },
+  "rich-text-editor.indent": {
+    "defaultMessage": "Augmenter le retrait (Tab)"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "Diminuer le retrait (Maj+Tab)"
   }
 }

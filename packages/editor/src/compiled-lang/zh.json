@@ -873,6 +873,12 @@
       "value": "项目符号列表"
     }
   ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "增加縮排 (Tab)"
+    }
+  ],
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
@@ -895,6 +901,12 @@
     {
       "type": 0,
       "value": "编号列表"
+    }
+  ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "減少縮排 (Shift+Tab)"
     }
   ],
   "rich-text-editor.strikethrough": [

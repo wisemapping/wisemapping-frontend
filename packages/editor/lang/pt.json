@@ -766,5 +766,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "Nenhum tópico corresponde a “{query}”."
+  },
+  "rich-text-editor.indent": {
+    "defaultMessage": "Aumentar recuo (Tab)"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "Diminuir recuo (Shift+Tab)"
   }
 }

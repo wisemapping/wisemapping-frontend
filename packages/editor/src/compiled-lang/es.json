@@ -865,6 +865,12 @@
       "value": "Lista con Viñetas"
     }
   ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "Aumentar sangría (Tab)"
+    }
+  ],
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
@@ -887,6 +893,12 @@
     {
       "type": 0,
       "value": "Lista Numerada"
+    }
+  ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "Reducir sangría (Mayús+Tab)"
     }
   ],
   "rich-text-editor.strikethrough": [

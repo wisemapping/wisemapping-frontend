@@ -766,5 +766,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "Ningún tópico coincide con “{query}”."
+  },
+  "rich-text-editor.indent": {
+    "defaultMessage": "Aumentar sangría (Tab)"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "Reducir sangría (Mayús+Tab)"
   }
 }

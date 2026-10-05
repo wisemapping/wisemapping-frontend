@@ -865,6 +865,12 @@
       "value": "قائمة نقطية"
     }
   ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "زيادة المسافة البادئة (Tab)"
+    }
+  ],
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
@@ -887,6 +893,12 @@
     {
       "type": 0,
       "value": "قائمة مرقّمة"
+    }
+  ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "إنقاص المسافة البادئة (Shift+Tab)"
     }
   ],
   "rich-text-editor.strikethrough": [

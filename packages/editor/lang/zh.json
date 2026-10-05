@@ -766,5 +766,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "没有主题匹配“{query}”。"
+  },
+  "rich-text-editor.indent": {
+    "defaultMessage": "增加縮排 (Tab)"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "減少縮排 (Shift+Tab)"
   }
 }

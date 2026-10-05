@@ -865,6 +865,12 @@
       "value": "箇条書きリスト"
     }
   ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "インデントを増やす (Tab)"
+    }
+  ],
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
@@ -887,6 +893,12 @@
     {
       "type": 0,
       "value": "番号付きリスト"
+    }
+  ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "インデントを減らす (Shift+Tab)"
     }
   ],
   "rich-text-editor.strikethrough": [

@@ -766,5 +766,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "Nessun argomento corrisponde a “{query}”."
+  },
+  "rich-text-editor.indent": {
+    "defaultMessage": "Aumenta rientro (Tab)"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "Riduci rientro (Maiusc+Tab)"
   }
 }

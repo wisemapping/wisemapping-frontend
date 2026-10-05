@@ -766,5 +766,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "لا يوجد موضوع يطابق «{query}»."
+  },
+  "rich-text-editor.indent": {
+    "defaultMessage": "زيادة المسافة البادئة (Tab)"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "إنقاص المسافة البادئة (Shift+Tab)"
   }
 }

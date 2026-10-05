@@ -422,6 +422,9 @@
   "rich-text-editor.bullet-list": {
     "defaultMessage": "Bullet List"
   },
+  "rich-text-editor.indent": {
+    "defaultMessage": "Increase Indent (Tab)"
+  },
   "rich-text-editor.insert-icon": {
     "defaultMessage": "Insert Icon"
   },
@@ -433,6 +436,9 @@
   },
   "rich-text-editor.numbered-list": {
     "defaultMessage": "Numbered List"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "Decrease Indent (Shift+Tab)"
   },
   "rich-text-editor.strikethrough": {
     "defaultMessage": "Strikethrough"

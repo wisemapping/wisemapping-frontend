@@ -865,6 +865,12 @@
       "value": "Elenco Puntato"
     }
   ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "Aumenta rientro (Tab)"
+    }
+  ],
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
@@ -887,6 +893,12 @@
     {
       "type": 0,
       "value": "Elenco Numerato"
+    }
+  ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "Riduci rientro (Maiusc+Tab)"
     }
   ],
   "rich-text-editor.strikethrough": [

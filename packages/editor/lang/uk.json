@@ -766,5 +766,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "Немає тем, що відповідають «{query}»."
+  },
+  "rich-text-editor.indent": {
+    "defaultMessage": "Збільшити відступ (Tab)"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "Зменшити відступ (Shift+Tab)"
   }
 }

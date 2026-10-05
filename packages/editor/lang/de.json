@@ -766,5 +766,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "Kein Thema entspricht „{query}“."
+  },
+  "rich-text-editor.indent": {
+    "defaultMessage": "Einzug vergrößern (Tab)"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "Einzug verkleinern (Umschalt+Tab)"
   }
 }

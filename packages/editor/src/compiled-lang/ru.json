@@ -865,6 +865,12 @@
       "value": "Маркированный список"
     }
   ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "Увеличить отступ (Tab)"
+    }
+  ],
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
@@ -887,6 +893,12 @@
     {
       "type": 0,
       "value": "Нумерованный список"
+    }
+  ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "Уменьшить отступ (Shift+Tab)"
     }
   ],
   "rich-text-editor.strikethrough": [

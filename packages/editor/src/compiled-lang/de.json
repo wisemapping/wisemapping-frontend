@@ -865,6 +865,12 @@
       "value": "Aufzählungsliste"
     }
   ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "Einzug vergrößern (Tab)"
+    }
+  ],
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
@@ -887,6 +893,12 @@
     {
       "type": 0,
       "value": "Nummerierte Liste"
+    }
+  ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "Einzug verkleinern (Umschalt+Tab)"
     }
   ],
   "rich-text-editor.strikethrough": [

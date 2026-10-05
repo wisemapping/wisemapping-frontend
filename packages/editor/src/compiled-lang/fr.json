@@ -865,6 +865,12 @@
       "value": "Liste à Puces"
     }
   ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "Augmenter le retrait (Tab)"
+    }
+  ],
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
@@ -887,6 +893,12 @@
     {
       "type": 0,
       "value": "Liste Numérotée"
+    }
+  ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "Diminuer le retrait (Maj+Tab)"
     }
   ],
   "rich-text-editor.strikethrough": [

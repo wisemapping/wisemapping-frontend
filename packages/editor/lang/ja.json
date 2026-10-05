@@ -766,5 +766,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "「{query}」に一致するトピックはありません。"
+  },
+  "rich-text-editor.indent": {
+    "defaultMessage": "インデントを増やす (Tab)"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "インデントを減らす (Shift+Tab)"
   }
 }

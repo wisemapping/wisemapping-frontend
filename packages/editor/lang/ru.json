@@ -766,5 +766,11 @@
   },
   "find-in-map.empty-state": {
     "defaultMessage": "Нет тем, соответствующих «{query}»."
+  },
+  "rich-text-editor.indent": {
+    "defaultMessage": "Увеличить отступ (Tab)"
+  },
+  "rich-text-editor.outdent": {
+    "defaultMessage": "Уменьшить отступ (Shift+Tab)"
   }
 }
