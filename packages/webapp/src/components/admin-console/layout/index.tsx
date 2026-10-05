@@ -58,7 +58,7 @@ const AdminLayout = (): ReactElement => {
 
   useEffect(() => {
     document.title = intl.formatMessage({
-      id: 'admin.console.title',
+      id: 'admin.console.page-title',
       defaultMessage: 'Admin Console | WiseMapping',
     });
   }, [intl]);

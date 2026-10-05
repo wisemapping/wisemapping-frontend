@@ -272,10 +272,13 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
       mutationRemove.mutate();
     } else {
       setError({
-        msg: intl.formatMessage({
-          id: 'account.delete-confirmation-error',
-          defaultMessage: `Please type "${challengePhrase}" to confirm account deletion.`,
-        }),
+        msg: intl.formatMessage(
+          {
+            id: 'account.delete-challenge-error',
+            defaultMessage: 'Please type "{challengePhrase}" to confirm account deletion.',
+          },
+          { challengePhrase },
+        ),
       });
     }
   };

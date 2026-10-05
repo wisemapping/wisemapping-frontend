@@ -139,13 +139,7 @@ interface MapFormData {
 }
 
 type SortField =
-  | 'title'
-  | 'id'
-  | 'createdBy'
-  | 'createdById'
-  | 'creationTime'
-  | 'lastModificationTime'
-  | 'public';
+  'title' | 'id' | 'createdBy' | 'createdById' | 'creationTime' | 'lastModificationTime' | 'public';
 type SortDirection = 'asc' | 'desc';
 
 const MapsManagement = (): ReactElement => {
@@ -625,7 +619,7 @@ const MapsManagement = (): ReactElement => {
       >
         <Typography variant="h5" component="h2">
           {intl.formatMessage({
-            id: 'admin.maps.title',
+            id: 'admin.maps.page-title',
             defaultMessage: 'Maps Management',
           })}
         </Typography>
@@ -993,10 +987,17 @@ const MapsManagement = (): ReactElement => {
                         </IconButton>
                       </Tooltip>
                       <Tooltip
-                        title={intl.formatMessage({
-                          id: 'admin.maps.toggle-spam',
-                          defaultMessage: map.spam ? 'Mark as not spam' : 'Mark as spam',
-                        })}
+                        title={
+                          map.spam
+                            ? intl.formatMessage({
+                                id: 'admin.maps.mark-as-not-spam',
+                                defaultMessage: 'Mark as not spam',
+                              })
+                            : intl.formatMessage({
+                                id: 'admin.maps.mark-as-spam',
+                                defaultMessage: 'Mark as spam',
+                              })
+                        }
                       >
                         <span>
                           <IconButton

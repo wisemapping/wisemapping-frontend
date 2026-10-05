@@ -299,7 +299,7 @@ const AccountStatusChip = ({
                   <ListItemText>
                     {intl.formatMessage({
                       id: 'admin.unsuspend-user',
-                      defaultMessage: 'Unsuspend User',
+                      defaultMessage: 'Unsuspend user',
                     })}
                   </ListItemText>
                 </MenuItem>
@@ -313,7 +313,7 @@ const AccountStatusChip = ({
                     <ListItemText>
                       {intl.formatMessage({
                         id: 'admin.suspend-user',
-                        defaultMessage: 'Suspend User',
+                        defaultMessage: 'Suspend user',
                       })}
                     </ListItemText>
                   </MenuItem>
@@ -326,7 +326,7 @@ const AccountStatusChip = ({
                     <ListItemText>
                       {intl.formatMessage({
                         id: 'admin.activate-user',
-                        defaultMessage: 'Activate User',
+                        defaultMessage: 'Activate user',
                       })}
                     </ListItemText>
                   </MenuItem>

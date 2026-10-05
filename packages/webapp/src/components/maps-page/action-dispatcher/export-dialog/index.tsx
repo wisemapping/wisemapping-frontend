@@ -234,7 +234,7 @@ const ExportDialog = ({
           <Alert severity="info">
             <FormattedMessage
               id="export.warning"
-              defaultMessage="Exporting to Image (SVG,PNG,JPEG,PDF) is only available  in the editor toolbar."
+              defaultMessage="Exporting to Image (SVG,PNG,JPEG,PDF) is only available in the editor toolbar."
             />
           </Alert>
         )}

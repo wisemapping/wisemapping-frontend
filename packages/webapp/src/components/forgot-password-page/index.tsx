@@ -66,7 +66,7 @@ const ForgotPassword = () => {
         <Typography>
           <FormattedMessage
             id="forgot.oauth.message"
-            defaultMessage="You dont need password, please login using Google."
+            defaultMessage="You dont need password, please login using Facebook or Google."
           />
         </Typography>
         <Button
