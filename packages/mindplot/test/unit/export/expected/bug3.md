@@ -160,18 +160,18 @@
 					- Publications
 						- Impact of publications in the ISI database (h-index)
 						- Number of publications in international journals per worker per year
-						- Publications: Academic articles in international peer-reviewed journals per 1,000 researchers [articles/1,000 researchers].
+						- Publications: Academic articles in international peer-reviewed journals per 1,000 researchers \[articles/1,000 researchers\].
 					- Number of foreign patents granted per staff
 				- Supportive measures
 					- Diversity index of university entrepreneurship support measures[^23] 
 				- Commercialization
 					- Licensing
-						- Academic licenses: Number of licenses per 1,000 researchers.[licenses/researcher]
+						- Academic licenses: Number of licenses per 1,000 researchers.\[licenses/researcher\]
 					- Spin-offs
 						- Number of spin-offs with external private financing as a share of the institution's R&D budget
 					- Industry contracts
 						- Industry revenue per staff
-						- Foreign contracts: Number of contracts with foreign industria l companies at scientific and educational organizations per 1,000 researchers [contracts/researchers]
+						- Foreign contracts: Number of contracts with foreign industria l companies at scientific and educational organizations per 1,000 researchers \[contracts/researchers\]
 						- Share of industry income from foreign companies
 						- Revenue raised from industry R&D as a fraction of total institutional budget (up to a cap)
 						- Difficulties faced by research organization in collaborating with SMEs
@@ -195,8 +195,8 @@
 			- Growth rates of employment in supported innovative firms
 			- Role of IP for tenants/clients[^27] 
 			- Share of tenants with innovation activities
-			- Gazelle tenant: Share of tenants with annual revenue growth of more than 20% for each of the past four years or since formation [%]
-			- Globalization of tenants: Median share of tenant revenues obtained from exports [%]
+			- Gazelle tenant: Share of tenants with annual revenue growth of more than 20% for each of the past four years or since formation \[%\]
+			- Globalization of tenants: Median share of tenant revenues obtained from exports \[%\]
 		- Number of beneficiaries
 			- Number of projects conducted by companies in cooperation with innovation infrastructure
 			- Scope and intensity of use of services offered to firms
@@ -269,7 +269,7 @@
 			- Venture investment map
 			- Attractiveness to public competitive funding
 				- Fed and regional seed fund investments
-				- FASIE projects: Number of projects supported by the FASIE per 1,000 workers [awards/worker]
+				- FASIE projects: Number of projects supported by the FASIE per 1,000 workers \[awards/worker\]
 	- Competitiveness support factors
 		- Private investment in innovation
 - How to improve image
@@ -291,8 +291,8 @@
 [^9]: per 100 population aged 25-64
 [^10]: GCR
 [^11]: GCR
-[^12]: : the percentage of the workforce employed by foreign companies [%].
-[^13]: : exports as a share of total output in manufacturing and services [%].
+[^12]: : the percentage of the workforce employed by foreign companies \[%\].
+[^13]: : exports as a share of total output in manufacturing and services \[%\].
 [^14]: GEM
 [^15]: GEM
 [^16]: GEM

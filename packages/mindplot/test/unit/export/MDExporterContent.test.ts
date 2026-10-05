@@ -19,6 +19,7 @@ import { describe, expect, it } from '@jest/globals';
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
 import LinkModel from '../../../src/components/model/LinkModel';
+import NoteModel from '../../../src/components/model/NoteModel';
 import ContentType from '../../../src/components/ContentType';
 import TextExporterFactory from '../../../src/components/export/TextExporterFactory';
 
@@ -143,5 +144,113 @@ describe('MD export of links', () => {
     expect(await exportLink('https://example.com/a%20b')).toBe(
       '- Topic ( [link](https://example.com/a%20b) )',
     );
+  });
+});
+
+describe('MD export of a central topic without text (BL5-01)', () => {
+  it.each([undefined, '', '  '])(
+    'exports the branches under a placeholder title (%p)',
+    async (text) => {
+      const { mindmap, central } = buildMindmap();
+      central.setText(text);
+      addTopic(central, 'Child');
+
+      const lines = await exportLines(mindmap);
+
+      expect(lines).toEqual(['# Untitled', '', '- Child', '', '']);
+    },
+  );
+
+  it('uses the placeholder for an HTML central topic without visible text', async () => {
+    const { mindmap, central } = buildMindmap();
+    central.setText('<p></p>');
+    central.setContentType(ContentType.HTML);
+    addTopic(central, 'Child');
+
+    const lines = await exportLines(mindmap);
+
+    expect(lines.slice(0, 3)).toEqual(['# Untitled', '', '- Child']);
+  });
+});
+
+describe('MD export escaping (BL5-02)', () => {
+  const exportTopic = async (text: string): Promise<string> => {
+    const { mindmap, central } = buildMindmap();
+    addTopic(central, text);
+    const lines = await exportLines(mindmap);
+    return lines[2];
+  };
+
+  it.each([
+    ['# not a heading', '- \\# not a heading'],
+    ['> not a quote', '- \\> not a quote'],
+    ['1. not a list', '- 1\\. not a list'],
+    ['2024) not a list', '- 2024\\) not a list'],
+    ['- not a list', '- \\- not a list'],
+    ['+ not a list', '- \\+ not a list'],
+    ['*bold* and _em_', '- \\*bold\\* and \\_em\\_'],
+    ['[text](http://x)', '- \\[text\\](http://x)'],
+    ['see [^1]', '- see \\[^1\\]'],
+    ['`code`', '- \\`code\\`'],
+    ['<b>tag</b>', '- \\<b\\>tag\\</b\\>'],
+    ['~~gone~~', '- \\~\\~gone\\~\\~'],
+    ['a \\ b', '- a \\\\ b'],
+    ['a | b', '- a \\| b'],
+    ['&amp; &#169;', '- \\&amp; \\&#169;'],
+  ])('escapes %p so it renders literally', async (text, expected) => {
+    expect(await exportTopic(text)).toBe(expected);
+  });
+
+  it('keeps plain text, inner hashes and ampersands readable', async () => {
+    expect(await exportTopic('C# & R&D 2.0 (draft)')).toBe('- C# & R&D 2.0 (draft)');
+  });
+
+  it('escapes a trailing hash sequence of the title', async () => {
+    const { mindmap, central } = buildMindmap();
+    central.setText('Plan #');
+
+    expect((await exportLines(mindmap))[0]).toBe('# Plan \\#');
+  });
+
+  it('escapes the note of a footnote', async () => {
+    const { mindmap, central } = buildMindmap();
+    addTopic(central, 'Topic').addFeature(new NoteModel({ text: '*see* [^2]' }));
+
+    expect(await exportLines(mindmap)).toContain('[^1]: \\*see\\* \\[^2\\]');
+  });
+});
+
+describe('MD export of empty notes (BL5-03)', () => {
+  it.each([
+    ['plain', ' ', undefined],
+    ['html', '<p> </p>', ContentType.HTML],
+  ])('adds no footnote for an empty %s note', async (_kind, text, contentType) => {
+    const { mindmap, central } = buildMindmap();
+    const note = new NoteModel({ text });
+    if (contentType) note.setContentType(contentType);
+    addTopic(central, 'Topic').addFeature(note);
+
+    const lines = await exportLines(mindmap);
+
+    expect(lines).toEqual(['# Central', '', '- Topic', '', '']);
+  });
+
+  it('numbers footnotes without gaps when an empty note is skipped', async () => {
+    const { mindmap, central } = buildMindmap();
+    addTopic(central, 'A').addFeature(new NoteModel({ text: ' ' }));
+    addTopic(central, 'B').addFeature(new NoteModel({ text: 'Note' }));
+
+    const lines = await exportLines(mindmap);
+
+    expect(lines).toContain('- B[^1] ');
+    expect(lines).toContain('[^1]: Note');
+    expect(lines.filter((line) => line.startsWith('[^'))).toHaveLength(1);
+  });
+
+  it('skips a textless topic whose only feature is an empty note', async () => {
+    const { mindmap, central } = buildMindmap();
+    addTopic(central, undefined).addFeature(new NoteModel({ text: ' ' }));
+
+    expect(await exportLines(mindmap)).toEqual(['# Central', '', '', '']);
   });
 });
