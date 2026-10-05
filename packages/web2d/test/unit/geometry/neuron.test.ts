@@ -123,6 +123,12 @@ describe('geometry/neuron neuronSegments', () => {
     });
   });
 
+  it('takes a length that underflows to 0 as 1, so it has no NaN', () => {
+    const segments = neuronSegments(O, { x: 1e-200, y: 0 }, SEED)!;
+    expect(segments).toHaveLength(6);
+    segments.forEach((s) => expect(Number.isFinite(s.c1.x) && Number.isFinite(s.to.y)).toBe(true));
+  });
+
   it('is NaN, rather than throwing, for a NaN seed or an infinite end', () => {
     expect(neuronSegments(O, { x: 100, y: 0 }, NaN)![0]!.c1.y).toBeNaN();
     expect(neuronSegments(O, { x: Infinity, y: 0 }, SEED)![0]!.to.y).toBeNaN();
