@@ -17,7 +17,6 @@
  */
 import { $assert, $defined } from '../utils/assert';
 import SizeType from '../../SizeType';
-import EventUtils from '../utils/EventUtils';
 
 export type ElementListener = (event: Event, detail?: unknown) => void;
 
@@ -33,8 +32,6 @@ class ElementPeer {
 
   protected _size: SizeType;
 
-  private _changeListeners: Record<string, unknown>;
-
   // Native wrappers, by event type and then by listener, so that one listener can be registered
   // for several types and removed from each of them.
   private _handlers: Map<string, Map<ElementListener, EventListener>>;
@@ -49,9 +46,6 @@ class ElementPeer {
   constructor(svgElement: SVGElement) {
     this._native = svgElement;
     this._size = { width: 1, height: 1 };
-    this._changeListeners = {};
-    // http://support.adobe.com/devsup/devsup.nsf/docs/50493.htm
-
     this._handlers = new Map();
     this._children = [];
     this._parent = null;
@@ -78,14 +72,10 @@ class ElementPeer {
   append(elementPeer: ElementPeer): void {
     // Store parent and child relationship.
     elementPeer.setParent(this);
-    const children = this.getChildren();
-    children.push(elementPeer);
+    this._children.push(elementPeer);
 
     // Append element as a child.
     this._native.appendChild(elementPeer._native);
-
-    // Broadcast events ...
-    EventUtils.broadcastChangeEvent(this, 'strokeStyle');
   }
 
   removeChild(elementPeer: ElementPeer): void {
@@ -157,8 +147,6 @@ class ElementPeer {
       this._size.height = height;
       this._native.setAttribute('height', formatLength(height));
     }
-
-    EventUtils.broadcastChangeEvent(this, 'strokeStyle');
   }
 
   getSize(): SizeType {
@@ -260,32 +248,6 @@ class ElementPeer {
   isVisible(): boolean {
     const visibility = this._native.getAttribute('visibility');
     return !(visibility === 'hidden');
-  }
-
-  updateStrokeStyle() {
-    const strokeStyle = this._stokeStyle;
-    if (this.getParent()) {
-      if (strokeStyle && strokeStyle !== 'solid') {
-        this.setStroke(null, strokeStyle);
-      }
-    }
-  }
-
-  attachChangeEventListener(type: string, listener: (arg: unknown) => void) {
-    const listeners = this.getChangeEventListeners(type) as ((arg: unknown) => void)[];
-    if (!$defined(listener)) {
-      throw new Error('Listener can not be null');
-    }
-    listeners.push(listener);
-  }
-
-  getChangeEventListeners(type: string) {
-    let listeners = this._changeListeners[type];
-    if (!$defined(listeners)) {
-      listeners = [];
-      this._changeListeners[type] = listeners;
-    }
-    return listeners;
   }
 
   /**

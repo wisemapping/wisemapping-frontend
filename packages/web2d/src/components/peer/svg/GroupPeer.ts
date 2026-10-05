@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import ElementPeer from './ElementPeer';
-import EventUtils from '../utils/EventUtils';
 import PositionType from '../../PositionType';
 import SizeType from '../../SizeType';
 
@@ -54,7 +53,6 @@ class GroupPeer extends ElementPeer {
     if (change) {
       this.updateTransform();
     }
-    EventUtils.broadcastChangeEvent(this, 'strokeStyle');
   }
 
   getCoordSize(): SizeType {
@@ -148,11 +146,6 @@ class GroupPeer extends ElementPeer {
       x: this._position.x,
       y: this._position.y,
     };
-  }
-
-  append(child: ElementPeer) {
-    super.append(child);
-    EventUtils.broadcastChangeEvent(child, 'onChangeCoordSize');
   }
 
   getCoordOrigin() {

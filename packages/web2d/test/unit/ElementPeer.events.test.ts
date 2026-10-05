@@ -249,26 +249,4 @@ describe('ElementPeer tree', () => {
     a.setTestId('node-1');
     expect(a.peer._native.getAttribute('test-id')).toBe('node-1');
   });
-
-  it('change listeners are kept per type and must be functions', () => {
-    const peer = new ElementPeer(svgNode());
-    const fn = jest.fn();
-    peer.attachChangeEventListener('strokeStyle', fn);
-    expect(peer.getChangeEventListeners('strokeStyle')).toEqual([fn]);
-    expect(peer.getChangeEventListeners('other')).toEqual([]);
-    expect(() =>
-      peer.attachChangeEventListener('x', null as unknown as (arg: unknown) => void),
-    ).toThrow();
-  });
-
-  it('characterization: append broadcasts strokeStyle to the subtree (W-BROADCAST)', () => {
-    const parent = new ElementPeer(svgNode('g'));
-    const child = new ElementPeer(svgNode('g'));
-    const grandChild = new ElementPeer(svgNode());
-    child.append(grandChild);
-    const fn = jest.fn();
-    grandChild.attachChangeEventListener('strokeStyle', fn);
-    parent.append(child);
-    expect(fn).toHaveBeenCalled();
-  });
 });

@@ -96,15 +96,15 @@ describe('ElementPeer stroke', () => {
     expect(ElementPeer.stokeStyleToStrokDasharray().dash).toEqual([5, 5]);
   });
 
-  it('updateStrokeStyle re-applies a non-solid style once attached', () => {
-    const parent = peer();
+  // The VML-era broadcast re-applied dash strokes after a reparent. SVG keeps its attributes.
+  it('a dash style survives being appended and reparented', () => {
+    const a = peer();
+    const b = peer();
     const p = peer();
     p.setStroke(1, 'dash');
-    p._native.removeAttribute('stroke-dasharray');
-    p.updateStrokeStyle();
-    expect(attr(p, 'stroke-dasharray')).toBeNull();
-    parent.append(p);
-    p.updateStrokeStyle();
+    a.append(p);
+    a.removeChild(p);
+    b.append(p);
     expect(attr(p, 'stroke-dasharray')).toBe('5 5');
   });
 });

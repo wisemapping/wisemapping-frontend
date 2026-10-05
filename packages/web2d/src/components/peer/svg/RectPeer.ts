@@ -32,7 +32,6 @@ class RectPeer extends ElementPeer {
     super(svgElement);
     this._arc = arc;
     this._position = { x: 0, y: 0 };
-    this.attachChangeEventListener('strokeStyle', ElementPeer.prototype.updateStrokeStyle);
   }
 
   setPosition(x: number, y: number) {

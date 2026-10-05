@@ -30,7 +30,6 @@ class StraightLinePeer extends ElementPeer {
     const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'line');
     super(svgElement);
 
-    this.attachChangeEventListener('strokeStyle', ElementPeer.prototype.updateStrokeStyle);
     this._x1 = 0;
     this._x2 = 0;
     this._y1 = 10;

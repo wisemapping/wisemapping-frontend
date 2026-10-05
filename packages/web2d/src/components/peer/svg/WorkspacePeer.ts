@@ -17,7 +17,6 @@
  */
 import { $defined } from '../utils/assert';
 import ElementPeer from './ElementPeer';
-import EventUtils from '../utils/EventUtils';
 import SizeType from '../../SizeType';
 import PositionType from '../../PositionType';
 
@@ -65,7 +64,6 @@ class WorkspacePeer extends ElementPeer {
     coords[3] = height;
     this._native.setAttribute('viewBox', coords.join(' '));
     this._native.setAttribute('preserveAspectRatio', 'none');
-    EventUtils.broadcastChangeEvent(this, 'strokeStyle');
   }
 
   getCoordSize(): SizeType {
@@ -95,11 +93,6 @@ class WorkspacePeer extends ElementPeer {
     }
 
     this._native.setAttribute('viewBox', coords.join(' '));
-  }
-
-  append(child: ElementPeer): void {
-    super.append(child);
-    EventUtils.broadcastChangeEvent(child, 'onChangeCoordSize');
   }
 
   getCoordOrigin(): PositionType {

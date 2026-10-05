@@ -25,7 +25,6 @@ class ElipsePeer extends ElementPeer {
     const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
     super(svgElement);
 
-    this.attachChangeEventListener('strokeStyle', ElementPeer.prototype.updateStrokeStyle);
     this._position = { x: 0, y: 0 };
   }
 
