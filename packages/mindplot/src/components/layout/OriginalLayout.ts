@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import Node from './Node';
 import SymmetricSorter from './SymmetricSorter';
 import BalancedSorter from './BalancedSorter';
@@ -39,7 +39,7 @@ class OriginalLayout {
   }
 
   createNode(id: number, size: SizeType, position: PositionType, type: string): Node {
-    $assert($defined(id), 'id can not be null');
+    $assert(id != null, 'id can not be null');
     const strategy: ChildrenSorterStrategy =
       type === 'root' ? OriginalLayout.BALANCED_SORTER : OriginalLayout.SYMMETRIC_SORTER;
     return new Node(id, size, position, strategy);

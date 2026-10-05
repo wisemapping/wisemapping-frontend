@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import Node from './Node';
 import TreeSorter from './TreeSorter';
 import LayoutPass from './LayoutPass';
@@ -36,7 +36,7 @@ class TreeLayout {
   }
 
   createNode(id: number, size: SizeType, position: PositionType, _type: string): Node {
-    $assert($defined(id), 'id can not be null');
+    $assert(id != null, 'id can not be null');
     // Tree layout uses TreeSorter for all nodes
     return new Node(id, size, position, TreeLayout.TREE_SORTER);
   }

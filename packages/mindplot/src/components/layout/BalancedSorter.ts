@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import PositionType from '../PositionType';
 import AbstractBasicSorter from './AbstractBasicSorter';
 import type { SorterPrediction } from './ChildrenSorterStrategy';
@@ -38,7 +38,7 @@ class BalancedSorter extends AbstractBasicSorter {
 
     // If it is a dragged node...
     if (node) {
-      $assert($defined(position), 'position cannot be null for predict in dragging');
+      $assert(position != null, 'position cannot be null for predict in dragging');
       const nodeDirection = this._getRelativeDirection(rootNode.getPosition(), node.getPosition());
       const positionDirection = this._getRelativeDirection(rootNode.getPosition(), position);
       const siblings = graph.getSiblings(node);
