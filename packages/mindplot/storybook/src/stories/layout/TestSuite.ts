@@ -176,8 +176,8 @@ class TestSuite {
     manager.addEvent('change', (event) => {
       console.log(
         `\tUpdated nodes: {id:${event.getId()} order: ${event.getOrder()}position: {${
-          event.getPosition().x
-        }${event.getPosition().y}}`,
+          event.getPosition()?.x
+        }${event.getPosition()?.y}}`,
       );
       events.push(event);
     });
@@ -216,8 +216,8 @@ class TestSuite {
     manager.addEvent('change', (event) => {
       console.log(
         `\tUpdated nodes: {id:${event.getId()} order: ${event.getOrder()}position: {${
-          event.getPosition().x
-        }${event.getPosition().y}}`,
+          event.getPosition()?.x
+        }${event.getPosition()?.y}}`,
       );
       events.push(event);
     });
