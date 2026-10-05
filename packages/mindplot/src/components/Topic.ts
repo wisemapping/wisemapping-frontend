@@ -1409,8 +1409,7 @@ abstract class Topic extends NodeGraph {
 
       // Calculate topic size and adjust elements. The text is measured once: the font
       // height is the height of one of its lines (Text.getFontHeight) ...
-      const textWidth = textShape.getShapeWidth();
-      const textHeight = textShape.getShapeHeight();
+      const { width: textWidth, height: textHeight } = textShape.measure();
       const fontHeight = textHeight / textShape.peer.getTextLines().length;
       this._measuredFontHeight = fontHeight;
       const padding = theme.getInnerPadding(this);

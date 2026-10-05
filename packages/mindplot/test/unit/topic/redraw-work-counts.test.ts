@@ -245,6 +245,24 @@ describe('Topic.redraw of an unchanged topic', () => {
   });
 });
 
+describe('Topic.redraw of a changed text', () => {
+  // The width and the height come from one measurement (Text.measure), not one call each
+  // (getShapeWidth then getShapeHeight), which measure twice when the result is not cacheable.
+  it('measures the text once', () => {
+    const topic = harness.topic(3);
+    const { peer } = topic.getOrBuildTextShape();
+    topic.setText('A changed text');
+    const measures = countCalls(
+      Object.getPrototypeOf(peer) as { measure: () => unknown },
+      'measure',
+      () => topic.redraw(topic.getThemeVariant(), false),
+      (self) => self === peer,
+    );
+    console.info(`changed text redraw: ${measures} text measurements`);
+    expect(measures).toBe(1);
+  });
+});
+
 describe('emoji and gallery icon', () => {
   it('does not rewrite nor re-append the emoji on a redraw', () => {
     const topic = harness.topic(9);
