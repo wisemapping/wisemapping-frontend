@@ -23,6 +23,7 @@ import GroupPeer from './peer/svg/GroupPeer';
 import SizeType from './SizeType';
 import StyleAttributes from './StyleAttributes';
 import PositionType from './PositionType';
+import type { ElementType } from './types';
 
 /**
  * A group object can be used to collect shapes. `M` types its custom events (see CustomEventMap).
@@ -77,7 +78,7 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
       throw new Error("It's not posible to add the group as a child of itself");
     }
 
-    const elementType: string = element.getType();
+    const elementType = element.getType();
     if (elementType == null) {
       throw new Error(`It seems not to be an element ->${element}`);
     }
@@ -89,7 +90,7 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
     this.peer.append(element.peer);
   }
 
-  getType() {
+  getType(): ElementType {
     return 'Group';
   }
 
@@ -128,13 +129,14 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
   }
 
   /** A group has no stroke of its own: this is a no-op (stroke its children instead). */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   override setStroke(
     _width?: number | null,
     _style?: string,
     _color?: string,
     _opacity?: number,
   ): void {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     // No-op.
   }
 

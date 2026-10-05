@@ -18,6 +18,7 @@
 import WorkspaceElement from './WorkspaceElement';
 import ElementPeer from './peer/svg/ElementPeer';
 import PositionType from './PositionType';
+import type { ElementType } from './types';
 
 interface Line {
   setFrom(x: number, y: number): void;
@@ -64,7 +65,7 @@ interface Line {
 
   moveToFront(): void;
 
-  getType(): string;
+  getType(): ElementType;
 
   addEvent(value: string, listener: (event: Event, detail?: unknown) => void): void;
 

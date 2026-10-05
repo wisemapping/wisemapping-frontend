@@ -21,6 +21,7 @@ import Line from './Line';
 import CurvedLinePeer from './peer/svg/CurvedLinePeer';
 import PositionType from './PositionType';
 import StyleAttributes from './StyleAttributes';
+import type { ElementType } from './types';
 
 class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
   constructor(attributes?: StyleAttributes) {
@@ -36,7 +37,7 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
     super(peer, mergedAttr);
   }
 
-  getType() {
+  getType(): ElementType {
     return 'CurvedLine';
   }
 

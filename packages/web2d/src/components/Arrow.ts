@@ -20,6 +20,7 @@ import WorkspaceElement from './WorkspaceElement';
 import ArrowPeer from './peer/svg/ArrowPeer';
 import PositionType from './PositionType';
 import StyleAttributes from './StyleAttributes';
+import type { ElementType } from './types';
 
 class Arrow extends WorkspaceElement<ArrowPeer> {
   constructor(attributes?: StyleAttributes) {
@@ -35,7 +36,7 @@ class Arrow extends WorkspaceElement<ArrowPeer> {
     super(peer, mergedAttr);
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'Arrow';
   }
 

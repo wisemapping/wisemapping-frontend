@@ -17,20 +17,20 @@
  */
 
 import WorkspaceElement from './WorkspaceElement';
-import { FontWeightType } from './FontWeightType';
 import TextPeer from './peer/svg/TextPeer';
 import TransformUtil from './peer/utils/TransformUtils';
 import StyleAttributes from './StyleAttributes';
 import PositionType from './PositionType';
 import SizeType from './SizeType';
 import FontPeer, { FontStyle } from './peer/svg/FontPeer';
+import type { ElementType, FontWeightType } from './types';
 
 class Text extends WorkspaceElement<TextPeer> {
   constructor(attributes?: StyleAttributes) {
     super(new TextPeer(new FontPeer('Arial')), attributes ?? {});
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'Text';
   }
 
@@ -42,7 +42,8 @@ class Text extends WorkspaceElement<TextPeer> {
     return this.peer.getText();
   }
 
-  setFont(font: string, size: number, style: string, weight: string): void {
+  /** Sets the font. An empty name, or a missing size, style or weight, keeps the current one. */
+  setFont(font: string, size?: number | null, style?: string | null, weight?: string | null): void {
     this.peer.setFont(font, size, style, weight);
   }
 

@@ -35,6 +35,7 @@ import {
   roundNumbers,
   serializeSvg,
 } from '../helpers/svgGolden';
+import { POLYLINE_STYLES, type PolyLineStyle, type StrokeStyle } from '../../src/components/types';
 
 /*
  * SVG golden tests (WEB2D_REVIEW_PLAN.md section 7.3, layer 1). Each scenario renders into jsdom
@@ -54,7 +55,7 @@ const QUADRANTS: [number, number][] = [
   [-100, 100],
 ];
 
-const polylineScene = (style: string, orientation: Orientation): Element => {
+const polylineScene = (style: PolyLineStyle, orientation: Orientation): Element => {
   const lines: PolyLine[] = [];
   const add = (x1: number, y1: number, x2: number, y2: number) => {
     const line = new PolyLine();
@@ -166,7 +167,7 @@ const strokeVariants = (line: WaveLine, i: number) => {
     [3, 'dashdot'],
   ];
   const [width, style] = variants[i]!;
-  line.setStroke(width, style, '#335577', 1);
+  line.setStroke(width, style as StrokeStyle, '#335577', 1);
 };
 
 const textScene = (texts: [string, (t: Text) => void][]): Element => {
@@ -195,7 +196,7 @@ const widthBySign = (offset: number): number => {
 const SCENARIOS: Record<string, Scenario> = {
   // PolyLine: every style × orientation (W-VCURVE, W-HCURVE, W-MIDCURVE).
   ...Object.fromEntries(
-    ['Straight', 'MiddleStraight', 'MiddleCurved', 'Curved'].flatMap((style) =>
+    POLYLINE_STYLES.flatMap((style) =>
       (['horizontal', 'vertical'] as Orientation[]).map((o) => [
         `polyline-${style.toLowerCase()}-${o}`,
         () => polylineScene(style, o),
@@ -397,7 +398,7 @@ const SCENARIOS: Record<string, Scenario> = {
         const line = new StraightLine();
         line.setFrom(-150, -150 + i * 60);
         line.setTo(150, -150 + i * 60);
-        line.setStroke(3, style, 'black', 1);
+        line.setStroke(3, style as StrokeStyle, 'black', 1);
         return line;
       }),
     ).svg,

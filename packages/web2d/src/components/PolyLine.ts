@@ -21,6 +21,7 @@ import Line from './Line';
 import PositionType from './PositionType';
 import StyleAttributes from './StyleAttributes';
 import PolyLinePeer from './peer/svg/PolyLinePeer';
+import type { ElementType, Orientation, PolyLineStyle } from './types';
 
 class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
   constructor(attributes?: StyleAttributes) {
@@ -80,7 +81,7 @@ class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
     throw new Error('Method not implemented.');
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'PolyLine';
   }
 
@@ -92,19 +93,19 @@ class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
     this.peer.setTo(x, y);
   }
 
-  setStyle(style: string): void {
+  setStyle(style: PolyLineStyle): void {
     this.peer.setStyle(style);
   }
 
-  getStyle(): string {
+  getStyle(): PolyLineStyle {
     return this.peer.getStyle();
   }
 
-  setOrientation(orientation: 'horizontal' | 'vertical'): void {
+  setOrientation(orientation: Orientation): void {
     this.peer.setOrientation(orientation);
   }
 
-  getOrientation(): 'horizontal' | 'vertical' {
+  getOrientation(): Orientation {
     return this.peer.getOrientation();
   }
 

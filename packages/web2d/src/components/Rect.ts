@@ -20,6 +20,7 @@ import WorkspaceElement from './WorkspaceElement';
 import RectPeer from './peer/svg/RectPeer';
 import StyleAttributes from './StyleAttributes';
 import PositionType from './PositionType';
+import type { ElementType } from './types';
 
 /**
  * Create a rectangle and variations of a rectangle shape.
@@ -46,7 +47,7 @@ class Rect extends WorkspaceElement<RectPeer> {
     super(peer, mergedAttr);
   }
 
-  getType() {
+  getType(): ElementType {
     return 'Rect';
   }
 

@@ -19,6 +19,7 @@ import Workspace from '../../src/components/Workspace';
 import WorkspacePeer from '../../src/components/peer/svg/WorkspacePeer';
 import Rect from '../../src/components/Rect';
 import Group from '../../src/components/Group';
+import type { StrokeStyle } from '../../src/components/types';
 
 describe('WorkspacePeer viewBox (W-VIEWBOX, BL-71)', () => {
   it('starts without a viewBox: size defaults to 1, origin to 0', () => {
@@ -170,12 +171,12 @@ describe('Workspace', () => {
     ['dot', 'dotted'],
   ])('maps the stroke style %s to the CSS border style %s', (style, css) => {
     const workspace = new Workspace();
-    workspace.setStroke(1, style, 'red');
+    workspace.setStroke(1, style as StrokeStyle, 'red');
     expect(workspace._getHtmlContainer().style.border).toBe(`1px ${css} red`);
   });
 
   it('rejects unknown stroke styles', () => {
-    expect(() => new Workspace().setStroke(1, 'wavy', 'red')).toThrow(
+    expect(() => new Workspace().setStroke(1, 'wavy' as unknown as StrokeStyle, 'red')).toThrow(
       "Unsupported stroke style: 'wavy'",
     );
   });

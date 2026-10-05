@@ -19,11 +19,10 @@ import PolyLinePeer from '../../src/components/peer/svg/PolyLinePeer';
 import PolyLine from '../../src/components/PolyLine';
 import { STRAIGHT_TOLERANCE_PX } from '../../src/components/geometry/polyline';
 import { parsePoints } from '../helpers/geometry';
-
-type Orientation = 'horizontal' | 'vertical';
+import { POLYLINE_STYLES, type Orientation, type PolyLineStyle } from '../../src/components/types';
 
 const poly = (
-  style: string,
+  style: PolyLineStyle,
   orientation: Orientation,
   x1: number,
   y1: number,
@@ -56,14 +55,14 @@ describe('PolyLinePeer points per style and orientation', () => {
     ],
     ['Curved', 'horizontal', '0.0, 0.0 45.0, 0.0 50.0, 5.0 50.0, 95.0 55.0, 100.0 100.0, 100.0'],
     ['Curved', 'vertical', '0.0, 0.0 0.0, 45.0 5.0, 50.0 95.0, 50.0 100.0, 55.0 100.0, 100.0'],
-  ] as [string, Orientation, string][])(
+  ] as [PolyLineStyle, Orientation, string][])(
     '%s %s (0,0)->(100,100)',
     (style, orientation, expected) => {
       expect(poly(style, orientation, 0, 0, 100, 100)).toBe(expected);
     },
   );
 
-  it.each(['Straight', 'MiddleStraight', 'MiddleCurved', 'Curved'])(
+  it.each(POLYLINE_STYLES)(
     '%s starts and ends at the given points in every quadrant and orientation',
     (style) => {
       (['horizontal', 'vertical'] as Orientation[]).forEach((o) => {
@@ -82,13 +81,13 @@ describe('PolyLinePeer points per style and orientation', () => {
   );
 
   it('an empty style draws the curved path', () => {
-    expect(poly('', 'horizontal', 0, 0, 100, 100)).toBe(
+    expect(poly('' as PolyLineStyle, 'horizontal', 0, 0, 100, 100)).toBe(
       poly('Curved', 'horizontal', 0, 0, 100, 100),
     );
   });
 
   it('an unknown style draws the curved path, as an empty one does', () => {
-    expect(poly('Zigzag', 'horizontal', 0, 0, 100, 100)).toBe(
+    expect(poly('Zigzag' as unknown as PolyLineStyle, 'horizontal', 0, 0, 100, 100)).toBe(
       poly('Curved', 'horizontal', 0, 0, 100, 100),
     );
   });
@@ -182,10 +181,10 @@ describe('PolyLine', () => {
  * connections; beyond it, the elbow keeps its jog.
  */
 describe('PolyLinePeer straight-line tolerance (BL5-72)', () => {
-  const STYLES = ['Straight', 'MiddleStraight', 'MiddleCurved', 'Curved'];
+  const STYLES = POLYLINE_STYLES;
   const ORIENTATIONS: Orientation[] = ['horizontal', 'vertical'];
   // From (10, 20), 100 along the layout and `across` across it.
-  const elbow = (style: string, orientation: Orientation, across: number) => {
+  const elbow = (style: PolyLineStyle, orientation: Orientation, across: number) => {
     const [x2, y2] = orientation === 'vertical' ? [10 + across, 120] : [110, 20 + across];
     return { pts: parsePoints(poly(style, orientation, 10, 20, x2, y2)), end: [x2, y2] };
   };

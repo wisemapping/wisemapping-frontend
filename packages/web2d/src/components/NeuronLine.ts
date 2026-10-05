@@ -22,6 +22,7 @@ import Line from './Line';
 import StyleAttributes from './StyleAttributes';
 import NeuronLinePeer from './peer/svg/NeuronLinePeer';
 import PositionType from './PositionType';
+import type { ElementType } from './types';
 
 class NeuronLine extends WorkspaceElement<NeuronLinePeer> implements Line {
   constructor(attributes?: StyleAttributes) {
@@ -38,7 +39,7 @@ class NeuronLine extends WorkspaceElement<NeuronLinePeer> implements Line {
     super(peer, mergedAttr);
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'NeuronLine';
   }
 

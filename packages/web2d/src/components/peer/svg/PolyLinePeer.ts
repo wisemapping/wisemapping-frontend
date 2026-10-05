@@ -18,8 +18,7 @@
 import { $defined } from '../utils/assert';
 import * as PolyLineUtils from '../../geometry/polyline';
 import ElementPeer from './ElementPeer';
-
-export type PolyLineStyle = 'Straight' | 'MiddleStraight' | 'MiddleCurved' | 'Curved';
+import type { Orientation, PolyLineStyle } from '../../types';
 
 class PolyLinePeer extends ElementPeer {
   private _breakDistance: number;
@@ -32,9 +31,9 @@ class PolyLinePeer extends ElementPeer {
 
   private _y2: number;
 
-  private _style: string;
+  private _style: PolyLineStyle;
 
-  private _orientation: 'horizontal' | 'vertical';
+  private _orientation: Orientation;
 
   // Whether the points are out of date. The first setter always draws; after that a setter that
   // does not change an input does not rebuild or rewrite the points.
@@ -77,23 +76,23 @@ class PolyLinePeer extends ElementPeer {
     this.attr('stroke', color);
   }
 
-  setStyle(style: string) {
+  setStyle(style: PolyLineStyle) {
     const changed = this._style !== style;
     this._style = style;
     this._refreshPath(changed);
   }
 
-  getStyle(): string {
+  getStyle(): PolyLineStyle {
     return this._style;
   }
 
-  setOrientation(orientation: 'horizontal' | 'vertical') {
+  setOrientation(orientation: Orientation) {
     const changed = this._orientation !== orientation;
     this._orientation = orientation;
     this._refreshPath(changed);
   }
 
-  getOrientation(): 'horizontal' | 'vertical' {
+  getOrientation(): Orientation {
     return this._orientation;
   }
 
@@ -110,7 +109,7 @@ class PolyLinePeer extends ElementPeer {
 
   /** Redraws the line in its style. An empty or unknown style draws the `Curved` path. */
   private _updatePath() {
-    switch (this._style as PolyLineStyle) {
+    switch (this._style) {
       case 'Straight':
         this._updateStraightPath();
         break;

@@ -33,6 +33,7 @@ import CurvedLinePeer from '../../src/components/peer/svg/CurvedLinePeer';
 import ArcLinePeer from '../../src/components/peer/svg/ArcLinePeer';
 import ArrowPeer from '../../src/components/peer/svg/ArrowPeer';
 import NeuronLinePeer from '../../src/components/peer/svg/NeuronLinePeer';
+import type { StrokeStyle } from '../../src/components/types';
 
 const peer = () => new ElementPeer(document.createElementNS('http://www.w3.org/2000/svg', 'rect'));
 const attr = (p: ElementPeer, name: string) => p._native.getAttribute(name);
@@ -54,7 +55,7 @@ describe('ElementPeer stroke', () => {
   ])('style %s uses dash array "%s"', (style, dash, cap) => {
     const p = peer();
     p.setStroke(1, 'dot');
-    p.setStroke(1, style);
+    p.setStroke(1, style as StrokeStyle);
     expect(attr(p, 'stroke-dasharray')).toBe(dash);
     expect(attr(p, 'stroke-linecap')).toBe(cap);
   });
@@ -82,8 +83,8 @@ describe('ElementPeer stroke', () => {
     ['dash', 'dot', 'dashdot', 'longdash'].forEach((style) => {
       const rect = peer();
       const heartbeat = new HeartbeatLinePeer();
-      rect.setStroke(1, style);
-      heartbeat.setStroke(1, style);
+      rect.setStroke(1, style as StrokeStyle);
+      heartbeat.setStroke(1, style as StrokeStyle);
       expect(attr(rect, 'stroke-dasharray')).toBe(attr(heartbeat, 'stroke-dasharray'));
     });
   });
@@ -103,20 +104,20 @@ describe('ElementPeer stroke', () => {
 
     it.each(CASES)('style %s at width %d is "%s"', (style, width, expected) => {
       const p = peer();
-      p.setStroke(width, style);
+      p.setStroke(width, style as StrokeStyle);
       expect(attr(p, 'stroke-dasharray')).toBe(expected);
       // The same on every element type that uses the shared table.
       const heartbeat = new HeartbeatLinePeer();
-      heartbeat.setStroke(width, style);
+      heartbeat.setStroke(width, style as StrokeStyle);
       expect(attr(heartbeat, 'stroke-dasharray')).toBe(expected);
       const neuron = new NeuronLinePeer();
-      neuron.setStroke(width, style);
+      neuron.setStroke(width, style as StrokeStyle);
       expect(attr(neuron, 'stroke-dasharray')).toBe(expected);
     });
 
     it.each(CASES)('style %s set first, then width %d, is "%s"', (style, width, expected) => {
       const p = peer();
-      p.setStroke(1, style);
+      p.setStroke(1, style as StrokeStyle);
       p.setStroke(width);
       expect(attr(p, 'stroke-dasharray')).toBe(expected);
     });
@@ -124,7 +125,7 @@ describe('ElementPeer stroke', () => {
     it('width 1 renders exactly the table', () => {
       TABLE.forEach(([style, lengths]) => {
         const p = peer();
-        p.setStroke(1, style);
+        p.setStroke(1, style as StrokeStyle);
         expect(attr(p, 'stroke-dasharray')).toBe(lengths.join(' '));
       });
     });
@@ -181,8 +182,12 @@ describe('ElementPeer stroke', () => {
   });
 
   it('rejects unknown styles', () => {
-    expect(() => peer().setStroke(1, 'wavy')).toThrow('Unsupported style: wavy');
-    expect(() => new Rect(0).setStroke(1, 'wavy')).toThrow("Unsupported stroke style: 'wavy'");
+    expect(() => peer().setStroke(1, 'wavy' as unknown as StrokeStyle)).toThrow(
+      'Unsupported style: wavy',
+    );
+    expect(() => new Rect(0).setStroke(1, 'wavy' as unknown as StrokeStyle)).toThrow(
+      "Unsupported stroke style: 'wavy'",
+    );
   });
 
   it('getStroke returns numbers, like getFill', () => {

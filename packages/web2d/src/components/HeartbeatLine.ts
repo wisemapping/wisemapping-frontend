@@ -22,6 +22,7 @@ import Line from './Line';
 import StyleAttributes from './StyleAttributes';
 import HeartbeatLinePeer from './peer/svg/HeartbeatLinePeer';
 import PositionType from './PositionType';
+import type { ElementType } from './types';
 
 class HeartbeatLine extends WorkspaceElement<HeartbeatLinePeer> implements Line {
   constructor(attributes?: StyleAttributes) {
@@ -38,7 +39,7 @@ class HeartbeatLine extends WorkspaceElement<HeartbeatLinePeer> implements Line 
     super(peer, mergedAttr);
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'HeartbeatLine';
   }
 

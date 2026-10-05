@@ -16,14 +16,12 @@
  *   limitations under the License.
  */
 import { fixed, formatPoint, fullPrecision, pointsData, unsignedFixed, type Vec } from './path';
+import type { Orientation } from '../types';
 
 /*
  * The elbow connectors of PolyLine: the straight elbow, the chamfered elbow (`Curved` and
  * `MiddleCurved`) and the rounded-middle elbow (`MiddleStraight`), in both orientations.
  */
-
-/** The main axis of a layout: x for a mind map (horizontal), y for a tree (vertical). */
-export type Orientation = 'horizontal' | 'vertical';
 
 /** The corner chamfer of the `Curved` style. */
 export const CURVED_CHAMFER = 5;

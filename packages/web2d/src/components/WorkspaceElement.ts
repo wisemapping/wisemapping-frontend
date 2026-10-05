@@ -19,6 +19,7 @@
 import { $defined } from './peer/utils/assert';
 import ElementPeer, { CustomEventMap, ElementListener, EventDetail } from './peer/svg/ElementPeer';
 import StyleAttributes from './StyleAttributes';
+import { isStrokeStyle, type ElementType } from './types';
 
 /**
  * `M` maps the element's custom event names to their detail type (see CustomEventMap).
@@ -156,7 +157,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
    * /*
    * Returns element type name.
    */
-  abstract getType(): string;
+  abstract getType(): ElementType;
 
   /**
    * Todo: Doc
@@ -181,16 +182,9 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
    *  color: stroke color
    *  opacity: stroke visibility
    */
-  setStroke(width: number | null, style?: string, color?: string, opacity?: number) {
-    if (
-      style != null &&
-      style !== undefined &&
-      style !== 'dash' &&
-      style !== 'dot' &&
-      style !== 'solid' &&
-      style !== 'longdash' &&
-      style !== 'dashdot'
-    ) {
+  setStroke(width: number | null, style?: string, color?: string, opacity?: number): void {
+    // Checked at run time too: JavaScript callers and attribute strings are not type checked.
+    if (style != null && !isStrokeStyle(style)) {
       throw new Error(`Unsupported stroke style: '${style}'`);
     }
     this.peer.setStroke(width, style, color, opacity);

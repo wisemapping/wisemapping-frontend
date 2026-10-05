@@ -20,6 +20,7 @@ import NeuronLinePeer from '../../src/components/peer/svg/NeuronLinePeer';
 import HeartbeatLine from '../../src/components/HeartbeatLine';
 import NeuronLine from '../../src/components/NeuronLine';
 import { hasNaN, parsePathPoints, pathCommands } from '../helpers/geometry';
+import type { StrokeStyle } from '../../src/components/types';
 
 type WavePeer = HeartbeatLinePeer | NeuronLinePeer;
 
@@ -99,7 +100,7 @@ describe.each(KINDS)('%s', (_name, create) => {
     ['dashdot', '10 5 1 5'],
   ])('style %s uses the shared dash array "%s" at width 1 (W-DASH)', (style, expected) => {
     const peer = create();
-    peer.setStroke(1, style);
+    peer.setStroke(1, style as StrokeStyle);
     expect(peer._native.getAttribute('stroke-dasharray')).toBe(expected);
   });
 
@@ -115,7 +116,7 @@ describe.each(KINDS)('%s', (_name, create) => {
     ['dashdot', 4, '40 20 4 20'],
   ])('BL5-77: style %s at width %d draws "%s"', (style, width, expected) => {
     const peer = create();
-    peer.setStroke(width, style);
+    peer.setStroke(width, style as StrokeStyle);
     expect(peer._native.getAttribute('stroke-dasharray')).toBe(expected);
   });
 

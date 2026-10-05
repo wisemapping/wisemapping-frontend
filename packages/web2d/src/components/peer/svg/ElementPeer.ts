@@ -17,6 +17,7 @@
  */
 import { $assert, $defined } from '../utils/assert';
 import SizeType from '../../SizeType';
+import { isStrokeStyle, type StrokeStyle } from '../../types';
 
 export type ElementListener = (event: Event, detail?: unknown) => void;
 
@@ -32,7 +33,7 @@ export type EventDetail<M extends CustomEventMap, K extends string> = K extends 
   ? M[K]
   : unknown;
 
-export type StrokeStyle = 'solid' | 'dot' | 'dash' | 'dashdot' | 'longdash';
+export type { StrokeStyle };
 
 /** Formats a coordinate or length with at most 2 decimals and no trailing zeros. */
 export const formatLength = (value: number): string => String(Math.round(value * 100) / 100 || 0);
@@ -50,7 +51,7 @@ class ElementPeer {
 
   private _children: ElementPeer[];
 
-  private _stokeStyle: string | null;
+  private _stokeStyle: StrokeStyle | null;
 
   // Opacity set with setOpacity(). setVisibility() shows the element at this opacity.
   private _opacity: number;
@@ -211,7 +212,7 @@ class ElementPeer {
 
   getStroke(): {
     color: string | null;
-    style: string | null;
+    style: StrokeStyle | null;
     opacity: number;
     width: number | null;
   } {
@@ -227,7 +228,12 @@ class ElementPeer {
     };
   }
 
-  setStroke(width: number | null, style?: string | null, color?: string | null, opacity?: number) {
+  setStroke(
+    width: number | null,
+    style?: StrokeStyle | null,
+    color?: string | null,
+    opacity?: number,
+  ): void {
     if ($defined(width)) {
       this.attr('stroke-width', `${width}`);
     }
@@ -237,12 +243,12 @@ class ElementPeer {
     }
 
     if (style) {
-      if (!Object.prototype.hasOwnProperty.call(ElementPeer.DASH_ARRAYS, style)) {
+      if (!isStrokeStyle(style)) {
         throw new Error(`Unsupported style: ${style}`);
       }
       this._stokeStyle = style;
-      this.writeTableDash(style as StrokeStyle);
-      const lineCap = ElementPeer.DASH_LINE_CAPS[style as StrokeStyle];
+      this.writeTableDash(style);
+      const lineCap = ElementPeer.DASH_LINE_CAPS[style];
       if (lineCap) {
         this.attr('stroke-linecap', lineCap);
       } else {
@@ -280,7 +286,7 @@ class ElementPeer {
    * other means (CurvedLine and Arrow setDashed) is left alone.
    */
   private rescaleTableDash(): void {
-    const style = this._stokeStyle as StrokeStyle | null;
+    const style = this._stokeStyle;
     if (
       style &&
       this._tableDash !== null &&

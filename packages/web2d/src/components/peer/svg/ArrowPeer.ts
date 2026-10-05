@@ -20,6 +20,7 @@ import { $defined } from '../utils/assert';
 import PositionType from '../../PositionType';
 import { arrowPathData } from '../../geometry/arrow';
 import ElementPeer from './ElementPeer';
+import type { StrokeStyle } from '../../types';
 
 class ArrowPeer extends ElementPeer {
   private _fromPoint: PositionType;
@@ -68,7 +69,7 @@ class ArrowPeer extends ElementPeer {
 
   override setStroke(
     width: number | null,
-    style?: string | null,
+    style?: StrokeStyle | null,
     color?: string | null,
     opacity?: number,
   ) {

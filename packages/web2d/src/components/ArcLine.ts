@@ -21,6 +21,7 @@ import Line from './Line';
 import StyleAttributes from './StyleAttributes';
 import ArcLinePeer from './peer/svg/ArcLinePeer';
 import PositionType from './PositionType';
+import type { ElementType, Orientation } from './types';
 
 class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
   constructor(attributes?: StyleAttributes) {
@@ -37,7 +38,7 @@ class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
     super(peer, mergedAttr);
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'ArcLine';
   }
 
@@ -99,11 +100,11 @@ class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
     throw new Error('Method not implemented.');
   }
 
-  setOrientation(orientation: 'horizontal' | 'vertical'): void {
+  setOrientation(orientation: Orientation): void {
     this.peer.setOrientation(orientation);
   }
 
-  getOrientation(): 'horizontal' | 'vertical' {
+  getOrientation(): Orientation {
     return this.peer.getOrientation();
   }
 }

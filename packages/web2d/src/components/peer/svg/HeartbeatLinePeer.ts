@@ -19,7 +19,8 @@
 import { $defined } from '../utils/assert';
 import PositionType from '../../PositionType';
 import { heartbeatPathData } from '../../geometry/heartbeat';
-import ElementPeer, { StrokeStyle } from './ElementPeer';
+import ElementPeer from './ElementPeer';
+import type { StrokeStyle } from '../../types';
 
 /**
  * HeartbeatLinePeer renders an ECG-inspired waveform with a signature spike that
@@ -33,7 +34,7 @@ class HeartbeatLinePeer extends ElementPeer {
 
   private _strokeColor: string;
 
-  private _strokeStyle: string | null;
+  private _strokeStyle: StrokeStyle | null;
 
   private _dashPattern: string | null;
 
@@ -72,7 +73,7 @@ class HeartbeatLinePeer extends ElementPeer {
 
   override setStroke(
     width: number | null,
-    style?: string | null,
+    style?: StrokeStyle | null,
     color?: string | null,
     opacity?: number,
   ) {
@@ -146,7 +147,7 @@ class HeartbeatLinePeer extends ElementPeer {
     // The table dash scales with the drawn width (BL5-77).
     const dashArray =
       this._strokeStyle && this._strokeStyle !== 'solid'
-        ? ElementPeer.dashArray(this._strokeStyle as StrokeStyle, Math.max(1, this._strokeWidth))
+        ? ElementPeer.dashArray(this._strokeStyle, Math.max(1, this._strokeWidth))
         : undefined;
 
     if (dashArray) {

@@ -21,6 +21,7 @@ import ElementPeer from './peer/svg/ElementPeer';
 import WorkspacePeer from './peer/svg/WorkspacePeer';
 import PositionType from './PositionType';
 import StyleAttributes from './StyleAttributes';
+import { isStrokeStyle, type ElementType, type StrokeStyle } from './types';
 
 class Workspace extends WorkspaceElement<WorkspacePeer> {
   private _htmlContainer: HTMLElement;
@@ -47,7 +48,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     htmlContainer.append(this.peer._native);
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'Workspace';
   }
 
@@ -146,7 +147,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
 
   /** Sets the container background. The opacity is not supported and is ignored. */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  override setFill(color: string, _opacity?: number) {
+  override setFill(color: string, _opacity?: number): void {
     if (color) {
       this._htmlContainer.style.backgroundColor = color;
     }
@@ -161,23 +162,25 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
    * Sets the container border. A number width is in pixels; a missing style is solid. The dash
    * styles map to the closest CSS border style, and the opacity is not supported and is ignored.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   override setStroke(
     width: number | string | null,
     style?: string,
     color?: string,
     _opacity?: number,
-  ) {
+  ): void {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const borderWidth = typeof width === 'number' ? `${width}px` : width;
-    const borderStyle = Workspace._BORDER_STYLES[style || 'solid'];
-    if (!borderStyle) {
+    const strokeStyle = style || 'solid';
+    if (!isStrokeStyle(strokeStyle)) {
       throw new Error(`Unsupported stroke style: '${style}'`);
     }
+    const borderStyle = Workspace._BORDER_STYLES[strokeStyle];
     const border = [borderWidth, borderStyle, color].filter((part) => part).join(' ');
     this._htmlContainer.style.border = border;
   }
 
-  private static _BORDER_STYLES: Record<string, string> = {
+  private static _BORDER_STYLES: Readonly<Record<StrokeStyle, string>> = {
     solid: 'solid',
     dash: 'dashed',
     longdash: 'dashed',

@@ -160,7 +160,12 @@ class TextPeer extends ElementPeer {
     return getPosition(this._native, container);
   }
 
-  setFont(fontName: string, size: number, style: string, weight: string): void {
+  setFont(
+    fontName: string,
+    size?: number | null,
+    style?: string | null,
+    weight?: string | null,
+  ): void {
     // Empty arguments keep the current value.
     if (fontName) {
       this.useFontName(fontName);
@@ -201,12 +206,12 @@ class TextPeer extends ElementPeer {
     return this._native.getAttribute('fill');
   }
 
-  setStyle(style: string) {
+  setStyle(style: string): void {
     this._font.setStyle(style);
     this.updateFontStyle();
   }
 
-  setWeight(weight: string) {
+  setWeight(weight: string): void {
     this._font.setWeight(weight);
     this.updateFontStyle();
   }

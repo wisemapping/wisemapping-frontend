@@ -19,6 +19,7 @@ import { $defined } from '../utils/assert';
 import PositionType from '../../PositionType';
 import { arcPathData } from '../../geometry/arc';
 import ElementPeer from './ElementPeer';
+import type { Orientation } from '../../types';
 
 class ArcLinePeer extends ElementPeer {
   private _x1: number;
@@ -29,7 +30,7 @@ class ArcLinePeer extends ElementPeer {
 
   private _y2: number;
 
-  private _orientation: 'horizontal' | 'vertical';
+  private _orientation: Orientation;
 
   constructor() {
     const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -71,7 +72,7 @@ class ArcLinePeer extends ElementPeer {
     this.setStroke(width);
   }
 
-  setOrientation(orientation: 'horizontal' | 'vertical'): void {
+  setOrientation(orientation: Orientation): void {
     const change = this._orientation !== orientation;
     this._orientation = orientation;
     if (change) {
@@ -79,7 +80,7 @@ class ArcLinePeer extends ElementPeer {
     }
   }
 
-  getOrientation(): 'horizontal' | 'vertical' {
+  getOrientation(): Orientation {
     return this._orientation;
   }
 

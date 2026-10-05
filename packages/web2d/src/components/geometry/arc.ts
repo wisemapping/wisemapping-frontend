@@ -16,13 +16,12 @@
  *   limitations under the License.
  */
 import { fixed, formatPoint, type Vec } from './path';
+import type { Orientation } from '../types';
 
 /*
  * The arc connector of ArcLine: a cubic curve that leaves the source along the cross axis and
  * reaches the target along the main axis.
  */
-
-export type ArcOrientation = 'horizontal' | 'vertical';
 
 /** Coordinates are written with 1 decimal (a negative zero is kept as `-0.0`). */
 const format = fixed(1);
@@ -32,7 +31,7 @@ const format = fixed(1);
  * eighth of the way, and arrives level with the target. Vertical (tree): the same with the axes
  * swapped.
  */
-export const arcControlPoints = (from: Vec, to: Vec, orientation: ArcOrientation): [Vec, Vec] => {
+export const arcControlPoints = (from: Vec, to: Vec, orientation: Orientation): [Vec, Vec] => {
   if (orientation === 'vertical') {
     return [
       { x: from.x + (to.x - from.x) / 8, y: from.y },
@@ -50,7 +49,7 @@ export const arcControlPoints = (from: Vec, to: Vec, orientation: ArcOrientation
  * space after each point and a comma between the control points) is kept, so the output stays
  * byte-identical: browsers parse it the same way.
  */
-export const arcPathData = (from: Vec, to: Vec, orientation: ArcOrientation): string => {
+export const arcPathData = (from: Vec, to: Vec, orientation: Orientation): string => {
   const str = (p: Vec) => `${formatPoint(p, format)} `;
   const [c1, c2] = arcControlPoints(from, to, orientation);
   return `M${str(from)} C${str(c1)},${str(c2)} ${str(to)}`;

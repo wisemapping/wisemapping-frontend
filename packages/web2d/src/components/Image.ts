@@ -20,6 +20,7 @@ import ImagePeer from './peer/svg/ImagePeer';
 import SizeType from './SizeType';
 import StyleAttributes from './StyleAttributes';
 import PositionType from './PositionType';
+import type { ElementType } from './types';
 
 class Image extends WorkspaceElement<ImagePeer> {
   constructor(attributes?: StyleAttributes) {
@@ -27,7 +28,7 @@ class Image extends WorkspaceElement<ImagePeer> {
     super(peer, attributes || {});
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'Image';
   }
 

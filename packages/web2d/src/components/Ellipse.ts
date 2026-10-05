@@ -20,6 +20,7 @@ import ElipsePeer from './peer/svg/ElipsePeer';
 import SizeType from './SizeType';
 import StyleAttributes from './StyleAttributes';
 import PositionType from './PositionType';
+import type { ElementType } from './types';
 
 class Ellipse extends WorkspaceElement<ElipsePeer> {
   constructor(attributes?: StyleAttributes) {
@@ -37,7 +38,7 @@ class Ellipse extends WorkspaceElement<ElipsePeer> {
     super(peer, mergedAttr);
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'Ellipse';
   }
 

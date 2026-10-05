@@ -21,6 +21,7 @@ import Line from './Line';
 import StraightLinePeer from './peer/svg/StraightPeer';
 import PositionType from './PositionType';
 import StyleAttributes from './StyleAttributes';
+import type { ElementType } from './types';
 
 class StraightLine extends WorkspaceElement<StraightLinePeer> implements Line {
   constructor(attributes?: StyleAttributes) {
@@ -67,7 +68,7 @@ class StraightLine extends WorkspaceElement<StraightLinePeer> implements Line {
     throw new Error('Method not implemented.');
   }
 
-  getType() {
+  getType(): ElementType {
     return 'Line';
   }
 

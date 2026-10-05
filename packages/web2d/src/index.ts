@@ -37,6 +37,22 @@ import type { FontStyle } from './components/peer/svg/FontPeer';
 import type { CustomEventMap, EventDetail } from './components/peer/svg/ElementPeer';
 import type StyleAttributes from './components/StyleAttributes';
 import { STRAIGHT_TOLERANCE_PX } from './components/geometry/polyline';
+import {
+  STROKE_STYLES,
+  POLYLINE_STYLES,
+  ORIENTATIONS,
+  FONT_STYLES,
+  FONT_WEIGHTS,
+  ELEMENT_TYPES,
+} from './components/types';
+import type {
+  StrokeStyle,
+  PolyLineStyle,
+  Orientation,
+  FontStyleType,
+  FontWeightType,
+  ElementType,
+} from './components/types';
 
 export {
   Arrow,
@@ -56,6 +72,24 @@ export {
   Workspace,
   ElementPeer,
   STRAIGHT_TOLERANCE_PX,
+  STROKE_STYLES,
+  POLYLINE_STYLES,
+  ORIENTATIONS,
+  FONT_STYLES,
+  FONT_WEIGHTS,
+  ELEMENT_TYPES,
 };
 
-export type { Line, StyleAttributes, FontStyle, CustomEventMap, EventDetail };
+export type {
+  Line,
+  StyleAttributes,
+  FontStyle,
+  CustomEventMap,
+  EventDetail,
+  StrokeStyle,
+  PolyLineStyle,
+  Orientation,
+  FontStyleType,
+  FontWeightType,
+  ElementType,
+};
