@@ -1924,7 +1924,7 @@
   "export.document": [
     {
       "type": 0,
-      "value": "Mindmap Tools (WXML, MM, MMX): Export your mindmap in thirdparty mindmap tool formats"
+      "value": "Mindmap Tools (WXML, MM): Export your mindmap in thirdparty mindmap tool formats"
     }
   ],
   "export.document-label": [

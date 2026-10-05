@@ -39,8 +39,9 @@ class FreeplaneExporter extends FreemindExporter {
     [StrokeStyle.DOTTED]: '3 3',
   };
 
+  // mmx is only the id of the format: Freeplane maps are .mm files, as FreeMind ones.
   extension(): string {
-    return 'mmx';
+    return 'mm';
   }
 
   protected getVersionNumber(): string {

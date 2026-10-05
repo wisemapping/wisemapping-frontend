@@ -100,6 +100,7 @@ describe('MMX export test execution', () => {
     const mindmap: Mindmap = serializer.loadFromDom(mapDocument, testName);
 
     const exporter = TextExporterFactory.create('mmx', mindmap);
-    await exporterAssert(testName, exporter);
+    // Freeplane maps are .mm files, as FreeMind ones: the expected files keep the format id.
+    await exporterAssert(testName, exporter, 'mmx');
   });
 });

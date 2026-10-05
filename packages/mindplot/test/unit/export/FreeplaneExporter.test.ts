@@ -96,10 +96,11 @@ describe('FreeplaneExporter', () => {
     expect(nodeOf(doc, 3).querySelector(':scope > node')?.getAttribute('TEXT')).toBe('B1');
   });
 
-  test('is the mmx text exporter, an xml file', () => {
+  test('is the mmx text exporter, an xml file with the Freeplane extension (BL5-115)', () => {
     const exporter = TextExporterFactory.create('mmx', buildMindmap().mindmap);
     expect(exporter).toBeInstanceOf(FreeplaneExporter);
-    expect(exporter.extension()).toBe('mmx');
+    // mmx is the format id: Freeplane maps are .mm files.
+    expect(exporter.extension()).toBe('mm');
     expect(exporter.getContentType()).toBe('application/xml');
   });
 

@@ -891,7 +891,7 @@
     "defaultMessage": "Export this map in the format that you want and start using it in your presentations or sharing by email"
   },
   "export.document": {
-    "defaultMessage": "Mindmap Tools (WXML, MM, MMX): Export your mindmap in thirdparty mindmap tool formats"
+    "defaultMessage": "Mindmap Tools (WXML, MM): Export your mindmap in thirdparty mindmap tool formats"
   },
   "export.document-label": {
     "defaultMessage": "Document (TXT, MD): Export your mindmap in a self-contained document ready to share"

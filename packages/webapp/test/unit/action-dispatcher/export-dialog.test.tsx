@@ -131,6 +131,29 @@ describe('ExportDialog', () => {
     expect(mockCreateTextExporter).toHaveBeenCalledWith('txt', selected);
   });
 
+  test('downloads a Freeplane export as a .mm file (BL5-115)', async () => {
+    mockFetchMindmap.mockResolvedValue(fakeMindmap('selected map'));
+    const downloads: string[] = [];
+    const click = jest.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (
+      this: HTMLAnchorElement,
+    ) {
+      downloads.push(this.download);
+    });
+    renderWithProviders(<ExportDialog mapId={7} enableImgExport={false} onClose={jest.fn()} />, {
+      client,
+    });
+
+    fireEvent.click(screen.getByLabelText(/Mindmap Tools/));
+    fireEvent.mouseDown(screen.getByRole('combobox'));
+    fireEvent.click(await screen.findByRole('option', { name: 'Freeplane (MM)' }));
+    submit();
+
+    await waitFor(() => expect(downloads).toEqual(['Map.mm']));
+    // mmx is still the id of the format.
+    expect(mockCreateTextExporter.mock.calls[0][0]).toBe('mmx');
+    click.mockRestore();
+  });
+
   describe('from the editor, leaves the live map theme as it was', () => {
     const renderOwn = (own: ReturnType<typeof fakeDesigner>, enableImgExport = true) =>
       renderWithProviders(

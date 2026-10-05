@@ -43,6 +43,10 @@ import { useFetchMapMetadata } from '../../../../classes/middleware';
 import { trackExport } from '../../../../utils/analytics';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'pdf' | 'txt' | 'mm' | 'mmx' | 'wxml' | 'md';
+
+// The extension of the downloaded file. mmx is only the id of the Freeplane format: Freeplane maps
+// are .mm files, as FreeMind ones.
+const fileExtension = (format: ExportFormat): string => (format === 'mmx' ? 'mm' : format);
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
 
 type ExportDialogProps = {
@@ -208,7 +212,7 @@ const ExportDialog = ({
         // Create hidden anchor to force download ...
         const anchor: HTMLAnchorElement = document.createElement('a');
         anchor.style.display = 'display: none';
-        anchor.download = `${mapMetadata?.title ?? 'mindmap'}.${exportFormat}`;
+        anchor.download = `${mapMetadata?.title ?? 'mindmap'}.${fileExtension(exportFormat)}`;
         anchor.href = url;
         document.body.appendChild(anchor);
 
@@ -336,7 +340,7 @@ const ExportDialog = ({
                 label={intl.formatMessage({
                   id: 'export.document',
                   defaultMessage:
-                    'Mindmap Tools (WXML, MM, MMX): Export your mindmap in thirdparty mindmap tool formats',
+                    'Mindmap Tools (WXML, MM): Export your mindmap in thirdparty mindmap tool formats',
                 })}
                 color="secondary"
               />
@@ -354,7 +358,7 @@ const ExportDialog = ({
                     Freemind 1.0.1 (MM)
                   </MenuItem>
                   <MenuItem css={classes.select} value="mmx">
-                    Freeplane (MMX)
+                    Freeplane (MM)
                   </MenuItem>
                   {/* <MenuItem className={classes.select} value="mmap">
                                         MindManager (MMAP)

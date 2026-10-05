@@ -61,10 +61,16 @@ export const parseXMLFile = (
   return parseXMLString(content, mimeType);
 };
 
-export const exporterAssert = async (testName: string, exporter: Exporter) => {
+// The expected file is named after the extension of the exporter, or the given one when two
+// exporters share it (FreeMind and Freeplane maps are both .mm files).
+export const exporterAssert = async (
+  testName: string,
+  exporter: Exporter,
+  extension = exporter.extension(),
+) => {
   const actualStr = await exporter.export();
 
   // Compared with expected ...
-  const expectedPath = path.resolve(__dirname, `./expected/${testName}.${exporter.extension()}`);
+  const expectedPath = path.resolve(__dirname, `./expected/${testName}.${extension}`);
   assertExpectedFile(expectedPath, actualStr);
 };
