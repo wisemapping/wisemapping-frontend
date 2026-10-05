@@ -115,11 +115,11 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
   };
 
   const handleOnFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event?.target?.files;
+    // A cancelled picker can fire a change with no file in it.
+    const file = event?.target?.files?.[0];
     const reader = new FileReader();
 
-    if (files) {
-      const file = files[0];
+    if (file) {
       const extensionFile = file.name.split('.').pop()?.toLowerCase();
       const request = ++fileRequest.current;
       const isStale = () => request !== fileRequest.current;

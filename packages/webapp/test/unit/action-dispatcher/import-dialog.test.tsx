@@ -209,6 +209,31 @@ describe('ImportDialog', () => {
     });
   });
 
+  test('a change with no file picked is ignored', async () => {
+    const errors: unknown[] = [];
+    const onError = (event: ErrorEvent) => {
+      errors.push(event.error);
+      event.preventDefault();
+    };
+    window.addEventListener('error', onError);
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    try {
+      renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+      const input = document.getElementById('contained-button-file') as HTMLInputElement;
+
+      // Chrome fires a change with an empty FileList when the picker is cancelled.
+      fireEvent.change(input, { target: { files: [] } });
+      await act(() => new Promise((resolve) => setTimeout(resolve, 50)));
+
+      expect(errors).toEqual([]);
+      expect(consoleError).not.toHaveBeenCalled();
+      expect(mockCreateImporter).not.toHaveBeenCalled();
+      expect(screen.queryByRole('alert')).toBeNull();
+    } finally {
+      window.removeEventListener('error', onError);
+    }
+  });
+
   test('the description field is controlled from the start', () => {
     renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
 
