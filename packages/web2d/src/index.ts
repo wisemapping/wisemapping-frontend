@@ -32,6 +32,7 @@ import HeartbeatLine from './components/HeartbeatLine';
 import NeuronLine from './components/NeuronLine';
 import WorkspaceElement from './components/WorkspaceElement';
 import type Line from './components/Line';
+import type { ControlPointLine } from './components/Line';
 import ElementPeer from './components/peer/svg/ElementPeer';
 import type { FontStyle } from './components/peer/svg/FontPeer';
 import type { CustomEventMap, EventDetail } from './components/peer/svg/ElementPeer';
@@ -82,6 +83,7 @@ export {
 
 export type {
   Line,
+  ControlPointLine,
   StyleAttributes,
   FontStyle,
   CustomEventMap,

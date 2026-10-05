@@ -17,13 +17,13 @@
  */
 import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
-import Line from './Line';
+import type { ControlPointLine } from './Line';
 import CurvedLinePeer from './peer/svg/CurvedLinePeer';
 import PositionType from './PositionType';
 import type { ElementAttributes } from './StyleAttributes';
 import type { ElementType } from './types';
 
-class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
+class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements ControlPointLine {
   constructor(attributes?: ElementAttributes) {
     const peer = new CurvedLinePeer();
     const defaultAttributes = {

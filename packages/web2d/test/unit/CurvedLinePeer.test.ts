@@ -17,6 +17,7 @@
  */
 import CurvedLinePeer from '../../src/components/peer/svg/CurvedLinePeer';
 import CurvedLine from '../../src/components/CurvedLine';
+import type { ControlPointLine } from '../../src/components/Line';
 import { extent, parsePathPoints, pathCommands } from '../helpers/geometry';
 
 const line = (x1: number, y1: number, x2: number, y2: number): CurvedLinePeer => {
@@ -355,5 +356,16 @@ describe('CurvedLine', () => {
 describe('CurvedLinePeer taper constants (BL5-147)', () => {
   it('does not re-export the taper constants: geometry/curve owns them', () => {
     expect(Object.keys(CurvedLinePeer).filter((key) => key.startsWith('TAPER_'))).toEqual([]);
+  });
+});
+
+describe('ControlPointLine (typing T5)', () => {
+  it('CurvedLine is the line with control points', () => {
+    // Checked by tsc: a CurvedLine is a ControlPointLine.
+    const line: ControlPointLine = new CurvedLine();
+    line.setSrcControlPoint({ x: 1, y: 2 });
+    line.setIsSrcControlPointCustom(true);
+    expect(line.getControlPoints()[0]).toEqual({ x: 1, y: 2 });
+    expect(line.isSrcControlPointCustom()).toBe(true);
   });
 });

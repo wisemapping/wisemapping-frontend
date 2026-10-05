@@ -20,6 +20,13 @@ import ElementPeer from './peer/svg/ElementPeer';
 import PositionType from './PositionType';
 import type { ElementType } from './types';
 
+/**
+ * A line between two points, as mindplot draws connections: its ends, stroke, fill, visibility,
+ * opacity, z-order and events.
+ *
+ * The control point members are only implemented by CurvedLine (see ControlPointLine); the other
+ * lines throw. They move to ControlPointLine once mindplot types its curved lines with it.
+ */
 interface Line {
   setFrom(x: number, y: number): void;
 
@@ -73,4 +80,21 @@ interface Line {
 
   getElementClass(): WorkspaceElement<ElementPeer>;
 }
+/** A line whose curve is shaped by two control points (CurvedLine). */
+export interface ControlPointLine extends Line {
+  setSrcControlPoint(value: PositionType): void;
+
+  setDestControlPoint(value: PositionType): void;
+
+  getControlPoints(): [PositionType, PositionType];
+
+  isSrcControlPointCustom(): boolean;
+
+  isDestControlPointCustom(): boolean;
+
+  setIsSrcControlPointCustom(value: boolean): void;
+
+  setIsDestControlPointCustom(value: boolean): void;
+}
+
 export default Line;
