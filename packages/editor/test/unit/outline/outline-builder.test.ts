@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { OutlineBuilder } from './OutlineBuilder';
+import { OutlineBuilder } from '../../../src/components/action-widget/pane/outline-view-dialog/OutlineBuilder';
 import { INodeModel, ContentType } from '@wisemapping/mindplot';
 
 // Mock feature type for testing
@@ -24,6 +24,7 @@ interface MockFeature {
   getType: () => string;
   getUrl?: () => string;
   getText?: () => string;
+  getAttributes?: () => Record<string, string>;
 }
 
 // Mock node creation helpers
@@ -65,6 +66,7 @@ describe('OutlineBuilder', () => {
         level: 0,
         children: [],
         iconUrls: [],
+        emojiChars: [],
         linkUrl: undefined,
         noteText: undefined,
         node,
@@ -130,6 +132,21 @@ describe('OutlineBuilder', () => {
       const result = builder.buildOutlineData(node, 0);
 
       expect(result.noteText).toBe('This is a note');
+    });
+
+    it('should extract emoji characters from emoji icon features', () => {
+      const emojiFeature = {
+        getType: () => 'eicon',
+        getAttributes: () => ({ id: '🚀' }),
+      };
+      const node = createMockNode(1, 'Node with emoji', {
+        features: [emojiFeature],
+      });
+
+      const result = builder.buildOutlineData(node, 0);
+
+      expect(result.emojiChars).toEqual(['🚀']);
+      expect(result.iconUrls).toEqual([]);
     });
 
     it('should handle HTML content type', () => {
