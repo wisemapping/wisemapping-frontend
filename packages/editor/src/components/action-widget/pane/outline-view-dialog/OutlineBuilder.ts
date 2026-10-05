@@ -16,7 +16,14 @@
  *   limitations under the License.
  */
 
-import { INodeModel, LinkModel, NoteModel, SvgIconModel, ContentType } from '@wisemapping/mindplot';
+import {
+  INodeModel,
+  LinkModel,
+  NoteModel,
+  SvgIconModel,
+  SvgImageIcon,
+  ContentType,
+} from '@wisemapping/mindplot';
 
 export interface OutlineNodeData {
   id: string;
@@ -49,19 +56,8 @@ export class OutlineBuilder {
    * Helper function to get icon URL (same logic as SvgImageIcon.getImageUrl)
    */
   private getIconUrl(iconId: string): string {
-    try {
-      // Dynamically require the icon
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      return require(`@wisemapping/mindplot/assets/icons/${iconId}.svg`);
-    } catch {
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        return require(`@wisemapping/mindplot/assets/icons/${iconId}.png`);
-      } catch {
-        console.warn(`Icon not found: ${iconId}`);
-        return '';
-      }
-    }
+    // The same lookup as the canvas: the browser bundle has no require() to load the asset with.
+    return SvgImageIcon.getImageUrl(iconId);
   }
 
   /**
