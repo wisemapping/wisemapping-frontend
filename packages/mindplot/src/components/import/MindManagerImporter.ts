@@ -60,6 +60,166 @@ type MindManagerRawInput = string | ArrayBuffer | Uint8Array;
 // topics of the map or of the callouts of a topic (StyleGroup/RootTopicDefaultsGroup, ...).
 type TopicKind = 'Root' | 'Label' | 'Callout';
 
+// MindManager icon ids and the WiseMapping EmojiIcons they map to.
+const MINDMANAGER_ICONS: Readonly<Record<string, string>> = {
+  // Priority icons
+  'priority-1': '🔴',
+  'priority-2': '🟡',
+  'priority-3': '🟢',
+  'priority-4': '🔵',
+  'priority-5': '🟣',
+
+  // Task icons
+  'task-start': '🟡',
+  'task-done': '✅',
+  'task-pause': '⏸️',
+  'task-cancel': '❌',
+
+  // Star icons
+  star: '⭐',
+  'star-empty': '☆',
+  'star-half': '⭐',
+
+  // Arrow icons
+  'arrow-up': '⬆️',
+  'arrow-down': '⬇️',
+  'arrow-left': '⬅️',
+  'arrow-right': '➡️',
+
+  // Number icons
+  1: '1️⃣',
+  2: '2️⃣',
+  3: '3️⃣',
+  4: '4️⃣',
+  5: '5️⃣',
+  6: '6️⃣',
+  7: '7️⃣',
+  8: '8️⃣',
+  9: '9️⃣',
+  10: '🔟',
+
+  // Letter icons
+  A: '🅰️',
+  B: '🅱️',
+  C: '🅲',
+  D: '🅳',
+  E: '🅴',
+  F: '🅵',
+  G: '🅶',
+  H: '🅷',
+  I: '🅸',
+  J: '🅹',
+  K: '🅺',
+  L: '🅻',
+  M: '🅼',
+  N: '🅽',
+  O: '🅾️',
+  P: '🅿️',
+  Q: '🆀',
+  R: '🆁',
+  S: '🆂',
+  T: '🆃',
+  U: '🆄',
+  V: '🆅',
+  W: '🆆',
+  X: '🆇',
+  Y: '🆈',
+  Z: '🆉',
+
+  // Emotion icons
+  smile: '😊',
+  happy: '😃',
+  sad: '😢',
+  angry: '😠',
+  thinking: '🤔',
+  surprised: '😲',
+
+  // Technology icons
+  computer: '💻',
+  phone: '📱',
+  email: '📧',
+  internet: '🌐',
+
+  // Stock icons of the MindManager document schema (IconType="urn:mindjet:...")
+  SmileyHappy: '😃',
+  SmileyNeutral: '😐',
+  SmileySad: '😢',
+  SmileyAngry: '😠',
+  SmileyScreaming: '😱',
+  Clock: '🕐',
+  Calendar: '📅',
+  Letter: '✉️',
+  Email: '📧',
+  Mailbox: '📫',
+  Megaphone: '📣',
+  House: '🏠',
+  Rolodex: '📇',
+  Dollar: '💲',
+  Euro: '💶',
+  FlagRed: '🔴',
+  FlagBlue: '🔵',
+  FlagGreen: '🟢',
+  FlagBlack: '⚫',
+  FlagOrange: '🟠',
+  FlagYellow: '🟡',
+  FlagPurple: '🟣',
+  TrafficLightsRed: '🚦',
+  PadlockLocked: '🔒',
+  PadlockUnlocked: '🔓',
+  ArrowUp: '⬆️',
+  ArrowDown: '⬇️',
+  ArrowLeft: '⬅️',
+  ArrowRight: '➡️',
+  TwoEndArrow: '↔️',
+  Phone: '📞',
+  Cellphone: '📱',
+  Camera: '📷',
+  Fax: '📠',
+  Stop: '🛑',
+  ExclamationMark: '❗',
+  QuestionMark: '❓',
+  ThumbsUp: '👍',
+  ThumbsDown: '👎',
+  OnHold: '⏸️',
+  Hourglass: '⏳',
+  Emergency: '🚨',
+  NoEntry: '⛔',
+  Bomb: '💣',
+  Key: '🔑',
+  Glasses: '👓',
+  JudgeHammer: '🔨',
+  Rocket: '🚀',
+  Scales: '⚖️',
+  Redo: '🔁',
+  Lightbulb: '💡',
+  CoffeeCup: '☕',
+  TwoFeet: '👣',
+  Meeting: '👥',
+  Check: '✅',
+  Note: '📝',
+  Book: '📖',
+  MagnifyingGlass: '🔍',
+  BrokenConnection: '⛓️',
+  Information: 'ℹ️',
+  Folder: '📁',
+  // Task priorities (TaskPriority="urn:mindjet:Prio1")
+  Prio1: '🔴',
+  Prio2: '🟡',
+  Prio3: '🟢',
+  Prio4: '🔵',
+  Prio5: '🟣',
+  Prio6: '6️⃣',
+  Prio7: '7️⃣',
+  Prio8: '8️⃣',
+  Prio9: '9️⃣',
+};
+
+// The same icons by lower case id: the ids are matched ignoring case. Only own entries, as a
+// Map: a plain object would map 'constructor' to the Object function.
+const MINDMANAGER_ICONS_BY_LOWER_CASE: ReadonlyMap<string, string> = new Map(
+  Object.entries(MINDMANAGER_ICONS).map(([id, emoji]) => [id.toLowerCase(), emoji]),
+);
+
 class MindManagerImporter extends Importer {
   private mindManagerInput: MindManagerRawInput;
 
@@ -93,167 +253,12 @@ class MindManagerImporter extends Importer {
     return notes.trim();
   }
 
-  private mapMindManagerIconToEmojiIcon(iconId: string): string {
-    // MindManager icon mapping to WiseMapping EmojiIcons
-    const iconMappings: { [key: string]: string } = {
-      // Priority icons
-      'priority-1': '🔴',
-      'priority-2': '🟡',
-      'priority-3': '🟢',
-      'priority-4': '🔵',
-      'priority-5': '🟣',
-
-      // Task icons
-      'task-start': '🟡',
-      'task-done': '✅',
-      'task-pause': '⏸️',
-      'task-cancel': '❌',
-
-      // Star icons
-      star: '⭐',
-      'star-empty': '☆',
-      'star-half': '⭐',
-
-      // Arrow icons
-      'arrow-up': '⬆️',
-      'arrow-down': '⬇️',
-      'arrow-left': '⬅️',
-      'arrow-right': '➡️',
-
-      // Number icons
-      1: '1️⃣',
-      2: '2️⃣',
-      3: '3️⃣',
-      4: '4️⃣',
-      5: '5️⃣',
-      6: '6️⃣',
-      7: '7️⃣',
-      8: '8️⃣',
-      9: '9️⃣',
-      10: '🔟',
-
-      // Letter icons
-      A: '🅰️',
-      B: '🅱️',
-      C: '🅲',
-      D: '🅳',
-      E: '🅴',
-      F: '🅵',
-      G: '🅶',
-      H: '🅷',
-      I: '🅸',
-      J: '🅹',
-      K: '🅺',
-      L: '🅻',
-      M: '🅼',
-      N: '🅽',
-      O: '🅾️',
-      P: '🅿️',
-      Q: '🆀',
-      R: '🆁',
-      S: '🆂',
-      T: '🆃',
-      U: '🆄',
-      V: '🆅',
-      W: '🆆',
-      X: '🆇',
-      Y: '🆈',
-      Z: '🆉',
-
-      // Emotion icons
-      smile: '😊',
-      happy: '😃',
-      sad: '😢',
-      angry: '😠',
-      thinking: '🤔',
-      surprised: '😲',
-
-      // Technology icons
-      computer: '💻',
-      phone: '📱',
-      email: '📧',
-      internet: '🌐',
-
-      // Stock icons of the MindManager document schema (IconType="urn:mindjet:...")
-      SmileyHappy: '😃',
-      SmileyNeutral: '😐',
-      SmileySad: '😢',
-      SmileyAngry: '😠',
-      SmileyScreaming: '😱',
-      Clock: '🕐',
-      Calendar: '📅',
-      Letter: '✉️',
-      Email: '📧',
-      Mailbox: '📫',
-      Megaphone: '📣',
-      House: '🏠',
-      Rolodex: '📇',
-      Dollar: '💲',
-      Euro: '💶',
-      FlagRed: '🔴',
-      FlagBlue: '🔵',
-      FlagGreen: '🟢',
-      FlagBlack: '⚫',
-      FlagOrange: '🟠',
-      FlagYellow: '🟡',
-      FlagPurple: '🟣',
-      TrafficLightsRed: '🚦',
-      PadlockLocked: '🔒',
-      PadlockUnlocked: '🔓',
-      ArrowUp: '⬆️',
-      ArrowDown: '⬇️',
-      ArrowLeft: '⬅️',
-      ArrowRight: '➡️',
-      TwoEndArrow: '↔️',
-      Phone: '📞',
-      Cellphone: '📱',
-      Camera: '📷',
-      Fax: '📠',
-      Stop: '🛑',
-      ExclamationMark: '❗',
-      QuestionMark: '❓',
-      ThumbsUp: '👍',
-      ThumbsDown: '👎',
-      OnHold: '⏸️',
-      Hourglass: '⏳',
-      Emergency: '🚨',
-      NoEntry: '⛔',
-      Bomb: '💣',
-      Key: '🔑',
-      Glasses: '👓',
-      JudgeHammer: '🔨',
-      Rocket: '🚀',
-      Scales: '⚖️',
-      Redo: '🔁',
-      Lightbulb: '💡',
-      CoffeeCup: '☕',
-      TwoFeet: '👣',
-      Meeting: '👥',
-      Check: '✅',
-      Note: '📝',
-      Book: '📖',
-      MagnifyingGlass: '🔍',
-      BrokenConnection: '⛓️',
-      Information: 'ℹ️',
-      Folder: '📁',
-      // Task priorities (TaskPriority="urn:mindjet:Prio1")
-      Prio1: '🔴',
-      Prio2: '🟡',
-      Prio3: '🟢',
-      Prio4: '🔵',
-      Prio5: '🟣',
-      Prio6: '6️⃣',
-      Prio7: '7️⃣',
-      Prio8: '8️⃣',
-      Prio9: '9️⃣',
-
-      // Default fallback
-    };
-
-    // Only own entries: iconMappings.constructor is the Object function.
-    const lookup = (key: string): string | undefined =>
-      Object.prototype.hasOwnProperty.call(iconMappings, key) ? iconMappings[key] : undefined;
-    return lookup(iconId) || lookup(iconId.toLowerCase()) || '💡';
+  // The emoji of a MindManager icon id, its own or the one of its id in another case. Undefined
+  // for an unknown icon.
+  private static mapMindManagerIconToEmojiIcon(iconId: string): string | undefined {
+    return Object.prototype.hasOwnProperty.call(MINDMANAGER_ICONS, iconId)
+      ? MINDMANAGER_ICONS[iconId]
+      : MINDMANAGER_ICONS_BY_LOWER_CASE.get(iconId.toLowerCase());
   }
 
   private buildMindmap(rootTopic: MindManagerTopic, nameMap: string, doc: Document): Mindmap {
@@ -343,8 +348,12 @@ class MindManagerImporter extends Importer {
     }
 
     topic.icons.forEach((icon) => {
-      const emojiIcon = this.mapMindManagerIconToEmojiIcon(icon);
-      node.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
+      const emojiIcon = MindManagerImporter.mapMindManagerIconToEmojiIcon(icon);
+      if (emojiIcon) {
+        node.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
+      } else {
+        console.warn(`MindManager icon '${icon}' has no emoji: it is not imported.`);
+      }
     });
 
     if (topic.notesHtml) {

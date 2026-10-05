@@ -17,7 +17,7 @@
  */
 
 /* eslint-disable import/no-extraneous-dependencies */
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, jest, test } from '@jest/globals';
 import { strToU8, zipSync } from 'fflate';
 import MindManagerImporter from '../../../src/components/import/MindManagerImporter';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
@@ -131,6 +131,44 @@ describe('MindManagerImporter icons', () => {
 
 const iconsOf = (node: NodeModel): string[] =>
   node.findFeatureByType('eicon').map((icon) => (icon as EmojiIconModel).getIconType());
+
+describe('MindManagerImporter unknown icons', () => {
+  test('skips an icon without an emoji and logs it, instead of importing a light bulb', async () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const mindManager = `<ap:Map xmlns:ap="http://schemas.mindjet.com/MindManager/Application/2003">
+      <ap:OneTopic><ap:Topic OId="t1"><ap:Text PlainText="Central"/>
+        <ap:IconsGroup><ap:Icons>
+          <ap:Icon IconType="urn:mindjet:NoSuchIcon"/>
+          <ap:Icon IconType="urn:mindjet:Rocket"/>
+        </ap:Icons></ap:IconsGroup>
+      </ap:Topic></ap:OneTopic>
+    </ap:Map>`;
+
+    try {
+      const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+      expect(iconsOf(mindmap.getCentralTopic() as NodeModel)).toEqual(['🚀']);
+      expect(warn).toHaveBeenCalledWith(expect.stringContaining('NoSuchIcon'));
+    } finally {
+      warn.mockRestore();
+    }
+  });
+
+  test('matches the icon ids ignoring case', async () => {
+    const mindManager = `<?xml version="1.0" encoding="UTF-8"?>
+<Map xmlns="http://www.mindjet.com/MindManager/MindMapXML/1.0">
+  <Topic ID="1" Text="Root">
+    <Topic ID="2" Text="Lower"><Icon Name="calendar"/></Topic>
+    <Topic ID="3" Text="Exact"><Icon Name="phone"/></Topic>
+  </Topic>
+</Map>`;
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    expect(iconsOf(findByText(mindmap, 'Lower'))).toEqual(['📅']);
+    expect(iconsOf(findByText(mindmap, 'Exact'))).toEqual(['📱']);
+  });
+});
 
 describe('MindManagerImporter central topic', () => {
   test('imports the notes, icons and links of the central topic', async () => {

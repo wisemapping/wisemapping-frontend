@@ -64,7 +64,7 @@ describe('icon tables only map their own entries, not the Object.prototype prope
 
     const icons = await importedIcons(new MindManagerImporter(mindManager));
 
-    icons.forEach((icon) => expect(icon).not.toContain('native code'));
-    expect(icons.length).toBeLessThanOrEqual(1);
+    // MindManager skips the icons it does not know.
+    expect(icons).toEqual([]);
   });
 });
