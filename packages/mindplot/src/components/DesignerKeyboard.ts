@@ -35,6 +35,11 @@ class DesignerKeyboard extends Keyboard {
   // bring the shortcuts back while the outer pause is still held ...
   private static _pauseCount = 0;
 
+  // Pauses still held when the registered keyboard was disposed. They belong to the UI of
+  // the disposed designer: the resumes that come after the dispose lift them first, and the
+  // next register() drops the rest, which were never going to be resumed ...
+  private static _stalePauseCount = 0;
+
   // Paused because the pointer left the canvas. Kept apart from _pauseCount, so
   // hovering the canvas does not bring the shortcuts back behind a dialog ...
   private static _outsideCanvas = false;
@@ -113,6 +118,7 @@ class DesignerKeyboard extends Keyboard {
 
     if (DesignerKeyboard._instance === this) {
       DesignerKeyboard._instance = undefined;
+      DesignerKeyboard._stalePauseCount = DesignerKeyboard._pauseCount;
       KeyboardManager.clearAll();
     }
   }
@@ -731,9 +737,17 @@ class DesignerKeyboard extends Keyboard {
 
   /**
    * Builds the keyboard of a designer. A pause() requested before, e.g. by the editor while its
-   * keyboard events are disabled, is kept: only resume() lifts it.
+   * keyboard events are disabled, is kept: only resume() lifts it. A pause leaked by the
+   * previous designer (held when it was disposed, never resumed) is dropped.
    */
   static register(designer: Designer) {
+    if (this._stalePauseCount > 0) {
+      console.warn(
+        `DesignerKeyboard: dropping ${this._stalePauseCount} pause() call(s) never resumed by the previous designer. Every pause() needs a matching resume().`,
+      );
+      this._pauseCount -= this._stalePauseCount;
+      this._stalePauseCount = 0;
+    }
     this._instance = new DesignerKeyboard(designer);
     this._outsideCanvas = false;
   }
@@ -752,6 +766,7 @@ class DesignerKeyboard extends Keyboard {
    */
   static resume() {
     this._pauseCount = Math.max(0, this._pauseCount - 1);
+    this._stalePauseCount = Math.max(0, this._stalePauseCount - 1);
     if (this._pauseCount === 0) {
       this._outsideCanvas = false;
     }

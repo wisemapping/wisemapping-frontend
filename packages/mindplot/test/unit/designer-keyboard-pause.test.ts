@@ -45,6 +45,8 @@ const registerOnContainer = (): HTMLDivElement => {
 const resetPause = (): void => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (DesignerKeyboard as any)._pauseCount = 0;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (DesignerKeyboard as any)._stalePauseCount = 0;
   DesignerKeyboard.resume();
 };
 
@@ -168,6 +170,73 @@ describe('DesignerKeyboard register (BL-37)', () => {
     DesignerKeyboard.register(designer);
 
     expect(DesignerKeyboard.isDisabled()).toBe(true);
+
+    DesignerKeyboard.resume();
+    expect(DesignerKeyboard.isDisabled()).toBe(false);
+  });
+});
+
+/**
+ * A pause() whose resume() never comes (a caller that unmounts without it) used to
+ * keep the shortcuts off for every designer built after it. The pauses still held
+ * when the registered designer is disposed belong to that designer's UI: the next
+ * designer drops them, with a warning. A pause taken once the previous designer is
+ * gone is kept (BL-37).
+ */
+describe('DesignerKeyboard leaked pause (BL5-26)', () => {
+  const buildDesigner = (): Designer => {
+    const container = document.createElement('div');
+    return {
+      getModel: jest.fn().mockReturnValue({}),
+      getContainer: () => container,
+    } as unknown as Designer;
+  };
+
+  let warn: jest.SpyInstance;
+
+  beforeEach(() => {
+    resetPause();
+    warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+  });
+
+  afterEach(() => {
+    DesignerKeyboard.getInstance()?.dispose();
+    warn.mockRestore();
+    resetPause();
+  });
+
+  it('drops a pause leaked by the previous designer, with a warning', () => {
+    DesignerKeyboard.register(buildDesigner());
+    DesignerKeyboard.pause(); // never resumed
+    DesignerKeyboard.getInstance()!.dispose();
+
+    DesignerKeyboard.register(buildDesigner());
+
+    expect(DesignerKeyboard.isDisabled()).toBe(false);
+    expect(warn).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not warn when the pause is resumed after the designer is disposed', () => {
+    DesignerKeyboard.register(buildDesigner());
+    DesignerKeyboard.pause();
+    DesignerKeyboard.getInstance()!.dispose();
+    DesignerKeyboard.resume(); // e.g. a pane unmounted after the designer
+
+    DesignerKeyboard.register(buildDesigner());
+
+    expect(DesignerKeyboard.isDisabled()).toBe(false);
+    expect(warn).not.toHaveBeenCalled();
+  });
+
+  it('keeps a pause taken for the next designer while dropping the leaked one', () => {
+    DesignerKeyboard.register(buildDesigner());
+    DesignerKeyboard.pause(); // leaked
+    DesignerKeyboard.getInstance()!.dispose();
+    DesignerKeyboard.pause(); // the next editor mounts with its keyboard events off
+
+    DesignerKeyboard.register(buildDesigner());
+    expect(DesignerKeyboard.isDisabled()).toBe(true);
+    expect(warn).toHaveBeenCalledTimes(1);
 
     DesignerKeyboard.resume();
     expect(DesignerKeyboard.isDisabled()).toBe(false);
