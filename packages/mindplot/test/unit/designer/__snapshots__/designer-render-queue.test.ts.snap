@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Map load render queue adds the queued elements, and what they add, to the canvas in the same order 1`] = `
+{
+  "count": 2166,
+  "order": "22ba6875fb87",
+}
+`;
+
+exports[`Map load render queue leaves the same canvas 1`] = `"63ca5fdb3716"`;
