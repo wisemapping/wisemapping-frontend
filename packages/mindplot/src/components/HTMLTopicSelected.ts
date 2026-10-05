@@ -1215,6 +1215,15 @@ class HTMLTopicSelected {
       });
     };
 
+    // The canvas moved under the topics (pan, zoom, window resize): its coordinates are already
+    // final, so the overlays follow in the same frame. Otherwise they lag two frames behind, and a
+    // capture of that frame (a screenshot taken right after a resize) shows them off their topic.
+    // The deferred pass still runs, for a layout that settles later.
+    const followCanvas = () => {
+      selectionShadows.forEach((shadow) => shadow.update());
+      updateShadows();
+    };
+
     // Lifecycle hooks: create shadow when topic is selected
     const onTopicSelected = (nodeModel: NodeModel) => {
       const topic = findTopicByModel(nodeModel);
@@ -1247,8 +1256,8 @@ class HTMLTopicSelected {
       ['topicMoved', updateShadows],
       ['topicConnected', updateShadows],
       // Update shadows when canvas is panned/dragged or zoomed
-      ['canvasPanned', updateShadows],
-      ['canvasZoomed', updateShadows],
+      ['canvasPanned', followCanvas],
+      ['canvasZoomed', followCanvas],
     ];
     handlers.forEach(([type, handler]) => LayoutEventBus.addEvent(type, handler));
 
