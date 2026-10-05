@@ -28,7 +28,7 @@ import {
 import type PositionType from './PositionType';
 import type SizeType from './SizeType';
 import FontPeer, { type FontStyle } from './peer/svg/FontPeer';
-import type { ElementType, FontWeightType } from './types';
+import type { ElementType, FontStyleType, FontWeightType } from './types';
 
 class Text extends WorkspaceElement<TextPeer> {
   constructor(attributes?: ShapeAttributes) {
@@ -57,7 +57,12 @@ class Text extends WorkspaceElement<TextPeer> {
   }
 
   /** Sets the font. An empty name, or a missing size, style or weight, keeps the current one. */
-  setFont(font: string, size?: number | null, style?: string | null, weight?: string | null): void {
+  setFont(
+    font: string,
+    size?: number | null,
+    style?: FontStyleType | null,
+    weight?: FontWeightType | null,
+  ): void {
     this.peer.setFont(font, size, style, weight);
   }
 
@@ -73,7 +78,7 @@ class Text extends WorkspaceElement<TextPeer> {
     return this.peer.getColor();
   }
 
-  setStyle(style: string): void {
+  setStyle(style: FontStyleType): void {
     this.peer.setStyle(style);
   }
 

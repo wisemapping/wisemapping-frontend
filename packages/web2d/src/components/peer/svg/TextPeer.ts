@@ -22,6 +22,7 @@ import type FontPeer from './FontPeer';
 import ElementPeer from './ElementPeer';
 import type SizeType from '../../SizeType';
 import type PositionType from '../../PositionType';
+import type { FontStyleType, FontWeightType } from '../../types';
 
 // A no-break space: unlike a plain space it is never collapsed, so an empty line keeps its height.
 const EMPTY_LINE = '\u00A0';
@@ -161,8 +162,8 @@ class TextPeer extends ElementPeer<SVGTextElement> {
   setFont(
     fontName: string,
     size?: number | null,
-    style?: string | null,
-    weight?: string | null,
+    style?: FontStyleType | null,
+    weight?: FontWeightType | null,
   ): void {
     // Empty arguments keep the current value.
     if (fontName) {
@@ -204,12 +205,12 @@ class TextPeer extends ElementPeer<SVGTextElement> {
     return this._native.getAttribute('fill');
   }
 
-  setStyle(style: string): void {
+  setStyle(style: FontStyleType): void {
     this._font.setStyle(style);
     this.updateFontStyle();
   }
 
-  setWeight(weight: string): void {
+  setWeight(weight: FontWeightType): void {
     this._font.setWeight(weight);
     this.updateFontStyle();
   }

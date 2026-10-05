@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { Text, Group, ElementClass, ElementPeer, Rect } from '@wisemapping/web2d';
-import type { StrokeStyle } from '@wisemapping/web2d';
+import type { StrokeStyle, FontWeightType as TextWeight } from '@wisemapping/web2d';
 import { $assert, $defined } from './util/assert';
 import isMacPlatform from './util/platform';
 
@@ -43,7 +43,7 @@ import FeatureModel from './model/FeatureModel';
 import PositionType from './PositionType';
 import Icon from './Icon';
 import { FontStyleType } from './FontStyleType';
-import { FontWeightType } from './FontWeightType';
+import { FontWeightType, toTextWeight } from './FontWeightType';
 import DragTopic from './DragTopic';
 import ThemeFactory from './theme/ThemeFactory';
 import ThemeResolutionCache from './theme/ThemeResolutionCache';
@@ -58,8 +58,8 @@ const ICON_SCALING_FACTOR = 1.3;
 type AppliedTextValues = {
   color?: string;
   size?: number;
-  weight?: string;
-  style?: string;
+  weight?: TextWeight;
+  style?: FontStyleType;
   family?: string;
   text?: string;
 };
@@ -460,7 +460,7 @@ abstract class Topic extends NodeGraph {
     const size = this.getFontSize();
     const weight = this.getFontWeight();
     const style = this.getFontStyle();
-    result.setFont(family, size, style, weight);
+    result.setFont(family, size, style, toTextWeight(weight));
 
     // Note: Font color will be set later in redraw() method with proper variant
     // const color = this.getFontColor();
@@ -1386,8 +1386,7 @@ abstract class Topic extends NodeGraph {
       const fontColor = this.getFontColor(variant);
       const fontSize = this.getFontSize();
       const fontWeight = this.getFontWeight();
-      // Map theme weight '600' to a concrete weight for rendering
-      const web2dWeight = fontWeight === '600' ? 'bold' : fontWeight;
+      const web2dWeight = toTextWeight(fontWeight);
       const fontStyle = this.getFontStyle();
       const fontFamily = this.getFontFamily();
       const text = this.getText();
@@ -1584,7 +1583,7 @@ abstract class Topic extends NodeGraph {
       textShape.setFontSize(values.size);
     }
     if (applied.weight !== values.weight) {
-      textShape.setWeight(values.weight as 'normal' | 'bold');
+      textShape.setWeight(values.weight);
     }
     if (applied.style !== values.style) {
       textShape.setStyle(values.style);

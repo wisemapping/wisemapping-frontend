@@ -15,10 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import type { FontWeightType as TextWeight } from '@wisemapping/web2d';
+import { toTextWeight } from '../../src/components/FontWeightType';
 
-export type FontWeightType = 'bold' | 'normal' | '600';
-
-/** The weight a topic text is drawn with: the theme weight '600' is drawn bold. */
-export const toTextWeight = (weight: FontWeightType): TextWeight =>
-  weight === '600' ? 'bold' : weight;
+describe('toTextWeight (W4)', () => {
+  it('draws the theme weight 600 bold and keeps normal and bold', () => {
+    expect(toTextWeight('600')).toBe('bold');
+    expect(toTextWeight('bold')).toBe('bold');
+    expect(toTextWeight('normal')).toBe('normal');
+  });
+});
