@@ -17,85 +17,109 @@
  */
 
 /// <reference types="cypress" />
+
+// A module, so that the types and helpers below stay local to this spec.
+export {};
+
+// What the spec uses of the designer the playground pages expose as `window.designer`.
+type DesignerHandle = {
+  addIconType(type: 'image' | 'emoji', iconType: string): void;
+};
+
+type IconGroup = { id: string; icons: string[] };
+
+const ICON_GROUPS = 'src/components/action-widget/pane/icon-picker/image-icon-tab/iconGroups.json';
+
+/**
+ * The topic icons (SvgImageIcon) on the canvas. Link and note icons are <image> elements too,
+ * but they carry a test-id.
+ */
+const canvasIcons = (selector = '') =>
+  cy.get('mindplot-component').shadow().find(`${selector} image:not([test-id])`.trim());
+
+const hrefOf = (image: Element): string => (image as SVGImageElement).href.baseVal;
+
+/**
+ * Asserts that `url` is an icon URL the bundler produced (an asset URL or a data URL, never the
+ * raw relative path from the source) and that the browser decodes it into an image.
+ */
+const assertIconUrlLoads = (url: string, iconName: string): void => {
+  expect(url, `${iconName} URL`).to.not.equal('');
+  expect(url, `${iconName} URL`).to.not.include('undefined');
+  expect(url, `${iconName} URL`).to.not.match(/^\.\.?\//);
+  cy.window({ log: false }).then((win) => {
+    const image = new win.Image();
+    image.src = url;
+    return image.decode().catch(() => {
+      throw new Error(`${iconName}: the image at ${url} does not load`);
+    });
+  });
+};
+
 describe('Image URL Validation Suite', () => {
-  beforeEach(() => {
+  it('Every image icon of a map renders with a loadable URL', () => {
+    cy.visit('/map-render/html/viewmode.html?id=icon-sample');
+    cy.get('[aria-label="vortex-loading"]', { timeout: 120000 }).should('not.exist');
+
+    cy.readFile('test/playground/map-render/samples/icon-sample.wxml').then((xml: string) => {
+      const iconsInFile = (xml.match(/<icon\s/g) || []).length;
+      expect(iconsInFile, 'icons in icon-sample.wxml').to.be.greaterThan(0);
+      canvasIcons().should('have.length', iconsInFile);
+    });
+    canvasIcons().each(($image, index) => {
+      assertIconUrlLoads(hrefOf($image[0]), `canvas icon #${index}`);
+    });
+  });
+
+  it('The Icons Gallery shows every icon of iconGroups.json with a loadable URL', () => {
     cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
-  });
 
-  it('Validate SvgImageIcon.getImageUrl returns proper data URLs', () => {
-    cy.window().then((win) => {
-      // Access the SvgImageIcon class from the global scope
-      const SvgImageIcon = (win as any).mindplot?.SvgImageIcon;
+    cy.focusTopicById(3);
+    cy.onClickToolbarButton('Add Icon');
+    cy.contains('Icons Gallery').should('be.visible').click();
 
-      if (SvgImageIcon) {
-        // Test known icons that should exist
-        const testIcons = ['social_facebook', 'task_0', 'flag_blue', 'bullet_black'];
+    cy.readFile(ICON_GROUPS).then((iconGroups: IconGroup[]) => {
+      const icons = iconGroups.flatMap((group) => group.icons);
+      expect(icons, 'icons in iconGroups.json').to.have.length.greaterThan(0);
 
-        testIcons.forEach((iconId) => {
-          const url = SvgImageIcon.getImageUrl(iconId);
-
-          // Should not be empty
-          expect(url).to.not.be.empty;
-
-          // Should not contain raw relative paths (indicates webpack didn't process it)
-          expect(url).to.not.include('../assets/');
-          expect(url).to.not.include('../../assets/');
-
-          // Should be a data URL (properly processed by webpack)
-          expect(url).to.match(/^data:image\/(svg\+xml|png);base64,/);
+      // The gallery: the search field and, below it, one <img> per icon, in iconGroups order
+      // (no "Frequently Used" row, since Cypress clears local storage before each test).
+      cy.get('input[placeholder="Search icons..."]')
+        .closest('.MuiTextField-root')
+        .parent()
+        .find('img')
+        .should('have.length', icons.length)
+        .each(($img, index) => {
+          assertIconUrlLoads($img.attr('src') ?? '', icons[index]);
         });
-      } else {
-        // If SvgImageIcon is not globally available, we can test indirectly
-        cy.log('SvgImageIcon not globally available, testing indirectly');
-      }
     });
   });
 
-  it('Validate all icon family entries have corresponding image URLs', () => {
+  it('An unknown icon renders without an image and warns', () => {
+    const iconName = 'nonexistent_icon_12345';
+    cy.visit('/map-render/html/editor.html');
+    cy.waitEditorLoaded();
+
+    cy.focusTopicById(3);
     cy.window().then((win) => {
-      const SvgImageIcon = (win as any).mindplot?.SvgImageIcon;
-
-      if (SvgImageIcon) {
-        // Get the icon family configuration
-        cy.fixture(
-          '../src/components/action-widget/pane/icon-picker/image-icon-tab/iconGroups.json',
-        ).then((iconGroups) => {
-          iconGroups.forEach((family: any) => {
-            family.icons.forEach((iconId: string) => {
-              const url = SvgImageIcon.getImageUrl(iconId);
-
-              // Every icon in the family should have a valid URL
-              expect(url, `Icon ${iconId} should have a valid URL`).to.not.be.empty;
-              expect(url, `Icon ${iconId} should not have a raw path`).to.not.include('../assets/');
-            });
-          });
-        });
-      }
+      // The warning is the expected outcome here: keep it from the check for unexpected warnings
+      // in cypress/support/e2e.ts, and pass any other warning on to it.
+      const warn = win.console.warn;
+      cy.stub(win.console, 'warn')
+        .callsFake((...args: unknown[]) => {
+          if (args[0] !== `Icon not found: ${iconName}`) {
+            warn.apply(win.console, args);
+          }
+        })
+        .as('warn');
+      (win as unknown as { designer: DesignerHandle }).designer.addIconType('image', iconName);
     });
-  });
 
-  it('Validate console warnings for missing icons are helpful', () => {
-    cy.window().then((win) => {
-      const SvgImageIcon = (win as any).mindplot?.SvgImageIcon;
-
-      if (SvgImageIcon) {
-        // Get the current call count before testing
-        const initialCallCount = (win.console.warn as any).callCount || 0;
-
-        // Test with a non-existent icon
-        const url = SvgImageIcon.getImageUrl('nonexistent_icon_12345');
-
-        // Should return empty string for missing icons
-        expect(url).to.equal('');
-
-        // Should have logged a warning (check that warn was called at least once more)
-        expect((win.console.warn as any).callCount).to.be.greaterThan(initialCallCount);
-
-        // Check that the last call contains the expected message
-        const lastCall = (win.console.warn as any).getCall((win.console.warn as any).callCount - 1);
-        expect(lastCall.args[0]).to.include('Icon not found: nonexistent_icon_12345');
-      }
+    cy.get('@warn').should('have.been.calledWith', `Icon not found: ${iconName}`);
+    canvasIcons('[test-id="3"]').should(($images) => {
+      const hrefs = $images.toArray().map(hrefOf);
+      expect(hrefs, 'icon URLs of topic 3').to.include('');
     });
   });
 });
