@@ -24,6 +24,7 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
 import { buildDesigner } from '../commands/designer-harness';
 import Topic from '../../../src/components/Topic';
 import { LineType } from '../../../src/components/BaseConnectionLine';
+import { STRAIGHT_TOLERANCE_PX } from '../../../src/components/TopicConnection';
 
 /**
  * The map below, as MindManager draws it (mmap2json `test.mmap`):
@@ -161,10 +162,9 @@ describe('Layout of a map with centred siblings (MindManager mmap2json sample)',
     ys.forEach((y) => expect(y).toBeCloseTo(ys[0], 5));
   });
 
-  // W-TAPER (WEB2D_REVIEW_PLAN.md): the tapered curve is offset along y only and not
-  // symmetrically, so its centre sags below the ends even when both are at the same height.
-  // W1-B flips these.
-  it.failing.each([
+  // W-TAPER (WEB2D_REVIEW_PLAN.md): the tapered curve used to be offset along y only and not
+  // symmetrically, so its centre sagged below the ends even when both were at the same height.
+  it.each([
     ['the theme default style', undefined],
     ['THIN_CURVED', LineType.THIN_CURVED],
     ['THICK_CURVED', LineType.THICK_CURVED],
@@ -176,4 +176,84 @@ describe('Layout of a map with centred siblings (MindManager mmap2json sample)',
     expect(ys.length).toBeGreaterThanOrEqual(2);
     ys.forEach((y) => expect(y).toBeCloseTo(ys[0], 1));
   });
+
+  type Point = { x: number; y: number };
+
+  /**
+   * The centre line's control polygon (start, two control points, end) of a curved connection.
+   * The path is one edge there (M p0 C p1 p2 p3) and the other edge back (C p4 p5 p6 Z), each
+   * offset by the same amount to either side of the centre.
+   */
+  const centreControlPolygon = (topic: Topic): Point[] => {
+    const pts = connectionPoints(topic);
+    expect(pts).toHaveLength(7);
+    const mid = (a: Point, b: Point): Point => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
+    return [mid(pts[0], pts[6]), mid(pts[1], pts[5]), mid(pts[2], pts[4]), pts[3]];
+  };
+
+  /** Distance from `p` to the line through `a` and `b`. */
+  const distanceToChord = (p: Point, a: Point, b: Point): number =>
+    Math.abs((p.x - a.x) * (b.y - a.y) - (p.y - a.y) * (b.x - a.x)) /
+    Math.hypot(b.x - a.x, b.y - a.y);
+
+  /** Moves G (a child of E, at E's height) by dy, which redraws the E → G connection. */
+  const connectionWithDy = async (lineType: LineType | undefined, dy: number) => {
+    const { topic } = await buildDesigner(mapWith(lineType));
+    const [e, g] = [topic(4), topic(6)];
+    g.setPosition({ x: pos(g).x, y: pos(e).y + dy });
+    return centreControlPolygon(g);
+  };
+
+  const CURVED_STYLES: [string, LineType | undefined][] = [
+    ['the theme default style', undefined],
+    ['THIN_CURVED', LineType.THIN_CURVED],
+    ['THICK_CURVED', LineType.THICK_CURVED],
+    ['THICK_CURVED_ORGANIC', LineType.THICK_CURVED_ORGANIC],
+  ];
+
+  it('uses a straight-line tolerance of 5 px', () => {
+    expect(STRAIGHT_TOLERANCE_PX).toBe(5);
+  });
+
+  describe.each(CURVED_STYLES)('with %s', (_name, lineType) => {
+    it.each([0, 1, -3, 4.5, 5, -5])(
+      'draws the connection straight, on the chord, when dy = %d (within the tolerance)',
+      async (dy) => {
+        const [start, c1, c2, end] = await connectionWithDy(lineType, dy);
+        expect(end.y - start.y).toBeCloseTo(dy, 0);
+        // The path is rounded to 0.1 px.
+        expect(distanceToChord(c1, start, end)).toBeLessThanOrEqual(0.15);
+        expect(distanceToChord(c2, start, end)).toBeLessThanOrEqual(0.15);
+      },
+    );
+
+    it.each([6, -6, 40])('draws an S-curve when dy = %d (beyond the tolerance)', async (dy) => {
+      const [start, c1, c2, end] = await connectionWithDy(lineType, dy);
+      expect(end.y - start.y).toBeCloseTo(dy, 0);
+      expect(
+        Math.max(distanceToChord(c1, start, end), distanceToChord(c2, start, end)),
+      ).toBeGreaterThan(1);
+    });
+  });
+
+  // The symmetric S-curve has its control points at the heights of its ends, so (by the convex
+  // hull of a Bézier curve) the centre line stays in the band between them. The organic style is
+  // hand-drawn on purpose and does bulge out of it.
+  describe.each(CURVED_STYLES.filter(([, type]) => type !== LineType.THICK_CURVED_ORGANIC))(
+    'with %s',
+    (_name, lineType) => {
+      it.each([6, -6, 40, -40])(
+        'keeps the S-curve within the band between the end heights when dy = %d',
+        async (dy) => {
+          const [start, c1, c2, end] = await connectionWithDy(lineType, dy);
+          const low = Math.min(start.y, end.y) - 0.15;
+          const high = Math.max(start.y, end.y) + 0.15;
+          [c1, c2].forEach((p) => {
+            expect(p.y).toBeGreaterThanOrEqual(low);
+            expect(p.y).toBeLessThanOrEqual(high);
+          });
+        },
+      );
+    },
+  );
 });

@@ -30,6 +30,13 @@ import { sideOf } from './util/side';
 export { LineType };
 
 /**
+ * A curved connection (THIN_CURVED, THICK_CURVED, THICK_CURVED_ORGANIC) whose ends are at most
+ * this far apart across the layout (in y for a mind map, in x for a tree) is drawn as a straight
+ * segment, as a tiny S-curve only reads as a wobble. Decided with the user: 5 px.
+ */
+export const STRAIGHT_TOLERANCE_PX = 5;
+
+/**
  * TopicConnection represents hierarchical parent-child connections in the mindmap
  */
 class TopicConnection extends BaseConnectionLine {
@@ -80,6 +87,18 @@ class TopicConnection extends BaseConnectionLine {
 
     // Get orientation from the parent topic
     const orientation = parentTopic.getOrientation();
+
+    // Ends at (almost) the same height: control points on the chord, so the line is straight,
+    // although it may be slightly inclined.
+    const chordX = childPos.x - parentPos.x;
+    const chordY = childPos.y - parentPos.y;
+    const across = orientation === 'vertical' ? chordX : chordY;
+    if (Math.abs(across) <= STRAIGHT_TOLERANCE_PX) {
+      return [
+        { x: chordX / 3, y: chordY / 3 },
+        { x: -chordX / 3, y: -chordY / 3 },
+      ];
+    }
 
     if (orientation === 'vertical') {
       // Tree layout: vertical connections (parent above, child below)
