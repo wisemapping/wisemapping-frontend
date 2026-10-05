@@ -30,6 +30,51 @@ const childTags = (element: Element | null): string[] =>
   Array.from(element?.children || []).map((child) => child.tagName);
 
 describe('FreemindMap', () => {
+  test('writes every element kind with its attributes in a fixed order', () => {
+    // Attributes in reverse order, so the writer order is the one pinned below. The central node
+    // writes its text right after its id; DASH (Freeplane) and unknown elements are not read.
+    const doc = roundTrip(`<map version="1.0.1">
+      <node ENCRYPTED_CONTENT="enc" VSHIFT="9" WORDER="8" WCOORDS="7" VGAP="6" HGAP="5"
+        MODIFIED="4" CREATED="3" FOLDED="true" LINK="https://a.b" TEXT="Root" COLOR="#000001"
+        BACKGROUND_COLOR="#000002" STYLE="bubble" POSITION="left" ID="ID_1">
+        <font NAME="Arial" ITALIC="true" BOLD="true"/>
+        <font SIZE="18"/>
+        <edge WIDTH="2" STYLE="bezier" COLOR="#000003"/>
+        <arrowlink STARTINCLINATION="1;2" ID="A_1" ENDARROW="Default" ENDINCLINATION="3;4"
+          COLOR="#000004" STARTARROW="None" DESTINATION="ID_2" DASH="3 3"/>
+        <cloud COLOR="#000005"/>
+        <cloud/>
+        <icon BUILTIN="idea"/>
+        <hook NAME="plugin"><text>Old note</text></hook>
+        <hook/>
+        <richcontent TYPE="NOTE"><html><body><p>Note</p></body></html></richcontent>
+        <richcontent TYPE="NODE"/>
+        <unknown/>
+        <node COLOR="#000006" TEXT="Child" POSITION="right" ID="ID_2"/>
+        <node TEXT="" ID="ID_3"/>
+      </node>
+    </map>`);
+
+    expect(new XMLSerializer().serializeToString(doc)).toBe(
+      '<map version="1.0.1">' +
+        '<node ID="ID_1" TEXT="Root" POSITION="left" STYLE="bubble" BACKGROUND_COLOR="#000002" COLOR="#000001" LINK="https://a.b" FOLDED="true" CREATED="3" MODIFIED="4" HGAP="5" VGAP="6" WCOORDS="7" WORDER="8" VSHIFT="9" ENCRYPTED_CONTENT="enc">' +
+        '<font SIZE="12" BOLD="true" ITALIC="true" NAME="Arial"/>' +
+        '<font SIZE="18"/>' +
+        '<edge COLOR="#000003" STYLE="bezier" WIDTH="2"/>' +
+        '<arrowlink DESTINATION="ID_2" STARTARROW="None" COLOR="#000004" ENDINCLINATION="3;4" ENDARROW="Default" ID="A_1" STARTINCLINATION="1;2"/>' +
+        '<cloud COLOR="#000005"/>' +
+        '<cloud/>' +
+        '<icon BUILTIN="idea"/>' +
+        '<hook NAME="plugin"><text>Old note</text></hook>' +
+        '<hook/>' +
+        '<richcontent TYPE="NOTE"><html xmlns="http://www.w3.org/1999/xhtml"><body><p>Note</p></body></html></richcontent>' +
+        '<richcontent TYPE="NODE"/>' +
+        '<node ID="ID_2" POSITION="right" COLOR="#000006" TEXT="Child"/>' +
+        '<node ID="ID_3"/>' +
+        '</node></map>',
+    );
+  });
+
   test('keeps the icons, notes and arrowlinks of the root node', () => {
     const doc = roundTrip(`<map version="1.0.1">
       <node ID="ID_1" TEXT="Root">
