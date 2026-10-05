@@ -26,6 +26,7 @@ import FreemindImporter from '../../../src/components/import/FreemindImporter';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import SvgIconModel from '../../../src/components/model/SvgIconModel';
 import LinkModel from '../../../src/components/model/LinkModel';
+import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
 const buildMindmap = (configure: (topic: NodeModel) => void): Mindmap => {
   const mindmap = new Mindmap('test');
@@ -311,4 +312,41 @@ describe('FreemindExporter', () => {
     const icons = Array.from(doc.querySelectorAll('topic[id="2"] > eicon'));
     expect(icons.map((icon) => icon.getAttribute('id'))).toEqual(['✅', '⚠️']);
   });
+
+  test.each([6, 8, 10, 15])(
+    'the text color and font survive a FreeMind export and import round trip, size %p (BL5-156)',
+    async (size: number) => {
+      const mindmap = buildMindmap((topic) => {
+        topic.setFontColor('#00ff00');
+        topic.setFontFamily('Verdana');
+        topic.setFontSize(size);
+        topic.setFontWeight('bold');
+        topic.setFontStyle('italic');
+      });
+      const central = mindmap.getBranches()[0];
+      central.setFontColor('#990000');
+      central.setFontFamily('Georgia');
+      // The exporter only writes a font with a size, weight or style: a family alone is dropped.
+      central.setFontSize(10);
+
+      const xml = await new FreemindImporter(await new FreemindExporter(mindmap).export()).import(
+        'test',
+        '',
+      );
+      const doc = new DOMParser().parseFromString(xml, 'text/xml');
+      const imported = XMLSerializerFactory.createFromDocument(doc).loadFromDom(doc, 'test');
+      const importedCentral = imported.getCentralTopic();
+      expect(importedCentral.getFontColor()).toBe('#990000');
+      expect(importedCentral.getFontFamily()).toBe('Georgia');
+      expect(importedCentral.getFontSize()).toBe(10);
+
+      const [topic] = importedCentral.getChildren();
+      expect(topic.getFontColor()).toBe('#00ff00');
+      expect(topic.getFontFamily()).toBe('Verdana');
+      // Size 8 is exported as 12, the FreeMind default size: it imports as the theme size.
+      expect(topic.getFontSize()).toBe(size === 8 ? undefined : size);
+      expect(topic.getFontWeight()).toBe('bold');
+      expect(topic.getFontStyle()).toBe('italic');
+    },
+  );
 });

@@ -59,7 +59,7 @@ for at least some traits.]]></text>
                     ]]></note>
             </topic>
         </topic>
-        <topic position="200,0" order="1" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" bgColor="#cccccc" connColor="#cccccc">
+        <topic position="200,0" order="1" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" fontStyle=";;#000000;;;" bgColor="#cccccc" connColor="#cccccc">
             <topic position="290,-125" order="0" shape="line" id="22">
                 <text><![CDATA[Here, we develop a new approach that links functional attributes
 of tree species with studies of forest recovery and regional
@@ -138,7 +138,7 @@ groups in a tropical forest landscape of Hainan Island, South China.
 J. Integr. Plant Biol. 50: 547–558.]]></text>
             </topic>
         </topic>
-        <topic position="-200,50" order="2" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" bgColor="#cccccc" connColor="#cccccc">
+        <topic position="-200,50" order="2" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" fontStyle=";;#000000;;;" bgColor="#cccccc" connColor="#cccccc">
             <topic position="-290,38" order="0" text="Espécies pioneiras crescem mais rápido do que as não pioneiras" shape="line" id="3">
                 <topic position="-380,26" order="0" text="Tolerância a sombra está relacionada com persistência e não com crescimento" shape="line" id="4"/>
             </topic>

@@ -21,10 +21,17 @@ import path from 'path';
 import { describe, expect, test } from '@jest/globals';
 import FreemindImporter from '../../../src/components/import/FreemindImporter';
 import ImportError from '../../../src/components/import/ImportError';
+import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
+import Mindmap from '../../../src/components/model/Mindmap';
 
 const importMap = async (mm: string): Promise<Document> => {
   const xml = await new FreemindImporter(mm).import('test', '');
   return new DOMParser().parseFromString(xml, 'text/xml');
+};
+
+const importMindmap = async (mm: string): Promise<Mindmap> => {
+  const doc = await importMap(mm);
+  return XMLSerializerFactory.createFromDocument(doc).loadFromDom(doc, 'test');
 };
 
 const topicById = (doc: Document, id: string): Element => {
@@ -464,5 +471,42 @@ describe('FreemindImporter', () => {
     const doc = await importMap(mm);
     const icons = Array.from(topicById(doc, '2').querySelectorAll(':scope > eicon'));
     expect(icons.map((icon) => icon.getAttribute('id'))).toEqual(['😮', '💡', '👍', '✏️', '🖥️']);
+  });
+
+  test('imports the text color and the font of the nodes, the root included (BL5-156)', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root" COLOR="#990000">
+        <font NAME="Georgia" SIZE="18"/>
+        <node ID="ID_2" TEXT="A" POSITION="right" COLOR="#00ff00">
+          <font NAME="Verdana" SIZE="24" BOLD="true" ITALIC="true"/>
+        </node>
+        <node ID="ID_3" TEXT="B" POSITION="left">
+          <font SIZE="12" ITALIC="true"/>
+        </node>
+        <node ID="ID_4" TEXT="C" POSITION="right"/>
+      </node>
+    </map>`;
+
+    const mindmap = await importMindmap(mm);
+    const central = mindmap.getCentralTopic();
+    expect(central.getFontColor()).toBe('#990000');
+    expect(central.getFontFamily()).toBe('Georgia');
+    expect(central.getFontSize()).toBe(10);
+
+    const [a, b, c] = central.getChildren();
+    expect(a.getFontColor()).toBe('#00ff00');
+    expect(a.getFontFamily()).toBe('Verdana');
+    expect(a.getFontSize()).toBe(15);
+    expect(a.getFontWeight()).toBe('bold');
+    expect(a.getFontStyle()).toBe('italic');
+
+    // 12 is the FreeMind default size, written with any font: the theme size is kept.
+    expect(b.getFontSize()).toBeUndefined();
+    expect(b.getFontStyle()).toBe('italic');
+    expect(b.getFontWeight()).toBeUndefined();
+
+    expect(c.getFontColor()).toBeUndefined();
+    expect(c.getFontFamily()).toBeUndefined();
+    expect(c.getFontSize()).toBeUndefined();
   });
 });

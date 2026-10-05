@@ -1,6 +1,6 @@
 <map name="bug3" theme="prism" layout="mindmap" version="tango">
-    <topic central="true" text="Indicator needs" id="1">
-        <topic position="200,-100" order="0" text="Which new measures" shape="rounded rectangle" id="5">
+    <topic central="true" text="Indicator needs" id="1" fontStyle=";15;;;;">
+        <topic position="200,-100" order="0" text="Which new measures" shape="rounded rectangle" id="5" fontStyle=";10;;;;">
             <note contentType="html"><![CDATA[
                     
                     
@@ -24,7 +24,7 @@
                 <topic position="380,-87" order="2" text="Number of specific types of measures per capita" shape="line" id="112"/>
             </topic>
         </topic>
-        <topic position="-200,-100" order="1" text="How to design &amp; implement measures" shape="rounded rectangle" id="6">
+        <topic position="-200,-100" order="1" text="How to design &amp; implement measures" shape="rounded rectangle" id="6" fontStyle=";10;;;;">
             <note contentType="html"><![CDATA[
                     
                     
@@ -91,7 +91,7 @@ highly cited scientific article in the whole Federation)]]></text>
                 </topic>
             </topic>
         </topic>
-        <topic position="200,0" order="2" text="How much effort: where &amp; how" shape="rounded rectangle" id="2">
+        <topic position="200,0" order="2" text="How much effort: where &amp; how" shape="rounded rectangle" id="2" fontStyle=";10;;;;">
             <note contentType="html"><![CDATA[
                     
                     
@@ -536,7 +536,7 @@ per 1,000 researchers [contracts/researchers]]]></text>
                 </topic>
             </topic>
         </topic>
-        <topic position="-200,0" order="3" text="What to do about existing measures" shape="rounded rectangle" id="4">
+        <topic position="-200,0" order="3" text="What to do about existing measures" shape="rounded rectangle" id="4" fontStyle=";10;;;;">
             <note contentType="html"><![CDATA[
                     
                     
@@ -662,7 +662,7 @@ of regional budget expenditures on innovation projects]]></text>
                 </topic>
             </topic>
         </topic>
-        <topic position="200,100" order="4" text="What investments in innovative projects" shape="rounded rectangle" id="7">
+        <topic position="200,100" order="4" text="What investments in innovative projects" shape="rounded rectangle" id="7" fontStyle=";10;;;;">
             <note contentType="html"><![CDATA[
                     
                     
@@ -717,7 +717,7 @@ by the FASIE per 1,000 workers [awards/worker]]]></text>
                 <topic position="380,88" order="0" text="Private investment in innovation" shape="line" id="68"/>
             </topic>
         </topic>
-        <topic position="-200,100" order="5" text="How to improve image" shape="rounded rectangle" id="69" bgColor="#e0e5ef">
+        <topic position="-200,100" order="5" text="How to improve image" shape="rounded rectangle" id="69" fontStyle=";10;;;;" bgColor="#e0e5ef">
             <topic position="-290,75" order="0" text="Rankings" shape="rounded rectangle" id="75" bgColor="#feffff">
                 <topic position="-380,50" order="0" text="macro indicators" shape="line" id="70"/>
                 <topic position="-380,75" order="1" text="meso-indicators" shape="line" id="71"/>

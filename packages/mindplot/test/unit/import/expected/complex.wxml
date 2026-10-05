@@ -1,15 +1,15 @@
 <map name="complex" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="PPM Plan" id="1">
-        <topic position="200,-300" order="0" text="Business Development " shape="line" id="4"/>
-        <topic position="200,-300" order="1" text="Backlog Management" shape="line" id="18">
+        <topic position="200,-300" order="0" text="Business Development " shape="line" id="4" fontStyle=";;;bold;;"/>
+        <topic position="200,-300" order="1" text="Backlog Management" shape="line" id="18" fontStyle=";;;bold;;">
             <link url="https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit" urlType="url"/>
         </topic>
-        <topic position="-200,-100" order="2" text="Freeform IT" shape="line" id="10"/>
-        <topic position="-200,-100" order="3" text="Client Project Management" shape="line" id="204"/>
-        <topic position="-200,0" order="4" text="Governance &amp; Executive" shape="line" id="206"/>
-        <topic position="200,-100" order="5" text="Finance" shape="line" id="5"/>
-        <topic position="200,0" order="6" text="Administration" shape="line" id="3"/>
-        <topic position="200,0" order="7" text="Human Resources" shape="line" id="154">
+        <topic position="-200,-100" order="2" text="Freeform IT" shape="line" id="10" fontStyle=";;;bold;;"/>
+        <topic position="-200,-100" order="3" text="Client Project Management" shape="line" id="204" fontStyle=";;;bold;;"/>
+        <topic position="-200,0" order="4" text="Governance &amp; Executive" shape="line" id="206" fontStyle=";;;bold;;"/>
+        <topic position="200,-100" order="5" text="Finance" shape="line" id="5" fontStyle=";;;bold;;"/>
+        <topic position="200,0" order="6" text="Administration" shape="line" id="3" fontStyle=";;;bold;;"/>
+        <topic position="200,0" order="7" text="Human Resources" shape="line" id="154" fontStyle=";;;bold;;">
             <note contentType="html"><![CDATA[
                     
                     
@@ -18,9 +18,9 @@
                     
                 ]]></note>
         </topic>
-        <topic position="-200,200" order="8" text="Freeform Hosting" shape="line" id="16"/>
-        <topic position="200,100" order="9" text="Community Outreach" shape="line" id="247"/>
-        <topic position="200,200" order="10" text="R&amp;D" shape="line" id="261">
+        <topic position="-200,200" order="8" text="Freeform Hosting" shape="line" id="16" fontStyle=";;;bold;;"/>
+        <topic position="200,100" order="9" text="Community Outreach" shape="line" id="247" fontStyle=";;;bold;;"/>
+        <topic position="200,200" order="10" text="R&amp;D" shape="line" id="261" fontStyle=";;;bold;;">
             <topic position="290,175" order="0" text="Goals" shape="line" id="263"/>
             <topic position="290,200" order="1" text="Formulize" shape="line" id="264"/>
         </topic>

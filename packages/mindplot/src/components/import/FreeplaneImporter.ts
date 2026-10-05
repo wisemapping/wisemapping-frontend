@@ -28,6 +28,7 @@ import HtmlSanitizer from '../security/HtmlSanitizer';
 import toWiseMappingXml from './support/MindmapXml';
 import { legacyIconEmoji } from './support/LegacyIconMap';
 import { htmlToPlainText } from './support/HtmlText';
+import { applyFreemindFont } from './support/FreemindFont';
 import FreemindIconConverter, { WiseIcon } from './FreemindIconConverter';
 import { TopicShapeType } from '../model/INodeModel';
 
@@ -184,50 +185,14 @@ class FreeplaneImporter extends Importer {
     }
 
     const font = freeplaneNode.querySelector(':scope > font');
-    if (!font) {
-      return;
+    if (font) {
+      applyFreemindFont(topic, {
+        name: font.getAttribute('NAME'),
+        size: font.getAttribute('SIZE'),
+        bold: font.getAttribute('BOLD'),
+        italic: font.getAttribute('ITALIC'),
+      });
     }
-    const name = font.getAttribute('NAME');
-    if (name) {
-      topic.setFontFamily(name);
-    }
-    const size = FreeplaneImporter.fontSize(font.getAttribute('SIZE'));
-    if (size) {
-      topic.setFontSize(size);
-    }
-    if (font.getAttribute('BOLD') === 'true') {
-      topic.setFontWeight('bold');
-    }
-    if (font.getAttribute('ITALIC') === 'true') {
-      topic.setFontStyle('italic');
-    }
-  }
-
-  // The WiseMapping font sizes and the Freeplane size each one is exported as.
-  private static readonly FONT_SIZES: Array<[number, number]> = [
-    [6, 10],
-    [8, 12],
-    [10, 18],
-    [15, 24],
-  ];
-
-  /**
-   * The WiseMapping size closest to a Freeplane font size. 12, the FreeMind default size, is also
-   * the size the exporter writes in a font that only sets the weight or style, so it is not
-   * imported: the theme size applies.
-   */
-  private static fontSize(size: string | null): number | undefined {
-    const freeSize = Number(size);
-    if (!size || !Number.isFinite(freeSize) || freeSize <= 0 || freeSize === 12) {
-      return undefined;
-    }
-    let result = FreeplaneImporter.FONT_SIZES[0];
-    FreeplaneImporter.FONT_SIZES.forEach((entry) => {
-      if (Math.abs(entry[1] - freeSize) < Math.abs(result[1] - freeSize)) {
-        result = entry;
-      }
-    });
-    return result[0];
   }
 
   // The icons, notes and links of a node, the central one included.
