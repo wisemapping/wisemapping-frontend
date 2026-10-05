@@ -21,14 +21,14 @@
  * topic drawn without a fill (BL5-58). A canvas colour change must redraw those topics, on
  * execute, undo and redo (BL5-122).
  */
+import { buildDesigner, Harness } from './designer-harness';
+import Topic from '../../../src/components/Topic';
+import LayoutManager from '../../../src/components/layout/LayoutManager';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner, Harness } from './designer-harness';
-import Topic from '../../../src/components/Topic';
-import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 const BLACK = '#000000';
 const WHITE = '#FFFFFF';

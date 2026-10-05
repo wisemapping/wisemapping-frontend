@@ -22,16 +22,16 @@
  * the topic, which can land on another edge. The search now starts from the released end, so the
  * end stays on its edge, at the same place along it (BL5-125).
  */
-jest.mock('../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { buildDesigner } from './commands/designer-harness';
 import Relationship from '../../src/components/Relationship';
 import Topic from '../../src/components/Topic';
 import PositionType from '../../src/components/PositionType';
 import { PivotType } from '../../src/components/RelationshipControlPoints';
+
+jest.mock('../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 // The gap between a topic border and its snap points (Relationship.calculateSnapPoint).
 const GAP = 7;

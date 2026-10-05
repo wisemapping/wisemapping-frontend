@@ -16,14 +16,14 @@
  *   limitations under the License.
  */
 
+import { buildDesigner } from './commands/designer-harness';
+import Relationship from '../../src/components/Relationship';
+import { StrokeStyle } from '../../src/components/model/RelationshipModel';
+
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner } from './commands/designer-harness';
-import Relationship from '../../src/components/Relationship';
-import { StrokeStyle } from '../../src/components/model/RelationshipModel';
 
 const lineOf = (relationship: Relationship): SVGElement =>
   (relationship as unknown as { _line: { peer: { _native: SVGElement } } })._line.peer._native;

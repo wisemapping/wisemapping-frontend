@@ -23,14 +23,14 @@
  * and each child redraws its own line. This pins that every line is up to date after the edits
  * that move or resize a parent.
  */
+import { buildDesigner, Harness } from '../commands/designer-harness';
+import Topic from '../../../src/components/Topic';
+import { TopicShapeType } from '../../../src/components/model/INodeModel';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner, Harness } from '../commands/designer-harness';
-import Topic from '../../../src/components/Topic';
-import { TopicShapeType } from '../../../src/components/model/INodeModel';
 
 beforeAll(() => {
   jest.spyOn(console, 'log').mockImplementation(() => undefined);

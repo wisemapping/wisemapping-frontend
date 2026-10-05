@@ -21,15 +21,15 @@
  * gallery drew an unrelated glyph for them (BL5-123). They are drawn from the path of the
  * @mui/icons-material icon the editor's picker shows, in the topic text colour.
  */
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { Image, Text } from '@wisemapping/web2d';
 import { buildDesigner } from '../commands/designer-harness';
 import { BRAND_ICON_PATHS, brandIconHref } from '../../../src/components/ImageSVGFeature';
 import Topic from '../../../src/components/Topic';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 const BRANDS = ['twitter', 'instagram', 'linkedin', 'youtube', 'whatsapp'];
 

@@ -48,11 +48,9 @@ describe('Icon Mapping Validation', () => {
       /const BRAND_ICON_PATHS: \{ readonly \[key: string\]: string \} = \{([\s\S]*?)\n\};/,
     );
     if (brandIconsMatch) {
-      const brandNameRegex = /^ {2}(\w+):/gm;
-      let match;
-      while ((match = brandNameRegex.exec(brandIconsMatch[1])) !== null) {
+      Array.from(brandIconsMatch[1].matchAll(/^ {2}(\w+):/gm)).forEach((match) => {
         materialIconsMapping[match[1]] = 'path';
-      }
+      });
     }
 
     // Read and parse image-icon-tab/index.tsx to extract icon names

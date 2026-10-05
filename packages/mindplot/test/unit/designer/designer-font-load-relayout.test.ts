@@ -21,14 +21,14 @@
  * then, but nothing redrew the topics, so they kept the size measured with the fallback font
  * until something else redrew them (BL5-124). The designer now redraws and lays out once.
  */
+import { buildDesigner } from '../commands/designer-harness';
+import Topic from '../../../src/components/Topic';
+import LayoutManager from '../../../src/components/layout/LayoutManager';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner } from '../commands/designer-harness';
-import Topic from '../../../src/components/Topic';
-import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 // jsdom has no FontFaceSet. web2d starts listening on the first measurement, so it is defined
 // before any topic is built.
