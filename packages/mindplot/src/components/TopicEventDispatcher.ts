@@ -31,24 +31,31 @@ type TopicEventType = keyof TopicEvents;
 class TopicEventDispatcher extends EventDispispatcher<TopicEvents> {
   private _readOnly: boolean;
 
+  // The text editor of this dispatcher's designer: one per designer, so two maps on a page can
+  // each have one open ...
+  private _editor = new MultitTextEditor();
+
   constructor(readOnly: boolean) {
     super();
     this._readOnly = readOnly;
   }
 
+  getTextEditor(): MultitTextEditor {
+    return this._editor;
+  }
+
   close(update: boolean): void {
-    const editor = MultitTextEditor.getInstance();
+    const editor = this._editor;
     if (editor.isActive()) {
       editor.close(update);
     }
   }
 
   /**
-   * Closes the text editor without saving it, if it is open on a topic of `designer`. The editor
-   * is one per page: one open on another designer's topic is left alone.
+   * Closes the text editor without saving it, if it is open on a topic of `designer`.
    */
   closeFor(designer: Designer): void {
-    const editor = MultitTextEditor.getInstance();
+    const editor = this._editor;
     if (editor.getActiveTopic()?.getDesigner() === designer) {
       editor.close(false);
     }
@@ -60,7 +67,7 @@ class TopicEventDispatcher extends EventDispispatcher<TopicEvents> {
 
   process(eventType: TopicEventType, topic: Topic, textOverwrite?: string): void {
     // Close all previous open editor ....
-    const editor = MultitTextEditor.getInstance();
+    const editor = this._editor;
     if (editor.isActive()) {
       this.close(false);
     }
@@ -75,11 +82,11 @@ class TopicEventDispatcher extends EventDispispatcher<TopicEvents> {
   }
 
   isVisible(): boolean {
-    return MultitTextEditor.getInstance().isActive();
+    return this._editor.isActive();
   }
 
   isEditingTopic(topic: Topic): boolean {
-    const activeTopic = MultitTextEditor.getInstance().getActiveTopic();
+    const activeTopic = this._editor.getActiveTopic();
     return activeTopic === topic;
   }
 }

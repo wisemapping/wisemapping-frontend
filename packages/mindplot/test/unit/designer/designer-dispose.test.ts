@@ -22,7 +22,6 @@ import Designer from '../../../src/components/Designer';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import DragManager from '../../../src/components/DragManager';
 import DragTopic from '../../../src/components/DragTopic';
-import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import PersistenceManager from '../../../src/components/PersistenceManager';
@@ -277,7 +276,7 @@ describe('Designer dispose (BL-48)', () => {
     const topic = designer.getModel().findTopicById(1)!;
     const textBefore = topic.getModel().getText();
     topic.showTextEditor('typed');
-    const editor = MultitTextEditor.getInstance();
+    const editor = designer.getTextEditor();
     expect(editor.getActiveTopic()).toBe(topic);
 
     designer.dispose();
@@ -295,8 +294,8 @@ describe('Designer dispose (BL-48)', () => {
 
     designer.dispose();
 
-    expect(MultitTextEditor.getInstance().getActiveTopic()).toBe(topic);
-    MultitTextEditor.getInstance().close(false);
+    expect(other.designer.getTextEditor().getActiveTopic()).toBe(topic);
+    other.designer.getTextEditor().close(false);
   });
 
   it('can be disposed twice', async () => {

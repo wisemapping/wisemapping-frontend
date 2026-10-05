@@ -114,10 +114,13 @@ export type Harness = {
   topic: (id: number) => Topic;
 };
 
-export const buildDesigner = async (xml: string = SAMPLE_MAP): Promise<Harness> => {
-  const container = document.createElement('div');
-  document.body.appendChild(container);
-
+/**
+ * Builds a designer on `container`, or on a new div appended to the body.
+ */
+export const buildDesigner = async (
+  xml: string = SAMPLE_MAP,
+  container: HTMLDivElement = document.body.appendChild(document.createElement('div')),
+): Promise<Harness> => {
   const designer = new Designer({
     zoom: 1,
     mode: 'edition-owner',

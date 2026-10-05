@@ -40,6 +40,7 @@ import RelationshipPivot from './RelationshipPivot';
 import Relationship from './Relationship';
 
 import TopicEventDispatcher from './TopicEventDispatcher';
+import type MultitTextEditor from './MultilineTextEditor';
 import TopicFactory from './TopicFactory';
 
 import LayoutEventBus from './layout/LayoutEventBus';
@@ -217,6 +218,14 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     // If not manager was specifed, use the readonly one.
     this._widgetManager = options.widgetManager;
+  }
+
+  /**
+   * The text editor of this designer's topics.
+   * @internal
+   */
+  getTextEditor(): MultitTextEditor {
+    return this._topicEventDispatcher.getTextEditor();
   }
 
   /** The keyboard of this designer, if it is editable: its shortcuts drive this map only. */

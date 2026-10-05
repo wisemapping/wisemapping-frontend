@@ -19,12 +19,20 @@
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import Topic from '../../../src/components/Topic';
+import type Designer from '../../../src/components/Designer';
+import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import { buildTopics, stubSvgMeasurement } from './Helper';
 
 let changeTextToTopic: jest.Mock;
+// The canvas container of the designer: the editor is placed next to it.
 let mindmapComp: HTMLElement;
+let designer: Designer;
+let textEditor: MultitTextEditor;
 
-const editor = () => MultitTextEditor.getInstance();
+const editor = () => textEditor;
+
+/** A central topic and a child, of a designer with no canvas but its container. */
+const buildDesignerTopics = () => buildTopics({ designer });
 
 const textarea = (): HTMLTextAreaElement =>
   document.querySelector('#textContainer textarea') as HTMLTextAreaElement;
@@ -46,9 +54,15 @@ beforeAll(() => {
 beforeEach(() => {
   const wrapper = document.createElement('div');
   mindmapComp = document.createElement('div');
-  mindmapComp.id = 'mindmap-comp';
   wrapper.appendChild(mindmapComp);
   document.body.appendChild(wrapper);
+  textEditor = new MultitTextEditor();
+  const layoutEventBus = new LayoutEventBus();
+  designer = {
+    getContainer: () => mindmapComp,
+    getActionDispatcher: () => ActionDispatcher.getInstance(),
+    getLayoutEventBus: () => layoutEventBus,
+  } as unknown as Designer;
 
   changeTextToTopic = jest.fn();
   ActionDispatcher.setInstance({
@@ -66,7 +80,7 @@ afterEach(() => {
 
 describe('MultilineTextEditor Escape', () => {
   it('leaves an empty topic empty instead of saving the placeholder', () => {
-    const { central } = buildTopics();
+    const { central } = buildDesignerTopics();
     topics = [central];
     expect(central.getModel().getText()).toBeFalsy();
     const placeholder = central.getText();
@@ -83,7 +97,7 @@ describe('MultilineTextEditor Escape', () => {
   });
 
   it('restores the previous text of a topic that has one', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child, 'x');
@@ -97,7 +111,7 @@ describe('MultilineTextEditor Escape', () => {
 
 describe('MultilineTextEditor IME composition', () => {
   it('does not commit on Enter while composing', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child);
@@ -108,7 +122,7 @@ describe('MultilineTextEditor IME composition', () => {
   });
 
   it('does not commit on Enter reported with the IME key code', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child);
@@ -119,7 +133,7 @@ describe('MultilineTextEditor IME composition', () => {
   });
 
   it('commits on a plain Enter', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child);
@@ -131,7 +145,7 @@ describe('MultilineTextEditor IME composition', () => {
   });
 
   it('keeps the Enter that commits from adding a new line to the topic', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child);
@@ -157,7 +171,7 @@ describe('MultilineTextEditor IME composition', () => {
 
 describe('MultilineTextEditor input', () => {
   it('updates the topic and the editor size on paste or delete', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child);
@@ -184,7 +198,7 @@ describe('MultilineTextEditor position', () => {
   });
 
   it('is placed over the text, relative to its offset parent', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
     const wrapper = mindmapComp.parentElement!;
     wrapper.style.position = 'relative';

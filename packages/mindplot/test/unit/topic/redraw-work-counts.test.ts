@@ -28,7 +28,6 @@ import ThemeFactory from '../../../src/components/theme/ThemeFactory';
 import DefaultTheme from '../../../src/components/theme/DefaultTheme';
 import ImageSVGFeature from '../../../src/components/ImageSVGFeature';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
-import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import { buildMediumMap, stubTextMeasurement } from './RenderFixture';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
@@ -90,12 +89,6 @@ beforeAll(async () => {
   stubTextMeasurement();
   jest.spyOn(console, 'log').mockImplementation(() => undefined);
   jest.spyOn(console, 'warn').mockImplementation(() => undefined);
-
-  const wrapper = document.createElement('div');
-  const mindmapComp = document.createElement('div');
-  mindmapComp.id = 'mindmap-comp';
-  wrapper.appendChild(mindmapComp);
-  document.body.appendChild(wrapper);
 
   harness = await buildDesigner(buildMediumMap());
   topics = harness.designer.getModel().getTopics();
@@ -160,13 +153,13 @@ describe('Designer theme variant toggle', () => {
 
 describe('text editor', () => {
   afterEach(() => {
-    MultitTextEditor.getInstance().close(false);
+    harness.designer.getTextEditor().close(false);
   });
 
   it('redraws only the edited topic on each keystroke, not its subtree', async () => {
     const topic = harness.topic(1);
     expect(subtreeSize(topic)).toBeGreaterThan(5);
-    MultitTextEditor.getInstance().show(topic);
+    harness.designer.getTextEditor().show(topic);
     await nextFrame();
     const textarea = document.querySelector('#textContainer textarea') as HTMLTextAreaElement;
 
@@ -181,7 +174,7 @@ describe('text editor', () => {
 
   it('lays out once per frame however many keystrokes arrive in it', async () => {
     const topic = harness.topic(1);
-    MultitTextEditor.getInstance().show(topic);
+    harness.designer.getTextEditor().show(topic);
     await nextFrame();
     const textarea = document.querySelector('#textContainer textarea') as HTMLTextAreaElement;
 

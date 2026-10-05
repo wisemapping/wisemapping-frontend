@@ -24,7 +24,6 @@
  */
 import { buildDesigner, Harness } from '../commands/designer-harness';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
-import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import { buildMediumMap, renderSnapshot, stubTextMeasurement } from './RenderFixture';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
@@ -51,13 +50,6 @@ describe('redraw render snapshot of a medium map', () => {
   let harness: Harness;
 
   beforeAll(async () => {
-    // The text editor is shown next to the map component.
-    const wrapper = document.createElement('div');
-    const mindmapComp = document.createElement('div');
-    mindmapComp.id = 'mindmap-comp';
-    wrapper.appendChild(mindmapComp);
-    document.body.appendChild(wrapper);
-
     harness = await buildDesigner(buildMediumMap());
   });
 
@@ -85,7 +77,7 @@ describe('redraw render snapshot of a medium map', () => {
 
   it('renders the same while typing in the text editor and after committing', async () => {
     const topic = harness.topic(2);
-    MultitTextEditor.getInstance().show(topic);
+    harness.designer.getTextEditor().show(topic);
     const textarea = document.querySelector('#textContainer textarea') as HTMLTextAreaElement;
     // One keystroke per frame, as a person types. The editor lays the map out once per
     // frame, so several keystrokes in one frame are laid out together.
@@ -102,7 +94,7 @@ describe('redraw render snapshot of a medium map', () => {
       new KeyboardEvent('keydown', { bubbles: true, cancelable: true, code: 'Enter' }),
     );
     await nextFrame();
-    expect(MultitTextEditor.getInstance().isActive()).toBe(false);
+    expect(harness.designer.getTextEditor().isActive()).toBe(false);
     expect(topic.getModel().getText()).toBe('Typed text\nwith a second line');
     expect(renderSnapshot(harness.designer)).toMatchSnapshot('committed');
   });
