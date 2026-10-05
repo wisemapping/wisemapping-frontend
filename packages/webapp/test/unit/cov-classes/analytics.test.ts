@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { waitFor } from '@testing-library/react';
 import ReactGA from 'react-ga4';
 import {
   clearAnalyticsUserId,
@@ -123,10 +124,10 @@ describe('analytics user id', () => {
     const set = jest.spyOn(ReactGA, 'set');
 
     setAnalyticsUserEmail('  Me@Example.com ');
-    await flushPromises();
 
-    // The raw email never reaches analytics.
-    expect(set).toHaveBeenCalledWith({ userId: HASH });
+    // The digest resolves on Node's thread pool, not in a microtask: wait for the call itself,
+    // or it lands in a later test. The raw email never reaches analytics.
+    await waitFor(() => expect(set).toHaveBeenCalledWith({ userId: HASH }));
   });
 
   it('clears the user id for an empty email and on clear', () => {
