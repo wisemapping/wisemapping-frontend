@@ -272,6 +272,9 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
             mapsId={[mapId]}
             fromEditor
             pageMode={pageMode}
+            designer={
+              editorConfig.model?.isMapLoadded() ? editorConfig.model.getDesigner() : undefined
+            }
           />
         </Suspense>
       )}

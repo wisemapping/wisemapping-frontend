@@ -49,6 +49,8 @@ type ExportDialogProps = {
   mapId: number;
   enableImgExport: boolean;
   svgXml?: string;
+  /** The designer of the editor the dialog was opened from; none from the map list. */
+  designer?: Designer;
   onClose: () => void;
 };
 
@@ -56,6 +58,7 @@ const ExportDialog = ({
   mapId,
   onClose,
   enableImgExport,
+  designer,
 }: ExportDialogProps): React.ReactElement => {
   const intl = useIntl();
   const [submit, setSubmit] = React.useState<boolean>(false);
@@ -115,9 +118,7 @@ const ExportDialog = ({
     let originalTheme: ThemeType | undefined;
     let backgroundColor = '#ffffff';
 
-    const designer: Designer | undefined = globalThis.designer;
     // exporting from editor toolbar action
-
     if (designer != null) {
       // Depending on the type of export. It will require differt POST.
       const workspace = designer.getWorkSpace();
