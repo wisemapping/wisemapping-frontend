@@ -110,6 +110,7 @@ export type { TopicShapeType } from './components/model/INodeModel';
 export { StrokeStyle } from './components/model/RelationshipModel';
 export { LineType } from './components/ConnectionLine';
 export { ContentType } from './components/ContentType';
+export { default as HtmlSanitizer } from './components/security/HtmlSanitizer';
 export { default as INodeModel } from './components/model/INodeModel';
 export { default as SvgIconModel } from './components/model/SvgIconModel';
 export { GALLERY_ICON_NAMES } from './components/GalleryIconData';
