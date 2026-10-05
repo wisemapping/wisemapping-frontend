@@ -22,8 +22,6 @@ import path from 'path';
 import { describe, expect, test } from '@jest/globals';
 import FreemindImporter from '../../../src/components/import/FreemindImporter';
 import ImportError from '../../../src/components/import/ImportError';
-import { LineType } from '../../../src/components/ConnectionLine';
-import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
 const importMap = async (mm: string): Promise<Document> => {
   const xml = await new FreemindImporter(mm).import('test', '');
@@ -359,10 +357,8 @@ describe('FreemindImporter', () => {
 
     const doc = await importMap(mm);
     const relationship = doc.querySelector('relationship')!;
-    // Saved with the legacy lineType every relationship carries (BL4-32), read as a thin curve ...
+    // Saved with the legacy lineType every relationship carries (BL4-32) ...
     expect(relationship.getAttribute('lineType')).toBe('3');
-    const mindmap = XMLSerializerFactory.createFromDocument(doc).loadFromDom(doc, 'test');
-    expect(mindmap.getRelationships()[0].getLineType()).toBe(LineType.THIN_CURVED);
   });
 
   test('imports the edge color as the connection color, keeping the background color', async () => {

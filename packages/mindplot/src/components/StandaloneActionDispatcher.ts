@@ -287,18 +287,6 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  changeRelationshipStyle(relationships: Relationship[], lineType: LineType) {
-    const commandFunc = (relationship: Relationship, type: LineType) => {
-      const result: LineType = relationship.getModel().getLineType();
-      relationship.getModel().setLineType(type);
-      relationship.redraw();
-      return result;
-    };
-
-    const command = new GenericRelationshipFunctionCommand(commandFunc, relationships, lineType);
-    this.execute(command);
-  }
-
   changeRelationshipColor(relationships: Relationship[], value: string | undefined) {
     const commandFunc = (relationship: Relationship, color: string | undefined) => {
       const result: string | undefined = relationship.getModel().getStrokeColor();

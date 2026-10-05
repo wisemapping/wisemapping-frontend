@@ -38,7 +38,6 @@ import FeatureModel from '../model/FeatureModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import { TopicShapeType } from '../model/INodeModel';
 import ContentType from '../ContentType';
-import { LineType } from '../ConnectionLine';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import SecureXmlParser from '../security/SecureXmlParser';
 
@@ -171,7 +170,6 @@ export default class FreemindImporter extends Importer {
           relationship.setStartArrow(startarrow.toLowerCase() !== 'none');
         }
 
-        relationship.setLineType(LineType.THIN_CURVED);
         this.fixRelationshipControlPoints(relationship, source, destNode);
         mindmap.addRelationship(relationship);
       }

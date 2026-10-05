@@ -1621,13 +1621,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  changeRelationshipStyle(type: LineType): void {
-    const relationships = this.getModel().filterSelectedRelationships();
-    if (relationships.length > 0) {
-      this._actionDispatcher.changeRelationshipStyle(relationships, type);
-    }
-  }
-
   changeRelationshipColor(value: string | undefined): void {
     const relationships = this.getModel().filterSelectedRelationships();
     if (relationships.length > 0) {

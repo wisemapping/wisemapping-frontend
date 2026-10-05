@@ -23,9 +23,8 @@ import MindManagerImporter from '../../../src/components/import/MindManagerImpor
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import Mindmap from '../../../src/components/model/Mindmap';
 import { StrokeStyle } from '../../../src/components/model/RelationshipModel';
-import { LineType } from '../../../src/components/ConnectionLine';
 
-// Dash styles are a stroke style. The line type is the shape of the line (curved, polyline...).
+// Dash styles are a stroke style. Relationships are always drawn thin curved.
 
 const loadMindmap = (xml: string): Mindmap => {
   const doc = new DOMParser().parseFromString(xml, 'text/xml');
@@ -50,7 +49,7 @@ describe('FreeplaneImporter relationship style', () => {
   </node>
 </map>`;
 
-  test('maps DASH to the closest stroke style and keeps a valid line type', async () => {
+  test('maps DASH to the closest stroke style', async () => {
     const mindmap = loadMindmap(await new FreeplaneImporter(freeplane).import('test'));
 
     const relationships = mindmap.getRelationships();
@@ -61,7 +60,6 @@ describe('FreeplaneImporter relationship style', () => {
       StrokeStyle.DOTTED,
       StrokeStyle.DASHED,
     ]);
-    relationships.forEach((r) => expect(r.getLineType()).toBe(LineType.THIN_CURVED));
   });
 });
 
@@ -79,7 +77,7 @@ describe('MindManagerImporter relationship style', () => {
   </Relationships>
 </Map>`;
 
-  test('maps LineStyle to the stroke style and keeps a valid line type', async () => {
+  test('maps LineStyle to the stroke style', async () => {
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
     const relationships = mindmap.getRelationships();
@@ -88,6 +86,5 @@ describe('MindManagerImporter relationship style', () => {
       StrokeStyle.DOTTED,
       StrokeStyle.SOLID,
     ]);
-    relationships.forEach((r) => expect(r.getLineType()).toBe(LineType.THIN_CURVED));
   });
 });

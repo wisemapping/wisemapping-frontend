@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { LineType } from '../../../src/components/ConnectionLine';
 import Mindmap from '../../../src/components/model/Mindmap';
 import XMLSerializerTango from '../../../src/components/persistence/XMLSerializerTango';
 
@@ -45,14 +44,12 @@ const savedLineTypes = (mindmap: Mindmap): (string | null)[] =>
 
 describe('Tango relationship lineType (BL4-32)', () => {
   it.each(['3', '0', '1', '6', 'curved', null])(
-    'reads a stored lineType of %s as the thin curve relationships are drawn with',
+    'ignores a stored lineType of %s and saves the legacy one',
     (lineType) => {
       const attribute = lineType === null ? '' : ` lineType="${lineType}"`;
       const mindmap = load(mapWith(`<relationship srcTopicId="1" destTopicId="2"${attribute}/>`));
 
-      const [relationship] = mindmap.getRelationships();
-      expect(relationship.getLineType()).toBe(LineType.THIN_CURVED);
-      // ... and saves it back with the legacy value every map carries.
+      // It is ignored, and saved back with the legacy value every map carries.
       expect(savedLineTypes(mindmap)).toEqual(['3']);
     },
   );
