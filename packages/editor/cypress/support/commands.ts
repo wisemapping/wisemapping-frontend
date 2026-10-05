@@ -83,11 +83,16 @@ addMatchImageSnapshotCommand(snapshotDefaults);
 const FREEZE_STYLE_ID = 'cypress-visual-freeze';
 // Hover tooltips open after a timer, so whether one is on screen at capture time is a race. The
 // ripple of the last click is frozen mid-animation, at a size that differs from run to run.
+// macOS overlay scrollbars fade out on a timer, so they are hidden too.
 const FREEZE_CSS = `*, *::before, *::after {
   transition: none !important;
   animation: none !important;
   caret-color: transparent !important;
   scroll-behavior: auto !important;
+  scrollbar-width: none !important;
+}
+*::-webkit-scrollbar {
+  display: none !important;
 }
 .MuiTooltip-popper {
   visibility: hidden !important;
