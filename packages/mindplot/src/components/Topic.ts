@@ -35,8 +35,6 @@ import NodeModel from './model/NodeModel';
 import Relationship from './Relationship';
 import Canvas from './Canvas';
 import LayoutManager from './layout/LayoutManager';
-import NoteModel from './model/NoteModel';
-import LinkModel from './model/LinkModel';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 import PositionType from './PositionType';
@@ -871,7 +869,7 @@ abstract class Topic extends NodeGraph {
 
     let result: string | null = null;
     if (notes.length > 0) {
-      result = (notes[0] as NoteModel).getText();
+      result = notes[0].getText();
     }
 
     return result;
@@ -909,7 +907,7 @@ abstract class Topic extends NodeGraph {
     const links = model.findFeatureByType('link');
     let result: string | undefined;
     if (links.length > 0) {
-      result = (links[0] as LinkModel).getUrl();
+      result = links[0].getUrl();
     }
     return result;
   }

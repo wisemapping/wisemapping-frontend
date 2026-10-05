@@ -23,9 +23,6 @@ import TextImporterFactory from '../../../src/components/import/TextImporterFact
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
-import NoteModel from '../../../src/components/model/NoteModel';
-import LinkModel from '../../../src/components/model/LinkModel';
-import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import { StrokeStyle } from '../../../src/components/model/RelationshipModel';
 import ContentType from '../../../src/components/ContentType';
 
@@ -94,8 +91,8 @@ describe('MindManagerImporter .mmap archives', () => {
 
     const childA = findByText(mindmap, 'Child A');
     expect(childA.getChildren().map((c) => c.getText())).toEqual(['Grandchild']);
-    expect((childA.findFeatureByType('note')[0] as NoteModel).getText()).toBe('Note of A');
-    expect((childA.findFeatureByType('link')[0] as LinkModel).getUrl()).toBe('https://example.com');
+    expect(childA.findFeatureByType('note')[0].getText()).toBe('Note of A');
+    expect(childA.findFeatureByType('link')[0].getUrl()).toBe('https://example.com');
 
     const relationships = mindmap.getRelationships();
     expect(relationships).toHaveLength(1);
@@ -124,12 +121,12 @@ describe('MindManagerImporter icons', () => {
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
     const icons = findByText(mindmap, 'Letter').findFeatureByType('eicon');
-    expect((icons[0] as EmojiIconModel).getIconType()).toBe('🅰️');
+    expect(icons[0].getIconType()).toBe('🅰️');
   });
 });
 
 const iconsOf = (node: NodeModel): string[] =>
-  node.findFeatureByType('eicon').map((icon) => (icon as EmojiIconModel).getIconType());
+  node.findFeatureByType('eicon').map((icon) => icon.getIconType());
 
 describe('MindManagerImporter unknown icons', () => {
   test('skips an icon without an emoji and logs it, instead of importing a light bulb', async () => {
@@ -208,12 +205,8 @@ describe('MindManagerImporter central topic', () => {
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
     const central = findByText(mindmap, 'Root');
-    expect((central.findFeatureByType('note')[0] as NoteModel | undefined)?.getText()).toBe(
-      'Root note',
-    );
-    expect((central.findFeatureByType('link')[0] as LinkModel | undefined)?.getUrl()).toBe(
-      'https://example.com/root',
-    );
+    expect(central.findFeatureByType('note').at(0)?.getText()).toBe('Root note');
+    expect(central.findFeatureByType('link').at(0)?.getUrl()).toBe('https://example.com/root');
     expect(iconsOf(central)).toEqual(['⭐']);
   });
 });
@@ -353,7 +346,7 @@ describe('MindManagerImporter hyperlinks', () => {
 
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
-    expect((findByText(mindmap, 'Web').findFeatureByType('link')[0] as LinkModel).getUrl()).toBe(
+    expect(findByText(mindmap, 'Web').findFeatureByType('link')[0].getUrl()).toBe(
       'https://www.microsoft.com',
     );
     expect(findByText(mindmap, 'Internal').findFeatureByType('link')).toEqual([]);
@@ -374,7 +367,7 @@ describe('MindManagerImporter XHTML notes', () => {
 
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
-    const note = findByText(mindmap, 'Rich').findFeatureByType('note')[0] as NoteModel;
+    const note = findByText(mindmap, 'Rich').findFeatureByType('note')[0];
     expect(note.getContentType()).toBe(ContentType.HTML);
     expect(note.getText()).toContain('<p>Hello <b>world</b></p>');
     expect(note.getText()).not.toContain('onerror');
@@ -391,7 +384,7 @@ describe('MindManagerImporter XHTML notes', () => {
 
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
-    const note = findByText(mindmap, 'Plain').findFeatureByType('note')[0] as NoteModel;
+    const note = findByText(mindmap, 'Plain').findFeatureByType('note')[0];
     expect(note.getText()).toBe('Only a preview');
     expect(note.getContentType()).not.toBe(ContentType.HTML);
   });
@@ -615,9 +608,7 @@ describe('MindManagerImporter relationship labels', () => {
     const label = findByText(mindmap, 'Label');
     expect(mindmap.getBranches()).toContain(label);
     expect(label.getParent()).toBeFalsy();
-    expect((label.findFeatureByType('link')[0] as LinkModel).getUrl()).toBe(
-      'https://example.com/label',
-    );
+    expect(label.findFeatureByType('link')[0].getUrl()).toBe('https://example.com/label');
     // The middle of Start (378, 0) and End (378, 189), moved by the Offset of the label (38, 0)
     expect(label.getPosition()).toEqual({ x: 416, y: 95 });
     // MindManager draws relationship labels as plain text.
@@ -911,7 +902,7 @@ describe('MindManagerImporter XHTML note whitespace (BL5-140)', () => {
 
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
-    const note = findByText(mindmap, 'Spaced').findFeatureByType('note')[0] as NoteModel;
+    const note = findByText(mindmap, 'Spaced').findFeatureByType('note')[0];
     expect(note.getText()).toBe(
       '<p><b>This&nbsp;</b> <span>is a</span></p><p>line<br>break</p><pre>keep\n  this</pre>',
     );

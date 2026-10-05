@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import { buildDesigner } from './designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
@@ -38,17 +37,17 @@ describe('AddFeatureToTopicCommand', () => {
     dispatcher.addFeatureToTopic([1, 3], 'eicon', { id: '😀' });
     const after = save();
 
-    const [featureA] = topic(1).getModel().getFeatures();
-    const [featureB] = topic(3).getModel().getFeatures();
+    const [featureA] = topic(1).getModel().findFeatureByType('eicon');
+    const [featureB] = topic(3).getModel().findFeatureByType('eicon');
     expect(featureA).toBeDefined();
     expect(featureB).toBeDefined();
     expect(featureA).not.toBe(featureB);
     expect(featureA.getId()).not.toBe(featureB.getId());
 
     // Changing the icon on A (as clicking it in the canvas does) leaves B alone ...
-    (featureA as EmojiIconModel).setIconType('😎');
+    featureA.setIconType('😎');
     expect(topic(3).getModel().getFeatures()[0].getAttributes()).toEqual({ id: '😀' });
-    (featureA as EmojiIconModel).setIconType('😀');
+    featureA.setIconType('😀');
 
     designer.undo();
     expect(topic(1).getModel().getFeatures()).toHaveLength(0);

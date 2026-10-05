@@ -19,11 +19,7 @@ import xmlFormatter from 'xml-formatter';
 import { Mindmap } from '../..';
 import INodeModel, { TopicShapeType } from '../model/INodeModel';
 import RelationshipModel from '../model/RelationshipModel';
-import SvgIconModel from '../model/SvgIconModel';
-import EmojiIconModel from '../model/EmojiIconModel';
 import FeatureModel from '../model/FeatureModel';
-import LinkModel from '../model/LinkModel';
-import NoteModel from '../model/NoteModel';
 import ContentType from '../ContentType';
 import PositionNodeType from '../PositionType';
 import Exporter from './Exporter';
@@ -260,15 +256,12 @@ class FreemindExporter extends Exporter {
     const branches: Array<FeatureModel> = mindmapTopic.getFeatures();
 
     branches.forEach((feature: FeatureModel) => {
-      const type = feature.getType();
-
-      if (type === 'link') {
-        const link = feature as LinkModel;
-        freemindNode.setLink(link.getUrl());
+      if (feature.isOfType('link')) {
+        freemindNode.setLink(feature.getUrl());
       }
 
-      if (type === 'note') {
-        const note = feature as NoteModel;
+      if (feature.isOfType('note')) {
+        const note = feature;
         const richcontent: Richcontent = this.buildRichcontent(
           note.getText(),
           'NOTE',
@@ -277,7 +270,7 @@ class FreemindExporter extends Exporter {
         freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
       }
 
-      if (type === 'icon' || type === 'eicon') {
+      if (feature.isOfType('icon') || feature.isOfType('eicon')) {
         const builtin = this.iconBuiltin(feature);
         if (builtin) {
           const freemindIcon: Icon = new Icon();
@@ -293,10 +286,13 @@ class FreemindExporter extends Exporter {
    * FreeMind builtin icon, if there is one.
    */
   protected iconBuiltin(feature: FeatureModel): string | null {
-    if (feature.getType() === 'icon') {
-      return FreemindIconConverter.svgToFreemindIcon((feature as SvgIconModel).getIconType());
+    if (feature.isOfType('icon')) {
+      return FreemindIconConverter.svgToFreemindIcon(feature.getIconType());
     }
-    return FreemindIconConverter.toFreemindIcon((feature as EmojiIconModel).getIconType());
+    if (feature.isOfType('eicon')) {
+      return FreemindIconConverter.toFreemindIcon(feature.getIconType());
+    }
+    return null;
   }
 
   // A FreeMind edge is the line that connects the node to its parent, the WiseMapping connection.

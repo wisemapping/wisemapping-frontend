@@ -22,35 +22,23 @@ import LinkIcon from './LinkIcon';
 import NoteIcon from './NoteIcon';
 import FeatureModel from './model/FeatureModel';
 import Topic from './Topic';
-import SvgIconModel from './model/SvgIconModel';
-import LinkModel from './model/LinkModel';
-import NoteModel from './model/NoteModel';
-import EmojiIconModel from './model/EmojiIconModel';
 import Icon from './Icon';
 
 class TopicFeatureFactory {
   static createIcon(topic: Topic, model: FeatureModel, readOnly: boolean): Icon {
-    let result: Icon;
-    const featureType = model.getType();
-    switch (featureType) {
-      case 'icon':
-        result = new SvgImageIcon(topic, model as SvgIconModel, readOnly);
-        break;
-      case 'eicon':
-        result = new EmojiCharIcon(topic, model as EmojiIconModel, readOnly);
-        break;
-      case 'link':
-        result = new LinkIcon(topic, model as LinkModel, readOnly);
-        break;
-      case 'note':
-        result = new NoteIcon(topic, model as NoteModel, readOnly);
-        break;
-      default: {
-        const exhaustiveCheck: never = featureType;
-        throw new Error(`Unhandled feature type case: ${exhaustiveCheck}`);
-      }
+    if (model.isOfType('icon')) {
+      return new SvgImageIcon(topic, model, readOnly);
     }
-    return result;
+    if (model.isOfType('eicon')) {
+      return new EmojiCharIcon(topic, model, readOnly);
+    }
+    if (model.isOfType('link')) {
+      return new LinkIcon(topic, model, readOnly);
+    }
+    if (model.isOfType('note')) {
+      return new NoteIcon(topic, model, readOnly);
+    }
+    throw new Error(`Unhandled feature type case: ${model.getType()}`);
   }
 }
 

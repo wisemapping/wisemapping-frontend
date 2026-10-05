@@ -17,7 +17,6 @@
  */
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
-import NoteModel from '../../../src/components/model/NoteModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
 import XMLSerializerTango from '../../../src/components/persistence/XMLSerializerTango';
 import XMLSerializerBeta from '../../../src/components/persistence/XMLSerializerBeta';
@@ -57,7 +56,7 @@ const roundTrip = (mindmap: Mindmap): Mindmap => {
 const findChild = (mindmap: Mindmap): NodeModel => mindmap.findNodeById(2) as NodeModel;
 
 const noteText = (topic: NodeModel): string => {
-  const note = topic.getFeatures().find((f) => f.getType() === 'note') as NoteModel;
+  const note = topic.findFeatureByType('note')[0];
   return note.getText();
 };
 

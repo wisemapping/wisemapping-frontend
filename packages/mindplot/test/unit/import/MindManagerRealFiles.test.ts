@@ -25,9 +25,6 @@ import TextImporterFactory from '../../../src/components/import/TextImporterFact
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
-import NoteModel from '../../../src/components/model/NoteModel';
-import LinkModel from '../../../src/components/model/LinkModel';
-import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import { StrokeStyle } from '../../../src/components/model/RelationshipModel';
 import ContentType from '../../../src/components/ContentType';
 
@@ -56,7 +53,7 @@ const importReal = async (name: string): Promise<Mindmap> => {
 };
 
 const emojis = (node: NodeModel): string[] =>
-  node.findFeatureByType('eicon').map((icon) => (icon as EmojiIconModel).getIconType());
+  node.findFeatureByType('eicon').map((icon) => icon.getIconType());
 
 const side = (node: NodeModel): number => Math.sign(node.getPosition()?.x ?? 0);
 
@@ -98,7 +95,7 @@ describe('MindManager 8 file (blumind-mm8)', () => {
     const central = centralOf(mindmap);
     const [noted, plain, smiley] = central.getChildren();
 
-    const note = noted.findFeatureByType('note')[0] as NoteModel;
+    const note = noted.findFeatureByType('note')[0];
     expect(note.getContentType()).toBe(ContentType.HTML);
     expect(note.getText()).toBe('<p>Hello, World</p>');
 
@@ -181,9 +178,7 @@ describe('MindManager 23 file (mindm-test-dom-mm23)', () => {
     const mindmap = await importReal('mindm-test-dom-mm23');
 
     const [one] = byText(mindmap, '1');
-    expect((one.findFeatureByType('link')[0] as LinkModel).getUrl()).toBe(
-      'https://www.microsoft.com',
-    );
+    expect(one.findFeatureByType('link')[0].getUrl()).toBe('https://www.microsoft.com');
     // Url="#xpointer(/descendant-or-self::ap:Topic[@OId='...'])"
     expect(byText(mindmap, '3')[0].findFeatureByType('link')).toEqual([]);
   });
@@ -198,7 +193,7 @@ describe('MindManager 23 file (mindm-test-dom-mm23)', () => {
       expect(emojis(byText(mindmap, 'Main Topic')[0])).toEqual(['⬆️']);
       expect(emojis(byText(mindmap, '11')[0])).toEqual([]);
       expect(warn).toHaveBeenCalledWith(expect.stringContaining('custom icon'));
-      const note = byText(mindmap, '2')[0].findFeatureByType('note')[0] as NoteModel;
+      const note = byText(mindmap, '2')[0].findFeatureByType('note')[0];
       expect(note.getText()).toBe('<p>Notes for 2</p>');
     } finally {
       warn.mockRestore();
@@ -350,7 +345,7 @@ describe('MindManager XHTML notes of the real files (BL5-140)', () => {
     const three = centralOf(mindmap)
       .getChildren()
       .find((node) => node.getText() === '3')!;
-    const note = three.findFeatureByType('note')[0] as NoteModel;
+    const note = three.findFeatureByType('note')[0];
 
     expect(note.getText()).not.toMatch(/\n/);
     expect(note.getText()).toBe(

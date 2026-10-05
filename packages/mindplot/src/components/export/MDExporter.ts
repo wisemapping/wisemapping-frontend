@@ -16,9 +16,7 @@
  *   limitations under the License.
  */
 import { Mindmap } from '../..';
-import EmojiIconModel from '../model/EmojiIconModel';
 import INodeModel from '../model/INodeModel';
-import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
 import ContentType from '../ContentType';
@@ -110,7 +108,7 @@ class MDExporter extends Exporter {
         .some(
           (f) =>
             ['eicon', 'link'].includes(f.getType()) ||
-            (f.getType() === 'note' && this.noteText(f as NoteModel) !== ''),
+            (f.isOfType('note') && this.noteText(f) !== ''),
         ) ||
       node.getChildren().some((n) => this.isExportable(n))
     );
@@ -122,24 +120,23 @@ class MDExporter extends Exporter {
       .filter((n) => this.isExportable(n))
       .forEach((node) => {
         // Convert icons to list ...
-        const icons = node.getFeatures().filter((f) => f.getType() === 'eicon');
+        const icons = node.getFeatures().filter((f) => f.isOfType('eicon'));
         let iconStr = ' ';
         if (icons.length > 0) {
-          iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
+          iconStr = ` ${icons.map((icon) => icon.getIconType()).toString()} `;
         }
 
         const nodeText = this.nodeText(node);
         result = `${result}${prefix}-${iconStr}${MDExporter.escape(nodeText)}`;
         node.getFeatures().forEach((f) => {
-          const type = f.getType();
           // Dump all features ...
-          if (type === 'link') {
-            result = `${result} ( [link](${MDExporter.encodeUrl((f as LinkModel).getUrl())}) )`;
+          if (f.isOfType('link')) {
+            result = `${result} ( [link](${MDExporter.encodeUrl(f.getUrl())}) )`;
           }
 
-          if (type === 'note') {
+          if (f.isOfType('note')) {
             // Empty notes would leave an empty footnote definition ...
-            const noteText = this.noteText(f as NoteModel);
+            const noteText = this.noteText(f);
             if (noteText) {
               this.footNotes.push(noteText);
               result = `${result}[^${this.footNotes.length}] `;

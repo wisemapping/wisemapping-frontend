@@ -16,10 +16,7 @@
  *   limitations under the License.
  */
 import { Mindmap } from '../..';
-import EmojiIconModel from '../model/EmojiIconModel';
 import INodeModel from '../model/INodeModel';
-import LinkModel from '../model/LinkModel';
-import NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
 import ContentType from '../ContentType';
 
@@ -43,10 +40,10 @@ class TxtExporter extends Exporter {
     let result = '';
     branches.forEach((node, index) => {
       // Convert icons to list ...
-      const icons = node.getFeatures().filter((f) => f.getType() === 'eicon');
+      const icons = node.getFeatures().filter((f) => f.isOfType('eicon'));
       let iconStr = ' ';
       if (icons.length > 0) {
-        iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
+        iconStr = ` ${icons.map((icon) => icon.getIconType()).toString()} `;
       }
 
       let nodeText = '';
@@ -59,12 +56,11 @@ class TxtExporter extends Exporter {
       }
       result = `${result}${indent}${prefix}${index + 1}${iconStr}${nodeText}`;
       node.getFeatures().forEach((f) => {
-        const type = f.getType();
-        if (type === 'link') {
-          result = `${result}\n ${indent}  [Link: ${(f as LinkModel).getUrl()}]`;
+        if (f.isOfType('link')) {
+          result = `${result}\n ${indent}  [Link: ${f.getUrl()}]`;
         }
-        if (type === 'note') {
-          const noteModel = f as NoteModel;
+        if (f.isOfType('note')) {
+          const noteModel = f;
           const noteText =
             noteModel.getContentType() === ContentType.HTML
               ? noteModel.getPlainText()

@@ -22,8 +22,6 @@
  * built. With two designers on the page, an edit in the first changed the second's map (BL5-144).
  */
 import { buildDesigner, Harness } from '../commands/designer-harness';
-import NoteModel from '../../../src/components/model/NoteModel';
-import LinkModel from '../../../src/components/model/LinkModel';
 import NoteIcon from '../../../src/components/NoteIcon';
 import LinkIcon from '../../../src/components/LinkIcon';
 import ShrinkConnector from '../../../src/components/ShrinkConnector';
@@ -81,8 +79,8 @@ describe('Commands of a topic with two designers on the page (BL5-144)', () => {
       harness.topic(1).setLinkValue('https://example.com');
     });
     const topic = first.topic(1);
-    const note = topic.getModel().findFeatureByType('note')[0] as NoteModel;
-    const link = topic.getModel().findFeatureByType('link')[0] as LinkModel;
+    const note = topic.getModel().findFeatureByType('note')[0];
+    const link = topic.getModel().findFeatureByType('link')[0];
 
     new NoteIcon(topic, note, false).remove();
     new LinkIcon(topic, link, false).remove();

@@ -18,7 +18,6 @@
 import INodeModel, { TopicShapeType } from '../model/INodeModel';
 import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
 import FeatureModel from '../model/FeatureModel';
-import EmojiIconModel from '../model/EmojiIconModel';
 import ContentType from '../ContentType';
 import FreemindExporter from './FreemindExporter';
 import FreeminNode from './freemind/Node';
@@ -101,10 +100,10 @@ class FreeplaneExporter extends FreemindExporter {
    */
   protected iconBuiltin(feature: FeatureModel): string | null {
     const builtin = super.iconBuiltin(feature);
-    if (builtin || feature.getType() !== 'eicon') {
+    if (builtin || !feature.isOfType('eicon')) {
       return builtin;
     }
-    const codePoints = Array.from((feature as EmojiIconModel).getIconType())
+    const codePoints = Array.from(feature.getIconType())
       .map((char) => char.codePointAt(0)!)
       .filter((codePoint) => codePoint !== 0xfe0f)
       .map((codePoint) => codePoint.toString(16).toUpperCase());

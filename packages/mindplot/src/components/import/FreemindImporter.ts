@@ -338,12 +338,12 @@ export default class FreemindImporter extends Importer {
           const cleanHtml = this.cleanHtml(html);
           switch (type) {
             case 'NOTE': {
-              const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
+              const noteModel = FeatureModelFactory.createModel('note', {
                 text: cleanHtml || FreemindConstant.EMPTY_NOTE,
               });
               // Set contentType for rich text notes
               if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
-                (noteModel as NoteModel).setContentType(ContentType.HTML);
+                noteModel.setContentType(ContentType.HTML);
               }
               wiseParent.addFeature(noteModel);
               break;
@@ -357,12 +357,12 @@ export default class FreemindImporter extends Importer {
             }
 
             default: {
-              const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
+              const noteModel = FeatureModelFactory.createModel('note', {
                 text: cleanHtml || FreemindConstant.EMPTY_NOTE,
               });
               // Set contentType for rich text notes
               if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
-                (noteModel as NoteModel).setContentType(ContentType.HTML);
+                noteModel.setContentType(ContentType.HTML);
               }
               wiseParent.addFeature(noteModel);
             }

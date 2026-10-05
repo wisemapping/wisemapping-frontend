@@ -22,7 +22,6 @@ import FreeplaneImporter from '../../../src/components/import/FreeplaneImporter'
 import MindManagerImporter from '../../../src/components/import/MindManagerImporter';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import Mindmap from '../../../src/components/model/Mindmap';
-import NoteModel from '../../../src/components/model/NoteModel';
 import NodeModel from '../../../src/components/model/NodeModel';
 
 // Values that come from the imported file, or from the user, must be escaped in the WiseMapping XML.
@@ -52,8 +51,7 @@ const findByText = (mindmap: Mindmap, text: string): NodeModel => {
   return result;
 };
 
-const noteOf = (node: NodeModel): string =>
-  (node.findFeatureByType('note')[0] as NoteModel | undefined)?.getText() ?? '';
+const noteOf = (node: NodeModel): string => node.findFeatureByType('note').at(0)?.getText() ?? '';
 
 describe('XMindImporter escaping', () => {
   test('XML format: escapes the map name and keeps notes containing "]]>"', async () => {

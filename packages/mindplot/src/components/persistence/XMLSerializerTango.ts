@@ -24,7 +24,7 @@ import NodeModel from '../model/NodeModel';
 import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import ModelCodeName from './ModelCodeName';
-import FeatureType from '../model/FeatureType';
+import FeatureModel from '../model/FeatureModel';
 import { legacyIconEmoji } from '../import/support/LegacyIconMap';
 import {
   isFontStyleType,
@@ -679,8 +679,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
           }
 
           // Create a new element ....
-          const featureType = elem.tagName as FeatureType;
-          let feature = FeatureModelFactory.createModel(featureType, attributes);
+          const featureType = elem.tagName;
+          let feature: FeatureModel = FeatureModelFactory.createModel(featureType, attributes);
 
           // Migrate icons to emoji ...
           if (featureType === 'icon') {
@@ -688,7 +688,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
             const emoji = XMLSerializerTango.emojiEquivalent(svgIcon);
             if (emoji) {
               attributes.id = emoji;
-              feature = FeatureModelFactory.createModel('eicon' as FeatureType, attributes);
+              feature = FeatureModelFactory.createModel('eicon', attributes);
             }
           }
 

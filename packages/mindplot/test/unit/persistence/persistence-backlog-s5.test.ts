@@ -18,7 +18,6 @@
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
 import NoteModel from '../../../src/components/model/NoteModel';
-import LinkModel from '../../../src/components/model/LinkModel';
 import FeatureModel from '../../../src/components/model/FeatureModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
 import XMLSerializerBeta from '../../../src/components/persistence/XMLSerializerBeta';
@@ -36,8 +35,7 @@ const load = (xml: string): Mindmap => {
 
 const node = (mindmap: Mindmap, id: number): NodeModel => mindmap.findNodeById(id) as NodeModel;
 
-const noteOf = (topic: NodeModel): NoteModel =>
-  topic.getFeatures().find((f) => f.getType() === 'note') as NoteModel;
+const noteOf = (topic: NodeModel): NoteModel => topic.findFeatureByType('note')[0];
 
 beforeEach(() => {
   jest.spyOn(console, 'warn').mockImplementation(() => undefined);
@@ -252,7 +250,7 @@ describe('node model (BL-17, BL-75)', () => {
 
 describe('feature attributes (BL-14)', () => {
   test('LinkModel maps url and urlType to its setters', () => {
-    const link = FeatureModelFactory.createModel('link', { url: 'http://a.com' }) as LinkModel;
+    const link = FeatureModelFactory.createModel('link', { url: 'http://a.com' });
     link.setAttributes({ url: 'mailto:me@b.com' });
     expect(link.getUrl()).toBe('mailto:me@b.com');
     expect(link.getAttribute('urlType')).toBe('mail');

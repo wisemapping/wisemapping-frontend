@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureType from './FeatureType';
+import FeatureType, { type FeatureByType } from './FeatureType';
 
 /** Feature attributes as stored in the map XML: attribute name to value. */
 export type FeatureAttributes = Record<string, string>;
@@ -106,6 +106,11 @@ class FeatureModel {
 
   getType(): FeatureType {
     return this._type;
+  }
+
+  /** Narrows the feature to the model class of the given type. */
+  isOfType<T extends FeatureType>(type: T): this is FeatureByType[T] {
+    return this._type === type;
   }
 
   static _nextUUID(): number {

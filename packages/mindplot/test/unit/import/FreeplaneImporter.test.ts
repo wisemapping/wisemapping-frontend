@@ -22,8 +22,6 @@ import XMLSerializerFactory from '../../../src/components/persistence/XMLSeriali
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
 import NoteModel from '../../../src/components/model/NoteModel';
-import LinkModel from '../../../src/components/model/LinkModel';
-import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import ContentType from '../../../src/components/ContentType';
 
 const loadMindmap = (xml: string): Mindmap => {
@@ -34,8 +32,7 @@ const loadMindmap = (xml: string): Mindmap => {
 
 const centralOf = (mindmap: Mindmap): NodeModel => mindmap.getCentralTopic() as NodeModel;
 
-const noteOf = (node: NodeModel): NoteModel | undefined =>
-  node.findFeatureByType('note')[0] as NoteModel | undefined;
+const noteOf = (node: NodeModel): NoteModel | undefined => node.findFeatureByType('note')[0];
 
 describe('FreeplaneImporter big notes', () => {
   test('a note over 100 KB is truncated, it does not fail the import', async () => {
@@ -97,17 +94,13 @@ describe('FreeplaneImporter central topic', () => {
 
     const central = centralOf(mindmap);
     expect(noteOf(central)?.getText()).toContain('Root note');
-    expect(
-      central.findFeatureByType('eicon').map((icon) => (icon as EmojiIconModel).getIconType()),
-    ).toEqual(['💡']);
-    expect((central.findFeatureByType('link')[0] as LinkModel | undefined)?.getUrl()).toBe(
-      'https://example.com/root',
-    );
+    expect(central.findFeatureByType('eicon').map((icon) => icon.getIconType())).toEqual(['💡']);
+    expect(central.findFeatureByType('link').at(0)?.getUrl()).toBe('https://example.com/root');
   });
 });
 
 const iconsOf = (node: NodeModel): string[] =>
-  node.findFeatureByType('eicon').map((icon) => (icon as EmojiIconModel).getIconType());
+  node.findFeatureByType('eicon').map((icon) => icon.getIconType());
 
 describe('FreeplaneImporter legacy WiseMapping icons', () => {
   // Maps exported by older WiseMapping versions, then saved by Freeplane, keep the legacy ids.

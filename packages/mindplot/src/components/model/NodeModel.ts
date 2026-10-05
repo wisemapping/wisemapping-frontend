@@ -21,7 +21,7 @@ import INodeModel, { NodeModelType, NodePropKey, NodeProps } from './INodeModel'
 import FeatureModelFactory from './FeatureModelFactory';
 import FeatureModel, { FeatureAttributes } from './FeatureModel';
 import Mindmap from './Mindmap';
-import FeatureType from './FeatureType';
+import FeatureType, { type FeatureByType } from './FeatureType';
 
 class NodeModel extends INodeModel {
   private _properties: Partial<NodeProps>;
@@ -50,7 +50,7 @@ class NodeModel extends INodeModel {
    * @param attributes
    * @return {mindplot.model.FeatureModel} the created feature model
    */
-  createFeature(type: FeatureType, attributes: FeatureAttributes): FeatureModel {
+  createFeature<T extends FeatureType>(type: T, attributes: FeatureAttributes): FeatureByType[T] {
     return FeatureModelFactory.createModel(type, attributes);
   }
 
@@ -78,9 +78,9 @@ class NodeModel extends INodeModel {
    * @param {String} type the feature type, e.g. icon or link
    * @throws will throw an error if type is null or undefined
    */
-  findFeatureByType(type: string): FeatureModel[] {
+  findFeatureByType<T extends FeatureType>(type: T): FeatureByType[T][] {
     $assert(type, 'type can not be null');
-    return this._features.filter((feature) => feature.getType() === type);
+    return this._features.filter((feature): feature is FeatureByType[T] => feature.isOfType(type));
   }
 
   /**
