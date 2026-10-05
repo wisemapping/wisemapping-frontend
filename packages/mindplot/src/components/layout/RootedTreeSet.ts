@@ -192,22 +192,6 @@ class RootedTreeSet {
     return result!;
   }
 
-  private _find(id: number, parent: Node): Node {
-    if (parent.getId() === id) {
-      return parent;
-    }
-
-    let result: Node | null = null;
-    const children = parent._children;
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      result = this._find(id, child);
-      if (result) break;
-    }
-
-    return result!;
-  }
-
   /**
    * @param node
    * @throws will throw an error if nodeId is null or undefined
@@ -473,9 +457,13 @@ class RootedTreeSet {
     // direct descendants of the root that do not contain the node and are on the same side
     // and on the direction of the offset
     const rootNode = this.getRootNode(node);
-    const branches = this.getChildren(rootNode).filter((child) => this._find(node.getId(), child));
 
-    const branch = branches[0];
+    // The branch of the root that holds the node: its ancestor right under the root.
+    let branch = node;
+    while (branch._parent && branch._parent !== rootNode) {
+      branch = branch._parent;
+    }
+
     const result = this.getSiblings(branch).filter((sibling) => {
       const sameSide =
         node.getPosition().x > rootNode.getPosition().x

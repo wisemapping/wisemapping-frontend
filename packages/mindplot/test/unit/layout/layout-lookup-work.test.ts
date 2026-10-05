@@ -18,6 +18,7 @@
 
 import ChangeEvent from '../../../src/components/layout/ChangeEvent';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
+import Node from '../../../src/components/layout/Node';
 import RootedTreeSet from '../../../src/components/layout/RootedTreeSet';
 
 /*
@@ -30,12 +31,8 @@ const NODES = 500;
 const SIZE = { width: 60, height: 20 };
 const ORIGIN = { x: 0, y: 0 };
 
-/** The tree visits of RootedTreeSet's private depth-first search. */
-const spyOnTreeVisits = () =>
-  jest.spyOn(
-    RootedTreeSet.prototype as unknown as { _find: (id: number, node: unknown) => unknown },
-    '_find',
-  );
+/** The ids of layout nodes read: a search of the tree reads the id of each node it visits. */
+const spyOnTreeVisits = () => jest.spyOn(Node.prototype, 'getId');
 
 describe('Layout lookups', () => {
   afterEach(() => {
@@ -53,8 +50,8 @@ describe('Layout lookups', () => {
       expect(manager.find(id).getId()).toBe(id);
     }
 
-    // Before: 125,250 visits, the depth of each node.
-    expect(visits).not.toHaveBeenCalled();
+    // Before: 125,250 visits, the depth of each node. Now only the test's own getId.
+    expect(visits).toHaveBeenCalledTimes(NODES);
   });
 
   it('keeps finding the nodes that are reachable, and only those', () => {
