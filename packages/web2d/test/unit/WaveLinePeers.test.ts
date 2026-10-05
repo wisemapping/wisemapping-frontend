@@ -195,6 +195,30 @@ describe('NeuronLinePeer', () => {
     const pts = parsePathPoints(d(draw(() => new NeuronLinePeer(), 0, 0, 200, 0)));
     expect(pts[pts.length - 1]).toEqual([200, 0]);
   });
+
+  // BL5-74: the seed came from the length, so dragging one end reshuffled the whole shape. The
+  // seed is now fixed once both ends are set: the same lateral offsets, stretched.
+  it('BL5-74: keeps its shape when one end moves (drag)', () => {
+    // The segment ends (every third point after M) of a horizontal line are its lateral offsets.
+    const offsets = (peer: WavePeer) =>
+      parsePathPoints(d(peer))
+        .filter((_p, i) => i % 3 === 0)
+        .slice(1, -1)
+        .map(([, y]) => y);
+    // 200 and 210 units both draw 6 segments with the maximum amplitude.
+    const peer = draw(() => new NeuronLinePeer(), 0, 0, 200, 0);
+    const before = offsets(peer);
+    peer.setTo(210, 0);
+    expect(offsets(peer)).toEqual(before);
+  });
+
+  it('BL5-74: a static render does not depend on how its ends were set', () => {
+    const direct = d(draw(() => new NeuronLinePeer(), 10, 20, 210, 120));
+    const peer = new NeuronLinePeer();
+    peer.setTo(210, 120);
+    peer.setFrom(10, 20);
+    expect(d(peer)).toBe(direct);
+  });
 });
 
 describe.each([

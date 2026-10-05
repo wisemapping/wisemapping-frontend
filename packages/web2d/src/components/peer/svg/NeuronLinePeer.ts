@@ -43,6 +43,13 @@ class NeuronLinePeer extends ElementPeer {
 
   private _y2: number;
 
+  // Whether setFrom and setTo have been called: the seed is fixed on the first draw with both.
+  private _hasFrom: boolean;
+
+  private _hasTo: boolean;
+
+  private _seed: number | null;
+
   constructor() {
     const svgElement = window.document.createElementNS(
       NeuronLinePeer.svgNamespace,
@@ -64,6 +71,9 @@ class NeuronLinePeer extends ElementPeer {
     this._y1 = 0;
     this._x2 = 0;
     this._y2 = 0;
+    this._hasFrom = false;
+    this._hasTo = false;
+    this._seed = null;
 
     this._applyStroke();
   }
@@ -109,6 +119,7 @@ class NeuronLinePeer extends ElementPeer {
     const changed = this._x1 !== x || this._y1 !== y;
     this._x1 = x;
     this._y1 = y;
+    this._hasFrom = true;
     if (changed) {
       this._updatePath();
     }
@@ -118,6 +129,7 @@ class NeuronLinePeer extends ElementPeer {
     const changed = this._x2 !== x || this._y2 !== y;
     this._x2 = x;
     this._y2 = y;
+    this._hasTo = true;
     if (changed) {
       this._updatePath();
     }
@@ -173,7 +185,7 @@ class NeuronLinePeer extends ElementPeer {
 
     const steps = Math.min(18, Math.max(6, Math.round(distance / 35)));
     const amplitude = Math.min(60, distance * 0.35);
-    const jitterSeed = this._pseudoSeed();
+    const jitterSeed = this._seedFor();
     const pathSegments: string[] = [];
     pathSegments.push(`M${NeuronLinePeer._pointToStr(this._x1, this._y1)}`);
 
@@ -187,8 +199,9 @@ class NeuronLinePeer extends ElementPeer {
       const lateral =
         Math.sin(t * Math.PI * (1.5 + jitterSeed * 0.5) + jitterSeed * 6) *
         amplitude *
-        (0.2 + this._rand(i, 0.6) * 0.6);
-      const forward = (Math.cos(t * Math.PI * 2 + this._rand(i, 1) * 2) - 0.5) * amplitude * 0.08;
+        (0.2 + this._rand(jitterSeed, i, 0.6) * 0.6);
+      const forward =
+        (Math.cos(t * Math.PI * 2 + this._rand(jitterSeed, i, 1) * 2) - 0.5) * amplitude * 0.08;
 
       const spikePhase = (Math.sin(t * Math.PI * 4 + jitterSeed * 10) + 1) / 2;
       const spike = spikePhase > 0.8 ? (spikePhase - 0.8) * 5 : 0;
@@ -200,12 +213,21 @@ class NeuronLinePeer extends ElementPeer {
 
       const ctrlOffset = distance / steps / 3;
       const ctrl1 = {
-        x: prevPoint.x + unitX * ctrlOffset + perpX * this._rand(i * 2, 0.4) * ctrlOffset,
-        y: prevPoint.y + unitY * ctrlOffset + perpY * this._rand(i * 2 + 1, 0.4) * ctrlOffset,
+        x:
+          prevPoint.x +
+          unitX * ctrlOffset +
+          perpX * this._rand(jitterSeed, i * 2, 0.4) * ctrlOffset,
+        y:
+          prevPoint.y +
+          unitY * ctrlOffset +
+          perpY * this._rand(jitterSeed, i * 2 + 1, 0.4) * ctrlOffset,
       };
       const ctrl2 = {
-        x: targetX - unitX * ctrlOffset + perpX * this._rand(i * 3, 0.4) * ctrlOffset,
-        y: targetY - unitY * ctrlOffset + perpY * this._rand(i * 3 + 1, 0.4) * ctrlOffset,
+        x: targetX - unitX * ctrlOffset + perpX * this._rand(jitterSeed, i * 3, 0.4) * ctrlOffset,
+        y:
+          targetY -
+          unitY * ctrlOffset +
+          perpY * this._rand(jitterSeed, i * 3 + 1, 0.4) * ctrlOffset,
       };
 
       const adjustedTargetX = last ? targetX : targetX + perpX * spike;
@@ -221,16 +243,23 @@ class NeuronLinePeer extends ElementPeer {
   }
 
   /**
-   * Seeded from the length, not the absolute ends, so the shape does not reshuffle when the whole
-   * line moves (W-STALEPATH).
+   * The seed belongs to the line: it comes from the length of its first draw with both ends set,
+   * and is then kept. So moving the whole line, or dragging one end, stretches the same shape
+   * instead of reshuffling it (W-STALEPATH, BL5-74), and a static render stays deterministic.
    */
-  private _pseudoSeed(): number {
-    const seedValue = Math.hypot(this._x2 - this._x1, this._y2 - this._y1) * 0.37;
-    return (Math.sin(seedValue) + 1) / 2;
+  private _seedFor(): number {
+    if (this._seed !== null) {
+      return this._seed;
+    }
+    const length = Math.hypot(this._x2 - this._x1, this._y2 - this._y1);
+    const seed = (Math.sin(length * 0.37) + 1) / 2;
+    if (this._hasFrom && this._hasTo) {
+      this._seed = seed;
+    }
+    return seed;
   }
 
-  private _rand(iteration: number, amplitude: number): number {
-    const seed = this._pseudoSeed();
+  private _rand(seed: number, iteration: number, amplitude: number): number {
     const value = Math.sin(seed * 100 + iteration * 7.13) * 43758.5453;
     return (value - Math.floor(value)) * 2 * amplitude - amplitude;
   }
