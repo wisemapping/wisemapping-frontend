@@ -79,7 +79,7 @@ class KeyboardManager {
       this.active = owner;
     }
     shortcuts.forEach((shortcut) => {
-      ownShortcuts!.set(this.normalizeShortcut(shortcut), callback);
+      ownShortcuts.set(this.normalizeShortcut(shortcut), callback);
     });
   }
 
