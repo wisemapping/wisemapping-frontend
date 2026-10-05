@@ -16,6 +16,12 @@
  *   limitations under the License.
  */
 
+jest.mock('../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
+
+import { buildDesigner } from './commands/designer-harness';
 import CommandContext from '../../src/components/CommandContext';
 import Designer from '../../src/components/Designer';
 import DesignerModel from '../../src/components/DesignerModel';
@@ -85,6 +91,30 @@ describe('DesignerModel topic lookups', () => {
     expect(calls).toBe(TOPICS);
   });
 
+  // BL5-98: the deep-link focus asks for a topic on every layout until it exists.
+  it('answers a miss without scanning the topics', () => {
+    const { mindmap, model, topics } = fill();
+    const getId = topics.map((topic) => jest.spyOn(topic, 'getId'));
+    const getModel = topics.map((topic) => jest.spyOn(topic, 'getModel'));
+
+    expect(model.findTopicById(TOPICS + 1)).toBeUndefined();
+    expect(model.findTopicByModel(mindmap.createNode('MainTopic', TOPICS + 2))).toBeUndefined();
+
+    // Before: a scan, 500 calls each.
+    expect(getId.reduce((sum, spy) => sum + spy.mock.calls.length, 0)).toBe(0);
+    expect(getModel.reduce((sum, spy) => sum + spy.mock.calls.length, 0)).toBe(0);
+  });
+
+  it('finds a topic under its new id once reindexed', () => {
+    const { model, topics } = fill();
+    const topic = topics[3];
+    topic.id = TOPICS + 10;
+    model.reindexTopic(topic, 3);
+
+    expect(model.findTopicById(TOPICS + 10)).toBe(topic);
+    expect(model.findTopicById(3)).toBeUndefined();
+  });
+
   it('finds topics by ids in the order the model keeps them', () => {
     const { model, topics } = fill();
     const found = model.findTopicsByIds([40, 3, 12, 9999]);
@@ -139,5 +169,18 @@ describe('DesignerModel topic lookups', () => {
     expect(() => context.findTopics([3, 1000])).toThrow('Could not find topic');
     // A repeated id is not a second topic, as before.
     expect(() => context.findTopics([3, 3])).toThrow('Could not find topic');
+  });
+});
+
+describe('Topic.setId', () => {
+  it('moves the topic to its new id in the designer lookups', async () => {
+    const { designer, topic } = await buildDesigner();
+    const floating = topic(5);
+
+    floating.setId(42);
+
+    expect(designer.getModel().findTopicById(42)).toBe(floating);
+    expect(designer.getModel().findTopicById(5)).toBeUndefined();
+    expect(designer.getModel().findTopicByModel(floating.getModel())).toBe(floating);
   });
 });

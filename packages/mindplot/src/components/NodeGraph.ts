@@ -26,6 +26,7 @@ import PositionType from './PositionType';
 import CanvasElement from './CanvasElement';
 import type TopicEventDispatcher from './TopicEventDispatcher';
 import type Designer from './Designer';
+import type Topic from './Topic';
 
 type Web2DListener = (event: Event, detail?: unknown) => void;
 
@@ -78,7 +79,12 @@ abstract class NodeGraph implements CanvasElement {
 
   setId(id: number) {
     $assert(typeof id === 'number', `id is not a number:${id}`);
+    const previousId = this.getId();
     this.getModel().setId(id);
+    // The designer finds topics by id ...
+    this.getDesigner()
+      ?.getModel()
+      .reindexTopic(this as unknown as Topic, previousId);
   }
 
   protected _set2DElement(elem2d: Group) {
