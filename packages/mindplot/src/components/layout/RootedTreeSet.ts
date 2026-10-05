@@ -401,15 +401,18 @@ class RootedTreeSet {
   }
 
   /**
+   * Moves `node` to `position`, and its descendants along with it, by what it really moved
+   * (Node.setPosition ignores a move of half a pixel or less).
    * @param node
    * @param position
    */
   updateBranchPosition(node: Node, position: PositionType): void {
     const oldPos = node.getPosition();
     node.setPosition(position);
+    const newPos = node.getPosition();
 
-    const xOffset = oldPos.x - position.x;
-    const yOffset = oldPos.y - position.y;
+    const xOffset = newPos.x - oldPos.x;
+    const yOffset = newPos.y - oldPos.y;
 
     const children = this.getChildren(node);
     children.forEach((child) => {
