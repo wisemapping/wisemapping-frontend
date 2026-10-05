@@ -145,6 +145,70 @@ describe('ImportDialog', () => {
     });
   });
 
+  describe('a second file picked while the first is still importing', () => {
+    // One pending import per file picked, settled by the test in any order.
+    const pendingImports = () => {
+      const imports: { resolve: (content: string) => void; reject: (e: Error) => void }[] = [];
+      mockCreateImporter.mockImplementation(() => ({
+        import: () =>
+          new Promise<string>((resolve, reject) => {
+            imports.push({ resolve, reject });
+          }),
+      }));
+      return imports;
+    };
+
+    const pickBoth = async (): Promise<void> => {
+      selectFile(new File(['<map/>'], 'alpha.wxml', { type: 'text/xml' }));
+      await waitFor(() => expect(mockCreateImporter).toHaveBeenCalledTimes(1));
+      selectFile(new File(['<map/>'], 'beta.wxml', { type: 'text/xml' }));
+      await waitFor(() => expect(mockCreateImporter).toHaveBeenCalledTimes(2));
+    };
+
+    test('is not overwritten by the slower first import', async () => {
+      const imports = pendingImports();
+      mockImportMap.mockResolvedValue(1);
+      renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+
+      await pickBoth();
+      await act(async () => imports[1].resolve('<map name="beta"/>'));
+      await act(async () => imports[0].resolve('<map name="alpha"/>'));
+
+      fireEvent.submit(screen.getByRole('button', { name: 'Create' }).closest('form')!);
+      await waitFor(() => expect(mockImportMap).toHaveBeenCalled());
+      expect(mockImportMap.mock.calls[0][0]).toMatchObject({ content: '<map name="beta"/>' });
+    });
+
+    test('does not show the error of the first import', async () => {
+      const imports = pendingImports();
+      renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+
+      await pickBoth();
+      await act(async () => imports[1].resolve('<map name="beta"/>'));
+      const error = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+      await act(async () => imports[0].reject(new Error('alpha is broken')));
+
+      expect(screen.queryByRole('alert')).toBeNull();
+      error.mockRestore();
+    });
+
+    test('is not saved with the first file while it is still loading', async () => {
+      const imports = pendingImports();
+      renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+
+      selectFile(new File(['<map/>'], 'alpha.wxml', { type: 'text/xml' }));
+      await waitFor(() => expect(mockCreateImporter).toHaveBeenCalledTimes(1));
+      await act(async () => imports[0].resolve('<map name="alpha"/>'));
+      selectFile(new File(['<map/>'], 'beta.wxml', { type: 'text/xml' }));
+      // beta is picked but not imported yet: there is nothing to save.
+      fireEvent.submit(screen.getByRole('button', { name: 'Create' }).closest('form')!);
+
+      // The mutation calls the client asynchronously.
+      await act(() => new Promise((resolve) => setTimeout(resolve, 50)));
+      expect(mockImportMap).not.toHaveBeenCalled();
+    });
+  });
+
   test('the description field is controlled from the start', () => {
     renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
 

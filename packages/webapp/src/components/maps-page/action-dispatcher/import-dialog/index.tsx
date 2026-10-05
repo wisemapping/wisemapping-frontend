@@ -51,6 +51,8 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
   const [model, setModel] = React.useState<ImportModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
   const [errorFile, setErrorFile] = React.useState<ErrorFile>({ error: false, message: '' });
+  // Counts the files picked: a read or import started for an earlier file is stale and ignored.
+  const fileRequest = React.useRef(0);
   const intl = useIntl();
 
   const mutation = useMutation<number, ErrorInfo, ImportModel>({
@@ -119,8 +121,16 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
     if (files) {
       const file = files[0];
       const extensionFile = file.name.split('.').pop()?.toLowerCase();
+      const request = ++fileRequest.current;
+      const isStale = () => request !== fileRequest.current;
+      // The previous file is no longer the one to save, even before this one is read.
+      setModel((current) => ({ ...current, content: undefined }));
+
       // Closure to capture the file information.
       reader.onload = (event) => {
+        if (isStale()) {
+          return;
+        }
         setErrorFile({ error: false, message: '' });
 
         // Forget the previous file and suggest its name as the title. The updates are functional
@@ -163,9 +173,15 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
           importer
             .import(title, model.description)
             .then((content) => {
-              setModel((current) => ({ ...current, content }));
+              if (!isStale()) {
+                setModel((current) => ({ ...current, content }));
+              }
             })
-            .catch(showImportError);
+            .catch((e: unknown) => {
+              if (!isStale()) {
+                showImportError(e);
+              }
+            });
         } catch (e) {
           showImportError(e);
         }
