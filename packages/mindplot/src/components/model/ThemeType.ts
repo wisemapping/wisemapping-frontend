@@ -15,6 +15,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-type ThemeType = 'classic' | 'prism' | 'robot' | 'sunrise' | 'ocean' | 'aurora' | 'retro';
+export const THEME_TYPES = [
+  'classic',
+  'prism',
+  'robot',
+  'sunrise',
+  'ocean',
+  'aurora',
+  'retro',
+] as const;
+
+type ThemeType = (typeof THEME_TYPES)[number];
 
 export default ThemeType;

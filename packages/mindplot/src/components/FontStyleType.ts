@@ -15,4 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-export type FontStyleType = 'italic' | 'normal';
+export const FONT_STYLE_TYPES = ['italic', 'normal'] as const;
+
+export type FontStyleType = (typeof FONT_STYLE_TYPES)[number];

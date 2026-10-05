@@ -27,8 +27,16 @@ import ContentType from '../ContentType';
 
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
 
-export type TopicShapeType =
-  'rectangle' | 'rounded rectangle' | 'elipse' | 'line' | 'none' | 'image';
+export const TOPIC_SHAPE_TYPES = [
+  'rectangle',
+  'rounded rectangle',
+  'elipse',
+  'line',
+  'none',
+  'image',
+] as const;
+
+export type TopicShapeType = (typeof TOPIC_SHAPE_TYPES)[number];
 
 /** The properties a node model stores, with the type of each one. */
 export interface NodeProps {

@@ -17,7 +17,9 @@
  */
 import type { FontWeightType as TextWeight } from '@wisemapping/web2d';
 
-export type FontWeightType = 'bold' | 'normal' | '600';
+export const FONT_WEIGHT_TYPES = ['bold', 'normal', '600'] as const;
+
+export type FontWeightType = (typeof FONT_WEIGHT_TYPES)[number];
 
 /** The weight a topic text is drawn with: the theme weight '600' is drawn bold. */
 export const toTextWeight = (weight: FontWeightType): TextWeight =>

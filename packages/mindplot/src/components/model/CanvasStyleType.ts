@@ -16,7 +16,9 @@
  *   limitations under the License.
  */
 
-export type BackgroundPatternType = 'solid' | 'grid' | 'dots';
+export const BACKGROUND_PATTERN_TYPES = ['solid', 'grid', 'dots'] as const;
+
+export type BackgroundPatternType = (typeof BACKGROUND_PATTERN_TYPES)[number];
 
 export type CanvasStyleType = {
   backgroundColor?: string;
