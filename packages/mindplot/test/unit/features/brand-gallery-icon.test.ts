@@ -23,7 +23,8 @@
  */
 import { Image, Text } from '@wisemapping/web2d';
 import { buildDesigner } from '../commands/designer-harness';
-import { BRAND_ICON_PATHS, brandIconHref } from '../../../src/components/ImageSVGFeature';
+import { brandIconHref } from '../../../src/components/ImageSVGFeature';
+import { BRAND_ICON_PATHS } from '../../../src/components/GalleryIconData';
 import Topic from '../../../src/components/Topic';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({

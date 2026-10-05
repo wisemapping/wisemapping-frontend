@@ -120,6 +120,7 @@ export { LineType } from './components/ConnectionLine';
 export { ContentType } from './components/ContentType';
 export { default as INodeModel } from './components/model/INodeModel';
 export { default as SvgIconModel } from './components/model/SvgIconModel';
+export { GALLERY_ICON_NAMES } from './components/GalleryIconData';
 export { default as Relationship } from './components/Relationship';
 export type { default as ThemeType } from './components/model/ThemeType';
 export type { ThemeVariant } from './components/theme/Theme';

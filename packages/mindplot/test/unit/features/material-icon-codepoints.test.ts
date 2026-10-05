@@ -20,7 +20,7 @@ import path from 'path';
 import {
   BRAND_ICON_PATHS,
   MATERIAL_ICON_CODEPOINTS,
-} from '../../../src/components/ImageSVGFeature';
+} from '../../../src/components/GalleryIconData';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
