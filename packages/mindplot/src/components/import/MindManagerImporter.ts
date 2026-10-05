@@ -631,11 +631,12 @@ class MindManagerImporter extends Importer {
       topic.notes = notesData.getAttribute('PreviewPlainText') || '';
     }
 
-    // Parse hyperlink
+    // Parse hyperlink. A link to a topic of the map (#xpointer(...ap:Topic[@OId=...])) can not be
+    // opened from WiseMapping: it is skipped.
     const hyperlinkElement = this.findChildByTagName(topicElement, 'Hyperlink');
-    if (hyperlinkElement) {
-      topic.hyperlink =
-        hyperlinkElement.getAttribute('URL') || hyperlinkElement.getAttribute('Url') || '';
+    const url = hyperlinkElement?.getAttribute('URL') || hyperlinkElement?.getAttribute('Url');
+    if (url && !url.startsWith('#')) {
+      topic.hyperlink = url;
     }
 
     // Parse icons: <Icon Name>, or the stock icons of IconsGroup/Icons and the task priority

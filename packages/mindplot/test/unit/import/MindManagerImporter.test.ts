@@ -342,6 +342,25 @@ const schemaMap = (topics: string, rest = ''): string =>
   ${rest}
 </ap:Map>`;
 
+describe('MindManagerImporter hyperlinks', () => {
+  test('skips the links to a topic of the map, which can not be opened as a URL', async () => {
+    const mindManager = schemaMap(`
+        <ap:Topic OId="a"><ap:Text PlainText="Web"/>
+          <ap:Hyperlink Url="https://www.microsoft.com" Title="Microsoft" Absolute="false"/>
+        </ap:Topic>
+        <ap:Topic OId="b"><ap:Text PlainText="Internal"/>
+          <ap:Hyperlink Url="#xpointer(/descendant-or-self::ap:Topic[@OId='a'])" Absolute="false"/>
+        </ap:Topic>`);
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    expect((findByText(mindmap, 'Web').findFeatureByType('link')[0] as LinkModel).getUrl()).toBe(
+      'https://www.microsoft.com',
+    );
+    expect(findByText(mindmap, 'Internal').findFeatureByType('link')).toEqual([]);
+  });
+});
+
 describe('MindManagerImporter XHTML notes', () => {
   test('imports the XHTML body of the note as sanitized HTML', async () => {
     const mindManager = schemaMap(`
