@@ -56,7 +56,8 @@ describe('WorkspaceElement._initialize (attribute bag)', () => {
   it('splits multi-argument strings', () => {
     const rect = new Rect(0, { stroke: '2 dot blue' });
     expect(rect.peer._native.getAttribute('stroke-width')).toBe('2');
-    expect(rect.peer._native.getAttribute('stroke-dasharray')).toBe('1 8');
+    // The dot dash scales with the width of 2 (BL5-77).
+    expect(rect.peer._native.getAttribute('stroke-dasharray')).toBe('2 16');
     expect(rect.peer._native.getAttribute('stroke')).toBe('blue');
   });
 

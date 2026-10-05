@@ -43,6 +43,9 @@ class ElementPeer {
   // Opacity set with setOpacity(). setVisibility() shows the element at this opacity.
   private _opacity: number;
 
+  // The dash array last written from the style table, to rescale it when the width changes.
+  private _tableDash: string | null;
+
   constructor(svgElement: SVGElement) {
     this._native = svgElement;
     this._size = { width: 1, height: 1 };
@@ -51,6 +54,7 @@ class ElementPeer {
     this._parent = null;
     this._stokeStyle = null;
     this._opacity = 1;
+    this._tableDash = null;
   }
 
   setChildren(children: ElementPeer[]): void {
@@ -225,24 +229,63 @@ class ElementPeer {
         throw new Error(`Unsupported style: ${style}`);
       }
       this._stokeStyle = style;
-      const dashArray = ElementPeer.DASH_ARRAYS[style as StrokeStyle];
-      // Solid removes the attributes: an empty value is invalid SVG.
-      if (dashArray.length > 0) {
-        this.attr('stroke-dasharray', dashArray.join(' '));
-      } else {
-        this.removeAttr('stroke-dasharray');
-      }
+      this.writeTableDash(style as StrokeStyle);
       const lineCap = ElementPeer.DASH_LINE_CAPS[style as StrokeStyle];
       if (lineCap) {
         this.attr('stroke-linecap', lineCap);
       } else {
         this.removeAttr('stroke-linecap');
       }
+    } else if ($defined(width)) {
+      this.rescaleTableDash();
     }
 
     if ($defined(opacity)) {
       this.attr('stroke-opacity', String(opacity));
     }
+  }
+
+  /** The stroke width the dash lengths scale with: the written one, or the SVG default of 1. */
+  private dashScale(): number {
+    const width = Number.parseFloat(this._native.getAttribute('stroke-width') ?? '');
+    return width > 0 ? width : 1;
+  }
+
+  /** Writes the style's dash array, scaled with the stroke width. Solid removes it. */
+  private writeTableDash(style: StrokeStyle): void {
+    const dashArray = ElementPeer.dashArray(style, this.dashScale());
+    // Solid removes the attributes: an empty value is invalid SVG.
+    if (dashArray) {
+      this.attr('stroke-dasharray', dashArray);
+    } else {
+      this.removeAttr('stroke-dasharray');
+    }
+    this._tableDash = dashArray || null;
+  }
+
+  /**
+   * A new width rescales the dash array written from the style table (BL5-77). A dash written by
+   * other means (CurvedLine and Arrow setDashed) is left alone.
+   */
+  private rescaleTableDash(): void {
+    const style = this._stokeStyle as StrokeStyle | null;
+    if (
+      style &&
+      this._tableDash !== null &&
+      this._native.getAttribute('stroke-dasharray') === this._tableDash
+    ) {
+      this.writeTableDash(style);
+    }
+  }
+
+  /**
+   * The dash array of a style as an attribute value ('' for solid). The table lengths are for a
+   * stroke width of 1 and are multiplied by the width, so a thick dashed stroke keeps the same
+   * look instead of closing its gaps (BL5-77).
+   */
+  static dashArray(style: StrokeStyle, strokeWidth: number): string {
+    const scale = strokeWidth > 0 ? strokeWidth : 1;
+    return ElementPeer.DASH_ARRAYS[style].map((length) => formatLength(length * scale)).join(' ');
   }
 
   /**
@@ -328,7 +371,7 @@ class ElementPeer {
     this.writeStyle('cursor', type);
   }
 
-  /** The single dash table, shared by every element type. */
+  /** The single dash table, shared by every element type, for a stroke width of 1. */
   static readonly DASH_ARRAYS: Readonly<Record<StrokeStyle, readonly number[]>> = {
     solid: [],
     dot: [1, 8],

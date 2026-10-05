@@ -97,10 +97,35 @@ describe.each(KINDS)('%s', (_name, create) => {
     ['dot', '1 8'],
     ['longdash', '10 5'],
     ['dashdot', '10 5 1 5'],
-  ])('style %s uses the shared dash array "%s" (W-DASH)', (style, expected) => {
+  ])('style %s uses the shared dash array "%s" at width 1 (W-DASH)', (style, expected) => {
     const peer = create();
-    peer.setStroke(null, style);
+    peer.setStroke(1, style);
     expect(peer._native.getAttribute('stroke-dasharray')).toBe(expected);
+  });
+
+  // BL5-77: the dash lengths are for width 1 and scale with the drawn width.
+  it.each([
+    ['dash', 2, '10 10'],
+    ['dash', 4, '20 20'],
+    ['dot', 2, '2 16'],
+    ['dot', 4, '4 32'],
+    ['longdash', 2, '20 10'],
+    ['longdash', 4, '40 20'],
+    ['dashdot', 2, '20 10 2 10'],
+    ['dashdot', 4, '40 20 4 20'],
+  ])('BL5-77: style %s at width %d draws "%s"', (style, width, expected) => {
+    const peer = create();
+    peer.setStroke(width, style);
+    expect(peer._native.getAttribute('stroke-dasharray')).toBe(expected);
+  });
+
+  it('BL5-77: a width set after the style rescales the dash; below 1 it draws at 1', () => {
+    const peer = create();
+    peer.setStroke(1, 'dash');
+    peer.setStroke(4);
+    expect(peer._native.getAttribute('stroke-dasharray')).toBe('20 20');
+    peer.setStroke(0.5);
+    expect(peer._native.getAttribute('stroke-dasharray')).toBe('5 5');
   });
 
   it('a dash pattern applies when the style is solid, and solid clears it', () => {

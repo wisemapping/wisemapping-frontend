@@ -142,13 +142,14 @@ class HeartbeatLinePeer extends ElementPeer {
     this.attr('stroke-opacity', this._strokeOpacity.toString());
     this.attr('stroke', this._strokeColor);
 
+    // The table dash scales with the drawn width (BL5-77).
     const dashArray =
       this._strokeStyle && this._strokeStyle !== 'solid'
-        ? ElementPeer.DASH_ARRAYS[this._strokeStyle as StrokeStyle]
+        ? ElementPeer.dashArray(this._strokeStyle as StrokeStyle, Math.max(1, this._strokeWidth))
         : undefined;
 
-    if (dashArray && dashArray.length > 0) {
-      this.attr('stroke-dasharray', dashArray.join(' '));
+    if (dashArray) {
+      this.attr('stroke-dasharray', dashArray);
     } else if (this._dashPattern) {
       this.attr('stroke-dasharray', this._dashPattern);
     } else {

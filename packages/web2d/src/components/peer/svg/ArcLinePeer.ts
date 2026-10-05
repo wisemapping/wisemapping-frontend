@@ -66,7 +66,8 @@ class ArcLinePeer extends ElementPeer {
   }
 
   setStrokeWidth(width: number): void {
-    this.attr('stroke-width', String(width));
+    // Through setStroke, so a dash from the style table is rescaled (BL5-77).
+    this.setStroke(width);
   }
 
   setOrientation(orientation: 'horizontal' | 'vertical'): void {

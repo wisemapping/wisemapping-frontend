@@ -30,6 +30,9 @@ import ElipsePeer from '../../src/components/peer/svg/ElipsePeer';
 import StraightLinePeer from '../../src/components/peer/svg/StraightPeer';
 import PolyLinePeer from '../../src/components/peer/svg/PolyLinePeer';
 import CurvedLinePeer from '../../src/components/peer/svg/CurvedLinePeer';
+import ArcLinePeer from '../../src/components/peer/svg/ArcLinePeer';
+import ArrowPeer from '../../src/components/peer/svg/ArrowPeer';
+import NeuronLinePeer from '../../src/components/peer/svg/NeuronLinePeer';
 
 const peer = () => new ElementPeer(document.createElementNS('http://www.w3.org/2000/svg', 'rect'));
 const attr = (p: ElementPeer, name: string) => p._native.getAttribute(name);
@@ -82,6 +85,98 @@ describe('ElementPeer stroke', () => {
       rect.setStroke(1, style);
       heartbeat.setStroke(1, style);
       expect(attr(rect, 'stroke-dasharray')).toBe(attr(heartbeat, 'stroke-dasharray'));
+    });
+  });
+
+  // BL5-77: the dash lengths did not scale with the stroke width, so a thick dashed stroke closed
+  // its gaps. The table is for width 1, which renders as before.
+  describe('BL5-77: dash lengths scale with the stroke width', () => {
+    const TABLE: [string, number[]][] = [
+      ['dash', [5, 5]],
+      ['dot', [1, 8]],
+      ['longdash', [10, 5]],
+      ['dashdot', [10, 5, 1, 5]],
+    ];
+    const CASES = TABLE.flatMap(([style, lengths]) =>
+      [1, 2, 4].map((width) => [style, width, lengths.map((l) => l * width).join(' ')]),
+    ) as [string, number, string][];
+
+    it.each(CASES)('style %s at width %d is "%s"', (style, width, expected) => {
+      const p = peer();
+      p.setStroke(width, style);
+      expect(attr(p, 'stroke-dasharray')).toBe(expected);
+      // The same on every element type that uses the shared table.
+      const heartbeat = new HeartbeatLinePeer();
+      heartbeat.setStroke(width, style);
+      expect(attr(heartbeat, 'stroke-dasharray')).toBe(expected);
+      const neuron = new NeuronLinePeer();
+      neuron.setStroke(width, style);
+      expect(attr(neuron, 'stroke-dasharray')).toBe(expected);
+    });
+
+    it.each(CASES)('style %s set first, then width %d, is "%s"', (style, width, expected) => {
+      const p = peer();
+      p.setStroke(1, style);
+      p.setStroke(width);
+      expect(attr(p, 'stroke-dasharray')).toBe(expected);
+    });
+
+    it('width 1 renders exactly the table', () => {
+      TABLE.forEach(([style, lengths]) => {
+        const p = peer();
+        p.setStroke(1, style);
+        expect(attr(p, 'stroke-dasharray')).toBe(lengths.join(' '));
+      });
+    });
+
+    it('a style without a width scales with the width already written, or 1', () => {
+      const p = peer();
+      p.setStroke(null, 'dash');
+      expect(attr(p, 'stroke-dasharray')).toBe('5 5');
+      p.setStroke(3);
+      p.setStroke(null, 'dot');
+      expect(attr(p, 'stroke-dasharray')).toBe('3 24');
+    });
+
+    it('rounds fractional lengths to 2 decimals', () => {
+      const p = peer();
+      p.setStroke(1.333, 'dash');
+      expect(attr(p, 'stroke-dasharray')).toBe('6.67 6.67');
+    });
+
+    it.each([
+      ['CurvedLinePeer', () => new CurvedLinePeer()],
+      ['ArcLinePeer', () => new ArcLinePeer()],
+      ['PolyLinePeer', () => new PolyLinePeer()],
+    ] as [string, () => CurvedLinePeer | ArcLinePeer | PolyLinePeer][])(
+      '%s.setStrokeWidth rescales the dash',
+      (_name, create) => {
+        const p = create();
+        p.setStroke(1, 'dash');
+        p.setStrokeWidth(2);
+        expect(attr(p, 'stroke-width')).toBe('2');
+        expect(attr(p, 'stroke-dasharray')).toBe('10 10');
+      },
+    );
+
+    it('a new width leaves a dash written by setDashed alone', () => {
+      const curve = new CurvedLinePeer();
+      curve.setStroke(2, 'solid');
+      curve.setDashed(8, 4);
+      curve.setStroke(5);
+      expect(attr(curve, 'stroke-dasharray')).toBe('8,4');
+      const arrow = new ArrowPeer();
+      arrow.setStroke(1, 'dash');
+      arrow.setDashed(true, 3, 3);
+      arrow.setStrokeWidth(4);
+      expect(attr(arrow, 'stroke-dasharray')).toBe('3,3');
+    });
+
+    it('a new width after solid writes no dash', () => {
+      const p = peer();
+      p.setStroke(1, 'solid');
+      p.setStroke(4);
+      expect(p._native.hasAttribute('stroke-dasharray')).toBe(false);
     });
   });
 
