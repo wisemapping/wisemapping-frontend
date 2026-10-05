@@ -205,10 +205,9 @@ describe('AccountInfoDialog account settings', () => {
     expect(await screen.findByText('Language not available')).toBeTruthy();
   });
 
-  // Bug: the account's locale is a Locale object (the REST client builds it with localeFromStr),
-  // but the effect that syncs the form stores the object itself as the selected LocaleCode
-  // (account-info-dialog/index.tsx:153), so the language select matches no option and shows empty.
-  test.failing("the language select shows the account's language", async () => {
+  // The account's locale is a Locale object; the effect that syncs the form used to store the
+  // object itself as the selected LocaleCode, so the select matched no option and showed empty.
+  test("the language select shows the account's language", async () => {
     await openSettingsTab({ locale: Locales.ES });
 
     await waitFor(() => expect(screen.getByRole('combobox').textContent).toBe('Español'));
