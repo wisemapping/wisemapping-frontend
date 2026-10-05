@@ -16,9 +16,11 @@
  *   limitations under the License.
  */
 
+import type EditorRenderMode from './EditorRenderMode';
+
 type MindplotWebComponentInterface = {
   id: string;
-  mode: string;
+  mode: EditorRenderMode;
   ref?: React.Ref<unknown>;
   locale?: string;
   zoom?: number;

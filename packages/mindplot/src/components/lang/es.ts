@@ -16,7 +16,9 @@
  *   limitations under the License.
  */
 
-const ES = {
+import type { LocaleMessages } from './en';
+
+const ES: LocaleMessages = {
   LOADING: 'Cargando ...',
   SAVING: 'Grabando ...',
   SAVE_COMPLETE: 'Grabado completo',

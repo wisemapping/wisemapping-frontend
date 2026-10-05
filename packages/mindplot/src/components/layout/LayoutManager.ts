@@ -25,9 +25,33 @@ import SizeType from '../SizeType';
 import Node from './Node';
 import PositionType from '../PositionType';
 import LayoutEventType from './LayoutEventType';
+
 import type { LayoutType, OrientationType } from './LayoutType';
 
-class LayoutManager extends EventDispispatcher<LayoutEventType> {
+/** The events of the layout manager: 'change' sends each node the layout moved. */
+export type LayoutManagerEvents = Record<LayoutEventType, ChangeEvent>;
+
+/**
+ * A layout node as LayoutManager.find gives it: without its setters. The manager tracks what
+ * changes through its own methods (see needsLayout); a node changed behind its back would not be
+ * laid out by the next forceLayout.
+ */
+export type NodeView = Omit<
+  Node,
+  | 'setShrunken'
+  | 'setOrder'
+  | 'resetPositionState'
+  | 'resetOrderState'
+  | 'resetFreeState'
+  | 'setSize'
+  | 'setFreeDisplacement'
+  | 'setPosition'
+  | 'setSorter'
+  | '_children'
+  | '_parent'
+>;
+
+class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
   private _treeSet: RootedTreeSet;
 
   private _mindmapLayout: OriginalLayout;
@@ -36,11 +60,19 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
 
   private _layoutType: LayoutType;
 
+  // The central topic: the root created with the manager. Floating topics are roots too.
+  private _rootNodeId: number;
+
   private _events: ChangeEvent[];
 
   // The pending change of each node in _events: a layout that is not flushed leaves its changes
   // for the next one to update.
   private _eventsById: Map<number, ChangeEvent>;
+
+  // Whether something the layout depends on (the trees, the orders, sizes, shrink states and the
+  // positions of the roots) changed since it last ran. The layout is idempotent: without such a
+  // change it would move nothing (see needsLayout).
+  private _changedSinceLayout = true;
 
   constructor(rootNodeId: number, rootSize: SizeType, layoutType: LayoutType = 'mindmap') {
     super();
@@ -51,6 +83,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     this._mindmapLayout = new OriginalLayout(this._treeSet);
     this._treeLayout = new TreeLayout(this._treeSet);
     this._layoutType = layoutType;
+    this._rootNodeId = rootNodeId;
 
     const rootNode = this._getCurrentLayout().createNode(
       rootNodeId,
@@ -71,7 +104,12 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     $assert($defined(id), 'id can not be null');
 
     const node = this._treeSet.find(id);
+    const before = node.getSize();
     node.setSize(size);
+    // Node.setSize ignores a change of half a pixel or less: the layout would not see it either.
+    if (node.getSize() !== before) {
+      this._changedSinceLayout = true;
+    }
   }
 
   updateShrinkState(id: number, value: boolean): void {
@@ -79,10 +117,14 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     $assert($defined(value), 'value can not be null');
 
     const node = this._treeSet.find(id);
-    node.setShrunken(value);
+    if (node.areChildrenShrunken() !== value) {
+      node.setShrunken(value);
+      this._changedSinceLayout = true;
+    }
   }
 
-  find(id: number): Node {
+  /** A node, to read: change it through the manager's methods, which needsLayout tracks. */
+  find(id: number): NodeView {
     return this._treeSet.find(id);
   }
 
@@ -101,11 +143,16 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     $assert($defined(position.y), 'y can not be null');
 
     const node = this._treeSet.find(id);
+    const before = node.getPosition();
     node.setPosition(position);
+    if (node.getPosition() !== before) {
+      this._changedSinceLayout = true;
+    }
   }
 
   connectNode(parentId: number, childId: number, order: number) {
     this._getCurrentLayout().connectNode(parentId, childId, order);
+    this._changedSinceLayout = true;
 
     return this;
   }
@@ -113,6 +160,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
   disconnectNode(id: number): void {
     $assert($defined(id), 'id can not be null');
     this._getCurrentLayout().disconnectNode(id);
+    this._changedSinceLayout = true;
   }
 
   /**
@@ -131,6 +179,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     );
     const result = this._getCurrentLayout().createNode(id, size, position, 'topic');
     this._treeSet.add(result);
+    this._changedSinceLayout = true;
 
     return this;
   }
@@ -145,6 +194,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
 
     // Remove the all the branch ...
     this._treeSet.remove(id);
+    this._changedSinceLayout = true;
 
     return this;
   }
@@ -206,9 +256,19 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     return canvas;
   }
 
+  /**
+   * Whether a layout would do anything: something it depends on changed since it last ran, through
+   * this manager, or a layout that was not flushed left changes to fire. find() gives the nodes
+   * without their setters, so that they are not changed behind the manager's back.
+   */
+  needsLayout(): boolean {
+    return this._changedSinceLayout || this._events.length > 0;
+  }
+
   layout(flush?: boolean): LayoutManager {
     // File repositioning ...
     this._getCurrentLayout().layout();
+    this._changedSinceLayout = false;
 
     // Collect changes ...
     this._collectChanges(this._treeSet.getTreeRoots());
@@ -230,7 +290,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
         this._treeLayout.migrateFromLayout();
       } else if (layoutType === 'mindmap') {
         // Switching to mindmap: redistribute for balanced sorter
-        this._mindmapLayout.migrateFromLayout();
+        this._mindmapLayout.migrateFromLayout(this._rootNodeId);
       }
 
       // Trigger re-layout with new layout type
@@ -259,10 +319,12 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
       if (node.hasOrderChanged() || node.hasPositionChanged()) {
         // Find or create a event ...
         const id = node.getId();
+        // A change left by a layout that was not flushed is queued already: update it only.
         let event = this._eventsById.get(id);
         if (!event) {
           event = new ChangeEvent(id);
           this._eventsById.set(id, event);
+          this._events.push(event);
         }
 
         // Update nodes ...
@@ -274,7 +336,6 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
 
         node.resetPositionState();
         node.resetOrderState();
-        this._events.push(event);
       }
       this._collectChanges(this._treeSet.getChildren(node));
     });

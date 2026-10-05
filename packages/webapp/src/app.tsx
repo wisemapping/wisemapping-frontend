@@ -20,7 +20,6 @@ import { IntlProvider } from 'react-intl';
 import {
   Route,
   RouterProvider,
-  useNavigate,
   useParams,
   createRoutesFromElements,
   createBrowserRouter,
@@ -54,8 +53,9 @@ import { loader as configLoader } from './loader';
 import queryClient from './queryClient';
 
 import { ClientContext } from './classes/provider/client-context';
-import { KeyboardContext } from './classes/provider/keyboard-context';
+import { KeyboardContext, useKeyboardContextValue } from './classes/provider/keyboard-context';
 import CommonPage from './components/common-page';
+import Redirect from './components/redirect';
 import AppConfig from './classes/app-config';
 import { useFetchAccount } from './classes/middleware';
 
@@ -306,16 +306,8 @@ const buildRouter = () =>
     ),
   );
 
-function Redirect({ to }: { to: string }) {
-  const navigate = useNavigate();
-  useEffect(() => {
-    navigate(to);
-  });
-  return null;
-}
-
 const AppWithTheme = (): ReactElement => {
-  const [hotkeyEnabled, setHotkeyEnabled] = useState(true);
+  const keyboardContext = useKeyboardContextValue();
   const { mode } = useTheme();
   const theme = createAppTheme(mode);
   const [router, setRouter] = useState<ReturnType<typeof createBrowserRouter> | null>(null);
@@ -363,7 +355,7 @@ const AppWithTheme = (): ReactElement => {
             <MuiThemeProvider theme={theme}>
               <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <KeyboardContext.Provider value={{ hotkeyEnabled, setHotkeyEnabled }}>
+                <KeyboardContext.Provider value={keyboardContext}>
                   <RouterProvider router={router} />
                 </KeyboardContext.Provider>
               </ThemeProvider>

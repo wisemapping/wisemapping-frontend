@@ -182,7 +182,7 @@
   "canvas-style.background-style": [
     {
       "type": 0,
-      "value": "Background Style"
+      "value": "背景スタイル"
     }
   ],
   "canvas-style.colors": [
@@ -230,13 +230,13 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "グリッドスタイル"
+      "value": "グリッドサイズ"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "デフォルト - テーマに基づいてすべてのスタイルが自動的に選択されます"
     }
   ],
   "canvas-style.pattern-dots": [
@@ -278,13 +278,13 @@
   "canvas-style.tab-color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "色"
     }
   ],
   "canvas-style.tab-grid": [
     {
       "type": 0,
-      "value": "Grid Color"
+      "value": "グリッド色"
     }
   ],
   "canvas-style.title": [
@@ -302,13 +302,13 @@
   "color-picker.color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "色"
     }
   ],
   "color-picker.default-color": [
     {
       "type": 0,
-      "value": "Default color"
+      "value": "デフォルトの色"
     }
   ],
   "common.close": [
@@ -780,25 +780,31 @@
   "icon-collection.border.dashed": [
     {
       "type": 0,
-      "value": "Dashed"
+      "value": "破線"
     }
   ],
   "icon-collection.border.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "デフォルト"
+    }
+  ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "デフォルト - 選択したテーマに基づいて色が自動的に設定されます"
     }
   ],
   "icon-collection.border.dotted": [
     {
       "type": 0,
-      "value": "Dotted"
+      "value": "点線"
     }
   ],
   "icon-collection.border.solid": [
     {
       "type": 0,
-      "value": "Solid"
+      "value": "実線"
     }
   ],
   "icon-collection.connection.arc": [
@@ -816,7 +822,7 @@
   "icon-collection.connection.curved-polyline": [
     {
       "type": 0,
-      "value": "Curved Polyline"
+      "value": "曲線ポリライン"
     }
   ],
   "icon-collection.connection.curved-polyline-tooltip": [
@@ -828,7 +834,7 @@
   "icon-collection.connection.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "デフォルト"
     }
   ],
   "icon-collection.connection.default-tooltip": [
@@ -876,19 +882,19 @@
   "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
-      "value": "Simple Polyline"
+      "value": "シンプルなポリライン"
     }
   ],
   "icon-collection.connection.simple-polyline-tooltip": [
     {
       "type": 0,
-      "value": "Direct straight line connection - Clean and minimalist style for simple relationships"
+      "value": "直線による直接接続 - シンプルな関係に適した、すっきりとしたミニマルなスタイル"
     }
   ],
   "icon-collection.connection.thick-curved": [
     {
       "type": 0,
-      "value": "Thick Curved"
+      "value": "太い曲線"
     }
   ],
   "icon-collection.connection.thick-curved-tooltip": [
@@ -900,7 +906,7 @@
   "icon-collection.connection.thin-curved": [
     {
       "type": 0,
-      "value": "Thin Curved"
+      "value": "細い曲線"
     }
   ],
   "icon-collection.connection.thin-curved-tooltip": [
@@ -912,49 +918,49 @@
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "デフォルト - テーマに基づいてすべてのスタイルが自動的に選択されます"
     }
   ],
   "icon-collection.shape.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "デフォルト"
     }
   ],
   "icon-collection.shape.ellipse": [
     {
       "type": 0,
-      "value": "Ellipse"
+      "value": "楕円"
     }
   ],
   "icon-collection.shape.line": [
     {
       "type": 0,
-      "value": "Line"
+      "value": "線"
     }
   ],
   "icon-collection.shape.none": [
     {
       "type": 0,
-      "value": "None"
+      "value": "なし"
     }
   ],
   "icon-collection.shape.none-tooltip": [
     {
       "type": 0,
-      "value": "None - No visible shape background"
+      "value": "なし - 図形の背景を表示しません"
     }
   ],
   "icon-collection.shape.rectangle": [
     {
       "type": 0,
-      "value": "Rectangle"
+      "value": "長方形"
     }
   ],
   "icon-collection.shape.rounded": [
     {
       "type": 0,
-      "value": "Rounded"
+      "value": "角丸"
     }
   ],
   "icon-picker.emojis": [
@@ -1129,6 +1135,12 @@
       "value": "折りたたむ"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "すべて折りたたむ"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1139,6 +1151,12 @@
     {
       "type": 0,
       "value": "展開"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "すべて展開"
     }
   ],
   "outline.has-note": [
@@ -1180,37 +1198,37 @@
   "relationship-style-editor.dashed-line": [
     {
       "type": 0,
-      "value": "Dashed Line"
+      "value": "破線"
     }
   ],
   "relationship-style-editor.dashed-line-tooltip": [
     {
       "type": 0,
-      "value": "Dashed line style"
+      "value": "破線のスタイル"
     }
   ],
   "relationship-style-editor.dotted-line": [
     {
       "type": 0,
-      "value": "Dotted Line"
+      "value": "点線"
     }
   ],
   "relationship-style-editor.dotted-line-tooltip": [
     {
       "type": 0,
-      "value": "Dotted line style"
+      "value": "点線のスタイル"
     }
   ],
   "relationship-style-editor.end-arrow": [
     {
       "type": 0,
-      "value": "End Arrow"
+      "value": "終点の矢印"
     }
   ],
   "relationship-style-editor.end-arrow-tooltip": [
     {
       "type": 0,
-      "value": "Toggle end arrow"
+      "value": "終点の矢印を切り替え"
     }
   ],
   "relationship-style-editor.line-arrows": [
@@ -1222,25 +1240,25 @@
   "relationship-style-editor.solid-line": [
     {
       "type": 0,
-      "value": "Solid Line"
+      "value": "実線"
     }
   ],
   "relationship-style-editor.solid-line-tooltip": [
     {
       "type": 0,
-      "value": "Solid line style"
+      "value": "実線のスタイル"
     }
   ],
   "relationship-style-editor.start-arrow": [
     {
       "type": 0,
-      "value": "Start Arrow"
+      "value": "始点の矢印"
     }
   ],
   "relationship-style-editor.start-arrow-tooltip": [
     {
       "type": 0,
-      "value": "Toggle start arrow"
+      "value": "始点の矢印を切り替え"
     }
   ],
   "retro": [
@@ -1339,6 +1357,30 @@
       "value": "テキスト変更をキャンセル"
     }
   ],
+  "shortcut-help-pane.category-editing": [
+    {
+      "type": 0,
+      "value": "編集"
+    }
+  ],
+  "shortcut-help-pane.category-format": [
+    {
+      "type": 0,
+      "value": "書式"
+    }
+  ],
+  "shortcut-help-pane.category-navigation": [
+    {
+      "type": 0,
+      "value": "ナビゲーション"
+    }
+  ],
+  "shortcut-help-pane.category-view": [
+    {
+      "type": 0,
+      "value": "表示"
+    }
+  ],
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
@@ -1375,10 +1417,52 @@
       "value": "すべてのトピックの選択を解除"
     }
   ],
+  "shortcut-help-pane.diagram-aria": [
+    {
+      "type": 0,
+      "value": "左矢印で親トピックへ、右矢印で子トピックへ、上下矢印で兄弟トピック間を移動します。"
+    }
+  ],
+  "shortcut-help-pane.diagram-caption": [
+    {
+      "type": 0,
+      "value": "マップの左半分では、← と → の役割が入れ替わります。"
+    }
+  ],
+  "shortcut-help-pane.diagram-child": [
+    {
+      "type": 0,
+      "value": "子"
+    }
+  ],
+  "shortcut-help-pane.diagram-parent": [
+    {
+      "type": 0,
+      "value": "親"
+    }
+  ],
+  "shortcut-help-pane.diagram-selected": [
+    {
+      "type": 0,
+      "value": "選択中"
+    }
+  ],
+  "shortcut-help-pane.diagram-sibling": [
+    {
+      "type": 0,
+      "value": "兄弟"
+    }
+  ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
       "value": "トピックを切断"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect-key": [
+    {
+      "type": 0,
+      "value": "トピックをドラッグ"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
@@ -1582,7 +1666,7 @@
   "theme.aurora.description": [
     {
       "type": 0,
-      "value": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+      "value": "ネオンにインスパイアされたグラデーションテーマ。グロー効果、太字のタイポグラフィ、高コントラストのコネクタで、没入感のあるストーリーテリングを演出します。"
     }
   ],
   "theme.aurora.name": [
@@ -1594,7 +1678,7 @@
   "theme.classic.description": [
     {
       "type": 0,
-      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+      "value": "青のアクセントが効いた、すっきりとしたプロフェッショナルなデザイン。ビジネスプレゼンテーションや正式な文書に最適です。"
     }
   ],
   "theme.classic.name": [
@@ -1618,7 +1702,7 @@
   "theme.ocean.description": [
     {
       "type": 0,
-      "value": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+      "value": "海をイメージした青いテーマで、ライト/ダークの各バリエーションがあります。落ち着いたプロフェッショナルな配色で、ビジネスにもクリエイティブなプロジェクトにも最適です。"
     }
   ],
   "theme.ocean.name": [
@@ -1630,7 +1714,7 @@
   "theme.retro.description": [
     {
       "type": 0,
-      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+      "value": "80年代のシンセウェイヴ風パレット。ネオンの縁取り、クロームのグラデーション、グリッド状のキャンバスで、レトロなナイトパーティーを再現します。"
     }
   ],
   "theme.retro.name": [
@@ -1642,7 +1726,7 @@
   "theme.robot.description": [
     {
       "type": 0,
-      "value": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+      "value": "テクノロジーをイメージした緑のテーマ。技術文書や未来的なプレゼンテーションに最適です。"
     }
   ],
   "theme.robot.name": [
@@ -1654,7 +1738,7 @@
   "theme.summer.description": [
     {
       "type": 0,
-      "value": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+      "value": "明るく鮮やかなオレンジのテーマ。クリエイティブなプロジェクトやエネルギッシュなプレゼンテーションにぴったりです。"
     }
   ],
   "theme.summer.name": [
@@ -1666,7 +1750,7 @@
   "theme.sunrise.description": [
     {
       "type": 0,
-      "value": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+      "value": "ライト/ダークモードに対応した日の出テーマ。色とコントラストを強化し、読みやすさを向上させました。"
     }
   ],
   "theme.sunrise.name": [
@@ -1702,31 +1786,31 @@
   "topic-font-editor.active": [
     {
       "type": 0,
-      "value": "active"
+      "value": "有効"
     }
   ],
   "topic-font-editor.bold": [
     {
       "type": 0,
-      "value": "Bold"
+      "value": "太字"
     }
   ],
   "topic-font-editor.bold-tooltip": [
     {
       "type": 0,
-      "value": "Toggle bold"
+      "value": "太字を切り替え"
     }
   ],
   "topic-font-editor.decrease-size": [
     {
       "type": 0,
-      "value": "Smaller"
+      "value": "小さく"
     }
   ],
   "topic-font-editor.decrease-size-tooltip": [
     {
       "type": 0,
-      "value": "Decrease font size"
+      "value": "フォントサイズを小さくする"
     }
   ],
   "topic-font-editor.font-color": [
@@ -1750,37 +1834,37 @@
   "topic-font-editor.increase-size": [
     {
       "type": 0,
-      "value": "Bigger"
+      "value": "大きく"
     }
   ],
   "topic-font-editor.increase-size-tooltip": [
     {
       "type": 0,
-      "value": "Increase font size"
+      "value": "フォントサイズを大きくする"
     }
   ],
   "topic-font-editor.italic": [
     {
       "type": 0,
-      "value": "Italic"
+      "value": "斜体"
     }
   ],
   "topic-font-editor.italic-tooltip": [
     {
       "type": 0,
-      "value": "Toggle italic"
+      "value": "斜体を切り替え"
     }
   ],
   "topic-font-editor.reset-to-default": [
     {
       "type": 0,
-      "value": "Reset to Default"
+      "value": "デフォルトに戻す"
     }
   ],
   "unified-styling.background-color": [
     {
       "type": 0,
-      "value": "Background Color"
+      "value": "背景色"
     }
   ],
   "unified-styling.border-color": [
@@ -1810,7 +1894,7 @@
   "unified-styling.shape-type": [
     {
       "type": 0,
-      "value": "Shape Type"
+      "value": "形状の種類"
     }
   ],
   "unified-styling.tab.border": [
@@ -1847,6 +1931,20 @@
     {
       "type": 0,
       "value": "レベルごとに展開"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "レベルごとに展開（レベル "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": "）"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

@@ -1,4 +1,24 @@
 {
+  "account.delete-challenge": [
+    {
+      "type": 0,
+      "value": "ELIMINAR MI CUENTA"
+    }
+  ],
+  "account.delete-challenge-error": [
+    {
+      "type": 0,
+      "value": "Por favor, escribe \""
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "\" para confirmar la eliminación de la cuenta."
+    }
+  ],
   "account.delete-confirm": [
     {
       "type": 0,
@@ -8,7 +28,29 @@
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
-      "value": "Por favor, escribe ELIMINAR MI CUENTA para confirmar:"
+      "value": "Por favor, escribe "
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": " para confirmar:"
+    }
+  ],
+  "account.delete-confirmation-label": [
+    {
+      "type": 0,
+      "value": "Escribe \""
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "\" para confirmar"
     }
   ],
   "account.delete-confirmation-title": [
@@ -733,10 +775,14 @@
       "value": "Cargando ..."
     }
   ],
-  "duplicate.copy-prefix": [
+  "duplicate.copy-title": [
     {
       "type": 0,
       "value": "Copia de "
+    },
+    {
+      "type": 1,
+      "value": "title"
     }
   ],
   "duplicate.title": [

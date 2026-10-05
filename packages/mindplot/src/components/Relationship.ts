@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { Arrow, CurvedLine } from '@wisemapping/web2d';
-import type { Line } from '@wisemapping/web2d';
+import type { Line, StrokeStyle as LineStrokeStyle } from '@wisemapping/web2d';
 import BaseConnectionLine, { LineType } from './BaseConnectionLine';
 import ArcLine from './model/ArcLine';
 import RelationshipControlPoints, { PivotType } from './RelationshipControlPoints';
@@ -26,15 +26,18 @@ import Topic from './Topic';
 import Shape from './util/Shape';
 import Canvas from './Canvas';
 
+/** The relationship's own events: it fires them, with itself as detail, on a focus change. */
+export type RelationshipEventMap = { ontfocus: Relationship; ontblur: Relationship };
+
 /**
  * Relationship represents arbitrary connections between topics (not hierarchical)
  */
-class Relationship extends BaseConnectionLine {
+class Relationship extends BaseConnectionLine<CurvedLine> {
   private _sourceTopic: Topic;
 
   private _targetTopic: Topic;
 
-  private _focusShape: Line;
+  private _focusShape: CurvedLine;
 
   private _onFocus: boolean;
 
@@ -54,15 +57,21 @@ class Relationship extends BaseConnectionLine {
 
   private _focusEndArrow: Arrow;
 
-  private _onFocusHandler: (event: Event, detail?: unknown) => void;
+  private _onFocusHandler: (event: Event) => void;
 
   private _model: RelationshipModel;
+
+  // The connection point each control point was released at in this session, as an offset from
+  // the centre of its topic, by end and control point. A stored control point is relative to a
+  // snap point, and it fits several of them (BL5-41): this places it again where the drag left it.
+  private _releasedOffsets: [Map<string, PositionType>, Map<string, PositionType>];
 
   constructor(sourceNode: Topic, targetNode: Topic, model: RelationshipModel) {
     super(LineType.THIN_CURVED);
     this._sourceTopic = sourceNode;
     this._targetTopic = targetNode;
     this._model = model;
+    this._releasedOffsets = [new Map(), new Map()];
 
     // Initialize line after setting topics
     this.initializeLine();
@@ -74,7 +83,7 @@ class Relationship extends BaseConnectionLine {
     this._line.setIsDestControlPointCustom(false);
     this._line.setCursor('pointer');
     // Set width to 0 to avoid closed path that creates double line effect
-    (this._line as CurvedLine).setWidth(0);
+    this._line.setWidth(0);
     // Use stroke width (2px) for relationships
     this._line.setStroke(2, 'solid', strokeColor);
     this._line.setFill('none', 1);
@@ -82,7 +91,7 @@ class Relationship extends BaseConnectionLine {
     this._line.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
 
     // Build focus shape ...
-    this._focusShape = this.createLine(LineType.THIN_CURVED);
+    this._focusShape = BaseConnectionLine.createCurvedLine(10);
     this._focusShape.setIsSrcControlPointCustom(false);
     this._focusShape.setIsDestControlPointCustom(false);
     // Focus shape is barely visible but always present for event handling
@@ -92,7 +101,7 @@ class Relationship extends BaseConnectionLine {
     this._focusShape.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
 
     // Ensure focus shape uses solid stroke rendering for continuous hit area
-    (this._focusShape as CurvedLine).setWidth(0); // Force simple stroke rendering
+    this._focusShape.setWidth(0); // Force simple stroke rendering
 
     // Always create both arrows, but show them based on model
     this._startArrow = new Arrow();
@@ -136,7 +145,7 @@ class Relationship extends BaseConnectionLine {
     };
   }
 
-  setStroke(color: string, style: string, _opacity: number): void {
+  setStroke(color: string, style: LineStrokeStyle, _opacity: number): void {
     this._line.setStroke(2, style, color);
     this._startArrow?.setStrokeColor(color);
     this._endArrow?.setStrokeColor(color);
@@ -150,6 +159,11 @@ class Relationship extends BaseConnectionLine {
 
   protected getLineWidthOrganic(): number {
     return 5; // Slightly thicker for organic style
+  }
+
+  /** A relationship is always a thin curve (LineType.THIN_CURVED). */
+  protected buildLine(): CurvedLine {
+    return BaseConnectionLine.createCurvedLine(10);
   }
 
   protected createArcLine(): Line {
@@ -192,7 +206,7 @@ class Relationship extends BaseConnectionLine {
       line2d.setTo(tPos.x, tPos.y);
     } else {
       // Control points have been manually moved - recalculate best connection points
-      ctrlPoints = this.recalculateCustomControlPoints(line2d, sourceTopic, targetTopic);
+      ctrlPoints = this.recalculateCustomControlPoints(line2d);
 
       // An end the user did not shape keeps following its topic, with a default control point ...
       if (!srcCustom || !destCustom) {
@@ -225,11 +239,8 @@ class Relationship extends BaseConnectionLine {
     // Apply stroke style only once at the end of redraw
     this._applyStrokeStyle(this._model.getStrokeStyle());
 
-    // Relationships are kept below topics (see addToWorkspace). Raising the line or
-    // the focus shape here would put them on top of every topic on each redraw, and
-    // a relationship crossing a topic would then take the topic's clicks.
-    this._startArrow.moveToBack();
-    this._endArrow.moveToBack();
+    // The stacking is set once, by addToWorkspace: moving a part here would make the order of
+    // the relationships depend on the order they are redrawn in (BL5-145).
 
     this._endArrow.setVisibility(this.isVisible() && this._showEndArrow);
     this._startArrow.setVisibility(this.isVisible() && this._showStartArrow);
@@ -247,19 +258,12 @@ class Relationship extends BaseConnectionLine {
     this._startArrow.setFrom(spos.x, spos.y);
     this._endArrow.setFrom(tpos.x, tpos.y);
 
-    if (this._line.getType() === 'CurvedLine') {
-      const controlPoints = this._line.getControlPoints();
-      // Start arrow points from source toward first control point (direction of flow)
-      this._startArrow.setControlPoint(controlPoints[0]);
-      // End arrow points from target back toward second control point (direction of flow)
-      this._endArrow.setControlPoint(controlPoints[1]);
-    } else {
-      // For straight lines:
-      // Start arrow points from source toward target
-      this._startArrow.setControlPoint(tpos);
-      // End arrow points from target back toward source
-      this._endArrow.setControlPoint(spos);
-    }
+    // The line is always a curve (buildLine)
+    const controlPoints = this._line.getControlPoints();
+    // Start arrow points from source toward first control point (direction of flow)
+    this._startArrow.setControlPoint(controlPoints[0]);
+    // End arrow points from target back toward second control point (direction of flow)
+    this._endArrow.setControlPoint(controlPoints[1]);
   }
 
   addToWorkspace(workspace: Canvas): void {
@@ -285,11 +289,14 @@ class Relationship extends BaseConnectionLine {
 
     super.addToWorkspace(workspace);
 
-    // Ensure all relationship components are rendered below topics
+    // Below the topics, so that a relationship crossing a topic does not take its clicks, and
+    // below the relationships already there: the stacking follows the order relationships are
+    // added in, not the order they are redrawn or focused in (BL5-145). From the top: the line,
+    // its arrows, then the focus shape and arrows, which highlight them from behind.
     this.moveToBack(); // Main relationship line
-    this._focusShape.getElementClass().moveToBack();
     this._startArrow.moveToBack();
     this._endArrow.moveToBack();
+    this._focusShape.getElementClass().moveToBack();
     this._focusStartArrow.moveToBack();
     this._focusEndArrow.moveToBack();
 
@@ -404,7 +411,7 @@ class Relationship extends BaseConnectionLine {
     if (pivot === PivotType.Start) {
       const srcCtrlPoint = this._model.getSrcCtrlPoint();
       if (srcCtrlPoint) {
-        const from = Relationship.calculateConnectionPointFor(this._sourceTopic, srcCtrlPoint);
+        const from = this.connectionPointFor(PivotType.Start, srcCtrlPoint);
         line.setFrom(from.x, from.y);
         line.setSrcControlPoint({ ...srcCtrlPoint });
       }
@@ -412,7 +419,7 @@ class Relationship extends BaseConnectionLine {
     } else {
       const destCtrlPoint = this._model.getDestCtrlPoint();
       if (destCtrlPoint) {
-        const to = Relationship.calculateConnectionPointFor(this._targetTopic, destCtrlPoint);
+        const to = this.connectionPointFor(PivotType.End, destCtrlPoint);
         line.setTo(to.x, to.y);
         line.setDestControlPoint({ ...destCtrlPoint });
       }
@@ -422,10 +429,14 @@ class Relationship extends BaseConnectionLine {
 
   /**
    * Finds the snap point a control point is relative to: the one facing the control point
-   * placed from it.
+   * placed from it. The search starts from a point, the centre of the topic by default.
    */
-  private static calculateConnectionPointFor(topic: Topic, ctrlPoint: PositionType): PositionType {
-    let result = topic.getPosition();
+  private static calculateConnectionPointFor(
+    topic: Topic,
+    ctrlPoint: PositionType,
+    start: PositionType = topic.getPosition(),
+  ): PositionType {
+    let result = start;
     // The snap point depends on where the control point lands, which depends on the snap point.
     // Starting from the center of the topic, it settles in a step or two ...
     for (let i = 0; i < 3; i++) {
@@ -441,6 +452,52 @@ class Relationship extends BaseConnectionLine {
     return result;
   }
 
+  /**
+   * Remembers where the end of a released control point is: the snap point the drag placed it
+   * from. Placing the control point again (redraw, undo, redo) then keeps that end, rather than
+   * another snap point of the edge the control point also fits.
+   */
+  rememberReleasedControlPoint(pivot: PivotType): void {
+    const line = this._line;
+    const topic = pivot === PivotType.Start ? this._sourceTopic : this._targetTopic;
+    const end = pivot === PivotType.Start ? line.getFrom() : line.getTo();
+    const ctrlPoint = line.getControlPoints()[pivot];
+    const pos = topic.getPosition();
+    this._releasedOffsets[pivot].set(Relationship.keyOf(ctrlPoint), {
+      x: end.x - pos.x,
+      y: end.y - pos.y,
+    });
+  }
+
+  /**
+   * The connection point a custom control point of an end is placed from: where it was released,
+   * if that is still a snap point the control point fits. Otherwise (the topic was resized, so its
+   * snap points moved) the snap point the search reaches from there, and as on load if it was
+   * never released.
+   */
+  private connectionPointFor(pivot: PivotType, ctrlPoint: PositionType): PositionType {
+    const topic = pivot === PivotType.Start ? this._sourceTopic : this._targetTopic;
+    const offset = this._releasedOffsets[pivot].get(Relationship.keyOf(ctrlPoint));
+    if (offset) {
+      const pos = topic.getPosition();
+      const released = { x: pos.x + offset.x, y: pos.y + offset.y };
+      const snap = Relationship.calculateSnapPoint(topic, {
+        x: released.x + ctrlPoint.x,
+        y: released.y + ctrlPoint.y,
+      });
+      // The offset went through a subtraction: compare with a tolerance ...
+      if (Math.abs(snap.x - released.x) < 0.01 && Math.abs(snap.y - released.y) < 0.01) {
+        return snap;
+      }
+      return Relationship.calculateConnectionPointFor(topic, ctrlPoint, released);
+    }
+    return Relationship.calculateConnectionPointFor(topic, ctrlPoint);
+  }
+
+  private static keyOf(point: PositionType): string {
+    return `${point.x},${point.y}`;
+  }
+
   private calculateRelationshipConnectionPoint(topic: Topic): PositionType {
     // Determine which topic we're calculating for
     const isSourceTopic = topic === this._sourceTopic;
@@ -454,29 +511,23 @@ class Relationship extends BaseConnectionLine {
   /**
    * Places the ends of a line whose control points have been customized. A custom control point is
    * relative to the connection point it was placed from, as the model stores it: the end is placed
-   * as on load (applyModelControlPoint), so the curve keeps its shape relative to its topics when
-   * they move, and is drawn as it is saved. The end being dragged stays where the drag put it, on
-   * the snap point under the cursor.
+   * as by applyModelControlPoint (where it was released, or as on load), so the curve keeps its
+   * shape relative to its topics when they move. The end being dragged stays where the drag put
+   * it, on the snap point under the cursor.
    *
    * @param line2d The line to update
-   * @param sourceTopic Source topic
-   * @param targetTopic Target topic
    * @returns The control points, relative to the connection points
    */
-  private recalculateCustomControlPoints(
-    line2d: Line,
-    sourceTopic: Topic,
-    targetTopic: Topic,
-  ): [PositionType, PositionType] {
+  private recalculateCustomControlPoints(line2d: CurvedLine): [PositionType, PositionType] {
     const [srcCtrlPoint, destCtrlPoint] = line2d.getControlPoints();
     const controlPoints = this._controlPointsController;
 
     const from = controlPoints.isDragging(PivotType.Start)
       ? line2d.getFrom()
-      : Relationship.calculateConnectionPointFor(sourceTopic, srcCtrlPoint);
+      : this.connectionPointFor(PivotType.Start, srcCtrlPoint);
     const to = controlPoints.isDragging(PivotType.End)
       ? line2d.getTo()
-      : Relationship.calculateConnectionPointFor(targetTopic, destCtrlPoint);
+      : this.connectionPointFor(PivotType.End, destCtrlPoint);
 
     line2d.setFrom(from.x, from.y);
     line2d.setTo(to.x, to.y);
@@ -494,15 +545,13 @@ class Relationship extends BaseConnectionLine {
         // Show focus shape when focusing
         this._focusShape.setVisibility(true);
         this._focusShape.setOpacity(1);
+        // The focus shape and arrows are below the line and its arrows (see addToWorkspace),
+        // so that style changes stay visible.
         this._focusShape.setStroke(5, 'solid', '#3f96ff');
-        // Move focus shape below the main line so style changes are visible
-        this._focusShape.moveToBack();
 
         // Show focus arrows if corresponding arrows are enabled
         this._focusStartArrow.setVisibility(this._showStartArrow);
         this._focusEndArrow.setVisibility(this._showEndArrow);
-        this._focusStartArrow.moveToBack();
-        this._focusEndArrow.moveToBack();
       } else {
         // Back to the barely visible hit shape: hiding it would leave only the 2px
         // line clickable.
@@ -555,25 +604,14 @@ class Relationship extends BaseConnectionLine {
     this._focusStartArrow.setFrom(sPos.x, sPos.y);
     this._focusEndArrow.setFrom(tPos.x, tPos.y);
 
-    if (this._line.getType() === 'CurvedLine') {
-      // Start arrow points from source toward first control point
-      this._focusStartArrow.setControlPoint(ctrlPoints[0]);
-      // End arrow points from target back toward second control point
-      this._focusEndArrow.setControlPoint(ctrlPoints[1]);
-    } else {
-      // For straight lines
-      this._focusStartArrow.setControlPoint(tPos);
-      this._focusEndArrow.setControlPoint(sPos);
-    }
+    // Start arrow points from source toward first control point
+    this._focusStartArrow.setControlPoint(ctrlPoints[0]);
+    // End arrow points from target back toward second control point
+    this._focusEndArrow.setControlPoint(ctrlPoints[1]);
   }
 
-  addEvent(eventType: string, listener: () => void) {
-    let type = eventType;
-    // Translate to web 2d events ...
-    if (type === 'onfocus') {
-      type = 'mousedown';
-    }
-
+  /** Listens to the relationship's own events (see RelationshipEventMap). */
+  addEvent(type: keyof RelationshipEventMap, listener: (event: Event) => void) {
     const line = this._line;
     line.addEvent(type, listener);
   }
@@ -674,16 +712,16 @@ class Relationship extends BaseConnectionLine {
     return this._model.getId();
   }
 
-  fireEvent(type: string, event: unknown): void {
+  fireEvent<K extends keyof RelationshipEventMap>(type: K, detail: RelationshipEventMap[K]): void {
     const elem = this._line;
-    elem.trigger(type, event);
+    elem.trigger(type, detail);
   }
 
   private _applyStrokeStyle(strokeStyle: StrokeStyle): void {
     switch (strokeStyle) {
       case StrokeStyle.SOLID:
-        // Remove any dashed pattern for solid lines
-        this._line.setDashed(0, 0);
+        // Removes the dash array (a '0,0' one would be a dash of zero length)
+        this._line.setDashed();
         break;
       case StrokeStyle.DASHED:
         // 8px dashes, 4px gaps

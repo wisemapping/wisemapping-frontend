@@ -16,53 +16,32 @@
  *   limitations under the License.
  */
 
-import SizeType from '../../SizeType';
-import ElementPeer from '../svg/ElementPeer';
+import type SizeType from '../../SizeType';
+import type ElementPeer from '../svg/ElementPeer';
 import GroupPeer from '../svg/GroupPeer';
-import TextPeer from '../svg/TextPeer';
 import WorkspacePeer from '../svg/WorkspacePeer';
 
-/**
- * The rendered size of a container. A workspace reads it from its <svg> width and height: they are
- * the source of truth, and a consumer may resize the SVG without going through `setSize`
- * (W-HTMLFONT: mindplot's Canvas used to, so the editor font was scaled by the old/new height).
- */
-const renderedSize = (container: ElementPeer): SizeType => {
-  const size = container.getSize();
-  if (container instanceof WorkspacePeer) {
-    const width = Number.parseFloat(container._native.getAttribute('width') ?? '');
-    const height = Number.parseFloat(container._native.getAttribute('height') ?? '');
-    return {
-      width: Number.isNaN(width) ? size.width : width,
-      height: Number.isNaN(height) ? size.height : height,
-    };
-  }
-  return size;
-};
-
 class TransformUtil {
-  static workoutScale(elementPeer: TextPeer): SizeType {
+  /**
+   * The screen scale of an element: the product of the size / coordinate size ratio of every
+   * group and workspace above it.
+   */
+  static workoutScale(elementPeer: ElementPeer): SizeType {
     let width = 1;
     let height = 1;
-    let current: ElementPeer | null = elementPeer.getParent();
+    let current = elementPeer.getParent();
     while (current) {
-      if (
-        !(current instanceof GroupPeer) &&
-        !(current instanceof WorkspacePeer) &&
-        !(current instanceof TextPeer)
-      ) {
-        throw new Error(
-          `Not supported element as part of the parent hierarchy.${current instanceof GroupPeer}`,
-        );
+      if (!(current instanceof GroupPeer) && !(current instanceof WorkspacePeer)) {
+        throw new Error('Not supported element as part of the parent hierarchy.');
       }
 
-      const container = current as GroupPeer;
-      const coordSize = container.getCoordSize();
-      const size = renderedSize(container);
+      const coordSize = current.getCoordSize();
+      // A workspace reads its size from the <svg> attributes (W-HTMLFONT).
+      const size = current.getSize();
 
       width *= size.width / coordSize.width;
       height *= size.height / coordSize.height;
-      current = container.getParent();
+      current = current.getParent();
     }
     return { width, height };
   }

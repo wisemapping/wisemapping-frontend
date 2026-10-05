@@ -29,16 +29,16 @@ describe('Theme Suite', () => {
   it('should open theme dialog and select a theme', () => {
     // Click on the Theme button in toolbar
     cy.onClickToolbarButton('Theme');
-    
+
     // Verify theme dialog is open
     cy.get('[role="dialog"]').should('be.visible');
-    
+
     // Select Summer theme (first option)
     cy.contains('Summer').should('be.visible').click({ force: true });
-    
+
     // Click Apply Theme button
     cy.contains('Apply Theme').should('be.visible').click({ force: true });
-    
+
     // Take snapshot
     cy.matchImageSnapshot('select-summer-theme');
   });
@@ -46,13 +46,14 @@ describe('Theme Suite', () => {
   it('should select Ocean theme', () => {
     // Click on the Theme button in toolbar
     cy.onClickToolbarButton('Theme');
-    
+
     // Select Ocean theme - scroll into view first to ensure it's visible
-    cy.contains('Ocean').scrollIntoView().should('be.visible').click({ force: true });
-    
+    cy.contains('Ocean').scrollIntoView();
+    cy.contains('Ocean').should('be.visible').click({ force: true });
+
     // Click Apply Theme button
     cy.contains('Apply Theme').click({ force: true });
-    
+
     // Take snapshot
     cy.matchImageSnapshot('select-ocean-theme');
   });
@@ -60,13 +61,14 @@ describe('Theme Suite', () => {
   it('should select Classic theme', () => {
     // Click on the Theme button in toolbar
     cy.onClickToolbarButton('Theme');
-    
+
     // Select Classic theme - scroll into view first to ensure it's visible
-    cy.contains('Classic').scrollIntoView().should('be.visible').click({ force: true });
-    
+    cy.contains('Classic').scrollIntoView();
+    cy.contains('Classic').should('be.visible').click({ force: true });
+
     // Click Apply Theme button
     cy.contains('Apply Theme').click({ force: true });
-    
+
     // Take snapshot
     cy.matchImageSnapshot('select-classic-theme');
   });
@@ -74,13 +76,13 @@ describe('Theme Suite', () => {
   it('should show theme descriptions when hovering', () => {
     // Click on the Theme button in toolbar
     cy.onClickToolbarButton('Theme');
-    
+
     // Verify theme dialog is open
     cy.get('[role="dialog"]').should('be.visible');
-    
+
     // Hover over a theme to see description
     cy.contains('Ocean').trigger('mouseover');
-    
+
     // Take snapshot
     cy.matchImageSnapshot('theme-descriptions-dialog');
   });
@@ -88,18 +90,17 @@ describe('Theme Suite', () => {
   it('should close theme dialog when clicking outside', () => {
     // Click on the Theme button in toolbar
     cy.onClickToolbarButton('Theme');
-    
+
     // Verify theme dialog is open
     cy.get('[role="dialog"]').should('be.visible');
-    
+
     // Click outside the dialog (on the backdrop)
     cy.get('[role="dialog"]').parent().click(0, 0);
-    
+
     // Verify dialog is closed
     cy.get('[role="dialog"]').should('not.exist');
-    
+
     // Take snapshot
     cy.matchImageSnapshot('theme-dialog-backdrop-close');
   });
 });
-

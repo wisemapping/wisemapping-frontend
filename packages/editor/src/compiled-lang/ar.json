@@ -230,7 +230,7 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "نمط الشبكة"
+      "value": "حجم الشبكة"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
@@ -789,6 +789,12 @@
       "value": "افتراضي"
     }
   ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "افتراضي - سيتم أخذ الألوان تلقائيًا بناءً على السمة المحددة"
+    }
+  ],
   "icon-collection.border.dotted": [
     {
       "type": 0,
@@ -1117,6 +1123,12 @@
       "value": "طي"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "طي الكل"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1127,6 +1139,12 @@
     {
       "type": 0,
       "value": "توسيع"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "توسيع الكل"
     }
   ],
   "outline.has-note": [
@@ -1327,6 +1345,30 @@
       "value": "إلغاء تغييرات النص"
     }
   ],
+  "shortcut-help-pane.category-editing": [
+    {
+      "type": 0,
+      "value": "التحرير"
+    }
+  ],
+  "shortcut-help-pane.category-format": [
+    {
+      "type": 0,
+      "value": "التنسيق"
+    }
+  ],
+  "shortcut-help-pane.category-navigation": [
+    {
+      "type": 0,
+      "value": "التنقل"
+    }
+  ],
+  "shortcut-help-pane.category-view": [
+    {
+      "type": 0,
+      "value": "العرض"
+    }
+  ],
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
@@ -1363,10 +1405,52 @@
       "value": "إلغاء تحديد جميع المواضيع"
     }
   ],
+  "shortcut-help-pane.diagram-aria": [
+    {
+      "type": 0,
+      "value": "ينتقل السهم الأيسر إلى الموضوع الأصل، والسهم الأيمن إلى موضوع فرعي، والسهمان لأعلى ولأسفل بين المواضيع الشقيقة."
+    }
+  ],
+  "shortcut-help-pane.diagram-caption": [
+    {
+      "type": 0,
+      "value": "في النصف الأيسر من الخريطة، يتبادل ← و → دوريهما."
+    }
+  ],
+  "shortcut-help-pane.diagram-child": [
+    {
+      "type": 0,
+      "value": "فرعي"
+    }
+  ],
+  "shortcut-help-pane.diagram-parent": [
+    {
+      "type": 0,
+      "value": "أصل"
+    }
+  ],
+  "shortcut-help-pane.diagram-selected": [
+    {
+      "type": 0,
+      "value": "محدد"
+    }
+  ],
+  "shortcut-help-pane.diagram-sibling": [
+    {
+      "type": 0,
+      "value": "شقيق"
+    }
+  ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
       "value": "فصل الموضوع"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect-key": [
+    {
+      "type": 0,
+      "value": "اسحب الموضوع"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
@@ -1835,6 +1919,20 @@
     {
       "type": 0,
       "value": "توسيع حسب المستوى"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "توسيع حسب المستوى (المستوى "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

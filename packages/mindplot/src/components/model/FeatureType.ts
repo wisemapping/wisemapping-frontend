@@ -15,6 +15,19 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import type NoteModel from './NoteModel';
+import type LinkModel from './LinkModel';
+import type SvgIconModel from './SvgIconModel';
+import type EmojiIconModel from './EmojiIconModel';
+
 type FeatureType = 'note' | 'link' | 'icon' | 'eicon';
+
+/** The model class of each feature type. */
+export type FeatureByType = {
+  note: NoteModel;
+  link: LinkModel;
+  icon: SvgIconModel;
+  eicon: EmojiIconModel;
+};
 
 export default FeatureType;

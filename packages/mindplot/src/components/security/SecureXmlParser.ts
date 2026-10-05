@@ -248,7 +248,6 @@ class SecureXmlParser {
       /<!ENTITY[^>]*>/gi,
       /&(?!(?:amp|lt|gt|quot|apos);)[a-zA-Z][a-zA-Z0-9]*;/g,
       /<\?xml-stylesheet[^>]*>/gi,
-      /<\?xml-stylesheet[^>]*>/gi,
       /<script[^>]*>/gi,
       /<iframe[^>]*>/gi,
       /<object[^>]*>/gi,

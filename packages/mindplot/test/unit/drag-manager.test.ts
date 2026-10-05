@@ -83,6 +83,8 @@ const buildTopic = () => {
   const node = {
     getId: () => 3,
     isCentralTopic: () => false,
+    // A topic without a designer: it runs its commands through ActionDispatcher.getInstance().
+    getActionDispatcher: () => ActionDispatcher.getInstance(),
     getSize: () => ({ width: 40, height: 20 }),
     addEvent: (type: string, listener: (event: Event) => void) => {
       if (type === 'mousedown') mouseDown = listener;
@@ -283,6 +285,14 @@ describe('DragManager', () => {
 
     // ... so a draggable topic can still be dragged.
     startDrag();
+  });
+
+  // BL5-39: Designer adds every topic it builds and relies on this to skip the central one.
+  it('registers no listener on the central topic', () => {
+    const addEvent = jest.fn();
+    dragManager.add({ getId: () => 0, isCentralTopic: () => true, addEvent } as unknown as Topic);
+
+    expect(addEvent).not.toHaveBeenCalled();
   });
 
   it('ignores keys other than Escape during a drag', () => {

@@ -32,6 +32,14 @@ const TopicStyleEditorWithActions = (props: {
   onConnectionStyleChange?: (style: LineType | undefined) => void;
   onConnectionColorChange?: (color: string | undefined) => void;
 }): React.ReactElement => {
+  const {
+    onShapeChange,
+    onFillColorChange,
+    onBorderColorChange,
+    onBorderStyleChange,
+    onConnectionStyleChange,
+    onConnectionColorChange,
+  } = props;
   const [shape, setShape] = React.useState<TopicShapeType | undefined>('rounded rectangle');
   const [fillColor, setFillColor] = React.useState<string | undefined>('#00ff00');
   const [borderColor, setBorderColor] = React.useState<string | undefined>('#0000ff');
@@ -46,11 +54,11 @@ const TopicStyleEditorWithActions = (props: {
       getValue: () => shape,
       setValue: (v: TopicShapeType | undefined) => {
         setShape(v);
-        props.onShapeChange?.(v);
+        onShapeChange?.(v);
       },
       switchValue: () => {},
     }),
-    [shape, props.onShapeChange],
+    [shape, onShapeChange],
   );
 
   const fillColorModel: NodeProperty<string | undefined> = React.useMemo(
@@ -58,11 +66,11 @@ const TopicStyleEditorWithActions = (props: {
       getValue: () => fillColor,
       setValue: (v: string | undefined) => {
         setFillColor(v);
-        props.onFillColorChange?.(v);
+        onFillColorChange?.(v);
       },
       switchValue: () => {},
     }),
-    [fillColor, props.onFillColorChange],
+    [fillColor, onFillColorChange],
   );
 
   const borderColorModel: NodeProperty<string | undefined> = React.useMemo(
@@ -70,11 +78,11 @@ const TopicStyleEditorWithActions = (props: {
       getValue: () => borderColor,
       setValue: (v: string | undefined) => {
         setBorderColor(v);
-        props.onBorderColorChange?.(v);
+        onBorderColorChange?.(v);
       },
       switchValue: () => {},
     }),
-    [borderColor, props.onBorderColorChange],
+    [borderColor, onBorderColorChange],
   );
 
   const borderStyleModel: NodeProperty<StrokeStyle | undefined> = React.useMemo(
@@ -82,11 +90,11 @@ const TopicStyleEditorWithActions = (props: {
       getValue: () => borderStyle,
       setValue: (v: StrokeStyle | undefined) => {
         setBorderStyle(v);
-        props.onBorderStyleChange?.(v);
+        onBorderStyleChange?.(v);
       },
       switchValue: () => {},
     }),
-    [borderStyle, props.onBorderStyleChange],
+    [borderStyle, onBorderStyleChange],
   );
 
   const connectionStyleModel: NodeProperty<LineType | undefined> = React.useMemo(
@@ -94,11 +102,11 @@ const TopicStyleEditorWithActions = (props: {
       getValue: () => connectionStyle,
       setValue: (v: LineType | undefined) => {
         setConnectionStyle(v);
-        props.onConnectionStyleChange?.(v);
+        onConnectionStyleChange?.(v);
       },
       switchValue: () => {},
     }),
-    [connectionStyle, props.onConnectionStyleChange],
+    [connectionStyle, onConnectionStyleChange],
   );
 
   const connectionColorModel: NodeProperty<string | undefined> = React.useMemo(
@@ -106,11 +114,11 @@ const TopicStyleEditorWithActions = (props: {
       getValue: () => connectionColor,
       setValue: (v: string | undefined) => {
         setConnectionColor(v);
-        props.onConnectionColorChange?.(v);
+        onConnectionColorChange?.(v);
       },
       switchValue: () => {},
     }),
-    [connectionColor, props.onConnectionColorChange],
+    [connectionColor, onConnectionColorChange],
   );
 
   return (

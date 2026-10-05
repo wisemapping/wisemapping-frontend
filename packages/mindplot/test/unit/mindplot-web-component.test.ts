@@ -21,15 +21,11 @@ import PersistenceManager from '../../src/components/PersistenceManager';
 import WidgetBuilder from '../../src/components/WidgetBuilder';
 import buildDesigner from '../../src/components/DesignerBuilder';
 import { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
+import LocalStorageManager from '../../src/components/LocalStorageManager';
 
 jest.mock('../../src/components/DesignerBuilder', () => ({
   __esModule: true,
   default: jest.fn(),
-}));
-
-jest.mock('../../src/components/DesignerKeyboard', () => ({
-  __esModule: true,
-  default: { getInstance: jest.fn().mockReturnValue(undefined) },
 }));
 
 jest.mock('../../src/components/model/ToolbarNotifier', () => ({
@@ -79,7 +75,6 @@ describe('MindplotWebComponent', () => {
     mindmap = { getId: () => '1' };
     persistence = { save: jest.fn(), unlockMap: jest.fn() };
     dispose = jest.fn();
-    PersistenceManager.init(persistence as unknown as PersistenceManager);
 
     (buildDesigner as jest.Mock).mockReset();
     (buildDesigner as jest.Mock).mockImplementation(() => ({
@@ -88,6 +83,7 @@ describe('MindplotWebComponent', () => {
       },
       getMindmap: () => mindmap,
       getMindmapProperties: () => ({}),
+      getKeyboard: () => undefined,
       dispose,
     }));
 
@@ -201,8 +197,65 @@ describe('MindplotWebComponent', () => {
     });
   });
 
+  describe('default persistence (BL5-27)', () => {
+    it('falls back to a LocalStorageManager when no persistence is given', () => {
+      component.setAttribute('mode', 'edition-owner');
+      component.buildDesigner(undefined, {} as unknown as WidgetBuilder);
+
+      const { calls } = (buildDesigner as jest.Mock).mock;
+      const options: DesignerOptions = calls[calls.length - 1][0];
+      expect(options.persistenceManager).toBeInstanceOf(LocalStorageManager);
+    });
+  });
+
+  describe('persistence (BL5-36)', () => {
+    it('saves and unlocks through the persistence it was built with', () => {
+      build('edition-owner');
+
+      component.save(true);
+      component.unlockMap();
+
+      expect(persistence.save).toHaveBeenCalledTimes(1);
+      expect(persistence.unlockMap).toHaveBeenCalledWith('1');
+    });
+
+    it('loads through the persistence it was built with', async () => {
+      const load = jest.fn().mockResolvedValue({});
+      Object.assign(persistence, { load });
+      const loadMap = jest.fn();
+      (buildDesigner as jest.Mock).mockImplementation(() => ({
+        addEvent: jest.fn(),
+        getKeyboard: () => undefined,
+        loadMap,
+      }));
+      build('edition-owner');
+
+      await component.loadMap('1');
+
+      expect(load).toHaveBeenCalledWith('1');
+      expect(loadMap).toHaveBeenCalled();
+    });
+
+    it('still unlocks the map once the element leaves the page', async () => {
+      build('edition-owner');
+      document.body.appendChild(component);
+
+      component.remove();
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, 0);
+      });
+
+      // Pending changes can still be saved and the map unlocked ...
+      component.unlockMap();
+      expect(persistence.unlockMap).toHaveBeenCalledWith('1');
+    });
+  });
+
   describe('disconnect (BL-48)', () => {
-    const flushMicrotasks = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+    const flushMicrotasks = () =>
+      new Promise<void>((resolve) => {
+        setTimeout(resolve, 0);
+      });
 
     afterEach(() => {
       component.remove();

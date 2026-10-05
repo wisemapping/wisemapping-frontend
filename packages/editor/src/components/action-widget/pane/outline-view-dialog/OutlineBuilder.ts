@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { INodeModel, LinkModel, NoteModel, SvgIconModel, ContentType } from '@wisemapping/mindplot';
+import { INodeModel, SvgImageIcon, ContentType } from '@wisemapping/mindplot';
 
 export interface OutlineNodeData {
   id: string;
@@ -49,19 +49,8 @@ export class OutlineBuilder {
    * Helper function to get icon URL (same logic as SvgImageIcon.getImageUrl)
    */
   private getIconUrl(iconId: string): string {
-    try {
-      // Dynamically require the icon
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      return require(`@wisemapping/mindplot/assets/icons/${iconId}.svg`);
-    } catch {
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        return require(`@wisemapping/mindplot/assets/icons/${iconId}.png`);
-      } catch {
-        console.warn(`Icon not found: ${iconId}`);
-        return '';
-      }
-    }
+    // The same lookup as the canvas: the browser bundle has no require() to load the asset with.
+    return SvgImageIcon.getImageUrl(iconId);
   }
 
   /**
@@ -78,16 +67,14 @@ export class OutlineBuilder {
     const emojiChars: string[] = [];
 
     features.forEach((feature) => {
-      const type = feature.getType();
-      if (type === 'icon') {
+      if (feature.isOfType('icon')) {
         // SVG icon from gallery
-        const iconModel = feature as SvgIconModel;
-        const iconType = iconModel.getIconType();
+        const iconType = feature.getIconType();
         const iconUrl = this.getIconUrl(iconType);
         if (iconUrl) {
           iconUrls.push(iconUrl);
         }
-      } else if (type === 'eicon') {
+      } else if (feature.isOfType('eicon')) {
         // Emoji icon - extract the emoji character
         // The feature attributes contain the emoji ID
         const attributes = feature.getAttributes();
@@ -99,16 +86,16 @@ export class OutlineBuilder {
 
     // Extract link URL
     let linkUrl: string | undefined;
-    const linkFeature = features.find((f) => f.getType() === 'link');
+    const linkFeature = features.find((f) => f.isOfType('link'));
     if (linkFeature) {
-      linkUrl = (linkFeature as LinkModel).getUrl();
+      linkUrl = linkFeature.getUrl();
     }
 
     // Extract note text
     let noteText: string | undefined;
-    const noteFeature = features.find((f) => f.getType() === 'note');
+    const noteFeature = features.find((f) => f.isOfType('note'));
     if (noteFeature) {
-      noteText = (noteFeature as NoteModel).getText();
+      noteText = noteFeature.getText();
     }
 
     const nodeText =

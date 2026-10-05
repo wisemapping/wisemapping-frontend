@@ -15,26 +15,29 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import WorkspaceElement from './WorkspaceElement';
-import ElementPeer from './peer/svg/ElementPeer';
-import PositionType from './PositionType';
+import type WorkspaceElement from './WorkspaceElement';
+import type ElementPeer from './peer/svg/ElementPeer';
+import type PositionType from './PositionType';
+import type { ElementType, StrokeStyle } from './types';
 
+/**
+ * A line between two points, as mindplot draws connections: its ends, stroke, fill, visibility,
+ * opacity, z-order and events. Every line class implements all of it.
+ */
 interface Line {
   setFrom(x: number, y: number): void;
 
   setTo(x: number, y: number): void;
 
-  setIsSrcControlPointCustom(value: boolean): void;
+  getFrom(): PositionType;
 
-  setIsDestControlPointCustom(value: boolean): void;
+  getTo(): PositionType;
 
   setCursor(value: string): void;
 
-  setStroke(width: number, style?: string, color?: string, opacity?: number): void;
+  setStroke(width: number, style?: StrokeStyle | null, color?: string, opacity?: number): void;
 
   setFill(color: string, opacity: number): void;
-
-  setDashed(v: number, v2: number): void;
 
   setVisibility(value: boolean, fade?: number): void;
 
@@ -42,29 +45,15 @@ interface Line {
 
   setOpacity(value: number): void;
 
+  moveToFront(): void;
+
   moveToBack(): void;
 
   setTestId(value: string): void;
 
-  setSrcControlPoint(value: PositionType): void;
-
-  setDestControlPoint(value: PositionType): void;
-
-  isDestControlPointCustom(): boolean;
-
-  isSrcControlPointCustom(): boolean;
-
-  getControlPoints(): [PositionType, PositionType];
-
   trigger(value: string, event: unknown): void;
 
-  getTo(): PositionType;
-
-  getFrom(): PositionType;
-
-  moveToFront(): void;
-
-  getType(): string;
+  getType(): ElementType;
 
   addEvent(value: string, listener: (event: Event, detail?: unknown) => void): void;
 
@@ -72,4 +61,27 @@ interface Line {
 
   getElementClass(): WorkspaceElement<ElementPeer>;
 }
-export default Line;
+
+/** A line whose curve is shaped by two control points, and that can be dashed (CurvedLine). */
+export interface ControlPointLine extends Line {
+  setSrcControlPoint(value: PositionType): void;
+
+  setDestControlPoint(value: PositionType): void;
+
+  getControlPoints(): [PositionType, PositionType];
+
+  isSrcControlPointCustom(): boolean;
+
+  isDestControlPointCustom(): boolean;
+
+  setIsSrcControlPointCustom(value: boolean): void;
+
+  setIsDestControlPointCustom(value: boolean): void;
+
+  /** Dashes the line; no length or spacing makes it solid again. */
+  setDashed(length?: number, spacing?: number): void;
+}
+
+// A type cannot be `export default`ed by name under verbatimModuleSyntax.
+// eslint-disable-next-line no-restricted-exports
+export type { Line as default };

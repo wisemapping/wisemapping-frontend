@@ -139,10 +139,7 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
         }}
       >
         {SHORTCUT_CATEGORIES.map((entry) => (
-          <Tab
-            key={entry.key}
-            label={<FormattedMessage id={entry.labelId} defaultMessage={entry.labelDefault} />}
-          />
+          <Tab key={entry.key} label={<FormattedMessage {...entry.label} />} />
         ))}
       </Tabs>
 
@@ -166,9 +163,9 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
           </TableHead>
           <TableBody>
             {category.shortcuts.map((shortcut) => (
-              <TableRow hover key={shortcut.id}>
+              <TableRow hover key={shortcut.message.id}>
                 <TableCell sx={{ fontSize: '0.72rem' }}>
-                  <FormattedMessage id={shortcut.id} defaultMessage={shortcut.defaultMessage} />
+                  <FormattedMessage {...shortcut.message} />
                 </TableCell>
                 <TableCell>
                   <ComboList combos={isMac ? shortcut.mac : shortcut.win} />

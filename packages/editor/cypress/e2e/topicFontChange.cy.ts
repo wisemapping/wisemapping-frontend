@@ -41,73 +41,91 @@ describe('Topic Font Suite', () => {
   it('Change Font Size', () => {
     // Open font style panel
     cy.onClickToolbarButton('Font Style');
-    
+
     // Wait for font size controls to be visible
     cy.get('[aria-label="Smaller"]').should('be.visible').and('not.be.disabled').as('smaller');
     cy.get('[aria-label="Bigger"]').should('be.visible').and('not.be.disabled').as('bigger');
-    
+
     // Get initial font size
-    cy.get('[test-id=1] > text').invoke('attr', 'font-size').then((initialSize) => {
-      const initial = parseFloat(initialSize as string);
-      
-      // Decrease font size once
-      cy.get('@smaller').first().click({ force: true });
-      cy.get('[test-id=1] > text').invoke('attr', 'font-size').should((newSize) => {
-        expect(parseFloat(newSize as string)).to.be.lessThan(initial);
+    cy.get('[test-id=1] > text')
+      .invoke('attr', 'font-size')
+      .then((initialSize) => {
+        const initial = parseFloat(initialSize as string);
+
+        // Decrease font size once
+        cy.get('@smaller').first().click({ force: true });
+        cy.get('[test-id=1] > text')
+          .invoke('attr', 'font-size')
+          .should((newSize) => {
+            expect(parseFloat(newSize as string)).to.be.lessThan(initial);
+          });
+        cy.matchImageSnapshot('changeFontSizeSmaller');
+
+        // Decrease font size again
+        cy.get('@smaller').first().click({ force: true });
+        cy.get('[test-id=1] > text')
+          .invoke('attr', 'font-size')
+          .then((smallestSize) => {
+            const smallest = parseFloat(smallestSize as string);
+            expect(smallest).to.be.lessThan(initial);
+            cy.matchImageSnapshot('changeFontSizeSmall');
+
+            // Increase font size back
+            cy.get('@bigger').first().click({ force: true });
+            cy.get('[test-id=1] > text')
+              .invoke('attr', 'font-size')
+              .should((newSize) => {
+                expect(parseFloat(newSize as string)).to.be.greaterThan(smallest);
+              });
+            cy.matchImageSnapshot('changeFontSizeNormal');
+
+            // Increase to large size
+            cy.get('@bigger').first().click({ force: true });
+            cy.get('[test-id=1] > text')
+              .invoke('attr', 'font-size')
+              .should((newSize) => {
+                const large = parseFloat(newSize as string);
+                expect(large).to.be.greaterThan(smallest);
+                expect(large).to.be.at.least(13.0); // Should be at least 13.0 (could be 13.4 for size 10)
+              });
+            cy.matchImageSnapshot('changeFontSizeLarge');
+
+            // Increase to huge size
+            cy.get('@bigger').first().click({ force: true });
+            cy.get('[test-id=1] > text')
+              .invoke('attr', 'font-size')
+              .should((newSize) => {
+                const huge = parseFloat(newSize as string);
+                expect(huge).to.be.at.least(20.0); // Should be at least 20.0 (could be 20.2 for size 15)
+              });
+            cy.matchImageSnapshot('changeFontSizeHuge');
+
+            // Try to increase beyond maximum (should stay at max)
+            cy.get('@bigger').first().click({ force: true });
+            cy.get('[test-id=1] > text')
+              .invoke('attr', 'font-size')
+              .should((newSize) => {
+                const stillHuge = parseFloat(newSize as string);
+                expect(stillHuge).to.be.at.least(20.0); // Should remain at maximum
+              });
+            cy.matchImageSnapshot('changeFontSizeMaxReached');
+          });
       });
-      cy.matchImageSnapshot('changeFontSizeSmaller');
-      
-      // Decrease font size again
-      cy.get('@smaller').first().click({ force: true });
-      cy.get('[test-id=1] > text').invoke('attr', 'font-size').then((smallestSize) => {
-        const smallest = parseFloat(smallestSize as string);
-        expect(smallest).to.be.lessThan(initial);
-        cy.matchImageSnapshot('changeFontSizeSmall');
-        
-        // Increase font size back
-        cy.get('@bigger').first().click({ force: true });
-        cy.get('[test-id=1] > text').invoke('attr', 'font-size').should((newSize) => {
-          expect(parseFloat(newSize as string)).to.be.greaterThan(smallest);
-        });
-        cy.matchImageSnapshot('changeFontSizeNormal');
-        
-        // Increase to large size
-        cy.get('@bigger').first().click({ force: true });
-        cy.get('[test-id=1] > text').invoke('attr', 'font-size').should((newSize) => {
-          const large = parseFloat(newSize as string);
-          expect(large).to.be.greaterThan(smallest);
-          expect(large).to.be.at.least(13.0); // Should be at least 13.0 (could be 13.4 for size 10)
-        });
-        cy.matchImageSnapshot('changeFontSizeLarge');
-        
-        // Increase to huge size
-        cy.get('@bigger').first().click({ force: true });
-        cy.get('[test-id=1] > text').invoke('attr', 'font-size').should((newSize) => {
-          const huge = parseFloat(newSize as string);
-          expect(huge).to.be.at.least(20.0); // Should be at least 20.0 (could be 20.2 for size 15)
-        });
-        cy.matchImageSnapshot('changeFontSizeHuge');
-        
-        // Try to increase beyond maximum (should stay at max)
-        cy.get('@bigger').first().click({ force: true });
-        cy.get('[test-id=1] > text').invoke('attr', 'font-size').should((newSize) => {
-          const stillHuge = parseFloat(newSize as string);
-          expect(stillHuge).to.be.at.least(20.0); // Should remain at maximum
-        });
-        cy.matchImageSnapshot('changeFontSizeMaxReached');
-      });
-    });
   });
 
   it('Change Font To Italic', () => {
     cy.onClickToolbarButton('Font Style');
-    
+
     // Wait for italic button to be available and click it
-    cy.get('[aria-label*="Italic"]').should('be.visible').and('not.be.disabled').first().click({ force: true });
-    
+    cy.get('[aria-label*="Italic"]')
+      .should('be.visible')
+      .and('not.be.disabled')
+      .first()
+      .click({ force: true });
+
     // Wait for the text element to be updated with italic style
     cy.get('[test-id=1] > text').should('have.attr', 'font-style', 'italic');
-    
+
     // Click away to close the toolbar and verify the change visually
     cy.contains('Mind Mapping').click({ force: true });
     cy.matchImageSnapshot('changeFontItalic');
@@ -115,30 +133,32 @@ describe('Topic Font Suite', () => {
 
   it('Change Font to Bold', () => {
     cy.onClickToolbarButton('Font Style');
-    
+
     // Wait for bold button to be available
     cy.get('[aria-label*="Bold"]').should('be.visible').and('not.be.disabled').as('boldButton');
-    
+
     // Get initial font weight to determine current state
-    cy.get('[test-id=1] > text').invoke('attr', 'font-weight').then((initialWeight) => {
-      const isBold = initialWeight === '900';
-      
-      if (!isBold) {
-        // If not bold, click to make it bold
-        cy.get('@boldButton').first().click({ force: true });
-        cy.get('[test-id=1] > text').should('have.attr', 'font-weight', '900');
-      } else {
-        // If already bold, click twice (toggle off then on) to ensure bold state
-        cy.get('@boldButton').first().click({ force: true });
-        cy.get('[test-id=1] > text').should('have.attr', 'font-weight', '600');
-        cy.get('@boldButton').first().click({ force: true });
-        cy.get('[test-id=1] > text').should('have.attr', 'font-weight', '900');
-      }
-      
-      // Click away to close the toolbar and verify the change visually
-      cy.contains('Mind Mapping').click({ force: true });
-      cy.matchImageSnapshot('changeFontBold');
-    });
+    cy.get('[test-id=1] > text')
+      .invoke('attr', 'font-weight')
+      .then((initialWeight) => {
+        const isBold = initialWeight === '900';
+
+        if (!isBold) {
+          // If not bold, click to make it bold
+          cy.get('@boldButton').first().click({ force: true });
+          cy.get('[test-id=1] > text').should('have.attr', 'font-weight', '900');
+        } else {
+          // If already bold, click twice (toggle off then on) to ensure bold state
+          cy.get('@boldButton').first().click({ force: true });
+          cy.get('[test-id=1] > text').should('have.attr', 'font-weight', '600');
+          cy.get('@boldButton').first().click({ force: true });
+          cy.get('[test-id=1] > text').should('have.attr', 'font-weight', '900');
+        }
+
+        // Click away to close the toolbar and verify the change visually
+        cy.contains('Mind Mapping').click({ force: true });
+        cy.matchImageSnapshot('changeFontBold');
+      });
   });
 
   it('Change Font Color', () => {
@@ -156,7 +176,7 @@ describe('Topic Font Suite', () => {
 
   it.skip('Reset to Default hides all font options', () => {
     cy.onClickToolbarButton('Font Style');
-    
+
     // Change font color first to make Reset button visible
     cy.get('[title="#cc0000"]').should('be.visible').click({ force: true });
 

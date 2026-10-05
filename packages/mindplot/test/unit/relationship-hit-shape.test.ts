@@ -16,14 +16,14 @@
  *   limitations under the License.
  */
 
+import Relationship from '../../src/components/Relationship';
+import Topic from '../../src/components/Topic';
+import { buildDesigner } from './commands/designer-harness';
+
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import Relationship from '../../src/components/Relationship';
-import Topic from '../../src/components/Topic';
-import { buildDesigner } from './commands/designer-harness';
 
 /**
  * A relationship draws a 2px line, plus a 12px "focus shape" that is meant to be
@@ -37,13 +37,13 @@ import { buildDesigner } from './commands/designer-harness';
  * relationship crossing a topic took the topic's clicks.
  */
 
-type Native = { _native: SVGElement };
-const nativeOf = (element: unknown): SVGElement => (element as { peer: Native }).peer._native;
+const nativeOf = (element: unknown): SVGElement =>
+  (element as { getNode: () => SVGElement }).getNode();
 
 const focusShapeOf = (relationship: Relationship): SVGElement =>
   nativeOf((relationship as unknown as { _focusShape: unknown })._focusShape);
 
-const lineOf = (relationship: Relationship): SVGElement => nativeOf(relationship.getLine());
+const lineOf = (relationship: Relationship): SVGElement => relationship.getLine().getNode();
 
 const expectClickableHitShape = (relationship: Relationship): void => {
   const shape = focusShapeOf(relationship);

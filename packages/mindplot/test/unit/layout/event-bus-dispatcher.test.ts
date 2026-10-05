@@ -21,6 +21,12 @@ import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import Mindmap from '../../../src/components/model/Mindmap';
 
+// The bus of the designer the dispatcher belongs to: a new one for each test.
+let bus: LayoutEventBus;
+beforeEach(() => {
+  bus = new LayoutEventBus();
+});
+
 describe('EventBusDispatcher payloads (BL4-35)', () => {
   let dispatcher: EventBusDispatcher;
 
@@ -37,20 +43,20 @@ describe('EventBusDispatcher payloads (BL4-35)', () => {
     child.connectTo(central);
 
     const manager = new LayoutManager(0, { width: 100, height: 40 });
-    dispatcher = new EventBusDispatcher();
+    dispatcher = new EventBusDispatcher(bus);
     dispatcher.setLayoutManager(manager);
 
-    LayoutEventBus.fireEvent('topicAdded', child);
-    LayoutEventBus.fireEvent('topicResize', { node: child, size: { width: 60, height: 20 } });
-    LayoutEventBus.fireEvent('topicConnected', { parentNode: central, childNode: child });
+    bus.fireEvent('topicAdded', child);
+    bus.fireEvent('topicResize', { node: child, size: { width: 60, height: 20 } });
+    bus.fireEvent('topicConnected', { parentNode: central, childNode: child });
 
     // The model had no order: it gets the next one among its siblings.
     expect(child.getOrder()).toBe(0);
     expect(manager.find(1).getSize()).toEqual({ width: 60, height: 20 });
     expect(manager.find(1).getOrder()).toBe(0);
 
-    LayoutEventBus.fireEvent('topicDisconect', child);
-    LayoutEventBus.fireEvent('topicRemoved', child);
+    bus.fireEvent('topicDisconect', child);
+    bus.fireEvent('topicRemoved', child);
     expect(() => manager.find(1)).toThrow();
   });
 
@@ -62,14 +68,14 @@ describe('EventBusDispatcher payloads (BL4-35)', () => {
     // Never run: ts-jest type-checks the tests, so these fail to compile while fireEvent takes any
     // payload.
     const typeChecks = () => {
-      LayoutEventBus.fireEvent('topicRemoved', model);
-      LayoutEventBus.fireEvent('forceLayout');
+      bus.fireEvent('topicRemoved', model);
+      bus.fireEvent('forceLayout');
       // @ts-expect-error topics are sent as their model
-      LayoutEventBus.fireEvent('topicRemoved', notAModel);
+      bus.fireEvent('topicRemoved', notAModel);
       // @ts-expect-error topicMoved needs a position
-      LayoutEventBus.fireEvent('topicMoved', { node: model });
+      bus.fireEvent('topicMoved', { node: model });
       // @ts-expect-error topicConnected needs its payload
-      LayoutEventBus.fireEvent('topicConnected');
+      bus.fireEvent('topicConnected');
     };
     expect(typeChecks).toBeInstanceOf(Function);
   });
@@ -99,17 +105,20 @@ describe('EventBusDispatcher layout coalescing', () => {
       return child;
     });
     const manager = new LayoutManager(0, { width: 100, height: 40 });
-    dispatcher = new EventBusDispatcher();
+    dispatcher = new EventBusDispatcher(bus);
     dispatcher.setLayoutManager(manager);
     const layout = jest.spyOn(manager, 'layout');
     const connect = (child: (typeof models)[number]) => {
-      LayoutEventBus.fireEvent('topicAdded', child);
-      LayoutEventBus.fireEvent('topicConnected', { parentNode: central, childNode: child });
+      bus.fireEvent('topicAdded', child);
+      bus.fireEvent('topicConnected', { parentNode: central, childNode: child });
     };
     return { manager, models, layout, connect };
   };
 
-  const microtasks = () => new Promise<void>((resolve) => queueMicrotask(resolve));
+  const microtasks = () =>
+    new Promise<void>((resolve) => {
+      queueMicrotask(resolve);
+    });
 
   it('lays out once for a run of connections, in a microtask', async () => {
     const { manager, models, layout, connect } = setUp(5);
@@ -133,7 +142,7 @@ describe('EventBusDispatcher layout coalescing', () => {
 
     // What Topic.connectTo does: topicConnected, then forceLayout ...
     connect(models[0]);
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('forceLayout');
     expect(layout).toHaveBeenCalledTimes(1);
     expect(changes).toContain(1);
 
@@ -187,5 +196,93 @@ describe('EventBusDispatcher layout coalescing', () => {
 
     await microtasks();
     expect(layout).not.toHaveBeenCalled();
+  });
+});
+
+/**
+ * BL5-94: forceLayout skips the layout when nothing it depends on changed since the last one (it
+ * would move nothing), and runs it after any change.
+ */
+describe('EventBusDispatcher forceLayout with nothing pending', () => {
+  let dispatcher: EventBusDispatcher;
+
+  afterEach(() => {
+    dispatcher?.dispose();
+    jest.restoreAllMocks();
+  });
+
+  const setUp = () => {
+    const mindmap = new Mindmap();
+    const central = mindmap.createNode('CentralTopic', 0);
+    mindmap.addBranch(central);
+    const child = mindmap.createNode('MainTopic', 1);
+    child.setPosition(100, 0);
+    child.setOrder(0);
+    child.connectTo(central);
+    const manager = new LayoutManager(0, { width: 100, height: 40 });
+    dispatcher = new EventBusDispatcher(bus);
+    dispatcher.setLayoutManager(manager);
+    bus.fireEvent('topicAdded', child);
+    bus.fireEvent('topicConnected', { parentNode: central, childNode: child });
+    bus.fireEvent('forceLayout');
+    const layout = jest.spyOn(manager, 'layout');
+    return { manager, central, child, layout };
+  };
+
+  it('does not lay out again when nothing changed', () => {
+    const { layout } = setUp();
+    bus.fireEvent('forceLayout');
+    bus.fireEvent('forceLayout');
+    expect(layout).not.toHaveBeenCalled();
+  });
+
+  it('lays out after a change of size, shrink state or position, and only once', () => {
+    const { manager, central, child, layout } = setUp();
+    const before = manager.find(1).getPosition().x;
+
+    bus.fireEvent('topicResize', { node: central, size: { width: 300, height: 40 } });
+    bus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(1);
+    expect(manager.find(1).getPosition().x).toBeGreaterThan(before);
+    bus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(1);
+
+    // A resize the layout does not see (half a pixel or less) changes nothing.
+    bus.fireEvent('topicResize', { node: central, size: { width: 300.5, height: 40 } });
+    bus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(1);
+
+    child.setChildrenShrunken(true);
+    bus.fireEvent('childShrinked', child);
+    bus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(2);
+
+    bus.fireEvent('topicMoved', { node: central, position: { x: 50, y: 0 } });
+    bus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(3);
+  });
+
+  it('lays out after a connection, a disconnection or a removal', () => {
+    const { child, layout } = setUp();
+    bus.fireEvent('topicDisconect', child);
+    bus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(1);
+
+    bus.fireEvent('topicRemoved', child);
+    bus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(2);
+  });
+
+  it('flushes the changes a layout that was not flushed left', () => {
+    const { manager, central, layout } = setUp();
+    bus.fireEvent('topicResize', { node: central, size: { width: 300, height: 40 } });
+    manager.layout(false);
+    layout.mockClear();
+    const changes: number[] = [];
+    manager.addEvent('change', (event: { getId: () => number }) => changes.push(event.getId()));
+
+    bus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(1);
+    expect(changes).toContain(1);
   });
 });

@@ -19,12 +19,20 @@
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import Topic from '../../../src/components/Topic';
+import type Designer from '../../../src/components/Designer';
+import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import { buildTopics, stubSvgMeasurement } from './Helper';
 
 let changeTextToTopic: jest.Mock;
+// The canvas container of the designer: the editor is placed next to it.
 let mindmapComp: HTMLElement;
+let designer: Designer;
+let textEditor: MultitTextEditor;
 
-const editor = () => MultitTextEditor.getInstance();
+const editor = () => textEditor;
+
+/** A central topic and a child, of a designer with no canvas but its container. */
+const buildDesignerTopics = () => buildTopics({ designer });
 
 const textarea = (): HTMLTextAreaElement =>
   document.querySelector('#textContainer textarea') as HTMLTextAreaElement;
@@ -37,6 +45,8 @@ const openEditor = (topic: Topic, text?: string) => {
   editor().show(topic, text);
 };
 
+let topics: Topic[] = [];
+
 beforeAll(() => {
   stubSvgMeasurement();
 });
@@ -44,9 +54,15 @@ beforeAll(() => {
 beforeEach(() => {
   const wrapper = document.createElement('div');
   mindmapComp = document.createElement('div');
-  mindmapComp.id = 'mindmap-comp';
   wrapper.appendChild(mindmapComp);
   document.body.appendChild(wrapper);
+  textEditor = new MultitTextEditor();
+  const layoutEventBus = new LayoutEventBus();
+  designer = {
+    getContainer: () => mindmapComp,
+    getActionDispatcher: () => ActionDispatcher.getInstance(),
+    getLayoutEventBus: () => layoutEventBus,
+  } as unknown as Designer;
 
   changeTextToTopic = jest.fn();
   ActionDispatcher.setInstance({
@@ -62,11 +78,9 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
-let topics: Topic[] = [];
-
 describe('MultilineTextEditor Escape', () => {
   it('leaves an empty topic empty instead of saving the placeholder', () => {
-    const { central } = buildTopics();
+    const { central } = buildDesignerTopics();
     topics = [central];
     expect(central.getModel().getText()).toBeFalsy();
     const placeholder = central.getText();
@@ -83,7 +97,7 @@ describe('MultilineTextEditor Escape', () => {
   });
 
   it('restores the previous text of a topic that has one', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child, 'x');
@@ -97,7 +111,7 @@ describe('MultilineTextEditor Escape', () => {
 
 describe('MultilineTextEditor IME composition', () => {
   it('does not commit on Enter while composing', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child);
@@ -108,7 +122,7 @@ describe('MultilineTextEditor IME composition', () => {
   });
 
   it('does not commit on Enter reported with the IME key code', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child);
@@ -119,7 +133,7 @@ describe('MultilineTextEditor IME composition', () => {
   });
 
   it('commits on a plain Enter', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child);
@@ -131,7 +145,7 @@ describe('MultilineTextEditor IME composition', () => {
   });
 
   it('keeps the Enter that commits from adding a new line to the topic', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child);
@@ -157,7 +171,7 @@ describe('MultilineTextEditor IME composition', () => {
 
 describe('MultilineTextEditor input', () => {
   it('updates the topic and the editor size on paste or delete', () => {
-    const { child } = buildTopics();
+    const { child } = buildDesignerTopics();
     topics = [child];
 
     openEditor(child);
@@ -172,5 +186,37 @@ describe('MultilineTextEditor input', () => {
 
     expect(child.getModel().getText()).toBe('A');
     expect(textarea().getAttribute('cols')).toBe('1');
+  });
+});
+
+// BL5-76 (W-NATIVEPOS): the editor is absolutely positioned inside its offset parent (the map
+// component's wrapper), but was placed with the text's document coordinates, so it was off by the
+// wrapper's offset whenever the wrapper was not at the page origin.
+describe('MultilineTextEditor position', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('is placed over the text, relative to its offset parent', () => {
+    const { child } = buildDesignerTopics();
+    topics = [child];
+    const wrapper = mindmapComp.parentElement!;
+    wrapper.style.position = 'relative';
+    jest
+      .spyOn(HTMLElement.prototype, 'offsetParent', 'get')
+      .mockImplementation(function offsetParent(this: HTMLElement) {
+        return this.parentElement;
+      });
+    wrapper.getBoundingClientRect = () => ({ top: 100, left: 20, width: 800 }) as DOMRect;
+    const textNode = child.getOrBuildTextShape().getNode();
+    textNode.getClientRects = () => [{}] as unknown as DOMRectList;
+    textNode.getBoundingClientRect = () => ({ top: 130, left: 60 }) as DOMRect;
+
+    openEditor(child);
+
+    const container = textarea().parentElement as HTMLElement;
+    expect(container.style.position).toBe('absolute');
+    expect(container.style.top).toBe('30px');
+    expect(container.style.left).toBe('40px');
   });
 });

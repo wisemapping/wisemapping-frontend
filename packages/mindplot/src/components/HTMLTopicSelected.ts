@@ -23,7 +23,7 @@ import ColorUtil from './theme/ColorUtil';
 import type { ThemeVariant } from './theme/Theme';
 import type { OrientationType } from './layout/LayoutType';
 import { $msg } from './Messages';
-import LayoutEventBus from './layout/LayoutEventBus';
+import { LayoutEventPayloads } from './layout/LayoutEventBus';
 import { LayoutEventBusType } from './LayoutEventBusType';
 import NodeModel from './model/NodeModel';
 
@@ -92,22 +92,14 @@ class HTMLTopicSelected {
 
   private _topic: Topic;
 
-  private _designer: Designer | null;
-
   private _onTopicFocus: (() => void) | null;
 
   private _onTopicBlur: (() => void) | null;
 
-  constructor(
-    topic: Topic,
-    containerElement: HTMLDivElement,
-    screenManager: ScreenManager,
-    designer?: Designer,
-  ) {
+  constructor(topic: Topic, containerElement: HTMLDivElement, screenManager: ScreenManager) {
     this._topic = topic;
     this._containerElement = containerElement;
     this._screenManager = screenManager;
-    this._designer = designer || null;
     this._isVisible = false;
     this._helperContainer = null;
 
@@ -164,6 +156,7 @@ class HTMLTopicSelected {
       }
 
       // Check if multiple topics are selected
+      const designer = this._topic.getDesigner();
       if (designer) {
         try {
           const selectedTopics = designer.getModel().filterSelectedTopics();
@@ -211,8 +204,9 @@ class HTMLTopicSelected {
     }
 
     // If not found via parent chain (isolated topic), search all topics
-    if (!centralTopic && this._designer) {
-      const allTopics = this._designer.getModel().getTopics();
+    const designer = this._topic.getDesigner();
+    if (!centralTopic && designer) {
+      const allTopics = designer.getModel().getTopics();
       centralTopic = allTopics.find((t) => t.isCentralTopic()) || null;
     }
 
@@ -1000,8 +994,9 @@ class HTMLTopicSelected {
     }
 
     // Check if multiple topics are selected
-    if (this._designer) {
-      const selectedTopics = this._designer.getModel().filterSelectedTopics();
+    const designer = this._topic.getDesigner();
+    if (designer) {
+      const selectedTopics = designer.getModel().filterSelectedTopics();
       if (selectedTopics.length > 1) {
         // Multiple topics selected - hide shadow
         if (this._isVisible) {
@@ -1059,8 +1054,8 @@ class HTMLTopicSelected {
   }
 
   private _createSibling(): void {
-    // The designer passed in, or else the one the topic was built with
-    const designer = this._designer || this._topic.getDesigner();
+    // The designer the topic was built with
+    const designer = this._topic.getDesigner();
     if (!designer) {
       console.warn('Designer instance not available for creating sibling');
       return;
@@ -1081,8 +1076,8 @@ class HTMLTopicSelected {
   }
 
   private _createChild(): void {
-    // The designer passed in, or else the one the topic was built with
-    const designer = this._designer || this._topic.getDesigner();
+    // The designer the topic was built with
+    const designer = this._topic.getDesigner();
     if (!designer) {
       console.warn('Designer instance not available for creating child');
       return;
@@ -1164,7 +1159,7 @@ class HTMLTopicSelected {
     if (!selectionShadows.has(topic)) {
       const screenManager = designer.getScreenManager();
       const containerElement = designer.getContainer();
-      const shadow = new HTMLTopicSelected(topic, containerElement, screenManager, designer);
+      const shadow = new HTMLTopicSelected(topic, containerElement, screenManager);
       selectionShadows.set(topic, shadow);
     }
   }
@@ -1176,7 +1171,7 @@ class HTMLTopicSelected {
    * Returns a function that removes the LayoutEventBus handlers it registered.
    */
   static initializeSelectionShadows(designer: Designer): Unsubscribe {
-    // LayoutEventBus is module-level, so drop the handlers of a previous call first
+    // Drop the handlers of a previous call first
     unsubscribeByDesigner.get(designer)?.();
 
     // Don't initialize selection shadows in read-only mode
@@ -1195,12 +1190,8 @@ class HTMLTopicSelected {
       .filterSelectedTopics()
       .forEach((topic) => HTMLTopicSelected.ensureTopicShadow(designer, topic));
 
-    // Helper to find topic by model
     const findTopicByModel = (nodeModel: NodeModel): Topic | undefined =>
-      designer
-        .getModel()
-        .getTopics()
-        .find((t) => t.getModel() === nodeModel);
+      designer.getModel().findTopicByModel(nodeModel);
 
     const selectionShadows = designer.getSelectionShadows();
 
@@ -1247,22 +1238,29 @@ class HTMLTopicSelected {
       }
     };
 
-    const handlers: [LayoutEventBusType, (nodeModel: NodeModel) => void][] = [
-      ['topicSelected', onTopicSelected],
-      ['topicUnselected', onTopicUnselected],
-      ['topicRemoved', onTopicRemoved],
-      ['forceLayout', updateShadows],
-      ['topicResize', updateShadows],
-      ['topicMoved', updateShadows],
-      ['topicConnected', updateShadows],
-      // Update shadows when canvas is panned/dragged or zoomed
-      ['canvasPanned', followCanvas],
-      ['canvasZoomed', followCanvas],
-    ];
-    handlers.forEach(([type, handler]) => LayoutEventBus.addEvent(type, handler));
+    // Each handler is checked against the payload its event sends.
+    const removals: Unsubscribe[] = [];
+    const bus = designer.getLayoutEventBus();
+    const on = <T extends LayoutEventBusType>(
+      type: T,
+      handler: (payload: LayoutEventPayloads[T]) => void,
+    ): void => {
+      bus.addEvent(type, handler);
+      removals.push(() => bus.removeEvent(type, handler));
+    };
+    on('topicSelected', onTopicSelected);
+    on('topicUnselected', onTopicUnselected);
+    on('topicRemoved', onTopicRemoved);
+    on('forceLayout', updateShadows);
+    on('topicResize', updateShadows);
+    on('topicMoved', updateShadows);
+    on('topicConnected', updateShadows);
+    // Update shadows when canvas is panned/dragged or zoomed
+    on('canvasPanned', followCanvas);
+    on('canvasZoomed', followCanvas);
 
     const unsubscribe: Unsubscribe = () => {
-      handlers.forEach(([type, handler]) => LayoutEventBus.removeEvent(type, handler));
+      removals.forEach((remove) => remove());
       if (unsubscribeByDesigner.get(designer) === unsubscribe) {
         unsubscribeByDesigner.delete(designer);
       }

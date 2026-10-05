@@ -65,7 +65,7 @@ describe('TreeSorter Order Recovery Tests', () => {
 
     // Verify error was logged
     expect(console.error).toHaveBeenCalledWith(
-      expect.stringContaining('[TreeSorter] Order discontinuity detected')
+      expect.stringContaining('[TreeSorter] Order discontinuity detected'),
     );
   });
 
@@ -96,7 +96,7 @@ describe('TreeSorter Order Recovery Tests', () => {
 
     // Verify error was logged
     expect(console.error).toHaveBeenCalledWith(
-      expect.stringContaining('[TreeSorter] Invalid order value detected')
+      expect.stringContaining('[TreeSorter] Invalid order value detected'),
     );
   });
 
@@ -123,7 +123,7 @@ describe('TreeSorter Order Recovery Tests', () => {
 
     // Verify error was logged
     expect(console.error).toHaveBeenCalledWith(
-      expect.stringContaining('[TreeSorter] Invalid order value detected')
+      expect.stringContaining('[TreeSorter] Invalid order value detected'),
     );
   });
 
@@ -150,7 +150,7 @@ describe('TreeSorter Order Recovery Tests', () => {
 
     // Verify error was logged
     expect(console.error).toHaveBeenCalledWith(
-      expect.stringContaining('[TreeSorter] Invalid order value detected')
+      expect.stringContaining('[TreeSorter] Invalid order value detected'),
     );
   });
 
@@ -177,7 +177,7 @@ describe('TreeSorter Order Recovery Tests', () => {
     expect(node4).toBeDefined();
 
     // Check positions are valid numbers
-    [node1, node2, node3, node4].forEach(node => {
+    [node1, node2, node3, node4].forEach((node) => {
       const pos = node.getPosition();
       expect(typeof pos.x).toBe('number');
       expect(typeof pos.y).toBe('number');
@@ -202,7 +202,7 @@ describe('TreeSorter Order Recovery Tests', () => {
     for (let i = 1; i <= 4; i++) {
       const node = manager.find(i);
       expect(node).toBeDefined();
-      
+
       const pos = node.getPosition();
       expect(Number.isFinite(pos.x)).toBe(true);
       expect(Number.isFinite(pos.y)).toBe(true);
@@ -227,10 +227,10 @@ describe('TreeSorter Order Recovery Tests', () => {
 
     // Add nodes with various order issues
     manager.addNode(1, NODE_SIZE, position).connectNode(0, 1, 0);
-    manager.addNode(2, NODE_SIZE, position).connectNode(0, 2, 5);  // Gap
+    manager.addNode(2, NODE_SIZE, position).connectNode(0, 2, 5); // Gap
     manager.addNode(3, NODE_SIZE, position).connectNode(0, 3, -1); // Negative
     manager.addNode(4, NODE_SIZE, position).connectNode(0, 4, NaN); // NaN
-    manager.addNode(5, NODE_SIZE, position).connectNode(0, 5, 3);  // Valid
+    manager.addNode(5, NODE_SIZE, position).connectNode(0, 5, 3); // Valid
 
     manager.layout();
 
@@ -243,8 +243,8 @@ describe('TreeSorter Order Recovery Tests', () => {
     }
 
     // All orders should be valid numbers
-    const orders = [1, 2, 3, 4, 5].map(id => manager.find(id).getOrder());
-    orders.forEach(order => {
+    const orders = [1, 2, 3, 4, 5].map((id) => manager.find(id).getOrder());
+    orders.forEach((order) => {
       expect(Number.isFinite(order)).toBe(true);
       expect(order).toBeGreaterThanOrEqual(0);
       expect(order).toBeLessThan(5);
@@ -277,7 +277,7 @@ describe('TreeSorter Order Recovery Tests', () => {
     expect(manager.find(4)).toBeDefined();
 
     // All positions should be valid
-    [1, 2, 3, 4].forEach(id => {
+    [1, 2, 3, 4].forEach((id) => {
       const node = manager.find(id);
       const pos = node.getPosition();
       expect(Number.isFinite(pos.x)).toBe(true);
@@ -288,4 +288,3 @@ describe('TreeSorter Order Recovery Tests', () => {
     expect(console.error).toHaveBeenCalled();
   });
 });
-

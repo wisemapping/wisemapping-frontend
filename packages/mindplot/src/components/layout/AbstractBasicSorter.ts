@@ -89,6 +89,21 @@ abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
     return result;
   }
 
+  /**
+   * Half the gap, in y, between the centre of children[index] and the next child in the list (the
+   * one before it, for the last): how far from the first child, or from the last one, the drag
+   * pivot goes before or after them, as it is centred in the gap between two children. A lone
+   * child counts the gap the layout leaves between two leaves of its height.
+   */
+  protected _halfSiblingGap(children: Node[], index: number): number {
+    const child = children[index];
+    const neighbour = children[index === 0 ? 1 : index - 1];
+    const gap = neighbour
+      ? Math.abs(neighbour.getPosition().y - child.getPosition().y)
+      : child.getSize().height + this.getVerticalPadding() * 2;
+    return gap / 2;
+  }
+
   protected _getRelativeDirection(reference: PositionType, position: PositionType): 1 | -1 {
     return sideOf(position.x, reference.x);
   }

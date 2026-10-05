@@ -26,14 +26,18 @@ type DesignerHandle = {
   getModel(): { getTopics(): unknown[] };
 };
 
-/** Asserts that the page shows the requested map: its id, and as many topics as its file has. */
-const assertMapLoaded = (mapId: string) => {
+/**
+ * Asserts that the page shows the requested map: its id, and as many topics as its file has.
+ * Retried until it holds (up to `timeout`), so it also waits for a large map to finish loading.
+ */
+const assertMapLoaded = (mapId: string, timeout: number) => {
   cy.readFile(`test/playground/map-render/samples/${mapId}.wxml`).then((xml: string) => {
     const topicsInFile = (xml.match(/<topic[\s>]/g) || []).length;
-    cy.window().then((win) => {
-      const designer = (win as unknown as { designer: DesignerHandle }).designer;
-      expect(designer.getMindmap().getId(), 'loaded map').to.equal(mapId);
-      expect(designer.getModel().getTopics(), 'topics').to.have.length(topicsInFile);
+    cy.window({ timeout }).should((win) => {
+      const designer = (win as unknown as { designer?: DesignerHandle }).designer;
+      expect(designer, 'designer').to.not.equal(undefined);
+      expect(designer?.getMindmap().getId(), 'loaded map').to.equal(mapId);
+      expect(designer?.getModel().getTopics(), 'topics').to.have.length(topicsInFile);
     });
   });
 };
@@ -79,12 +83,9 @@ describe('Render all sample maps', () => {
       // Wait for fonts to load
       cy.document().its('fonts.status').should('equal', 'loaded');
 
-      // Additional wait for huge maps to ensure all nodes are rendered
-      if (mapId === 'huge2' || mapId === 'huge') {
-        cy.wait(2000); // Extra time for large maps to finish rendering
-      }
-
-      assertMapLoaded(mapId);
+      // Waits for every topic to be loaded (large maps take a while); the snapshot then waits
+      // for the markup to settle.
+      assertMapLoaded(mapId, timeout);
       cy.matchImageSnapshot(`map-${mapId}`);
     });
   });

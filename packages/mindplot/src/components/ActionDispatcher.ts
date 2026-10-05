@@ -25,10 +25,13 @@ import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import PositionType from './PositionType';
-import LayoutEventBusType from './LayoutEventBusType';
+import type { ModelUpdateEvent } from './DesignerUndoManager';
 import type { FeatureAttributes } from './model/FeatureModel';
 
-abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
+/** The events of the ActionDispatcher: 'modelUpdate' after every command, undo or redo. */
+export type ActionDispatcherEvents = { modelUpdate: ModelUpdateEvent };
+
+abstract class ActionDispatcher extends EventDispispatcher<ActionDispatcherEvents> {
   private static _instance: ActionDispatcher | undefined;
 
   private _commandContext: CommandContext;

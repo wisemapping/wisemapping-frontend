@@ -92,7 +92,7 @@ describe('LayoutManager - Basic Layout Tests', () => {
       // The baseline (vertical center) should be aligned
       const node5Center = node5.getPosition().y;
       const node6Center = node6.getPosition().y;
-      
+
       // With different heights, they should be vertically offset
       expect(node5Center).not.toBe(node6Center);
     });
@@ -115,7 +115,7 @@ describe('LayoutManager - Basic Layout Tests', () => {
 
       const node2 = manager.find(2);
       expect(node2).toBeDefined();
-      
+
       // Node should still exist after disconnection
       expect(node2.getPosition()).toBeDefined();
     });
@@ -136,7 +136,7 @@ describe('LayoutManager - Basic Layout Tests', () => {
       manager.layout();
 
       const node2 = manager.find(2);
-      
+
       expect(node2).toBeDefined();
       expect(node2.getPosition()).toBeDefined();
     });
@@ -185,10 +185,10 @@ describe('LayoutManager - Basic Layout Tests', () => {
       const manager = new LayoutManager(0, ROOT_NODE_SIZE);
 
       manager.addNode(1, NODE_SIZE, position).connectNode(0, 1, 0);
-      
+
       // Should not throw
       expect(() => manager.layout()).not.toThrow();
-      
+
       // Node should have valid position after layout
       const node1 = manager.find(1);
       expect(node1.getPosition()).toBeDefined();
@@ -201,12 +201,12 @@ describe('LayoutManager - Basic Layout Tests', () => {
       manager.addNode(1, NODE_SIZE, position).connectNode(0, 1, 0);
       manager.addNode(2, NODE_SIZE, position).connectNode(1, 2, 0);
       manager.addNode(3, NODE_SIZE, position).connectNode(1, 3, 1);
-      
+
       // Should not throw
       expect(() => manager.layout()).not.toThrow();
-      
+
       // All nodes should have valid positions
-      [1, 2, 3].forEach(id => {
+      [1, 2, 3].forEach((id) => {
         const node = manager.find(id);
         const pos = node.getPosition();
         expect(Number.isFinite(pos.x)).toBe(true);
@@ -236,3 +236,29 @@ describe('LayoutManager - Basic Layout Tests', () => {
   });
 });
 
+describe('LayoutManager change events (BL5-97)', () => {
+  it('fires one event per node for changes left by a layout that was not flushed', () => {
+    const manager = new LayoutManager(0, ROOT_NODE_SIZE);
+    manager.addNode(1, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 1, 0);
+    manager.layout(true);
+
+    const fired: { id: number; y: number }[] = [];
+    manager.addEvent('change', (event) =>
+      fired.push({ id: event.getId(), y: event.getPosition()!.y }),
+    );
+
+    // Node 1 moves in a layout that is not flushed, and again in the next one.
+    manager.updateNodeSize(1, { width: 80, height: 60 });
+    manager.addNode(2, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 2, 2);
+    manager.layout(false);
+    manager.addNode(3, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 3, 4);
+    manager.layout(true);
+
+    // Before: node 1's event was queued once per layout, so it fired twice.
+    const ids = fired.map((event) => event.id);
+    expect(ids.filter((id) => id === 1)).toHaveLength(1);
+    expect(new Set(ids).size).toBe(ids.length);
+    // The event carries the last position.
+    expect(fired.find((event) => event.id === 1)!.y).toBe(manager.find(1).getPosition().y);
+  });
+});

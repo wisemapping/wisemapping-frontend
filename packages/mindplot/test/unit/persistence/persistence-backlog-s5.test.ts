@@ -18,7 +18,6 @@
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
 import NoteModel from '../../../src/components/model/NoteModel';
-import LinkModel from '../../../src/components/model/LinkModel';
 import FeatureModel from '../../../src/components/model/FeatureModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
 import XMLSerializerBeta from '../../../src/components/persistence/XMLSerializerBeta';
@@ -34,10 +33,13 @@ const load = (xml: string): Mindmap => {
   return XMLSerializerFactory.createFromDocument(dom).loadFromDom(dom, 'map');
 };
 
-const node = (mindmap: Mindmap, id: number): NodeModel => mindmap.findNodeById(id) as NodeModel;
+const node = (mindmap: Mindmap, id: number): NodeModel => {
+  const result = mindmap.findNodeById(id);
+  if (!result) throw new Error(`node ${id} not found`);
+  return result;
+};
 
-const noteOf = (topic: NodeModel): NoteModel =>
-  topic.getFeatures().find((f) => f.getType() === 'note') as NoteModel;
+const noteOf = (topic: NodeModel): NoteModel => topic.findFeatureByType('note')[0];
 
 beforeEach(() => {
   jest.spyOn(console, 'warn').mockImplementation(() => undefined);
@@ -245,14 +247,14 @@ describe('node model (BL-17, BL-75)', () => {
   test('a corrupted stored position counts as missing', () => {
     const mindmap = new Mindmap('map');
     const topic = mindmap.createNode('MainTopic');
-    topic.putProperty('position', '{x:NaN,y:0}');
+    topic.putProperty('position', { x: NaN, y: 0 });
     expect(topic.hasPosition()).toBe(false);
   });
 });
 
 describe('feature attributes (BL-14)', () => {
   test('LinkModel maps url and urlType to its setters', () => {
-    const link = FeatureModelFactory.createModel('link', { url: 'http://a.com' }) as LinkModel;
+    const link = FeatureModelFactory.createModel('link', { url: 'http://a.com' });
     link.setAttributes({ url: 'mailto:me@b.com' });
     expect(link.getUrl()).toBe('mailto:me@b.com');
     expect(link.getAttribute('urlType')).toBe('mail');

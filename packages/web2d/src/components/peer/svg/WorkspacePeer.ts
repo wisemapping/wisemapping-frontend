@@ -16,103 +16,132 @@
  *   limitations under the License.
  */
 import { $defined } from '../utils/assert';
-import ElementPeer from './ElementPeer';
-import EventUtils from '../utils/EventUtils';
-import SizeType from '../../SizeType';
-import PositionType from '../../PositionType';
+import ElementPeer, { formatLength } from './ElementPeer';
+import type SizeType from '../../SizeType';
+import type PositionType from '../../PositionType';
+import { viewBoxMatrix, type Matrix } from '../../geometry/matrix';
 
-class WorkspacePeer extends ElementPeer {
+/** The viewBox numbers: <min-x> <min-y> <width> <height>. */
+type ViewBox = readonly [x: number, y: number, width: number, height: number];
+
+class WorkspacePeer extends ElementPeer<SVGSVGElement> {
   constructor() {
-    const svgElement: SVGElement = window.document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'svg',
-    );
-    super(svgElement);
-    this._native.setAttribute('focusable', 'true');
-    // this._native.setAttribute('id', 'workspace');
-    this._native.setAttribute('preserveAspectRatio', 'none');
+    super(ElementPeer.createNode('svg'));
+    // The viewBox (the coordinate size and origin) stretches to the SVG size on both axes.
+    this.attr('preserveAspectRatio', 'none');
+  }
+
+  /** The root <svg> is sized with its width and height attributes. */
+  protected override hasSizeAttributes(): boolean {
+    return true;
   }
 
   /**
-   * http://www.w3.org/TR/SVG/coords.html 7.7 The viewBox  attribute
-   * It is often desirable to specify that a given set of graphics
-   * stretch to fit a particular container element. The viewBox attribute
-   * provides this capability.
-   *
-   * All elements that establish a new viewport (see elements that establish viewports),
-   * plus the 'marker', 'pattern' and 'view' elements have attribute viewBox.
-   * The value of the viewBox attribute is a list of four numbers <min-x>, <min-y>,
-   * <width> and <height>, separated by whitespace and/or a comma, which specify a rectangle
-   * in user space which should be mapped to the bounds of the viewport established by
-   * the given element, taking into account attribute preserveAspectRatio. If specified,
-   * an additional transformation is applied to all descendants of the given element to
-   * achieve the specified effect.
-   *
-   * A negative value for <width> or <height> is an error (see Error processing).
-   * A value of zero disables rendering of the element.
+   * The <svg> width and height attributes are the source of truth: a consumer may resize the SVG
+   * around the peer (W-HTMLFONT, BL5-64). While an attribute still matches the kept size, the kept
+   * value is returned, so its precision is not lost to the attribute format.
+   */
+  override getSize(): SizeType {
+    const { width, height } = super.getSize();
+    return {
+      width: this.sizeAttribute('width', width),
+      height: this.sizeAttribute('height', height),
+    };
+  }
+
+  private sizeAttribute(name: 'width' | 'height', kept: number): number {
+    const value = this._native.getAttribute(name);
+    if (value === null || value === formatLength(kept)) {
+      return kept;
+    }
+    const parsed = Number.parseFloat(value);
+    return Number.isNaN(parsed) ? kept : parsed;
+  }
+
+  // The viewBox as numbers, and the attribute value they were parsed from or written as. A pan
+  // reads and writes the origin, so it should not parse the string each time.
+  private _viewBoxSource: string | null = null;
+
+  private _viewBox: ViewBox | null = null;
+
+  /**
+   * The coordinate size and origin are the SVG viewBox: <min-x> <min-y> <width> <height> in user
+   * units, mapped onto the whole <svg> (preserveAspectRatio="none").
    *
    * Values are kept at full precision: mindplot maps the mouse with the exact origin and
    * scale, so rounding them here makes slow pans stall and the mouse mapping drift.
    */
-
-  setCoordSize(width: number, height: number) {
-    const viewBox = this._native.getAttribute('viewBox');
-    let coords = [0, 0, 0, 0];
-    if (viewBox != null) {
-      coords = viewBox.split(/ /).map((e: string) => Number.parseFloat(e));
-    }
-    coords[2] = width;
-    coords[3] = height;
-    this._native.setAttribute('viewBox', coords.join(' '));
-    this._native.setAttribute('preserveAspectRatio', 'none');
-    EventUtils.broadcastChangeEvent(this, 'strokeStyle');
+  setCoordSize(width: number, height: number): void {
+    const [x, y] = this.viewBox() ?? [0, 0, 0, 0];
+    this.writeViewBox([x, y, width, height]);
   }
 
   getCoordSize(): SizeType {
-    const viewBox = this._native.getAttribute('viewBox');
-    let coords = [1, 1, 1, 1];
-    if (viewBox != null) {
-      coords = viewBox.split(/ /).map((e) => Number.parseFloat(e));
-    }
-    return { width: coords[2]!, height: coords[3]! };
+    const [, , width, height] = this.viewBox() ?? [1, 1, 1, 1];
+    return { width, height };
   }
 
   setCoordOrigin(x: number, y: number): void {
-    const viewBox = this._native.getAttribute('viewBox');
-
     // ViewBox min-x ,min-y by default initializated with 0 and 0.
-    let coords = [0, 0, 0, 0];
-    if (viewBox != null) {
-      coords = viewBox.split(/ /).map((e: string) => Number.parseFloat(e));
-    }
-
-    if ($defined(x)) {
-      coords[0] = x;
-    }
-
-    if ($defined(y)) {
-      coords[1] = y;
-    }
-
-    this._native.setAttribute('viewBox', coords.join(' '));
-  }
-
-  append(child: ElementPeer): void {
-    super.append(child);
-    EventUtils.broadcastChangeEvent(child, 'onChangeCoordSize');
+    const [currentX, currentY, width, height] = this.viewBox() ?? [0, 0, 0, 0];
+    this.writeViewBox([$defined(x) ? x : currentX, $defined(y) ? y : currentY, width, height]);
   }
 
   getCoordOrigin(): PositionType {
-    const viewBox = this._native.getAttribute('viewBox');
-    let coords = [0, 0, 0, 0];
-    if (viewBox != null) {
-      coords = viewBox.split(/ /).map((e) => Number.parseFloat(e));
-    }
-    return { x: coords[0]!, y: coords[1]! };
+    const [x, y] = this.viewBox() ?? [0, 0, 0, 0];
+    return { x, y };
   }
 
-  getPosition() {
+  /**
+   * The viewBox numbers, or null without a viewBox. The string is parsed only when it is not the
+   * one last seen, for example after a write around the peer. A missing number is NaN.
+   */
+  private viewBox(): ViewBox | null {
+    const viewBox = this._native.getAttribute('viewBox');
+    if (viewBox === null) {
+      return null;
+    }
+    if (viewBox !== this._viewBoxSource || !this._viewBox) {
+      const [x = NaN, y = NaN, width = NaN, height = NaN] = viewBox
+        .split(/ /)
+        .map((e: string) => Number.parseFloat(e));
+      this._viewBoxSource = viewBox;
+      this._viewBox = [x, y, width, height];
+    }
+    return this._viewBox;
+  }
+
+  private writeViewBox(viewBox: ViewBox): void {
+    const value = viewBox.join(' ');
+    this.attr('viewBox', value);
+    this._viewBoxSource = value;
+    this._viewBox = viewBox;
+  }
+
+  getPosition(): PositionType {
     return { x: 0, y: 0 };
+  }
+
+  /**
+   * The matrix from workspace coordinates (user units) to client (viewport) pixels: the browser's
+   * getScreenCTM(), which accounts for the zoom (viewBox size), the pan (viewBox origin) and the
+   * position of the <svg> on the page. Where it is missing or null (an <svg> that is not
+   * rendered, an environment without layout), it is computed from the viewBox and the <svg>
+   * bounding box, or its size when the box is empty.
+   */
+  getScreenMatrix(): Matrix {
+    const ctm =
+      typeof this._native.getScreenCTM === 'function' ? this._native.getScreenCTM() : null;
+    if (ctm) {
+      return ctm;
+    }
+    const rect = this._native.getBoundingClientRect();
+    const { width, height } = rect.width > 0 && rect.height > 0 ? rect : this.getSize();
+    const [x, y, viewBoxWidth, viewBoxHeight] = this.viewBox() ?? [0, 0, width, height];
+    return viewBoxMatrix(
+      { x, y, width: viewBoxWidth, height: viewBoxHeight },
+      { x: rect.left, y: rect.top, width, height },
+    );
   }
 }
 

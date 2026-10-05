@@ -18,14 +18,14 @@
  */
 import WorkspaceElement from './WorkspaceElement';
 import ArrowPeer from './peer/svg/ArrowPeer';
-import PositionType from './PositionType';
-import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
+import type PositionType from './PositionType';
+import type { ElementAttributes } from './StyleAttributes';
+import type { ElementType } from './types';
 
 class Arrow extends WorkspaceElement<ArrowPeer> {
-  constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createArrow();
-    const defaultAttributes: StyleAttributes = {
+  constructor(attributes?: ElementAttributes) {
+    const peer = new ArrowPeer();
+    const defaultAttributes: ElementAttributes = {
       strokeColor: 'black',
       strokeWidth: 1,
       strokeStyle: 'solid',
@@ -36,7 +36,7 @@ class Arrow extends WorkspaceElement<ArrowPeer> {
     super(peer, mergedAttr);
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'Arrow';
   }
 

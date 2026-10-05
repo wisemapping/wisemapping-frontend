@@ -1,26 +1,68 @@
 {
+  "account.delete-challenge": [
+    {
+      "type": 0,
+      "value": "アカウントを削除"
+    }
+  ],
+  "account.delete-challenge-error": [
+    {
+      "type": 0,
+      "value": "アカウントの削除を確認するには「"
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "」と入力してください。"
+    }
+  ],
   "account.delete-confirm": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "アカウントを削除"
     }
   ],
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
-      "value": "Please type DELETE MY ACCOUNT to confirm:"
+      "value": "確認のため「"
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "」と入力してください："
+    }
+  ],
+  "account.delete-confirmation-label": [
+    {
+      "type": 0,
+      "value": "確認のため「"
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "」と入力"
     }
   ],
   "account.delete-confirmation-title": [
     {
       "type": 0,
-      "value": "Are you absolutely sure?"
+      "value": "本当によろしいですか？"
     }
   ],
   "account.delete-confirmation-warning": [
     {
       "type": 0,
-      "value": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+      "value": "この操作は元に戻せません。アカウントは完全に削除され、すべてのデータが当社のサーバーから削除されます。"
     }
   ],
   "account.delete-warning": [
@@ -32,43 +74,43 @@
   "account.delete-warning-collaborations": [
     {
       "type": 0,
-      "value": "All shared mindmaps and collaborations"
+      "value": "共有しているすべてのマインドマップと共同編集"
     }
   ],
   "account.delete-warning-consequences": [
     {
       "type": 0,
-      "value": "This will permanently delete:"
+      "value": "以下が完全に削除されます："
     }
   ],
   "account.delete-warning-data": [
     {
       "type": 0,
-      "value": "All your personal data and account information"
+      "value": "すべての個人データとアカウント情報"
     }
   ],
   "account.delete-warning-description": [
     {
       "type": 0,
-      "value": "Once you delete your account, there is no going back. Please be certain."
+      "value": "アカウントを削除すると、元に戻すことはできません。よくご確認ください。"
     }
   ],
   "account.delete-warning-history": [
     {
       "type": 0,
-      "value": "All account history and activity logs"
+      "value": "すべてのアカウント履歴とアクティビティログ"
     }
   ],
   "account.delete-warning-mindmaps": [
     {
       "type": 0,
-      "value": "All your mindmaps and their content"
+      "value": "すべてのマインドマップとその内容"
     }
   ],
   "account.delete-warning-title": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "アカウントを削除"
     }
   ],
   "accountinfo.button": [
@@ -733,7 +775,11 @@
       "value": "読み込み中..."
     }
   ],
-  "duplicate.copy-prefix": [
+  "duplicate.copy-title": [
+    {
+      "type": 1,
+      "value": "title"
+    },
     {
       "type": 0,
       "value": "のコピー"

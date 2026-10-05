@@ -17,24 +17,24 @@
  */
 
 import { $defined } from '../utils/assert';
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
+import { heartbeatPathData } from '../../geometry/heartbeat';
 import ElementPeer from './ElementPeer';
+import type { StrokeStyle } from '../../types';
 
 /**
  * HeartbeatLinePeer renders an ECG-inspired waveform with a signature spike that
  * runs between the source and destination points. It gives a rhythmic, animated feel
  * that differs from the bezier-based connectors.
  */
-class HeartbeatLinePeer extends ElementPeer {
-  private _path: SVGPathElement;
-
+class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
   private _strokeWidth: number;
 
   private _strokeOpacity: number;
 
   private _strokeColor: string;
 
-  private _strokeStyle: string | null;
+  private _strokeStyle: StrokeStyle | null;
 
   private _dashPattern: string | null;
 
@@ -47,16 +47,11 @@ class HeartbeatLinePeer extends ElementPeer {
   private _y2: number;
 
   constructor() {
-    const svgElement = window.document.createElementNS(
-      HeartbeatLinePeer.svgNamespace,
-      'path',
-    ) as SVGPathElement;
-    super(svgElement);
+    super(ElementPeer.createNode('path'));
 
-    this._path = svgElement;
-    this._path.setAttribute('fill', 'none');
-    this._path.setAttribute('stroke-linejoin', 'round');
-    this._path.setAttribute('stroke-linecap', 'round');
+    this.attr('fill', 'none');
+    this.attr('stroke-linejoin', 'round');
+    this.attr('stroke-linecap', 'round');
 
     this._strokeWidth = 3;
     this._strokeOpacity = 1;
@@ -74,7 +69,7 @@ class HeartbeatLinePeer extends ElementPeer {
 
   override setStroke(
     width: number | null,
-    style?: string | null,
+    style?: StrokeStyle | null,
     color?: string | null,
     opacity?: number,
   ) {
@@ -95,8 +90,8 @@ class HeartbeatLinePeer extends ElementPeer {
       this._strokeColor = color;
     }
 
-    if ($defined(opacity)) {
-      this._strokeOpacity = opacity as number;
+    if (opacity != null) {
+      this._strokeOpacity = opacity;
     }
 
     this._applyStroke();
@@ -141,101 +136,40 @@ class HeartbeatLinePeer extends ElementPeer {
   }
 
   private _applyStroke(): void {
-    this._path.setAttribute('stroke-width', Math.max(1, this._strokeWidth).toFixed(1));
-    this._path.setAttribute('stroke-opacity', this._strokeOpacity.toString());
-    this._path.setAttribute('stroke', this._strokeColor);
+    this.attr('stroke-width', Math.max(1, this._strokeWidth).toFixed(1));
+    this.attr('stroke-opacity', this._strokeOpacity.toString());
+    this.attr('stroke', this._strokeColor);
 
-    const dashStyles = ElementPeer.stokeStyleToStrokDasharray();
+    // The table dash scales with the drawn width (BL5-77).
     const dashArray =
       this._strokeStyle && this._strokeStyle !== 'solid'
-        ? dashStyles[this._strokeStyle as keyof typeof dashStyles]
+        ? ElementPeer.dashArray(this._strokeStyle, Math.max(1, this._strokeWidth))
         : undefined;
 
-    if (dashArray && dashArray.length > 0) {
-      this._path.setAttribute('stroke-dasharray', dashArray.join(' '));
+    if (dashArray) {
+      this.attr('stroke-dasharray', dashArray);
     } else if (this._dashPattern) {
-      this._path.setAttribute('stroke-dasharray', this._dashPattern);
+      this.attr('stroke-dasharray', this._dashPattern);
     } else {
-      this._path.removeAttribute('stroke-dasharray');
+      this.removeAttr('stroke-dasharray');
     }
   }
 
   private _updatePath(): void {
-    if (
-      !$defined(this._x1) ||
-      !$defined(this._y1) ||
-      !$defined(this._x2) ||
-      !$defined(this._y2) ||
-      (this._x1 === this._x2 && this._y1 === this._y2)
-    ) {
+    const d =
+      $defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)
+        ? heartbeatPathData(
+            { x: this._x1, y: this._y1 },
+            { x: this._x2, y: this._y2 },
+            this._strokeWidth,
+          )
+        : null;
+    if (d === null) {
       // Nothing to draw: clear the previous path rather than leave it on screen (W-STALEPATH).
-      this._path.removeAttribute('d');
+      this.removeAttr('d');
       return;
     }
-
-    const dx = this._x2 - this._x1;
-    const dy = this._y2 - this._y1;
-    const distance = Math.sqrt(dx * dx + dy * dy) || 1;
-
-    const unitX = dx / distance;
-    const unitY = dy / distance;
-    const perpX = -unitY;
-    const perpY = unitX;
-
-    const amplitudeBase = Math.min(distance * 0.35, 60);
-    // A floor of 10 keeps the spike visible, but never beyond the base amplitude: otherwise a
-    // 1 unit line would draw a ±10 spike.
-    const amplitude = Math.max(
-      Math.min(10, amplitudeBase),
-      amplitudeBase * (0.4 + this._strokeWidth * 0.04),
-    );
-
-    // Seeded from the length, not the absolute ends, so the shape does not change when the
-    // whole line moves (W-STALEPATH).
-    const wobbleSeed = Math.sin(distance * 0.05);
-    const wobble = 1 + wobbleSeed * 0.15;
-
-    const pattern = HeartbeatLinePeer._heartbeatPattern();
-    const pathSegments: string[] = [];
-    pathSegments.push(`M${HeartbeatLinePeer._pointToStr(this._x1, this._y1)}`);
-
-    pattern.forEach((node) => {
-      const baseX = this._x1 + dx * node.pos;
-      const baseY = this._y1 + dy * node.pos;
-
-      const offset = node.amp * amplitude * wobble;
-      const x = baseX + perpX * offset;
-      const y = baseY + perpY * offset;
-      pathSegments.push(`L${HeartbeatLinePeer._pointToStr(x, y)}`);
-    });
-
-    pathSegments.push(`L${HeartbeatLinePeer._pointToStr(this._x2, this._y2)}`);
-    this._path.setAttribute('d', pathSegments.join(' '));
-  }
-
-  private static _pointToStr(x: number, y: number): string {
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  }
-
-  private static _heartbeatPattern(): { pos: number; amp: number }[] {
-    return [
-      { pos: 0.1, amp: 0 },
-      { pos: 0.18, amp: 0.15 },
-      { pos: 0.24, amp: -0.25 },
-      { pos: 0.3, amp: 0 },
-      { pos: 0.36, amp: 0 },
-      { pos: 0.44, amp: 1 },
-      { pos: 0.48, amp: -0.6 },
-      { pos: 0.52, amp: 0.2 },
-      { pos: 0.56, amp: -0.1 },
-      { pos: 0.6, amp: 0 },
-      { pos: 0.66, amp: 0.12 },
-      { pos: 0.72, amp: -0.18 },
-      { pos: 0.78, amp: 0 },
-      { pos: 0.84, amp: 0.08 },
-      { pos: 0.9, amp: -0.08 },
-      { pos: 0.96, amp: 0 },
-    ];
+    this.attr('d', d);
   }
 }
 

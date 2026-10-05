@@ -52,11 +52,11 @@ describe('Note export honours the note content type', () => {
     expect(result).not.toContain('<strong>');
   });
 
-  it('md exports html notes as text and plain notes verbatim', async () => {
+  it('md exports html notes as text and plain notes escaped, so they render literally', async () => {
     const result = await TextExporterFactory.create('md', buildMindmap()).export();
 
     expect(result).toContain('Rich note');
-    expect(result).toContain(PLAIN_NOTE);
+    expect(result).toContain('Plain note with a \\<tag\\> & an \\&amp; entity');
     expect(result).not.toContain('<strong>');
   });
 

@@ -183,7 +183,7 @@ const borderStyles = [
     label: <FormattedMessage id="icon-collection.border.default" defaultMessage="Default" />,
     tooltip: (
       <FormattedMessage
-        id="icon-collection.default-tooltip"
+        id="icon-collection.border.default-tooltip"
         defaultMessage="Default - Colors will be automatically taken based on the selected theme"
       />
     ),

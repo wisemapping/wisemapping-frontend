@@ -30,13 +30,17 @@ const load = (xml: string): Mindmap => {
   return XMLSerializerFactory.createFromDocument(dom).loadFromDom(dom, 'map');
 };
 
-const node = (mindmap: Mindmap, id: number): NodeModel => mindmap.findNodeById(id) as NodeModel;
+const node = (mindmap: Mindmap, id: number): NodeModel => {
+  const result = mindmap.findNodeById(id);
+  if (!result) throw new Error(`node ${id} not found`);
+  return result;
+};
 
 // A tango map with a single child topic carrying the given attributes.
 const tangoTopic = (attributes: string): NodeModel =>
   node(
     load(
-      `<map version="tango"><topic central="true" id="1" text="c">` +
+      '<map version="tango"><topic central="true" id="1" text="c">' +
         `<topic id="2" position="200,0" order="0" text="t" ${attributes}/></topic></map>`,
     ),
     2,
@@ -46,7 +50,7 @@ const tangoTopic = (attributes: string): NodeModel =>
 const betaTopic = (attributes: string): NodeModel =>
   load(
     `<map><topic central="true" text="c"><topic position="200,0" text="t" ${attributes}/>` +
-      `</topic></map>`,
+      '</topic></map>',
   )
     .getBranches()[0]
     .getChildren()[0];
@@ -72,6 +76,11 @@ describe('topic attributes validation (BL4-18)', () => {
     expect(topic.getShapeType()).toBeUndefined();
     expect(topic.getConnectionStyle()).toBeUndefined();
     expect(warn).toHaveBeenCalledTimes(4);
+  });
+
+  test('tango ignores a non numeric font size (BL5-04)', () => {
+    expect(tangoTopic('fontStyle="Arial;big;#000000;;;"').getFontSize()).toBeUndefined();
+    expect(tangoTopic('fontStyle="Arial;12;#000000;;;"').getFontSize()).toBe(12);
   });
 
   test('tango ignores a non numeric connection style', () => {

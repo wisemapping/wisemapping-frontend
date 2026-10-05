@@ -16,10 +16,12 @@
  *   limitations under the License.
  */
 import { $defined } from '../utils/assert';
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
+import { arcPathData } from '../../geometry/arc';
 import ElementPeer from './ElementPeer';
+import type { Orientation } from '../../types';
 
-class ArcLinePeer extends ElementPeer {
+class ArcLinePeer extends ElementPeer<SVGPathElement> {
   private _x1: number;
 
   private _y1: number;
@@ -28,11 +30,10 @@ class ArcLinePeer extends ElementPeer {
 
   private _y2: number;
 
-  private _orientation: 'horizontal' | 'vertical';
+  private _orientation: Orientation;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    super(svgElement);
+    super(ElementPeer.createNode('path'));
     this._x1 = 0;
     this._x2 = 0;
     this._y1 = 0;
@@ -66,43 +67,27 @@ class ArcLinePeer extends ElementPeer {
   }
 
   setStrokeWidth(width: number): void {
-    this._native.setAttribute('stroke-width', String(width));
+    // Through setStroke, so a dash from the style table is rescaled (BL5-77).
+    this.setStroke(width);
   }
 
-  setOrientation(orientation: 'horizontal' | 'vertical'): void {
+  setOrientation(orientation: Orientation): void {
+    const change = this._orientation !== orientation;
     this._orientation = orientation;
-    this._updatePath();
+    if (change) {
+      this._updatePath();
+    }
   }
 
-  getOrientation(): 'horizontal' | 'vertical' {
+  getOrientation(): Orientation {
     return this._orientation;
   }
 
-  private static pointToStr(x: number, y: number) {
-    return `${x.toFixed(1)},${y.toFixed(1)} `;
-  }
-
   private _updatePath() {
-    // Update style based on width ....
     if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
-      const fromPoint = ArcLinePeer.pointToStr(this._x1, this._y1);
-      const toPoint = ArcLinePeer.pointToStr(this._x2, this._y2);
-
-      let curveP1: string;
-      let curveP2: string;
-
-      if (this._orientation === 'vertical') {
-        // For vertical tree layout: arc curves horizontally (concave in X direction)
-        curveP1 = ArcLinePeer.pointToStr(this._x1 + (this._x2 - this._x1) / 8, this._y1);
-        curveP2 = ArcLinePeer.pointToStr(this._x2, this._y2 - (this._y2 - this._y1));
-      } else {
-        // For horizontal mindmap layout: arc curves vertically (concave in Y direction)
-        curveP1 = ArcLinePeer.pointToStr(this._x1, this._y1 + (this._y2 - this._y1) / 8);
-        curveP2 = ArcLinePeer.pointToStr(this._x2 - (this._x2 - this._x1), this._y2);
-      }
-
-      const path = `M${fromPoint} C${curveP1},${curveP2} ${toPoint}`;
-      this._native.setAttribute('d', path);
+      const from = { x: this._x1, y: this._y1 };
+      const to = { x: this._x2, y: this._y2 };
+      this.attr('d', arcPathData(from, to, this._orientation));
     }
   }
 }

@@ -76,17 +76,11 @@ class AddTopicCommand extends Command {
       // Add a new topic ...
       const topic = commandContext.createTopic(model);
 
-      // Connect to topic ...
-      if (this._parentsIds) {
-        const parentId = this._parentsIds[index];
-        if ($defined(parentId)) {
-          const parentTopic = parents.get(parentId);
-          if (parentTopic) {
-            commandContext.connect(topic, parentTopic);
-          } else {
-            commandContext.addTopic(topic);
-          }
-        }
+      // Connect to its parent, or add it as a floating topic when it has none ...
+      const parentId = this._parentsIds?.[index];
+      const parentTopic = $defined(parentId) ? parents.get(parentId) : undefined;
+      if (parentTopic) {
+        commandContext.connect(topic, parentTopic);
       } else {
         commandContext.addTopic(topic);
       }

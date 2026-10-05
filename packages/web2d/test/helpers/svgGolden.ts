@@ -18,8 +18,8 @@
 import fs from 'fs';
 import path from 'path';
 import Workspace from '../../src/components/Workspace';
-import WorkspaceElement from '../../src/components/WorkspaceElement';
-import ElementPeer from '../../src/components/peer/svg/ElementPeer';
+import type WorkspaceElement from '../../src/components/WorkspaceElement';
+import type ElementPeer from '../../src/components/peer/svg/ElementPeer';
 
 /*
  * SVG golden files (layer 1 of the visual regression plan, WEB2D_REVIEW_PLAN.md section 7.3).
@@ -66,7 +66,7 @@ const serializeElement = (el: Element, depth: number, isRoot: boolean): string[]
   if (isRoot) {
     attrs.push(['xmlns', SVG_NS], ['xmlns:xlink', XLINK_NS]);
   }
-  attrs.sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+  attrs.sort(([a], [b]) => Number(a > b) - Number(a < b));
   const open = `${indent}<${el.localName}${attrs.map(([n, v]) => ` ${n}="${escapeAttr(v)}"`).join('')}`;
 
   const children = Array.from(el.childNodes);

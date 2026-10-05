@@ -17,6 +17,7 @@
  */
 import CurvedLinePeer from '../../src/components/peer/svg/CurvedLinePeer';
 import CurvedLine from '../../src/components/CurvedLine';
+import type { ControlPointLine } from '../../src/components/Line';
 import { extent, parsePathPoints, pathCommands } from '../helpers/geometry';
 
 const line = (x1: number, y1: number, x2: number, y2: number): CurvedLinePeer => {
@@ -117,7 +118,7 @@ describe('CurvedLinePeer control points (W-CTRLFLAG, BL-69)', () => {
     peer.setSrcControlPoint(control);
     control.x = 99;
     const [c1] = peer.getControlPoints();
-    c1.x = 42;
+    (c1 as { x: number }).x = 42;
     expect(peer.getControlPoints()[0]).toEqual({ x: 1, y: 2 });
   });
 
@@ -258,12 +259,26 @@ describe('CurvedLinePeer width (taper)', () => {
     expect(pts[6]).toEqual([-5, 0]);
   });
 
-  it('setFill re-renders the path', () => {
+  // The fill does not change the path: setFill used to rebuild and rewrite it anyway.
+  it('setFill does not rebuild the path', () => {
     const peer = line(0, 0, 90, 0);
+    peer.setWidth(10);
+    const before = d(peer);
     const spy = jest.spyOn(peer._native, 'setAttribute');
     peer.setFill('red', 1);
     expect(peer._native.getAttribute('fill')).toBe('red');
-    expect(spy).toHaveBeenCalledWith('d', expect.any(String));
+    expect(spy).not.toHaveBeenCalledWith('d', expect.any(String));
+    expect(d(peer)).toBe(before);
+  });
+
+  it('setWidth rebuilds the path only when the width changes', () => {
+    const peer = line(0, 0, 90, 0);
+    peer.setWidth(10);
+    const spy = jest.spyOn(peer._native, 'setAttribute');
+    peer.setWidth(10);
+    expect(spy).not.toHaveBeenCalled();
+    peer.setWidth(0.5);
+    expect(spy).toHaveBeenCalledWith('d', 'M0.0,0.0 C30.0,0.0 60.0,0.0 90.0,0.0');
   });
 });
 
@@ -287,8 +302,9 @@ describe('CurvedLinePeer misc', () => {
     const peer = line(0, 0, 90, 0);
     peer.setDashed(5, 3);
     expect(peer._native.getAttribute('stroke-dasharray')).toBe('5,3');
+    // W2 follow-up: it wrote an empty (invalid) stroke-dasharray instead of removing it.
     peer.setDashed(undefined as unknown as number, undefined as unknown as number);
-    expect(peer._native.getAttribute('stroke-dasharray')).toBe('');
+    expect(peer._native.hasAttribute('stroke-dasharray')).toBe(false);
   });
 
   it('setStrokeWidth writes stroke-width', () => {
@@ -334,5 +350,22 @@ describe('CurvedLine', () => {
     const curve = new CurvedLine();
     expect(() => curve.setFrom(Number.NaN, 0)).toThrow();
     expect(() => curve.setTo(0, Number.NaN)).toThrow();
+  });
+});
+
+describe('CurvedLinePeer taper constants (BL5-147)', () => {
+  it('does not re-export the taper constants: geometry/curve owns them', () => {
+    expect(Object.keys(CurvedLinePeer).filter((key) => key.startsWith('TAPER_'))).toEqual([]);
+  });
+});
+
+describe('ControlPointLine (typing T5)', () => {
+  it('CurvedLine is the line with control points', () => {
+    // Checked by tsc: a CurvedLine is a ControlPointLine.
+    const curved: ControlPointLine = new CurvedLine();
+    curved.setSrcControlPoint({ x: 1, y: 2 });
+    curved.setIsSrcControlPointCustom(true);
+    expect(curved.getControlPoints()[0]).toEqual({ x: 1, y: 2 });
+    expect(curved.isSrcControlPointCustom()).toBe(true);
   });
 });

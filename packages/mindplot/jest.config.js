@@ -33,11 +33,17 @@ const config = {
   },
   // Unit tests only: Cypress specs and the legacy bundle test run elsewhere.
   testPathIgnorePatterns: ['/node_modules/', '/dist/', '/cypress/', '/__tests__/'],
-  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts', '!src/index.ts'],
+  // SvgIconAssets uses import.meta, which ts-jest can not compile; tests use a mock (see above).
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/**/*.d.ts',
+    '!src/index.ts',
+    '!src/components/SvgIconAssets.ts',
+  ],
   coverageReporters: ['text-summary', 'lcov', 'json-summary'],
   // Ratchet these up as coverage improves; never lower them.
   coverageThreshold: {
-    global: { statements: 76, branches: 65, functions: 73, lines: 76 },
+    global: { statements: 85, branches: 75, functions: 83, lines: 85 },
   },
 };
 

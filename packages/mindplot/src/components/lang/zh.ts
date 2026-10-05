@@ -16,7 +16,9 @@
  *   limitations under the License.
  */
 
-const ZH = {
+import type { LocaleMessages } from './en';
+
+const ZH: LocaleMessages = {
   LOADING: '加载......',
   SAVING: '保存......',
   SAVE_COMPLETE: '保存完成',

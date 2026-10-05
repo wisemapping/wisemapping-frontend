@@ -18,21 +18,46 @@
 import EventDispispatcher from './EventDispatcher';
 import Topic from './Topic';
 import MultitTextEditor from './MultilineTextEditor';
+import type NodeModel from './model/NodeModel';
+import type Designer from './Designer';
 
-type TopicEventType = 'editnode' | 'clicknode';
+type TopicEventPayload = { model: NodeModel; readOnly: boolean };
 
-class TopicEventDispatcher extends EventDispispatcher<TopicEventType> {
+/** The events of a topic the dispatcher does not handle itself. */
+export type TopicEvents = { editnode: TopicEventPayload; clicknode: TopicEventPayload };
+
+type TopicEventType = keyof TopicEvents;
+
+class TopicEventDispatcher extends EventDispispatcher<TopicEvents> {
   private _readOnly: boolean;
+
+  // The text editor of this dispatcher's designer: one per designer, so two maps on a page can
+  // each have one open ...
+  private _editor = new MultitTextEditor();
 
   constructor(readOnly: boolean) {
     super();
     this._readOnly = readOnly;
   }
 
+  getTextEditor(): MultitTextEditor {
+    return this._editor;
+  }
+
   close(update: boolean): void {
-    const editor = MultitTextEditor.getInstance();
+    const editor = this._editor;
     if (editor.isActive()) {
       editor.close(update);
+    }
+  }
+
+  /**
+   * Closes the text editor without saving it, if it is open on a topic of `designer`.
+   */
+  closeFor(designer: Designer): void {
+    const editor = this._editor;
+    if (editor.getActiveTopic()?.getDesigner() === designer) {
+      editor.close(false);
     }
   }
 
@@ -42,7 +67,7 @@ class TopicEventDispatcher extends EventDispispatcher<TopicEventType> {
 
   process(eventType: TopicEventType, topic: Topic, textOverwrite?: string): void {
     // Close all previous open editor ....
-    const editor = MultitTextEditor.getInstance();
+    const editor = this._editor;
     if (editor.isActive()) {
       this.close(false);
     }
@@ -57,11 +82,11 @@ class TopicEventDispatcher extends EventDispispatcher<TopicEventType> {
   }
 
   isVisible(): boolean {
-    return MultitTextEditor.getInstance().isActive();
+    return this._editor.isActive();
   }
 
   isEditingTopic(topic: Topic): boolean {
-    const activeTopic = MultitTextEditor.getInstance().getActiveTopic();
+    const activeTopic = this._editor.getActiveTopic();
     return activeTopic === topic;
   }
 }

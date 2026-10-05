@@ -107,6 +107,10 @@ const LoginPage = (): React.ReactElement => {
       id: 'login.page-title',
       defaultMessage: 'Login | WiseMapping',
     });
+  }, [intl]);
+
+  // Once per visit: a language change retitles the page but is not a new page view.
+  useEffect(() => {
     trackPageView(window.location.pathname, 'Login');
   }, []);
 

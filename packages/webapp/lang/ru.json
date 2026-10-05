@@ -113,8 +113,8 @@
   "deletem.title": {
     "defaultMessage": "Все выбранные карты будут удалены"
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "Копия "
+  "duplicate.copy-title": {
+    "defaultMessage": "Копия {title}"
   },
   "duplicate.title": {
     "defaultMessage": "Клонировать"
@@ -768,37 +768,46 @@
     "defaultMessage": "Personal Details"
   },
   "account.delete-warning-title": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Удалить аккаунт"
   },
   "account.delete-warning-description": {
-    "defaultMessage": "Once you delete your account, there is no going back. Please be certain."
+    "defaultMessage": "После удаления аккаунта восстановить его будет невозможно. Пожалуйста, примите решение обдуманно."
   },
   "account.delete-warning-consequences": {
-    "defaultMessage": "This will permanently delete:"
+    "defaultMessage": "Будут безвозвратно удалены:"
   },
   "account.delete-warning-mindmaps": {
-    "defaultMessage": "All your mindmaps and their content"
+    "defaultMessage": "Все ваши карты и их содержимое"
   },
   "account.delete-warning-data": {
-    "defaultMessage": "All your personal data and account information"
+    "defaultMessage": "Все ваши личные данные и информация об аккаунте"
   },
   "account.delete-warning-collaborations": {
-    "defaultMessage": "All shared mindmaps and collaborations"
+    "defaultMessage": "Все карты, к которым вы открыли доступ, и совместная работа"
   },
   "account.delete-warning-history": {
-    "defaultMessage": "All account history and activity logs"
+    "defaultMessage": "Вся история аккаунта и журналы активности"
   },
   "account.delete-confirmation-title": {
-    "defaultMessage": "Are you absolutely sure?"
+    "defaultMessage": "Вы абсолютно уверены?"
   },
   "account.delete-confirmation-warning": {
-    "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+    "defaultMessage": "Это действие нельзя отменить. Ваш аккаунт будет удалён навсегда, а все данные будут стёрты с наших серверов."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+    "defaultMessage": "Введите {challengePhrase} для подтверждения:"
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "Введите «{challengePhrase}» для подтверждения"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "УДАЛИТЬ МОЙ АККАУНТ"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "Введите «{challengePhrase}», чтобы подтвердить удаление аккаунта."
   },
   "account.delete-confirm": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Удалить аккаунт"
   },
   "menu.admin-console": {
     "defaultMessage": "Admin Console"

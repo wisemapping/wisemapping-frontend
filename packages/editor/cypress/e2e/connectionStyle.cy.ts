@@ -28,16 +28,15 @@ describe('Connection Style Suite', () => {
 
   it('Open connection style panel', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
-    
+
     // Wait for the panel to open and then click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
-    
+
     cy.matchImageSnapshot('connection-style-panel');
   });
 
   it('Change to thick curved connection', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
-    
 
     // Wait for the panel to open and then click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
@@ -50,7 +49,7 @@ describe('Connection Style Suite', () => {
 
   it('Change to arc connection', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
-    
+
     // Wait for the panel to open and then click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
 
@@ -62,7 +61,7 @@ describe('Connection Style Suite', () => {
 
   it('Change to thin curved connection', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
-    
+
     // Wait for the panel to open and then click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
 
@@ -74,7 +73,7 @@ describe('Connection Style Suite', () => {
 
   it('Change to simple polyline connection', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
-    
+
     // Wait for the panel to open and then click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
 
@@ -86,7 +85,7 @@ describe('Connection Style Suite', () => {
 
   it('Change to curved polyline connection', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
-    
+
     // Wait for the panel to open and then click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
 
@@ -98,7 +97,7 @@ describe('Connection Style Suite', () => {
 
   it('Change connection color', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
-    
+
     // Wait for the panel to open and then click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
 
@@ -118,10 +117,10 @@ describe('Connection Style Suite', () => {
   it('Reset connection color to default', () => {
     // First change the color
     cy.onClickToolbarButton('Style Topic & Connections');
-    
+
     // Wait for the panel to open and then click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
-    
+
     // Select a connection style first to make color picker visible
     cy.get('[aria-label="Thick Curved"]').should('be.visible').first().click({ force: true });
 
@@ -133,7 +132,7 @@ describe('Connection Style Suite', () => {
 
     // Now reset to default - click the Connector tab again to ensure focus
     cy.contains('Connector').click({ force: true });
-    
+
     // Click the default connection style option
     cy.get('[aria-label="Default"]').first().click({ force: true });
 
@@ -142,10 +141,10 @@ describe('Connection Style Suite', () => {
 
   it('Default connection style hides color picker', () => {
     cy.onClickToolbarButton('Style Topic & Connections');
-    
+
     // Click the Connector tab
     cy.contains('Connector').should('be.visible').click({ force: true });
-    
+
     // Click the default connection style option
     cy.get('[aria-label="Default"]').should('be.visible').first().click({ force: true });
 

@@ -16,6 +16,9 @@
  *   limitations under the License.
  */
 
+import RelationshipControlPoints from '../../src/components/RelationshipControlPoints';
+import { buildDesigner } from './commands/designer-harness';
+
 jest.mock('../../src/components/SvgImageIcon', () => ({
   __esModule: true,
   default: class MockSvgImageIcon {},
@@ -34,12 +37,12 @@ jest.mock('../../src/components/RelationshipControlPoints', () => {
     get PivotType() {
       return actual().PivotType;
     },
-    default: jest.fn((relationship: unknown) => new (actual().default)(relationship)),
+    default: jest.fn((relationship: unknown) => {
+      const ControlPoints = actual().default;
+      return new ControlPoints(relationship);
+    }),
   };
 });
-
-import RelationshipControlPoints from '../../src/components/RelationshipControlPoints';
-import { buildDesigner } from './commands/designer-harness';
 
 describe('Relationship construction (BL4-28)', () => {
   it('builds a single control point controller per relationship, the one it uses', async () => {

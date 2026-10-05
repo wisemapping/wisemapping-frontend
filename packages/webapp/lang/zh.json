@@ -116,8 +116,8 @@
   "deletem.title": {
     "defaultMessage": "所有选中的脑图将被删除"
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "的副本"
+  "duplicate.copy-title": {
+    "defaultMessage": "{title}的副本"
   },
   "duplicate.title": {
     "defaultMessage": "复制"
@@ -768,37 +768,46 @@
     "defaultMessage": "Personal Details"
   },
   "account.delete-warning-title": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "删除账号"
   },
   "account.delete-warning-description": {
-    "defaultMessage": "Once you delete your account, there is no going back. Please be certain."
+    "defaultMessage": "账号一旦删除便无法恢复，请务必确认。"
   },
   "account.delete-warning-consequences": {
-    "defaultMessage": "This will permanently delete:"
+    "defaultMessage": "这将永久删除："
   },
   "account.delete-warning-mindmaps": {
-    "defaultMessage": "All your mindmaps and their content"
+    "defaultMessage": "您的所有思维导图及其内容"
   },
   "account.delete-warning-data": {
-    "defaultMessage": "All your personal data and account information"
+    "defaultMessage": "您的所有个人数据和账号信息"
   },
   "account.delete-warning-collaborations": {
-    "defaultMessage": "All shared mindmaps and collaborations"
+    "defaultMessage": "所有共享的思维导图和协作"
   },
   "account.delete-warning-history": {
-    "defaultMessage": "All account history and activity logs"
+    "defaultMessage": "所有账号历史记录和活动日志"
   },
   "account.delete-confirmation-title": {
-    "defaultMessage": "Are you absolutely sure?"
+    "defaultMessage": "您真的确定吗？"
   },
   "account.delete-confirmation-warning": {
-    "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+    "defaultMessage": "此操作无法撤销。这将永久删除您的账号，并从我们的服务器中移除所有数据。"
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+    "defaultMessage": "请输入 {challengePhrase} 以确认："
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "输入“{challengePhrase}”以确认"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "删除我的账号"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "请输入“{challengePhrase}”以确认删除账号。"
   },
   "account.delete-confirm": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "删除账号"
   },
   "menu.admin-console": {
     "defaultMessage": "Admin Console"

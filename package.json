@@ -27,19 +27,23 @@
     "test:unit": "lerna run test:unit --stream"
   },
   "lint-staged": {
-    "packages/mindplot/src/**/*.{ts,tsx}": [
+    "packages/mindplot/{src,test}/**/*.{ts,tsx}": [
       "cd packages/mindplot && eslint --fix",
       "prettier --write"
     ],
-    "packages/editor/src/**/*.{ts,tsx}": [
+    "packages/editor/{src,test}/**/*.{ts,tsx}": [
       "cd packages/editor && eslint --fix",
       "prettier --write"
     ],
-    "packages/webapp/src/**/*.{ts,tsx}": [
+    "packages/editor/{cypress/**/*,cypress*.config}.ts": [
+      "cd packages/editor && eslint --fix",
+      "prettier --write"
+    ],
+    "packages/webapp/{src,test}/**/*.{ts,tsx}": [
       "cd packages/webapp && eslint --fix",
       "prettier --write"
     ],
-    "packages/web2d/src/**/*.{ts,tsx}": [
+    "packages/web2d/{src,test}/**/*.{ts,tsx}": [
       "cd packages/web2d && eslint --fix",
       "prettier --write"
     ],

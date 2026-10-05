@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '../util/assert';
-import { LineType } from '../ConnectionLine';
 import PositionType from '../PositionType';
 
 export enum StrokeStyle {
@@ -33,8 +32,6 @@ class RelationshipModel {
   private _sourceTargetId: number;
 
   private _targetTopicId: number;
-
-  private _lineType: LineType;
 
   private _srcCtrlPoint: PositionType | null;
 
@@ -57,7 +54,6 @@ class RelationshipModel {
     this._id = RelationshipModel._nextUUID();
     this._sourceTargetId = sourceTopicId;
     this._targetTopicId = targetTopicId;
-    this._lineType = LineType.THIN_CURVED;
     this._srcCtrlPoint = null;
     this._destCtrlPoint = null;
     this._endArrow = true;
@@ -77,14 +73,6 @@ class RelationshipModel {
   getId(): number {
     $assert(this._id, 'id is null');
     return this._id;
-  }
-
-  getLineType(): LineType {
-    return this._lineType;
-  }
-
-  setLineType(lineType: LineType) {
-    this._lineType = lineType;
   }
 
   getSrcCtrlPoint(): PositionType | null {
@@ -141,7 +129,6 @@ class RelationshipModel {
   clone() {
     const result = new RelationshipModel(this._sourceTargetId, this._targetTopicId);
     result._id = this._id;
-    result._lineType = this._lineType;
     result._srcCtrlPoint = this._srcCtrlPoint;
     result._destCtrlPoint = this._destCtrlPoint;
     result._endArrow = this._endArrow;

@@ -93,32 +93,32 @@ class OriginalLayout {
       );
 
       this.layoutChildren(node, heightById, pass);
-      // this.fixOverlapping(node, heightById);
     });
   }
 
   /**
    * Migrates node ordering from TreeLayout's continuous ordering
-   * to OriginalLayout's balanced ordering (even/odd for root children)
+   * to OriginalLayout's balanced ordering (even/odd for the central topic's children).
+   * The other tree roots, floating topics, get the sorter of a topic, as createNode gives them.
    */
-  migrateFromLayout(): void {
+  migrateFromLayout(centralId: number): void {
     const roots = this._treeSet.getTreeRoots();
     roots.forEach((node) => {
-      this._migrateNodeOrdering(node, true);
+      this._migrateNodeOrdering(node, node.getId() === centralId);
     });
   }
 
   private _migrateNodeOrdering(node: Node, isRoot: boolean): void {
-    const children = this._treeSet.getChildren(node);
+    // Update sorter strategy based on node type, also for a node without children yet: it would
+    // otherwise keep the sorter of the other layout for the children it gets.
+    node.setSorter(isRoot ? OriginalLayout.BALANCED_SORTER : OriginalLayout.SYMMETRIC_SORTER);
 
+    const children = this._treeSet.getChildren(node);
     if (children.length === 0) {
       return;
     }
 
-    // Update sorter strategy based on node type
     if (isRoot) {
-      node.setSorter(OriginalLayout.BALANCED_SORTER);
-
       // Sort children by current order
       const sortedChildren = [...children].sort(
         (a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0),
@@ -137,9 +137,7 @@ class OriginalLayout {
         }
       });
     } else {
-      // For non-root nodes, use SymmetricSorter and ensure continuous ordering
-      node.setSorter(OriginalLayout.SYMMETRIC_SORTER);
-
+      // For non-root nodes, ensure continuous ordering
       const sortedChildren = [...children].sort(
         (a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0),
       );
@@ -239,58 +237,6 @@ class OriginalLayout {
       heightById.get(node.getId())! >
       node.getSize().height + node.getSorter().getVerticalPadding() * 2
     );
-  }
-
-  private fixOverlapping(node: Node, heightById: Map<number, number>): void {
-    const children = this._treeSet.getChildren(node);
-
-    children.forEach((child) => {
-      this.fixOverlapping(child, heightById);
-    });
-  }
-
-  _shiftBranches(node: Node, heightById: Map<number, number>): void {
-    const shiftedBranches = [node];
-
-    const siblingsToShift = this._treeSet.getSiblingsInVerticalDirection(
-      node,
-      node.getFreeDisplacement().y,
-    );
-
-    siblingsToShift.forEach((sibling) => {
-      const overlappingOccurs = shiftedBranches.some((shiftedBranch) =>
-        OriginalLayout._branchesOverlap(shiftedBranch, sibling, heightById),
-      );
-      if (overlappingOccurs) {
-        const sAmount = node.getFreeDisplacement().y;
-        this._treeSet.shiftBranchPosition(sibling, 0, sAmount);
-        shiftedBranches.push(sibling);
-      }
-    });
-
-    const branchesToShift = this._treeSet
-      .getBranchesInVerticalDirection(node, node.getFreeDisplacement().y)
-      .filter((branch) => !shiftedBranches.includes(branch));
-
-    branchesToShift.forEach((branch) => {
-      const bAmount = node.getFreeDisplacement().y;
-      this._treeSet.shiftBranchPosition(branch, 0, bAmount);
-      shiftedBranches.push(branch);
-    });
-  }
-
-  static _branchesOverlap(branchA: Node, branchB: Node, heightById: Map<number, number>): boolean {
-    // a branch doesn't really overlap with itself
-    if (branchA === branchB) {
-      return false;
-    }
-
-    const topA = branchA.getPosition().y - heightById.get(branchA.getId())! / 2;
-    const bottomA = branchA.getPosition().y + heightById.get(branchA.getId())! / 2;
-    const topB = branchB.getPosition().y - heightById.get(branchB.getId())! / 2;
-    const bottomB = branchB.getPosition().y + heightById.get(branchB.getId())! / 2;
-
-    return !(topA >= bottomB || bottomA <= topB);
   }
 
   static SYMMETRIC_SORTER: ChildrenSorterStrategy = new SymmetricSorter();

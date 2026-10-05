@@ -94,14 +94,13 @@ class TreeLayout {
   }
 
   private _migrateNodeOrdering(node: Node): void {
-    const children = this._treeSet.getChildren(node);
+    // Update sorter strategy to TreeSorter for all nodes, also the ones without children yet
+    node.setSorter(TreeLayout.TREE_SORTER);
 
+    const children = this._treeSet.getChildren(node);
     if (children.length === 0) {
       return;
     }
-
-    // Update sorter strategy to TreeSorter for all nodes
-    node.setSorter(TreeLayout.TREE_SORTER);
 
     // Sort children by current order
     const sortedChildren = [...children].sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));

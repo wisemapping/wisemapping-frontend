@@ -27,21 +27,48 @@ import ContentType from '../ContentType';
 
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
 
-export type TopicShapeType =
-  'rectangle' | 'rounded rectangle' | 'elipse' | 'line' | 'none' | 'image';
+export const TOPIC_SHAPE_TYPES = [
+  'rectangle',
+  'rounded rectangle',
+  'elipse',
+  'line',
+  'none',
+  'image',
+] as const;
 
-// regex taken from https://stackoverflow.com/a/34763398/58128
-const parseJsObject = (str: string) =>
-  JSON.parse(str.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": '));
+export type TopicShapeType = (typeof TOPIC_SHAPE_TYPES)[number];
 
-// Parses a stored {key:number,...} value. Corrupted values (e.g. NaN) are reported as missing.
-const parseFiniteObject = <T>(str: string, keys: string[]): T | undefined => {
-  try {
-    const result = parseJsObject(str);
-    return keys.every((key) => Number.isFinite(result?.[key])) ? result : undefined;
-  } catch {
-    return undefined;
-  }
+/** The properties a node model stores, with the type of each one. */
+export interface NodeProps {
+  id: number;
+  type: NodeModelType;
+  text?: string;
+  contentType?: ContentType;
+  position?: PositionType;
+  imageSize?: SizeType;
+  imageUrl?: string;
+  imageEmojiChar?: string;
+  imageGalleryIconName?: string;
+  metadata?: string;
+  shapeType?: TopicShapeType;
+  order?: number;
+  shrunken?: boolean;
+  fontFamily?: string;
+  fontSize?: number;
+  fontColor?: string;
+  fontWeight?: FontWeightType;
+  fontStyle?: FontStyleType;
+  borderColor?: string;
+  borderStyle?: string;
+  backgroundColor?: string;
+  connectionStyle?: LineType;
+  connectionColor?: string;
+}
+
+export type NodePropKey = keyof NodeProps;
+
+const copyProperty = <K extends NodePropKey>(source: INodeModel, target: INodeModel, key: K) => {
+  target.putProperty(key, source.getProperty(key));
 };
 
 abstract class INodeModel {
@@ -57,7 +84,7 @@ abstract class INodeModel {
   }
 
   getId(): number {
-    return this.getProperty('id') as number;
+    return this.getProperty('id');
   }
 
   abstract getFeatures(): FeatureModel[];
@@ -77,7 +104,7 @@ abstract class INodeModel {
   }
 
   getType(): NodeModelType {
-    return this.getProperty('type') as NodeModelType;
+    return this.getProperty('type');
   }
 
   setType(type: NodeModelType): void {
@@ -89,7 +116,7 @@ abstract class INodeModel {
   }
 
   getText(): string | undefined {
-    return this.getProperty('text') as string;
+    return this.getProperty('text');
   }
 
   setContentType(contentType: ContentType | undefined): void {
@@ -97,7 +124,7 @@ abstract class INodeModel {
   }
 
   getContentType(): ContentType {
-    return (this.getProperty('contentType') as ContentType) || ContentType.PLAIN;
+    return this.getProperty('contentType') || ContentType.PLAIN;
   }
 
   getPlainText(): string {
@@ -118,7 +145,7 @@ abstract class INodeModel {
       console.warn(`Ignoring invalid position (${x},${y}) for topic ${this.getId()}`);
       return;
     }
-    this.putProperty('position', `{x:${x},y:${y}}`);
+    this.putProperty('position', { x, y });
   }
 
   /**
@@ -126,12 +153,12 @@ abstract class INodeModel {
    * getPositionOrThrow, which make that explicit.
    */
   getPosition(): PositionType | undefined {
-    const value = this.getProperty('position') as string;
-    let result: PositionType | undefined;
-    if (value != null) {
-      result = parseFiniteObject<PositionType>(value, ['x', 'y']);
-    }
-    return result;
+    // setPosition only stores finite values: the check guards a value put directly. A copy is
+    // returned, so callers can not change the model, or the copies sharing it (deepCopy).
+    const value = this.getProperty('position');
+    return value && Number.isFinite(value.x) && Number.isFinite(value.y)
+      ? { x: value.x, y: value.y }
+      : undefined;
   }
 
   /** @return true if the topic has a valid position */
@@ -156,32 +183,30 @@ abstract class INodeModel {
       console.warn(`Ignoring invalid image size (${width},${height}) for topic ${this.getId()}`);
       return;
     }
-    this.putProperty('imageSize', `{width:${width},height:${height}}`);
+    this.putProperty('imageSize', { width, height });
   }
 
   getImageSize(): SizeType | undefined {
-    const value = this.getProperty('imageSize') as string;
-    let result: SizeType | undefined;
-    if (value) {
-      result = parseFiniteObject<SizeType>(value, ['width', 'height']);
-    }
-    return result;
+    const value = this.getProperty('imageSize');
+    return value && Number.isFinite(value.width) && Number.isFinite(value.height)
+      ? { width: value.width, height: value.height }
+      : undefined;
   }
 
   setImageUrl(url: string) {
     this.putProperty('imageUrl', url);
   }
 
-  getMetadata(): string {
-    return this.getProperty('metadata') as string;
+  getMetadata(): string | undefined {
+    return this.getProperty('metadata');
   }
 
   setMetadata(json: string): void {
     this.putProperty('metadata', json);
   }
 
-  getImageUrl(): string {
-    return this.getProperty('imageUrl') as string;
+  getImageUrl(): string | undefined {
+    return this.getProperty('imageUrl');
   }
 
   getMindmap(): Mindmap {
@@ -198,7 +223,7 @@ abstract class INodeModel {
   }
 
   getShapeType(): TopicShapeType | undefined {
-    const result = this.getProperty('shapeType') as TopicShapeType | undefined;
+    const result = this.getProperty('shapeType');
     return result;
   }
 
@@ -225,7 +250,7 @@ abstract class INodeModel {
    * @returns The order value, or undefined if node has no siblings
    */
   getOrder(): number | undefined {
-    return this.getProperty('order') as number | undefined;
+    return this.getProperty('order');
   }
 
   setFontFamily(fontFamily: string | undefined): void {
@@ -233,7 +258,7 @@ abstract class INodeModel {
   }
 
   getFontFamily(): string | undefined {
-    return this.getProperty('fontFamily') as string;
+    return this.getProperty('fontFamily');
   }
 
   setFontStyle(fontStyle: FontStyleType | undefined) {
@@ -241,7 +266,7 @@ abstract class INodeModel {
   }
 
   getFontStyle(): FontStyleType | undefined {
-    return this.getProperty('fontStyle') as FontStyleType;
+    return this.getProperty('fontStyle');
   }
 
   setFontWeight(weight: FontWeightType): void {
@@ -249,7 +274,7 @@ abstract class INodeModel {
   }
 
   getFontWeight(): FontWeightType | undefined {
-    return this.getProperty('fontWeight') as FontWeightType;
+    return this.getProperty('fontWeight');
   }
 
   setFontColor(color: string | undefined): void {
@@ -257,7 +282,7 @@ abstract class INodeModel {
   }
 
   getFontColor(): string | undefined {
-    return this.getProperty('fontColor') as string;
+    return this.getProperty('fontColor');
   }
 
   setFontSize(size: number | undefined): void {
@@ -265,11 +290,11 @@ abstract class INodeModel {
   }
 
   getFontSize(): number | undefined {
-    return this.getProperty('fontSize') as number;
+    return this.getProperty('fontSize');
   }
 
   getBorderColor(): string | undefined {
-    return this.getProperty('borderColor') as string;
+    return this.getProperty('borderColor');
   }
 
   setBorderColor(color: string | undefined): void {
@@ -277,7 +302,7 @@ abstract class INodeModel {
   }
 
   getBorderStyle(): string | undefined {
-    return this.getProperty('borderStyle') as string;
+    return this.getProperty('borderStyle');
   }
 
   setBorderStyle(style: string | undefined): void {
@@ -285,7 +310,7 @@ abstract class INodeModel {
   }
 
   getBackgroundColor(): string | undefined {
-    return this.getProperty('backgroundColor') as string;
+    return this.getProperty('backgroundColor');
   }
 
   setBackgroundColor(color: string | undefined): void {
@@ -293,7 +318,7 @@ abstract class INodeModel {
   }
 
   areChildrenShrunken(): boolean {
-    const result = this.getProperty('shrunken') as boolean;
+    const result = this.getProperty('shrunken');
     return $defined(result) ? result : false;
   }
 
@@ -309,7 +334,7 @@ abstract class INodeModel {
   }
 
   getConnectionStyle(): LineType | undefined {
-    return this.getProperty('connectionStyle') as LineType | undefined;
+    return this.getProperty('connectionStyle');
   }
 
   setConnectionColor(value: string | undefined): void {
@@ -317,7 +342,7 @@ abstract class INodeModel {
   }
 
   getConnectionColor(): string | undefined {
-    return this.getProperty('connectionColor') as string;
+    return this.getProperty('connectionColor');
   }
 
   setImageEmojiChar(imageEmojiChar: string | undefined) {
@@ -325,7 +350,7 @@ abstract class INodeModel {
   }
 
   getImageEmojiChar(): string | undefined {
-    return this.getProperty('imageEmojiChar') as string | undefined;
+    return this.getProperty('imageEmojiChar');
   }
 
   setImageGalleryIconName(imageGalleryIconName: string | undefined) {
@@ -333,7 +358,7 @@ abstract class INodeModel {
   }
 
   getImageGalleryIconName(): string | undefined {
-    return this.getProperty('imageGalleryIconName') as string | undefined;
+    return this.getProperty('imageGalleryIconName');
   }
 
   isNodeModel(): boolean {
@@ -367,11 +392,7 @@ abstract class INodeModel {
   copyTo(target: INodeModel): INodeModel {
     const source = this;
     // Copy properties ...
-    const keys = source.getPropertiesKeys();
-    keys.forEach((key) => {
-      const value = source.getProperty(key);
-      target.putProperty(key, value);
-    });
+    source.getPropertiesKeys().forEach((key) => copyProperty(source, target, key));
 
     // Copy children ...
     const children = this.getChildren();
@@ -402,11 +423,11 @@ abstract class INodeModel {
     }
   }
 
-  abstract getPropertiesKeys(): string[];
+  abstract getPropertiesKeys(): NodePropKey[];
 
-  abstract getProperty(key: string): number | string | boolean | undefined;
+  abstract getProperty<K extends NodePropKey>(key: K): NodeProps[K];
 
-  abstract putProperty(key: string, value: number | string | boolean | undefined): void;
+  abstract putProperty<K extends NodePropKey>(key: K, value: NodeProps[K]): void;
 
   abstract setParent(parent: INodeModel): void;
 
@@ -433,22 +454,8 @@ abstract class INodeModel {
     return result;
   }
 
-  findNodeById(id: number): INodeModel | undefined {
-    let result: INodeModel | undefined;
-    if (this.getId() === id) {
-      result = this;
-    } else {
-      const children = this.getChildren();
-      for (let i = 0; i < children.length; i++) {
-        const child = children[i];
-        result = child.findNodeById(id);
-        if (result) {
-          break;
-        }
-      }
-    }
-    return result;
-  }
+  /** The node with the given id in this subtree (this node included), undefined if none. */
+  abstract findNodeById(id: number): INodeModel | undefined;
 
   inspect() {
     let result = `{ type: ${this.getType()} , id: ${this.getId()} , text: ${this.getText()}`;
@@ -461,7 +468,8 @@ abstract class INodeModel {
         const keys = node.getPropertiesKeys();
         keys.forEach((key) => {
           const value = node.getProperty(key);
-          result = `${result + key}:${value},`;
+          const text = typeof value === 'object' ? JSON.stringify(value) : value;
+          result = `${result + key}:${text},`;
         });
         result = `${result}}`;
       });

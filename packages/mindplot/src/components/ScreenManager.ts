@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import type { Workspace as Workspace2D } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import EventManager from './util/EventManager';
 import PositionType from './PositionType';
@@ -27,6 +28,9 @@ class ScreenManager {
   private _clickEvents: EventListener[];
 
   private _scale: number;
+
+  // The workspace drawn in the container, which maps mouse positions (see setWorkspace).
+  private _workspace: Workspace2D | null = null;
 
   constructor(divElement: HTMLElement) {
     $assert(divElement, 'can not be null');
@@ -64,6 +68,15 @@ class ScreenManager {
 
   setScale(scale: number) {
     this._scale = scale;
+  }
+
+  /**
+   * The workspace drawn in the container. Mouse positions are mapped through its SVG screen matrix
+   * (Workspace.clientToWorld), which applies the zoom, the pan and where the SVG really is on the
+   * page (a container border or padding, a CSS transform). Null maps them from the container.
+   */
+  setWorkspace(workspace: Workspace2D | null): void {
+    this._workspace = workspace;
   }
 
   addEvent(eventType: string, listener: EventListener) {
@@ -109,6 +122,30 @@ class ScreenManager {
 
   private tocuchEvents = ['touchstart', 'touchend', 'touchmove'];
 
+  /** The viewport (client) position of a mouse or touch event. */
+  getClientPosition(event: MouseEvent | TouchEvent): PositionType {
+    let x: number | null = null;
+    let y: number | null = null;
+
+    if (this.mouseEvents.includes(event.type)) {
+      x = (event as MouseEvent).clientX;
+      y = (event as MouseEvent).clientY;
+    } else if (this.tocuchEvents.includes(event.type)) {
+      // On touchend the lifted finger is no longer in touches, only in changedTouches.
+      const touchEvent = event as TouchEvent;
+      const touch = touchEvent.touches[0] ?? touchEvent.changedTouches?.[0];
+      if (touch) {
+        x = touch.clientX;
+        y = touch.clientY;
+      }
+    }
+
+    if (x === null || y === null) {
+      throw new Error(`Coordinated can not be null, eventType= ${event.type}`);
+    }
+    return { x, y };
+  }
+
   getWorkspaceMousePosition(event: MouseEvent | TouchEvent): PositionType {
     let x: number | null = null;
     let y: number | null = null;
@@ -132,6 +169,13 @@ class ScreenManager {
       throw new Error(`Coordinated can not be null, eventType= ${event.type}`);
     }
 
+    // Through the SVG screen matrix, where the browser has one ...
+    const svg = this._workspace?.getSVGElement();
+    if (this._workspace && svg && typeof svg.getScreenCTM === 'function') {
+      return this._workspace.clientToWorld(x, y);
+    }
+
+    // Without one (jsdom has no layout): from the container rect, the zoom and the pan.
     // Adjust the deviation of the container positioning. clientX/clientY and the bounding rect
     // are both viewport relative, so the page scroll must not be applied here ...
     const containerRect = this._divContainer.getBoundingClientRect();

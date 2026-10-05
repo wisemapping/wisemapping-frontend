@@ -17,18 +17,32 @@
  */
 import WorkspaceElement from './WorkspaceElement';
 import ImagePeer from './peer/svg/ImagePeer';
-import SizeType from './SizeType';
-import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
-import PositionType from './PositionType';
+import type SizeType from './SizeType';
+import {
+  pointArguments,
+  type AttributeArguments,
+  type AttributeSetter,
+  type ShapeAttributes,
+} from './StyleAttributes';
+import type PositionType from './PositionType';
+import type { ElementType } from './types';
 
 class Image extends WorkspaceElement<ImagePeer> {
-  constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createImage();
+  constructor(attributes?: ShapeAttributes) {
+    const peer = new ImagePeer();
     super(peer, attributes || {});
   }
 
-  getType(): string {
+  /** Applies the position attributes (x, y, position) too. */
+  protected override applyAttribute(setter: AttributeSetter, args: AttributeArguments): void {
+    if (setter === 'position') {
+      this.setPosition(...pointArguments(args, this.getPosition()));
+    } else {
+      super.applyAttribute(setter, args);
+    }
+  }
+
+  getType(): ElementType {
     return 'Image';
   }
 
@@ -40,7 +54,7 @@ class Image extends WorkspaceElement<ImagePeer> {
     return this.peer.getHref();
   }
 
-  getSize(): SizeType | undefined {
+  getSize(): SizeType {
     return this.peer.getSize();
   }
 

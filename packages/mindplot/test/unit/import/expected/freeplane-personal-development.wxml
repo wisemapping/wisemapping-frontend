@@ -1,13 +1,13 @@
 <map name="freeplane-personal-development" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Personal Development Plan" id="1">
         <topic position="200,0" order="0" text="Career Goals" shape="line" id="2">
-            <eicon id="💡"/>
+            <eicon id="1️⃣"/>
             <topic position="200,0" order="0" text="Skill Development" shape="line" id="3">
                 <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Identify and develop key professional skills</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Networking" shape="line" id="4">
-                <eicon id="💡"/>
+                <eicon id="👥"/>
                 <note contentType="html"><![CDATA[<p>Build professional network and relationships</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Certification" shape="line" id="5">
@@ -20,7 +20,7 @@
             </topic>
         </topic>
         <topic position="-200,0" order="1" text="Health &amp; Wellness" shape="line" id="7">
-            <eicon id="💡"/>
+            <eicon id="2️⃣"/>
             <topic position="200,0" order="0" text="Physical Fitness" shape="line" id="8">
                 <eicon id="⚽"/>
                 <note contentType="html"><![CDATA[<p>Regular exercise and physical activity</p>]]></note>
@@ -39,7 +39,7 @@
             </topic>
         </topic>
         <topic position="300,75" order="2" text="Financial Planning" shape="line" id="12">
-            <eicon id="💡"/>
+            <eicon id="3️⃣"/>
             <topic position="200,0" order="0" text="Savings Goals" shape="line" id="13">
                 <eicon id="💰"/>
                 <note contentType="html"><![CDATA[<p>Set and achieve savings targets</p>]]></note>
@@ -58,7 +58,7 @@
             </topic>
         </topic>
         <topic position="-300,75" order="3" text="Personal Growth" shape="line" id="17">
-            <eicon id="💡"/>
+            <eicon id="4️⃣"/>
             <topic position="200,0" order="0" text="Reading Goals" shape="line" id="18">
                 <eicon id="📚"/>
                 <note contentType="html"><![CDATA[<p>Read books for personal and professional growth</p>]]></note>

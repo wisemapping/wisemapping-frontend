@@ -21,8 +21,8 @@ import {
   PersistenceManager,
   DesignerModel,
   WidgetBuilder,
-  Topic,
 } from '@wisemapping/mindplot';
+import type { DesignerEvents, FeatureEditEvent } from '@wisemapping/mindplot';
 import Capability from '../../action/capability';
 import { trackEditorInteraction } from '../../../utils/analytics';
 import debounce from 'lodash/debounce';
@@ -37,6 +37,12 @@ class Editor {
   // The debounced autosave and the designer it listens on, released by dispose() ...
   private autoSave: { designer: Designer; save: (() => void) & { cancel: () => void } } | null =
     null;
+
+  // The designer loadMindmap built, disposed by dispose() ...
+  private designer: Designer | null = null;
+
+  // Removes the designer handlers added by registerEvents; called by dispose() ...
+  private removeDesignerHandlersFn: (() => void) | null = null;
 
   constructor(component: MindplotWebComponent) {
     this.component = component;
@@ -73,7 +79,7 @@ class Editor {
     persistenceManager: PersistenceManager,
     widgetBuilder: WidgetBuilder,
   ): Promise<void> {
-    this.component.buildDesigner(persistenceManager, widgetBuilder);
+    this.designer = this.component.buildDesigner(persistenceManager, widgetBuilder);
     return this.component.loadMap(mapId);
   }
 
@@ -97,17 +103,16 @@ class Editor {
         canvasUpdate(Date.now());
       };
 
-      const featureEdition = (value: { event: 'note' | 'link' | 'close'; topic: Topic }): void => {
-        const { event, topic } = value;
-        switch (event) {
+      const featureEdition = (value: FeatureEditEvent): void => {
+        switch (value.event) {
           case 'note': {
             trackEditorInteraction('note_editor_open');
-            widgetBuilder.fireEvent('note', topic);
+            widgetBuilder.fireEvent('note', value.topic);
             break;
           }
           case 'link': {
             trackEditorInteraction('link_editor_open');
-            widgetBuilder.fireEvent('link', topic);
+            widgetBuilder.fireEvent('link', value.topic);
             break;
           }
         }
@@ -121,13 +126,21 @@ class Editor {
       // here re-rendered the entire editor chrome per frame. The one piece of
       // chrome that needs it -- the zoom percentage -- subscribes directly in
       // visualization-toolbar/zoom-display.tsx, so only that leaf re-renders.
-      designer.addEvent('onblur', onNodeBlurHandler);
-      designer.addEvent('onfocus', onNodeFocusHandler);
-      designer.addEvent('modelUpdate', onNodeFocusHandler);
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      designer.addEvent('featureEdit', featureEdition);
+      this.removeDesignerHandlers();
+      const removals: (() => void)[] = [];
+      // Each handler is checked against the payload of its event.
+      const on = <K extends keyof DesignerEvents>(
+        type: K,
+        handler: (payload: DesignerEvents[K]) => void,
+      ): void => {
+        designer.addEvent(type, handler);
+        removals.push(() => designer.removeEvent(type, handler));
+      };
+      on('onblur', onNodeBlurHandler);
+      on('onfocus', onNodeFocusHandler);
+      on('modelUpdate', onNodeFocusHandler);
+      on('featureEdit', featureEdition);
+      this.removeDesignerHandlersFn = () => removals.forEach((remove) => remove());
 
       // Is the save action enabled ... ?
       if (!capability.isHidden('save')) {
@@ -195,12 +208,24 @@ class Editor {
   }
 
   /**
-   * Releases the listeners added by registerEvents. A pending autosave is dropped, not run: the
-   * caller flushes the pending changes before disposing.
+   * Releases the listeners added by registerEvents and disposes the designer. A pending autosave
+   * is dropped, not run: the caller flushes the pending changes before disposing. The designer
+   * keeps its map, so a flush still in flight can save and unlock it.
    */
   dispose(): void {
     this.removeBeforeUnloadHandler();
     this.removeAutoSave();
+    this.removeDesignerHandlers();
+    // The element disposes it too once it leaves the page; disposing twice is a no-op.
+    this.designer?.dispose();
+    this.designer = null;
+  }
+
+  private removeDesignerHandlers(): void {
+    if (this.removeDesignerHandlersFn) {
+      this.removeDesignerHandlersFn();
+      this.removeDesignerHandlersFn = null;
+    }
   }
 
   private removeAutoSave(): void {

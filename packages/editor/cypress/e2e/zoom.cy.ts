@@ -28,54 +28,58 @@ describe('Zoom Suite', () => {
     cy.get('[aria-label="Zoom In"]').should('be.visible');
     cy.get('[aria-label="Zoom Out"]').should('be.visible');
     cy.get('[aria-label="Zoom to Fit"]').should('be.visible');
-    
+
     // Verify zoom percentage is displayed
     cy.contains(/\d+%/).should('be.visible');
-    
+
     cy.matchImageSnapshot('zoom-controls-visible');
   });
 
   it('should zoom in when clicking zoom in button', () => {
     // Get initial zoom percentage
-    cy.contains(/\d+%/).invoke('text').then((initialZoom) => {
-      const initialValue = parseInt(initialZoom);
+    cy.contains(/\d+%/)
+      .invoke('text')
+      .then((initialZoom) => {
+        const initialValue = parseInt(initialZoom);
 
-      // Click zoom in button
-      cy.get('[aria-label="Zoom In"]').first().click();
+        // Click zoom in button
+        cy.get('[aria-label="Zoom In"]').first().click();
 
-      // Verify zoom percentage increased
-      cy.contains(/\d+%/).should(($el) => {
-        // @ts-expect-error - Cypress guarantees $el is defined in .should() callback
-        const newValue = parseInt($el.text());
-        expect(newValue).to.be.greaterThan(initialValue);
+        // Verify zoom percentage increased
+        cy.contains(/\d+%/).should(($el) => {
+          // @ts-expect-error - Cypress guarantees $el is defined in .should() callback
+          const newValue = parseInt($el.text());
+          expect(newValue).to.be.greaterThan(initialValue);
+        });
+
+        // Verify the map content is still visible
+        cy.contains('Mind Mapping').should('be.visible');
       });
 
-      // Verify the map content is still visible
-      cy.contains('Mind Mapping').should('be.visible');
-    });
-    
     cy.matchImageSnapshot('zoom-in-applied');
   });
 
   it('should zoom out when clicking zoom out button', () => {
     // Get initial zoom percentage
-    cy.contains(/\d+%/).invoke('text').then((initialZoom) => {
-      const initialValue = parseInt(initialZoom);
+    cy.contains(/\d+%/)
+      .invoke('text')
+      .then((initialZoom) => {
+        const initialValue = parseInt(initialZoom);
 
-      // Click zoom out button
-      cy.get('[aria-label="Zoom Out"]').first().click();
+        // Click zoom out button
+        cy.get('[aria-label="Zoom Out"]').first().click();
 
-      // Verify zoom percentage decreased
-      cy.contains(/\d+%/).should(($el) => {
-        // @ts-expect-error - Cypress guarantees $el is defined in .should() callback
-        const newValue = parseInt($el.text());
-        expect(newValue).to.be.lessThan(initialValue);
+        // Verify zoom percentage decreased
+        cy.contains(/\d+%/).should(($el) => {
+          // @ts-expect-error - Cypress guarantees $el is defined in .should() callback
+          const newValue = parseInt($el.text());
+          expect(newValue).to.be.lessThan(initialValue);
+        });
+
+        // Verify the map content is still visible
+        cy.contains('Mind Mapping').should('be.visible');
       });
 
-      // Verify the map content is still visible
-      cy.contains('Mind Mapping').should('be.visible');
-    });
-    
     cy.matchImageSnapshot('zoom-out-applied');
   });
 
@@ -84,23 +88,25 @@ describe('Zoom Suite', () => {
     cy.get('[aria-label="Zoom In"]').first().click();
 
     // Get zoom level after zooming in
-    cy.contains(/\d+%/).invoke('text').then((zoomedLevel) => {
-      const zoomedValue = parseInt(zoomedLevel);
+    cy.contains(/\d+%/)
+      .invoke('text')
+      .then((zoomedLevel) => {
+        const zoomedValue = parseInt(zoomedLevel);
 
-      // Click zoom to fit button
-      cy.get('[aria-label="Zoom to Fit"]').first().click();
+        // Click zoom to fit button
+        cy.get('[aria-label="Zoom to Fit"]').first().click();
 
-      // Verify zoom percentage changed
-      cy.contains(/\d+%/).should(($el) => {
-        // @ts-expect-error - Cypress guarantees $el is defined in .should() callback
-        const newValue = parseInt($el.text());
-        expect(newValue).to.not.equal(zoomedValue);
+        // Verify zoom percentage changed
+        cy.contains(/\d+%/).should(($el) => {
+          // @ts-expect-error - Cypress guarantees $el is defined in .should() callback
+          const newValue = parseInt($el.text());
+          expect(newValue).to.not.equal(zoomedValue);
+        });
+
+        // Verify the map content is still visible
+        cy.contains('Mind Mapping').should('be.visible');
       });
 
-      // Verify the map content is still visible
-      cy.contains('Mind Mapping').should('be.visible');
-    });
-    
     cy.matchImageSnapshot('zoom-to-fit-applied');
   });
 });

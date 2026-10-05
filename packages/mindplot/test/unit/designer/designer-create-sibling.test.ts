@@ -17,17 +17,17 @@
  */
 
 // jspdf pulls in a TextEncoder that jsdom does not provide, and nothing here exports.
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import Designer from '../../../src/components/Designer';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import type { LayoutType } from '../../../src/components/layout/LayoutType';
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
 import type Topic from '../../../src/components/Topic';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 const ROOT_NODE_SIZE = { width: 140, height: 90 };
 const NODE_SIZE = { width: 80, height: 60 };

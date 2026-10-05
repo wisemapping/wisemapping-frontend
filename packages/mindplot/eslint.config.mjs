@@ -28,7 +28,6 @@ export default defineConfig([
             "*.min.js",
             "**/*.d.ts",
             "src/@types/**",
-            "test/**",
             "cypress/**",
             "storybook/**"
         ]
@@ -127,6 +126,15 @@ export default defineConfig([
             "implicit-arrow-linebreak": "off",
             "no-confusing-arrow": "off", // Disabled to avoid conflict with Prettier
             "function-paren-newline": "off", // Disabled to avoid conflict with Prettier
+        },
+    },
+    {
+        files: ["test/**/*.ts"],
+        rules: {
+            // Test doubles (mock classes) live next to the test that uses them.
+            "max-classes-per-file": "off",
+            // The security tests feed javascript: URLs to the sanitizers on purpose.
+            "no-script-url": "off",
         },
     }
 ]);

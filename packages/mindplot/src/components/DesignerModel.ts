@@ -30,8 +30,9 @@ class DesignerModel {
 
   private _relationships: Relationship[];
 
-  // Topics by id: lookups used to scan _topics. A topic's id is not expected to change once it
-  // is added; if one does, the lookup falls back to the scan.
+  // Topics by id, authoritative: a topic missing from it is not in _topics, so a miss needs no
+  // scan. A topic's id changes through NodeGraph.setId, which calls reindexTopic; an entry whose
+  // topic has another id all the same is repaired when a lookup meets it.
   private _topicsById: Map<number, Topic>;
 
   constructor(options: DesignerOptions) {
@@ -183,12 +184,30 @@ class DesignerModel {
     return relationships.length > 0 ? relationships[0] : undefined;
   }
 
+  /** Indexes a topic whose id changed from previousId. */
+  reindexTopic(topic: Topic, previousId: number): void {
+    if (this._topicsById.get(previousId) === topic) {
+      this._topicsById.delete(previousId);
+      // Another topic with the previous id, if any, takes its place ...
+      const other = this._topics.find((t) => t.getId() === previousId);
+      if (other) {
+        this._topicsById.set(previousId, other);
+      }
+    }
+    if (this._topics.includes(topic)) {
+      this._index(topic);
+    }
+  }
+
   findTopicById(id: number): Topic | undefined {
     const topic = this._topicsById.get(id);
-    if (topic && topic.getId() === id) {
+    if (!topic || topic.getId() === id) {
       return topic;
     }
-    // Not indexed under this id (absent, or its id changed): search, and index what is found.
+    // Its id changed without reindexTopic: index it under the new one, and search for another
+    // topic with this id. Rare, unlike a miss.
+    this._topicsById.delete(id);
+    this._index(topic);
     const result = this._topics.find((t) => t.getId() === id);
     if (result) {
       this._topicsById.set(id, result);
@@ -198,10 +217,11 @@ class DesignerModel {
 
   /** The topic of a model. A topic has the id of its model, so the id index finds it. */
   findTopicByModel(model: NodeModel): Topic | undefined {
-    const topic = this._topicsById.get(model.getId());
-    if (topic && topic.getModel() === model) {
+    const topic = this.findTopicById(model.getId());
+    if (!topic || topic.getModel() === model) {
       return topic;
     }
+    // Another topic with the same id (a duplicate, or one given another model): search.
     return this._topics.find((t) => t.getModel() === model);
   }
 

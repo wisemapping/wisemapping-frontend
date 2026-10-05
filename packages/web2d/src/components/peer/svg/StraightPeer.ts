@@ -15,9 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { fixed } from '../../geometry/path';
 import ElementPeer from './ElementPeer';
 
-class StraightLinePeer extends ElementPeer {
+/** The ends are written with 2 decimals. */
+const format = fixed(2);
+
+class StraightLinePeer extends ElementPeer<SVGLineElement> {
   private _x1: number;
 
   private _y1: number;
@@ -27,10 +31,8 @@ class StraightLinePeer extends ElementPeer {
   private _y2: number;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    super(svgElement);
+    super(ElementPeer.createNode('line'));
 
-    this.attachChangeEventListener('strokeStyle', ElementPeer.prototype.updateStrokeStyle);
     this._x1 = 0;
     this._x2 = 0;
     this._y1 = 10;
@@ -40,15 +42,15 @@ class StraightLinePeer extends ElementPeer {
   setFrom(x1: number, y1: number) {
     this._x1 = x1;
     this._y1 = y1;
-    this._native.setAttribute('x1', x1.toFixed(2));
-    this._native.setAttribute('y1', y1.toFixed(2));
+    this.attr('x1', format(x1));
+    this.attr('y1', format(y1));
   }
 
   setTo(x2: number, y2: number) {
     this._x2 = x2;
     this._y2 = y2;
-    this._native.setAttribute('x2', x2.toFixed(2));
-    this._native.setAttribute('y2', y2.toFixed(2));
+    this.attr('x2', format(x2));
+    this.attr('y2', format(y2));
   }
 
   getFrom() {

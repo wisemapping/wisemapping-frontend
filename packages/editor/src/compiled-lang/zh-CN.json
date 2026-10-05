@@ -182,7 +182,7 @@
   "canvas-style.background-style": [
     {
       "type": 0,
-      "value": "Background Style"
+      "value": "背景样式"
     }
   ],
   "canvas-style.colors": [
@@ -230,13 +230,13 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "网格样式"
+      "value": "网格大小"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "默认 - 所有样式将根据主题自动选择"
     }
   ],
   "canvas-style.pattern-dots": [
@@ -278,13 +278,13 @@
   "canvas-style.tab-color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "颜色"
     }
   ],
   "canvas-style.tab-grid": [
     {
       "type": 0,
-      "value": "Grid Color"
+      "value": "网格颜色"
     }
   ],
   "canvas-style.title": [
@@ -794,7 +794,13 @@
   "icon-collection.border.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "默认"
+    }
+  ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "默认 - 颜色将根据所选主题自动设置"
     }
   ],
   "icon-collection.border.dotted": [
@@ -836,7 +842,7 @@
   "icon-collection.connection.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "默认"
     }
   ],
   "icon-collection.connection.default-tooltip": [
@@ -920,13 +926,13 @@
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "默认 - 所有样式将根据主题自动选择"
     }
   ],
   "icon-collection.shape.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "默认"
     }
   ],
   "icon-collection.shape.ellipse": [
@@ -1137,6 +1143,12 @@
       "value": "折叠"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "全部折叠"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1147,6 +1159,12 @@
     {
       "type": 0,
       "value": "展开"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "全部展开"
     }
   ],
   "outline.has-note": [
@@ -1347,6 +1365,30 @@
       "value": "取消文本更改"
     }
   ],
+  "shortcut-help-pane.category-editing": [
+    {
+      "type": 0,
+      "value": "编辑"
+    }
+  ],
+  "shortcut-help-pane.category-format": [
+    {
+      "type": 0,
+      "value": "格式"
+    }
+  ],
+  "shortcut-help-pane.category-navigation": [
+    {
+      "type": 0,
+      "value": "导航"
+    }
+  ],
+  "shortcut-help-pane.category-view": [
+    {
+      "type": 0,
+      "value": "视图"
+    }
+  ],
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
@@ -1383,10 +1425,52 @@
       "value": "取消选择所有主题"
     }
   ],
+  "shortcut-help-pane.diagram-aria": [
+    {
+      "type": 0,
+      "value": "左箭头移到父主题，右箭头移到子主题，上下箭头在同级主题之间移动。"
+    }
+  ],
+  "shortcut-help-pane.diagram-caption": [
+    {
+      "type": 0,
+      "value": "在导图的左半部分，← 和 → 的作用互换。"
+    }
+  ],
+  "shortcut-help-pane.diagram-child": [
+    {
+      "type": 0,
+      "value": "子主题"
+    }
+  ],
+  "shortcut-help-pane.diagram-parent": [
+    {
+      "type": 0,
+      "value": "父主题"
+    }
+  ],
+  "shortcut-help-pane.diagram-selected": [
+    {
+      "type": 0,
+      "value": "已选中"
+    }
+  ],
+  "shortcut-help-pane.diagram-sibling": [
+    {
+      "type": 0,
+      "value": "同级主题"
+    }
+  ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
       "value": "断开主题连接"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect-key": [
+    {
+      "type": 0,
+      "value": "拖动主题"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
@@ -1590,7 +1674,7 @@
   "theme.aurora.description": [
     {
       "type": 0,
-      "value": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+      "value": "霓虹风格的渐变主题，带有发光效果、粗体字体和高对比度连接线，专为沉浸式叙事而设计。"
     }
   ],
   "theme.aurora.name": [
@@ -1602,7 +1686,7 @@
   "theme.classic.description": [
     {
       "type": 0,
-      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+      "value": "简洁专业的设计，搭配蓝色点缀。非常适合商务演示和正式文档。"
     }
   ],
   "theme.classic.name": [
@@ -1626,7 +1710,7 @@
   "theme.ocean.description": [
     {
       "type": 0,
-      "value": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+      "value": "海洋风格的蓝色主题，提供浅色和深色两种变体。沉稳专业的配色，非常适合商务和创意项目。"
     }
   ],
   "theme.ocean.name": [
@@ -1638,7 +1722,7 @@
   "theme.retro.description": [
     {
       "type": 0,
-      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+      "value": "80 年代合成波配色，搭配霓虹轮廓、镀铬渐变和网格画布，灵感来自复古夜间派对。"
     }
   ],
   "theme.retro.name": [
@@ -1650,7 +1734,7 @@
   "theme.robot.description": [
     {
       "type": 0,
-      "value": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+      "value": "科技风格的绿色主题。非常适合技术文档和未来感演示。"
     }
   ],
   "theme.robot.name": [
@@ -1662,7 +1746,7 @@
   "theme.summer.description": [
     {
       "type": 0,
-      "value": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+      "value": "明亮活泼的橙色主题。非常适合创意项目和充满活力的演示。"
     }
   ],
   "theme.summer.name": [
@@ -1674,7 +1758,7 @@
   "theme.sunrise.description": [
     {
       "type": 0,
-      "value": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+      "value": "日出主题，提供浅色和深色模式。增强的颜色和对比度带来更好的可读性。"
     }
   ],
   "theme.sunrise.name": [
@@ -1782,13 +1866,13 @@
   "topic-font-editor.reset-to-default": [
     {
       "type": 0,
-      "value": "Reset to Default"
+      "value": "恢复默认"
     }
   ],
   "unified-styling.background-color": [
     {
       "type": 0,
-      "value": "Background Color"
+      "value": "背景颜色"
     }
   ],
   "unified-styling.border-color": [
@@ -1818,7 +1902,7 @@
   "unified-styling.shape-type": [
     {
       "type": 0,
-      "value": "Shape Type"
+      "value": "形状类型"
     }
   ],
   "unified-styling.tab.border": [
@@ -1855,6 +1939,20 @@
     {
       "type": 0,
       "value": "按级别展开"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "按级别展开（级别 "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": "）"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

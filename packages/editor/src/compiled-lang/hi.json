@@ -182,7 +182,7 @@
   "canvas-style.background-style": [
     {
       "type": 0,
-      "value": "Background Style"
+      "value": "पृष्ठभूमि शैली"
     }
   ],
   "canvas-style.colors": [
@@ -230,13 +230,13 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "ग्रिड शैली"
+      "value": "ग्रिड आकार"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "डिफ़ॉल्ट - थीम के आधार पर सभी शैलियाँ स्वचालित रूप से चुनी जाएँगी"
     }
   ],
   "canvas-style.pattern-dots": [
@@ -278,13 +278,13 @@
   "canvas-style.tab-color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "रंग"
     }
   ],
   "canvas-style.tab-grid": [
     {
       "type": 0,
-      "value": "Grid Color"
+      "value": "ग्रिड रंग"
     }
   ],
   "canvas-style.title": [
@@ -302,13 +302,13 @@
   "color-picker.color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "रंग"
     }
   ],
   "color-picker.default-color": [
     {
       "type": 0,
-      "value": "Default color"
+      "value": "डिफ़ॉल्ट रंग"
     }
   ],
   "common.close": [
@@ -780,25 +780,31 @@
   "icon-collection.border.dashed": [
     {
       "type": 0,
-      "value": "Dashed"
+      "value": "डैश वाली"
     }
   ],
   "icon-collection.border.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "डिफ़ॉल्ट"
+    }
+  ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "डिफ़ॉल्ट - चयनित थीम के आधार पर रंग स्वचालित रूप से लिए जाएँगे"
     }
   ],
   "icon-collection.border.dotted": [
     {
       "type": 0,
-      "value": "Dotted"
+      "value": "बिंदुदार"
     }
   ],
   "icon-collection.border.solid": [
     {
       "type": 0,
-      "value": "Solid"
+      "value": "ठोस"
     }
   ],
   "icon-collection.connection.arc": [
@@ -816,7 +822,7 @@
   "icon-collection.connection.curved-polyline": [
     {
       "type": 0,
-      "value": "Curved Polyline"
+      "value": "घुमावदार पॉलीलाइन"
     }
   ],
   "icon-collection.connection.curved-polyline-tooltip": [
@@ -828,7 +834,7 @@
   "icon-collection.connection.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "डिफ़ॉल्ट"
     }
   ],
   "icon-collection.connection.default-tooltip": [
@@ -876,19 +882,19 @@
   "icon-collection.connection.simple-polyline": [
     {
       "type": 0,
-      "value": "Simple Polyline"
+      "value": "सरल पॉलीलाइन"
     }
   ],
   "icon-collection.connection.simple-polyline-tooltip": [
     {
       "type": 0,
-      "value": "Direct straight line connection - Clean and minimalist style for simple relationships"
+      "value": "सीधी रेखा वाला सीधा कनेक्शन - सरल संबंधों के लिए साफ़ और न्यूनतम शैली"
     }
   ],
   "icon-collection.connection.thick-curved": [
     {
       "type": 0,
-      "value": "Thick Curved"
+      "value": "मोटी घुमावदार"
     }
   ],
   "icon-collection.connection.thick-curved-tooltip": [
@@ -900,7 +906,7 @@
   "icon-collection.connection.thin-curved": [
     {
       "type": 0,
-      "value": "Thin Curved"
+      "value": "पतली घुमावदार"
     }
   ],
   "icon-collection.connection.thin-curved-tooltip": [
@@ -912,49 +918,49 @@
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "डिफ़ॉल्ट - थीम के आधार पर सभी शैलियाँ स्वचालित रूप से चुनी जाएँगी"
     }
   ],
   "icon-collection.shape.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "डिफ़ॉल्ट"
     }
   ],
   "icon-collection.shape.ellipse": [
     {
       "type": 0,
-      "value": "Ellipse"
+      "value": "दीर्घवृत्त"
     }
   ],
   "icon-collection.shape.line": [
     {
       "type": 0,
-      "value": "Line"
+      "value": "रेखा"
     }
   ],
   "icon-collection.shape.none": [
     {
       "type": 0,
-      "value": "None"
+      "value": "कोई नहीं"
     }
   ],
   "icon-collection.shape.none-tooltip": [
     {
       "type": 0,
-      "value": "None - No visible shape background"
+      "value": "कोई नहीं - कोई दृश्य आकार पृष्ठभूमि नहीं"
     }
   ],
   "icon-collection.shape.rectangle": [
     {
       "type": 0,
-      "value": "Rectangle"
+      "value": "आयत"
     }
   ],
   "icon-collection.shape.rounded": [
     {
       "type": 0,
-      "value": "Rounded"
+      "value": "गोलाकार कोने"
     }
   ],
   "icon-picker.emojis": [
@@ -1129,6 +1135,12 @@
       "value": "संक्षिप्त करें"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "सभी संक्षिप्त करें"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1139,6 +1151,12 @@
     {
       "type": 0,
       "value": "विस्तार करें"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "सभी विस्तार करें"
     }
   ],
   "outline.has-note": [
@@ -1180,37 +1198,37 @@
   "relationship-style-editor.dashed-line": [
     {
       "type": 0,
-      "value": "Dashed Line"
+      "value": "डैश वाली रेखा"
     }
   ],
   "relationship-style-editor.dashed-line-tooltip": [
     {
       "type": 0,
-      "value": "Dashed line style"
+      "value": "डैश वाली रेखा शैली"
     }
   ],
   "relationship-style-editor.dotted-line": [
     {
       "type": 0,
-      "value": "Dotted Line"
+      "value": "बिंदुदार रेखा"
     }
   ],
   "relationship-style-editor.dotted-line-tooltip": [
     {
       "type": 0,
-      "value": "Dotted line style"
+      "value": "बिंदुदार रेखा शैली"
     }
   ],
   "relationship-style-editor.end-arrow": [
     {
       "type": 0,
-      "value": "End Arrow"
+      "value": "अंतिम तीर"
     }
   ],
   "relationship-style-editor.end-arrow-tooltip": [
     {
       "type": 0,
-      "value": "Toggle end arrow"
+      "value": "अंतिम तीर टॉगल करें"
     }
   ],
   "relationship-style-editor.line-arrows": [
@@ -1222,25 +1240,25 @@
   "relationship-style-editor.solid-line": [
     {
       "type": 0,
-      "value": "Solid Line"
+      "value": "ठोस रेखा"
     }
   ],
   "relationship-style-editor.solid-line-tooltip": [
     {
       "type": 0,
-      "value": "Solid line style"
+      "value": "ठोस रेखा शैली"
     }
   ],
   "relationship-style-editor.start-arrow": [
     {
       "type": 0,
-      "value": "Start Arrow"
+      "value": "प्रारंभिक तीर"
     }
   ],
   "relationship-style-editor.start-arrow-tooltip": [
     {
       "type": 0,
-      "value": "Toggle start arrow"
+      "value": "प्रारंभिक तीर टॉगल करें"
     }
   ],
   "retro": [
@@ -1339,6 +1357,30 @@
       "value": "पाठ परिवर्तन रद्द करें"
     }
   ],
+  "shortcut-help-pane.category-editing": [
+    {
+      "type": 0,
+      "value": "संपादन"
+    }
+  ],
+  "shortcut-help-pane.category-format": [
+    {
+      "type": 0,
+      "value": "फ़ॉर्मेट"
+    }
+  ],
+  "shortcut-help-pane.category-navigation": [
+    {
+      "type": 0,
+      "value": "नेविगेशन"
+    }
+  ],
+  "shortcut-help-pane.category-view": [
+    {
+      "type": 0,
+      "value": "दृश्य"
+    }
+  ],
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
@@ -1375,10 +1417,52 @@
       "value": "सभी विषयों का चयन रद्द करें"
     }
   ],
+  "shortcut-help-pane.diagram-aria": [
+    {
+      "type": 0,
+      "value": "बायाँ तीर पैरेंट विषय पर ले जाता है, दायाँ तीर चाइल्ड विषय पर, और ऊपर-नीचे के तीर सिबलिंग विषयों के बीच।"
+    }
+  ],
+  "shortcut-help-pane.diagram-caption": [
+    {
+      "type": 0,
+      "value": "मैप के बाएँ आधे भाग में ← और → की भूमिकाएँ आपस में बदल जाती हैं।"
+    }
+  ],
+  "shortcut-help-pane.diagram-child": [
+    {
+      "type": 0,
+      "value": "चाइल्ड"
+    }
+  ],
+  "shortcut-help-pane.diagram-parent": [
+    {
+      "type": 0,
+      "value": "पैरेंट"
+    }
+  ],
+  "shortcut-help-pane.diagram-selected": [
+    {
+      "type": 0,
+      "value": "चयनित"
+    }
+  ],
+  "shortcut-help-pane.diagram-sibling": [
+    {
+      "type": 0,
+      "value": "सिबलिंग"
+    }
+  ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
       "value": "विषय डिस्कनेक्ट करें"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect-key": [
+    {
+      "type": 0,
+      "value": "विषय खींचें"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
@@ -1582,19 +1666,19 @@
   "theme.aurora.description": [
     {
       "type": 0,
-      "value": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+      "value": "नियॉन से प्रेरित ग्रेडिएंट थीम, जिसमें ग्लो इफ़ेक्ट, बोल्ड टाइपोग्राफ़ी और हाई-कॉन्ट्रास्ट कनेक्टर हैं, जो प्रभावशाली कहानी कहने के लिए बनाई गई है।"
     }
   ],
   "theme.aurora.name": [
     {
       "type": 0,
-      "value": "Aurora"
+      "value": "ऑरोरा"
     }
   ],
   "theme.classic.description": [
     {
       "type": 0,
-      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+      "value": "नीले रंग के लहजे के साथ साफ़ और पेशेवर डिज़ाइन। व्यावसायिक प्रस्तुतियों और औपचारिक दस्तावेज़ों के लिए उत्तम।"
     }
   ],
   "theme.classic.name": [
@@ -1618,7 +1702,7 @@
   "theme.ocean.description": [
     {
       "type": 0,
-      "value": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+      "value": "समुद्र से प्रेरित नीली थीम, लाइट/डार्क वेरिएंट के साथ। शांत और पेशेवर रंग, व्यावसायिक और रचनात्मक परियोजनाओं के लिए उत्तम।"
     }
   ],
   "theme.ocean.name": [
@@ -1630,7 +1714,7 @@
   "theme.retro.description": [
     {
       "type": 0,
-      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+      "value": "80 के दशक का सिंथवेव पैलेट, जिसमें नियॉन किनारे, क्रोम ग्रेडिएंट और ग्रिड वाले कैनवास हैं, जो रेट्रो नाइट पार्टियों से प्रेरित हैं।"
     }
   ],
   "theme.retro.name": [
@@ -1642,7 +1726,7 @@
   "theme.robot.description": [
     {
       "type": 0,
-      "value": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+      "value": "तकनीक से प्रेरित हरी थीम। तकनीकी दस्तावेज़ों और भविष्यवादी प्रस्तुतियों के लिए उत्तम।"
     }
   ],
   "theme.robot.name": [
@@ -1654,7 +1738,7 @@
   "theme.summer.description": [
     {
       "type": 0,
-      "value": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+      "value": "चमकीली और जीवंत नारंगी थीम। रचनात्मक परियोजनाओं और ऊर्जावान प्रस्तुतियों के लिए बढ़िया।"
     }
   ],
   "theme.summer.name": [
@@ -1666,7 +1750,7 @@
   "theme.sunrise.description": [
     {
       "type": 0,
-      "value": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+      "value": "लाइट/डार्क मोड वेरिएंट वाली सूर्योदय थीम। बेहतर पठनीयता के लिए उन्नत रंग और कॉन्ट्रास्ट।"
     }
   ],
   "theme.sunrise.name": [
@@ -1702,31 +1786,31 @@
   "topic-font-editor.active": [
     {
       "type": 0,
-      "value": "active"
+      "value": "सक्रिय"
     }
   ],
   "topic-font-editor.bold": [
     {
       "type": 0,
-      "value": "Bold"
+      "value": "बोल्ड"
     }
   ],
   "topic-font-editor.bold-tooltip": [
     {
       "type": 0,
-      "value": "Toggle bold"
+      "value": "बोल्ड टॉगल करें"
     }
   ],
   "topic-font-editor.decrease-size": [
     {
       "type": 0,
-      "value": "Smaller"
+      "value": "छोटा"
     }
   ],
   "topic-font-editor.decrease-size-tooltip": [
     {
       "type": 0,
-      "value": "Decrease font size"
+      "value": "फ़ॉन्ट आकार घटाएँ"
     }
   ],
   "topic-font-editor.font-color": [
@@ -1750,37 +1834,37 @@
   "topic-font-editor.increase-size": [
     {
       "type": 0,
-      "value": "Bigger"
+      "value": "बड़ा"
     }
   ],
   "topic-font-editor.increase-size-tooltip": [
     {
       "type": 0,
-      "value": "Increase font size"
+      "value": "फ़ॉन्ट आकार बढ़ाएँ"
     }
   ],
   "topic-font-editor.italic": [
     {
       "type": 0,
-      "value": "Italic"
+      "value": "इटैलिक"
     }
   ],
   "topic-font-editor.italic-tooltip": [
     {
       "type": 0,
-      "value": "Toggle italic"
+      "value": "इटैलिक टॉगल करें"
     }
   ],
   "topic-font-editor.reset-to-default": [
     {
       "type": 0,
-      "value": "Reset to Default"
+      "value": "डिफ़ॉल्ट पर रीसेट करें"
     }
   ],
   "unified-styling.background-color": [
     {
       "type": 0,
-      "value": "Background Color"
+      "value": "पृष्ठभूमि रंग"
     }
   ],
   "unified-styling.border-color": [
@@ -1810,7 +1894,7 @@
   "unified-styling.shape-type": [
     {
       "type": 0,
-      "value": "Shape Type"
+      "value": "आकार का प्रकार"
     }
   ],
   "unified-styling.tab.border": [
@@ -1847,6 +1931,20 @@
     {
       "type": 0,
       "value": "स्तर के अनुसार विस्तार"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "स्तर के अनुसार विस्तार (स्तर "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

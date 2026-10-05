@@ -15,13 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import HTMLTopicSelected from '../../../src/components/HTMLTopicSelected';
+import { buildDesigner, Harness } from '../commands/designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import HTMLTopicSelected from '../../../src/components/HTMLTopicSelected';
-import { buildDesigner, Harness } from '../commands/designer-harness';
 
 type PlusButtons = { _rightPlus: HTMLElement | null; _bottomPlus: HTMLElement | null };
 
@@ -54,4 +54,21 @@ describe('HTMLTopicSelected with two designers on the page (BL4-22)', () => {
       shadow.dispose();
     },
   );
+});
+
+describe('HTMLTopicSelected reads the designer from its topic (BL5-09)', () => {
+  it('a shadow built without a designer stays hidden while several topics are selected', async () => {
+    const { designer, topic } = await buildDesigner();
+    topic(1).setOnFocus(true);
+    topic(3).setOnFocus(true);
+
+    const shadow = new HTMLTopicSelected(
+      topic(1),
+      designer.getContainer(),
+      designer.getScreenManager(),
+    );
+
+    expect((shadow as unknown as { _isVisible: boolean })._isVisible).toBe(false);
+    shadow.dispose();
+  });
 });

@@ -22,7 +22,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { createAppTheme } from '../../../src/theme';
 
 jest.mock('react-intl', () => {
-  const ReactActual = require('react');
+  const ReactActual = jest.requireActual<typeof React>('react');
   return {
     FormattedMessage: ({ defaultMessage, id }: { defaultMessage?: string; id?: string }) =>
       ReactActual.createElement('span', null, defaultMessage || id),

@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { describe, expect, test } from '@jest/globals';
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
@@ -26,6 +25,8 @@ import FreemindExporter from '../../../src/components/export/FreemindExporter';
 import FreemindImporter from '../../../src/components/import/FreemindImporter';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import SvgIconModel from '../../../src/components/model/SvgIconModel';
+import LinkModel from '../../../src/components/model/LinkModel';
+import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
 const buildMindmap = (configure: (topic: NodeModel) => void): Mindmap => {
   const mindmap = new Mindmap('test');
@@ -105,6 +106,28 @@ describe('FreemindExporter', () => {
     expect(central.getAttribute('connColor')).toBe('#0000ff');
     expect(topic.getAttribute('connColor')).toBe('#ff0000');
     expect(topic.getAttribute('brColor')).toBeNull();
+  });
+
+  test('exports the link and style of the central topic (BL5-12)', async () => {
+    const mindmap = buildMindmap(() => undefined);
+    const central = mindmap.getBranches()[0];
+    central.setShapeType('rectangle');
+    central.addFeature(new LinkModel({ url: 'https://www.wisemapping.com' }));
+
+    const doc = await exportMindmap(mindmap);
+    const root = doc.querySelector('map > node')!;
+    expect(root.getAttribute('LINK')).toBe('https://www.wisemapping.com');
+    expect(root.getAttribute('STYLE')).toBe('rectangle');
+
+    // The link survives the round trip.
+    const xml = await new FreemindImporter(await new FreemindExporter(mindmap).export()).import(
+      'test',
+      '',
+    );
+    const imported = new DOMParser().parseFromString(xml, 'text/xml');
+    expect(imported.querySelector('topic[central="true"] > link')?.getAttribute('url')).toBe(
+      'https://www.wisemapping.com',
+    );
   });
 
   test('exports topics without a position on the right side', async () => {
@@ -231,6 +254,34 @@ describe('FreemindExporter', () => {
     expect(imported.map((icon) => icon.getAttribute('id'))).toEqual(['tag_blue', 'flag_purple']);
   });
 
+  test('the blue flag survives a FreeMind export and import round trip (BL5-14)', async () => {
+    const mm = await new FreemindExporter(
+      buildMindmap((topic) => topic.addFeature(new SvgIconModel({ id: 'flag_blue' }))),
+    ).export();
+
+    const xml = await new FreemindImporter(mm).import('test', '');
+    const doc = new DOMParser().parseFromString(xml, 'text/xml');
+    const topic = doc.querySelector('topic[id="2"]')!;
+    expect(topic.querySelector(':scope > icon')?.getAttribute('id')).toBe('flag_blue');
+    expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
+  });
+
+  test.each(['flag_green', 'flag_yellow', 'flag_orange', 'flag_pink'])(
+    'the %s icon survives a FreeMind export and import round trip (BL5-113)',
+    async (iconId: string) => {
+      const mm = await new FreemindExporter(
+        buildMindmap((topic) => topic.addFeature(new SvgIconModel({ id: iconId }))),
+      ).export();
+      expect(mm).toContain(`BUILTIN="${iconId.replace('_', '-')}"`);
+
+      const xml = await new FreemindImporter(mm).import('test', '');
+      const doc = new DOMParser().parseFromString(xml, 'text/xml');
+      const topic = doc.querySelector('topic[id="2"]')!;
+      expect(topic.querySelector(':scope > icon')?.getAttribute('id')).toBe(iconId);
+      expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
+    },
+  );
+
   test('exports emoji icons written without the emoji variation selector', async () => {
     const doc = await exportMindmap(
       buildMindmap((topic) => topic.addFeature(new EmojiIconModel({ id: '\u26A0' }))),
@@ -261,4 +312,41 @@ describe('FreemindExporter', () => {
     const icons = Array.from(doc.querySelectorAll('topic[id="2"] > eicon'));
     expect(icons.map((icon) => icon.getAttribute('id'))).toEqual(['✅', '⚠️']);
   });
+
+  test.each([6, 8, 10, 15])(
+    'the text color and font survive a FreeMind export and import round trip, size %p (BL5-156)',
+    async (size: number) => {
+      const mindmap = buildMindmap((topic) => {
+        topic.setFontColor('#00ff00');
+        topic.setFontFamily('Verdana');
+        topic.setFontSize(size);
+        topic.setFontWeight('bold');
+        topic.setFontStyle('italic');
+      });
+      const central = mindmap.getBranches()[0];
+      central.setFontColor('#990000');
+      // A family alone, without size, weight or style (BL5-167).
+      central.setFontFamily('Georgia');
+
+      const xml = await new FreemindImporter(await new FreemindExporter(mindmap).export()).import(
+        'test',
+        '',
+      );
+      const doc = new DOMParser().parseFromString(xml, 'text/xml');
+      const imported = XMLSerializerFactory.createFromDocument(doc).loadFromDom(doc, 'test');
+      const importedCentral = imported.getCentralTopic();
+      expect(importedCentral.getFontColor()).toBe('#990000');
+      expect(importedCentral.getFontFamily()).toBe('Georgia');
+      // Its font is written with the FreeMind default size, which imports as the theme size.
+      expect(importedCentral.getFontSize()).toBeUndefined();
+
+      const [topic] = importedCentral.getChildren();
+      expect(topic.getFontColor()).toBe('#00ff00');
+      expect(topic.getFontFamily()).toBe('Verdana');
+      // Size 8 is exported as 12, the FreeMind default size: it imports as the theme size.
+      expect(topic.getFontSize()).toBe(size === 8 ? undefined : size);
+      expect(topic.getFontWeight()).toBe('bold');
+      expect(topic.getFontStyle()).toBe('italic');
+    },
+  );
 });

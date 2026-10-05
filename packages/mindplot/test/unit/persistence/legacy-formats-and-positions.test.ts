@@ -17,7 +17,6 @@
  */
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
-import NoteModel from '../../../src/components/model/NoteModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
 import XMLSerializerTango from '../../../src/components/persistence/XMLSerializerTango';
 import XMLSerializerBeta from '../../../src/components/persistence/XMLSerializerBeta';
@@ -51,10 +50,14 @@ const buildMap = (): { mindmap: Mindmap; child: NodeModel } => {
   return { mindmap, child };
 };
 
-const node = (mindmap: Mindmap, id: number): NodeModel => mindmap.findNodeById(id) as NodeModel;
+const node = (mindmap: Mindmap, id: number): NodeModel => {
+  const result = mindmap.findNodeById(id);
+  if (!result) throw new Error(`node ${id} not found`);
+  return result;
+};
 
 const noteText = (topic: NodeModel): string => {
-  const note = topic.getFeatures().find((f) => f.getType() === 'note') as NoteModel;
+  const note = topic.findFeatureByType('note')[0];
   return note.getText();
 };
 
@@ -104,11 +107,15 @@ describe('pela maps without positions (B-PELA)', () => {
     const mindmap = load(
       '<map version="pela"><topic central="true" id="1" text="c">' +
         '<topic id="2" position="-200,0" order="0" text="left"><topic id="4" text="l1"/></topic>' +
-        '<topic id="3" position="200,0" order="1" text="right"/></topic></map>',
+        '<topic id="3" position="200,0" order="1" text="right"><topic id="5" text="r1"/>' +
+        '</topic></topic></map>',
     );
     expect(node(mindmap, 2).getOrder()).toBe(1);
     expect(node(mindmap, 3).getOrder()).toBe(0);
-    expect(node(mindmap, 4).getPosition()).toEqual({ x: -170, y: 0 });
+    // A child without position goes 30px further from the centre than its parent, on its side:
+    // -200 - 30 on the left, as +30 on the right (BL5-06; it was -170, toward the centre).
+    expect(node(mindmap, 4).getPosition()).toEqual({ x: -230, y: 0 });
+    expect(node(mindmap, 5).getPosition()).toEqual({ x: 230, y: 0 });
   });
 });
 
@@ -175,25 +182,25 @@ describe('non finite positions and image sizes (B-NANPOS)', () => {
 
   test('getPosition does not throw on a corrupted stored value', () => {
     const { child } = buildMap();
-    child.putProperty('position', '{x:NaN,y:NaN}');
+    child.putProperty('position', { x: NaN, y: NaN });
     expect(() => child.getPosition()).not.toThrow();
     expect(child.getPosition()).toBeUndefined();
   });
 
-  test('ignores a NaN image size and parses a corrupted one defensively', () => {
+  test('ignores a NaN image size and reports a corrupted one as missing', () => {
     const { child } = buildMap();
     child.setImageSize(80, 40);
     child.setImageSize(NaN, 40);
     expect(child.getImageSize()).toEqual({ width: 80, height: 40 });
 
-    child.putProperty('imageSize', '{width:NaN,height:NaN}');
+    child.putProperty('imageSize', { width: NaN, height: NaN });
     expect(() => child.getImageSize()).not.toThrow();
     expect(child.getImageSize()).toBeUndefined();
   });
 
   test('does not write a NaN position', () => {
     const { mindmap, child } = buildMap();
-    child.putProperty('position', '{x:NaN,y:NaN}');
+    child.putProperty('position', { x: NaN, y: NaN });
     expect(toXmlString(mindmap)).not.toContain('NaN');
   });
 

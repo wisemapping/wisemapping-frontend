@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createContext } from 'react';
+import { createContext, useCallback, useMemo, useState } from 'react';
 
 export type KetboardConfig = {
   hotkeysEnabled: boolean;
@@ -23,11 +23,33 @@ export type KetboardConfig = {
 
 type KeyboardContextType = {
   hotkeyEnabled: boolean;
-  setHotkeyEnabled: (value: boolean) => void;
+  /**
+   * Disables the hotkeys until the returned release is called. Holds nest (e.g. two open
+   * dialogs): the hotkeys come back only once every holder has released.
+   */
+  disableHotkeys: () => () => void;
 };
 
 // Hack to prevent error in the initialization. Needs more reseach ...
 export const KeyboardContext = createContext<KeyboardContextType>({
   hotkeyEnabled: true,
-  setHotkeyEnabled: () => {},
+  disableHotkeys: () => () => {},
 });
+
+/** The KeyboardContext value: counts the holds that keep the hotkeys disabled. */
+export const useKeyboardContextValue = (): KeyboardContextType => {
+  const [holds, setHolds] = useState(0);
+
+  const disableHotkeys = useCallback(() => {
+    setHolds((count) => count + 1);
+    let released = false;
+    return () => {
+      if (!released) {
+        released = true;
+        setHolds((count) => count - 1);
+      }
+    };
+  }, []);
+
+  return useMemo(() => ({ hotkeyEnabled: holds === 0, disableHotkeys }), [holds, disableHotkeys]);
+};

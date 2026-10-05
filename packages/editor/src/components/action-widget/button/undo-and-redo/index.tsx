@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import ActionConfig from '../../../../classes/action/action-config';
 import Editor from '../../../../classes/model/editor';
 import { ToolbarMenuItem } from '../../../toolbar';
@@ -33,7 +33,15 @@ const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo): 
   const [disabled, setDisabled] = useState(true);
   const mapLoaded = model?.isMapLoadded() ?? false;
 
-  // Subscribes again when the model changes, or once its map has loaded ...
+  // The parent passes a new condition on every render: read the latest one from a ref, so that
+  // the modelUpdate subscription below is not dropped and added again on every render ...
+  const disabledConditionRef = useRef(disabledCondition);
+  useEffect(() => {
+    disabledConditionRef.current = disabledCondition;
+  }, [disabledCondition]);
+
+  // Subscribes again when the model changes, or once its map has loaded. The button starts
+  // disabled for each subscription: the previous model's undo steps say nothing about this one ...
   useEffect(() => {
     if (!model || !mapLoaded) {
       return undefined;
@@ -44,12 +52,13 @@ const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo): 
     }
 
     const handleUpdate = (event?: unknown) => {
-      const isDisabled = disabledCondition(event as UndoRedoEvent);
+      const isDisabled = disabledConditionRef.current(event as UndoRedoEvent);
       setDisabled(!isDisabled);
     };
     designer.addEvent('modelUpdate', handleUpdate);
     return () => {
       designer.removeEvent('modelUpdate', handleUpdate);
+      setDisabled(true);
     };
   }, [model, mapLoaded]);
 

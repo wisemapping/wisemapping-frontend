@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 import { $defined } from '../utils/assert';
-import * as PolyLineUtils from '../utils/PolyLineUtils';
+import * as PolyLineUtils from '../../geometry/polyline';
 import ElementPeer from './ElementPeer';
+import type { Orientation, PolyLineStyle } from '../../types';
+import type PositionType from '../../PositionType';
 
-export type PolyLineStyle = 'Straight' | 'MiddleStraight' | 'MiddleCurved' | 'Curved';
-
-class PolyLinePeer extends ElementPeer {
+class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
   private _breakDistance: number;
 
   private _x1: number;
@@ -32,13 +32,16 @@ class PolyLinePeer extends ElementPeer {
 
   private _y2: number;
 
-  private _style: string;
+  private _style: PolyLineStyle;
 
-  private _orientation: 'horizontal' | 'vertical';
+  private _orientation: Orientation;
+
+  // Whether the points are out of date. The first setter always draws; after that a setter that
+  // does not change an input does not rebuild or rewrite the points.
+  private _pathDirty: boolean;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-    super(svgElement);
+    super(ElementPeer.createNode('polyline'));
     this.setFill('none');
     this._breakDistance = 10;
     this._x1 = 0;
@@ -47,49 +50,74 @@ class PolyLinePeer extends ElementPeer {
     this._y2 = 0;
     this._style = 'Straight';
     this._orientation = 'horizontal';
+    this._pathDirty = true;
   }
 
   setFrom(x1: number, y1: number) {
+    const changed = this._x1 !== x1 || this._y1 !== y1;
     this._x1 = x1;
     this._y1 = y1;
-    this._updatePath();
+    this._refreshPath(changed);
   }
 
   setTo(x2: number, y2: number) {
+    const changed = this._x2 !== x2 || this._y2 !== y2;
     this._x2 = x2;
     this._y2 = y2;
-    this._updatePath();
+    this._refreshPath(changed);
+  }
+
+  getFrom(): PositionType {
+    return { x: this._x1, y: this._y1 };
+  }
+
+  getTo(): PositionType {
+    return { x: this._x2, y: this._y2 };
   }
 
   setStrokeWidth(width: number) {
-    this._native.setAttribute('stroke-width', String(width));
+    // Through setStroke, so a dash from the style table is rescaled (BL5-77).
+    this.setStroke(width);
   }
 
   setColor(color: string) {
-    this._native.setAttribute('stroke', color);
+    this.attr('stroke', color);
   }
 
-  setStyle(style: string) {
+  setStyle(style: PolyLineStyle) {
+    const changed = this._style !== style;
     this._style = style;
-    this._updatePath();
+    this._refreshPath(changed);
   }
 
-  getStyle(): string {
+  getStyle(): PolyLineStyle {
     return this._style;
   }
 
-  setOrientation(orientation: 'horizontal' | 'vertical') {
+  setOrientation(orientation: Orientation) {
+    const changed = this._orientation !== orientation;
     this._orientation = orientation;
-    this._updatePath();
+    this._refreshPath(changed);
   }
 
-  getOrientation(): 'horizontal' | 'vertical' {
+  getOrientation(): Orientation {
     return this._orientation;
+  }
+
+  /** Marks the points dirty when an input changed, and redraws them if they are dirty. */
+  private _refreshPath(changed: boolean): void {
+    if (changed) {
+      this._pathDirty = true;
+    }
+    if (this._pathDirty) {
+      this._pathDirty = false;
+      this._updatePath();
+    }
   }
 
   /** Redraws the line in its style. An empty or unknown style draws the `Curved` path. */
   private _updatePath() {
-    switch (this._style as PolyLineStyle) {
+    switch (this._style) {
       case 'Straight':
         this._updateStraightPath();
         break;
@@ -124,7 +152,7 @@ class PolyLinePeer extends ElementPeer {
               this._x2,
               this._y2,
             );
-      this._native.setAttribute('points', path);
+      this.attr('points', path);
     }
   }
 
@@ -139,28 +167,21 @@ class PolyLinePeer extends ElementPeer {
         PolyLineUtils.MIDDLE_CURVED_CHAMFER,
         this._orientation,
       );
-      this._native.setAttribute('points', path);
+      this.attr('points', path);
     }
   }
 
   /** An elbow that breaks at the middle, which is rounded to whole units. */
   private _updateMiddleStraightPath() {
-    const x1 = this._x1;
-    const y1 = this._y1;
-    const x2 = this._x2;
-    const y2 = this._y2;
-    if ($defined(x1) && $defined(x2) && $defined(y1) && $defined(y2)) {
-      let path: string;
-      if (this._orientation === 'vertical') {
-        // For vertical tree layout: go down, then horizontal, then down
-        const middley = ((y2 - y1) * 0.5 + y1).toFixed(0);
-        path = `${x1}, ${y1} ${x1}, ${middley} ${x2}, ${middley} ${x2}, ${y2}`;
-      } else {
-        // For horizontal mindmap layout: go horizontal, then vertical, then horizontal
-        const middlex = ((x2 - x1) * 0.5 + x1).toFixed(0);
-        path = `${x1}, ${y1} ${middlex}, ${y1} ${middlex}, ${y2} ${x2}, ${y2}`;
-      }
-      this._native.setAttribute('points', path);
+    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
+      const path = PolyLineUtils.buildMiddleStraightPath(
+        this._x1,
+        this._y1,
+        this._x2,
+        this._y2,
+        this._orientation,
+      );
+      this.attr('points', path);
     }
   }
 
@@ -182,7 +203,7 @@ class PolyLinePeer extends ElementPeer {
               this._x2,
               this._y2,
             );
-      this._native.setAttribute('points', path);
+      this.attr('points', path);
     }
   }
 }

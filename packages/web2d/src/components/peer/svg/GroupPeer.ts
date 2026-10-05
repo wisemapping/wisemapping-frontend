@@ -16,11 +16,10 @@
  *   limitations under the License.
  */
 import ElementPeer from './ElementPeer';
-import EventUtils from '../utils/EventUtils';
-import PositionType from '../../PositionType';
-import SizeType from '../../SizeType';
+import type PositionType from '../../PositionType';
+import type SizeType from '../../SizeType';
 
-class GroupPeer extends ElementPeer {
+class GroupPeer extends ElementPeer<SVGGElement> {
   private _coordSize: SizeType;
 
   private _position: PositionType;
@@ -28,14 +27,11 @@ class GroupPeer extends ElementPeer {
   private _coordOrigin: PositionType;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    super(svgElement);
-    this._native.setAttribute('preserveAspectRatio', 'none');
+    super(ElementPeer.createNode('g'));
     this._coordSize = {
       width: 1,
       height: 1,
     };
-    this._native.setAttribute('focusable', 'true');
     this._position = {
       x: 0,
       y: 0,
@@ -48,13 +44,11 @@ class GroupPeer extends ElementPeer {
 
   setCoordSize(width: number, height: number): void {
     const change = this._coordSize.width !== width || this._coordSize.height !== height;
-    this._coordSize.width = width;
-    this._coordSize.height = height;
+    this._coordSize = { width, height };
 
     if (change) {
       this.updateTransform();
     }
-    EventUtils.broadcastChangeEvent(this, 'strokeStyle');
   }
 
   getCoordSize(): SizeType {
@@ -106,7 +100,7 @@ class GroupPeer extends ElementPeer {
     const cx = this._position.x - this._coordOrigin.x * sx;
     const cy = this._position.y - this._coordOrigin.y * sy;
     // The scale is not rounded: 16.8 / 100 must stay 0.168, not 0.17.
-    this._native.setAttribute(
+    this.attr(
       'transform',
       `translate(${cx.toFixed(2)},${cy.toFixed(2)}) scale(${GroupPeer.formatScale(sx)},${GroupPeer.formatScale(sy)})`,
     );
@@ -118,26 +112,24 @@ class GroupPeer extends ElementPeer {
 
   setCoordOrigin(x: number, y: number) {
     const change = x !== this._coordOrigin.x || y !== this._coordOrigin.y;
-    this._coordOrigin.x = x;
-    this._coordOrigin.y = y;
+    this._coordOrigin = { x, y };
 
     if (change) {
       this.updateTransform();
     }
   }
 
-  setSize(width: number, height: number) {
-    const change = width !== this._size.width || height !== this._size.height;
+  override setSize(width?: number | null, height?: number | null): void {
+    const before = this._size;
     super.setSize(width, height);
-    if (change) {
+    if (this._size.width !== before.width || this._size.height !== before.height) {
       this.updateTransform();
     }
   }
 
   setPosition(x: number, y: number) {
     const change = x !== this._position.x || y !== this._position.y;
-    this._position.x = x;
-    this._position.y = y;
+    this._position = { x, y };
     if (change) {
       this.updateTransform();
     }
@@ -148,11 +140,6 @@ class GroupPeer extends ElementPeer {
       x: this._position.x,
       y: this._position.y,
     };
-  }
-
-  append(child: ElementPeer) {
-    super.append(child);
-    EventUtils.broadcastChangeEvent(child, 'onChangeCoordSize');
   }
 
   getCoordOrigin() {

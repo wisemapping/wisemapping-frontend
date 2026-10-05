@@ -1,4 +1,24 @@
 {
+  "account.delete-challenge": [
+    {
+      "type": 0,
+      "value": "DELETE MY ACCOUNT"
+    }
+  ],
+  "account.delete-challenge-error": [
+    {
+      "type": 0,
+      "value": "Please type \""
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "\" to confirm account deletion."
+    }
+  ],
   "account.delete-confirm": [
     {
       "type": 0,
@@ -8,7 +28,29 @@
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
-      "value": "Please type DELETE MY ACCOUNT to confirm:"
+      "value": "Please type "
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": " to confirm:"
+    }
+  ],
+  "account.delete-confirmation-label": [
+    {
+      "type": 0,
+      "value": "Type \""
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "\" to confirm"
     }
   ],
   "account.delete-confirmation-title": [
@@ -21,12 +63,6 @@
     {
       "type": 0,
       "value": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
-    }
-  ],
-  "account.delete-warning": [
-    {
-      "type": 0,
-      "value": "Keep in mind that you will not be able retrieve any mindmap you have added. All your information will be deleted and it can not be restored."
     }
   ],
   "account.delete-warning-collaborations": [
@@ -71,10 +107,16 @@
       "value": "Delete Account"
     }
   ],
+  "accountinfo.account-settings": [
+    {
+      "type": 0,
+      "value": "Account Settings"
+    }
+  ],
   "accountinfo.button": [
     {
       "type": 0,
-      "value": "Accept"
+      "value": "Save Changes"
     }
   ],
   "accountinfo.deleteaccount": [
@@ -107,10 +149,16 @@
       "value": "Personal Details"
     }
   ],
+  "accountinfo.personal-info": [
+    {
+      "type": 0,
+      "value": "Personal Info"
+    }
+  ],
   "accountinfo.title": [
     {
       "type": 0,
-      "value": "Account info"
+      "value": "Account Settings"
     }
   ],
   "action.cancel-button": [
@@ -263,6 +311,12 @@
       "value": "Activating Your Account"
     }
   ],
+  "activation.page-title": [
+    {
+      "type": 0,
+      "value": "Account Activation | WiseMapping"
+    }
+  ],
   "activation.success.message": [
     {
       "type": 0,
@@ -275,10 +329,136 @@
       "value": "Account Activated Successfully"
     }
   ],
+  "admin.accounts.add-user": [
+    {
+      "type": 0,
+      "value": "Add New User"
+    }
+  ],
+  "admin.accounts.create": [
+    {
+      "type": 0,
+      "value": "Create User"
+    }
+  ],
+  "admin.accounts.create-user": [
+    {
+      "type": 0,
+      "value": "Create User"
+    }
+  ],
+  "admin.accounts.edit-user": [
+    {
+      "type": 0,
+      "value": "Edit User"
+    }
+  ],
+  "admin.accounts.filters": [
+    {
+      "type": 0,
+      "value": "Search & Filters"
+    }
+  ],
+  "admin.accounts.no-users": [
+    {
+      "type": 0,
+      "value": "No users found"
+    }
+  ],
+  "admin.accounts.refresh": [
+    {
+      "type": 0,
+      "value": "Refresh"
+    }
+  ],
+  "admin.accounts.refresh-tooltip": [
+    {
+      "type": 0,
+      "value": "Refresh Data"
+    }
+  ],
+  "admin.accounts.search": [
+    {
+      "type": 0,
+      "value": "Search users..."
+    }
+  ],
+  "admin.accounts.subtitle": [
+    {
+      "type": 0,
+      "value": "Manage user accounts, permissions, and settings"
+    }
+  ],
+  "admin.accounts.title": [
+    {
+      "type": 0,
+      "value": "User Management"
+    }
+  ],
+  "admin.action.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "mark as not spam"
+    }
+  ],
+  "admin.action.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "mark as spam"
+    }
+  ],
+  "admin.activate-user": [
+    {
+      "type": 0,
+      "value": "Activate user"
+    }
+  ],
   "admin.auth-type": [
     {
       "type": 0,
       "value": "Auth Type"
+    }
+  ],
+  "admin.auth.database": [
+    {
+      "type": 0,
+      "value": "Database"
+    }
+  ],
+  "admin.auth.facebook": [
+    {
+      "type": 0,
+      "value": "Facebook"
+    }
+  ],
+  "admin.auth.google": [
+    {
+      "type": 0,
+      "value": "Google"
+    }
+  ],
+  "admin.auth.ldap": [
+    {
+      "type": 0,
+      "value": "LDAP"
+    }
+  ],
+  "admin.button.update-user": [
+    {
+      "type": 0,
+      "value": "Update User"
+    }
+  ],
+  "admin.button.updating": [
+    {
+      "type": 0,
+      "value": "Updating..."
+    }
+  ],
+  "admin.cancel": [
+    {
+      "type": 0,
+      "value": "Cancel"
     }
   ],
   "admin.change-password": [
@@ -321,6 +501,64 @@
       "value": "Confirm Password"
     }
   ],
+  "admin.confirm.delete-map": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the map \""
+    },
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "admin.confirm.spam-action": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": " this map?"
+    }
+  ],
+  "admin.console.description": [
+    {
+      "type": 0,
+      "value": "Manage users, system settings, and application configuration."
+    }
+  ],
+  "admin.console.page-title": [
+    {
+      "type": 0,
+      "value": "Admin Console | WiseMapping"
+    }
+  ],
+  "admin.console.subtitle": [
+    {
+      "type": 0,
+      "value": "System Administration"
+    }
+  ],
+  "admin.console.title": [
+    {
+      "type": 0,
+      "value": "Admin Console"
+    }
+  ],
+  "admin.current-suspension-reason": [
+    {
+      "type": 0,
+      "value": "Current suspension reason:"
+    }
+  ],
   "admin.delete": [
     {
       "type": 0,
@@ -345,6 +583,108 @@
       "value": "Edit user"
     }
   ],
+  "admin.error.access-denied": [
+    {
+      "type": 0,
+      "value": "Access denied. Admin permissions required."
+    }
+  ],
+  "admin.error.create-user-failed": [
+    {
+      "type": 0,
+      "value": "Failed to create user. Please try again."
+    }
+  ],
+  "admin.error.load-users": [
+    {
+      "type": 0,
+      "value": "Failed to load users: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
+  "admin.error.unknown": [
+    {
+      "type": 0,
+      "value": "Unknown error"
+    }
+  ],
+  "admin.error.update-map-failed": [
+    {
+      "type": 0,
+      "value": "Failed to update map. Please try again."
+    }
+  ],
+  "admin.error.update-user-failed": [
+    {
+      "type": 0,
+      "value": "Failed to update user. Please try again."
+    }
+  ],
+  "admin.facebook.filter-tooltip": [
+    {
+      "type": 0,
+      "value": "Facebook data deletion lookup"
+    }
+  ],
+  "admin.facebook.lookup-button": [
+    {
+      "type": 0,
+      "value": "Find Account"
+    }
+  ],
+  "admin.facebook.lookup-not-found": [
+    {
+      "type": 0,
+      "value": "No account found for this Facebook user ID."
+    }
+  ],
+  "admin.facebook.remove": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
+  "admin.facebook.remove-button": [
+    {
+      "type": 0,
+      "value": "Remove Facebook Account"
+    }
+  ],
+  "admin.facebook.remove-confirm": [
+    {
+      "type": 0,
+      "value": "Remove Facebook association for \""
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "admin.facebook.remove-dialog-title": [
+    {
+      "type": 0,
+      "value": "Remove Facebook Account"
+    }
+  ],
+  "admin.facebook.remove-warning": [
+    {
+      "type": 0,
+      "value": "This will disconnect the Facebook authentication from this account. The user will receive a password reset email to regain access."
+    }
+  ],
+  "admin.facebook.removing": [
+    {
+      "type": 0,
+      "value": "Removing..."
+    }
+  ],
   "admin.lock-status": [
     {
       "type": 0,
@@ -355,6 +695,306 @@
     {
       "type": 0,
       "value": "Locked"
+    }
+  ],
+  "admin.maps.clean-tooltip": [
+    {
+      "type": 0,
+      "value": "Not marked as spam"
+    }
+  ],
+  "admin.maps.creator-suspended-tooltip": [
+    {
+      "type": 0,
+      "value": "Map creator account has been suspended by an administrator"
+    }
+  ],
+  "admin.maps.delete": [
+    {
+      "type": 0,
+      "value": "Delete map"
+    }
+  ],
+  "admin.maps.description": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "admin.maps.edit": [
+    {
+      "type": 0,
+      "value": "Edit map"
+    }
+  ],
+  "admin.maps.edit-title": [
+    {
+      "type": 0,
+      "value": "Edit Map"
+    }
+  ],
+  "admin.maps.filter.date": [
+    {
+      "type": 0,
+      "value": "Date Range"
+    }
+  ],
+  "admin.maps.filter.spam": [
+    {
+      "type": 0,
+      "value": "Spam"
+    }
+  ],
+  "admin.maps.locked-tooltip": [
+    {
+      "type": 0,
+      "value": "Currently being edited by "
+    },
+    {
+      "type": 1,
+      "value": "user"
+    }
+  ],
+  "admin.maps.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "Mark as not spam"
+    }
+  ],
+  "admin.maps.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "Mark as spam"
+    }
+  ],
+  "admin.maps.no-maps": [
+    {
+      "type": 0,
+      "value": "No maps found"
+    }
+  ],
+  "admin.maps.page-title": [
+    {
+      "type": 0,
+      "value": "Maps Management"
+    }
+  ],
+  "admin.maps.private-tooltip": [
+    {
+      "type": 0,
+      "value": "Only collaborators can view this map"
+    }
+  ],
+  "admin.maps.public-tooltip": [
+    {
+      "type": 0,
+      "value": "Anyone can view this map"
+    }
+  ],
+  "admin.maps.search": [
+    {
+      "type": 0,
+      "value": "Search maps... (#123 for ID, email for creator)"
+    }
+  ],
+  "admin.maps.search-by-email": [
+    {
+      "type": 0,
+      "value": "🔍 Searching by Creator Email"
+    }
+  ],
+  "admin.maps.search-by-id": [
+    {
+      "type": 0,
+      "value": "🔍 Searching by Map ID"
+    }
+  ],
+  "admin.maps.search-by-text": [
+    {
+      "type": 0,
+      "value": "🔍 Searching in titles and descriptions"
+    }
+  ],
+  "admin.maps.spam-tooltip": [
+    {
+      "type": 0,
+      "value": "Detected as spam on "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
+  "admin.maps.spam-tooltip-no-date": [
+    {
+      "type": 0,
+      "value": "Marked as spam"
+    }
+  ],
+  "admin.maps.suspend-user": [
+    {
+      "type": 0,
+      "value": "Suspend user account"
+    }
+  ],
+  "admin.maps.suspend-user.confirm": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to suspend the account for user \""
+    },
+    {
+      "type": 1,
+      "value": "userName"
+    },
+    {
+      "type": 0,
+      "value": "\" (ID: "
+    },
+    {
+      "type": 1,
+      "value": "userId"
+    },
+    {
+      "type": 0,
+      "value": ")? This will be marked as a manual review suspension."
+    }
+  ],
+  "admin.maps.suspend-user.confirm-button": [
+    {
+      "type": 0,
+      "value": "Suspend User"
+    }
+  ],
+  "admin.maps.suspend-user.title": [
+    {
+      "type": 0,
+      "value": "Suspend User Account"
+    }
+  ],
+  "admin.maps.suspend-user.warning": [
+    {
+      "type": 0,
+      "value": "This action will suspend the user account, preventing them from accessing the system."
+    }
+  ],
+  "admin.maps.table.actions": [
+    {
+      "type": 0,
+      "value": "Actions"
+    }
+  ],
+  "admin.maps.table.created": [
+    {
+      "type": 0,
+      "value": "Created"
+    }
+  ],
+  "admin.maps.table.description": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "admin.maps.table.id": [
+    {
+      "type": 0,
+      "value": "Map ID"
+    }
+  ],
+  "admin.maps.table.modified": [
+    {
+      "type": 0,
+      "value": "Modified"
+    }
+  ],
+  "admin.maps.table.spam": [
+    {
+      "type": 0,
+      "value": "Spam"
+    }
+  ],
+  "admin.maps.table.spam-status": [
+    {
+      "type": 0,
+      "value": "Spam Status"
+    }
+  ],
+  "admin.maps.table.status": [
+    {
+      "type": 0,
+      "value": "Status"
+    }
+  ],
+  "admin.maps.table.title": [
+    {
+      "type": 0,
+      "value": "Title"
+    }
+  ],
+  "admin.maps.title": [
+    {
+      "type": 0,
+      "value": "Title"
+    }
+  ],
+  "admin.maps.unlocked-tooltip": [
+    {
+      "type": 0,
+      "value": "Not currently being edited"
+    }
+  ],
+  "admin.maps.view-xml": [
+    {
+      "type": 0,
+      "value": "View XML"
+    }
+  ],
+  "admin.maps.xml-viewer.copy": [
+    {
+      "type": 0,
+      "value": "Copy Formatted XML"
+    }
+  ],
+  "admin.maps.xml-viewer.info": [
+    {
+      "type": 0,
+      "value": "This is the raw XML content of the mindmap. You can copy this content for backup or analysis purposes."
+    }
+  ],
+  "admin.maps.xml-viewer.loading": [
+    {
+      "type": 0,
+      "value": "Loading XML content..."
+    }
+  ],
+  "admin.maps.xml-viewer.no-content": [
+    {
+      "type": 0,
+      "value": "No XML content available"
+    }
+  ],
+  "admin.maps.xml-viewer.title": [
+    {
+      "type": 0,
+      "value": "Map XML Content"
+    }
+  ],
+  "admin.menu.accounts": [
+    {
+      "type": 0,
+      "value": "Accounts"
+    }
+  ],
+  "admin.menu.maps": [
+    {
+      "type": 0,
+      "value": "Maps"
+    }
+  ],
+  "admin.menu.system": [
+    {
+      "type": 0,
+      "value": "System"
     }
   ],
   "admin.new-password": [
@@ -393,6 +1033,12 @@
       "value": "Passwords do not match"
     }
   ],
+  "admin.prompt.new-user-password": [
+    {
+      "type": 0,
+      "value": "Enter password for new user:"
+    }
+  ],
   "admin.public": [
     {
       "type": 0,
@@ -411,16 +1057,22 @@
       "value": "Refresh"
     }
   ],
-  "admin.status": [
-    {
-      "type": 0,
-      "value": "Status"
-    }
-  ],
   "admin.status-active": [
     {
       "type": 0,
       "value": "Active"
+    }
+  ],
+  "admin.status-active-tooltip": [
+    {
+      "type": 0,
+      "value": "Account is activated and in good standing"
+    }
+  ],
+  "admin.status-active-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "Account is activated and in good standing | Click to change status"
     }
   ],
   "admin.status-clean": [
@@ -429,10 +1081,54 @@
       "value": "Clean"
     }
   ],
+  "admin.status-not-activated": [
+    {
+      "type": 0,
+      "value": "Not Activated"
+    }
+  ],
+  "admin.status-not-activated-tooltip": [
+    {
+      "type": 0,
+      "value": "User has not confirmed their email address yet"
+    }
+  ],
+  "admin.status-not-activated-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "User has not confirmed their email address yet | Click to change status"
+    }
+  ],
   "admin.status-suspended": [
     {
       "type": 0,
       "value": "Suspended"
+    }
+  ],
+  "admin.status.click-to-change": [
+    {
+      "type": 0,
+      "value": "Click to change status"
+    }
+  ],
+  "admin.status.reason": [
+    {
+      "type": 0,
+      "value": "Reason: "
+    },
+    {
+      "type": 1,
+      "value": "reason"
+    }
+  ],
+  "admin.status.suspended-on": [
+    {
+      "type": 0,
+      "value": "Suspended on: "
+    },
+    {
+      "type": 1,
+      "value": "date"
     }
   ],
   "admin.suspend-user": [
@@ -489,10 +1185,70 @@
       "value": "Terms Violation"
     }
   ],
+  "admin.system.app.name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "admin.system.app.port": [
+    {
+      "type": 0,
+      "value": "Port"
+    }
+  ],
+  "admin.system.application": [
+    {
+      "type": 0,
+      "value": "Application"
+    }
+  ],
+  "admin.system.database": [
+    {
+      "type": 0,
+      "value": "Database"
+    }
+  ],
+  "admin.system.database.info": [
+    {
+      "type": 0,
+      "value": "Database"
+    }
+  ],
+  "admin.system.db.ddl": [
+    {
+      "type": 0,
+      "value": "Hibernate DDL"
+    }
+  ],
+  "admin.system.db.driver": [
+    {
+      "type": 0,
+      "value": "Driver"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,
       "value": "URL"
+    }
+  ],
+  "admin.system.db.username": [
+    {
+      "type": 0,
+      "value": "Username"
+    }
+  ],
+  "admin.system.error": [
+    {
+      "type": 0,
+      "value": "Failed to load system information"
+    }
+  ],
+  "admin.system.health": [
+    {
+      "type": 0,
+      "value": "System Health"
     }
   ],
   "admin.system.jvm": [
@@ -501,16 +1257,172 @@
       "value": "JVM"
     }
   ],
+  "admin.system.jvm.load": [
+    {
+      "type": 0,
+      "value": "System Load"
+    }
+  ],
+  "admin.system.jvm.processors": [
+    {
+      "type": 0,
+      "value": "Processors"
+    }
+  ],
+  "admin.system.jvm.start": [
+    {
+      "type": 0,
+      "value": "Start Time"
+    }
+  ],
+  "admin.system.jvm.uptime": [
+    {
+      "type": 0,
+      "value": "Uptime"
+    }
+  ],
+  "admin.system.jvm.vendor": [
+    {
+      "type": 0,
+      "value": "Vendor"
+    }
+  ],
+  "admin.system.jvm.version": [
+    {
+      "type": 0,
+      "value": "Java Version"
+    }
+  ],
+  "admin.system.loading": [
+    {
+      "type": 0,
+      "value": "Loading system information..."
+    }
+  ],
   "admin.system.memory": [
     {
       "type": 0,
       "value": "Memory"
     }
   ],
+  "admin.system.memory.info": [
+    {
+      "type": 0,
+      "value": "Memory"
+    }
+  ],
+  "admin.system.memory.max": [
+    {
+      "type": 0,
+      "value": "Max Memory"
+    }
+  ],
+  "admin.system.memory.total": [
+    {
+      "type": 0,
+      "value": "Total Memory"
+    }
+  ],
+  "admin.system.memory.usage": [
+    {
+      "type": 0,
+      "value": "Memory Usage"
+    }
+  ],
+  "admin.system.memory.used": [
+    {
+      "type": 0,
+      "value": "Used Memory"
+    }
+  ],
+  "admin.system.mindmapMetrics.collaborations": [
+    {
+      "type": 0,
+      "value": "Collaborations Considered"
+    }
+  ],
+  "admin.system.mindmapMetrics.disabled": [
+    {
+      "type": 0,
+      "value": "Set `app.monitoring.performance.log-mindmap-listing` to true to capture metrics."
+    }
+  ],
+  "admin.system.mindmapMetrics.entityLoads": [
+    {
+      "type": 0,
+      "value": "Entity Loads"
+    }
+  ],
+  "admin.system.mindmapMetrics.executedStatements": [
+    {
+      "type": 0,
+      "value": "Prepared Statements"
+    }
+  ],
+  "admin.system.mindmapMetrics.lastUpdated": [
+    {
+      "type": 0,
+      "value": "Last Updated"
+    }
+  ],
+  "admin.system.mindmapMetrics.mapCount": [
+    {
+      "type": 0,
+      "value": "Maps Returned"
+    }
+  ],
+  "admin.system.mindmapMetrics.pending": [
+    {
+      "type": 0,
+      "value": "Waiting for the next mindmap listing request to capture metrics."
+    }
+  ],
+  "admin.system.mindmapMetrics.segments": [
+    {
+      "type": 0,
+      "value": "Execution Segments"
+    }
+  ],
+  "admin.system.mindmapMetrics.title": [
+    {
+      "type": 0,
+      "value": "Mindmap Listing Performance"
+    }
+  ],
+  "admin.system.mindmapMetrics.topQueries": [
+    {
+      "type": 0,
+      "value": "Top Queries"
+    }
+  ],
+  "admin.system.mindmapMetrics.totalTime": [
+    {
+      "type": 0,
+      "value": "Total Time (ms)"
+    }
+  ],
   "admin.system.refresh": [
     {
       "type": 0,
       "value": "Refresh"
+    }
+  ],
+  "admin.system.statistics": [
+    {
+      "type": 0,
+      "value": "Statistics"
+    }
+  ],
+  "admin.system.stats.mindmaps": [
+    {
+      "type": 0,
+      "value": "Total Mindmaps"
+    }
+  ],
+  "admin.system.stats.users": [
+    {
+      "type": 0,
+      "value": "Total Users"
     }
   ],
   "admin.system.title": [
@@ -523,6 +1435,106 @@
     {
       "type": 0,
       "value": "Unsuspend user"
+    }
+  ],
+  "admin.user-info.auth-type": [
+    {
+      "type": 0,
+      "value": "Authentication"
+    }
+  ],
+  "admin.user-info.created": [
+    {
+      "type": 0,
+      "value": "Created"
+    }
+  ],
+  "admin.user-info.status": [
+    {
+      "type": 0,
+      "value": "Status"
+    }
+  ],
+  "admin.user-info.suspension-reason": [
+    {
+      "type": 0,
+      "value": "Suspension Reason:"
+    }
+  ],
+  "admin.user-info.title": [
+    {
+      "type": 0,
+      "value": "User Information"
+    }
+  ],
+  "admin.user-info.total-maps": [
+    {
+      "type": 0,
+      "value": "Total Maps"
+    }
+  ],
+  "admin.user-maps-dialog.loading": [
+    {
+      "type": 0,
+      "value": "Loading user..."
+    }
+  ],
+  "admin.user-maps-dialog.no-maps": [
+    {
+      "type": 0,
+      "value": "This user has no maps."
+    }
+  ],
+  "admin.user-maps-dialog.title": [
+    {
+      "type": 0,
+      "value": "Maps owned by "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " (ID: #"
+    },
+    {
+      "type": 1,
+      "value": "id"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
+  "admin.validation.email-invalid": [
+    {
+      "type": 0,
+      "value": "Invalid email format"
+    }
+  ],
+  "admin.validation.email-required": [
+    {
+      "type": 0,
+      "value": "Email is required"
+    }
+  ],
+  "admin.validation.firstname-required": [
+    {
+      "type": 0,
+      "value": "First name is required"
+    }
+  ],
+  "admin.validation.lastname-required": [
+    {
+      "type": 0,
+      "value": "Last name is required"
+    }
+  ],
+  "admin.view-user-maps": [
+    {
+      "type": 0,
+      "value": "View user maps"
     }
   ],
   "admin.view-xml": [
@@ -555,6 +1567,24 @@
       "value": "Password do not match. Please, try again."
     }
   ],
+  "changepwd.password-max-length": [
+    {
+      "type": 0,
+      "value": "Password cannot be longer than 39 characters."
+    }
+  ],
+  "changepwd.password-min-length": [
+    {
+      "type": 0,
+      "value": "Password must be at least 8 characters long."
+    }
+  ],
+  "changepwd.password-required": [
+    {
+      "type": 0,
+      "value": "Password cannot be empty."
+    }
+  ],
   "changepwd.title": [
     {
       "type": 0,
@@ -565,6 +1595,18 @@
     {
       "type": 0,
       "value": "Allow Email Notifications"
+    }
+  ],
+  "common.cancel": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Close"
     }
   ],
   "common.delete": [
@@ -579,6 +1621,12 @@
       "value": "Delete tag"
     }
   ],
+  "common.disabled": [
+    {
+      "type": 0,
+      "value": "Disabled"
+    }
+  ],
   "common.email": [
     {
       "type": 0,
@@ -589,6 +1637,12 @@
     {
       "type": 0,
       "value": "Emails"
+    }
+  ],
+  "common.enabled": [
+    {
+      "type": 0,
+      "value": "Enabled"
     }
   ],
   "common.first-name": [
@@ -627,6 +1681,12 @@
       "value": "Maps list"
     }
   ],
+  "common.na": [
+    {
+      "type": 0,
+      "value": "N/A"
+    }
+  ],
   "common.open-drawer": [
     {
       "type": 0,
@@ -655,6 +1715,12 @@
     {
       "type": 0,
       "value": "Retry"
+    }
+  ],
+  "common.save": [
+    {
+      "type": 0,
+      "value": "Save"
     }
   ],
   "common.settings": [
@@ -727,16 +1793,14 @@
       "value": "All selected maps will be deleted"
     }
   ],
-  "dialog.loading": [
-    {
-      "type": 0,
-      "value": "Loading ..."
-    }
-  ],
-  "duplicate.copy-prefix": [
+  "duplicate.copy-title": [
     {
       "type": 0,
       "value": "Copy of "
+    },
+    {
+      "type": 1,
+      "value": "title"
     }
   ],
   "duplicate.title": [
@@ -783,6 +1847,12 @@
     {
       "type": 0,
       "value": "Sign In"
+    }
+  ],
+  "error.invalid-map-id": [
+    {
+      "type": 0,
+      "value": "Invalid map ID"
     }
   ],
   "error.map-title-required": [
@@ -854,19 +1924,19 @@
   "export.document": [
     {
       "type": 0,
-      "value": "Mindmap Tools: Export your mindmap in thirdparty mindmap tool formats"
+      "value": "Mindmap Tools (WXML, MM): Export your mindmap in thirdparty mindmap tool formats"
     }
   ],
   "export.document-label": [
     {
       "type": 0,
-      "value": "Document: Export your mindmap in a self-contained document ready to share"
+      "value": "Document (TXT, MD): Export your mindmap in a self-contained document ready to share"
     }
   ],
   "export.image": [
     {
       "type": 0,
-      "value": "Image: Get a graphic representation of your map including all colors and shapes."
+      "value": "Image (SVG, PNG, JPEG, PDF): Get a graphic representation of your map including all colors and shapes."
     }
   ],
   "export.img-center": [
@@ -934,7 +2004,7 @@
   "footer.donations": [
     {
       "type": 0,
-      "value": "Donations"
+      "value": "Donate"
     }
   ],
   "footer.faq": [
@@ -970,7 +2040,7 @@
   "footer.termsandconditions": [
     {
       "type": 0,
-      "value": "Term And Conditions"
+      "value": "Terms and Conditions"
     }
   ],
   "footer.twitter": [
@@ -1184,7 +2254,7 @@
   "label.add-for": [
     {
       "type": 0,
-      "value": "Editing labels for"
+      "value": "Editing labels for "
     }
   ],
   "label.add-placeholder": [
@@ -1512,7 +2582,7 @@
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "Owned"
+      "value": "My Maps"
     }
   ],
   "maps.nav-public": [
@@ -1590,7 +2660,7 @@
   "menu.change-password": [
     {
       "type": 0,
-      "value": "Change password"
+      "value": "Change Password"
     }
   ],
   "menu.signout": [
@@ -1700,7 +2770,7 @@
   "registration.desc": [
     {
       "type": 0,
-      "value": "Signing up is free and just take a moment"
+      "value": "Signing up is free and just take a moment "
     }
   ],
   "registration.division": [
@@ -1938,7 +3008,7 @@
   "share.add-message": [
     {
       "type": 0,
-      "value": "Add message"
+      "value": "Customize share message"
     }
   ],
   "share.adding-button": [

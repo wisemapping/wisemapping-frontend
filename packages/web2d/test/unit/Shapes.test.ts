@@ -15,6 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import Group from '../../src/components/Group';
+import Text from '../../src/components/Text';
 import Rect from '../../src/components/Rect';
 import Ellipse from '../../src/components/Ellipse';
 import Image from '../../src/components/Image';
@@ -50,7 +52,7 @@ describe('Rect', () => {
 
   it('getPosition of a new rect peer is the origin, and a copy', () => {
     const rect = new Rect(0, { x: 7, y: 8 });
-    rect.getPosition().x = 99;
+    (rect.getPosition() as { x: number }).x = 99;
     expect(rect.getPosition()).toEqual({ x: 7, y: 8 });
   });
 });
@@ -107,5 +109,58 @@ describe('Image', () => {
     const peer = new ImagePeer();
     expect(peer.getPosition()).toEqual({ x: 0, y: 0 });
     expect(peer.getHref()).toBe('');
+  });
+});
+
+// Typing T7: getPosition() hands out a copy, so a caller cannot change the element through it.
+describe.each([
+  ['Text', () => new Text()],
+  ['Image', () => new Image()],
+  ['Ellipse', () => new Ellipse()],
+] as [string, () => Text | Image | Ellipse][])('%s getPosition (typing T7)', (_name, create) => {
+  it('returns a copy', () => {
+    const element = create();
+    element.setPosition(7, 8);
+    (element.getPosition() as { x: number }).x = 99;
+    expect(element.getPosition()).toEqual({ x: 7, y: 8 });
+  });
+});
+
+// W4: element methods for what mindplot read from the peers (WEB2D_REVIEW_PLAN 3.7).
+describe('element APIs instead of peer reach-ins (W4)', () => {
+  it('getNode returns the SVG node of the element', () => {
+    const rect = new Rect(0);
+    expect(rect.getNode()).toBe(rect.peer._native);
+    expect(rect.getNode().tagName).toBe('rect');
+  });
+
+  it('Group.contains tells whether an element was appended and not removed', () => {
+    const group = new Group();
+    const text = new Text();
+    expect(group.contains(text)).toBe(false);
+    group.append(text);
+    expect(group.contains(text)).toBe(true);
+    group.removeChild(text);
+    expect(group.contains(text)).toBe(false);
+  });
+
+  it('Group.isLastChild tells whether an element is the front child', () => {
+    const group = new Group();
+    const back = new Rect(0);
+    const front = new Text();
+    group.append(back);
+    group.append(front);
+    expect(group.isLastChild(front)).toBe(true);
+    expect(group.isLastChild(back)).toBe(false);
+    // A node appended around web2d is in front in the DOM: the element is no longer the last.
+    group.appendDomChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
+    expect(group.isLastChild(front)).toBe(false);
+  });
+
+  it('Text.getLineCount counts the lines', () => {
+    const text = new Text();
+    expect(text.getLineCount()).toBe(0);
+    text.setText('a\nb\r\nc');
+    expect(text.getLineCount()).toBe(3);
   });
 });

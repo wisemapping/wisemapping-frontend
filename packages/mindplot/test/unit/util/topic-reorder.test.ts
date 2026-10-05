@@ -314,7 +314,10 @@ describe('resolveTopicMove', () => {
         });
         manager.layout();
 
-        const target = resolve(stubs.find((s) => s.id === id)!, move);
+        const target = resolve(
+          stubs.find((s) => s.id === id)!,
+          move,
+        );
         expect(target?.kind).toBe('reorder');
 
         // What DragTopicCommand does with the target: detach, then connect with its order.

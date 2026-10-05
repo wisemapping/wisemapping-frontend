@@ -15,13 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import type Topic from '../../../src/components/Topic';
+import { buildDesigner, Harness } from '../commands/designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import type Topic from '../../../src/components/Topic';
-import { buildDesigner, Harness } from '../commands/designer-harness';
 
 const rect = (left: number, top: number, width: number, height: number): DOMRect =>
   ({
@@ -37,12 +37,15 @@ const rect = (left: number, top: number, width: number, height: number): DOMRect
   }) as DOMRect;
 
 // jsdom runs animation frames on a ~16 ms timer.
-const afterAnimationFrames = () => new Promise((resolve) => setTimeout(resolve, 100));
+const afterAnimationFrames = () =>
+  new Promise((resolve) => {
+    setTimeout(resolve, 100);
+  });
 
 /** The topic's screen rectangle, which the test moves as the canvas would. */
 const mockTopicRect = (topic: Topic, initial: DOMRect) => {
   let current = initial;
-  const group = (topic.get2DElement() as unknown as { peer: { _native: Element } }).peer._native;
+  const group = topic.get2DElement().getNode();
   jest.spyOn(group, 'getBoundingClientRect').mockImplementation(() => current);
   return (next: DOMRect) => {
     current = next;

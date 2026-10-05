@@ -190,15 +190,13 @@ class HtmlSanitizer {
       return '';
     }
 
-    // Limit content length to prevent DoS attacks
-    if (htmlContent.length > 100000) {
-      // 100KB limit
-      throw new Error('HTML content too large');
-    }
+    // Limit content length to prevent DoS attacks: longer content is truncated, then sanitized
+    // as any other. Throwing would make a whole import fail for one big note.
+    const content = this.truncate(htmlContent);
 
     try {
       // Parse in an inert document so nothing (e.g. <img onerror>) runs while parsing
-      const container = this.parseInert(htmlContent);
+      const container = this.parseInert(content);
 
       // Sanitize the DOM tree
       Array.from(container.childNodes).forEach((child) => this.sanitizeNode(child));
@@ -207,8 +205,25 @@ class HtmlSanitizer {
     } catch (error) {
       console.warn('HTML sanitization failed:', error);
       // Return plain text if sanitization fails
-      return this.stripHtmlTags(htmlContent);
+      return this.stripHtmlTags(content);
     }
+  }
+
+  // 100KB limit
+  private static readonly MAX_CONTENT_LENGTH = 100000;
+
+  private static truncate(htmlContent: string): string {
+    if (htmlContent.length <= this.MAX_CONTENT_LENGTH) {
+      return htmlContent;
+    }
+    console.warn(
+      `HTML content of ${htmlContent.length} characters truncated to ${this.MAX_CONTENT_LENGTH}`,
+    );
+    // Do not keep the first half of a surrogate pair.
+    const end = this.MAX_CONTENT_LENGTH;
+    const lastCode = htmlContent.charCodeAt(end - 1);
+    const isHighSurrogate = lastCode >= 0xd800 && lastCode <= 0xdbff;
+    return htmlContent.slice(0, isHighSurrogate ? end - 1 : end);
   }
 
   /**

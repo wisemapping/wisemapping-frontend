@@ -17,16 +17,15 @@
  */
 import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
-import Line from './Line';
-import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
+import type Line from './Line';
+import type { ElementAttributes } from './StyleAttributes';
 import ArcLinePeer from './peer/svg/ArcLinePeer';
-import PositionType from './PositionType';
+import type { ElementType, Orientation } from './types';
 
 class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
-  constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createArcLine();
-    const defaultAttributes = {
+  constructor(attributes?: ElementAttributes) {
+    const peer = new ArcLinePeer();
+    const defaultAttributes: ElementAttributes = {
       strokeColor: 'blue',
       strokeWidth: 1,
       strokeStyle: 'solid',
@@ -38,7 +37,7 @@ class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
     super(peer, mergedAttr);
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'ArcLine';
   }
 
@@ -68,43 +67,11 @@ class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
     return this;
   }
 
-  setIsSrcControlPointCustom(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setIsDestControlPointCustom(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setDashed(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setSrcControlPoint(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setDestControlPoint(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  isDestControlPointCustom(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  isSrcControlPointCustom(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  getControlPoints(): [PositionType, PositionType] {
-    throw new Error('Method not implemented.');
-  }
-
-  setOrientation(orientation: 'horizontal' | 'vertical'): void {
+  setOrientation(orientation: Orientation): void {
     this.peer.setOrientation(orientation);
   }
 
-  getOrientation(): 'horizontal' | 'vertical' {
+  getOrientation(): Orientation {
     return this.peer.getOrientation();
   }
 }

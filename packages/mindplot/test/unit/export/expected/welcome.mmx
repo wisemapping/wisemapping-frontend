@@ -1,0 +1,65 @@
+<map version="freeplane 1.9.13">
+    <node ID="ID_1" TEXT="Welcome To WiseMapping" COLOR="#ffffff">
+        <icon BUILTIN="info"/>
+        <node ID="ID_30" POSITION="right" STYLE="fork" TEXT="5 min tutorial video ?&#xA;Follow the link !" LINK="https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE">
+            <icon BUILTIN="emoji-1F5A5"/>
+            <arrowlink DESTINATION="ID_11" STARTARROW="Default" ENDARROW="None" DASH="7 7"/>
+        </node>
+        <node ID="ID_11" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Try it Now!">
+            <icon BUILTIN="smiley-oh"/>
+            <node ID="ID_12" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Double Click">
+                <font SIZE="12" ITALIC="true"/>
+            </node>
+            <node ID="ID_13" POSITION="left" STYLE="fork" TEXT="Press &quot;enter&quot; to add a &#xA;Sibling"/>
+            <node ID="ID_14" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Drag map to move">
+                <font SIZE="12" ITALIC="true"/>
+            </node>
+        </node>
+        <node ID="ID_15" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Features">
+            <node ID="ID_16" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Links to Sites" LINK="http://www.digg.com">
+                <font SIZE="10"/>
+            </node>
+            <node ID="ID_31" POSITION="right" STYLE="fork" TEXT="Styles">
+                <node ID="ID_17" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Fonts"/>
+                <node ID="ID_19" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Topic Shapes"/>
+                <node ID="ID_18" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Topic Color"/>
+            </node>
+            <node ID="ID_20" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Icons">
+                <icon BUILTIN="emoji-1F308"/>
+            </node>
+            <node ID="ID_21" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="History Changes">
+                <icon BUILTIN="back"/>
+            </node>
+        </node>
+        <node ID="ID_6" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Mind Mapping">
+            <icon BUILTIN="emoji-1F44D"/>
+            <node ID="ID_7" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Share with Collegues"/>
+            <node ID="ID_8" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Online"/>
+            <node ID="ID_9" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Anyplace, Anytime"/>
+            <node ID="ID_10" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Free!!!"/>
+        </node>
+        <node ID="ID_2" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Productivity">
+            <icon BUILTIN="emoji-1F4CA"/>
+            <node ID="ID_3" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Share your ideas">
+                <icon BUILTIN="idea"/>
+            </node>
+            <node ID="ID_4" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Brainstorming"/>
+            <node ID="ID_5" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Visual "/>
+        </node>
+        <node ID="ID_27" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Install In Your Server">
+            <icon BUILTIN="emoji-1F5A5"/>
+            <node ID="ID_29" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Open Source" LINK="http://www.wisemapping.org/">
+                <icon BUILTIN="penguin"/>
+            </node>
+            <node ID="ID_28" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Download" LINK="http://www.wisemapping.com/inyourserver.html"/>
+        </node>
+        <node ID="ID_32" POSITION="left" STYLE="fork" TEXT="Collaborate">
+            <icon BUILTIN="emoji-1F468-200D-1F467-200D-1F466"/>
+            <node ID="ID_33" POSITION="left" STYLE="fork" TEXT="Embed"/>
+            <node ID="ID_34" POSITION="left" STYLE="fork" TEXT="Publish"/>
+            <node ID="ID_35" POSITION="left" STYLE="fork" TEXT="Share for Edition">
+                <icon BUILTIN="Mail"/>
+            </node>
+        </node>
+    </node>
+</map>

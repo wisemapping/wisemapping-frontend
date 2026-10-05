@@ -21,7 +21,7 @@ import SvgIconModel from './SvgIconModel';
 import LinkModel from './LinkModel';
 import NoteModel from './NoteModel';
 import FeatureModel, { FeatureAttributes } from './FeatureModel';
-import FeatureType from './FeatureType';
+import FeatureType, { type FeatureByType } from './FeatureType';
 import EmojiIconModel from './EmojiIconModel';
 
 interface NodeById {
@@ -49,19 +49,23 @@ class FeatureModelFactory {
     },
   ];
 
-  static createModel(type: FeatureType, attributes: FeatureAttributes): FeatureModel {
+  static createModel<T extends FeatureType>(
+    type: T,
+    attributes: FeatureAttributes,
+  ): FeatureByType[T] {
     $assert(type, 'type can not be null');
     $assert(attributes, 'attributes can not be null');
 
     const { model: Model } = FeatureModelFactory.modelById.filter((elem) => elem.id === type)[0];
-    return new Model(attributes);
+    // modelById pairs each type with its model class.
+    return new Model(attributes) as FeatureByType[T];
   }
 
   /**
    * @param id the feature metadata id
    * @return {Boolean} returns true if the given id is contained in the metadata array
    */
-  static isSupported(type: string): boolean {
+  static isSupported(type: string): type is FeatureType {
     return FeatureModelFactory.modelById.some((elem) => elem.id === type);
   }
 }

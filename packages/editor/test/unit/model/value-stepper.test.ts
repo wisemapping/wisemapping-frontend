@@ -16,10 +16,7 @@
  *   limitations under the License.
  */
 
-import {
-  getNextValue,
-  getPreviousValue,
-} from '../../../src/classes/model/value-stepper';
+import { getNextValue, getPreviousValue } from '../../../src/classes/model/value-stepper';
 
 describe('getNextValue', () => {
   it('Given an array and the current value it return the next value of the array', () => {
@@ -55,24 +52,4 @@ describe('getPrevioustValue', () => {
   // it('Given an array and the current value undefined it return the next value of the array', () => {
   //   expect(getPreviousValue([1, undefined, 3], undefined)).toEqual(1);
   // });
-});
-
-describe('getTheUniqueValueOrNull', () => {
-  const testArray = [
-    {
-      a: 'va',
-      b: 'vb',
-      c: 'vc',
-    },
-    {
-      a: 'va',
-      b: 'vb!!!!!',
-      c: 'vc',
-    },
-    {
-      a: 'va',
-      b: 'vb',
-      c: 'vc',
-    },
-  ];
 });

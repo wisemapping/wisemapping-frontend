@@ -65,7 +65,8 @@ export default {
 } as Meta;
 
 const BoundingBoxTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: TopicArgs & { zoom?: number }) => {
-  LayoutEventBus.reset();
+  // The layout bus of this story: a designer would own it.
+  const layoutEventBus = new LayoutEventBus();
 
   // Build basic container ...
   const divElem = document.createElement('div');
@@ -77,12 +78,12 @@ const BoundingBoxTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: Topic
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);
   const zoom = args.zoom !== undefined ? args.zoom : 0.7;
-  const canvas = new Canvas(screenManager, zoom, true, true);
+  const canvas = new Canvas(screenManager, zoom, true, true, layoutEventBus);
   const topicEventDispatcher = new TopicEventDispatcher(true);
 
   // Create mindmap with multiple topics ...
   const mindmap = new Mindmap();
-  const topicOptions = { readOnly: true, topicEventDispatcher } as const;
+  const topicOptions = { readOnly: true, topicEventDispatcher, layoutEventBus } as const;
 
   // Central topic
   const centralModel = new NodeModel('CentralTopic', mindmap);
@@ -125,7 +126,7 @@ const BoundingBoxTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: Topic
   const allTopics = [centralTopic, child1Topic, child2Topic, child3Topic, child4Topic];
 
   // Configure event dispatcher and layout manager
-  const dispatcher = new EventBusDispatcher();
+  const dispatcher = new EventBusDispatcher(layoutEventBus);
   const size = { width: 25, height: 25 };
   const layoutManager = new LayoutManager(mindmap.getCentralTopic().getId(), size);
   dispatcher.setLayoutManager(layoutManager);
@@ -266,11 +267,11 @@ const BoundingBoxTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: Topic
   };
 
   // Listen to layout events
-  LayoutEventBus.addEvent('forceLayout', updateAllOverlays);
-  LayoutEventBus.addEvent('topicResize', updateAllOverlays);
-  LayoutEventBus.addEvent('topicMoved', updateAllOverlays);
-  LayoutEventBus.addEvent('topicConnected', updateAllOverlays);
-  LayoutEventBus.addEvent('topicAdded', updateAllOverlays);
+  layoutEventBus.addEvent('forceLayout', updateAllOverlays);
+  layoutEventBus.addEvent('topicResize', updateAllOverlays);
+  layoutEventBus.addEvent('topicMoved', updateAllOverlays);
+  layoutEventBus.addEvent('topicConnected', updateAllOverlays);
+  layoutEventBus.addEvent('topicAdded', updateAllOverlays);
 
   // Register refresh hook
   const registerRefreshHook = (topics: Topic[]) => {
@@ -280,7 +281,7 @@ const BoundingBoxTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: Topic
 
     globalThis.observer = new MutationObserver(() => {
       topics.forEach((t) => t.redraw(t.getThemeVariant(), false));
-      LayoutEventBus.fireEvent('forceLayout');
+      layoutEventBus.fireEvent('forceLayout');
       // Update overlays after redraw
       setTimeout(updateAllOverlays, 0);
     });
@@ -296,7 +297,8 @@ const BoundingBoxTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: Topic
 };
 
 const SingleTopicOverlayTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: TopicArgs & { zoom?: number }) => {
-  LayoutEventBus.reset();
+  // The layout bus of this story: a designer would own it.
+  const layoutEventBus = new LayoutEventBus();
 
   // Build basic container ...
   const divElem = document.createElement('div');
@@ -308,12 +310,12 @@ const SingleTopicOverlayTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);
   const zoom = args.zoom !== undefined ? args.zoom : 0.7;
-  const canvas = new Canvas(screenManager, zoom, true, true);
+  const canvas = new Canvas(screenManager, zoom, true, true, layoutEventBus);
   const topicEventDispatcher = new TopicEventDispatcher(true);
 
   // Create a simple mindmap with just one topic
   const mindmap = new Mindmap();
-  const topicOptions = { readOnly: true, topicEventDispatcher } as const;
+  const topicOptions = { readOnly: true, topicEventDispatcher, layoutEventBus } as const;
 
   // Single central topic
   const centralModel = new NodeModel('CentralTopic', mindmap);
@@ -355,9 +357,9 @@ const SingleTopicOverlayTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args
   };
 
   // Listen to layout events
-  LayoutEventBus.addEvent('forceLayout', updateAllOverlays);
-  LayoutEventBus.addEvent('topicResize', updateAllOverlays);
-  LayoutEventBus.addEvent('topicMoved', updateAllOverlays);
+  layoutEventBus.addEvent('forceLayout', updateAllOverlays);
+  layoutEventBus.addEvent('topicResize', updateAllOverlays);
+  layoutEventBus.addEvent('topicMoved', updateAllOverlays);
 
   // Register refresh hook
   const registerRefreshHook = (topic: Topic) => {
@@ -367,7 +369,7 @@ const SingleTopicOverlayTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args
 
     globalThis.observer = new MutationObserver(() => {
       topic.redraw(topic.getThemeVariant(), false);
-      LayoutEventBus.fireEvent('forceLayout');
+      layoutEventBus.fireEvent('forceLayout');
       // Update overlay after redraw
       setTimeout(updateAllOverlays, 0);
     });
@@ -396,8 +398,6 @@ class StorybookWidgetBuilder extends WidgetBuilder {
 }
 
 const SimpleMapWithShadowTemplate: StoryFn<TopicArgs & { zoom?: number }> = (args: TopicArgs & { zoom?: number }) => {
-  LayoutEventBus.reset();
-
   // Build basic container ...
   const divElem = document.createElement('div');
   divElem.style.height = '600px';

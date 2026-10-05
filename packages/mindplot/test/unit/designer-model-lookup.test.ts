@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { buildDesigner } from './commands/designer-harness';
 import CommandContext from '../../src/components/CommandContext';
 import Designer from '../../src/components/Designer';
 import DesignerModel from '../../src/components/DesignerModel';
@@ -23,6 +24,11 @@ import { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
 import Topic from '../../src/components/Topic';
 import Mindmap from '../../src/components/model/Mindmap';
 import NodeModel from '../../src/components/model/NodeModel';
+
+jest.mock('../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 const TOPICS = 500;
 
@@ -85,6 +91,30 @@ describe('DesignerModel topic lookups', () => {
     expect(calls).toBe(TOPICS);
   });
 
+  // BL5-98: the deep-link focus asks for a topic on every layout until it exists.
+  it('answers a miss without scanning the topics', () => {
+    const { mindmap, model, topics } = fill();
+    const getId = topics.map((topic) => jest.spyOn(topic, 'getId'));
+    const getModel = topics.map((topic) => jest.spyOn(topic, 'getModel'));
+
+    expect(model.findTopicById(TOPICS + 1)).toBeUndefined();
+    expect(model.findTopicByModel(mindmap.createNode('MainTopic', TOPICS + 2))).toBeUndefined();
+
+    // Before: a scan, 500 calls each.
+    expect(getId.reduce((sum, spy) => sum + spy.mock.calls.length, 0)).toBe(0);
+    expect(getModel.reduce((sum, spy) => sum + spy.mock.calls.length, 0)).toBe(0);
+  });
+
+  it('finds a topic under its new id once reindexed', () => {
+    const { model, topics } = fill();
+    const topic = topics[3];
+    topic.id = TOPICS + 10;
+    model.reindexTopic(topic, 3);
+
+    expect(model.findTopicById(TOPICS + 10)).toBe(topic);
+    expect(model.findTopicById(3)).toBeUndefined();
+  });
+
   it('finds topics by ids in the order the model keeps them', () => {
     const { model, topics } = fill();
     const found = model.findTopicsByIds([40, 3, 12, 9999]);
@@ -139,5 +169,39 @@ describe('DesignerModel topic lookups', () => {
     expect(() => context.findTopics([3, 1000])).toThrow('Could not find topic');
     // A repeated id is not a second topic, as before.
     expect(() => context.findTopics([3, 3])).toThrow('Could not find topic');
+  });
+});
+
+describe('Topic.setId', () => {
+  it('moves the topic to its new id in the designer lookups', async () => {
+    const { designer, topic } = await buildDesigner();
+    const floating = topic(5);
+
+    floating.setId(42);
+
+    expect(designer.getModel().findTopicById(42)).toBe(floating);
+    expect(designer.getModel().findTopicById(5)).toBeUndefined();
+    expect(designer.getModel().findTopicByModel(floating.getModel())).toBe(floating);
+  });
+});
+
+// BL5-93: selecting a topic looked it up by scanning every topic, in the auto-pan and in the
+// selection shadow handlers.
+describe('Selecting a topic', () => {
+  it('finds it through the index, without scanning the topics', async () => {
+    const { designer, topic } = await buildDesigner();
+    const getTopics = jest.spyOn(designer.getModel(), 'getTopics');
+    // The auto-pan is asked to show the topic; it does not pan here (a pan closes the editors of
+    // every topic, which reads the topic list).
+    const ensureVisible = jest
+      .spyOn(designer.getWorkSpace(), 'ensureVisible')
+      .mockReturnValue(false);
+
+    topic(4).setOnFocus(true);
+
+    expect(ensureVisible).toHaveBeenCalled();
+    expect(designer.getSelectionShadows().has(topic(4))).toBe(true);
+    // Before: two scans, one per handler.
+    expect(getTopics).not.toHaveBeenCalled();
   });
 });

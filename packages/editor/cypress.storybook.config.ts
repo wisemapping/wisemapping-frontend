@@ -17,9 +17,7 @@
  */
 
 import { defineConfig } from 'cypress';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { visualSnapshotExpose } = require('./cypress/plugins/index.ts');
+import setupNodeEvents, { visualSnapshotExpose } from './cypress/plugins';
 
 export default defineConfig({
   projectId: 'it9g7s',
@@ -30,17 +28,11 @@ export default defineConfig({
   viewportWidth: 1000,
   viewportHeight: 660,
   e2e: {
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.ts')(on, config);
-    },
+    setupNodeEvents,
     // Storybook runs on port 6008
     baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:6008',
     // Only run Storybook tests
     specPattern: 'cypress/e2e/storybook/**/*.cy.ts',
     chromeWebSecurity: false,
   },
-  chrome: {
-    args: ['--no-sandbox', '--disable-web-security', '--disable-features=VizDisplayCompositor']
-  }
 });
-

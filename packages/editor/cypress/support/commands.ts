@@ -24,13 +24,18 @@ declare global {
   /** A viewport (client) coordinate of the application under test. */
   type PointerPosition = { clientX: number; clientY: number };
 
-  type PointerDragOptions = {
-    /**
-     * Fire the mousedown at this element instead of at the element under `from`: for a handle
-     * that another element covers (as `force: true` does for cy.trigger()).
-     */
-    pressOn?: Element;
-  };
+  /** The aria-label (or its start) of a toolbar button that cy.onClickToolbarButton() clicks. */
+  type ToolbarButton =
+    | 'Add Relationship'
+    | 'Add Icon'
+    | 'Add Link'
+    | 'Add Note'
+    | 'Add Topic Image'
+    | 'Theme'
+    | 'Connection Style'
+    | 'Relationship Style'
+    | 'Font Style'
+    | 'Style Topic & Connections';
 
   namespace Cypress {
     interface Chainable {
@@ -43,24 +48,12 @@ declare global {
         value:
           'Style Topic & Connections' | 'Font Style' | 'Connection Style' | 'Relationship Style',
       ): void;
-      onClickToolbarButton(
-        value:
-          | 'Add Relationship'
-          | 'Add Icon'
-          | 'Add Link'
-          | 'Add Note'
-          | 'Add Topic Image'
-          | 'Theme'
-          | 'Connection Style'
-          | 'Relationship Style'
-          | 'Font Style'
-          | 'Style Topic & Connections',
-      ): void;
+      onClickToolbarButton(value: ToolbarButton): void;
 
       triggerUndo(): void;
       triggerRedo(): void;
       getEmoji(): Chainable<JQuery<HTMLElement>>;
-      pointerDrag(from: PointerPosition, to: PointerPosition, options?: PointerDragOptions): void;
+      pointerDrag(from: PointerPosition, to: PointerPosition): void;
       waitForEmojiTab(): void;
       waitForIconsGalleryTab(): void;
     }
@@ -90,11 +83,16 @@ addMatchImageSnapshotCommand(snapshotDefaults);
 const FREEZE_STYLE_ID = 'cypress-visual-freeze';
 // Hover tooltips open after a timer, so whether one is on screen at capture time is a race. The
 // ripple of the last click is frozen mid-animation, at a size that differs from run to run.
+// macOS overlay scrollbars fade out on a timer, so they are hidden too.
 const FREEZE_CSS = `*, *::before, *::after {
   transition: none !important;
   animation: none !important;
   caret-color: transparent !important;
   scroll-behavior: auto !important;
+  scrollbar-width: none !important;
+}
+*::-webkit-scrollbar {
+  display: none !important;
 }
 .MuiTooltip-popper {
   visibility: hidden !important;
@@ -140,6 +138,8 @@ const waitForStablePage = (previous = '', stableChecks = 0, attempts = 0): void 
       });
       return;
     }
+    // A polling interval between two markup samples, not a wait for something to happen.
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(150, { log: false });
     waitForStablePage(markup, settled, attempts + 1);
   });
@@ -226,24 +226,10 @@ Cypress.Commands.add(
   },
 );
 
-Cypress.Commands.add(
-  'onClickToolbarButton',
-  (
-    button:
-      | 'Add Relationship'
-      | 'Add Icon'
-      | 'Add Link'
-      | 'Add Note'
-      | 'Add Topic Image'
-      | 'Theme'
-      | 'Connection Style'
-      | 'Relationship Style'
-      | 'Font Style',
-  ) => {
-    // Use contains selector for buttons that include keyboard shortcuts in their aria-label
-    cy.get(`[aria-label*="${button}"]`).click({ multiple: true, force: true });
-  },
-);
+Cypress.Commands.add('onClickToolbarButton', (button: ToolbarButton) => {
+  // Use contains selector for buttons that include keyboard shortcuts in their aria-label
+  cy.get(`[aria-label*="${button}"]`).click({ multiple: true, force: true });
+});
 
 Cypress.Commands.add('triggerUndo', () => {
   cy.get('[aria-label^="Undo ').eq(1).click();
@@ -271,9 +257,8 @@ const dispatchPointerEvent = (
   win: Cypress.AUTWindow,
   type: 'mousedown' | 'mousemove' | 'mouseup',
   position: PointerPosition,
-  target: Element = elementUnderPointer(win.document, position),
 ): void => {
-  target.dispatchEvent(
+  elementUnderPointer(win.document, position).dispatchEvent(
     new win.MouseEvent(type, {
       bubbles: true,
       cancelable: true,
@@ -291,32 +276,29 @@ const dispatchPointerEvent = (
 /**
  * Drags with the left button the way a real pointer does: mousedown on the element under `from`,
  * a few mousemoves on the way to `to`, and the mouseup on the element under `to`. Each event is a
- * bubbling, composed MouseEvent fired at the element under the pointer (see `options.pressOn`).
+ * bubbling, composed MouseEvent fired at the element under the pointer.
  *
  * Do not use `cy.get('body').trigger('mousemove')` for drags: trigger() dispatches a plain,
  * non-composed Event at the element in the middle of the body, which here is inside the mindplot
  * shadow root, so it never reaches the drag listeners on the document.
  */
-Cypress.Commands.add(
-  'pointerDrag',
-  (from: PointerPosition, to: PointerPosition, options: PointerDragOptions = {}) => {
-    cy.window({ log: false }).then((win) => {
-      Cypress.log({
-        name: 'pointerDrag',
-        message: `(${from.clientX}, ${from.clientY}) -> (${to.clientX}, ${to.clientY})`,
-      });
-      dispatchPointerEvent(win, 'mousedown', from, options.pressOn);
-      const steps = 4;
-      for (let step = 1; step <= steps; step++) {
-        dispatchPointerEvent(win, 'mousemove', {
-          clientX: from.clientX + ((to.clientX - from.clientX) * step) / steps,
-          clientY: from.clientY + ((to.clientY - from.clientY) * step) / steps,
-        });
-      }
-      dispatchPointerEvent(win, 'mouseup', to);
+Cypress.Commands.add('pointerDrag', (from: PointerPosition, to: PointerPosition) => {
+  cy.window({ log: false }).then((win) => {
+    Cypress.log({
+      name: 'pointerDrag',
+      message: `(${from.clientX}, ${from.clientY}) -> (${to.clientX}, ${to.clientY})`,
     });
-  },
-);
+    dispatchPointerEvent(win, 'mousedown', from);
+    const steps = 4;
+    for (let step = 1; step <= steps; step++) {
+      dispatchPointerEvent(win, 'mousemove', {
+        clientX: from.clientX + ((to.clientX - from.clientX) * step) / steps,
+        clientY: from.clientY + ((to.clientY - from.clientY) * step) / steps,
+      });
+    }
+    dispatchPointerEvent(win, 'mouseup', to);
+  });
+});
 
 Cypress.Commands.add('getEmoji', () => {
   return cy.get('button.epr-emoji:visible');

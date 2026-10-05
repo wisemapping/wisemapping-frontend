@@ -17,12 +17,12 @@
  */
 import PolyLinePeer from '../../src/components/peer/svg/PolyLinePeer';
 import PolyLine from '../../src/components/PolyLine';
+import { STRAIGHT_TOLERANCE_PX } from '../../src/components/geometry/polyline';
 import { parsePoints } from '../helpers/geometry';
-
-type Orientation = 'horizontal' | 'vertical';
+import { POLYLINE_STYLES, type Orientation, type PolyLineStyle } from '../../src/components/types';
 
 const poly = (
-  style: string,
+  style: PolyLineStyle,
   orientation: Orientation,
   x1: number,
   y1: number,
@@ -55,14 +55,14 @@ describe('PolyLinePeer points per style and orientation', () => {
     ],
     ['Curved', 'horizontal', '0.0, 0.0 45.0, 0.0 50.0, 5.0 50.0, 95.0 55.0, 100.0 100.0, 100.0'],
     ['Curved', 'vertical', '0.0, 0.0 0.0, 45.0 5.0, 50.0 95.0, 50.0 100.0, 55.0 100.0, 100.0'],
-  ] as [string, Orientation, string][])(
+  ] as [PolyLineStyle, Orientation, string][])(
     '%s %s (0,0)->(100,100)',
     (style, orientation, expected) => {
       expect(poly(style, orientation, 0, 0, 100, 100)).toBe(expected);
     },
   );
 
-  it.each(['Straight', 'MiddleStraight', 'MiddleCurved', 'Curved'])(
+  it.each(POLYLINE_STYLES)(
     '%s starts and ends at the given points in every quadrant and orientation',
     (style) => {
       (['horizontal', 'vertical'] as Orientation[]).forEach((o) => {
@@ -81,13 +81,13 @@ describe('PolyLinePeer points per style and orientation', () => {
   );
 
   it('an empty style draws the curved path', () => {
-    expect(poly('', 'horizontal', 0, 0, 100, 100)).toBe(
+    expect(poly('' as PolyLineStyle, 'horizontal', 0, 0, 100, 100)).toBe(
       poly('Curved', 'horizontal', 0, 0, 100, 100),
     );
   });
 
   it('an unknown style draws the curved path, as an empty one does', () => {
-    expect(poly('Zigzag', 'horizontal', 0, 0, 100, 100)).toBe(
+    expect(poly('Zigzag' as unknown as PolyLineStyle, 'horizontal', 0, 0, 100, 100)).toBe(
       poly('Curved', 'horizontal', 0, 0, 100, 100),
     );
   });
@@ -158,19 +158,65 @@ describe('PolyLine', () => {
     expect(line.peer._native.getAttribute('stroke-width')).toBe('1');
   });
 
+  // Section 3.6: getFrom/getTo threw although the peer has the ends.
+  it('getFrom and getTo return the ends', () => {
+    const line = new PolyLine();
+    line.setFrom(1, 2);
+    line.setTo(30, 40);
+    expect(line.getFrom()).toEqual({ x: 1, y: 2 });
+    expect(line.getTo()).toEqual({ x: 30, y: 40 });
+  });
+
+  // Typing T5: only CurvedLine (a ControlPointLine) has control points; the throwing stubs are gone.
   it.each([
-    'getTo',
-    'getFrom',
     'setIsSrcControlPointCustom',
     'setIsDestControlPointCustom',
-    'setDashed',
     'setSrcControlPoint',
     'setDestControlPoint',
     'isDestControlPointCustom',
     'isSrcControlPointCustom',
     'getControlPoints',
-  ])('characterization: %s is a throwing Line stub (typing step T5)', (method) => {
-    const line = new PolyLine() as unknown as Record<string, () => unknown>;
-    expect(() => line[method]!()).toThrow('Method not implemented.');
+    'setDashed',
+  ])('has no %s (typing T5)', (method) => {
+    expect((new PolyLine() as unknown as Record<string, unknown>)[method]).toBeUndefined();
+  });
+});
+
+/**
+ * BL5-72: an elbow whose ends are at most STRAIGHT_TOLERANCE_PX (5) apart across the layout (in y
+ * for a mind map, in x for a tree) is one straight segment, as mindplot draws its curved
+ * connections; beyond it, the elbow keeps its jog.
+ */
+describe('PolyLinePeer straight-line tolerance (BL5-72)', () => {
+  const STYLES = POLYLINE_STYLES;
+  const ORIENTATIONS: Orientation[] = ['horizontal', 'vertical'];
+  // From (10, 20), 100 along the layout and `across` across it.
+  const elbow = (style: PolyLineStyle, orientation: Orientation, across: number) => {
+    const [x2, y2] = orientation === 'vertical' ? [10 + across, 120] : [110, 20 + across];
+    return { pts: parsePoints(poly(style, orientation, 10, 20, x2, y2)), end: [x2, y2] };
+  };
+
+  it('uses a tolerance of 5 px', () => {
+    expect(STRAIGHT_TOLERANCE_PX).toBe(5);
+  });
+
+  describe.each(STYLES)('%s', (style) => {
+    it.each(ORIENTATIONS.flatMap((o) => [0, 5, -5].map((across) => [o, across])))(
+      '%s: straight when the ends are %d apart across the layout',
+      (orientation, across) => {
+        const { pts, end } = elbow(style, orientation as Orientation, across as number);
+        expect(pts).toEqual([[10, 20], end]);
+      },
+    );
+
+    it.each(ORIENTATIONS.flatMap((o) => [6, -6].map((across) => [o, across])))(
+      '%s: a jog when the ends are %d apart across the layout',
+      (orientation, across) => {
+        const { pts, end } = elbow(style, orientation as Orientation, across as number);
+        expect(pts[0]).toEqual([10, 20]);
+        expect(pts[pts.length - 1]).toEqual(end);
+        expect(pts.length).toBeGreaterThanOrEqual(4);
+      },
+    );
   });
 });

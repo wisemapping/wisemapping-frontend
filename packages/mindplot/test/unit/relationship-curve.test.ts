@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { CurvedLine } from '@wisemapping/web2d';
 import { buildDesigner, SAMPLE_MAP } from './commands/designer-harness';
 import Relationship from '../../src/components/Relationship';
@@ -28,6 +23,11 @@ import PositionType from '../../src/components/PositionType';
 import Shape from '../../src/components/util/Shape';
 import ActionDispatcher from '../../src/components/ActionDispatcher';
 import { PivotType } from '../../src/components/RelationshipControlPoints';
+
+jest.mock('../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 const relationshipOf = (designer: Awaited<ReturnType<typeof buildDesigner>>['designer']) =>
   designer.getModel().getRelationships()[0];
@@ -313,9 +313,9 @@ describe('Relationship control point handle follows the cursor (BL4-30)', () => 
     document.dispatchEvent(move);
     const cursor = designer.getScreenManager().getWorkspaceMousePosition(move);
 
-    // The curve is drawn with its handle under the cursor, where the dot is ...
+    // The curve is drawn with its handle under the cursor, where the dot is centred (BL5-100) ...
     expectPoint(handles(relationship)[type], cursor);
-    expectPoint(pivot._dot.getPosition(), { x: cursor.x - 5, y: cursor.y - 5 });
+    expectPoint(pivot._dot.getPosition(), cursor);
 
     document.dispatchEvent(new MouseEvent('mouseup', { clientX: x, clientY: y }));
   });
@@ -344,6 +344,90 @@ describe('Relationship custom end after an interrupted drag (BL4-30)', () => {
     expectPoint(handles(relationship)[PivotType.End], {
       x: handleBefore.x + 300,
       y: handleBefore.y + 200,
+    });
+  });
+});
+
+describe('Relationship control point release (BL5-99, BL5-41)', () => {
+  type Pivot = { mouseDownHandler(event: Event): void };
+  const pivotOf = (relationship: Relationship, type: PivotType): Pivot =>
+    (relationship as unknown as { _controlPointsController: { _pivotLines: Pivot[] } })
+      ._controlPointsController._pivotLines[type];
+
+  const endOf = (relationship: Relationship, type: PivotType): PositionType => {
+    const line = relationship.getLine();
+    return { ...(type === PivotType.Start ? line.getFrom() : line.getTo()) };
+  };
+
+  /** Drags a handle to a client position and releases it there. Returns what the drag drew. */
+  const dragAndRelease = (relationship: Relationship, type: PivotType, x: number, y: number) => {
+    pivotOf(relationship, type).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+    document.dispatchEvent(new MouseEvent('mousemove', { clientX: x, clientY: y }));
+    const dragged = { end: endOf(relationship, type), handle: handles(relationship)[type] };
+    document.dispatchEvent(new MouseEvent('mouseup', { clientX: x, clientY: y }));
+    return dragged;
+  };
+
+  // Releases over and beside the target topic, at (400,400), and beside the source: a control
+  // point relative to a snap point fits several snap points of an edge, and placing it again
+  // from the centre of the topic picked another one ...
+  it.each([
+    [PivotType.End, 0, 0],
+    [PivotType.End, 400, 400],
+    [PivotType.End, 600, 300],
+    [PivotType.End, 700, 200],
+    [PivotType.Start, -300, 200],
+    [PivotType.Start, 100, -100],
+  ])(
+    'keeps the end and the handle where the drag left them (pivot %s, %s,%s)',
+    async (type, x, y) => {
+      const { designer } = await buildDesigner();
+      const relationship = relationshipOf(designer);
+      relationship.setOnFocus(true);
+
+      const dragged = dragAndRelease(relationship, type, x, y);
+
+      expectPoint(endOf(relationship, type), dragged.end);
+      expectPoint(handles(relationship)[type], dragged.handle);
+    },
+  );
+
+  it.each([PivotType.Start, PivotType.End])(
+    'gives back each dragged curve on undo and redo (pivot %s)',
+    async (type) => {
+      const { designer } = await buildDesigner();
+      const relationship = relationshipOf(designer);
+      relationship.setOnFocus(true);
+
+      const first = dragAndRelease(relationship, type, 400, 400);
+      const second = dragAndRelease(relationship, type, 700, 200);
+
+      designer.undo();
+      expectPoint(endOf(relationship, type), first.end);
+      expectPoint(handles(relationship)[type], first.handle);
+
+      designer.redo();
+      expectPoint(endOf(relationship, type), second.end);
+      expectPoint(handles(relationship)[type], second.handle);
+    },
+  );
+
+  it('keeps the released end on its topic when the topic moves', async () => {
+    const { designer, topic } = await buildDesigner();
+    const relationship = relationshipOf(designer);
+    relationship.setOnFocus(true);
+    const dragged = dragAndRelease(relationship, PivotType.End, 400, 400);
+
+    const before = topic(5).getPosition();
+    designer.getActionDispatcher().moveTopic(5, { x: before.x + 300, y: before.y + 200 });
+
+    expectPoint(endOf(relationship, PivotType.End), {
+      x: dragged.end.x + 300,
+      y: dragged.end.y + 200,
+    });
+    expectPoint(handles(relationship)[PivotType.End], {
+      x: dragged.handle.x + 300,
+      y: dragged.handle.y + 200,
     });
   });
 });

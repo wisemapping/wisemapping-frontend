@@ -17,6 +17,7 @@
  */
 
 import { Group } from '@wisemapping/web2d';
+import type { StrokeStyle } from '@wisemapping/web2d';
 import { TopicShapeType } from '../model/INodeModel';
 import SizeType from '../SizeType';
 
@@ -39,7 +40,7 @@ interface TopicShape {
 
   removeFrom(group: Group): void;
 
-  setStroke(width: number | null, style: string | null, color: string): void;
+  setStroke(width: number | null, style: StrokeStyle | null, color: string): void;
 
   getShapeType(): TopicShapeType;
 }

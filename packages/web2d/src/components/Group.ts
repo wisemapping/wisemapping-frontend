@@ -18,20 +18,27 @@
 
 import { $defined } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
-import ElementPeer from './peer/svg/ElementPeer';
+import { type CustomEventMap } from './peer/svg/ElementPeer';
+import type ElementPeer from './peer/svg/ElementPeer';
 import GroupPeer from './peer/svg/GroupPeer';
-import SizeType from './SizeType';
-import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
-import PositionType from './PositionType';
+import type SizeType from './SizeType';
+import {
+  pointArguments,
+  sizeArguments,
+  type AttributeArguments,
+  type AttributeSetter,
+  type GroupAttributes,
+} from './StyleAttributes';
+import type PositionType from './PositionType';
+import type { ElementType, StrokeStyle } from './types';
 
 /**
- * A group object can be used to collect shapes.
+ * A group object can be used to collect shapes. `M` types its custom events (see CustomEventMap).
  */
-class Group extends WorkspaceElement<GroupPeer> {
-  constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createGroup();
-    const defaultAttributes: StyleAttributes = {
+class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<GroupPeer, M> {
+  constructor(attributes?: GroupAttributes) {
+    const peer = new GroupPeer();
+    const defaultAttributes: GroupAttributes = {
       width: 50,
       height: 50,
       x: 0,
@@ -78,7 +85,7 @@ class Group extends WorkspaceElement<GroupPeer> {
       throw new Error("It's not posible to add the group as a child of itself");
     }
 
-    const elementType: string = element.getType();
+    const elementType = element.getType();
     if (elementType == null) {
       throw new Error(`It seems not to be an element ->${element}`);
     }
@@ -90,19 +97,52 @@ class Group extends WorkspaceElement<GroupPeer> {
     this.peer.append(element.peer);
   }
 
-  getType() {
+  /** Applies the position and coordinate attributes too. */
+  protected override applyAttribute(setter: AttributeSetter, args: AttributeArguments): void {
+    switch (setter) {
+      case 'position':
+        this.setPosition(...pointArguments(args, this.getPosition()));
+        break;
+      case 'coordSize':
+        this.setCoordSize(...sizeArguments(args, this.getCoordSize()));
+        break;
+      case 'coordOrigin':
+        this.setCoordOrigin(...pointArguments(args, this.getCoordOrigin()));
+        break;
+      default:
+        super.applyAttribute(setter, args);
+    }
+  }
+
+  /** Whether the element was appended to this group (and not removed since). */
+  contains(element: WorkspaceElement<ElementPeer>): boolean {
+    return this.peer.getChildren().includes(element.peer);
+  }
+
+  /** Whether the element is the last child of this group, drawn in front of the others. */
+  isLastChild(element: WorkspaceElement<ElementPeer>): boolean {
+    const children = this.peer.getChildren();
+    return (
+      children[children.length - 1] === element.peer &&
+      this.peer._native.lastChild === element.peer._native
+    );
+  }
+
+  getType(): ElementType {
     return 'Group';
   }
 
   /**
-   * The group element is a containing blocks for this content
-   * - they define a CSS2 "block level box".
-   * Inside the containing block a local coordinate system is
-   * defined for any sub-elements using the coordsize and coordorigin attributes.
-   * All CSS2 positioning information is expressed in terms of this local coordinate space.
-   * Consequently CSS2 position attributes (left, top, width, height and so on)
-   * have no unit specifier -
-   * they are simple numbers, not CSS length quantities.
+   * Removes every listener added with addEvent() to this element and to every element in it,
+   * for example when a map is torn down. The elements stay usable.
+   */
+  override dispose(): void {
+    this.peer.disposeTree();
+  }
+
+  /**
+   * The size of the group's own coordinate system: its children are laid out in these units,
+   * which are scaled to the group size (an SVG translate + scale transform).
    */
   setCoordSize(width: number, height: number) {
     this.peer.setCoordSize(width, height);
@@ -122,13 +162,19 @@ class Group extends WorkspaceElement<GroupPeer> {
 
   /** A group has no fill of its own: this is a no-op (fill its children instead). */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setFill(_color?: string, _opacity?: number): void {
+  override setFill(_color?: string, _opacity?: number): void {
     // No-op.
   }
 
   /** A group has no stroke of its own: this is a no-op (stroke its children instead). */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setStroke(_width?: number | null, _style?: string, _color?: string, _opacity?: number): void {
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  override setStroke(
+    _width?: number | null,
+    _style?: StrokeStyle | null,
+    _color?: string,
+    _opacity?: number,
+  ): void {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     // No-op.
   }
 

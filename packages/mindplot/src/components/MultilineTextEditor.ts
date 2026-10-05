@@ -20,14 +20,13 @@ import type { FontStyle } from '@wisemapping/web2d';
 
 import DOMUtils from './util/DOMUtils';
 import EventManager from './util/EventManager';
-import ActionDispatcher from './ActionDispatcher';
 import EventDispatcher from './EventDispatcher';
-import LayoutEventBus from './layout/LayoutEventBus';
 import Topic from './Topic';
 
-type EditorEventType = 'input';
+/** 'input' sends the DOM event and the new text. */
+type EditorEvents = { input: [Event, string] };
 
-class EditorComponent extends EventDispatcher<EditorEventType> {
+class EditorComponent extends EventDispatcher<EditorEvents> {
   private _topic: Topic;
 
   private _oldText: string | undefined;
@@ -43,12 +42,9 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     super();
     this._topic = topic;
 
-    // Create editor ui
+    // Create editor ui, next to the map of the topic's designer ...
     this._containerElem = EditorComponent.buildEditor();
-    const mindmapComp = document.getElementById('mindmap-comp');
-    if (mindmapComp && mindmapComp.parentElement) {
-      mindmapComp.parentElement.appendChild(this._containerElem);
-    }
+    EditorComponent.anchorOf(topic)?.parentElement?.appendChild(this._containerElem);
     this.registerEvents(this._containerElem);
     // Use the model text: getText() falls back to the theme placeholder for empty topics ...
     this._oldText = topic.getModel().getText();
@@ -57,6 +53,20 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 
   getTopic(): Topic {
     return this._topic;
+  }
+
+  /**
+   * The element the editor is placed next to, in the page: the web component of the topic's
+   * designer, or its canvas container when that is not in a web component. The editor stays out
+   * of the shadow DOM, where the page could not tell it has the focus.
+   */
+  private static anchorOf(topic: Topic): HTMLElement | undefined {
+    const container = topic.getDesigner()?.getContainer();
+    if (!container) {
+      return undefined;
+    }
+    const root = container.getRootNode();
+    return root instanceof ShadowRoot ? (root.host as HTMLElement) : container;
   }
 
   private static buildEditor(): HTMLElement {
@@ -211,16 +221,16 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     this.cancelRelayout();
 
     // Force relayout ...
-    LayoutEventBus.fireEvent('forceLayout');
+    this._topic.getLayoutEventBus().fireEvent('forceLayout');
 
-    // Adjust position ...
+    // Adjust position: the editor is absolute, so place it relative to its offset parent ...
     const textShape = this._topic.getOrBuildTextShape();
-    const { top, left } = textShape.getNativePosition();
     this._containerElem.style.position = 'absolute';
+    const { top, left } = textShape.getNativePosition(this._containerElem.offsetParent);
     this._containerElem.style.top = `${top}px`;
     this._containerElem.style.left = `${left}px`;
 
-    const mindmapCompData = document.getElementById('mindmap-comp')?.getBoundingClientRect();
+    const mindmapCompData = EditorComponent.anchorOf(this._topic)?.getBoundingClientRect();
     const maxWidth = mindmapCompData ? mindmapCompData.width - left : 0;
     DOMUtils.css(this._containerElem, 'maxWidth', `${maxWidth}px`);
   }
@@ -242,7 +252,7 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     const text = this.getTextAreaText();
     const topicId = this._topic.getId();
 
-    const actionDispatcher = ActionDispatcher.getInstance();
+    const actionDispatcher = this._topic.getActionDispatcher();
     const commandContext = actionDispatcher.getCommandContext();
 
     // Safety check: Verify the topic still exists in the designer before updating
@@ -371,17 +381,12 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
   }
 }
 
+/** The text editor of one designer: each designer has its own (see TopicEventDispatcher). */
 class MultitTextEditor {
-  private static instance: MultitTextEditor = new MultitTextEditor();
-
   private _component: EditorComponent | null;
 
   constructor() {
     this._component = null;
-  }
-
-  static getInstance(): MultitTextEditor {
-    return MultitTextEditor.instance;
   }
 
   isActive(): boolean {

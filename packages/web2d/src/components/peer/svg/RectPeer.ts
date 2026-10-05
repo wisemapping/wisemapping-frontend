@@ -16,33 +16,31 @@
  *   limitations under the License.
  */
 import { $defined } from '../utils/assert';
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
 import ElementPeer, { formatLength } from './ElementPeer';
 
 /**
  * http://www.w3.org/TR/SVG/shapes.html#RectElement
  */
-class RectPeer extends ElementPeer {
+class RectPeer extends ElementPeer<SVGRectElement> {
   private _arc: number;
 
   private _position: PositionType;
 
   constructor(arc: number) {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    super(svgElement);
+    super(ElementPeer.createNode('rect'));
     this._arc = arc;
     this._position = { x: 0, y: 0 };
-    this.attachChangeEventListener('strokeStyle', ElementPeer.prototype.updateStrokeStyle);
   }
 
   setPosition(x: number, y: number) {
     if ($defined(x)) {
-      this._position.x = x;
-      this._native.setAttribute('x', formatLength(x));
+      this._position = { ...this._position, x };
+      this.attr('x', formatLength(x));
     }
     if ($defined(y)) {
-      this._position.y = y;
-      this._native.setAttribute('y', formatLength(y));
+      this._position = { ...this._position, y };
+      this.attr('y', formatLength(y));
     }
   }
 
@@ -50,15 +48,20 @@ class RectPeer extends ElementPeer {
     return { x: this._position.x, y: this._position.y };
   }
 
-  setSize(width: number, height: number): void {
+  protected override hasSizeAttributes(): boolean {
+    return true;
+  }
+
+  override setSize(width?: number | null, height?: number | null): void {
     super.setSize(width, height);
-    const min = width < height ? width : height;
+    // The kept size: a missing width or height keeps the current one.
+    const min = Math.min(this._size.width, this._size.height);
 
     if ($defined(this._arc)) {
       // Transform percentages to SVG format.
       const arc = (min / 2) * this._arc;
-      this._native.setAttribute('rx', formatLength(arc));
-      this._native.setAttribute('ry', formatLength(arc));
+      this.attr('rx', formatLength(arc));
+      this.attr('ry', formatLength(arc));
     }
   }
 }

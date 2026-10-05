@@ -15,14 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-/* eslint-disable import/no-extraneous-dependencies */
+
 import { describe, expect, test } from '@jest/globals';
 import WisemappingImporter from '../../../src/components/import/WisemappingImporter';
 import ImportError from '../../../src/components/import/ImportError';
 
 describe('WisemappingImporter', () => {
   test('imports a WiseMapping map', async () => {
-    const wxml = `<map name="1" version="tango"><topic central="true" text="Root" id="1"/></map>`;
+    const wxml = '<map name="1" version="tango"><topic central="true" text="Root" id="1"/></map>';
 
     const xml = await new WisemappingImporter(wxml).import('test', 'description');
     const doc = new DOMParser().parseFromString(xml, 'text/xml');

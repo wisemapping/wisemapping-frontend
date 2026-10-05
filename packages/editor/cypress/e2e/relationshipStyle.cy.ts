@@ -26,7 +26,7 @@ describe('Relationship Style Suite', () => {
     cy.focusTopicByText('Features');
     cy.onClickToolbarButton('Add Relationship');
     cy.focusTopicByText('Try it Now!');
-    
+
     // Wait for relationship to be created and select it
     cy.get('[test-id*="relationship"]').should('exist');
     cy.get('[test-id*="relationship"]').first().click({ force: true });
@@ -36,7 +36,6 @@ describe('Relationship Style Suite', () => {
     cy.onClickToolbarButton('Relationship Style');
     cy.matchImageSnapshot('relationship-style-panel');
   });
-
 
   it('Change to solid stroke style', () => {
     cy.onClickToolbarButton('Relationship Style');
@@ -50,7 +49,7 @@ describe('Relationship Style Suite', () => {
   it('Change to dashed stroke style', () => {
     cy.onClickToolbarButton('Relationship Style');
 
-    // Click on dashed stroke option  
+    // Click on dashed stroke option
     cy.get('[aria-label="Dashed Line"]').first().click({ force: true });
 
     cy.matchImageSnapshot('dashed-stroke-relationship');
@@ -88,7 +87,7 @@ describe('Relationship Style Suite', () => {
 
     // Click on end arrow option
     cy.get('[aria-label="End Arrow"]').first().click({ force: true });
-    
+
     // Click on start arrow option
     cy.get('[aria-label="Start Arrow"]').first().click({ force: true });
 
@@ -119,5 +118,4 @@ describe('Relationship Style Suite', () => {
     // so we'll just verify the color was applied and take a snapshot
     cy.matchImageSnapshot('reset-relationship-color');
   });
-
 });

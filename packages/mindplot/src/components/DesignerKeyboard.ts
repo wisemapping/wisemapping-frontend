@@ -28,12 +28,18 @@ import { $notify } from './model/ToolbarNotifier';
 
 export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
-  private static _instance: DesignerKeyboard | undefined;
+  // The keyboards of the live designers: one per designer, several maps can share a page ...
+  private static _live: Set<DesignerKeyboard> = new Set();
 
   // Pauses held by the editor (pause()/resume()), e.g. while a dialog is open. A count,
   // not a flag: pauses nest (a text field inside a pane), and the inner resume must not
   // bring the shortcuts back while the outer pause is still held ...
   private static _pauseCount = 0;
+
+  // Pauses still held when the last live keyboard was disposed. They belong to the UI of
+  // the disposed designer: the resumes that come after the dispose lift them first, and the
+  // next register() drops the rest, which were never going to be resumed ...
+  private static _stalePauseCount = 0;
 
   // Paused because the pointer left the canvas. Kept apart from _pauseCount, so
   // hovering the canvas does not bring the shortcuts back behind a dialog ...
@@ -67,6 +73,8 @@ class DesignerKeyboard extends Keyboard {
 
   private _mouseLeaveListener: EventListener | null = null;
 
+  private _pointerDownListener: EventListener | null = null;
+
   private _disposed = false;
 
   constructor(designer: Designer) {
@@ -86,8 +94,8 @@ class DesignerKeyboard extends Keyboard {
   }
 
   /**
-   * Removes the listeners this keyboard bound on the document and the canvas. If it is the
-   * registered keyboard, its shortcuts are dropped as well.
+   * Removes the listeners this keyboard bound on the document and the canvas, and drops its
+   * shortcuts. The other designers keep theirs.
    */
   dispose(): void {
     if (this._disposed) {
@@ -106,15 +114,25 @@ class DesignerKeyboard extends Keyboard {
       if (this._mouseLeaveListener) {
         this._container.removeEventListener('mouseleave', this._mouseLeaveListener);
       }
+      if (this._pointerDownListener) {
+        this._container.removeEventListener('pointerdown', this._pointerDownListener);
+      }
     }
     this._container = null;
     this._mouseEnterListener = null;
     this._mouseLeaveListener = null;
+    this._pointerDownListener = null;
 
-    if (DesignerKeyboard._instance === this) {
-      DesignerKeyboard._instance = undefined;
-      KeyboardManager.clearAll();
+    KeyboardManager.removeOwner(this);
+    DesignerKeyboard._live.delete(this);
+    if (DesignerKeyboard._live.size === 0) {
+      DesignerKeyboard._stalePauseCount = DesignerKeyboard._pauseCount;
     }
+  }
+
+  /** Whether key presses go to this keyboard's designer: the one last hovered or touched. */
+  isActive(): boolean {
+    return KeyboardManager.isActive(this);
   }
 
   private _registerEvents(designer: Designer) {
@@ -252,8 +270,15 @@ class DesignerKeyboard extends Keyboard {
     this._mouseEnterListener = () => {
       super.resume();
       DesignerKeyboard._outsideCanvas = false;
+      KeyboardManager.activate(this);
     };
     this._container.addEventListener('mouseenter', this._mouseEnterListener);
+
+    // A touch (no hover) or a click makes this designer the one the keys go to as well ...
+    this._pointerDownListener = () => {
+      KeyboardManager.activate(this);
+    };
+    this._container.addEventListener('pointerdown', this._pointerDownListener);
 
     this._mouseLeaveListener = () => {
       super.pause();
@@ -264,6 +289,7 @@ class DesignerKeyboard extends Keyboard {
     this._keypressListener = (event: Event) => {
       // Needs to be ignored ?
       if (
+        !this.isActive() ||
         DesignerKeyboard.isDisabled() ||
         DesignerKeyboard.excludeFromEditor.includes((event as KeyboardEvent).code)
       ) {
@@ -730,12 +756,24 @@ class DesignerKeyboard extends Keyboard {
   }
 
   /**
-   * Builds the keyboard of a designer. A pause() requested before, e.g. by the editor while its
-   * keyboard events are disabled, is kept: only resume() lifts it.
+   * Builds the keyboard of a designer, which the keys go to until another designer is hovered
+   * or touched. A pause() requested before, e.g. by the editor while its keyboard events are
+   * disabled, is kept: only resume() lifts it. A pause leaked by the previous designer (held
+   * when it was disposed, never resumed) is dropped.
    */
-  static register(designer: Designer) {
-    this._instance = new DesignerKeyboard(designer);
+  static register(designer: Designer): DesignerKeyboard {
+    if (this._stalePauseCount > 0) {
+      console.warn(
+        `DesignerKeyboard: dropping ${this._stalePauseCount} pause() call(s) never resumed by the previous designer. Every pause() needs a matching resume().`,
+      );
+      this._pauseCount -= this._stalePauseCount;
+      this._stalePauseCount = 0;
+    }
+    const keyboard = new DesignerKeyboard(designer);
+    this._live.add(keyboard);
+    KeyboardManager.activate(keyboard);
     this._outsideCanvas = false;
+    return keyboard;
   }
 
   /**
@@ -752,6 +790,7 @@ class DesignerKeyboard extends Keyboard {
    */
   static resume() {
     this._pauseCount = Math.max(0, this._pauseCount - 1);
+    this._stalePauseCount = Math.max(0, this._stalePauseCount - 1);
     if (this._pauseCount === 0) {
       this._outsideCanvas = false;
     }
@@ -759,10 +798,6 @@ class DesignerKeyboard extends Keyboard {
 
   static isDisabled() {
     return this._pauseCount > 0 || this._outsideCanvas;
-  }
-
-  static getInstance() {
-    return this._instance;
   }
 }
 

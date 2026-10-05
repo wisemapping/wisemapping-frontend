@@ -62,6 +62,12 @@
   "outline.collapse": {
     "defaultMessage": "طي"
   },
+  "outline.expand-all": {
+    "defaultMessage": "توسيع الكل"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "طي الكل"
+  },
   "outline.has-note": {
     "defaultMessage": "يحتوي على ملاحظة"
   },
@@ -218,6 +224,18 @@
   "shortcut-help-pane.cancel-text-changes": {
     "defaultMessage": "إلغاء تغييرات النص"
   },
+  "shortcut-help-pane.category-editing": {
+    "defaultMessage": "التحرير"
+  },
+  "shortcut-help-pane.category-format": {
+    "defaultMessage": "التنسيق"
+  },
+  "shortcut-help-pane.category-navigation": {
+    "defaultMessage": "التنقل"
+  },
+  "shortcut-help-pane.category-view": {
+    "defaultMessage": "العرض"
+  },
   "shortcut-help-pane.change-font-bold": {
     "defaultMessage": "تغيير النص إلى غامق"
   },
@@ -248,8 +266,29 @@
   "shortcut-help-pane.deselect-all-topics": {
     "defaultMessage": "إلغاء تحديد جميع المواضيع"
   },
+  "shortcut-help-pane.diagram-aria": {
+    "defaultMessage": "ينتقل السهم الأيسر إلى الموضوع الأصل، والسهم الأيمن إلى موضوع فرعي، والسهمان لأعلى ولأسفل بين المواضيع الشقيقة."
+  },
+  "shortcut-help-pane.diagram-caption": {
+    "defaultMessage": "في النصف الأيسر من الخريطة، يتبادل ← و → دوريهما."
+  },
+  "shortcut-help-pane.diagram-child": {
+    "defaultMessage": "فرعي"
+  },
+  "shortcut-help-pane.diagram-parent": {
+    "defaultMessage": "أصل"
+  },
+  "shortcut-help-pane.diagram-selected": {
+    "defaultMessage": "محدد"
+  },
+  "shortcut-help-pane.diagram-sibling": {
+    "defaultMessage": "شقيق"
+  },
   "shortcut-help-pane.drag-disconnect": {
     "defaultMessage": "فصل الموضوع"
+  },
+  "shortcut-help-pane.drag-disconnect-key": {
+    "defaultMessage": "اسحب الموضوع"
   },
   "shortcut-help-pane.edit-multiline": {
     "defaultMessage": "إضافة نص موضوع متعدد الأسطر"
@@ -372,7 +411,7 @@
     "defaultMessage": "بدون"
   },
   "canvas-style.grid-style": {
-    "defaultMessage": "نمط الشبكة"
+    "defaultMessage": "حجم الشبكة"
   },
   "canvas-style.grid-size-xs": {
     "defaultMessage": "صغير جدًا"
@@ -797,6 +836,9 @@
   "icon-collection.border.default": {
     "defaultMessage": "افتراضي"
   },
+  "icon-collection.border.default-tooltip": {
+    "defaultMessage": "افتراضي - سيتم أخذ الألوان تلقائيًا بناءً على السمة المحددة"
+  },
   "icon-collection.connection.default": {
     "defaultMessage": "افتراضي"
   },
@@ -883,6 +925,9 @@
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "توسيع حسب المستوى"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "توسيع حسب المستوى (المستوى {level})"
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "اختصارات لوحة المفاتيح"

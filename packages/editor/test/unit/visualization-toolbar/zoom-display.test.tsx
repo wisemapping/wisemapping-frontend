@@ -18,7 +18,9 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ZoomDisplay, { toZoomPercent } from '../../../src/components/visualization-toolbar/zoom-display';
+import ZoomDisplay, {
+  toZoomPercent,
+} from '../../../src/components/visualization-toolbar/zoom-display';
 import type Model from '../../../src/classes/model/editor';
 
 describe('toZoomPercent', () => {
@@ -59,7 +61,7 @@ type Harness = {
 const createHarness = (options: { loaded?: boolean; zoom?: number } = {}): Harness => {
   const state = { zoom: options.zoom ?? 1, loaded: options.loaded ?? true };
   let listeners: (() => void)[] = [];
-  let designerListeners: Record<string, (() => void)[]> = {};
+  const designerListeners: Record<string, (() => void)[]> = {};
 
   const screenManager = {
     addEvent: (_event: string, callback: () => void) => {

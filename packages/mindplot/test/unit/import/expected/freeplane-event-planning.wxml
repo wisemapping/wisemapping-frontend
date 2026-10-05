@@ -1,7 +1,7 @@
 <map name="freeplane-event-planning" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Event Planning" id="1">
         <topic position="200,0" order="0" text="Pre-Event Planning" shape="line" id="2">
-            <eicon id="💡"/>
+            <eicon id="1️⃣"/>
             <topic position="200,0" order="0" text="Venue Selection" shape="line" id="3">
                 <eicon id="📍"/>
                 <note contentType="html"><![CDATA[<p>Research and book appropriate venue</p>]]></note>
@@ -11,7 +11,7 @@
                 <note contentType="html"><![CDATA[<p>Create detailed budget and cost estimates</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Guest Management" shape="line" id="5">
-                <eicon id="💡"/>
+                <eicon id="👥"/>
                 <note contentType="html"><![CDATA[<p>Create guest list and manage invitations</p>]]></note>
             </topic>
             <topic position="-300,75" order="3" text="Vendor Coordination" shape="line" id="6">
@@ -20,13 +20,13 @@
             </topic>
         </topic>
         <topic position="-200,0" order="1" text="Event Day Operations" shape="line" id="7">
-            <eicon id="💡"/>
+            <eicon id="2️⃣"/>
             <topic position="200,0" order="0" text="Setup &amp; Decoration" shape="line" id="8">
                 <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Venue setup and decoration coordination</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Registration" shape="line" id="9">
-                <eicon id="💡"/>
+                <eicon id="📝"/>
                 <note contentType="html"><![CDATA[<p>Guest registration and check-in process</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Program Execution" shape="line" id="10">
@@ -39,9 +39,9 @@
             </topic>
         </topic>
         <topic position="300,75" order="2" text="Post-Event Activities" shape="line" id="12">
-            <eicon id="💡"/>
+            <eicon id="3️⃣"/>
             <topic position="200,0" order="0" text="Cleanup" shape="line" id="13">
-                <eicon id="💡"/>
+                <eicon id="✅"/>
                 <note contentType="html"><![CDATA[<p>Venue cleanup and equipment return</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Feedback Collection" shape="line" id="14">
@@ -58,9 +58,9 @@
             </topic>
         </topic>
         <topic position="-300,75" order="3" text="Marketing &amp; Promotion" shape="line" id="17">
-            <eicon id="💡"/>
+            <eicon id="4️⃣"/>
             <topic position="200,0" order="0" text="Social Media" shape="line" id="18">
-                <eicon id="💡"/>
+                <eicon id="👥"/>
                 <note contentType="html"><![CDATA[<p>Promote event on social media platforms</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Email Campaigns" shape="line" id="19">

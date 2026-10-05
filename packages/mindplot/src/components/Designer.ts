@@ -40,6 +40,7 @@ import RelationshipPivot from './RelationshipPivot';
 import Relationship from './Relationship';
 
 import TopicEventDispatcher from './TopicEventDispatcher';
+import type MultitTextEditor from './MultilineTextEditor';
 import TopicFactory from './TopicFactory';
 
 import LayoutEventBus from './layout/LayoutEventBus';
@@ -68,22 +69,35 @@ import ThemeType from './model/ThemeType';
 import ThemeFactory from './theme/ThemeFactory';
 import Theme, { ThemeVariant } from './theme/Theme';
 import ChangeEvent from './layout/ChangeEvent';
+import type { ModelUpdateEvent } from './DesignerUndoManager';
 import HTMLTopicSelected from './HTMLTopicSelected';
 
-/** How far zoomOut() goes: workspace units per screen pixel. */
-const MAX_ZOOM = 7;
-
-/** How far zoomIn() goes. */
-const MIN_ZOOM = 0.3;
+/**
+ * The zoom range, in workspace units per screen pixel, shared by setZoom(), zoomIn() (down to
+ * min), zoomOut() and zoomToFit() (up to max).
+ */
+const ZOOM_RANGE = { min: 0.3, max: 7 } as const;
 
 /** The part of each edge of the canvas covered by the host's chrome, in pixels. */
 export type ViewportInsets = { top?: number; right?: number; bottom?: number; left?: number };
 
 export type ZoomToFitOptions = { insets?: ViewportInsets };
 
-type DesignerEventType = 'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess' | 'featureEdit';
+/** The payload of 'featureEdit': open the link or note editor of a topic, or close it. */
+export type FeatureEditEvent = { event: 'link' | 'note'; topic: Topic } | { event: 'close' };
 
-class Designer extends EventDispispatcher<DesignerEventType> {
+/** The events a designer fires to its host (the editor) and their payloads. */
+export type DesignerEvents = {
+  modelUpdate: ModelUpdateEvent;
+  featureEdit: FeatureEditEvent;
+  onfocus: void;
+  onblur: void;
+  loadSuccess: void;
+};
+
+export type DesignerEventType = keyof DesignerEvents;
+
+class Designer extends EventDispispatcher<DesignerEvents> {
   private _mindmap: Mindmap | null;
 
   private _options: DesignerOptions;
@@ -95,6 +109,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   private _model: DesignerModel;
 
   private _canvas: Canvas;
+
+  // The layout events of this designer: its topics, canvas and commands fire them.
+  private _layoutEventBus: LayoutEventBus;
 
   _eventBussDispatcher: EventBusDispatcher;
 
@@ -120,14 +137,24 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   private _wheelListener: ((event: WheelEvent) => void) | null = null;
 
+  // Re-lays out the map once a web font finishes loading (see _registerFontLoadRelayout).
+  private _fontLoadListener: (() => void) | null = null;
+
+  private _fontLoadFrame: number | null = null;
+
   private _keyboard: DesignerKeyboard | undefined;
 
   private _disposed = false;
 
   private _viewportInsets: ViewportInsets | (() => ViewportInsets) = {};
 
+  // The last zoomToFit: its options and the viewport it left, to re-fit on a container resize ...
+  private _lastFit: { options?: ZoomToFitOptions; zoom: number; origin: PositionType } | null =
+    null;
+
   constructor(options: DesignerOptions) {
     super();
+    this._layoutEventBus = new LayoutEventBus();
     // Set up i18n location ...
     Messages.init(options.locale ? options.locale : 'en');
     const divElem = options.divContainer;
@@ -154,12 +181,19 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Init Screen manager..
     const screenManager = new ScreenManager(divElem);
-    this._canvas = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly(), false);
+    this._canvas = new Canvas(
+      screenManager,
+      this._model.getZoom(),
+      this.isReadOnly(),
+      false,
+      this._layoutEventBus,
+    );
 
     this._registerAutoPanOnFocus();
+    this._canvas.setResizeHandler(() => this._onContainerResize());
 
     // Init layout manager ...
-    this._eventBussDispatcher = new EventBusDispatcher();
+    this._eventBussDispatcher = new EventBusDispatcher(this._layoutEventBus);
 
     // Register events
     if (!this.isReadOnly()) {
@@ -167,12 +201,12 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       this._registerMouseEvents();
 
       // Register keyboard events ...
-      DesignerKeyboard.register(this);
-      this._keyboard = DesignerKeyboard.getInstance();
+      this._keyboard = DesignerKeyboard.register(this);
 
       this._dragManager = this._buildDragManager(this._canvas);
     }
     this._registerWheelEvents();
+    this._registerFontLoadRelayout();
 
     this._relPivot = new RelationshipPivot(this._canvas, this);
 
@@ -186,8 +220,52 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     this._widgetManager = options.widgetManager;
   }
 
+  /**
+   * The text editor of this designer's topics.
+   * @internal
+   */
+  getTextEditor(): MultitTextEditor {
+    return this._topicEventDispatcher.getTextEditor();
+  }
+
+  /** The keyboard of this designer, if it is editable: its shortcuts drive this map only. */
+  getKeyboard(): DesignerKeyboard | undefined {
+    return this._keyboard;
+  }
+
+  /** The layout events of this designer. No other designer fires or listens to them. */
+  getLayoutEventBus(): LayoutEventBus {
+    return this._layoutEventBus;
+  }
+
   getContainer(): HTMLDivElement {
     return this._canvas.getScreenManager().getContainer();
+  }
+
+  /**
+   * A web font that finishes loading changes the size of the text drawn with the fallback font
+   * until then. web2d drops its cached text measurements on the same 'loadingdone' event, so the
+   * topics are redrawn (measured again) and the map laid out, once per frame however many fonts
+   * load in it. The frame also runs after every listener of the event, web2d's included.
+   */
+  private _registerFontLoadRelayout(): void {
+    const { fonts } = document as { fonts?: Pick<FontFaceSet, 'addEventListener'> };
+    if (!fonts?.addEventListener) {
+      return;
+    }
+    this._fontLoadListener = () => {
+      if (this._fontLoadFrame !== null) {
+        return;
+      }
+      this._fontLoadFrame = requestAnimationFrame(() => {
+        this._fontLoadFrame = null;
+        if (this._mindmap && !this._disposed) {
+          this.redrawAllTopics();
+          this._layoutEventBus.fireEvent('forceLayout');
+        }
+      });
+    };
+    fonts.addEventListener('loadingdone', this._fontLoadListener);
   }
 
   private _registerWheelEvents(): void {
@@ -225,10 +303,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   getActionDispatcher(): StandaloneActionDispatcher {
     return this._actionDispatcher;
-  }
-
-  addEvent(type: DesignerEventType, listener: (event?: unknown) => void): void {
-    super.addEvent(type, listener);
   }
 
   private _registerMouseEvents() {
@@ -318,11 +392,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         me.onObjectFocusEvent(topic, event);
       });
 
-      // Register node listeners ...
-      if (topic.getType() !== 'CentralTopic') {
-        // Central Topic doesn't support to be dragged
-        this._dragManager.add(topic);
-      }
+      // Register node listeners (the drag manager skips the central topic) ...
+      this._dragManager.add(topic);
     }
 
     // Connect Topic ...
@@ -412,7 +483,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   setZoom(zoom: number): void {
-    if (zoom > 1.9 || zoom < 0.3) {
+    if (zoom > ZOOM_RANGE.max || zoom < ZOOM_RANGE.min) {
       $notify($msg('ZOOM_IN_ERROR'));
       return;
     }
@@ -459,17 +530,17 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const visibleWidth = Math.max(containerWidth - left - right, 1);
     const visibleHeight = Math.max(containerHeight - top - bottom, 1);
 
-    // Bounding box of all topics, with a 10% padding on each side. An empty map is centred on
-    // the origin.
+    // Bounding box of the visible topics (not the ones under a collapsed branch), with a 10%
+    // padding on each side. An empty map is centred on the origin.
     let minX = Infinity;
     let maxX = -Infinity;
     let minY = Infinity;
     let maxY = -Infinity;
     this.getModel()
       .getTopics()
+      .filter((topic) => topic.isVisible())
       .forEach((topic) => {
-        // A topic without a position yet sits at the origin, as the layout places it.
-        const position = (topic.getPosition() as PositionType | undefined) ?? { x: 0, y: 0 };
+        const position = topic.getPosition();
         const size = topic.getSize();
         minX = Math.min(minX, position.x - size.width / 2);
         maxX = Math.max(maxX, position.x + size.width / 2);
@@ -489,7 +560,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // Workspace units per screen pixel, as everywhere else: above 1 shows more of the map.
     const zoom = Math.min(
       Math.max(contentWidth / visibleWidth, contentHeight / visibleHeight, 1),
-      MAX_ZOOM,
+      ZOOM_RANGE.max,
     );
 
     this.getModel().setZoom(zoom);
@@ -497,12 +568,36 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       x: left + visibleWidth / 2,
       y: top + visibleHeight / 2,
     });
+    this._lastFit = { options, zoom, origin: { ...this._canvas.getCoordOrigin() } };
+  }
+
+  /**
+   * A container resize re-fits the map while the view is still the one zoomToFit left: the user
+   * asked to see the whole map clear of the insets, and that still holds at the new size. Once
+   * they zoomed or panned (wheel, keyboard, drag, auto-pan to a topic), the view is theirs:
+   * re-fitting would throw it away, so the zoom and the point at the centre of the view are kept.
+   * Comparing the viewport catches every way it can change without hooking each one.
+   */
+  private _onContainerResize(): void {
+    const fit = this._lastFit;
+    const origin = this._canvas.getCoordOrigin();
+    if (
+      fit &&
+      fit.zoom === this._canvas.getZoom() &&
+      fit.origin.x === origin.x &&
+      fit.origin.y === origin.y
+    ) {
+      this.zoomToFit(fit.options);
+    } else {
+      this._lastFit = null;
+      this._canvas.adjustToContainer();
+    }
   }
 
   zoomOut(factor = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() * factor;
-    if (scale <= MAX_ZOOM) {
+    if (scale <= ZOOM_RANGE.max) {
       model.setZoom(scale);
       this._canvas.setZoom(scale);
     } else {
@@ -514,7 +609,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const model = this.getModel();
     const scale = model.getZoom() / factor;
 
-    if (scale >= MIN_ZOOM) {
+    if (scale >= ZOOM_RANGE.min) {
       model.setZoom(scale);
       this._canvas.setZoom(scale);
     } else {
@@ -1018,7 +1113,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       this._unsubscribeSelectionShadows = HTMLTopicSelected.initializeSelectionShadows(this);
 
       // Finally, sort the map ...
-      LayoutEventBus.fireEvent('forceLayout');
+      this._layoutEventBus.fireEvent('forceLayout');
       this.fireEvent('loadSuccess');
     });
   }
@@ -1073,6 +1168,15 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // Redraw all topics immediately (no queue rendering during editing). Each topic is
     // redrawn once, parents before children: redrawing every topic with its subtree
     // redrew each one once per ancestor.
+    this.redrawAllTopics();
+  }
+
+  /**
+   * Redraws every topic once, floating ones included, parents first, with the current theme
+   * variant. It lays nothing out.
+   * @internal
+   */
+  redrawAllTopics(): void {
     const variant = this.getThemeVariant();
     this.getModel()
       .getTopics()
@@ -1167,13 +1271,16 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       // Re-render canvas with new theme variant
       this.applyCanvasStyle();
 
-      const centralTopic = this.getModel().getCentralTopic();
-      if (centralTopic) {
-        Designer.setTreeThemeVariant(centralTopic, this._themeVariant);
-        Designer.redrawTree(centralTopic, this._themeVariant);
+      // Every tree: the central topic's and the floating topics' ...
+      const roots = this.getModel()
+        .getTopics()
+        .filter((topic) => !topic.getParent());
+      if (roots.length > 0) {
+        roots.forEach((root) => Designer.setTreeThemeVariant(root, this._themeVariant));
+        roots.forEach((root) => Designer.redrawTree(root, this._themeVariant));
 
         // Force a layout refresh to ensure all changes are applied
-        LayoutEventBus.fireEvent('forceLayout');
+        this._layoutEventBus.fireEvent('forceLayout');
       }
     }
   }
@@ -1222,8 +1329,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // Re-render with new theme (preserves custom canvas style if it exists)
     this.applyCanvasStyle();
 
-    const centralTopic = this.getModel().getCentralTopic();
-    centralTopic.redraw(this._themeVariant, true);
+    // Every tree: the central topic's and the floating topics'.
+    this.redrawAllTopics();
   }
 
   /**
@@ -1330,9 +1437,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     result.setVisibility(sourceTopic.isVisible() && targetTopic.isVisible());
 
+    // Relationship.addToWorkspace puts it below the topics and the relationships already there
     this._canvas.append(result);
-    // Ensure relationships are rendered below topics
-    result.moveToBack();
     return result;
   }
 
@@ -1621,13 +1727,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  changeRelationshipStyle(type: LineType): void {
-    const relationships = this.getModel().filterSelectedRelationships();
-    if (relationships.length > 0) {
-      this._actionDispatcher.changeRelationshipStyle(relationships, type);
-    }
-  }
-
   changeRelationshipColor(value: string | undefined): void {
     const relationships = this.getModel().filterSelectedRelationships();
     if (relationships.length > 0) {
@@ -1778,11 +1877,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       return;
     }
 
-    // A topic focused before the layout places it (AddTopicCommand) may have no position yet ...
-    const position = node.getPosition() as PositionType | undefined;
-    if (!position) {
-      return;
-    }
+    // A topic focused before the layout places it (AddTopicCommand) has its parent's position.
+    const position = node.getPosition();
     const size = node.getSize();
     const bounds = {
       left: position.x - size.width / 2,
@@ -1796,21 +1892,19 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   private _registerAutoPanOnFocus(): void {
     this._autoPanOnFocusListener = (nodeModel: NodeModel) => {
-      const topic = this.getModel()
-        .getTopics()
-        .find((candidate) => candidate.getModel() === nodeModel);
+      const topic = this.getModel().findTopicByModel(nodeModel);
       if (topic) {
         this.ensureNodeVisible(topic);
       }
     };
-    LayoutEventBus.addEvent('topicSelected', this._autoPanOnFocusListener);
+    this._layoutEventBus.addEvent('topicSelected', this._autoPanOnFocusListener);
   }
 
   /**
-   * Releases what the designer registered outside its own objects: the LayoutEventBus handlers
-   * (a module-level bus shared by every designer), the keyboard, a topic drag in progress, the
-   * canvas listeners on the window and the container, the canvas SVG, and the ActionDispatcher
-   * instance and `globalThis.designer` if they still point at this designer.
+   * Releases what the designer registered outside its own objects: the handlers on its
+   * LayoutEventBus (a topic or the host may still hold the bus), the keyboard, a topic drag in
+   * progress, the canvas listeners on the window and the container, the canvas SVG, and the
+   * ActionDispatcher instance and `globalThis.designer` if they still point at this designer.
    *
    * The PersistenceManager instance is kept: MindplotWebComponent saves and unlocks the map
    * through it after the designer is disposed.
@@ -1824,6 +1918,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
     this._disposed = true;
 
+    // The text editor is appended to the page, outside the canvas ...
+    this._topicEventDispatcher.closeFor(this);
+
     if (this._unsubscribeSelectionShadows) {
       this._unsubscribeSelectionShadows();
       this._unsubscribeSelectionShadows = null;
@@ -1831,7 +1928,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     HTMLTopicSelected.cleanupSelectionShadows(this);
 
     if (this._autoPanOnFocusListener) {
-      LayoutEventBus.removeEvent('topicSelected', this._autoPanOnFocusListener);
+      this._layoutEventBus.removeEvent('topicSelected', this._autoPanOnFocusListener);
       this._autoPanOnFocusListener = null;
     }
     this._eventBussDispatcher.dispose();
@@ -1844,6 +1941,16 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     if (this._wheelListener) {
       this.getContainer().removeEventListener('wheel', this._wheelListener);
       this._wheelListener = null;
+    }
+
+    if (this._fontLoadListener) {
+      const { fonts } = document as { fonts?: Pick<FontFaceSet, 'removeEventListener'> };
+      fonts?.removeEventListener('loadingdone', this._fontLoadListener);
+      this._fontLoadListener = null;
+    }
+    if (this._fontLoadFrame !== null) {
+      cancelAnimationFrame(this._fontLoadFrame);
+      this._fontLoadFrame = null;
     }
 
     // Read-only designers have no drag manager ...

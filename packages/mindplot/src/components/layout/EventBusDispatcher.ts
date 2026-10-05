@@ -18,25 +18,18 @@
 import PositionType from '../PositionType';
 import INodeModel from '../model/INodeModel';
 import SizeType from '../SizeType';
-import LayoutEventBus, { LayoutEventPayloads } from './LayoutEventBus';
+import LayoutEventBus from './LayoutEventBus';
 import LayoutManager from './LayoutManager';
-import { LayoutEventBusType } from '../LayoutEventBusType';
-
-type BusHandler = Parameters<typeof LayoutEventBus.addEvent>[1];
-
-/** A handler for one event, typed with the payload the bus sends for it. */
-type EventHandler<T extends LayoutEventBusType> = (arg: LayoutEventPayloads[T]) => void;
-
-const busHandler = <T extends LayoutEventBusType>(
-  type: T,
-  handler: EventHandler<T>,
-): [LayoutEventBusType, BusHandler] => [type, handler as BusHandler];
+import { LayoutEventBusType, LayoutEvents } from '../LayoutEventBusType';
 
 class EventBusDispatcher {
   private _layoutManager: LayoutManager | null;
 
-  // LayoutEventBus is module-level: keep the handlers, so that dispose() can remove them ...
-  private _busHandlers: [LayoutEventBusType, BusHandler][] = [];
+  // The bus of the designer whose layout this dispatcher drives.
+  private _layoutEventBus: LayoutEventBus;
+
+  // Removes the LayoutEventBus handlers registerBusEvents added; called by dispose() ...
+  private _busRemovals: (() => void)[] = [];
 
   // A connection asks for a layout, which is run once for a run of them (see _requestLayout).
   private _layoutPending = false;
@@ -45,7 +38,8 @@ class EventBusDispatcher {
 
   private _batchDepth = 0;
 
-  constructor() {
+  constructor(layoutEventBus: LayoutEventBus) {
+    this._layoutEventBus = layoutEventBus;
     this.registerBusEvents();
     this._layoutManager = null;
   }
@@ -84,25 +78,29 @@ class EventBusDispatcher {
 
   registerBusEvents() {
     this.dispose();
-    this._busHandlers = [
-      busHandler('topicAdded', this._topicAdded.bind(this)),
-      busHandler('topicRemoved', this._topicRemoved.bind(this)),
-      busHandler('topicResize', this._topicResizeEvent.bind(this)),
-      busHandler('topicMoved', this._topicMoved.bind(this)),
-      busHandler('topicDisconect', this._topicDisconect.bind(this)),
-      busHandler('topicConnected', this._topicConnected.bind(this)),
-      busHandler('childShrinked', this._childShrinked.bind(this)),
-      busHandler('forceLayout', this._forceLayout.bind(this)),
-    ];
-    this._busHandlers.forEach(([type, handler]) => LayoutEventBus.addEvent(type, handler));
+    this._on('topicAdded', this._topicAdded.bind(this));
+    this._on('topicRemoved', this._topicRemoved.bind(this));
+    this._on('topicResize', this._topicResizeEvent.bind(this));
+    this._on('topicMoved', this._topicMoved.bind(this));
+    this._on('topicDisconect', this._topicDisconect.bind(this));
+    this._on('topicConnected', this._topicConnected.bind(this));
+    this._on('childShrinked', this._childShrinked.bind(this));
+    this._on('forceLayout', this._forceLayout.bind(this));
+  }
+
+  /** Adds a handler, checked against the payload of its event, and keeps how to remove it. */
+  private _on<T extends LayoutEventBusType>(type: T, handler: (payload: LayoutEvents[T]) => void) {
+    const bus = this._layoutEventBus;
+    bus.addEvent(type, handler);
+    this._busRemovals.push(() => bus.removeEvent(type, handler));
   }
 
   /**
    * Removes the LayoutEventBus handlers, so that this dispatcher no longer drives its layout.
    */
   dispose(): void {
-    this._busHandlers.forEach(([type, handler]) => LayoutEventBus.removeEvent(type, handler));
-    this._busHandlers = [];
+    this._busRemovals.forEach((remove) => remove());
+    this._busRemovals = [];
     this._layoutPending = false;
     this._batchDepth = 0;
   }
@@ -200,10 +198,17 @@ class EventBusDispatcher {
     this.getLayoutManager().removeNode(node.getId());
   }
 
+  /**
+   * Lays out, unless nothing changed since the last layout: it would move nothing. A command runs
+   * Topic.connectTo, which lays out, and the action runner then asks for another one (BL5-94).
+   */
   private _forceLayout(): void {
     // This layout includes any a connection asked for ...
     this._layoutPending = false;
-    this.getLayoutManager().layout(true);
+    const layoutManager = this.getLayoutManager();
+    if (layoutManager.needsLayout()) {
+      layoutManager.layout(true);
+    }
   }
 }
 

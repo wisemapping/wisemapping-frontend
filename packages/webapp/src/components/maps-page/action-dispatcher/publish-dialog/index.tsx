@@ -55,13 +55,14 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
   const previousModelRef = useRef<boolean>(map?.public ?? false);
 
   // Sync model state when map data changes (e.g., after refetch or initial load)
+  const loadedMapId = map?.id;
+  const loadedPublic = map ? (map.public ?? false) : undefined;
   useEffect(() => {
-    if (map) {
-      const newValue = map.public ?? false;
-      setModel(newValue);
-      previousModelRef.current = newValue;
+    if (loadedPublic !== undefined) {
+      setModel(loadedPublic);
+      previousModelRef.current = loadedPublic;
     }
-  }, [map?.id, map?.public]);
+  }, [loadedMapId, loadedPublic]);
 
   const mutation = useMutation<void, ErrorInfo, boolean>({
     mutationFn: (model: boolean) => {
@@ -137,7 +138,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
         title={intl.formatMessage({ id: 'publish.title', defaultMessage: 'Publish' })}
         description={intl.formatMessage({
           id: 'publish.description',
-          defaultMessage: 'By publishing the map you make it visible to everyone on the Internet.',
+          defaultMessage: 'Make your map public. Anyone with the link can view it.',
         })}
         maxWidth="md"
         papercss={classes.paper}
@@ -212,7 +213,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
               <Typography variant="subtitle2" css={classes.label}>
                 <FormattedMessage
                   id="publish.embedded-msg"
-                  defaultMessage="Copy this snippet of code to embed in your blog or page:"
+                  defaultMessage="Click the code below to copy it to your clipboard:"
                 />
               </Typography>
               <Tooltip
@@ -240,7 +241,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
               <Typography variant="subtitle2" css={classes.label}>
                 <FormattedMessage
                   id="publish.public-url-msg"
-                  defaultMessage="Copy and paste the link below to share your map with colleagues:"
+                  defaultMessage="Click the link below to copy it to your clipboard:"
                 />
               </Typography>
               <Tooltip

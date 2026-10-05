@@ -16,14 +16,15 @@
  *   limitations under the License.
  */
 
+import SvgIconModel from '../../../src/components/model/SvgIconModel';
+import NoteModel from '../../../src/components/model/NoteModel';
+import FeatureType from '../../../src/components/model/FeatureType';
+import { buildDesigner } from './designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import SvgIconModel from '../../../src/components/model/SvgIconModel';
-import NoteModel from '../../../src/components/model/NoteModel';
-import { buildDesigner } from './designer-harness';
 
 // A carries an emoji icon, a legacy plain note (no contentType) and a link.
 const MAP = [
@@ -40,7 +41,7 @@ const MAP = [
 
 const featureId = (
   topic: ReturnType<Awaited<ReturnType<typeof buildDesigner>>['topic']>,
-  type: string,
+  type: FeatureType,
 ) => topic.getModel().findFeatureByType(type)[0].getId();
 
 describe('ChangeFeatureToTopicCommand undo/redo', () => {
@@ -64,7 +65,7 @@ describe('ChangeFeatureToTopicCommand undo/redo', () => {
   it('turns a plain note back into a plain note', async () => {
     const { designer, save, topic } = await buildDesigner(MAP);
     const before = save();
-    const note = topic(1).getModel().findFeatureByType('note')[0] as NoteModel;
+    const note = topic(1).getModel().findFeatureByType('note')[0];
     expect(note.getAttributes()).not.toHaveProperty('contentType');
 
     // As the rich text editor does: it always saves HTML.

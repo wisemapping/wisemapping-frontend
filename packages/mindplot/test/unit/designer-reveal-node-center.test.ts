@@ -29,15 +29,15 @@ jest.mock('@wisemapping/web2d', () => {
     ...actual,
     Workspace: jest.fn().mockImplementation(() => ({
       addItAsChildTo: jest.fn(),
-      append: jest.fn((elem: { peer?: { _native?: Node } }) => {
-        if (elem?.peer?._native) {
-          svgElement.appendChild(elem.peer._native);
+      append: jest.fn((elem: { getNode?: () => Node }) => {
+        const node = elem?.getNode?.();
+        if (node) {
+          svgElement.appendChild(node);
         }
       }),
-      removeChild: jest.fn((elem: { peer?: { _native?: Node } }) => {
-        if (elem?.peer?._native?.parentNode) {
-          elem.peer._native.parentNode.removeChild(elem.peer._native);
-        }
+      removeChild: jest.fn((elem: { getNode?: () => Node }) => {
+        const node = elem?.getNode?.();
+        node?.parentNode?.removeChild(node);
       }),
       getCoordOrigin: jest.fn().mockReturnValue({ x: 0, y: 0 }),
       setCoordOrigin: jest.fn(),
@@ -51,10 +51,13 @@ jest.mock('@wisemapping/web2d', () => {
 
 jest.mock('../../src/components/layout/LayoutEventBus', () => ({
   __esModule: true,
-  default: {
-    fireEvent: jest.fn(),
-    addEvent: jest.fn(),
-    removeEvent: jest.fn(),
+  // A bus that drops every event.
+  default: class {
+    fireEvent = jest.fn();
+
+    addEvent = jest.fn();
+
+    removeEvent = jest.fn();
   },
 }));
 

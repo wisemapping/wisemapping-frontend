@@ -27,6 +27,7 @@ import FreemindMap from '../export/freemind/Map';
 import FreemindNode, { Choise } from '../export/freemind/Node';
 import FreemindEdge from '../export/freemind/Edge';
 import FreemindIcon from '../export/freemind/Icon';
+import FreemindFont from '../export/freemind/Font';
 import FreemindHook from '../export/freemind/Hook';
 import FreemindRichcontent from '../export/freemind/Richcontent';
 import FreemindArrowlink from '../export/freemind/Arrowlink';
@@ -38,9 +39,10 @@ import FeatureModel from '../model/FeatureModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import { TopicShapeType } from '../model/INodeModel';
 import ContentType from '../ContentType';
-import { LineType } from '../ConnectionLine';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import SecureXmlParser from '../security/SecureXmlParser';
+import { htmlToPlainText } from './support/HtmlText';
+import { applyFreemindFont } from './support/FreemindFont';
 
 export default class FreemindImporter extends Importer {
   private mindmap!: Mindmap;
@@ -56,6 +58,9 @@ export default class FreemindImporter extends Importer {
   private arrowlinks!: Array<{ source: NodeModel; arrowlink: FreemindArrowlink }>;
 
   private idDefault = 0;
+
+  // Topic ids already given, so that two FreeMind ids never map to the same topic id.
+  private usedIds!: Set<number>;
 
   constructor(map: string) {
     super();
@@ -74,6 +79,8 @@ export default class FreemindImporter extends Importer {
     this.mindmap = new Mindmap(nameMap);
     this.nodesmap = new Map<string, NodeModel>();
     this.arrowlinks = [];
+    this.idDefault = 0;
+    this.usedIds = new Set<number>();
 
     // Use secure XML parser to prevent XXE attacks
     const freemindDoc = SecureXmlParser.parseSecureXml(this.freemindInput);
@@ -166,7 +173,6 @@ export default class FreemindImporter extends Importer {
           relationship.setStartArrow(startarrow.toLowerCase() !== 'none');
         }
 
-        relationship.setLineType(LineType.THIN_CURVED);
         this.fixRelationshipControlPoints(relationship, source, destNode);
         mindmap.addRelationship(relationship);
       }
@@ -209,18 +215,18 @@ export default class FreemindImporter extends Importer {
       wiseTopic.setBackgroundColor(bgColor);
     }
 
+    // COLOR is the text color. The font is a child element, read with the other children.
+    const color = freeNode.getColor();
+    if (color) {
+      wiseTopic.setFontColor(color);
+    }
+
     if (centralTopic === false) {
       const shape = this.getShapeFromFreeNode(freeNode);
       if (shape) {
         wiseTopic.setShapeType(shape);
       }
     }
-
-    // Check for style...
-    // const fontStyle = this.generateFontStyle(freeNode, undefined);
-    // if (fontStyle && fontStyle !== ';;;;') {
-    //   wiseTopic.setFontStyle(fontStyle);
-    // }
 
     // Is there any link...
     const url = freeNode.getLink();
@@ -283,13 +289,14 @@ export default class FreemindImporter extends Importer {
         }
       }
 
-      // if (child instanceof FreemindFont) {
-      //   const font: FreemindFont = child as FreemindFont;
-      //   const fontStyle: string = this.generateFontStyle(freeParent, font);
-      //   if (fontStyle) {
-      //     wiseParent.setFontStyle(fontStyle);
-      //   }
-      // }
+      if (child instanceof FreemindFont) {
+        applyFreemindFont(wiseParent, {
+          name: child.getName(),
+          size: child.getSize(),
+          bold: child.getBold(),
+          italic: child.getItalic(),
+        });
+      }
 
       // A FreeMind edge is the line that connects the node to its parent, and the default of its
       // children. The root node has no edge to a parent, but its children inherit its color.
@@ -331,30 +338,31 @@ export default class FreemindImporter extends Importer {
           const cleanHtml = this.cleanHtml(html);
           switch (type) {
             case 'NOTE': {
-              const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
+              const noteModel = FeatureModelFactory.createModel('note', {
                 text: cleanHtml || FreemindConstant.EMPTY_NOTE,
               });
               // Set contentType for rich text notes
               if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
-                (noteModel as NoteModel).setContentType(ContentType.HTML);
+                noteModel.setContentType(ContentType.HTML);
               }
               wiseParent.addFeature(noteModel);
               break;
             }
 
             case 'NODE': {
-              wiseParent.setText(cleanHtml);
-              // Topic text is always plain, no contentType needed
+              // Topic text is plain (the model does not persist a content type for it), so the
+              // rich text is kept as its text, one line per paragraph.
+              wiseParent.setText(htmlToPlainText(cleanHtml));
               break;
             }
 
             default: {
-              const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
+              const noteModel = FeatureModelFactory.createModel('note', {
                 text: cleanHtml || FreemindConstant.EMPTY_NOTE,
               });
               // Set contentType for rich text notes
               if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
-                (noteModel as NoteModel).setContentType(ContentType.HTML);
+                noteModel.setContentType(ContentType.HTML);
               }
               wiseParent.addFeature(noteModel);
             }
@@ -370,17 +378,19 @@ export default class FreemindImporter extends Importer {
 
   private getIdNode(node: FreemindNode): number {
     const id = node.getId();
-    // FreeMind ids look like ID_1234. Ids that do not end in a number get a generated one.
+    // FreeMind ids look like ID_1234. Ids that do not end in a number, or whose number is already
+    // used (ID_5 and Freemind_Link_5), get a generated one.
     const idNumber = id !== undefined ? parseInt(id.split('_').pop()!, 10) : NaN;
-    let idFreeToIdWise: number;
+    let idFreeToIdWise = idNumber;
 
-    if (Number.isNaN(idNumber)) {
-      this.idDefault++;
+    if (Number.isNaN(idNumber) || this.usedIds.has(idNumber)) {
+      do {
+        this.idDefault++;
+      } while (this.usedIds.has(this.idDefault));
       idFreeToIdWise = this.idDefault;
-    } else {
-      idFreeToIdWise = idNumber;
     }
 
+    this.usedIds.add(idFreeToIdWise);
     return idFreeToIdWise;
   }
 
@@ -420,55 +430,6 @@ export default class FreemindImporter extends Importer {
     }
     return result;
   }
-
-  // private generateFontStyle(node: FreemindNode, font: FreemindFont | undefined): string {
-  //   const fontStyle: Array<string> = [];
-
-  //   // Font family
-  //   if (font) {
-  //     const name = font.getName();
-  //     if (name) {
-  //       fontStyle.push(name);
-  //     }
-  //   }
-  //   fontStyle.push(';');
-
-  //   // Font Size
-  //   if (font) {
-  //     const size = font.getSize();
-  //     const fontSize: number =
-  //       !size || parseInt(size, 10) < 8 ? FreemindConstant.FONT_SIZE_NORMAL : parseInt(size, 10);
-  //     let wiseFontSize: number = FreemindConstant.FONT_SIZE_SMALL;
-  //     if (fontSize >= 24) {
-  //       wiseFontSize = FreemindConstant.FONT_SIZE_HUGE;
-  //     }
-  //     if (fontSize >= 16) {
-  //       wiseFontSize = FreemindConstant.FONT_SIZE_LARGE;
-  //     }
-  //     if (fontSize >= 8) {
-  //       wiseFontSize = FreemindConstant.FONT_SIZE_NORMAL;
-  //     }
-  //     fontStyle.push(wiseFontSize.toString());
-  //   }
-  //   fontStyle.push(';');
-
-  //   // Font Color
-  //   const color = node.getColor();
-  //   if (color && color !== '') {
-  //     fontStyle.push(color);
-  //   }
-  //   fontStyle.push(';');
-
-  //   // Font Italic
-  //   if (font) {
-  //     const hasItalic = Boolean(font.getItalic());
-  //     fontStyle.push(hasItalic ? FreemindConstant.ITALIC : '');
-  //   }
-  //   fontStyle.push(';');
-
-  //   const result: string = fontStyle.join('');
-  //   return result;
-  // }
 
   private convertPosition(
     wiseParent: NodeModel,

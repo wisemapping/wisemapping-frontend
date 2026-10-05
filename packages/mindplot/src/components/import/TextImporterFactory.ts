@@ -32,8 +32,8 @@ export default class TextImporterFactory {
       case 'wxml':
         return new WisemappingImporter(mapAsString);
       case 'mm':
-        // Check if it's Freeplane or FreeMind
-        if (mapAsString.includes('freeplane') || mapAsString.includes('version="freeplane')) {
+        // Freeplane and FreeMind share the extension: Freeplane names itself in the map version.
+        if (TextImporterFactory.isFreeplaneMap(mapAsString)) {
           return new FreeplaneImporter(mapAsString);
         }
         return new FreemindImporter(mapAsString);
@@ -49,6 +49,12 @@ export default class TextImporterFactory {
       default:
         throw new Error(`Unsupported type ${type}`);
     }
+  }
+
+  /** Whether the root <map> element has a Freeplane version, as in <map version="freeplane 1.9.13">. */
+  private static isFreeplaneMap(map: string): boolean {
+    const rootTag = map.match(/<map\b[^>]*>/);
+    return rootTag !== null && /\bversion\s*=\s*["']freeplane/.test(rootTag[0]);
   }
 
   private static asString(map: string | ArrayBuffer | Uint8Array): string {

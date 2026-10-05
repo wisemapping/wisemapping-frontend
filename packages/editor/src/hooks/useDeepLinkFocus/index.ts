@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { useEffect, useRef } from 'react';
-import { LayoutEventBus } from '@wisemapping/mindplot';
 import type Model from '../../classes/model/editor';
 
 /**
@@ -53,7 +52,7 @@ const resolveNodeId = (searchParams: URLSearchParams | null | undefined): number
  *  - `loadSuccess` (on the designer) is fired at the very end of
  *    `Designer.loadMap()`, by which point every topic has been built, made
  *    visible and connected -- so `findTopicById` can resolve the id.
- *  - `forceLayout` (on mindplot's `LayoutEventBus`) is the only event that
+ *  - `forceLayout` (on the designer's `LayoutEventBus`) is the only event that
  *    re-runs `LayoutManager.layout()`, i.e. the only thing that can move a
  *    topic. `EventBusDispatcher` subscribes to it when the designer is
  *    constructed and applies the recomputed positions synchronously, and
@@ -97,7 +96,8 @@ export const useDeepLinkFocus = (
     };
 
     designer.addEvent('loadSuccess', revealIfReady);
-    LayoutEventBus.addEvent('forceLayout', revealIfReady);
+    const layoutEventBus = designer.getLayoutEventBus();
+    layoutEventBus.addEvent('forceLayout', revealIfReady);
 
     // The map may already be loaded by the time this effect runs (both signals
     // would then be in the past).
@@ -107,7 +107,7 @@ export const useDeepLinkFocus = (
 
     return () => {
       designer.removeEvent('loadSuccess', revealIfReady);
-      LayoutEventBus.removeEvent('forceLayout', revealIfReady);
+      layoutEventBus.removeEvent('forceLayout', revealIfReady);
     };
   }, [model, searchParams]);
 };

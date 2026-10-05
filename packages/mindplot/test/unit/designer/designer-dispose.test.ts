@@ -16,24 +16,22 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { SAMPLE_MAP, buildDesigner as buildHarness } from '../commands/designer-harness';
 import buildDesigner from '../../../src/components/DesignerBuilder';
 import Designer from '../../../src/components/Designer';
-import DesignerKeyboard from '../../../src/components/DesignerKeyboard';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import DragManager from '../../../src/components/DragManager';
 import DragTopic from '../../../src/components/DragTopic';
-import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import PersistenceManager from '../../../src/components/PersistenceManager';
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 type DesignerInternals = {
   _eventBussDispatcher: EventBusDispatcher;
@@ -76,11 +74,6 @@ const build = async (): Promise<Designer> => {
 };
 
 describe('Designer dispose (BL-48)', () => {
-  beforeAll(() => {
-    // Drop the listeners other suites in this worker left on the module-level bus.
-    LayoutEventBus.reset();
-  });
-
   afterEach(() => {
     built.splice(0).forEach((designer) => {
       designer.dispose();
@@ -99,22 +92,47 @@ describe('Designer dispose (BL-48)', () => {
     expect(globalDesigner()).toBe(second);
   });
 
-  it('still refuses a second designer while the first one is live', async () => {
-    await build();
-    await expect(build()).rejects.toThrow('multiple initializations');
+  // W5: a disposed designer left every listener on the shapes of its map, each holding its topic
+  // (and through it the designer) for as long as the nodes lived. Disposing the canvas now disposes
+  // the web2d workspace tree, which aborts them all.
+  it('W5: removes the listeners of every shape of the map', async () => {
+    const designer = await build();
+    const topic = designer.getModel().getCentralTopic();
+    const listener = jest.fn();
+    topic.addEvent('click', listener);
+    const node = topic.get2DElement().getNode();
+
+    designer.dispose();
+    node.dispatchEvent(new MouseEvent('click'));
+
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  // BL5-179: two maps on one page, each in its own web component.
+  it('builds a second designer while the first one is live', async () => {
+    const first = await build();
+    const second = await build();
+
+    expect(second).not.toBe(first);
+    expect(first.isDisposed()).toBe(false);
+    expect(second.isDisposed()).toBe(false);
   });
 
   it('stops the disposed designer from handling layout bus events', async () => {
     const first = await build();
-    const firstLayout = jest.spyOn(layoutManagerOf(first), 'layout');
+    // forceLayout asks the layout manager whether a layout would do anything (BL5-94).
+    const firstLayout = jest.spyOn(layoutManagerOf(first), 'needsLayout');
     const firstEnsureVisible = jest.spyOn(first.getWorkSpace(), 'ensureVisible');
     first.dispose();
 
     const second = await build();
-    const secondLayout = jest.spyOn(layoutManagerOf(second), 'layout');
+    const secondLayout = jest.spyOn(layoutManagerOf(second), 'needsLayout');
 
-    LayoutEventBus.fireEvent('forceLayout');
-    LayoutEventBus.fireEvent('topicSelected', first.getModel().getCentralTopic().getModel());
+    // Something still holding the disposed designer's bus fires on it ...
+    const firstBus = first.getLayoutEventBus();
+    firstBus.fireEvent('forceLayout');
+    firstBus.fireEvent('topicSelected', first.getModel().getCentralTopic().getModel());
+    second.getLayoutEventBus().fireEvent('forceLayout');
 
     expect(firstLayout).not.toHaveBeenCalled();
     expect(firstEnsureVisible).not.toHaveBeenCalled();
@@ -139,13 +157,14 @@ describe('Designer dispose (BL-48)', () => {
   it('removes its selection shadows and their bus listeners', async () => {
     const designer = await build();
     const central = designer.getModel().getCentralTopic();
-    LayoutEventBus.fireEvent('topicSelected', central.getModel());
+    const bus = designer.getLayoutEventBus();
+    bus.fireEvent('topicSelected', central.getModel());
     expect(designer.getSelectionShadows().size).toBeGreaterThan(0);
 
     designer.dispose();
     expect(designer.getSelectionShadows().size).toBe(0);
 
-    LayoutEventBus.fireEvent('topicSelected', central.getModel());
+    bus.fireEvent('topicSelected', central.getModel());
     expect(designer.getSelectionShadows().size).toBe(0);
   });
 
@@ -165,8 +184,9 @@ describe('Designer dispose (BL-48)', () => {
     const showTextEditor = jest.spyOn(topic, 'showTextEditor').mockImplementation(() => undefined);
     const deleteSelected = jest.spyOn(first, 'deleteSelectedEntities');
 
+    const keyboard = first.getKeyboard()!;
     first.dispose();
-    expect(DesignerKeyboard.getInstance()).toBeUndefined();
+    expect(keyboard.isActive()).toBe(false);
 
     document.dispatchEvent(new KeyboardEvent('keypress', { key: 'a', code: 'KeyA' }));
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Delete' }));
@@ -175,7 +195,7 @@ describe('Designer dispose (BL-48)', () => {
     expect(deleteSelected).not.toHaveBeenCalled();
 
     const second = await build();
-    expect(DesignerKeyboard.getInstance()).toBeDefined();
+    expect(second.getKeyboard()!.isActive()).toBe(true);
     expect(globalDesigner()).toBe(second);
   });
 
@@ -218,7 +238,10 @@ describe('Designer dispose (BL-48)', () => {
 
     // Press the mouse on a draggable topic: the drag listeners go on the document ...
     const topic = designer.getModel().findTopicById(1)!;
-    topic.fireEvent('mousedown', new MouseEvent('mousedown', { clientX: 10, clientY: 10 }));
+    topic
+      .get2DElement()
+      .getNode()
+      .dispatchEvent(new MouseEvent('mousedown', { clientX: 10, clientY: 10 }));
     const { _mouseMoveListener: mouseMove, _mouseUpListener: mouseUp } = dragListeners;
     expect(mouseMove).not.toBeNull();
 
@@ -246,6 +269,33 @@ describe('Designer dispose (BL-48)', () => {
     first.dispose();
 
     expect(ActionDispatcher.getInstance()).toBe(second.designer.getActionDispatcher());
+  });
+
+  it('closes a text editor open on one of its topics, without saving it', async () => {
+    const designer = await build();
+    const topic = designer.getModel().findTopicById(1)!;
+    const textBefore = topic.getModel().getText();
+    topic.showTextEditor('typed');
+    const editor = designer.getTextEditor();
+    expect(editor.getActiveTopic()).toBe(topic);
+
+    designer.dispose();
+
+    expect(editor.isActive()).toBe(false);
+    expect(topic.getModel().getText()).toBe(textBefore);
+  });
+
+  it('leaves a text editor open on another designer alone', async () => {
+    const other = await buildHarness();
+    built.push(other.designer);
+    const designer = await build();
+    const topic = other.topic(1);
+    topic.showTextEditor('typed');
+
+    designer.dispose();
+
+    expect(other.designer.getTextEditor().getActiveTopic()).toBe(topic);
+    other.designer.getTextEditor().close(false);
   });
 
   it('can be disposed twice', async () => {
@@ -292,5 +342,91 @@ describe('Designer enddragging (BL-49)', () => {
     expect(applyChanges).not.toHaveBeenCalled();
     // The topics get their mouse events back either way ...
     expect(enable).toHaveBeenCalledWith(true);
+  });
+});
+
+describe('Designer dispose leaves no listener behind (T3)', () => {
+  type Target = 'window' | 'document' | 'fonts';
+
+  /** Tracks the listeners added to and removed from window, document and document.fonts. */
+  const trackListeners = () => {
+    const fonts = new EventTarget();
+    Object.defineProperty(document, 'fonts', { value: fonts, configurable: true });
+    const live = new Map<Target, Set<string>>([
+      ['window', new Set()],
+      ['document', new Set()],
+      ['fonts', new Set()],
+    ]);
+    const ids = new WeakMap<object, number>();
+    let next = 0;
+    const key = (type: string, listener: unknown): string => {
+      const fn = listener as object;
+      if (!ids.has(fn)) {
+        next += 1;
+        ids.set(fn, next);
+      }
+      return `${type}#${ids.get(fn)}`;
+    };
+    const spies = (
+      [
+        ['window', window],
+        ['document', document],
+        ['fonts', fonts],
+      ] as [Target, EventTarget][]
+    ).flatMap(([name, target]) => {
+      const add = target.addEventListener.bind(target);
+      const remove = target.removeEventListener.bind(target);
+      return [
+        jest.spyOn(target, 'addEventListener').mockImplementation((type, listener, options) => {
+          if (listener) live.get(name)!.add(key(type, listener));
+          add(type, listener, options);
+        }),
+        jest.spyOn(target, 'removeEventListener').mockImplementation((type, listener, options) => {
+          if (listener) live.get(name)!.delete(key(type, listener));
+          remove(type, listener, options);
+        }),
+      ];
+    });
+    return {
+      counts: () => Object.fromEntries([...live].map(([name, set]) => [name, set.size])),
+      restore: () => {
+        spies.forEach((spy) => spy.mockRestore());
+        delete (document as unknown as { fonts?: unknown }).fonts;
+      },
+    };
+  };
+
+  /** Builds a designer and uses it: selects a topic (selection shadow), zooms and pans. */
+  const buildAndUse = async (): Promise<Designer> => {
+    const { designer } = await buildHarness();
+    designer.goToNode(designer.getModel().findTopicById(1)!);
+    designer.zoomIn();
+    designer.panBy(10, 10);
+    return designer;
+  };
+
+  it('returns window, document, font and bus listeners to the baseline after 3 designers', async () => {
+    const tracker = trackListeners();
+    try {
+      // The first designer of a page adds listeners that stay, once per page: the page-wide
+      // shortcuts (KeyboardManager), web2d's text measurement cache (fonts) and jsdom's own.
+      const first = await buildAndUse();
+      first.dispose();
+      first.getContainer().remove();
+      const baseline = tracker.counts();
+
+      const designers = await Promise.all([buildAndUse(), buildAndUse(), buildAndUse()]);
+      expect(tracker.counts()).not.toEqual(baseline);
+
+      designers.forEach((designer) => designer.dispose());
+
+      expect(tracker.counts()).toEqual(baseline);
+      designers.forEach((designer) => {
+        expect(designer.getLayoutEventBus().listenerCount()).toBe(0);
+        designer.getContainer().remove();
+      });
+    } finally {
+      tracker.restore();
+    }
   });
 });

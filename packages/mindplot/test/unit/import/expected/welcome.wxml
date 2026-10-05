@@ -1,69 +1,59 @@
 <map name="welcome" theme="prism" layout="mindmap" version="tango">
-    <topic central="true" text="Welcome To WiseMapping" id="1">
+    <topic central="true" text="Welcome To WiseMapping" id="1" fontStyle=";;#ffffff;;;">
         <icon id="sign_info"/>
         <topic position="200,-100" order="0" shape="line" id="30">
-            <text><![CDATA[
-                    
-                    
-                        <p>5 min tutorial video ?</p>
-                        <p>Follow the link !</p>
-                    
-                ]]></text>
+            <text><![CDATA[5 min tutorial video ?
+Follow the link !]]></text>
             <link url="https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE" urlType="url"/>
             <eicon id="🖥️"/>
         </topic>
-        <topic position="-200,-150" order="1" text="Try it Now!" shape="line" id="11" connColor="#080559">
+        <topic position="-200,-150" order="1" text="Try it Now!" shape="line" id="11" fontStyle=";;#525c61;;;" connColor="#080559">
             <eicon id="😮"/>
-            <topic position="-290,-187" order="0" text="Double Click" shape="line" id="12"/>
+            <topic position="-290,-187" order="0" text="Double Click" shape="line" id="12" fontStyle=";;#525c61;;;"/>
             <topic position="-290,-162" order="1" shape="line" id="13">
-                <text><![CDATA[
-                        
-                        
-                            <p>Press "enter" to add a</p>
-                            <p>Sibling</p>
-                        
-                    ]]></text>
+                <text><![CDATA[Press "enter" to add a
+Sibling]]></text>
             </topic>
-            <topic position="-290,-137" order="2" text="Drag map to move" shape="line" id="14"/>
+            <topic position="-290,-137" order="2" text="Drag map to move" shape="line" id="14" fontStyle=";;#525c61;;;"/>
         </topic>
-        <topic position="200,0" order="2" text="Features" shape="line" id="15">
-            <topic position="290,-50" order="0" text="Links to Sites" shape="line" id="16">
+        <topic position="200,0" order="2" text="Features" shape="line" id="15" fontStyle=";;#525c61;;;">
+            <topic position="290,-50" order="0" text="Links to Sites" shape="line" id="16" fontStyle=";6;#525c61;;;">
                 <link url="http://www.digg.com" urlType="url"/>
             </topic>
             <topic position="290,-25" order="1" text="Styles" shape="line" id="31">
-                <topic position="380,-62" order="0" text="Fonts" shape="line" id="17"/>
-                <topic position="380,-37" order="1" text="Topic Shapes" shape="line" id="19"/>
-                <topic position="380,-12" order="2" text="Topic Color" shape="line" id="18"/>
+                <topic position="380,-62" order="0" text="Fonts" shape="line" id="17" fontStyle=";;#525c61;;;"/>
+                <topic position="380,-37" order="1" text="Topic Shapes" shape="line" id="19" fontStyle=";;#525c61;;;"/>
+                <topic position="380,-12" order="2" text="Topic Color" shape="line" id="18" fontStyle=";;#525c61;;;"/>
             </topic>
-            <topic position="290,0" order="2" text="Icons" shape="line" id="20">
+            <topic position="290,0" order="2" text="Icons" shape="line" id="20" fontStyle=";;#525c61;;;">
                 <eicon id="🌈"/>
             </topic>
-            <topic position="290,25" order="3" text="History Changes" shape="line" id="21">
+            <topic position="290,25" order="3" text="History Changes" shape="line" id="21" fontStyle=";;#525c61;;;">
                 <eicon id="⬅️"/>
             </topic>
         </topic>
-        <topic position="-200,-50" order="3" text="Mind Mapping" shape="line" id="6">
+        <topic position="-200,-50" order="3" text="Mind Mapping" shape="line" id="6" fontStyle=";;#525c61;;;">
             <eicon id="👍"/>
-            <topic position="-290,-100" order="0" text="Share with Collegues" shape="line" id="7"/>
-            <topic position="-290,-75" order="1" text="Online" shape="line" id="8"/>
-            <topic position="-290,-50" order="2" text="Anyplace, Anytime" shape="line" id="9"/>
-            <topic position="-290,-25" order="3" text="Free!!!" shape="line" id="10"/>
+            <topic position="-290,-100" order="0" text="Share with Collegues" shape="line" id="7" fontStyle=";;#525c61;;;"/>
+            <topic position="-290,-75" order="1" text="Online" shape="line" id="8" fontStyle=";;#525c61;;;"/>
+            <topic position="-290,-50" order="2" text="Anyplace, Anytime" shape="line" id="9" fontStyle=";;#525c61;;;"/>
+            <topic position="-290,-25" order="3" text="Free!!!" shape="line" id="10" fontStyle=";;#525c61;;;"/>
         </topic>
-        <topic position="200,100" order="4" text="Productivity" shape="line" id="2">
+        <topic position="200,100" order="4" text="Productivity" shape="line" id="2" fontStyle=";;#525c61;;;">
             <eicon id="📊"/>
-            <topic position="290,63" order="0" text="Share your ideas" shape="line" id="3">
+            <topic position="290,63" order="0" text="Share your ideas" shape="line" id="3" fontStyle=";;#525c61;;;">
                 <eicon id="💡"/>
             </topic>
-            <topic position="290,88" order="1" text="Brainstorming" shape="line" id="4"/>
-            <topic position="290,113" order="2" text="Visual " shape="line" id="5"/>
+            <topic position="290,88" order="1" text="Brainstorming" shape="line" id="4" fontStyle=";;#525c61;;;"/>
+            <topic position="290,113" order="2" text="Visual " shape="line" id="5" fontStyle=";;#525c61;;;"/>
         </topic>
-        <topic position="-200,50" order="5" text="Install In Your Server" shape="line" id="27">
+        <topic position="-200,50" order="5" text="Install In Your Server" shape="line" id="27" fontStyle=";;#525c61;;;">
             <eicon id="🖥️"/>
-            <topic position="-290,25" order="0" text="Open Source" shape="line" id="29">
+            <topic position="-290,25" order="0" text="Open Source" shape="line" id="29" fontStyle=";;#525c61;;;">
                 <link url="http://www.wisemapping.org/" urlType="url"/>
                 <icon id="soft_penguin"/>
             </topic>
-            <topic position="-290,50" order="1" text="Download" shape="line" id="28">
+            <topic position="-290,50" order="1" text="Download" shape="line" id="28" fontStyle=";;#525c61;;;">
                 <link url="http://www.wisemapping.com/inyourserver.html" urlType="url"/>
             </topic>
         </topic>

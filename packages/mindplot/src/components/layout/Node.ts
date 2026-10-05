@@ -120,10 +120,6 @@ class Node {
     return this.isPropertyChanged('position');
   }
 
-  hasSizeChanged(): boolean {
-    return this.isPropertyChanged('size');
-  }
-
   /**
    * Get the position of this node.
    * Position is always defined (initialized in constructor).
@@ -182,14 +178,20 @@ class Node {
     return freeDisplacement || { x: 0, y: 0 };
   }
 
+  /**
+   * @throws will throw an error if position is missing, or its x or y is not a finite number: the
+   * node would keep it (it compares as NaN) and the layout would place its branch there.
+   */
   setPosition(position: PositionType): void {
+    $assert(
+      position && Number.isFinite(position.x) && Number.isFinite(position.y),
+      `position must have finite x and y. Value:${JSON.stringify(position)}`,
+    );
+
     // This is a performance improvement to avoid movements that really could be avoided.
-    // A current position without finite coordinates compares as NaN: always replace it.
     const currentPos = this.getProperty('position') as PositionType | undefined;
     if (
       !currentPos ||
-      !Number.isFinite(currentPos.x) ||
-      !Number.isFinite(currentPos.y) ||
       Math.abs(currentPos.x - position.x) > 0.5 ||
       Math.abs(currentPos.y - position.y) > 0.5
     ) {

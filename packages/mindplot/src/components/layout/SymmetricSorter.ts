@@ -29,34 +29,11 @@ class SymmetricSorter extends AbstractBasicSorter {
   predict(
     graph: RootedTreeSet,
     parent: Node,
-    node: Node,
-    position: PositionType,
-    free?: boolean,
+    node: Node | null,
+    position: PositionType | null,
   ): [number, PositionType] {
     const self = this;
     const rootNode = graph.getRootNode(parent);
-
-    // If its a free node...
-    if (free) {
-      $assert(position, 'position cannot be null for predict in free positioning');
-      $assert(node, 'node cannot be null for predict in free positioning');
-
-      const direction = this._getChildrenDirection(graph, parent);
-      const limitXPos =
-        parent.getPosition().x +
-        direction *
-          (parent.getSize().width / 2 +
-            node.getSize().width / 2 +
-            SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
-
-      let xPos: number;
-      if (direction > 0) {
-        xPos = position.x >= limitXPos ? position.x : limitXPos;
-      } else {
-        xPos = position.x <= limitXPos ? position.x : limitXPos;
-      }
-      return [0, { x: xPos, y: position.y }];
-    }
 
     // Its not a dragged node (it is being added)
     if (!node) {
@@ -83,7 +60,10 @@ class SymmetricSorter extends AbstractBasicSorter {
       return [node.getOrder() ?? 0, node.getPosition()];
     }
 
-    const parentChildren = graph.getChildren(parent);
+    // By order, top to bottom. A copy: the children array is in whatever order a layout last left.
+    const parentChildren = [...graph.getChildren(parent)].sort(
+      (a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0),
+    );
     if (parentChildren.length === 0) {
       // Fit as a child of the parent node, on the side the layout puts its children, whatever
       // side the mouse is on ...
@@ -112,12 +92,10 @@ class SymmetricSorter extends AbstractBasicSorter {
             ? lastOrderValue
             : lastOrderValue + 1;
 
+        // Half a gap below the last child, as between two children.
         const result = {
           x: parentChild.getPosition().x,
-          y:
-            parentChild.getPosition().y +
-            parentChild.getSize().height +
-            SymmetricSorter.INTERNODE_VERTICAL_PADDING * 2,
+          y: parentChild.getPosition().y + this._halfSiblingGap(parentChildren, i),
         };
         return [order, result];
       }
@@ -153,12 +131,10 @@ class SymmetricSorter extends AbstractBasicSorter {
 
     // Position wasn't below any node, so it must be fitted above the first
     const first = parentChildren[0];
+    // ... half a gap above it, as between two children.
     const resultPosition = {
       x: first.getPosition().x,
-      y:
-        first.getPosition().y -
-        first.getSize().height -
-        SymmetricSorter.INTERNODE_VERTICAL_PADDING * 2,
+      y: first.getPosition().y - this._halfSiblingGap(parentChildren, 0),
     };
     return [0, resultPosition];
   }

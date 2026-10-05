@@ -28,17 +28,20 @@ import TopicEventDispatcher from '../../../src/components/TopicEventDispatcher';
 import { TopicShapeType } from '../../../src/components/model/INodeModel';
 import ThemeType from '../../../src/components/model/ThemeType';
 import type Designer from '../../../src/components/Designer';
+import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 
 // The stories render a lone topic, without a Designer. The note and link icons get the designer
 // from the topic (NodeOption.designer) to register their tooltips and edit handlers: this one
-// provides those as no-ops.
-const storyDesigner = {
-  getWidgetManager: () => ({
-    configureTooltipForNode: () => {},
-    createTooltipForLink: () => {},
-  }),
-  fireEvent: () => {},
-} as unknown as Designer;
+// provides those as no-ops, and the story's own layout event bus.
+const storyDesignerFor = (layoutEventBus: LayoutEventBus): Designer =>
+  ({
+    getWidgetManager: () => ({
+      configureTooltipForNode: () => {},
+      createTooltipForLink: () => {},
+    }),
+    fireEvent: () => {},
+    getLayoutEventBus: () => layoutEventBus,
+  }) as unknown as Designer;
 
 const registerRefreshHook = (topic: Topic) => {
   // Trigger a redraw after the node is added ...
@@ -74,21 +77,24 @@ export type CreateTopicOptions = {
   onTopicCreated?: (topic: Topic, container: HTMLDivElement, workspace: Canvas) => void;
 };
 
-const createTopic = ({
-  backgroundColor = undefined,
-  text = undefined,
-  borderColor = undefined,
-  shapeType = undefined,
-  fontFamily = undefined,
-  fontSize = undefined,
-  fontColor = undefined,
-  noteText = undefined,
-  linkText = undefined,
-  eicon = undefined,
-  imageEmojiChar = undefined,
-  theme = undefined,
-  readOnly = true,
-}: TopicArgs, options?: CreateTopicOptions) => {
+const createTopic = (
+  {
+    backgroundColor = undefined,
+    text = undefined,
+    borderColor = undefined,
+    shapeType = undefined,
+    fontFamily = undefined,
+    fontSize = undefined,
+    fontColor = undefined,
+    noteText = undefined,
+    linkText = undefined,
+    eicon = undefined,
+    imageEmojiChar = undefined,
+    theme = undefined,
+    readOnly = true,
+  }: TopicArgs,
+  options?: CreateTopicOptions,
+) => {
   // Build basic container ...
   const divElem = document.createElement('div');
   divElem.style.height = '600px';
@@ -98,7 +104,8 @@ const createTopic = ({
 
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);
-  const workspace = new Canvas(screenManager, 0.3, readOnly, true);
+  const layoutEventBus = new LayoutEventBus();
+  const workspace = new Canvas(screenManager, 0.3, readOnly, true, layoutEventBus);
   const topicEventDispatcher = new TopicEventDispatcher(readOnly);
 
   // Update model ...
@@ -143,7 +150,7 @@ const createTopic = ({
   mindmap.addBranch(model);
   const centralTopic = new CentralTopic(
     model,
-    { readOnly, topicEventDispatcher, designer: storyDesigner },
+    { readOnly, topicEventDispatcher, designer: storyDesignerFor(layoutEventBus), layoutEventBus },
     'light',
   ); // Default to light for storybook
   workspace.append(centralTopic);

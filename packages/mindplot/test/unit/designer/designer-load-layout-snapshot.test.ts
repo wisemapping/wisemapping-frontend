@@ -16,15 +16,15 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import fs from 'fs';
 import path from 'path';
 import { buildDesigner } from '../commands/designer-harness';
 import { buildMediumMap, layoutOf, useTextSizedBoxes } from './medium-map';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 /**
  * Pins where the layout puts every topic of a medium map: after a load, and after the

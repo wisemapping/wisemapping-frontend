@@ -182,7 +182,7 @@
   "canvas-style.background-style": [
     {
       "type": 0,
-      "value": "Background Style"
+      "value": "Стиль фону"
     }
   ],
   "canvas-style.colors": [
@@ -230,13 +230,13 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "Стиль сітки"
+      "value": "Розмір сітки"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "За замовчуванням - Усі стилі буде автоматично вибрано на основі теми"
     }
   ],
   "canvas-style.pattern-dots": [
@@ -278,13 +278,13 @@
   "canvas-style.tab-color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "Колір"
     }
   ],
   "canvas-style.tab-grid": [
     {
       "type": 0,
-      "value": "Grid Color"
+      "value": "Колір сітки"
     }
   ],
   "canvas-style.title": [
@@ -786,7 +786,13 @@
   "icon-collection.border.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "За замовчуванням"
+    }
+  ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "За замовчуванням - Кольори буде автоматично взято з вибраної теми"
     }
   ],
   "icon-collection.border.dotted": [
@@ -828,7 +834,7 @@
   "icon-collection.connection.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "За замовчуванням"
     }
   ],
   "icon-collection.connection.default-tooltip": [
@@ -912,13 +918,13 @@
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "За замовчуванням - Усі стилі буде автоматично вибрано на основі теми"
     }
   ],
   "icon-collection.shape.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "За замовчуванням"
     }
   ],
   "icon-collection.shape.ellipse": [
@@ -1129,6 +1135,12 @@
       "value": "Згорнути"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "Згорнути все"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1139,6 +1151,12 @@
     {
       "type": 0,
       "value": "Розгорнути"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "Розгорнути все"
     }
   ],
   "outline.has-note": [
@@ -1339,6 +1357,30 @@
       "value": "Скасувати зміни тексту"
     }
   ],
+  "shortcut-help-pane.category-editing": [
+    {
+      "type": 0,
+      "value": "Редагування"
+    }
+  ],
+  "shortcut-help-pane.category-format": [
+    {
+      "type": 0,
+      "value": "Формат"
+    }
+  ],
+  "shortcut-help-pane.category-navigation": [
+    {
+      "type": 0,
+      "value": "Навігація"
+    }
+  ],
+  "shortcut-help-pane.category-view": [
+    {
+      "type": 0,
+      "value": "Вигляд"
+    }
+  ],
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
@@ -1375,10 +1417,52 @@
       "value": "Скасувати вибір всіх тем"
     }
   ],
+  "shortcut-help-pane.diagram-aria": [
+    {
+      "type": 0,
+      "value": "Стрілка ліворуч переходить до батьківської теми, стрілка праворуч — до дочірньої, вгору й униз — між сестринськими темами."
+    }
+  ],
+  "shortcut-help-pane.diagram-caption": [
+    {
+      "type": 0,
+      "value": "У лівій половині карти ← і → міняються ролями."
+    }
+  ],
+  "shortcut-help-pane.diagram-child": [
+    {
+      "type": 0,
+      "value": "Дочірня"
+    }
+  ],
+  "shortcut-help-pane.diagram-parent": [
+    {
+      "type": 0,
+      "value": "Батьківська"
+    }
+  ],
+  "shortcut-help-pane.diagram-selected": [
+    {
+      "type": 0,
+      "value": "Вибрана"
+    }
+  ],
+  "shortcut-help-pane.diagram-sibling": [
+    {
+      "type": 0,
+      "value": "Сестринська"
+    }
+  ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
       "value": "Відключити тему"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect-key": [
+    {
+      "type": 0,
+      "value": "перетягнути тему"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
@@ -1582,7 +1666,7 @@
   "theme.aurora.description": [
     {
       "type": 0,
-      "value": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+      "value": "Градієнтна тема в неоновому стилі з ефектами світіння, жирною типографікою та контрастними з'єднувачами для захопливої розповіді."
     }
   ],
   "theme.aurora.name": [
@@ -1594,7 +1678,7 @@
   "theme.classic.description": [
     {
       "type": 0,
-      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+      "value": "Чистий професійний дизайн із синіми акцентами. Ідеально підходить для ділових презентацій та офіційних документів."
     }
   ],
   "theme.classic.name": [
@@ -1618,7 +1702,7 @@
   "theme.ocean.description": [
     {
       "type": 0,
-      "value": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+      "value": "Синя тема в морському стилі зі світлим і темним варіантами. Спокійні професійні кольори, ідеальні для ділових і творчих проєктів."
     }
   ],
   "theme.ocean.name": [
@@ -1630,7 +1714,7 @@
   "theme.retro.description": [
     {
       "type": 0,
-      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+      "value": "Палітра синтвейву 80-х із неоновими контурами, хромованими градієнтами та полотнами в сітку, натхненна ретровечірками."
     }
   ],
   "theme.retro.name": [
@@ -1642,7 +1726,7 @@
   "theme.robot.description": [
     {
       "type": 0,
-      "value": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+      "value": "Зелена тема в технологічному стилі. Ідеально підходить для технічної документації та футуристичних презентацій."
     }
   ],
   "theme.robot.name": [
@@ -1654,7 +1738,7 @@
   "theme.summer.description": [
     {
       "type": 0,
-      "value": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+      "value": "Яскрава й насичена помаранчева тема. Чудово підходить для творчих проєктів та енергійних презентацій."
     }
   ],
   "theme.summer.name": [
@@ -1666,7 +1750,7 @@
   "theme.sunrise.description": [
     {
       "type": 0,
-      "value": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+      "value": "Тема «Схід сонця» зі світлим і темним режимами. Покращені кольори та контраст для кращої читабельності."
     }
   ],
   "theme.sunrise.name": [
@@ -1774,13 +1858,13 @@
   "topic-font-editor.reset-to-default": [
     {
       "type": 0,
-      "value": "Reset to Default"
+      "value": "Скинути до значень за замовчуванням"
     }
   ],
   "unified-styling.background-color": [
     {
       "type": 0,
-      "value": "Background Color"
+      "value": "Колір фону"
     }
   ],
   "unified-styling.border-color": [
@@ -1810,7 +1894,7 @@
   "unified-styling.shape-type": [
     {
       "type": 0,
-      "value": "Shape Type"
+      "value": "Тип форми"
     }
   ],
   "unified-styling.tab.border": [
@@ -1847,6 +1931,20 @@
     {
       "type": 0,
       "value": "Розгорнути за рівнем"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "Розгорнути за рівнем (рівень "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

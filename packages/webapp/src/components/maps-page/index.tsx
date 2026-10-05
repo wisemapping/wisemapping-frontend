@@ -138,6 +138,10 @@ const MapsPage = (): ReactElement => {
       id: 'maps.page-title',
       defaultMessage: 'My Maps | WiseMapping',
     });
+  }, [intl]);
+
+  // Once per visit: a language change retitles the page but is not a new page view.
+  useEffect(() => {
     window.scrollTo(0, 0);
     trackPageView(window.location.pathname, 'Maps List');
   }, []);

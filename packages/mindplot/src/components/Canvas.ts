@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { Workspace as Workspace2D, ElementClass, ElementPeer } from '@wisemapping/web2d';
+import type { CustomEventMap, ElementEventListener } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ScreenManager from './ScreenManager';
 import SizeType from './SizeType';
@@ -24,6 +25,12 @@ import LayoutEventBus from './layout/LayoutEventBus';
 import PositionType from './PositionType';
 
 const DEFAULT_VISIBILITY_PADDING = 80;
+
+/** Elements a map load adds to the canvas before it lets the browser paint (its spinner). */
+const RENDER_QUEUE_BATCH = 300;
+
+/** How long to wait for a paint where animation frames don't run (a hidden tab). */
+const NO_FRAME_TIMEOUT = 100;
 const VISIBILITY_PADDING_RATIO = 0.08;
 type BoundsType = { left: number; right: number; top: number; bottom: number };
 
@@ -53,13 +60,20 @@ class Canvas {
 
   private _mouseDownListener: ((event: Event) => void) | null;
 
-  private _resizeListener: (() => void) | null;
+  // Stops observing the container size (registerEvents); null before or after.
+  private _stopResizeObserver: (() => void) | null;
+
+  private _resizeHandler: (() => void) | null = null;
+
+  // Receives canvasPanned and canvasZoomed: the bus of the designer the canvas belongs to.
+  private _layoutEventBus: LayoutEventBus;
 
   constructor(
     screenManager: ScreenManager,
     zoom: number,
     isReadOnly: boolean,
     delayRenderQueue: boolean,
+    layoutEventBus: LayoutEventBus = new LayoutEventBus(),
   ) {
     // Create a suitable container ...
     $assert(screenManager, 'Div container can not be null');
@@ -67,6 +81,7 @@ class Canvas {
 
     this._zoom = zoom;
     this._screenManager = screenManager;
+    this._layoutEventBus = layoutEventBus;
     this._isReadOnly = isReadOnly;
 
     const divContainer = screenManager.getContainer();
@@ -80,6 +95,8 @@ class Canvas {
 
     // Append to the workspace...
     workspace.addItAsChildTo(divContainer as HTMLDivElement);
+    // Mouse positions map through the workspace screen matrix ...
+    screenManager.setWorkspace(workspace);
 
     this.setZoom(zoom, true);
     this._renderQueue = [];
@@ -89,11 +106,17 @@ class Canvas {
     this._mouseUpListener = null;
     this._cancelPan = null;
     this._mouseDownListener = null;
-    this._resizeListener = null;
+    this._stopResizeObserver = null;
   }
 
-  private _adjustWorkspace(): void {
+  /** Fits the viewport to the container's new size, keeping the zoom and the centre of the view. */
+  adjustToContainer(): void {
     this.setZoom(this._zoom, false);
+  }
+
+  /** Handles a container resize instead of adjustToContainer(), or null for the default. */
+  setResizeHandler(handler: (() => void) | null): void {
+    this._resizeHandler = handler;
   }
 
   registerEvents() {
@@ -102,27 +125,32 @@ class Canvas {
       // Register drag events ...
       this._registerDragEvents();
 
-      // Readjust if the window is resized ...
-      this._resizeListener = () => {
-        this._adjustWorkspace();
-      };
-      window.addEventListener('resize', this._resizeListener);
+      // Readjust when the container is resized: by the window, or by the page layout around it
+      // (a side panel opening), which a window resize listener missed (BL5-143) ...
+      this._stopResizeObserver = this._workspace.observeResize(() => {
+        if (this._resizeHandler) {
+          this._resizeHandler();
+        } else {
+          this.adjustToContainer();
+        }
+      }, this._screenManager.getContainer());
     }
     this._eventsEnabled = true;
   }
 
   /**
-   * Removes the listeners registered on the window and the container, ending any pan in progress,
-   * and the workspace SVG from the container: a designer built again on it adds its own.
+   * Removes the listeners registered on the container, the workspace and every shape in it, stops
+   * observing the container size, ends any pan in progress, and removes the workspace SVG from the
+   * container: a designer built again on it adds its own.
    */
   dispose(): void {
     if (this._cancelPan) {
       this._cancelPan();
     }
 
-    if (this._resizeListener) {
-      window.removeEventListener('resize', this._resizeListener);
-      this._resizeListener = null;
+    if (this._stopResizeObserver) {
+      this._stopResizeObserver();
+      this._stopResizeObserver = null;
     }
 
     if (this._mouseDownListener) {
@@ -132,7 +160,10 @@ class Canvas {
     }
     this._eventsEnabled = false;
 
+    // Every listener added to the workspace and the shapes in it, in one go ...
+    this._workspace.dispose();
     this._workspace._getHtmlContainer().remove();
+    this._screenManager.setWorkspace(null);
   }
 
   isReadOnly(): boolean {
@@ -180,41 +211,57 @@ class Canvas {
 
     let result = Promise.resolve();
     if (!value) {
-      // eslint-disable-next-line arrow-body-style
-      result = Canvas.delay(100).then(() => {
-        return this.processRenderQueue(this._renderQueue.reverse(), 300);
-      });
+      result = Canvas.afterNextPaint().then(() =>
+        this.processRenderQueue(this._renderQueue.reverse(), RENDER_QUEUE_BATCH),
+      );
     }
     return result;
   }
 
-  private static delay(t: number) {
+  /**
+   * Resolves once the browser could paint: just after the next animation frame, or after a
+   * timeout where frames don't run (a hidden tab, no requestAnimationFrame).
+   *
+   * A map load adds its elements in batches so that the page (the editor's loading spinner)
+   * keeps painting. It used to wait 100 ms before the first batch and 30 ms after each one,
+   * which made most of a load waiting; a frame is all a paint needs.
+   */
+  private static afterNextPaint(): Promise<void> {
     return new Promise((resolve) => {
-      setTimeout(resolve, t);
+      let timeout: ReturnType<typeof setTimeout> | undefined;
+      let done = false;
+      const finish = () => {
+        if (!done) {
+          done = true;
+          clearTimeout(timeout);
+          resolve();
+        }
+      };
+      timeout = setTimeout(finish, NO_FRAME_TIMEOUT);
+      if (typeof requestAnimationFrame === 'function') {
+        // The frame callback runs before the paint: continue in the task after it.
+        requestAnimationFrame(() => setTimeout(finish, 0));
+      }
     });
   }
 
+  /** Adds the queued elements, a batch per paint, in the order they were queued (popped). */
   private processRenderQueue(
     renderQueue: (ElementClass<ElementPeer> | CanvasElement)[],
     batch: number,
   ): Promise<void> {
-    let result: Promise<void>;
-
-    if (renderQueue.length > 0) {
-      result = new Promise(
-        (resolve: (queue: (ElementClass<ElementPeer> | CanvasElement)[]) => void) => {
-          for (let i = 0; i < batch && renderQueue.length > 0; i++) {
-            const elem = renderQueue.pop()!;
-            this.appendInternal(elem);
-          }
-
-          resolve(renderQueue);
-        },
-      ).then((queue) => Canvas.delay(30).then(() => this.processRenderQueue(queue, batch)));
-    } else {
-      result = Promise.resolve();
+    try {
+      for (let i = 0; i < batch && renderQueue.length > 0; i++) {
+        const elem = renderQueue.pop()!;
+        this.appendInternal(elem);
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return result;
+    if (renderQueue.length === 0) {
+      return Promise.resolve();
+    }
+    return Canvas.afterNextPaint().then(() => this.processRenderQueue(renderQueue, batch));
   }
 
   removeChild(shape: ElementClass<ElementPeer> | CanvasElement): void {
@@ -225,11 +272,12 @@ class Canvas {
     }
   }
 
-  addEvent(type: string, listener: (event: Event, detail?: unknown) => void): void {
+  /** Listens to the workspace: a native type gives its DOM event ('mousemove' a MouseEvent). */
+  addEvent<K extends string>(type: K, listener: ElementEventListener<CustomEventMap, K>): void {
     this._workspace.addEvent(type, listener);
   }
 
-  removeEvent(type: string, listener: (event: Event, detail?: unknown) => void): void {
+  removeEvent<K extends string>(type: K, listener: ElementEventListener<CustomEventMap, K>): void {
     $assert(type, 'type can not be null');
     $assert(listener, 'listener can not be null');
     this._workspace.removeEvent(type, listener);
@@ -308,7 +356,7 @@ class Canvas {
     // Some changes in the screen. Let's fire an update event...
     this._screenManager.fireEvent('update');
     // Also fire LayoutEventBus event for canvas zooming
-    LayoutEventBus.fireEvent('canvasZoomed', { zoom });
+    this._layoutEventBus.fireEvent('canvasZoomed', { zoom });
   }
 
   getScreenManager(): ScreenManager {
@@ -317,6 +365,10 @@ class Canvas {
 
   setCoordOrigin(x: number, y: number): void {
     this._workspace.setCoordOrigin(x, y);
+  }
+
+  getCoordOrigin(): PositionType {
+    return this._workspace.getCoordOrigin();
   }
 
   panBy(deltaX: number, deltaY: number): void {
@@ -328,7 +380,7 @@ class Canvas {
     this._workspace.setCoordOrigin(newOriginX, newOriginY);
     this._screenManager.setOffset(newOriginX, newOriginY);
     this._screenManager.fireEvent('update');
-    LayoutEventBus.fireEvent('canvasPanned');
+    this._layoutEventBus.fireEvent('canvasPanned');
   }
 
   setCoordSize(width: number, height: number): void {
@@ -365,7 +417,7 @@ class Canvas {
       if (!panUpdateScheduled) {
         panUpdateScheduled = true;
         requestAnimationFrame(() => {
-          LayoutEventBus.fireEvent('canvasPanned');
+          this._layoutEventBus.fireEvent('canvasPanned');
           panUpdateScheduled = false;
         });
       }
@@ -388,22 +440,22 @@ class Canvas {
           mWorkspace.enableWorkspaceEvents(false);
 
           const originalEvent = event;
-          const mouseDownPosition = screenManager.getWorkspaceMousePosition(
-            originalEvent as MouseEvent,
-          );
+          // The pan follows the pointer in screen pixels, scaled by the zoom (workspace units per
+          // pixel). Mapping each move to workspace coordinates would read them through the very
+          // viewBox the pan is moving, so the canvas would lag behind the pointer.
+          const mouseDownPosition = screenManager.getClientPosition(originalEvent as MouseEvent);
           const originalCoordOrigin = workspace.getCoordOrigin();
 
           let wasDragged = false;
           this._mouseMoveListener = (mouseMoveEvent: Event) => {
-            const originalMoveEvent = mouseMoveEvent;
-            const currentMousePosition = screenManager.getWorkspaceMousePosition(
-              originalMoveEvent as MouseEvent,
+            const currentMousePosition = screenManager.getClientPosition(
+              mouseMoveEvent as MouseEvent,
             );
 
-            const offsetX = currentMousePosition.x - mouseDownPosition.x;
+            const offsetX = (currentMousePosition.x - mouseDownPosition.x) * this._zoom;
             const coordOriginX = -offsetX + originalCoordOrigin.x;
 
-            const offsetY = currentMousePosition.y - mouseDownPosition.y;
+            const offsetY = (currentMousePosition.y - mouseDownPosition.y) * this._zoom;
             const coordOriginY = -offsetY + originalCoordOrigin.y;
 
             workspace.setCoordOrigin(coordOriginX, coordOriginY);
@@ -531,7 +583,7 @@ class Canvas {
       workspace.setCoordOrigin(newOriginX, newOriginY);
       this._screenManager.setOffset(newOriginX, newOriginY);
       this._screenManager.fireEvent('update');
-      LayoutEventBus.fireEvent('canvasPanned');
+      this._layoutEventBus.fireEvent('canvasPanned');
       return true;
     }
     return false;
@@ -563,7 +615,7 @@ class Canvas {
     workspace.setCoordOrigin(newOriginX, newOriginY);
     this._screenManager.setOffset(newOriginX, newOriginY);
     this._screenManager.fireEvent('update');
-    LayoutEventBus.fireEvent('canvasPanned');
+    this._layoutEventBus.fireEvent('canvasPanned');
     return true;
   }
 

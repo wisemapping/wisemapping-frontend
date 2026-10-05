@@ -20,7 +20,7 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import { ImportError, Importer, TextImporterFactory } from '@wisemapping/editor';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation } from '@tanstack/react-query';
@@ -45,12 +45,22 @@ type ErrorFile = {
   message: string;
 };
 
-const defaultModel: ImportModel = { title: '' };
+const defaultModel: ImportModel = { title: '', description: '' };
 const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
   const client = useContext(ClientContext);
   const [model, setModel] = React.useState<ImportModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
   const [errorFile, setErrorFile] = React.useState<ErrorFile>({ error: false, message: '' });
+  // Counts the files picked: a read or import started for an earlier file is stale and ignored.
+  const fileRequest = React.useRef(0);
+  // A file is read asynchronously: its read needs what the user has typed by then, not what the
+  // form held when the file was picked.
+  const latestModel = React.useRef(model);
+  useEffect(() => {
+    latestModel.current = model;
+  }, [model]);
+  // The title last suggested from a file name: the next file replaces it, a typed title is kept.
+  const suggestedTitle = React.useRef('');
   const intl = useIntl();
 
   const mutation = useMutation<number, ErrorInfo, ImportModel>({
@@ -113,26 +123,34 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
   };
 
   const handleOnFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event?.target?.files;
+    // A cancelled picker can fire a change with no file in it.
+    const file = event?.target?.files?.[0];
     const reader = new FileReader();
 
-    if (files) {
-      const file = files[0];
+    if (file) {
       const extensionFile = file.name.split('.').pop()?.toLowerCase();
+      const request = ++fileRequest.current;
+      const isStale = () => request !== fileRequest.current;
+      // The previous file is no longer the one to save, even before this one is read.
+      setModel((current) => ({ ...current, content: undefined }));
+
       // Closure to capture the file information.
       reader.onload = (event) => {
-        // Forget the previous file.
-        model.content = undefined;
+        if (isStale()) {
+          return;
+        }
         setErrorFile({ error: false, message: '' });
 
-        // Suggest file name ...
-        const fileName = file.name;
-        if (fileName) {
-          const title = fileName.split('.')[0];
-          if (!model.title || 0 === model.title.length) {
-            model.title = title;
-          }
+        // Forget the previous file and suggest its name as the title, unless the user typed one.
+        // The updates are functional (never a mutation of `model`) so that what the user types
+        // meanwhile is kept.
+        const { title: typedTitle, description } = latestModel.current;
+        const keepTitle = typedTitle !== '' && typedTitle !== suggestedTitle.current;
+        const title = keepTitle ? typedTitle : file.name.split('.')[0];
+        if (!keepTitle) {
+          suggestedTitle.current = title;
         }
+        setModel((current) => ({ ...current, title, content: undefined }));
 
         const extensionAccept = ['wxml', 'mm', 'mmx', 'xmind', 'mmap', 'opml'];
 
@@ -148,8 +166,9 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
           return;
         }
 
-        model.contentType =
+        const contentType =
           extensionFile === 'xmind' ? 'application/vnd.xmind.workbook' : 'application/xml';
+        setModel((current) => ({ ...current, contentType }));
 
         const fileContent = event?.target?.result;
         let mapContent: string | ArrayBuffer;
@@ -166,12 +185,17 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
 
           // A file that can not be imported rejects with an ImportError: show it, never save it.
           importer
-            .import(model.title, model.description)
-            .then((res) => {
-              model.content = res;
-              setModel({ ...model });
+            .import(title, description)
+            .then((content) => {
+              if (!isStale()) {
+                setModel((current) => ({ ...current, content }));
+              }
             })
-            .catch(showImportError);
+            .catch((e: unknown) => {
+              if (!isStale()) {
+                showImportError(e);
+              }
+            });
         } catch (e) {
           showImportError(e);
         }

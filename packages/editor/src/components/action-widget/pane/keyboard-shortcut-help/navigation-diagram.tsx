@@ -47,9 +47,10 @@ const NavigationDiagram = (): ReactElement => {
   const accentText = theme.palette.primary.contrastText;
   const connector = theme.palette.divider;
 
-  const label = (id: string, defaultMessage: string) => intl.formatMessage({ id, defaultMessage });
-
-  const siblingLabel = label('shortcut-help-pane.diagram-sibling', 'Sibling');
+  const siblingLabel = intl.formatMessage({
+    id: 'shortcut-help-pane.diagram-sibling',
+    defaultMessage: 'Sibling',
+  });
 
   return (
     <Box
@@ -67,10 +68,11 @@ const NavigationDiagram = (): ReactElement => {
         component="svg"
         viewBox="0 0 420 150"
         role="img"
-        aria-label={label(
-          'shortcut-help-pane.diagram-aria',
-          'Left arrow moves to the parent topic, right arrow to a child, up and down between siblings.',
-        )}
+        aria-label={intl.formatMessage({
+          id: 'shortcut-help-pane.diagram-aria',
+          defaultMessage:
+            'Left arrow moves to the parent topic, right arrow to a child, up and down between siblings.',
+        })}
         sx={{ display: 'block', width: '100%', minWidth: '380px', height: 'auto' }}
         style={{ color: accent }}
       >
@@ -100,7 +102,10 @@ const NavigationDiagram = (): ReactElement => {
         <g>
           <rect x="16" y="61" width="70" height="28" rx="6" fill={nodeFill} stroke={nodeStroke} />
           <text x="51" y="79" textAnchor="middle" fontSize="9" fill={labelColor}>
-            {label('shortcut-help-pane.diagram-parent', 'Parent')}
+            {intl.formatMessage({
+              id: 'shortcut-help-pane.diagram-parent',
+              defaultMessage: 'Parent',
+            })}
           </text>
         </g>
 
@@ -127,7 +132,10 @@ const NavigationDiagram = (): ReactElement => {
             strokeWidth={1.5}
           />
           <text x="180" y="79" textAnchor="middle" fontSize="9" fontWeight="600" fill={accentText}>
-            {label('shortcut-help-pane.diagram-selected', 'Selected')}
+            {intl.formatMessage({
+              id: 'shortcut-help-pane.diagram-selected',
+              defaultMessage: 'Selected',
+            })}
           </text>
         </g>
 
@@ -135,7 +143,10 @@ const NavigationDiagram = (): ReactElement => {
         <g>
           <rect x="274" y="61" width="70" height="28" rx="6" fill={nodeFill} stroke={nodeStroke} />
           <text x="309" y="79" textAnchor="middle" fontSize="9" fill={labelColor}>
-            {label('shortcut-help-pane.diagram-child', 'Child')}
+            {intl.formatMessage({
+              id: 'shortcut-help-pane.diagram-child',
+              defaultMessage: 'Child',
+            })}
           </text>
         </g>
 
@@ -169,10 +180,10 @@ const NavigationDiagram = (): ReactElement => {
           fontStyle="italic"
           fill={theme.palette.text.disabled}
         >
-          {label(
-            'shortcut-help-pane.diagram-caption',
-            'On the left half of the map, ← and → swap roles.',
-          )}
+          {intl.formatMessage({
+            id: 'shortcut-help-pane.diagram-caption',
+            defaultMessage: 'On the left half of the map, ← and → swap roles.',
+          })}
         </text>
       </Box>
     </Box>

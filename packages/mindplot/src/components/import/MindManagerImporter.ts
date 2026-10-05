@@ -25,9 +25,11 @@ import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import { StrokeStyle } from '../model/RelationshipModel';
+import INodeModel, { TopicShapeType } from '../model/INodeModel';
 import ContentType from '../ContentType';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import { decodeUtf8 } from './support/Utf8Decoder';
+import { normalizeHtmlWhitespace } from './support/HtmlText';
 import toWiseMappingXml from './support/MindmapXml';
 
 interface MindManagerTopic {
@@ -39,8 +41,13 @@ interface MindManagerTopic {
   notesHtml?: string;
   hyperlink?: string;
   icons: string[];
+  // The WiseMapping task progress icon (task_0 ... task_100) of the TaskPercentage.
+  progressIcon?: string;
   fillColor?: string;
   lineColor?: string;
+  shape?: TopicShapeType;
+  // TopicViewGroup/Collapsed: the subtopics are hidden.
+  collapsed?: boolean;
   // In millimeters. For a floating topic, its position from the central topic. For a subtopic, a
   // layout hint: CX is the distance from the parent, its sign the side; CY is not a position.
   offset?: { x: number; y: number };
@@ -60,6 +67,166 @@ type MindManagerRawInput = string | ArrayBuffer | Uint8Array;
 // topics of the map or of the callouts of a topic (StyleGroup/RootTopicDefaultsGroup, ...).
 type TopicKind = 'Root' | 'Label' | 'Callout';
 
+// MindManager icon ids and the WiseMapping EmojiIcons they map to.
+const MINDMANAGER_ICONS: Readonly<Record<string, string>> = {
+  // Priority icons
+  'priority-1': '🔴',
+  'priority-2': '🟡',
+  'priority-3': '🟢',
+  'priority-4': '🔵',
+  'priority-5': '🟣',
+
+  // Task icons
+  'task-start': '🟡',
+  'task-done': '✅',
+  'task-pause': '⏸️',
+  'task-cancel': '❌',
+
+  // Star icons
+  star: '⭐',
+  'star-empty': '☆',
+  'star-half': '⭐',
+
+  // Arrow icons
+  'arrow-up': '⬆️',
+  'arrow-down': '⬇️',
+  'arrow-left': '⬅️',
+  'arrow-right': '➡️',
+
+  // Number icons
+  1: '1️⃣',
+  2: '2️⃣',
+  3: '3️⃣',
+  4: '4️⃣',
+  5: '5️⃣',
+  6: '6️⃣',
+  7: '7️⃣',
+  8: '8️⃣',
+  9: '9️⃣',
+  10: '🔟',
+
+  // Letter icons
+  A: '🅰️',
+  B: '🅱️',
+  C: '🅲',
+  D: '🅳',
+  E: '🅴',
+  F: '🅵',
+  G: '🅶',
+  H: '🅷',
+  I: '🅸',
+  J: '🅹',
+  K: '🅺',
+  L: '🅻',
+  M: '🅼',
+  N: '🅽',
+  O: '🅾️',
+  P: '🅿️',
+  Q: '🆀',
+  R: '🆁',
+  S: '🆂',
+  T: '🆃',
+  U: '🆄',
+  V: '🆅',
+  W: '🆆',
+  X: '🆇',
+  Y: '🆈',
+  Z: '🆉',
+
+  // Emotion icons
+  smile: '😊',
+  happy: '😃',
+  sad: '😢',
+  angry: '😠',
+  thinking: '🤔',
+  surprised: '😲',
+
+  // Technology icons
+  computer: '💻',
+  phone: '📱',
+  email: '📧',
+  internet: '🌐',
+
+  // Stock icons of the MindManager document schema (IconType="urn:mindjet:...")
+  SmileyHappy: '😃',
+  SmileyNeutral: '😐',
+  SmileySad: '😢',
+  SmileyAngry: '😠',
+  SmileyScreaming: '😱',
+  Clock: '🕐',
+  Calendar: '📅',
+  Letter: '✉️',
+  Email: '📧',
+  Mailbox: '📫',
+  Megaphone: '📣',
+  House: '🏠',
+  Rolodex: '📇',
+  Dollar: '💲',
+  Euro: '💶',
+  FlagRed: '🔴',
+  FlagBlue: '🔵',
+  FlagGreen: '🟢',
+  FlagBlack: '⚫',
+  FlagOrange: '🟠',
+  FlagYellow: '🟡',
+  FlagPurple: '🟣',
+  TrafficLightsRed: '🚦',
+  PadlockLocked: '🔒',
+  PadlockUnlocked: '🔓',
+  ArrowUp: '⬆️',
+  ArrowDown: '⬇️',
+  ArrowLeft: '⬅️',
+  ArrowRight: '➡️',
+  TwoEndArrow: '↔️',
+  Phone: '📞',
+  Cellphone: '📱',
+  Camera: '📷',
+  Fax: '📠',
+  Stop: '🛑',
+  ExclamationMark: '❗',
+  QuestionMark: '❓',
+  ThumbsUp: '👍',
+  ThumbsDown: '👎',
+  OnHold: '⏸️',
+  Hourglass: '⏳',
+  Emergency: '🚨',
+  NoEntry: '⛔',
+  Bomb: '💣',
+  Key: '🔑',
+  Glasses: '👓',
+  JudgeHammer: '🔨',
+  Rocket: '🚀',
+  Scales: '⚖️',
+  Redo: '🔁',
+  Lightbulb: '💡',
+  CoffeeCup: '☕',
+  TwoFeet: '👣',
+  Meeting: '👥',
+  Check: '✅',
+  Note: '📝',
+  Book: '📖',
+  MagnifyingGlass: '🔍',
+  BrokenConnection: '⛓️',
+  Information: 'ℹ️',
+  Folder: '📁',
+  // Task priorities (TaskPriority="urn:mindjet:Prio1")
+  Prio1: '🔴',
+  Prio2: '🟡',
+  Prio3: '🟢',
+  Prio4: '🔵',
+  Prio5: '🟣',
+  Prio6: '6️⃣',
+  Prio7: '7️⃣',
+  Prio8: '8️⃣',
+  Prio9: '9️⃣',
+};
+
+// The same icons by lower case id: the ids are matched ignoring case. Only own entries, as a
+// Map: a plain object would map 'constructor' to the Object function.
+const MINDMANAGER_ICONS_BY_LOWER_CASE: ReadonlyMap<string, string> = new Map(
+  Object.entries(MINDMANAGER_ICONS).map(([id, emoji]) => [id.toLowerCase(), emoji]),
+);
+
 class MindManagerImporter extends Importer {
   private mindManagerInput: MindManagerRawInput;
 
@@ -68,6 +235,9 @@ class MindManagerImporter extends Importer {
   private topicIdMap: Map<string, number>;
 
   private styleGroup: Element | null = null;
+
+  // 1 or -1 when every main topic grows on the right or on the left of the central topic.
+  private mainTopicsSide: number | undefined;
 
   constructor(map: MindManagerRawInput) {
     super();
@@ -93,164 +263,12 @@ class MindManagerImporter extends Importer {
     return notes.trim();
   }
 
-  private mapMindManagerIconToEmojiIcon(iconId: string): string {
-    // MindManager icon mapping to WiseMapping EmojiIcons
-    const iconMappings: { [key: string]: string } = {
-      // Priority icons
-      'priority-1': '🔴',
-      'priority-2': '🟡',
-      'priority-3': '🟢',
-      'priority-4': '🔵',
-      'priority-5': '🟣',
-
-      // Task icons
-      'task-start': '🟡',
-      'task-done': '✅',
-      'task-pause': '⏸️',
-      'task-cancel': '❌',
-
-      // Star icons
-      star: '⭐',
-      'star-empty': '☆',
-      'star-half': '⭐',
-
-      // Arrow icons
-      'arrow-up': '⬆️',
-      'arrow-down': '⬇️',
-      'arrow-left': '⬅️',
-      'arrow-right': '➡️',
-
-      // Number icons
-      1: '1️⃣',
-      2: '2️⃣',
-      3: '3️⃣',
-      4: '4️⃣',
-      5: '5️⃣',
-      6: '6️⃣',
-      7: '7️⃣',
-      8: '8️⃣',
-      9: '9️⃣',
-      10: '🔟',
-
-      // Letter icons
-      A: '🅰️',
-      B: '🅱️',
-      C: '🅲',
-      D: '🅳',
-      E: '🅴',
-      F: '🅵',
-      G: '🅶',
-      H: '🅷',
-      I: '🅸',
-      J: '🅹',
-      K: '🅺',
-      L: '🅻',
-      M: '🅼',
-      N: '🅽',
-      O: '🅾️',
-      P: '🅿️',
-      Q: '🆀',
-      R: '🆁',
-      S: '🆂',
-      T: '🆃',
-      U: '🆄',
-      V: '🆅',
-      W: '🆆',
-      X: '🆇',
-      Y: '🆈',
-      Z: '🆉',
-
-      // Emotion icons
-      smile: '😊',
-      happy: '😃',
-      sad: '😢',
-      angry: '😠',
-      thinking: '🤔',
-      surprised: '😲',
-
-      // Technology icons
-      computer: '💻',
-      phone: '📱',
-      email: '📧',
-      internet: '🌐',
-
-      // Stock icons of the MindManager document schema (IconType="urn:mindjet:...")
-      SmileyHappy: '😃',
-      SmileyNeutral: '😐',
-      SmileySad: '😢',
-      SmileyAngry: '😠',
-      SmileyScreaming: '😱',
-      Clock: '🕐',
-      Calendar: '📅',
-      Letter: '✉️',
-      Email: '📧',
-      Mailbox: '📫',
-      Megaphone: '📣',
-      House: '🏠',
-      Rolodex: '📇',
-      Dollar: '💲',
-      Euro: '💶',
-      FlagRed: '🔴',
-      FlagBlue: '🔵',
-      FlagGreen: '🟢',
-      FlagBlack: '⚫',
-      FlagOrange: '🟠',
-      FlagYellow: '🟡',
-      FlagPurple: '🟣',
-      TrafficLightsRed: '🚦',
-      PadlockLocked: '🔒',
-      PadlockUnlocked: '🔓',
-      ArrowUp: '⬆️',
-      ArrowDown: '⬇️',
-      ArrowLeft: '⬅️',
-      ArrowRight: '➡️',
-      TwoEndArrow: '↔️',
-      Phone: '📞',
-      Cellphone: '📱',
-      Camera: '📷',
-      Fax: '📠',
-      Stop: '🛑',
-      ExclamationMark: '❗',
-      QuestionMark: '❓',
-      ThumbsUp: '👍',
-      ThumbsDown: '👎',
-      OnHold: '⏸️',
-      Hourglass: '⏳',
-      Emergency: '🚨',
-      NoEntry: '⛔',
-      Bomb: '💣',
-      Key: '🔑',
-      Glasses: '👓',
-      JudgeHammer: '🔨',
-      Rocket: '🚀',
-      Scales: '⚖️',
-      Redo: '🔁',
-      Lightbulb: '💡',
-      CoffeeCup: '☕',
-      TwoFeet: '👣',
-      Meeting: '👥',
-      Check: '✅',
-      Note: '📝',
-      Book: '📖',
-      MagnifyingGlass: '🔍',
-      BrokenConnection: '⛓️',
-      Information: 'ℹ️',
-      Folder: '📁',
-      // Task priorities (TaskPriority="urn:mindjet:Prio1")
-      Prio1: '🔴',
-      Prio2: '🟡',
-      Prio3: '🟢',
-      Prio4: '🔵',
-      Prio5: '🟣',
-      Prio6: '6️⃣',
-      Prio7: '7️⃣',
-      Prio8: '8️⃣',
-      Prio9: '9️⃣',
-
-      // Default fallback
-    };
-
-    return iconMappings[iconId] || iconMappings[iconId.toLowerCase()] || '💡';
+  // The emoji of a MindManager icon id, its own or the one of its id in another case. Undefined
+  // for an unknown icon.
+  private static mapMindManagerIconToEmojiIcon(iconId: string): string | undefined {
+    return Object.prototype.hasOwnProperty.call(MINDMANAGER_ICONS, iconId)
+      ? MINDMANAGER_ICONS[iconId]
+      : MINDMANAGER_ICONS_BY_LOWER_CASE.get(iconId.toLowerCase());
   }
 
   private buildMindmap(rootTopic: MindManagerTopic, nameMap: string, doc: Document): Mindmap {
@@ -264,15 +282,43 @@ class MindManagerImporter extends Importer {
     this.addFeatures(centralTopic, rootTopic);
     mindmap.addBranch(centralTopic);
 
-    // The main topics go on the side of their offset or, without one, on the side with fewer
-    // topics. Even orders are on the right, odd ones on the left, in document order on each side.
+    // The main topics go on the side of the growth direction of the central topic or, if it grows
+    // on both sides, on the side of their offset or, without one, on the side with fewer topics.
     let right = 0;
     let left = 0;
-    rootTopic.children?.forEach((topic) => {
-      const atLeft = topic.offset ? topic.offset.x < 0 : left < right;
-      const sideIndex = atLeft ? left++ : right++;
-      const order = atLeft ? 2 * sideIndex + 1 : 2 * sideIndex;
-      centralTopic.append(this.convertTopic(mindmap, topic, order, sideIndex, atLeft ? -1 : 1));
+    const atLeft = (rootTopic.children ?? []).map((topic) => {
+      let result: boolean;
+      if (this.mainTopicsSide) {
+        result = this.mainTopicsSide < 0;
+      } else {
+        result = topic.offset ? topic.offset.x < 0 : left < right;
+      }
+      if (result) {
+        left++;
+      } else {
+        right++;
+      }
+      return result;
+    });
+
+    // Even orders are on the right, odd ones on the left, from top to bottom. On both sides,
+    // MindManager lays them out clockwise: the right ones in document order from the top, the left
+    // ones from the bottom.
+    const clockwise = !this.mainTopicsSide;
+    let rightIndex = 0;
+    let leftIndex = 0;
+    rootTopic.children?.forEach((topic, index) => {
+      let sideIndex: number;
+      if (!atLeft[index]) {
+        sideIndex = rightIndex++;
+      } else {
+        sideIndex = clockwise ? left - 1 - leftIndex : leftIndex;
+        leftIndex++;
+      }
+      const order = atLeft[index] ? 2 * sideIndex + 1 : 2 * sideIndex;
+      centralTopic.append(
+        this.convertTopic(mindmap, topic, order, sideIndex, atLeft[index] ? -1 : 1),
+      );
     });
 
     // Floating topics are isolated topics, placed at their offset from the central topic.
@@ -304,21 +350,29 @@ class MindManagerImporter extends Importer {
     node.setText(topic.text);
     node.setPosition(position.x, position.y);
     node.setOrder(order);
-    node.setShapeType('line');
+    // Without a StyleGroup, topics are lines.
+    node.setShapeType(topic.shape ?? 'line');
     this.addFeatures(node, topic);
 
+    // The floating topics of a topic are callouts attached to it: they are imported as its
+    // children. Their Offset is their position from the topic: the callouts above it (negative
+    // CY) go before its subtopics, the others after them.
+    const callouts = topic.floating ?? [];
+    const isAbove = (callout: MindManagerTopic): boolean => (callout.offset?.y ?? 0) < 0;
+    const children = [
+      ...callouts.filter(isAbove),
+      ...(topic.children ?? []),
+      ...callouts.filter((callout) => !isAbove(callout)),
+    ];
+
     // Generate child topics recursively. They are on the side of their parent.
-    topic.children?.forEach((child, index) => {
+    children.forEach((child, index) => {
       node.append(this.convertTopic(mindmap, child, index, index, side));
     });
 
-    // The floating topics of a topic are callouts attached to it: they are imported as its last
-    // children.
-    const childCount = topic.children?.length ?? 0;
-    topic.floating?.forEach((callout, index) => {
-      const calloutOrder = childCount + index;
-      node.append(this.convertTopic(mindmap, callout, calloutOrder, calloutOrder, side));
-    });
+    if (topic.collapsed && node.getChildren().length > 0) {
+      node.setChildrenShrunken(true);
+    }
 
     return node;
   }
@@ -340,9 +394,16 @@ class MindManagerImporter extends Importer {
     }
 
     topic.icons.forEach((icon) => {
-      const emojiIcon = this.mapMindManagerIconToEmojiIcon(icon);
-      node.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
+      const emojiIcon = MindManagerImporter.mapMindManagerIconToEmojiIcon(icon);
+      if (emojiIcon) {
+        node.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
+      } else {
+        console.warn(`MindManager icon '${icon}' has no emoji: it is not imported.`);
+      }
     });
+    if (topic.progressIcon) {
+      node.addFeature(FeatureModelFactory.createModel('icon', { id: topic.progressIcon }));
+    }
 
     if (topic.notesHtml) {
       const note = new NoteModel({ text: topic.notesHtml });
@@ -422,31 +483,120 @@ class MindManagerImporter extends Importer {
     }
 
     this.styleGroup = this.findChildByTagName(mapElement, 'StyleGroup');
+    this.mainTopicsSide = this.growthSide(rootTopic);
     return this.parseTopic(rootTopic, 'Root', 0);
   }
 
   /**
+   * The style defaults of a topic in the StyleGroup: the ${kind}TopicDefaultsGroup for a topic
+   * at depth 0 (the central topic, a floating topic or a callout), and the
+   * ${kind}SubTopicDefaultsGroup of the Level (depth - 1) for its subtopics. The deepest level
+   * that is defined applies below it.
+   */
+  private defaultsGroup(kind: TopicKind, depth: number): Element | null {
+    if (!this.styleGroup) {
+      return null;
+    }
+    if (depth === 0) {
+      return this.findChildByTagName(this.styleGroup, `${kind}TopicDefaultsGroup`);
+    }
+    const levels = this.findChildrenByTagName(this.styleGroup, `${kind}SubTopicDefaultsGroup`)
+      .map((group) => ({ group, level: Number(group.getAttribute('Level')) }))
+      .filter(({ level }) => Number.isInteger(level) && level <= depth - 1)
+      .sort((a, b) => b.level - a.level);
+    return levels.length > 0 ? levels[0].group : null;
+  }
+
+  /**
+   * The side where the main topics grow: the SubTopicsGrowthDirection of the SubTopicsShape of the
+   * central topic, or of the DefaultSubTopicsShape of the RootTopicDefaultsGroup. 1 for Right, -1
+   * for Left, undefined for both sides (LeftAndRight, AutomaticHorizontal).
+   */
+  private growthSide(rootTopic: Element): number | undefined {
+    const attribute = 'SubTopicsGrowthDirection';
+    const own = this.findChildByTagName(rootTopic, 'SubTopicsShape')?.getAttribute(attribute);
+    const defaults = this.defaultsGroup('Root', 0);
+    const byDefault =
+      defaults &&
+      this.findChildByTagName(defaults, 'DefaultSubTopicsShape')?.getAttribute(attribute);
+    switch ((own || byDefault)?.replace(MINDJET_URN, '')) {
+      case 'Right':
+        return 1;
+      case 'Left':
+        return -1;
+      default:
+        return undefined;
+    }
+  }
+
+  /**
    * MindManager does not write the text of a topic that keeps the default one of its level, for
-   * example "Main Topic". The default is the PlainText of the DefaultText of the StyleGroup:
-   * RootTopicDefaultsGroup for the central topic, and the RootSubTopicDefaultsGroup of the Level
-   * (depth - 1) for its subtopics. The deepest level that is defined applies below it.
+   * example "Main Topic". The default is the PlainText of the DefaultText of the defaults group
+   * of the topic.
    */
   private defaultText(kind: TopicKind, depth: number): string | undefined {
-    if (!this.styleGroup) {
-      return undefined;
-    }
-    let defaults: Element | null;
-    if (depth === 0) {
-      defaults = this.findChildByTagName(this.styleGroup, `${kind}TopicDefaultsGroup`);
-    } else {
-      const levels = this.findChildrenByTagName(this.styleGroup, `${kind}SubTopicDefaultsGroup`)
-        .map((group) => ({ group, level: Number(group.getAttribute('Level')) }))
-        .filter(({ level }) => Number.isInteger(level) && level <= depth - 1)
-        .sort((a, b) => b.level - a.level);
-      defaults = levels.length > 0 ? levels[0].group : null;
-    }
+    const defaults = this.defaultsGroup(kind, depth);
     const text = defaults && this.findChildByTagName(defaults, 'DefaultText');
     return text?.getAttribute('PlainText') || undefined;
+  }
+
+  /**
+   * The shape of a topic: its own SubTopicShape, or the DefaultSubTopicShape of the defaults group
+   * of its level. Floating topics and callouts have a LabelFloatingTopicShape or a
+   * CalloutFloatingTopicShape, by default the one of the Label or CalloutTopicDefaultsGroup (the
+   * ones of the RootTopicDefaultsGroup are not those MindManager draws). Undefined for the
+   * central topic, which keeps the shape of the theme, or when there is no shape that maps.
+   */
+  private topicShape(
+    topicElement: Element,
+    kind: TopicKind,
+    depth: number,
+  ): TopicShapeType | undefined {
+    if (depth === 0 && kind === 'Root') {
+      return undefined;
+    }
+    const name = depth === 0 ? `${kind}FloatingTopicShape` : 'SubTopicShape';
+    const defaults = this.defaultsGroup(kind, depth);
+    const own = this.findChildByTagName(topicElement, name)?.getAttribute(name);
+    const byDefault = defaults && this.findChildByTagName(defaults, `Default${name}`);
+    return (
+      MindManagerImporter.toShapeType(own) ??
+      MindManagerImporter.toShapeType(byDefault?.getAttribute(name))
+    );
+  }
+
+  // The shape of a SubTopicShape, LabelFloatingTopicShape or CalloutFloatingTopicShape
+  // (urn:mindjet:RoundedRectangle, ...), undefined if it is not one.
+  private static toShapeType(shape: string | null | undefined): TopicShapeType | undefined {
+    switch (shape?.replace(MINDJET_URN, '')) {
+      case 'None':
+        return 'none';
+      case 'Line':
+      case 'CalloutLine':
+        return 'line';
+      case 'RoundedRectangle':
+      case 'RoundedRectangleBalloon':
+      case 'Capsule':
+        return 'rounded rectangle';
+      case 'Circle':
+      case 'Oval':
+      case 'OvalBalloon':
+      case 'ThoughtBubble':
+        return 'elipse';
+      case 'Rectangle':
+      case 'RectangleBalloon':
+      case 'Highlight':
+      case 'Hexagon':
+      case 'Octagon':
+      case 'Diamond':
+      case 'Data':
+      case 'Database':
+      case 'PredefinedProcess':
+      case 'Document':
+        return 'rectangle';
+      default:
+        return undefined;
+    }
   }
 
   private findElementByTagName(parent: Element | Document, tagName: string): Element | null {
@@ -495,6 +645,7 @@ class MindManagerImporter extends Importer {
       id,
       text,
       icons: [],
+      shape: this.topicShape(topicElement, kind, depth),
     };
 
     // Parse notes
@@ -508,11 +659,12 @@ class MindManagerImporter extends Importer {
       topic.notes = notesData.getAttribute('PreviewPlainText') || '';
     }
 
-    // Parse hyperlink
+    // Parse hyperlink. A link to a topic of the map (#xpointer(...ap:Topic[@OId=...])) can not be
+    // opened from WiseMapping: it is skipped.
     const hyperlinkElement = this.findChildByTagName(topicElement, 'Hyperlink');
-    if (hyperlinkElement) {
-      topic.hyperlink =
-        hyperlinkElement.getAttribute('URL') || hyperlinkElement.getAttribute('Url') || '';
+    const url = hyperlinkElement?.getAttribute('URL') || hyperlinkElement?.getAttribute('Url');
+    if (url && !url.startsWith('#')) {
+      topic.hyperlink = url;
     }
 
     // Parse icons: <Icon Name>, or the stock icons of IconsGroup/Icons and the task priority
@@ -527,22 +679,44 @@ class MindManagerImporter extends Importer {
       const iconType = icon.getAttribute('IconType');
       if (iconType) {
         topic.icons.push(iconType.replace(MINDJET_URN, ''));
+      } else {
+        // A custom icon (xsi:type="ap:CustomIcon") is an image of the file, identified by its
+        // IconSignature: it has no emoji.
+        console.warn(
+          `MindManager custom icon '${icon.getAttribute('IconSignature') ?? ''}' of topic '${topic.text}' is not imported.`,
+        );
       }
     });
-    const priority = this.findChildByTagName(topicElement, 'Task')?.getAttribute('TaskPriority');
+    const task = this.findChildByTagName(topicElement, 'Task');
+    const priority = task?.getAttribute('TaskPriority');
     if (priority) {
       topic.icons.push(priority.replace(MINDJET_URN, ''));
     }
+    topic.progressIcon = MindManagerImporter.progressIcon(task?.getAttribute('TaskPercentage'));
 
-    // Parse colors: <Color Value>, or the FillColor and LineColor of the document schema
+    // Parse colors: <Color Value>, or the FillColor and LineColor of the document schema. A color
+    // the topic does not set is the DefaultColor of the defaults group of its level.
     const colorElement = this.findChildByTagName(topicElement, 'Color');
-    if (colorElement) {
-      topic.fillColor = MindManagerImporter.toColor(
-        colorElement.getAttribute('FillColor') ||
-          colorElement.getAttribute('Value') ||
-          colorElement.textContent,
-      );
-      topic.lineColor = MindManagerImporter.toColor(colorElement.getAttribute('LineColor'));
+    const defaults = this.defaultsGroup(kind, depth);
+    const defaultColor = defaults && this.findChildByTagName(defaults, 'DefaultColor');
+    const ownFill =
+      colorElement &&
+      (colorElement.getAttribute('FillColor') ||
+        colorElement.getAttribute('Value') ||
+        colorElement.textContent);
+    topic.fillColor = MindManagerImporter.toColor(
+      ownFill || defaultColor?.getAttribute('FillColor'),
+    );
+    topic.lineColor = MindManagerImporter.toColor(
+      colorElement?.getAttribute('LineColor') || defaultColor?.getAttribute('LineColor'),
+    );
+
+    // Collapsed in the first view (ViewIndex 0), the one MindManager opens
+    const views = this.findChildrenByTagName(topicElement, 'TopicViewGroup');
+    const view = views.find((group) => group.getAttribute('ViewIndex') === '0') ?? views[0];
+    const collapsed = view && this.findChildByTagName(view, 'Collapsed');
+    if (collapsed?.getAttribute('Collapsed') === 'true') {
+      topic.collapsed = true;
     }
 
     const offsetElement = this.findChildByTagName(topicElement, 'Offset');
@@ -578,6 +752,19 @@ class MindManagerImporter extends Importer {
   }
 
   /**
+   * The task progress icon closest to a TaskPercentage (0 to 100): task_0, task_25, task_50,
+   * task_75 or task_100. Undefined if there is no percentage.
+   */
+  private static progressIcon(percentage: string | null | undefined): string | undefined {
+    const value = percentage?.trim() ? Number(percentage) : NaN;
+    if (!Number.isFinite(value)) {
+      return undefined;
+    }
+    const quarter = Math.round(Math.min(100, Math.max(0, value)) / 25) * 25;
+    return `task_${quarter}`;
+  }
+
+  /**
    * NotesXhtmlData holds the note as an XHTML document (<html xmlns="http://www.w3.org/1999/xhtml">).
    * It is sanitized like FreeMind notes, which drops the <html> and <body> wrappers and any script.
    * Undefined if there is no XHTML, or it can not be sanitized: the preview text is used instead.
@@ -587,7 +774,9 @@ class MindManagerImporter extends Importer {
       return undefined;
     }
     try {
-      return HtmlSanitizer.sanitize(notesData.innerHTML).trim() || undefined;
+      // MindManager indents the XHTML with blank lines, which html does not show: the whitespace
+      // is collapsed. Its line breaks are the paragraphs and <br> of the markup.
+      return normalizeHtmlWhitespace(HtmlSanitizer.sanitize(notesData.innerHTML)) || undefined;
     } catch (error) {
       console.warn('MindManager note could not be imported as HTML:', error);
       return undefined;
@@ -607,7 +796,7 @@ class MindManagerImporter extends Importer {
       StrokeStyle.DASHED;
 
     this.findChildrenByTagName(relationshipsElement, 'Relationship').forEach((rel) => {
-      this.addRelationship(mindmap, rel, defaultStrokeStyle);
+      this.addRelationship(mindmap, rel, defaults, defaultStrokeStyle);
     });
   }
 
@@ -633,20 +822,47 @@ class MindManagerImporter extends Importer {
     }
   }
 
-  // MindManager writes the ends of a relationship as ConnectionGroups (Index 0 and 1) that
-  // reference the topic OIds.
-  private connectionEnd(relationshipElement: Element, index: string): string | null {
-    const group = this.findChildrenByTagName(relationshipElement, 'ConnectionGroup').find(
+  // MindManager writes the ends of a relationship as ConnectionGroups (Index 0 and 1).
+  private connectionGroup(relationshipElement: Element, index: string): Element | undefined {
+    return this.findChildrenByTagName(relationshipElement, 'ConnectionGroup').find(
       (candidate) => candidate.getAttribute('Index') === index,
     );
+  }
+
+  // The topic OId referenced by an end of a relationship.
+  private connectionEnd(relationshipElement: Element, index: string): string | null {
+    const group = this.connectionGroup(relationshipElement, index);
     const connection = group && this.findChildByTagName(group, 'Connection');
     const reference = connection && this.findChildByTagName(connection, 'ObjectReference');
     return reference ? reference.getAttribute('OIdRef') : null;
   }
 
+  /**
+   * Whether an end of a relationship (Index 0 its start, 1 its end) has an arrow: the
+   * ConnectionShape (urn:mindjet:NoArrow, Arrow, OpenArrow...) of its ConnectionStyle, or of the
+   * DefaultConnectionStyle of the same Index. Undefined if neither is written.
+   */
+  private hasArrow(
+    relationshipElement: Element,
+    defaults: Element | null,
+    index: string,
+  ): boolean | undefined {
+    const group = this.connectionGroup(relationshipElement, index);
+    const own = group && this.findChildByTagName(group, 'ConnectionStyle');
+    const byDefault =
+      defaults &&
+      this.findChildrenByTagName(defaults, 'DefaultConnectionStyle').find(
+        (style) => style.getAttribute('Index') === index,
+      );
+    const shape =
+      own?.getAttribute('ConnectionShape') || byDefault?.getAttribute('ConnectionShape');
+    return shape ? shape.replace(MINDJET_URN, '') !== 'NoArrow' : undefined;
+  }
+
   private addRelationship(
     mindmap: Mindmap,
     relationshipElement: Element,
+    defaults: Element | null,
     defaultStrokeStyle: StrokeStyle,
   ): void {
     const fromTopicId =
@@ -682,7 +898,87 @@ class MindManagerImporter extends Importer {
       );
     }
 
+    // The LineColor of its Color, or of the DefaultColor of the RelationshipDefaultsGroup
+    const color = this.findChildByTagName(relationshipElement, 'Color');
+    const defaultColor = defaults && this.findChildByTagName(defaults, 'DefaultColor');
+    const strokeColor =
+      MindManagerImporter.toColor(color?.getAttribute('LineColor')) ??
+      MindManagerImporter.toColor(defaultColor?.getAttribute('LineColor'));
+    if (strokeColor) {
+      relationship.setStrokeColor(strokeColor);
+    }
+
+    // Without a ConnectionStyle, the arrow is at the end, as in the model.
+    const startArrow = this.hasArrow(relationshipElement, defaults, '0');
+    if (startArrow !== undefined) {
+      relationship.setStartArrow(startArrow);
+    }
+    const endArrow = this.hasArrow(relationshipElement, defaults, '1');
+    if (endArrow !== undefined) {
+      relationship.setEndArrow(endArrow);
+    }
+
     mindmap.addRelationship(relationship);
+    this.addRelationshipLabels(mindmap, relationshipElement, srcTopicId, destTopicId);
+  }
+
+  /**
+   * WiseMapping relationships have no text: the labels of a relationship (its FloatingTopics) are
+   * imported as floating topics in the middle of its ends, moved by their Offset (in the real
+   * files, a few millimeters from the middle of the relationship).
+   *
+   * Known limitation: the middle is estimated from the import positions, before the layout places
+   * the topics again, so a label can end up away from its relationship. A label can not follow the
+   * relationship until RelationshipModel has a text of its own.
+   */
+  private addRelationshipLabels(
+    mindmap: Mindmap,
+    relationshipElement: Element,
+    srcTopicId: number,
+    destTopicId: number,
+  ): void {
+    const floatingTopics = this.findChildByTagName(relationshipElement, 'FloatingTopics');
+    if (!floatingTopics) {
+      return;
+    }
+    const src = MindManagerImporter.approximatePosition(mindmap.findNodeById(srcTopicId));
+    const dest = MindManagerImporter.approximatePosition(mindmap.findNodeById(destTopicId));
+    this.findChildrenByTagName(floatingTopics, 'Topic').forEach((labelElement, index) => {
+      const label = this.parseTopic(labelElement, 'Label', 0);
+      // MindManager draws them as plain text, not with the shape (or the default colors) of the
+      // floating topics.
+      if (!this.findChildByTagName(labelElement, 'Color')) {
+        label.fillColor = undefined;
+        label.lineColor = undefined;
+      }
+      const shape = this.findChildByTagName(labelElement, 'LabelFloatingTopicShape');
+      label.shape =
+        MindManagerImporter.toShapeType(shape?.getAttribute('LabelFloatingTopicShape')) ?? 'none';
+      const node = this.convertTopic(mindmap, label, index, index, 1);
+      const offset = label.offset ?? { x: 0, y: 0 };
+      node.setPosition(
+        Math.round((src.x + dest.x) / 2 + offset.x * PIXELS_PER_MILLIMETER),
+        Math.round((src.y + dest.y) / 2 + offset.y * PIXELS_PER_MILLIMETER),
+      );
+      mindmap.addBranch(node);
+    });
+  }
+
+  // Where a topic is, roughly: the layout places the topics again, but the import positions of a
+  // topic and of its ancestors add up to its side and distance from the central topic.
+  private static approximatePosition(node: INodeModel | undefined): { x: number; y: number } {
+    let x = 0;
+    let y = 0;
+    for (
+      let current: INodeModel | null | undefined = node;
+      current;
+      current = current.getParent()
+    ) {
+      const position = current.getPosition();
+      x += position?.x ?? 0;
+      y += position?.y ?? 0;
+    }
+    return { x, y };
   }
 
   public import(nameMap: string, _description?: string): Promise<string> {

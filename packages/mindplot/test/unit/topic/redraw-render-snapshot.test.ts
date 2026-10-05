@@ -22,15 +22,14 @@
  * setters, cached theme resolution, coalesced editor layout) must leave every
  * position, size, colour and SVG element exactly as it was.
  */
+import { buildDesigner, Harness } from '../commands/designer-harness';
+import ActionDispatcher from '../../../src/components/ActionDispatcher';
+import { buildMediumMap, renderSnapshot, stubTextMeasurement } from './RenderFixture';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner, Harness } from '../commands/designer-harness';
-import ActionDispatcher from '../../../src/components/ActionDispatcher';
-import MultitTextEditor from '../../../src/components/MultilineTextEditor';
-import { buildMediumMap, renderSnapshot, stubTextMeasurement } from './RenderFixture';
 
 const nextFrame = (): Promise<void> =>
   new Promise((resolve) => {
@@ -51,13 +50,6 @@ describe('redraw render snapshot of a medium map', () => {
   let harness: Harness;
 
   beforeAll(async () => {
-    // The text editor is shown next to the map component.
-    const wrapper = document.createElement('div');
-    const mindmapComp = document.createElement('div');
-    mindmapComp.id = 'mindmap-comp';
-    wrapper.appendChild(mindmapComp);
-    document.body.appendChild(wrapper);
-
     harness = await buildDesigner(buildMediumMap());
   });
 
@@ -85,12 +77,13 @@ describe('redraw render snapshot of a medium map', () => {
 
   it('renders the same while typing in the text editor and after committing', async () => {
     const topic = harness.topic(2);
-    MultitTextEditor.getInstance().show(topic);
+    harness.designer.getTextEditor().show(topic);
     const textarea = document.querySelector('#textContainer textarea') as HTMLTextAreaElement;
     // One keystroke per frame, as a person types. The editor lays the map out once per
     // frame, so several keystrokes in one frame are laid out together.
-    for (const value of ['T', 'Ty', 'Typ', 'Typed text', 'Typed text\nwith a second line']) {
-      textarea.value = value;
+    const values = ['T', 'Ty', 'Typ', 'Typed text', 'Typed text\nwith a second line'];
+    for (let i = 0; i < values.length; i++) {
+      textarea.value = values[i];
       textarea.dispatchEvent(new Event('input', { bubbles: true }));
       // eslint-disable-next-line no-await-in-loop
       await nextFrame();
@@ -101,7 +94,7 @@ describe('redraw render snapshot of a medium map', () => {
       new KeyboardEvent('keydown', { bubbles: true, cancelable: true, code: 'Enter' }),
     );
     await nextFrame();
-    expect(MultitTextEditor.getInstance().isActive()).toBe(false);
+    expect(harness.designer.getTextEditor().isActive()).toBe(false);
     expect(topic.getModel().getText()).toBe('Typed text\nwith a second line');
     expect(renderSnapshot(harness.designer)).toMatchSnapshot('committed');
   });

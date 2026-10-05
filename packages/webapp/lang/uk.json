@@ -119,8 +119,8 @@
   "dialog.loading": {
     "defaultMessage": "Завантаження..."
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "Копія "
+  "duplicate.copy-title": {
+    "defaultMessage": "Копія {title}"
   },
   "duplicate.title": {
     "defaultMessage": "Дублювати"
@@ -768,37 +768,46 @@
     "defaultMessage": "Personal Details"
   },
   "account.delete-warning-title": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Видалити акаунт"
   },
   "account.delete-warning-description": {
-    "defaultMessage": "Once you delete your account, there is no going back. Please be certain."
+    "defaultMessage": "Після видалення акаунта повернути його буде неможливо. Будь ласка, ухвалюйте рішення зважено."
   },
   "account.delete-warning-consequences": {
-    "defaultMessage": "This will permanently delete:"
+    "defaultMessage": "Буде безповоротно видалено:"
   },
   "account.delete-warning-mindmaps": {
-    "defaultMessage": "All your mindmaps and their content"
+    "defaultMessage": "Усі ваші карти розуму та їхній вміст"
   },
   "account.delete-warning-data": {
-    "defaultMessage": "All your personal data and account information"
+    "defaultMessage": "Усі ваші особисті дані та інформація акаунта"
   },
   "account.delete-warning-collaborations": {
-    "defaultMessage": "All shared mindmaps and collaborations"
+    "defaultMessage": "Усі спільні карти розуму та співпраця"
   },
   "account.delete-warning-history": {
-    "defaultMessage": "All account history and activity logs"
+    "defaultMessage": "Уся історія акаунта та журнали активності"
   },
   "account.delete-confirmation-title": {
-    "defaultMessage": "Are you absolutely sure?"
+    "defaultMessage": "Ви абсолютно впевнені?"
   },
   "account.delete-confirmation-warning": {
-    "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+    "defaultMessage": "Цю дію неможливо скасувати. Ваш акаунт буде видалено назавжди, а всі дані буде стерто з наших серверів."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+    "defaultMessage": "Введіть {challengePhrase} для підтвердження:"
+  },
+  "account.delete-confirmation-label": {
+    "defaultMessage": "Введіть «{challengePhrase}» для підтвердження"
+  },
+  "account.delete-challenge": {
+    "defaultMessage": "ВИДАЛИТИ МІЙ АКАУНТ"
+  },
+  "account.delete-challenge-error": {
+    "defaultMessage": "Введіть «{challengePhrase}», щоб підтвердити видалення акаунта."
   },
   "account.delete-confirm": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Видалити акаунт"
   },
   "menu.admin-console": {
     "defaultMessage": "Admin Console"

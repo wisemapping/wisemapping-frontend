@@ -1,5 +1,5 @@
 <map version="1.0.1">
-    <node ID="ID_0" BACKGROUND_COLOR="#ffcc33" COLOR="#0000cc" TEXT="">
+    <node ID="ID_0" TEXT="" BACKGROUND_COLOR="#ffcc33" COLOR="#0000cc">
         <richcontent TYPE="NOTE">
             <html xmlns="http://www.w3.org/1999/xhtml">
                 <head></head>

@@ -19,7 +19,7 @@
 import type { Workspace } from '@wisemapping/web2d';
 import Canvas from '../../src/components/Canvas';
 import ScreenManager from '../../src/components/ScreenManager';
-import LayoutEventBus from '../../src/components/layout/LayoutEventBus';
+import type LayoutEventBus from '../../src/components/layout/LayoutEventBus';
 
 // Mock DOM elements and jQuery
 const mockDiv = {
@@ -56,16 +56,12 @@ jest.mock('@wisemapping/web2d', () => ({
   })),
 }));
 
-jest.mock('../../src/components/layout/LayoutEventBus', () => ({
-  __esModule: true,
-  default: {
-    fireEvent: jest.fn(),
-    addEvent: jest.fn(),
-    removeEvent: jest.fn(),
-  },
-}));
-
-const layoutEventBus = LayoutEventBus as jest.Mocked<typeof LayoutEventBus>;
+// The bus the canvas fires canvasZoomed and canvasPanned on.
+const layoutEventBus = {
+  fireEvent: jest.fn(),
+  addEvent: jest.fn(),
+  removeEvent: jest.fn(),
+};
 
 describe('Canvas', () => {
   let canvas: Canvas;
@@ -85,16 +81,23 @@ describe('Canvas', () => {
         }),
         setOffset: jest.fn(),
         setScale: jest.fn(),
+        setWorkspace: jest.fn(),
         fireEvent: jest.fn(),
         addEvent: jest.fn(),
         removeEvent: jest.fn(),
       };
-      return instance as any;
+      return instance as unknown as ScreenManager;
     });
 
-    mockScreenManager = new MockedScreenManager({} as any) as jest.Mocked<ScreenManager>;
-    canvas = new Canvas(mockScreenManager, 1.0, false, false);
-    workspace = (canvas as any)._workspace;
+    mockScreenManager = new MockedScreenManager({} as HTMLElement) as jest.Mocked<ScreenManager>;
+    canvas = new Canvas(
+      mockScreenManager,
+      1.0,
+      false,
+      false,
+      layoutEventBus as unknown as LayoutEventBus,
+    );
+    workspace = (canvas as unknown as { _workspace: jest.Mocked<Workspace> })._workspace;
   });
 
   describe('zoom', () => {

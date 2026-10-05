@@ -16,16 +16,12 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { describe, expect, test } from '@jest/globals';
 import { strToU8, zipSync } from 'fflate';
 import XMindImporter from '../../../src/components/import/XMindImporter';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
-import NoteModel from '../../../src/components/model/NoteModel';
-import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
-import LinkModel from '../../../src/components/model/LinkModel';
 
 const loadMindmap = (xml: string): Mindmap => {
   const doc = new DOMParser().parseFromString(xml, 'text/xml');
@@ -46,14 +42,13 @@ const findByText = (mindmap: Mindmap, text: string): NodeModel => {
   return result;
 };
 
-const noteOf = (node: NodeModel): string =>
-  (node.findFeatureByType('note')[0] as NoteModel | undefined)?.getText() ?? '';
+const noteOf = (node: NodeModel): string => node.findFeatureByType('note').at(0)?.getText() ?? '';
 
 const iconsOf = (node: NodeModel): string[] =>
-  node.findFeatureByType('eicon').map((icon) => (icon as EmojiIconModel).getIconType());
+  node.findFeatureByType('eicon').map((icon) => icon.getIconType());
 
 const linkOf = (node: NodeModel): string | undefined =>
-  (node.findFeatureByType('link')[0] as LinkModel | undefined)?.getUrl();
+  node.findFeatureByType('link').at(0)?.getUrl();
 
 describe('XMindImporter (JSON format) content', () => {
   const sheet = {

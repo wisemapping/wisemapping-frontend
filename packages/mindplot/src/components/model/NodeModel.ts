@@ -17,14 +17,14 @@
  */
 import cloneDeep from 'lodash/cloneDeep';
 import { $assert, $defined } from '../util/assert';
-import INodeModel, { NodeModelType } from './INodeModel';
+import INodeModel, { NodeModelType, NodePropKey, NodeProps } from './INodeModel';
 import FeatureModelFactory from './FeatureModelFactory';
 import FeatureModel, { FeatureAttributes } from './FeatureModel';
 import Mindmap from './Mindmap';
-import FeatureType from './FeatureType';
+import FeatureType, { type FeatureByType } from './FeatureType';
 
 class NodeModel extends INodeModel {
-  private _properties: Record<string, string | number | boolean | undefined>;
+  private _properties: Partial<NodeProps>;
 
   private _children: NodeModel[];
 
@@ -50,7 +50,7 @@ class NodeModel extends INodeModel {
    * @param attributes
    * @return {mindplot.model.FeatureModel} the created feature model
    */
-  createFeature(type: FeatureType, attributes: FeatureAttributes): FeatureModel {
+  createFeature<T extends FeatureType>(type: T, attributes: FeatureAttributes): FeatureByType[T] {
     return FeatureModelFactory.createModel(type, attributes);
   }
 
@@ -78,9 +78,9 @@ class NodeModel extends INodeModel {
    * @param {String} type the feature type, e.g. icon or link
    * @throws will throw an error if type is null or undefined
    */
-  findFeatureByType(type: string): FeatureModel[] {
+  findFeatureByType<T extends FeatureType>(type: T): FeatureByType[T][] {
     $assert(type, 'type can not be null');
-    return this._features.filter((feature) => feature.getType() === type);
+    return this._features.filter((feature): feature is FeatureByType[T] => feature.isOfType(type));
   }
 
   /**
@@ -96,25 +96,21 @@ class NodeModel extends INodeModel {
     return result[0];
   }
 
-  getPropertiesKeys() {
-    return Object.keys(this._properties);
+  getPropertiesKeys(): NodePropKey[] {
+    return Object.keys(this._properties) as NodePropKey[];
   }
 
-  /**
-   * @param key
-   * @param value - Can be string, number, boolean, or undefined
-   * @throws will throw an error if key is null or undefined
-   */
-  putProperty(key: string, value: string | number | boolean | undefined): void {
+  putProperty<K extends NodePropKey>(key: K, value: NodeProps[K]): void {
     this._properties[key] = value;
   }
 
-  getProperties() {
+  getProperties(): Readonly<Partial<NodeProps>> {
     return this._properties;
   }
 
-  getProperty(key: string): number | string | boolean | undefined {
-    return this._properties[key];
+  // id and type are set by the constructor, so they are never missing.
+  getProperty<K extends NodePropKey>(key: K): NodeProps[K] {
+    return this._properties[key] as NodeProps[K];
   }
 
   clone(): NodeModel {
@@ -156,6 +152,19 @@ class NodeModel extends INodeModel {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object.');
     this._children = this._children.filter((c) => c !== child);
     child._parent = null;
+  }
+
+  findNodeById(id: number): NodeModel | undefined {
+    if (this.getId() === id) {
+      return this;
+    }
+    for (let i = 0; i < this._children.length; i++) {
+      const result = this._children[i].findNodeById(id);
+      if (result) {
+        return result;
+      }
+    }
+    return undefined;
   }
 
   getChildren(): NodeModel[] {

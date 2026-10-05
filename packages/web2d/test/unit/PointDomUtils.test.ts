@@ -16,12 +16,7 @@
  *   limitations under the License.
  */
 import Point from '../../src/components/Point';
-import {
-  getOffset,
-  getPosition,
-  getPositionIn,
-  getStyle,
-} from '../../src/components/peer/utils/DomUtils';
+import { getOffset, getPosition, getPositionIn } from '../../src/components/peer/utils/DomUtils';
 import { $assert, $defined } from '../../src/components/peer/utils/assert';
 
 describe('Point', () => {
@@ -74,19 +69,11 @@ describe('assert', () => {
 
 describe('DomUtils', () => {
   const mockRect = (el: Element, top: number, left: number) => {
-    el.getClientRects = () => [{}] as unknown as DOMRectList;
-    el.getBoundingClientRect = () => ({ top, left }) as DOMRect;
+    Object.assign(el, {
+      getClientRects: () => [{}] as unknown as DOMRectList,
+      getBoundingClientRect: () => ({ top, left }) as DOMRect,
+    });
   };
-
-  it('getStyle parses px values, stringifies others', () => {
-    const div = document.createElement('div');
-    div.style.width = '12px';
-    div.style.display = 'block';
-    document.body.append(div);
-    expect(getStyle(div, 'width')).toBe(12);
-    expect(getStyle(div, 'display')).toBe('block');
-    div.remove();
-  });
 
   it('getOffset of a missing or unrendered element is 0,0', () => {
     expect(getOffset(null)).toEqual({ top: 0, left: 0 });
@@ -99,35 +86,20 @@ describe('DomUtils', () => {
     expect(getOffset(div)).toEqual({ top: 10 + window.pageYOffset, left: 20 + window.pageXOffset });
   });
 
-  it('getPosition of a fixed element is its viewport position', () => {
-    const div = document.createElement('div');
-    div.style.position = 'fixed';
-    document.body.append(div);
-    mockRect(div, 7, 8);
-    expect(getPosition(div)).toEqual({ top: 7, left: 8 });
-    div.remove();
+  it('getOffset of an element of a document without a window adds no scroll', () => {
+    const doc = document.implementation.createHTMLDocument('detached');
+    const div = doc.createElement('div');
+    doc.body.append(div);
+    mockRect(div, 10, 20);
+    expect(doc.defaultView).toBeNull();
+    expect(getOffset(div)).toEqual({ top: 10, left: 20 });
   });
 
-  it('getPosition subtracts a positioned offset parent', () => {
+  // W5 (W-NATIVEPOS): the jQuery position() port walked the offsetParent chain, which an SVG
+  // element does not have. Without a container, the position is now always document coordinates.
+  it('W5: getPosition without a container is the document position, even with an offset parent', () => {
     const parent = document.createElement('div');
     parent.style.position = 'relative';
-    const child = document.createElement('div');
-    child.style.marginTop = '2px';
-    child.style.marginLeft = '3px';
-    parent.append(child);
-    document.body.append(parent);
-    Object.defineProperty(child, 'offsetParent', { value: parent });
-    mockRect(parent, 100, 50);
-    mockRect(child, 130, 90);
-    expect(getPosition(child)).toEqual({ top: 28, left: 37 });
-    parent.remove();
-  });
-
-  // W-NATIVEPOS: an 'auto' margin or a non-length border gave NaN.
-  it('getPosition treats non-length margins and borders as 0', () => {
-    const parent = document.createElement('div');
-    parent.style.position = 'relative';
-    parent.style.borderTopWidth = 'medium';
     const child = document.createElement('div');
     child.style.marginTop = 'auto';
     parent.append(child);
@@ -135,10 +107,27 @@ describe('DomUtils', () => {
     Object.defineProperty(child, 'offsetParent', { value: parent });
     mockRect(parent, 100, 50);
     mockRect(child, 130, 90);
-    const { top, left } = getPosition(child);
-    expect(Number.isNaN(top)).toBe(false);
-    expect(left).toBe(40);
+    expect(getPosition(child)).toEqual({ top: 130, left: 90 });
+    expect(getPosition(child, null)).toEqual({ top: 130, left: 90 });
     parent.remove();
+  });
+
+  it('W5: getPosition of an element that is not rendered is 0,0', () => {
+    expect(getPosition(document.createElement('div'))).toEqual({ top: 0, left: 0 });
+  });
+
+  it('W5: getPosition in a positioned <body> is relative to it', () => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    document.body.append(svg);
+    document.body.style.position = 'relative';
+    const bodyRect = jest
+      .spyOn(document.body, 'getBoundingClientRect')
+      .mockReturnValue({ top: 8, left: 8 } as DOMRect);
+    svg.getBoundingClientRect = () => ({ top: 30, left: 40 }) as DOMRect;
+    expect(getPosition(svg, document.body)).toEqual({ top: 22, left: 32 });
+    bodyRect.mockRestore();
+    document.body.style.position = '';
+    svg.remove();
   });
 
   // W-NATIVEPOS: an SVG element has no offsetParent, so getPosition gave document coordinates.

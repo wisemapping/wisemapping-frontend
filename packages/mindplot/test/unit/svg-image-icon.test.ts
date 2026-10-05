@@ -23,7 +23,11 @@ import SvgImageIcon from '../../src/components/SvgImageIcon';
 import Topic from '../../src/components/Topic';
 import SvgIconModel from '../../src/components/model/SvgIconModel';
 
-const topic = { getId: () => 7 } as unknown as Topic;
+// A topic without a designer: it runs its commands through ActionDispatcher.getInstance().
+const topic = {
+  getId: () => 7,
+  getActionDispatcher: () => ActionDispatcher.getInstance(),
+} as unknown as Topic;
 
 const click = (icon: SvgImageIcon) => icon.getElement().trigger('click', {});
 const href = (icon: SvgImageIcon) => (icon.getElement() as Image).getHref();

@@ -16,37 +16,9 @@
  *   limitations under the License.
  */
 
-interface LanguageStrings {
-  [key: string]: string;
-  LOADING: string;
-  SAVING: string;
-  SAVE_COMPLETE: string;
-  ZOOM_IN_ERROR: string;
-  ZOOM_ERROR: string;
-  ONLY_ONE_TOPIC_MUST_BE_SELECTED: string;
-  ONE_TOPIC_MUST_BE_SELECTED: string;
-  ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE: string;
-  SAVE_COULD_NOT_BE_COMPLETED: string;
-  MAIN_TOPIC: string;
-  SUB_TOPIC: string;
-  ISOLATED_TOPIC: string;
-  CENTRAL_TOPIC: string;
-  ENTITIES_COULD_NOT_BE_DELETED: string;
-  CLIPBOARD_IS_EMPTY: string;
-  CENTRAL_TOPIC_CAN_NOT_BE_DELETED: string;
-  RELATIONSHIP_COULD_NOT_BE_CREATED: string;
-  SESSION_EXPIRED: string;
-  CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: string;
-  CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: string;
-  TAB_TO_CREATE_CHILD: string;
-  ENTER_TO_CREATE_SIBLING: string;
-  PLUS_TOOLTIP_CREATE_CHILD: string;
-  PLUS_TOOLTIP_CREATE_SIBLING: string;
-  LINK: string;
-  NOTE: string;
-}
+import type { LocaleMessages } from './en';
 
-const HI: LanguageStrings = {
+const HI: LocaleMessages = {
   LOADING: 'लोड हो रहा है ..',
   SAVING: 'सहेजा जा रहा है ...',
   SAVE_COMPLETE: 'सहेजना पूरा हो गया',

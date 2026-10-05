@@ -16,32 +16,16 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import PersistenceManager from './PersistenceManager';
 import Designer from './Designer';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 
-let designer: Designer | null = null;
-
+/**
+ * Builds a designer on `options.divContainer`. Each web component builds its own, so several maps
+ * can be live on one page; a component disposes its designer once it leaves the page.
+ */
 export function buildDesigner(options: DesignerOptions): Designer {
-  const containerElem = options.divContainer;
-  $assert(containerElem, 'container could not be null');
-  if (designer && !designer.isDisposed()) {
-    // A designer whose container left the page is being torn down (MindplotWebComponent disposes
-    // it once disconnected): finish it now. A designer still on the page is in use ...
-    if (designer.getContainer().isConnected) {
-      throw new Error('Designer can does not support multiple initializations');
-    }
-    designer.dispose();
-  }
-
-  // Register load events ...
-  designer = new Designer(options);
-
-  // Configure default persistence manager ...
-  const persistence = options.persistenceManager;
-  PersistenceManager.init(persistence!);
-
-  return designer;
+  $assert(options.divContainer, 'container could not be null');
+  return new Designer(options);
 }
 
 export default buildDesigner;

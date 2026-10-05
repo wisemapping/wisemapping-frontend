@@ -1,54 +1,54 @@
 <map name="freeplane-project-management" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Project Management Plan" id="1">
         <topic position="200,0" order="0" text="Planning Phase" shape="line" id="2">
-            <eicon id="💡"/>
+            <eicon id="1️⃣"/>
             <topic position="200,0" order="0" text="Define Scope" shape="line" id="3">
-                <eicon id="💡"/>
+                <eicon id="2️⃣"/>
                 <note contentType="html"><![CDATA[<p>Clearly define project boundaries and deliverables</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Create Timeline" shape="line" id="4">
-                <eicon id="💡"/>
+                <eicon id="3️⃣"/>
                 <note contentType="html"><![CDATA[<p>Develop detailed project schedule with milestones</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Resource Allocation" shape="line" id="5">
-                <eicon id="💡"/>
+                <eicon id="4️⃣"/>
                 <note contentType="html"><![CDATA[<p>Assign team members and budget resources</p>]]></note>
             </topic>
         </topic>
         <topic position="-200,0" order="1" text="Execution Phase" shape="line" id="6">
-            <eicon id="💡"/>
+            <eicon id="2️⃣"/>
             <topic position="200,0" order="0" text="Development" shape="line" id="7">
-                <eicon id="💡"/>
+                <eicon id="1️⃣"/>
                 <note contentType="html"><![CDATA[<p>Implement project deliverables</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Testing" shape="line" id="8">
-                <eicon id="💡"/>
+                <eicon id="2️⃣"/>
                 <note contentType="html"><![CDATA[<p>Quality assurance and testing procedures</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Documentation" shape="line" id="9">
-                <eicon id="💡"/>
+                <eicon id="3️⃣"/>
                 <note contentType="html"><![CDATA[<p>Create project documentation and user guides</p>]]></note>
             </topic>
         </topic>
         <topic position="300,75" order="2" text="Monitoring &amp; Control" shape="line" id="10">
-            <eicon id="💡"/>
+            <eicon id="3️⃣"/>
             <topic position="200,0" order="0" text="Progress Tracking" shape="line" id="11">
-                <eicon id="💡"/>
+                <eicon id="🔴"/>
                 <note contentType="html"><![CDATA[<p>Monitor project progress against timeline</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Quality Assurance" shape="line" id="12">
-                <eicon id="💡"/>
+                <icon id="flag_yellow"/>
                 <note contentType="html"><![CDATA[<p>Ensure deliverables meet quality standards</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Risk Management" shape="line" id="13">
-                <eicon id="💡"/>
+                <icon id="flag_green"/>
                 <note contentType="html"><![CDATA[<p>Identify and mitigate project risks</p>]]></note>
             </topic>
         </topic>
         <topic position="-300,75" order="3" text="Closure Phase" shape="line" id="14">
-            <eicon id="💡"/>
+            <eicon id="4️⃣"/>
             <topic position="200,0" order="0" text="Final Review" shape="line" id="15">
-                <eicon id="💡"/>
+                <eicon id="✅"/>
                 <note contentType="html"><![CDATA[<p>Conduct final project review and sign-off</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Lessons Learned" shape="line" id="16">

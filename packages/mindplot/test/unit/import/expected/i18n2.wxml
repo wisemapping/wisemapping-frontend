@@ -9,13 +9,8 @@
                 ]]></note>
         </topic>
         <topic position="-200,0" order="1" shape="line" id="2">
-            <text><![CDATA[
-                    
-                    
-                        <p>Long text node:</p>
-                        <p>أَبْجَدِيَّة عَرَب</p>
-                    
-                ]]></text>
+            <text><![CDATA[Long text node:
+أَبْجَدِيَّة عَرَب]]></text>
         </topic>
     </topic>
 </map>

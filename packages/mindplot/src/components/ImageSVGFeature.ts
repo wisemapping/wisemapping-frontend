@@ -21,10 +21,9 @@
  * It provides functionality to set, get, and render Material UI icons on topics.
  */
 
-import { Text, Group } from '@wisemapping/web2d';
+import { Text, Group, Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
-import ActionDispatcher from './ActionDispatcher';
 import Icon from './Icon';
 import SizeType from './SizeType';
 import PositionType from './PositionType';
@@ -32,407 +31,27 @@ import FeatureModel from './model/FeatureModel';
 import Topic from './Topic';
 import ThemeFactory from './theme/ThemeFactory';
 import ImageEmojiFeature from './ImageEmojiFeature';
+import { BRAND_ICON_PATHS, MATERIAL_ICON_CODEPOINTS } from './GalleryIconData';
 
-// Material Icons Unicode codepoints: the actual codepoints of the Material Icons font.
-// Built once: it was rebuilt on every lookup, several times per redraw.
-const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
-  // Basic actions
-  star: '\ue838',
-  favorite: '\ue87d',
-  'thumbs-up': '\ue8dc',
-  'check-circle': '\ue86c',
-  warning: '\ue002',
-  error: '\ue000',
-  info: '\ue88e',
-  help: '\ue887',
-  add: '\ue145',
-  delete: '\ue872',
-  edit: '\ue3c9',
-  save: '\ue161',
-  search: '\ue8b6',
-  settings: '\ue8b8',
+// The gallery icon size: the font size of a glyph icon, the grid of a brand icon.
+const ICON_SIZE = 24;
 
-  // Navigation
-  home: '\ue88a',
-  work: '\ue8f9',
-  business: '\ue7ee',
+// The colour of an icon left uncoloured: a glyph without a fill draws black (the SVG default).
+const DEFAULT_ICON_COLOR = '#000000';
 
-  // Communication
-  email: '\ue0be',
-  phone: '\ue0cd',
-  message: '\ue0c9',
-  share: '\ue80d',
+/** A gallery icon: a Material Icons glyph, or a brand icon drawn from its path. */
+export type GalleryIconShape = Text | Image;
 
-  // Technology
-  computer: '\ue30a',
-  smartphone: '\ue32c',
-  tablet: '\ue32f',
-  laptop: '\ue31e',
-
-  // Transportation
-  'directions-car': '\ue531',
-  flight: '\ue539',
-  train: '\ue570',
-  'directions-bike': '\ue52f',
-  'directions-walk': '\ue536',
-  'location-on': '\ue55f',
-  'two-wheeler': '\ue9ca',
-  'directions-run': '\ue566',
-
-  // Education & Creative
-  school: '\ue80c',
-  palette: '\ue40a',
-  brush: '\ue3ae',
-  lightbulb: '\ue0f0',
-  'flash-on': '\ue3e7',
-  flash: '\ue3e7', // Same as flash-on
-  security: '\ue32a',
-  lock: '\ue897',
-  'menu-book': '\ue421',
-  assignment: '\ue85d',
-  build: '\ue869',
-  science: '\uea4b',
-
-  // Lifestyle
-  restaurant: '\ue56c',
-  'shopping-cart': '\ue8cc',
-  'local-grocery-store': '\ue547',
-  'local-hospital': '\ue548',
-  'sports-soccer': '\uea2c',
-  'sports-basketball': '\uea26',
-  gamepad: '\ue30f',
-  book: '\ue865',
-  'local-cafe': '\ue541',
-  'shopping-bag': '\ue8cb',
-
-  // Media & Controls
-  play: '\ue037',
-  pause: '\ue034',
-  stop: '\ue047',
-  'skip-next': '\ue044',
-  'skip-previous': '\ue045',
-  'fast-forward': '\ue01f',
-  'fast-rewind': '\ue020',
-  'volume-up': '\ue050',
-  'volume-down': '\ue04d',
-  'volume-off': '\ue04f',
-  mic: '\ue31d',
-  'mic-off': '\ue02b',
-  videocam: '\ue04b',
-  'videocam-off': '\ue04c',
-  fullscreen: '\ue5d0',
-  'fullscreen-exit': '\ue5d1',
-  'zoom-in': '\ue8ff',
-  'zoom-out': '\ue900',
-
-  // People & Communication
-  'account-circle': '\ue853',
-  person: '\ue7fd',
-  group: '\ue7ef',
-  mail: '\ue158',
-  chat: '\ue0b7',
-  notifications: '\ue7f4',
-
-  // Technology & Devices
-  'phone-android': '\ue324',
-  tv: '\ue333',
-  headphones: '\ue30f',
-  camera: '\ue3af',
-  image: '\ue3f4',
-  'video-file': '\ue1a2',
-  'audio-file': '\ue1a0',
-  folder: '\ue2c7',
-  'cloud-upload': '\ue2c3',
-  wifi: '\ue63e',
-  bluetooth: '\ue1a7',
-  storage: '\ue1db',
-  memory: '\ue322',
-
-  // Business & Finance
-  money: '\ue227',
-  'trending-up': '\ue8e5',
-  'pie-chart': '\ue6c3',
-  'bar-chart': '\ue26b',
-  timeline: '\ue922',
-  assessment: '\ue85f',
-  description: '\ue873',
-  schedule: '\ue8b5',
-  'calendar-today': '\ue935',
-  event: '\ue878',
-  'event-available': '\ue614',
-  'event-busy': '\ue615',
-  'access-time': '\ue192',
-  timer: '\ue425',
-  'date-range': '\ue916',
-  today: '\ue8df',
-  update: '\ue923',
-  history: '\ue889',
-
-  // Transportation & Location
-  location: '\ue55f',
-  car: '\ue531',
-  bike: '\ue52f',
-  walk: '\ue536',
-
-  // Lifestyle & Activities
-  'grocery-store': '\ue547',
-  hospital: '\ue548',
-  soccer: '\uea2c',
-  basketball: '\uea26',
-  tennis: '\uea32',
-  fitness: '\ueb43',
-  music: '\ue405',
-  movie: '\ue02c',
-
-  // Creative & Design
-  'photo-camera': '\ue412',
-  'color-lens': '\ue40a',
-  'auto-fix': '\ue3e0',
-  'filter-vintage': '\ue3e3',
-  gradient: '\ue3e9',
-  texture: '\ue421',
-
-  // Nature & Weather
-  sunny: '\ue430',
-  snow: '\ueb3b',
-  fire: '\ue80e',
-  'invert-colors': '\ue891',
-  opacity: '\ue91c',
-  park: '\ue63f',
-  nature: '\ue406',
-
-  // Food & Drink
-  'wine-bar': '\ue7eb',
-  coffee: '\uef4a',
-  cake: '\ue7e9',
-  'ice-cream': '\uea69',
-  cookie: '\ueaac',
-  bakery: '\uea53',
-
-  // Health & Medical
-  'medical-services': '\uef4d',
-  'health-safety': '\ue1f5',
-  coronavirus: '\uf221',
-  vaccines: '\ue138',
-  medication: '\uef4e',
-  sick: '\uef80',
-
-  // Social Media
-  facebook: '\uf234',
-  twitter: '\uf099',
-  instagram: '\uf16d',
-  linkedin: '\uf08c',
-  youtube: '\uf167',
-  whatsapp: '\uf232',
-
-  // Additional General Icons
-  close: '\ue5cd',
-  check: '\ue5ca',
-  cancel: '\ue5c9',
-  done: '\ue876',
-  clear: '\ue14c',
-  remove: '\ue15b',
-  'add-circle': '\ue147',
-  'remove-circle': '\ue15c',
-  'expand-more': '\ue5cf',
-  'expand-less': '\ue5ce',
-  'arrow-down': '\ue313',
-  'arrow-up': '\ue316',
-  'arrow-left': '\ue314',
-  'arrow-right': '\ue315',
-
-  // Actions & Navigation
-  'open-in-new': '\ue89e',
-  launch: '\ue895',
-  link: '\ue157',
-  'link-off': '\ue16f',
-  'content-copy': '\ue14d',
-  'content-cut': '\ue14e',
-  'content-paste': '\ue14f',
-  undo: '\ue166',
-  redo: '\ue15a',
-  print: '\ue8ad',
-  'print-disabled': '\ue8ae',
-  pdf: '\ue415',
-  download: '\ue2c4',
-  upload: '\ue2c6',
-  refresh: '\ue5d5',
-
-  // Documents & Notes
-  article: '\uef42',
-  note: '\ue8d9',
-  'sticky-note': '\ue1fc',
-  task: '\ue8f5',
-  checklist: '\ue6b1',
-  list: '\ue896',
-
-  // Views & Layout
-  'view-list': '\ue8ef',
-  'view-module': '\ue8f0',
-  dashboard: '\ue871',
-  table: '\ue265',
-  'view-column': '\ue8f1',
-  'view-headline': '\ue8f2',
-  'view-stream': '\ue8f3',
-  'view-week': '\ue8f4',
-  'view-day': '\ue8ee',
-  'view-agenda': '\ue8ed',
-  'view-carousel': '\ue8f6',
-  'view-comfy': '\ue8f7',
-  'view-compact': '\ue8f8',
-  'view-sidebar': '\ue8f9',
-  'view-quilt': '\ue8fa',
-  'view-array': '\ue8fb',
-  'view-kanban': '\ue8fc',
-  'view-timeline': '\ue8fd',
-  'view-ar': '\ue8fe',
-
-  // Additional Business & Productivity Icons (40 new icons)
-  'account-balance': '\ue84f',
-  'business-center': '\ueb3f',
-  'work-outline': '\ue940',
-  badge: '\uea67',
-  contacts: '\ue0ba',
-  store: '\ue8d1',
-  'shopping-basket': '\ue8cb',
-  receipt: '\ue8b0',
-  'credit-card': '\ue870',
-  payment: '\ue8a1',
-
-  // Files & Folders
-  'create-new-folder': '\ue2cc',
-  'folder-open': '\ue2c8',
-  'file-copy': '\ue173',
-  'insert-drive-file': '\ue24d',
-  'attach-file': '\ue226',
-
-  // Communication & Social
-  forum: '\ue0bf',
-  comment: '\ue0b9',
-  announcement: '\ue85a',
-  campaign: '\uef49',
-  feedback: '\ue87f',
-
-  // Project Management
-  flag: '\ue153',
-  bookmark: '\ue866',
-  'bookmark-border': '\ue867',
-  label: '\ue892',
-  'label-important': '\ue937',
-  extension: '\ue87b',
-  'dashboard-customize': '\ue99b',
-
-  // Transportation
-  'directions-subway': '\ue534',
-  'directions-bus': '\ue530',
-  'local-shipping': '\ue558',
-
-  // Tools & Construction
-  construction: '\uea3c',
-  handyman: '\uf10b',
-  engineering: '\uea3d',
-
-  // Emotions & Feedback
-  'sentiment-satisfied': '\ue815',
-  mood: '\ue7f2',
-  'emoji-emotions': '\uea22',
-
-  // Time & Productivity
-  alarm: '\ue855',
-  'alarm-on': '\ue857',
-  'hourglass-empty': '\ue88b',
-  pending: '\uef64',
-
-  // Analytics & Data (10 icons)
-  analytics: '\uef3e',
-  insights: '\uf092',
-  'data-usage': '\ue1af',
-  'cloud-done': '\ue876',
-  'cloud-off': '\ue16a',
-  'cloud-queue': '\ue2c2',
-  'table-view': '\uf1be',
-  api: '\uf1b7',
-  query: '\ue8b5',
-  'bar-chart-outlined': '\ue26b',
-
-  // Industry & Professional (15 icons)
-  factory: '\uebbc',
-  agriculture: '\uea79',
-  biotech: '\uea3a',
-  'real-estate': '\ue59d',
-  'local-pharmacy': '\ue54c',
-  'medical-information': '\uebed',
-  'school-outlined': '\ue80c',
-  'local-library': '\ue54b',
-  museum: '\uea36',
-  theater: '\ue8da',
-  'sports-esports': '\uea36',
-  apartment: '\uea40',
-  domain: '\ue7ee',
-  'local-cafe-outlined': '\ue541',
-  'local-dining': '\ue56c',
-
-  // Actions & Controls (20 icons)
-  'play-circle': '\ue038',
-  'pause-circle': '\ue039',
-  'stop-circle': '\ue047',
-  replay: '\ue042',
-  'forward-10': '\ue056',
-  'replay-10': '\ue059',
-  shuffle: '\ue043',
-  repeat: '\ue040',
-  'repeat-one': '\ue041',
-  sort: '\ue164',
-  'filter-list': '\ue152',
-  'filter-alt': '\uef4f',
-  'search-off': '\uea76',
-  'find-in-page': '\ue880',
-  'find-replace': '\ue881',
-  visibility: '\ue8f4',
-  'visibility-off': '\ue8f5',
-  compare: '\ue3ba',
-  flip: '\ue3e1',
-  'rotate-left': '\ue419',
-
-  // Status & Indicators (15 icons)
-  'priority-high': '\ue645',
-  'new-releases': '\ue031',
-  'fiber-new': '\ue05e',
-  verified: '\uef76',
-  'verified-user': '\ue8e8',
-  'workspace-premium': '\ue99b',
-  stars: '\ue8d0',
-  grade: '\ue885',
-  'military-tech': '\uea3f',
-  'trending-flat': '\ue8e2',
-  'trending-down': '\ue8e3',
-  circle: '\uef4a',
-  'radio-button-checked': '\ue837',
-  'radio-button-unchecked': '\ue836',
-  'check-box': '\ue834',
-
-  // Content & Media (15 icons)
-  'library-books': '\ue02f',
-  'photo-library': '\ue413',
-  'video-library': '\ue04a',
-  collections: '\ue3b6',
-  'perm-media': '\ue8aa',
-  slideshow: '\ue41b',
-  theaters: '\ue8da',
-  'live-tv': '\ue639',
-  podcasts: '\uf048',
-  'speaker-notes': '\ue8cd',
-  'format-quote': '\ue244',
-  'library-music': '\ue030',
-  'library-add': '\ue02e',
-  'video-call': '\ue070',
-  'photo-camera-front': '\ue412',
-};
+/** A self-contained SVG image of a brand icon, so that it also renders in an exported map. */
+export const brandIconHref = (path: string, color: string): string =>
+  `data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${ICON_SIZE} ${ICON_SIZE}" width="${ICON_SIZE}" height="${ICON_SIZE}"><path fill="${color}" d="${path}"/></svg>`,
+  )}`;
 
 class ImageSVGFeature {
   private _topic: Topic;
 
-  private _svgText: Text | undefined;
+  private _svgText: GalleryIconShape | undefined;
 
   private _svgRemoveTip: ElementDeleteWidget | undefined;
 
@@ -440,7 +59,7 @@ class ImageSVGFeature {
   // ElementDeleteWidget.decorate only skips icons it has already decorated.
   private _svgIcon: Icon | undefined;
 
-  private _svgIconText: Text | undefined;
+  private _svgIconText: GalleryIconShape | undefined;
 
   // Gallery icon name that has no codepoint, so that it is not looked up on every call.
   private _unknownIconName: string | undefined;
@@ -485,17 +104,43 @@ class ImageSVGFeature {
    */
   updateIconColor(): void {
     if (this._svgText) {
-      const shapeType = this._topic.getShapeType();
-      if (shapeType !== 'line') {
-        const model = this._topic.getModel();
-        const theme = ThemeFactory.create(model, this._topic.getThemeVariant());
-        const fontColor = theme.getFontColor(this._topic);
-        this._svgText.setColor(fontColor);
+      const color = this.iconColor();
+      if (this._svgText instanceof Image) {
+        this.colorBrandIcon(this._svgText, color);
+      } else if (color) {
+        this._svgText.setColor(color);
       }
     }
   }
 
-  getOrBuildSVGElement(): Text | undefined {
+  /** The topic font colour, or none for a line shape (the icon keeps its default colour). */
+  private iconColor(): string | undefined {
+    const shapeType = this._topic.getShapeType();
+    if (shapeType === 'line') {
+      return undefined;
+    }
+    const model = this._topic.getModel();
+    const theme = ThemeFactory.create(model, this._topic.getThemeVariant());
+    return theme.getFontColor(this._topic);
+  }
+
+  /** Draws the brand icon in a colour, rewriting the image only when it changes. */
+  private colorBrandIcon(image: Image, color: string | undefined): void {
+    const path = BRAND_ICON_PATHS[this.getGalleryIconName() ?? ''];
+    if (path) {
+      const href = brandIconHref(path, color ?? DEFAULT_ICON_COLOR);
+      if (image.getHref() !== href) {
+        image.setHref(href);
+      }
+    }
+  }
+
+  /** The icon size: a glyph is measured, a brand icon is drawn on its grid. */
+  private static iconSize(shape: GalleryIconShape): SizeType {
+    return shape instanceof Text ? shape.measure() : { width: ICON_SIZE, height: ICON_SIZE };
+  }
+
+  getOrBuildSVGElement(): GalleryIconShape | undefined {
     const galleryIconName = this.getGalleryIconName();
     if (!galleryIconName) {
       return undefined;
@@ -508,8 +153,10 @@ class ImageSVGFeature {
       return undefined;
     }
 
-    // Create Text element for Material UI icon
-    const text = this.createMaterialIcon(galleryIconName);
+    // A Text element for a Material Icons glyph, an Image for a brand icon
+    const text = BRAND_ICON_PATHS[galleryIconName]
+      ? this.createBrandIcon()
+      : this.createMaterialIcon(galleryIconName);
     if (!text) {
       this._unknownIconName = galleryIconName;
     }
@@ -549,6 +196,13 @@ class ImageSVGFeature {
     // Don't call redraw here to avoid infinite recursion
   }
 
+  private createBrandIcon(): Image {
+    const image = new Image();
+    image.setSize(ICON_SIZE, ICON_SIZE);
+    this.colorBrandIcon(image, this.iconColor());
+    return image;
+  }
+
   private createMaterialIcon(iconName: string): Text | undefined {
     try {
       // Get the Material Icons Unicode codepoint for the icon
@@ -561,7 +215,7 @@ class ImageSVGFeature {
         text.setFontName('Material Icons');
 
         // Set the text properties
-        text.setFontSize(24); // Standard icon size
+        text.setFontSize(ICON_SIZE); // Standard icon size
 
         // Set the text content with the Unicode codepoint
         text.setText(iconUnicode);
@@ -573,11 +227,8 @@ class ImageSVGFeature {
         }
 
         // Set icon color to match topic font color (only for non-line shapes)
-        const shapeType = this._topic.getShapeType();
-        if (shapeType !== 'line') {
-          const model = this._topic.getModel();
-          const theme = ThemeFactory.create(model, this._topic.getThemeVariant());
-          const fontColor = theme.getFontColor(this._topic);
+        const fontColor = this.iconColor();
+        if (fontColor) {
           text.setColor(fontColor);
         }
 
@@ -610,8 +261,8 @@ class ImageSVGFeature {
     }
 
     // Standard icon size
-    const svgHeight = 24;
-    const svgWidth = svgText.getShapeWidth();
+    const svgHeight = ICON_SIZE;
+    const svgWidth = ImageSVGFeature.iconSize(svgText).width;
 
     return { height: svgHeight, width: svgWidth };
   }
@@ -662,7 +313,7 @@ class ImageSVGFeature {
     }
 
     // Center SVG horizontally in the middle of the topic
-    const svgX = (topicWidth - svgText.getShapeWidth()) / 2;
+    const svgX = (topicWidth - ImageSVGFeature.iconSize(svgText).width) / 2;
 
     // Position text and icons below the SVG with balanced spacing
     const spacing = 12; // More space between SVG and text
@@ -726,10 +377,7 @@ class ImageSVGFeature {
         return null;
       },
       getSize(): SizeType | undefined {
-        return {
-          width: svgText.getShapeWidth(),
-          height: svgText.getShapeHeight(),
-        };
+        return ImageSVGFeature.iconSize(svgText);
       },
       getPosition(): PositionType {
         return svgText.getPosition();
@@ -738,7 +386,7 @@ class ImageSVGFeature {
         svgText.addEvent(type, fnc);
       },
       remove(): void {
-        const actionDispatcher = ActionDispatcher.getInstance();
+        const actionDispatcher = topic.getActionDispatcher();
         actionDispatcher.changeImageGalleryIconNameToTopic([topic.getId()], undefined);
       },
       getModel(): FeatureModel {

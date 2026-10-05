@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import INodeModel from '../../../src/components/model/INodeModel';
+import NodeModel from '../../../src/components/model/NodeModel';
 import Mindmap from '../../../src/components/model/Mindmap';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import { buildMediumMap } from '../designer/medium-map';
@@ -41,7 +41,7 @@ describe('Relationship endpoints on save and load', () => {
   it('are checked against the ids of the map, not by searching it for each one', () => {
     jest.spyOn(console, 'log').mockImplementation(() => undefined);
     const xml = buildMediumMap({ topics: 500, relationships: 50 });
-    const findNodeById = jest.spyOn(INodeModel.prototype, 'findNodeById');
+    const findNodeById = jest.spyOn(NodeModel.prototype, 'findNodeById');
 
     const mindmap = load(xml);
     expect(mindmap.getRelationships()).toHaveLength(50);

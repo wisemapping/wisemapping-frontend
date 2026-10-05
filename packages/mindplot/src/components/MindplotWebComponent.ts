@@ -25,19 +25,21 @@ import WidgetBuilder from './WidgetBuilder';
 import mindplotStyles from './styles/mindplot-styles';
 import { $notify } from './model/ToolbarNotifier';
 import { $msg } from './Messages';
-import DesignerKeyboard from './DesignerKeyboard';
 import LocalStorageManager from './LocalStorageManager';
 import ThemeFactory from './theme/ThemeFactory';
 
 /**
- * WebComponent implementation for minplot designer.
+ * WebComponent implementation for the mindplot designer.
  * This component is registered as mindplot-component in customElements api. (see https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define)
- * For use it you need to import minplot.js and put in your DOM a <mindplot-component/> tag. In order to create a Designer on it you need to call its buildDesigner method. Maps can be loaded throught loadMap method.
+ * To use it, import @wisemapping/mindplot (its entry point registers the element) and put a <mindplot-component/> tag in your DOM. To create a Designer on it, call its buildDesigner method. Maps are loaded through the loadMap method.
  */
 class MindplotWebComponent extends HTMLElement {
   private _shadowRoot: ShadowRoot;
 
   private _designer: Designer | undefined;
+
+  // The persistence the designer was built with: each component saves through its own.
+  private _persistence: PersistenceManager | undefined;
 
   private _saveRequired: boolean;
 
@@ -144,10 +146,12 @@ class MindplotWebComponent extends HTMLElement {
 
   /**
    * Build the designer of the component
-   * @param {PersistenceManager} persistence the persistence manager to be used. By default a LocalStorageManager is created
-   * @param {UIManager} widgetManager an UI Manager to override default Designer option.
+   * @param persistence the persistence manager to be used. When undefined, a LocalStorageManager
+   * reading `map.xml` (and keeping the changes in the browser local storage) is created.
+   * @param widgetManager builds the link and note editors and tooltips. Required: there is no
+   * default, WidgetBuilder is abstract.
    */
-  buildDesigner(persistence: PersistenceManager, widgetManager: WidgetBuilder) {
+  buildDesigner(persistence: PersistenceManager | undefined, widgetManager: WidgetBuilder) {
     const editorRenderMode = this.getAttribute('mode') as EditorRenderMode;
     const locale = this.getAttribute('locale');
     const zoom = this.getAttribute('zoom');
@@ -172,6 +176,7 @@ class MindplotWebComponent extends HTMLElement {
       locale: locale || 'en',
     });
 
+    this._persistence = persistenceManager;
     this._designer = buildDesigner(options);
     this._designer.addEvent('modelUpdate', () => {
       if (this._isLoaded) {
@@ -196,8 +201,8 @@ class MindplotWebComponent extends HTMLElement {
 
   /**
    * Disposes the designer once the element has left the page. A move (removed and inserted
-   * again in the same task) keeps it. The designer stays reachable, so that pending changes can
-   * still be saved.
+   * again in the same task) keeps it. The designer and its persistence stay reachable, so that
+   * pending changes can still be saved and the map unlocked.
    */
   disconnectedCallback(): void {
     queueMicrotask(() => {
@@ -207,8 +212,16 @@ class MindplotWebComponent extends HTMLElement {
     });
   }
 
+  private getPersistence(): PersistenceManager {
+    if (!this._persistence) {
+      throw Error('Designer has not been initialized');
+    }
+    return this._persistence;
+  }
+
   private registerShortcuts() {
-    const designerKeyboard = DesignerKeyboard.getInstance();
+    // The keyboard of this component's designer: ctrl+s saves this map, not another one ...
+    const designerKeyboard = this._designer?.getKeyboard();
     if (designerKeyboard) {
       designerKeyboard.addShortcut(['ctrl+s', 'meta+s'], () => {
         this.save(true).catch((error) => {
@@ -230,8 +243,9 @@ class MindplotWebComponent extends HTMLElement {
     this._isLoaded = false;
     this.setSaveRequired(false);
 
-    const instance = PersistenceManager.getInstance();
-    return instance.load(id).then((mindmap) => this._designer!.loadMap(mindmap));
+    return this.getPersistence()
+      .load(id)
+      .then((mindmap) => this._designer!.loadMap(mindmap));
   }
 
   /**
@@ -252,7 +266,7 @@ class MindplotWebComponent extends HTMLElement {
     }
 
     // Call persistence manager for saving ...
-    const persistenceManager = PersistenceManager.getInstance();
+    const persistenceManager = this.getPersistence();
     // The map is serialized synchronously by save(), so this is the revision being sent.
     const savedRevision = this._revision;
     return new Promise<void>((resolve, reject) => {
@@ -285,7 +299,7 @@ class MindplotWebComponent extends HTMLElement {
 
   unlockMap(): Promise<void> {
     const mindmap = this._designer!.getMindmap();
-    const persistenceManager = PersistenceManager.getInstance();
+    const persistenceManager = this.getPersistence();
 
     // If the map could not be loaded, partial map load could happen.
     const mapId = mindmap?.getId();

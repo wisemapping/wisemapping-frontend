@@ -17,16 +17,20 @@
  */
 
 import WorkspaceElement from './WorkspaceElement';
-import Line from './Line';
+import type Line from './Line';
 import StraightLinePeer from './peer/svg/StraightPeer';
-import PositionType from './PositionType';
-import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
+import type PositionType from './PositionType';
+import type { ElementAttributes } from './StyleAttributes';
+import type { ElementType } from './types';
 
 class StraightLine extends WorkspaceElement<StraightLinePeer> implements Line {
-  constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createStraightLine();
-    const defaultAttributes = { strokeColor: '#495879', strokeWidth: 1, strokeOpacity: 1 };
+  constructor(attributes?: ElementAttributes) {
+    const peer = new StraightLinePeer();
+    const defaultAttributes: ElementAttributes = {
+      strokeColor: '#495879',
+      strokeWidth: 1,
+      strokeOpacity: 1,
+    };
 
     const mergedAttr = { ...defaultAttributes, ...attributes };
     super(peer, mergedAttr);
@@ -36,39 +40,7 @@ class StraightLine extends WorkspaceElement<StraightLinePeer> implements Line {
     return this;
   }
 
-  setIsSrcControlPointCustom(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setIsDestControlPointCustom(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setDashed(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setSrcControlPoint(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setDestControlPoint(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  isDestControlPointCustom(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  isSrcControlPointCustom(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  getControlPoints(): [PositionType, PositionType] {
-    throw new Error('Method not implemented.');
-  }
-
-  getType() {
+  getType(): ElementType {
     return 'Line';
   }
 
@@ -86,18 +58,6 @@ class StraightLine extends WorkspaceElement<StraightLinePeer> implements Line {
 
   getTo(): PositionType {
     return this.peer.getTo();
-  }
-
-  static setPosition() {
-    throw new Error('Unsupported operation');
-  }
-
-  static setSize() {
-    throw new Error('Unsupported operation');
-  }
-
-  static setFill() {
-    throw new Error('Unsupported operation');
   }
 }
 

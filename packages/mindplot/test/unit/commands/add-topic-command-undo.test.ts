@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 
+import { buildDesigner } from './designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner } from './designer-harness';
 
 // A is collapsed: its child A1 is hidden.
 const MAP = [
@@ -143,5 +143,22 @@ describe('AddTopicCommand with a missing parent', () => {
     designer.redo();
     expect(save()).toEqual(after);
     warn.mockRestore();
+  });
+
+  // BL5-43: a null entry was neither connected nor added as a branch, so it was never saved.
+  it('adds a topic with a null parent id as a floating topic', async () => {
+    const { designer, save } = await buildDesigner(MAP);
+
+    const child = createTopic(designer, 'Child');
+    const floating = createTopic(designer, 'Floating');
+    designer.getActionDispatcher().addTopics([child, floating], [3, null as unknown as number]);
+
+    expect(
+      designer
+        .getMindmap()
+        .getBranches()
+        .map((b) => b.getId()),
+    ).toContain(floating.getId());
+    expect(save()).toContain('text="Floating"');
   });
 });

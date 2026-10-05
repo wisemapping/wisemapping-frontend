@@ -17,6 +17,7 @@
  */
 import Messages, { $msg } from '../../../src/components/Messages';
 import Bundle from '../../../src/components/lang/Bundle';
+import type { LocaleMessages } from '../../../src/components/lang/en';
 
 describe('Messages locale resolution', () => {
   afterEach(() => {
@@ -34,7 +35,7 @@ describe('Messages locale resolution', () => {
     ['fr', 'fr'],
   ])('resolves %s to the %s bundle', (locale, bundle) => {
     Messages.init(locale);
-    expect($msg('MAIN_TOPIC')).toBe(Bundle[bundle].MAIN_TOPIC);
+    expect($msg('MAIN_TOPIC')).toBe(Bundle[bundle]?.MAIN_TOPIC);
   });
 
   it.each(['xx', 'xx-YY', ''])('falls back to English for unknown locale %p', (locale) => {
@@ -49,12 +50,27 @@ describe('$msg fallback', () => {
   });
 
   it('falls back to the English text when the active bundle lacks the key', () => {
-    Messages.__bundle = {};
+    // Bundles are typed complete: an incomplete one can only come from outside the type system.
+    Messages.__bundle = {} as LocaleMessages;
     expect($msg('MAIN_TOPIC')).toBe('Main Topic');
   });
 
   it('returns the key only when no bundle has it', () => {
     Messages.init('es');
+    // @ts-expect-error an unknown key does not compile
     expect($msg('NO_SUCH_KEY')).toBe('NO_SUCH_KEY');
+  });
+});
+
+// ts-jest type-checks the tests: these fail to compile while the bundles are string records.
+describe('typed bundles (T4)', () => {
+  it('a locale must translate every key, and only those', () => {
+    const { NOTE, ...withoutNote } = Bundle.en;
+    expect(NOTE).toBe('Note');
+    // @ts-expect-error NOTE is missing
+    const missing: LocaleMessages = withoutNote;
+    // @ts-expect-error EXTRA is not a key
+    const extra: LocaleMessages = { ...Bundle.en, EXTRA: 'x' };
+    expect([missing, extra]).toHaveLength(2);
   });
 });

@@ -28,11 +28,11 @@ class RelationshipPivot {
 
   private _designer: Designer;
 
-  private _mouseMoveEvent: (event: Event, detail?: unknown) => void;
+  private _mouseMoveEvent: (event: Event) => void;
 
-  private _onClickEvent: (event: Event, detail?: unknown) => void;
+  private _onClickEvent: (event: Event) => void;
 
-  private _onTopicClick: (event: Event, targetTopic: Topic) => void;
+  private _onTopicClick: (event: CustomEvent<Topic>) => void;
 
   private _sourceTopic: Topic | null;
 
@@ -181,7 +181,9 @@ class RelationshipPivot {
     return Relationship.calculateSnapPoint(sourceTopic, toPosition);
   }
 
-  private _connectOnFocus(event: Event, targetTopic: Topic): void {
+  /** A topic took the focus: its 'ontfocus' event carries the topic as detail. */
+  private _connectOnFocus(event: CustomEvent<Topic>): void {
+    const targetTopic = event.detail;
     const sourceTopic = this._sourceTopic;
     const mindmap = this._designer.getMindmap();
 

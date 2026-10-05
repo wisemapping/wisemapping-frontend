@@ -18,8 +18,6 @@
 
 /// <reference types="cypress" />
 describe('Image Emoji Suite', () => {
-
-
   beforeEach(() => {
     cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();
@@ -57,13 +55,15 @@ describe('Image Emoji Suite', () => {
     cy.waitForIconsGalleryTab();
 
     // Click on a different image (second one) to replace the first
-    cy.get('img').should('have.length.gt', 0).then(($imgs) => {
-      if ($imgs.length >= 2) {
-        cy.get('img').eq(1).parent().click({ force: true });
-      } else {
-        cy.get('img').eq(0).parent().click({ force: true });
-      }
-    });
+    cy.get('img')
+      .should('have.length.gt', 0)
+      .then(($imgs) => {
+        if ($imgs.length >= 2) {
+          cy.get('img').eq(1).parent().click({ force: true });
+        } else {
+          cy.get('img').eq(0).parent().click({ force: true });
+        }
+      });
 
     cy.matchImageSnapshot('image-icon-replaced');
   });

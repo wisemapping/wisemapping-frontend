@@ -32,9 +32,35 @@ import HeartbeatLine from './components/HeartbeatLine';
 import NeuronLine from './components/NeuronLine';
 import WorkspaceElement from './components/WorkspaceElement';
 import type Line from './components/Line';
+import type { ControlPointLine } from './components/Line';
 import ElementPeer from './components/peer/svg/ElementPeer';
 import type { FontStyle } from './components/peer/svg/FontPeer';
+import type {
+  CustomEventMap,
+  ElementEvent,
+  ElementListener,
+  EventDetail,
+} from './components/peer/svg/ElementPeer';
+import type { ElementEventListener } from './components/WorkspaceElement';
 import type StyleAttributes from './components/StyleAttributes';
+import { STRAIGHT_TOLERANCE_PX, isWithinStraightTolerance } from './components/geometry/polyline';
+import { defaultControlPoints } from './components/geometry/curve';
+import {
+  STROKE_STYLES,
+  POLYLINE_STYLES,
+  ORIENTATIONS,
+  FONT_STYLES,
+  FONT_WEIGHTS,
+  ELEMENT_TYPES,
+} from './components/types';
+import type {
+  StrokeStyle,
+  PolyLineStyle,
+  Orientation,
+  FontStyleType,
+  FontWeightType,
+  ElementType,
+} from './components/types';
 
 export {
   Arrow,
@@ -53,6 +79,31 @@ export {
   Text,
   Workspace,
   ElementPeer,
+  STRAIGHT_TOLERANCE_PX,
+  STROKE_STYLES,
+  POLYLINE_STYLES,
+  ORIENTATIONS,
+  FONT_STYLES,
+  FONT_WEIGHTS,
+  ELEMENT_TYPES,
+  isWithinStraightTolerance,
+  defaultControlPoints,
 };
 
-export type { Line, StyleAttributes, FontStyle };
+export type {
+  Line,
+  ControlPointLine,
+  StyleAttributes,
+  FontStyle,
+  CustomEventMap,
+  ElementEvent,
+  ElementEventListener,
+  ElementListener,
+  EventDetail,
+  StrokeStyle,
+  PolyLineStyle,
+  Orientation,
+  FontStyleType,
+  FontWeightType,
+  ElementType,
+};

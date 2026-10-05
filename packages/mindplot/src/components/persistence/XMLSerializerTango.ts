@@ -24,43 +24,19 @@ import NodeModel from '../model/NodeModel';
 import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import ModelCodeName from './ModelCodeName';
-import FeatureType from '../model/FeatureType';
+import FeatureModel from '../model/FeatureModel';
 import { legacyIconEmoji } from '../import/support/LegacyIconMap';
 import {
+  isBackgroundPatternType,
   isFontStyleType,
   isFontWeightType,
+  isLayoutType,
   isLineType,
+  isStrokeStyle,
+  isThemeType,
   isTopicShapeType,
 } from './TopicAttributeTypes';
-import ThemeType from '../model/ThemeType';
-import { CanvasStyleType, BackgroundPatternType } from '../model/CanvasStyleType';
-import { LAYOUT_ORIENTATION, type LayoutType } from '../layout/LayoutType';
-
-// Keyed by the union, so the compiler reports a theme or pattern added to the type but not here.
-const THEME_TYPES: Record<ThemeType, true> = {
-  classic: true,
-  prism: true,
-  robot: true,
-  sunrise: true,
-  ocean: true,
-  aurora: true,
-  retro: true,
-};
-
-const BACKGROUND_PATTERN_TYPES: Record<BackgroundPatternType, true> = {
-  solid: true,
-  grid: true,
-  dots: true,
-};
-
-const isThemeType = (value: string): value is ThemeType =>
-  Object.prototype.hasOwnProperty.call(THEME_TYPES, value);
-
-const isLayoutType = (value: string): value is LayoutType =>
-  Object.prototype.hasOwnProperty.call(LAYOUT_ORIENTATION, value);
-
-const isBackgroundPatternType = (value: string): value is BackgroundPatternType =>
-  Object.prototype.hasOwnProperty.call(BACKGROUND_PATTERN_TYPES, value);
+import { CanvasStyleType } from '../model/CanvasStyleType';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -520,9 +496,10 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         topic.setFontFamily(fontFamily);
       }
 
-      const fontSize = fontParts[1];
-      if (fontSize) {
-        topic.setFontSize(Number.parseInt(fontSize, 10));
+      // A non numeric size is ignored, so the theme default applies.
+      const fontSize = Number.parseInt(fontParts[1], 10);
+      if (Number.isFinite(fontSize)) {
+        topic.setFontSize(fontSize);
       }
 
       const fontColor = fontParts[2];
@@ -678,8 +655,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
           }
 
           // Create a new element ....
-          const featureType = elem.tagName as FeatureType;
-          let feature = FeatureModelFactory.createModel(featureType, attributes);
+          const featureType = elem.tagName;
+          let feature: FeatureModel = FeatureModelFactory.createModel(featureType, attributes);
 
           // Migrate icons to emoji ...
           if (featureType === 'icon') {
@@ -687,7 +664,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
             const emoji = XMLSerializerTango.emojiEquivalent(svgIcon);
             if (emoji) {
               attributes.id = emoji;
-              feature = FeatureModelFactory.createModel('eicon' as FeatureType, attributes);
+              feature = FeatureModelFactory.createModel('eicon', attributes);
             }
           }
 
@@ -817,8 +794,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     // Load stroke style if present
     const strokeStyle = domElement.getAttribute('strokeStyle');
-    if (strokeStyle && Object.values(StrokeStyle).includes(strokeStyle as StrokeStyle)) {
-      model.setStrokeStyle(strokeStyle as StrokeStyle);
+    if (strokeStyle && isStrokeStyle(strokeStyle)) {
+      model.setStrokeStyle(strokeStyle);
     } else {
       // Default to dashed for backwards compatibility
       model.setStrokeStyle(StrokeStyle.DASHED);

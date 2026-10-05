@@ -18,9 +18,14 @@
 
 import WorkspaceElement from './WorkspaceElement';
 import RectPeer from './peer/svg/RectPeer';
-import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
-import PositionType from './PositionType';
+import {
+  pointArguments,
+  type AttributeArguments,
+  type AttributeSetter,
+  type ShapeAttributes,
+} from './StyleAttributes';
+import type PositionType from './PositionType';
+import type { ElementType } from './types';
 
 /**
  * Create a rectangle and variations of a rectangle shape.
@@ -29,12 +34,12 @@ import PositionType from './PositionType';
  *     For rounded rectangles, radius of the ellipse used to round off the corners of the rectangle.
  */
 class Rect extends WorkspaceElement<RectPeer> {
-  constructor(arc: number, attributes?: StyleAttributes) {
+  constructor(arc: number, attributes?: ShapeAttributes) {
     if (arc && arc > 1) {
       throw new Error('Arc must be 0<=arc<=1');
     }
-    const peer = Toolkit.createRect(arc);
-    const defaultAttributes = {
+    const peer = new RectPeer(arc);
+    const defaultAttributes: ShapeAttributes = {
       width: 40,
       height: 40,
       x: 5,
@@ -47,7 +52,16 @@ class Rect extends WorkspaceElement<RectPeer> {
     super(peer, mergedAttr);
   }
 
-  getType() {
+  /** Applies the position attributes (x, y, position) too. */
+  protected override applyAttribute(setter: AttributeSetter, args: AttributeArguments): void {
+    if (setter === 'position') {
+      this.setPosition(...pointArguments(args, this.getPosition()));
+    } else {
+      super.applyAttribute(setter, args);
+    }
+  }
+
+  getType(): ElementType {
     return 'Rect';
   }
 

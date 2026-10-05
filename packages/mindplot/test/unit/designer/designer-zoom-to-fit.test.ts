@@ -16,16 +16,15 @@
  *   limitations under the License.
  */
 
+import { buildDesigner } from '../commands/designer-harness';
+import Designer from '../../../src/components/Designer';
+import PositionType from '../../../src/components/PositionType';
+import ScreenManager from '../../../src/components/ScreenManager';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner } from '../commands/designer-harness';
-import Designer from '../../../src/components/Designer';
-import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
-import PositionType from '../../../src/components/PositionType';
-import ScreenManager from '../../../src/components/ScreenManager';
 
 /**
  * Zoom, everywhere in mindplot, is workspace units per screen pixel: the viewBox is the
@@ -196,7 +195,7 @@ describe('Designer.zoomToFit on a map bigger than the container', () => {
 
   it('fires canvasZoomed with the zoom it applied', async () => {
     const designer = await build(WIDTH, HEIGHT);
-    const fired = jest.spyOn(LayoutEventBus, 'fireEvent');
+    const fired = jest.spyOn(designer.getLayoutEventBus(), 'fireEvent');
 
     designer.zoomToFit();
 
@@ -347,6 +346,20 @@ describe('Designer.zoomToFit edge cases', () => {
     expect(center.y).toBeCloseTo(64 + (800 - 64) / 2, 6);
   });
 
+  // BL5-66: a collapsed branch hides its topics, which must not widen the fit.
+  it('ignores the topics hidden under a collapsed branch', async () => {
+    const designer = await build(2000, 1600);
+    designer.getActionDispatcher().shrinkBranch([1], true);
+    const hidden = designer.getModel().findTopicById(2)!;
+    expect(hidden.isVisible()).toBe(false);
+    // A big hidden subtree, far from the visible map.
+    jest.spyOn(hidden, 'getPosition').mockReturnValue({ x: 6000, y: 4000 });
+
+    designer.zoomToFit();
+
+    expect(designer.getModel().getZoom()).toBe(1);
+  });
+
   it('centres an empty map on the origin at 1x', async () => {
     const designer = await build(1000, 800);
     jest.spyOn(designer.getModel(), 'getTopics').mockReturnValue([]);
@@ -356,20 +369,111 @@ describe('Designer.zoomToFit edge cases', () => {
     expect(designer.getModel().getZoom()).toBe(1);
     expect(viewportOf(designer).origin).toEqual({ x: -500, y: -400 });
   });
+});
 
-  it('keeps the fitted zoom when the container is resized afterwards', async () => {
+/**
+ * BL5-68: a container resize re-fits the map when the view is still the one zoomToFit left
+ * (the user asked to see the whole map, with the insets clear). Once the user zoomed or panned,
+ * the view is theirs: the resize keeps the zoom and the point at the centre of the view.
+ */
+describe('Designer container resize', () => {
+  const resize = (designer: Designer, width: number, height: number): void => {
+    sizeContainer(designer, width, height);
+    window.dispatchEvent(new Event('resize'));
+  };
+
+  /** The viewport and zoom zoomToFit gives at a size, on a fresh designer. */
+  const fittedAt = async (width: number, height: number, top: number) => {
+    const designer = await build(width, height);
+    designer.zoomToFit({ insets: { top } });
+    return { viewport: viewportOf(designer), zoom: designer.getModel().getZoom() };
+  };
+
+  it('re-fits a fitted map, with its insets', async () => {
+    const designer = await build(400, 300);
+    designer.setViewportInsets({ top: 64 });
+    designer.zoomToFit();
+
+    resize(designer, 800, 500);
+
+    const expected = await fittedAt(800, 500, 64);
+    expect(viewportOf(designer).origin.x).toBeCloseTo(expected.viewport.origin.x, 6);
+    expect(viewportOf(designer).origin.y).toBeCloseTo(expected.viewport.origin.y, 6);
+    expect(viewportOf(designer).size.width).toBeCloseTo(expected.viewport.size.width, 6);
+    expect(designer.getModel().getZoom()).toBeCloseTo(expected.zoom, 6);
+    expect(designer.getWorkSpace().getZoom()).toBeCloseTo(expected.zoom, 6);
+    expect(scaleOf(designer)).toBeCloseTo(expected.zoom, 6);
+    const center = toScreen(designer, contentCenterOf(designer));
+    expect(center.y).toBeCloseTo(64 + (500 - 64) / 2, 6);
+  });
+
+  it('keeps re-fitting through several resizes', async () => {
     const designer = await build(400, 300);
     designer.zoomToFit();
-    const k = viewportOf(designer).size.width / 400;
 
-    sizeContainer(designer, 800, 500);
-    window.dispatchEvent(new Event('resize'));
+    resize(designer, 800, 500);
+    resize(designer, 300, 200);
 
-    const viewport = viewportOf(designer);
-    expect(viewport.svgWidth).toBe(800);
-    expect(viewport.size.width).toBeCloseTo(800 * k, 6);
-    expect(viewport.size.height).toBeCloseTo(500 * k, 6);
+    const expected = await fittedAt(300, 200, 0);
+    expect(designer.getModel().getZoom()).toBeCloseTo(expected.zoom, 6);
+  });
+
+  it.each([
+    ['zoomed', (designer: Designer) => designer.zoomIn()],
+    ['panned', (designer: Designer) => designer.panBy(30, -20)],
+  ])('keeps the zoom and the centre of a fitted map the user %s since', async (_label, change) => {
+    const designer = await build(400, 300);
+    designer.zoomToFit();
+    change(designer);
+    const before = viewportOf(designer);
+    const k = before.size.width / 400;
+    const centre = {
+      x: before.origin.x + before.size.width / 2,
+      y: before.origin.y + before.size.height / 2,
+    };
+
+    resize(designer, 800, 500);
+
+    const after = viewportOf(designer);
+    expect(after.svgWidth).toBe(800);
+    expect(after.size.width).toBeCloseTo(800 * k, 6);
+    expect(after.size.height).toBeCloseTo(500 * k, 6);
     expect(designer.getWorkSpace().getZoom()).toBeCloseTo(k, 6);
     expect(scaleOf(designer)).toBeCloseTo(k, 6);
+    expect(after.origin.x + after.size.width / 2).toBeCloseTo(centre.x, 6);
+    expect(after.origin.y + after.size.height / 2).toBeCloseTo(centre.y, 6);
+  });
+
+  it('keeps the zoom of a map that was never fitted', async () => {
+    const designer = await build(400, 300);
+
+    resize(designer, 800, 500);
+
+    expect(designer.getModel().getZoom()).toBe(1);
+    expect(viewportOf(designer).size).toEqual({ width: 800, height: 500 });
+  });
+});
+
+// BL5-67: setZoom accepted 0.3-1.9 while zoomIn/zoomOut go from 0.3 to 7, so a zoom reached
+// by zooming out was rejected when set back.
+describe('Designer.setZoom range', () => {
+  it('accepts every zoom zoomIn and zoomOut can reach', async () => {
+    const designer = await build(1000, 800);
+
+    designer.setZoom(7);
+    expect(designer.getModel().getZoom()).toBe(7);
+    expect(designer.getWorkSpace().getZoom()).toBe(7);
+
+    designer.setZoom(0.3);
+    expect(designer.getModel().getZoom()).toBe(0.3);
+  });
+
+  it('rejects a zoom outside that range', async () => {
+    const designer = await build(1000, 800);
+
+    designer.setZoom(7.5);
+    designer.setZoom(0.2);
+
+    expect(designer.getModel().getZoom()).toBe(1);
   });
 });

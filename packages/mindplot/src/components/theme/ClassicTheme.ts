@@ -65,17 +65,14 @@ class ClassicTheme extends DefaultTheme {
   }
 
   getFontColor(topic: Topic): string {
-    const model = topic.getModel();
-    let result = model.getFontColor();
-
-    // If topic has a custom font color, always use it
-    if (result) {
-      return result;
+    // A color picked by the user (on the topic or an ancestor) is used as is ...
+    const picked = this.resolve('fontColor', topic, false) as string | undefined;
+    if (picked) {
+      return picked;
     }
 
-    // Use theme colors from style system
-    result = this.resolve('fontColor', topic) as string;
-    return result;
+    // The theme color, as long as it can be read on the fill or, without one, on the canvas.
+    return this.readableTextColor(topic, this.getStyles(topic).fontColor);
   }
 }
 

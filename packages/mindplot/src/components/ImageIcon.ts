@@ -29,7 +29,9 @@ abstract class ImageIcon implements Icon {
   private _group: IconGroup | null;
 
   constructor(url: string) {
-    $assert(url, 'image url can not be null');
+    // An empty url is an icon whose image is unknown (SvgImageIcon warns about it): it is drawn
+    // as an empty image, so the topic and its map still load.
+    $assert(url !== undefined && url !== null, 'image url can not be null');
     this._image = new Image();
     this._image.setHref(url);
     this._image.setSize(ImageIcon.SIZE, ImageIcon.SIZE);

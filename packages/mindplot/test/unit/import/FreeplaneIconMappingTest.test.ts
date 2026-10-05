@@ -18,6 +18,9 @@
 
 import FreeplaneImporter from '../../../src/components/import/FreeplaneImporter';
 
+// The private icon mapper under test.
+type IconMapper = { mapFreeplaneIconToEmojiIcon(builtin: string): string };
+
 describe('Freeplane Icon Mapping Tests', () => {
   let importer: FreeplaneImporter;
 
@@ -27,7 +30,9 @@ describe('Freeplane Icon Mapping Tests', () => {
 
   describe('Icon Mapping Functionality', () => {
     test('should map priority and status icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('flag_red')).toBe('🔴'); // 🔴
       expect(mapIcon('flag_yellow')).toBe('🟡'); // 🟡
@@ -39,7 +44,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map star and rating icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('star')).toBe('⭐'); // ⭐
       expect(mapIcon('star_yellow')).toBe('⭐'); // ⭐
@@ -49,7 +56,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map task and completion icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('task')).toBe('📋'); // 📋
       expect(mapIcon('task_done')).toBe('✅'); // ✅
@@ -59,7 +68,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map arrow and direction icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('arrow_up')).toBe('⬆️'); // ⬆️
       expect(mapIcon('arrow_down')).toBe('⬇️'); // ⬇️
@@ -72,7 +83,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map emotion icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('smile')).toBe('😊'); // 😊
       expect(mapIcon('sad')).toBe('😢'); // 😢
@@ -96,7 +109,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map number icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('number_1')).toBe('1️⃣'); // 1️⃣
       expect(mapIcon('number_2')).toBe('2️⃣'); // 2️⃣
@@ -111,7 +126,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map letter icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('letter_a')).toBe('🅰️'); // 🅰️
       expect(mapIcon('letter_b')).toBe('🅱️'); // 🅱️
@@ -142,7 +159,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map people icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('people')).toBe('👥'); // 👥
       expect(mapIcon('person')).toBe('👤'); // 👤
@@ -152,7 +171,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map time and calendar icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('clock')).toBe('🕐'); // 🕐
       expect(mapIcon('calendar')).toBe('📅'); // 📅
@@ -164,7 +185,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map file and document icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('file')).toBe('📄'); // 📄
       expect(mapIcon('folder')).toBe('📁'); // 📁
@@ -173,7 +196,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map warning and info icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('warning')).toBe('⚠️'); // ⚠️
       expect(mapIcon('info')).toBe('ℹ️'); // ℹ️
@@ -182,7 +207,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map heart and like icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('heart')).toBe('❤️'); // ❤️
       expect(mapIcon('like')).toBe('👍'); // 👍
@@ -190,7 +217,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map idea and lightbulb icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('lightbulb')).toBe('💡'); // 💡
       expect(mapIcon('idea')).toBe('💡'); // 💡
@@ -198,7 +227,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map money and currency icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('money')).toBe('💰'); // 💰
       expect(mapIcon('dollar')).toBe('💲'); // 💲
@@ -207,7 +238,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map location and building icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('location')).toBe('📍'); // 📍
       expect(mapIcon('home')).toBe('🏠'); // 🏠
@@ -216,7 +249,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map technology icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('computer')).toBe('💻'); // 💻
       expect(mapIcon('laptop')).toBe('💻'); // 💻
@@ -225,7 +260,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map weather icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('sun')).toBe('☀️'); // ☀️
       expect(mapIcon('cloud')).toBe('☁️'); // ☁️
@@ -244,7 +281,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map animal icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('dog')).toBe('🐶'); // 🐶
       expect(mapIcon('cat')).toBe('🐱'); // 🐱
@@ -280,7 +319,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map food and drink icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('coffee')).toBe('☕'); // ☕
       expect(mapIcon('food')).toBe('🍽️'); // 🍽️
@@ -313,7 +354,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map sports and activity icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('sports')).toBe('⚽'); // ⚽
       expect(mapIcon('football')).toBe('⚽'); // ⚽
@@ -353,7 +396,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map music and entertainment icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('music')).toBe('🎵'); // 🎵
       expect(mapIcon('movie')).toBe('🎬'); // 🎬
@@ -362,7 +407,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map travel and transport icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('car')).toBe('🚗'); // 🚗
       expect(mapIcon('plane')).toBe('✈️'); // ✈️
@@ -372,7 +419,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map nature icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('tree')).toBe('🌳'); // 🌳
       expect(mapIcon('flower')).toBe('🌸'); // 🌸
@@ -382,7 +431,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map holiday and celebration icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('gift')).toBe('🎁'); // 🎁
       expect(mapIcon('cake')).toBe('🎂'); // 🎂
@@ -393,7 +444,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map tools and work icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('tool')).toBe('🔧'); // 🔧
       expect(mapIcon('wrench')).toBe('🔧'); // 🔧
@@ -404,7 +457,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map medical and health icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('medical')).toBe('🏥'); // 🏥
       expect(mapIcon('health')).toBe('💊'); // 💊
@@ -414,7 +469,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map shopping and commerce icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('shopping')).toBe('🛒'); // 🛒
       expect(mapIcon('cart')).toBe('🛒'); // 🛒
@@ -423,7 +480,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map security and safety icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('security')).toBe('🔒'); // 🔒
       expect(mapIcon('shield')).toBe('🛡️'); // 🛡️
@@ -432,7 +491,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should map science and education icons correctly', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('science')).toBe('🔬'); // 🔬
       expect(mapIcon('microscope')).toBe('🔬'); // 🔬
@@ -443,7 +504,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should handle case insensitive mapping', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('FLAG_RED')).toBe('🔴'); // 🔴
       expect(mapIcon('STAR')).toBe('⭐'); // ⭐
@@ -451,7 +514,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should return default icon for unknown icons', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('unknown-icon')).toBe('💡'); // 💡 (default)
       expect(mapIcon('non-existent')).toBe('💡'); // 💡 (default)
@@ -459,7 +524,9 @@ describe('Freeplane Icon Mapping Tests', () => {
     });
 
     test('should handle edge cases', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       expect(mapIcon('flag_0')).toBe('💡'); // 💡 (default)
       expect(mapIcon('flag_8')).toBe('💡'); // 💡 (default)
@@ -469,7 +536,9 @@ describe('Freeplane Icon Mapping Tests', () => {
 
   describe('Icon Mapping Coverage', () => {
     test('should have comprehensive icon coverage', () => {
-      const mapIcon = (importer as any).mapFreeplaneIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapFreeplaneIconToEmojiIcon.bind(
+        importer,
+      );
 
       // Test a representative sample from each category
       const testIcons = [

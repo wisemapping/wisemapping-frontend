@@ -24,7 +24,7 @@ describe('ArcLine Suite', () => {
 
   it('ArcLine Stroke', () => {
     cy.visit('/iframe.html?args=&id=shapes-arcline--stroke&viewMode=story');
-    cy.get('path').first().should('have.attr', 'stroke-dasharray', '10 5');
+    cy.get('path').first().should('have.attr', 'stroke-dasharray', '100 50');
     cy.matchImageSnapshot('arcline-stroke');
   });
 });

@@ -33,6 +33,7 @@ import ExportDialog from './export-dialog';
 import ShareDialog from './share-dialog';
 import LabelDialog from './label-dialog';
 import { trackMindmapListAction } from '../../../utils/analytics';
+import type { Designer } from '@wisemapping/editor';
 
 export type BasicMapInfo = {
   name: string;
@@ -45,6 +46,8 @@ type ActionDialogProps = {
   onClose: (success?: boolean) => void;
   fromEditor: boolean;
   pageMode?: PageModeType;
+  /** The designer of the editor the action comes from, if any. */
+  designer?: Designer;
 };
 
 const ActionDispatcher = ({
@@ -53,6 +56,7 @@ const ActionDispatcher = ({
   onClose,
   fromEditor,
   pageMode,
+  designer,
 }: ActionDialogProps): React.ReactElement => {
   useEffect(() => {
     if (action) {
@@ -82,7 +86,7 @@ const ActionDispatcher = ({
           break;
       }
     }
-  }, [action, mapsId, onClose]);
+  }, [action, mapsId, onClose, pageMode]);
 
   const handleOnClose = (success?: boolean): void => {
     onClose(success);
@@ -104,7 +108,12 @@ const ActionDispatcher = ({
       {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'export' && (
-        <ExportDialog onClose={handleOnClose} mapId={mapsId[0]} enableImgExport={fromEditor} />
+        <ExportDialog
+          onClose={handleOnClose}
+          mapId={mapsId[0]}
+          enableImgExport={fromEditor}
+          designer={designer}
+        />
       )}
       {action === 'share' && <ShareDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'label' && <LabelDialog onClose={handleOnClose} mapsId={mapsId} />}

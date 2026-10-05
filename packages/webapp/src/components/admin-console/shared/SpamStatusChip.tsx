@@ -131,10 +131,17 @@ const SpamStatusChip = ({
       {/* Toggle Spam Button */}
       {showToggleButton && onToggleSpam && (
         <Tooltip
-          title={intl.formatMessage({
-            id: 'admin.maps.toggle-spam',
-            defaultMessage: spam ? 'Mark as not spam' : 'Mark as spam',
-          })}
+          title={
+            spam
+              ? intl.formatMessage({
+                  id: 'admin.maps.mark-as-not-spam',
+                  defaultMessage: 'Mark as not spam',
+                })
+              : intl.formatMessage({
+                  id: 'admin.maps.mark-as-spam',
+                  defaultMessage: 'Mark as spam',
+                })
+          }
         >
           <span>
             <IconButton

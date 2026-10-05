@@ -17,19 +17,31 @@
  */
 import { $defined } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
-import ElementPeer from './peer/svg/ElementPeer';
+import type ElementPeer from './peer/svg/ElementPeer';
 import WorkspacePeer from './peer/svg/WorkspacePeer';
-import PositionType from './PositionType';
-import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
+import type PositionType from './PositionType';
+import type SizeType from './SizeType';
+import { IDENTITY, applyMatrix, invertMatrix } from './geometry/matrix';
+import {
+  pointArguments,
+  sizeArguments,
+  toLength,
+  toNumber,
+  toStrokeStyle,
+  toText,
+  type AttributeArguments,
+  type AttributeSetter,
+  type WorkspaceAttributes,
+} from './StyleAttributes';
+import { isStrokeStyle, type ElementType, type StrokeStyle } from './types';
 
 class Workspace extends WorkspaceElement<WorkspacePeer> {
-  private _htmlContainer: HTMLElement;
+  private readonly _htmlContainer: HTMLElement;
 
-  constructor(attributes?: StyleAttributes) {
+  constructor(attributes?: WorkspaceAttributes) {
     const htmlContainer = Workspace._createDivContainer();
-    const peer = Toolkit.createWorkspace();
-    const defaultAttributes: StyleAttributes = {
+    const peer = new WorkspacePeer();
+    const defaultAttributes: WorkspaceAttributes = {
       width: '400px',
       height: '400px',
       stroke: '1px solid #edf1be',
@@ -48,8 +60,44 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     htmlContainer.append(this.peer._native);
   }
 
-  getType(): string {
+  /**
+   * Applies the coordinate attributes too. The size and the stroke width keep CSS lengths
+   * ('400px', '1px') as they are.
+   */
+  protected override applyAttribute(setter: AttributeSetter, args: AttributeArguments): void {
+    switch (setter) {
+      case 'size':
+        this.setSize(toLength(args[0]), toLength(args[1]));
+        break;
+      case 'stroke':
+        this.setStroke(
+          toLength(args[0]) ?? null,
+          toStrokeStyle(args[1]),
+          toText(args[2]),
+          toNumber(args[3]),
+        );
+        break;
+      case 'coordSize':
+        this.setCoordSize(...sizeArguments(args, this.getCoordSize()));
+        break;
+      case 'coordOrigin':
+        this.setCoordOrigin(...pointArguments(args, this.getCoordOrigin()));
+        break;
+      default:
+        super.applyAttribute(setter, args);
+    }
+  }
+
+  getType(): ElementType {
     return 'Workspace';
+  }
+
+  /**
+   * Removes every listener added with addEvent() to this element and to every element in it,
+   * for example when a map is torn down. The elements stay usable.
+   */
+  override dispose(): void {
+    this.peer.disposeTree();
   }
 
   /**
@@ -98,7 +146,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
    * pt (points; 1pt=1/72in)
    * pc (picas; 1pc=12pt)
    */
-  setSize(width: string | number, height: string | number) {
+  override setSize(width?: string | number | null, height?: string | number | null): void {
     // HTML container must have the size of the group element.
     if (width) {
       this._htmlContainer.style.width = String(width);
@@ -107,18 +155,18 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     if (height) {
       this._htmlContainer.style.height = String(height);
     }
-    this.peer.setSize(Number.parseInt(String(width), 10), Number.parseInt(String(height), 10));
+    // A missing width or height keeps the current one.
+    this.peer.setSize(Workspace.toPixels(width), Workspace.toPixels(height));
+  }
+
+  /** The pixels of a size given in pixels or as a CSS length ('400px'). */
+  private static toPixels(value?: string | number | null): number | undefined {
+    return value == null ? undefined : Number.parseInt(String(value), 10);
   }
 
   /**
-   * The workspace element is a containing blocks for this content
-   * - they define a CSS2 "block level box".
-   * Inside the containing block a local coordinate system is
-   * defined for any sub-elements using the coordsize and coordorigin attributes.
-   * All CSS2 positioning information is expressed in terms of this local coordinate space.
-   * Consequently CSS2 position attributes (left, top, width, height
-   * and so on) have no unit specifier -
-   * they are simple numbers, not CSS length quantities.
+   * The size of the workspace coordinate system, in user units: the SVG viewBox width and height,
+   * stretched to the workspace size.
    */
   setCoordSize(width: number | string, height: number | string): void {
     this.peer.setCoordSize(Number.parseFloat(String(width)), Number.parseFloat(String(height)));
@@ -145,7 +193,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
 
   /** Sets the container background. The opacity is not supported and is ignored. */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setFill(color: string, _opacity?: number) {
+  override setFill(color: string, _opacity?: number): void {
     if (color) {
       this._htmlContainer.style.backgroundColor = color;
     }
@@ -160,18 +208,25 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
    * Sets the container border. A number width is in pixels; a missing style is solid. The dash
    * styles map to the closest CSS border style, and the opacity is not supported and is ignored.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setStroke(width: number | string | null, style?: string, color?: string, _opacity?: number) {
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  override setStroke(
+    width: number | string | null,
+    style?: StrokeStyle | null,
+    color?: string,
+    _opacity?: number,
+  ): void {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const borderWidth = typeof width === 'number' ? `${width}px` : width;
-    const borderStyle = Workspace._BORDER_STYLES[style || 'solid'];
-    if (!borderStyle) {
+    const strokeStyle = style || 'solid';
+    if (!isStrokeStyle(strokeStyle)) {
       throw new Error(`Unsupported stroke style: '${style}'`);
     }
+    const borderStyle = Workspace._BORDER_STYLES[strokeStyle];
     const border = [borderWidth, borderStyle, color].filter((part) => part).join(' ');
     this._htmlContainer.style.border = border;
   }
 
-  private static _BORDER_STYLES: Record<string, string> = {
+  private static _BORDER_STYLES: Readonly<Record<StrokeStyle, string>> = {
     solid: 'solid',
     dash: 'dashed',
     longdash: 'dashed',
@@ -203,8 +258,72 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     this.peer.removeChild(element.peer);
   }
 
-  getSVGElement(): Element {
-    return this._htmlContainer.firstChild as Element;
+  /**
+   * The workspace coordinates (the user units elements are placed in) of a point given in client
+   * pixels, such as a mouse or pointer event's clientX and clientY. The zoom (coordinate size), the
+   * pan (coordinate origin) and the position of the workspace on the page are all applied, through
+   * the inverse of the SVG screen matrix. A workspace with no area maps nothing, and returns the
+   * point unchanged.
+   */
+  clientToWorld(clientX: number, clientY: number): PositionType {
+    const inverse = invertMatrix(this.peer.getScreenMatrix()) ?? IDENTITY;
+    return applyMatrix(inverse, { x: clientX, y: clientY });
+  }
+
+  /** The client pixels of a point in workspace coordinates: the reverse of clientToWorld(). */
+  worldToClient(x: number, y: number): PositionType {
+    return applyMatrix(this.peer.getScreenMatrix(), { x, y });
+  }
+
+  /**
+   * Calls `callback` with the new content size of `target` each time it changes, and returns a
+   * function that stops observing. `target` defaults to the element the workspace was added to
+   * (addItAsChildTo), or its own container before that.
+   *
+   * It uses a ResizeObserver, so a container resized by the page layout (a side panel opening) is
+   * seen as well as a window resize. The size observed when the call is made is the starting
+   * point, so only a change is reported.
+   *
+   * Without ResizeObserver (an old browser, jsdom), it acts as a window resize listener did: every
+   * window resize is reported, with the target's content size at that moment.
+   */
+  observeResize(callback: (size: SizeType) => void, target?: Element): () => void {
+    const observed = target ?? this._htmlContainer.parentElement ?? this._htmlContainer;
+
+    if (typeof ResizeObserver !== 'undefined') {
+      let last = Workspace.contentSize(observed);
+      const observer = new ResizeObserver((entries) => {
+        entries.forEach(({ contentRect: { width, height } }) => {
+          if (width !== last.width || height !== last.height) {
+            last = { width, height };
+            callback(last);
+          }
+        });
+      });
+      observer.observe(observed);
+      return () => observer.disconnect();
+    }
+
+    const win = observed.ownerDocument.defaultView ?? window;
+    const onResize = () => callback(Workspace.contentSize(observed));
+    win.addEventListener('resize', onResize);
+    return () => win.removeEventListener('resize', onResize);
+  }
+
+  /** The content box size of an element: its client size without the padding. */
+  private static contentSize(element: Element): SizeType {
+    const style = element.ownerDocument.defaultView?.getComputedStyle(element);
+    const padding = (a?: string, b?: string) =>
+      (Number.parseFloat(a ?? '') || 0) + (Number.parseFloat(b ?? '') || 0);
+    return {
+      width: element.clientWidth - padding(style?.paddingLeft, style?.paddingRight),
+      height: element.clientHeight - padding(style?.paddingTop, style?.paddingBottom),
+    };
+  }
+
+  /** The root <svg> node, the only child of the HTML container. */
+  getSVGElement(): SVGSVGElement {
+    return this.peer._native;
   }
 }
 

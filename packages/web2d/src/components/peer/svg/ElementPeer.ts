@@ -16,47 +16,88 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '../utils/assert';
-import SizeType from '../../SizeType';
-import EventUtils from '../utils/EventUtils';
+import type SizeType from '../../SizeType';
+import { isStrokeStyle, type StrokeStyle } from '../../types';
 
-export type ElementListener = (event: Event, detail?: unknown) => void;
+/**
+ * A listener of an element event. It is declared with method syntax, so that its parameter is
+ * checked bivariantly: a listener of a specific event (a MouseEvent, a CustomEvent<D>) is accepted
+ * where the DOM expects an Event, as addEventListener's own typing does. The event a type
+ * dispatches is the one its name maps to (see ElementEvent).
+ */
+export type ElementListener<E extends Event = Event> = {
+  handle(event: E): void;
+}['handle'];
 
-export type StrokeStyle = 'solid' | 'dot' | 'dash' | 'dashdot' | 'longdash';
+/**
+ * Custom event names (fired with trigger()) mapped to the type of their detail. web2d fires none
+ * itself: an element user such as mindplot passes its own map as a type argument (W-TRIGGER).
+ * The default accepts any name and detail.
+ */
+export type CustomEventMap = Record<string, unknown>;
+
+/**
+ * The event a listener of `type` receives: a CustomEvent for a custom event of a specific map `M`
+ * (fired with trigger()), the DOM event for a native type ('click' gets a MouseEvent,
+ * 'pointerdown' a PointerEvent), else an Event.
+ */
+export type ElementEvent<M extends CustomEventMap, K extends string> = string extends keyof M
+  ? NativeEvent<K>
+  : K extends keyof M
+    ? CustomEvent<M[K]>
+    : NativeEvent<K>;
+
+/** The DOM event of a native event type, or Event for any other type. */
+type NativeEvent<K extends string> = K extends keyof SVGElementEventMap
+  ? SVGElementEventMap[K]
+  : Event;
+
+/** The detail a listener of `type` receives: the mapped type of a custom event, else unknown. */
+export type EventDetail<M extends CustomEventMap, K extends string> = K extends keyof M
+  ? M[K]
+  : unknown;
+
+export type { StrokeStyle };
 
 /** Formats a coordinate or length with at most 2 decimals and no trailing zeros. */
 export const formatLength = (value: number): string => String(Math.round(value * 100) / 100 || 0);
 
-class ElementPeer {
-  _native: SVGElement;
+/** The SVG namespace, typed so that createElementNS returns the element type of the tag. */
+export const SVG_NAMESPACE = 'http://www.w3.org/2000/svg' as const;
+
+/**
+ * The SVG implementation behind an element. `N` is the type of its SVG node.
+ */
+class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
+  readonly _native: N;
 
   private _parent: ElementPeer | null;
 
   protected _size: SizeType;
 
-  private _changeListeners: Record<string, unknown>;
-
-  // Native wrappers, by event type and then by listener, so that one listener can be registered
-  // for several types and removed from each of them.
-  private _handlers: Map<string, Map<ElementListener, EventListener>>;
+  // Aborts every listener added with addEvent(): each one is registered with its signal. Created
+  // with the first listener, and replaced by dispose().
+  private _listeners: AbortController | null;
 
   private _children: ElementPeer[];
 
-  private _stokeStyle: string | null;
+  private _stokeStyle: StrokeStyle | null;
 
   // Opacity set with setOpacity(). setVisibility() shows the element at this opacity.
   private _opacity: number;
 
-  constructor(svgElement: SVGElement) {
+  // The dash array last written from the style table, to rescale it when the width changes.
+  private _tableDash: string | null;
+
+  constructor(svgElement: N) {
     this._native = svgElement;
     this._size = { width: 1, height: 1 };
-    this._changeListeners = {};
-    // http://support.adobe.com/devsup/devsup.nsf/docs/50493.htm
-
-    this._handlers = new Map();
+    this._listeners = null;
     this._children = [];
     this._parent = null;
     this._stokeStyle = null;
     this._opacity = 1;
+    this._tableDash = null;
   }
 
   setChildren(children: ElementPeer[]): void {
@@ -78,14 +119,10 @@ class ElementPeer {
   append(elementPeer: ElementPeer): void {
     // Store parent and child relationship.
     elementPeer.setParent(this);
-    const children = this.getChildren();
-    children.push(elementPeer);
+    this._children.push(elementPeer);
 
     // Append element as a child.
     this._native.appendChild(elementPeer._native);
-
-    // Broadcast events ...
-    EventUtils.broadcastChangeEvent(this, 'strokeStyle');
   }
 
   removeChild(elementPeer: ElementPeer): void {
@@ -99,78 +136,82 @@ class ElementPeer {
   }
 
   /**
-   * http://www.w3.org/TR/DOM-Level-3-Events/events.html
-   * http://developer.mozilla.org/en/docs/addEvent
+   * Adds a listener of the `type` events of the element, as addEventListener does: adding the same
+   * listener to one type again is a no-op. A native type passes through unchanged, so Pointer
+   * Events ('pointerdown', 'pointermove', 'pointerup', 'pointercancel') work like mouse events. An
+   * event fired with trigger() is a CustomEvent whose `detail` is the payload.
    */
   addEvent(type: string, listener: ElementListener): void {
-    let byListener = this._handlers.get(type);
-    if (!byListener) {
-      byListener = new Map();
-      this._handlers.set(type, byListener);
-    }
-    // Like addEventListener, adding the same listener twice to one type is a no-op.
-    if (byListener.has(listener)) {
-      return;
-    }
-
-    // The listener gets the event and, for an event fired with trigger(), its payload.
-    const wrappedListener = (e: Event) =>
-      listener(e, e instanceof CustomEvent ? (e.detail as unknown) : undefined);
-    byListener.set(listener, wrappedListener);
-    this._native.addEventListener(type, wrappedListener);
+    this._listeners ??= new AbortController();
+    this._native.addEventListener(type, listener, { signal: this._listeners.signal });
   }
 
-  /** Fires a (non-bubbling) custom event: listeners get `detail` as their second argument. */
+  /**
+   * Fires a non-bubbling CustomEvent of `type`: listeners read the payload from `event.detail`.
+   */
   trigger<D = unknown>(type: string, detail?: D): void {
     this._native.dispatchEvent(new CustomEvent(type, { detail }));
   }
 
   removeEvent(type: string, listener: ElementListener): void {
-    const byListener = this._handlers.get(type);
-    const eventListener = byListener?.get(listener);
-    if (byListener && eventListener) {
-      this._native.removeEventListener(type, eventListener);
-      byListener.delete(listener);
-      if (byListener.size === 0) {
-        this._handlers.delete(type);
+    this._native.removeEventListener(type, listener);
+  }
+
+  /**
+   * Removes every listener added with addEvent(), in one go, by aborting their signal. The element
+   * can still be used afterwards.
+   */
+  dispose(): void {
+    this._listeners?.abort();
+    this._listeners = null;
+  }
+
+  /** dispose() on this element and on every element appended to it, recursively. */
+  disposeTree(): void {
+    this.dispose();
+    this._children.forEach((child) => child.disposeTree());
+  }
+
+  /**
+   * Keeps the element size. Only the elements whose geometry is a width and a height (<svg>,
+   * <rect>, <image>) write them as attributes: on <g>, <text>, <path>, <line>, <polyline> and
+   * <ellipse> they mean nothing, and those peers derive their geometry from the size instead.
+   *
+   * The attributes are always written through attr(), which skips unchanged values: the kept size
+   * is not used to skip them, so a size written around the peer is restored (BL5-64).
+   */
+  setSize(width?: number | null, height?: number | null): void {
+    const writeAttributes = this.hasSizeAttributes();
+    if ($defined(width)) {
+      this._size = { ...this._size, width };
+      if (writeAttributes) {
+        this.attr('width', formatLength(width));
+      }
+    }
+
+    if ($defined(height)) {
+      this._size = { ...this._size, height };
+      if (writeAttributes) {
+        this.attr('height', formatLength(height));
       }
     }
   }
 
-  /** Removes every listener added with addEvent(). The element can still be used afterwards. */
-  dispose(): void {
-    this._handlers.forEach((byListener, type) => {
-      byListener.forEach((eventListener) => {
-        this._native.removeEventListener(type, eventListener);
-      });
-    });
-    this._handlers.clear();
-  }
-
-  setSize(width: number, height: number): void {
-    if ($defined(width) && this._size.width !== width) {
-      this._size.width = width;
-      this._native.setAttribute('width', formatLength(width));
-    }
-
-    if ($defined(height) && this._size.height !== height) {
-      this._size.height = height;
-      this._native.setAttribute('height', formatLength(height));
-    }
-
-    EventUtils.broadcastChangeEvent(this, 'strokeStyle');
+  /** Whether `width` and `height` are geometry attributes of this element. */
+  protected hasSizeAttributes(): boolean {
+    return false;
   }
 
   getSize(): SizeType {
     return { width: this._size.width, height: this._size.height };
   }
 
-  setFill(color: string | null, opacity?: number | null) {
+  setFill(color?: string | null, opacity?: number | null): void {
     if (color) {
-      this._native.setAttribute('fill', color);
+      this.attr('fill', color);
     }
     if ($defined(opacity)) {
-      this._native.setAttribute('fill-opacity', String(opacity));
+      this.attr('fill-opacity', String(opacity));
     }
   }
 
@@ -183,7 +224,7 @@ class ElementPeer {
 
   getStroke(): {
     color: string | null;
-    style: string | null;
+    style: StrokeStyle | null;
     opacity: number;
     width: number | null;
   } {
@@ -199,37 +240,111 @@ class ElementPeer {
     };
   }
 
-  setStroke(width: number | null, style?: string | null, color?: string | null, opacity?: number) {
+  setStroke(
+    width: number | null,
+    style?: StrokeStyle | null,
+    color?: string | null,
+    opacity?: number,
+  ): void {
     if ($defined(width)) {
-      this._native.setAttribute('stroke-width', `${width}`);
+      this.attr('stroke-width', `${width}`);
     }
 
     if (color) {
-      this._native.setAttribute('stroke', color);
+      this.attr('stroke', color);
     }
 
     if (style) {
-      if (!Object.prototype.hasOwnProperty.call(ElementPeer.DASH_ARRAYS, style)) {
+      if (!isStrokeStyle(style)) {
         throw new Error(`Unsupported style: ${style}`);
       }
       this._stokeStyle = style;
-      const dashArray = ElementPeer.DASH_ARRAYS[style as StrokeStyle];
-      // Solid removes the attributes: an empty value is invalid SVG.
-      if (dashArray.length > 0) {
-        this._native.setAttribute('stroke-dasharray', dashArray.join(' '));
-      } else {
-        this._native.removeAttribute('stroke-dasharray');
-      }
-      const lineCap = ElementPeer.DASH_LINE_CAPS[style as StrokeStyle];
+      this.writeTableDash(style);
+      const lineCap = ElementPeer.DASH_LINE_CAPS[style];
       if (lineCap) {
-        this._native.setAttribute('stroke-linecap', lineCap);
+        this.attr('stroke-linecap', lineCap);
       } else {
-        this._native.removeAttribute('stroke-linecap');
+        this.removeAttr('stroke-linecap');
       }
+    } else if ($defined(width)) {
+      this.rescaleTableDash();
     }
 
     if ($defined(opacity)) {
-      this._native.setAttribute('stroke-opacity', String(opacity));
+      this.attr('stroke-opacity', String(opacity));
+    }
+  }
+
+  /** The stroke width the dash lengths scale with: the written one, or the SVG default of 1. */
+  private dashScale(): number {
+    const width = Number.parseFloat(this._native.getAttribute('stroke-width') ?? '');
+    return width > 0 ? width : 1;
+  }
+
+  /** Writes the style's dash array, scaled with the stroke width. Solid removes it. */
+  private writeTableDash(style: StrokeStyle): void {
+    const dashArray = ElementPeer.dashArray(style, this.dashScale());
+    // Solid removes the attributes: an empty value is invalid SVG.
+    if (dashArray) {
+      this.attr('stroke-dasharray', dashArray);
+    } else {
+      this.removeAttr('stroke-dasharray');
+    }
+    this._tableDash = dashArray || null;
+  }
+
+  /**
+   * A new width rescales the dash array written from the style table (BL5-77). A dash written by
+   * other means (CurvedLine and Arrow setDashed) is left alone.
+   */
+  private rescaleTableDash(): void {
+    const style = this._stokeStyle;
+    if (
+      style &&
+      this._tableDash !== null &&
+      this._native.getAttribute('stroke-dasharray') === this._tableDash
+    ) {
+      this.writeTableDash(style);
+    }
+  }
+
+  /**
+   * The dash array of a style as an attribute value ('' for solid). The table lengths are for a
+   * stroke width of 1 and are multiplied by the width, so a thick dashed stroke keeps the same
+   * look instead of closing its gaps (BL5-77).
+   */
+  static dashArray(style: StrokeStyle, strokeWidth: number): string {
+    const scale = strokeWidth > 0 ? strokeWidth : 1;
+    return ElementPeer.DASH_ARRAYS[style].map((length) => formatLength(length * scale)).join(' ');
+  }
+
+  /**
+   * Writes an attribute only when its value changes, so a redraw that sets the same values costs
+   * no DOM writes. The DOM itself is the cache: a write made around the peer (mindplot writes some
+   * attributes on the native node directly) can never leave it stale.
+   */
+  protected attr(name: string, value: string): void {
+    ElementPeer.writeAttribute(this._native, name, value);
+  }
+
+  /** Removes an attribute, if it is set. */
+  protected removeAttr(name: string): void {
+    if (this._native.hasAttribute(name)) {
+      this._native.removeAttribute(name);
+    }
+  }
+
+  /** Writes an attribute of any element only when its value changes. */
+  static writeAttribute(element: Element, name: string, value: string): void {
+    if (element.getAttribute(name) !== value) {
+      element.setAttribute(name, value);
+    }
+  }
+
+  /** Writes an inline style property only when its value changes. */
+  private writeStyle(name: 'opacity' | 'transition' | 'cursor', value: string): void {
+    if (this._native.style[name] !== value) {
+      this._native.style[name] = value;
     }
   }
 
@@ -239,7 +354,7 @@ class ElementPeer {
    */
   setOpacity(value: number): void {
     this._opacity = value;
-    this._native.style.opacity = String(this.isVisible() ? value : 0);
+    this.writeStyle('opacity', String(this.isVisible() ? value : 0));
   }
 
   getOpacity(): number {
@@ -247,45 +362,19 @@ class ElementPeer {
   }
 
   setVisibility(value: boolean, fade?: number) {
-    this._native.setAttribute('visibility', value ? 'visible' : 'hidden');
+    this.attr('visibility', value ? 'visible' : 'hidden');
     // Shown at the opacity set with setOpacity(), and faded through the same property.
-    this._native.style.opacity = String(value ? this._opacity : 0);
+    this.writeStyle('opacity', String(value ? this._opacity : 0));
     if (fade) {
-      this._native.style.transition = `visibility ${fade}ms, opacity ${fade}ms`;
+      this.writeStyle('transition', `visibility ${fade}ms, opacity ${fade}ms`);
     } else {
-      this._native.style.transition = '';
+      this.writeStyle('transition', '');
     }
   }
 
   isVisible(): boolean {
     const visibility = this._native.getAttribute('visibility');
     return !(visibility === 'hidden');
-  }
-
-  updateStrokeStyle() {
-    const strokeStyle = this._stokeStyle;
-    if (this.getParent()) {
-      if (strokeStyle && strokeStyle !== 'solid') {
-        this.setStroke(null, strokeStyle);
-      }
-    }
-  }
-
-  attachChangeEventListener(type: string, listener: (arg: unknown) => void) {
-    const listeners = this.getChangeEventListeners(type) as ((arg: unknown) => void)[];
-    if (!$defined(listener)) {
-      throw new Error('Listener can not be null');
-    }
-    listeners.push(listener);
-  }
-
-  getChangeEventListeners(type: string) {
-    let listeners = this._changeListeners[type];
-    if (!$defined(listeners)) {
-      listeners = [];
-      this._changeListeners[type] = listeners;
-    }
-    return listeners;
   }
 
   /**
@@ -309,10 +398,29 @@ class ElementPeer {
   }
 
   setCursor(type: string) {
-    this._native.style.cursor = type;
+    this.writeStyle('cursor', type);
   }
 
-  /** The single dash table, shared by every element type. */
+  addClass(...names: string[]): void {
+    this._native.classList.add(...names);
+  }
+
+  removeClass(...names: string[]): void {
+    this._native.classList.remove(...names);
+  }
+
+  /** Toggles a class (see DOMTokenList.toggle); returns whether the element has it afterwards. */
+  toggleClass(name: string, force?: boolean): boolean {
+    return force === undefined
+      ? this._native.classList.toggle(name)
+      : this._native.classList.toggle(name, force);
+  }
+
+  hasClass(name: string): boolean {
+    return this._native.classList.contains(name);
+  }
+
+  /** The single dash table, shared by every element type, for a stroke width of 1. */
   static readonly DASH_ARRAYS: Readonly<Record<StrokeStyle, readonly number[]>> = {
     solid: [],
     dot: [1, 8],
@@ -340,7 +448,12 @@ class ElementPeer {
     };
   }
 
-  protected static svgNamespace = 'http://www.w3.org/2000/svg';
+  /** Creates an SVG node of `tag`, typed as its element (SVGRectElement for 'rect', ...). */
+  protected static createNode<K extends keyof SVGElementTagNameMap>(
+    tag: K,
+  ): SVGElementTagNameMap[K] {
+    return window.document.createElementNS(SVG_NAMESPACE, tag);
+  }
 
   protected static linkNamespace = 'http://www.w3.org/1999/xlink';
 }

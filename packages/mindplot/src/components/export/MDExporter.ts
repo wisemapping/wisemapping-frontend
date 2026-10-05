@@ -16,9 +16,7 @@
  *   limitations under the License.
  */
 import { Mindmap } from '../..';
-import EmojiIconModel from '../model/EmojiIconModel';
 import INodeModel from '../model/INodeModel';
-import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
 import ContentType from '../ContentType';
@@ -38,39 +36,57 @@ class MDExporter extends Exporter {
     return value.replace(/\s*\r?\n\s*/g, ' ').trim();
   }
 
+  // Title of a central topic without text, so its branches are still exported.
+  static readonly UNTITLED = 'Untitled';
+
+  // Escapes the Markdown syntax of a single line of text, so it renders literally.
+  static escape(value: string): string {
+    return (
+      value
+        // Inline syntax: emphasis, code, links, footnote references, html, strikethrough, tables.
+        .replace(/[\\`*_[\]<>~|]/g, '\\$&')
+        // Entity and numeric character references.
+        .replace(/&(?=#?\w+;)/g, '\\&')
+        // Headings and closing hash sequences.
+        .replace(/(^|\s)#/g, '$1\\#')
+        // Block syntax at the start of the line: block quotes, bullet and ordered lists.
+        .replace(/^[>+-]/, '\\$&')
+        .replace(/^(\d+)([.)])/, '$1\\$2')
+    );
+  }
+
   export(): Promise<string> {
     this.footNotes = [];
 
-    // Add cental node as text ...
+    // Add cental node as text. Without text, a placeholder keeps the branches as a list ...
     const centralTopic = this.mindmap.getCentralTopic();
+    const centralText = this.nodeText(centralTopic) || MDExporter.UNTITLED;
 
-    const centralTopicText = centralTopic.getText();
-    let result = '';
-    if (centralTopicText) {
-      const centralText =
-        centralTopic.getContentType() === ContentType.HTML
-          ? this.normalizeText(centralTopic.getPlainText())
-          : this.normalizeText(centralTopicText);
+    // Traverse all the branches ...
+    let result = `# ${MDExporter.escape(centralText)}\n\n`;
+    result += this.traverseBranch('', centralTopic.getChildren());
 
-      // Traverse all the branches ...
-      result = `# ${centralText}\n\n`;
-      result += this.traverseBranch('', centralTopic.getChildren());
-
-      // White footnotes:
-      if (this.footNotes.length > 0) {
-        result += '\n\n\n';
-        result += this.footNotes
-          .map((note, index) => `[^${index + 1}]: ${this.normalizeText(note)}`)
-          .join('\n');
-      }
-      result += '\n';
+    // White footnotes:
+    if (this.footNotes.length > 0) {
+      result += '\n\n\n';
+      result += this.footNotes
+        .map((note, index) => `[^${index + 1}]: ${MDExporter.escape(note)}`)
+        .join('\n');
     }
+    result += '\n';
     return Promise.resolve(result);
   }
 
   private nodeText(node: INodeModel): string {
     return this.normalizeText(
       (node.getContentType() === ContentType.HTML ? node.getPlainText() : node.getText()) || '',
+    );
+  }
+
+  // The text of a note on a single line, empty if it has no visible text.
+  private noteText(note: NoteModel): string {
+    return this.normalizeText(
+      note.getContentType() === ContentType.HTML ? note.getPlainText() : note.getText(),
     );
   }
 
@@ -87,7 +103,13 @@ class MDExporter extends Exporter {
   private isExportable(node: INodeModel): boolean {
     return (
       this.nodeText(node) !== '' ||
-      node.getFeatures().some((f) => ['eicon', 'link', 'note'].includes(f.getType())) ||
+      node
+        .getFeatures()
+        .some(
+          (f) =>
+            ['eicon', 'link'].includes(f.getType()) ||
+            (f.isOfType('note') && this.noteText(f) !== ''),
+        ) ||
       node.getChildren().some((n) => this.isExportable(n))
     );
   }
@@ -98,27 +120,27 @@ class MDExporter extends Exporter {
       .filter((n) => this.isExportable(n))
       .forEach((node) => {
         // Convert icons to list ...
-        const icons = node.getFeatures().filter((f) => f.getType() === 'eicon');
+        const icons = node.getFeatures().filter((f) => f.isOfType('eicon'));
         let iconStr = ' ';
         if (icons.length > 0) {
-          iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
+          iconStr = ` ${icons.map((icon) => icon.getIconType()).toString()} `;
         }
 
         const nodeText = this.nodeText(node);
-        result = `${result}${prefix}-${iconStr}${nodeText}`;
+        result = `${result}${prefix}-${iconStr}${MDExporter.escape(nodeText)}`;
         node.getFeatures().forEach((f) => {
-          const type = f.getType();
           // Dump all features ...
-          if (type === 'link') {
-            result = `${result} ( [link](${MDExporter.encodeUrl((f as LinkModel).getUrl())}) )`;
+          if (f.isOfType('link')) {
+            result = `${result} ( [link](${MDExporter.encodeUrl(f.getUrl())}) )`;
           }
 
-          if (type === 'note') {
-            const note = f as NoteModel;
-            const noteText =
-              note.getContentType() === ContentType.HTML ? note.getPlainText() : note.getText();
-            this.footNotes.push(noteText);
-            result = `${result}[^${this.footNotes.length}] `;
+          if (f.isOfType('note')) {
+            // Empty notes would leave an empty footnote definition ...
+            const noteText = this.noteText(f);
+            if (noteText) {
+              this.footNotes.push(noteText);
+              result = `${result}[^${this.footNotes.length}] `;
+            }
           }
         });
         result = `${result}\n`;

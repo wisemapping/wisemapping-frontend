@@ -17,32 +17,45 @@
  */
 
 import { $defined } from '../utils/assert';
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
+import { arrowPathData } from '../../geometry/arrow';
 import ElementPeer from './ElementPeer';
+import type { StrokeStyle } from '../../types';
 
-class ArrowPeer extends ElementPeer {
-  static readonly WING_LENGTH = 6;
-
+class ArrowPeer extends ElementPeer<SVGPathElement> {
   private _fromPoint: PositionType;
 
   private _controlPoint: PositionType | null;
 
+  private _strokeWidth: number;
+
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    super(svgElement);
+    super(ElementPeer.createNode('path'));
     this._fromPoint = { x: 0, y: 0 };
     this._controlPoint = null;
+    this._strokeWidth = 1;
   }
 
   setFrom(x: number, y: number) {
+    if (this._fromPoint.x === x && this._fromPoint.y === y && this.hasPath()) {
+      return;
+    }
     this._fromPoint = { x, y };
     this._redraw();
   }
 
   /** The direction the arrow points away from, relative to the tip. It is copied. */
   setControlPoint(point: PositionType) {
+    const current = this._controlPoint;
+    if (current && current.x === point.x && current.y === point.y) {
+      return;
+    }
     this._controlPoint = { x: point.x, y: point.y };
     this._redraw();
+  }
+
+  private hasPath(): boolean {
+    return this._native.hasAttribute('d');
   }
 
   setStrokeColor(color: string) {
@@ -53,35 +66,31 @@ class ArrowPeer extends ElementPeer {
     this.setStroke(width);
   }
 
-  setDashed(isDashed: boolean, length: number, spacing: number) {
-    if ($defined(isDashed) && isDashed && $defined(length) && $defined(spacing)) {
-      this._native.setAttribute('stroke-dasharray', `${length},${spacing}`);
-    } else {
-      this._native.removeAttribute('stroke-dasharray');
+  override setStroke(
+    width: number | null,
+    style?: StrokeStyle | null,
+    color?: string | null,
+    opacity?: number,
+  ) {
+    super.setStroke(width, style, color, opacity);
+    if ($defined(width) && width !== null && width !== this._strokeWidth) {
+      this._strokeWidth = Number(width);
+      this._redraw();
     }
   }
 
-  /**
-   * Two wings of WING_LENGTH from the tip, each at 45° from the control point direction. A zero
-   * control point is taken as pointing down.
-   */
+  setDashed(isDashed: boolean, length: number, spacing: number) {
+    if ($defined(isDashed) && isDashed && $defined(length) && $defined(spacing)) {
+      this.attr('stroke-dasharray', `${length},${spacing}`);
+    } else {
+      this.removeAttr('stroke-dasharray');
+    }
+  }
+
+  /** Two wings from the tip (geometry/arrow). Nothing is drawn until a control point is set. */
   private _redraw() {
     if (this._fromPoint && this._controlPoint) {
-      const length = Math.hypot(this._controlPoint.x, this._controlPoint.y);
-      const ux = length > 0 ? this._controlPoint.x / length : 0;
-      const uy = length > 0 ? this._controlPoint.y / length : 1;
-
-      // The control direction turned by -45° and by +45°.
-      const cos = Math.SQRT1_2;
-      const l = ArrowPeer.WING_LENGTH;
-      const x = (ux * cos + uy * cos) * l;
-      const y = (uy * cos - ux * cos) * l;
-      const xp = (ux * cos - uy * cos) * l;
-      const yp = (uy * cos + ux * cos) * l;
-
-      const { x: fx, y: fy } = this._fromPoint;
-      const path = `M${fx},${fy} L${x + fx},${y + fy} M${fx},${fy} L${xp + fx},${yp + fy}`;
-      this._native.setAttribute('d', path);
+      this.attr('d', arrowPathData(this._fromPoint, this._controlPoint, this._strokeWidth));
     }
   }
 }

@@ -182,7 +182,7 @@
   "canvas-style.background-style": [
     {
       "type": 0,
-      "value": "Background Style"
+      "value": "Estilo de fundo"
     }
   ],
   "canvas-style.colors": [
@@ -230,13 +230,13 @@
   "canvas-style.grid-style": [
     {
       "type": 0,
-      "value": "Estilo da grade"
+      "value": "Tamanho da grade"
     }
   ],
   "canvas-style.pattern-default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "Padrão - Todos os estilos serão selecionados automaticamente com base no tema"
     }
   ],
   "canvas-style.pattern-dots": [
@@ -278,13 +278,13 @@
   "canvas-style.tab-color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "Cor"
     }
   ],
   "canvas-style.tab-grid": [
     {
       "type": 0,
-      "value": "Grid Color"
+      "value": "Cor da grade"
     }
   ],
   "canvas-style.title": [
@@ -786,7 +786,13 @@
   "icon-collection.border.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "Padrão"
+    }
+  ],
+  "icon-collection.border.default-tooltip": [
+    {
+      "type": 0,
+      "value": "Padrão - As cores serão definidas automaticamente com base no tema selecionado"
     }
   ],
   "icon-collection.border.dotted": [
@@ -828,7 +834,7 @@
   "icon-collection.connection.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "Padrão"
     }
   ],
   "icon-collection.connection.default-tooltip": [
@@ -912,13 +918,13 @@
   "icon-collection.default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "Padrão - Todos os estilos serão selecionados automaticamente com base no tema"
     }
   ],
   "icon-collection.shape.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "Padrão"
     }
   ],
   "icon-collection.shape.ellipse": [
@@ -1129,6 +1135,12 @@
       "value": "Recolher"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "Recolher tudo"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1139,6 +1151,12 @@
     {
       "type": 0,
       "value": "Expandir"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "Expandir tudo"
     }
   ],
   "outline.has-note": [
@@ -1339,6 +1357,30 @@
       "value": "Cancelar alterações de texto"
     }
   ],
+  "shortcut-help-pane.category-editing": [
+    {
+      "type": 0,
+      "value": "Edição"
+    }
+  ],
+  "shortcut-help-pane.category-format": [
+    {
+      "type": 0,
+      "value": "Formatação"
+    }
+  ],
+  "shortcut-help-pane.category-navigation": [
+    {
+      "type": 0,
+      "value": "Navegação"
+    }
+  ],
+  "shortcut-help-pane.category-view": [
+    {
+      "type": 0,
+      "value": "Visualização"
+    }
+  ],
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
@@ -1375,10 +1417,52 @@
       "value": "Desmarcar todos os tópicos"
     }
   ],
+  "shortcut-help-pane.diagram-aria": [
+    {
+      "type": 0,
+      "value": "A seta para a esquerda vai para o tópico pai, a seta para a direita para um filho, e para cima e para baixo entre irmãos."
+    }
+  ],
+  "shortcut-help-pane.diagram-caption": [
+    {
+      "type": 0,
+      "value": "Na metade esquerda do mapa, ← e → trocam de função."
+    }
+  ],
+  "shortcut-help-pane.diagram-child": [
+    {
+      "type": 0,
+      "value": "Filho"
+    }
+  ],
+  "shortcut-help-pane.diagram-parent": [
+    {
+      "type": 0,
+      "value": "Pai"
+    }
+  ],
+  "shortcut-help-pane.diagram-selected": [
+    {
+      "type": 0,
+      "value": "Selecionado"
+    }
+  ],
+  "shortcut-help-pane.diagram-sibling": [
+    {
+      "type": 0,
+      "value": "Irmão"
+    }
+  ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
       "value": "Desconectar tópico"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect-key": [
+    {
+      "type": 0,
+      "value": "arrastar tópico"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
@@ -1582,7 +1666,7 @@
   "theme.aurora.description": [
     {
       "type": 0,
-      "value": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+      "value": "Tema em degradê inspirado no neon, com efeitos de brilho, tipografia em negrito e conectores de alto contraste, pensado para narrativas imersivas."
     }
   ],
   "theme.aurora.name": [
@@ -1594,7 +1678,7 @@
   "theme.classic.description": [
     {
       "type": 0,
-      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+      "value": "Design limpo e profissional com detalhes em azul. Perfeito para apresentações de negócios e documentos formais."
     }
   ],
   "theme.classic.name": [
@@ -1618,7 +1702,7 @@
   "theme.ocean.description": [
     {
       "type": 0,
-      "value": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+      "value": "Tema azul inspirado no oceano, com variantes clara e escura. Cores calmas e profissionais, perfeitas para projetos de negócios e criativos."
     }
   ],
   "theme.ocean.name": [
@@ -1630,7 +1714,7 @@
   "theme.retro.description": [
     {
       "type": 0,
-      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+      "value": "Paleta synthwave dos anos 80 com bordas neon, degradês cromados e telas quadriculadas inspiradas nas festas noturnas retrô."
     }
   ],
   "theme.retro.name": [
@@ -1642,7 +1726,7 @@
   "theme.robot.description": [
     {
       "type": 0,
-      "value": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+      "value": "Tema verde de inspiração tecnológica. Perfeito para documentação técnica e apresentações futuristas."
     }
   ],
   "theme.robot.name": [
@@ -1654,7 +1738,7 @@
   "theme.summer.description": [
     {
       "type": 0,
-      "value": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+      "value": "Tema laranja brilhante e vibrante. Ótimo para projetos criativos e apresentações cheias de energia."
     }
   ],
   "theme.summer.name": [
@@ -1666,7 +1750,7 @@
   "theme.sunrise.description": [
     {
       "type": 0,
-      "value": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+      "value": "Tema Nascer do sol com variantes de modo claro e escuro. Cores e contraste aprimorados para melhor legibilidade."
     }
   ],
   "theme.sunrise.name": [
@@ -1774,13 +1858,13 @@
   "topic-font-editor.reset-to-default": [
     {
       "type": 0,
-      "value": "Reset to Default"
+      "value": "Restaurar padrão"
     }
   ],
   "unified-styling.background-color": [
     {
       "type": 0,
-      "value": "Background Color"
+      "value": "Cor de fundo"
     }
   ],
   "unified-styling.border-color": [
@@ -1810,7 +1894,7 @@
   "unified-styling.shape-type": [
     {
       "type": 0,
-      "value": "Shape Type"
+      "value": "Tipo de forma"
     }
   ],
   "unified-styling.tab.border": [
@@ -1847,6 +1931,20 @@
     {
       "type": 0,
       "value": "Expandir por Nível"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "Expandir por Nível (Nível "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

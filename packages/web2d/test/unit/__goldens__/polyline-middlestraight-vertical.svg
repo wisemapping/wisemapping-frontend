@@ -1,10 +1,10 @@
-<svg focusable="true" height="400" preserveAspectRatio="none" viewBox="-200 -200 400 400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="400" preserveAspectRatio="none" viewBox="-200 -200 400 400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <polyline fill="none" points="0, 0 0, 50 100, 50 100, 100" stroke="blue" stroke-opacity="1" stroke-width="1"/>
   <polyline fill="none" points="0, 0 0, -50 -100, -50 -100, -100" stroke="blue" stroke-opacity="1" stroke-width="1"/>
   <polyline fill="none" points="0, 0 0, -50 100, -50 100, -100" stroke="blue" stroke-opacity="1" stroke-width="1"/>
   <polyline fill="none" points="0, 0 0, 50 -100, 50 -100, 100" stroke="blue" stroke-opacity="1" stroke-width="1"/>
   <polyline fill="none" points="-180, -180 -180, -180 -120, -180 -120, -180" stroke="blue" stroke-opacity="1" stroke-width="1"/>
-  <polyline fill="none" points="-180, -170 -180, -150 -180, -150 -180, -130" stroke="blue" stroke-opacity="1" stroke-width="1"/>
+  <polyline fill="none" points="-180, -170 -180, -130" stroke="blue" stroke-opacity="1" stroke-width="1"/>
   <polyline fill="none" points="120, -180 120, -178 180, -178 180, -176" stroke="blue" stroke-opacity="1" stroke-width="1"/>
   <polyline fill="none" points="120, 140 120, 160 126, 160 126, 180" stroke="blue" stroke-opacity="1" stroke-width="1"/>
 </svg>

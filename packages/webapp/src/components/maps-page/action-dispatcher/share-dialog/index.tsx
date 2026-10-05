@@ -156,8 +156,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
         })}
         description={intl.formatMessage({
           id: 'share.delete-description',
-          defaultMessage:
-            'Invite people to collaborate with you in the creation of your mindmap. They will be notified by email. ',
+          defaultMessage: "Add collaborators. They'll get instant email access to edit together.",
         })}
         maxWidth="md"
         papercss={classes.paper}

@@ -16,19 +16,17 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { describe, expect, test } from '@jest/globals';
 import XMindImporter from '../../../src/components/import/XMindImporter';
 import FreeplaneImporter from '../../../src/components/import/FreeplaneImporter';
 import MindManagerImporter from '../../../src/components/import/MindManagerImporter';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import Mindmap from '../../../src/components/model/Mindmap';
-import NoteModel from '../../../src/components/model/NoteModel';
 import NodeModel from '../../../src/components/model/NodeModel';
 
 // Values that come from the imported file, or from the user, must be escaped in the WiseMapping XML.
 
-const MAP_NAME = `Bob's <map> & "co"`;
+const MAP_NAME = 'Bob\'s <map> & "co"';
 const NOTE = 'Before ]]> after <b>&amp;</b>';
 
 const loadMindmap = (xml: string): Mindmap => {
@@ -53,8 +51,7 @@ const findByText = (mindmap: Mindmap, text: string): NodeModel => {
   return result;
 };
 
-const noteOf = (node: NodeModel): string =>
-  (node.findFeatureByType('note')[0] as NoteModel | undefined)?.getText() ?? '';
+const noteOf = (node: NodeModel): string => node.findFeatureByType('note').at(0)?.getText() ?? '';
 
 describe('XMindImporter escaping', () => {
   test('XML format: escapes the map name and keeps notes containing "]]>"', async () => {
@@ -76,7 +73,7 @@ describe('XMindImporter escaping', () => {
 
     const mindmap = loadMindmap(xml);
     expect(mapNameOf(xml)).toBe(MAP_NAME);
-    expect(noteOf(findByText(mindmap, `A & 'B'`))).toBe(NOTE);
+    expect(noteOf(findByText(mindmap, "A & 'B'"))).toBe(NOTE);
   });
 
   test('JSON format: escapes the map name, the colors and keeps notes containing "]]>"', async () => {
@@ -90,9 +87,9 @@ describe('XMindImporter escaping', () => {
           attached: [
             {
               id: 'a',
-              title: `A & 'B'`,
+              title: "A & 'B'",
               labels: [NOTE],
-              style: { id: 's', properties: { 'svg:fill': `#fff' x='1` } },
+              style: { id: 's', properties: { 'svg:fill': "#fff' x='1" } },
             },
           ],
         },
@@ -103,9 +100,9 @@ describe('XMindImporter escaping', () => {
 
     const mindmap = loadMindmap(xml);
     expect(mapNameOf(xml)).toBe(MAP_NAME);
-    const topic = findByText(mindmap, `A & 'B'`);
+    const topic = findByText(mindmap, "A & 'B'");
     expect(noteOf(topic)).toContain(NOTE);
-    expect(topic.getBackgroundColor()).toBe(`#fff' x='1`);
+    expect(topic.getBackgroundColor()).toBe("#fff' x='1");
   });
 });
 
@@ -124,7 +121,7 @@ describe('FreeplaneImporter escaping', () => {
     const mindmap = loadMindmap(xml);
     expect(mapNameOf(xml)).toBe(MAP_NAME);
     // The note is HTML: the text of the CDATA section is kept, escaped.
-    expect(noteOf(findByText(mindmap, `A & 'B'`))).toContain('<p>a &lt; b</p>');
+    expect(noteOf(findByText(mindmap, "A & 'B'"))).toContain('<p>a &lt; b</p>');
   });
 });
 
@@ -144,8 +141,8 @@ describe('MindManagerImporter escaping', () => {
 
     const mindmap = loadMindmap(xml);
     expect(mapNameOf(xml)).toBe(MAP_NAME);
-    const topic = findByText(mindmap, `A & 'B'`);
+    const topic = findByText(mindmap, "A & 'B'");
     expect(noteOf(topic)).toBe(NOTE);
-    expect(topic.getBackgroundColor()).toBe(`#f00' x='1`);
+    expect(topic.getBackgroundColor()).toBe("#f00' x='1");
   });
 });

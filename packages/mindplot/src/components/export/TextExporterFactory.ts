@@ -42,7 +42,7 @@ class TextExporterFactory {
         result = new FreemindExporter(mindmap);
         break;
       case 'mmx':
-        result = new FreeplaneExporter();
+        result = new FreeplaneExporter(mindmap);
         break;
       default:
         throw new Error(`Unsupported type ${type}`);

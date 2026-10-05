@@ -34,9 +34,8 @@ const initialization = (designer: Designer) => {
     // Code for selector of map.
     const mapSelectElem = document.getElementById('map-select') as HTMLSelectElement;
     if (mapSelectElem) {
-      mapSelectElem.addEventListener('change', (e) => {
-        // @ts-ignore
-        const selectMap = e.target?.value;
+      mapSelectElem.addEventListener('change', () => {
+        const selectMap = mapSelectElem.value;
         window.location.href = `${window.location.pathname}?id=${selectMap}`;
       });
 

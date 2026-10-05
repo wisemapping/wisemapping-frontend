@@ -16,17 +16,17 @@
  *   limitations under the License.
  */
 import WorkspaceElement from './WorkspaceElement';
-import Toolkit from './Toolkit';
-import * as PolyLineUtils from './peer/utils/PolyLineUtils';
-import Line from './Line';
-import PositionType from './PositionType';
-import StyleAttributes from './StyleAttributes';
+import * as PolyLineUtils from './geometry/polyline';
+import type Line from './Line';
+import type PositionType from './PositionType';
+import type { ElementAttributes } from './StyleAttributes';
 import PolyLinePeer from './peer/svg/PolyLinePeer';
+import type { ElementType, Orientation, PolyLineStyle } from './types';
 
 class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
-  constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createPolyLine();
-    const defaultAttributes = {
+  constructor(attributes?: ElementAttributes) {
+    const peer = new PolyLinePeer();
+    const defaultAttributes: ElementAttributes = {
       strokeColor: 'blue',
       strokeWidth: 1,
       strokeStyle: 'solid',
@@ -42,46 +42,14 @@ class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
   }
 
   getTo(): PositionType {
-    throw new Error('Method not implemented.');
+    return this.peer.getTo();
   }
 
   getFrom(): PositionType {
-    throw new Error('Method not implemented.');
+    return this.peer.getFrom();
   }
 
-  setIsSrcControlPointCustom(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setIsDestControlPointCustom(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setDashed(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setSrcControlPoint(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setDestControlPoint(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  isDestControlPointCustom(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  isSrcControlPointCustom(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  getControlPoints(): [PositionType, PositionType] {
-    throw new Error('Method not implemented.');
-  }
-
-  getType(): string {
+  getType(): ElementType {
     return 'PolyLine';
   }
 
@@ -93,19 +61,19 @@ class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
     this.peer.setTo(x, y);
   }
 
-  setStyle(style: string): void {
+  setStyle(style: PolyLineStyle): void {
     this.peer.setStyle(style);
   }
 
-  getStyle(): string {
+  getStyle(): PolyLineStyle {
     return this.peer.getStyle();
   }
 
-  setOrientation(orientation: 'horizontal' | 'vertical'): void {
+  setOrientation(orientation: Orientation): void {
     this.peer.setOrientation(orientation);
   }
 
-  getOrientation(): 'horizontal' | 'vertical' {
+  getOrientation(): Orientation {
     return this.peer.getOrientation();
   }
 

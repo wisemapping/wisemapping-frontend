@@ -30,7 +30,7 @@ describe('Topic Note Suite', () => {
 
   it('Add note to topic', () => {
     cy.focusTopicById(3);
-    
+
     cy.onClickToolbarButton('Add Note');
 
     // Wait for note panel to load dynamically
@@ -100,7 +100,8 @@ describe('Topic Note Suite', () => {
     cy.get('[contenteditable="true"]').should('contain.text', initialNote);
 
     // Clear and type new text
-    cy.get('[contenteditable="true"]').first().clear().type('Updated note text');
+    cy.get('[contenteditable="true"]').first().clear();
+    cy.get('[contenteditable="true"]').first().type('Updated note text');
     cy.contains('Accept').should('be.visible').click();
 
     cy.matchImageSnapshot('note-edited-successfully');
@@ -115,7 +116,7 @@ describe('Topic Note Suite', () => {
 
     const noteContent = 'This note should persist after saving';
     cy.get('[contenteditable="true"]').first().type(noteContent);
-    
+
     // Save the note
     cy.contains('Accept').should('be.visible').click();
 
@@ -139,7 +140,8 @@ describe('Topic Note Suite', () => {
     cy.onClickToolbarButton('Add Note');
     waitForNotePanel();
 
-    cy.get('[contenteditable="true"]').first().clear().type(tooltipNote);
+    cy.get('[contenteditable="true"]').first().clear();
+    cy.get('[contenteditable="true"]').first().type(tooltipNote);
     cy.contains('Accept').should('be.visible').click();
 
     cy.get('mindplot-component')

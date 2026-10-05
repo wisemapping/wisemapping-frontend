@@ -84,14 +84,15 @@ describe('SymmetricSorter.predict: no jump at the centre of a child', () => {
 
   it('dragging a node from another parent: order and pivot of the pixel above', () => {
     const manager = build();
-    const x = pos(manager, 11).x;
+    const { x } = pos(manager, 11);
     const sweep = sweepY(manager, 1, 2, x, -100, 100);
 
     // The reported case: between centres it was right, at them it fell back to "above the first".
     expect(sweep.get(4)).toEqual({ order: 2, position: { x, y: 20 } });
     expect(sweep.get(0)).toEqual({ order: 1, position: { x, y: -20 } });
     expect(sweep.get(40)).toEqual({ order: 2, position: { x, y: 20 } });
-    expect(sweep.get(-40)).toEqual({ order: 0, position: { x, y: -80 } });
+    // Above the first child, half a gap above it (option b): it was glued a whole gap away.
+    expect(sweep.get(-40)).toEqual({ order: 0, position: { x, y: -60 } });
 
     [-40, 0, 40].forEach((centre) => {
       expect(sweep.get(centre)).toEqual(sweep.get(centre - 1));
@@ -107,7 +108,7 @@ describe('SymmetricSorter.predict: no jump at the centre of a child', () => {
 
   it.each([11, 12, 13])('dragging child %s among its siblings', (dragged) => {
     const manager = build();
-    const x = pos(manager, 11).x;
+    const { x } = pos(manager, 11);
     const sweep = sweepY(manager, 1, dragged, x, -100, 100);
 
     [-40, 0, 40].forEach((centre) => {
@@ -117,7 +118,7 @@ describe('SymmetricSorter.predict: no jump at the centre of a child', () => {
 
   it('dragging a child of another branch', () => {
     const manager = build();
-    const x = pos(manager, 11).x;
+    const { x } = pos(manager, 11);
     const sweep = sweepY(manager, 1, 22, x, -100, 100);
 
     [-40, 0, 40].forEach((centre) => {
@@ -129,7 +130,7 @@ describe('SymmetricSorter.predict: no jump at the centre of a child', () => {
 describe('BalancedSorter.predict: no jump at the centre of a main topic', () => {
   it('order and pivot of the pixel above', () => {
     const manager = build('mindmap', true);
-    const x = pos(manager, 1).x;
+    const { x } = pos(manager, 1);
     const centres = [pos(manager, 1).y, pos(manager, 3).y];
     expect(centres.every(Number.isInteger)).toBe(true);
     const sweep = sweepY(manager, 0, 2, x, centres[0] - 60, centres[1] + 60);
@@ -145,12 +146,105 @@ describe('TreeSorter.predict: no jump at the centre of a child', () => {
     const manager = build('tree');
     const centres = [11, 12, 13].map((id) => pos(manager, id).x);
     expect(centres.every(Number.isInteger)).toBe(true);
-    const y = pos(manager, 11).y;
+    const { y } = pos(manager, 11);
 
     centres.forEach((centre) => {
       const at = manager.predict(1, 2, { x: centre, y });
       const left = manager.predict(1, 2, { x: centre - 1, y });
       expect(at).toEqual(left);
     });
+  });
+});
+
+/*
+ * Option b (user decision, 2026-10-05): before the first child or after the last one, the pivot
+ * is half a sibling gap away from it, as it is centred in the gap between two children. A child
+ * without siblings counts the gap the layout leaves between two of its size. Only the pivot
+ * moves: the drop order, and so the final layout, stay.
+ */
+describe('drag pivot before the first child and after the last one (option b)', () => {
+  it('SymmetricSorter: half a gap above the first child, and below the last one', () => {
+    const manager = build();
+    const { x } = pos(manager, 11);
+
+    expect(manager.predict(1, 2, { x, y: -90 })).toEqual({ order: 0, position: { x, y: -60 } });
+    expect(manager.predict(1, 2, { x, y: 90 })).toEqual({ order: 3, position: { x, y: 60 } });
+  });
+
+  it('SymmetricSorter: a lone child counts the gap the layout leaves after it', () => {
+    const manager = build();
+    manager.removeNode(12);
+    manager.removeNode(13);
+    manager.layout(true);
+    const { x, y } = pos(manager, 11);
+    // A leaf of 30px takes 30 + 2 * 5: the next one would be 40px below.
+    expect(manager.predict(1, 2, { x, y: y + 50 })).toEqual({
+      order: 1,
+      position: { x, y: y + 20 },
+    });
+    expect(manager.predict(1, 2, { x, y: y - 50 })).toEqual({
+      order: 0,
+      position: { x, y: y - 20 },
+    });
+  });
+
+  it('BalancedSorter: half a gap above the first main topic, and below the last one', () => {
+    const manager = build('mindmap', true);
+    // Two children under 3, so the gap is not the 30 + 2 * 5 of a leaf.
+    [31, 32].forEach((id, order) =>
+      manager.addNode(id, SIZE, { x: 0, y: 0 }).connectNode(3, id, order),
+    );
+    manager.layout(true);
+    const { x } = pos(manager, 1);
+    const [first, last] = [pos(manager, 1).y, pos(manager, 3).y];
+    const gap = last - first;
+    expect(gap / 2).not.toBe(SIZE.height / 2 + 2 * 5);
+
+    const above = manager.predict(0, 2, { x, y: first - 100 });
+    const below = manager.predict(0, 2, { x, y: last + 100 });
+    expect(above.position).toEqual({ x, y: first - gap / 2 });
+    expect(below.position).toEqual({ x, y: last + gap / 2 });
+    // The orders are those of before: on the right, first and after the last.
+    expect(above.order).toBe(0);
+    expect(below.order).toBe(4);
+  });
+
+  it('TreeSorter: half a gap left of the first child, and right of the last one', () => {
+    const manager = build('tree');
+    // Two children under 11 and 13, so the gap is not the 60 + 2 * 5 of a leaf.
+    [111, 112, 131, 132].forEach((id) =>
+      manager.addNode(id, SIZE, { x: 0, y: 0 }).connectNode(id < 130 ? 11 : 13, id, (id % 10) - 1),
+    );
+    manager.layout(true);
+    const [first, , last] = [11, 12, 13].map((id) => pos(manager, id).x);
+    const gap = pos(manager, 12).x - first;
+    expect(gap / 2).not.toBe(SIZE.width / 2 + 5);
+    const { y } = pos(manager, 11);
+
+    const before = manager.predict(1, 2, { x: first - 100, y });
+    const after = manager.predict(1, 2, { x: last + 100, y });
+    expect(before).toEqual({ order: 0, position: { x: first - gap / 2, y } });
+    expect(after).toEqual({ order: 3, position: { x: last + gap / 2, y } });
+  });
+
+  it('keeps the order monotonic and the pivot moving one way across a whole sweep', () => {
+    const manager = build();
+    const { x } = pos(manager, 11);
+    const predictions = Array.from(sweepY(manager, 1, 2, x, -150, 150).values());
+    predictions.slice(1).forEach((prediction, index) => {
+      expect(prediction.order).toBeGreaterThanOrEqual(predictions[index].order);
+      expect(prediction.position.y).toBeGreaterThanOrEqual(predictions[index].position.y);
+    });
+
+    const tree = build('tree');
+    const { y } = pos(tree, 11);
+    const xs = [11, 13].map((id) => pos(tree, id).x);
+    let previous = tree.predict(1, 2, { x: xs[0] - 100, y });
+    for (let mouseX = xs[0] - 99; mouseX <= xs[1] + 100; mouseX++) {
+      const prediction = tree.predict(1, 2, { x: mouseX, y });
+      expect(prediction.order).toBeGreaterThanOrEqual(previous.order);
+      expect(prediction.position.x).toBeGreaterThanOrEqual(previous.position.x);
+      previous = prediction;
+    }
   });
 });

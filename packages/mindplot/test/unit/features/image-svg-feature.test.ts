@@ -58,7 +58,7 @@ describe('ImageSVGFeature delete widget (B-EMOJIWIDGET)', () => {
   let addEvent: jest.SpyInstance;
 
   // Events registered on one glyph, in order.
-  const eventsOn = (text: Text): string[] =>
+  const eventsOn = (text: unknown): string[] =>
     addEvent.mock.calls.filter((_, i) => addEvent.mock.contexts[i] === text).map((c) => c[0]);
 
   beforeEach(() => {

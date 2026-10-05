@@ -15,7 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import SizeType from '../../SizeType';
+import type SizeType from '../../SizeType';
+import type { FontStyleType, FontWeightType } from '../../types';
 
 export type FontStyle = {
   fontFamily?: string;
@@ -35,9 +36,9 @@ export const FONT_PT_TO_PX = 43 / 32;
 class FontPeer {
   private _size: number;
 
-  private _style: string;
+  private _style: FontStyleType;
 
-  private _weight: string;
+  private _weight: FontWeightType;
 
   private _fontName: string;
 
@@ -48,7 +49,7 @@ class FontPeer {
     this._fontName = fontName;
   }
 
-  init(args: { size?: number; style?: string; weight?: string }) {
+  init(args: { size?: number; style?: FontStyleType; weight?: FontWeightType }): void {
     if (args.size !== undefined) {
       this._size = args.size;
     }
@@ -82,7 +83,7 @@ class FontPeer {
     return this._size;
   }
 
-  getStyle(): string {
+  getStyle(): FontStyleType {
     return this._style;
   }
 
@@ -104,11 +105,11 @@ class FontPeer {
     this._size = value;
   }
 
-  setStyle(style: string) {
+  setStyle(style: FontStyleType): void {
     this._style = style;
   }
 
-  setWeight(weight: string) {
+  setWeight(weight: FontWeightType): void {
     this._weight = weight;
   }
 

@@ -17,7 +17,6 @@
  */
 // eslint-disable-next-line max-classes-per-file
 import { Ellipse, StraightLine } from '@wisemapping/web2d';
-import ActionDispatcher from './ActionDispatcher';
 import Canvas from './Canvas';
 import PositionType from './PositionType';
 import Relationship from './Relationship';
@@ -76,7 +75,9 @@ class ControlPivotLine {
     this._dot = new Ellipse({
       width: 6,
       height: 6,
-      stroke: '1 solid #6589de',
+      strokeWidth: 1,
+      strokeStyle: 'solid',
+      strokeColor: '#6589de',
       fillColor: 'gray',
       visibility: false,
     });
@@ -180,13 +181,12 @@ class ControlPivotLine {
         this._pivotType === PivotType.End ? relationshipLine.getTo() : relationshipLine.getFrom();
       const ctrPosition = relationshipLine.getControlPoints()[this._pivotType];
 
+      // The dot is an ellipse, positioned by its centre: on the control point ...
+      const x = startPosition.x + ctrPosition.x;
+      const y = startPosition.y + ctrPosition.y;
       this._line.setFrom(startPosition.x, startPosition.y);
-      this._line.setTo(startPosition.x + ctrPosition.x - 5, startPosition.y + ctrPosition.y - 5);
-
-      this._dot.setPosition(
-        startPosition.x + ctrPosition.x - 5,
-        startPosition.y + ctrPosition.y - 5,
-      );
+      this._line.setTo(x, y);
+      this._dot.setPosition(x, y);
     }
   }
 
@@ -215,11 +215,11 @@ class ControlPivotLine {
     const ctlPoint = { x: mousePosition.x - relPos.x, y: mousePosition.y - relPos.y };
     this._moveRelHandler(ctlPoint);
 
-    // Update pivot ...
-    this._dot.setPosition(mousePosition.x - 5, mousePosition.y - 5);
+    // Update pivot, centred under the cursor ...
+    this._dot.setPosition(mousePosition.x, mousePosition.y);
 
     // Update line ...
-    this._line.setTo(mousePosition.x - 5, mousePosition.y - 5);
+    this._line.setTo(mousePosition.x, mousePosition.y);
     const linePos =
       this._pivotType === PivotType.Start
         ? this._relationship.getLine().getFrom()
@@ -304,7 +304,8 @@ class RelationshipControlPoints {
         relationship.redraw();
       },
       () => {
-        const actionDispatcher = ActionDispatcher.getInstance();
+        relationship.rememberReleasedControlPoint(PivotType.Start);
+        const actionDispatcher = relationship.getSourceTopic().getActionDispatcher();
         actionDispatcher.moveControlPoint(
           relationship.getModel(),
           this.getControlPointPosition(PivotType.Start),
@@ -323,7 +324,8 @@ class RelationshipControlPoints {
         relationship.redraw();
       },
       () => {
-        const actionDispatcher = ActionDispatcher.getInstance();
+        relationship.rememberReleasedControlPoint(PivotType.End);
+        const actionDispatcher = relationship.getSourceTopic().getActionDispatcher();
         actionDispatcher.moveControlPoint(
           relationship.getModel(),
           this.getControlPointPosition(PivotType.End),

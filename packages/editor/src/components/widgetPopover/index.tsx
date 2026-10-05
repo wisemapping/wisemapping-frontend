@@ -20,7 +20,8 @@ import type { PopoverOrigin } from '@mui/material/Popover';
 import Box from '@mui/material/Box';
 import React, { useState, useCallback, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, defineMessage } from 'react-intl';
+import type { MessageDescriptor } from 'react-intl';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { WidgetBuilder, WidgetEventType } from '@wisemapping/mindplot';
@@ -43,7 +44,7 @@ export const WidgetPopover = ({
   designer,
 }: WidgetPopoverProps): React.ReactElement => {
   const [event, setEvent] = useState<WidgetEventType>('none');
-  const [panelTitle, setPanelTitle] = useState<string | undefined>(undefined);
+  const [panelTitle, setPanelTitle] = useState<MessageDescriptor | undefined>(undefined);
   const [achorElem, setAnchorElem] = useState<Element | undefined>(undefined);
   const [editorComponent, setEditorComponent] = useState<React.ReactElement | undefined>(undefined);
   const [anchorOrigin, setAnchorOrigin] = useState<PopoverOrigin>({
@@ -63,17 +64,17 @@ export const WidgetPopover = ({
     (newEvent: WidgetEventType, topic?: Topic) => {
       setEvent(newEvent);
 
-      let title: string | undefined = undefined;
+      let title: MessageDescriptor | undefined = undefined;
       let component: React.ReactElement = <></>;
 
       switch (newEvent) {
         case 'note': {
-          title = 'editor-panel.note-panel-title';
+          title = defineMessage({ id: 'editor-panel.note-panel-title', defaultMessage: 'Note' });
           component = widgetManager.buidEditorForNote(topic!);
           break;
         }
         case 'link':
-          title = 'editor-panel.link-panel-title';
+          title = defineMessage({ id: 'editor-panel.link-panel-title', defaultMessage: 'Link' });
           component = widgetManager.buildEditorForLink(topic!);
           break;
         case 'none':
@@ -83,7 +84,7 @@ export const WidgetPopover = ({
 
       topic?.closeEditors();
 
-      const anchorElement = topic?.getOuterShape().peer._native as Element | undefined;
+      const anchorElement = topic?.getOuterShape().getNode();
 
       if (anchorElement) {
         const rect = anchorElement.getBoundingClientRect();
@@ -153,7 +154,7 @@ export const WidgetPopover = ({
                 opacity: 0.7,
               }}
             >
-              <FormattedMessage id={panelTitle} defaultMessage="" />
+              {panelTitle && <FormattedMessage {...panelTitle} />}
             </Typography>
 
             <IconButton

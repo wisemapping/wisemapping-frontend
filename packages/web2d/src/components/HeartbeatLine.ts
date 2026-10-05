@@ -18,16 +18,16 @@
 
 import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
-import Line from './Line';
-import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
+import type Line from './Line';
+import type { ElementAttributes } from './StyleAttributes';
 import HeartbeatLinePeer from './peer/svg/HeartbeatLinePeer';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
+import type { ElementType } from './types';
 
 class HeartbeatLine extends WorkspaceElement<HeartbeatLinePeer> implements Line {
-  constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createHeartbeatLine();
-    const defaultAttributes = {
+  constructor(attributes?: ElementAttributes) {
+    const peer = new HeartbeatLinePeer();
+    const defaultAttributes: ElementAttributes = {
       strokeColor: '#ff3366',
       strokeWidth: 3,
       strokeStyle: 'solid',
@@ -39,7 +39,7 @@ class HeartbeatLine extends WorkspaceElement<HeartbeatLinePeer> implements Line 
     super(peer, mergedAttr);
   }
 
-  getType(): string {
+  getType(): ElementType {
     return 'HeartbeatLine';
   }
 
@@ -69,36 +69,8 @@ class HeartbeatLine extends WorkspaceElement<HeartbeatLinePeer> implements Line 
     return this;
   }
 
-  setIsSrcControlPointCustom(value: boolean): void {
-    throw new Error(`Method not implemented. Received value: ${value}`);
-  }
-
-  setIsDestControlPointCustom(value: boolean): void {
-    throw new Error(`Method not implemented. Received value: ${value}`);
-  }
-
   setDashed(length: number, spacing: number): void {
     this.peer.setDashPattern(length, spacing);
-  }
-
-  setSrcControlPoint(value: PositionType): void {
-    throw new Error(`Method not implemented. Received value: ${JSON.stringify(value)}`);
-  }
-
-  setDestControlPoint(value: PositionType): void {
-    throw new Error(`Method not implemented. Received value: ${JSON.stringify(value)}`);
-  }
-
-  isDestControlPointCustom(): boolean {
-    return false;
-  }
-
-  isSrcControlPointCustom(): boolean {
-    return false;
-  }
-
-  getControlPoints(): [PositionType, PositionType] {
-    throw new Error('Method not implemented.');
   }
 }
 

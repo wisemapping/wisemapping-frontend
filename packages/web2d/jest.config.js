@@ -21,7 +21,7 @@ const config = {
   preset: 'ts-jest',
   moduleFileExtensions: ['js', 'ts'],
   transform: {
-    '^.+\\.ts$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.test.json' }],
+    '^.+\\.ts$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.jest.json' }],
   },
   // jsdom has no layout: getBBox, getScreenCTM, getComputedTextLength and ResizeObserver are faked.
   setupFiles: ['<rootDir>/test/setup.ts'],
@@ -31,9 +31,11 @@ const config = {
   coverageReporters: ['text-summary', 'lcov', 'json-summary'],
   // Set at the measured baseline (rounded down). Ratchet these up as coverage improves; never lower them.
   coverageThreshold: {
-    global: { statements: 99, branches: 91, functions: 99, lines: 99 },
+    global: { statements: 99, branches: 94, functions: 99, lines: 99 },
     // Pure path geometry and DOM helpers.
     './src/components/peer/utils/': { lines: 98, branches: 93 },
+    // Pure geometry (no DOM): every function has direct unit tests.
+    './src/components/geometry/': { lines: 100, branches: 100, functions: 100 },
   },
 };
 

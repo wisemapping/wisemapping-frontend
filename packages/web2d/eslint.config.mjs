@@ -27,13 +27,12 @@ export default defineConfig([
             "coverage/**",
             "*.min.js",
             "**/*.d.ts",
-            "test/**",
             "cypress/**",
             "storybook/**"
         ]
     },
     {
-        files: ["src/**/*.{js,ts}"],
+        files: ["src/**/*.{js,ts}", "test/**/*.{js,ts}"],
         extends: compat.extends(
             "airbnb-base",
             "plugin:@typescript-eslint/eslint-recommended",
@@ -108,6 +107,8 @@ export default defineConfig([
             }],
 
             "implicit-arrow-linebreak": "off",
+            "no-confusing-arrow": "off", // Disabled to avoid conflict with Prettier
+            "function-paren-newline": "off", // Disabled to avoid conflict with Prettier
         },
     }
 ]);

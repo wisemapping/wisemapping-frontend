@@ -44,7 +44,13 @@ class FakeTopic {
 
   connectionColor = '#3f96ff';
 
+  designer: Designer | undefined;
+
   constructor(readonly name: string) {}
+
+  getDesigner(): Designer | undefined {
+    return this.designer;
+  }
 
   addEvent(type: string, fn: Listener): void {
     const list = this.listeners.get(type) || [];
@@ -107,7 +113,6 @@ class FakeTopic {
     return [];
   }
 
-  // eslint-disable-next-line class-methods-use-this
   _getTopicEventDispatcher(): null {
     return null;
   }
@@ -118,12 +123,15 @@ const asTopic = (t: FakeTopic): Topic => t as unknown as Topic;
 const buildDesigner = (topics: FakeTopic[]) => {
   const shadows = new Map<Topic, HTMLTopicSelected>();
   const container = document.createElement('div');
+  const layoutEventBus = new LayoutEventBus();
   const designer = {
+    getLayoutEventBus: () => layoutEventBus,
     isReadOnly: () => false,
     closeNodeEditors: () => undefined,
     getModel: () => ({
       getEntities: () => topics,
       getTopics: () => topics,
+      findTopicByModel: (model: object) => topics.find((t) => t.getModel() === model),
       filterSelectedTopics: () => topics.filter((t) => t.isOnFocus()),
     }),
     getSelectionShadows: () => shadows,
@@ -133,6 +141,10 @@ const buildDesigner = (topics: FakeTopic[]) => {
       Designer.prototype.onObjectFocusEvent.call(this, currentObject, event);
     },
   };
+  // The topics were built by this designer.
+  topics.forEach((topic) => {
+    topic.designer = designer as unknown as Designer;
+  });
   return { designer: designer as unknown as Designer & typeof designer, container };
 };
 
@@ -208,15 +220,10 @@ describe('HTMLTopicSelected', () => {
   describe('listener lifecycle (B-SHADOWLEAK)', () => {
     it('dispose() removes every listener it added to the topic', () => {
       const topic = new FakeTopic('a');
-      const { designer, container } = buildDesigner([topic]);
+      const { container } = buildDesigner([topic]);
       const before = ['ontfocus', 'ontblur', 'mousedown'].map((t) => topic.count(t));
 
-      const shadow = new HTMLTopicSelected(
-        asTopic(topic),
-        container,
-        {} as ScreenManager,
-        designer,
-      );
+      const shadow = new HTMLTopicSelected(asTopic(topic), container, {} as ScreenManager);
       shadow.dispose();
 
       expect(['ontfocus', 'ontblur', 'mousedown'].map((t) => topic.count(t))).toEqual(before);
@@ -245,7 +252,7 @@ describe('HTMLTopicSelected', () => {
       const second = HTMLTopicSelected.initializeSelectionShadows(designer);
       ensure.mockClear();
 
-      LayoutEventBus.fireEvent('topicSelected', topic.getModel() as NodeModel);
+      designer.getLayoutEventBus().fireEvent('topicSelected', topic.getModel() as NodeModel);
       expect(ensure).toHaveBeenCalledTimes(1);
 
       first();
@@ -261,7 +268,7 @@ describe('HTMLTopicSelected', () => {
       unsubscribe();
       ensure.mockClear();
 
-      LayoutEventBus.fireEvent('topicSelected', topic.getModel() as NodeModel);
+      designer.getLayoutEventBus().fireEvent('topicSelected', topic.getModel() as NodeModel);
       expect(ensure).not.toHaveBeenCalled();
     });
 
@@ -276,7 +283,8 @@ describe('HTMLTopicSelected', () => {
       const unsubscribeSecond = HTMLTopicSelected.initializeSelectionShadows(second);
       ensure.mockClear();
 
-      LayoutEventBus.fireEvent('topicSelected', b.getModel() as NodeModel);
+      second.getLayoutEventBus().fireEvent('topicSelected', b.getModel() as NodeModel);
+      expect(ensure).toHaveBeenCalledTimes(1);
       expect(ensure).toHaveBeenCalledWith(second, b);
 
       unsubscribeFirst();
@@ -294,13 +302,8 @@ describe('HTMLTopicSelected', () => {
 
     it('uses the current colors after they change', () => {
       const topic = new FakeTopic('a');
-      const { designer, container } = buildDesigner([topic]);
-      const shadow = new HTMLTopicSelected(
-        asTopic(topic),
-        container,
-        {} as ScreenManager,
-        designer,
-      );
+      const { container } = buildDesigner([topic]);
+      const shadow = new HTMLTopicSelected(asTopic(topic), container, {} as ScreenManager);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const internal = shadow as any;
       internal.ensurePlusButtons();

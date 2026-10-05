@@ -19,7 +19,8 @@ import HeartbeatLinePeer from '../../src/components/peer/svg/HeartbeatLinePeer';
 import NeuronLinePeer from '../../src/components/peer/svg/NeuronLinePeer';
 import HeartbeatLine from '../../src/components/HeartbeatLine';
 import NeuronLine from '../../src/components/NeuronLine';
-import { hasNaN, parsePathPoints } from '../helpers/geometry';
+import { hasNaN, parsePathPoints, pathCommands } from '../helpers/geometry';
+import type { StrokeStyle } from '../../src/components/types';
 
 type WavePeer = HeartbeatLinePeer | NeuronLinePeer;
 
@@ -97,10 +98,35 @@ describe.each(KINDS)('%s', (_name, create) => {
     ['dot', '1 8'],
     ['longdash', '10 5'],
     ['dashdot', '10 5 1 5'],
-  ])('style %s uses the shared dash array "%s" (W-DASH)', (style, expected) => {
+  ])('style %s uses the shared dash array "%s" at width 1 (W-DASH)', (style, expected) => {
     const peer = create();
-    peer.setStroke(null, style);
+    peer.setStroke(1, style as StrokeStyle);
     expect(peer._native.getAttribute('stroke-dasharray')).toBe(expected);
+  });
+
+  // BL5-77: the dash lengths are for width 1 and scale with the drawn width.
+  it.each([
+    ['dash', 2, '10 10'],
+    ['dash', 4, '20 20'],
+    ['dot', 2, '2 16'],
+    ['dot', 4, '4 32'],
+    ['longdash', 2, '20 10'],
+    ['longdash', 4, '40 20'],
+    ['dashdot', 2, '20 10 2 10'],
+    ['dashdot', 4, '40 20 4 20'],
+  ])('BL5-77: style %s at width %d draws "%s"', (style, width, expected) => {
+    const peer = create();
+    peer.setStroke(width, style as StrokeStyle);
+    expect(peer._native.getAttribute('stroke-dasharray')).toBe(expected);
+  });
+
+  it('BL5-77: a width set after the style rescales the dash; below 1 it draws at 1', () => {
+    const peer = create();
+    peer.setStroke(1, 'dash');
+    peer.setStroke(4);
+    expect(peer._native.getAttribute('stroke-dasharray')).toBe('20 20');
+    peer.setStroke(0.5);
+    expect(peer._native.getAttribute('stroke-dasharray')).toBe('5 5');
   });
 
   it('a dash pattern applies when the style is solid, and solid clears it', () => {
@@ -195,6 +221,65 @@ describe('NeuronLinePeer', () => {
     const pts = parsePathPoints(d(draw(() => new NeuronLinePeer(), 0, 0, 200, 0)));
     expect(pts[pts.length - 1]).toEqual([200, 0]);
   });
+
+  // BL5-74: the seed came from the length, so dragging one end reshuffled the whole shape. The
+  // seed is now fixed once both ends are set: the same lateral offsets, stretched.
+  it('BL5-74: keeps its shape when one end moves (drag)', () => {
+    // The segment ends (every third point after M) of a horizontal line are its lateral offsets.
+    const offsets = (peer: WavePeer) =>
+      parsePathPoints(d(peer))
+        .filter((_p, i) => i % 3 === 0)
+        .slice(1, -1)
+        .map(([, y]) => y);
+    // 200 and 210 units both draw 6 segments with the maximum amplitude.
+    const peer = draw(() => new NeuronLinePeer(), 0, 0, 200, 0);
+    const before = offsets(peer);
+    peer.setTo(210, 0);
+    expect(offsets(peer)).toEqual(before);
+  });
+
+  // BL5-119: the segment count came from the current length, round(distance / 35), so a drag
+  // across a rounding boundary added or dropped a segment and the whole line jumped. The count is
+  // now fixed with the seed, and the same segments stretch.
+  it('BL5-119: keeps its segment count when one end moves (drag)', () => {
+    const peer = draw(() => new NeuronLinePeer(), 0, 0, 200, 0);
+    const segments = pathCommands(d(peer)).filter((c) => c === 'C').length;
+    expect(segments).toBe(6);
+    peer.setTo(400, 0);
+    expect(pathCommands(d(peer)).filter((c) => c === 'C').length).toBe(segments);
+  });
+
+  it('BL5-119: a one-unit drag across a rounding boundary moves the line by about a unit', () => {
+    // 227 units draw round(6.49) = 6 segments, 228 units round(6.51) = 7.
+    const peer = draw(() => new NeuronLinePeer(), 0, 0, 227, 0);
+    const before = parsePathPoints(d(peer));
+    peer.setTo(228, 0);
+    const after = parsePathPoints(d(peer));
+    expect(after).toHaveLength(before.length);
+    const jump = Math.max(
+      ...after.map(([x, y], i) => Math.hypot(x - before[i]![0], y - before[i]![1])),
+    );
+    expect(jump).toBeLessThan(2);
+  });
+
+  it('BL5-74: a static render does not depend on how its ends were set', () => {
+    const direct = d(draw(() => new NeuronLinePeer(), 10, 20, 210, 120));
+    const peer = new NeuronLinePeer();
+    peer.setTo(210, 120);
+    peer.setFrom(10, 20);
+    expect(d(peer)).toBe(direct);
+  });
+
+  it('a draw with coinciding ends does not fix the seed', () => {
+    const collapsed = new NeuronLinePeer();
+    collapsed.setTo(100, 0);
+    collapsed.setFrom(100, 0);
+    collapsed.setFrom(0, 50);
+    collapsed.setTo(300, 20);
+    const direct = draw(() => new NeuronLinePeer(), 0, 50, 100, 0);
+    direct.setTo(300, 20);
+    expect(d(collapsed)).toBe(d(direct));
+  });
 });
 
 describe.each([
@@ -211,8 +296,6 @@ describe.each([
     expect(line.getTo()).toEqual({ x: 100, y: 50 });
     line.setDashed(3, 3);
     expect(line.peer._native.getAttribute('stroke-dasharray')).toBe('3,3');
-    expect(line.isSrcControlPointCustom()).toBe(false);
-    expect(line.isDestControlPointCustom()).toBe(false);
     expect(line.peer._native.getAttribute('stroke')).toBe(color);
     expect(line.peer._native.getAttribute('stroke-width')).toBe('3.0');
   });
@@ -223,12 +306,10 @@ describe.each([
     expect(() => line.setTo(0, Number.NaN)).toThrow();
   });
 
-  it('characterization: control point methods are throwing Line stubs (typing step T5)', () => {
-    const line = create();
-    expect(() => line.setIsSrcControlPointCustom(true)).toThrow();
-    expect(() => line.setIsDestControlPointCustom(true)).toThrow();
-    expect(() => line.setSrcControlPoint({ x: 0, y: 0 })).toThrow();
-    expect(() => line.setDestControlPoint({ x: 0, y: 0 })).toThrow();
-    expect(() => line.getControlPoints()).toThrow();
+  it('has no control point methods (typing T5)', () => {
+    const line = create() as unknown as Record<string, unknown>;
+    expect(line.setSrcControlPoint).toBeUndefined();
+    expect(line.getControlPoints).toBeUndefined();
+    expect(line.isSrcControlPointCustom).toBeUndefined();
   });
 });

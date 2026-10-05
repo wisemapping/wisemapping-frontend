@@ -153,12 +153,14 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
       // Clear any previous errors when model is successfully initialized
       setError(undefined);
 
-      // Add translated "Copy of " prefix to the title
-      const copyPrefix = intl.formatMessage({
-        id: 'duplicate.copy-prefix',
-        defaultMessage: 'Copy of ',
-      });
-      const copyTitle = `${copyPrefix}${map.title.trim()}`;
+      // Translated "Copy of {title}": each language places the title where its phrase needs it.
+      const copyTitle = intl.formatMessage(
+        {
+          id: 'duplicate.copy-title',
+          defaultMessage: 'Copy of {title}',
+        },
+        { title: map.title.trim() },
+      );
 
       setModel({
         title: copyTitle,

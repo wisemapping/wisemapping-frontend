@@ -40,6 +40,9 @@ const config = {
     '^@wisemapping/mindplot/(.*)$': '<rootDir>/../mindplot/src/$1',
     '^@wisemapping/web2d$': '<rootDir>/../web2d/src/index.ts',
     '^@wisemapping/web2d/(.*)$': '<rootDir>/../web2d/src/$1',
+    // mindplot lists its icons with Vite's import.meta.glob, which ts-jest (CommonJS) can not
+    // compile: reuse mindplot's own test replacement, which lists them from disk.
+    '/SvgIconAssets$': '<rootDir>/../mindplot/test/unit/__mocks__/SvgIconAssets.ts',
     // Asset imports carry no behaviour under jsdom.
     '\\.(svg|css|styl|less|sass|scss|png|jpg|jpeg|gif|ttf|woff|woff2|wxml)$': 'jest-transform-stub',
     // react-ga4 touches window.gtag on import; stub it out.

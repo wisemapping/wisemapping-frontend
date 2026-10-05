@@ -17,8 +17,11 @@
  */
 
 import LayoutManager from '../../../src/components/layout/LayoutManager';
-import RootedTreeSet from '../../../src/components/layout/RootedTreeSet';
 import SymmetricSorter from '../../../src/components/layout/SymmetricSorter';
+import BalancedSorter from '../../../src/components/layout/BalancedSorter';
+import TreeSorter from '../../../src/components/layout/TreeSorter';
+import ChildrenSorterStrategy from '../../../src/components/layout/ChildrenSorterStrategy';
+import PositionType from '../../../src/components/PositionType';
 
 const ROOT_NODE_SIZE = { width: 140, height: 90 };
 const NODE_SIZE = { width: 80, height: 60 };
@@ -147,9 +150,6 @@ describe('SymmetricSorter.predict of a new child of an isolated topic', () => {
 });
 
 describe('SymmetricSorter.predict previews the side the layout uses (BL4-36)', () => {
-  const treeSetOf = (manager: LayoutManager): RootedTreeSet =>
-    (manager as unknown as { _treeSet: RootedTreeSet })._treeSet;
-
   it('drops onto a childless topic on the side of its children, not of the mouse', () => {
     // Topic 1 is on the right of the central topic and topic 2, which has no children, on the left.
     const manager = new LayoutManager(0, ROOT_NODE_SIZE);
@@ -171,30 +171,59 @@ describe('SymmetricSorter.predict previews the side the layout uses (BL4-36)', (
     expect(Math.sign(laidOut.x - parentX)).toBe(-1);
     expect(Math.sign(predicted.position.x - parentX)).toBe(Math.sign(laidOut.x - parentX));
   });
+});
 
-  it.each([-400, 400])('places a free child of an isolated topic at x=%i on its side', (x) => {
-    // Topic 5 is not connected to the central topic: it is the root of its own tree.
+describe('sorter predict signatures (BL5-33, BL5-34)', () => {
+  // LayoutManager.predict hands the sorters a null node (a new child) and a null position. As a
+  // method, SymmetricSorter.predict could narrow them to non-null and still override the abstract
+  // one; as plain functions, it does not compile (ts-jest type-checks this file).
+  type Predict = (...args: Parameters<ChildrenSorterStrategy['predict']>) => [number, PositionType];
+
+  it.each([new SymmetricSorter(), new BalancedSorter(), new TreeSorter()])(
+    '%s takes the nullable node and position LayoutManager passes, and nothing more',
+    (sorter) => {
+      const { predict }: { predict: Predict } = sorter;
+      // The free-positioning flag nothing passed (BL5-33) is gone.
+      expect(predict).toHaveLength(4);
+    },
+  );
+
+  it('asks for a position to predict where a dragged node goes', () => {
     const manager = new LayoutManager(0, ROOT_NODE_SIZE);
-    manager.addNode(5, NODE_SIZE, { x, y: 300 });
-    manager.addNode(6, NODE_SIZE, { x: 0, y: 0 });
+    manager.addNode(1, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 1, 0);
+    manager.addNode(2, NODE_SIZE, { x: 0, y: 0 }).connectNode(1, 2, 0);
+    manager.addNode(3, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 3, 1);
     manager.layout();
 
-    const sorter = new SymmetricSorter();
-    const treeSet = treeSetOf(manager);
-    // The mouse is far on the other side of the topic.
-    const [, predicted] = sorter.predict(
-      treeSet,
-      manager.find(5),
-      manager.find(6),
-      { x: x - Math.sign(x) * 1000, y: 300 },
-      true,
-    );
+    expect(() => manager.predict(1, 3, null)).toThrow(/position cannot be null/);
+  });
+});
 
-    manager.connectNode(5, 6, 0);
-    manager.layout();
-    const laidOut = manager.find(6).getPosition();
+describe('SymmetricSorter.predict reads the children by order (BL5-81)', () => {
+  it('predicts the same slot whether or not a layout sorted the children', () => {
+    // Topic 1 gets children 3 then 4, inserted first: their array is [3, 4], their orders [1, 0].
+    const build = () => {
+      const manager = new LayoutManager(0, ROOT_NODE_SIZE);
+      manager.addNode(1, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 1, 0);
+      manager.addNode(2, NODE_SIZE, { x: 0, y: 0 }).connectNode(0, 2, 1);
+      manager.addNode(3, NODE_SIZE, { x: 0, y: 0 }).connectNode(1, 3, 0);
+      manager.addNode(4, NODE_SIZE, { x: 0, y: 0 }).connectNode(1, 4, 0);
+      manager.layout();
+      return manager;
+    };
+    const unsorted = build();
+    const sorted = build();
+    // Undo the sort the layout did as a side effect, in one of them.
+    const parent = unsorted.find(1) as unknown as { _children: { getId(): number }[] };
+    parent._children.sort((a, b) => a.getId() - b.getId());
+    expect(parent._children.map((child) => child.getId())).toEqual([3, 4]);
 
-    expect(Math.sign(laidOut.x - x)).toBe(Math.sign(x));
-    expect(Math.sign(predicted.x - x)).toBe(Math.sign(laidOut.x - x));
+    // Topic 2 is dragged between the two children of topic 1.
+    const between = {
+      x: unsorted.find(4).getPosition().x,
+      y: (unsorted.find(3).getPosition().y + unsorted.find(4).getPosition().y) / 2,
+    };
+    expect(unsorted.predict(1, 2, between)).toEqual(sorted.predict(1, 2, between));
+    expect(sorted.predict(1, 2, between).order).toBe(1);
   });
 });

@@ -16,15 +16,15 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { buildDesigner } from '../commands/designer-harness';
 import Topic from '../../../src/components/Topic';
 import { LineType } from '../../../src/components/BaseConnectionLine';
 import { STRAIGHT_TOLERANCE_PX } from '../../../src/components/TopicConnection';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 /**
  * The map below, as MindManager draws it (mmap2json `test.mmap`):
@@ -59,17 +59,18 @@ const mapWith = (connStyle?: LineType): string => {
 
 const pos = (topic: Topic) => topic.getPosition();
 
-/** Every point of the SVG line between a topic and its parent. */
-const connectionPoints = (topic: Topic): { x: number; y: number }[] => {
-  const line = (
-    topic as unknown as {
-      _outgoingLine: { _line: { peer: { _native: SVGElement } } } | null;
-    }
-  )._outgoingLine?._line;
+/** The SVG node of the line between a topic and its parent. */
+const connectionNode = (topic: Topic): SVGElement => {
+  const line = topic.getOutgoingLine()?.getLine();
   if (!line) {
     throw new Error(`Topic ${topic.getId()} has no connection`);
   }
-  const native = line.peer._native;
+  return line.getElementClass().getNode() as SVGElement;
+};
+
+/** Every point of the SVG line between a topic and its parent. */
+const connectionPoints = (topic: Topic): { x: number; y: number }[] => {
+  const native = connectionNode(topic);
   const raw =
     native.getAttribute('d') ??
     native.getAttribute('points') ??
@@ -94,9 +95,7 @@ const connectionPoints = (topic: Topic): { x: number; y: number }[] => {
  */
 const centerLineYs = (topic: Topic): number[] => {
   const points = connectionPoints(topic);
-  const native = (
-    topic as unknown as { _outgoingLine: { _line: { peer: { _native: SVGElement } } } }
-  )._outgoingLine._line.peer._native;
+  const native = connectionNode(topic);
   if (native.tagName.toLowerCase() !== 'path') {
     return points.map((point) => point.y);
   }

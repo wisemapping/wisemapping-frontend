@@ -27,6 +27,10 @@ import ContentType from '../ContentType';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import toWiseMappingXml from './support/MindmapXml';
 import { legacyIconEmoji } from './support/LegacyIconMap';
+import { htmlToPlainText } from './support/HtmlText';
+import { applyFreemindFont } from './support/FreemindFont';
+import FreemindIconConverter, { WiseIcon } from './FreemindIconConverter';
+import { TopicShapeType } from '../model/INodeModel';
 
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
@@ -72,10 +76,14 @@ class FreeplaneImporter extends Importer {
     mindmap.setTheme('prism');
     mindmap.setLayout('mindmap');
 
-    const centralTitle = rootNode.getAttribute('TEXT') || 'Central Topic';
     const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
     this.mapNodeId(rootNode, centralTopic);
-    centralTopic.setText(centralTitle);
+    centralTopic.setText(FreeplaneImporter.nodeText(rootNode) || 'Central Topic');
+    const centralShape = FreeplaneImporter.styleToShape(rootNode.getAttribute('STYLE'));
+    if (centralShape) {
+      centralTopic.setShapeType(centralShape);
+    }
+    this.addStyle(centralTopic, rootNode);
     this.addFeatures(centralTopic, rootNode);
     mindmap.addBranch(centralTopic);
 
@@ -94,12 +102,19 @@ class FreeplaneImporter extends Importer {
     const topic = mindmap.createNode('MainTopic', this.generateId());
     this.mapNodeId(freeplaneNode, topic);
 
-    const title = freeplaneNode.getAttribute('TEXT') || 'Untitled';
     const position = this.calculatePosition(order);
-    topic.setText(title);
+    topic.setText(FreeplaneImporter.nodeText(freeplaneNode) || 'Untitled');
     topic.setPosition(position.x, position.y);
     topic.setOrder(order);
-    topic.setShapeType('line');
+    // A background is only drawn by a shape, so a node with one and no shape is a rectangle.
+    const shape =
+      FreeplaneImporter.styleToShape(freeplaneNode.getAttribute('STYLE')) ||
+      (freeplaneNode.getAttribute('BACKGROUND_COLOR') ? 'rectangle' : 'line');
+    topic.setShapeType(shape);
+    this.addStyle(topic, freeplaneNode);
+    if (freeplaneNode.getAttribute('FOLDED') === 'true') {
+      topic.setChildrenShrunken(true);
+    }
     this.addFeatures(topic, freeplaneNode);
 
     // Process child nodes recursively
@@ -120,14 +135,74 @@ class FreeplaneImporter extends Importer {
     }
   }
 
+  /**
+   * The text of a node: its TEXT, or the text of its rich content. Topic text is plain (the model
+   * does not persist a content type for it), so rich text is kept as its lines of text.
+   */
+  private static nodeText(freeplaneNode: Element): string {
+    const text = freeplaneNode.getAttribute('TEXT');
+    if (text) {
+      return text;
+    }
+    const richcontent = freeplaneNode.querySelector(':scope > richcontent[TYPE="NODE"]');
+    if (!richcontent) {
+      return '';
+    }
+    const html = richcontent.cloneNode(true) as Element;
+    FreeplaneImporter.cdataToText(html);
+    return htmlToPlainText(html.innerHTML);
+  }
+
+  // The node STYLE, as written by Freeplane (and the Freeplane exporter).
+  private static styleToShape(style: string | null): TopicShapeType | undefined {
+    switch (style) {
+      case 'bubble':
+        return 'rounded rectangle';
+      case 'oval':
+        return 'elipse';
+      case 'rectangle':
+        return 'rectangle';
+      case 'fork':
+        return 'line';
+      default:
+        return undefined;
+    }
+  }
+
+  // Colors and font of a node. COLOR is the text color, the edge color the connection color.
+  private addStyle(topic: NodeModel, freeplaneNode: Element): void {
+    const backgroundColor = freeplaneNode.getAttribute('BACKGROUND_COLOR');
+    if (backgroundColor) {
+      topic.setBackgroundColor(backgroundColor);
+    }
+    const color = freeplaneNode.getAttribute('COLOR');
+    if (color) {
+      topic.setFontColor(color);
+    }
+    const edgeColor = freeplaneNode.querySelector(':scope > edge')?.getAttribute('COLOR');
+    if (edgeColor) {
+      topic.setConnectionColor(edgeColor);
+    }
+
+    const font = freeplaneNode.querySelector(':scope > font');
+    if (font) {
+      applyFreemindFont(topic, {
+        name: font.getAttribute('NAME'),
+        size: font.getAttribute('SIZE'),
+        bold: font.getAttribute('BOLD'),
+        italic: font.getAttribute('ITALIC'),
+      });
+    }
+  }
+
   // The icons, notes and links of a node, the central one included.
   private addFeatures(topic: NodeModel, freeplaneNode: Element): void {
     const icons = freeplaneNode.querySelectorAll(':scope > icon');
     icons.forEach((icon) => {
       const builtin = icon.getAttribute('BUILTIN');
       if (builtin) {
-        const emojiIcon = this.mapFreeplaneIconToEmojiIcon(builtin);
-        topic.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
+        const wiseIcon = this.toWiseIcon(builtin);
+        topic.addFeature(FeatureModelFactory.createModel(wiseIcon.type, { id: wiseIcon.id }));
       }
     });
 
@@ -172,6 +247,43 @@ class FreeplaneImporter extends Importer {
         FreeplaneImporter.cdataToText(child);
       }
     });
+  }
+
+  /**
+   * The WiseMapping icon of a Freeplane icon: its emoji icons (emoji-<code points>), the FreeMind
+   * builtins and the WiseMapping icon ids, which the Freeplane exporter writes, then the other
+   * Freeplane names.
+   */
+  private toWiseIcon(builtin: string): WiseIcon {
+    const emoji = FreeplaneImporter.emojiOf(builtin);
+    if (emoji) {
+      return { type: 'eicon', id: emoji };
+    }
+    return (
+      FreemindIconConverter.toWiseIcon(builtin) || {
+        type: 'eicon',
+        id: this.mapFreeplaneIconToEmojiIcon(builtin),
+      }
+    );
+  }
+
+  /**
+   * The emoji of a Freeplane emoji icon, named after its code points without the emoji variation
+   * selector, which is added back to a single character that is text by default (❤ is ❤️).
+   */
+  private static emojiOf(builtin: string): string | undefined {
+    const match = /^emoji-([0-9A-F]+(?:-[0-9A-F]+)*)$/i.exec(builtin);
+    if (!match) {
+      return undefined;
+    }
+    const codePoints = match[1].split('-').map((hex) => parseInt(hex, 16));
+    if (codePoints.some((codePoint) => codePoint > 0x10ffff)) {
+      return undefined;
+    }
+    const emoji = String.fromCodePoint(...codePoints);
+    return codePoints.length === 1 && !/\p{Emoji_Presentation}/u.test(emoji)
+      ? `${emoji}\uFE0F`
+      : emoji;
   }
 
   private mapFreeplaneIconToEmojiIcon(builtin: string): string {
@@ -506,8 +618,12 @@ class FreeplaneImporter extends Importer {
       graduation: '🎓',
     };
 
-    // Return mapped emoji, the emoji of a legacy WiseMapping icon id, or default if not found
-    return iconMap[builtin.toLowerCase()] || legacyIconEmoji(builtin) || '💡'; // Default to lightbulb
+    // Return mapped emoji, the emoji of a legacy WiseMapping icon id, or default if not found.
+    // Only own entries: iconMap.constructor is the Object function. Freeplane names use hyphens
+    // (flag-red), the map underscores.
+    const key = builtin.toLowerCase().replace(/-/g, '_');
+    const mapped = Object.prototype.hasOwnProperty.call(iconMap, key) ? iconMap[key] : undefined;
+    return mapped || legacyIconEmoji(builtin) || '💡'; // Default to lightbulb
   }
 
   private generateId(): number {

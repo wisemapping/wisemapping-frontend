@@ -17,7 +17,6 @@
  */
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
-import NoteModel from '../../../src/components/model/NoteModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
 import XMLSerializerTango from '../../../src/components/persistence/XMLSerializerTango';
 import XMLSerializerBeta from '../../../src/components/persistence/XMLSerializerBeta';
@@ -54,10 +53,14 @@ const roundTrip = (mindmap: Mindmap): Mindmap => {
   return new XMLSerializerTango().loadFromDom(dom, 'roundtrip');
 };
 
-const findChild = (mindmap: Mindmap): NodeModel => mindmap.findNodeById(2) as NodeModel;
+const findChild = (mindmap: Mindmap): NodeModel => {
+  const result = mindmap.findNodeById(2);
+  if (!result) throw new Error('node 2 not found');
+  return result;
+};
 
 const noteText = (topic: NodeModel): string => {
-  const note = topic.getFeatures().find((f) => f.getType() === 'note') as NoteModel;
+  const note = topic.findFeatureByType('note')[0];
   return note.getText();
 };
 
@@ -156,9 +159,9 @@ describe('XMLSerializerTango round trip', () => {
 
   describe('shrink attribute (B-SHRINK)', () => {
     const tangoXml = (shrink: string) =>
-      `<map name="m" version="tango"><topic central="true" id="1" text="C">` +
+      '<map name="m" version="tango"><topic central="true" id="1" text="C">' +
       `<topic id="2" order="0" text="A" shrink="${shrink}"><topic id="3" order="0" text="B"/></topic>` +
-      `</topic></map>`;
+      '</topic></map>';
 
     test('writer only emits shrink="true" for collapsed topics with children', () => {
       const { mindmap, central, child } = buildMap();
@@ -195,9 +198,9 @@ describe('XMLSerializerTango round trip', () => {
       ['', false],
     ])('beta loads shrink="%s" as %s', (shrink, expected) => {
       const xml =
-        `<map name="m"><topic central="true" id="1" text="C">` +
+        '<map name="m"><topic central="true" id="1" text="C">' +
         `<topic id="2" order="0" text="A" shrink="${shrink}"><topic id="3" order="0" text="B"/></topic>` +
-        `</topic></map>`;
+        '</topic></map>';
       const dom = new DOMParser().parseFromString(xml, 'text/xml');
       const mindmap = new XMLSerializerBeta().loadFromDom(dom, 'm');
       const topic = mindmap.getCentralTopic().getChildren()[0];

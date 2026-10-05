@@ -180,32 +180,20 @@ class RootedTreeSet {
    * @param validate
    * @throws will throw an error if id is null or undefined
    * @throws will throw an error if node cannot be found
-   * @return node
+   * @return node, or null when it is not found and validate is false
    */
-  find(id: number, validate = true): Node {
+  find(id: number, validate?: true): Node;
+
+  find(id: number, validate: false): Node | null;
+
+  find(id: number, validate = true): Node | null {
     const result = this._nodesById.get(id) ?? null;
 
     if (validate && !result) {
       throw new Error(`node could not be found id:${id}\n,RootedTreeSet${this.dump()}`);
     }
 
-    return result!;
-  }
-
-  private _find(id: number, parent: Node): Node {
-    if (parent.getId() === id) {
-      return parent;
-    }
-
-    let result: Node | null = null;
-    const children = parent._children;
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      result = this._find(id, child);
-      if (result) break;
-    }
-
-    return result!;
+    return result;
   }
 
   /**
@@ -401,15 +389,18 @@ class RootedTreeSet {
   }
 
   /**
+   * Moves `node` to `position`, and its descendants along with it, by what it really moved
+   * (Node.setPosition ignores a move of half a pixel or less).
    * @param node
    * @param position
    */
   updateBranchPosition(node: Node, position: PositionType): void {
     const oldPos = node.getPosition();
     node.setPosition(position);
+    const newPos = node.getPosition();
 
-    const xOffset = oldPos.x - position.x;
-    const yOffset = oldPos.y - position.y;
+    const xOffset = newPos.x - oldPos.x;
+    const yOffset = newPos.y - oldPos.y;
 
     const children = this.getChildren(node);
     children.forEach((child) => {
@@ -431,60 +422,6 @@ class RootedTreeSet {
     children.forEach((child) => {
       me.shiftBranchPosition(child, xOffset, yOffset);
     });
-  }
-
-  /**
-   * @param node
-   * @param yOffset
-   * @return siblings in the offset (vertical) direction, i.e. with lower or higher order
-   */
-  getSiblingsInVerticalDirection(node: Node, yOffset: number): Node[] {
-    // siblings with lower or higher order
-    // (depending on the direction of the offset and on the same side as their parent)
-    const parent = this.getParent(node)!;
-    const siblings = this.getSiblings(node).filter((sibling) => {
-      const sameSide =
-        node.getPosition().x > parent.getPosition().x
-          ? sibling.getPosition().x > parent.getPosition().x
-          : sibling.getPosition().x < parent.getPosition().x;
-      const siblingOrder = sibling.getOrder() ?? 0;
-      const nodeOrder = node.getOrder() ?? 0;
-      const orderOK = yOffset < 0 ? siblingOrder < nodeOrder : siblingOrder > nodeOrder;
-      return orderOK && sameSide;
-    });
-
-    if (yOffset < 0) {
-      siblings.reverse();
-    }
-
-    return siblings;
-  }
-
-  /**
-   * @param node
-   * @param yOffset
-   * @return branches of the root node on the same side as the given node's, in the given
-   * vertical direction
-   */
-  getBranchesInVerticalDirection(node: Node, yOffset: number): Node[] {
-    // direct descendants of the root that do not contain the node and are on the same side
-    // and on the direction of the offset
-    const rootNode = this.getRootNode(node);
-    const branches = this.getChildren(rootNode).filter((child) => this._find(node.getId(), child));
-
-    const branch = branches[0];
-    const result = this.getSiblings(branch).filter((sibling) => {
-      const sameSide =
-        node.getPosition().x > rootNode.getPosition().x
-          ? sibling.getPosition().x > rootNode.getPosition().x
-          : sibling.getPosition().x < rootNode.getPosition().x;
-      const siblingOrder = sibling.getOrder() ?? 0;
-      const branchOrder = branch.getOrder() ?? 0;
-      const sameDirection = yOffset < 0 ? siblingOrder < branchOrder : siblingOrder > branchOrder;
-      return sameSide && sameDirection;
-    }, this);
-
-    return result;
   }
 
   /**

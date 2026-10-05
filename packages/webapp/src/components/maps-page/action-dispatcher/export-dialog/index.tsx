@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import BaseDialog from '../base-dialog';
 import { useStyles } from './style';
@@ -43,12 +43,18 @@ import { useFetchMapMetadata } from '../../../../classes/middleware';
 import { trackExport } from '../../../../utils/analytics';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'pdf' | 'txt' | 'mm' | 'mmx' | 'wxml' | 'md';
+
+// The extension of the downloaded file. mmx is only the id of the Freeplane format: Freeplane maps
+// are .mm files, as FreeMind ones.
+const fileExtension = (format: ExportFormat): string => (format === 'mmx' ? 'mm' : format);
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
 
 type ExportDialogProps = {
   mapId: number;
   enableImgExport: boolean;
   svgXml?: string;
+  /** The designer of the editor the dialog was opened from; none from the map list. */
+  designer?: Designer;
   onClose: () => void;
 };
 
@@ -56,9 +62,9 @@ const ExportDialog = ({
   mapId,
   onClose,
   enableImgExport,
+  designer,
 }: ExportDialogProps): React.ReactElement => {
   const intl = useIntl();
-  const [submit, setSubmit] = React.useState<boolean>(false);
   const { data: mapMetadata } = useFetchMapMetadata(mapId);
 
   const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
@@ -100,60 +106,70 @@ const ExportDialog = ({
     onClose();
   };
 
-  const handleOnSubmit = (): void => {
-    setSubmit(true);
-  };
-
   const handleOnZoomToFit = (): void => {
     setZoomToFit(!zoomToFit);
   };
 
   const exporter = async (formatType: ExportFormat): Promise<string> => {
-    let svgElement: Element | undefined;
-    let size: SizeType;
-    let mindmap: Mindmap;
-    let originalTheme: ThemeType | undefined;
-    let backgroundColor = '#ffffff';
-
-    const designer: Designer | undefined = globalThis.designer;
     // exporting from editor toolbar action
-
     if (designer != null) {
-      // Depending on the type of export. It will require differt POST.
-      const workspace = designer.getWorkSpace();
-      svgElement = workspace.getSVGElement();
-      size = { width: window.innerWidth, height: window.innerHeight };
-      mindmap = designer.getMindmap();
-
-      // Store original theme and apply export theme
-      originalTheme = mindmap.getTheme();
-      if (originalTheme !== exportTheme) {
-        designer.applyTheme(exportTheme);
-        // Re-render to apply new theme
-        workspace.getSVGElement();
-      }
-
-      // Resolve the canvas background color applied by the Designer so exports
-      // include it (SVG, PNG, JPEG, PDF). Designer sets the style on the SVG's
-      // grandparent element (see Canvas.setBackgroundStyle). Read after
-      // applyTheme so the color matches the export theme.
-      const canvasContainer = svgElement?.parentElement?.parentElement;
-      if (canvasContainer) {
-        const resolved = window.getComputedStyle(canvasContainer).backgroundColor;
-        if (resolved && resolved !== 'rgba(0, 0, 0, 0)' && resolved !== 'transparent') {
-          backgroundColor = resolved;
+      // The export is rendered in the export theme on the live canvas, so put the
+      // map's own theme back once it is done (or failed): the editor saves this model.
+      const originalTheme = designer.getMindmap().getTheme();
+      const swapTheme = originalTheme !== exportTheme;
+      try {
+        if (swapTheme) {
+          designer.applyTheme(exportTheme);
         }
-      }
-    } else {
-      // exporting from map list
-      mindmap = await fetchMindmap(mapId);
-      // Store original theme and apply export theme
-      originalTheme = mindmap.getTheme();
-      if (originalTheme !== exportTheme) {
-        mindmap.setTheme(exportTheme);
+        return await exportFromDesigner(designer, formatType);
+      } finally {
+        if (swapTheme) {
+          designer.applyTheme(originalTheme);
+        }
       }
     }
 
+    // exporting from map list: a fresh copy of the map, so it can take the export theme.
+    const mindmap = await fetchMindmap(mapId);
+    if (mindmap.getTheme() !== exportTheme) {
+      mindmap.setTheme(exportTheme);
+    }
+    return createExporter(formatType, mindmap).exportAndEncode();
+  };
+
+  const exportFromDesigner = (current: Designer, formatType: ExportFormat): Promise<string> => {
+    const svgElement = current.getWorkSpace().getSVGElement();
+    const size: SizeType = { width: window.innerWidth, height: window.innerHeight };
+
+    // Resolve the canvas background color applied by the Designer so exports
+    // include it (SVG, PNG, JPEG, PDF). Designer sets the style on the SVG's
+    // grandparent element (see Canvas.setBackgroundStyle). Read after
+    // applyTheme so the color matches the export theme.
+    let backgroundColor = '#ffffff';
+    const canvasContainer = svgElement?.parentElement?.parentElement;
+    if (canvasContainer) {
+      const resolved = window.getComputedStyle(canvasContainer).backgroundColor;
+      if (resolved && resolved !== 'rgba(0, 0, 0, 0)' && resolved !== 'transparent') {
+        backgroundColor = resolved;
+      }
+    }
+
+    return createExporter(
+      formatType,
+      current.getMindmap(),
+      svgElement,
+      size,
+      backgroundColor,
+    ).exportAndEncode();
+  };
+
+  const createExporter = (
+    formatType: ExportFormat,
+    mindmap: Mindmap,
+    svgElement?: Element,
+    size?: SizeType,
+    backgroundColor = '#ffffff',
+  ): Exporter => {
     let exporter: Exporter;
     switch (formatType) {
       case 'png':
@@ -184,37 +200,35 @@ const ExportDialog = ({
       }
     }
 
-    return exporter.exportAndEncode();
+    return exporter;
   };
 
-  useEffect(() => {
-    if (submit) {
-      exporter(exportFormat)
-        .then((url: string) => {
-          // Track specific export format in Google Analytics
-          trackExport(exportFormat, exportGroup);
+  const handleOnSubmit = (): void => {
+    exporter(exportFormat)
+      .then((url: string) => {
+        // Track specific export format in Google Analytics
+        trackExport(exportFormat, exportGroup);
 
-          // Create hidden anchor to force download ...
-          const anchor: HTMLAnchorElement = document.createElement('a');
-          anchor.style.display = 'display: none';
-          anchor.download = `${mapMetadata?.title ?? 'mindmap'}.${exportFormat}`;
-          anchor.href = url;
-          document.body.appendChild(anchor);
+        // Create hidden anchor to force download ...
+        const anchor: HTMLAnchorElement = document.createElement('a');
+        anchor.style.display = 'display: none';
+        anchor.download = `${mapMetadata?.title ?? 'mindmap'}.${fileExtension(exportFormat)}`;
+        anchor.href = url;
+        document.body.appendChild(anchor);
 
-          // Trigger click ...
-          anchor.click();
+        // Trigger click ...
+        anchor.click();
 
-          // Clean up ...
-          URL.revokeObjectURL(url);
-          document.body.removeChild(anchor);
-        })
-        .catch((fail) => {
-          console.error('Unexpected error during export:' + fail);
-        });
+        // Clean up ...
+        URL.revokeObjectURL(url);
+        document.body.removeChild(anchor);
+      })
+      .catch((fail) => {
+        console.error('Unexpected error during export:' + fail);
+      });
 
-      onClose();
-    }
-  }, [submit]);
+    onClose();
+  };
 
   return (
     <div>
@@ -233,7 +247,7 @@ const ExportDialog = ({
           <Alert severity="info">
             <FormattedMessage
               id="export.warning"
-              defaultMessage="Exporting to Image (SVG,PNG,JPEG,PDF) is only available  in the editor toolbar."
+              defaultMessage="Exporting to Image (SVG,PNG,JPEG,PDF) is only available in the editor toolbar."
             />
           </Alert>
         )}
@@ -326,7 +340,7 @@ const ExportDialog = ({
                 label={intl.formatMessage({
                   id: 'export.document',
                   defaultMessage:
-                    'Mindmap Tools (WXML, MM, MMX): Export your mindmap in thirdparty mindmap tool formats',
+                    'Mindmap Tools (WXML, MM): Export your mindmap in thirdparty mindmap tool formats',
                 })}
                 color="secondary"
               />
@@ -344,7 +358,7 @@ const ExportDialog = ({
                     Freemind 1.0.1 (MM)
                   </MenuItem>
                   <MenuItem css={classes.select} value="mmx">
-                    Freeplane (MMX)
+                    Freeplane (MM)
                   </MenuItem>
                   {/* <MenuItem className={classes.select} value="mmap">
                                         MindManager (MMAP)

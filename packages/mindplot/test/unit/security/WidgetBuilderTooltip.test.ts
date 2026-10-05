@@ -37,16 +37,14 @@ class TestWidgetBuilder extends WidgetBuilder {
 
 type Listener = (evt: MouseEvent) => void;
 
-/** Minimal icon whose peer records the listeners WidgetBuilder registers. */
+/** Minimal icon whose element records the listeners WidgetBuilder registers. */
 const fakeIcon = () => {
   const listeners: Record<string, Listener> = {};
   const target = document.createElement('span');
   const icon = {
     getElement: () => ({
-      peer: {
-        addEvent: (type: string, listener: Listener) => {
-          listeners[type] = listener;
-        },
+      addEvent: (type: string, listener: Listener) => {
+        listeners[type] = listener;
       },
     }),
   };
@@ -101,7 +99,7 @@ describe('WidgetBuilder tooltips', () => {
   };
 
   it('renders the link url as text, not markup', () => {
-    const url = `https://x.org/"><img src=x onerror="window.__mindplotXssHook()">`;
+    const url = 'https://x.org/"><img src=x onerror="window.__mindplotXssHook()">';
     const hook = installXssHook();
 
     const link = showLink(url);

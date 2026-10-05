@@ -44,8 +44,6 @@ export type SaveOptions = {
 };
 
 abstract class PersistenceManager {
-  private static _instance: PersistenceManager;
-
   private _errorHandlers: PersistenceErrorCallback[] = [];
 
   save(
@@ -116,14 +114,6 @@ abstract class PersistenceManager {
   ): void;
 
   abstract unlockMap(mapId: string): void | Promise<void>;
-
-  static init = (instance: PersistenceManager) => {
-    this._instance = instance;
-  };
-
-  static getInstance(): PersistenceManager {
-    return this._instance;
-  }
 
   static loadFromDom(mapId: string, mapDom: Document) {
     $assert(mapId, 'mapId can not be null');

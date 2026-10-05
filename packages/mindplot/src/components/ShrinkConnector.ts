@@ -18,7 +18,6 @@
 import { Ellipse, Group } from '@wisemapping/web2d';
 
 import TopicConfig from './TopicConfig';
-import ActionDispatcher from './ActionDispatcher';
 import Topic from './Topic';
 import ColorUtil from './theme/ColorUtil';
 
@@ -40,7 +39,7 @@ class ShirinkConnector {
       const collapse = !model.areChildrenShrunken();
 
       const topicId = topic.getId();
-      const actionDispatcher = ActionDispatcher.getInstance();
+      const actionDispatcher = topic.getActionDispatcher();
       actionDispatcher.shrinkBranch([topicId], collapse);
 
       event.stopPropagation();
@@ -98,10 +97,6 @@ class ShirinkConnector {
 
   setPosition(x: number, y: number): void {
     this._ellipse.setPosition(x + 3, y + 3);
-  }
-
-  moveToBack(): void {
-    this._ellipse.moveToBack();
   }
 
   moveToFront(): void {

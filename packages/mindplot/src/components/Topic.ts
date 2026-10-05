@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { Text, Group, ElementClass, ElementPeer, Rect } from '@wisemapping/web2d';
+import type { StrokeStyle, FontWeightType as TextWeight } from '@wisemapping/web2d';
 import { $assert, $defined } from './util/assert';
 import isMacPlatform from './util/platform';
 
@@ -24,8 +25,7 @@ import TopicFeatureFactory from './TopicFeature';
 import TopicConnection, { LineType } from './TopicConnection';
 import IconGroup from './IconGroup';
 import ImageEmojiFeature from './ImageEmojiFeature';
-import ImageSVGFeature from './ImageSVGFeature';
-import LayoutEventBus from './layout/LayoutEventBus';
+import ImageSVGFeature, { GalleryIconShape } from './ImageSVGFeature';
 import ShirinkConnector from './ShrinkConnector';
 import ActionDispatcher from './ActionDispatcher';
 
@@ -35,14 +35,12 @@ import NodeModel from './model/NodeModel';
 import Relationship from './Relationship';
 import Canvas from './Canvas';
 import LayoutManager from './layout/LayoutManager';
-import NoteModel from './model/NoteModel';
-import LinkModel from './model/LinkModel';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 import PositionType from './PositionType';
 import Icon from './Icon';
 import { FontStyleType } from './FontStyleType';
-import { FontWeightType } from './FontWeightType';
+import { FontWeightType, toTextWeight } from './FontWeightType';
 import DragTopic from './DragTopic';
 import ThemeFactory from './theme/ThemeFactory';
 import ThemeResolutionCache from './theme/ThemeResolutionCache';
@@ -57,8 +55,8 @@ const ICON_SCALING_FACTOR = 1.3;
 type AppliedTextValues = {
   color?: string;
   size?: number;
-  weight?: string;
-  style?: string;
+  weight?: TextWeight;
+  style?: FontStyleType;
   family?: string;
   text?: string;
 };
@@ -308,8 +306,7 @@ abstract class Topic extends NodeGraph {
       return null;
     }
 
-    const groupPeer = this.get2DElement().peer;
-    const nativeElement = groupPeer?._native;
+    const nativeElement = this.get2DElement()?.getNode();
     if (!nativeElement || !nativeElement.isConnected) {
       return null;
     }
@@ -356,7 +353,7 @@ abstract class Topic extends NodeGraph {
     return this._imageEmojiFeature.getOrBuildEmojiTextShape();
   }
 
-  getOrBuildImageSVGElement(): Text | undefined {
+  getOrBuildImageSVGElement(): GalleryIconShape | undefined {
     return this._imageSVGFeature.getOrBuildSVGElement();
   }
 
@@ -459,7 +456,7 @@ abstract class Topic extends NodeGraph {
     const size = this.getFontSize();
     const weight = this.getFontWeight();
     const style = this.getFontStyle();
-    result.setFont(family, size, style, weight);
+    result.setFont(family, size, style, toTextWeight(weight));
 
     // Note: Font color will be set later in redraw() method with proper variant
     // const color = this.getFontColor();
@@ -576,8 +573,9 @@ abstract class Topic extends NodeGraph {
     model.setText(modelText);
 
     // The text does not change how the descendants render, only where the lines that
-    // meet this topic are drawn: redraw this topic and the descendants' connection and
-    // relationship lines, as a redraw of the whole subtree did, but not the topics.
+    // meet this topic are drawn: redraw this topic and the descendants' connection
+    // lines, as a redraw of the whole subtree did, but not the topics. Their
+    // relationships follow them when the layout moves them (setPosition).
     this.redraw(this.getThemeVariant(), false);
     if (this._isInWorkspace) {
       this.redrawDescendantLines();
@@ -585,8 +583,8 @@ abstract class Topic extends NodeGraph {
   }
 
   /**
-   * Redraws the connection and relationship lines of the visible descendants, in the
-   * order a redraw of the subtree redraws them.
+   * Redraws the connection lines of the visible descendants, in the order a redraw of
+   * the subtree redraws them.
    */
   private redrawDescendantLines(): void {
     if (this.areChildrenShrunken()) {
@@ -597,7 +595,6 @@ abstract class Topic extends NodeGraph {
         if (child._workspace) {
           child.getOutgoingLine()?.redraw();
         }
-        child._relationships.forEach((r) => r.redraw());
         child.redrawDescendantLines();
       }
     });
@@ -759,9 +756,9 @@ abstract class Topic extends NodeGraph {
 
       // Fire LayoutEventBus event for global selection tracking (includes topic model/ID)
       if (focus) {
-        LayoutEventBus.fireEvent('topicSelected', this.getModel());
+        this.getLayoutEventBus().fireEvent('topicSelected', this.getModel());
       } else {
-        LayoutEventBus.fireEvent('topicUnselected', this.getModel());
+        this.getLayoutEventBus().fireEvent('topicUnselected', this.getModel());
       }
     }
   }
@@ -823,7 +820,7 @@ abstract class Topic extends NodeGraph {
       elem.setVisibility(!value, 250);
     });
 
-    LayoutEventBus.fireEvent('childShrinked', model);
+    this.getLayoutEventBus().fireEvent('childShrinked', model);
   }
 
   getShrinkConnector(): ShirinkConnector | null {
@@ -857,13 +854,22 @@ abstract class Topic extends NodeGraph {
     dispatcher.show(this, text);
   }
 
+  /**
+   * The dispatcher of the topic's designer, which runs its commands on its own map and undo
+   * stack. ActionDispatcher.getInstance() is the last designer built's: with two designers on a
+   * page, the other map. A topic built without a designer falls back to it.
+   */
+  getActionDispatcher(): ActionDispatcher {
+    return this.getDesigner()?.getActionDispatcher() ?? ActionDispatcher.getInstance();
+  }
+
   getNoteValue(): string | null {
     const model = this.getModel();
     const notes = model.findFeatureByType('note');
 
     let result: string | null = null;
     if (notes.length > 0) {
-      result = (notes[0] as NoteModel).getText();
+      result = notes[0].getText();
     }
 
     return result;
@@ -872,22 +878,23 @@ abstract class Topic extends NodeGraph {
   setNoteValue(value: string | undefined): void {
     const topicId = this.getId();
     const model = this.getModel();
-    const dispatcher = ActionDispatcher.getInstance();
+    // Fetched only when there is something to dispatch: clearing a missing note needs none.
+    const dispatcher = () => this.getActionDispatcher();
     const notes = model.findFeatureByType('note');
 
     if (!$defined(value)) {
       // Nothing to clear when the topic has no note ...
       if (notes.length > 0) {
         const featureId = notes[0].getId();
-        dispatcher.removeFeatureFromTopic(topicId, featureId);
+        dispatcher().removeFeatureFromTopic(topicId, featureId);
       }
     } else if (notes.length > 0) {
-      dispatcher.changeFeatureToTopic(topicId, notes[0].getId(), {
+      dispatcher().changeFeatureToTopic(topicId, notes[0].getId(), {
         text: value,
         contentType: 'html', // Rich text editor always saves HTML
       });
     } else {
-      dispatcher.addFeatureToTopic([topicId], 'note', {
+      dispatcher().addFeatureToTopic([topicId], 'note', {
         text: value,
         contentType: 'html', // Rich text editor always saves HTML
       });
@@ -900,7 +907,7 @@ abstract class Topic extends NodeGraph {
     const links = model.findFeatureByType('link');
     let result: string | undefined;
     if (links.length > 0) {
-      result = (links[0] as LinkModel).getUrl();
+      result = links[0].getUrl();
     }
     return result;
   }
@@ -908,21 +915,22 @@ abstract class Topic extends NodeGraph {
   setLinkValue(value: string | undefined) {
     const topicId = this.getId();
     const model = this.getModel();
-    const dispatcher = ActionDispatcher.getInstance();
+    // Fetched only when there is something to dispatch: clearing a missing link needs none.
+    const dispatcher = () => this.getActionDispatcher();
     const links = model.findFeatureByType('link');
 
     if (!$defined(value)) {
       // Nothing to clear when the topic has no link ...
       if (links.length > 0) {
         const featureId = links[0].getId();
-        dispatcher.removeFeatureFromTopic(topicId, featureId);
+        dispatcher().removeFeatureFromTopic(topicId, featureId);
       }
     } else if (links.length > 0) {
-      dispatcher.changeFeatureToTopic(topicId, links[0].getId(), {
+      dispatcher().changeFeatureToTopic(topicId, links[0].getId(), {
         url: value,
       });
     } else {
-      dispatcher.addFeatureToTopic([topicId], 'link', {
+      dispatcher().addFeatureToTopic([topicId], 'link', {
         url: value,
       });
     }
@@ -942,6 +950,8 @@ abstract class Topic extends NodeGraph {
   setPosition(point: PositionType): void {
     // allowed param reassign to avoid risks of existing code relying in this side-effect
     const model = this.getModel();
+    const previous = model.getPosition();
+    const moved = !previous || previous.x !== point.x || previous.y !== point.y;
     model.setPosition(point.x, point.y);
 
     // Elements are positioned in the center.
@@ -956,6 +966,11 @@ abstract class Topic extends NodeGraph {
 
     // Update connection lines ...
     this.updateConnection();
+
+    // ... and the relationships attached to it, whose ends follow the topic.
+    if (moved) {
+      this._relationships.forEach((r) => r.redraw());
+    }
 
     // Check object state.
     this.invariant();
@@ -1005,18 +1020,6 @@ abstract class Topic extends NodeGraph {
     if (outgoingLine) {
       outgoingLine.setVisibility(value, fade);
     }
-  }
-
-  protected moveToBack(): void {
-    // Update relationship lines
-    this._relationships.forEach((r) => r.moveToBack());
-
-    const connector = this.getShrinkConnector();
-    if (connector) {
-      connector.moveToBack();
-    }
-
-    this.get2DElement().moveToBack();
   }
 
   protected moveToFront(): void {
@@ -1144,7 +1147,7 @@ abstract class Topic extends NodeGraph {
       this.updatePositionOnChangeSize();
 
       if (hasSizeChanged) {
-        LayoutEventBus.fireEvent('topicResize', {
+        this.getLayoutEventBus().fireEvent('topicResize', {
           node: this.getModel(),
           size: roundedSize,
         });
@@ -1180,7 +1183,7 @@ abstract class Topic extends NodeGraph {
       }
 
       // Remove from workspace.
-      LayoutEventBus.fireEvent('topicDisconect', this.getModel());
+      this.getLayoutEventBus().fireEvent('topicDisconect', this.getModel());
 
       this.redraw(this.getThemeVariant(), true);
     }
@@ -1233,13 +1236,13 @@ abstract class Topic extends NodeGraph {
 
     // Fire connection event ...
     if (this._isInWorkspace) {
-      LayoutEventBus.fireEvent('topicConnected', {
+      this.getLayoutEventBus().fireEvent('topicConnected', {
         parentNode: targetTopic.getModel(),
         childNode: this.getModel(),
       });
 
       // Hack for the case of first node created, it needs to review the positioning problem.
-      LayoutEventBus.fireEvent('forceLayout');
+      this.getLayoutEventBus().fireEvent('forceLayout');
       this.redraw(this.getThemeVariant(), false);
     }
   }
@@ -1283,7 +1286,7 @@ abstract class Topic extends NodeGraph {
     }
     this._isInWorkspace = false;
     this._workspace = null;
-    LayoutEventBus.fireEvent('topicRemoved', this.getModel());
+    this.getLayoutEventBus().fireEvent('topicRemoved', this.getModel());
   }
 
   addToWorkspace(workspace: Canvas): void {
@@ -1291,12 +1294,12 @@ abstract class Topic extends NodeGraph {
     workspace.append(elem);
     if (!this._isInWorkspace) {
       if (!this.isCentralTopic()) {
-        LayoutEventBus.fireEvent('topicAdded', this.getModel());
+        this.getLayoutEventBus().fireEvent('topicAdded', this.getModel());
       }
 
       const outgoingTopic = this.getOutgoingConnectedTopic();
       if (this.getModel().isConnected() && outgoingTopic) {
-        LayoutEventBus.fireEvent('topicConnected', {
+        this.getLayoutEventBus().fireEvent('topicConnected', {
           parentNode: outgoingTopic.getModel(),
           childNode: this.getModel(),
         });
@@ -1376,8 +1379,7 @@ abstract class Topic extends NodeGraph {
       const fontColor = this.getFontColor(variant);
       const fontSize = this.getFontSize();
       const fontWeight = this.getFontWeight();
-      // Map theme weight '600' to a concrete weight for rendering
-      const web2dWeight = fontWeight === '600' ? 'bold' : fontWeight;
+      const web2dWeight = toTextWeight(fontWeight);
       const fontStyle = this.getFontStyle();
       const fontFamily = this.getFontFamily();
       const text = this.getText();
@@ -1400,9 +1402,8 @@ abstract class Topic extends NodeGraph {
 
       // Calculate topic size and adjust elements. The text is measured once: the font
       // height is the height of one of its lines (Text.getFontHeight) ...
-      const textWidth = textShape.getShapeWidth();
-      const textHeight = textShape.getShapeHeight();
-      const fontHeight = textHeight / textShape.peer.getTextLines().length;
+      const { width: textWidth, height: textHeight } = textShape.measure();
+      const fontHeight = textHeight / textShape.getLineCount();
       this._measuredFontHeight = fontHeight;
       const padding = theme.getInnerPadding(this);
 
@@ -1575,7 +1576,7 @@ abstract class Topic extends NodeGraph {
       textShape.setFontSize(values.size);
     }
     if (applied.weight !== values.weight) {
-      textShape.setWeight(values.weight as 'normal' | 'bold');
+      textShape.setWeight(values.weight);
     }
     if (applied.style !== values.style) {
       textShape.setStyle(values.style);
@@ -1624,7 +1625,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  private getStrokeStyle(borderStyle: string | null): string | null {
+  private getStrokeStyle(borderStyle: string | null): StrokeStyle | null {
     if (!borderStyle) return null;
 
     switch (borderStyle) {

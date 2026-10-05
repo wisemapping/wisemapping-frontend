@@ -15,7 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Point, CurvedLine, Rect } from '@wisemapping/web2d';
+import {
+  Point,
+  CurvedLine,
+  Rect,
+  defaultControlPoints,
+  isWithinStraightTolerance,
+} from '@wisemapping/web2d';
 import { $assert, $defined } from './util/assert';
 import PositionType from './PositionType';
 
@@ -126,7 +132,21 @@ class DragPivot implements CanvasElement {
 
     // Set control points based on orientation
     if (line) {
-      if (orientation === 'vertical') {
+      // Ends at (almost) the same height, as TopicConnection draws it: control points on the
+      // chord, so the line is straight.
+      if (
+        isWithinStraightTolerance(
+          pivotPoint.x,
+          pivotPoint.y,
+          targetPoint.x,
+          targetPoint.y,
+          orientation,
+        )
+      ) {
+        const [src, dest] = defaultControlPoints(pivotPoint, targetPoint);
+        line.setSrcControlPoint(new Point(src.x, src.y));
+        line.setDestControlPoint(new Point(dest.x, dest.y));
+      } else if (orientation === 'vertical') {
         // Vertical orientation: control points based on Y distance
         const deltaY = (targetPoint.y - pivotPoint.y) / 3;
         line.setSrcControlPoint(new Point(0, deltaY));

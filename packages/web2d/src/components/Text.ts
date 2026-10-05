@@ -17,22 +17,34 @@
  */
 
 import WorkspaceElement from './WorkspaceElement';
-import { FontWeightType } from './FontWeightType';
 import TextPeer from './peer/svg/TextPeer';
 import TransformUtil from './peer/utils/TransformUtils';
-import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
-import PositionType from './PositionType';
-import { FontStyle } from './peer/svg/FontPeer';
+import {
+  pointArguments,
+  type AttributeArguments,
+  type AttributeSetter,
+  type ShapeAttributes,
+} from './StyleAttributes';
+import type PositionType from './PositionType';
+import type SizeType from './SizeType';
+import FontPeer, { type FontStyle } from './peer/svg/FontPeer';
+import type { ElementType, FontStyleType, FontWeightType } from './types';
 
 class Text extends WorkspaceElement<TextPeer> {
-  constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createText('Arial');
-    // @ts-expect-error - Toolkit.createText returns a generic peer type that needs to be cast
-    super(peer, attributes);
+  constructor(attributes?: ShapeAttributes) {
+    super(new TextPeer(new FontPeer('Arial')), attributes ?? {});
   }
 
-  getType(): string {
+  /** Applies the position attributes (x, y, position) too. */
+  protected override applyAttribute(setter: AttributeSetter, args: AttributeArguments): void {
+    if (setter === 'position') {
+      this.setPosition(...pointArguments(args, this.getPosition()));
+    } else {
+      super.applyAttribute(setter, args);
+    }
+  }
+
+  getType(): ElementType {
     return 'Text';
   }
 
@@ -44,7 +56,13 @@ class Text extends WorkspaceElement<TextPeer> {
     return this.peer.getText();
   }
 
-  setFont(font: string, size: number, style: string, weight: string): void {
+  /** Sets the font. An empty name, or a missing size, style or weight, keeps the current one. */
+  setFont(
+    font: string,
+    size?: number | null,
+    style?: FontStyleType | null,
+    weight?: FontWeightType | null,
+  ): void {
     this.peer.setFont(font, size, style, weight);
   }
 
@@ -60,7 +78,7 @@ class Text extends WorkspaceElement<TextPeer> {
     return this.peer.getColor();
   }
 
-  setStyle(style: string): void {
+  setStyle(style: FontStyleType): void {
     this.peer.setStyle(style);
   }
 
@@ -81,6 +99,14 @@ class Text extends WorkspaceElement<TextPeer> {
     return this.peer.getHtmlFontSize(scale);
   }
 
+  /**
+   * The text bounding box size, measured once: a redraw that needs both the width and the height
+   * should call this rather than getShapeWidth and getShapeHeight. The result is a copy.
+   */
+  measure(): SizeType {
+    return this.peer.measure();
+  }
+
   getShapeWidth(): number {
     return this.peer.getShapeWidth();
   }
@@ -89,9 +115,14 @@ class Text extends WorkspaceElement<TextPeer> {
     return this.peer.getShapeHeight();
   }
 
+  /** The number of lines (an empty text has none). */
+  getLineCount(): number {
+    return this.peer.getTextLines().length;
+  }
+
   /** The height of one line. An empty text has no lines and measures 0, not NaN. */
   getFontHeight(): number {
-    return this.getShapeHeight() / Math.max(1, this.peer.getTextLines().length);
+    return this.measure().height / Math.max(1, this.getLineCount());
   }
 
   getPosition(): PositionType {
@@ -102,8 +133,12 @@ class Text extends WorkspaceElement<TextPeer> {
     this.peer.setPosition(x, y);
   }
 
-  getNativePosition() {
-    return this.peer.getNativePosition();
+  /**
+   * The text position in pixels. Pass the offset parent of an absolutely positioned element that
+   * should be placed over the text (BL5-76); without it, the position is in document coordinates.
+   */
+  getNativePosition(container?: Element | null) {
+    return this.peer.getNativePosition(container);
   }
 }
 

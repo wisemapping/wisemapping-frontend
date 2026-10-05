@@ -27,6 +27,7 @@ const ColorPickerWithActions = (props: {
   initialColor?: string;
   onColorChange?: (color: string | undefined) => void;
 }): React.ReactElement => {
+  const { onColorChange } = props;
   const [color, setColor] = React.useState<string | undefined>(props.initialColor);
 
   const colorModel: NodeProperty<string | undefined> = React.useMemo(
@@ -34,10 +35,10 @@ const ColorPickerWithActions = (props: {
       getValue: () => color,
       setValue: (v: string | undefined) => {
         setColor(v);
-        props.onColorChange?.(v);
+        onColorChange?.(v);
       },
     }),
-    [color, props.onColorChange],
+    [color, onColorChange],
   );
 
   return <ColorPicker closeModal={props.closeModal} colorModel={colorModel} />;

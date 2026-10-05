@@ -5,8 +5,20 @@
                 <head></head>
                 <body>
                     <p>Always ask</p>
+                    <p><![CDATA[Why? <because> & "then" 'what']]></p>
+                    <p>Mixed <![CDATA[a < b]]> and <![CDATA[c > d]]></p>
                 </body>
             </html>
         </richcontent>
+        <node ID="ID_2" POSITION="right">
+            <richcontent TYPE="NODE">
+                <html>
+                    <head></head>
+                    <body>
+                        <p><![CDATA[Fish & <Chips>]]></p>
+                    </body>
+                </html>
+            </richcontent>
+        </node>
     </node>
 </map>

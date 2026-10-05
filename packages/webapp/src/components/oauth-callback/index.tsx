@@ -61,8 +61,12 @@ const OAuthCallbackPage = (): React.ReactElement => {
       id: 'registation.success-title',
       defaultMessage: 'Registation Success | WiseMapping',
     });
+  }, [intl]);
+
+  // Once per visit: a language change retitles the page but is not a new page view.
+  useEffect(() => {
     trackPageView(window.location.pathname, 'Registration:Success');
-  });
+  }, []);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -154,6 +158,9 @@ const OAuthCallbackPage = (): React.ReactElement => {
         setError(errorInfo);
         logCriticalError(`Unexpected error on ${provider} OAuth callback`, errorInfo);
       });
+    // Once, on arrival: the OAuth code in the URL is single-use, and initializeThemeFromSystem is a
+    // new function on every ThemeContext render, so re-running would post the spent code again.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const confirmAccountSynching = (): void => {

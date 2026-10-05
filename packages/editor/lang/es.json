@@ -68,6 +68,12 @@
   "outline.collapse": {
     "defaultMessage": "Contraer"
   },
+  "outline.expand-all": {
+    "defaultMessage": "Expandir todo"
+  },
+  "outline.collapse-all": {
+    "defaultMessage": "Contraer todo"
+  },
   "outline.has-note": {
     "defaultMessage": "Tiene nota"
   },
@@ -188,6 +194,18 @@
   "shortcut-help-pane.cancel-text-changes": {
     "defaultMessage": "Cancelar cambio de texto"
   },
+  "shortcut-help-pane.category-editing": {
+    "defaultMessage": "Edición"
+  },
+  "shortcut-help-pane.category-format": {
+    "defaultMessage": "Formato"
+  },
+  "shortcut-help-pane.category-navigation": {
+    "defaultMessage": "Navegación"
+  },
+  "shortcut-help-pane.category-view": {
+    "defaultMessage": "Vista"
+  },
   "shortcut-help-pane.change-font-bold": {
     "defaultMessage": "Cambiar texto a negrita"
   },
@@ -217,6 +235,24 @@
   },
   "shortcut-help-pane.deselect-all-topics": {
     "defaultMessage": "Deseleccionar tópicos"
+  },
+  "shortcut-help-pane.diagram-aria": {
+    "defaultMessage": "La flecha izquierda va al tópico padre, la derecha a un hijo, y arriba y abajo entre hermanos."
+  },
+  "shortcut-help-pane.diagram-caption": {
+    "defaultMessage": "En la mitad izquierda del mapa, ← y → intercambian sus funciones."
+  },
+  "shortcut-help-pane.diagram-child": {
+    "defaultMessage": "Hijo"
+  },
+  "shortcut-help-pane.diagram-parent": {
+    "defaultMessage": "Padre"
+  },
+  "shortcut-help-pane.diagram-selected": {
+    "defaultMessage": "Seleccionado"
+  },
+  "shortcut-help-pane.diagram-sibling": {
+    "defaultMessage": "Hermano"
   },
   "shortcut-help-pane.edit-multiline": {
     "defaultMessage": "Agregar texto multi-linea"
@@ -298,6 +334,9 @@
   },
   "shortcut-help-pane.drag-disconnect": {
     "defaultMessage": "Desconectar tópico"
+  },
+  "shortcut-help-pane.drag-disconnect-key": {
+    "defaultMessage": "arrastrar tópico"
   },
   "theme.dark": {
     "defaultMessage": "Oscuro"
@@ -387,7 +426,7 @@
     "defaultMessage": "Color de cuadrícula"
   },
   "canvas-style.grid-style": {
-    "defaultMessage": "Estilo de cuadrícula"
+    "defaultMessage": "Tamaño de cuadrícula"
   },
   "canvas-style.pattern-dots": {
     "defaultMessage": "Puntos"
@@ -690,43 +729,43 @@
     "defaultMessage": "Elegir tema"
   },
   "theme.classic.description": {
-    "defaultMessage": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+    "defaultMessage": "Diseño limpio y profesional con acentos azules. Perfecto para presentaciones de negocios y documentos formales."
   },
   "theme.classic.name": {
     "defaultMessage": "Clásico"
   },
   "theme.aurora.description": {
-    "defaultMessage": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    "defaultMessage": "Tema degradado de inspiración neón con efectos de brillo, tipografía en negrita y conectores de alto contraste, pensado para narraciones inmersivas."
   },
   "theme.aurora.name": {
     "defaultMessage": "Aurora"
   },
   "theme.retro.description": {
-    "defaultMessage": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    "defaultMessage": "Paleta synthwave de los 80 con bordes de neón, degradados cromados y lienzos cuadriculados inspirados en las fiestas nocturnas retro."
   },
   "theme.retro.name": {
     "defaultMessage": "Noche Retro 80s"
   },
   "theme.ocean.description": {
-    "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+    "defaultMessage": "Tema azul inspirado en el océano, con variantes clara y oscura. Colores serenos y profesionales, perfectos para proyectos de negocios y creativos."
   },
   "theme.ocean.name": {
     "defaultMessage": "Océano"
   },
   "theme.robot.description": {
-    "defaultMessage": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+    "defaultMessage": "Tema verde de inspiración tecnológica. Perfecto para documentación técnica y presentaciones futuristas."
   },
   "theme.robot.name": {
     "defaultMessage": "Robot"
   },
   "theme.summer.description": {
-    "defaultMessage": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+    "defaultMessage": "Tema naranja brillante y vibrante. Ideal para proyectos creativos y presentaciones llenas de energía."
   },
   "theme.summer.name": {
     "defaultMessage": "Verano"
   },
   "theme.sunrise.description": {
-    "defaultMessage": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+    "defaultMessage": "Tema Amanecer con variantes de modo claro y oscuro. Colores y contraste mejorados para una mejor legibilidad."
   },
   "theme.sunrise.name": {
     "defaultMessage": "Amanecer"
@@ -744,37 +783,43 @@
     "defaultMessage": "Color"
   },
   "canvas-style.tab-grid": {
-    "defaultMessage": "Grid Color"
+    "defaultMessage": "Color de cuadrícula"
   },
   "canvas-style.background-style": {
-    "defaultMessage": "Background Style"
+    "defaultMessage": "Estilo de fondo"
   },
   "canvas-style.pattern-default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "Predeterminado - Todos los estilos se seleccionarán automáticamente según el tema"
   },
   "icon-collection.shape.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "Predeterminado"
   },
   "icon-collection.border.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "Predeterminado"
+  },
+  "icon-collection.border.default-tooltip": {
+    "defaultMessage": "Predeterminado - Los colores se tomarán automáticamente según el tema seleccionado"
   },
   "icon-collection.connection.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "Predeterminado"
   },
   "icon-collection.default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "Predeterminado - Todos los estilos se seleccionarán automáticamente según el tema"
   },
   "unified-styling.shape-type": {
-    "defaultMessage": "Shape Type"
+    "defaultMessage": "Tipo de forma"
   },
   "unified-styling.background-color": {
-    "defaultMessage": "Background Color"
+    "defaultMessage": "Color de fondo"
   },
   "topic-font-editor.reset-to-default": {
-    "defaultMessage": "Reset to Default"
+    "defaultMessage": "Restablecer valores predeterminados"
   },
   "visualization-toolbar.tooltip-expand-level": {
     "defaultMessage": "Expandir por Nivel"
+  },
+  "visualization-toolbar.tooltip-expand-level-current": {
+    "defaultMessage": "Expandir por Nivel (Nivel {level})"
   },
   "appbar.tooltip-change-layout": {
     "defaultMessage": "Cambiar Diseño"

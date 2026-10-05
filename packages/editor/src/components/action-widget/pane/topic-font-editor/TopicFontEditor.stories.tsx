@@ -31,6 +31,13 @@ const TopicFontEditorWithActions = (props: {
   onFontStyleSwitch?: () => void;
   onFontColorChange?: (color: string | undefined) => void;
 }): React.ReactElement => {
+  const {
+    onFontFamilyChange,
+    onFontSizeSwitch,
+    onFontWeightSwitch,
+    onFontStyleSwitch,
+    onFontColorChange,
+  } = props;
   const [fontFamily, setFontFamily] = React.useState<string | undefined>('Arial');
   const [fontSize, setFontSize] = React.useState<number>(12);
   const [fontWeight, setFontWeight] = React.useState<string | undefined>('normal');
@@ -42,11 +49,11 @@ const TopicFontEditorWithActions = (props: {
       getValue: () => fontFamily,
       setValue: (v: string | undefined) => {
         setFontFamily(v);
-        props.onFontFamilyChange?.(v);
+        onFontFamilyChange?.(v);
       },
       switchValue: () => {},
     }),
-    [fontFamily, props.onFontFamilyChange],
+    [fontFamily, onFontFamilyChange],
   );
 
   const fontSizeModel: NodeProperty<number> = React.useMemo(
@@ -58,10 +65,10 @@ const TopicFontEditorWithActions = (props: {
       switchValue: (direction?: SwitchValueDirection) => {
         const newSize = direction === SwitchValueDirection.up ? fontSize + 1 : fontSize - 1;
         setFontSize(newSize);
-        props.onFontSizeSwitch?.(direction);
+        onFontSizeSwitch?.(direction);
       },
     }),
-    [fontSize, props.onFontSizeSwitch],
+    [fontSize, onFontSizeSwitch],
   );
 
   const fontWeightModel: NodeProperty<string | undefined> = React.useMemo(
@@ -73,10 +80,10 @@ const TopicFontEditorWithActions = (props: {
       switchValue: () => {
         const newWeight = fontWeight === 'bold' ? 'normal' : 'bold';
         setFontWeight(newWeight);
-        props.onFontWeightSwitch?.();
+        onFontWeightSwitch?.();
       },
     }),
-    [fontWeight, props.onFontWeightSwitch],
+    [fontWeight, onFontWeightSwitch],
   );
 
   const fontStyleModel: NodeProperty<string> = React.useMemo(
@@ -88,10 +95,10 @@ const TopicFontEditorWithActions = (props: {
       switchValue: () => {
         const newStyle = fontStyle === 'italic' ? 'normal' : 'italic';
         setFontStyle(newStyle);
-        props.onFontStyleSwitch?.();
+        onFontStyleSwitch?.();
       },
     }),
-    [fontStyle, props.onFontStyleSwitch],
+    [fontStyle, onFontStyleSwitch],
   );
 
   const fontColorModel: NodeProperty<string | undefined> = React.useMemo(
@@ -99,11 +106,11 @@ const TopicFontEditorWithActions = (props: {
       getValue: () => fontColor,
       setValue: (v: string | undefined) => {
         setFontColor(v);
-        props.onFontColorChange?.(v);
+        onFontColorChange?.(v);
       },
       switchValue: () => {},
     }),
-    [fontColor, props.onFontColorChange],
+    [fontColor, onFontColorChange],
   );
 
   return (

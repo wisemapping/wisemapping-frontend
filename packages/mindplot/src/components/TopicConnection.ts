@@ -16,8 +16,14 @@
  *   limitations under the License.
  */
 
-import { CurvedLine, PolyLine } from '@wisemapping/web2d';
-import type { Line } from '@wisemapping/web2d';
+import {
+  CurvedLine,
+  PolyLine,
+  STRAIGHT_TOLERANCE_PX,
+  defaultControlPoints,
+  isWithinStraightTolerance,
+} from '@wisemapping/web2d';
+import type { Line, StrokeStyle } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import PositionType from './PositionType';
 import Topic from './Topic';
@@ -32,9 +38,10 @@ export { LineType };
 /**
  * A curved connection (THIN_CURVED, THICK_CURVED, THICK_CURVED_ORGANIC) whose ends are at most
  * this far apart across the layout (in y for a mind map, in x for a tree) is drawn as a straight
- * segment, as a tiny S-curve only reads as a wobble. Decided with the user: 5 px.
+ * segment, as a tiny S-curve only reads as a wobble. Decided with the user: 5 px. web2d's elbow
+ * styles (POLYLINE_*) use the same tolerance, so it is defined there.
  */
-export const STRAIGHT_TOLERANCE_PX = 5;
+export { STRAIGHT_TOLERANCE_PX };
 
 /**
  * TopicConnection represents hierarchical parent-child connections in the mindmap
@@ -69,6 +76,10 @@ class TopicConnection extends BaseConnectionLine {
     return new ArcLine(this._childTopic, this._parentTopic);
   }
 
+  protected buildLine(): Line {
+    return this.createLine(this.getLineTypeValue());
+  }
+
   protected override initializeLine(): void {
     super.initializeLine();
     // Set orientation for polylines and arc lines based on parent topic
@@ -90,14 +101,8 @@ class TopicConnection extends BaseConnectionLine {
 
     // Ends at (almost) the same height: control points on the chord, so the line is straight,
     // although it may be slightly inclined.
-    const chordX = childPos.x - parentPos.x;
-    const chordY = childPos.y - parentPos.y;
-    const across = orientation === 'vertical' ? chordX : chordY;
-    if (Math.abs(across) <= STRAIGHT_TOLERANCE_PX) {
-      return [
-        { x: chordX / 3, y: chordY / 3 },
-        { x: -chordX / 3, y: -chordY / 3 },
-      ];
+    if (isWithinStraightTolerance(parentPos.x, parentPos.y, childPos.x, childPos.y, orientation)) {
+      return defaultControlPoints(parentPos, childPos);
     }
 
     if (orientation === 'vertical') {
@@ -235,14 +240,11 @@ class TopicConnection extends BaseConnectionLine {
       line2d.setOrientation(orientation);
     }
 
-    if (
-      this.getLineType() === LineType.THICK_CURVED ||
-      this.getLineType() === LineType.THIN_CURVED ||
-      this.getLineType() === LineType.THICK_CURVED_ORGANIC
-    ) {
+    // The curved line types (thin, thick and organic) draw a CurvedLine.
+    if (line2d instanceof CurvedLine) {
       const ctrlPoints = this._getCtrlPoints(this._childTopic, this._parentTopic);
-      (line2d as CurvedLine).setSrcControlPoint(ctrlPoints[0]);
-      (line2d as CurvedLine).setDestControlPoint(ctrlPoints[1]);
+      line2d.setSrcControlPoint(ctrlPoints[0]);
+      line2d.setDestControlPoint(ctrlPoints[1]);
     }
 
     // Add connector ...
@@ -292,7 +294,7 @@ class TopicConnection extends BaseConnectionLine {
     }
   }
 
-  setStroke(color: string, style: string, opacity: number): void {
+  setStroke(color: string, style: StrokeStyle, opacity: number): void {
     this._line.setStroke(1, style, color, opacity);
     this._color = color;
   }

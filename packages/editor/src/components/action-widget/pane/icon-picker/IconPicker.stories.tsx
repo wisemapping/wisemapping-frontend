@@ -27,6 +27,7 @@ const IconPickerWithActions = (props: {
   initialIcon?: string;
   onIconChange?: (icon: string | undefined) => void;
 }): React.ReactElement => {
+  const { onIconChange } = props;
   const [icon, setIcon] = React.useState<string | undefined>(props.initialIcon);
 
   const iconModel: NodeProperty<string | undefined> = React.useMemo(
@@ -34,10 +35,10 @@ const IconPickerWithActions = (props: {
       getValue: () => icon,
       setValue: (v: string | undefined) => {
         setIcon(v);
-        props.onIconChange?.(v);
+        onIconChange?.(v);
       },
     }),
-    [icon, props.onIconChange],
+    [icon, onIconChange],
   );
 
   return <IconPicker triggerClose={props.triggerClose} iconModel={iconModel} />;

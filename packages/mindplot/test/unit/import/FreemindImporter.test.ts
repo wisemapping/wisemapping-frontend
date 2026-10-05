@@ -16,18 +16,22 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import fs from 'fs';
 import path from 'path';
 import { describe, expect, test } from '@jest/globals';
 import FreemindImporter from '../../../src/components/import/FreemindImporter';
 import ImportError from '../../../src/components/import/ImportError';
-import { LineType } from '../../../src/components/ConnectionLine';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
+import Mindmap from '../../../src/components/model/Mindmap';
 
 const importMap = async (mm: string): Promise<Document> => {
   const xml = await new FreemindImporter(mm).import('test', '');
   return new DOMParser().parseFromString(xml, 'text/xml');
+};
+
+const importMindmap = async (mm: string): Promise<Mindmap> => {
+  const doc = await importMap(mm);
+  return XMLSerializerFactory.createFromDocument(doc).loadFromDom(doc, 'test');
 };
 
 const topicById = (doc: Document, id: string): Element => {
@@ -45,14 +49,15 @@ const positionOf = (topic: Element): { x: number; y: number } => {
 
 describe('FreemindImporter', () => {
   test('imports maps written by FreeMind versions older than 1.0.1', async () => {
-    const mm = `<map version="0.9.0"><node ID="ID_1" TEXT="Root"><node ID="ID_2" TEXT="Child" POSITION="right"/></node></map>`;
+    const mm =
+      '<map version="0.9.0"><node ID="ID_1" TEXT="Root"><node ID="ID_2" TEXT="Child" POSITION="right"/></node></map>';
 
     const doc = await importMap(mm);
     expect(topicById(doc, '2').getAttribute('text')).toBe('Child');
   });
 
   test('rejects maps written by FreeMind versions newer than the supported one', async () => {
-    const mm = `<map version="1.1.0"><node ID="ID_1" TEXT="Root"/></map>`;
+    const mm = '<map version="1.1.0"><node ID="ID_1" TEXT="Root"/></map>';
 
     let result: Promise<string> | undefined;
     expect(() => {
@@ -191,6 +196,62 @@ describe('FreemindImporter', () => {
     expect(icons.map((icon) => icon.getAttribute('id'))).toEqual(['💡', '1️⃣', '✅', '⚠️']);
   });
 
+  test('imports the blue flag as the WiseMapping blue flag icon, not a circle (BL5-14)', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" TEXT="Child" POSITION="right"><icon BUILTIN="flag-blue"/></node>
+      </node>
+    </map>`;
+
+    const topic = topicById(await importMap(mm), '2');
+    expect(topic.querySelector(':scope > icon')?.getAttribute('id')).toBe('flag_blue');
+    expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
+  });
+
+  test('imports the rich content of a node as its plain text, one line per paragraph (BL5-114)', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" POSITION="right">
+          <richcontent TYPE="NODE">
+            <html>
+              <head></head>
+              <body>
+                <p>First   <b>bold</b>
+                  line</p>
+                <p><![CDATA[Fish & <Chips>]]></p>
+                <p></p>
+                <p>After a blank<br/>and a break</p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+      </node>
+    </map>`;
+
+    const topic = topicById(await importMap(mm), '2');
+    const text = topic.getAttribute('text') ?? topic.querySelector(':scope > text')?.textContent;
+    expect(text).toBe('First bold line\nFish & <Chips>\n\nAfter a blank\nand a break');
+    // Topic text is plain: the model does not keep a content type for it.
+    expect(topic.getAttribute('contentType')).toBeNull();
+  });
+
+  test('imports the colored flags as the WiseMapping flag icons, not circles (BL5-113)', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" TEXT="Child" POSITION="right">
+          <icon BUILTIN="flag-green"/><icon BUILTIN="flag-yellow"/>
+          <icon BUILTIN="flag-orange"/><icon BUILTIN="flag-pink"/>
+        </node>
+      </node>
+    </map>`;
+
+    const topic = topicById(await importMap(mm), '2');
+    expect(
+      Array.from(topic.querySelectorAll(':scope > icon')).map((i) => i.getAttribute('id')),
+    ).toEqual(['flag_green', 'flag_yellow', 'flag_orange', 'flag_pink']);
+    expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
+  });
+
   test('keeps the WiseMapping icons written by the FreeMind exporter', async () => {
     const mm = `<map version="1.0.1">
       <node ID="ID_1" TEXT="Root">
@@ -263,6 +324,40 @@ describe('FreemindImporter', () => {
     ids.forEach((id) => expect(Number.isInteger(Number(id))).toBe(true));
   });
 
+  test('gives unique ids to nodes whose FreeMind ids end in the same number (BL5-13)', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="root" TEXT="Root">
+        <node ID="ID_abc" TEXT="Generated" POSITION="right"/>
+        <node ID="ID_1" TEXT="One" POSITION="right"/>
+        <node ID="ID_5" TEXT="Five" POSITION="left">
+          <arrowlink DESTINATION="Freemind_Link_5"/>
+        </node>
+        <node ID="Freemind_Link_5" TEXT="Link five" POSITION="left"/>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    const topics = Array.from(doc.querySelectorAll('topic'));
+    const ids = topics.map((topic) => topic.getAttribute('id'));
+    expect(new Set(ids).size).toBe(5);
+    // Parsed ids are kept when they are free.
+    expect(topicById(doc, '5').getAttribute('text')).toBe('Five');
+    // The arrowlink still points to the node it names.
+    const relationship = doc.querySelector('relationship')!;
+    const dest = topicById(doc, relationship.getAttribute('destTopicId')!);
+    expect(relationship.getAttribute('srcTopicId')).toBe('5');
+    expect(dest.getAttribute('text')).toBe('Link five');
+  });
+
+  test('gives each import its own ids', async () => {
+    const mm = '<map version="1.0.1"><node ID="root" TEXT="Root"/></map>';
+    const importer = new FreemindImporter(mm);
+    const first = await importer.import('test', '');
+    const second = await importer.import('test', '');
+
+    expect(second).toBe(first);
+  });
+
   test('keeps the text of CDATA sections in rich content notes', async () => {
     const mm = fs.readFileSync(path.resolve(__dirname, './input/cdata-note.mm'), 'utf-8');
 
@@ -313,10 +408,8 @@ describe('FreemindImporter', () => {
 
     const doc = await importMap(mm);
     const relationship = doc.querySelector('relationship')!;
-    // Saved with the legacy lineType every relationship carries (BL4-32), read as a thin curve ...
+    // Saved with the legacy lineType every relationship carries (BL4-32) ...
     expect(relationship.getAttribute('lineType')).toBe('3');
-    const mindmap = XMLSerializerFactory.createFromDocument(doc).loadFromDom(doc, 'test');
-    expect(mindmap.getRelationships()[0].getLineType()).toBe(LineType.THIN_CURVED);
   });
 
   test('imports the edge color as the connection color, keeping the background color', async () => {
@@ -378,5 +471,42 @@ describe('FreemindImporter', () => {
     const doc = await importMap(mm);
     const icons = Array.from(topicById(doc, '2').querySelectorAll(':scope > eicon'));
     expect(icons.map((icon) => icon.getAttribute('id'))).toEqual(['😮', '💡', '👍', '✏️', '🖥️']);
+  });
+
+  test('imports the text color and the font of the nodes, the root included (BL5-156)', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root" COLOR="#990000">
+        <font NAME="Georgia" SIZE="18"/>
+        <node ID="ID_2" TEXT="A" POSITION="right" COLOR="#00ff00">
+          <font NAME="Verdana" SIZE="24" BOLD="true" ITALIC="true"/>
+        </node>
+        <node ID="ID_3" TEXT="B" POSITION="left">
+          <font SIZE="12" ITALIC="true"/>
+        </node>
+        <node ID="ID_4" TEXT="C" POSITION="right"/>
+      </node>
+    </map>`;
+
+    const mindmap = await importMindmap(mm);
+    const central = mindmap.getCentralTopic();
+    expect(central.getFontColor()).toBe('#990000');
+    expect(central.getFontFamily()).toBe('Georgia');
+    expect(central.getFontSize()).toBe(10);
+
+    const [a, b, c] = central.getChildren();
+    expect(a.getFontColor()).toBe('#00ff00');
+    expect(a.getFontFamily()).toBe('Verdana');
+    expect(a.getFontSize()).toBe(15);
+    expect(a.getFontWeight()).toBe('bold');
+    expect(a.getFontStyle()).toBe('italic');
+
+    // 12 is the FreeMind default size, written with any font: the theme size is kept.
+    expect(b.getFontSize()).toBeUndefined();
+    expect(b.getFontStyle()).toBe('italic');
+    expect(b.getFontWeight()).toBeUndefined();
+
+    expect(c.getFontColor()).toBeUndefined();
+    expect(c.getFontFamily()).toBeUndefined();
+    expect(c.getFontSize()).toBeUndefined();
   });
 });

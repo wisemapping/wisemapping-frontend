@@ -93,7 +93,10 @@ const HelpMenu = (): React.ReactElement => {
             <ListItemIcon>
               <PolicyOutlined fontSize="small" />
             </ListItemIcon>
-            <FormattedMessage id="footer.termsandconditions" defaultMessage="Term And Conditions" />
+            <FormattedMessage
+              id="footer.termsandconditions"
+              defaultMessage="Terms and Conditions"
+            />
           </Link>
         </MenuItem>
 

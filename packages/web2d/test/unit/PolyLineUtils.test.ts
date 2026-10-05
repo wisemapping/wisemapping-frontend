@@ -20,7 +20,7 @@ import {
   buildStraightPath,
   buildVerticalCurvedPath,
   buildVerticalStraightPath,
-} from '../../src/components/peer/utils/PolyLineUtils';
+} from '../../src/components/geometry/polyline';
 import { parsePoints } from '../helpers/geometry';
 
 type Builder = typeof buildCurvedPath;
@@ -52,7 +52,7 @@ describe('PolyLineUtils.buildStraightPath (horizontal elbow)', () => {
   });
 
   it('keeps the input precision', () => {
-    expect(buildStraightPath(10, 0.25, 1, 10.5, 2)).toBe('0.25, 1 5.375, 1 5.375, 2 10.5, 2');
+    expect(buildStraightPath(10, 0.25, 1, 10.5, 7.5)).toBe('0.25, 1 5.375, 1 5.375, 7.5 10.5, 7.5');
   });
 });
 

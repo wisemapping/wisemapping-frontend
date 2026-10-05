@@ -16,7 +16,9 @@
  *   limitations under the License.
  */
 
-const RU = {
+import type { LocaleMessages } from './en';
+
+const RU: LocaleMessages = {
   LOADING: 'Loading ...',
   SAVING: 'Saving ...',
   SAVE_COMPLETE: 'Save Complete',

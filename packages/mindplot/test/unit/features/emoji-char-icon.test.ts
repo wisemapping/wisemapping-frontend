@@ -21,7 +21,7 @@ import Topic from '../../../src/components/Topic';
 
 const topic = { getId: () => 7 } as unknown as Topic;
 
-const glyph = (icon: EmojiCharIcon): string | null => icon.getElement().peer._native.textContent;
+const glyph = (icon: EmojiCharIcon): string | null => icon.getElement().getNode().textContent;
 
 describe('EmojiCharIcon (BL-15)', () => {
   it('shows the emoji of its model', () => {

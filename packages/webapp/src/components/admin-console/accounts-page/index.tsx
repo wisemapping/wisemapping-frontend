@@ -757,7 +757,7 @@ const AccountManagement = (): ReactElement => {
             <Stack direction="row" spacing={1}>
               <Tooltip
                 title={intl.formatMessage({
-                  id: 'admin.accounts.refresh',
+                  id: 'admin.accounts.refresh-tooltip',
                   defaultMessage: 'Refresh Data',
                 })}
               >
@@ -990,7 +990,7 @@ const AccountManagement = (): ReactElement => {
                         onClick={() => handleRemoveFacebookAccount(facebookLookupResult)}
                       >
                         {intl.formatMessage({
-                          id: 'admin.facebook.remove-button',
+                          id: 'admin.facebook.remove',
                           defaultMessage: 'Remove',
                         })}
                       </Button>
@@ -1637,16 +1637,9 @@ const AccountManagement = (): ReactElement => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setIsPasswordDialogOpen(false)}>
-            {intl.formatMessage({
-              id:
-                changingPasswordUser?.authenticationType === AuthenticationType.DATABASE
-                  ? 'admin.cancel'
-                  : 'admin.close',
-              defaultMessage:
-                changingPasswordUser?.authenticationType === AuthenticationType.DATABASE
-                  ? 'Cancel'
-                  : 'Close',
-            })}
+            {changingPasswordUser?.authenticationType === AuthenticationType.DATABASE
+              ? intl.formatMessage({ id: 'admin.cancel', defaultMessage: 'Cancel' })
+              : intl.formatMessage({ id: 'admin.close', defaultMessage: 'Close' })}
           </Button>
           {changingPasswordUser?.authenticationType === AuthenticationType.DATABASE && (
             <Button onClick={handleConfirmPasswordChange} variant="contained" color="primary">

@@ -1,26 +1,68 @@
 {
+  "account.delete-challenge": [
+    {
+      "type": 0,
+      "value": "ВИДАЛИТИ МІЙ АКАУНТ"
+    }
+  ],
+  "account.delete-challenge-error": [
+    {
+      "type": 0,
+      "value": "Введіть «"
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "», щоб підтвердити видалення акаунта."
+    }
+  ],
   "account.delete-confirm": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "Видалити акаунт"
     }
   ],
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
-      "value": "Please type DELETE MY ACCOUNT to confirm:"
+      "value": "Введіть "
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": " для підтвердження:"
+    }
+  ],
+  "account.delete-confirmation-label": [
+    {
+      "type": 0,
+      "value": "Введіть «"
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "» для підтвердження"
     }
   ],
   "account.delete-confirmation-title": [
     {
       "type": 0,
-      "value": "Are you absolutely sure?"
+      "value": "Ви абсолютно впевнені?"
     }
   ],
   "account.delete-confirmation-warning": [
     {
       "type": 0,
-      "value": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+      "value": "Цю дію неможливо скасувати. Ваш акаунт буде видалено назавжди, а всі дані буде стерто з наших серверів."
     }
   ],
   "account.delete-warning": [
@@ -32,43 +74,43 @@
   "account.delete-warning-collaborations": [
     {
       "type": 0,
-      "value": "All shared mindmaps and collaborations"
+      "value": "Усі спільні карти розуму та співпраця"
     }
   ],
   "account.delete-warning-consequences": [
     {
       "type": 0,
-      "value": "This will permanently delete:"
+      "value": "Буде безповоротно видалено:"
     }
   ],
   "account.delete-warning-data": [
     {
       "type": 0,
-      "value": "All your personal data and account information"
+      "value": "Усі ваші особисті дані та інформація акаунта"
     }
   ],
   "account.delete-warning-description": [
     {
       "type": 0,
-      "value": "Once you delete your account, there is no going back. Please be certain."
+      "value": "Після видалення акаунта повернути його буде неможливо. Будь ласка, ухвалюйте рішення зважено."
     }
   ],
   "account.delete-warning-history": [
     {
       "type": 0,
-      "value": "All account history and activity logs"
+      "value": "Уся історія акаунта та журнали активності"
     }
   ],
   "account.delete-warning-mindmaps": [
     {
       "type": 0,
-      "value": "All your mindmaps and their content"
+      "value": "Усі ваші карти розуму та їхній вміст"
     }
   ],
   "account.delete-warning-title": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "Видалити акаунт"
     }
   ],
   "accountinfo.button": [
@@ -733,10 +775,14 @@
       "value": "Завантаження..."
     }
   ],
-  "duplicate.copy-prefix": [
+  "duplicate.copy-title": [
     {
       "type": 0,
       "value": "Копія "
+    },
+    {
+      "type": 1,
+      "value": "title"
     }
   ],
   "duplicate.title": [

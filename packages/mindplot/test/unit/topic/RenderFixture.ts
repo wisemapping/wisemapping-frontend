@@ -120,12 +120,8 @@ export const stubTextMeasurement = (): void => {
 
 const hash = (value: string): string => createHash('sha1').update(value).digest('hex').slice(0, 12);
 
-const lineMarkup = (topic: Topic): string => {
-  const line = topic.getOutgoingLine() as unknown as {
-    _line?: { peer: { _native: Element } };
-  } | null;
-  return line?._line?.peer._native.outerHTML ?? '';
-};
+const lineMarkup = (topic: Topic): string =>
+  topic.getOutgoingLine()?.getLine().getElementClass().getNode().outerHTML ?? '';
 
 /**
  * What a topic renders: its position, its size, and a digest of its SVG group and
@@ -141,7 +137,7 @@ export const renderSnapshot = (designer: Designer): Record<string, string> => {
   topics.forEach((topic) => {
     const pos = topic.getPosition();
     const size = topic.getSize();
-    const group = topic.get2DElement().peer._native as Element;
+    const group = topic.get2DElement().getNode() as Element;
     result[`topic ${topic.getId()}`] = [
       `pos=${pos.x},${pos.y}`,
       `size=${size.width}x${size.height}`,
@@ -150,7 +146,7 @@ export const renderSnapshot = (designer: Designer): Record<string, string> => {
       `line=${hash(lineMarkup(topic))}`,
     ].join(' ');
   });
-  const svg = designer.getModel().getCentralTopic().get2DElement().peer._native.ownerSVGElement;
+  const svg = designer.getModel().getCentralTopic().get2DElement().getNode().ownerSVGElement;
   result.canvas = hash(svg ? svg.outerHTML : '');
   return result;
 };

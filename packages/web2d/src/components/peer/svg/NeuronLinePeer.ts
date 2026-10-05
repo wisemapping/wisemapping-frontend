@@ -17,23 +17,23 @@
  */
 
 import { $defined } from '../utils/assert';
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
+import { neuronPathData, neuronSeed, neuronSteps } from '../../geometry/neuron';
 import ElementPeer from './ElementPeer';
+import type { StrokeStyle } from '../../types';
 
 /**
  * NeuronLinePeer renders an irregular spline that mimics the branching impulse
  * of neurons. Each connection gets a deterministic but organic-looking path.
  */
-class NeuronLinePeer extends ElementPeer {
-  private _path: SVGPathElement;
-
+class NeuronLinePeer extends ElementPeer<SVGPathElement> {
   private _strokeWidth: number;
 
   private _strokeOpacity: number;
 
   private _strokeColor: string;
 
-  private _strokeStyle: string | null;
+  private _strokeStyle: StrokeStyle | null;
 
   private _dashPattern: string | null;
 
@@ -45,17 +45,20 @@ class NeuronLinePeer extends ElementPeer {
 
   private _y2: number;
 
-  constructor() {
-    const svgElement = window.document.createElementNS(
-      NeuronLinePeer.svgNamespace,
-      'path',
-    ) as SVGPathElement;
-    super(svgElement);
+  // Whether setFrom and setTo have been called: the shape is fixed on the first draw with both.
+  private _hasFrom: boolean;
 
-    this._path = svgElement;
-    this._path.setAttribute('fill', 'none');
-    this._path.setAttribute('stroke-linecap', 'round');
-    this._path.setAttribute('stroke-linejoin', 'round');
+  private _hasTo: boolean;
+
+  // The seed and the segment count of the fixed shape, or null until it is fixed.
+  private _shape: { readonly seed: number; readonly steps: number } | null;
+
+  constructor() {
+    super(ElementPeer.createNode('path'));
+
+    this.attr('fill', 'none');
+    this.attr('stroke-linecap', 'round');
+    this.attr('stroke-linejoin', 'round');
 
     this._strokeWidth = 3;
     this._strokeOpacity = 1;
@@ -67,13 +70,16 @@ class NeuronLinePeer extends ElementPeer {
     this._y1 = 0;
     this._x2 = 0;
     this._y2 = 0;
+    this._hasFrom = false;
+    this._hasTo = false;
+    this._shape = null;
 
     this._applyStroke();
   }
 
   override setStroke(
     width: number | null,
-    style?: string | null,
+    style?: StrokeStyle | null,
     color?: string | null,
     opacity?: number,
   ) {
@@ -92,8 +98,8 @@ class NeuronLinePeer extends ElementPeer {
       this._strokeColor = color;
     }
 
-    if ($defined(opacity)) {
-      this._strokeOpacity = opacity as number;
+    if (opacity != null) {
+      this._strokeOpacity = opacity;
     }
 
     this._applyStroke();
@@ -112,6 +118,7 @@ class NeuronLinePeer extends ElementPeer {
     const changed = this._x1 !== x || this._y1 !== y;
     this._x1 = x;
     this._y1 = y;
+    this._hasFrom = true;
     if (changed) {
       this._updatePath();
     }
@@ -121,6 +128,7 @@ class NeuronLinePeer extends ElementPeer {
     const changed = this._x2 !== x || this._y2 !== y;
     this._x2 = x;
     this._y2 = y;
+    this._hasTo = true;
     if (changed) {
       this._updatePath();
     }
@@ -135,112 +143,61 @@ class NeuronLinePeer extends ElementPeer {
   }
 
   private _applyStroke(): void {
-    this._path.setAttribute('stroke-width', Math.max(1, this._strokeWidth).toFixed(1));
-    this._path.setAttribute('stroke-opacity', this._strokeOpacity.toString());
-    this._path.setAttribute('stroke', this._strokeColor);
+    this.attr('stroke-width', Math.max(1, this._strokeWidth).toFixed(1));
+    this.attr('stroke-opacity', this._strokeOpacity.toString());
+    this.attr('stroke', this._strokeColor);
 
-    const dashStyles = ElementPeer.stokeStyleToStrokDasharray();
+    // The table dash scales with the drawn width (BL5-77).
     const dashArray =
       this._strokeStyle && this._strokeStyle !== 'solid'
-        ? dashStyles[this._strokeStyle as keyof typeof dashStyles]
+        ? ElementPeer.dashArray(this._strokeStyle, Math.max(1, this._strokeWidth))
         : undefined;
 
-    if (dashArray && dashArray.length > 0) {
-      this._path.setAttribute('stroke-dasharray', dashArray.join(' '));
+    if (dashArray) {
+      this.attr('stroke-dasharray', dashArray);
     } else if (this._dashPattern) {
-      this._path.setAttribute('stroke-dasharray', this._dashPattern);
+      this.attr('stroke-dasharray', this._dashPattern);
     } else {
-      this._path.removeAttribute('stroke-dasharray');
+      this.removeAttr('stroke-dasharray');
     }
   }
 
   private _updatePath(): void {
-    if (
-      !$defined(this._x1) ||
-      !$defined(this._y1) ||
-      !$defined(this._x2) ||
-      !$defined(this._y2) ||
-      (this._x1 === this._x2 && this._y1 === this._y2)
-    ) {
+    const from = { x: this._x1, y: this._y1 };
+    const to = { x: this._x2, y: this._y2 };
+    // The ends are checked before the seed is taken: a draw with coinciding ends must not fix it.
+    const drawable =
+      $defined(from.x) &&
+      $defined(from.y) &&
+      $defined(to.x) &&
+      $defined(to.y) &&
+      (from.x !== to.x || from.y !== to.y);
+    const shape = drawable ? this._shapeFor() : null;
+    const d = shape ? neuronPathData(from, to, shape.seed, shape.steps) : null;
+    if (d === null) {
       // Nothing to draw: clear the previous path rather than leave it on screen (W-STALEPATH).
-      this._path.removeAttribute('d');
+      this.removeAttr('d');
       return;
     }
-
-    const dx = this._x2 - this._x1;
-    const dy = this._y2 - this._y1;
-    const distance = Math.sqrt(dx * dx + dy * dy) || 1;
-    const unitX = dx / distance;
-    const unitY = dy / distance;
-    const perpX = -unitY;
-    const perpY = unitX;
-
-    const steps = Math.min(18, Math.max(6, Math.round(distance / 35)));
-    const amplitude = Math.min(60, distance * 0.35);
-    const jitterSeed = this._pseudoSeed();
-    const pathSegments: string[] = [];
-    pathSegments.push(`M${NeuronLinePeer._pointToStr(this._x1, this._y1)}`);
-
-    let prevPoint = { x: this._x1, y: this._y1 };
-
-    for (let i = 1; i <= steps; i += 1) {
-      const t = i / steps;
-      const baseX = this._x1 + dx * t;
-      const baseY = this._y1 + dy * t;
-
-      const lateral =
-        Math.sin(t * Math.PI * (1.5 + jitterSeed * 0.5) + jitterSeed * 6) *
-        amplitude *
-        (0.2 + this._rand(i, 0.6) * 0.6);
-      const forward = (Math.cos(t * Math.PI * 2 + this._rand(i, 1) * 2) - 0.5) * amplitude * 0.08;
-
-      const spikePhase = (Math.sin(t * Math.PI * 4 + jitterSeed * 10) + 1) / 2;
-      const spike = spikePhase > 0.8 ? (spikePhase - 0.8) * 5 : 0;
-
-      // The last segment ends exactly at the target (W-NEURONEND).
-      const last = i === steps;
-      const targetX = last ? this._x2 : baseX + perpX * lateral + unitX * forward;
-      const targetY = last ? this._y2 : baseY + perpY * lateral + unitY * forward;
-
-      const ctrlOffset = distance / steps / 3;
-      const ctrl1 = {
-        x: prevPoint.x + unitX * ctrlOffset + perpX * this._rand(i * 2, 0.4) * ctrlOffset,
-        y: prevPoint.y + unitY * ctrlOffset + perpY * this._rand(i * 2 + 1, 0.4) * ctrlOffset,
-      };
-      const ctrl2 = {
-        x: targetX - unitX * ctrlOffset + perpX * this._rand(i * 3, 0.4) * ctrlOffset,
-        y: targetY - unitY * ctrlOffset + perpY * this._rand(i * 3 + 1, 0.4) * ctrlOffset,
-      };
-
-      const adjustedTargetX = last ? targetX : targetX + perpX * spike;
-      const adjustedTargetY = last ? targetY : targetY + perpY * spike;
-
-      pathSegments.push(
-        `C${NeuronLinePeer._pointToStr(ctrl1.x, ctrl1.y)} ${NeuronLinePeer._pointToStr(ctrl2.x, ctrl2.y)} ${NeuronLinePeer._pointToStr(adjustedTargetX, adjustedTargetY)}`,
-      );
-      prevPoint = { x: adjustedTargetX, y: adjustedTargetY };
-    }
-
-    this._path.setAttribute('d', pathSegments.join(' '));
+    this.attr('d', d);
   }
 
   /**
-   * Seeded from the length, not the absolute ends, so the shape does not reshuffle when the whole
-   * line moves (W-STALEPATH).
+   * The shape belongs to the line: its seed and its segment count come from the length of its
+   * first draw with both ends set, and are then kept. So moving the whole line, or dragging one
+   * end, stretches the same shape instead of reshuffling it (W-STALEPATH, BL5-74) or adding and
+   * dropping segments in jumps (BL5-119), and a static render stays deterministic.
    */
-  private _pseudoSeed(): number {
-    const seedValue = Math.hypot(this._x2 - this._x1, this._y2 - this._y1) * 0.37;
-    return (Math.sin(seedValue) + 1) / 2;
-  }
-
-  private _rand(iteration: number, amplitude: number): number {
-    const seed = this._pseudoSeed();
-    const value = Math.sin(seed * 100 + iteration * 7.13) * 43758.5453;
-    return (value - Math.floor(value)) * 2 * amplitude - amplitude;
-  }
-
-  private static _pointToStr(x: number, y: number): string {
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  private _shapeFor(): { readonly seed: number; readonly steps: number } {
+    if (this._shape !== null) {
+      return this._shape;
+    }
+    const length = Math.hypot(this._x2 - this._x1, this._y2 - this._y1);
+    const shape = { seed: neuronSeed(length), steps: neuronSteps(length) };
+    if (this._hasFrom && this._hasTo) {
+      this._shape = shape;
+    }
+    return shape;
   }
 }
 

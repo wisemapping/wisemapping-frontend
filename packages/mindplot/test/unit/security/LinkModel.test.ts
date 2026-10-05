@@ -69,3 +69,13 @@ describe('LinkModel url handling', () => {
     expect(model.getAttribute('urlType')).toBe('mail');
   });
 });
+
+describe('LinkModel.getUrl (BL5-11)', () => {
+  it('returns a string when the url attribute was removed', () => {
+    const model = new LinkModel({ url: 'https://www.wisemapping.com' });
+    // An undo snapshot removes the attributes it lists as undefined.
+    model.setAttributes({ url: undefined });
+
+    expect(model.getUrl()).toBe('');
+  });
+});

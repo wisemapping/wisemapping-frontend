@@ -4,5 +4,9 @@ dist
 lang
 coverage
 *.json
-packages/mindplot/test/unit/export/expected/
-packages/mindplot/test/unit/import/expected/
+# Test fixtures and goldens: tests compare against their exact bytes, so formatting them breaks the tests.
+packages/*/test/**/expected/
+packages/*/test/**/input/
+packages/*/test/**/samples/
+**/__goldens__/
+**/__snapshots__/

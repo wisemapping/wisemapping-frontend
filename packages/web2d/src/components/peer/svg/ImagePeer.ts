@@ -15,30 +15,33 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
 import ElementPeer from './ElementPeer';
 
-class ImagePeer extends ElementPeer {
+class ImagePeer extends ElementPeer<SVGImageElement> {
   private _position: PositionType;
 
   private _href: string;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    super(svgElement);
+    super(ElementPeer.createNode('image'));
     this._position = { x: 0, y: 0 };
     this._href = '';
-    this._native.setAttribute('preserveAspectRatio', 'none');
+    this.attr('preserveAspectRatio', 'none');
+  }
+
+  protected override hasSizeAttributes(): boolean {
+    return true;
   }
 
   setPosition(x: number, y: number): void {
     this._position = { x, y };
-    this._native.setAttribute('y', String(y));
-    this._native.setAttribute('x', String(x));
+    this.attr('y', String(y));
+    this.attr('x', String(x));
   }
 
   getPosition(): PositionType {
-    return this._position;
+    return { x: this._position.x, y: this._position.y };
   }
 
   setHref(url: string): void {

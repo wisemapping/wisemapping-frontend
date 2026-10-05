@@ -1,26 +1,68 @@
 {
+  "account.delete-challenge": [
+    {
+      "type": 0,
+      "value": "EXCLUIR MINHA CONTA"
+    }
+  ],
+  "account.delete-challenge-error": [
+    {
+      "type": 0,
+      "value": "Digite \""
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "\" para confirmar a exclusão da conta."
+    }
+  ],
   "account.delete-confirm": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "Excluir conta"
     }
   ],
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
-      "value": "Please type DELETE MY ACCOUNT to confirm:"
+      "value": "Digite "
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": " para confirmar:"
+    }
+  ],
+  "account.delete-confirmation-label": [
+    {
+      "type": 0,
+      "value": "Digite \""
+    },
+    {
+      "type": 1,
+      "value": "challengePhrase"
+    },
+    {
+      "type": 0,
+      "value": "\" para confirmar"
     }
   ],
   "account.delete-confirmation-title": [
     {
       "type": 0,
-      "value": "Are you absolutely sure?"
+      "value": "Você tem certeza absoluta?"
     }
   ],
   "account.delete-confirmation-warning": [
     {
       "type": 0,
-      "value": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+      "value": "Esta ação não pode ser desfeita. Ela excluirá permanentemente sua conta e removerá todos os dados de nossos servidores."
     }
   ],
   "account.delete-warning": [
@@ -32,43 +74,43 @@
   "account.delete-warning-collaborations": [
     {
       "type": 0,
-      "value": "All shared mindmaps and collaborations"
+      "value": "Todos os mapas mentais compartilhados e colaborações"
     }
   ],
   "account.delete-warning-consequences": [
     {
       "type": 0,
-      "value": "This will permanently delete:"
+      "value": "Isto excluirá permanentemente:"
     }
   ],
   "account.delete-warning-data": [
     {
       "type": 0,
-      "value": "All your personal data and account information"
+      "value": "Todos os seus dados pessoais e informações da conta"
     }
   ],
   "account.delete-warning-description": [
     {
       "type": 0,
-      "value": "Once you delete your account, there is no going back. Please be certain."
+      "value": "Depois de excluir sua conta, não há como voltar atrás. Tenha certeza."
     }
   ],
   "account.delete-warning-history": [
     {
       "type": 0,
-      "value": "All account history and activity logs"
+      "value": "Todo o histórico da conta e registros de atividade"
     }
   ],
   "account.delete-warning-mindmaps": [
     {
       "type": 0,
-      "value": "All your mindmaps and their content"
+      "value": "Todos os seus mapas mentais e o conteúdo deles"
     }
   ],
   "account.delete-warning-title": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "Excluir conta"
     }
   ],
   "accountinfo.button": [
@@ -733,10 +775,14 @@
       "value": "Carregando..."
     }
   ],
-  "duplicate.copy-prefix": [
+  "duplicate.copy-title": [
     {
       "type": 0,
       "value": "Cópia de "
+    },
+    {
+      "type": 1,
+      "value": "title"
     }
   ],
   "duplicate.title": [

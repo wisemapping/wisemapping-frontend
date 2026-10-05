@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { Ellipse } from '@wisemapping/web2d';
 import ActionDispatcher from '../../src/components/ActionDispatcher';
 import Canvas from '../../src/components/Canvas';
 import Relationship from '../../src/components/Relationship';
@@ -81,6 +82,7 @@ describe('Relationship control points', () => {
       setTo: jest.Mock;
     };
     let redraw: jest.Mock;
+    let rememberReleasedControlPoint: jest.Mock;
 
     const pivot = (type: PivotType) =>
       (
@@ -117,13 +119,16 @@ describe('Relationship control points', () => {
         setTo: jest.fn(),
       };
       redraw = jest.fn();
-      const topic = { getId: () => 1 };
+      rememberReleasedControlPoint = jest.fn();
+      // A topic without a designer: it runs its commands through ActionDispatcher.getInstance().
+      const topic = { getId: () => 1, getActionDispatcher: () => ActionDispatcher.getInstance() };
       const relationship = {
         getSourceTopic: () => topic,
         getTargetTopic: () => topic,
         getLine: () => line,
         getModel: () => ({ getId: () => 7 }),
         redraw,
+        rememberReleasedControlPoint,
       } as unknown as Relationship;
 
       controlPoints = new RelationshipControlPoints(relationship);
@@ -132,6 +137,12 @@ describe('Relationship control points', () => {
         append: (elem: { addToWorkspace?: (c: unknown) => void }) => elem.addToWorkspace?.(canvas),
       };
       controlPoints.addToWorkspace(canvas as unknown as Canvas);
+    });
+
+    // W4: the dot stroke is given with typed keys instead of the '1 solid #6589de' string.
+    it('draws the handle dots with a 1 px solid #6589de stroke', () => {
+      const { _dot: dot } = pivot(PivotType.Start) as unknown as { _dot: Ellipse };
+      expect(dot.getStroke()).toEqual({ color: '#6589de', style: 'solid', opacity: 1, width: 1 });
     });
 
     afterEach(() => {
@@ -164,6 +175,11 @@ describe('Relationship control points', () => {
 
         expect(moveControlPoint).toHaveBeenCalledTimes(1);
         expect(moveControlPoint.mock.calls[0][2]).toBe(type);
+        // ... where the drag left the end, before the move places it again (BL5-99).
+        expect(rememberReleasedControlPoint).toHaveBeenCalledWith(type);
+        expect(rememberReleasedControlPoint.mock.invocationCallOrder[0]).toBeLessThan(
+          moveControlPoint.mock.invocationCallOrder[0],
+        );
       },
     );
 
@@ -274,6 +290,44 @@ describe('Relationship control points', () => {
       expect(line.setDestControlPoint).toHaveBeenLastCalledWith({ x: -10, y: -10 });
       expect(line.setIsDestControlPointCustom).toHaveBeenLastCalledWith(true);
       expect(moveControlPoint).not.toHaveBeenCalled();
+    });
+
+    // The handle is an ellipse, positioned by its centre: it is drawn on the control point
+    // (BL5-100), at its end of the guide line.
+    type Handle = {
+      _isVisible: boolean;
+      redraw(): void;
+      _dot: { getPosition(): { x: number; y: number } };
+      _line: { getTo(): { x: number; y: number } };
+    };
+    const handle = (type: PivotType) =>
+      (controlPoints as unknown as { _pivotLines: Handle[] })._pivotLines[type];
+    // Shown as when the relationship is focused (the stub canvas holds no SVG nodes) ...
+    const show = (type: PivotType) => {
+      handle(type)._isVisible = true;
+      handle(type).redraw();
+    };
+
+    it.each([
+      [PivotType.Start, { x: 10, y: 10 }],
+      [PivotType.End, { x: 90, y: 90 }],
+    ])('centres the handle on the control point (pivot %s)', (type, expected) => {
+      show(type);
+
+      expect(handle(type)._dot.getPosition()).toEqual(expected);
+      expect(handle(type)._line.getTo()).toEqual(expected);
+    });
+
+    it('keeps the handle centred under the cursor while dragging', () => {
+      show(PivotType.End);
+      pivot(PivotType.End).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      container.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
+      );
+
+      expect(handle(PivotType.End)._dot.getPosition()).toEqual({ x: 40, y: 30 });
+      expect(handle(PivotType.End)._line.getTo()).toEqual({ x: 40, y: 30 });
+      document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
     });
 
     it('ignores other keys during the drag', () => {

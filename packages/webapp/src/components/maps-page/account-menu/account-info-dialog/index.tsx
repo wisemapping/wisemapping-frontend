@@ -17,7 +17,7 @@
  */
 
 import React, { useContext, useEffect } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorInfo } from '../../../../classes/client';
 import Input from '../../../form/input';
@@ -63,6 +63,13 @@ type ChangePasswordModel = {
 const defaultModel: AccountInfoModel = { firstname: '', lastname: '', email: '' };
 const defaultPasswordModel: ChangePasswordModel = { password: '', retryPassword: '' };
 
+// The phrase the user types to confirm deleting the account. The form submit and the
+// confirm button both check it, and the instruction, the field label and the error show it
+// through {challengePhrase}: every locale translates it once, so what is shown is what is checked.
+const messages = defineMessages({
+  deleteChallenge: { id: 'account.delete-challenge', defaultMessage: 'DELETE MY ACCOUNT' },
+});
+
 const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElement => {
   const client = useContext(ClientContext);
   const queryClient = useQueryClient();
@@ -79,6 +86,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     React.useState<ChangePasswordModel>(defaultPasswordModel);
   const [error, setError] = React.useState<ErrorInfo>();
   const intl = useIntl();
+  const deleteChallenge = intl.formatMessage(messages.deleteChallenge);
 
   const mutationChangeName = useMutation<void, ErrorInfo, AccountInfoModel>({
     mutationFn: (model: AccountInfoModel) => {
@@ -145,7 +153,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
       const currentLocale = account?.locale || AppI18n.getDefaultLocale().code;
       setSelectedLanguage(currentLocale as LocaleCode);
     }
-  }, [account?.email, account?.locale]);
+  }, [account]);
 
   const handleOnClose = (): void => {
     onClose();
@@ -213,16 +221,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
       }
       mutationChangePassword.mutate(passwordModel);
     } else if (showDeleteDialog) {
-      if (deleteConfirmationText === 'DELETE') {
-        mutationRemove.mutate();
-      } else {
-        setError({
-          msg: intl.formatMessage({
-            id: 'account.delete-confirmation-error',
-            defaultMessage: 'Please type "DELETE" to confirm account deletion.',
-          }),
-        });
-      }
+      handleDeleteAccountSubmit();
     } else {
       mutationChangeName.mutate(model);
     }
@@ -257,25 +256,23 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
 
   const handleDeleteConfirmationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDeleteConfirmationText(event.target.value);
-    if (error?.msg?.includes('DELETE')) {
+    if (error?.msg?.includes(deleteChallenge)) {
       setError(undefined);
     }
   };
 
   const handleDeleteAccountSubmit = () => {
-    const challengePhrase = intl.formatMessage({
-      id: 'account.delete-challenge',
-      defaultMessage: 'DELETE MY ACCOUNT',
-    });
-
-    if (deleteConfirmationText === challengePhrase) {
+    if (deleteConfirmationText === deleteChallenge) {
       mutationRemove.mutate();
     } else {
       setError({
-        msg: intl.formatMessage({
-          id: 'account.delete-confirmation-error',
-          defaultMessage: `Please type "${challengePhrase}" to confirm account deletion.`,
-        }),
+        msg: intl.formatMessage(
+          {
+            id: 'account.delete-challenge-error',
+            defaultMessage: 'Please type "{challengePhrase}" to confirm account deletion.',
+          },
+          { challengePhrase: deleteChallenge },
+        ),
       });
     }
   };
@@ -517,7 +514,8 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
                       <FormattedMessage
                         id="account.delete-confirmation-instruction"
-                        defaultMessage="Please type DELETE MY ACCOUNT to confirm:"
+                        defaultMessage="Please type {challengePhrase} to confirm:"
+                        values={{ challengePhrase: deleteChallenge }}
                       />
                     </Typography>
                   </Alert>
@@ -525,10 +523,13 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                   <Input
                     name="deleteConfirmation"
                     type="text"
-                    label={intl.formatMessage({
-                      id: 'account.delete-confirmation-label',
-                      defaultMessage: 'Type "DELETE MY ACCOUNT" to confirm',
-                    })}
+                    label={intl.formatMessage(
+                      {
+                        id: 'account.delete-confirmation-label',
+                        defaultMessage: 'Type "{challengePhrase}" to confirm',
+                      },
+                      { challengePhrase: deleteChallenge },
+                    )}
                     value={deleteConfirmationText}
                     onChange={handleDeleteConfirmationChange}
                     error={error}
@@ -543,13 +544,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                     <Button
                       variant="contained"
                       color="error"
-                      disabled={
-                        deleteConfirmationText !==
-                        intl.formatMessage({
-                          id: 'account.delete-challenge',
-                          defaultMessage: 'DELETE MY ACCOUNT',
-                        })
-                      }
+                      disabled={deleteConfirmationText !== deleteChallenge}
                       onClick={handleDeleteAccountSubmit}
                       sx={{ flex: 1 }}
                     >

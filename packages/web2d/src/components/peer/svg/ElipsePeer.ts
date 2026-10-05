@@ -15,31 +15,30 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
 import ElementPeer, { formatLength } from './ElementPeer';
 
-class ElipsePeer extends ElementPeer {
+class ElipsePeer extends ElementPeer<SVGEllipseElement> {
   private _position: PositionType;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-    super(svgElement);
+    super(ElementPeer.createNode('ellipse'));
 
-    this.attachChangeEventListener('strokeStyle', ElementPeer.prototype.updateStrokeStyle);
     this._position = { x: 0, y: 0 };
   }
 
-  setSize(width: number, height: number) {
+  override setSize(width?: number | null, height?: number | null): void {
     super.setSize(width, height);
-    this._native.setAttribute('rx', formatLength(width / 2));
-    this._native.setAttribute('ry', formatLength(height / 2));
+    // The kept size: a missing width or height keeps the current one.
+    this.attr('rx', formatLength(this._size.width / 2));
+    this.attr('ry', formatLength(this._size.height / 2));
   }
 
   setPosition(pcx: number, pcy: number) {
     this._position = { x: pcx, y: pcy };
 
-    this._native.setAttribute('cx', formatLength(pcx));
-    this._native.setAttribute('cy', formatLength(pcy));
+    this.attr('cx', formatLength(pcx));
+    this.attr('cy', formatLength(pcy));
   }
 
   getPosition(): PositionType {

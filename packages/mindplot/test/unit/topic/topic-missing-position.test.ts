@@ -16,15 +16,15 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/SvgImageIcon', () => ({
-  __esModule: true,
-  default: class MockSvgImageIcon {},
-}));
-
 import Canvas from '../../../src/components/Canvas';
 import CentralTopic from '../../../src/components/CentralTopic';
 import MainTopic from '../../../src/components/MainTopic';
 import Mindmap from '../../../src/components/model/Mindmap';
+
+jest.mock('../../../src/components/SvgImageIcon', () => ({
+  __esModule: true,
+  default: class MockSvgImageIcon {},
+}));
 
 beforeAll(() => {
   // An empty text keeps the topics at their default size, so a new central topic is not

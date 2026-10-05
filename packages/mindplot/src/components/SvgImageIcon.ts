@@ -19,7 +19,6 @@ import { Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 
 import ImageIcon from './ImageIcon';
-import ActionDispatcher from './ActionDispatcher';
 import iconFamily from './model/SvgIconFamily.json';
 import Topic from './Topic';
 import SvgIconModel from './model/SvgIconModel';
@@ -46,6 +45,8 @@ const originalGetImageUrl = (iconId: string): string => {
 class SvgImageIcon extends ImageIcon {
   private _topicId: number;
 
+  private _topic: Topic;
+
   private _featureModel: SvgIconModel;
 
   constructor(topic: Topic, iconModel: SvgIconModel, readOnly: boolean) {
@@ -58,6 +59,7 @@ class SvgImageIcon extends ImageIcon {
     super(imgUrl);
 
     this._topicId = topic.getId();
+    this._topic = topic;
     this._featureModel = iconModel;
 
     // Follow the icon type when a command changes it, e.g. on click or undo.
@@ -73,7 +75,7 @@ class SvgImageIcon extends ImageIcon {
         const iconTypeClick = iconModel.getIconType();
         const newIconType = SvgImageIcon._getNextFamilyIconId(iconTypeClick);
         // Through the dispatcher, so it can be undone and the map is saved.
-        ActionDispatcher.getInstance().changeFeatureToTopic(this._topicId, iconModel.getId(), {
+        this._topic.getActionDispatcher().changeFeatureToTopic(this._topicId, iconModel.getId(), {
           id: newIconType,
         });
       });
@@ -140,7 +142,7 @@ class SvgImageIcon extends ImageIcon {
   }
 
   remove() {
-    const actionDispatcher = ActionDispatcher.getInstance();
+    const actionDispatcher = this._topic.getActionDispatcher();
     const featureId = this._featureModel.getId();
     const topicId = this._topicId;
     actionDispatcher.removeFeatureFromTopic(topicId, featureId);

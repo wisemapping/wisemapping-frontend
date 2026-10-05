@@ -17,16 +17,16 @@
  */
 import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
-import Line from './Line';
+import type { ControlPointLine } from './Line';
 import CurvedLinePeer from './peer/svg/CurvedLinePeer';
-import PositionType from './PositionType';
-import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
+import type PositionType from './PositionType';
+import type { ElementAttributes } from './StyleAttributes';
+import type { ElementType } from './types';
 
-class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
-  constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createCurvedLine();
-    const defaultAttributes = {
+class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements ControlPointLine {
+  constructor(attributes?: ElementAttributes) {
+    const peer = new CurvedLinePeer();
+    const defaultAttributes: ElementAttributes = {
       strokeColor: 'blue',
       strokeWidth: 1,
       strokeStyle: 'solid',
@@ -37,7 +37,7 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
     super(peer, mergedAttr);
   }
 
-  getType() {
+  getType(): ElementType {
     return 'CurvedLine';
   }
 
@@ -107,7 +107,8 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
     return this.peer.updateLine(Boolean(avoidControlPointFix));
   }
 
-  setDashed(length: number, spacing: number) {
+  /** Dashes the line; called without a length and a spacing, it draws it solid again. */
+  setDashed(length?: number, spacing?: number) {
     this.peer.setDashed(length, spacing);
   }
 

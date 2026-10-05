@@ -71,11 +71,26 @@ export default defineConfig([globalIgnores(["**/dist/**/*"]), {
         "@typescript-eslint/no-explicit-any": "error",
         "@typescript-eslint/explicit-module-boundary-types": "error",
         "@typescript-eslint/no-unused-vars": "error",
-        "react-hooks/rules-of-hooks": "off",
-        "react-hooks/exhaustive-deps": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
 
         "no-restricted-imports": ["error", {
             patterns: ["@mui/*/*/*", "!@mui/material/test-utils/*"],
         }],
+    },
+}, {
+    // The jest setup and module mocks are CommonJS, run by Node.
+    files: ["test/**/*.js"],
+
+    languageOptions: {
+        globals: {
+            ...globals.node,
+        },
+
+        sourceType: "commonjs",
+    },
+
+    rules: {
+        "@typescript-eslint/no-require-imports": "off",
     },
 }]);

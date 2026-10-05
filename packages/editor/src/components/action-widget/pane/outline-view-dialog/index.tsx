@@ -30,7 +30,7 @@ import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import LinkIcon from '@mui/icons-material/Link';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Mindmap, INodeModel, LinkModel, NoteModel } from '@wisemapping/mindplot';
+import { Mindmap, INodeModel } from '@wisemapping/mindplot';
 import { OutlineBuilder, OutlineNodeData } from './OutlineBuilder';
 import {
   OutlineContainer,
@@ -275,12 +275,14 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
 
           {/* Floating Toolbar for Expand/Collapse All */}
           <FloatingToolbar>
-            <Tooltip title={<FormattedMessage id="outline.expand" defaultMessage="Expand All" />}>
+            <Tooltip
+              title={<FormattedMessage id="outline.expand-all" defaultMessage="Expand All" />}
+            >
               <ToolbarButton
                 size="small"
                 onClick={expandAll}
                 aria-label={intl.formatMessage({
-                  id: 'outline.expand',
+                  id: 'outline.expand-all',
                   defaultMessage: 'Expand All',
                 })}
               >
@@ -288,13 +290,13 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
               </ToolbarButton>
             </Tooltip>
             <Tooltip
-              title={<FormattedMessage id="outline.collapse" defaultMessage="Collapse All" />}
+              title={<FormattedMessage id="outline.collapse-all" defaultMessage="Collapse All" />}
             >
               <ToolbarButton
                 size="small"
                 onClick={collapseAll}
                 aria-label={intl.formatMessage({
-                  id: 'outline.collapse',
+                  id: 'outline.collapse-all',
                   defaultMessage: 'Collapse All',
                 })}
               >
@@ -328,8 +330,8 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
         {selectedNode &&
           dialogType === 'link' &&
           (() => {
-            const linkFeature = selectedNode.getFeatures().find((f) => f.getType() === 'link');
-            const linkUrl = linkFeature ? (linkFeature as LinkModel).getUrl() : '';
+            const linkFeature = selectedNode.getFeatures().find((f) => f.isOfType('link'));
+            const linkUrl = linkFeature ? linkFeature.getUrl() : '';
             return (
               <Box>
                 <TooltipContent>
@@ -368,8 +370,7 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
         {selectedNode &&
           dialogType === 'note' &&
           (() => {
-            const noteFeature = selectedNode.getFeatures().find((f) => f.getType() === 'note');
-            const noteModel = noteFeature as NoteModel;
+            const noteModel = selectedNode.getFeatures().find((f) => f.isOfType('note'));
             const noteText = noteModel ? noteModel.getText() : '';
             const isHtml = noteModel?.getContentType() === 'html';
             return (

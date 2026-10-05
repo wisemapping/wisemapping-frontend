@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { describe, expect, test } from '@jest/globals';
 import XMindImporter from '../../../src/components/import/XMindImporter';
 import FreeplaneImporter from '../../../src/components/import/FreeplaneImporter';
@@ -140,7 +139,7 @@ describe('MindManagerImporter reads only the topic own data', () => {
   <Topic ID="1" Text="Root">
     <Topic ID="2" Text="Parent">
       <Topic ID="3" Text="Child">
-        <Icon Name="people"/>
+        <Icon Name="star"/>
         <Notes>Child note</Notes>
         <Hyperlink URL="https://example.com"/>
         <Color Value="#ff0000"/>

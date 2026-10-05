@@ -21,14 +21,12 @@ import { expect, test, describe, jest } from '@jest/globals';
 import { parseXMLFile, setupBlob } from './Helper';
 
 // Stub PDFExporter to avoid pulling in jspdf (which needs TextEncoder in node).
-jest.mock('../../../src/components/export/PDFExporter', () => {
-  return {
-    __esModule: true,
-    default: class {},
-  };
-});
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class {},
+}));
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires, import/first
+// eslint-disable-next-line import/first
 import ImageExporterFactory from '../../../src/components/export/ImageExporterFactory';
 // eslint-disable-next-line import/first
 import SVGExporter from '../../../src/components/export/SVGExporter';

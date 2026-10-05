@@ -15,7 +15,9 @@
         </node>
         <node ID="ID_11" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Try it Now!">
             <icon BUILTIN="smiley-oh"/>
-            <node ID="ID_12" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Double Click"/>
+            <node ID="ID_12" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Double Click">
+                <font SIZE="12" ITALIC="true"/>
+            </node>
             <node ID="ID_13" POSITION="left" STYLE="fork">
                 <richcontent TYPE="NODE">
                     <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,7 +29,9 @@
                     </html>
                 </richcontent>
             </node>
-            <node ID="ID_14" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Drag map to move"/>
+            <node ID="ID_14" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Drag map to move">
+                <font SIZE="12" ITALIC="true"/>
+            </node>
         </node>
         <node ID="ID_15" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Features">
             <node ID="ID_16" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Links to Sites" LINK="http://www.digg.com">

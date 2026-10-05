@@ -17,9 +17,10 @@
  */
 import { $defined } from './util/assert';
 import Bundle from './lang/Bundle';
+import type { LocaleMessages, MsgKey } from './lang/en';
 
 class Messages {
-  public static __bundle: Record<string, string> | undefined;
+  public static __bundle: LocaleMessages | undefined;
 
   static init(locale: string) {
     const userLocale = $defined(locale) && locale ? locale : 'en';
@@ -30,7 +31,7 @@ class Messages {
   }
 }
 
-const $msg = function $msg(key: string) {
+const $msg = function $msg(key: MsgKey): string {
   if (!Messages.__bundle) {
     Messages.init('en');
   }

@@ -17,9 +17,9 @@
  */
 
 import { Text, Group } from '@wisemapping/web2d';
+import type { Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
-import ActionDispatcher from './ActionDispatcher';
 import Icon from './Icon';
 import IconGroup from './IconGroup';
 import SizeType from './SizeType';
@@ -150,13 +150,8 @@ class ImageEmojiFeature {
   }
 
   getSize(): SizeType | undefined {
-    if (this._emojiText) {
-      return {
-        width: this._emojiText.getShapeWidth(),
-        height: this._emojiText.getShapeHeight(),
-      };
-    }
-    return undefined;
+    // Measured once: the width and the height come from one text box.
+    return this._emojiText?.measure();
   }
 
   addToGroup(group: Group): void {
@@ -174,21 +169,14 @@ class ImageEmojiFeature {
    * Whether the element is already the front (last) child of the group, which is where
    * addToGroup puts it: then there is nothing to move.
    */
-  static isLastChild(group: Group, element: Text): boolean {
-    const children = group.peer.getChildren();
-    return (
-      children[children.length - 1] === element.peer &&
-      group.peer._native.lastChild === element.peer._native
-    );
+  static isLastChild(group: Group, element: Text | Image): boolean {
+    return group.isLastChild(element);
   }
 
   removeFromGroup(group: Group): void {
     if (this._emojiText) {
       // Check if the element is actually in the group before trying to remove it
-      const children = group.peer.getChildren();
-      const isInGroup = children.includes(this._emojiText.peer);
-
-      if (isInGroup) {
+      if (group.contains(this._emojiText)) {
         group.removeChild(this._emojiText);
       }
     }
@@ -210,10 +198,7 @@ class ImageEmojiFeature {
         return null;
       },
       getSize(): SizeType | undefined {
-        return {
-          width: emojiTextShape.getShapeWidth(),
-          height: emojiTextShape.getShapeHeight(),
-        };
+        return emojiTextShape.measure();
       },
       getPosition(): PositionType {
         return emojiTextShape.getPosition();
@@ -222,7 +207,7 @@ class ImageEmojiFeature {
         emojiTextShape.addEvent(type, fnc);
       },
       remove(): void {
-        const actionDispatcher = ActionDispatcher.getInstance();
+        const actionDispatcher = topic.getActionDispatcher();
         actionDispatcher.changeImageEmojiCharToTopic([topic.getId()], undefined);
       },
       getModel(): FeatureModel {
