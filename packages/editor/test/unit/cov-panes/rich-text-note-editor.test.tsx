@@ -85,10 +85,9 @@ describe('RichTextNoteEditor', () => {
     expect(screen.getByText('9990 left')).toBeTruthy();
   });
 
-  // Bug: the initial count is the length of the stored HTML (tags included), while every count
-  // after an edit is the length of the plain text. Opening "<b>Existing</b> note" shows
-  // "9980 left" and the first keystroke jumps it to ~"9986 left".
-  it.failing('counts only the visible text of an existing rich-text note', () => {
+  // The initial count, like every count after an edit, is the length of the visible text, not
+  // of the stored HTML (it used to start at "9980 left" and jump on the first keystroke).
+  it('counts only the visible text of an existing rich-text note', () => {
     renderPane(
       <RichTextNoteEditor closeModal={jest.fn()} noteModel={note('<b>Existing</b> note')} />,
     );

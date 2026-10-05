@@ -51,7 +51,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   const [iconPickerAnchor, setIconPickerAnchor] = useState<HTMLButtonElement | null>(null);
   const savedRangeRef = useRef<Range | null>(null);
   const editingRef = useRef<NoteEditing | null>(null);
-  const [characterCount, setCharacterCount] = useState(initialValue.length);
+  // Count visible text, as edits do; DOMParser is inert (no scripts or image loads).
+  const [characterCount, setCharacterCount] = useState(
+    () => new DOMParser().parseFromString(initialValue, 'text/html').body.textContent?.length ?? 0,
+  );
   const MAX_CHARACTERS = 10000;
   const theme = useTheme();
   const intl = useIntl();
