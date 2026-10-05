@@ -440,22 +440,22 @@ class Canvas {
           mWorkspace.enableWorkspaceEvents(false);
 
           const originalEvent = event;
-          const mouseDownPosition = screenManager.getWorkspaceMousePosition(
-            originalEvent as MouseEvent,
-          );
+          // The pan follows the pointer in screen pixels, scaled by the zoom (workspace units per
+          // pixel). Mapping each move to workspace coordinates would read them through the very
+          // viewBox the pan is moving, so the canvas would lag behind the pointer.
+          const mouseDownPosition = screenManager.getClientPosition(originalEvent as MouseEvent);
           const originalCoordOrigin = workspace.getCoordOrigin();
 
           let wasDragged = false;
           this._mouseMoveListener = (mouseMoveEvent: Event) => {
-            const originalMoveEvent = mouseMoveEvent;
-            const currentMousePosition = screenManager.getWorkspaceMousePosition(
-              originalMoveEvent as MouseEvent,
+            const currentMousePosition = screenManager.getClientPosition(
+              mouseMoveEvent as MouseEvent,
             );
 
-            const offsetX = currentMousePosition.x - mouseDownPosition.x;
+            const offsetX = (currentMousePosition.x - mouseDownPosition.x) * this._zoom;
             const coordOriginX = -offsetX + originalCoordOrigin.x;
 
-            const offsetY = currentMousePosition.y - mouseDownPosition.y;
+            const offsetY = (currentMousePosition.y - mouseDownPosition.y) * this._zoom;
             const coordOriginY = -offsetY + originalCoordOrigin.y;
 
             workspace.setCoordOrigin(coordOriginX, coordOriginY);

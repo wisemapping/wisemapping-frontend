@@ -119,6 +119,13 @@ const panEndHandleBelowAppBar = (margin = 60) =>
         expect(from, 'an empty spot of the canvas to pan from').to.not.equal(undefined);
         cy.pointerDrag(from!, { clientX: from!.clientX, clientY: from!.clientY + dy });
       });
+      // The canvas follows the pointer one to one: the handle moves by exactly dy.
+      dotCenter(1).should((moved) => {
+        expect(moved.clientY, 'end handle panned by the pointer move').to.be.closeTo(
+          handle.clientY + dy,
+          1,
+        );
+      });
     });
     dotCenter(1).should((handle) => {
       expect(handle.clientY, 'end handle below the app bar').to.be.greaterThan(barBottom);

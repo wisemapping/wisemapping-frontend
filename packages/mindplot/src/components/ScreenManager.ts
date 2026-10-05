@@ -122,6 +122,30 @@ class ScreenManager {
 
   private tocuchEvents = ['touchstart', 'touchend', 'touchmove'];
 
+  /** The viewport (client) position of a mouse or touch event. */
+  getClientPosition(event: MouseEvent | TouchEvent): PositionType {
+    let x: number | null = null;
+    let y: number | null = null;
+
+    if (this.mouseEvents.includes(event.type)) {
+      x = (event as MouseEvent).clientX;
+      y = (event as MouseEvent).clientY;
+    } else if (this.tocuchEvents.includes(event.type)) {
+      // On touchend the lifted finger is no longer in touches, only in changedTouches.
+      const touchEvent = event as TouchEvent;
+      const touch = touchEvent.touches[0] ?? touchEvent.changedTouches?.[0];
+      if (touch) {
+        x = touch.clientX;
+        y = touch.clientY;
+      }
+    }
+
+    if (x === null || y === null) {
+      throw new Error(`Coordinated can not be null, eventType= ${event.type}`);
+    }
+    return { x, y };
+  }
+
   getWorkspaceMousePosition(event: MouseEvent | TouchEvent): PositionType {
     let x: number | null = null;
     let y: number | null = null;
