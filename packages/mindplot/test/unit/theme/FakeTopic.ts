@@ -29,6 +29,8 @@ export type FakeModelProps = {
   fontWeight?: string;
   fontSize?: number;
   fontStyle?: string;
+  // The background colour of the map canvas, when the map sets one.
+  canvasColor?: string;
 };
 
 /**
@@ -51,6 +53,10 @@ const fakeTopic = (
     getFontWeight: () => props.fontWeight,
     getFontSize: () => props.fontSize,
     getFontStyle: () => props.fontStyle,
+    getMindmap: () => ({
+      getCanvasStyle: () =>
+        props.canvasColor ? { backgroundColor: props.canvasColor } : undefined,
+    }),
   };
   return {
     getModel: () => model,

@@ -55,6 +55,10 @@ const keyToModel = new Map<keyof TopicStyleType, (model: NodeModel) => StyleType
 const isUnset = (value: StyleType): boolean =>
   value === undefined || value === null || value === '';
 
+// The least WCAG contrast a theme text colour keeps with what is behind it: 3:1, the AA level for
+// large text and user interface components. Below it, the text is drawn black or white instead.
+const MIN_TEXT_CONTRAST = 3;
+
 class DefaultTheme implements Theme {
   private _themeStyle: ThemeStyle;
 
@@ -229,6 +233,36 @@ class DefaultTheme implements Theme {
       result = this.getConnectionColor(topic);
     }
     return result;
+  }
+
+  /**
+   * The colour behind the topic text: the canvas when the shape draws no fill (line, none),
+   * otherwise the fill as seen over the canvas (a transparent fill shows the canvas).
+   */
+  protected getTextBackdropColor(topic: Topic): string {
+    const canvasStyle = topic.getModel().getMindmap().getCanvasStyle();
+    const canvasColor = canvasStyle?.backgroundColor || this.getCanvasBackgroundColor();
+    const shapeType = this.getShapeType(topic);
+    if (shapeType === 'line' || shapeType === 'none') {
+      return canvasColor;
+    }
+    const fillColor = this.getBackgroundColor(topic);
+    return ColorUtil.over(fillColor, canvasColor) ?? fillColor;
+  }
+
+  /**
+   * A theme text colour that can be read on what is behind the text: the colour itself, or black
+   * or white (whichever contrasts more) when its contrast is below MIN_TEXT_CONTRAST.
+   */
+  protected readableTextColor(topic: Topic, color: string): string {
+    const backdrop = this.getTextBackdropColor(topic);
+    const contrast = ColorUtil.contrastRatio(color, backdrop);
+    if (contrast === undefined || contrast >= MIN_TEXT_CONTRAST) {
+      return color;
+    }
+    const black = ColorUtil.contrastRatio('#000000', backdrop)!;
+    const white = ColorUtil.contrastRatio('#FFFFFF', backdrop)!;
+    return black >= white ? '#000000' : '#FFFFFF';
   }
 
   getOuterBackgroundColor(topic: Topic, onFocus: boolean): string {
