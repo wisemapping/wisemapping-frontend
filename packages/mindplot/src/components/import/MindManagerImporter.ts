@@ -926,6 +926,10 @@ class MindManagerImporter extends Importer {
    * WiseMapping relationships have no text: the labels of a relationship (its FloatingTopics) are
    * imported as floating topics in the middle of its ends, moved by their Offset (in the real
    * files, a few millimeters from the middle of the relationship).
+   *
+   * Known limitation: the middle is estimated from the import positions, before the layout places
+   * the topics again, so a label can end up away from its relationship. A label can not follow the
+   * relationship until RelationshipModel has a text of its own.
    */
   private addRelationshipLabels(
     mindmap: Mindmap,
