@@ -1193,10 +1193,13 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       // Re-render canvas with new theme variant
       this.applyCanvasStyle();
 
-      const centralTopic = this.getModel().getCentralTopic();
-      if (centralTopic) {
-        Designer.setTreeThemeVariant(centralTopic, this._themeVariant);
-        Designer.redrawTree(centralTopic, this._themeVariant);
+      // Every tree: the central topic's and the floating topics' ...
+      const roots = this.getModel()
+        .getTopics()
+        .filter((topic) => !topic.getParent());
+      if (roots.length > 0) {
+        roots.forEach((root) => Designer.setTreeThemeVariant(root, this._themeVariant));
+        roots.forEach((root) => Designer.redrawTree(root, this._themeVariant));
 
         // Force a layout refresh to ensure all changes are applied
         LayoutEventBus.fireEvent('forceLayout');
