@@ -23,7 +23,7 @@ import ColorUtil from './theme/ColorUtil';
 import type { ThemeVariant } from './theme/Theme';
 import type { OrientationType } from './layout/LayoutType';
 import { $msg } from './Messages';
-import LayoutEventBus from './layout/LayoutEventBus';
+import LayoutEventBus, { LayoutEventPayloads } from './layout/LayoutEventBus';
 import { LayoutEventBusType } from './LayoutEventBusType';
 import NodeModel from './model/NodeModel';
 
@@ -1242,22 +1242,28 @@ class HTMLTopicSelected {
       }
     };
 
-    const handlers: [LayoutEventBusType, (nodeModel: NodeModel) => void][] = [
-      ['topicSelected', onTopicSelected],
-      ['topicUnselected', onTopicUnselected],
-      ['topicRemoved', onTopicRemoved],
-      ['forceLayout', updateShadows],
-      ['topicResize', updateShadows],
-      ['topicMoved', updateShadows],
-      ['topicConnected', updateShadows],
-      // Update shadows when canvas is panned/dragged or zoomed
-      ['canvasPanned', followCanvas],
-      ['canvasZoomed', followCanvas],
-    ];
-    handlers.forEach(([type, handler]) => LayoutEventBus.addEvent(type, handler));
+    // Each handler is checked against the payload its event sends.
+    const removals: Unsubscribe[] = [];
+    const on = <T extends LayoutEventBusType>(
+      type: T,
+      handler: (payload: LayoutEventPayloads[T]) => void,
+    ): void => {
+      LayoutEventBus.addEvent(type, handler);
+      removals.push(() => LayoutEventBus.removeEvent(type, handler));
+    };
+    on('topicSelected', onTopicSelected);
+    on('topicUnselected', onTopicUnselected);
+    on('topicRemoved', onTopicRemoved);
+    on('forceLayout', updateShadows);
+    on('topicResize', updateShadows);
+    on('topicMoved', updateShadows);
+    on('topicConnected', updateShadows);
+    // Update shadows when canvas is panned/dragged or zoomed
+    on('canvasPanned', followCanvas);
+    on('canvasZoomed', followCanvas);
 
     const unsubscribe: Unsubscribe = () => {
-      handlers.forEach(([type, handler]) => LayoutEventBus.removeEvent(type, handler));
+      removals.forEach((remove) => remove());
       if (unsubscribeByDesigner.get(designer) === unsubscribe) {
         unsubscribeByDesigner.delete(designer);
       }
