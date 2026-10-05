@@ -27,6 +27,26 @@ import PositionType from '../PositionType';
 import LayoutEventType from './LayoutEventType';
 import type { LayoutType, OrientationType } from './LayoutType';
 
+/**
+ * A layout node as LayoutManager.find gives it: without its setters. The manager tracks what
+ * changes through its own methods (see needsLayout); a node changed behind its back would not be
+ * laid out by the next forceLayout.
+ */
+export type NodeView = Omit<
+  Node,
+  | 'setShrunken'
+  | 'setOrder'
+  | 'resetPositionState'
+  | 'resetOrderState'
+  | 'resetFreeState'
+  | 'setSize'
+  | 'setFreeDisplacement'
+  | 'setPosition'
+  | 'setSorter'
+  | '_children'
+  | '_parent'
+>;
+
 class LayoutManager extends EventDispispatcher<LayoutEventType> {
   private _treeSet: RootedTreeSet;
 
@@ -99,7 +119,8 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     }
   }
 
-  find(id: number): Node {
+  /** A node, to read: change it through the manager's methods, which needsLayout tracks. */
+  find(id: number): NodeView {
     return this._treeSet.find(id);
   }
 
@@ -233,8 +254,8 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
 
   /**
    * Whether a layout would do anything: something it depends on changed since it last ran, through
-   * this manager, or a layout that was not flushed left changes to fire. Nodes changed directly
-   * (through find()) are not seen.
+   * this manager, or a layout that was not flushed left changes to fire. find() gives the nodes
+   * without their setters, so that they are not changed behind the manager's back.
    */
   needsLayout(): boolean {
     return this._changedSinceLayout || this._events.length > 0;
