@@ -4,7 +4,17 @@
                 
                 
                     <p>Always ask</p>
+                    <p>Why? &lt;because&gt; &amp; "then" 'what'</p>
+                    <p>Mixed a &lt; b and c &gt; d</p>
                 
             ]]></note>
+        <topic position="200,0" order="0" shape="line" id="2">
+            <text><![CDATA[
+                    
+                    
+                        <p>Fish &amp; &lt;Chips&gt;</p>
+                    
+                ]]></text>
+        </topic>
     </topic>
 </map>
