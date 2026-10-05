@@ -202,6 +202,24 @@ class Mindmap extends IMindmap {
   }
 
   /**
+   * The ids of every node of the map, in one walk: to check many ids, use this rather than
+   * findNodeById, which walks the map on each call. findNodeById finds no node for NaN, so it is
+   * left out.
+   */
+  getNodeIds(): Set<number> {
+    const result = new Set<number>();
+    const collect = (node: INodeModel): void => {
+      const id = node.getId();
+      if (!Number.isNaN(id)) {
+        result.add(id);
+      }
+      node.getChildren().forEach(collect);
+    };
+    this._branches.forEach(collect);
+    return result;
+  }
+
+  /**
    * Calculate the maximum depth of the mindmap tree
    * @returns the maximum depth level in the mindmap
    */

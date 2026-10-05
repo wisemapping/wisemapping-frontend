@@ -112,11 +112,9 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     // Create Relationships
     const relationships = mindmap.getRelationships();
+    const nodeIds = relationships.length > 0 ? mindmap.getNodeIds() : new Set<number>();
     relationships.forEach((relationship) => {
-      if (
-        mindmap.findNodeById(relationship.getFromNode()) !== undefined &&
-        mindmap.findNodeById(relationship.getToNode()) !== undefined
-      ) {
+      if (nodeIds.has(relationship.getFromNode()) && nodeIds.has(relationship.getToNode())) {
         // Isolated relationships are not persisted ....
         const relationDom = XMLSerializerTango._relationshipToXML(document, relationship);
         mapElem.appendChild(relationDom);
@@ -453,9 +451,10 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         (child: ChildNode) => child.nodeType === 1 && (child as Element).tagName === 'relationship',
       )
       .map((c) => c as Element);
+    const nodeIds = relationshipsNodes.length > 0 ? mindmap.getNodeIds() : new Set<number>();
     relationshipsNodes.forEach((child) => {
       try {
-        const relationship = XMLSerializerTango._deserializeRelationship(child, mindmap);
+        const relationship = XMLSerializerTango._deserializeRelationship(child, mindmap, nodeIds);
         mindmap.addRelationship(relationship);
       } catch (e) {
         console.error(e);
@@ -762,6 +761,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
   private static _deserializeRelationship(
     domElement: Element,
     mindmap: Mindmap,
+    nodeIds: Set<number>,
   ): RelationshipModel {
     const srcId = Number.parseInt(domElement.getAttribute('srcTopicId')!, 10);
     const destId = Number.parseInt(domElement.getAttribute('destTopicId')!, 10);
@@ -774,7 +774,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     // Is the connections points valid ?. If it's not, do not load the relationship ...
-    if (mindmap.findNodeById(srcId) == null || mindmap.findNodeById(destId) == null) {
+    if (!nodeIds.has(srcId) || !nodeIds.has(destId)) {
       throw new Error('Transition could not created, missing node for relationship');
     }
 
