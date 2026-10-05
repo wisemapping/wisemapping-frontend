@@ -25,10 +25,13 @@ import type { INodeModel, Mindmap } from '@wisemapping/mindplot';
 import OutlineViewDialog from '../../../src/components/action-widget/pane/outline-view-dialog';
 import { renderPane } from './helpers';
 
-// The outline only needs the icon URL lookup and the content-type names from mindplot.
+// The outline only needs the icon URL lookup, the content-type names and the note sanitizer
+// from mindplot.
 jest.mock('@wisemapping/mindplot', () => ({
   SvgImageIcon: { getImageUrl: (id: string) => `/icons/${id}.svg` },
   ContentType: { PLAIN: 'plain', HTML: 'html' },
+  HtmlSanitizer: jest.requireActual('../../../../mindplot/src/components/security/HtmlSanitizer')
+    .default,
 }));
 
 type Feature = {
@@ -97,7 +100,18 @@ const sampleMap = (): Mindmap =>
           { type: 'note', text: 'Plain planning note', contentType: 'plain' },
         ],
       ),
-      node(5, 'Research', [], [{ type: 'note', text: '<b>Bold</b> idea', contentType: 'html' }]),
+      node(
+        5,
+        'Research',
+        [],
+        [
+          {
+            type: 'note',
+            text: '<b>Bold</b> idea, <a href="https://wisemapping.com/r">source</a>',
+            contentType: 'html',
+          },
+        ],
+      ),
       // A topic without text is skipped.
       node(6, undefined),
     ]),
@@ -206,7 +220,13 @@ describe('OutlineViewDialog', () => {
 
     const bold = await screen.findByText('Bold');
     expect(bold.tagName).toBe('B');
-    expect(screen.queryByText('<b>Bold</b> idea')).toBeNull();
+    expect(screen.queryByText(/<b>Bold<\/b> idea/)).toBeNull();
+    // The markup is sanitized for display: its links open in a new tab without the opener.
+    const link = screen.getByText('source');
+    expect(link.tagName).toBe('A');
+    expect(link.getAttribute('href')).toBe('https://wisemapping.com/r');
+    expect(link.getAttribute('target')).toBe('_blank');
+    expect(link.getAttribute('rel')).toBe('noopener noreferrer');
   });
 
   it('closes the popover with Escape', async () => {
