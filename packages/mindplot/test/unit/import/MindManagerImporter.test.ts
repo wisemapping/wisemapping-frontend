@@ -877,7 +877,7 @@ describe('MindManagerImporter task progress (BL5-139)', () => {
 
   test('a task without a percentage has no progress icon', async () => {
     const mindManager = schemaMap(
-      `<ap:Topic OId="t"><ap:Text PlainText="T"/><ap:Task TaskPercentage="" TaskPriority="urn:mindjet:Prio1"/></ap:Topic>`,
+      '<ap:Topic OId="t"><ap:Text PlainText="T"/><ap:Task TaskPercentage="" TaskPriority="urn:mindjet:Prio1"/></ap:Topic>',
     );
 
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
