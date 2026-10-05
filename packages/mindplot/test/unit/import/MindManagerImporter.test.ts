@@ -885,3 +885,35 @@ describe('MindManagerImporter task progress (BL5-139)', () => {
     expect(findByText(mindmap, 'T').findFeatureByType('icon')).toEqual([]);
   });
 });
+
+describe('MindManagerImporter XHTML note whitespace (BL5-140)', () => {
+  test('collapses the source whitespace, keeping the line breaks of the markup', async () => {
+    const mindManager = schemaMap(`
+        <ap:Topic OId="a">
+          <ap:Text PlainText="Spaced"/>
+          <ap:NotesGroup>
+            <ap:NotesXhtmlData PreviewPlainText="This is a test">
+              <html xmlns="http://www.w3.org/1999/xhtml"><p><b>This&#160;</b>
+
+
+<span>is a</span>
+
+
+</p>
+
+<p>line<br/>break</p>
+<pre>keep
+  this</pre>
+</html>
+            </ap:NotesXhtmlData>
+          </ap:NotesGroup>
+        </ap:Topic>`);
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    const note = findByText(mindmap, 'Spaced').findFeatureByType('note')[0] as NoteModel;
+    expect(note.getText()).toBe(
+      '<p><b>This&nbsp;</b> <span>is a</span></p><p>line<br>break</p><pre>keep\n  this</pre>',
+    );
+  });
+});

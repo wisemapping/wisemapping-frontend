@@ -343,3 +343,18 @@ describe('MindManager task progress of the real files (BL5-139)', () => {
     ).toHaveLength(2);
   });
 });
+
+describe('MindManager XHTML notes of the real files (BL5-140)', () => {
+  test('the note keeps its markup without the blank lines of the source', async () => {
+    const mindmap = await importReal('mindm-test-dom-mm23');
+    const three = centralOf(mindmap)
+      .getChildren()
+      .find((node) => node.getText() === '3')!;
+    const note = three.findFeatureByType('note')[0] as NoteModel;
+
+    expect(note.getText()).not.toMatch(/\n/);
+    expect(note.getText()).toBe(
+      '<p><b>This&nbsp;</b> <span><span style=" font-size:26pt">is a</span> </span> &nbsp;<span><span style=" font-size:48pt">test</span> </span></p>',
+    );
+  });
+});

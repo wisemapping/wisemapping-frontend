@@ -18,7 +18,10 @@
 
 /* eslint-disable import/no-extraneous-dependencies */
 import { describe, expect, test } from '@jest/globals';
-import { htmlToPlainText } from '../../../src/components/import/support/HtmlText';
+import {
+  htmlToPlainText,
+  normalizeHtmlWhitespace,
+} from '../../../src/components/import/support/HtmlText';
 
 describe('htmlToPlainText', () => {
   test.each([
@@ -35,5 +38,26 @@ describe('htmlToPlainText', () => {
     ['decodes entities', '<p>Fish &amp; &lt;Chips&gt;</p>', 'Fish & <Chips>'],
   ])('%s', (_name: string, html: string, text: string) => {
     expect(htmlToPlainText(html)).toBe(text);
+  });
+});
+
+describe('normalizeHtmlWhitespace', () => {
+  test.each([
+    ['collapses whitespace runs to a space', '<p>one \n\n  two</p>', '<p>one two</p>'],
+    [
+      'keeps the space between inline elements',
+      '<p><b>a</b>\n\n<i>b</i></p>',
+      '<p><b>a</b> <i>b</i></p>',
+    ],
+    ['drops the whitespace between blocks', '<p>a</p>\n\n<p>b</p>', '<p>a</p><p>b</p>'],
+    [
+      'drops the whitespace-only text at the edges of a block',
+      '<p>\n<b>a</b>\n</p>',
+      '<p><b>a</b></p>',
+    ],
+    ['keeps <br> and no-break spaces', '<p>a&nbsp;<br>\n b</p>', '<p>a&nbsp;<br> b</p>'],
+    ['keeps preformatted text', '<pre>a\n  b</pre>', '<pre>a\n  b</pre>'],
+  ])('%s', (_name: string, html: string, expected: string) => {
+    expect(normalizeHtmlWhitespace(html)).toBe(expected);
   });
 });

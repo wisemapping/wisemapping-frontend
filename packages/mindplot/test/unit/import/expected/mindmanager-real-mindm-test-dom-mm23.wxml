@@ -15,32 +15,7 @@
             <note contentType="html"><![CDATA[<p>Notes for 2</p>]]></note>
         </topic>
         <topic position="300,75" order="2" text="3" shape="rounded rectangle" id="9" bgColor="#ecf4fa" brColor="#3283c0">
-            <note contentType="html"><![CDATA[<p><b>This&nbsp;</b>
-
-
-
-
-<span><span style=" font-size:26pt">is a</span>
-
-
-
-
-</span>
-
-
-
-
-&nbsp;<span><span style=" font-size:48pt">test</span>
-
-
-
-
-</span>
-
-
-
-
-</p>]]></note>
+            <note contentType="html"><![CDATA[<p><b>This&nbsp;</b> <span><span style=" font-size:26pt">is a</span> </span> &nbsp;<span><span style=" font-size:48pt">test</span> </span></p>]]></note>
         </topic>
         <topic position="400,150" order="4" text="5" shape="rounded rectangle" id="10" bgColor="#abe595" brColor="#3283c0">
             <icon id="task_100"/>

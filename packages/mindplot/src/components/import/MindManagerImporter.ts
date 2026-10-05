@@ -29,6 +29,7 @@ import INodeModel, { TopicShapeType } from '../model/INodeModel';
 import ContentType from '../ContentType';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import { decodeUtf8 } from './support/Utf8Decoder';
+import { normalizeHtmlWhitespace } from './support/HtmlText';
 import toWiseMappingXml from './support/MindmapXml';
 
 interface MindManagerTopic {
@@ -773,7 +774,9 @@ class MindManagerImporter extends Importer {
       return undefined;
     }
     try {
-      return HtmlSanitizer.sanitize(notesData.innerHTML).trim() || undefined;
+      // MindManager indents the XHTML with blank lines, which html does not show: the whitespace
+      // is collapsed. Its line breaks are the paragraphs and <br> of the markup.
+      return normalizeHtmlWhitespace(HtmlSanitizer.sanitize(notesData.innerHTML)) || undefined;
     } catch (error) {
       console.warn('MindManager note could not be imported as HTML:', error);
       return undefined;

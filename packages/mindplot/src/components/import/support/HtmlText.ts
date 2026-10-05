@@ -114,4 +114,49 @@ export const htmlToPlainText = (html: string): string => {
   return result.join('\n');
 };
 
+// Elements whose whitespace is shown as it is.
+const PREFORMATTED_TAGS = new Set(['PRE', 'TEXTAREA']);
+
+// HTML whitespace: unlike \s, it does not include the no-break space.
+const HTML_WHITESPACE = /[ \t\n\r\f]+/g;
+
+const isBlock = (node: Node | null): boolean =>
+  node?.nodeType === Node.ELEMENT_NODE && BLOCK_TAGS.has((node as Element).tagName.toUpperCase());
+
+/**
+ * An html fragment without the whitespace of its source, which a browser does not show: runs of
+ * whitespace are one space, and whitespace between blocks or at their start or end is dropped.
+ * The line breaks of the markup (paragraphs, <br>) and preformatted text are kept.
+ */
+export const normalizeHtmlWhitespace = (html: string): string => {
+  const { body } = new DOMParser().parseFromString(html, 'text/html');
+
+  const walk = (node: Node): void => {
+    Array.from(node.childNodes).forEach((child) => {
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        if (!PREFORMATTED_TAGS.has((child as Element).tagName.toUpperCase())) {
+          walk(child);
+        }
+        return;
+      }
+      if (child.nodeType !== Node.TEXT_NODE) {
+        return;
+      }
+      const text = (child.textContent || '').replace(HTML_WHITESPACE, ' ');
+      const atBlockEdge =
+        ((node === body || isBlock(node)) && (!child.previousSibling || !child.nextSibling)) ||
+        isBlock(child.previousSibling) ||
+        isBlock(child.nextSibling);
+      if (text === ' ' && atBlockEdge) {
+        child.remove();
+      } else {
+        child.textContent = text;
+      }
+    });
+  };
+
+  walk(body);
+  return body.innerHTML.trim();
+};
+
 export default htmlToPlainText;
