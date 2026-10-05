@@ -54,7 +54,7 @@ class Image extends WorkspaceElement<ImagePeer> {
     return this.peer.getHref();
   }
 
-  getSize(): SizeType | undefined {
+  getSize(): SizeType {
     return this.peer.getSize();
   }
 

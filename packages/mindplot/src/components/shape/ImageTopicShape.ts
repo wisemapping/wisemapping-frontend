@@ -35,8 +35,9 @@ class ImageTopicShape extends Image {
     this._topic = topic;
   }
 
-  getSize(): SizeType | undefined {
-    return this._topic.getModel().getImageSize();
+  /** The image size of the model, or the drawn size when the model has none. */
+  override getSize(): SizeType {
+    return this._topic.getModel().getImageSize() ?? super.getSize();
   }
 
   setPosition(): void {
