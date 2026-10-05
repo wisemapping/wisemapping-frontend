@@ -90,3 +90,16 @@ describe('MM export test execution', () => {
     await exporterAssert(testName, exporter);
   });
 });
+
+describe('MMX export test execution', () => {
+  test.each(testNames)('Exporting %p suite', async (testName: string) => {
+    const mindmapPath = path.resolve(__dirname, `./input/${testName}.wxml`);
+    const mapDocument = parseXMLFile(mindmapPath, 'text/xml');
+
+    const serializer = XMLSerializerFactory.createFromDocument(mapDocument);
+    const mindmap: Mindmap = serializer.loadFromDom(mapDocument, testName);
+
+    const exporter = TextExporterFactory.create('mmx', mindmap);
+    await exporterAssert(testName, exporter);
+  });
+});

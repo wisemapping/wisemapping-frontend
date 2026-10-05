@@ -1,0 +1,100 @@
+<map version="freeplane 1.9.13">
+    <node ID="ID_0" TEXT="California" STYLE="bubble">
+        <node ID="ID_1" POSITION="left" STYLE="fork" TEXT="Northern California">
+            <node ID="ID_2" POSITION="left" STYLE="fork" TEXT="Oakland/Berkeley"/>
+            <node ID="ID_3" POSITION="left" STYLE="fork" TEXT="San Mateo"/>
+            <node ID="ID_4" POSITION="left" STYLE="fork" TEXT="Other North"/>
+            <node ID="ID_5" POSITION="left" STYLE="fork" TEXT="San Francisco"/>
+            <node ID="ID_6" POSITION="left" STYLE="fork" TEXT="Santa Clara"/>
+            <node ID="ID_7" POSITION="left" STYLE="fork" TEXT="Marin/Napa/Solano"/>
+        </node>
+        <node ID="ID_8" POSITION="left" STYLE="fork" TEXT="Hawaii"/>
+        <node ID="ID_9" POSITION="left" STYLE="fork" TEXT="Southern California">
+            <node ID="ID_10" POSITION="left" STYLE="fork" TEXT="Los Angeles"/>
+            <node ID="ID_11" POSITION="left" STYLE="fork" TEXT="Anaheim/Santa Ana"/>
+            <node ID="ID_12" POSITION="left" STYLE="fork" TEXT="Ventura"/>
+            <node ID="ID_13" POSITION="left" STYLE="fork" TEXT="Other South"/>
+        </node>
+        <node ID="ID_14" POSITION="left" STYLE="fork" TEXT="Policy Bodies">
+            <node ID="ID_15" POSITION="left" STYLE="fork" TEXT="Advocacy">
+                <node ID="ID_16" POSITION="left" STYLE="fork" TEXT="AAO"/>
+                <node ID="ID_17" POSITION="left" STYLE="fork" TEXT="ASCRS"/>
+                <node ID="ID_18" POSITION="left" STYLE="fork" TEXT="EBAA"/>
+            </node>
+            <node ID="ID_19" POSITION="left" STYLE="fork" TEXT="Military"/>
+            <node ID="ID_20" POSITION="left" STYLE="fork" TEXT="United Network for Organ Sharing"/>
+            <node ID="ID_21" POSITION="left" STYLE="fork" TEXT="Kaiser Hospital System"/>
+            <node ID="ID_22" POSITION="left" STYLE="fork" TEXT="University of California System"/>
+            <node ID="ID_23" POSITION="left" STYLE="fork" TEXT="CMS">
+                <node ID="ID_24" POSITION="left" STYLE="fork" TEXT="Medicare Part A"/>
+                <node ID="ID_25" POSITION="left" STYLE="fork" TEXT="Medicare Part B"/>
+            </node>
+        </node>
+        <node ID="ID_26" POSITION="right" STYLE="fork" TEXT="Corneal Tissue OPS">
+            <node ID="ID_27" POSITION="right" STYLE="fork" TEXT="Transplant Bank International">
+                <node ID="ID_28" POSITION="right" STYLE="fork" TEXT="Orange County Eye and Transplant Bank"/>
+                <node ID="ID_29" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#00ffd5" TEXT="Northern California Transplant Bank">
+                    <node ID="ID_30" POSITION="right" STYLE="fork" TEXT="In 2010, 2,500 referrals forwarded to OneLegacy"/>
+                </node>
+                <node ID="ID_31" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#00ffd5" TEXT="Doheny Eye and Tissue Transplant Bank" LINK="http://www.dohenyeyebank.org/"/>
+                <arrowlink DESTINATION="ID_32" STARTARROW="None" ENDARROW="Default" DASH="7 7"/>
+                <arrowlink DESTINATION="ID_36" STARTARROW="None" ENDARROW="Default" DASH="7 7"/>
+            </node>
+            <node ID="ID_32" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#00ffd5" TEXT="OneLegacy">
+                <node ID="ID_33" POSITION="right" STYLE="fork" TEXT="In 2010, 11,828 referrals"/>
+            </node>
+            <node ID="ID_34" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#00ffd5" TEXT="San Diego Eye Bank">
+                <node ID="ID_35" POSITION="right" STYLE="fork" TEXT="In 2010, 2,555 referrals"/>
+            </node>
+            <node ID="ID_36" POSITION="right" STYLE="fork" TEXT="California Transplant Donor Network"/>
+            <node ID="ID_37" POSITION="right" STYLE="fork" TEXT="California Transplant Services">
+                <node ID="ID_38" POSITION="right" STYLE="fork" TEXT="In 2010, 0 referrals"/>
+            </node>
+            <node ID="ID_39" POSITION="right" STYLE="fork" TEXT="Lifesharing"/>
+            <node ID="ID_40" POSITION="right" STYLE="fork" TEXT="DCI Donor Services">
+                <node ID="ID_41" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#00ffd5" TEXT="Sierra Eye and Tissue Donor Services">
+                    <node ID="ID_42" POSITION="right" STYLE="fork" TEXT="In 2010, 2.023 referrals"/>
+                </node>
+            </node>
+            <node ID="ID_43" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#00ffd5" TEXT="SightLife"/>
+        </node>
+        <node ID="ID_44" POSITION="left" STYLE="fork" TEXT="Tools">
+            <node ID="ID_45" POSITION="left" STYLE="fork" TEXT="Darthmouth Atlas of Health"/>
+            <node ID="ID_46" POSITION="left" STYLE="fork" TEXT="HealthLandscape"/>
+        </node>
+        <node ID="ID_47" POSITION="right" STYLE="fork" TEXT="QE Medicare"/>
+        <node ID="ID_48" POSITION="right" STYLE="fork" TEXT="CMS Data"/>
+        <node ID="ID_49" POSITION="right" STYLE="fork" TEXT="Ambulatory Payment Classification">
+            <node ID="ID_50" POSITION="right" STYLE="fork" TEXT="CPT's which don't allow V2785">
+                <node ID="ID_51" POSITION="right" STYLE="fork" TEXT="Ocular Reconstruction Transplant">
+                    <node ID="ID_52" POSITION="right" STYLE="fork" TEXT="65780 (amniotic membrane tranplant"/>
+                    <node ID="ID_53" POSITION="right" STYLE="fork" TEXT="65781 (limbal stem cell allograft)"/>
+                    <node ID="ID_54" POSITION="right" STYLE="fork" TEXT="65782 (limbal conjunctiva autograft)"/>
+                </node>
+                <node ID="ID_55" POSITION="right" STYLE="fork" TEXT="Endothelial keratoplasty">
+                    <node ID="ID_56" POSITION="right" STYLE="fork" TEXT="65756"/>
+                </node>
+                <node ID="ID_57" POSITION="right" STYLE="fork" TEXT="Epikeratoplasty">
+                    <node ID="ID_58" POSITION="right" STYLE="fork" TEXT="65767"/>
+                </node>
+            </node>
+            <node ID="ID_59" POSITION="right" STYLE="fork" TEXT="Anterior lamellar keratoplasty">
+                <node ID="ID_60" POSITION="right" STYLE="fork" TEXT="65710"/>
+            </node>
+            <node ID="ID_61" POSITION="right" STYLE="fork" TEXT="Processing, preserving, and transporting corneal tissue">
+                <node ID="ID_62" POSITION="right" STYLE="fork" TEXT="V2785"/>
+                <node ID="ID_63" POSITION="right" STYLE="fork" TEXT="Laser incision in recepient">
+                    <node ID="ID_64" POSITION="right" STYLE="fork" TEXT="0290T"/>
+                </node>
+            </node>
+            <node ID="ID_65" POSITION="right" STYLE="fork" TEXT="Laser incision in donor">
+                <node ID="ID_66" POSITION="right" STYLE="fork" TEXT="0289T"/>
+            </node>
+            <node ID="ID_67" POSITION="right" STYLE="fork" TEXT="Penetrating keratoplasty">
+                <node ID="ID_68" POSITION="right" STYLE="fork" TEXT="65730 (in other)"/>
+                <node ID="ID_69" POSITION="right" STYLE="fork" TEXT="65755 (in pseudoaphakia)"/>
+                <node ID="ID_70" POSITION="right" STYLE="fork" TEXT="65750 (in aphakia)"/>
+            </node>
+        </node>
+    </node>
+</map>

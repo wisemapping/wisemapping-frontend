@@ -1,0 +1,6 @@
+<map version="freeplane 1.9.13">
+    <node ID="ID_1" TEXT="NIF (NORMAS DE INFORMACIÓN FINANCIERA)" STYLE="bubble" BACKGROUND_COLOR="#d5a6bd" COLOR="#741b47">
+        <icon BUILTIN="pencil"/>
+        <font SIZE="18" BOLD="true"/>
+    </node>
+</map>

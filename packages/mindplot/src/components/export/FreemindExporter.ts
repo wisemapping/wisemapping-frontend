@@ -40,15 +40,15 @@ import Font from './freemind/Font';
 import FreemindIconConverter from '../import/FreemindIconConverter';
 
 class FreemindExporter extends Exporter {
-  private mindmap: Mindmap;
+  protected mindmap: Mindmap;
 
   private nodeMap!: Map<number, FreeminNode>;
 
   private version: VersionNumber = FreemindConstant.SUPPORTED_FREEMIND_VERSION;
 
-  private objectFactory!: ObjectFactory;
+  protected objectFactory!: ObjectFactory;
 
-  private static wisweToFreeFontSize: Map<number, number> = new Map<number, number>();
+  protected static wisweToFreeFontSize: Map<number, number> = new Map<number, number>();
 
   constructor(mindmap: Mindmap) {
     super(FreemindConstant.SUPPORTED_FREEMIND_VERSION.getVersion(), 'application/xml');
@@ -103,22 +103,7 @@ class FreemindExporter extends Exporter {
       const destNode: FreeminNode | undefined = this.nodeMap.get(relationship.getToNode());
 
       if (srcNode && destNode) {
-        const arrowlink: Arrowlink = this.objectFactory.crateArrowlink();
-
-        const idRel = destNode.getId();
-        if (idRel) {
-          arrowlink.setDestination(idRel);
-        }
-
-        if (relationship.getEndArrow() && relationship.getEndArrow()) {
-          arrowlink.setEndarrow('Default');
-        }
-
-        if (relationship.getStartArrow() && relationship.getStartArrow()) {
-          arrowlink.setStartarrow('Default');
-        }
-
-        srcNode.setArrowlinkOrCloudOrEdge(arrowlink);
+        srcNode.setArrowlinkOrCloudOrEdge(this.buildArrowlink(relationship, destNode));
       }
     });
 
@@ -133,7 +118,25 @@ class FreemindExporter extends Exporter {
     return Promise.resolve(formatXml);
   }
 
-  private setTopicPropertiesToNode({
+  protected buildArrowlink(relationship: RelationshipModel, destNode: FreeminNode): Arrowlink {
+    const arrowlink: Arrowlink = this.objectFactory.crateArrowlink();
+
+    const idRel = destNode.getId();
+    if (idRel) {
+      arrowlink.setDestination(idRel);
+    }
+
+    if (relationship.getEndArrow()) {
+      arrowlink.setEndarrow('Default');
+    }
+
+    if (relationship.getStartArrow()) {
+      arrowlink.setStartarrow('Default');
+    }
+    return arrowlink;
+  }
+
+  protected setTopicPropertiesToNode({
     freemindNode,
     mindmapTopic,
     isRoot,
@@ -144,6 +147,27 @@ class FreemindExporter extends Exporter {
   }): void {
     freemindNode.setId(`ID_${mindmapTopic.getId()}`);
 
+    this.addTextNode(freemindNode, mindmapTopic);
+
+    const wiseShape: TopicShapeType | undefined = mindmapTopic.getShapeType();
+    if (wiseShape && wiseShape !== 'line' && wiseShape !== undefined) {
+      const color = mindmapTopic.getBackgroundColor();
+      if (color) {
+        freemindNode.setBackgorundColor(this.rgbToHex(color));
+      }
+    }
+
+    const style = this.shapeToStyle(wiseShape, isRoot);
+    if (style) {
+      freemindNode.setStyle(style);
+    }
+
+    this.addFeautreNode(freemindNode, mindmapTopic);
+    this.addFontNode(freemindNode, mindmapTopic);
+    this.addEdgeNode(freemindNode, mindmapTopic);
+  }
+
+  protected addTextNode(freemindNode: FreeminNode, mindmapTopic: INodeModel): void {
     const text = mindmapTopic.getText();
 
     if (text) {
@@ -158,31 +182,17 @@ class FreemindExporter extends Exporter {
         freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
       }
     }
+  }
 
-    const wiseShape: TopicShapeType | undefined = mindmapTopic.getShapeType();
-    if (wiseShape && wiseShape !== 'line' && wiseShape !== undefined) {
-      const color = mindmapTopic.getBackgroundColor();
-      if (color) {
-        freemindNode.setBackgorundColor(this.rgbToHex(color));
-      }
+  // The STYLE of the node. The central topic is a rounded rectangle by default, the rest a line.
+  protected shapeToStyle(shape: TopicShapeType | undefined, isRoot: boolean): string | undefined {
+    if (!shape) {
+      return isRoot ? undefined : 'fork';
     }
-
-    if (wiseShape) {
-      const isRootRoundedRectangle = isRoot && wiseShape !== 'rounded rectangle';
-      const notIsRootLine = !isRoot && wiseShape !== 'line';
-
-      if (isRootRoundedRectangle || notIsRootLine) {
-        let style: string = wiseShape;
-        if (style === 'rounded rectangle' || style === 'elipse') {
-          style = 'bubble';
-        }
-        freemindNode.setStyle(style);
-      }
-    } else if (!isRoot) freemindNode.setStyle('fork');
-
-    this.addFeautreNode(freemindNode, mindmapTopic);
-    this.addFontNode(freemindNode, mindmapTopic);
-    this.addEdgeNode(freemindNode, mindmapTopic);
+    if ((isRoot && shape !== 'rounded rectangle') || (!isRoot && shape !== 'line')) {
+      return shape === 'rounded rectangle' || shape === 'elipse' ? 'bubble' : shape;
+    }
+    return undefined;
   }
 
   private addNodeFromTopic(mainTopic: INodeModel, destNode: FreeminNode): void {
@@ -210,7 +220,7 @@ class FreemindExporter extends Exporter {
     });
   }
 
-  private buildRichcontent(text: string, type: string, isHtml = false): Richcontent {
+  protected buildRichcontent(text: string, type: string, isHtml = false): Richcontent {
     const richconent: Richcontent = this.objectFactory.createRichcontent();
 
     richconent.setType(type);
@@ -267,17 +277,8 @@ class FreemindExporter extends Exporter {
         freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
       }
 
-      if (type === 'icon') {
-        const icon = feature as SvgIconModel;
-        const freemindIcon: Icon = new Icon();
-        freemindIcon.setBuiltin(FreemindIconConverter.svgToFreemindIcon(icon.getIconType()));
-        freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);
-      }
-
-      // Emoji icons are exported as the equivalent FreeMind builtin icon, if there is one.
-      if (type === 'eicon') {
-        const icon = feature as EmojiIconModel;
-        const builtin = FreemindIconConverter.toFreemindIcon(icon.getIconType());
+      if (type === 'icon' || type === 'eicon') {
+        const builtin = this.iconBuiltin(feature);
         if (builtin) {
           const freemindIcon: Icon = new Icon();
           freemindIcon.setBuiltin(builtin);
@@ -285,6 +286,17 @@ class FreemindExporter extends Exporter {
         }
       }
     });
+  }
+
+  /**
+   * The builtin icon of an icon feature, null to skip it. Emoji icons are exported as the equivalent
+   * FreeMind builtin icon, if there is one.
+   */
+  protected iconBuiltin(feature: FeatureModel): string | null {
+    if (feature.getType() === 'icon') {
+      return FreemindIconConverter.svgToFreemindIcon((feature as SvgIconModel).getIconType());
+    }
+    return FreemindIconConverter.toFreemindIcon((feature as EmojiIconModel).getIconType());
   }
 
   // A FreeMind edge is the line that connects the node to its parent, the WiseMapping connection.
@@ -298,7 +310,7 @@ class FreemindExporter extends Exporter {
     }
   }
 
-  private addFontNode(freemindNode: FreeminNode, mindmapTopic: INodeModel): void {
+  protected addFontNode(freemindNode: FreeminNode, mindmapTopic: INodeModel): void {
     const fontFamily: string | undefined = mindmapTopic.getFontFamily();
     const fontSize: number | undefined = mindmapTopic.getFontSize();
     const fontColor: string | undefined = mindmapTopic.getFontColor();
@@ -336,6 +348,7 @@ class FreemindExporter extends Exporter {
 
       if (fontStyle === 'italic') {
         font.setItalic(String(true));
+        fontNodeNeeded = true;
       }
 
       if (fontNodeNeeded) {
@@ -350,7 +363,7 @@ class FreemindExporter extends Exporter {
     }
   }
 
-  private rgbToHex(color: string): string {
+  protected rgbToHex(color: string): string {
     let result: string = color;
     if (result) {
       const rgb = /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/i.exec(result.trim());
@@ -369,7 +382,7 @@ class FreemindExporter extends Exporter {
     return this.version;
   }
 
-  private getVersionNumber(): string {
+  protected getVersionNumber(): string {
     return this.getVersion().getVersion();
   }
 }

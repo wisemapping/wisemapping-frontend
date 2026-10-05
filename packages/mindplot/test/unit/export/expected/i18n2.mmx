@@ -1,0 +1,15 @@
+<map version="freeplane 1.9.13">
+    <node ID="ID_0" TEXT="أَبْجَدِيَّة عَرَبِيَّة" STYLE="bubble">
+        <node ID="ID_1" POSITION="right" STYLE="fork" TEXT="أَبْجَدِيَّة عَرَبِ">
+            <richcontent TYPE="NOTE">
+                <html xmlns="http://www.w3.org/1999/xhtml">
+                    <head></head>
+                    <body>
+                        <p>This is a not in languange أَبْجَدِيَّة عَرَبِ</p>
+                    </body>
+                </html>
+            </richcontent>
+        </node>
+        <node ID="ID_2" POSITION="left" STYLE="fork" TEXT="Long text node: &#xA; أَبْجَدِيَّة عَرَب"/>
+    </node>
+</map>

@@ -1,0 +1,77 @@
+<map version="freeplane 1.9.13">
+    <node ID="ID_1" TEXT="La computadora" STYLE="bubble" BACKGROUND_COLOR="#cc0000" COLOR="#feffff">
+        <font SIZE="24" BOLD="true" NAME="Verdana"/>
+        <node ID="ID_21" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#a64d79" COLOR="#feffff" TEXT="Hardware&#xA;(componentes físicos)">
+            <font SIZE="18" BOLD="true"/>
+            <node ID="ID_25" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#c27ba0" COLOR="#feffff" TEXT="Entrada de datos&#xA;">
+                <font SIZE="12"/>
+                <node ID="ID_28" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#ead1dc" COLOR="#000000" TEXT=" Ratón, Teclado, Joystick,&#xA;Cámara digital, Micrófono, Escáner.">
+                    <font SIZE="12"/>
+                </node>
+            </node>
+            <node ID="ID_29" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#c27ba0" COLOR="#feffff" TEXT="Salida de datos">
+                <font SIZE="12"/>
+                <node ID="ID_30" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#ead1dc" COLOR="#000000" TEXT="Monitor, Impresora, Bocinas, Plóter.&#xA;">
+                    <font SIZE="12"/>
+                </node>
+            </node>
+            <node ID="ID_31" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#c27ba0" COLOR="#feffff" TEXT="Almacenamiento">
+                <font SIZE="12"/>
+                <node ID="ID_32" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#ead1dc" COLOR="#000000" TEXT="Disquete, Disco compacto, DVD,&#xA;BD, Disco duro, Memoria flash.">
+                    <font SIZE="12"/>
+                </node>
+            </node>
+        </node>
+        <node ID="ID_59" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#bf9000" COLOR="#000000" TEXT="Software&#xA;(Programas y datos con los que funciona la computadora)&#xA;">
+            <font SIZE="12" BOLD="true"/>
+            <node ID="ID_92" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#f1c232" COLOR="#000000" TEXT="Software de Sistema:Permite el entendimiento&#xA;entre el usuario y la maquina.">
+                <font SIZE="12"/>
+                <node ID="ID_101" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Microsoft Windows">
+                    <font SIZE="12"/>
+                </node>
+                <node ID="ID_106" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="GNU/LINUX">
+                    <font SIZE="12"/>
+                </node>
+                <node ID="ID_107" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="MAC ">
+                    <font SIZE="12"/>
+                </node>
+            </node>
+            <node ID="ID_93" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#f1c232" COLOR="#000000" TEXT="Software de Aplicación: Permite hacer hojas de&#xA;calculo navegar en internet, base de datos, etc.">
+                <font SIZE="12"/>
+                <node ID="ID_108" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Office">
+                    <font SIZE="12"/>
+                </node>
+                <node ID="ID_109" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Libre Office">
+                    <font SIZE="12"/>
+                </node>
+                <node ID="ID_110" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Navegadores">
+                    <font SIZE="12"/>
+                </node>
+                <node ID="ID_111" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Msn">
+                    <font SIZE="12"/>
+                </node>
+            </node>
+            <node ID="ID_94" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#f1c232" COLOR="#000000" TEXT="Software de Desarrollo&#xA;">
+                <font SIZE="12"/>
+            </node>
+        </node>
+        <node ID="ID_3" POSITION="left" STYLE="oval" TEXT="Tipos de computadora">
+            <font SIZE="18" BOLD="true"/>
+            <node ID="ID_8" POSITION="left" STYLE="oval" TEXT="Computadora personal de escritorio o Desktop">
+                <font SIZE="12" BOLD="true"/>
+            </node>
+            <node ID="ID_10" POSITION="left" STYLE="oval" TEXT="PDA&#xA;">
+                <font SIZE="12" BOLD="true"/>
+            </node>
+            <node ID="ID_11" POSITION="left" STYLE="oval" TEXT="Laptop">
+                <font SIZE="12" BOLD="true"/>
+            </node>
+            <node ID="ID_12" POSITION="left" STYLE="oval" TEXT="Servidor">
+                <font SIZE="12" BOLD="true"/>
+            </node>
+            <node ID="ID_13" POSITION="left" STYLE="oval" TEXT="Tablet PC">
+                <font SIZE="12" BOLD="true"/>
+            </node>
+        </node>
+    </node>
+</map>
