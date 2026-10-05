@@ -263,6 +263,40 @@ describe('FreemindImporter', () => {
     ids.forEach((id) => expect(Number.isInteger(Number(id))).toBe(true));
   });
 
+  test('gives unique ids to nodes whose FreeMind ids end in the same number (BL5-13)', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="root" TEXT="Root">
+        <node ID="ID_abc" TEXT="Generated" POSITION="right"/>
+        <node ID="ID_1" TEXT="One" POSITION="right"/>
+        <node ID="ID_5" TEXT="Five" POSITION="left">
+          <arrowlink DESTINATION="Freemind_Link_5"/>
+        </node>
+        <node ID="Freemind_Link_5" TEXT="Link five" POSITION="left"/>
+      </node>
+    </map>`;
+
+    const doc = await importMap(mm);
+    const topics = Array.from(doc.querySelectorAll('topic'));
+    const ids = topics.map((topic) => topic.getAttribute('id'));
+    expect(new Set(ids).size).toBe(5);
+    // Parsed ids are kept when they are free.
+    expect(topicById(doc, '5').getAttribute('text')).toBe('Five');
+    // The arrowlink still points to the node it names.
+    const relationship = doc.querySelector('relationship')!;
+    const dest = topicById(doc, relationship.getAttribute('destTopicId')!);
+    expect(relationship.getAttribute('srcTopicId')).toBe('5');
+    expect(dest.getAttribute('text')).toBe('Link five');
+  });
+
+  test('gives each import its own ids', async () => {
+    const mm = `<map version="1.0.1"><node ID="root" TEXT="Root"/></map>`;
+    const importer = new FreemindImporter(mm);
+    const first = await importer.import('test', '');
+    const second = await importer.import('test', '');
+
+    expect(second).toBe(first);
+  });
+
   test('keeps the text of CDATA sections in rich content notes', async () => {
     const mm = fs.readFileSync(path.resolve(__dirname, './input/cdata-note.mm'), 'utf-8');
 

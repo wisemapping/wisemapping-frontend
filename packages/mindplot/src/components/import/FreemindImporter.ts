@@ -57,6 +57,9 @@ export default class FreemindImporter extends Importer {
 
   private idDefault = 0;
 
+  // Topic ids already given, so that two FreeMind ids never map to the same topic id.
+  private usedIds!: Set<number>;
+
   constructor(map: string) {
     super();
     this.freemindInput = map;
@@ -74,6 +77,8 @@ export default class FreemindImporter extends Importer {
     this.mindmap = new Mindmap(nameMap);
     this.nodesmap = new Map<string, NodeModel>();
     this.arrowlinks = [];
+    this.idDefault = 0;
+    this.usedIds = new Set<number>();
 
     // Use secure XML parser to prevent XXE attacks
     const freemindDoc = SecureXmlParser.parseSecureXml(this.freemindInput);
@@ -370,17 +375,19 @@ export default class FreemindImporter extends Importer {
 
   private getIdNode(node: FreemindNode): number {
     const id = node.getId();
-    // FreeMind ids look like ID_1234. Ids that do not end in a number get a generated one.
+    // FreeMind ids look like ID_1234. Ids that do not end in a number, or whose number is already
+    // used (ID_5 and Freemind_Link_5), get a generated one.
     const idNumber = id !== undefined ? parseInt(id.split('_').pop()!, 10) : NaN;
-    let idFreeToIdWise: number;
+    let idFreeToIdWise = idNumber;
 
-    if (Number.isNaN(idNumber)) {
-      this.idDefault++;
+    if (Number.isNaN(idNumber) || this.usedIds.has(idNumber)) {
+      do {
+        this.idDefault++;
+      } while (this.usedIds.has(this.idDefault));
       idFreeToIdWise = this.idDefault;
-    } else {
-      idFreeToIdWise = idNumber;
     }
 
+    this.usedIds.add(idFreeToIdWise);
     return idFreeToIdWise;
   }
 
