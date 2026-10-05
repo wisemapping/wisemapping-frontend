@@ -707,6 +707,9 @@ const iconMapping: { component: React.ComponentType; name: string; category: str
   { component: PhotoCameraFront, name: 'photo-camera-front', category: 'Technology' },
 ];
 
+/** The name of every icon the picker offers: mindplot must be able to draw each one. */
+export const PICKER_ICON_NAMES: readonly string[] = iconMapping.map((icon) => icon.name);
+
 interface ImageIconTabProps {
   iconModel: NodeProperty<string | undefined>;
   emojiModel: NodeProperty<string | undefined>;

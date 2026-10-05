@@ -16,145 +16,37 @@
  *   limitations under the License.
  */
 
-import fs from 'fs';
-import path from 'path';
+import {
+  BRAND_ICON_PATHS,
+  GALLERY_ICON_NAMES,
+  MATERIAL_ICON_CODEPOINTS,
+} from '../../src/components/GalleryIconData';
 
+// That every icon of the editor's image picker is in these tables is checked by the editor
+// (test/unit/image-picker/picker-icon-names.test.ts). The codepoints are checked against the
+// font by features/material-icon-codepoints.test.ts.
 describe('Icon Mapping Validation', () => {
-  const materialIconsMapping: { [key: string]: string } = {};
-  const iconPickerIcons: string[] = [];
+  test('lists the gallery icons', () => {
+    expect(GALLERY_ICON_NAMES.length).toBeGreaterThan(100);
+  });
 
-  beforeAll(() => {
-    // Read and parse ImageSVGFeature.ts to extract Material Icons mapping
-    const imageSVGFeaturePath = path.join(__dirname, '../../src/components/ImageSVGFeature.ts');
-    const imageSVGFeatureContent = fs.readFileSync(imageSVGFeaturePath, 'utf8');
+  test('draws each icon one way: a font glyph or a brand path', () => {
+    expect(
+      Object.keys(BRAND_ICON_PATHS).filter((name) => name in MATERIAL_ICON_CODEPOINTS),
+    ).toEqual([]);
+    expect(new Set(GALLERY_ICON_NAMES).size).toBe(GALLERY_ICON_NAMES.length);
+  });
 
-    // Extract the module-level codepoint table
-    const materialIconsMatch = imageSVGFeatureContent.match(
-      /const MATERIAL_ICON_CODEPOINTS: \{ readonly \[key: string\]: string \} = \{([\s\S]*?)\n\};/,
+  test('every codepoint is a single character', () => {
+    const invalid = Object.entries(MATERIAL_ICON_CODEPOINTS).filter(
+      ([, codepoint]) => [...codepoint].length !== 1,
     );
-
-    if (materialIconsMatch) {
-      const mappingContent = materialIconsMatch[1];
-      // Parse each icon mapping line
-      const iconMappingRegex = /(\w+|-\w+|'[\w-]+'): '\\u[0-9a-f]{4}'/g;
-      Array.from(mappingContent.matchAll(iconMappingRegex)).forEach((match) => {
-        const iconName = match[1].replace(/'/g, ''); // Remove quotes if present
-        materialIconsMapping[iconName] = 'mapped';
-      });
-    }
-
-    // The brand icons the font does not have are drawn from a path instead (BL5-123)
-    const brandIconsMatch = imageSVGFeatureContent.match(
-      /const BRAND_ICON_PATHS: \{ readonly \[key: string\]: string \} = \{([\s\S]*?)\n\};/,
-    );
-    if (brandIconsMatch) {
-      Array.from(brandIconsMatch[1].matchAll(/^ {2}(\w+):/gm)).forEach((match) => {
-        materialIconsMapping[match[1]] = 'path';
-      });
-    }
-
-    // Read and parse image-icon-tab/index.tsx to extract icon names
-    const iconTabPath = path.join(
-      __dirname,
-      '../../../editor/src/components/action-widget/pane/topic-image-picker/image-icon-tab/index.tsx',
-    );
-    const iconTabContent = fs.readFileSync(iconTabPath, 'utf8');
-
-    // Extract all icon names from the iconMapping array
-    const iconNameRegex = /name: '([\w-]+)'/g;
-    Array.from(iconTabContent.matchAll(iconNameRegex)).forEach((iconMatch) => {
-      const iconName = iconMatch[1];
-      if (!iconPickerIcons.includes(iconName)) {
-        iconPickerIcons.push(iconName);
-      }
-    });
-  });
-
-  test('should have Material Icons Unicode mapping for all icon picker icons', () => {
-    const missingMappings: string[] = [];
-
-    iconPickerIcons.forEach((iconName) => {
-      if (!materialIconsMapping[iconName]) {
-        missingMappings.push(iconName);
-      }
-    });
-
-    if (missingMappings.length > 0) {
-      console.error('\n❌ Missing Material Icons Unicode mappings:');
-      missingMappings.forEach((icon) => {
-        console.error(`  - ${icon}`);
-      });
-      console.error('\nPlease add these icons to the materialIcons object in ImageSVGFeature.ts');
-    }
-
-    expect(missingMappings).toEqual([]);
-  });
-
-  test('should have extracted icon mappings from ImageSVGFeature.ts', () => {
-    expect(Object.keys(materialIconsMapping).length).toBeGreaterThan(100);
-  });
-
-  test('should have extracted icon names from icon picker', () => {
-    expect(iconPickerIcons.length).toBeGreaterThan(100);
-  });
-
-  test('all icons should have valid Unicode codepoints format', () => {
-    const imageSVGFeaturePath = path.join(__dirname, '../../src/components/ImageSVGFeature.ts');
-    const imageSVGFeatureContent = fs.readFileSync(imageSVGFeaturePath, 'utf8');
-
-    // Check that all Unicode codepoints follow the correct format
-    const invalidCodepoints: string[] = [];
-    const codepointRegex = /([\w-]+|'[\w-]+'): '(\\u[0-9a-f]{4})'/g;
-    Array.from(imageSVGFeatureContent.matchAll(codepointRegex)).forEach((match) => {
-      const iconName = match[1].replace(/'/g, '');
-      const codepoint = match[2];
-
-      // Validate codepoint format
-      if (!/^\\u[0-9a-f]{4}$/i.test(codepoint)) {
-        invalidCodepoints.push(`${iconName}: ${codepoint}`);
-      }
-    });
-
-    if (invalidCodepoints.length > 0) {
-      console.error('\n❌ Invalid Unicode codepoints:');
-      invalidCodepoints.forEach((item) => {
-        console.error(`  - ${item}`);
-      });
-    }
-
-    expect(invalidCodepoints).toEqual([]);
-  });
-
-  test('should not have duplicate icon mappings', () => {
-    const imageSVGFeaturePath = path.join(__dirname, '../../src/components/ImageSVGFeature.ts');
-    const imageSVGFeatureContent = fs.readFileSync(imageSVGFeaturePath, 'utf8');
-
-    const iconNames: string[] = [];
-    const duplicates: string[] = [];
-    const iconNameRegex = /([\w-]+|'[\w-]+'): '\\u[0-9a-f]{4}'/g;
-    Array.from(imageSVGFeatureContent.matchAll(iconNameRegex)).forEach((match) => {
-      const iconName = match[1].replace(/'/g, '');
-      if (iconNames.includes(iconName)) {
-        duplicates.push(iconName);
-      } else {
-        iconNames.push(iconName);
-      }
-    });
-
-    if (duplicates.length > 0) {
-      console.error('\n❌ Duplicate icon mappings found:');
-      duplicates.forEach((icon) => {
-        console.error(`  - ${icon}`);
-      });
-    }
-
-    expect(duplicates).toEqual([]);
+    expect(invalid).toEqual([]);
   });
 
   test('flash icon should be mapped (regression test)', () => {
-    // This is a specific test for the bug we just fixed
-    expect(materialIconsMapping.flash).toBeDefined();
-    expect(materialIconsMapping['flash-on']).toBeDefined();
+    expect(GALLERY_ICON_NAMES).toContain('flash');
+    expect(GALLERY_ICON_NAMES).toContain('flash-on');
   });
 
   test('common Material UI icons should be mapped', () => {
@@ -169,16 +61,6 @@ describe('Icon Mapping Validation', () => {
       'warning',
       'error',
     ];
-
-    const missing = commonIcons.filter((icon) => !materialIconsMapping[icon]);
-
-    if (missing.length > 0) {
-      console.error('\n❌ Missing common Material UI icons:');
-      missing.forEach((icon) => {
-        console.error(`  - ${icon}`);
-      });
-    }
-
-    expect(missing).toEqual([]);
+    expect(commonIcons.filter((icon) => !GALLERY_ICON_NAMES.includes(icon))).toEqual([]);
   });
 });

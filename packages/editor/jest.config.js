@@ -39,6 +39,12 @@ const config = {
   },
   moduleNameMapper: {
     '^react-ga4$': '<rootDir>/test/mocks/react-ga4.js',
+    // The workspace sources, as tsconfig resolves them, rather than a dist built earlier: a test
+    // must see the mindplot it is checked against.
+    '^@wisemapping/mindplot$': '<rootDir>/../mindplot/src/index.ts',
+    '^@wisemapping/web2d$': '<rootDir>/../web2d/src/index.ts',
+    // Uses Vite's import.meta.glob, which ts-jest can not compile: list the icons from disk.
+    '/SvgIconAssets$': '<rootDir>/../mindplot/test/unit/__mocks__/SvgIconAssets.ts',
     // Before the transform below gets a chance: assets resolve to a placeholder
     // path rather than jest-transform-stub's empty string, which React rejects
     // when it lands on an <img src>.
