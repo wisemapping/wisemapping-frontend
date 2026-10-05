@@ -22,12 +22,13 @@ import ElementPeer from './ElementPeer';
 import SizeType from '../../SizeType';
 import PositionType from '../../PositionType';
 
+// A no-break space: unlike a plain space it is never collapsed, so an empty line keeps its height.
+const EMPTY_LINE = '\u00A0';
+
 class TextPeer extends ElementPeer {
   private _position: { x: number; y: number };
 
   private _font: FontPeer;
-
-  private _textAlign: string;
 
   private _text: string;
 
@@ -37,19 +38,10 @@ class TextPeer extends ElementPeer {
     this._position = { x: 0, y: 0 };
     this._font = fontPeer;
     this._text = '';
-    this._textAlign = 'left';
   }
 
   append(element: ElementPeer): void {
     this._native.appendChild(element._native);
-  }
-
-  setTextAlignment(align: string): void {
-    this._textAlign = align;
-  }
-
-  getTextAlignment(): 'left' | 'right' | 'center' {
-    return this._textAlign ? (this._textAlign as 'left' | 'right' | 'center') : 'left';
   }
 
   setText(text: string) {
@@ -67,30 +59,16 @@ class TextPeer extends ElementPeer {
       tspan.setAttribute('dy', '1em');
       tspan.setAttribute('x', this.getPosition().x.toFixed(1));
 
-      // Add new line ...
-      tspan.textContent = l || ' ';
+      // An empty line still needs a glyph to take its height: a plain space is collapsed when it
+      // is leading or trailing (default xml:space), which dropped a trailing empty line.
+      tspan.textContent = l || EMPTY_LINE;
       this._native.appendChild(tspan);
     });
   }
 
+  /** The text split on LF, CRLF or CR. A trailing line break adds an empty last line. */
   getTextLines(): string[] {
-    const result: string[] = [];
-    if (this._text) {
-      const text = this._text;
-      let line = '';
-      let i = 0;
-      do {
-        const c = text[i];
-        if (c === '\n' || i === text.length) {
-          result.push(line);
-          line = '';
-        } else {
-          line += c;
-        }
-        i += 1;
-      } while (i < text.length + 1);
-    }
-    return result;
+    return this._text ? this._text.split(/\r\n|\r|\n/) : [];
   }
 
   getText(): string {
@@ -117,14 +95,15 @@ class TextPeer extends ElementPeer {
   }
 
   setFont(fontName: string, size: number, style: string, weight: string): void {
+    // Empty arguments keep the current value.
     if (fontName) {
-      this._font = new FontPeer(fontName);
+      this._font = this._font.withFontName(fontName);
     }
 
     if (style) {
       this._font.setStyle(style);
     }
-    if ($defined(weight)) {
+    if (weight) {
       this._font.setWeight(weight);
     }
     if ($defined(size)) {
@@ -164,11 +143,7 @@ class TextPeer extends ElementPeer {
   }
 
   setFontName(fontName: string): void {
-    const oldFont = this._font;
-    this._font = new FontPeer(fontName);
-    this._font.setSize(oldFont.getSize());
-    this._font.setStyle(oldFont.getStyle());
-    this._font.setWeight(oldFont.getWeight());
+    this._font = this._font.withFontName(fontName);
     this.updateFontStyle();
   }
 
@@ -190,12 +165,23 @@ class TextPeer extends ElementPeer {
   }
 
   getShapeWidth(): number {
-    const result = (this._native as SVGGraphicsElement).getBBox().width;
-    return result;
+    return this.measure().width;
   }
 
   getShapeHeight(): number {
-    return (this._native as SVGGraphicsElement).getBBox().height;
+    return this.measure().height;
+  }
+
+  /**
+   * The text bounding box. Measuring a detached or undisplayed node throws in some browsers (older
+   * Firefox) and gives zeros in others, so a failure counts as an empty box.
+   */
+  private measure(): { width: number; height: number } {
+    try {
+      return (this._native as SVGGraphicsElement).getBBox();
+    } catch {
+      return { width: 0, height: 0 };
+    }
   }
 
   getHtmlFontSize(scale: SizeType): string {

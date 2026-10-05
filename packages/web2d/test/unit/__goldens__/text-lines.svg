@@ -9,15 +9,15 @@
   </text>
   <text fill="#222222" font-family="Arial" font-size="13.4" font-style="normal" font-weight="600" x="20" y="180">
     <tspan dy="1em" x="20">Before empty</tspan>
-    <tspan dy="1em" x="20"> </tspan>
+    <tspan dy="1em" x="20"> </tspan>
     <tspan dy="1em" x="20">After empty</tspan>
   </text>
   <text fill="#222222" font-family="Arial" font-size="13.4" font-style="normal" font-weight="600" x="20" y="260">
     <tspan dy="1em" x="20">Trailing newline</tspan>
-    <tspan dy="1em" x="20"> </tspan>
+    <tspan dy="1em" x="20"> </tspan>
   </text>
   <text fill="#222222" font-family="Arial" font-size="13.4" font-style="normal" font-weight="600" x="20" y="340">
-    <tspan dy="1em" x="20">CRLF 1&#13;</tspan>
+    <tspan dy="1em" x="20">CRLF 1</tspan>
     <tspan dy="1em" x="20">CRLF 2</tspan>
   </text>
 </svg>

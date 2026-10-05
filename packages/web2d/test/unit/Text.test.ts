@@ -19,7 +19,7 @@ import Text from '../../src/components/Text';
 import Workspace from '../../src/components/Workspace';
 import Group from '../../src/components/Group';
 import TextPeer from '../../src/components/peer/svg/TextPeer';
-import FontPeer from '../../src/components/peer/svg/FontPeer';
+import FontPeer, { FONT_PT_TO_PX } from '../../src/components/peer/svg/FontPeer';
 import RectPeer from '../../src/components/peer/svg/RectPeer';
 import TransformUtil from '../../src/components/peer/utils/TransformUtils';
 import { CHAR_WIDTH_RATIO, LINE_HEIGHT_RATIO } from '../setup';
@@ -42,23 +42,39 @@ describe('TextPeer lines', () => {
     expect(tspans(text)).toHaveLength(0);
   });
 
-  it('characterization: empty lines become a single-space tspan', () => {
+  // Section 3.5: a plain ' ' is collapsed when leading or trailing (default xml:space), so a
+  // trailing empty line was dropped and getFontHeight (bbox height / lines) came out too small.
+  it('empty lines become a no-break-space tspan, which is never collapsed', () => {
     const text = new Text();
-    text.setText('a\n\nb');
-    expect(tspans(text).map((t) => t.textContent)).toEqual(['a', ' ', 'b']);
+    text.setText('\na\n\nb\n');
+    expect(tspans(text).map((t) => t.textContent)).toEqual([
+      '\u00A0',
+      'a',
+      '\u00A0',
+      'b',
+      '\u00A0',
+    ]);
   });
 
-  it('characterization: a trailing newline adds an empty line', () => {
+  it('a trailing newline adds an empty line that is measured', () => {
     const text = new Text();
+    text.setFont('Arial', 10, 'normal', 'normal');
     text.setText('a\n');
     expect(text.peer.getTextLines()).toEqual(['a', '']);
+    expect(text.getShapeHeight()).toBeCloseTo(2 * 13.4 * LINE_HEIGHT_RATIO);
   });
 
-  // Section 3.5: getTextLines keeps \r from CRLF text.
-  it.failing('splits CRLF text without keeping \\r', () => {
+  // Section 3.5: getTextLines kept \r from CRLF text.
+  it('splits CRLF text without keeping \\r', () => {
     const text = new Text();
     text.setText('a\r\nb');
     expect(text.peer.getTextLines()).toEqual(['a', 'b']);
+  });
+
+  it('splits on a lone CR', () => {
+    const text = new Text();
+    text.setText('a\rb\r\n\nc');
+    expect(text.peer.getTextLines()).toEqual(['a', 'b', '', 'c']);
   });
 
   it('every tspan starts a new line at the text x', () => {
@@ -138,21 +154,30 @@ describe('TextPeer fonts', () => {
     });
   });
 
-  // Section 3.5: setFont(name, ...) rebuilds the FontPeer, so empty arguments reset to defaults.
-  it.failing('setFont with only a name keeps size, style and weight', () => {
+  // Section 3.5: setFont(name, ...) rebuilt the FontPeer, so empty arguments reset to defaults.
+  it('setFont with only a name keeps size, style and weight', () => {
     const text = new Text();
     text.setFont('Arial', 20, 'italic', 'bold');
     text.setFont('Tahoma', undefined as unknown as number, '', undefined as unknown as string);
-    expect(text.peer._native.getAttribute('font-size')).toBe('26.9');
-    expect(text.peer._native.getAttribute('font-style')).toBe('italic');
+    const node = text.peer._native;
+    expect(node.getAttribute('font-family')).toBe('Tahoma');
+    expect(node.getAttribute('font-size')).toBe('26.9');
+    expect(node.getAttribute('font-style')).toBe('italic');
+    expect(node.getAttribute('font-weight')).toBe('900');
   });
 
-  it('stores the alignment', () => {
+  it('setFont with an empty weight keeps the weight', () => {
     const text = new Text();
-    expect(text.peer.getTextAlignment()).toBe('left');
-    text.setTextAlignment('center');
-    expect(text.peer.getTextAlignment()).toBe('center');
-    expect(() => text.setTextAlignment('')).toThrow();
+    text.setFont('Arial', 10, 'normal', 'bold');
+    text.setFont('', 12, '', '');
+    expect(text.peer._native.getAttribute('font-family')).toBe('Arial');
+    expect(text.peer._native.getAttribute('font-weight')).toBe('900');
+  });
+
+  // Section 3.5: setTextAlignment was stored but never rendered, and nothing called it.
+  it('has no text alignment API', () => {
+    expect('setTextAlignment' in new Text()).toBe(false);
+    expect('getTextAlignment' in new Text().peer).toBe(false);
   });
 });
 
@@ -169,16 +194,30 @@ describe('FontPeer', () => {
     expect(font.getSize()).toBe(12);
   });
 
-  it('graph size is pt × 43/32 and HTML size is pt × scale × 42/32', () => {
+  // The rendered weight is heavier on purpose (e4e0602b); the semantic value is kept internally.
+  it('withFontName keeps size, style and the semantic weight', () => {
     const font = new FontPeer('Arial');
-    font.setSize(10);
-    expect(font.getGraphSize()).toBe('13.4');
-    expect(font.getHtmlSize({ width: 1, height: 1 })).toBe('13');
-    expect(font.getHtmlSize({ width: 2, height: 2 })).toBe('26');
+    font.init({ size: 12, style: 'italic', weight: 'bold' });
+    const copy = font.withFontName('Tahoma');
+    expect(copy.getFontName()).toBe('Tahoma');
+    expect(copy.getSize()).toBe(12);
+    expect(copy.getStyle()).toBe('italic');
+    expect(copy.getWeight()).toBe('900');
+    copy.setSize(20);
+    expect(font.getSize()).toBe(12);
   });
 
-  // Section 3.5: the editor uses 42/32 and the canvas 43/32, so editor text is about 3 % smaller.
-  it.failing('HTML and SVG font sizes use the same pt to px ratio', () => {
+  it('graph size is pt × 43/32 and HTML size is the graph size × scale', () => {
+    const font = new FontPeer('Arial');
+    font.setSize(10);
+    expect(FONT_PT_TO_PX).toBe(43 / 32);
+    expect(font.getGraphSize()).toBe('13.4');
+    expect(font.getHtmlSize({ width: 1, height: 1 })).toBe('13.4');
+    expect(font.getHtmlSize({ width: 2, height: 2 })).toBe('26.8');
+  });
+
+  // Section 3.5: the editor used 42/32 and the canvas 43/32, so editor text was about 3 % smaller.
+  it('HTML and SVG font sizes use the same pt to px ratio', () => {
     const font = new FontPeer('Arial');
     font.setSize(30);
     expect(Number(font.getHtmlSize({ width: 1, height: 1 }))).toBeCloseTo(
@@ -206,11 +245,23 @@ describe('Text measurement (fake getBBox)', () => {
     expect(measured().getFontHeight()).toBeCloseTo(13.4 * LINE_HEIGHT_RATIO);
   });
 
-  // Section 3.5: getFontHeight = bboxHeight / lines gives NaN for ''.
-  it.failing('getFontHeight of an empty text is a number', () => {
+  // Section 3.5: getFontHeight = bboxHeight / lines gave NaN for ''.
+  it('getFontHeight of an empty text is a number', () => {
     const text = new Text();
     text.setText('');
-    expect(Number.isNaN(text.getFontHeight())).toBe(false);
+    expect(text.getFontHeight()).toBe(0);
+  });
+
+  // Section 3.5: getBBox throws on a detached or undisplayed node in some browsers.
+  it('a getBBox failure measures as an empty box', () => {
+    const text = new Text();
+    text.setText('abc');
+    (text.peer._native as unknown as { getBBox: () => DOMRect }).getBBox = () => {
+      throw new Error('NS_ERROR_FAILURE');
+    };
+    expect(text.getShapeWidth()).toBe(0);
+    expect(text.getShapeHeight()).toBe(0);
+    expect(text.getFontHeight()).toBe(0);
   });
 });
 
@@ -222,7 +273,7 @@ describe('Text HTML font size (TransformUtil)', () => {
     const text = new Text();
     workspace.append(text);
     text.setFontSize(10);
-    expect(text.getHtmlFontSize()).toBe('26');
+    expect(text.getHtmlFontSize()).toBe('26.8');
   });
 
   it('multiplies the scale of nested groups', () => {
@@ -236,7 +287,7 @@ describe('Text HTML font size (TransformUtil)', () => {
     group.append(text);
     text.setFontSize(10);
     expect(TransformUtil.workoutScale(text.peer)).toEqual({ width: 4, height: 4 });
-    expect(text.getHtmlFontSize()).toBe('53');
+    expect(text.getHtmlFontSize()).toBe('53.6');
   });
 
   it('a detached text has scale 1', () => {
@@ -250,23 +301,46 @@ describe('Text HTML font size (TransformUtil)', () => {
     expect(() => TransformUtil.workoutScale(peer)).toThrow('Not supported element');
   });
 
-  // W-HTMLFONT: the scale comes from the workspace peer's _size, set once. mindplot's Canvas
-  // writes the SVG width/height directly on resize, so the editor font is scaled by H0/H1.
-  it.failing('W-HTMLFONT: the HTML font size is right after the SVG is resized', () => {
+  // W-HTMLFONT: the scale came from the workspace peer's _size, set once. mindplot's Canvas
+  // wrote the SVG width/height directly on resize, so the editor font was scaled by H0/H1.
+  it('W-HTMLFONT: the HTML font size is right after the SVG is resized', () => {
     const workspace = new Workspace();
     workspace.setSize('800px', '800px');
     workspace.setCoordSize(800, 800);
     const text = new Text();
     workspace.append(text);
     text.setFontSize(10);
-    expect(text.getHtmlFontSize()).toBe('13');
+    expect(text.getHtmlFontSize()).toBe('13.4');
 
-    // What mindplot's Canvas.setZoom does after the container shrinks to 400 px (zoom 1).
+    // What mindplot's Canvas.setZoom did after the container shrinks to 400 px (zoom 1).
     const svg = workspace.getSVGElement();
     svg.setAttribute('width', '400');
     svg.setAttribute('height', '400');
     workspace.setCoordSize(400, 400);
-    expect(text.getHtmlFontSize()).toBe('13');
+    expect(text.getHtmlFontSize()).toBe('13.4');
+  });
+
+  it('W-HTMLFONT: the HTML font size follows Workspace.setSize and the zoom', () => {
+    const workspace = new Workspace();
+    workspace.setSize('800px', '800px');
+    workspace.setCoordSize(800, 800);
+    const text = new Text();
+    workspace.append(text);
+    text.setFontSize(10);
+    workspace.setSize('400px', '400px');
+    workspace.setCoordSize(800, 800); // zoom 2: the coordinates are twice the pixels.
+    expect(text.getHtmlFontSize()).toBe('6.7');
+  });
+
+  it('a workspace SVG without a width or height uses the peer size', () => {
+    const workspace = new Workspace();
+    workspace.setSize('400px', '400px');
+    workspace.setCoordSize(200, 200);
+    const text = new Text();
+    workspace.append(text);
+    workspace.getSVGElement().removeAttribute('width');
+    workspace.getSVGElement().removeAttribute('height');
+    expect(TransformUtil.workoutScale(text.peer)).toEqual({ width: 2, height: 2 });
   });
 });
 

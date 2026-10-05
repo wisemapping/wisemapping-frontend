@@ -340,7 +340,7 @@ const SCENARIOS: Record<string, Scenario> = {
       ['Tahoma 20 bold italic', (t) => t.setFont('Tahoma', 20, 'italic', 'bold')],
       ['Coloured', (t) => t.setColor('#cc3333')],
     ]),
-  // W-HTMLFONT context: the SVG after a container resize written directly, as mindplot does.
+  // W-HTMLFONT context: the SVG after a container resize written directly, as mindplot did.
   'text-resized-workspace': () => {
     const workspace = new Workspace();
     workspace.setSize('800px', '800px');
