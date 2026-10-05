@@ -39,7 +39,7 @@ class Rect extends WorkspaceElement<RectPeer> {
       throw new Error('Arc must be 0<=arc<=1');
     }
     const peer = new RectPeer(arc);
-    const defaultAttributes = {
+    const defaultAttributes: ShapeAttributes = {
       width: 40,
       height: 40,
       x: 5,

@@ -25,6 +25,7 @@ import {
   sizeArguments,
   toLength,
   toNumber,
+  toStrokeStyle,
   toText,
   type AttributeArguments,
   type AttributeSetter,
@@ -69,7 +70,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
       case 'stroke':
         this.setStroke(
           toLength(args[0]) ?? null,
-          toText(args[1]),
+          toStrokeStyle(args[1]),
           toText(args[2]),
           toNumber(args[3]),
         );
@@ -208,7 +209,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   override setStroke(
     width: number | string | null,
-    style?: string,
+    style?: StrokeStyle | null,
     color?: string,
     _opacity?: number,
   ): void {

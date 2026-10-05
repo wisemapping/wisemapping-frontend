@@ -26,7 +26,7 @@ import type { ElementType, Orientation, PolyLineStyle } from './types';
 class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
   constructor(attributes?: ElementAttributes) {
     const peer = new PolyLinePeer();
-    const defaultAttributes = {
+    const defaultAttributes: ElementAttributes = {
       strokeColor: 'blue',
       strokeWidth: 1,
       strokeStyle: 'solid',

@@ -30,7 +30,7 @@ import type { ElementType } from './types';
 class Ellipse extends WorkspaceElement<ElipsePeer> {
   constructor(attributes?: ShapeAttributes) {
     const peer = new ElipsePeer();
-    const defaultAttributes = {
+    const defaultAttributes: ShapeAttributes = {
       width: 40,
       height: 40,
       x: 5,

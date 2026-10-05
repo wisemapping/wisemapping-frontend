@@ -27,11 +27,12 @@ import type StyleAttributes from './StyleAttributes';
 import {
   collectAttributeCalls,
   toNumber,
+  toStrokeStyle,
   toText,
   type AttributeArguments,
   type AttributeSetter,
 } from './StyleAttributes';
-import { isStrokeStyle, type ElementType } from './types';
+import { isStrokeStyle, type ElementType, type StrokeStyle } from './types';
 
 /**
  * A listener of the `type` event of an element: it gets the typed event (see ElementEvent) and,
@@ -75,7 +76,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
       case 'stroke':
         this.setStroke(
           toNumber(args[0]) ?? null,
-          toText(args[1]),
+          toStrokeStyle(args[1]),
           toText(args[2]),
           toNumber(args[3]),
         );
@@ -178,7 +179,12 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
    *  color: stroke color
    *  opacity: stroke visibility
    */
-  setStroke(width: number | null, style?: string, color?: string, opacity?: number): void {
+  setStroke(
+    width: number | null,
+    style?: StrokeStyle | null,
+    color?: string,
+    opacity?: number,
+  ): void {
     // Checked at run time too: JavaScript callers and attribute strings are not type checked.
     if (style != null && !isStrokeStyle(style)) {
       throw new Error(`Unsupported stroke style: '${style}'`);

@@ -27,7 +27,7 @@ import type { ElementType } from './types';
 class NeuronLine extends WorkspaceElement<NeuronLinePeer> implements Line {
   constructor(attributes?: ElementAttributes) {
     const peer = new NeuronLinePeer();
-    const defaultAttributes = {
+    const defaultAttributes: ElementAttributes = {
       strokeColor: '#9cf7ff',
       strokeWidth: 3,
       strokeStyle: 'solid',

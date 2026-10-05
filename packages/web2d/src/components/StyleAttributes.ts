@@ -18,6 +18,7 @@
 
 import type PositionType from './PositionType';
 import type SizeType from './SizeType';
+import { isStrokeStyle, type StrokeStyle } from './types';
 
 /*
  * The attribute bag an element constructor takes. Each key sets one argument of a setter
@@ -35,7 +36,7 @@ export type ElementAttributes = {
   /** Combined `<width> <style> <color> <opacity>`, for example '1 solid black'. */
   stroke?: string;
   strokeWidth?: number;
-  strokeStyle?: string;
+  strokeStyle?: StrokeStyle;
   strokeColor?: string;
   strokeOpacity?: number;
   /** Combined `<color> <opacity>`, for example 'none 0'. */
@@ -175,6 +176,14 @@ export const toNumber = (value: AttributeValue | undefined): number | undefined 
 /** A text argument (a color or a style). */
 export const toText = (value: AttributeValue | undefined): string | undefined =>
   value === undefined ? undefined : String(value);
+
+/** A stroke style argument. A value that is not a stroke style throws. */
+export const toStrokeStyle = (value: AttributeValue | undefined): StrokeStyle | undefined => {
+  if (value === undefined || isStrokeStyle(value)) {
+    return value;
+  }
+  throw new Error(`Unsupported stroke style: '${value}'`);
+};
 
 /** A length that may be a number or a CSS length ('400px'), kept as given. */
 export const toLength = (value: AttributeValue | undefined): number | string | undefined =>

@@ -17,7 +17,7 @@
  */
 
 import { CurvedLine, PolyLine, HeartbeatLine, NeuronLine } from '@wisemapping/web2d';
-import type { Line } from '@wisemapping/web2d';
+import type { Line, StrokeStyle } from '@wisemapping/web2d';
 import Canvas from './Canvas';
 
 export enum LineType {
@@ -119,7 +119,7 @@ abstract class BaseConnectionLine {
 
   abstract redraw(): void;
 
-  setStroke(color: string, style: string, opacity: number): void {
+  setStroke(color: string, style: StrokeStyle, opacity: number): void {
     this._line.setStroke(1, style, color, opacity);
     this._color = color;
   }

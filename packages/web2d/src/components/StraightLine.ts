@@ -26,7 +26,11 @@ import type { ElementType } from './types';
 class StraightLine extends WorkspaceElement<StraightLinePeer> implements Line {
   constructor(attributes?: ElementAttributes) {
     const peer = new StraightLinePeer();
-    const defaultAttributes = { strokeColor: '#495879', strokeWidth: 1, strokeOpacity: 1 };
+    const defaultAttributes: ElementAttributes = {
+      strokeColor: '#495879',
+      strokeWidth: 1,
+      strokeOpacity: 1,
+    };
 
     const mergedAttr = { ...defaultAttributes, ...attributes };
     super(peer, mergedAttr);

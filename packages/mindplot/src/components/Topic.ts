@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { Text, Group, ElementClass, ElementPeer, Rect } from '@wisemapping/web2d';
+import type { StrokeStyle } from '@wisemapping/web2d';
 import { $assert, $defined } from './util/assert';
 import isMacPlatform from './util/platform';
 
@@ -1632,7 +1633,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  private getStrokeStyle(borderStyle: string | null): string | null {
+  private getStrokeStyle(borderStyle: string | null): StrokeStyle | null {
     if (!borderStyle) return null;
 
     switch (borderStyle) {

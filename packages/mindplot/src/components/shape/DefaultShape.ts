@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { ElementClass, ElementPeer, Group } from '@wisemapping/web2d';
+import type { StrokeStyle } from '@wisemapping/web2d';
 import { TopicShapeType } from '../model/INodeModel';
 import SizeType from '../SizeType';
 import TopicShape from './TopicShape';
@@ -34,7 +35,7 @@ abstract class DefaultTopicShape<T extends ElementClass<ElementPeer>> implements
     return this._type;
   }
 
-  setStroke(width: number | null, style: string, color: string): void {
+  setStroke(width: number | null, style: StrokeStyle | null, color: string): void {
     this._shape.setStroke(width, style, color);
   }
 

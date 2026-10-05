@@ -27,7 +27,7 @@ import type { ElementType } from './types';
 class HeartbeatLine extends WorkspaceElement<HeartbeatLinePeer> implements Line {
   constructor(attributes?: ElementAttributes) {
     const peer = new HeartbeatLinePeer();
-    const defaultAttributes = {
+    const defaultAttributes: ElementAttributes = {
       strokeColor: '#ff3366',
       strokeWidth: 3,
       strokeStyle: 'solid',

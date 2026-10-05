@@ -26,7 +26,7 @@ import type { ElementType } from './types';
 class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements ControlPointLine {
   constructor(attributes?: ElementAttributes) {
     const peer = new CurvedLinePeer();
-    const defaultAttributes = {
+    const defaultAttributes: ElementAttributes = {
       strokeColor: 'blue',
       strokeWidth: 1,
       strokeStyle: 'solid',

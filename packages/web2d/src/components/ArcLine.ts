@@ -26,7 +26,7 @@ import type { ElementType, Orientation } from './types';
 class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
   constructor(attributes?: ElementAttributes) {
     const peer = new ArcLinePeer();
-    const defaultAttributes = {
+    const defaultAttributes: ElementAttributes = {
       strokeColor: 'blue',
       strokeWidth: 1,
       strokeStyle: 'solid',

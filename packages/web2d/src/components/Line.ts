@@ -18,7 +18,7 @@
 import type WorkspaceElement from './WorkspaceElement';
 import type ElementPeer from './peer/svg/ElementPeer';
 import type PositionType from './PositionType';
-import type { ElementType } from './types';
+import type { ElementType, StrokeStyle } from './types';
 
 /**
  * A line between two points, as mindplot draws connections: its ends, stroke, fill, visibility,
@@ -38,7 +38,7 @@ interface Line {
 
   setCursor(value: string): void;
 
-  setStroke(width: number, style?: string, color?: string, opacity?: number): void;
+  setStroke(width: number, style?: StrokeStyle | null, color?: string, opacity?: number): void;
 
   setFill(color: string, opacity: number): void;
 

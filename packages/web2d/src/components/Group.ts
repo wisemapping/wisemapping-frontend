@@ -30,7 +30,7 @@ import {
   type GroupAttributes,
 } from './StyleAttributes';
 import type PositionType from './PositionType';
-import type { ElementType } from './types';
+import type { ElementType, StrokeStyle } from './types';
 
 /**
  * A group object can be used to collect shapes. `M` types its custom events (see CustomEventMap).
@@ -170,7 +170,7 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
   /* eslint-disable @typescript-eslint/no-unused-vars */
   override setStroke(
     _width?: number | null,
-    _style?: string,
+    _style?: StrokeStyle | null,
     _color?: string,
     _opacity?: number,
   ): void {

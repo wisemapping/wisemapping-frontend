@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { Arrow, CurvedLine } from '@wisemapping/web2d';
-import type { Line } from '@wisemapping/web2d';
+import type { Line, StrokeStyle as LineStrokeStyle } from '@wisemapping/web2d';
 import BaseConnectionLine, { LineType } from './BaseConnectionLine';
 import ArcLine from './model/ArcLine';
 import RelationshipControlPoints, { PivotType } from './RelationshipControlPoints';
@@ -142,7 +142,7 @@ class Relationship extends BaseConnectionLine {
     };
   }
 
-  setStroke(color: string, style: string, _opacity: number): void {
+  setStroke(color: string, style: LineStrokeStyle, _opacity: number): void {
     this._line.setStroke(2, style, color);
     this._startArrow?.setStrokeColor(color);
     this._endArrow?.setStrokeColor(color);
