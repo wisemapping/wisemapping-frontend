@@ -37,11 +37,9 @@ describe('package/', () => {
     const freemapPath = path.resolve(__dirname, `./input/${testName}.mm`);
     const mapContent = fs.readFileSync(freemapPath, { encoding: 'utf-8' }).toString();
 
-    // Determine the file type based on content
+    // Determine the file type based on content; FreeMind and Freeplane maps both stay 'mm'.
     let fileType = 'mm';
-    if (mapContent.includes('freeplane')) {
-      fileType = 'mm'; // Freeplane uses .mm extension
-    } else if (mapContent.includes('xmap-content')) {
+    if (mapContent.includes('xmap-content')) {
       fileType = 'xmind';
     } else if (mapContent.includes('opml')) {
       fileType = 'opml';
