@@ -25,7 +25,7 @@ import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import { StrokeStyle } from '../model/RelationshipModel';
-import { TopicShapeType } from '../model/INodeModel';
+import INodeModel, { TopicShapeType } from '../model/INodeModel';
 import ContentType from '../ContentType';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import { decodeUtf8 } from './support/Utf8Decoder';
@@ -866,6 +866,52 @@ class MindManagerImporter extends Importer {
     }
 
     mindmap.addRelationship(relationship);
+    this.addRelationshipLabels(mindmap, relationshipElement, srcTopicId, destTopicId);
+  }
+
+  /**
+   * WiseMapping relationships have no text: the labels of a relationship (its FloatingTopics) are
+   * imported as floating topics in the middle of its ends, moved by their Offset.
+   */
+  private addRelationshipLabels(
+    mindmap: Mindmap,
+    relationshipElement: Element,
+    srcTopicId: number,
+    destTopicId: number,
+  ): void {
+    const floatingTopics = this.findChildByTagName(relationshipElement, 'FloatingTopics');
+    if (!floatingTopics) {
+      return;
+    }
+    const src = MindManagerImporter.approximatePosition(mindmap.findNodeById(srcTopicId));
+    const dest = MindManagerImporter.approximatePosition(mindmap.findNodeById(destTopicId));
+    this.findChildrenByTagName(floatingTopics, 'Topic').forEach((labelElement, index) => {
+      const label = this.parseTopic(labelElement, 'Label', 0);
+      const node = this.convertTopic(mindmap, label, index, index, 1);
+      const offset = label.offset ?? { x: 0, y: 0 };
+      node.setPosition(
+        Math.round((src.x + dest.x) / 2 + offset.x * PIXELS_PER_MILLIMETER),
+        Math.round((src.y + dest.y) / 2 + offset.y * PIXELS_PER_MILLIMETER),
+      );
+      mindmap.addBranch(node);
+    });
+  }
+
+  // Where a topic is, roughly: the layout places the topics again, but the import positions of a
+  // topic and of its ancestors add up to its side and distance from the central topic.
+  private static approximatePosition(node: INodeModel | undefined): { x: number; y: number } {
+    let x = 0;
+    let y = 0;
+    for (
+      let current: INodeModel | null | undefined = node;
+      current;
+      current = current.getParent()
+    ) {
+      const position = current.getPosition();
+      x += position?.x ?? 0;
+      y += position?.y ?? 0;
+    }
+    return { x, y };
   }
 
   public import(nameMap: string, _description?: string): Promise<string> {

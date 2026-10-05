@@ -568,6 +568,42 @@ describe('MindManagerImporter relationship color and arrows', () => {
   });
 });
 
+describe('MindManagerImporter relationship labels', () => {
+  test('imports the label of a relationship as a floating topic between its ends', async () => {
+    const mindManager = `<ap:Map xmlns:ap="http://schemas.mindjet.com/MindManager/Application/2003">
+      <ap:OneTopic><ap:Topic OId="root"><ap:Text PlainText="Central"/>
+        <ap:FloatingTopics>
+          <ap:Topic OId="f1"><ap:Text PlainText="Start"/><ap:Offset CX="100." CY="0."/></ap:Topic>
+          <ap:Topic OId="f2"><ap:Text PlainText="End"/><ap:Offset CX="100." CY="50."/></ap:Topic>
+        </ap:FloatingTopics>
+      </ap:Topic></ap:OneTopic>
+      <ap:Relationships>
+        <ap:Relationship OId="r1">
+          <ap:ConnectionGroup Index="0"><ap:Connection><ap:ObjectReference OIdRef="f1"/></ap:Connection></ap:ConnectionGroup>
+          <ap:ConnectionGroup Index="1"><ap:Connection><ap:ObjectReference OIdRef="f2"/></ap:Connection></ap:ConnectionGroup>
+          <ap:FloatingTopics>
+            <ap:Topic OId="l1"><ap:Text PlainText="Label"/><ap:Offset CX="10." CY="0."/>
+              <ap:Hyperlink Url="https://example.com/label"/>
+            </ap:Topic>
+          </ap:FloatingTopics>
+        </ap:Relationship>
+      </ap:Relationships>
+    </ap:Map>`;
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    const label = findByText(mindmap, 'Label');
+    expect(mindmap.getBranches()).toContain(label);
+    expect(label.getParent()).toBeFalsy();
+    expect((label.findFeatureByType('link')[0] as LinkModel).getUrl()).toBe(
+      'https://example.com/label',
+    );
+    // The middle of Start (378, 0) and End (378, 189), moved by the Offset of the label (38, 0)
+    expect(label.getPosition()).toEqual({ x: 416, y: 95 });
+    expect(mindmap.getRelationships()).toHaveLength(1);
+  });
+});
+
 describe('MindManagerImporter default topic texts', () => {
   test('takes the text of a topic without ap:Text from the StyleGroup of its level', async () => {
     const level = (n: number, text: string) =>
