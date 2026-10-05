@@ -69,11 +69,11 @@ declare global {
 
 // Visual regression (see cypress/plugins/index.ts and the "Image-snapshot tests" section of CLAUDE.md).
 // Baselines live in cypress/snapshots/<spec>/<name>.snap.png and are rendered natively on macOS
-// (headless Chrome). A snapshot fails when more than 50 pixels differ. Two native runs differed
-// in 7 of 128 snapshots, by 1 to 21 px, all on the active MUI toggle button of an open panel; a
-// moved line, a colour change or a text change is far above the threshold.
+// (headless Chrome). A snapshot fails when more than 10 pixels differ: two native runs differed
+// in 3 of 128 snapshots, by 2 px each, so this only leaves room for isolated anti-aliasing
+// pixels; a moved line, a colour change or a text change is far above it.
 const snapshotDefaults = {
-  failureThreshold: 50,
+  failureThreshold: 10,
   failureThresholdType: 'pixel' as const,
   // Per-pixel colour distance (pixelmatch YIQ, 0..1) below which two pixels count as equal.
   // 0.01 (the jest-image-snapshot default) flags a darker shade of the same hue; 0.1 does not.
@@ -88,7 +88,8 @@ const snapshotDefaults = {
 addMatchImageSnapshotCommand(snapshotDefaults);
 
 const FREEZE_STYLE_ID = 'cypress-visual-freeze';
-// Hover tooltips open after a timer, so whether one is on screen at capture time is a race.
+// Hover tooltips open after a timer, so whether one is on screen at capture time is a race. The
+// ripple of the last click is frozen mid-animation, at a size that differs from run to run.
 const FREEZE_CSS = `*, *::before, *::after {
   transition: none !important;
   animation: none !important;
@@ -97,6 +98,9 @@ const FREEZE_CSS = `*, *::before, *::after {
 }
 .MuiTooltip-popper {
   visibility: hidden !important;
+}
+.MuiTouchRipple-root {
+  display: none !important;
 }`;
 
 // Signature of the rendered page: the markup, including open shadow roots (the mindplot

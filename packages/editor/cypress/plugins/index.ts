@@ -56,6 +56,16 @@ const visualSnapshotExpose = (): Record<string, string | boolean> => {
  */
 module.exports = (on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) => {
   addMatchImageSnapshotPlugin(on);
+  // Headless Chrome opens a 1280x720 window, too small for the 1000x660 viewport and the Cypress
+  // runner around it: Cypress then shrinks the page to 1000x633 while it takes a screenshot, and
+  // the resize lands in the middle of the capture (the mindplot canvas re-centres). A bigger
+  // window keeps the viewport as configured.
+  on('before:browser:launch', (browser, launchOptions) => {
+    if (browser.family === 'chromium' && browser.isHeadless) {
+      launchOptions.args.push('--window-size=1600,1200');
+    }
+    return launchOptions;
+  });
   return config;
 };
 module.exports.visualSnapshotExpose = visualSnapshotExpose;
