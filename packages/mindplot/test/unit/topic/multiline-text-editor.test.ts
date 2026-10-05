@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import ActionDispatcher from '../../../src/components/ActionDispatcher';
+import ActionDispatcher, { CommandDispatcher } from '../../../src/components/ActionDispatcher';
 import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import Topic from '../../../src/components/Topic';
 import type Designer from '../../../src/components/Designer';
@@ -70,7 +70,7 @@ beforeEach(() => {
     getCommandContext: () => ({
       designer: { getModel: () => ({ getTopics: () => topics }) },
     }),
-  } as unknown as ActionDispatcher);
+  } as unknown as CommandDispatcher);
 });
 
 afterEach(() => {

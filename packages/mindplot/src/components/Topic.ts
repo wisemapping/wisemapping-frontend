@@ -27,7 +27,7 @@ import IconGroup from './IconGroup';
 import ImageEmojiFeature from './ImageEmojiFeature';
 import ImageSVGFeature, { GalleryIconShape } from './ImageSVGFeature';
 import ShirinkConnector from './ShrinkConnector';
-import ActionDispatcher from './ActionDispatcher';
+import ActionDispatcher, { CommandDispatcher } from './ActionDispatcher';
 
 import type TopicEventDispatcher from './TopicEventDispatcher';
 import { TopicShapeType } from './model/INodeModel';
@@ -859,7 +859,7 @@ abstract class Topic extends NodeGraph {
    * stack. ActionDispatcher.getInstance() is the last designer built's: with two designers on a
    * page, the other map. A topic built without a designer falls back to it.
    */
-  getActionDispatcher(): ActionDispatcher {
+  getActionDispatcher(): CommandDispatcher {
     return this.getDesigner()?.getActionDispatcher() ?? ActionDispatcher.getInstance();
   }
 

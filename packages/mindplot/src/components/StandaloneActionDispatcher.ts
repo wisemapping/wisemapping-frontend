@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from './util/assert';
-import ActionDispatcher from './ActionDispatcher';
+import ActionDispatcher, { ActionDispatcherCommands } from './ActionDispatcher';
 import DesignerActionRunner from './DesignerActionRunner';
 import AddTopicCommand from './commands/AddTopicCommand';
 import AddRelationshipCommand from './commands/AddRelationshipCommand';
@@ -47,7 +47,7 @@ import { LineType } from './ConnectionLine';
 import ThemeType from './model/ThemeType';
 import type { LayoutType } from './layout/LayoutType';
 
-class StandaloneActionDispatcher extends ActionDispatcher {
+class StandaloneActionDispatcher extends ActionDispatcher implements ActionDispatcherCommands {
   private _actionRunner: DesignerActionRunner;
 
   public get actionRunner(): DesignerActionRunner {
@@ -84,7 +84,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     topicId: number,
     position: PositionType,
     order: number | undefined,
-    parentTopic: Topic,
+    parentTopic: Topic | null,
   ): void {
     const command = new DragTopicCommand(topicId, position, order, parentTopic);
     this.execute(command);

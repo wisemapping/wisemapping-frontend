@@ -17,7 +17,7 @@
  */
 
 import { Ellipse } from '@wisemapping/web2d';
-import ActionDispatcher from '../../src/components/ActionDispatcher';
+import ActionDispatcher, { CommandDispatcher } from '../../src/components/ActionDispatcher';
 import Canvas from '../../src/components/Canvas';
 import Relationship from '../../src/components/Relationship';
 import RelationshipControlPoints, {
@@ -99,7 +99,7 @@ describe('Relationship control points', () => {
       moveControlPoint = jest.fn();
       jest
         .spyOn(ActionDispatcher, 'getInstance')
-        .mockReturnValue({ moveControlPoint } as unknown as ActionDispatcher);
+        .mockReturnValue({ moveControlPoint } as unknown as CommandDispatcher);
       jest.spyOn(Relationship, 'calculateSnapPoint').mockReturnValue({ x: 0, y: 0 });
 
       line = {

@@ -33,7 +33,7 @@ class DragTopicCommand extends Command {
     topicId: number,
     position: PositionType,
     order: number | undefined,
-    parentTopic: Topic,
+    parentTopic: Topic | null,
   ) {
     super();
     this._topicsId = topicId;

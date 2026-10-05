@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import ActionDispatcher from '../../../src/components/ActionDispatcher';
+import ActionDispatcher, { CommandDispatcher } from '../../../src/components/ActionDispatcher';
 import { buildTopics, stubSvgMeasurement } from './Helper';
 
 type DispatcherMock = {
@@ -37,7 +37,7 @@ beforeEach(() => {
     changeFeatureToTopic: jest.fn(),
     removeFeatureFromTopic: jest.fn(),
   };
-  ActionDispatcher.setInstance(dispatcher as unknown as ActionDispatcher);
+  ActionDispatcher.setInstance(dispatcher as unknown as CommandDispatcher);
 });
 
 describe('Topic.setLinkValue', () => {
@@ -124,7 +124,7 @@ describe('Topic.setNoteValue', () => {
 // fail when there is none (no live designer).
 describe('Clearing a missing link or note without an ActionDispatcher', () => {
   beforeEach(() => {
-    ActionDispatcher.clearInstance(dispatcher as unknown as ActionDispatcher);
+    ActionDispatcher.clearInstance(dispatcher as unknown as CommandDispatcher);
   });
 
   it('setLinkValue(undefined) does nothing', () => {

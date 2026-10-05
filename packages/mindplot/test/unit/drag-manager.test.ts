@@ -17,7 +17,7 @@
  */
 
 import { Group } from '@wisemapping/web2d';
-import ActionDispatcher from '../../src/components/ActionDispatcher';
+import ActionDispatcher, { CommandDispatcher } from '../../src/components/ActionDispatcher';
 import Canvas from '../../src/components/Canvas';
 import DragManager from '../../src/components/DragManager';
 import DragPivot from '../../src/components/DragPivot';
@@ -119,7 +119,7 @@ describe('DragManager', () => {
     jest.spyOn(ActionDispatcher, 'getInstance').mockReturnValue({
       dragTopic: dragTopicAction,
       moveTopic: jest.fn(),
-    } as unknown as ActionDispatcher);
+    } as unknown as CommandDispatcher);
 
     const eventDispatcher = {
       getLayoutManager: () => layoutManager,
@@ -334,7 +334,7 @@ describe('DragManager with the canvas in a shadow root', () => {
     jest.spyOn(ActionDispatcher, 'getInstance').mockReturnValue({
       dragTopic: dragTopicAction,
       moveTopic: jest.fn(),
-    } as unknown as ActionDispatcher);
+    } as unknown as CommandDispatcher);
 
     const dragManager = new DragManager(canvas, {
       getLayoutManager: () => layoutManager,
