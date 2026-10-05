@@ -27,7 +27,9 @@ class LinkModel extends FeatureModel {
   }
 
   getUrl(): string {
-    return this.getAttribute('url') as string;
+    // setAttributes can remove the attribute (an undefined value in an undo snapshot).
+    const url: string | undefined = this.getAttribute('url');
+    return url ?? '';
   }
 
   setUrl(url: string): void {
