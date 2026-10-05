@@ -206,7 +206,7 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
     position: PositionType | null,
   ): SorterPrediction {
     const parent = this._treeSet.find(parentId);
-    const node = nodeId ? this._treeSet.find(nodeId) : null;
+    const node = nodeId != null ? this._treeSet.find(nodeId) : null;
     const sorter = parent.getSorter();
 
     return sorter.predict(this._treeSet, parent, node, position);
