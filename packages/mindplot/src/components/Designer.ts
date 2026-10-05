@@ -200,8 +200,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       this._registerMouseEvents();
 
       // Register keyboard events ...
-      DesignerKeyboard.register(this);
-      this._keyboard = DesignerKeyboard.getInstance();
+      this._keyboard = DesignerKeyboard.register(this);
 
       this._dragManager = this._buildDragManager(this._canvas);
     }
@@ -218,6 +217,11 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     // If not manager was specifed, use the readonly one.
     this._widgetManager = options.widgetManager;
+  }
+
+  /** The keyboard of this designer, if it is editable: its shortcuts drive this map only. */
+  getKeyboard(): DesignerKeyboard | undefined {
+    return this._keyboard;
   }
 
   /** The layout events of this designer. No other designer fires or listens to them. */

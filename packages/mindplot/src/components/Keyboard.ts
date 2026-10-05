@@ -22,10 +22,14 @@ class Keyboard {
 
   addShortcut(shortcuts: string[] | string, callback: () => void) {
     const shortcutsArray = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
-    KeyboardManager.addShortcut(shortcutsArray, () => {
-      if (this.isDisabled()) return;
-      callback();
-    });
+    KeyboardManager.addShortcut(
+      shortcutsArray,
+      () => {
+        if (this.isDisabled()) return;
+        callback();
+      },
+      this,
+    );
   }
 
   pause() {

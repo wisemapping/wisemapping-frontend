@@ -25,7 +25,6 @@ import WidgetBuilder from './WidgetBuilder';
 import mindplotStyles from './styles/mindplot-styles';
 import { $notify } from './model/ToolbarNotifier';
 import { $msg } from './Messages';
-import DesignerKeyboard from './DesignerKeyboard';
 import LocalStorageManager from './LocalStorageManager';
 import ThemeFactory from './theme/ThemeFactory';
 
@@ -221,7 +220,8 @@ class MindplotWebComponent extends HTMLElement {
   }
 
   private registerShortcuts() {
-    const designerKeyboard = DesignerKeyboard.getInstance();
+    // The keyboard of this component's designer: ctrl+s saves this map, not another one ...
+    const designerKeyboard = this._designer?.getKeyboard();
     if (designerKeyboard) {
       designerKeyboard.addShortcut(['ctrl+s', 'meta+s'], () => {
         this.save(true).catch((error) => {

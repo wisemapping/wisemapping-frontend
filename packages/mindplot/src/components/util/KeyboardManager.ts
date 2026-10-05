@@ -23,19 +23,36 @@ const MODIFIER_ORDER = ['ctrl', 'alt', 'shift'];
  * Keyboard shortcut manager to replace jQuery hotkeys plugin
  * Handles complex key combinations and cross-browser compatibility
  */
+// The owner of the shortcuts added without one (code outside a designer).
+const SHARED_OWNER = {};
+
+/**
+ * Keyboard shortcut manager to replace jQuery hotkeys plugin
+ * Handles complex key combinations and cross-browser compatibility
+ *
+ * Each designer's keyboard owns its shortcuts. A key press runs the shortcut of the active
+ * owner (the designer in use, see activate), else a shared one. The document listener is
+ * added with the first shortcut and removed with the last owner.
+ */
 class KeyboardManager {
-  private static shortcuts: Map<string, () => void> = new Map();
+  private static owners: Map<object, Map<string, () => void>> = new Map();
 
-  private static initialized = false;
+  private static active: object | undefined;
 
-  /**
-   * Initialize the keyboard manager
-   */
-  private static init(): void {
-    if (this.initialized) return;
+  private static keydownListener: ((event: KeyboardEvent) => void) | null = null;
 
-    document.addEventListener('keydown', this.handleKeyDown.bind(this));
-    this.initialized = true;
+  private static listen(): void {
+    if (this.keydownListener) return;
+
+    this.keydownListener = (event: KeyboardEvent) => this.handleKeyDown(event);
+    document.addEventListener('keydown', this.keydownListener);
+  }
+
+  private static unlisten(): void {
+    if (this.keydownListener) {
+      document.removeEventListener('keydown', this.keydownListener);
+      this.keydownListener = null;
+    }
   }
 
   /**
@@ -44,13 +61,25 @@ class KeyboardManager {
    *
    * @param shortcuts - Array of key combinations (e.g., ['ctrl+s', 'cmd+s'])
    * @param callback - Function to execute when shortcut is pressed
+   * @param owner - The keyboard the shortcut belongs to; it runs while that owner is active
    */
-  static addShortcut(shortcuts: string[], callback: () => void): void {
-    this.init();
+  static addShortcut(
+    shortcuts: string[],
+    callback: () => void,
+    owner: object = SHARED_OWNER,
+  ): void {
+    this.listen();
 
+    let ownShortcuts = this.owners.get(owner);
+    if (!ownShortcuts) {
+      ownShortcuts = new Map();
+      this.owners.set(owner, ownShortcuts);
+    }
+    if (!this.active) {
+      this.active = owner;
+    }
     shortcuts.forEach((shortcut) => {
-      const normalizedShortcut = this.normalizeShortcut(shortcut);
-      this.shortcuts.set(normalizedShortcut, callback);
+      ownShortcuts!.set(this.normalizeShortcut(shortcut), callback);
     });
   }
 
@@ -58,11 +87,35 @@ class KeyboardManager {
    * Remove keyboard shortcut
    * Replaces: $(document).unbind('keydown', shortcut)
    */
-  static removeShortcut(shortcuts: string[]): void {
+  static removeShortcut(shortcuts: string[], owner: object = SHARED_OWNER): void {
+    const ownShortcuts = this.owners.get(owner);
     shortcuts.forEach((shortcut) => {
-      const normalizedShortcut = this.normalizeShortcut(shortcut);
-      this.shortcuts.delete(normalizedShortcut);
+      ownShortcuts?.delete(this.normalizeShortcut(shortcut));
     });
+  }
+
+  /** Makes the shortcuts of `owner` the ones a key press runs: its designer is the one in use. */
+  static activate(owner: object): void {
+    this.active = owner;
+  }
+
+  static isActive(owner: object): boolean {
+    return this.active === owner;
+  }
+
+  /**
+   * Drops the shortcuts of `owner`. The owner registered last before it becomes active, and the
+   * document listener is removed with the last owner.
+   */
+  static removeOwner(owner: object): void {
+    this.owners.delete(owner);
+    if (this.active === owner) {
+      this.active = Array.from(this.owners.keys()).pop();
+    }
+    if (this.owners.size === 0) {
+      this.active = undefined;
+      this.unlisten();
+    }
   }
 
   /**
@@ -75,7 +128,9 @@ class KeyboardManager {
     }
 
     const pressedShortcut = this.getEventShortcut(event);
-    const callback = this.shortcuts.get(pressedShortcut);
+    const callback =
+      (this.active && this.owners.get(this.active)?.get(pressedShortcut)) ||
+      this.owners.get(SHARED_OWNER)?.get(pressedShortcut);
 
     if (callback) {
       event.preventDefault();
@@ -225,14 +280,18 @@ class KeyboardManager {
    * Clear all shortcuts
    */
   static clearAll(): void {
-    this.shortcuts.clear();
+    this.owners.clear();
+    this.active = undefined;
+    this.unlisten();
   }
 
   /**
-   * Get all registered shortcuts (for debugging)
+   * Get the shortcuts a key press can run now (for debugging)
    */
   static getShortcuts(): string[] {
-    return Array.from(this.shortcuts.keys());
+    const active = this.active ? Array.from(this.owners.get(this.active)?.keys() ?? []) : [];
+    const shared = Array.from(this.owners.get(SHARED_OWNER)?.keys() ?? []);
+    return Array.from(new Set([...active, ...shared]));
   }
 }
 

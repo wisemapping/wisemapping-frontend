@@ -28,11 +28,6 @@ jest.mock('../../src/components/DesignerBuilder', () => ({
   default: jest.fn(),
 }));
 
-jest.mock('../../src/components/DesignerKeyboard', () => ({
-  __esModule: true,
-  default: { getInstance: jest.fn().mockReturnValue(undefined) },
-}));
-
 jest.mock('../../src/components/model/ToolbarNotifier', () => ({
   $notify: jest.fn(),
 }));
@@ -88,6 +83,7 @@ describe('MindplotWebComponent', () => {
       },
       getMindmap: () => mindmap,
       getMindmapProperties: () => ({}),
+      getKeyboard: () => undefined,
       dispose,
     }));
 
@@ -227,7 +223,11 @@ describe('MindplotWebComponent', () => {
       const load = jest.fn().mockResolvedValue({});
       Object.assign(persistence, { load });
       const loadMap = jest.fn();
-      (buildDesigner as jest.Mock).mockImplementation(() => ({ addEvent: jest.fn(), loadMap }));
+      (buildDesigner as jest.Mock).mockImplementation(() => ({
+        addEvent: jest.fn(),
+        getKeyboard: () => undefined,
+        loadMap,
+      }));
       build('edition-owner');
 
       await component.loadMap('1');

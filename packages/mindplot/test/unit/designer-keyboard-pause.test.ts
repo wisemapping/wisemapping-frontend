@@ -167,12 +167,13 @@ describe('DesignerKeyboard register (BL-37)', () => {
     // useEditor pauses the keyboard (enableKeyboardEvents=false) in an effect that
     // can run before the designer exists ...
     DesignerKeyboard.pause();
-    DesignerKeyboard.register(designer);
+    const keyboard = DesignerKeyboard.register(designer);
 
     expect(DesignerKeyboard.isDisabled()).toBe(true);
 
     DesignerKeyboard.resume();
     expect(DesignerKeyboard.isDisabled()).toBe(false);
+    keyboard.dispose();
   });
 });
 
@@ -193,6 +194,12 @@ describe('DesignerKeyboard leaked pause (BL5-26)', () => {
   };
 
   let warn: jest.SpyInstance;
+  let keyboard: DesignerKeyboard | undefined;
+
+  const register = (): DesignerKeyboard => {
+    keyboard = DesignerKeyboard.register(buildDesigner());
+    return keyboard;
+  };
 
   beforeEach(() => {
     resetPause();
@@ -200,41 +207,41 @@ describe('DesignerKeyboard leaked pause (BL5-26)', () => {
   });
 
   afterEach(() => {
-    DesignerKeyboard.getInstance()?.dispose();
+    keyboard?.dispose();
     warn.mockRestore();
     resetPause();
   });
 
   it('drops a pause leaked by the previous designer, with a warning', () => {
-    DesignerKeyboard.register(buildDesigner());
+    register();
     DesignerKeyboard.pause(); // never resumed
-    DesignerKeyboard.getInstance()!.dispose();
+    keyboard!.dispose();
 
-    DesignerKeyboard.register(buildDesigner());
+    register();
 
     expect(DesignerKeyboard.isDisabled()).toBe(false);
     expect(warn).toHaveBeenCalledTimes(1);
   });
 
   it('does not warn when the pause is resumed after the designer is disposed', () => {
-    DesignerKeyboard.register(buildDesigner());
+    register();
     DesignerKeyboard.pause();
-    DesignerKeyboard.getInstance()!.dispose();
+    keyboard!.dispose();
     DesignerKeyboard.resume(); // e.g. a pane unmounted after the designer
 
-    DesignerKeyboard.register(buildDesigner());
+    register();
 
     expect(DesignerKeyboard.isDisabled()).toBe(false);
     expect(warn).not.toHaveBeenCalled();
   });
 
   it('keeps a pause taken for the next designer while dropping the leaked one', () => {
-    DesignerKeyboard.register(buildDesigner());
+    register();
     DesignerKeyboard.pause(); // leaked
-    DesignerKeyboard.getInstance()!.dispose();
+    keyboard!.dispose();
     DesignerKeyboard.pause(); // the next editor mounts with its keyboard events off
 
-    DesignerKeyboard.register(buildDesigner());
+    register();
     expect(DesignerKeyboard.isDisabled()).toBe(true);
     expect(warn).toHaveBeenCalledTimes(1);
 

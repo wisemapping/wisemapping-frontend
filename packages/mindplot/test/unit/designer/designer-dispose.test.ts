@@ -19,7 +19,6 @@
 import { SAMPLE_MAP, buildDesigner as buildHarness } from '../commands/designer-harness';
 import buildDesigner from '../../../src/components/DesignerBuilder';
 import Designer from '../../../src/components/Designer';
-import DesignerKeyboard from '../../../src/components/DesignerKeyboard';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import DragManager from '../../../src/components/DragManager';
 import DragTopic from '../../../src/components/DragTopic';
@@ -186,8 +185,9 @@ describe('Designer dispose (BL-48)', () => {
     const showTextEditor = jest.spyOn(topic, 'showTextEditor').mockImplementation(() => undefined);
     const deleteSelected = jest.spyOn(first, 'deleteSelectedEntities');
 
+    const keyboard = first.getKeyboard()!;
     first.dispose();
-    expect(DesignerKeyboard.getInstance()).toBeUndefined();
+    expect(keyboard.isActive()).toBe(false);
 
     document.dispatchEvent(new KeyboardEvent('keypress', { key: 'a', code: 'KeyA' }));
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Delete' }));
@@ -196,7 +196,7 @@ describe('Designer dispose (BL-48)', () => {
     expect(deleteSelected).not.toHaveBeenCalled();
 
     const second = await build();
-    expect(DesignerKeyboard.getInstance()).toBeDefined();
+    expect(second.getKeyboard()!.isActive()).toBe(true);
     expect(globalDesigner()).toBe(second);
   });
 
