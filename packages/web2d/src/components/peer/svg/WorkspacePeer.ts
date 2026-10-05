@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $defined } from '../utils/assert';
-import ElementPeer from './ElementPeer';
+import ElementPeer, { formatLength } from './ElementPeer';
 import SizeType from '../../SizeType';
 import PositionType from '../../PositionType';
 
@@ -34,6 +34,28 @@ class WorkspacePeer extends ElementPeer {
   /** The root <svg> is sized with its width and height attributes. */
   protected override hasSizeAttributes(): boolean {
     return true;
+  }
+
+  /**
+   * The <svg> width and height attributes are the source of truth: a consumer may resize the SVG
+   * around the peer (W-HTMLFONT, BL5-64). While an attribute still matches the kept size, the kept
+   * value is returned, so its precision is not lost to the attribute format.
+   */
+  override getSize(): SizeType {
+    const { width, height } = super.getSize();
+    return {
+      width: this.sizeAttribute('width', width),
+      height: this.sizeAttribute('height', height),
+    };
+  }
+
+  private sizeAttribute(name: 'width' | 'height', kept: number): number {
+    const value = this._native.getAttribute(name);
+    if (value === null || value === formatLength(kept)) {
+      return kept;
+    }
+    const parsed = Number.parseFloat(value);
+    return Number.isNaN(parsed) ? kept : parsed;
   }
 
   /**

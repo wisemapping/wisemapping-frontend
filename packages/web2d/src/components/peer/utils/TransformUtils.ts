@@ -22,24 +22,6 @@ import GroupPeer from '../svg/GroupPeer';
 import TextPeer from '../svg/TextPeer';
 import WorkspacePeer from '../svg/WorkspacePeer';
 
-/**
- * The rendered size of a container. A workspace reads it from its <svg> width and height: they are
- * the source of truth, and a consumer may resize the SVG without going through `setSize`
- * (W-HTMLFONT: mindplot's Canvas used to, so the editor font was scaled by the old/new height).
- */
-const renderedSize = (container: ElementPeer): SizeType => {
-  const size = container.getSize();
-  if (container instanceof WorkspacePeer) {
-    const width = Number.parseFloat(container._native.getAttribute('width') ?? '');
-    const height = Number.parseFloat(container._native.getAttribute('height') ?? '');
-    return {
-      width: Number.isNaN(width) ? size.width : width,
-      height: Number.isNaN(height) ? size.height : height,
-    };
-  }
-  return size;
-};
-
 class TransformUtil {
   static workoutScale(elementPeer: TextPeer): SizeType {
     let width = 1;
@@ -58,7 +40,8 @@ class TransformUtil {
 
       const container = current as GroupPeer;
       const coordSize = container.getCoordSize();
-      const size = renderedSize(container);
+      // A workspace reads its size from the <svg> attributes (W-HTMLFONT).
+      const size = container.getSize();
 
       width *= size.width / coordSize.width;
       height *= size.height / coordSize.height;

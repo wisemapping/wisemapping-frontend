@@ -141,17 +141,20 @@ class ElementPeer {
    * Keeps the element size. Only the elements whose geometry is a width and a height (<svg>,
    * <rect>, <image>) write them as attributes: on <g>, <text>, <path>, <line>, <polyline> and
    * <ellipse> they mean nothing, and those peers derive their geometry from the size instead.
+   *
+   * The attributes are always written through attr(), which skips unchanged values: the kept size
+   * is not used to skip them, so a size written around the peer is restored (BL5-64).
    */
   setSize(width: number, height: number): void {
     const writeAttributes = this.hasSizeAttributes();
-    if ($defined(width) && this._size.width !== width) {
+    if ($defined(width)) {
       this._size.width = width;
       if (writeAttributes) {
         this.attr('width', formatLength(width));
       }
     }
 
-    if ($defined(height) && this._size.height !== height) {
+    if ($defined(height)) {
       this._size.height = height;
       if (writeAttributes) {
         this.attr('height', formatLength(height));

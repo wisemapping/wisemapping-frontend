@@ -188,3 +188,44 @@ describe('Workspace', () => {
     expect(group.peer.getParent()).toBe(workspace.peer);
   });
 });
+
+// BL5-64: setSize skipped a size equal to the kept one, so it could not restore an attribute
+// written around the peer, and getSize kept reporting the old size.
+describe('size attributes written around the peer (BL5-64)', () => {
+  it('setSize restores a width and height written directly on the svg', () => {
+    const workspace = new Workspace();
+    const svg = workspace.getSVGElement();
+    svg.setAttribute('width', '800');
+    svg.setAttribute('height', '600');
+    workspace.setSize('400px', '400px');
+    expect(svg.getAttribute('width')).toBe('400');
+    expect(svg.getAttribute('height')).toBe('400');
+  });
+
+  it('setSize restores a rect size written directly', () => {
+    const rect = new Rect(0, { width: 40, height: 20 });
+    rect.peer._native.setAttribute('width', '99');
+    rect.setSize(40, 20);
+    expect(rect.peer._native.getAttribute('width')).toBe('40');
+  });
+
+  it('WorkspacePeer.getSize reads the svg width and height', () => {
+    const peer = new WorkspacePeer();
+    peer.setSize(400, 300);
+    peer._native.setAttribute('width', '800');
+    expect(peer.getSize()).toEqual({ width: 800, height: 300 });
+  });
+
+  it('WorkspacePeer.getSize keeps the kept size for a non-numeric attribute', () => {
+    const peer = new WorkspacePeer();
+    peer.setSize(400, 300);
+    peer._native.setAttribute('width', 'auto');
+    expect(peer.getSize()).toEqual({ width: 400, height: 300 });
+  });
+
+  it('WorkspacePeer.getSize keeps full precision while the attributes match', () => {
+    const peer = new WorkspacePeer();
+    peer.setSize(400.555, 300.125);
+    expect(peer.getSize()).toEqual({ width: 400.555, height: 300.125 });
+  });
+});
