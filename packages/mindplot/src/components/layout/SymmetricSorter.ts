@@ -122,11 +122,12 @@ class SymmetricSorter extends AbstractBasicSorter {
         return [order, result];
       }
 
-      // Fit after this node
+      // Fit after this node. Exactly at the centre of the node after counts as the pixel above
+      // it, as in BalancedSorter: excluding it fell through to "above the first", a jump.
       if (
         nodeAfter &&
         position.y > parentChild.getPosition().y &&
-        position.y < nodeAfter.getPosition().y
+        position.y <= nodeAfter.getPosition().y
       ) {
         if (nodeAfter.getId() === node.getId() || parentChild.getId() === node.getId()) {
           return [node.getOrder() ?? 0, node.getPosition()];
