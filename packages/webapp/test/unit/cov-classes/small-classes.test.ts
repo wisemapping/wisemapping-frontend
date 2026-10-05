@@ -221,9 +221,9 @@ describe('LocalStorageThemeVariantStorage', () => {
     expect(listener).not.toHaveBeenCalled();
   });
 
-  // Bug: services/ThemeVariantStorage.ts:79 removes `this.handleStorageChange.bind(this)`,
-  // a new function, so the listener added in the constructor stays on window forever.
-  it.failing('destroy stops listening to storage events', () => {
+  // destroy() used to remove a freshly bound function, so the constructor's listener stayed on
+  // window forever.
+  it('destroy stops listening to storage events', () => {
     const add = jest.spyOn(window, 'addEventListener');
     const remove = jest.spyOn(window, 'removeEventListener');
     const storage = new LocalStorageThemeVariantStorage();

@@ -26,10 +26,12 @@ import { appLogger as log } from '../utils/logger';
  */
 export class LocalStorageThemeVariantStorage implements ThemeVariantStorage {
   private readonly listeners: Set<(variant: ThemeVariant) => void> = new Set();
+  // Bound once, so destroy() removes the same function the constructor added.
+  private readonly storageListener = this.handleStorageChange.bind(this);
 
   constructor() {
     // Listen for storage changes from other tabs/windows
-    window.addEventListener('storage', this.handleStorageChange.bind(this));
+    window.addEventListener('storage', this.storageListener);
   }
 
   getThemeVariant(): ThemeVariant {
@@ -76,7 +78,7 @@ export class LocalStorageThemeVariantStorage implements ThemeVariantStorage {
    * Clean up event listeners
    */
   destroy(): void {
-    window.removeEventListener('storage', this.handleStorageChange.bind(this));
+    window.removeEventListener('storage', this.storageListener);
     this.listeners.clear();
   }
 }
