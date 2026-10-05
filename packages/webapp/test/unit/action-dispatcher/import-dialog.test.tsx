@@ -17,13 +17,17 @@
  */
 
 import React from 'react';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 
 // The editor bundle pulls in the whole canvas. The dialog only needs the importer factory, which
 // rejects an unknown type with "Unsupported type", as TextImporterFactory does.
-const mockCreateImporter = jest.fn((type: string | undefined) => {
+const unsupportedType = (type: string | undefined) => {
   throw new Error(`Unsupported type ${type}`);
-});
+};
+const mockCreateImporter = jest.fn<
+  { import: (title: string, description?: string) => Promise<string> },
+  [string | undefined]
+>(unsupportedType);
 jest.mock('@wisemapping/editor', () => ({
   ImportError: class ImportError extends Error {},
   TextImporterFactory: { create: (type: string | undefined) => mockCreateImporter(type) },
@@ -44,6 +48,7 @@ const selectFile = (file: File): void => {
 describe('ImportDialog', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockCreateImporter.mockImplementation(unsupportedType);
   });
 
   test('explains the supported formats when the file extension is not supported', async () => {
@@ -76,5 +81,52 @@ describe('ImportDialog', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Create' }));
 
     expect(mockImportMap).not.toHaveBeenCalled();
+  });
+
+  test('a closed dialog does not leak its file into the next one', async () => {
+    mockCreateImporter.mockImplementation(() => ({
+      import: (title: string) => Promise.resolve(`<map name="${title}"/>`),
+    }));
+    const first = renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+    selectFile(new File(['<map/>'], 'alpha.wxml', { type: 'text/xml' }));
+    await waitFor(() => expect(mockCreateImporter).toHaveBeenCalled());
+    await waitFor(() => expect(screen.getByLabelText(/Name/)).toHaveProperty('value', 'alpha'));
+    first.unmount();
+
+    renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+
+    expect(screen.getByLabelText(/Name/)).toHaveProperty('value', '');
+    fireEvent.submit(screen.getByRole('button', { name: 'Create' }).closest('form')!);
+    expect(mockImportMap).not.toHaveBeenCalled();
+  });
+
+  test('keeps what the user types while the file is being imported', async () => {
+    let finishImport: (content: string) => void = () => undefined;
+    mockCreateImporter.mockImplementation(() => ({
+      import: () =>
+        new Promise<string>((resolve) => {
+          finishImport = resolve;
+        }),
+    }));
+    mockImportMap.mockResolvedValue(1);
+    renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+
+    selectFile(new File(['<map/>'], 'alpha.wxml', { type: 'text/xml' }));
+    await waitFor(() => expect(mockCreateImporter).toHaveBeenCalled());
+    fireEvent.change(screen.getByLabelText(/Description/), {
+      target: { name: 'description', value: 'My notes' },
+    });
+    await act(async () => finishImport('<map name="alpha"/>'));
+
+    expect(screen.getByLabelText(/Description/)).toHaveProperty('value', 'My notes');
+    // Submitted directly: jsdom's constraint validation can't see the file in the required input.
+    fireEvent.submit(screen.getByRole('button', { name: 'Create' }).closest('form')!);
+    await waitFor(() => expect(mockImportMap).toHaveBeenCalled());
+    expect(mockImportMap.mock.calls[0][0]).toEqual({
+      title: 'alpha',
+      description: 'My notes',
+      contentType: 'application/xml',
+      content: '<map name="alpha"/>',
+    });
   });
 });

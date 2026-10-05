@@ -121,18 +121,12 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
       const extensionFile = file.name.split('.').pop()?.toLowerCase();
       // Closure to capture the file information.
       reader.onload = (event) => {
-        // Forget the previous file.
-        model.content = undefined;
         setErrorFile({ error: false, message: '' });
 
-        // Suggest file name ...
-        const fileName = file.name;
-        if (fileName) {
-          const title = fileName.split('.')[0];
-          if (!model.title || 0 === model.title.length) {
-            model.title = title;
-          }
-        }
+        // Forget the previous file and suggest its name as the title. The updates are functional
+        // (never a mutation of `model`) so that what the user types meanwhile is kept.
+        const title = model.title || file.name.split('.')[0];
+        setModel((current) => ({ ...current, title: current.title || title, content: undefined }));
 
         const extensionAccept = ['wxml', 'mm', 'mmx', 'xmind', 'mmap', 'opml'];
 
@@ -148,8 +142,9 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
           return;
         }
 
-        model.contentType =
+        const contentType =
           extensionFile === 'xmind' ? 'application/vnd.xmind.workbook' : 'application/xml';
+        setModel((current) => ({ ...current, contentType }));
 
         const fileContent = event?.target?.result;
         let mapContent: string | ArrayBuffer;
@@ -166,10 +161,9 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
 
           // A file that can not be imported rejects with an ImportError: show it, never save it.
           importer
-            .import(model.title, model.description)
-            .then((res) => {
-              model.content = res;
-              setModel({ ...model });
+            .import(title, model.description)
+            .then((content) => {
+              setModel((current) => ({ ...current, content }));
             })
             .catch(showImportError);
         } catch (e) {
