@@ -44,7 +44,7 @@ export type SaveOptions = {
 };
 
 abstract class PersistenceManager {
-  private static _instance: PersistenceManager;
+  private static _instance: PersistenceManager | undefined;
 
   private _errorHandlers: PersistenceErrorCallback[] = [];
 
@@ -121,8 +121,15 @@ abstract class PersistenceManager {
     this._instance = instance;
   };
 
-  static getInstance(): PersistenceManager {
+  static getInstance(): PersistenceManager | undefined {
     return this._instance;
+  }
+
+  /** Drops the static instance, if it is still the given one. */
+  static clear(instance: PersistenceManager): void {
+    if (this._instance === instance) {
+      this._instance = undefined;
+    }
   }
 
   static loadFromDom(mapId: string, mapDom: Document) {

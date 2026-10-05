@@ -39,6 +39,10 @@ class MindplotWebComponent extends HTMLElement {
 
   private _designer: Designer | undefined;
 
+  // The persistence the designer was built with. Kept here rather than read back from the
+  // static PersistenceManager instance, which the next designer built replaces ...
+  private _persistence: PersistenceManager | undefined;
+
   private _saveRequired: boolean;
 
   // Incremented on every model change, so a save can tell whether the model changed
@@ -172,6 +176,7 @@ class MindplotWebComponent extends HTMLElement {
       locale: locale || 'en',
     });
 
+    this._persistence = persistenceManager;
     this._designer = buildDesigner(options);
     this._designer.addEvent('modelUpdate', () => {
       if (this._isLoaded) {
@@ -196,15 +201,25 @@ class MindplotWebComponent extends HTMLElement {
 
   /**
    * Disposes the designer once the element has left the page. A move (removed and inserted
-   * again in the same task) keeps it. The designer stays reachable, so that pending changes can
-   * still be saved.
+   * again in the same task) keeps it. The designer and its persistence stay reachable, so that
+   * pending changes can still be saved and the map unlocked.
    */
   disconnectedCallback(): void {
     queueMicrotask(() => {
       if (!this.isConnected && this._designer) {
         this._designer.dispose();
+        if (this._persistence) {
+          PersistenceManager.clear(this._persistence);
+        }
       }
     });
+  }
+
+  private getPersistence(): PersistenceManager {
+    if (!this._persistence) {
+      throw Error('Designer has not been initialized');
+    }
+    return this._persistence;
   }
 
   private registerShortcuts() {
@@ -230,8 +245,9 @@ class MindplotWebComponent extends HTMLElement {
     this._isLoaded = false;
     this.setSaveRequired(false);
 
-    const instance = PersistenceManager.getInstance();
-    return instance.load(id).then((mindmap) => this._designer!.loadMap(mindmap));
+    return this.getPersistence()
+      .load(id)
+      .then((mindmap) => this._designer!.loadMap(mindmap));
   }
 
   /**
@@ -252,7 +268,7 @@ class MindplotWebComponent extends HTMLElement {
     }
 
     // Call persistence manager for saving ...
-    const persistenceManager = PersistenceManager.getInstance();
+    const persistenceManager = this.getPersistence();
     // The map is serialized synchronously by save(), so this is the revision being sent.
     const savedRevision = this._revision;
     return new Promise<void>((resolve, reject) => {
@@ -285,7 +301,7 @@ class MindplotWebComponent extends HTMLElement {
 
   unlockMap(): Promise<void> {
     const mindmap = this._designer!.getMindmap();
-    const persistenceManager = PersistenceManager.getInstance();
+    const persistenceManager = this.getPersistence();
 
     // If the map could not be loaded, partial map load could happen.
     const mapId = mindmap?.getId();
