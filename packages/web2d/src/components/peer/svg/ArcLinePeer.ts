@@ -66,12 +66,15 @@ class ArcLinePeer extends ElementPeer {
   }
 
   setStrokeWidth(width: number): void {
-    this._native.setAttribute('stroke-width', String(width));
+    this.attr('stroke-width', String(width));
   }
 
   setOrientation(orientation: 'horizontal' | 'vertical'): void {
+    const change = this._orientation !== orientation;
     this._orientation = orientation;
-    this._updatePath();
+    if (change) {
+      this._updatePath();
+    }
   }
 
   getOrientation(): 'horizontal' | 'vertical' {
@@ -102,7 +105,7 @@ class ArcLinePeer extends ElementPeer {
       }
 
       const path = `M${fromPoint} C${curveP1},${curveP2} ${toPoint}`;
-      this._native.setAttribute('d', path);
+      this.attr('d', path);
     }
   }
 }

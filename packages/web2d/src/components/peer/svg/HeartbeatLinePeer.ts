@@ -18,7 +18,7 @@
 
 import { $defined } from '../utils/assert';
 import PositionType from '../../PositionType';
-import ElementPeer from './ElementPeer';
+import ElementPeer, { StrokeStyle } from './ElementPeer';
 
 /**
  * HeartbeatLinePeer renders an ECG-inspired waveform with a signature spike that
@@ -26,8 +26,6 @@ import ElementPeer from './ElementPeer';
  * that differs from the bezier-based connectors.
  */
 class HeartbeatLinePeer extends ElementPeer {
-  private _path: SVGPathElement;
-
   private _strokeWidth: number;
 
   private _strokeOpacity: number;
@@ -53,10 +51,9 @@ class HeartbeatLinePeer extends ElementPeer {
     ) as SVGPathElement;
     super(svgElement);
 
-    this._path = svgElement;
-    this._path.setAttribute('fill', 'none');
-    this._path.setAttribute('stroke-linejoin', 'round');
-    this._path.setAttribute('stroke-linecap', 'round');
+    this.attr('fill', 'none');
+    this.attr('stroke-linejoin', 'round');
+    this.attr('stroke-linecap', 'round');
 
     this._strokeWidth = 3;
     this._strokeOpacity = 1;
@@ -141,22 +138,21 @@ class HeartbeatLinePeer extends ElementPeer {
   }
 
   private _applyStroke(): void {
-    this._path.setAttribute('stroke-width', Math.max(1, this._strokeWidth).toFixed(1));
-    this._path.setAttribute('stroke-opacity', this._strokeOpacity.toString());
-    this._path.setAttribute('stroke', this._strokeColor);
+    this.attr('stroke-width', Math.max(1, this._strokeWidth).toFixed(1));
+    this.attr('stroke-opacity', this._strokeOpacity.toString());
+    this.attr('stroke', this._strokeColor);
 
-    const dashStyles = ElementPeer.stokeStyleToStrokDasharray();
     const dashArray =
       this._strokeStyle && this._strokeStyle !== 'solid'
-        ? dashStyles[this._strokeStyle as keyof typeof dashStyles]
+        ? ElementPeer.DASH_ARRAYS[this._strokeStyle as StrokeStyle]
         : undefined;
 
     if (dashArray && dashArray.length > 0) {
-      this._path.setAttribute('stroke-dasharray', dashArray.join(' '));
+      this.attr('stroke-dasharray', dashArray.join(' '));
     } else if (this._dashPattern) {
-      this._path.setAttribute('stroke-dasharray', this._dashPattern);
+      this.attr('stroke-dasharray', this._dashPattern);
     } else {
-      this._path.removeAttribute('stroke-dasharray');
+      this.removeAttr('stroke-dasharray');
     }
   }
 
@@ -169,7 +165,7 @@ class HeartbeatLinePeer extends ElementPeer {
       (this._x1 === this._x2 && this._y1 === this._y2)
     ) {
       // Nothing to draw: clear the previous path rather than leave it on screen (W-STALEPATH).
-      this._path.removeAttribute('d');
+      this.removeAttr('d');
       return;
     }
 
@@ -210,7 +206,7 @@ class HeartbeatLinePeer extends ElementPeer {
     });
 
     pathSegments.push(`L${HeartbeatLinePeer._pointToStr(this._x2, this._y2)}`);
-    this._path.setAttribute('d', pathSegments.join(' '));
+    this.attr('d', pathSegments.join(' '));
   }
 
   private static _pointToStr(x: number, y: number): string {

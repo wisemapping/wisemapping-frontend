@@ -142,7 +142,7 @@ class CurvedLinePeer extends ElementPeer {
   }
 
   setStrokeWidth(width: number): void {
-    this._native.setAttribute('stroke-width', String(width));
+    this.attr('stroke-width', String(width));
   }
 
   updateLine(avoidControlPointFix: boolean) {
@@ -157,13 +157,11 @@ class CurvedLinePeer extends ElementPeer {
   }
 
   setWidth(value: number): void {
+    const change = this._width !== value;
     this._width = value;
-    this._updatePath();
-  }
-
-  setFill(color: string, opacity?: number) {
-    super.setFill(color, opacity);
-    this._updatePath();
+    if (change) {
+      this._updatePath();
+    }
   }
 
   private _updatePath() {
@@ -189,7 +187,7 @@ class CurvedLinePeer extends ElementPeer {
     const str = CurvedLinePeer._pointToStr;
     const width = this.getWidth();
     if (width < 1) {
-      this._native.setAttribute('d', `M${str(start)} C${str(c1)} ${str(c2)} ${str(end)}`);
+      this.attr('d', `M${str(start)} C${str(c1)} ${str(c2)} ${str(end)}`);
       return;
     }
 
@@ -216,7 +214,7 @@ class CurvedLinePeer extends ElementPeer {
     });
     const there = `M${str(offset(start, n1, -h0))} C${str(offset(c1, n1, -h1))} ${str(offset(c2, n2, -h2))} ${str(end)}`;
     const back = `C${str(offset(c2, n2, h2))} ${str(offset(c1, n1, h1))} ${str(offset(start, n1, h0))} Z`;
-    this._native.setAttribute('d', `${there} ${back}`);
+    this.attr('d', `${there} ${back}`);
   }
 
   /**
@@ -278,9 +276,9 @@ class CurvedLinePeer extends ElementPeer {
 
   setDashed(length: number, spacing: number) {
     if ($defined(length) && $defined(spacing)) {
-      this._native.setAttribute('stroke-dasharray', `${length},${spacing}`);
+      this.attr('stroke-dasharray', `${length},${spacing}`);
     } else {
-      this._native.setAttribute('stroke-dasharray', '');
+      this.attr('stroke-dasharray', '');
     }
   }
 }

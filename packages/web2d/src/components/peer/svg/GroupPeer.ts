@@ -102,7 +102,7 @@ class GroupPeer extends ElementPeer {
     const cx = this._position.x - this._coordOrigin.x * sx;
     const cy = this._position.y - this._coordOrigin.y * sy;
     // The scale is not rounded: 16.8 / 100 must stay 0.168, not 0.17.
-    this._native.setAttribute(
+    this.attr(
       'transform',
       `translate(${cx.toFixed(2)},${cy.toFixed(2)}) scale(${GroupPeer.formatScale(sx)},${GroupPeer.formatScale(sy)})`,
     );

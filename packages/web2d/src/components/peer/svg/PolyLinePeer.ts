@@ -36,6 +36,10 @@ class PolyLinePeer extends ElementPeer {
 
   private _orientation: 'horizontal' | 'vertical';
 
+  // Whether the points are out of date. The first setter always draws; after that a setter that
+  // does not change an input does not rebuild or rewrite the points.
+  private _pathDirty: boolean;
+
   constructor() {
     const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
     super(svgElement);
@@ -47,31 +51,35 @@ class PolyLinePeer extends ElementPeer {
     this._y2 = 0;
     this._style = 'Straight';
     this._orientation = 'horizontal';
+    this._pathDirty = true;
   }
 
   setFrom(x1: number, y1: number) {
+    const changed = this._x1 !== x1 || this._y1 !== y1;
     this._x1 = x1;
     this._y1 = y1;
-    this._updatePath();
+    this._refreshPath(changed);
   }
 
   setTo(x2: number, y2: number) {
+    const changed = this._x2 !== x2 || this._y2 !== y2;
     this._x2 = x2;
     this._y2 = y2;
-    this._updatePath();
+    this._refreshPath(changed);
   }
 
   setStrokeWidth(width: number) {
-    this._native.setAttribute('stroke-width', String(width));
+    this.attr('stroke-width', String(width));
   }
 
   setColor(color: string) {
-    this._native.setAttribute('stroke', color);
+    this.attr('stroke', color);
   }
 
   setStyle(style: string) {
+    const changed = this._style !== style;
     this._style = style;
-    this._updatePath();
+    this._refreshPath(changed);
   }
 
   getStyle(): string {
@@ -79,12 +87,24 @@ class PolyLinePeer extends ElementPeer {
   }
 
   setOrientation(orientation: 'horizontal' | 'vertical') {
+    const changed = this._orientation !== orientation;
     this._orientation = orientation;
-    this._updatePath();
+    this._refreshPath(changed);
   }
 
   getOrientation(): 'horizontal' | 'vertical' {
     return this._orientation;
+  }
+
+  /** Marks the points dirty when an input changed, and redraws them if they are dirty. */
+  private _refreshPath(changed: boolean): void {
+    if (changed) {
+      this._pathDirty = true;
+    }
+    if (this._pathDirty) {
+      this._pathDirty = false;
+      this._updatePath();
+    }
   }
 
   /** Redraws the line in its style. An empty or unknown style draws the `Curved` path. */
@@ -124,7 +144,7 @@ class PolyLinePeer extends ElementPeer {
               this._x2,
               this._y2,
             );
-      this._native.setAttribute('points', path);
+      this.attr('points', path);
     }
   }
 
@@ -139,7 +159,7 @@ class PolyLinePeer extends ElementPeer {
         PolyLineUtils.MIDDLE_CURVED_CHAMFER,
         this._orientation,
       );
-      this._native.setAttribute('points', path);
+      this.attr('points', path);
     }
   }
 
@@ -160,7 +180,7 @@ class PolyLinePeer extends ElementPeer {
         const middlex = ((x2 - x1) * 0.5 + x1).toFixed(0);
         path = `${x1}, ${y1} ${middlex}, ${y1} ${middlex}, ${y2} ${x2}, ${y2}`;
       }
-      this._native.setAttribute('points', path);
+      this.attr('points', path);
     }
   }
 
@@ -182,7 +202,7 @@ class PolyLinePeer extends ElementPeer {
               this._x2,
               this._y2,
             );
-      this._native.setAttribute('points', path);
+      this.attr('points', path);
     }
   }
 }

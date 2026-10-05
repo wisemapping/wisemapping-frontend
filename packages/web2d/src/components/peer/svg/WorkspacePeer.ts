@@ -28,7 +28,7 @@ class WorkspacePeer extends ElementPeer {
     );
     super(svgElement);
     // The viewBox (the coordinate size and origin) stretches to the SVG size on both axes.
-    this._native.setAttribute('preserveAspectRatio', 'none');
+    this.attr('preserveAspectRatio', 'none');
   }
 
   /** The root <svg> is sized with its width and height attributes. */
@@ -51,7 +51,7 @@ class WorkspacePeer extends ElementPeer {
     }
     coords[2] = width;
     coords[3] = height;
-    this._native.setAttribute('viewBox', coords.join(' '));
+    this.attr('viewBox', coords.join(' '));
   }
 
   getCoordSize(): SizeType {
@@ -80,7 +80,7 @@ class WorkspacePeer extends ElementPeer {
       coords[1] = y;
     }
 
-    this._native.setAttribute('viewBox', coords.join(' '));
+    this.attr('viewBox', coords.join(' '));
   }
 
   getCoordOrigin(): PositionType {

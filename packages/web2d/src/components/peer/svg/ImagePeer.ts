@@ -28,7 +28,7 @@ class ImagePeer extends ElementPeer {
     super(svgElement);
     this._position = { x: 0, y: 0 };
     this._href = '';
-    this._native.setAttribute('preserveAspectRatio', 'none');
+    this.attr('preserveAspectRatio', 'none');
   }
 
   protected override hasSizeAttributes(): boolean {
@@ -37,8 +37,8 @@ class ImagePeer extends ElementPeer {
 
   setPosition(x: number, y: number): void {
     this._position = { x, y };
-    this._native.setAttribute('y', String(y));
-    this._native.setAttribute('x', String(x));
+    this.attr('y', String(y));
+    this.attr('x', String(x));
   }
 
   getPosition(): PositionType {

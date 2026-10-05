@@ -147,14 +147,14 @@ class ElementPeer {
     if ($defined(width) && this._size.width !== width) {
       this._size.width = width;
       if (writeAttributes) {
-        this._native.setAttribute('width', formatLength(width));
+        this.attr('width', formatLength(width));
       }
     }
 
     if ($defined(height) && this._size.height !== height) {
       this._size.height = height;
       if (writeAttributes) {
-        this._native.setAttribute('height', formatLength(height));
+        this.attr('height', formatLength(height));
       }
     }
   }
@@ -170,10 +170,10 @@ class ElementPeer {
 
   setFill(color: string | null, opacity?: number | null) {
     if (color) {
-      this._native.setAttribute('fill', color);
+      this.attr('fill', color);
     }
     if ($defined(opacity)) {
-      this._native.setAttribute('fill-opacity', String(opacity));
+      this.attr('fill-opacity', String(opacity));
     }
   }
 
@@ -204,11 +204,11 @@ class ElementPeer {
 
   setStroke(width: number | null, style?: string | null, color?: string | null, opacity?: number) {
     if ($defined(width)) {
-      this._native.setAttribute('stroke-width', `${width}`);
+      this.attr('stroke-width', `${width}`);
     }
 
     if (color) {
-      this._native.setAttribute('stroke', color);
+      this.attr('stroke', color);
     }
 
     if (style) {
@@ -219,20 +219,50 @@ class ElementPeer {
       const dashArray = ElementPeer.DASH_ARRAYS[style as StrokeStyle];
       // Solid removes the attributes: an empty value is invalid SVG.
       if (dashArray.length > 0) {
-        this._native.setAttribute('stroke-dasharray', dashArray.join(' '));
+        this.attr('stroke-dasharray', dashArray.join(' '));
       } else {
-        this._native.removeAttribute('stroke-dasharray');
+        this.removeAttr('stroke-dasharray');
       }
       const lineCap = ElementPeer.DASH_LINE_CAPS[style as StrokeStyle];
       if (lineCap) {
-        this._native.setAttribute('stroke-linecap', lineCap);
+        this.attr('stroke-linecap', lineCap);
       } else {
-        this._native.removeAttribute('stroke-linecap');
+        this.removeAttr('stroke-linecap');
       }
     }
 
     if ($defined(opacity)) {
-      this._native.setAttribute('stroke-opacity', String(opacity));
+      this.attr('stroke-opacity', String(opacity));
+    }
+  }
+
+  /**
+   * Writes an attribute only when its value changes, so a redraw that sets the same values costs
+   * no DOM writes. The DOM itself is the cache: a write made around the peer (mindplot writes some
+   * attributes on the native node directly) can never leave it stale.
+   */
+  protected attr(name: string, value: string): void {
+    ElementPeer.writeAttribute(this._native, name, value);
+  }
+
+  /** Removes an attribute, if it is set. */
+  protected removeAttr(name: string): void {
+    if (this._native.hasAttribute(name)) {
+      this._native.removeAttribute(name);
+    }
+  }
+
+  /** Writes an attribute of any element only when its value changes. */
+  static writeAttribute(element: Element, name: string, value: string): void {
+    if (element.getAttribute(name) !== value) {
+      element.setAttribute(name, value);
+    }
+  }
+
+  /** Writes an inline style property only when its value changes. */
+  private writeStyle(name: 'opacity' | 'transition' | 'cursor', value: string): void {
+    if (this._native.style[name] !== value) {
+      this._native.style[name] = value;
     }
   }
 
@@ -242,7 +272,7 @@ class ElementPeer {
    */
   setOpacity(value: number): void {
     this._opacity = value;
-    this._native.style.opacity = String(this.isVisible() ? value : 0);
+    this.writeStyle('opacity', String(this.isVisible() ? value : 0));
   }
 
   getOpacity(): number {
@@ -250,13 +280,13 @@ class ElementPeer {
   }
 
   setVisibility(value: boolean, fade?: number) {
-    this._native.setAttribute('visibility', value ? 'visible' : 'hidden');
+    this.attr('visibility', value ? 'visible' : 'hidden');
     // Shown at the opacity set with setOpacity(), and faded through the same property.
-    this._native.style.opacity = String(value ? this._opacity : 0);
+    this.writeStyle('opacity', String(value ? this._opacity : 0));
     if (fade) {
-      this._native.style.transition = `visibility ${fade}ms, opacity ${fade}ms`;
+      this.writeStyle('transition', `visibility ${fade}ms, opacity ${fade}ms`);
     } else {
-      this._native.style.transition = '';
+      this.writeStyle('transition', '');
     }
   }
 
@@ -286,7 +316,7 @@ class ElementPeer {
   }
 
   setCursor(type: string) {
-    this._native.style.cursor = type;
+    this.writeStyle('cursor', type);
   }
 
   /** The single dash table, shared by every element type. */

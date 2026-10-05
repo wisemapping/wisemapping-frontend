@@ -30,15 +30,15 @@ class ElipsePeer extends ElementPeer {
 
   setSize(width: number, height: number) {
     super.setSize(width, height);
-    this._native.setAttribute('rx', formatLength(width / 2));
-    this._native.setAttribute('ry', formatLength(height / 2));
+    this.attr('rx', formatLength(width / 2));
+    this.attr('ry', formatLength(height / 2));
   }
 
   setPosition(pcx: number, pcy: number) {
     this._position = { x: pcx, y: pcy };
 
-    this._native.setAttribute('cx', formatLength(pcx));
-    this._native.setAttribute('cy', formatLength(pcy));
+    this.attr('cx', formatLength(pcx));
+    this.attr('cy', formatLength(pcy));
   }
 
   getPosition(): PositionType {

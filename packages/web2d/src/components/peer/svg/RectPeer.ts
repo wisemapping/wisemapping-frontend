@@ -37,11 +37,11 @@ class RectPeer extends ElementPeer {
   setPosition(x: number, y: number) {
     if ($defined(x)) {
       this._position.x = x;
-      this._native.setAttribute('x', formatLength(x));
+      this.attr('x', formatLength(x));
     }
     if ($defined(y)) {
       this._position.y = y;
-      this._native.setAttribute('y', formatLength(y));
+      this.attr('y', formatLength(y));
     }
   }
 
@@ -60,8 +60,8 @@ class RectPeer extends ElementPeer {
     if ($defined(this._arc)) {
       // Transform percentages to SVG format.
       const arc = (min / 2) * this._arc;
-      this._native.setAttribute('rx', formatLength(arc));
-      this._native.setAttribute('ry', formatLength(arc));
+      this.attr('rx', formatLength(arc));
+      this.attr('ry', formatLength(arc));
     }
   }
 }

@@ -35,14 +35,25 @@ class ArrowPeer extends ElementPeer {
   }
 
   setFrom(x: number, y: number) {
+    if (this._fromPoint.x === x && this._fromPoint.y === y && this.hasPath()) {
+      return;
+    }
     this._fromPoint = { x, y };
     this._redraw();
   }
 
   /** The direction the arrow points away from, relative to the tip. It is copied. */
   setControlPoint(point: PositionType) {
+    const current = this._controlPoint;
+    if (current && current.x === point.x && current.y === point.y) {
+      return;
+    }
     this._controlPoint = { x: point.x, y: point.y };
     this._redraw();
+  }
+
+  private hasPath(): boolean {
+    return this._native.hasAttribute('d');
   }
 
   setStrokeColor(color: string) {
@@ -55,9 +66,9 @@ class ArrowPeer extends ElementPeer {
 
   setDashed(isDashed: boolean, length: number, spacing: number) {
     if ($defined(isDashed) && isDashed && $defined(length) && $defined(spacing)) {
-      this._native.setAttribute('stroke-dasharray', `${length},${spacing}`);
+      this.attr('stroke-dasharray', `${length},${spacing}`);
     } else {
-      this._native.removeAttribute('stroke-dasharray');
+      this.removeAttr('stroke-dasharray');
     }
   }
 
@@ -81,7 +92,7 @@ class ArrowPeer extends ElementPeer {
 
       const { x: fx, y: fy } = this._fromPoint;
       const path = `M${fx},${fy} L${x + fx},${y + fy} M${fx},${fy} L${xp + fx},${yp + fy}`;
-      this._native.setAttribute('d', path);
+      this.attr('d', path);
     }
   }
 }
