@@ -31,8 +31,8 @@ describe('Arrow Suite', () => {
 
   it('Arrow Dashed', () => {
     cy.visit('/iframe.html?args=&id=shapes-arrow--dashed&viewMode=story');
-    // W-ARROWDASH: setDashed(true, 3, 3) writes "33" today.
-    cy.get('path').first().should('have.attr', 'stroke-dasharray');
+    // W-ARROWDASH: setDashed(true, 3, 3) writes "3,3" (it used to write "33").
+    cy.get('path').first().should('have.attr', 'stroke-dasharray', '3,3');
     cy.matchImageSnapshot('arrow-dashed');
   });
 });

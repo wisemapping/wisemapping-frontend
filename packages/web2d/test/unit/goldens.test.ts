@@ -146,7 +146,7 @@ const WAVE_SHORT: [number, number, number, number][] = [
   [-150, -150, -149, -150], // length 1
   [-100, -100, -97, -96], // length 5
   [0, 0, 20, 0], // length 20
-  [100, 100, 100, 100], // zero length: W-STALEPATH keeps the path drawn after setFrom
+  [100, 100, 100, 100], // zero length: the path drawn after setFrom is cleared (W-STALEPATH)
 ];
 
 const WAVE_STROKES: [number, number, number, number][] = [
@@ -218,7 +218,7 @@ const SCENARIOS: Record<string, Scenario> = {
       ],
       (line) => line.setWidth(0),
     ),
-  // W-DEFCP: vertical and near-vertical default control points overshoot both ends.
+  // W-DEFCP: vertical and near-vertical default control points stay on the chord (no overshoot).
   'curvedline-default-vertical': () =>
     curvedScene(
       [
@@ -244,7 +244,7 @@ const SCENARIOS: Record<string, Scenario> = {
         line.setStroke(1, 'solid', '#3366cc', 1);
       },
     ),
-  // W-TAPER: the taper is offset only along y, so vertical connections lose their thickness.
+  // W-TAPER: the taper is offset along the normal, so vertical connections keep their thickness.
   'curvedline-width-vertical': () =>
     curvedScene(
       [

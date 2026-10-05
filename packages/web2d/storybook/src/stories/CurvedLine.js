@@ -105,7 +105,8 @@ export const createCurvedLine = ({ fillColor, strokeColor, strokeWidth, strokeSt
 
 // Vertical connections, as in the tree and org layouts: the ends are `dx` apart horizontally and
 // 100 apart vertically, with the control points along y. dx = 0 is a straight vertical line.
-// W-TAPER: with width >= 1 the taper is offset along y only, so these lose their thickness.
+// W-TAPER (fixed): with width >= 1 the taper is offset along the curve's normal, symmetrically,
+// so vertical lines keep their thickness.
 export const createVerticalCurvedLine = ({
   fillColor,
   strokeColor,
@@ -140,8 +141,8 @@ export const createVerticalCurvedLine = ({
   return divElem;
 };
 
-// No control points given: CurvedLinePeer works them out from the ends. W-DEFCP: for vertical and
-// near-vertical lines (|dx| <= 0.1) they point away from the target, so the curve overshoots.
+// No control points given: CurvedLinePeer works them out from the ends, a third of the way along
+// the chord (W-DEFCP, fixed: vertical and near-vertical lines no longer overshoot their ends).
 export const createDefaultControlPointsCurvedLine = ({ strokeColor, strokeWidth, strokeStyle }) => {
   const divElem = document.createElement('div');
   const workspace = createCenteredWorkspaceForCurves();

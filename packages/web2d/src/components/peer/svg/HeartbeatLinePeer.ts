@@ -78,6 +78,8 @@ class HeartbeatLinePeer extends ElementPeer {
     color?: string | null,
     opacity?: number,
   ) {
+    // The spike amplitude depends on the width, so a new width re-paths (W-STALEPATH).
+    const repath = $defined(width) && width !== null && width !== this._strokeWidth;
     if ($defined(width) && width !== null) {
       this._strokeWidth = width;
     }
@@ -98,6 +100,9 @@ class HeartbeatLinePeer extends ElementPeer {
     }
 
     this._applyStroke();
+    if (repath) {
+      this._updatePath();
+    }
   }
 
   setDashPattern(length: number, spacing: number): void {
@@ -163,6 +168,8 @@ class HeartbeatLinePeer extends ElementPeer {
       !$defined(this._y2) ||
       (this._x1 === this._x2 && this._y1 === this._y2)
     ) {
+      // Nothing to draw: clear the previous path rather than leave it on screen (W-STALEPATH).
+      this._path.removeAttribute('d');
       return;
     }
 
@@ -176,9 +183,16 @@ class HeartbeatLinePeer extends ElementPeer {
     const perpY = unitX;
 
     const amplitudeBase = Math.min(distance * 0.35, 60);
-    const amplitude = Math.max(10, amplitudeBase * (0.4 + this._strokeWidth * 0.04));
+    // A floor of 10 keeps the spike visible, but never beyond the base amplitude: otherwise a
+    // 1 unit line would draw a ±10 spike.
+    const amplitude = Math.max(
+      Math.min(10, amplitudeBase),
+      amplitudeBase * (0.4 + this._strokeWidth * 0.04),
+    );
 
-    const wobbleSeed = Math.sin((this._x1 + this._y1 + this._x2 + this._y2) * 0.05);
+    // Seeded from the length, not the absolute ends, so the shape does not change when the
+    // whole line moves (W-STALEPATH).
+    const wobbleSeed = Math.sin(distance * 0.05);
     const wobble = 1 + wobbleSeed * 0.15;
 
     const pattern = HeartbeatLinePeer._heartbeatPattern();

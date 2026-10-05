@@ -41,14 +41,22 @@ describe('PolyLinePeer points per style and orientation', () => {
   it.each([
     ['Straight', 'horizontal', '0, 0 50, 0 50, 100 100, 100'],
     ['Straight', 'vertical', '0, 0 0, 50 100, 50 100, 100'],
-    ['MiddleStraight', 'horizontal', '0, 0 50, 0 50, 0 50, 100 50, 100 100, 100'],
-    ['MiddleStraight', 'vertical', '0, 0 0, 50 0, 50 100, 50 100, 50 100, 100'],
-    ['MiddleCurved', 'horizontal', '0, 0 50, 0 50, 10 50, 90 50, 100 100, 100'],
-    ['MiddleCurved', 'vertical', '0, 0 0, 50 10, 50 90, 50 100, 50 100, 100'],
-    ['Curved', 'horizontal', '0.0, 0.0 50.0, 0.0 50.0, 95.0 55.0, 100.0 100.0, 100.0'],
-    ['Curved', 'vertical', '0.0, 0.0 0.0, 50.0 5.0, 50.0 95.0, 50.0 100.0, 50.0 100.0, 100.0'],
+    ['MiddleStraight', 'horizontal', '0, 0 50, 0 50, 100 100, 100'],
+    ['MiddleStraight', 'vertical', '0, 0 0, 50 100, 50 100, 100'],
+    [
+      'MiddleCurved',
+      'horizontal',
+      '0.0, 0.0 40.0, 0.0 50.0, 10.0 50.0, 90.0 60.0, 100.0 100.0, 100.0',
+    ],
+    [
+      'MiddleCurved',
+      'vertical',
+      '0.0, 0.0 0.0, 40.0 10.0, 50.0 90.0, 50.0 100.0, 60.0 100.0, 100.0',
+    ],
+    ['Curved', 'horizontal', '0.0, 0.0 45.0, 0.0 50.0, 5.0 50.0, 95.0 55.0, 100.0 100.0, 100.0'],
+    ['Curved', 'vertical', '0.0, 0.0 0.0, 45.0 5.0, 50.0 95.0, 50.0 100.0, 55.0 100.0, 100.0'],
   ] as [string, Orientation, string][])(
-    'characterization: %s %s (0,0)->(100,100)',
+    '%s %s (0,0)->(100,100)',
     (style, orientation, expected) => {
       expect(poly(style, orientation, 0, 0, 100, 100)).toBe(expected);
     },
@@ -78,8 +86,16 @@ describe('PolyLinePeer points per style and orientation', () => {
     );
   });
 
-  it('characterization: an unknown style draws nothing', () => {
-    expect(poly('Zigzag', 'horizontal', 0, 0, 100, 100)).toBeNull();
+  it('an unknown style draws the curved path, as an empty one does', () => {
+    expect(poly('Zigzag', 'horizontal', 0, 0, 100, 100)).toBe(
+      poly('Curved', 'horizontal', 0, 0, 100, 100),
+    );
+  });
+
+  it('MiddleStraight rounds the middle to whole units, and has no duplicated points', () => {
+    expect(poly('MiddleStraight', 'horizontal', 0.5, 0, 100, 10.5)).toBe(
+      '0.5, 0 50, 0 50, 10.5 100, 10.5',
+    );
   });
 
   it('defaults to Straight, horizontal, with no fill', () => {
@@ -97,19 +113,19 @@ describe('PolyLinePeer points per style and orientation', () => {
     expect(peer._native.getAttribute('stroke')).toBe('red');
   });
 
-  // W-MIDCURVE: signx starts at 0, so right-going lines get no horizontal chamfer, and y1 == y2
-  // draws a 20 unit vertical spike.
-  it.failing('W-MIDCURVE: a horizontal MiddleCurved line with y1 == y2 has no spike', () => {
+  // W-MIDCURVE: signx used to start at 0, so right-going lines got no horizontal chamfer, and
+  // y1 == y2 drew a 20 unit vertical spike.
+  it('W-MIDCURVE: a horizontal MiddleCurved line with y1 == y2 has no spike', () => {
     const pts = parsePoints(poly('MiddleCurved', 'horizontal', 0, 0, 100, 0));
     pts.forEach(([, y]) => expect(y).toBe(0));
   });
 
-  it.failing('W-MIDCURVE: a vertical MiddleCurved line with x1 == x2 has no spike', () => {
+  it('W-MIDCURVE: a vertical MiddleCurved line with x1 == x2 has no spike', () => {
     const pts = parsePoints(poly('MiddleCurved', 'vertical', 0, 0, 0, 100));
     pts.forEach(([x]) => expect(x).toBe(0));
   });
 
-  it.failing('W-MIDCURVE: right-going MiddleCurved lines are chamfered horizontally', () => {
+  it('W-MIDCURVE: right-going MiddleCurved lines are chamfered horizontally', () => {
     const pts = parsePoints(poly('MiddleCurved', 'horizontal', 0, 0, 100, 100));
     // The point before the first vertical segment must sit before the middle.
     expect(pts[1]![0]).toBeLessThan(50);

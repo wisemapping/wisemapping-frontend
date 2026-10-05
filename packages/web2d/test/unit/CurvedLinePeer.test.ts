@@ -29,11 +29,9 @@ const line = (x1: number, y1: number, x2: number, y2: number): CurvedLinePeer =>
 const d = (peer: CurvedLinePeer) => peer._native.getAttribute('d');
 
 describe('CurvedLinePeer default control points', () => {
-  it('characterization: horizontal line, width 1 (tapered and closed)', () => {
+  it('horizontal line, width 1: tapered, closed and symmetric about the centre', () => {
     const peer = line(0, 0, 90, 0);
-    expect(d(peer)).toBe(
-      'M0.0,-0.5  C30.0,0.0  60.0,0.0  90.0,0.0   60.0,0.4  30.0,0.7  0.0,0.5  Z',
-    );
+    expect(d(peer)).toBe('M0.0,-0.5 C30.0,-0.3 60.0,-0.2 90.0,0.0 C60.0,0.2 30.0,0.3 0.0,0.5 Z');
   });
 
   it('puts the control points at a third of the chord (horizontal)', () => {
@@ -56,15 +54,9 @@ describe('CurvedLinePeer default control points', () => {
     expect(c2).toEqual({ x: 30, y: 0 });
   });
 
-  it('characterization: vertical line control points point away from the target', () => {
-    const [c1, c2] = line(0, 0, 0, 100).getControlPoints();
-    expect(c1.y).toBeCloseTo(-33.33, 1);
-    expect(c2.y).toBeCloseTo(33.33, 1);
-  });
-
-  // W-DEFCP: when |dx| <= 0.1 the `div = 0.1` fallback flips the sign, so the control points point
-  // away from the target and the curve overshoots both ends.
-  it.failing('W-DEFCP: vertical line control points point towards the target', () => {
+  // W-DEFCP: when |dx| <= 0.1 the old `div = 0.1` fallback flipped the sign, so the control points
+  // pointed away from the target and the curve overshot both ends.
+  it('W-DEFCP: vertical line control points point towards the target', () => {
     const [c1, c2] = line(0, 0, 0, 100).getControlPoints();
     expect(c1.x).toBeCloseTo(0);
     expect(c1.y).toBeCloseTo(33.33, 1);
@@ -72,7 +64,7 @@ describe('CurvedLinePeer default control points', () => {
     expect(c2.y).toBeCloseTo(-33.33, 1);
   });
 
-  it.failing('W-DEFCP: near-vertical line stays inside the ends', () => {
+  it('W-DEFCP: near-vertical line stays inside the ends', () => {
     const peer = line(0, 0, 0.05, 100);
     peer.setWidth(0);
     const { minY, maxY } = extent(parsePathPoints(d(peer)));
@@ -115,7 +107,8 @@ describe('CurvedLinePeer control points (W-CTRLFLAG, BL-69)', () => {
       { x: 10, y: 20 },
       { x: -10, y: 20 },
     ]);
-    expect(d(peer)).toContain('C10.0,20.0  190.0,70.0  200.0,50.0');
+    peer.setWidth(0);
+    expect(d(peer)).toBe('M0.0,0.0 C10.0,20.0 190.0,70.0 200.0,50.0');
   });
 
   it('copies the control points in and out', () => {
@@ -144,12 +137,25 @@ describe('CurvedLinePeer control points (W-CTRLFLAG, BL-69)', () => {
     ]);
   });
 
-  // Section 3.3: setSrcControlPoint(null) dereferences control.x before its own guard.
-  it.failing('setSrcControlPoint(null) does not throw', () => {
+  // Section 3.3: setSrcControlPoint(null) used to dereference control.x before its own guard.
+  it('setSrcControlPoint(null) does not throw', () => {
     const peer = line(0, 0, 90, 0);
     expect(() =>
       peer.setSrcControlPoint(null as unknown as { x: number; y: number }),
     ).not.toThrow();
+  });
+
+  it('a null control point is ignored, and keeps the default point', () => {
+    const peer = line(0, 0, 90, 0);
+    const before = d(peer);
+    peer.setSrcControlPoint(null);
+    peer.setDestControlPoint(null);
+    expect(d(peer)).toBe(before);
+    peer.setTo(0, 90);
+    expect(peer.getControlPoints()).toEqual([
+      { x: 0, y: 30 },
+      { x: 0, y: -30 },
+    ]);
   });
 });
 
@@ -164,26 +170,92 @@ describe('CurvedLinePeer width (taper)', () => {
     const peer = line(0, 0, 90, 0);
     peer.setWidth(10);
     expect(peer.getWidth()).toBe(10);
-    expect(pathCommands(d(peer))).toEqual(['M', 'C', 'Z']);
+    expect(pathCommands(d(peer))).toEqual(['M', 'C', 'C', 'Z']);
   });
 
-  it('characterization: the taper is offset along y (horizontal line)', () => {
+  it('the taper of a horizontal line is offset along y', () => {
     const peer = line(0, 0, 90, 0);
     peer.setWidth(10);
     const pts = parsePathPoints(d(peer));
     expect(pts[0]).toEqual([0, -5]);
     expect(pts[pts.length - 1]).toEqual([0, 5]);
-    expect(extent(pts).maxY - extent(pts).minY).toBe(12);
+    expect(extent(pts).maxY - extent(pts).minY).toBe(10);
   });
 
-  // W-TAPER: the taper is offset only along y, so a vertical connection loses all thickness.
-  it.failing('W-TAPER: a vertical tapered line has thickness perpendicular to the chord', () => {
+  // W-TAPER: the taper used to be offset only along y, so a vertical connection lost all thickness.
+  it('W-TAPER: a vertical tapered line has thickness perpendicular to the chord', () => {
     const peer = line(0, 0, 0, 100);
     peer.setSrcControlPoint({ x: 0, y: 30 });
     peer.setDestControlPoint({ x: 0, y: -30 });
     peer.setWidth(10);
     const { minX, maxX } = extent(parsePathPoints(d(peer)));
     expect(maxX - minX).toBeGreaterThanOrEqual(5);
+  });
+
+  type P = [number, number];
+  const bezier = ([p0, p1, p2, p3]: [P, P, P, P], t: number): P => {
+    const u = 1 - t;
+    const at = (i: 0 | 1) =>
+      u * u * u * p0[i] + 3 * u * u * t * p1[i] + 3 * u * t * t * p2[i] + t * t * t * p3[i];
+    return [at(0), at(1)];
+  };
+
+  // W-TAPER: the two edges are offset by the same amount, to either side of the centre curve.
+  it.each([
+    ['a horizontal S-curve', [0, 0, 150, 60], [50, 0], [-50, 0]],
+    ['a right-to-left S-curve', [0, 0, -150, 60], [-50, 0], [50, 0]],
+    ['a vertical S-curve', [0, 0, 60, 150], [0, 50], [0, -50]],
+    ['a straight inclined line', [0, 0, 150, 4], [50, 4 / 3], [-50, -4 / 3]],
+  ] as [string, [number, number, number, number], P, P][])(
+    'the edges of the taper are symmetric about the centre curve: %s',
+    (_name, [x1, y1, x2, y2], src, dest) => {
+      const peer = line(x1, y1, x2, y2);
+      peer.setSrcControlPoint({ x: src[0], y: src[1] });
+      peer.setDestControlPoint({ x: dest[0], y: dest[1] });
+      peer.setWidth(10);
+      const pts = parsePathPoints(d(peer));
+      expect(pts).toHaveLength(7);
+      const edgeA = [pts[0], pts[1], pts[2], pts[3]] as [P, P, P, P];
+      const edgeB = [pts[6], pts[5], pts[4], pts[3]] as [P, P, P, P];
+      const centre: [P, P, P, P] = [
+        [x1, y1],
+        [x1 + src[0], y1 + src[1]],
+        [x2 + dest[0], y2 + dest[1]],
+        [x2, y2],
+      ];
+      for (let i = 0; i <= 20; i++) {
+        const t = i / 20;
+        const a = bezier(edgeA, t);
+        const b = bezier(edgeB, t);
+        const c = bezier(centre, t);
+        // Rounded to one decimal in the path, hence the 0.1 tolerance.
+        expect(Math.abs((a[0] + b[0]) / 2 - c[0])).toBeLessThanOrEqual(0.1);
+        expect(Math.abs((a[1] + b[1]) / 2 - c[1])).toBeLessThanOrEqual(0.1);
+        expect(
+          Math.abs(Math.hypot(a[0] - c[0], a[1] - c[1]) - Math.hypot(b[0] - c[0], b[1] - c[1])),
+        ).toBeLessThanOrEqual(0.15);
+      }
+      // Full width at the start, across the tangent there; a point at the end.
+      expect(Math.hypot(pts[0]![0] - pts[6]![0], pts[0]![1] - pts[6]![1])).toBeCloseTo(10, 1);
+    },
+  );
+
+  it('falls back to a vertical offset when every point coincides', () => {
+    const peer = line(5, 5, 5, 5);
+    peer.setWidth(10);
+    const pts = parsePathPoints(d(peer));
+    expect(pts[0]).toEqual([5, 0]);
+    expect(pts[6]).toEqual([5, 10]);
+  });
+
+  it('uses the chord when a control point sits on its end', () => {
+    const peer = line(0, 0, 0, 100);
+    peer.setSrcControlPoint({ x: 0, y: 0 });
+    peer.setDestControlPoint({ x: 0, y: 0 });
+    peer.setWidth(10);
+    const pts = parsePathPoints(d(peer));
+    expect(pts[0]).toEqual([5, 0]);
+    expect(pts[6]).toEqual([-5, 0]);
   });
 
   it('setFill re-renders the path', () => {
@@ -209,16 +281,6 @@ describe('CurvedLinePeer misc', () => {
     const peer = line(1, 2, 3, 4);
     expect(peer.getFrom()).toEqual({ x: 1, y: 2 });
     expect(peer.getTo()).toEqual({ x: 3, y: 4 });
-  });
-
-  it('stores the arrow flags', () => {
-    const peer = line(0, 0, 90, 0);
-    expect(peer.isShowEndArrow()).toBe(false);
-    expect(peer.isShowStartArrow()).toBe(false);
-    peer.setShowEndArrow(true);
-    peer.setShowStartArrow(true);
-    expect(peer.isShowEndArrow()).toBe(true);
-    expect(peer.isShowStartArrow()).toBe(true);
   });
 
   it('setDashed writes a comma separated dash array, and clears it', () => {
@@ -255,10 +317,6 @@ describe('CurvedLine', () => {
     curve.setIsDestControlPointCustom(true);
     expect(curve.isSrcControlPointCustom()).toBe(true);
     expect(curve.isDestControlPointCustom()).toBe(true);
-    curve.setShowEndArrow(true);
-    curve.setShowStartArrow(true);
-    expect(curve.isShowEndArrow()).toBe(true);
-    expect(curve.isShowStartArrow()).toBe(true);
     curve.setWidth(4);
     expect(curve.getWidth()).toBe(4);
     curve.setDashed(2, 2);

@@ -88,8 +88,8 @@ Size.args = {
   strokeColor: 'blue',
 };
 
-// Vertical orientation (tree and org layouts). W-VCURVE: VerticalCurved looks exactly like
-// VerticalStraight, because every middle point lies on y = middle.
+// Vertical orientation (tree and org layouts). W-VCURVE (fixed): VerticalCurved chamfers both
+// corners, so it no longer looks exactly like VerticalStraight.
 export const VerticalStraight = Template.bind({});
 VerticalStraight.args = {
   strokeWidth: 1,

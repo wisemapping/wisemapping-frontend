@@ -63,24 +63,8 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
     return this.peer.getTo();
   }
 
-  setShowEndArrow(visible: boolean) {
-    this.peer.setShowEndArrow(visible);
-  }
-
   getElementClass(): CurvedLine {
     return this;
-  }
-
-  isShowEndArrow(): boolean {
-    return this.peer.isShowEndArrow();
-  }
-
-  setShowStartArrow(visible: boolean): void {
-    this.peer.setShowStartArrow(visible);
-  }
-
-  isShowStartArrow(): boolean {
-    return this.peer.isShowStartArrow();
   }
 
   /**

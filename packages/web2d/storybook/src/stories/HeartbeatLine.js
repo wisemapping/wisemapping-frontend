@@ -21,8 +21,8 @@ import HeartbeatLine from '../../../src/components/HeartbeatLine';
 import { addReferencePoints, createCenteredWorkspace } from './Reference';
 
 // Lines in every direction, plus short ones (length 1, 5 and 20) and a zero-length one.
-// W-STALEPATH: the zero-length line still shows the path drawn after setFrom (to the origin),
-// because setTo with equal ends returns early without clearing it.
+// W-STALEPATH (fixed): the zero-length line shows nothing; the path drawn after setFrom (to the
+// origin) is cleared when setTo collapses the ends.
 const LINES = [
   [-180, -150, 180, -150],
   [-150, -120, -150, 180],

@@ -23,7 +23,7 @@ import Workspace from '../../../src/components/Workspace';
 
 // Eight arrows around the centre, each at the end of a grey shaft that runs along its control
 // point (as mindplot draws relationship ends), plus the horizontal (y = 0) case on the bottom row,
-// which ArrowPeer draws as y = 1. The workspace is zoomed in 2x so the 6 unit wings are visible.
+// whose wings are at ±45° too. The workspace is zoomed in 2x so the 6 unit wings are visible.
 export const createArrow = ({ strokeColor, strokeWidth, dashed }) => {
   const divElem = document.createElement('div');
   const workspace = new Workspace();

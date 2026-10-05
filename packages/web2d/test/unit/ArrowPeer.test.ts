@@ -78,16 +78,25 @@ describe('ArrowPeer', () => {
     expect(angleBetween(w1!, w2!)).toBeCloseTo(90);
   });
 
-  it('characterization: the y = 0 case is drawn as y = 1, so the wings are skewed', () => {
-    const peer = arrow([0, 0], { x: 10, y: 0 });
+  it.each([
+    [10, 0],
+    [-10, 0],
+  ])('the y = 0 case has wings at ±45° (%d,%d)', (x, y) => {
+    const peer = arrow([0, 0], { x, y });
     const [w1, w2] = wings(peer);
     expect(angleBetween(w1!, w2!)).toBeCloseTo(90);
-    expect(angleBetween(w1!, [10, 0])).toBeCloseTo(39.29, 1);
-    expect(angleBetween(w2!, [10, 0])).toBeCloseTo(50.71, 1);
+    expect(angleBetween(w1!, [x, y])).toBeCloseTo(45);
+    expect(angleBetween(w2!, [x, y])).toBeCloseTo(45);
   });
 
-  // Section 3.3: the y = 0 case writes y = 1 into the caller's object.
-  it.failing('does not mutate the caller control point (y = 0 case)', () => {
+  it('a zero control point points down', () => {
+    const [w1, w2] = wings(arrow([0, 0], { x: 0, y: 0 }));
+    expect(angleBetween(w1!, [0, 1])).toBeCloseTo(45);
+    expect(angleBetween(w2!, [0, 1])).toBeCloseTo(45);
+  });
+
+  // Section 3.3: the y = 0 case used to write y = 1 into the caller's object.
+  it('does not mutate the caller control point (y = 0 case)', () => {
     const cp = { x: 10, y: 0 };
     arrow([0, 0], cp);
     expect(cp).toEqual({ x: 10, y: 0 });
@@ -117,16 +126,16 @@ describe('ArrowPeer', () => {
     expect(peer._native.getAttribute('stroke-width')).toBe('3');
   });
 
-  it('characterization: setDashed concatenates length and spacing', () => {
+  it('setDashed writes length and spacing, and clears them', () => {
     const peer = arrow([0, 0], { x: 10, y: 5 });
-    peer.setDashed(true, 5, 5);
-    expect(peer._native.getAttribute('stroke-dasharray')).toBe('55');
+    peer.setDashed(true, 5, 3);
+    expect(peer._native.getAttribute('stroke-dasharray')).toBe('5,3');
     peer.setDashed(false, 5, 5);
     expect(peer._native.getAttribute('stroke-dasharray')).toBe('');
   });
 
-  // W-ARROWDASH: `${length}${spacing}` gives "55".
-  it.failing('W-ARROWDASH: setDashed separates length and spacing', () => {
+  // W-ARROWDASH: `${length}${spacing}` used to give "55".
+  it('W-ARROWDASH: setDashed separates length and spacing', () => {
     const peer = arrow([0, 0], { x: 10, y: 5 });
     peer.setDashed(true, 5, 5);
     expect(peer._native.getAttribute('stroke-dasharray')).toMatch(/^5[ ,]5$/);

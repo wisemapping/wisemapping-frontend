@@ -1,5 +1,5 @@
 <svg focusable="true" height="400" preserveAspectRatio="none" viewBox="-200 -200 400 400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <path d="M-150,-120.5  C-50,-120  50,-60  150,-60   50,-59.6  -50,-119.3  -150,-119.5  Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="1"/>
-  <path d="M-150,-5  C-50,0  50,60  150,60   50,64  -50,7  -150,5  Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="1"/>
-  <path d="M-150,110  C-50,120  50,180  150,180   50,188  -50,134  -150,130  Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="1"/>
+  <path d="M-150,-120.5 C-50,-120.3 50,-60.2 150,-60 C50,-59.8 -50,-119.7 -150,-119.5 Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="1"/>
+  <path d="M-150,-5 C-50,-3.5 50,58 150,60 C50,62 -50,3.5 -150,5 Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="1"/>
+  <path d="M-150,110 C-50,113 50,176 150,180 C50,184 -50,127 -150,130 Z" fill="#3366cc" fill-opacity="1" stroke="#3366cc" stroke-dasharray="" stroke-linecap="" stroke-opacity="1" stroke-width="1"/>
 </svg>

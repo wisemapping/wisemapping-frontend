@@ -162,6 +162,8 @@ class NeuronLinePeer extends ElementPeer {
       !$defined(this._y2) ||
       (this._x1 === this._x2 && this._y1 === this._y2)
     ) {
+      // Nothing to draw: clear the previous path rather than leave it on screen (W-STALEPATH).
+      this._path.removeAttribute('d');
       return;
     }
 
@@ -195,8 +197,10 @@ class NeuronLinePeer extends ElementPeer {
       const spikePhase = (Math.sin(t * Math.PI * 4 + jitterSeed * 10) + 1) / 2;
       const spike = spikePhase > 0.8 ? (spikePhase - 0.8) * 5 : 0;
 
-      const targetX = baseX + perpX * lateral + unitX * forward;
-      const targetY = baseY + perpY * lateral + unitY * forward;
+      // The last segment ends exactly at the target (W-NEURONEND).
+      const last = i === steps;
+      const targetX = last ? this._x2 : baseX + perpX * lateral + unitX * forward;
+      const targetY = last ? this._y2 : baseY + perpY * lateral + unitY * forward;
 
       const ctrlOffset = distance / steps / 3;
       const ctrl1 = {
@@ -208,8 +212,8 @@ class NeuronLinePeer extends ElementPeer {
         y: targetY - unitY * ctrlOffset + perpY * this._rand(i * 3 + 1, 0.4) * ctrlOffset,
       };
 
-      const adjustedTargetX = targetX + perpX * spike;
-      const adjustedTargetY = targetY + perpY * spike;
+      const adjustedTargetX = last ? targetX : targetX + perpX * spike;
+      const adjustedTargetY = last ? targetY : targetY + perpY * spike;
 
       pathSegments.push(
         `C${NeuronLinePeer._pointToStr(ctrl1.x, ctrl1.y)} ${NeuronLinePeer._pointToStr(ctrl2.x, ctrl2.y)} ${NeuronLinePeer._pointToStr(adjustedTargetX, adjustedTargetY)}`,
@@ -220,10 +224,12 @@ class NeuronLinePeer extends ElementPeer {
     this._path.setAttribute('d', pathSegments.join(' '));
   }
 
+  /**
+   * Seeded from the length, not the absolute ends, so the shape does not reshuffle when the whole
+   * line moves (W-STALEPATH).
+   */
   private _pseudoSeed(): number {
-    const seedValue = Math.abs(
-      this._x1 * 0.13 + this._y1 * 0.11 + this._x2 * 0.17 + this._y2 * 0.07,
-    );
+    const seedValue = Math.hypot(this._x2 - this._x1, this._y2 - this._y1) * 0.37;
     return (Math.sin(seedValue) + 1) / 2;
   }
 

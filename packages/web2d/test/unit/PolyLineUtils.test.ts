@@ -69,15 +69,15 @@ describe('PolyLineUtils.buildVerticalStraightPath (vertical elbow)', () => {
 });
 
 describe('PolyLineUtils.buildCurvedPath (horizontal, chamfered)', () => {
-  it('characterization: chamfers the second corner by 5 units', () => {
+  it('chamfers both corners by 5 units', () => {
     expect(buildCurvedPath(10, 0, 0, 100, 100)).toBe(
-      '0.0, 0.0 50.0, 0.0 50.0, 95.0 55.0, 100.0 100.0, 100.0',
+      '0.0, 0.0 45.0, 0.0 50.0, 5.0 50.0, 95.0 55.0, 100.0 100.0, 100.0',
     );
   });
 
   it.each(QUADRANTS)('starts and ends at the given points (%s)', (_n, x2, y2) => {
     const pts = endsAt(buildCurvedPath, x2, y2);
-    expect(pts).toHaveLength(5);
+    expect(pts).toHaveLength(6);
   });
 
   it.each(QUADRANTS)('differs from the straight elbow (%s)', (_n, x2, y2) => {
@@ -89,7 +89,8 @@ describe('PolyLineUtils.buildCurvedPath (horizontal, chamfered)', () => {
   it('chamfers towards the target in every quadrant', () => {
     expect(parsePoints(buildCurvedPath(10, 0, 0, -100, -100))).toEqual([
       [0, 0],
-      [-50, 0],
+      [-45, 0],
+      [-50, -5],
       [-50, -95],
       [-55, -100],
       [-100, -100],
@@ -105,14 +106,18 @@ describe('PolyLineUtils.buildCurvedPath (horizontal, chamfered)', () => {
     expect(buildCurvedPath(10, 5, 5, 5, 5)).toBe('5.0, 5.0 5.0, 5.0');
   });
 
+  it('never prints -0.0', () => {
+    expect(buildCurvedPath(10, -0.04, 0, 100, 0.01)).toBe('0.0, 0.0 100.0, 0.0');
+  });
+
   it('rounds to one decimal', () => {
-    expect(buildCurvedPath(10, 0.04, 0, 10.06, 50)).toBe(
-      '0.0, 0.0 5.1, 0.0 5.1, 45.0 10.1, 50.0 10.1, 50.0',
+    expect(buildCurvedPath(10, 0.04, 0, 20.06, 50)).toBe(
+      '0.0, 0.0 5.0, 0.0 10.0, 5.0 10.0, 45.0 15.0, 50.0 20.1, 50.0',
     );
   });
 
-  // W-HCURVE: only the second corner is chamfered, so the shape is asymmetric.
-  it.failing('W-HCURVE: chamfers both corners symmetrically', () => {
+  // W-HCURVE: only the second corner used to be chamfered, so the shape was asymmetric.
+  it('W-HCURVE: chamfers both corners symmetrically', () => {
     const pts = parsePoints(buildCurvedPath(10, 0, 0, 100, 100));
     expect(pts).toEqual([
       [0, 0],
@@ -124,8 +129,8 @@ describe('PolyLineUtils.buildCurvedPath (horizontal, chamfered)', () => {
     ]);
   });
 
-  // W-HCURVE: the 5 unit chamfer is not clamped.
-  it.failing('W-HCURVE: never overshoots the target when |dy| is small', () => {
+  // W-HCURVE: the 5 unit chamfer used not to be clamped.
+  it('W-HCURVE: never overshoots the target when |dy| is small', () => {
     const pts = parsePoints(buildCurvedPath(10, 0, 0, 100, 4));
     pts.forEach(([, y]) => {
       expect(y).toBeGreaterThanOrEqual(0);
@@ -133,7 +138,7 @@ describe('PolyLineUtils.buildCurvedPath (horizontal, chamfered)', () => {
     });
   });
 
-  it.failing('W-HCURVE: never overshoots the target when |dx| is small', () => {
+  it('W-HCURVE: never overshoots the target when |dx| is small', () => {
     const pts = parsePoints(buildCurvedPath(10, 0, 0, 6, 100));
     pts.forEach(([x]) => {
       expect(x).toBeGreaterThanOrEqual(0);
@@ -143,10 +148,24 @@ describe('PolyLineUtils.buildCurvedPath (horizontal, chamfered)', () => {
 });
 
 describe('PolyLineUtils.buildVerticalCurvedPath (vertical)', () => {
-  it('characterization: every middle point lies on y = middle', () => {
+  it('chamfers both corners by 5 units', () => {
     expect(buildVerticalCurvedPath(10, 0, 0, 100, 100)).toBe(
-      '0.0, 0.0 0.0, 50.0 5.0, 50.0 95.0, 50.0 100.0, 50.0 100.0, 100.0',
+      '0.0, 0.0 0.0, 45.0 5.0, 50.0 95.0, 50.0 100.0, 55.0 100.0, 100.0',
     );
+  });
+
+  it.each([
+    [100, 4],
+    [6, 100],
+    [-6, -100],
+  ])('never overshoots the target (%d,%d)', (x2, y2) => {
+    const pts = parsePoints(buildVerticalCurvedPath(10, 0, 0, x2, y2));
+    pts.forEach(([x, y]) => {
+      expect(Math.abs(x)).toBeLessThanOrEqual(Math.abs(x2));
+      expect(Math.sign(x) * Math.sign(x2)).not.toBe(-1);
+      expect(Math.abs(y)).toBeLessThanOrEqual(Math.abs(y2));
+      expect(Math.sign(y) * Math.sign(y2)).not.toBe(-1);
+    });
   });
 
   it.each(QUADRANTS)('starts and ends at the given points (%s)', (_n, x2, y2) => {
@@ -163,15 +182,15 @@ describe('PolyLineUtils.buildVerticalCurvedPath (vertical)', () => {
     expect(pts[3]).toEqual([-95, 50]);
   });
 
-  // W-VCURVE: all middle points lie on y = middle, so the "curved" vertical line looks exactly
-  // like the straight elbow, with no rounding at the corners.
-  it.failing('W-VCURVE: rounds the corners (not every middle point on y = middle)', () => {
+  // W-VCURVE: all middle points used to lie on y = middle, so the "curved" vertical line looked
+  // exactly like the straight elbow, with no rounding at the corners.
+  it('W-VCURVE: rounds the corners (not every middle point on y = middle)', () => {
     const pts = parsePoints(buildVerticalCurvedPath(10, 0, 0, 100, 100));
     const middle = pts.slice(1, -1);
     expect(middle.some(([, y]) => y !== 50)).toBe(true);
   });
 
-  it.failing('W-VCURVE: differs from the vertical straight elbow as a shape', () => {
+  it('W-VCURVE: differs from the vertical straight elbow as a shape', () => {
     // Dropping collinear points, the curved path must not reduce to the straight elbow.
     const dedupe = (pts: [number, number][]) =>
       pts.filter((p, i) => {

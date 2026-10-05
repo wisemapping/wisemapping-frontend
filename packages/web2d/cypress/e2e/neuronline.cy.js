@@ -19,10 +19,10 @@ describe('NeuronLine Suite', () => {
   ['default', 'thin', 'thick', 'dashed'].forEach((story) => {
     it(`NeuronLine ${story}`, () => {
       cy.visit(`/iframe.html?args=&id=shapes-neuronline--${story}&viewMode=story`);
-      // 8 lines. W-STALEPATH: the zero-length one keeps the path drawn when only its source was
-      // set (to the origin), because collapsing the ends does not clear it.
+      // 8 lines. The zero-length one has no path: the one drawn when only its source was set (to
+      // the origin) is cleared when the ends collapse (W-STALEPATH).
       cy.get('path').should('have.length', 8);
-      cy.get('path[d]').should('have.length', 8);
+      cy.get('path[d]').should('have.length', 7);
       cy.matchImageSnapshot(`neuronline-${story}`);
     });
   });

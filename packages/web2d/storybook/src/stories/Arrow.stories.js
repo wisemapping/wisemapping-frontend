@@ -42,7 +42,7 @@ Thick.args = {
   dashed: false,
 };
 
-// W-ARROWDASH: setDashed(true, 3, 3) writes stroke-dasharray "33".
+// W-ARROWDASH (fixed): setDashed(true, 3, 3) writes stroke-dasharray "3,3".
 export const Dashed = Template.bind({});
 Dashed.args = {
   strokeColor: 'red',

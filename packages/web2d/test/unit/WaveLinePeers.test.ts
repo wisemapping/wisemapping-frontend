@@ -61,11 +61,25 @@ describe.each(KINDS)('%s', (_name, create) => {
     expect(d(draw(create, 0, 0, 0, 0))).toBeNull();
   });
 
-  // W-STALEPATH: when the ends coincide, the method returns early and the previous path stays.
-  it.failing('W-STALEPATH: clears the path when the ends collapse', () => {
+  // W-STALEPATH: when the ends coincided, the method returned early and the previous path stayed.
+  it('W-STALEPATH: clears the path when the ends collapse', () => {
     const peer = draw(create, 0, 0, 100, 0);
     peer.setTo(0, 0);
     expect(d(peer) ?? '').toBe('');
+  });
+
+  it('keeps its shape when the whole line moves (seeded from the length)', () => {
+    const shape = (x: number, y: number) =>
+      parsePathPoints(d(draw(create, x, y, x + 200, y + 50))).map(([px, py]) => [
+        Number((px - x).toFixed(1)),
+        Number((py - y).toFixed(1)),
+      ]);
+    expect(shape(37, -11)).toEqual(shape(0, 0));
+  });
+
+  it('ends exactly at the target', () => {
+    const pts = parsePathPoints(d(draw(create, 10, 20, 210, 120)));
+    expect(pts[pts.length - 1]).toEqual([210, 120]);
   });
 
   it('applies the stroke: width at least 1, colour, opacity', () => {
@@ -131,13 +145,26 @@ describe('HeartbeatLinePeer', () => {
     expect(pts[pts.length - 1]).toEqual([210, 120]);
   });
 
+  it.each([1, 5, 20])('the spike of a %d unit line stays within its length', (length) => {
+    const pts = parsePathPoints(d(draw(() => new HeartbeatLinePeer(), 0, 0, length, 0)));
+    pts.forEach(([, y]) => expect(Math.abs(y)).toBeLessThanOrEqual(length));
+  });
+
+  it('a stroke update without a new width does not re-path', () => {
+    const peer = draw(() => new HeartbeatLinePeer(), 0, 0, 200, 0);
+    const before = d(peer);
+    peer.setStroke(3, 'dash');
+    peer.setStroke(null, null, 'red');
+    expect(d(peer)).toBe(before);
+  });
+
   it('the spike is perpendicular to the line (vertical line spikes along x)', () => {
     const pts = parsePathPoints(d(draw(() => new HeartbeatLinePeer(), 0, 0, 0, 200)));
     expect(Math.max(...pts.map(([x]) => Math.abs(x)))).toBeGreaterThan(10);
   });
 
-  // W-STALEPATH: setStroke(width) changes the amplitude, but does not re-path.
-  it.failing('W-STALEPATH: re-paths when the stroke width changes', () => {
+  // W-STALEPATH: setStroke(width) changed the amplitude, but did not re-path.
+  it('W-STALEPATH: re-paths when the stroke width changes', () => {
     const peer = draw(() => new HeartbeatLinePeer(), 0, 0, 200, 0);
     const before = d(peer);
     peer.setStroke(10);
@@ -146,11 +173,11 @@ describe('HeartbeatLinePeer', () => {
 });
 
 describe('NeuronLinePeer', () => {
-  it('characterization: horizontal (0,0)->(200,0)', () => {
+  it('horizontal (0,0)->(200,0)', () => {
     expect(d(draw(() => new NeuronLinePeer(), 0, 0, 200, 0))).toBe(
-      'M0.0,0.0 C11.1,-3.4 22.7,7.8 33.8,6.1 C44.9,2.0 50.2,2.4 61.3,3.6 C72.5,2.4 86.2,-1.4 ' +
-        '97.3,-3.2 C108.4,-3.1 121.0,14.0 132.1,15.8 C143.2,18.6 148.5,2.1 159.7,0.7 ' +
-        'C170.8,-1.1 188.1,-2.8 199.2,2.1',
+      'M0.0,0.0 C11.1,-3.2 15.7,19.7 26.8,21.9 C37.9,24.2 55.8,-1.8 66.9,0.1 C78.0,-1.8 ' +
+        '85.8,-1.2 96.9,-2.3 C108.0,-4.7 115.2,-4.6 126.3,0.4 C137.4,0.3 158.0,-13.3 ' +
+        '169.1,-17.3 C180.2,-21.7 188.9,-3.2 200.0,0.0',
     );
   });
 
@@ -162,9 +189,9 @@ describe('NeuronLinePeer', () => {
     expect(count(5000)).toBe(18);
   });
 
-  // New finding (W-NEURONEND): the last segment ends at the lateral/forward/spike offset of
-  // t = 1, not at the target, so the line stops short of (or past) the topic.
-  it.failing('W-NEURONEND: ends exactly at the target', () => {
+  // W-NEURONEND: the last segment used to end at the lateral/forward/spike offset of t = 1, not
+  // at the target, so the line stopped short of (or past) the topic.
+  it('W-NEURONEND: ends exactly at the target', () => {
     const pts = parsePathPoints(d(draw(() => new NeuronLinePeer(), 0, 0, 200, 0)));
     expect(pts[pts.length - 1]).toEqual([200, 0]);
   });
