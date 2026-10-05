@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import flatten from 'lodash/flatten';
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
 import NodeModel from '../model/NodeModel';
@@ -37,7 +37,7 @@ class DeleteCommand extends Command {
   private _parentTopicIds: (number | null)[];
 
   constructor(topicIds: number[], relIds: number[]) {
-    $assert($defined(relIds), 'topicIds can not be null');
+    $assert(relIds != null, 'topicIds can not be null');
 
     super();
     this._relIds = relIds;

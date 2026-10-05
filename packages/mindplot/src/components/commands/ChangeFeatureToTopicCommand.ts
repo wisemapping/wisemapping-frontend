@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
 import type { FeatureAttributes } from '../model/FeatureModel';
@@ -29,9 +29,9 @@ class ChangeFeatureToTopicCommand extends Command {
   private _attributes: Record<string, string | undefined>;
 
   constructor(topicId: number, featureId: number, attributes: FeatureAttributes) {
-    $assert($defined(topicId), 'topicId can not be null');
-    $assert($defined(featureId), 'featureId can not be null');
-    $assert($defined(attributes), 'attributes can not be null');
+    $assert(topicId != null, 'topicId can not be null');
+    $assert(featureId != null, 'featureId can not be null');
+    $assert(attributes != null, 'attributes can not be null');
 
     super();
     this._topicId = topicId;
