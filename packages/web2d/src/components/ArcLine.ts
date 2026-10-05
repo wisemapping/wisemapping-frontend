@@ -18,13 +18,13 @@
 import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
 import Line from './Line';
-import StyleAttributes from './StyleAttributes';
+import type { ElementAttributes } from './StyleAttributes';
 import ArcLinePeer from './peer/svg/ArcLinePeer';
 import PositionType from './PositionType';
 import type { ElementType, Orientation } from './types';
 
 class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
-  constructor(attributes?: StyleAttributes) {
+  constructor(attributes?: ElementAttributes) {
     const peer = new ArcLinePeer();
     const defaultAttributes = {
       strokeColor: 'blue',

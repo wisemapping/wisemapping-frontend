@@ -16,9 +16,14 @@
  *   limitations under the License.
  */
 
-import { $defined } from './peer/utils/assert';
 import ElementPeer, { CustomEventMap, ElementListener, EventDetail } from './peer/svg/ElementPeer';
-import StyleAttributes from './StyleAttributes';
+import StyleAttributes, {
+  collectAttributeCalls,
+  toNumber,
+  toText,
+  type AttributeArguments,
+  type AttributeSetter,
+} from './StyleAttributes';
 import { isStrokeStyle, type ElementType } from './types';
 
 /**
@@ -27,76 +32,56 @@ import { isStrokeStyle, type ElementType } from './types';
 abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap = CustomEventMap> {
   readonly peer: T;
 
-  constructor(peer: T, attributes: StyleAttributes, delayInit?: boolean) {
+  constructor(peer: T, attributes: StyleAttributes = {}, delayInit?: boolean) {
     this.peer = peer;
     if (peer == null) {
       throw new Error('Element peer can not be null');
     }
 
-    if (!delayInit && attributes) {
+    if (!delayInit) {
       this._initialize(attributes);
     }
   }
 
-  protected _initialize(attributes: StyleAttributes) {
-    const batchExecute: Record<string, (string | number)[]> = {};
+  protected _initialize(attributes: StyleAttributes): void {
+    collectAttributeCalls(attributes).forEach((args, setter) => this.applyAttribute(setter, args));
+  }
 
-    // Collect arguments ...
-    for (const key in attributes) {
-      if (Object.prototype.hasOwnProperty.call(attributes, key)) {
-        const funcName = this._attributeNameToFuncName(key, 'set');
-        let funcArgs = batchExecute[funcName];
-        if (!$defined(funcArgs)) {
-          funcArgs = [];
-        }
-
-        const signature =
-          WorkspaceElement._propertyNameToSignature[
-            key as keyof typeof WorkspaceElement._propertyNameToSignature
-          ];
-        const argPositions = signature?.[1];
-
-        if (argPositions !== WorkspaceElement._SIGNATURE_MULTIPLE_ARGUMENTS) {
-          const attrValue = attributes[key as keyof StyleAttributes];
-          if (
-            attrValue !== undefined &&
-            argPositions !== undefined &&
-            typeof argPositions === 'number' &&
-            funcArgs !== undefined
-          ) {
-            funcArgs[argPositions] = attrValue as string | number;
-            batchExecute[funcName] = funcArgs;
-          }
-        } else {
-          const attrValue = attributes[key as keyof StyleAttributes];
-          if (typeof attrValue === 'string') {
-            // The later key wins, as for single keys; the positions the combined key does not
-            // cover (strokeOpacity after '1 solid black') are kept.
-            const combined = WorkspaceElement._parseArguments(attrValue);
-            combined.forEach((arg, i) => {
-              funcArgs![i] = arg;
-            });
-            batchExecute[funcName] = funcArgs;
-          }
-        }
-      }
-    }
-
-    // Call functions ...
-    // eslint-disable-next-line guard-for-in
-    for (const key in batchExecute) {
-      const func = (this as Record<string, unknown>)[key];
-      if (!func) {
-        throw new Error(`Could not find function: ${key}`);
-      }
-      const batchArgs = batchExecute[key];
-      if (typeof func === 'function' && batchArgs) {
-        func.apply(this, batchArgs);
-      }
+  /**
+   * Calls the setter of one attribute group with its collected arguments. Elements with a
+   * position or a coordinate system handle those groups too; here they are unsupported.
+   */
+  protected applyAttribute(setter: AttributeSetter, args: AttributeArguments): void {
+    switch (setter) {
+      case 'size':
+        this.setSize(toNumber(args[0]), toNumber(args[1]));
+        break;
+      case 'stroke':
+        this.setStroke(
+          toNumber(args[0]) ?? null,
+          toText(args[1]),
+          toText(args[2]),
+          toNumber(args[3]),
+        );
+        break;
+      case 'fill':
+        this.setFill(toText(args[0]), toNumber(args[1]));
+        break;
+      case 'visibility':
+        this.setVisibility(Boolean(args[0]));
+        break;
+      case 'opacity':
+        this.setOpacity(Number(args[0]));
+        break;
+      default:
+        throw new Error(
+          `Could not find function: set${setter.charAt(0).toUpperCase()}${setter.substring(1)}`,
+        );
     }
   }
 
-  setSize(width: number, height: number) {
+  /** Sets the size. A missing width or height keeps the current one. */
+  setSize(width?: number | null, height?: number | null): void {
     this.peer.setSize(width, height);
   }
 
@@ -171,7 +156,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
    * color: Fill color
    * opacity: Opacity of the fill. It must be less than 1.
    */
-  setFill(color: string, opacity?: number): void {
+  setFill(color?: string | null, opacity?: number | null): void {
     this.peer.setFill(color, opacity);
   }
 
@@ -188,102 +173,6 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
       throw new Error(`Unsupported stroke style: '${style}'`);
     }
     this.peer.setStroke(width, style, color, opacity);
-  }
-
-  _attributeNameToFuncName(attributeKey: string, prefix: string) {
-    const signature =
-      WorkspaceElement._propertyNameToSignature[
-        attributeKey as keyof typeof WorkspaceElement._propertyNameToSignature
-      ];
-    if (!$defined(signature)) {
-      throw new Error(`Unsupported attribute: ${attributeKey}`);
-    }
-
-    const propName = signature[0];
-    if (typeof propName !== 'string') {
-      throw new Error(`Invalid signature for attribute: ${attributeKey}`);
-    }
-    const firstLetter = propName.charAt(0);
-    return prefix + firstLetter.toUpperCase() + propName.substring(1);
-  }
-
-  /**
-   * All element properties can be setted using either a method
-   *  invocation or attribute invocation.
-   *  key: size, width, height, position, x, y, stroke, strokeWidth, strokeStyle,
-   * strokeColor, strokeOpacity,
-   *       fill, fillColor, fillOpacity, coordSize, coordSizeWidth, coordSizeHeight,
-   * coordOrigin, coordOriginX, coordOrigiY
-   */
-  setAttribute(key: string, value: string | number) {
-    const funcName = this._attributeNameToFuncName(key, 'set');
-
-    const signature =
-      WorkspaceElement._propertyNameToSignature[
-        key as keyof typeof WorkspaceElement._propertyNameToSignature
-      ];
-    if (signature == null) {
-      throw new Error(`Could not find the signature for:${key}`);
-    }
-
-    // Parse arguments ..
-    const argPositions = signature[1];
-    let args: (string | number)[] = [];
-    if (
-      argPositions !== WorkspaceElement._SIGNATURE_MULTIPLE_ARGUMENTS &&
-      argPositions !== undefined &&
-      typeof argPositions === 'number'
-    ) {
-      args[argPositions] = value;
-    } else {
-      args = WorkspaceElement._parseArguments(String(value));
-    }
-
-    // Look up method ...
-    const setter = (this as Record<string, unknown>)[funcName];
-    if (setter == null) {
-      throw new Error(`Could not find the function name:${funcName}`);
-    }
-    if (typeof setter === 'function') {
-      setter.apply(this, args);
-    }
-  }
-
-  getAttribute(key: string) {
-    const funcName = this._attributeNameToFuncName(key, 'get');
-
-    const signature =
-      WorkspaceElement._propertyNameToSignature[
-        key as keyof typeof WorkspaceElement._propertyNameToSignature
-      ];
-    if (signature == null) {
-      throw new Error(`Could not find the signature for:${key}`);
-    }
-
-    const getter = (this as Record<string, unknown>)[funcName];
-    if (getter == null) {
-      throw new Error(`Could not find the function name:${funcName}`);
-    }
-
-    let getterResult: Record<string, unknown> = {};
-    if (typeof getter === 'function') {
-      getterResult = getter.apply(this, []) as Record<string, unknown>;
-    }
-    const attibuteName = signature[2];
-    if (!$defined(attibuteName)) {
-      throw new Error(`Could not find attribute mapping for:${key}`);
-    }
-
-    if (typeof attibuteName !== 'string' && typeof attibuteName !== 'number') {
-      throw new Error(`Invalid attribute name type for:${key}`);
-    }
-
-    const result = getterResult[attibuteName];
-    if (!$defined(result)) {
-      throw new Error(`Could not find attribute with name:${attibuteName}`);
-    }
-
-    return result;
   }
 
   /**
@@ -327,47 +216,5 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
   setTestId(testId: string) {
     this.peer._native.setAttribute('test-id', testId);
   }
-
-  static _SIGNATURE_MULTIPLE_ARGUMENTS = -1;
-
-  /** Splits a combined attribute ('1 solid black'): numeric parts become numbers. */
-  private static _parseArguments(value: string): (string | number)[] {
-    return value
-      .split(' ')
-      .filter((arg) => arg !== '')
-      .map((arg) => (Number.isFinite(Number(arg)) ? Number(arg) : arg));
-  }
-
-  private static _propertyNameToSignature = {
-    // Format: [attribute name, argument position on setter, attribute name on getter]
-    size: ['size', -1],
-    width: ['size', 0, 'width'],
-    height: ['size', 1, 'height'],
-
-    position: ['position', -1],
-    x: ['position', 0, 'x'],
-    y: ['position', 1, 'y'],
-
-    stroke: ['stroke', -1],
-    strokeWidth: ['stroke', 0, 'width'],
-    strokeStyle: ['stroke', 1, 'style'],
-    strokeColor: ['stroke', 2, 'color'],
-    strokeOpacity: ['stroke', 3, 'opacity'],
-
-    fill: ['fill', -1],
-    fillColor: ['fill', 0, 'color'],
-    fillOpacity: ['fill', 1, 'opacity'],
-
-    coordSize: ['coordSize', -1],
-    coordSizeWidth: ['coordSize', 0, 'width'],
-    coordSizeHeight: ['coordSize', 1, 'height'],
-
-    coordOrigin: ['coordOrigin', -1],
-    coordOriginX: ['coordOrigin', 0, 'x'],
-    coordOriginY: ['coordOrigin', 1, 'y'],
-
-    visibility: ['visibility', 0],
-    opacity: ['opacity', 0],
-  };
 }
 export default WorkspaceElement;

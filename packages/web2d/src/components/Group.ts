@@ -21,7 +21,13 @@ import WorkspaceElement from './WorkspaceElement';
 import ElementPeer, { CustomEventMap } from './peer/svg/ElementPeer';
 import GroupPeer from './peer/svg/GroupPeer';
 import SizeType from './SizeType';
-import StyleAttributes from './StyleAttributes';
+import {
+  pointArguments,
+  sizeArguments,
+  type AttributeArguments,
+  type AttributeSetter,
+  type GroupAttributes,
+} from './StyleAttributes';
 import PositionType from './PositionType';
 import type { ElementType } from './types';
 
@@ -29,9 +35,9 @@ import type { ElementType } from './types';
  * A group object can be used to collect shapes. `M` types its custom events (see CustomEventMap).
  */
 class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<GroupPeer, M> {
-  constructor(attributes?: StyleAttributes) {
+  constructor(attributes?: GroupAttributes) {
     const peer = new GroupPeer();
-    const defaultAttributes: StyleAttributes = {
+    const defaultAttributes: GroupAttributes = {
       width: 50,
       height: 50,
       x: 0,
@@ -88,6 +94,23 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
     }
 
     this.peer.append(element.peer);
+  }
+
+  /** Applies the position and coordinate attributes too. */
+  protected override applyAttribute(setter: AttributeSetter, args: AttributeArguments): void {
+    switch (setter) {
+      case 'position':
+        this.setPosition(...pointArguments(args, this.getPosition()));
+        break;
+      case 'coordSize':
+        this.setCoordSize(...sizeArguments(args, this.getCoordSize()));
+        break;
+      case 'coordOrigin':
+        this.setCoordOrigin(...pointArguments(args, this.getCoordOrigin()));
+        break;
+      default:
+        super.applyAttribute(setter, args);
+    }
   }
 
   getType(): ElementType {

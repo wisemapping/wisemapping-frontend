@@ -119,10 +119,10 @@ class GroupPeer extends ElementPeer<SVGGElement> {
     }
   }
 
-  override setSize(width: number, height: number) {
-    const change = width !== this._size.width || height !== this._size.height;
+  override setSize(width?: number | null, height?: number | null): void {
+    const before = this._size;
     super.setSize(width, height);
-    if (change) {
+    if (this._size.width !== before.width || this._size.height !== before.height) {
       this.updateTransform();
     }
   }

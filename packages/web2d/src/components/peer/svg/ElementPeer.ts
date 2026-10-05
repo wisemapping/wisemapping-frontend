@@ -174,7 +174,7 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
    * The attributes are always written through attr(), which skips unchanged values: the kept size
    * is not used to skip them, so a size written around the peer is restored (BL5-64).
    */
-  setSize(width: number, height: number): void {
+  setSize(width?: number | null, height?: number | null): void {
     const writeAttributes = this.hasSizeAttributes();
     if ($defined(width)) {
       this._size = { ...this._size, width };
@@ -200,7 +200,7 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
     return { width: this._size.width, height: this._size.height };
   }
 
-  setFill(color: string | null, opacity?: number | null) {
+  setFill(color?: string | null, opacity?: number | null): void {
     if (color) {
       this.attr('fill', color);
     }

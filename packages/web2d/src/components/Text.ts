@@ -19,15 +19,29 @@
 import WorkspaceElement from './WorkspaceElement';
 import TextPeer from './peer/svg/TextPeer';
 import TransformUtil from './peer/utils/TransformUtils';
-import StyleAttributes from './StyleAttributes';
+import {
+  pointArguments,
+  type AttributeArguments,
+  type AttributeSetter,
+  type ShapeAttributes,
+} from './StyleAttributes';
 import PositionType from './PositionType';
 import SizeType from './SizeType';
 import FontPeer, { FontStyle } from './peer/svg/FontPeer';
 import type { ElementType, FontWeightType } from './types';
 
 class Text extends WorkspaceElement<TextPeer> {
-  constructor(attributes?: StyleAttributes) {
+  constructor(attributes?: ShapeAttributes) {
     super(new TextPeer(new FontPeer('Arial')), attributes ?? {});
+  }
+
+  /** Applies the position attributes (x, y, position) too. */
+  protected override applyAttribute(setter: AttributeSetter, args: AttributeArguments): void {
+    if (setter === 'position') {
+      this.setPosition(...pointArguments(args, this.getPosition()));
+    } else {
+      super.applyAttribute(setter, args);
+    }
   }
 
   getType(): ElementType {

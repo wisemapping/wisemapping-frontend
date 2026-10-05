@@ -19,13 +19,13 @@
 import WorkspaceElement from './WorkspaceElement';
 import ArrowPeer from './peer/svg/ArrowPeer';
 import PositionType from './PositionType';
-import StyleAttributes from './StyleAttributes';
+import type { ElementAttributes } from './StyleAttributes';
 import type { ElementType } from './types';
 
 class Arrow extends WorkspaceElement<ArrowPeer> {
-  constructor(attributes?: StyleAttributes) {
+  constructor(attributes?: ElementAttributes) {
     const peer = new ArrowPeer();
-    const defaultAttributes: StyleAttributes = {
+    const defaultAttributes: ElementAttributes = {
       strokeColor: 'black',
       strokeWidth: 1,
       strokeStyle: 'solid',

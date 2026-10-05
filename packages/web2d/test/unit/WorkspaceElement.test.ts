@@ -18,7 +18,19 @@
 import Rect from '../../src/components/Rect';
 import Ellipse from '../../src/components/Ellipse';
 import StraightLine from '../../src/components/StraightLine';
-import StyleAttributes from '../../src/components/StyleAttributes';
+import Group from '../../src/components/Group';
+import Image from '../../src/components/Image';
+import Text from '../../src/components/Text';
+import Workspace from '../../src/components/Workspace';
+import CurvedLine from '../../src/components/CurvedLine';
+import {
+  collectAttributeCalls,
+  toLength,
+  toNumber,
+  toText,
+  type ElementAttributes,
+  type ShapeAttributes,
+} from '../../src/components/StyleAttributes';
 
 const attrs = (rect: Rect) =>
   Object.fromEntries(Array.from(rect.peer._native.attributes).map((a) => [a.name, a.value]));
@@ -43,7 +55,7 @@ describe('WorkspaceElement._initialize (attribute bag)', () => {
     // eslint-disable-next-line no-new
     new Rect(0, { strokeWidth: 3, strokeColor: 'red', strokeStyle: 'dash' });
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith(3, 'dash', 'red');
+    expect(spy).toHaveBeenCalledWith(3, 'dash', 'red', undefined);
     spy.mockRestore();
   });
 
@@ -79,23 +91,25 @@ describe('WorkspaceElement._initialize (attribute bag)', () => {
   });
 
   it('rejects unsupported attributes', () => {
-    expect(() => new Rect(0, { bogus: 1 } as unknown as StyleAttributes)).toThrow(
+    expect(() => new Rect(0, { bogus: 1 } as unknown as ShapeAttributes)).toThrow(
       'Unsupported attribute: bogus',
     );
   });
 
   it('rejects attributes without a setter', () => {
-    expect(() => new Ellipse({ coordSizeWidth: 1 })).toThrow('Could not find function');
+    expect(() => new Ellipse({ coordSizeWidth: 1 } as ShapeAttributes)).toThrow(
+      'Could not find function: setCoordSize',
+    );
   });
 
   // W-ATTRBAG: multi-argument strings reached number APIs unparsed.
   it('W-ATTRBAG: size "10 10" is accepted', () => {
-    const rect = new Rect(0, { size: '10 10' } as unknown as StyleAttributes);
+    const rect = new Rect(0, { size: '10 10' } as unknown as ShapeAttributes);
     expect(rect.getSize()).toEqual({ width: 10, height: 10 });
   });
 
   it('W-ATTRBAG: position "3 4" is accepted', () => {
-    const rect = new Rect(0, { position: '3 4' } as unknown as StyleAttributes);
+    const rect = new Rect(0, { position: '3 4' } as unknown as ShapeAttributes);
     expect(rect.getPosition()).toEqual({ x: 3, y: 4 });
   });
 
@@ -105,31 +119,91 @@ describe('WorkspaceElement._initialize (attribute bag)', () => {
   });
 });
 
-describe('WorkspaceElement.setAttribute / getAttribute', () => {
-  it('sets and gets single attributes', () => {
-    const rect = new Rect(0);
-    rect.setAttribute('strokeColor', 'red');
-    rect.setAttribute('x', 12);
-    rect.setAttribute('fillColor', 'blue');
-    expect(rect.getAttribute('strokeColor')).toBe('red');
-    expect(rect.getAttribute('x')).toBe(12);
-    expect(rect.getAttribute('fillColor')).toBe('blue');
+// Typing T8: the bag is applied with explicit code, and the reflective by-name API is gone.
+describe('WorkspaceElement attribute bag without reflection (typing T8)', () => {
+  it('has no setAttribute / getAttribute by name', () => {
+    const rect = new Rect(0) as unknown as Record<string, unknown>;
+    expect(rect.setAttribute).toBeUndefined();
+    expect(rect.getAttribute).toBeUndefined();
+    expect(rect._attributeNameToFuncName).toBeUndefined();
   });
 
-  it('sets multi-argument attributes from strings', () => {
-    const rect = new Rect(0);
-    rect.setAttribute('stroke', '4 dash red');
-    expect(rect.getAttribute('strokeWidth')).toBe(4);
-    expect(rect.getAttribute('strokeStyle')).toBe('dash');
+  it('collects one call per setter, in the order of its first key', () => {
+    const calls = collectAttributeCalls({
+      strokeColor: 'red',
+      x: 1,
+      width: 10,
+      strokeWidth: 2,
+      height: 20,
+      visibility: false,
+      opacity: 0.5,
+    });
+    expect([...calls.entries()]).toEqual([
+      ['stroke', [2, undefined, 'red']],
+      ['position', [1]],
+      ['size', [10, 20]],
+      ['visibility', [false]],
+      ['opacity', [0.5]],
+    ]);
   });
 
-  it('rejects unknown attributes and attributes without a getter mapping', () => {
-    const rect = new Rect(0);
-    expect(() => rect.setAttribute('bogus', 1)).toThrow();
-    expect(() => rect.getAttribute('bogus')).toThrow();
-    expect(() => rect.getAttribute('size')).toThrow();
-    expect(() => rect.getAttribute('coordSizeWidth')).toThrow();
-    expect(() => rect.setAttribute('coordSizeWidth', 1)).toThrow();
+  it('skips keys set to undefined, and combined keys that are not strings', () => {
+    const calls = collectAttributeCalls({
+      width: undefined,
+      stroke: 3,
+    } as unknown as ElementAttributes);
+    expect(calls.size).toBe(0);
+  });
+
+  it('converts the arguments explicitly', () => {
+    expect(toNumber(undefined)).toBeUndefined();
+    expect(toNumber('2')).toBe(2);
+    expect(toText(undefined)).toBeUndefined();
+    expect(toText(3)).toBe('3');
+    expect(toLength('400px')).toBe('400px');
+    expect(toLength(7)).toBe(7);
+    expect(toLength(true)).toBe('true');
+    expect(toLength(undefined)).toBeUndefined();
+  });
+
+  it('a missing size argument keeps the current one', () => {
+    const image = new Image({ width: 10 });
+    expect(image.getSize()).toEqual({ width: 10, height: 1 });
+    expect(image.peer._native.hasAttribute('height')).toBe(false);
+    const ellipse = new Ellipse({ size: '20' });
+    expect(ellipse.getSize()).toEqual({ width: 20, height: 40 });
+    expect(ellipse.peer._native.getAttribute('ry')).toBe('20');
+  });
+
+  it('a missing position argument keeps the current one', () => {
+    const text = new Text({ x: 3 });
+    expect(text.getPosition()).toEqual({ x: 3, y: 0 });
+    const image = new Image({ position: '4' });
+    expect(image.getPosition()).toEqual({ x: 4, y: 0 });
+    const group = new Group({ y: 9 });
+    expect(group.getPosition()).toEqual({ x: 0, y: 9 });
+  });
+
+  it('a missing coordinate argument keeps the current one', () => {
+    const group = new Group({ coordSizeWidth: 10, coordOriginY: 4 });
+    expect(group.getCoordSize()).toEqual({ width: 10, height: 50 });
+    expect(group.getCoordOrigin()).toEqual({ x: 0, y: 4 });
+    const workspace = new Workspace({ coordSize: '300', coordOrigin: '7' });
+    expect(workspace.getCoordSize()).toEqual({ width: 300, height: 200 });
+    expect(workspace.getCoordOrigin()).toEqual({ x: 7, y: 0 });
+  });
+
+  it('a workspace keeps CSS lengths for its size and stroke width', () => {
+    const workspace = new Workspace({ size: '300px 200px', stroke: '2px dash blue 0.5' });
+    expect(workspace.getSize()).toEqual({ width: '300px', height: '200px' });
+    expect(workspace._getHtmlContainer().style.border).toBe('2px dashed blue');
+    expect(workspace.peer.getSize()).toEqual({ width: 300, height: 200 });
+  });
+
+  it('a line rejects a position', () => {
+    expect(() => new CurvedLine({ x: 1 } as ElementAttributes)).toThrow(
+      'Could not find function: setPosition',
+    );
   });
 });
 

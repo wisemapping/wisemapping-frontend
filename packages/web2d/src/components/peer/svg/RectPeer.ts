@@ -52,9 +52,10 @@ class RectPeer extends ElementPeer<SVGRectElement> {
     return true;
   }
 
-  override setSize(width: number, height: number): void {
+  override setSize(width?: number | null, height?: number | null): void {
     super.setSize(width, height);
-    const min = width < height ? width : height;
+    // The kept size: a missing width or height keeps the current one.
+    const min = Math.min(this._size.width, this._size.height);
 
     if ($defined(this._arc)) {
       // Transform percentages to SVG format.

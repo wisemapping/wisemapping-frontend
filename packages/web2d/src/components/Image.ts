@@ -18,14 +18,28 @@
 import WorkspaceElement from './WorkspaceElement';
 import ImagePeer from './peer/svg/ImagePeer';
 import SizeType from './SizeType';
-import StyleAttributes from './StyleAttributes';
+import {
+  pointArguments,
+  type AttributeArguments,
+  type AttributeSetter,
+  type ShapeAttributes,
+} from './StyleAttributes';
 import PositionType from './PositionType';
 import type { ElementType } from './types';
 
 class Image extends WorkspaceElement<ImagePeer> {
-  constructor(attributes?: StyleAttributes) {
+  constructor(attributes?: ShapeAttributes) {
     const peer = new ImagePeer();
     super(peer, attributes || {});
+  }
+
+  /** Applies the position attributes (x, y, position) too. */
+  protected override applyAttribute(setter: AttributeSetter, args: AttributeArguments): void {
+    if (setter === 'position') {
+      this.setPosition(...pointArguments(args, this.getPosition()));
+    } else {
+      super.applyAttribute(setter, args);
+    }
   }
 
   getType(): ElementType {

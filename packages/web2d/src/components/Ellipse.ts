@@ -18,12 +18,17 @@
 import WorkspaceElement from './WorkspaceElement';
 import ElipsePeer from './peer/svg/ElipsePeer';
 import SizeType from './SizeType';
-import StyleAttributes from './StyleAttributes';
+import {
+  pointArguments,
+  type AttributeArguments,
+  type AttributeSetter,
+  type ShapeAttributes,
+} from './StyleAttributes';
 import PositionType from './PositionType';
 import type { ElementType } from './types';
 
 class Ellipse extends WorkspaceElement<ElipsePeer> {
-  constructor(attributes?: StyleAttributes) {
+  constructor(attributes?: ShapeAttributes) {
     const peer = new ElipsePeer();
     const defaultAttributes = {
       width: 40,
@@ -36,6 +41,15 @@ class Ellipse extends WorkspaceElement<ElipsePeer> {
 
     const mergedAttr = { ...defaultAttributes, ...attributes };
     super(peer, mergedAttr);
+  }
+
+  /** Applies the position attributes (x, y, position) too. */
+  protected override applyAttribute(setter: AttributeSetter, args: AttributeArguments): void {
+    if (setter === 'position') {
+      this.setPosition(...pointArguments(args, this.getPosition()));
+    } else {
+      super.applyAttribute(setter, args);
+    }
   }
 
   getType(): ElementType {

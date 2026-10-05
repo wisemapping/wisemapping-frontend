@@ -20,16 +20,25 @@ import WorkspaceElement from './WorkspaceElement';
 import ElementPeer from './peer/svg/ElementPeer';
 import WorkspacePeer from './peer/svg/WorkspacePeer';
 import PositionType from './PositionType';
-import StyleAttributes from './StyleAttributes';
+import {
+  pointArguments,
+  sizeArguments,
+  toLength,
+  toNumber,
+  toText,
+  type AttributeArguments,
+  type AttributeSetter,
+  type WorkspaceAttributes,
+} from './StyleAttributes';
 import { isStrokeStyle, type ElementType, type StrokeStyle } from './types';
 
 class Workspace extends WorkspaceElement<WorkspacePeer> {
   private readonly _htmlContainer: HTMLElement;
 
-  constructor(attributes?: StyleAttributes) {
+  constructor(attributes?: WorkspaceAttributes) {
     const htmlContainer = Workspace._createDivContainer();
     const peer = new WorkspacePeer();
-    const defaultAttributes: StyleAttributes = {
+    const defaultAttributes: WorkspaceAttributes = {
       width: '400px',
       height: '400px',
       stroke: '1px solid #edf1be',
@@ -46,6 +55,34 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     this._htmlContainer = htmlContainer;
     this._initialize(mergedAttr);
     htmlContainer.append(this.peer._native);
+  }
+
+  /**
+   * Applies the coordinate attributes too. The size and the stroke width keep CSS lengths
+   * ('400px', '1px') as they are.
+   */
+  protected override applyAttribute(setter: AttributeSetter, args: AttributeArguments): void {
+    switch (setter) {
+      case 'size':
+        this.setSize(toLength(args[0]), toLength(args[1]));
+        break;
+      case 'stroke':
+        this.setStroke(
+          toLength(args[0]) ?? null,
+          toText(args[1]),
+          toText(args[2]),
+          toNumber(args[3]),
+        );
+        break;
+      case 'coordSize':
+        this.setCoordSize(...sizeArguments(args, this.getCoordSize()));
+        break;
+      case 'coordOrigin':
+        this.setCoordOrigin(...pointArguments(args, this.getCoordOrigin()));
+        break;
+      default:
+        super.applyAttribute(setter, args);
+    }
   }
 
   getType(): ElementType {
@@ -106,7 +143,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
    * pt (points; 1pt=1/72in)
    * pc (picas; 1pc=12pt)
    */
-  override setSize(width: string | number, height: string | number) {
+  override setSize(width?: string | number | null, height?: string | number | null): void {
     // HTML container must have the size of the group element.
     if (width) {
       this._htmlContainer.style.width = String(width);
@@ -115,7 +152,13 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     if (height) {
       this._htmlContainer.style.height = String(height);
     }
-    this.peer.setSize(Number.parseInt(String(width), 10), Number.parseInt(String(height), 10));
+    // A missing width or height keeps the current one.
+    this.peer.setSize(Workspace.toPixels(width), Workspace.toPixels(height));
+  }
+
+  /** The pixels of a size given in pixels or as a CSS length ('400px'). */
+  private static toPixels(value?: string | number | null): number | undefined {
+    return value == null ? undefined : Number.parseInt(String(value), 10);
   }
 
   /**
