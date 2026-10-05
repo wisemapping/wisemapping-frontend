@@ -65,12 +65,6 @@
       "value": "Questa azione non può essere annullata. Il tuo account verrà eliminato definitivamente e tutti i dati verranno rimossi dai nostri server."
     }
   ],
-  "account.delete-warning": [
-    {
-      "type": 0,
-      "value": "Tieni presente che non sarai in grado di recuperare nessuna mappa mentale che hai aggiunto. Tutte le tue informazioni verranno cancellate e non potranno essere ripristinate."
-    }
-  ],
   "account.delete-warning-collaborations": [
     {
       "type": 0,
@@ -453,12 +447,6 @@
       "value": "Aggiorna"
     }
   ],
-  "admin.status": [
-    {
-      "type": 0,
-      "value": "Stato"
-    }
-  ],
   "admin.status-active": [
     {
       "type": 0,
@@ -767,12 +755,6 @@
     {
       "type": 0,
       "value": "Tutte le mappe selezionate verranno eliminate"
-    }
-  ],
-  "dialog.loading": [
-    {
-      "type": 0,
-      "value": "Caricamento..."
     }
   ],
   "duplicate.copy-title": [

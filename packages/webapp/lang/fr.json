@@ -2,9 +2,6 @@
   "common.terms-notice": {
     "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
   },
-  "account.delete-warning": {
-    "defaultMessage": "Gardez à l'esprit que vous ne pourrez pas récupérer les cartes mentales que vous avez créées. Toutes vos informations seront supprimées et ne pourront pas être restaurées."
-  },
   "accountinfo.button": {
     "defaultMessage": "J'accepte"
   },
@@ -527,9 +524,6 @@
   "footer.donations": {
     "defaultMessage": "Des dons"
   },
-  "dialog.loading": {
-    "defaultMessage": "Chargement ..."
-  },
   "registration.google.button": {
     "defaultMessage": "S'inscrire avec Google"
   },
@@ -616,9 +610,6 @@
   },
   "common.delete": {
     "defaultMessage": "Supprimer"
-  },
-  "admin.status": {
-    "defaultMessage": "Statut"
   },
   "admin.suspend-user": {
     "defaultMessage": "Suspendre l'utilisateur"

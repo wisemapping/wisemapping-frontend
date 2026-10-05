@@ -65,12 +65,6 @@
       "value": "此操作无法撤销。这将永久删除您的账号，并从我们的服务器中移除所有数据。"
     }
   ],
-  "account.delete-warning": [
-    {
-      "type": 0,
-      "value": "请记住，您将无法访问您添加的任何思维导图。您的所有信息都将被删除，并且无法恢复。"
-    }
-  ],
   "account.delete-warning-collaborations": [
     {
       "type": 0,
@@ -453,12 +447,6 @@
       "value": "刷新"
     }
   ],
-  "admin.status": [
-    {
-      "type": 0,
-      "value": "狀態"
-    }
-  ],
   "admin.status-active": [
     {
       "type": 0,
@@ -767,12 +755,6 @@
     {
       "type": 0,
       "value": "所有选中的脑图将被删除"
-    }
-  ],
-  "dialog.loading": [
-    {
-      "type": 0,
-      "value": "加載中..."
     }
   ],
   "duplicate.copy-title": [

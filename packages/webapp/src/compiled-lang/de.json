@@ -65,12 +65,6 @@
       "value": "Diese Aktion kann nicht rückgängig gemacht werden. Dies wird Ihr Konto dauerhaft löschen und alle Daten von unseren Servern entfernen."
     }
   ],
-  "account.delete-warning": [
-    {
-      "type": 0,
-      "value": "Denke daran, dass du keine von dir erstellte Mindmap mehr aufrufen kannst. Alle deine Informationen werden gelöscht und können nicht wiederhergestellt werden."
-    }
-  ],
   "account.delete-warning-collaborations": [
     {
       "type": 0,
@@ -453,12 +447,6 @@
       "value": "Aktualisieren"
     }
   ],
-  "admin.status": [
-    {
-      "type": 0,
-      "value": "Status"
-    }
-  ],
   "admin.status-active": [
     {
       "type": 0,
@@ -767,12 +755,6 @@
     {
       "type": 0,
       "value": "Alle ausgewählten Mindmaps werden gelöscht"
-    }
-  ],
-  "dialog.loading": [
-    {
-      "type": 0,
-      "value": "Wird geladen ..."
     }
   ],
   "duplicate.copy-title": [

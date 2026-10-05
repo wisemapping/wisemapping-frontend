@@ -2,9 +2,6 @@
   "common.terms-notice": {
     "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
   },
-  "account.delete-warning": {
-    "defaultMessage": "Tieni presente che non sarai in grado di recuperare nessuna mappa mentale che hai aggiunto. Tutte le tue informazioni verranno cancellate e non potranno essere ripristinate."
-  },
   "accountinfo.button": {
     "defaultMessage": "Accetta"
   },
@@ -115,9 +112,6 @@
   },
   "deletem.title": {
     "defaultMessage": "Tutte le mappe selezionate verranno eliminate"
-  },
-  "dialog.loading": {
-    "defaultMessage": "Caricamento..."
   },
   "duplicate.copy-title": {
     "defaultMessage": "Copia di {title}"
@@ -619,9 +613,6 @@
   },
   "common.delete": {
     "defaultMessage": "Elimina"
-  },
-  "admin.status": {
-    "defaultMessage": "Stato"
   },
   "admin.suspend-user": {
     "defaultMessage": "Sospendi utente"

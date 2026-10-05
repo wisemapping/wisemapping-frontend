@@ -2,9 +2,6 @@
   "common.terms-notice": {
     "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
   },
-  "account.delete-warning": {
-    "defaultMessage": "请记住，您将无法访问您添加的任何思维导图。您的所有信息都将被删除，并且无法恢复。"
-  },
   "accountinfo.button": {
     "defaultMessage": "接受"
   },
@@ -614,9 +611,6 @@
   "common.delete": {
     "defaultMessage": "刪除"
   },
-  "admin.status": {
-    "defaultMessage": "狀態"
-  },
   "admin.suspend-user": {
     "defaultMessage": "暫停用戶"
   },
@@ -667,9 +661,6 @@
   },
   "admin.delete": {
     "defaultMessage": "刪除"
-  },
-  "dialog.loading": {
-    "defaultMessage": "加載中..."
   },
   "common.last-name": {
     "defaultMessage": "姓"
