@@ -77,6 +77,8 @@ import FeatureModelFactory from '../model/FeatureModelFactory';
 import { decodeUtf8, tryDecodeUtf8 } from './support/Utf8Decoder';
 import toWiseMappingXml from './support/MindmapXml';
 import TopicIdSequence from './support/TopicIdSequence';
+import { alternatingSidePosition } from './support/MainTopicPosition';
+import PositionType from '../PositionType';
 
 // XMind data structures
 interface XMindTopic {
@@ -961,14 +963,9 @@ class XMindImporter extends Importer {
     return xmindColor;
   }
 
-  private calculatePosition(
-    order: number,
-    depth: number,
-    siblingCount: number,
-  ): {
-    x: number;
-    y: number;
-  } {
+  // A tree topic goes right of its parent, its siblings centered on it. A mind map main topic
+  // alternates sides.
+  private calculatePosition(order: number, depth: number, siblingCount: number): PositionType {
     if (this.currentLayout === 'tree') {
       const horizontalSpacing = 220;
       const verticalSpacing = 140;
@@ -978,17 +975,7 @@ class XMindImporter extends Importer {
 
       return { x, y };
     }
-
-    // Distribute first-level topics evenly between left and right sides
-    // Even orders (0, 2, 4...) = Right side, Odd orders (1, 3, 5...) = Left side
-    const isEven = order % 2 === 0;
-    const sideIndex = Math.floor(order / 2);
-
-    // Alternate between right (positive x) and left (negative x) sides
-    const x = isEven ? 200 + sideIndex * 100 : -200 - sideIndex * 100;
-    const y = sideIndex * 150 - sideIndex * 75; // Spread vertically
-
-    return { x, y };
+    return alternatingSidePosition(order);
   }
 
   private createMindmap(nameMap: string): Mindmap {

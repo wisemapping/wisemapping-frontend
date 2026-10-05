@@ -30,6 +30,7 @@ import { legacyIconEmoji } from './support/LegacyIconMap';
 import { htmlToPlainText } from './support/HtmlText';
 import { applyFreemindFont } from './support/FreemindFont';
 import TopicIdSequence from './support/TopicIdSequence';
+import { alternatingSidePosition } from './support/MainTopicPosition';
 import FreemindIconConverter, { WiseIcon } from './FreemindIconConverter';
 import { TopicShapeType } from '../model/INodeModel';
 
@@ -103,7 +104,7 @@ class FreeplaneImporter extends Importer {
     const topic = mindmap.createNode('MainTopic', this.ids.next());
     this.mapNodeId(freeplaneNode, topic);
 
-    const position = this.calculatePosition(order);
+    const position = alternatingSidePosition(order);
     topic.setText(FreeplaneImporter.nodeText(freeplaneNode) || 'Untitled');
     topic.setPosition(position.x, position.y);
     topic.setOrder(order);
@@ -625,19 +626,6 @@ class FreeplaneImporter extends Importer {
     const key = builtin.toLowerCase().replace(/-/g, '_');
     const mapped = Object.prototype.hasOwnProperty.call(iconMap, key) ? iconMap[key] : undefined;
     return mapped || legacyIconEmoji(builtin) || '💡'; // Default to lightbulb
-  }
-
-  private calculatePosition(order: number): { x: number; y: number } {
-    // Distribute first-level topics evenly between left and right sides
-    // Even orders (0, 2, 4...) = Right side, Odd orders (1, 3, 5...) = Left side
-    const isEven = order % 2 === 0;
-    const sideIndex = Math.floor(order / 2);
-
-    // Alternate between right (positive x) and left (negative x) sides
-    const x = isEven ? 200 + sideIndex * 100 : -200 - sideIndex * 100;
-    const y = sideIndex * 150 - sideIndex * 75; // Spread vertically
-
-    return { x, y };
   }
 
   private addRelationships(mindmap: Mindmap, rootNode: Element): void {

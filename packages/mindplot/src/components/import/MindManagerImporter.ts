@@ -32,6 +32,7 @@ import { decodeUtf8 } from './support/Utf8Decoder';
 import { normalizeHtmlWhitespace } from './support/HtmlText';
 import toWiseMappingXml from './support/MindmapXml';
 import TopicIdSequence from './support/TopicIdSequence';
+import { sidePosition } from './support/MainTopicPosition';
 
 interface MindManagerTopic {
   // Topics without an ID or OId can not be referenced, so they are not mapped.
@@ -246,15 +247,6 @@ class MindManagerImporter extends Importer {
     this.topicIdMap = new Map();
   }
 
-  // The initial position of the topic at the given index among the siblings on its side. The
-  // layout places the topics by their order.
-  private calculatePosition(sideIndex: number, side: number): { x: number; y: number } {
-    const x = side * (200 + sideIndex * 100);
-    const y = sideIndex * 75;
-
-    return { x, y };
-  }
-
   private buildNoteContent(notes?: string): string {
     if (!notes) return '';
     return notes.trim();
@@ -343,7 +335,7 @@ class MindManagerImporter extends Importer {
   ): NodeModel {
     const node = mindmap.createNode('MainTopic', this.ids.next());
     this.mapTopicId(topic, node);
-    const position = this.calculatePosition(sideIndex, side);
+    const position = sidePosition(sideIndex, side);
     node.setText(topic.text);
     node.setPosition(position.x, position.y);
     node.setOrder(order);
