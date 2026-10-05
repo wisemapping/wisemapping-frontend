@@ -113,8 +113,8 @@
   "deletem.title": {
     "defaultMessage": "Все выбранные карты будут удалены"
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "Копия "
+  "duplicate.copy-title": {
+    "defaultMessage": "Копия {title}"
   },
   "duplicate.title": {
     "defaultMessage": "Клонировать"

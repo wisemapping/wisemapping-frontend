@@ -116,8 +116,8 @@
   "deletem.title": {
     "defaultMessage": "Todos os mapas selecionados serão excluídos"
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "Cópia de "
+  "duplicate.copy-title": {
+    "defaultMessage": "Cópia de {title}"
   },
   "duplicate.title": {
     "defaultMessage": "Duplicar"

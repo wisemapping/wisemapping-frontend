@@ -733,10 +733,14 @@
       "value": "Завантаження..."
     }
   ],
-  "duplicate.copy-prefix": [
+  "duplicate.copy-title": [
     {
       "type": 0,
       "value": "Копія "
+    },
+    {
+      "type": 1,
+      "value": "title"
     }
   ],
   "duplicate.title": [

@@ -116,8 +116,8 @@
   "deletem.title": {
     "defaultMessage": "所有选中的脑图将被删除"
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "的副本"
+  "duplicate.copy-title": {
+    "defaultMessage": "{title}的副本"
   },
   "duplicate.title": {
     "defaultMessage": "复制"

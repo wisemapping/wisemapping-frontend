@@ -119,8 +119,8 @@
   "dialog.loading": {
     "defaultMessage": "جارٍ التحميل..."
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "نسخة من "
+  "duplicate.copy-title": {
+    "defaultMessage": "نسخة من {title}"
   },
   "duplicate.title": {
     "defaultMessage": "تكرار"

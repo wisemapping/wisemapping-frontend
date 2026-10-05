@@ -119,8 +119,8 @@
   "dialog.loading": {
     "defaultMessage": "Завантаження..."
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "Копія "
+  "duplicate.copy-title": {
+    "defaultMessage": "Копія {title}"
   },
   "duplicate.title": {
     "defaultMessage": "Дублювати"

@@ -830,8 +830,8 @@
   "deletem.title": {
     "defaultMessage": "All selected maps will be deleted"
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "Copy of "
+  "duplicate.copy-title": {
+    "defaultMessage": "Copy of {title}"
   },
   "duplicate.title": {
     "defaultMessage": "Duplicate"

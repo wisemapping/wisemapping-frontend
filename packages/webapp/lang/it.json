@@ -119,8 +119,8 @@
   "dialog.loading": {
     "defaultMessage": "Caricamento..."
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "Copia di "
+  "duplicate.copy-title": {
+    "defaultMessage": "Copia di {title}"
   },
   "duplicate.title": {
     "defaultMessage": "Duplica"

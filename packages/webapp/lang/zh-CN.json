@@ -119,8 +119,8 @@
   "dialog.loading": {
     "defaultMessage": "加载中..."
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "的副本"
+  "duplicate.copy-title": {
+    "defaultMessage": "{title}的副本"
   },
   "duplicate.title": {
     "defaultMessage": "复制"

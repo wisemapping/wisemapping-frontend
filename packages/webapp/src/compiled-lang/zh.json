@@ -733,7 +733,11 @@
       "value": "加載中..."
     }
   ],
-  "duplicate.copy-prefix": [
+  "duplicate.copy-title": [
+    {
+      "type": 1,
+      "value": "title"
+    },
     {
       "type": 0,
       "value": "的副本"

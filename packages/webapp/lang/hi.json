@@ -119,8 +119,8 @@
   "dialog.loading": {
     "defaultMessage": "लोड हो रहा है..."
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "की प्रतिलिपि "
+  "duplicate.copy-title": {
+    "defaultMessage": "{title} की प्रतिलिपि"
   },
   "duplicate.title": {
     "defaultMessage": "डुप्लिकेट"

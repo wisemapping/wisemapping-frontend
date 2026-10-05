@@ -113,8 +113,8 @@
   "deletem.title": {
     "defaultMessage": "Alle ausgewählten Mindmaps werden gelöscht"
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "Kopie von "
+  "duplicate.copy-title": {
+    "defaultMessage": "Kopie von {title}"
   },
   "duplicate.title": {
     "defaultMessage": "Kopie"

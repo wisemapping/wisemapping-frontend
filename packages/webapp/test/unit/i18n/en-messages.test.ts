@@ -59,9 +59,8 @@ describe('English messages', () => {
     expect(JSON.parse(fs.readFileSync(out, 'utf8'))).toEqual(en);
   }, 60000);
 
-  test('keeps the space after the duplicated map prefix', () => {
-    // The duplicate dialog builds its title as `${prefix}${title}`.
-    expect(en['duplicate.copy-prefix'].defaultMessage).toBe('Copy of ');
-    expect(compiledEn['duplicate.copy-prefix']).toEqual([{ type: 0, value: 'Copy of ' }]);
+  test('names the duplicated map with the title in the phrase', () => {
+    // The duplicate dialog formats its title with { title }; see duplicate-copy-title.test.ts.
+    expect(en['duplicate.copy-title'].defaultMessage).toBe('Copy of {title}');
   });
 });

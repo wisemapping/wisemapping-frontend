@@ -116,8 +116,8 @@
   "deletem.title": {
     "defaultMessage": "選択されたすべてのマップが削除されます"
   },
-  "duplicate.copy-prefix": {
-    "defaultMessage": "のコピー"
+  "duplicate.copy-title": {
+    "defaultMessage": "{title}のコピー"
   },
   "duplicate.title": {
     "defaultMessage": "複製"

@@ -733,10 +733,14 @@
       "value": "लोड हो रहा है..."
     }
   ],
-  "duplicate.copy-prefix": [
+  "duplicate.copy-title": [
+    {
+      "type": 1,
+      "value": "title"
+    },
     {
       "type": 0,
-      "value": "की प्रतिलिपि "
+      "value": " की प्रतिलिपि"
     }
   ],
   "duplicate.title": [
