@@ -5,36 +5,51 @@ WiseMapping Mindplot module is the core mind map rendering of WiseMapping. This 
 ## Usage
 
 A WebComponent implementation for mindplot designer is available.
-This component is registered as mindplot-component in customElements API. (see https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define)
-To use it you need to import mindplot.js and put in your DOM a <mindplot-component id="mindplot-comp"/> tag. In order to create a Designer on it you need to call its buildDesigner method. Maps can be loaded through loadMap method.
+Importing `@wisemapping/mindplot` registers it as `mindplot-component` in the customElements API (see https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define).
+Put a `<mindplot-component id="mindmap-comp">` tag in your DOM, call its `buildDesigner(persistence, widgetBuilder)` method to create a Designer on it, then load a map with `loadMap(id)`.
+
+`buildDesigner` takes:
+
+- `persistence`: a `PersistenceManager` (`LocalStorageManager`, `RESTPersistenceManager`, `MockPersistenceManager` or your own). It may be `undefined`: a `LocalStorageManager` is then created that loads `map.xml` (relative to the page) for any map id and keeps the changes in the browser local storage.
+- `widgetBuilder`: required. `WidgetBuilder` is abstract (there is no default): extend it to build the link and note editors.
+
+The `mode` attribute is an `EditorRenderMode` and defaults to `viewonly-private`.
 
 #### Code example
+
+The package is published as an ES module whose dependencies (React, lodash, `@wisemapping/web2d`, ...) are not bundled, so load it through your bundler:
 
 ```html
 <!doctype html>
 <html>
-  <head>
-    <script src="mindplot.js"></script>
-  </head>
   <body>
     <mindplot-component id="mindmap-comp" mode="viewonly-private"></mindplot-component>
-    <script>
-      var webComponent = document.getElementById('mindmap-comp');
-      webComponent.buildDesigner(persistence, widget);
-      webComponent.loadMap('1');
-    </script>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>
 ```
 
-Optionally you can use your own persistence manager and widget manager.
-If you don't have special requirements you can use the defaults.
+```js
+// main.js
+import { LocalStorageManager, WidgetBuilder } from '@wisemapping/mindplot';
 
-```ts
-var persistence = new LocalStorageManager('map.xml', false, undefined, false);
-var widget = new MyAwesomeWidgetManager();
-// then build the designer with these params
-webComponent.buildDesigner(persistence, widget);
+// Builds the link and note editors: return your own components.
+class MyWidgetBuilder extends WidgetBuilder {
+  buildEditorForLink(topic) {
+    return null;
+  }
+
+  buidEditorForNote(topic) {
+    return null;
+  }
+}
+
+// Loads /maps/<id>.wxml ({id} is replaced by the map id); pass undefined to load map.xml instead.
+const persistence = new LocalStorageManager('/maps/{id}.wxml', false, undefined, false);
+
+const webComponent = document.getElementById('mindmap-comp');
+webComponent.buildDesigner(persistence, new MyWidgetBuilder());
+webComponent.loadMap('1');
 ```
 
 ## Usage with React framework
@@ -84,4 +99,4 @@ const App = () => {
 };
 ```
 
-Check out the examples located in `test/playground/map-render/js` for some hints on high level usage. You can browse them by running `yarn playground`.
+Check out the editor package examples located in `packages/editor/test/playground/map-render/js` for some hints on high level usage. You can browse them by running `yarn playground --scope @wisemapping/editor`.

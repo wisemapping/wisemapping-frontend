@@ -148,10 +148,12 @@ class MindplotWebComponent extends HTMLElement {
 
   /**
    * Build the designer of the component
-   * @param {PersistenceManager} persistence the persistence manager to be used. By default a LocalStorageManager is created
-   * @param {UIManager} widgetManager an UI Manager to override default Designer option.
+   * @param persistence the persistence manager to be used. When undefined, a LocalStorageManager
+   * reading `map.xml` (and keeping the changes in the browser local storage) is created.
+   * @param widgetManager builds the link and note editors and tooltips. Required: there is no
+   * default, WidgetBuilder is abstract.
    */
-  buildDesigner(persistence: PersistenceManager, widgetManager: WidgetBuilder) {
+  buildDesigner(persistence: PersistenceManager | undefined, widgetManager: WidgetBuilder) {
     const editorRenderMode = this.getAttribute('mode') as EditorRenderMode;
     const locale = this.getAttribute('locale');
     const zoom = this.getAttribute('zoom');

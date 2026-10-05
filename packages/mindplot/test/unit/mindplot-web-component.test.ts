@@ -21,6 +21,7 @@ import PersistenceManager from '../../src/components/PersistenceManager';
 import WidgetBuilder from '../../src/components/WidgetBuilder';
 import buildDesigner from '../../src/components/DesignerBuilder';
 import { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
+import LocalStorageManager from '../../src/components/LocalStorageManager';
 
 jest.mock('../../src/components/DesignerBuilder', () => ({
   __esModule: true,
@@ -197,6 +198,17 @@ describe('MindplotWebComponent', () => {
       settle();
       await result;
       expect(done).toBe(true);
+    });
+  });
+
+  describe('default persistence (BL5-27)', () => {
+    it('falls back to a LocalStorageManager when no persistence is given', () => {
+      component.setAttribute('mode', 'edition-owner');
+      component.buildDesigner(undefined, {} as unknown as WidgetBuilder);
+
+      const { calls } = (buildDesigner as jest.Mock).mock;
+      const options: DesignerOptions = calls[calls.length - 1][0];
+      expect(options.persistenceManager).toBeInstanceOf(LocalStorageManager);
     });
   });
 
