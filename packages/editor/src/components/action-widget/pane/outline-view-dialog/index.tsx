@@ -30,7 +30,7 @@ import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import LinkIcon from '@mui/icons-material/Link';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Mindmap, INodeModel } from '@wisemapping/mindplot';
+import { Mindmap, INodeModel, HtmlSanitizer } from '@wisemapping/mindplot';
 import { OutlineBuilder, OutlineNodeData } from './OutlineBuilder';
 import {
   OutlineContainer,
@@ -376,7 +376,10 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
             return (
               <Box>
                 {isHtml ? (
-                  <TooltipContent dangerouslySetInnerHTML={{ __html: noteText }} />
+                  // The note comes from the map: sanitized, with its links opening in a new tab.
+                  <TooltipContent
+                    dangerouslySetInnerHTML={{ __html: HtmlSanitizer.sanitizeForDisplay(noteText) }}
+                  />
                 ) : (
                   <TooltipContent>{noteText}</TooltipContent>
                 )}
