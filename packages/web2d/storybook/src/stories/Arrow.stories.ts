@@ -15,23 +15,38 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createElement } from './Element';
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import { createArrow, type ArrowArgs } from './Arrow';
 
-// More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
-  title: 'Shapes/Element',
-  // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
+  title: 'Shapes/Arrow',
   argTypes: {
-    visibility: { control: 'boolean' },
-    visibilityDelay: { control: { type: 'number', min: 1, max: 1000, step: 100 } },
+    strokeColor: { control: 'color' },
+    strokeWidth: { control: { type: 'number', min: 1, max: 10, step: 1 } },
+    dashed: { control: 'boolean' },
   },
+} satisfies Meta<ArrowArgs>;
+
+const Template: StoryFn<ArrowArgs> = (args) => createArrow(args);
+
+export const Default = Template.bind({});
+Default.args = {
+  strokeColor: 'black',
+  strokeWidth: 1,
+  dashed: false,
 };
 
-// More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
-const Template = ({ label, ...args }) => createElement({ label, ...args });
+export const Thick = Template.bind({});
+Thick.args = {
+  strokeColor: '#3366cc',
+  strokeWidth: 5,
+  dashed: false,
+};
 
-export const Visibility = Template.bind({});
-Visibility.args = {
-  visibility: true,
-  visibilityDelay: 5000,
+// W-ARROWDASH (fixed): setDashed(true, 3, 3) writes stroke-dasharray "3,3".
+export const Dashed = Template.bind({});
+Dashed.args = {
+  strokeColor: 'red',
+  strokeWidth: 2,
+  dashed: true,
 };

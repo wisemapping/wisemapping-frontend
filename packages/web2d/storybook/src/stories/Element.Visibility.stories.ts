@@ -15,12 +15,24 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
-    },
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import { createElement, type ElementArgs } from './Element';
+
+// More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
+export default {
+  title: 'Shapes/Element',
+  // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
+  argTypes: {
+    visibility: { control: 'boolean' },
+    visibilityDelay: { control: { type: 'number', min: 1, max: 1000, step: 100 } },
   },
+} satisfies Meta<ElementArgs>;
+
+// More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
+const Template: StoryFn<ElementArgs> = (args) => createElement(args);
+
+export const Visibility = Template.bind({});
+Visibility.args = {
+  visibility: true,
+  visibilityDelay: 5000,
 };

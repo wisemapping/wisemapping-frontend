@@ -1,0 +1,13 @@
+{
+  // Type checks the stories and the Storybook preview against the web2d sources
+  // (`tsc -p storybook`, part of `yarn lint`).
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "skipLibCheck": true,
+    "rootDir": "..",
+    "declaration": false,
+    "isolatedDeclarations": false
+  },
+  "include": ["src/**/*", "../.storybook/preview.ts", "../src/**/*"]
+}

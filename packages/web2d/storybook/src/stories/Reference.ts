@@ -17,27 +17,38 @@
  */
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/prefer-default-export
-import Text from '../../../src/components/Text';
+import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
+import type { StrokeStyle } from '../../../src/components/types';
 
-export const createText = ({ text, fontFamily, color, weight, style }) => {
-  const divElem = document.createElement('div');
+/** The stroke controls shared by the line stories. */
+export type StrokeArgs = {
+  strokeColor: string;
+  strokeWidth: number;
+  strokeStyle: StrokeStyle;
+};
 
+// A 400x400 workspace centred on (0, 0), like the CurvedLine and Polyline stories.
+export const createCenteredWorkspace = (): Workspace => {
   const workspace = new Workspace();
   workspace.setSize('400px', '400px');
-  workspace.setCoordSize('400', '400');
-  workspace.setCoordOrigin(0, 0);
+  workspace.setCoordSize(400, 400);
+  workspace.setCoordOrigin(-200, -200);
+  return workspace;
+};
 
-  [6, 8, 10, 15, 20].forEach((size, i) => {
-    const wText = new Text();
-    workspace.append(wText);
-
-    wText.setText(text);
-    wText.setFont(fontFamily, size, style, weight);
-    wText.setPosition(30, 70 * i);
-    wText.setColor(color);
+// Small reference dots at the given points, so the ends of a line are visible.
+export const addReferencePoints = (
+  workspace: Workspace,
+  points: [number, number][],
+  color = 'red',
+): void => {
+  points.forEach(([x, y]) => {
+    const dot = new Ellipse();
+    dot.setSize(6, 6);
+    dot.setPosition(x, y);
+    dot.setStroke(0, 'solid', color, 1);
+    dot.setFill(color);
+    workspace.append(dot);
   });
-
-  workspace.addItAsChildTo(divElem);
-  return divElem;
 };

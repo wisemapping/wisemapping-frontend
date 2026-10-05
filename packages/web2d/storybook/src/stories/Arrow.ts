@@ -20,18 +20,25 @@
 import Arrow from '../../../src/components/Arrow';
 import StraightLine from '../../../src/components/StraightLine';
 import Workspace from '../../../src/components/Workspace';
+import type PositionType from '../../../src/components/PositionType';
+
+export type ArrowArgs = {
+  strokeColor: string;
+  strokeWidth: number;
+  dashed: boolean;
+};
 
 // Eight arrows around the centre, each at the end of a grey shaft that runs along its control
 // point (as mindplot draws relationship ends), plus the horizontal (y = 0) case on the bottom row,
 // whose wings are at ±45° too. The workspace is zoomed in 2x so the 6 unit wings are visible.
-export const createArrow = ({ strokeColor, strokeWidth, dashed }) => {
+export const createArrow = ({ strokeColor, strokeWidth, dashed }: ArrowArgs): HTMLDivElement => {
   const divElem = document.createElement('div');
   const workspace = new Workspace();
   workspace.setSize('400px', '400px');
   workspace.setCoordSize(200, 200);
   workspace.setCoordOrigin(-100, -100);
 
-  const addArrow = (tip, control, isDashed) => {
+  const addArrow = (tip: [number, number], control: PositionType, isDashed: boolean) => {
     const shaft = new StraightLine();
     shaft.setFrom(tip[0], tip[1]);
     shaft.setTo(tip[0] + control.x, tip[1] + control.y);

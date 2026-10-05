@@ -15,11 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createRectangle } from './Rectangle';
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import { createEllipse, type ShapeArgs } from './Ellipse';
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
-  title: 'Shapes/Rectangle',
+  title: 'Shapes/Ellipse',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
     backgroundColor: { control: 'color' },
@@ -47,10 +48,10 @@ export default {
       ],
     },
   },
-};
+} satisfies Meta<ShapeArgs>;
 
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
-const Template = ({ label, ...args }) => createRectangle({ label, ...args });
+const Template: StoryFn<ShapeArgs> = (args) => createEllipse(args);
 
 export const Fill = Template.bind({});
 Fill.args = {
@@ -59,7 +60,6 @@ Fill.args = {
   strokeWidth: 1,
   strokeStyle: 'solid',
   strokeColor: 'blue',
-  arc: 0,
 };
 
 export const Stroke = Template.bind({});
@@ -69,7 +69,6 @@ Stroke.args = {
   strokeWidth: 5,
   strokeStyle: 'dash',
   strokeColor: 'red',
-  arc: 0,
 };
 
 export const Size = Template.bind({});
@@ -79,15 +78,4 @@ Size.args = {
   strokeWidth: 5,
   strokeStyle: 'solid',
   strokeColor: 'blue',
-  arc: 0,
-};
-
-export const Arc = Template.bind({});
-Arc.args = {
-  backgroundColor: 'red',
-  size: '{ "width": 100, "height": 100 }',
-  strokeWidth: 5,
-  strokeStyle: 'solid',
-  strokeColor: 'blue',
-  arc: 0.5,
 };

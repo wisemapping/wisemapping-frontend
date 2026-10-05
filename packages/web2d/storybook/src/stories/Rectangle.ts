@@ -17,10 +17,22 @@
  */
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/prefer-default-export
-import StraightLine from '../../../src/components/StraightLine';
+import Rect from '../../../src/components/Rect';
+import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
+import type { ShapeArgs } from './Ellipse';
 
-export const createStraightLine = ({ strokeColor, strokeWidth, strokeStyle }) => {
+export type RectangleArgs = ShapeArgs & { arc: number };
+
+export const createRectangle = ({
+  backgroundColor,
+  strokeColor,
+  strokeWidth,
+  onClick,
+  strokeStyle,
+  size,
+  arc,
+}: RectangleArgs): HTMLDivElement => {
   const divElem = document.createElement('div');
 
   const workspace = new Workspace();
@@ -28,13 +40,27 @@ export const createStraightLine = ({ strokeColor, strokeWidth, strokeStyle }) =>
   workspace.setCoordSize(300, 300);
   workspace.setCoordOrigin(-150, -150);
 
-  const line = new StraightLine();
-  line.setFrom(100, 100);
-  line.setTo(-100, -100);
+  const rect = new Rect(arc);
+  rect.setFill(backgroundColor);
 
-  line.setStroke(strokeWidth, strokeStyle, strokeColor, 1);
-  workspace.append(line);
+  const parsedSize = JSON.parse(size) as { width: number; height: number };
+  rect.setSize(parsedSize.width, parsedSize.height);
 
+  rect.setPosition(-parsedSize.width / 2, -parsedSize.height / 2);
+
+  rect.setStroke(strokeWidth, strokeStyle, strokeColor, 1);
+
+  rect.addEvent('click', onClick);
+
+  // Add referene point ...
+  const e1 = new Ellipse();
+  e1.setSize(5, 5);
+  e1.setPosition(0, 0);
+  e1.setFill('red');
+
+  workspace.append(rect);
+  workspace.append(e1);
   workspace.addItAsChildTo(divElem);
+
   return divElem;
 };

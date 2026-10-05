@@ -20,8 +20,13 @@
 import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
 import ArcLine from '../../../src/components/ArcLine';
+import type { StrokeArgs } from './Reference';
 
-export const createArcLine = ({ strokeColor, strokeWidth, strokeStyle }) => {
+export const createArcLine = ({
+  strokeColor,
+  strokeWidth,
+  strokeStyle,
+}: StrokeArgs): HTMLDivElement => {
   const divElem = document.createElement('div');
 
   const workspace = new Workspace();

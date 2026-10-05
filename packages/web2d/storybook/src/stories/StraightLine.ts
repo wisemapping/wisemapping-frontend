@@ -17,39 +17,29 @@
  */
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/prefer-default-export
-import Image from '../../../src/components/Image';
+import StraightLine from '../../../src/components/StraightLine';
 import Workspace from '../../../src/components/Workspace';
-import { addReferencePoints } from './Reference';
+import type { StrokeArgs } from './Reference';
 
-// An inline image, so the story does not depend on the network or on asset paths.
-export const IMAGE_HREF = `data:image/svg+xml;utf8,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">' +
-    '<rect width="40" height="40" fill="#ffd54f"/>' +
-    '<circle cx="20" cy="20" r="12" fill="#e64a19"/>' +
-    '<rect x="0" y="0" width="20" height="20" fill="#1e88e5"/>' +
-    '</svg>',
-)}`;
-
-// Each image is [x, y, width, height]; the top-left corner gets a reference dot.
-export const createImage = ({ images, coordSize = 400 }) => {
+export const createStraightLine = ({
+  strokeColor,
+  strokeWidth,
+  strokeStyle,
+}: StrokeArgs): HTMLDivElement => {
   const divElem = document.createElement('div');
+
   const workspace = new Workspace();
   workspace.setSize('400px', '400px');
-  workspace.setCoordSize(coordSize, coordSize);
-  workspace.setCoordOrigin(0, 0);
+  workspace.setCoordSize(300, 300);
+  workspace.setCoordOrigin(-150, -150);
 
-  images.forEach(([x, y, width, height]) => {
-    const image = new Image();
-    image.setHref(IMAGE_HREF);
-    image.setPosition(x, y);
-    image.setSize(width, height);
-    workspace.append(image);
-  });
+  const line = new StraightLine();
+  line.setFrom(100, 100);
+  line.setTo(-100, -100);
 
-  addReferencePoints(
-    workspace,
-    images.map(([x, y]) => [x, y]),
-  );
+  line.setStroke(strokeWidth, strokeStyle, strokeColor, 1);
+  workspace.append(line);
+
   workspace.addItAsChildTo(divElem);
   return divElem;
 };

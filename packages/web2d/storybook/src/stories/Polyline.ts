@@ -20,6 +20,16 @@
 import PolyLine from '../../../src/components/PolyLine';
 import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
+import type { Orientation, PolyLineStyle, StrokeStyle } from '../../../src/components/types';
+
+export type PolylineArgs = {
+  backgroundColor?: string;
+  strokeColor: string;
+  strokeWidth: number;
+  strokeStyle: StrokeStyle;
+  style: PolyLineStyle;
+  orientation?: Orientation;
+};
 
 export const createPolyline = ({
   backgroundColor: fillColor,
@@ -28,7 +38,7 @@ export const createPolyline = ({
   strokeStyle,
   style,
   orientation = 'horizontal',
-}) => {
+}: PolylineArgs): HTMLDivElement => {
   const divElem = document.createElement('div');
 
   const workspace = new Workspace();

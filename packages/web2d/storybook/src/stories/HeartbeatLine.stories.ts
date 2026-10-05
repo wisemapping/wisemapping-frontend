@@ -15,10 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createNeuronLine } from './NeuronLine';
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import { createHeartbeatLine } from './HeartbeatLine';
+import type { StrokeArgs } from './Reference';
 
 export default {
-  title: 'Shapes/NeuronLine',
+  title: 'Shapes/HeartbeatLine',
   argTypes: {
     strokeColor: { control: 'color' },
     strokeStyle: {
@@ -27,9 +29,9 @@ export default {
     },
     strokeWidth: { control: { type: 'number', min: 1, max: 10, step: 1 } },
   },
-};
+} satisfies Meta<StrokeArgs>;
 
-const Template = ({ label, ...args }) => createNeuronLine({ label, ...args });
+const Template: StoryFn<StrokeArgs> = (args) => createHeartbeatLine(args);
 
 export const Default = Template.bind({});
 Default.args = {

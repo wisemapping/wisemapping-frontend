@@ -15,10 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import type { Meta, StoryFn } from '@storybook/html-vite';
 import {
   createCurvedLine,
   createDefaultControlPointsCurvedLine,
   createVerticalCurvedLine,
+  type CurvedLineArgs,
+  type DefaultControlPointsCurvedLineArgs,
+  type VerticalCurvedLineArgs,
 } from './CurvedLine';
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
@@ -36,10 +40,10 @@ export default {
     strokeWidth: { control: { type: 'number', min: 0, max: 30, step: 1 } },
     dx: { control: { type: 'number', min: 0, max: 200, step: 1 } },
   },
-};
+} satisfies Meta<VerticalCurvedLineArgs>;
 
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
-const Template = ({ label, ...args }) => createCurvedLine({ label, ...args });
+const Template: StoryFn<CurvedLineArgs> = (args) => createCurvedLine(args);
 
 export const Width = Template.bind({});
 Width.args = {
@@ -66,7 +70,7 @@ Fill.args = {
   fillColor: 'red',
 };
 
-const VerticalTemplate = ({ label, ...args }) => createVerticalCurvedLine({ label, ...args });
+const VerticalTemplate: StoryFn<VerticalCurvedLineArgs> = (args) => createVerticalCurvedLine(args);
 
 export const Vertical = VerticalTemplate.bind({});
 Vertical.args = {
@@ -98,8 +102,9 @@ VerticalThin.args = {
   fillColor: 'none',
 };
 
-export const DefaultControlPoints = (({ label, ...args }) =>
-  createDefaultControlPointsCurvedLine({ label, ...args })).bind({});
+export const DefaultControlPoints: StoryFn<DefaultControlPointsCurvedLineArgs> = ((
+  args: DefaultControlPointsCurvedLineArgs,
+) => createDefaultControlPointsCurvedLine(args)).bind({});
 DefaultControlPoints.args = {
   strokeWidth: 2,
   strokeStyle: 'solid',

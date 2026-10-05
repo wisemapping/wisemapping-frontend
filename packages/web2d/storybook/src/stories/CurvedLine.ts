@@ -21,8 +21,30 @@ import CurvedLine from '../../../src/components/CurvedLine';
 import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
 import Point from '../../../src/components/Point';
+import type { StrokeStyle } from '../../../src/components/types';
 
-export const createCurvedLine = ({ fillColor, strokeColor, strokeWidth, strokeStyle, width }) => {
+export type CurvedLineArgs = {
+  fillColor?: string;
+  strokeColor?: string;
+  strokeWidth: number;
+  strokeStyle?: StrokeStyle;
+  width: number;
+};
+
+export type VerticalCurvedLineArgs = CurvedLineArgs & {
+  /** Horizontal distance between the ends. */
+  dx: number;
+};
+
+export type DefaultControlPointsCurvedLineArgs = Omit<CurvedLineArgs, 'fillColor' | 'width'>;
+
+export const createCurvedLine = ({
+  fillColor,
+  strokeColor,
+  strokeWidth,
+  strokeStyle,
+  width,
+}: CurvedLineArgs): HTMLDivElement => {
   const divElem = document.createElement('div');
 
   const workspace = new Workspace();
@@ -114,16 +136,18 @@ export const createVerticalCurvedLine = ({
   strokeStyle,
   width,
   dx,
-}) => {
+}: VerticalCurvedLineArgs): HTMLDivElement => {
   const divElem = document.createElement('div');
   const workspace = createCenteredWorkspaceForCurves();
 
-  [
-    [0, -150, dx, -50],
-    [0, 50, -dx, 150],
-    [-100, -100, -100 + dx, 0],
-    [100, 0, 100 - dx, 100],
-  ].forEach(([x1, y1, x2, y2]) => {
+  (
+    [
+      [0, -150, dx, -50],
+      [0, 50, -dx, 150],
+      [-100, -100, -100 + dx, 0],
+      [100, 0, 100 - dx, 100],
+    ] as [number, number, number, number][]
+  ).forEach(([x1, y1, x2, y2]) => {
     const line = new CurvedLine();
     line.setFrom(x1, y1);
     line.setTo(x2, y2);
@@ -143,18 +167,24 @@ export const createVerticalCurvedLine = ({
 
 // No control points given: CurvedLinePeer works them out from the ends, a third of the way along
 // the chord (W-DEFCP, fixed: vertical and near-vertical lines no longer overshoot their ends).
-export const createDefaultControlPointsCurvedLine = ({ strokeColor, strokeWidth, strokeStyle }) => {
+export const createDefaultControlPointsCurvedLine = ({
+  strokeColor,
+  strokeWidth,
+  strokeStyle,
+}: DefaultControlPointsCurvedLineArgs): HTMLDivElement => {
   const divElem = document.createElement('div');
   const workspace = createCenteredWorkspaceForCurves();
 
-  [
-    [-150, -150, 150, -100],
-    [150, -50, -150, -50],
-    [-150, 0, -150, 150],
-    [-50, 0, -49.95, 150],
-    [50, 150, 50, 0],
-    [150, 0, 120, 150],
-  ].forEach(([x1, y1, x2, y2]) => {
+  (
+    [
+      [-150, -150, 150, -100],
+      [150, -50, -150, -50],
+      [-150, 0, -150, 150],
+      [-50, 0, -49.95, 150],
+      [50, 150, 50, 0],
+      [150, 0, 120, 150],
+    ] as [number, number, number, number][]
+  ).forEach(([x1, y1, x2, y2]) => {
     const line = new CurvedLine();
     line.setFrom(x1, y1);
     line.setTo(x2, y2);
@@ -169,7 +199,7 @@ export const createDefaultControlPointsCurvedLine = ({ strokeColor, strokeWidth,
   return divElem;
 };
 
-function createCenteredWorkspaceForCurves() {
+function createCenteredWorkspaceForCurves(): Workspace {
   const workspace = new Workspace();
   workspace.setSize('400px', '400px');
   workspace.setCoordSize(400, 400);
@@ -177,7 +207,7 @@ function createCenteredWorkspaceForCurves() {
   return workspace;
 }
 
-function addEnd(workspace, x, y) {
+function addEnd(workspace: Workspace, x: number, y: number): void {
   const e = new Ellipse();
   e.setSize(6, 6);
   e.setPosition(x, y);

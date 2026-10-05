@@ -21,9 +21,37 @@ import Rect from '../../../src/components/Rect';
 import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
 
+/** A Storybook action: it logs the event it receives in the Actions panel. */
+export type Action = (event: Event) => void;
+
+/** The event handlers of the event stories, and whether to show the on-page log. */
+export type EventArgs = {
+  onClick?: Action;
+  onMouseOver?: Action;
+  onMouseOut?: Action;
+  onDblClick?: Action;
+  eventLog?: boolean;
+};
+
+export type ElementArgs = EventArgs & {
+  visibility?: boolean;
+  visibilityDelay?: number;
+  fillOpacity?: number;
+  strokeOpacity?: number;
+};
+
+export type EventRegistrationArgs = EventArgs & {
+  enableForWorkspace: boolean;
+  enableForInnerCircle: boolean;
+  enableForOuterCircle: boolean;
+  stopEventPropagation: boolean;
+};
+
+type Log = (entry: string) => void;
+
 // Optional on-page log of the events received, as "<element>:<type>" items, so Cypress can assert
 // the event wiring (Storybook actions are only visible in the manager UI).
-const createEventLog = (divElem, enabled) => {
+const createEventLog = (divElem: HTMLDivElement, enabled: boolean): Log => {
   if (!enabled) {
     return () => {};
   }
@@ -32,14 +60,14 @@ const createEventLog = (divElem, enabled) => {
   list.style.fontFamily = 'monospace';
   list.style.fontSize = '12px';
   divElem.append(list);
-  return (entry) => {
+  return (entry: string) => {
     const item = document.createElement('li');
     item.textContent = entry;
     list.append(item);
   };
 };
 
-const logged = (log, name, action) => (event) => {
+const logged = (log: Log, name: string, action: Action | undefined) => (event: Event) => {
   log(`${name}:${event.type}`);
   if (action) {
     action(event);
@@ -56,7 +84,7 @@ export const createElement = ({
   onMouseOut,
   onDblClick,
   eventLog = false,
-}) => {
+}: ElementArgs): HTMLDivElement => {
   const divElem = document.createElement('div');
 
   const workspace = new Workspace();
@@ -64,7 +92,8 @@ export const createElement = ({
   workspace.setCoordSize(300, 300);
   workspace.setCoordOrigin(-150, -150);
 
-  const rect = new Rect();
+  // No arc: the rect is drawn without rx/ry (new Rect(0) would write rx="0" ry="0").
+  const rect = new Rect(undefined as unknown as number);
   rect.setSize(100, 100);
   rect.setPosition(-50, -50);
   rect.setVisibility(visibility, visibilityDelay);
@@ -110,10 +139,15 @@ export const createEventRegistration = ({
   onMouseOut,
   onDblClick,
   eventLog = false,
-}) => {
+}: EventRegistrationArgs): HTMLDivElement => {
   const logContainer = document.createElement('div');
   const log = createEventLog(logContainer, eventLog);
-  const registerEvent = (type, elem, action, name) => {
+  const registerEvent = (
+    type: 'click' | 'mouseover' | 'mouseout' | 'dblclick',
+    elem: Workspace | Ellipse,
+    action: Action | undefined,
+    name: string,
+  ) => {
     elem.addEvent(type, (event) => {
       log(`${name}:${event.type}`);
       if (action) {

@@ -15,35 +15,48 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createArcLine } from './ArcLine';
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import { createNeuronLine } from './NeuronLine';
+import type { StrokeArgs } from './Reference';
 
-// More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
-  title: 'Shapes/ArcLine',
-  // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
+  title: 'Shapes/NeuronLine',
   argTypes: {
     strokeColor: { control: 'color' },
     strokeStyle: {
       control: { type: 'select' },
       options: ['dash', 'dot', 'solid', 'longdash', 'dashdot'],
     },
-    strokeWidth: { control: { type: 'number', min: 0, max: 30, step: 1 } },
+    strokeWidth: { control: { type: 'number', min: 1, max: 10, step: 1 } },
   },
-};
+} satisfies Meta<StrokeArgs>;
 
-// More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
-const Template = ({ label, ...args }) => createArcLine({ label, ...args });
+const Template: StoryFn<StrokeArgs> = (args) => createNeuronLine(args);
 
-export const Width = Template.bind({});
-Width.args = {
+export const Default = Template.bind({});
+Default.args = {
   strokeWidth: 3,
   strokeStyle: 'solid',
-  strokeColor: 'blue',
+  strokeColor: '#335577',
 };
 
-export const Stroke = Template.bind({});
-Stroke.args = {
-  strokeWidth: 10,
-  strokeStyle: 'longdash',
-  strokeColor: 'red',
+export const Thin = Template.bind({});
+Thin.args = {
+  strokeWidth: 1,
+  strokeStyle: 'solid',
+  strokeColor: '#335577',
+};
+
+export const Thick = Template.bind({});
+Thick.args = {
+  strokeWidth: 6,
+  strokeStyle: 'solid',
+  strokeColor: '#335577',
+};
+
+export const Dashed = Template.bind({});
+Dashed.args = {
+  strokeWidth: 3,
+  strokeStyle: 'dash',
+  strokeColor: '#cc3333',
 };

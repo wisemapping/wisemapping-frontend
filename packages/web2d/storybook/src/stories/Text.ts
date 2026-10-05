@@ -17,26 +17,42 @@
  */
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/prefer-default-export
-import Ellipse from '../../../src/components/Ellipse';
+import Text from '../../../src/components/Text';
 import Workspace from '../../../src/components/Workspace';
+import type { FontStyleType, FontWeightType } from '../../../src/components/types';
 
-// A 400x400 workspace centred on (0, 0), like the CurvedLine and Polyline stories.
-export const createCenteredWorkspace = () => {
-  const workspace = new Workspace();
-  workspace.setSize('400px', '400px');
-  workspace.setCoordSize(400, 400);
-  workspace.setCoordOrigin(-200, -200);
-  return workspace;
+export type TextArgs = {
+  text: string;
+  fontFamily: string;
+  color: string;
+  weight: FontWeightType;
+  style: FontStyleType;
 };
 
-// Small reference dots at the given points, so the ends of a line are visible.
-export const addReferencePoints = (workspace, points, color = 'red') => {
-  points.forEach(([x, y]) => {
-    const dot = new Ellipse();
-    dot.setSize(6, 6);
-    dot.setPosition(x, y);
-    dot.setStroke(0, 'solid', color, 1);
-    dot.setFill(color);
-    workspace.append(dot);
+export const createText = ({
+  text,
+  fontFamily,
+  color,
+  weight,
+  style,
+}: TextArgs): HTMLDivElement => {
+  const divElem = document.createElement('div');
+
+  const workspace = new Workspace();
+  workspace.setSize('400px', '400px');
+  workspace.setCoordSize('400', '400');
+  workspace.setCoordOrigin(0, 0);
+
+  [6, 8, 10, 15, 20].forEach((size, i) => {
+    const wText = new Text();
+    workspace.append(wText);
+
+    wText.setText(text);
+    wText.setFont(fontFamily, size, style, weight);
+    wText.setPosition(30, 70 * i);
+    wText.setColor(color);
   });
+
+  workspace.addItAsChildTo(divElem);
+  return divElem;
 };

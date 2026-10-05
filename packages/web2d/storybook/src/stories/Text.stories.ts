@@ -15,7 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createText } from './Text';
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import { createText, type TextArgs } from './Text';
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
@@ -39,10 +40,10 @@ export default {
       control: 'text',
     },
   },
-};
+} satisfies Meta<TextArgs>;
 
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
-const Template = ({ label, ...args }) => createText({ label, ...args });
+const Template: StoryFn<TextArgs> = (args) => createText(args);
 
 export const Multiline = Template.bind({});
 Multiline.args = {

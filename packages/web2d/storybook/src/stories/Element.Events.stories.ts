@@ -15,31 +15,28 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createEventRegistration } from './Element';
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import { createElement, type Action, type ElementArgs } from './Element';
+
+// onMouseMove only shows the action in the panel: the story does not listen to mousemove.
+type EventsArgs = ElementArgs & { onMouseMove?: Action };
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
   title: 'Shapes/Element',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
-    enableForWorkspace: { control: 'boolean' },
-    enableForInnerCircle: { control: 'boolean' },
-    enableForOuterCircle: { control: 'boolean' },
-    stopEventPropagation: { control: 'boolean' },
     onClick: { action: 'onClick' },
     onMouseOver: { action: 'onMouseOver' },
+    onMouseMove: { action: 'onMouseMove' },
     onMouseOut: { action: 'onMouseOut' },
     onDblClick: { action: 'onDblClick' },
     eventLog: { control: 'boolean' },
   },
-};
+} satisfies Meta<EventsArgs>;
 
-export const EventsRegistration = (({ label, ...args }) =>
-  createEventRegistration({ label, ...args })).bind({});
-EventsRegistration.args = {
-  enableForWorkspace: false,
-  enableForInnerCircle: false,
-  enableForOuterCircle: false,
-  stopEventPropagation: true,
+// More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
+export const Events: StoryFn<EventsArgs> = ((args: EventsArgs) => createElement(args)).bind({});
+Events.args = {
   eventLog: true,
 };

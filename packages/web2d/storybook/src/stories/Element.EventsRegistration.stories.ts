@@ -15,24 +15,32 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createElement } from './Element';
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import { createEventRegistration, type EventRegistrationArgs } from './Element';
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
   title: 'Shapes/Element',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
-    fillOpacity: { control: { type: 'number', min: 0, max: 1, step: 0.1 } },
-    strokeOpacity: { control: { type: 'number', min: 0, max: 1, step: 0.1 } },
+    enableForWorkspace: { control: 'boolean' },
+    enableForInnerCircle: { control: 'boolean' },
+    enableForOuterCircle: { control: 'boolean' },
+    stopEventPropagation: { control: 'boolean' },
+    onClick: { action: 'onClick' },
+    onMouseOver: { action: 'onMouseOver' },
+    onMouseOut: { action: 'onMouseOut' },
+    onDblClick: { action: 'onDblClick' },
+    eventLog: { control: 'boolean' },
   },
-};
+} satisfies Meta<EventRegistrationArgs>;
 
-// More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
-const Template = ({ label, ...args }) => createElement({ label, ...args });
-
-export const Opacity = Template.bind({});
-Opacity.args = {
-  fillOpacity: 0.5,
-  strokeOpacity: 0.5,
-  opacity: 1,
+export const EventsRegistration: StoryFn<EventRegistrationArgs> = ((args: EventRegistrationArgs) =>
+  createEventRegistration(args)).bind({});
+EventsRegistration.args = {
+  enableForWorkspace: false,
+  enableForInnerCircle: false,
+  enableForOuterCircle: false,
+  stopEventPropagation: true,
+  eventLog: true,
 };

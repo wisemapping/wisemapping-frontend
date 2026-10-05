@@ -15,66 +15,37 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createEllipse } from './Ellipse';
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import { createStraightLine } from './StraightLine';
+import type { StrokeArgs } from './Reference';
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
-  title: 'Shapes/Ellipse',
+  title: 'Shapes/StraightLine',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
-    backgroundColor: { control: 'color' },
     strokeColor: { control: 'color' },
     strokeStyle: {
       control: { type: 'select' },
       options: ['dash', 'dot', 'solid', 'longdash', 'dashdot'],
     },
-    strokeWidth: {
-      control: { type: 'select' },
-      options: [0, 1, 2, 4, 5],
-    },
-    arc: {
-      control: { type: 'select' },
-      options: [0, 0.2, 0.5, 0.8, 1],
-    },
-    onClick: { action: 'onClick' },
-    size: {
-      control: { type: 'select' },
-      options: [
-        '{ "width": 50, "height": 50 }',
-        '{ "width": 100, "height": 100 }',
-        '{ "width": 50, "height": 100 }',
-        '{ "width": 100, "height": 50 }',
-      ],
-    },
+    strokeWidth: { control: { type: 'number', min: 0, max: 30, step: 1 } },
   },
-};
+} satisfies Meta<StrokeArgs>;
 
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
-const Template = ({ label, ...args }) => createEllipse({ label, ...args });
+const Template: StoryFn<StrokeArgs> = (args) => createStraightLine(args);
 
-export const Fill = Template.bind({});
-Fill.args = {
-  backgroundColor: 'yellow',
-  size: '{ "width": 100, "height": 100 }',
+export const StrokeColor = Template.bind({});
+StrokeColor.args = {
   strokeWidth: 1,
   strokeStyle: 'solid',
   strokeColor: 'blue',
 };
 
-export const Stroke = Template.bind({});
-Stroke.args = {
-  backgroundColor: 'blue',
-  size: '{ "width": 100, "height": 100 }',
-  strokeWidth: 5,
-  strokeStyle: 'dash',
-  strokeColor: 'red',
-};
-
-export const Size = Template.bind({});
-Size.args = {
-  backgroundColor: 'red',
-  size: '{ "width": 150, "height": 50 }',
-  strokeWidth: 5,
+export const StrokeWidth = Template.bind({});
+StrokeWidth.args = {
+  strokeWidth: 4,
   strokeStyle: 'solid',
-  strokeColor: 'blue',
+  strokeColor: 'red',
 };

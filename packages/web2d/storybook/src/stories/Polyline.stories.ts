@@ -15,7 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createPolyline } from './Polyline';
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import { createPolyline, type PolylineArgs } from './Polyline';
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
@@ -37,10 +38,10 @@ export default {
     },
     strokeWidth: { control: { type: 'number', min: 0, max: 100, step: 4 } },
   },
-};
+} satisfies Meta<PolylineArgs>;
 
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
-const Template = ({ label, ...args }) => createPolyline({ label, ...args });
+const Template: StoryFn<PolylineArgs> = (args) => createPolyline(args);
 
 export const Straight = Template.bind({});
 Straight.args = {

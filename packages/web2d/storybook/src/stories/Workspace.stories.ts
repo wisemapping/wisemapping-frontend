@@ -15,9 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import type { Meta, StoryFn } from '@storybook/html-vite';
 import Workspace from '../../../src/components/Workspace';
 import Ellipse from '../../../src/components/Ellipse';
 import Rect from '../../../src/components/Rect';
+
+type WorkspaceArgs = { enableAnimation: boolean };
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
@@ -25,9 +28,9 @@ export default {
   argTypes: {
     enableAnimation: { control: 'boolean' },
   },
-};
+} satisfies Meta<WorkspaceArgs>;
 
-export const Visibility = () => {
+export const Visibility: StoryFn<WorkspaceArgs> = () => {
   const container = document.createElement('div');
 
   const overflowWorkspace = new Workspace();
@@ -49,7 +52,7 @@ export const Visibility = () => {
   return container;
 };
 
-export const Position = () => {
+export const Position: StoryFn<WorkspaceArgs> = () => {
   const container = document.createElement('div');
 
   const elipseAttr = {
@@ -78,12 +81,12 @@ export const Position = () => {
   return container;
 };
 
-export const CoordsSize = (args) => {
+export const CoordsSize: StoryFn<WorkspaceArgs> = (args) => {
   const { enableAnimation } = args;
 
   const container = document.createElement('div');
 
-  const coordSizeSampleBuilder = (width, height) => {
+  const coordSizeSampleBuilder = (width: number, height: number) => {
     const workspace = new Workspace();
     workspace.setSize('100px', '100px');
     workspace.setCoordSize(width, height);
@@ -155,11 +158,11 @@ export const CoordsSize = (args) => {
   return container;
 };
 
-export const CoordsOrigin = (args) => {
+export const CoordsOrigin: StoryFn<WorkspaceArgs> = (args) => {
   const container = document.createElement('div');
   const { enableAnimation } = args;
 
-  const coordOriginSampleBuilder = (x, y) => {
+  const coordOriginSampleBuilder = (x: number, y: number) => {
     // Workspace with CoordOrigin(100,100);
     const workspace = new Workspace();
     workspace.setSize('100px', '100px');
@@ -237,12 +240,12 @@ export const CoordsOrigin = (args) => {
 
 // W-VIEWBOX (BL-71): a fractional zoom and origin, as mindplot's ScreenManager sets them, and an
 // origin moved by ten 0.3 unit pans. Each workspace shows a 50x50 square centred on (0, 0).
-export const FractionalCoords = () => {
+export const FractionalCoords: StoryFn<WorkspaceArgs> = () => {
   const container = document.createElement('div');
   const div = document.createElement('div');
   container.append(div);
 
-  const build = (coordSize, origin) => {
+  const build = (coordSize: number, origin: number) => {
     const workspace = new Workspace();
     workspace.setSize('200px', '200px');
     workspace.setCoordSize(coordSize, coordSize);

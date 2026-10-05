@@ -17,13 +17,13 @@
  */
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/prefer-default-export
-import HeartbeatLine from '../../../src/components/HeartbeatLine';
-import { addReferencePoints, createCenteredWorkspace } from './Reference';
+import NeuronLine from '../../../src/components/NeuronLine';
+import { addReferencePoints, createCenteredWorkspace, type StrokeArgs } from './Reference';
 
 // Lines in every direction, plus short ones (length 1, 5 and 20) and a zero-length one.
 // W-STALEPATH (fixed): the zero-length line shows nothing; the path drawn after setFrom (to the
 // origin) is cleared when setTo collapses the ends.
-const LINES = [
+const LINES: [number, number, number, number][] = [
   [-180, -150, 180, -150],
   [-150, -120, -150, 180],
   [-100, -100, 150, 150],
@@ -34,12 +34,16 @@ const LINES = [
   [180, 120, 180, 120],
 ];
 
-export const createHeartbeatLine = ({ strokeColor, strokeWidth, strokeStyle }) => {
+export const createNeuronLine = ({
+  strokeColor,
+  strokeWidth,
+  strokeStyle,
+}: StrokeArgs): HTMLDivElement => {
   const divElem = document.createElement('div');
   const workspace = createCenteredWorkspace();
 
   LINES.forEach(([x1, y1, x2, y2]) => {
-    const line = new HeartbeatLine();
+    const line = new NeuronLine();
     line.setFrom(x1, y1);
     line.setTo(x2, y2);
     line.setStroke(strokeWidth, strokeStyle, strokeColor, 1);

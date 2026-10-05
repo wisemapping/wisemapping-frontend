@@ -17,19 +17,30 @@
  */
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/prefer-default-export
-import Rect from '../../../src/components/Rect';
 import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
+import type { StrokeStyle } from '../../../src/components/types';
+import type { Action } from './Element';
 
-export const createRectangle = ({
+export type ShapeArgs = {
+  backgroundColor: string;
+  strokeColor: string;
+  strokeWidth: number;
+  onClick: Action;
+  strokeStyle: StrokeStyle;
+  /** JSON '{ "width": <number>, "height": <number> }', one of the select options. */
+  size: string;
+  arc?: number;
+};
+
+export const createEllipse = ({
   backgroundColor,
   strokeColor,
   strokeWidth,
   onClick,
   strokeStyle,
   size,
-  arc,
-}) => {
+}: ShapeArgs): HTMLDivElement => {
   const divElem = document.createElement('div');
 
   const workspace = new Workspace();
@@ -37,13 +48,15 @@ export const createRectangle = ({
   workspace.setCoordSize(300, 300);
   workspace.setCoordOrigin(-150, -150);
 
-  const rect = new Rect(arc);
+  // An ellipse has no arc: the JavaScript story passed `arc` as the attribute bag, which spread
+  // nothing, so the arc control has never had an effect.
+  const rect = new Ellipse();
   rect.setFill(backgroundColor);
 
-  const parsedSize = JSON.parse(size);
+  const parsedSize = JSON.parse(size) as { width: number; height: number };
   rect.setSize(parsedSize.width, parsedSize.height);
 
-  rect.setPosition(-parsedSize.width / 2, -parsedSize.height / 2);
+  rect.setPosition(0, 0);
 
   rect.setStroke(strokeWidth, strokeStyle, strokeColor, 1);
 

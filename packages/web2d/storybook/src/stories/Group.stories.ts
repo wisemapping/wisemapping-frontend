@@ -15,10 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import type { Meta, StoryFn } from '@storybook/html-vite';
 import Group from '../../../src/components/Group';
 import Workspace from '../../../src/components/Workspace';
 import Ellipse from '../../../src/components/Ellipse';
 import StraightLine from '../../../src/components/StraightLine';
+import type { Action } from './Element';
+
+type GroupArgs = { onClick: Action };
+
+// These stories have always passed the colour as the stroke width: setStroke('blue') writes
+// stroke-width="blue", which the browser ignores. Kept as is so that they render as before.
+const colourAsWidth = (colour: string): number => colour as unknown as number;
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
@@ -26,9 +34,9 @@ export default {
   argTypes: {
     onClick: { action: 'onClick' },
   },
-};
+} satisfies Meta<GroupArgs>;
 
-export const Container = () => {
+export const Container: StoryFn<GroupArgs> = () => {
   const container = document.createElement('div');
 
   const div = document.createElement('div');
@@ -54,13 +62,13 @@ export const Container = () => {
   let line = new StraightLine();
   line.setFrom(0, 0);
   line.setTo(200, 200);
-  line.setStroke('blue');
+  line.setStroke(colourAsWidth('blue'));
   group.append(line);
 
   line = new StraightLine();
   line.setFrom(200, 0);
   line.setTo(0, 200);
-  line.setStroke('blue');
+  line.setStroke(colourAsWidth('blue'));
   group.append(line);
 
   workspace.addItAsChildTo(div);
@@ -74,7 +82,7 @@ export const Container = () => {
   return container;
 };
 
-export const EventBubbling = (args) => {
+export const EventBubbling: StoryFn<GroupArgs> = (args) => {
   const { onClick } = args;
   const container = document.createElement('div');
 
@@ -120,7 +128,7 @@ export const EventBubbling = (args) => {
   return container;
 };
 
-export const Nested = () => {
+export const Nested: StoryFn<GroupArgs> = () => {
   const container = document.createElement('div');
   const div = document.createElement('div');
   container.append(div);
@@ -146,13 +154,13 @@ export const Nested = () => {
   let line = new StraightLine();
   line.setFrom(0, 0);
   line.setTo(200, 200);
-  line.setStroke('red');
+  line.setStroke(colourAsWidth('red'));
   groupOuter.append(line);
 
   line = new StraightLine();
   line.setFrom(200, 0);
   line.setTo(0, 200);
-  line.setStroke('red');
+  line.setStroke(colourAsWidth('red'));
   groupOuter.append(line);
 
   const groupInner = new Group();
@@ -170,13 +178,13 @@ export const Nested = () => {
   line = new StraightLine();
   line.setFrom(0, 0);
   line.setTo(200, 200);
-  line.setStroke('blue');
+  line.setStroke(colourAsWidth('blue'));
   groupInner.append(line);
 
   line = new StraightLine();
   line.setFrom(200, 0);
   line.setTo(0, 200);
-  line.setStroke('blue');
+  line.setStroke(colourAsWidth('blue'));
   groupInner.append(line);
   workspace.addItAsChildTo(container);
 
@@ -202,8 +210,8 @@ export const Nested = () => {
   return container;
 };
 
-export const CoordSize = () => {
-  const groupSampleBuilder = (width, height) => {
+export const CoordSize: StoryFn<GroupArgs> = () => {
+  const groupSampleBuilder = (width: number, height: number) => {
     // Group with CoordSize(50,50);
     const workspace = new Workspace();
     workspace.setSize('150px', '150px');
@@ -258,8 +266,8 @@ export const CoordSize = () => {
   return container;
 };
 
-export const CoordOrigin = () => {
-  const groupSampleBuilder = (x, y) => {
+export const CoordOrigin: StoryFn<GroupArgs> = () => {
+  const groupSampleBuilder = (x: number, y: number) => {
     const workspace = new Workspace();
     workspace.setSize('200px', '200px');
     workspace.setCoordSize(200, 200);

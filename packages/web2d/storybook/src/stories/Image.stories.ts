@@ -15,16 +15,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createImage } from './Image';
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import { createImage, type ImageArgs } from './Image';
 
 export default {
   title: 'Shapes/Image',
   argTypes: {
     coordSize: { control: { type: 'number', min: 100, max: 800, step: 50 } },
   },
-};
+} satisfies Meta<ImageArgs>;
 
-const Template = ({ label, ...args }) => createImage({ label, ...args });
+const Template: StoryFn<ImageArgs> = (args) => createImage(args);
 
 export const Size = Template.bind({});
 Size.args = {
