@@ -265,6 +265,22 @@ describe('FreemindExporter', () => {
     expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
   });
 
+  test.each(['flag_green', 'flag_yellow', 'flag_orange', 'flag_pink'])(
+    'the %s icon survives a FreeMind export and import round trip (BL5-113)',
+    async (iconId: string) => {
+      const mm = await new FreemindExporter(
+        buildMindmap((topic) => topic.addFeature(new SvgIconModel({ id: iconId }))),
+      ).export();
+      expect(mm).toContain(`BUILTIN="${iconId.replace('_', '-')}"`);
+
+      const xml = await new FreemindImporter(mm).import('test', '');
+      const doc = new DOMParser().parseFromString(xml, 'text/xml');
+      const topic = doc.querySelector('topic[id="2"]')!;
+      expect(topic.querySelector(':scope > icon')?.getAttribute('id')).toBe(iconId);
+      expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
+    },
+  );
+
   test('exports emoji icons written without the emoji variation selector', async () => {
     const doc = await exportMindmap(
       buildMindmap((topic) => topic.addFeature(new EmojiIconModel({ id: '\u26A0' }))),

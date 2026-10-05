@@ -201,6 +201,23 @@ describe('FreemindImporter', () => {
     expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
   });
 
+  test('imports the colored flags as the WiseMapping flag icons, not circles (BL5-113)', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" TEXT="Child" POSITION="right">
+          <icon BUILTIN="flag-green"/><icon BUILTIN="flag-yellow"/>
+          <icon BUILTIN="flag-orange"/><icon BUILTIN="flag-pink"/>
+        </node>
+      </node>
+    </map>`;
+
+    const topic = topicById(await importMap(mm), '2');
+    expect(
+      Array.from(topic.querySelectorAll(':scope > icon')).map((i) => i.getAttribute('id')),
+    ).toEqual(['flag_green', 'flag_yellow', 'flag_orange', 'flag_pink']);
+    expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
+  });
+
   test('keeps the WiseMapping icons written by the FreeMind exporter', async () => {
     const mm = `<map version="1.0.1">
       <node ID="ID_1" TEXT="Root">

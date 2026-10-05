@@ -55,7 +55,7 @@ const freeIdToEmoji: Record<string, string> = {
   desktop_new: '📌',
   flag: '🚩',
   'flag-black': '🏴',
-  // Only used to export the emoji: the blue flag is imported as a flag (freeIdToSvgId).
+  // Only used to export the emoji: the colored flags are imported as flags (freeIdToSvgId).
   'flag-blue': '🔵',
   'flag-green': '🟢',
   'flag-orange': '🟠',
@@ -104,9 +104,13 @@ const freeIdToEmoji: Record<string, string> = {
 };
 
 // FreeMind builtin icons imported as a WiseMapping SVG icon, because no emoji matches them.
-// There is no blue flag emoji, and 🔵 would turn the flag into a circle.
+// There are no colored flag emoji, and 🔵 or 🟢 would turn the flag into a circle.
 const freeIdToSvgId: Record<string, string> = {
   'flag-blue': 'flag_blue',
+  'flag-green': 'flag_green',
+  'flag-orange': 'flag_orange',
+  'flag-pink': 'flag_pink',
+  'flag-yellow': 'flag_yellow',
 };
 
 // The same emoji can be written with or without the emoji variation selector (U+FE0F).
