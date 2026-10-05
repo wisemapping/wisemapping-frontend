@@ -648,3 +648,61 @@ describe('MindManagerImporter collapsed topics', () => {
     expect(xml.match(/shrink="true"/g)).toHaveLength(1);
   });
 });
+
+describe('MindManagerImporter growth direction of the main topics', () => {
+  const mains = ['M1', 'M2', 'M3', 'M4']
+    .map((text) => `<ap:Topic OId="${text}"><ap:Text PlainText="${text}"/></ap:Topic>`)
+    .join('');
+  const growth = (direction: string): string =>
+    `<ap:DefaultSubTopicsShape SubTopicsGrowthDirection="urn:mindjet:${direction}"/>`;
+  const styleGroup = (direction: string): string =>
+    `<ap:StyleGroup><ap:RootTopicDefaultsGroup>${growth(direction)}</ap:RootTopicDefaultsGroup></ap:StyleGroup>`;
+  const sides = (mindmap: Mindmap): number[] =>
+    mindmap
+      .getCentralTopic()
+      .getChildren()
+      .map((node) => Math.sign(node.getPosition()!.x));
+  const orders = (mindmap: Mindmap): number[] =>
+    mindmap
+      .getCentralTopic()
+      .getChildren()
+      .map((node) => node.getOrder()!);
+
+  test('Right puts every main topic on the right', async () => {
+    const mindmap = loadMindmap(
+      await new MindManagerImporter(schemaMap(mains, styleGroup('Right'))).import('test'),
+    );
+
+    expect(sides(mindmap)).toEqual([1, 1, 1, 1]);
+    expect(orders(mindmap)).toEqual([0, 2, 4, 6]);
+  });
+
+  test('Left puts every main topic on the left', async () => {
+    const mindmap = loadMindmap(
+      await new MindManagerImporter(schemaMap(mains, styleGroup('Left'))).import('test'),
+    );
+
+    expect(sides(mindmap)).toEqual([-1, -1, -1, -1]);
+    expect(orders(mindmap)).toEqual([1, 3, 5, 7]);
+  });
+
+  test('the SubTopicsShape of the central topic overrides the StyleGroup', async () => {
+    const xml = schemaMap(mains, styleGroup('LeftAndRight')).replace(
+      '<ap:Text PlainText="Central"/>',
+      '<ap:Text PlainText="Central"/><ap:SubTopicsShape SubTopicsGrowthDirection="urn:mindjet:Right"/>',
+    );
+
+    const mindmap = loadMindmap(await new MindManagerImporter(xml).import('test'));
+
+    expect(sides(mindmap)).toEqual([1, 1, 1, 1]);
+  });
+
+  test('LeftAndRight and AutomaticHorizontal still balance the sides', async () => {
+    for (const direction of ['LeftAndRight', 'AutomaticHorizontal']) {
+      const mindmap = loadMindmap(
+        await new MindManagerImporter(schemaMap(mains, styleGroup(direction))).import('test'),
+      );
+      expect(sides(mindmap)).toEqual([1, -1, 1, -1]);
+    }
+  });
+});

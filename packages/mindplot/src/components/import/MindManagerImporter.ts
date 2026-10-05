@@ -233,6 +233,9 @@ class MindManagerImporter extends Importer {
 
   private styleGroup: Element | null = null;
 
+  // 1 or -1 when every main topic grows on the right or on the left of the central topic.
+  private mainTopicsSide: number | undefined;
+
   constructor(map: MindManagerRawInput) {
     super();
     this.mindManagerInput = map;
@@ -276,12 +279,18 @@ class MindManagerImporter extends Importer {
     this.addFeatures(centralTopic, rootTopic);
     mindmap.addBranch(centralTopic);
 
-    // The main topics go on the side of their offset or, without one, on the side with fewer
-    // topics. Even orders are on the right, odd ones on the left, in document order on each side.
+    // The main topics go on the side of the growth direction of the central topic or, if it grows
+    // on both sides, on the side of their offset or, without one, on the side with fewer topics.
+    // Even orders are on the right, odd ones on the left, in document order on each side.
     let right = 0;
     let left = 0;
     rootTopic.children?.forEach((topic) => {
-      const atLeft = topic.offset ? topic.offset.x < 0 : left < right;
+      let atLeft: boolean;
+      if (this.mainTopicsSide) {
+        atLeft = this.mainTopicsSide < 0;
+      } else {
+        atLeft = topic.offset ? topic.offset.x < 0 : left < right;
+      }
       const sideIndex = atLeft ? left++ : right++;
       const order = atLeft ? 2 * sideIndex + 1 : 2 * sideIndex;
       centralTopic.append(this.convertTopic(mindmap, topic, order, sideIndex, atLeft ? -1 : 1));
@@ -443,6 +452,7 @@ class MindManagerImporter extends Importer {
     }
 
     this.styleGroup = this.findChildByTagName(mapElement, 'StyleGroup');
+    this.mainTopicsSide = this.growthSide(rootTopic);
     return this.parseTopic(rootTopic, 'Root', 0);
   }
 
@@ -464,6 +474,28 @@ class MindManagerImporter extends Importer {
       .filter(({ level }) => Number.isInteger(level) && level <= depth - 1)
       .sort((a, b) => b.level - a.level);
     return levels.length > 0 ? levels[0].group : null;
+  }
+
+  /**
+   * The side where the main topics grow: the SubTopicsGrowthDirection of the SubTopicsShape of the
+   * central topic, or of the DefaultSubTopicsShape of the RootTopicDefaultsGroup. 1 for Right, -1
+   * for Left, undefined for both sides (LeftAndRight, AutomaticHorizontal).
+   */
+  private growthSide(rootTopic: Element): number | undefined {
+    const attribute = 'SubTopicsGrowthDirection';
+    const own = this.findChildByTagName(rootTopic, 'SubTopicsShape')?.getAttribute(attribute);
+    const defaults = this.defaultsGroup('Root', 0);
+    const byDefault =
+      defaults &&
+      this.findChildByTagName(defaults, 'DefaultSubTopicsShape')?.getAttribute(attribute);
+    switch ((own || byDefault)?.replace(MINDJET_URN, '')) {
+      case 'Right':
+        return 1;
+      case 'Left':
+        return -1;
+      default:
+        return undefined;
+    }
   }
 
   /**
