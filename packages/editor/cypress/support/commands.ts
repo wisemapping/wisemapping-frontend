@@ -24,6 +24,19 @@ declare global {
   /** A viewport (client) coordinate of the application under test. */
   type PointerPosition = { clientX: number; clientY: number };
 
+  /** The aria-label (or its start) of a toolbar button that cy.onClickToolbarButton() clicks. */
+  type ToolbarButton =
+    | 'Add Relationship'
+    | 'Add Icon'
+    | 'Add Link'
+    | 'Add Note'
+    | 'Add Topic Image'
+    | 'Theme'
+    | 'Connection Style'
+    | 'Relationship Style'
+    | 'Font Style'
+    | 'Style Topic & Connections';
+
   type PointerDragOptions = {
     /**
      * Fire the mousedown at this element instead of at the element under `from`: for a handle
@@ -43,19 +56,7 @@ declare global {
         value:
           'Style Topic & Connections' | 'Font Style' | 'Connection Style' | 'Relationship Style',
       ): void;
-      onClickToolbarButton(
-        value:
-          | 'Add Relationship'
-          | 'Add Icon'
-          | 'Add Link'
-          | 'Add Note'
-          | 'Add Topic Image'
-          | 'Theme'
-          | 'Connection Style'
-          | 'Relationship Style'
-          | 'Font Style'
-          | 'Style Topic & Connections',
-      ): void;
+      onClickToolbarButton(value: ToolbarButton): void;
 
       triggerUndo(): void;
       triggerRedo(): void;
@@ -140,6 +141,8 @@ const waitForStablePage = (previous = '', stableChecks = 0, attempts = 0): void 
       });
       return;
     }
+    // A polling interval between two markup samples, not a wait for something to happen.
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(150, { log: false });
     waitForStablePage(markup, settled, attempts + 1);
   });
@@ -226,24 +229,10 @@ Cypress.Commands.add(
   },
 );
 
-Cypress.Commands.add(
-  'onClickToolbarButton',
-  (
-    button:
-      | 'Add Relationship'
-      | 'Add Icon'
-      | 'Add Link'
-      | 'Add Note'
-      | 'Add Topic Image'
-      | 'Theme'
-      | 'Connection Style'
-      | 'Relationship Style'
-      | 'Font Style',
-  ) => {
-    // Use contains selector for buttons that include keyboard shortcuts in their aria-label
-    cy.get(`[aria-label*="${button}"]`).click({ multiple: true, force: true });
-  },
-);
+Cypress.Commands.add('onClickToolbarButton', (button: ToolbarButton) => {
+  // Use contains selector for buttons that include keyboard shortcuts in their aria-label
+  cy.get(`[aria-label*="${button}"]`).click({ multiple: true, force: true });
+});
 
 Cypress.Commands.add('triggerUndo', () => {
   cy.get('[aria-label^="Undo ').eq(1).click();

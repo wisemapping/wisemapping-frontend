@@ -90,7 +90,7 @@ describe('Image URL Validation Suite', () => {
         expect(url).to.equal('');
 
         // Should have logged a warning (check that warn was called at least once more)
-        expect(win.console.warn).to.have.callCount.greaterThan(initialCallCount);
+        expect((win.console.warn as any).callCount).to.be.greaterThan(initialCallCount);
 
         // Check that the last call contains the expected message
         const lastCall = (win.console.warn as any).getCall((win.console.warn as any).callCount - 1);
