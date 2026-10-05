@@ -104,11 +104,15 @@ describe('pela maps without positions (B-PELA)', () => {
     const mindmap = load(
       '<map version="pela"><topic central="true" id="1" text="c">' +
         '<topic id="2" position="-200,0" order="0" text="left"><topic id="4" text="l1"/></topic>' +
-        '<topic id="3" position="200,0" order="1" text="right"/></topic></map>',
+        '<topic id="3" position="200,0" order="1" text="right"><topic id="5" text="r1"/>' +
+        '</topic></topic></map>',
     );
     expect(node(mindmap, 2).getOrder()).toBe(1);
     expect(node(mindmap, 3).getOrder()).toBe(0);
-    expect(node(mindmap, 4).getPosition()).toEqual({ x: -170, y: 0 });
+    // A child without position goes 30px further from the centre than its parent, on its side:
+    // -200 - 30 on the left, as +30 on the right (BL5-06; it was -170, toward the centre).
+    expect(node(mindmap, 4).getPosition()).toEqual({ x: -230, y: 0 });
+    expect(node(mindmap, 5).getPosition()).toEqual({ x: 230, y: 0 });
   });
 });
 

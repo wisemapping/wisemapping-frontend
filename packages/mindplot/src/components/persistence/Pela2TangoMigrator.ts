@@ -92,7 +92,9 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
     // Position was not required in previous versions. Try to synthesize one .
     let position = node.getPosition();
     if (!position) {
-      position = { x: parentPosition.x + 30, y: parentPosition.y };
+      // One step further from the centre, on the side of the parent (x 0 counts as right).
+      const offset = parentPosition.x < 0 ? -30 : 30;
+      position = { x: parentPosition.x + offset, y: parentPosition.y };
       node.setPosition(position.x, position.y);
     }
     const children = node.getChildren();
