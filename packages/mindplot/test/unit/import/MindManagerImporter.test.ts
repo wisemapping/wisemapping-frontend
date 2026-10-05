@@ -154,6 +154,30 @@ describe('MindManagerImporter unknown icons', () => {
     }
   });
 
+  test('logs the custom icons, which have no emoji, instead of dropping them silently', async () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const mindManager = `<ap:Map xmlns:ap="http://schemas.mindjet.com/MindManager/Application/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <ap:OneTopic><ap:Topic OId="t1"><ap:Text PlainText="Central"/>
+        <ap:IconsGroup>
+          <ap:Icons>
+            <ap:Icon xsi:type="ap:CustomIcon" IconSignature="AAECAwQFBgcICQoLDA0ODw=="/>
+            <ap:Icon xsi:type="ap:StockIcon" IconType="urn:mindjet:Check"/>
+          </ap:Icons>
+          <ap:CustomIconImageData IconSignature="AAECAwQFBgcICQoLDA0ODw=="/>
+        </ap:IconsGroup>
+      </ap:Topic></ap:OneTopic>
+    </ap:Map>`;
+
+    try {
+      const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+      expect(iconsOf(mindmap.getCentralTopic() as NodeModel)).toEqual(['✅']);
+      expect(warn).toHaveBeenCalledWith(expect.stringContaining('custom icon'));
+    } finally {
+      warn.mockRestore();
+    }
+  });
+
   test('matches the icon ids ignoring case', async () => {
     const mindManager = `<?xml version="1.0" encoding="UTF-8"?>
 <Map xmlns="http://www.mindjet.com/MindManager/MindMapXML/1.0">

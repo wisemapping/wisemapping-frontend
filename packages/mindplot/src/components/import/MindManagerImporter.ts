@@ -539,6 +539,12 @@ class MindManagerImporter extends Importer {
       const iconType = icon.getAttribute('IconType');
       if (iconType) {
         topic.icons.push(iconType.replace(MINDJET_URN, ''));
+      } else {
+        // A custom icon (xsi:type="ap:CustomIcon") is an image of the file, identified by its
+        // IconSignature: it has no emoji.
+        console.warn(
+          `MindManager custom icon '${icon.getAttribute('IconSignature') ?? ''}' of topic '${topic.text}' is not imported.`,
+        );
       }
     });
     const priority = this.findChildByTagName(topicElement, 'Task')?.getAttribute('TaskPriority');
