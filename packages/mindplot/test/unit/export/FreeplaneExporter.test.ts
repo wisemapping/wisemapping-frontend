@@ -22,6 +22,7 @@ import NodeModel from '../../../src/components/model/NodeModel';
 import NoteModel from '../../../src/components/model/NoteModel';
 import LinkModel from '../../../src/components/model/LinkModel';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
+import SvgIconModel from '../../../src/components/model/SvgIconModel';
 import { StrokeStyle } from '../../../src/components/model/RelationshipModel';
 import ContentType from '../../../src/components/ContentType';
 import FreeplaneExporter from '../../../src/components/export/FreeplaneExporter';
@@ -172,6 +173,23 @@ describe('FreeplaneExporter', () => {
     ).toEqual(['💡', '📅', '🕐', '📁', '🐧', 'ℹ️']);
   });
 
+  test('emoji and WiseMapping icons survive a round trip (BL5-112)', async () => {
+    const { mindmap, topics } = buildMindmap();
+    ['🦄', '👨‍💻', '✅', '❤️', '1️⃣'].forEach((emoji) =>
+      topics[1].addFeature(new EmojiIconModel({ id: emoji })),
+    );
+    ['flag_green', 'tag_blue'].forEach((id) => topics[1].addFeature(new SvgIconModel({ id })));
+
+    const doc = await roundTrip(mindmap);
+    const topic = topicByText(doc, 'A');
+    expect(
+      Array.from(topic.querySelectorAll(':scope > eicon')).map((i) => i.getAttribute('id')),
+    ).toEqual(['🦄', '👨‍💻', '✅', '❤️', '1️⃣']);
+    expect(
+      Array.from(topic.querySelectorAll(':scope > icon')).map((i) => i.getAttribute('id')),
+    ).toEqual(['flag_green', 'tag_blue']);
+  });
+
   test('exports emoji without a builtin icon as Freeplane emoji icons', async () => {
     const { mindmap, topics } = buildMindmap();
     topics[1].addFeature(new EmojiIconModel({ id: '🦄' }));
@@ -226,6 +244,43 @@ describe('FreeplaneExporter', () => {
     expect(nodeB1.getAttribute('STYLE')).toBe('fork');
     // A font with only a style is still written.
     expect(nodeB1.querySelector(':scope > font')?.getAttribute('ITALIC')).toBe('true');
+  });
+
+  test('colors, fonts, shapes and the collapsed state survive a round trip (BL5-112)', async () => {
+    const { mindmap, topics } = buildMindmap();
+    const [central, a, b, b1] = topics;
+    central.setShapeType('elipse');
+    a.setShapeType('rectangle');
+    a.setBackgroundColor('rgb(255, 0, 128)');
+    a.setFontColor('#00ff00');
+    a.setConnectionColor('#0000ff');
+    a.setFontFamily('Verdana');
+    a.setFontSize(15);
+    a.setFontWeight('bold');
+    a.setFontStyle('italic');
+    b.setShapeType('rounded rectangle');
+    b.setChildrenShrunken(true);
+    b1.setShapeType('line');
+    b1.setFontStyle('italic');
+
+    const doc = await roundTrip(mindmap);
+
+    expect(doc.querySelector('topic[central="true"]')?.getAttribute('shape')).toBe('elipse');
+    const topicA = topicByText(doc, 'A');
+    expect(topicA.getAttribute('shape')).toBe('rectangle');
+    expect(topicA.getAttribute('bgColor')).toBe('#ff0080');
+    expect(topicA.getAttribute('connColor')).toBe('#0000ff');
+    expect(topicA.getAttribute('fontStyle')).toBe('Verdana;15;#00ff00;bold;italic;');
+    expect(topicA.getAttribute('shrink')).toBeNull();
+
+    const topicB = topicByText(doc, 'B');
+    expect(topicB.getAttribute('shape')).toBe('rounded rectangle');
+    expect(topicB.getAttribute('shrink')).toBe('true');
+
+    const topicB1 = topicByText(doc, 'B1');
+    expect(topicB1.getAttribute('shape')).toBe('line');
+    // The size Freeplane needs with any font is not imported: the theme size is kept.
+    expect(topicB1.getAttribute('fontStyle')).toBe(';;;;italic;');
   });
 
   test('exports relationships as arrowlinks with their arrows, color and dash', async () => {

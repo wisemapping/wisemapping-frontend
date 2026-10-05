@@ -1,26 +1,26 @@
 <map name="freeplane-educational-curriculum" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Educational Curriculum" id="1">
         <topic position="200,0" order="0" text="Core Subjects" shape="line" id="2">
-            <eicon id="💡"/>
+            <eicon id="1️⃣"/>
             <topic position="200,0" order="0" text="Mathematics" shape="line" id="3">
-                <eicon id="💡"/>
+                <eicon id="1️⃣"/>
                 <note contentType="html"><![CDATA[<p>Algebra, Geometry, Calculus, Statistics</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Science" shape="line" id="4">
-                <eicon id="💡"/>
+                <eicon id="2️⃣"/>
                 <note contentType="html"><![CDATA[<p>Physics, Chemistry, Biology, Earth Science</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Language Arts" shape="line" id="5">
-                <eicon id="💡"/>
+                <eicon id="3️⃣"/>
                 <note contentType="html"><![CDATA[<p>Reading, Writing, Literature, Grammar</p>]]></note>
             </topic>
             <topic position="-300,75" order="3" text="Social Studies" shape="line" id="6">
-                <eicon id="💡"/>
+                <eicon id="4️⃣"/>
                 <note contentType="html"><![CDATA[<p>History, Geography, Civics, Economics</p>]]></note>
             </topic>
         </topic>
         <topic position="-200,0" order="1" text="Elective Courses" shape="line" id="7">
-            <eicon id="💡"/>
+            <eicon id="2️⃣"/>
             <topic position="200,0" order="0" text="Arts" shape="line" id="8">
                 <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Visual Arts, Music, Drama, Dance</p>]]></note>
@@ -39,9 +39,9 @@
             </topic>
         </topic>
         <topic position="300,75" order="2" text="Assessment Methods" shape="line" id="12">
-            <eicon id="💡"/>
+            <eicon id="3️⃣"/>
             <topic position="200,0" order="0" text="Formative Assessment" shape="line" id="13">
-                <eicon id="💡"/>
+                <eicon id="📝"/>
                 <note contentType="html"><![CDATA[<p>Quizzes, homework, class participation</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Summative Assessment" shape="line" id="14">
@@ -53,12 +53,12 @@
                 <note contentType="html"><![CDATA[<p>Student portfolios and work samples</p>]]></note>
             </topic>
             <topic position="-300,75" order="3" text="Peer Assessment" shape="line" id="16">
-                <eicon id="💡"/>
+                <eicon id="👥"/>
                 <note contentType="html"><![CDATA[<p>Peer review and collaborative evaluation</p>]]></note>
             </topic>
         </topic>
         <topic position="-300,75" order="3" text="Learning Objectives" shape="line" id="17">
-            <eicon id="💡"/>
+            <eicon id="4️⃣"/>
             <topic position="200,0" order="0" text="Knowledge Acquisition" shape="line" id="18">
                 <eicon id="📚"/>
                 <note contentType="html"><![CDATA[<p>Students will acquire foundational knowledge</p>]]></note>

@@ -1,9 +1,9 @@
 <map name="freeplane-business-strategy" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Business Strategy" id="1">
         <topic position="200,0" order="0" text="Market Analysis" shape="line" id="2">
-            <eicon id="💡"/>
+            <eicon id="1️⃣"/>
             <topic position="200,0" order="0" text="Target Market" shape="line" id="3">
-                <eicon id="💡"/>
+                <eicon id="👥"/>
                 <note contentType="html"><![CDATA[<p>Identify and analyze target customer segments</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Competitive Landscape" shape="line" id="4">
@@ -16,7 +16,7 @@
             </topic>
         </topic>
         <topic position="-200,0" order="1" text="Strategic Objectives" shape="line" id="6">
-            <eicon id="💡"/>
+            <eicon id="2️⃣"/>
             <topic position="200,0" order="0" text="Revenue Growth" shape="line" id="7">
                 <eicon id="💰"/>
                 <note contentType="html"><![CDATA[<p>Achieve sustainable revenue growth targets</p>]]></note>
@@ -31,7 +31,7 @@
             </topic>
         </topic>
         <topic position="300,75" order="2" text="Implementation Plan" shape="line" id="10">
-            <eicon id="💡"/>
+            <eicon id="3️⃣"/>
             <topic position="200,0" order="0" text="Resource Allocation" shape="line" id="11">
                 <eicon id="📁"/>
                 <note contentType="html"><![CDATA[<p>Allocate resources for strategic initiatives</p>]]></note>
@@ -46,7 +46,7 @@
             </topic>
         </topic>
         <topic position="-300,75" order="3" text="Risk Management" shape="line" id="14">
-            <eicon id="💡"/>
+            <eicon id="4️⃣"/>
             <topic position="200,0" order="0" text="Risk Assessment" shape="line" id="15">
                 <eicon id="⚠️"/>
                 <note contentType="html"><![CDATA[<p>Identify and assess potential risks</p>]]></note>
@@ -56,7 +56,7 @@
                 <note contentType="html"><![CDATA[<p>Develop risk mitigation strategies</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Contingency Planning" shape="line" id="17">
-                <eicon id="💡"/>
+                <eicon id="❓"/>
                 <note contentType="html"><![CDATA[<p>Create contingency plans for critical risks</p>]]></note>
             </topic>
         </topic>
