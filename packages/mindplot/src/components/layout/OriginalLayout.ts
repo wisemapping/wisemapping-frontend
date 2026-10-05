@@ -99,12 +99,13 @@ class OriginalLayout {
 
   /**
    * Migrates node ordering from TreeLayout's continuous ordering
-   * to OriginalLayout's balanced ordering (even/odd for root children)
+   * to OriginalLayout's balanced ordering (even/odd for the central topic's children).
+   * The other tree roots, floating topics, get the sorter of a topic, as createNode gives them.
    */
-  migrateFromLayout(): void {
+  migrateFromLayout(centralId: number): void {
     const roots = this._treeSet.getTreeRoots();
     roots.forEach((node) => {
-      this._migrateNodeOrdering(node, true);
+      this._migrateNodeOrdering(node, node.getId() === centralId);
     });
   }
 

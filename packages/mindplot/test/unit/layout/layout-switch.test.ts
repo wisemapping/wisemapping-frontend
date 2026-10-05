@@ -53,4 +53,28 @@ describe('layout switch migration (BL5-82)', () => {
     manager.setLayoutType('tree');
     [0, 1, 2].forEach((id) => expect(manager.find(id).getSorter()).toBeInstanceOf(TreeSorter));
   });
+
+  // A floating topic is the root of its own tree, but createNode gives it the sorter of a topic:
+  // its children are on one side of it, not spread on both like the central topic's (BL5-130).
+  it('gives a floating topic the sorter of a topic, as when it is created', () => {
+    const manager = new LayoutManager(0, ROOT_SIZE, 'mindmap');
+    manager.addNode(5, SIZE, { x: 400, y: 400 });
+    expect(manager.find(5).getSorter()).toBeInstanceOf(SymmetricSorter);
+
+    manager.setLayoutType('tree');
+    manager.addNode(6, SIZE, { x: 0, y: 0 }).connectNode(5, 6, 0);
+    manager.addNode(7, SIZE, { x: 0, y: 0 }).connectNode(5, 7, 1);
+    manager.addNode(8, SIZE, { x: 0, y: 0 }).connectNode(5, 8, 2);
+    manager.setLayoutType('mindmap');
+
+    expect(manager.find(0).getSorter()).toBeInstanceOf(BalancedSorter);
+    expect(manager.find(5).getSorter()).toBeInstanceOf(SymmetricSorter);
+    expect([6, 7, 8].map((id) => manager.find(id).getOrder())).toEqual([0, 1, 2]);
+    // All on one side of the floating topic, one under the other.
+    const floating = manager.find(5).getPosition();
+    const children = [6, 7, 8].map((id) => manager.find(id).getPosition());
+    children.forEach((child) => expect(child.x).toBeGreaterThan(floating.x));
+    expect(children[0].y).toBeLessThan(children[1].y);
+    expect(children[1].y).toBeLessThan(children[2].y);
+  });
 });
