@@ -18,11 +18,8 @@
 import { Blob } from 'blob-polyfill';
 import path from 'path';
 import fs from 'fs';
-import { diff } from 'jest-diff';
-import { expect } from '@jest/globals';
 import Exporter from '../../../src/components/export/Exporter';
-
-const saveOutputRecord = process.env.UPDATE_SNAPSHOTS === 'true';
+import { assertExpectedFile } from '../helpers/expectedFile';
 
 export const setupBlob = () => {
   // Workaround for partial implementations on Jest:
@@ -69,15 +66,5 @@ export const exporterAssert = async (testName: string, exporter: Exporter) => {
 
   // Compared with expected ...
   const expectedPath = path.resolve(__dirname, `./expected/${testName}.${exporter.extension()}`);
-  if (saveOutputRecord) {
-    fs.writeFileSync(expectedPath, actualStr);
-  }
-
-  // compare with expected ...
-  const expectedStr = fs.readFileSync(expectedPath).toString();
-  if (actualStr !== expectedStr) {
-    const diffResult = diff(actualStr, expectedStr);
-    console.log(diffResult);
-    expect(actualStr).toEqual(expectedStr);
-  }
+  assertExpectedFile(expectedPath, actualStr);
 };

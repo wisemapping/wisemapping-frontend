@@ -20,11 +20,8 @@
 /* eslint-disable import/prefer-default-export */
 import fs from 'fs';
 import path from 'path';
-import { expect } from '@jest/globals';
-import { diff } from 'jest-diff';
 import Importer from '../../../src/components/import/Importer';
-
-const saveOutputRecord = process.env.XMIND_IMPORTER_UPDATE_EXPECTED === 'true';
+import { assertExpectedFile } from '../helpers/expectedFile';
 
 export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType) => {
   const parser = new DOMParser();
@@ -47,19 +44,7 @@ export const parseXMLFile = (
 export const exporterAssert = async (testName: string, importer: Importer) => {
   const actualMindmap = await importer.import(testName, '');
 
-  // Load mindmap file..
-  const mindmapPath = path.resolve(__dirname, `./expected/${testName}.wxml`);
-  if (saveOutputRecord) {
-    fs.writeFileSync(mindmapPath, actualMindmap);
-  }
-
   // Compare with expected...
-  if (fs.existsSync(mindmapPath)) {
-    const mindmapExpect = fs.readFileSync(mindmapPath).toString();
-    if (actualMindmap !== mindmapExpect) {
-      const diffResult = diff(actualMindmap, mindmapExpect);
-      console.log(diffResult);
-      expect(actualMindmap).toEqual(mindmapExpect);
-    }
-  }
+  const mindmapPath = path.resolve(__dirname, `./expected/${testName}.wxml`);
+  assertExpectedFile(mindmapPath, actualMindmap);
 };
