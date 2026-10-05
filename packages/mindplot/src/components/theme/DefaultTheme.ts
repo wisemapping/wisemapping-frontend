@@ -205,10 +205,15 @@ class DefaultTheme implements Theme {
     return topic.isCentralTopic() ? fontHeight * 1.0 : fontHeight * 0.7;
   }
 
-  // Variant-aware methods - default implementation falls back to non-variant methods
   getFontColor(topic: Topic): string {
-    // Default implementation ignores variant, subclasses can override
-    return this.resolve('fontColor', topic);
+    // A color picked by the user (on the topic or an ancestor) is used as is ...
+    const picked = this.resolve('fontColor', topic, false);
+    if (picked) {
+      return picked;
+    }
+
+    // The theme color, as long as it can be read on the fill or, without one, on the canvas.
+    return this.readableTextColor(topic, this.getStyles(topic).fontColor);
   }
 
   getBackgroundColor(topic: Topic): string {

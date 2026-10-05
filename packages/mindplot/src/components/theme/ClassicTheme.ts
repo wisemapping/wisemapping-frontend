@@ -58,17 +58,6 @@ class ClassicTheme extends DefaultTheme {
     result = pickByOrder(colors, topic.getOrder());
     return result;
   }
-
-  getFontColor(topic: Topic): string {
-    // A color picked by the user (on the topic or an ancestor) is used as is ...
-    const picked = this.resolve('fontColor', topic, false) as string | undefined;
-    if (picked) {
-      return picked;
-    }
-
-    // The theme color, as long as it can be read on the fill or, without one, on the canvas.
-    return this.readableTextColor(topic, this.getStyles(topic).fontColor);
-  }
 }
 
 export default ClassicTheme;
