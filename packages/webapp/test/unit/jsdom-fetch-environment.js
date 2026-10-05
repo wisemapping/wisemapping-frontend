@@ -31,12 +31,21 @@ const JsdomEnvironment = require('jest-environment-jsdom').default;
 // Replaced as a set so the four classes always come from the same implementation.
 const FETCH_API = ['fetch', 'Headers', 'Request', 'Response'];
 
+// jsdom has no Encoding API either; @wisemapping/editor pulls in jspdf (through mindplot's
+// exporters), which uses it at module scope, so the editor could not even be imported.
+const ENCODING_API = ['TextEncoder', 'TextDecoder'];
+
 class JsdomFetchEnvironment extends JsdomEnvironment {
   constructor(...args) {
     super(...args);
 
     FETCH_API.forEach((name) => {
       if (typeof globalThis[name] !== 'undefined') {
+        this.global[name] = globalThis[name];
+      }
+    });
+    ENCODING_API.forEach((name) => {
+      if (typeof this.global[name] === 'undefined') {
         this.global[name] = globalThis[name];
       }
     });
