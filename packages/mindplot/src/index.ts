@@ -128,3 +128,4 @@ export type {
   SaveOptions,
 } from './components/PersistenceManager';
 export type { default as SizeType } from './components/SizeType';
+export type { ViewportInsets, ZoomToFitOptions } from './components/Designer';

@@ -70,6 +70,17 @@ import Theme, { ThemeVariant } from './theme/Theme';
 import ChangeEvent from './layout/ChangeEvent';
 import HTMLTopicSelected from './HTMLTopicSelected';
 
+/** How far zoomOut() goes: workspace units per screen pixel. */
+const MAX_ZOOM = 7;
+
+/** How far zoomIn() goes. */
+const MIN_ZOOM = 0.3;
+
+/** The part of each edge of the canvas covered by the host's chrome, in pixels. */
+export type ViewportInsets = { top?: number; right?: number; bottom?: number; left?: number };
+
+export type ZoomToFitOptions = { insets?: ViewportInsets };
+
 type DesignerEventType = 'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess' | 'featureEdit';
 
 class Designer extends EventDispispatcher<DesignerEventType> {
@@ -112,6 +123,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   private _keyboard: DesignerKeyboard | undefined;
 
   private _disposed = false;
+
+  private _viewportInsets: ViewportInsets | (() => ViewportInsets) = {};
 
   constructor(options: DesignerOptions) {
     super();
@@ -410,131 +423,85 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     this._canvas.panBy(deltaX, deltaY);
   }
 
-  zoomToFit(): void {
-    const topics = this.getModel().getTopics();
-    if (!topics || topics.length === 0) {
-      // If no topics, just center on origin
-      this.getModel().setZoom(1);
-      this._canvas.setZoom(1, true);
-      return;
-    }
+  /**
+   * Sets the insets `zoomToFit()` uses when it is called without any: the part of each edge of
+   * the canvas the host covers with its own chrome (an app bar, floating toolbars). The canvas
+   * cannot see that chrome, so the host tells it. A function is measured on every fit, so the
+   * insets follow the host's layout without having to be pushed again.
+   */
+  setViewportInsets(insets: ViewportInsets | (() => ViewportInsets)): void {
+    this._viewportInsets = insets;
+  }
 
-    // Calculate bounding box of all topics
+  /**
+   * Zooms and pans so that the whole map is visible, centred in the part of the canvas that the
+   * insets leave uncovered. It never zooms in beyond 1x (a small map is only centred), nor out
+   * beyond the zoomOut() limit (a bigger map is centred, and overflows).
+   *
+   * @param options.insets the covered part of each edge, in pixels. Defaults to the insets set
+   * with setViewportInsets(), or none.
+   */
+  zoomToFit(options?: ZoomToFitOptions): void {
+    const configured =
+      typeof this._viewportInsets === 'function' ? this._viewportInsets() : this._viewportInsets;
+    const insets = options?.insets ?? configured;
+    const inset = (value: number | undefined): number =>
+      Number.isFinite(value) ? Math.max(value as number, 0) : 0;
+    const top = inset(insets.top);
+    const right = inset(insets.right);
+    const bottom = inset(insets.bottom);
+    const left = inset(insets.left);
+
+    const screenManager = this._canvas.getScreenManager();
+    const containerWidth = screenManager.getContainerWidth();
+    const containerHeight = screenManager.getContainerHeight();
+    const visibleWidth = Math.max(containerWidth - left - right, 1);
+    const visibleHeight = Math.max(containerHeight - top - bottom, 1);
+
+    // Bounding box of all topics, with a 10% padding on each side. An empty map is centred on
+    // the origin.
     let minX = Infinity;
     let maxX = -Infinity;
     let minY = Infinity;
     let maxY = -Infinity;
+    this.getModel()
+      .getTopics()
+      .forEach((topic) => {
+        // A topic without a position yet sits at the origin, as the layout places it.
+        const position = (topic.getPosition() as PositionType | undefined) ?? { x: 0, y: 0 };
+        const size = topic.getSize();
+        minX = Math.min(minX, position.x - size.width / 2);
+        maxX = Math.max(maxX, position.x + size.width / 2);
+        minY = Math.min(minY, position.y - size.height / 2);
+        maxY = Math.max(maxY, position.y + size.height / 2);
+      });
 
-    topics.forEach((topic) => {
-      // A topic without a position yet sits at the origin, as the layout places it.
-      const position = (topic.getPosition() as PositionType | undefined) ?? { x: 0, y: 0 };
-      const size = topic.getSize();
-
-      // Topic position is the center, so calculate bounds
-      const halfWidth = size.width / 2;
-      const halfHeight = size.height / 2;
-
-      minX = Math.min(minX, position.x - halfWidth);
-      maxX = Math.max(maxX, position.x + halfWidth);
-      minY = Math.min(minY, position.y - halfHeight);
-      maxY = Math.max(maxY, position.y + halfHeight);
-    });
-
-    // Add padding (10% on each side)
-    const paddingX = (maxX - minX) * 0.1;
-    const paddingY = (maxY - minY) * 0.1;
-    minX -= paddingX;
-    maxX += paddingX;
-    minY -= paddingY;
-    maxY += paddingY;
-
-    const contentWidth = maxX - minX;
-    const contentHeight = maxY - minY;
-    const contentCenterX = (minX + maxX) / 2;
-    const contentCenterY = (minY + maxY) / 2;
-
-    // Get container dimensions
-    const screenManager = this._canvas.getScreenManager();
-    const containerWidth = screenManager.getContainerWidth();
-    let containerHeight = screenManager.getContainerHeight();
-
-    // Subtract AppBar height from available height
-    // Find the main AppBar (not the toolbars which are positioned absolutely)
-    // The main AppBar is typically at the top of the page
-    const allAppBars = Array.from(document.querySelectorAll('.MuiAppBar-root')) as HTMLElement[];
-
-    // Find the top AppBar height (not absolutely positioned toolbars)
-    const topAppBarHeight = allAppBars
-      .map((appBarElement) => {
-        const appBarRect = appBarElement.getBoundingClientRect();
-        const style = window.getComputedStyle(appBarElement);
-
-        // Check if this is the top AppBar (not absolutely positioned toolbars)
-        // Toolbars use position: absolute, main AppBar uses position: fixed or static
-        if (appBarRect.height > 0 && appBarRect.top >= 0 && style.position !== 'absolute') {
-          return appBarRect.height;
-        }
-        return 0;
-      })
-      .reduce((max, height) => Math.max(max, height), 0);
-
-    // Subtract the top AppBar height from available height
-    if (topAppBarHeight > 0) {
-      containerHeight = Math.max(containerHeight - topAppBarHeight, containerWidth * 0.1); // Ensure minimum height
+    let contentWidth = 0;
+    let contentHeight = 0;
+    let contentCenter: PositionType = { x: 0, y: 0 };
+    if (minX <= maxX && minY <= maxY) {
+      contentWidth = (maxX - minX) * 1.2;
+      contentHeight = (maxY - minY) * 1.2;
+      contentCenter = { x: (minX + maxX) / 2, y: (minY + maxY) / 2 };
     }
 
-    // Handle edge cases where content has no size
-    if (contentWidth <= 0 || contentHeight <= 0) {
-      // Content has no size, just center on content center
-      this.getModel().setZoom(1);
-      this._canvas.setZoomValue(1);
-      const visibleWidth = containerWidth;
-      const visibleHeight = containerHeight;
-      const coordOriginX = contentCenterX - visibleWidth / 2;
-      const coordOriginY = contentCenterY - visibleHeight / 2;
-      this._canvas.setCoordOrigin(coordOriginX, coordOriginY);
-      this._canvas.setCoordSize(visibleWidth, visibleHeight);
-      screenManager.setOffset(coordOriginX, coordOriginY);
-      screenManager.setScale(1);
-      screenManager.fireEvent('update');
-      return;
-    }
+    // Workspace units per screen pixel, as everywhere else: above 1 shows more of the map.
+    const zoom = Math.min(
+      Math.max(contentWidth / visibleWidth, contentHeight / visibleHeight, 1),
+      MAX_ZOOM,
+    );
 
-    // Calculate zoom to fit content in container
-    const zoomX = containerWidth / contentWidth;
-    const zoomY = containerHeight / contentHeight;
-    const zoom = Math.min(zoomX, zoomY, 1); // Don't zoom in beyond 1x
-
-    // Calculate coordinate origin to center content in view
-    // The visible area in workspace coordinates is: coordOrigin to coordOrigin + (containerSize / zoom)
-    const visibleWidth = containerWidth / zoom;
-    const visibleHeight = containerHeight / zoom;
-
-    // Center the content in the visible area
-    const coordOriginX = contentCenterX - visibleWidth / 2;
-    const coordOriginY = contentCenterY - visibleHeight / 2;
-
-    // Update zoom in model and canvas
     this.getModel().setZoom(zoom);
-    this._canvas.setZoomValue(zoom);
-
-    // Update canvas zoom and coordinate origin
-    this._canvas.setCoordOrigin(coordOriginX, coordOriginY);
-    this._canvas.setCoordSize(visibleWidth, visibleHeight);
-
-    // Update screen manager
-    screenManager.setOffset(coordOriginX, coordOriginY);
-    screenManager.setScale(zoom);
-
-    // Fire update events
-    screenManager.fireEvent('update');
-    LayoutEventBus.fireEvent('canvasZoomed', { zoom });
+    this._canvas.setZoomAt(zoom, contentCenter, {
+      x: left + visibleWidth / 2,
+      y: top + visibleHeight / 2,
+    });
   }
 
   zoomOut(factor = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() * factor;
-    if (scale <= 7.0) {
+    if (scale <= MAX_ZOOM) {
       model.setZoom(scale);
       this._canvas.setZoom(scale);
     } else {
@@ -546,7 +513,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const model = this.getModel();
     const scale = model.getZoom() / factor;
 
-    if (scale >= 0.3) {
+    if (scale >= MIN_ZOOM) {
       model.setZoom(scale);
       this._canvas.setZoom(scale);
     } else {

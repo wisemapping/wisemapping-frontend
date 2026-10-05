@@ -246,9 +246,6 @@ class Canvas {
     const containerHeight = this._screenManager.getContainerHeight();
     const newVisibleAreaSize = { width: containerWidth, height: containerHeight };
 
-    // - svg must fit container size. Go through the workspace so its size stays in sync: the inline
-    // editor's font size is scaled by it (W-HTMLFONT).
-    workspace.setSize(`${containerWidth}px`, `${containerHeight}px`);
     // - svg viewPort must fit container size with zoom adjustment
     const newCoordWidth = containerWidth * zoom;
     const newCoordHeight = containerHeight * zoom;
@@ -275,9 +272,34 @@ class Canvas {
       coordOriginY = visibleCenterY - newCoordHeight / 2;
     }
 
+    this._applyViewport(zoom, coordOriginX, coordOriginY);
+  }
+
+  /**
+   * Sets the zoom and pans so that `position` (in workspace coordinates) is drawn at
+   * `screenPoint` (in pixels from the container's top-left corner).
+   */
+  setZoomAt(zoom: number, position: PositionType, screenPoint: PositionType): void {
+    this._applyViewport(zoom, position.x - screenPoint.x * zoom, position.y - screenPoint.y * zoom);
+  }
+
+  /**
+   * The one place the viewport changes zoom: the SVG fills the container, the viewBox is the
+   * container scaled by `zoom` (workspace units per screen pixel), and the zoom kept here, the
+   * screen manager's scale and the viewBox all agree.
+   */
+  private _applyViewport(zoom: number, coordOriginX: number, coordOriginY: number): void {
+    const workspace = this._workspace;
+    const containerWidth = this._screenManager.getContainerWidth();
+    const containerHeight = this._screenManager.getContainerHeight();
+
+    // - svg must fit container size. Go through the workspace so its size stays in sync: the inline
+    // editor's font size is scaled by it (W-HTMLFONT).
+    workspace.setSize(`${containerWidth}px`, `${containerHeight}px`);
+
     this._zoom = zoom;
     workspace.setCoordOrigin(coordOriginX, coordOriginY);
-    workspace.setCoordSize(newCoordWidth, newCoordHeight);
+    workspace.setCoordSize(containerWidth * zoom, containerHeight * zoom);
 
     // Update screen.
     this._screenManager.setOffset(coordOriginX, coordOriginY);
