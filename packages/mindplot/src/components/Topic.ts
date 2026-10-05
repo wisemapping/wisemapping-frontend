@@ -309,8 +309,7 @@ abstract class Topic extends NodeGraph {
       return null;
     }
 
-    const groupPeer = this.get2DElement().peer;
-    const nativeElement = groupPeer?._native;
+    const nativeElement = this.get2DElement()?.getNode();
     if (!nativeElement || !nativeElement.isConnected) {
       return null;
     }
@@ -1410,7 +1409,7 @@ abstract class Topic extends NodeGraph {
       // Calculate topic size and adjust elements. The text is measured once: the font
       // height is the height of one of its lines (Text.getFontHeight) ...
       const { width: textWidth, height: textHeight } = textShape.measure();
-      const fontHeight = textHeight / textShape.peer.getTextLines().length;
+      const fontHeight = textHeight / textShape.getLineCount();
       this._measuredFontHeight = fontHeight;
       const padding = theme.getInnerPadding(this);
 

@@ -83,7 +83,7 @@ export const WidgetPopover = ({
 
       topic?.closeEditors();
 
-      const anchorElement = topic?.getOuterShape().peer._native as Element | undefined;
+      const anchorElement = topic?.getOuterShape().getNode();
 
       if (anchorElement) {
         const rect = anchorElement.getBoundingClientRect();

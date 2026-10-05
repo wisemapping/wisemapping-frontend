@@ -176,20 +176,13 @@ class ImageEmojiFeature {
    * addToGroup puts it: then there is nothing to move.
    */
   static isLastChild(group: Group, element: Text | Image): boolean {
-    const children = group.peer.getChildren();
-    return (
-      children[children.length - 1] === element.peer &&
-      group.peer._native.lastChild === element.peer._native
-    );
+    return group.isLastChild(element);
   }
 
   removeFromGroup(group: Group): void {
     if (this._emojiText) {
       // Check if the element is actually in the group before trying to remove it
-      const children = group.peer.getChildren();
-      const isInGroup = children.includes(this._emojiText.peer);
-
-      if (isInGroup) {
+      if (group.contains(this._emojiText)) {
         group.removeChild(this._emojiText);
       }
     }

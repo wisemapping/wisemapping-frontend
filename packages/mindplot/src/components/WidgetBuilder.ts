@@ -17,7 +17,7 @@
  */
 
 import debounce from 'lodash/debounce';
-import { ElementPeer } from '@wisemapping/web2d';
+import type { ElementClass, ElementPeer } from '@wisemapping/web2d';
 import DOMUtils from './util/DOMUtils';
 import LinkIcon from './LinkIcon';
 import LinkModel from './model/LinkModel';
@@ -61,7 +61,7 @@ abstract class WidgetBuilder {
   }
 
   private createTooltip(
-    mindmapElement: ElementPeer,
+    mindmapElement: ElementClass<ElementPeer>,
     title: string,
     linkModel?: LinkModel,
     noteModel?: NoteModel,
@@ -232,11 +232,11 @@ abstract class WidgetBuilder {
   }
 
   createTooltipForLink(_topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
-    this.createTooltip(linkIcon.getElement().peer, $msg('LINK'), linkModel, undefined);
+    this.createTooltip(linkIcon.getElement(), $msg('LINK'), linkModel, undefined);
   }
 
   configureTooltipForNode(_topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void {
-    this.createTooltip(noteIcon.getElement().peer, $msg('NOTE'), undefined, noteModel);
+    this.createTooltip(noteIcon.getElement(), $msg('NOTE'), undefined, noteModel);
   }
 
   abstract buildEditorForLink(topic: Topic): React.ReactElement;

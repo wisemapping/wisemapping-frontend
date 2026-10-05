@@ -37,16 +37,14 @@ class TestWidgetBuilder extends WidgetBuilder {
 
 type Listener = (evt: MouseEvent) => void;
 
-/** Minimal icon whose peer records the listeners WidgetBuilder registers. */
+/** Minimal icon whose element records the listeners WidgetBuilder registers. */
 const fakeIcon = () => {
   const listeners: Record<string, Listener> = {};
   const target = document.createElement('span');
   const icon = {
     getElement: () => ({
-      peer: {
-        addEvent: (type: string, listener: Listener) => {
-          listeners[type] = listener;
-        },
+      addEvent: (type: string, listener: Listener) => {
+        listeners[type] = listener;
       },
     }),
   };
