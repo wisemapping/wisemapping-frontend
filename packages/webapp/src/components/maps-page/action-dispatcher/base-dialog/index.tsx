@@ -46,14 +46,10 @@ export type DialogProps = {
 };
 
 const BaseDialog = (props: DialogProps): React.ReactElement => {
-  const { setHotkeyEnabled } = useContext(KeyboardContext);
+  const { disableHotkeys } = useContext(KeyboardContext);
   const intl = useIntl();
-  useEffect(() => {
-    setHotkeyEnabled(false);
-    return () => {
-      setHotkeyEnabled(true);
-    };
-  }, []);
+  // Hotkeys stay disabled while any dialog is open: released on unmount.
+  useEffect(() => disableHotkeys(), [disableHotkeys]);
   const { onClose, onSubmit, maxWidth = 'sm', papercss, isLoading = false } = props;
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
