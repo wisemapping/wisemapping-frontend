@@ -43,6 +43,8 @@ interface MindManagerTopic {
   fillColor?: string;
   lineColor?: string;
   shape?: TopicShapeType;
+  // TopicViewGroup/Collapsed: the subtopics are hidden.
+  collapsed?: boolean;
   // In millimeters. For a floating topic, its position from the central topic. For a subtopic, a
   // layout hint: CX is the distance from the parent, its sign the side; CY is not a position.
   offset?: { x: number; y: number };
@@ -330,6 +332,10 @@ class MindManagerImporter extends Importer {
       const calloutOrder = childCount + index;
       node.append(this.convertTopic(mindmap, callout, calloutOrder, calloutOrder, side));
     });
+
+    if (topic.collapsed && node.getChildren().length > 0) {
+      node.setChildrenShrunken(true);
+    }
 
     return node;
   }
@@ -630,6 +636,14 @@ class MindManagerImporter extends Importer {
           colorElement.textContent,
       );
       topic.lineColor = MindManagerImporter.toColor(colorElement.getAttribute('LineColor'));
+    }
+
+    // Collapsed in the first view (ViewIndex 0), the one MindManager opens
+    const views = this.findChildrenByTagName(topicElement, 'TopicViewGroup');
+    const view = views.find((group) => group.getAttribute('ViewIndex') === '0') ?? views[0];
+    const collapsed = view && this.findChildByTagName(view, 'Collapsed');
+    if (collapsed?.getAttribute('Collapsed') === 'true') {
+      topic.collapsed = true;
     }
 
     const offsetElement = this.findChildByTagName(topicElement, 'Offset');

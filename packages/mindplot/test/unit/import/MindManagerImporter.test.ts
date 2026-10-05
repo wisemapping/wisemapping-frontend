@@ -623,3 +623,28 @@ describe('MindManagerImporter topic shapes', () => {
     expect(findByText(mindmap, 'Own').getShapeType()).toBe('elipse');
   });
 });
+
+describe('MindManagerImporter collapsed topics', () => {
+  const view = (collapsed: boolean): string =>
+    `<ap:TopicViewGroup ViewIndex="0"><ap:Collapsed Collapsed="${collapsed}"/></ap:TopicViewGroup>`;
+  const sub = (oid: string) =>
+    `<ap:SubTopics><ap:Topic OId="${oid}"><ap:Text PlainText="${oid}"/></ap:Topic></ap:SubTopics>`;
+
+  test('a collapsed topic with subtopics is imported shrunk', async () => {
+    const mindManager = schemaMap(`
+        <ap:Topic OId="a">${sub('a1')}${view(true)}<ap:Text PlainText="Collapsed"/></ap:Topic>
+        <ap:Topic OId="b">${sub('b1')}${view(false)}<ap:Text PlainText="Expanded"/></ap:Topic>
+        <ap:Topic OId="c">${sub('c1')}<ap:Text PlainText="No view"/></ap:Topic>
+        <ap:Topic OId="d">${view(true)}<ap:Text PlainText="Leaf"/></ap:Topic>`);
+
+    const xml = await new MindManagerImporter(mindManager).import('test');
+    const mindmap = loadMindmap(xml);
+
+    expect(findByText(mindmap, 'Collapsed').areChildrenShrunken()).toBe(true);
+    expect(findByText(mindmap, 'Expanded').areChildrenShrunken()).toBe(false);
+    expect(findByText(mindmap, 'No view').areChildrenShrunken()).toBe(false);
+    // A leaf has nothing to shrink.
+    expect(findByText(mindmap, 'Leaf').areChildrenShrunken()).toBe(false);
+    expect(xml.match(/shrink="true"/g)).toHaveLength(1);
+  });
+});
