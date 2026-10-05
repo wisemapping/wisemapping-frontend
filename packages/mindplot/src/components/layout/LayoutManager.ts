@@ -259,10 +259,12 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
       if (node.hasOrderChanged() || node.hasPositionChanged()) {
         // Find or create a event ...
         const id = node.getId();
+        // A change left by a layout that was not flushed is queued already: update it only.
         let event = this._eventsById.get(id);
         if (!event) {
           event = new ChangeEvent(id);
           this._eventsById.set(id, event);
+          this._events.push(event);
         }
 
         // Update nodes ...
@@ -274,7 +276,6 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
 
         node.resetPositionState();
         node.resetOrderState();
-        this._events.push(event);
       }
       this._collectChanges(this._treeSet.getChildren(node));
     });
