@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import IMindmap from './IMindmap';
 import INodeModel, { NodeModelType } from './INodeModel';
 import NodeModel from './NodeModel';
@@ -176,8 +176,8 @@ class Mindmap extends IMindmap {
   }
 
   createRelationship(sourceNodeId: number, targetNodeId: number): RelationshipModel {
-    $assert($defined(sourceNodeId), 'from node cannot be null');
-    $assert($defined(targetNodeId), 'to node cannot be null');
+    $assert(sourceNodeId != null, 'from node cannot be null');
+    $assert(targetNodeId != null, 'to node cannot be null');
 
     return new RelationshipModel(sourceNodeId, targetNodeId);
   }

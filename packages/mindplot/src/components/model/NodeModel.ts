@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import cloneDeep from 'lodash/cloneDeep';
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import INodeModel, { NodeModelType, NodePropKey, NodeProps } from './INodeModel';
 import FeatureModelFactory from './FeatureModelFactory';
 import FeatureModel, { FeatureAttributes } from './FeatureModel';
@@ -90,7 +90,7 @@ class NodeModel extends INodeModel {
    * @return the feature with the given id
    */
   findFeatureById(id: number): FeatureModel {
-    $assert($defined(id), 'id can not be null');
+    $assert(id != null, 'id can not be null');
     const result = this._features.filter((feature) => feature.getId() === id);
     $assert(result.length === 1, `Feature could not be found:${id}`);
     return result[0];

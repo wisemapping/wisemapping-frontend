@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import { LineType } from '../ConnectionLine';
 import PositionType from '../PositionType';
 import { FontWeightType } from '../FontWeightType';
@@ -333,7 +333,7 @@ abstract class INodeModel {
 
   areChildrenShrunken(): boolean {
     const result = this.getProperty('shrunken');
-    return $defined(result) ? result : false;
+    return result ?? false;
   }
 
   /**
