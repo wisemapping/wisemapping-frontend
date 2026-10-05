@@ -34,6 +34,8 @@ const config = {
     global: { statements: 99, branches: 93, functions: 99, lines: 99 },
     // Pure path geometry and DOM helpers.
     './src/components/peer/utils/': { lines: 98, branches: 93 },
+    // Pure geometry (no DOM): every function has direct unit tests.
+    './src/components/geometry/': { lines: 95, branches: 90 },
   },
 };
 
