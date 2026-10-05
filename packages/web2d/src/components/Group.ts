@@ -113,6 +113,20 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
     }
   }
 
+  /** Whether the element was appended to this group (and not removed since). */
+  contains(element: WorkspaceElement<ElementPeer>): boolean {
+    return this.peer.getChildren().includes(element.peer);
+  }
+
+  /** Whether the element is the last child of this group, drawn in front of the others. */
+  isLastChild(element: WorkspaceElement<ElementPeer>): boolean {
+    const children = this.peer.getChildren();
+    return (
+      children[children.length - 1] === element.peer &&
+      this.peer._native.lastChild === element.peer._native
+    );
+  }
+
   getType(): ElementType {
     return 'Group';
   }

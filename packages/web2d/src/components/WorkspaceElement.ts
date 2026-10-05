@@ -222,6 +222,14 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
     this.peer.setCursor(type);
   }
 
+  /**
+   * The SVG node of the element, for DOM work web2d has no method for (measuring it on screen,
+   * anchoring a popover). Prefer the element methods: the node is the peer's implementation.
+   */
+  getNode(): T['_native'] {
+    return this.peer._native;
+  }
+
   setTestId(testId: string) {
     this.peer._native.setAttribute('test-id', testId);
   }

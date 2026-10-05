@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import Group from '../../src/components/Group';
 import Text from '../../src/components/Text';
 import Rect from '../../src/components/Rect';
 import Ellipse from '../../src/components/Ellipse';
@@ -122,5 +123,44 @@ describe.each([
     element.setPosition(7, 8);
     (element.getPosition() as { x: number }).x = 99;
     expect(element.getPosition()).toEqual({ x: 7, y: 8 });
+  });
+});
+
+// W4: element methods for what mindplot read from the peers (WEB2D_REVIEW_PLAN 3.7).
+describe('element APIs instead of peer reach-ins (W4)', () => {
+  it('getNode returns the SVG node of the element', () => {
+    const rect = new Rect(0);
+    expect(rect.getNode()).toBe(rect.peer._native);
+    expect(rect.getNode().tagName).toBe('rect');
+  });
+
+  it('Group.contains tells whether an element was appended and not removed', () => {
+    const group = new Group();
+    const text = new Text();
+    expect(group.contains(text)).toBe(false);
+    group.append(text);
+    expect(group.contains(text)).toBe(true);
+    group.removeChild(text);
+    expect(group.contains(text)).toBe(false);
+  });
+
+  it('Group.isLastChild tells whether an element is the front child', () => {
+    const group = new Group();
+    const back = new Rect(0);
+    const front = new Text();
+    group.append(back);
+    group.append(front);
+    expect(group.isLastChild(front)).toBe(true);
+    expect(group.isLastChild(back)).toBe(false);
+    // A node appended around web2d is in front in the DOM: the element is no longer the last.
+    group.appendDomChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
+    expect(group.isLastChild(front)).toBe(false);
+  });
+
+  it('Text.getLineCount counts the lines', () => {
+    const text = new Text();
+    expect(text.getLineCount()).toBe(0);
+    text.setText('a\nb\r\nc');
+    expect(text.getLineCount()).toBe(3);
   });
 });

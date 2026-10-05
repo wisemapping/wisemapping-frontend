@@ -110,9 +110,14 @@ class Text extends WorkspaceElement<TextPeer> {
     return this.peer.getShapeHeight();
   }
 
+  /** The number of lines (an empty text has none). */
+  getLineCount(): number {
+    return this.peer.getTextLines().length;
+  }
+
   /** The height of one line. An empty text has no lines and measures 0, not NaN. */
   getFontHeight(): number {
-    return this.measure().height / Math.max(1, this.peer.getTextLines().length);
+    return this.measure().height / Math.max(1, this.getLineCount());
   }
 
   getPosition(): PositionType {
