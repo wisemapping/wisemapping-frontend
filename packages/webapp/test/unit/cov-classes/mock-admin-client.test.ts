@@ -115,8 +115,8 @@ describe('MockAdminClient user changes', () => {
     expect((await client.updateAdminUser(3, { lastname: 'Roe' })).fullName).toBe('Johnny Roe');
   });
 
-  it('updateAdminUser throws for an unknown user', () => {
-    expect(() => client.updateAdminUser(999, {})).toThrow('User with id 999 not found');
+  it('updateAdminUser rejects for an unknown user', async () => {
+    await expect(client.updateAdminUser(999, {})).rejects.toThrow('User with id 999 not found');
   });
 
   it('createAdminUser adds an active database user with the next id', async () => {
@@ -137,11 +137,11 @@ describe('MockAdminClient user changes', () => {
     expect((await client.getAdminUsers()).totalElements).toBe(13);
   });
 
-  it('deleteAdminUser removes the user, and throws for an unknown one', async () => {
+  it('deleteAdminUser removes the user, and rejects for an unknown one', async () => {
     await client.deleteAdminUser(12);
 
     expect((await client.getAdminUsers()).totalElements).toBe(11);
-    expect(() => client.deleteAdminUser(12)).toThrow('User with id 12 not found');
+    await expect(client.deleteAdminUser(12)).rejects.toThrow('User with id 12 not found');
   });
 
   it('updateUserSuspension records and clears the suspension reason', async () => {
@@ -174,11 +174,19 @@ describe('MockAdminClient user changes', () => {
     expect(page.data.map((u) => u.id)).toEqual([4]);
   });
 
-  // Bug: mock-admin-client/index.ts:789 (and :804, :819, :834, :848) throw inside the
-  // setTimeout callback instead of rejecting, so for an unknown user the promise never
-  // settles and the error escapes as an uncaught exception.
-  it.failing('suspendAdminUser rejects for an unknown user', async () => {
-    const result = client.suspendAdminUser(999);
+  // These used to throw inside the setTimeout callback, so for an unknown user the promise
+  // never settled and the error escaped as an uncaught exception.
+  it.each([
+    [
+      'updateUserSuspension',
+      (c: MockAdminClient) => c.updateUserSuspension(999, { suspended: true }),
+    ],
+    ['suspendAdminUser', (c: MockAdminClient) => c.suspendAdminUser(999)],
+    ['unsuspendAdminUser', (c: MockAdminClient) => c.unsuspendAdminUser(999)],
+    ['activateAdminUser', (c: MockAdminClient) => c.activateAdminUser(999)],
+    ['changeUserPassword', (c: MockAdminClient) => c.changeUserPassword(999, 'p')],
+  ] as const)('%s rejects for an unknown user', async (_name, call) => {
+    const result: Promise<unknown> = call(client);
     jest.advanceTimersByTime(500);
     await expect(result).rejects.toThrow('User with ID 999 not found');
   });

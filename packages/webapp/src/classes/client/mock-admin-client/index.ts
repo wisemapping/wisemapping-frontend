@@ -510,7 +510,7 @@ class MockAdminClient implements AdminClientInterface {
 
     const userIndex = this.adminUsers.findIndex((user) => user.id === userId);
     if (userIndex === -1) {
-      throw new Error(`User with id ${userId} not found`);
+      return Promise.reject(new Error(`User with id ${userId} not found`));
     }
 
     const updatedUser = {
@@ -546,7 +546,7 @@ class MockAdminClient implements AdminClientInterface {
 
     const userIndex = this.adminUsers.findIndex((user) => user.id === userId);
     if (userIndex === -1) {
-      throw new Error(`User with id ${userId} not found`);
+      return Promise.reject(new Error(`User with id ${userId} not found`));
     }
 
     this.adminUsers.splice(userIndex, 1);
@@ -764,7 +764,7 @@ class MockAdminClient implements AdminClientInterface {
     suspensionData: { suspended: boolean; suspensionReason?: string },
   ): Promise<AdminUser> {
     console.log(`MockAdminClient: Updating suspension for user ${userId}`, suspensionData);
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
         if (user) {
@@ -786,7 +786,7 @@ class MockAdminClient implements AdminClientInterface {
           }
           resolve({ ...user });
         } else {
-          throw new Error(`User with ID ${userId} not found`);
+          reject(new Error(`User with ID ${userId} not found`));
         }
       }, 500);
     });
@@ -794,14 +794,14 @@ class MockAdminClient implements AdminClientInterface {
 
   suspendAdminUser(userId: number): Promise<AdminUser> {
     console.log(`MockAdminClient: Suspending user ${userId}`);
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
         if (user) {
           user.isSuspended = true;
           resolve({ ...user });
         } else {
-          throw new Error(`User with ID ${userId} not found`);
+          reject(new Error(`User with ID ${userId} not found`));
         }
       }, 500);
     });
@@ -809,14 +809,14 @@ class MockAdminClient implements AdminClientInterface {
 
   unsuspendAdminUser(userId: number): Promise<AdminUser> {
     console.log(`MockAdminClient: Unsuspending user ${userId}`);
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
         if (user) {
           user.isSuspended = false;
           resolve({ ...user });
         } else {
-          throw new Error(`User with ID ${userId} not found`);
+          reject(new Error(`User with ID ${userId} not found`));
         }
       }, 500);
     });
@@ -824,14 +824,14 @@ class MockAdminClient implements AdminClientInterface {
 
   activateAdminUser(userId: number): Promise<void> {
     console.log(`MockAdminClient: Activating user ${userId}`);
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
         if (user) {
           user.isActive = true;
           resolve();
         } else {
-          throw new Error(`User with ID ${userId} not found`);
+          reject(new Error(`User with ID ${userId} not found`));
         }
       }, 500);
     });
@@ -839,13 +839,13 @@ class MockAdminClient implements AdminClientInterface {
 
   changeUserPassword(userId: number, _password: string): Promise<void> {
     console.log(`MockAdminClient: Changing password for user ${userId}`);
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
         if (user) {
           resolve();
         } else {
-          throw new Error(`User with ID ${userId} not found`);
+          reject(new Error(`User with ID ${userId} not found`));
         }
       }, 500);
     });
