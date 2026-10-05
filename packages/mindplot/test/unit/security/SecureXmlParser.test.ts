@@ -79,6 +79,12 @@ describe('SecureXmlParser', () => {
     expect(doc!.documentElement.textContent).toBe('ab');
   });
 
+  test('isXmlContentSafe rejects xml-stylesheet processing instructions (BL5-23)', () => {
+    expect(SecureXmlParser.isXmlContentSafe('<?xml-stylesheet href="x.xsl"?><map/>')).toBe(false);
+    expect(SecureXmlParser.isXmlContentSafe('<?XML-STYLESHEET href="x.xsl"?><map/>')).toBe(false);
+    expect(SecureXmlParser.isXmlContentSafe('<map/>')).toBe(true);
+  });
+
   test('isXmlContentSafe accepts the predefined XML entities', () => {
     expect(SecureXmlParser.isXmlContentSafe('<node TEXT="R&amp;D"/>')).toBe(true);
     expect(SecureXmlParser.isXmlContentSafe('<node TEXT="&xxe;"/>')).toBe(false);
