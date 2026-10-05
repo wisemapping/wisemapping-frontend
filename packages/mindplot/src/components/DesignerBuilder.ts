@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import PersistenceManager from './PersistenceManager';
 import Designer from './Designer';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 
@@ -36,10 +35,6 @@ export function buildDesigner(options: DesignerOptions): Designer {
 
   // Register load events ...
   designer = new Designer(options);
-
-  // Configure default persistence manager ...
-  const persistence = options.persistenceManager;
-  PersistenceManager.init(persistence!);
 
   return designer;
 }

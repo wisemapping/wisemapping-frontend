@@ -213,26 +213,14 @@ describe('MindplotWebComponent', () => {
   });
 
   describe('persistence (BL5-36)', () => {
-    const other = () =>
-      ({
-        save: jest.fn(),
-        unlockMap: jest.fn(),
-        load: jest.fn(),
-      }) as unknown as PersistenceManager;
-
     it('saves and unlocks through the persistence it was built with', () => {
       build('edition-owner');
-      // Another designer built afterwards replaces the static instance ...
-      const another = other();
-      PersistenceManager.init(another);
 
       component.save(true);
       component.unlockMap();
 
       expect(persistence.save).toHaveBeenCalledTimes(1);
       expect(persistence.unlockMap).toHaveBeenCalledWith('1');
-      expect(another.save).not.toHaveBeenCalled();
-      expect(another.unlockMap).not.toHaveBeenCalled();
     });
 
     it('loads through the persistence it was built with', async () => {
@@ -241,7 +229,6 @@ describe('MindplotWebComponent', () => {
       const loadMap = jest.fn();
       (buildDesigner as jest.Mock).mockImplementation(() => ({ addEvent: jest.fn(), loadMap }));
       build('edition-owner');
-      PersistenceManager.init(other());
 
       await component.loadMap('1');
 
@@ -249,9 +236,8 @@ describe('MindplotWebComponent', () => {
       expect(loadMap).toHaveBeenCalled();
     });
 
-    it('clears the static instance it set once the element leaves the page', async () => {
+    it('still unlocks the map once the element leaves the page', async () => {
       build('edition-owner');
-      PersistenceManager.init(persistence as unknown as PersistenceManager);
       document.body.appendChild(component);
 
       component.remove();
@@ -259,24 +245,9 @@ describe('MindplotWebComponent', () => {
         setTimeout(resolve, 0);
       });
 
-      expect(PersistenceManager.getInstance()).toBeUndefined();
       // Pending changes can still be saved and the map unlocked ...
       component.unlockMap();
       expect(persistence.unlockMap).toHaveBeenCalledWith('1');
-    });
-
-    it('keeps a static instance set by another designer', async () => {
-      build('edition-owner');
-      const another = other();
-      PersistenceManager.init(another);
-      document.body.appendChild(component);
-
-      component.remove();
-      await new Promise<void>((resolve) => {
-        setTimeout(resolve, 0);
-      });
-
-      expect(PersistenceManager.getInstance()).toBe(another);
     });
   });
 

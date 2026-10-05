@@ -39,8 +39,7 @@ class MindplotWebComponent extends HTMLElement {
 
   private _designer: Designer | undefined;
 
-  // The persistence the designer was built with. Kept here rather than read back from the
-  // static PersistenceManager instance, which the next designer built replaces ...
+  // The persistence the designer was built with: each component saves through its own.
   private _persistence: PersistenceManager | undefined;
 
   private _saveRequired: boolean;
@@ -210,9 +209,6 @@ class MindplotWebComponent extends HTMLElement {
     queueMicrotask(() => {
       if (!this.isConnected && this._designer) {
         this._designer.dispose();
-        if (this._persistence) {
-          PersistenceManager.clear(this._persistence);
-        }
       }
     });
   }
