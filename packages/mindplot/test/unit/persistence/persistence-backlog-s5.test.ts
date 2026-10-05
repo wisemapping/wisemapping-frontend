@@ -245,7 +245,7 @@ describe('node model (BL-17, BL-75)', () => {
   test('a corrupted stored position counts as missing', () => {
     const mindmap = new Mindmap('map');
     const topic = mindmap.createNode('MainTopic');
-    topic.putProperty('position', '{x:NaN,y:0}');
+    topic.putProperty('position', { x: NaN, y: 0 });
     expect(topic.hasPosition()).toBe(false);
   });
 });

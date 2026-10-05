@@ -28,7 +28,7 @@ class ImageTopicShape extends Image {
     const url = model.getImageUrl();
     const size = model.getImageSize();
 
-    super.setHref(url);
+    super.setHref(url ?? '');
     if (size) {
       super.setSize(size.width, size.height);
     }

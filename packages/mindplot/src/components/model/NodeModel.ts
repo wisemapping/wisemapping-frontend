@@ -17,14 +17,14 @@
  */
 import cloneDeep from 'lodash/cloneDeep';
 import { $assert, $defined } from '../util/assert';
-import INodeModel, { NodeModelType } from './INodeModel';
+import INodeModel, { NodeModelType, NodePropKey, NodeProps } from './INodeModel';
 import FeatureModelFactory from './FeatureModelFactory';
 import FeatureModel, { FeatureAttributes } from './FeatureModel';
 import Mindmap from './Mindmap';
 import FeatureType from './FeatureType';
 
 class NodeModel extends INodeModel {
-  private _properties: Record<string, string | number | boolean | undefined>;
+  private _properties: Partial<NodeProps>;
 
   private _children: NodeModel[];
 
@@ -96,25 +96,21 @@ class NodeModel extends INodeModel {
     return result[0];
   }
 
-  getPropertiesKeys() {
-    return Object.keys(this._properties);
+  getPropertiesKeys(): NodePropKey[] {
+    return Object.keys(this._properties) as NodePropKey[];
   }
 
-  /**
-   * @param key
-   * @param value - Can be string, number, boolean, or undefined
-   * @throws will throw an error if key is null or undefined
-   */
-  putProperty(key: string, value: string | number | boolean | undefined): void {
+  putProperty<K extends NodePropKey>(key: K, value: NodeProps[K]): void {
     this._properties[key] = value;
   }
 
-  getProperties() {
+  getProperties(): Readonly<Partial<NodeProps>> {
     return this._properties;
   }
 
-  getProperty(key: string): number | string | boolean | undefined {
-    return this._properties[key];
+  // id and type are set by the constructor, so they are never missing.
+  getProperty<K extends NodePropKey>(key: K): NodeProps[K] {
+    return this._properties[key] as NodeProps[K];
   }
 
   clone(): NodeModel {

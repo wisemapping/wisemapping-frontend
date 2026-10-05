@@ -179,25 +179,25 @@ describe('non finite positions and image sizes (B-NANPOS)', () => {
 
   test('getPosition does not throw on a corrupted stored value', () => {
     const { child } = buildMap();
-    child.putProperty('position', '{x:NaN,y:NaN}');
+    child.putProperty('position', { x: NaN, y: NaN });
     expect(() => child.getPosition()).not.toThrow();
     expect(child.getPosition()).toBeUndefined();
   });
 
-  test('ignores a NaN image size and parses a corrupted one defensively', () => {
+  test('ignores a NaN image size and reports a corrupted one as missing', () => {
     const { child } = buildMap();
     child.setImageSize(80, 40);
     child.setImageSize(NaN, 40);
     expect(child.getImageSize()).toEqual({ width: 80, height: 40 });
 
-    child.putProperty('imageSize', '{width:NaN,height:NaN}');
+    child.putProperty('imageSize', { width: NaN, height: NaN });
     expect(() => child.getImageSize()).not.toThrow();
     expect(child.getImageSize()).toBeUndefined();
   });
 
   test('does not write a NaN position', () => {
     const { mindmap, child } = buildMap();
-    child.putProperty('position', '{x:NaN,y:NaN}');
+    child.putProperty('position', { x: NaN, y: NaN });
     expect(toXmlString(mindmap)).not.toContain('NaN');
   });
 
