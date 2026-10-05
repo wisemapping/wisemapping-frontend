@@ -323,6 +323,7 @@ class FreemindExporter extends Exporter {
 
       if (fontFamily) {
         font.setName(fontFamily);
+        fontNodeNeeded = true;
       }
 
       if (fontSize) {

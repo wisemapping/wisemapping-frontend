@@ -325,9 +325,8 @@ describe('FreemindExporter', () => {
       });
       const central = mindmap.getBranches()[0];
       central.setFontColor('#990000');
+      // A family alone, without size, weight or style (BL5-167).
       central.setFontFamily('Georgia');
-      // The exporter only writes a font with a size, weight or style: a family alone is dropped.
-      central.setFontSize(10);
 
       const xml = await new FreemindImporter(await new FreemindExporter(mindmap).export()).import(
         'test',
@@ -338,7 +337,8 @@ describe('FreemindExporter', () => {
       const importedCentral = imported.getCentralTopic();
       expect(importedCentral.getFontColor()).toBe('#990000');
       expect(importedCentral.getFontFamily()).toBe('Georgia');
-      expect(importedCentral.getFontSize()).toBe(10);
+      // Its font is written with the FreeMind default size, which imports as the theme size.
+      expect(importedCentral.getFontSize()).toBeUndefined();
 
       const [topic] = importedCentral.getChildren();
       expect(topic.getFontColor()).toBe('#00ff00');
