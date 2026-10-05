@@ -30,9 +30,9 @@ import LocalStorageManager from './LocalStorageManager';
 import ThemeFactory from './theme/ThemeFactory';
 
 /**
- * WebComponent implementation for minplot designer.
+ * WebComponent implementation for the mindplot designer.
  * This component is registered as mindplot-component in customElements api. (see https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define)
- * For use it you need to import minplot.js and put in your DOM a <mindplot-component/> tag. In order to create a Designer on it you need to call its buildDesigner method. Maps can be loaded throught loadMap method.
+ * To use it, import @wisemapping/mindplot (its entry point registers the element) and put a <mindplot-component/> tag in your DOM. To create a Designer on it, call its buildDesigner method. Maps are loaded through the loadMap method.
  */
 class MindplotWebComponent extends HTMLElement {
   private _shadowRoot: ShadowRoot;
