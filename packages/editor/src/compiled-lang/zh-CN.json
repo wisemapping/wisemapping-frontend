@@ -11,12 +11,6 @@
       "value": "删除"
     }
   ],
-  "app-bar-title": [
-    {
-      "type": 0,
-      "value": "思维导图编辑器"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -47,12 +41,6 @@
       "value": "分享"
     }
   ],
-  "appbar.theme-title": [
-    {
-      "type": 0,
-      "value": "主题"
-    }
-  ],
   "appbar.title-renamed": [
     {
       "type": 0,
@@ -81,12 +69,6 @@
     {
       "type": 0,
       "value": "信息"
-    }
-  ],
-  "appbar.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "大纲视图"
     }
   ],
   "appbar.tooltip-print": [
@@ -155,40 +137,16 @@
       "value": "撤销"
     }
   ],
-  "aurora": [
-    {
-      "type": 0,
-      "value": "极光"
-    }
-  ],
-  "canvas-style.apply": [
-    {
-      "type": 0,
-      "value": "应用"
-    }
-  ],
   "canvas-style.background-color": [
     {
       "type": 0,
       "value": "背景颜色"
     }
   ],
-  "canvas-style.background-pattern": [
-    {
-      "type": 0,
-      "value": "背景图案"
-    }
-  ],
   "canvas-style.background-style": [
     {
       "type": 0,
       "value": "背景样式"
-    }
-  ],
-  "canvas-style.colors": [
-    {
-      "type": 0,
-      "value": "颜色"
     }
   ],
   "canvas-style.grid-color": [
@@ -251,28 +209,10 @@
       "value": "网格线"
     }
   ],
-  "canvas-style.pattern-none": [
-    {
-      "type": 0,
-      "value": "无"
-    }
-  ],
   "canvas-style.pattern-solid": [
     {
       "type": 0,
       "value": "纯色"
-    }
-  ],
-  "canvas-style.preview": [
-    {
-      "type": 0,
-      "value": "预览"
-    }
-  ],
-  "canvas-style.reset": [
-    {
-      "type": 0,
-      "value": "重置"
     }
   ],
   "canvas-style.tab-color": [
@@ -285,18 +225,6 @@
     {
       "type": 0,
       "value": "网格颜色"
-    }
-  ],
-  "canvas-style.title": [
-    {
-      "type": 0,
-      "value": "背景"
-    }
-  ],
-  "classic": [
-    {
-      "type": 0,
-      "value": "经典"
     }
   ],
   "color-picker.color": [
@@ -329,24 +257,6 @@
       "value": "描述"
     }
   ],
-  "demo-simple-select": [
-    {
-      "type": 0,
-      "value": "选择"
-    }
-  ],
-  "divider": [
-    {
-      "type": 0,
-      "value": "分隔符"
-    }
-  ],
-  "editor-panel.canvas-style-title": [
-    {
-      "type": 0,
-      "value": "背景"
-    }
-  ],
   "editor-panel.deeplink-copied": [
     {
       "type": 0,
@@ -371,12 +281,6 @@
       "value": "混合"
     }
   ],
-  "editor-panel.icon-title": [
-    {
-      "type": 0,
-      "value": "图标"
-    }
-  ],
   "editor-panel.link-panel-title": [
     {
       "type": 0,
@@ -387,12 +291,6 @@
     {
       "type": 0,
       "value": "备注"
-    }
-  ],
-  "editor-panel.theme-title": [
-    {
-      "type": 0,
-      "value": "主题"
     }
   ],
   "editor-panel.tooltip-add-icon": [
@@ -419,12 +317,6 @@
       "value": "添加关系"
     }
   ],
-  "editor-panel.tooltip-add-topic": [
-    {
-      "type": 0,
-      "value": "添加主题"
-    }
-  ],
   "editor-panel.tooltip-add-topic-image": [
     {
       "type": 0,
@@ -437,118 +329,10 @@
       "value": "背景"
     }
   ],
-  "editor-panel.tooltip-change-layout": [
-    {
-      "type": 0,
-      "value": "更改布局"
-    }
-  ],
-  "editor-panel.tooltip-connection-color": [
-    {
-      "type": 0,
-      "value": "颜色"
-    }
-  ],
-  "editor-panel.tooltip-connection-color-default": [
-    {
-      "type": 0,
-      "value": "默认颜色"
-    }
-  ],
-  "editor-panel.tooltip-connection-style": [
-    {
-      "type": 0,
-      "value": "连接样式"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-arc": [
-    {
-      "type": 0,
-      "value": "弧线"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-curved-thick": [
-    {
-      "type": 0,
-      "value": "粗曲线"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-curved-thin": [
-    {
-      "type": 0,
-      "value": "细曲线"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-polyline": [
-    {
-      "type": 0,
-      "value": "简单折线"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-polyline-curved": [
-    {
-      "type": 0,
-      "value": "曲线折线"
-    }
-  ],
   "editor-panel.tooltip-copy-node-link": [
     {
       "type": 0,
       "value": "复制主题链接"
-    }
-  ],
-  "editor-panel.tooltip-delete-topic": [
-    {
-      "type": 0,
-      "value": "删除主题"
-    }
-  ],
-  "editor-panel.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "大纲视图"
-    }
-  ],
-  "editor-panel.tooltip-relationship-arrow-end": [
-    {
-      "type": 0,
-      "value": "结束箭头"
-    }
-  ],
-  "editor-panel.tooltip-relationship-arrow-start": [
-    {
-      "type": 0,
-      "value": "开始箭头"
-    }
-  ],
-  "editor-panel.tooltip-relationship-color": [
-    {
-      "type": 0,
-      "value": "颜色"
-    }
-  ],
-  "editor-panel.tooltip-relationship-color-default": [
-    {
-      "type": 0,
-      "value": "默认颜色"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-dashed": [
-    {
-      "type": 0,
-      "value": "虚线"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-dotted": [
-    {
-      "type": 0,
-      "value": "点线"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-solid": [
-    {
-      "type": 0,
-      "value": "实线"
     }
   ],
   "editor-panel.tooltip-relationship-style": [
@@ -557,124 +341,16 @@
       "value": "关系样式"
     }
   ],
-  "editor-panel.tooltip-theme": [
-    {
-      "type": 0,
-      "value": "主题"
-    }
-  ],
-  "editor-panel.tooltip-topic-border-color": [
-    {
-      "type": 0,
-      "value": "边框颜色"
-    }
-  ],
-  "editor-panel.tooltip-topic-border-color-default": [
-    {
-      "type": 0,
-      "value": "默认边框颜色"
-    }
-  ],
-  "editor-panel.tooltip-topic-fill-color": [
-    {
-      "type": 0,
-      "value": "填充颜色"
-    }
-  ],
-  "editor-panel.tooltip-topic-fill-color-default": [
-    {
-      "type": 0,
-      "value": "默认填充颜色"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-bigger": [
-    {
-      "type": 0,
-      "value": "更大"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-bold": [
-    {
-      "type": 0,
-      "value": "粗体"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-color": [
-    {
-      "type": 0,
-      "value": "颜色"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-color-default": [
-    {
-      "type": 0,
-      "value": "默认颜色"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-italic": [
-    {
-      "type": 0,
-      "value": "斜体"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-smaller": [
-    {
-      "type": 0,
-      "value": "更小"
-    }
-  ],
   "editor-panel.tooltip-topic-font-style": [
     {
       "type": 0,
       "value": "字体样式"
     }
   ],
-  "editor-panel.tooltip-topic-share-ellipse": [
-    {
-      "type": 0,
-      "value": "椭圆形状"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-line": [
-    {
-      "type": 0,
-      "value": "线条形状"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-none": [
-    {
-      "type": 0,
-      "value": "无形状"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-rectangle": [
-    {
-      "type": 0,
-      "value": "矩形形状"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-rounded": [
-    {
-      "type": 0,
-      "value": "圆角形状"
-    }
-  ],
-  "editor-panel.tooltip-topic-style": [
-    {
-      "type": 0,
-      "value": "主题样式"
-    }
-  ],
   "editor-panel.tooltip-unified-styling": [
     {
       "type": 0,
       "value": "主题和连接样式"
-    }
-  ],
-  "editor-panel.topic-image-title": [
-    {
-      "type": 0,
-      "value": "主题图像"
     }
   ],
   "editor.edit-description-mobile": [
@@ -779,12 +455,6 @@
       "value": "上一个匹配"
     }
   ],
-  "headerNotifier": [
-    {
-      "type": 0,
-      "value": "标题通知"
-    }
-  ],
   "icon-collection.border.dashed": [
     {
       "type": 0,
@@ -873,18 +543,6 @@
     {
       "type": 0,
       "value": "具有分支脉冲的有机脉冲线 - 适合科学、神经网络或未来主义主题"
-    }
-  ],
-  "icon-collection.connection.organic-curved": [
-    {
-      "type": 0,
-      "value": "有机曲线"
-    }
-  ],
-  "icon-collection.connection.organic-curved-tooltip": [
-    {
-      "type": 0,
-      "value": "手绘风格，具有戏剧性曲线 - 非常适合创意和富有表现力的思维导图"
     }
   ],
   "icon-collection.connection.simple-polyline": [
@@ -1007,24 +665,6 @@
       "value": "显示图像"
     }
   ],
-  "image-icon-tab.icon-found": [
-    {
-      "type": 0,
-      "value": "找到图标"
-    }
-  ],
-  "image-icon-tab.icons": [
-    {
-      "type": 0,
-      "value": "图标"
-    }
-  ],
-  "image-icon-tab.icons-found": [
-    {
-      "type": 0,
-      "value": "找到图标"
-    }
-  ],
   "layout-selector.accept": [
     {
       "type": 0,
@@ -1043,34 +683,10 @@
       "value": "选择布局样式"
     }
   ],
-  "layout-selector.mindmap": [
-    {
-      "type": 0,
-      "value": "思维导图"
-    }
-  ],
-  "layout-selector.mindmap-description": [
-    {
-      "type": 0,
-      "value": "具有均衡分支的水平布局"
-    }
-  ],
   "layout-selector.title": [
     {
       "type": 0,
       "value": "选择布局"
-    }
-  ],
-  "layout-selector.tree": [
-    {
-      "type": 0,
-      "value": "树形"
-    }
-  ],
-  "layout-selector.tree-description": [
-    {
-      "type": 0,
-      "value": "从上到下的垂直层次结构"
     }
   ],
   "layout.mindmap.description": [
@@ -1109,12 +725,6 @@
       "value": "https://www.example.com"
     }
   ],
-  "mindmap-comp": [
-    {
-      "type": 0,
-      "value": "思维导图组件"
-    }
-  ],
   "note.character.count": [
     {
       "type": 0,
@@ -1129,12 +739,6 @@
     {
       "type": 0,
       "value": "(接近限制)"
-    }
-  ],
-  "ocean": [
-    {
-      "type": 0,
-      "value": "海洋"
     }
   ],
   "outline.collapse": [
@@ -1183,18 +787,6 @@
     {
       "type": 0,
       "value": "笔记"
-    }
-  ],
-  "popover": [
-    {
-      "type": 0,
-      "value": "弹出框"
-    }
-  ],
-  "prism": [
-    {
-      "type": 0,
-      "value": "棱镜"
     }
   ],
   "relationship-style-editor.color": [
@@ -1269,12 +861,6 @@
       "value": "切换起点箭头"
     }
   ],
-  "retro": [
-    {
-      "type": 0,
-      "value": "复古之夜"
-    }
-  ],
   "rich-text-editor.bold": [
     {
       "type": 0,
@@ -1321,12 +907,6 @@
     {
       "type": 0,
       "value": "下划线"
-    }
-  ],
-  "robot": [
-    {
-      "type": 0,
-      "value": "机器人"
     }
   ],
   "shortcut-help-pane.action": [
@@ -1641,12 +1221,6 @@
       "value": "用滚轮放大或缩小"
     }
   ],
-  "sunrise": [
-    {
-      "type": 0,
-      "value": "日出"
-    }
-  ],
   "theme-editor.accept": [
     {
       "type": 0,
@@ -1777,18 +1351,6 @@
     {
       "type": 0,
       "value": "切换到浅色模式"
-    }
-  ],
-  "theme.toggle": [
-    {
-      "type": 0,
-      "value": "切换主题"
-    }
-  ],
-  "title-input": [
-    {
-      "type": 0,
-      "value": "标题输入"
     }
   ],
   "topic-font-editor.active": [
@@ -1967,12 +1529,6 @@
       "value": "键盘快捷键"
     }
   ],
-  "visualization-toolbar.tooltip-layout": [
-    {
-      "type": 0,
-      "value": "更改布局"
-    }
-  ],
   "visualization-toolbar.tooltip-outline-view": [
     {
       "type": 0,
@@ -2013,48 +1569,6 @@
     {
       "type": 0,
       "value": "适合缩放"
-    }
-  ],
-  "zoom-panel.tooltip-collapse-all": [
-    {
-      "type": 0,
-      "value": "折叠所有节点"
-    }
-  ],
-  "zoom-panel.tooltip-expand-all": [
-    {
-      "type": 0,
-      "value": "展开所有节点"
-    }
-  ],
-  "zoom-panel.tooltip-keyboard": [
-    {
-      "type": 0,
-      "value": "键盘快捷键"
-    }
-  ],
-  "zoom-panel.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "大纲视图"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-in": [
-    {
-      "type": 0,
-      "value": "放大"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-out": [
-    {
-      "type": 0,
-      "value": "缩小"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-to-fit": [
-    {
-      "type": 0,
-      "value": "适合窗口"
     }
   ]
 }

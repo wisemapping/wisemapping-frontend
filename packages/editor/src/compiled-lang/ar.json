@@ -11,12 +11,6 @@
       "value": "حذف"
     }
   ],
-  "app-bar-title": [
-    {
-      "type": 0,
-      "value": "محرر الخرائط الذهنية"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -47,12 +41,6 @@
       "value": "مشاركة"
     }
   ],
-  "appbar.theme-title": [
-    {
-      "type": 0,
-      "value": "السمة"
-    }
-  ],
   "appbar.title-renamed": [
     {
       "type": 0,
@@ -81,12 +69,6 @@
     {
       "type": 0,
       "value": "معلومات"
-    }
-  ],
-  "appbar.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "عرض المخطط"
     }
   ],
   "appbar.tooltip-print": [
@@ -155,40 +137,16 @@
       "value": "تراجع"
     }
   ],
-  "aurora": [
-    {
-      "type": 0,
-      "value": "أورورا"
-    }
-  ],
-  "canvas-style.apply": [
-    {
-      "type": 0,
-      "value": "تطبيق"
-    }
-  ],
   "canvas-style.background-color": [
     {
       "type": 0,
       "value": "لون الخلفية"
     }
   ],
-  "canvas-style.background-pattern": [
-    {
-      "type": 0,
-      "value": "نمط الخلفية"
-    }
-  ],
   "canvas-style.background-style": [
     {
       "type": 0,
       "value": "نمط الخلفية"
-    }
-  ],
-  "canvas-style.colors": [
-    {
-      "type": 0,
-      "value": "الألوان"
     }
   ],
   "canvas-style.grid-color": [
@@ -251,28 +209,10 @@
       "value": "خطوط شبكية"
     }
   ],
-  "canvas-style.pattern-none": [
-    {
-      "type": 0,
-      "value": "بدون"
-    }
-  ],
   "canvas-style.pattern-solid": [
     {
       "type": 0,
       "value": "لون صلب"
-    }
-  ],
-  "canvas-style.preview": [
-    {
-      "type": 0,
-      "value": "معاينة"
-    }
-  ],
-  "canvas-style.reset": [
-    {
-      "type": 0,
-      "value": "إعادة تعيين"
     }
   ],
   "canvas-style.tab-color": [
@@ -285,18 +225,6 @@
     {
       "type": 0,
       "value": "لون الشبكة"
-    }
-  ],
-  "canvas-style.title": [
-    {
-      "type": 0,
-      "value": "الخلفية"
-    }
-  ],
-  "classic": [
-    {
-      "type": 0,
-      "value": "كلاسيكي"
     }
   ],
   "color-picker.color": [
@@ -329,24 +257,6 @@
       "value": "الوصف"
     }
   ],
-  "demo-simple-select": [
-    {
-      "type": 0,
-      "value": "اختر"
-    }
-  ],
-  "divider": [
-    {
-      "type": 0,
-      "value": "فاصل"
-    }
-  ],
-  "editor-panel.canvas-style-title": [
-    {
-      "type": 0,
-      "value": "الخلفية"
-    }
-  ],
   "editor-panel.deeplink-copied": [
     {
       "type": 0,
@@ -371,12 +281,6 @@
       "value": "مختلط"
     }
   ],
-  "editor-panel.icon-title": [
-    {
-      "type": 0,
-      "value": "أيقونة"
-    }
-  ],
   "editor-panel.link-panel-title": [
     {
       "type": 0,
@@ -387,12 +291,6 @@
     {
       "type": 0,
       "value": "ملاحظة"
-    }
-  ],
-  "editor-panel.theme-title": [
-    {
-      "type": 0,
-      "value": "السمة"
     }
   ],
   "editor-panel.tooltip-add-icon": [
@@ -419,12 +317,6 @@
       "value": "إضافة علاقة"
     }
   ],
-  "editor-panel.tooltip-add-topic": [
-    {
-      "type": 0,
-      "value": "إضافة موضوع"
-    }
-  ],
   "editor-panel.tooltip-add-topic-image": [
     {
       "type": 0,
@@ -437,118 +329,10 @@
       "value": "الخلفية"
     }
   ],
-  "editor-panel.tooltip-change-layout": [
-    {
-      "type": 0,
-      "value": "تغيير التخطيط"
-    }
-  ],
-  "editor-panel.tooltip-connection-color": [
-    {
-      "type": 0,
-      "value": "اللون"
-    }
-  ],
-  "editor-panel.tooltip-connection-color-default": [
-    {
-      "type": 0,
-      "value": "اللون الافتراضي"
-    }
-  ],
-  "editor-panel.tooltip-connection-style": [
-    {
-      "type": 0,
-      "value": "نمط الاتصال"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-arc": [
-    {
-      "type": 0,
-      "value": "قوس"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-curved-thick": [
-    {
-      "type": 0,
-      "value": "منحنى سميك"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-curved-thin": [
-    {
-      "type": 0,
-      "value": "منحنى رفيع"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-polyline": [
-    {
-      "type": 0,
-      "value": "خط متعدد بسيط"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-polyline-curved": [
-    {
-      "type": 0,
-      "value": "خط متعدد منحنٍ"
-    }
-  ],
   "editor-panel.tooltip-copy-node-link": [
     {
       "type": 0,
       "value": "نسخ رابط الموضوع"
-    }
-  ],
-  "editor-panel.tooltip-delete-topic": [
-    {
-      "type": 0,
-      "value": "حذف الموضوع"
-    }
-  ],
-  "editor-panel.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "عرض المخطط"
-    }
-  ],
-  "editor-panel.tooltip-relationship-arrow-end": [
-    {
-      "type": 0,
-      "value": "سهم النهاية"
-    }
-  ],
-  "editor-panel.tooltip-relationship-arrow-start": [
-    {
-      "type": 0,
-      "value": "سهم البداية"
-    }
-  ],
-  "editor-panel.tooltip-relationship-color": [
-    {
-      "type": 0,
-      "value": "اللون"
-    }
-  ],
-  "editor-panel.tooltip-relationship-color-default": [
-    {
-      "type": 0,
-      "value": "اللون الافتراضي"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-dashed": [
-    {
-      "type": 0,
-      "value": "خط متقطع"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-dotted": [
-    {
-      "type": 0,
-      "value": "خط منقّط"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-solid": [
-    {
-      "type": 0,
-      "value": "خط متصل"
     }
   ],
   "editor-panel.tooltip-relationship-style": [
@@ -557,124 +341,16 @@
       "value": "نمط العلاقة"
     }
   ],
-  "editor-panel.tooltip-theme": [
-    {
-      "type": 0,
-      "value": "السمة"
-    }
-  ],
-  "editor-panel.tooltip-topic-border-color": [
-    {
-      "type": 0,
-      "value": "لون الحدود"
-    }
-  ],
-  "editor-panel.tooltip-topic-border-color-default": [
-    {
-      "type": 0,
-      "value": "لون الحدود الافتراضي"
-    }
-  ],
-  "editor-panel.tooltip-topic-fill-color": [
-    {
-      "type": 0,
-      "value": "لون التعبئة"
-    }
-  ],
-  "editor-panel.tooltip-topic-fill-color-default": [
-    {
-      "type": 0,
-      "value": "لون التعبئة الافتراضي"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-bigger": [
-    {
-      "type": 0,
-      "value": "أكبر"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-bold": [
-    {
-      "type": 0,
-      "value": "غامق"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-color": [
-    {
-      "type": 0,
-      "value": "اللون"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-color-default": [
-    {
-      "type": 0,
-      "value": "اللون الافتراضي"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-italic": [
-    {
-      "type": 0,
-      "value": "مائل"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-smaller": [
-    {
-      "type": 0,
-      "value": "أصغر"
-    }
-  ],
   "editor-panel.tooltip-topic-font-style": [
     {
       "type": 0,
       "value": "نمط الخط"
     }
   ],
-  "editor-panel.tooltip-topic-share-ellipse": [
-    {
-      "type": 0,
-      "value": "شكل بيضاوي"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-line": [
-    {
-      "type": 0,
-      "value": "شكل خط"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-none": [
-    {
-      "type": 0,
-      "value": "بدون شكل"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-rectangle": [
-    {
-      "type": 0,
-      "value": "شكل مستطيل"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-rounded": [
-    {
-      "type": 0,
-      "value": "شكل دائري الزوايا"
-    }
-  ],
-  "editor-panel.tooltip-topic-style": [
-    {
-      "type": 0,
-      "value": "نمط الموضوع"
-    }
-  ],
   "editor-panel.tooltip-unified-styling": [
     {
       "type": 0,
       "value": "تنسيق الموضوع والاتصالات"
-    }
-  ],
-  "editor-panel.topic-image-title": [
-    {
-      "type": 0,
-      "value": "صورة الموضوع"
     }
   ],
   "editor.edit-description-mobile": [
@@ -769,12 +445,6 @@
     {
       "type": 0,
       "value": "المطابقة السابقة"
-    }
-  ],
-  "headerNotifier": [
-    {
-      "type": 0,
-      "value": "مُنبّه الرأس"
     }
   ],
   "icon-collection.border.dashed": [
@@ -987,24 +657,6 @@
       "value": "إظهار الصور"
     }
   ],
-  "image-icon-tab.icon-found": [
-    {
-      "type": 0,
-      "value": "أيقونة موجودة"
-    }
-  ],
-  "image-icon-tab.icons": [
-    {
-      "type": 0,
-      "value": "أيقونات"
-    }
-  ],
-  "image-icon-tab.icons-found": [
-    {
-      "type": 0,
-      "value": "أيقونات موجودة"
-    }
-  ],
   "layout-selector.accept": [
     {
       "type": 0,
@@ -1023,34 +675,10 @@
       "value": "اختر نمط التخطيط"
     }
   ],
-  "layout-selector.mindmap": [
-    {
-      "type": 0,
-      "value": "خريطة ذهنية"
-    }
-  ],
-  "layout-selector.mindmap-description": [
-    {
-      "type": 0,
-      "value": "تخطيط أفقي بفروع متوازنة"
-    }
-  ],
   "layout-selector.title": [
     {
       "type": 0,
       "value": "اختر التخطيط"
-    }
-  ],
-  "layout-selector.tree": [
-    {
-      "type": 0,
-      "value": "شجرة"
-    }
-  ],
-  "layout-selector.tree-description": [
-    {
-      "type": 0,
-      "value": "تسلسل هرمي عمودي يتدفق من الأعلى إلى الأسفل"
     }
   ],
   "layout.mindmap.description": [
@@ -1089,12 +717,6 @@
       "value": "https://www.example.com"
     }
   ],
-  "mindmap-comp": [
-    {
-      "type": 0,
-      "value": "مكوّن الخريطة الذهنية"
-    }
-  ],
   "note.character.count": [
     {
       "type": 1,
@@ -1109,12 +731,6 @@
     {
       "type": 0,
       "value": "(الاقتراب من الحد الأقصى)"
-    }
-  ],
-  "ocean": [
-    {
-      "type": 0,
-      "value": "محيط"
     }
   ],
   "outline.collapse": [
@@ -1163,18 +779,6 @@
     {
       "type": 0,
       "value": "ملاحظة"
-    }
-  ],
-  "popover": [
-    {
-      "type": 0,
-      "value": "نافذة منبثقة"
-    }
-  ],
-  "prism": [
-    {
-      "type": 0,
-      "value": "موشور"
     }
   ],
   "relationship-style-editor.color": [
@@ -1249,12 +853,6 @@
       "value": "تبديل سهم البداية"
     }
   ],
-  "retro": [
-    {
-      "type": 0,
-      "value": "ليلة ريترو"
-    }
-  ],
   "rich-text-editor.bold": [
     {
       "type": 0,
@@ -1301,12 +899,6 @@
     {
       "type": 0,
       "value": "تسطير"
-    }
-  ],
-  "robot": [
-    {
-      "type": 0,
-      "value": "روبوت"
     }
   ],
   "shortcut-help-pane.action": [
@@ -1621,12 +1213,6 @@
       "value": "التكبير والتصغير بعجلة الفأرة"
     }
   ],
-  "sunrise": [
-    {
-      "type": 0,
-      "value": "شروق"
-    }
-  ],
   "theme-editor.accept": [
     {
       "type": 0,
@@ -1757,18 +1343,6 @@
     {
       "type": 0,
       "value": "التبديل إلى الوضع الفاتح"
-    }
-  ],
-  "theme.toggle": [
-    {
-      "type": 0,
-      "value": "تبديل السمة"
-    }
-  ],
-  "title-input": [
-    {
-      "type": 0,
-      "value": "إدخال العنوان"
     }
   ],
   "topic-font-editor.active": [
@@ -1947,12 +1521,6 @@
       "value": "اختصارات لوحة المفاتيح"
     }
   ],
-  "visualization-toolbar.tooltip-layout": [
-    {
-      "type": 0,
-      "value": "تغيير التخطيط"
-    }
-  ],
   "visualization-toolbar.tooltip-outline-view": [
     {
       "type": 0,
@@ -1990,48 +1558,6 @@
     }
   ],
   "visualization-toolbar.tooltip-zoom-to-fit": [
-    {
-      "type": 0,
-      "value": "ضبط للملاءمة"
-    }
-  ],
-  "zoom-panel.tooltip-collapse-all": [
-    {
-      "type": 0,
-      "value": "طي جميع العقد"
-    }
-  ],
-  "zoom-panel.tooltip-expand-all": [
-    {
-      "type": 0,
-      "value": "توسيع جميع العقد"
-    }
-  ],
-  "zoom-panel.tooltip-keyboard": [
-    {
-      "type": 0,
-      "value": "اختصارات لوحة المفاتيح"
-    }
-  ],
-  "zoom-panel.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "عرض المخطط"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-in": [
-    {
-      "type": 0,
-      "value": "تكبير"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-out": [
-    {
-      "type": 0,
-      "value": "تصغير"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-to-fit": [
     {
       "type": 0,
       "value": "ضبط للملاءمة"

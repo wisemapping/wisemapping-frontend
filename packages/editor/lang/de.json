@@ -92,29 +92,8 @@
   "editor-panel.note-panel-title": {
     "defaultMessage": "Notiz"
   },
-  "editor-panel.icon-title": {
-    "defaultMessage": "Symbol"
-  },
   "editor-panel.link-panel-title": {
     "defaultMessage": "Verknüpfung"
-  },
-  "zoom-panel.tooltip-keyboard": {
-    "defaultMessage": "Tastatürkürzel"
-  },
-  "zoom-panel.tooltip-zoom-in": {
-    "defaultMessage": "Vergrößern"
-  },
-  "zoom-panel.tooltip-zoom-out": {
-    "defaultMessage": "Verkleinern"
-  },
-  "zoom-panel.tooltip-zoom-to-fit": {
-    "defaultMessage": "Einpassen"
-  },
-  "editor-panel.tooltip-theme": {
-    "defaultMessage": "Thema"
-  },
-  "editor-panel.theme-title": {
-    "defaultMessage": "Thema"
   },
   "editor-panel.tooltip-add-icon": {
     "defaultMessage": "Symbol hinzufügen"
@@ -128,47 +107,8 @@
   "editor-panel.tooltip-add-relationship": {
     "defaultMessage": "Beziehung hinzufügen"
   },
-  "editor-panel.tooltip-add-topic": {
-    "defaultMessage": "Thema hinzufügen"
-  },
-  "editor-panel.tooltip-delete-topic": {
-    "defaultMessage": "Thema löschen"
-  },
-  "editor-panel.tooltip-topic-border-color": {
-    "defaultMessage": "Randfarbe"
-  },
-  "editor-panel.tooltip-topic-font-bigger": {
-    "defaultMessage": "Größer"
-  },
-  "editor-panel.tooltip-topic-font-bold": {
-    "defaultMessage": "Fett"
-  },
-  "editor-panel.tooltip-topic-font-color": {
-    "defaultMessage": "Farbe"
-  },
-  "editor-panel.tooltip-topic-font-italic": {
-    "defaultMessage": "Kursiv"
-  },
-  "editor-panel.tooltip-topic-font-smaller": {
-    "defaultMessage": "Kleiner"
-  },
   "editor-panel.tooltip-topic-font-style": {
     "defaultMessage": "Schriftstil"
-  },
-  "editor-panel.tooltip-topic-share-ellipse": {
-    "defaultMessage": "Ellipsenform"
-  },
-  "editor-panel.tooltip-topic-share-line": {
-    "defaultMessage": "Linienform"
-  },
-  "editor-panel.tooltip-topic-share-rectangle": {
-    "defaultMessage": "Rechteckform"
-  },
-  "editor-panel.tooltip-topic-share-rounded": {
-    "defaultMessage": "Rechteckform abgerundet"
-  },
-  "editor-panel.tooltip-topic-style": {
-    "defaultMessage": "Themenstil"
   },
   "shortcut-help-pane.action": {
     "defaultMessage": "Aktion"
@@ -284,47 +224,14 @@
   "icon-picker.show-images": {
     "defaultMessage": "Bilder anzeigen"
   },
-  "editor-panel.tooltip-connection-style-polyline": {
-    "defaultMessage": "Linie eckig"
-  },
-  "editor-panel.tooltip-connection-style-polyline-curved": {
-    "defaultMessage": "Linie abgeschrägt"
-  },
   "shortcut-help-pane.overwrite-edit-topic": {
     "defaultMessage": "Thementext überschreiben"
   },
   "shortcut-help-pane.overwrite-edit-topic-key": {
     "defaultMessage": "Ausgewähltes Thema durch tippen überschreiben"
   },
-  "editor-panel.tooltip-connection-color": {
-    "defaultMessage": "Farbe"
-  },
-  "editor-panel.tooltip-connection-color-default": {
-    "defaultMessage": "Standardfarbe"
-  },
-  "editor-panel.tooltip-connection-style": {
-    "defaultMessage": "Verbindungsstil"
-  },
-  "editor-panel.tooltip-connection-style-curved-thick": {
-    "defaultMessage": "Kurve breit"
-  },
-  "editor-panel.tooltip-connection-style-curved-thin": {
-    "defaultMessage": "Kurve schmal"
-  },
-  "editor-panel.tooltip-topic-border-color-default": {
-    "defaultMessage": "Standardrandfarbe"
-  },
-  "editor-panel.tooltip-topic-fill-color": {
-    "defaultMessage": "Füllfarbe"
-  },
-  "editor-panel.tooltip-topic-fill-color-default": {
-    "defaultMessage": "Standardfüllfarbe"
-  },
   "action.delete": {
     "defaultMessage": "Löschen"
-  },
-  "editor-panel.tooltip-topic-font-color-default": {
-    "defaultMessage": "Standardfarbe"
   },
   "shortcut-help-pane.drag-disconnect": {
     "defaultMessage": "Thema isolieren"
@@ -332,32 +239,11 @@
   "shortcut-help-pane.drag-disconnect-key": {
     "defaultMessage": "Thema ziehen"
   },
-  "zoom-panel.tooltip-collapse-all": {
-    "defaultMessage": "Alle Knoten reduzieren"
-  },
-  "zoom-panel.tooltip-expand-all": {
-    "defaultMessage": "Alle Knoten erweitern"
-  },
-  "zoom-panel.tooltip-outline-view": {
-    "defaultMessage": "Gliederungsansicht"
-  },
   "editor-panel.tooltip-canvas-style": {
     "defaultMessage": "Hintergrund"
   },
-  "editor-panel.canvas-style-title": {
-    "defaultMessage": "Hintergrund"
-  },
-  "canvas-style.title": {
-    "defaultMessage": "Hintergrund"
-  },
-  "canvas-style.colors": {
-    "defaultMessage": "Farben"
-  },
   "canvas-style.background-color": {
     "defaultMessage": "Hintergrundfarbe"
-  },
-  "canvas-style.background-pattern": {
-    "defaultMessage": "Hintergrundmuster"
   },
   "canvas-style.pattern-solid": {
     "defaultMessage": "Einfarbig"
@@ -367,9 +253,6 @@
   },
   "canvas-style.pattern-dots": {
     "defaultMessage": "Punkte"
-  },
-  "canvas-style.pattern-none": {
-    "defaultMessage": "Keine"
   },
   "canvas-style.grid-style": {
     "defaultMessage": "Rastergröße"
@@ -392,23 +275,11 @@
   "canvas-style.grid-color": {
     "defaultMessage": "Rasterfarbe"
   },
-  "canvas-style.preview": {
-    "defaultMessage": "Vorschau"
-  },
-  "canvas-style.reset": {
-    "defaultMessage": "Zurücksetzen"
-  },
-  "canvas-style.apply": {
-    "defaultMessage": "Anwenden"
-  },
   "theme.dark": {
     "defaultMessage": "Dunkel"
   },
   "theme.light": {
     "defaultMessage": "Hell"
-  },
-  "theme.toggle": {
-    "defaultMessage": "Design Wechseln"
   },
   "rich-text-editor.insert-link": {
     "defaultMessage": "Link Einfügen"
@@ -433,15 +304,6 @@
   },
   "rich-text-editor.numbered-list": {
     "defaultMessage": "Nummerierte Liste"
-  },
-  "image-icon-tab.icon-found": {
-    "defaultMessage": "Symbol gefunden"
-  },
-  "image-icon-tab.icons-found": {
-    "defaultMessage": "Symbole gefunden"
-  },
-  "image-icon-tab.icons": {
-    "defaultMessage": "Symbole"
   },
   "common.close": {
     "defaultMessage": "Schließen"
@@ -473,20 +335,11 @@
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "Themenbild hinzufügen"
   },
-  "editor-panel.topic-image-title": {
-    "defaultMessage": "Themenbild"
-  },
-  "app-bar-title": {
-    "defaultMessage": "Mindmap-Editor"
-  },
   "appbar.error-saving-title": {
     "defaultMessage": "Fehler beim Speichern"
   },
   "appbar.logo-aria-label": {
     "defaultMessage": "WiseMapping Logo"
-  },
-  "appbar.theme-title": {
-    "defaultMessage": "Thema"
   },
   "appbar.title-renamed": {
     "defaultMessage": "Mindmap umbenannt"
@@ -496,39 +349,6 @@
   },
   "appbar.tooltip-theme": {
     "defaultMessage": "Thema"
-  },
-  "classic": {
-    "defaultMessage": "Klassisch"
-  },
-  "demo-simple-select": {
-    "defaultMessage": "Auswählen"
-  },
-  "divider": {
-    "defaultMessage": "Trennlinie"
-  },
-  "editor-panel.tooltip-connection-style-arc": {
-    "defaultMessage": "Bogen"
-  },
-  "editor-panel.tooltip-relationship-arrow-end": {
-    "defaultMessage": "Endpfeil"
-  },
-  "editor-panel.tooltip-relationship-arrow-start": {
-    "defaultMessage": "Startpfeil"
-  },
-  "editor-panel.tooltip-relationship-color": {
-    "defaultMessage": "Farbe"
-  },
-  "editor-panel.tooltip-relationship-color-default": {
-    "defaultMessage": "Standardfarbe"
-  },
-  "editor-panel.tooltip-relationship-stroke-dashed": {
-    "defaultMessage": "Gestrichelte Linie"
-  },
-  "editor-panel.tooltip-relationship-stroke-dotted": {
-    "defaultMessage": "Gepunktete Linie"
-  },
-  "editor-panel.tooltip-relationship-stroke-solid": {
-    "defaultMessage": "Durchgezogene Linie"
   },
   "editor-panel.tooltip-relationship-style": {
     "defaultMessage": "Beziehungsstil"
@@ -614,12 +434,6 @@
   "topic-font-editor.active": {
     "defaultMessage": "aktiv"
   },
-  "editor-panel.tooltip-topic-share-none": {
-    "defaultMessage": "Keine Form"
-  },
-  "headerNotifier": {
-    "defaultMessage": "Header-Benachrichtigung"
-  },
   "icon-collection.shape.none": {
     "defaultMessage": "Keine"
   },
@@ -662,12 +476,6 @@
   "icon-collection.connection.heartbeat-tooltip": {
     "defaultMessage": "EKG-inspirierte Wellenform mit scharfen Spitzen - perfekt zur Vermittlung von Energie, Dringlichkeit oder Lebenssignalen"
   },
-  "icon-collection.connection.organic-curved": {
-    "defaultMessage": "Organische Kurve"
-  },
-  "icon-collection.connection.organic-curved-tooltip": {
-    "defaultMessage": "Handgezeichneter Stil mit dramatischen Kurven - Perfekt für kreative und ausdrucksstarke Mindmaps"
-  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Dünne Kurve"
   },
@@ -686,35 +494,11 @@
   "icon-picker.icons": {
     "defaultMessage": "Symbol-Galerie"
   },
-  "mindmap-comp": {
-    "defaultMessage": "Mindmap-Komponente"
-  },
   "note.character.count": {
     "defaultMessage": "{remaining} übrig"
   },
   "note.character.limit.warning": {
     "defaultMessage": "(Grenze erreicht)"
-  },
-  "aurora": {
-    "defaultMessage": "Aurora"
-  },
-  "retro": {
-    "defaultMessage": "Retro Night"
-  },
-  "ocean": {
-    "defaultMessage": "Ozean"
-  },
-  "popover": {
-    "defaultMessage": "Popover"
-  },
-  "prism": {
-    "defaultMessage": "Prisma"
-  },
-  "robot": {
-    "defaultMessage": "Roboter"
-  },
-  "sunrise": {
-    "defaultMessage": "Sonnenaufgang"
   },
   "theme-editor.accept": {
     "defaultMessage": "Thema anwenden"
@@ -776,9 +560,6 @@
   "theme.switch-to-light": {
     "defaultMessage": "Zu hellem Modus wechseln"
   },
-  "title-input": {
-    "defaultMessage": "Titel-Eingabe"
-  },
   "canvas-style.tab-color": {
     "defaultMessage": "Farbe"
   },
@@ -818,17 +599,8 @@
   "appbar.tooltip-change-layout": {
     "defaultMessage": "Layout ändern"
   },
-  "appbar.tooltip-outline-view": {
-    "defaultMessage": "Gliederungsansicht"
-  },
   "appbar.tooltip-theme-toggle": {
     "defaultMessage": "Thema wechseln"
-  },
-  "editor-panel.tooltip-change-layout": {
-    "defaultMessage": "Layout ändern"
-  },
-  "editor-panel.tooltip-outline-view": {
-    "defaultMessage": "Gliederungsansicht"
   },
   "icon-collection.connection.curved-polyline-tooltip": {
     "defaultMessage": "Mehrsegmentige Linie mit glatten Ecken - Ideal für strukturierte Layouts und klare Pfade"
@@ -857,20 +629,8 @@
   "layout-selector.description": {
     "defaultMessage": "Layout-Stil auswählen"
   },
-  "layout-selector.mindmap": {
-    "defaultMessage": "Mindmap"
-  },
-  "layout-selector.mindmap-description": {
-    "defaultMessage": "Horizontales Layout mit ausgewogenen Ästen"
-  },
   "layout-selector.title": {
     "defaultMessage": "Layout auswählen"
-  },
-  "layout-selector.tree": {
-    "defaultMessage": "Baum"
-  },
-  "layout-selector.tree-description": {
-    "defaultMessage": "Vertikale Hierarchie von oben nach unten"
   },
   "layout.mindmap.description": {
     "defaultMessage": "Horizontales Layout mit ausgewogenen Ästen auf beiden Seiten. Ideal für traditionelle Mindmaps und Brainstorming."
@@ -937,9 +697,6 @@
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "Tastenkürzel"
-  },
-  "visualization-toolbar.tooltip-layout": {
-    "defaultMessage": "Layout ändern"
   },
   "visualization-toolbar.tooltip-outline-view": {
     "defaultMessage": "Gliederungsansicht"

@@ -92,17 +92,8 @@
   "editor-panel.note-panel-title": {
     "defaultMessage": "Nota"
   },
-  "editor-panel.icon-title": {
-    "defaultMessage": "Icono"
-  },
   "editor-panel.link-panel-title": {
     "defaultMessage": "Enlace"
-  },
-  "editor-panel.tooltip-theme": {
-    "defaultMessage": "Tema"
-  },
-  "editor-panel.theme-title": {
-    "defaultMessage": "Tema"
   },
   "editor-panel.tooltip-add-icon": {
     "defaultMessage": "Agregar Icono"
@@ -116,30 +107,6 @@
   "editor-panel.tooltip-add-relationship": {
     "defaultMessage": "Agregar Relacion"
   },
-  "editor-panel.tooltip-add-topic": {
-    "defaultMessage": "Agregar tópico"
-  },
-  "editor-panel.tooltip-delete-topic": {
-    "defaultMessage": "Borrar tópico"
-  },
-  "editor-panel.tooltip-topic-border-color": {
-    "defaultMessage": "Color del border"
-  },
-  "editor-panel.tooltip-topic-font-bigger": {
-    "defaultMessage": "Incrementar"
-  },
-  "editor-panel.tooltip-topic-font-bold": {
-    "defaultMessage": "Negrita"
-  },
-  "editor-panel.tooltip-topic-font-color": {
-    "defaultMessage": "Color"
-  },
-  "editor-panel.tooltip-topic-font-italic": {
-    "defaultMessage": "Italica"
-  },
-  "editor-panel.tooltip-topic-font-smaller": {
-    "defaultMessage": "Petite"
-  },
   "editor-panel.tooltip-topic-font-style": {
     "defaultMessage": "Estilo de fuente"
   },
@@ -148,33 +115,6 @@
   },
   "editor-panel.font-family-mixed": {
     "defaultMessage": "Mixto"
-  },
-  "editor-panel.tooltip-topic-share-ellipse": {
-    "defaultMessage": "Forma de elipse"
-  },
-  "editor-panel.tooltip-topic-share-line": {
-    "defaultMessage": "Forma de linea"
-  },
-  "editor-panel.tooltip-topic-share-rectangle": {
-    "defaultMessage": "Forma rectagular"
-  },
-  "editor-panel.tooltip-topic-share-rounded": {
-    "defaultMessage": "Forma redondeada"
-  },
-  "editor-panel.tooltip-topic-style": {
-    "defaultMessage": "Estilo de tópico"
-  },
-  "zoom-panel.tooltip-keyboard": {
-    "defaultMessage": "Teclado"
-  },
-  "zoom-panel.tooltip-zoom-in": {
-    "defaultMessage": "Aumentar"
-  },
-  "zoom-panel.tooltip-zoom-out": {
-    "defaultMessage": "Decrementar"
-  },
-  "zoom-panel.tooltip-zoom-to-fit": {
-    "defaultMessage": "Centrar"
   },
   "shortcut-help-pane.action": {
     "defaultMessage": "Acción"
@@ -290,47 +230,14 @@
   "icon-picker.show-images": {
     "defaultMessage": "Mostrar imagenes"
   },
-  "editor-panel.tooltip-connection-style-polyline": {
-    "defaultMessage": "Polilinea"
-  },
-  "editor-panel.tooltip-connection-style-polyline-curved": {
-    "defaultMessage": "Polilinea Curva"
-  },
   "shortcut-help-pane.overwrite-edit-topic": {
     "defaultMessage": "Sobrescribir el texto del tópico"
   },
   "shortcut-help-pane.overwrite-edit-topic-key": {
     "defaultMessage": "Comenzar a escribir en el tópico seleccionado"
   },
-  "editor-panel.tooltip-connection-color": {
-    "defaultMessage": "Color"
-  },
-  "editor-panel.tooltip-connection-color-default": {
-    "defaultMessage": "Color por defecto"
-  },
-  "editor-panel.tooltip-connection-style": {
-    "defaultMessage": "Estilo de conexión"
-  },
-  "editor-panel.tooltip-connection-style-curved-thick": {
-    "defaultMessage": "Curva ancha"
-  },
-  "editor-panel.tooltip-connection-style-curved-thin": {
-    "defaultMessage": "Curva delgada"
-  },
-  "editor-panel.tooltip-topic-border-color-default": {
-    "defaultMessage": "Color de border por defecto"
-  },
-  "editor-panel.tooltip-topic-fill-color": {
-    "defaultMessage": "Color de relleno"
-  },
-  "editor-panel.tooltip-topic-fill-color-default": {
-    "defaultMessage": "Color de relleno por defecto"
-  },
   "action.delete": {
     "defaultMessage": "Borrar"
-  },
-  "editor-panel.tooltip-topic-font-color-default": {
-    "defaultMessage": "Color por defecto"
   },
   "shortcut-help-pane.drag-disconnect": {
     "defaultMessage": "Desconectar tópico"
@@ -343,9 +250,6 @@
   },
   "theme.light": {
     "defaultMessage": "Claro"
-  },
-  "theme.toggle": {
-    "defaultMessage": "Cambiar Tema"
   },
   "rich-text-editor.insert-link": {
     "defaultMessage": "Insertar Enlace"
@@ -370,15 +274,6 @@
   },
   "rich-text-editor.numbered-list": {
     "defaultMessage": "Lista Numerada"
-  },
-  "image-icon-tab.icon-found": {
-    "defaultMessage": "icono encontrado"
-  },
-  "image-icon-tab.icons-found": {
-    "defaultMessage": "iconos encontrados"
-  },
-  "image-icon-tab.icons": {
-    "defaultMessage": "iconos"
   },
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Buscar emojis..."
@@ -410,17 +305,8 @@
   "common.close": {
     "defaultMessage": "Cerrar"
   },
-  "canvas-style.apply": {
-    "defaultMessage": "Aplicar"
-  },
   "canvas-style.background-color": {
     "defaultMessage": "Color de fondo"
-  },
-  "canvas-style.background-pattern": {
-    "defaultMessage": "Patrón de fondo"
-  },
-  "canvas-style.colors": {
-    "defaultMessage": "Colores"
   },
   "canvas-style.grid-color": {
     "defaultMessage": "Color de cuadrícula"
@@ -434,20 +320,8 @@
   "canvas-style.pattern-grid": {
     "defaultMessage": "Líneas de cuadrícula"
   },
-  "canvas-style.pattern-none": {
-    "defaultMessage": "Ninguno"
-  },
   "canvas-style.pattern-solid": {
     "defaultMessage": "Color sólido"
-  },
-  "canvas-style.preview": {
-    "defaultMessage": "Vista previa"
-  },
-  "canvas-style.reset": {
-    "defaultMessage": "Restablecer"
-  },
-  "canvas-style.title": {
-    "defaultMessage": "Fondo"
   },
   "creator-info-pane.creator": {
     "defaultMessage": "Creador"
@@ -455,38 +329,17 @@
   "creator-info-pane.description": {
     "defaultMessage": "Descripción"
   },
-  "editor-panel.canvas-style-title": {
-    "defaultMessage": "Fondo"
-  },
   "editor-panel.tooltip-canvas-style": {
     "defaultMessage": "Fondo"
   },
-  "zoom-panel.tooltip-collapse-all": {
-    "defaultMessage": "Contraer todos los nodos"
-  },
-  "zoom-panel.tooltip-expand-all": {
-    "defaultMessage": "Expandir todos los nodos"
-  },
-  "zoom-panel.tooltip-outline-view": {
-    "defaultMessage": "Vista de Esquema"
-  },
   "editor-panel.tooltip-add-topic-image": {
     "defaultMessage": "Agregar imagen de tema"
-  },
-  "editor-panel.topic-image-title": {
-    "defaultMessage": "Imagen de tema"
-  },
-  "app-bar-title": {
-    "defaultMessage": "Editor de Mapas Mentales"
   },
   "appbar.error-saving-title": {
     "defaultMessage": "Error al guardar"
   },
   "appbar.logo-aria-label": {
     "defaultMessage": "Logo de WiseMapping"
-  },
-  "appbar.theme-title": {
-    "defaultMessage": "Tema"
   },
   "appbar.title-renamed": {
     "defaultMessage": "Mapa mental renombrado"
@@ -496,39 +349,6 @@
   },
   "appbar.tooltip-theme": {
     "defaultMessage": "Tema"
-  },
-  "classic": {
-    "defaultMessage": "Clásico"
-  },
-  "demo-simple-select": {
-    "defaultMessage": "Seleccionar"
-  },
-  "divider": {
-    "defaultMessage": "Divisor"
-  },
-  "editor-panel.tooltip-connection-style-arc": {
-    "defaultMessage": "Arco"
-  },
-  "editor-panel.tooltip-relationship-arrow-end": {
-    "defaultMessage": "Flecha final"
-  },
-  "editor-panel.tooltip-relationship-arrow-start": {
-    "defaultMessage": "Flecha inicial"
-  },
-  "editor-panel.tooltip-relationship-color": {
-    "defaultMessage": "Color"
-  },
-  "editor-panel.tooltip-relationship-color-default": {
-    "defaultMessage": "Color por defecto"
-  },
-  "editor-panel.tooltip-relationship-stroke-dashed": {
-    "defaultMessage": "Línea discontinua"
-  },
-  "editor-panel.tooltip-relationship-stroke-dotted": {
-    "defaultMessage": "Línea punteada"
-  },
-  "editor-panel.tooltip-relationship-stroke-solid": {
-    "defaultMessage": "Línea sólida"
   },
   "editor-panel.tooltip-relationship-style": {
     "defaultMessage": "Estilo de relación"
@@ -614,12 +434,6 @@
   "topic-font-editor.active": {
     "defaultMessage": "activo"
   },
-  "editor-panel.tooltip-topic-share-none": {
-    "defaultMessage": "Sin forma"
-  },
-  "headerNotifier": {
-    "defaultMessage": "Notificador de encabezado"
-  },
   "icon-collection.shape.none": {
     "defaultMessage": "Ninguno"
   },
@@ -662,12 +476,6 @@
   "icon-collection.connection.heartbeat-tooltip": {
     "defaultMessage": "Forma de onda inspirada en ECG con picos agudos - perfecto para transmitir energía, urgencia o señales de vida"
   },
-  "icon-collection.connection.organic-curved": {
-    "defaultMessage": "Curva Orgánica"
-  },
-  "icon-collection.connection.organic-curved-tooltip": {
-    "defaultMessage": "Estilo dibujado a mano con curvas dramáticas - Perfecto para mapas mentales creativos y expresivos"
-  },
   "icon-collection.connection.thin-curved": {
     "defaultMessage": "Curva delgada"
   },
@@ -686,35 +494,11 @@
   "icon-picker.icons": {
     "defaultMessage": "Galería de iconos"
   },
-  "mindmap-comp": {
-    "defaultMessage": "Componente de mapa mental"
-  },
   "note.character.count": {
     "defaultMessage": "{remaining} restantes"
   },
   "note.character.limit.warning": {
     "defaultMessage": "(Acercándose al límite)"
-  },
-  "aurora": {
-    "defaultMessage": "Aurora"
-  },
-  "retro": {
-    "defaultMessage": "Retro Night"
-  },
-  "ocean": {
-    "defaultMessage": "Océano"
-  },
-  "popover": {
-    "defaultMessage": "Popover"
-  },
-  "prism": {
-    "defaultMessage": "Prisma"
-  },
-  "robot": {
-    "defaultMessage": "Robot"
-  },
-  "sunrise": {
-    "defaultMessage": "Amanecer"
   },
   "theme-editor.accept": {
     "defaultMessage": "Aplicar tema"
@@ -776,9 +560,6 @@
   "theme.switch-to-light": {
     "defaultMessage": "Cambiar a modo claro"
   },
-  "title-input": {
-    "defaultMessage": "Entrada de título"
-  },
   "canvas-style.tab-color": {
     "defaultMessage": "Color"
   },
@@ -824,17 +605,8 @@
   "appbar.tooltip-change-layout": {
     "defaultMessage": "Cambiar Diseño"
   },
-  "appbar.tooltip-outline-view": {
-    "defaultMessage": "Vista de Esquema"
-  },
   "appbar.tooltip-theme-toggle": {
     "defaultMessage": "Alternar Tema"
-  },
-  "editor-panel.tooltip-change-layout": {
-    "defaultMessage": "Cambiar Diseño"
-  },
-  "editor-panel.tooltip-outline-view": {
-    "defaultMessage": "Vista de Esquema"
   },
   "icon-collection.connection.curved-polyline-tooltip": {
     "defaultMessage": "Línea de múltiples segmentos con esquinas suavizadas - Ideal para diseños estructurados y caminos claros"
@@ -863,20 +635,8 @@
   "layout-selector.description": {
     "defaultMessage": "Elegir estilo de diseño"
   },
-  "layout-selector.mindmap": {
-    "defaultMessage": "Mapa Mental"
-  },
-  "layout-selector.mindmap-description": {
-    "defaultMessage": "Diseño horizontal con ramas equilibradas"
-  },
   "layout-selector.title": {
     "defaultMessage": "Elegir Diseño"
-  },
-  "layout-selector.tree": {
-    "defaultMessage": "Árbol"
-  },
-  "layout-selector.tree-description": {
-    "defaultMessage": "Jerarquía vertical de arriba a abajo"
   },
   "layout.mindmap.description": {
     "defaultMessage": "Diseño horizontal con ramas equilibradas en ambos lados. Ideal para la creación de mapas mentales tradicionales y lluvia de ideas."
@@ -937,9 +697,6 @@
   },
   "visualization-toolbar.tooltip-keyboard": {
     "defaultMessage": "Atajos de Teclado"
-  },
-  "visualization-toolbar.tooltip-layout": {
-    "defaultMessage": "Cambiar Diseño"
   },
   "visualization-toolbar.tooltip-outline-view": {
     "defaultMessage": "Vista de Esquema"

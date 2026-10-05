@@ -11,12 +11,6 @@
       "value": "削除"
     }
   ],
-  "app-bar-title": [
-    {
-      "type": 0,
-      "value": "マインドマップエディター"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -47,12 +41,6 @@
       "value": "共有"
     }
   ],
-  "appbar.theme-title": [
-    {
-      "type": 0,
-      "value": "テーマ"
-    }
-  ],
   "appbar.title-renamed": [
     {
       "type": 0,
@@ -81,12 +69,6 @@
     {
       "type": 0,
       "value": "情報"
-    }
-  ],
-  "appbar.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "アウトライン表示"
     }
   ],
   "appbar.tooltip-print": [
@@ -155,40 +137,16 @@
       "value": "元に戻す"
     }
   ],
-  "aurora": [
-    {
-      "type": 0,
-      "value": "オーロラ"
-    }
-  ],
-  "canvas-style.apply": [
-    {
-      "type": 0,
-      "value": "適用"
-    }
-  ],
   "canvas-style.background-color": [
     {
       "type": 0,
       "value": "背景色"
     }
   ],
-  "canvas-style.background-pattern": [
-    {
-      "type": 0,
-      "value": "背景パターン"
-    }
-  ],
   "canvas-style.background-style": [
     {
       "type": 0,
       "value": "背景スタイル"
-    }
-  ],
-  "canvas-style.colors": [
-    {
-      "type": 0,
-      "value": "色"
     }
   ],
   "canvas-style.grid-color": [
@@ -251,28 +209,10 @@
       "value": "グリッドライン"
     }
   ],
-  "canvas-style.pattern-none": [
-    {
-      "type": 0,
-      "value": "なし"
-    }
-  ],
   "canvas-style.pattern-solid": [
     {
       "type": 0,
       "value": "ソリッドカラー"
-    }
-  ],
-  "canvas-style.preview": [
-    {
-      "type": 0,
-      "value": "プレビュー"
-    }
-  ],
-  "canvas-style.reset": [
-    {
-      "type": 0,
-      "value": "リセット"
     }
   ],
   "canvas-style.tab-color": [
@@ -285,18 +225,6 @@
     {
       "type": 0,
       "value": "グリッド色"
-    }
-  ],
-  "canvas-style.title": [
-    {
-      "type": 0,
-      "value": "背景"
-    }
-  ],
-  "classic": [
-    {
-      "type": 0,
-      "value": "クラシック"
     }
   ],
   "color-picker.color": [
@@ -329,24 +257,6 @@
       "value": "説明"
     }
   ],
-  "demo-simple-select": [
-    {
-      "type": 0,
-      "value": "選択"
-    }
-  ],
-  "divider": [
-    {
-      "type": 0,
-      "value": "区切り"
-    }
-  ],
-  "editor-panel.canvas-style-title": [
-    {
-      "type": 0,
-      "value": "背景"
-    }
-  ],
   "editor-panel.deeplink-copied": [
     {
       "type": 0,
@@ -371,12 +281,6 @@
       "value": "混合"
     }
   ],
-  "editor-panel.icon-title": [
-    {
-      "type": 0,
-      "value": "アイコン"
-    }
-  ],
   "editor-panel.link-panel-title": [
     {
       "type": 0,
@@ -387,12 +291,6 @@
     {
       "type": 0,
       "value": "ノート"
-    }
-  ],
-  "editor-panel.theme-title": [
-    {
-      "type": 0,
-      "value": "テーマ"
     }
   ],
   "editor-panel.tooltip-add-icon": [
@@ -419,12 +317,6 @@
       "value": "関係を追加"
     }
   ],
-  "editor-panel.tooltip-add-topic": [
-    {
-      "type": 0,
-      "value": "トピックを追加"
-    }
-  ],
   "editor-panel.tooltip-add-topic-image": [
     {
       "type": 0,
@@ -437,118 +329,10 @@
       "value": "背景"
     }
   ],
-  "editor-panel.tooltip-change-layout": [
-    {
-      "type": 0,
-      "value": "レイアウト変更"
-    }
-  ],
-  "editor-panel.tooltip-connection-color": [
-    {
-      "type": 0,
-      "value": "色"
-    }
-  ],
-  "editor-panel.tooltip-connection-color-default": [
-    {
-      "type": 0,
-      "value": "デフォルト色"
-    }
-  ],
-  "editor-panel.tooltip-connection-style": [
-    {
-      "type": 0,
-      "value": "接続スタイル"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-arc": [
-    {
-      "type": 0,
-      "value": "アーク"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-curved-thick": [
-    {
-      "type": 0,
-      "value": "太い曲線"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-curved-thin": [
-    {
-      "type": 0,
-      "value": "細い曲線"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-polyline": [
-    {
-      "type": 0,
-      "value": "シンプルなポリライン"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-polyline-curved": [
-    {
-      "type": 0,
-      "value": "曲線ポリライン"
-    }
-  ],
   "editor-panel.tooltip-copy-node-link": [
     {
       "type": 0,
       "value": "トピックへのリンクをコピー"
-    }
-  ],
-  "editor-panel.tooltip-delete-topic": [
-    {
-      "type": 0,
-      "value": "トピックを削除"
-    }
-  ],
-  "editor-panel.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "アウトライン表示"
-    }
-  ],
-  "editor-panel.tooltip-relationship-arrow-end": [
-    {
-      "type": 0,
-      "value": "終了矢印"
-    }
-  ],
-  "editor-panel.tooltip-relationship-arrow-start": [
-    {
-      "type": 0,
-      "value": "開始矢印"
-    }
-  ],
-  "editor-panel.tooltip-relationship-color": [
-    {
-      "type": 0,
-      "value": "色"
-    }
-  ],
-  "editor-panel.tooltip-relationship-color-default": [
-    {
-      "type": 0,
-      "value": "デフォルト色"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-dashed": [
-    {
-      "type": 0,
-      "value": "破線"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-dotted": [
-    {
-      "type": 0,
-      "value": "点線"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-solid": [
-    {
-      "type": 0,
-      "value": "実線"
     }
   ],
   "editor-panel.tooltip-relationship-style": [
@@ -557,124 +341,16 @@
       "value": "関係スタイル"
     }
   ],
-  "editor-panel.tooltip-theme": [
-    {
-      "type": 0,
-      "value": "テーマ"
-    }
-  ],
-  "editor-panel.tooltip-topic-border-color": [
-    {
-      "type": 0,
-      "value": "境界線の色"
-    }
-  ],
-  "editor-panel.tooltip-topic-border-color-default": [
-    {
-      "type": 0,
-      "value": "デフォルト境界線色"
-    }
-  ],
-  "editor-panel.tooltip-topic-fill-color": [
-    {
-      "type": 0,
-      "value": "塗りつぶし色"
-    }
-  ],
-  "editor-panel.tooltip-topic-fill-color-default": [
-    {
-      "type": 0,
-      "value": "デフォルト塗りつぶし色"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-bigger": [
-    {
-      "type": 0,
-      "value": "大きく"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-bold": [
-    {
-      "type": 0,
-      "value": "太字"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-color": [
-    {
-      "type": 0,
-      "value": "色"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-color-default": [
-    {
-      "type": 0,
-      "value": "デフォルト色"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-italic": [
-    {
-      "type": 0,
-      "value": "斜体"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-smaller": [
-    {
-      "type": 0,
-      "value": "小さく"
-    }
-  ],
   "editor-panel.tooltip-topic-font-style": [
     {
       "type": 0,
       "value": "フォントスタイル"
     }
   ],
-  "editor-panel.tooltip-topic-share-ellipse": [
-    {
-      "type": 0,
-      "value": "楕円形"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-line": [
-    {
-      "type": 0,
-      "value": "線形"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-none": [
-    {
-      "type": 0,
-      "value": "形状なし"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-rectangle": [
-    {
-      "type": 0,
-      "value": "矩形"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-rounded": [
-    {
-      "type": 0,
-      "value": "角丸形"
-    }
-  ],
-  "editor-panel.tooltip-topic-style": [
-    {
-      "type": 0,
-      "value": "トピックスタイル"
-    }
-  ],
   "editor-panel.tooltip-unified-styling": [
     {
       "type": 0,
       "value": "トピックと接続のスタイル"
-    }
-  ],
-  "editor-panel.topic-image-title": [
-    {
-      "type": 0,
-      "value": "トピック画像"
     }
   ],
   "editor.edit-description-mobile": [
@@ -771,12 +447,6 @@
       "value": "前の一致"
     }
   ],
-  "headerNotifier": [
-    {
-      "type": 0,
-      "value": "ヘッダー通知"
-    }
-  ],
   "icon-collection.border.dashed": [
     {
       "type": 0,
@@ -865,18 +535,6 @@
     {
       "type": 0,
       "value": "分岐パルスを持つ有機的なインパルスライン - 科学、ニューラルネット、未来的なテーマに最適"
-    }
-  ],
-  "icon-collection.connection.organic-curved": [
-    {
-      "type": 0,
-      "value": "有機曲線"
-    }
-  ],
-  "icon-collection.connection.organic-curved-tooltip": [
-    {
-      "type": 0,
-      "value": "手描きスタイルで劇的な曲線 - 創造的で表現力豊かなマインドマップに最適"
     }
   ],
   "icon-collection.connection.simple-polyline": [
@@ -999,24 +657,6 @@
       "value": "画像を表示"
     }
   ],
-  "image-icon-tab.icon-found": [
-    {
-      "type": 0,
-      "value": "アイコンが見つかりました"
-    }
-  ],
-  "image-icon-tab.icons": [
-    {
-      "type": 0,
-      "value": "アイコン"
-    }
-  ],
-  "image-icon-tab.icons-found": [
-    {
-      "type": 0,
-      "value": "アイコンが見つかりました"
-    }
-  ],
   "layout-selector.accept": [
     {
       "type": 0,
@@ -1035,34 +675,10 @@
       "value": "レイアウトスタイルを選択"
     }
   ],
-  "layout-selector.mindmap": [
-    {
-      "type": 0,
-      "value": "マインドマップ"
-    }
-  ],
-  "layout-selector.mindmap-description": [
-    {
-      "type": 0,
-      "value": "均衡した枝を持つ水平レイアウト"
-    }
-  ],
   "layout-selector.title": [
     {
       "type": 0,
       "value": "レイアウトを選択"
-    }
-  ],
-  "layout-selector.tree": [
-    {
-      "type": 0,
-      "value": "ツリー"
-    }
-  ],
-  "layout-selector.tree-description": [
-    {
-      "type": 0,
-      "value": "上から下に流れる垂直階層"
     }
   ],
   "layout.mindmap.description": [
@@ -1101,12 +717,6 @@
       "value": "https://www.example.com"
     }
   ],
-  "mindmap-comp": [
-    {
-      "type": 0,
-      "value": "マインドマップコンポーネント"
-    }
-  ],
   "note.character.count": [
     {
       "type": 1,
@@ -1121,12 +731,6 @@
     {
       "type": 0,
       "value": "(制限に近づいています)"
-    }
-  ],
-  "ocean": [
-    {
-      "type": 0,
-      "value": "オーシャン"
     }
   ],
   "outline.collapse": [
@@ -1175,18 +779,6 @@
     {
       "type": 0,
       "value": "ノート"
-    }
-  ],
-  "popover": [
-    {
-      "type": 0,
-      "value": "ポップオーバー"
-    }
-  ],
-  "prism": [
-    {
-      "type": 0,
-      "value": "プリズム"
     }
   ],
   "relationship-style-editor.color": [
@@ -1261,12 +853,6 @@
       "value": "始点の矢印を切り替え"
     }
   ],
-  "retro": [
-    {
-      "type": 0,
-      "value": "レトロナイト"
-    }
-  ],
   "rich-text-editor.bold": [
     {
       "type": 0,
@@ -1313,12 +899,6 @@
     {
       "type": 0,
       "value": "下線"
-    }
-  ],
-  "robot": [
-    {
-      "type": 0,
-      "value": "ロボット"
     }
   ],
   "shortcut-help-pane.action": [
@@ -1633,12 +1213,6 @@
       "value": "ホイールで拡大・縮小"
     }
   ],
-  "sunrise": [
-    {
-      "type": 0,
-      "value": "日の出"
-    }
-  ],
   "theme-editor.accept": [
     {
       "type": 0,
@@ -1769,18 +1343,6 @@
     {
       "type": 0,
       "value": "ライトモードに切り替え"
-    }
-  ],
-  "theme.toggle": [
-    {
-      "type": 0,
-      "value": "テーマ切り替え"
-    }
-  ],
-  "title-input": [
-    {
-      "type": 0,
-      "value": "タイトル入力"
     }
   ],
   "topic-font-editor.active": [
@@ -1959,12 +1521,6 @@
       "value": "キーボードショートカット"
     }
   ],
-  "visualization-toolbar.tooltip-layout": [
-    {
-      "type": 0,
-      "value": "レイアウト変更"
-    }
-  ],
   "visualization-toolbar.tooltip-outline-view": [
     {
       "type": 0,
@@ -2005,48 +1561,6 @@
     {
       "type": 0,
       "value": "フィットするようにズーム"
-    }
-  ],
-  "zoom-panel.tooltip-collapse-all": [
-    {
-      "type": 0,
-      "value": "すべてのノードを折りたたむ"
-    }
-  ],
-  "zoom-panel.tooltip-expand-all": [
-    {
-      "type": 0,
-      "value": "すべてのノードを展開"
-    }
-  ],
-  "zoom-panel.tooltip-keyboard": [
-    {
-      "type": 0,
-      "value": "キーボードショートカット"
-    }
-  ],
-  "zoom-panel.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "アウトラインビュー"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-in": [
-    {
-      "type": 0,
-      "value": "ズームイン"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-out": [
-    {
-      "type": 0,
-      "value": "ズームアウト"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-to-fit": [
-    {
-      "type": 0,
-      "value": "フィット"
     }
   ]
 }

@@ -64,6 +64,11 @@ describe.each(locales)('%s messages', (lang) => {
     expect(Object.keys(en).filter((id) => !messages[id])).toEqual([]);
   });
 
+  // BL5-195: messages removed from English stayed in every locale.
+  test('has no message English does not have', () => {
+    expect(Object.keys(messages).filter((id) => !en[id])).toEqual([]);
+  });
+
   test('translates every English message', () => {
     const untranslated = Object.keys(en).filter(
       (id) =>
