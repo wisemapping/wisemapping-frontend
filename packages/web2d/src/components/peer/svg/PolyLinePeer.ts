@@ -172,7 +172,9 @@ class PolyLinePeer extends ElementPeer {
     const y2 = this._y2;
     if ($defined(x1) && $defined(x2) && $defined(y1) && $defined(y2)) {
       let path: string;
-      if (this._orientation === 'vertical') {
+      if (PolyLineUtils.isWithinStraightTolerance(x1, y1, x2, y2, this._orientation)) {
+        path = `${x1}, ${y1} ${x2}, ${y2}`;
+      } else if (this._orientation === 'vertical') {
         // For vertical tree layout: go down, then horizontal, then down
         const middley = ((y2 - y1) * 0.5 + y1).toFixed(0);
         path = `${x1}, ${y1} ${x1}, ${middley} ${x2}, ${middley} ${x2}, ${y2}`;

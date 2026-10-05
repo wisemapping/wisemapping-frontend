@@ -17,6 +17,7 @@
  */
 import PolyLinePeer from '../../src/components/peer/svg/PolyLinePeer';
 import PolyLine from '../../src/components/PolyLine';
+import { STRAIGHT_TOLERANCE_PX } from '../../src/components/peer/utils/PolyLineUtils';
 import { parsePoints } from '../helpers/geometry';
 
 type Orientation = 'horizontal' | 'vertical';
@@ -172,5 +173,44 @@ describe('PolyLine', () => {
   ])('characterization: %s is a throwing Line stub (typing step T5)', (method) => {
     const line = new PolyLine() as unknown as Record<string, () => unknown>;
     expect(() => line[method]!()).toThrow('Method not implemented.');
+  });
+});
+
+/**
+ * BL5-72: an elbow whose ends are at most STRAIGHT_TOLERANCE_PX (5) apart across the layout (in y
+ * for a mind map, in x for a tree) is one straight segment, as mindplot draws its curved
+ * connections; beyond it, the elbow keeps its jog.
+ */
+describe('PolyLinePeer straight-line tolerance (BL5-72)', () => {
+  const STYLES = ['Straight', 'MiddleStraight', 'MiddleCurved', 'Curved'];
+  const ORIENTATIONS: Orientation[] = ['horizontal', 'vertical'];
+  // From (10, 20), 100 along the layout and `across` across it.
+  const elbow = (style: string, orientation: Orientation, across: number) => {
+    const [x2, y2] = orientation === 'vertical' ? [10 + across, 120] : [110, 20 + across];
+    return { pts: parsePoints(poly(style, orientation, 10, 20, x2, y2)), end: [x2, y2] };
+  };
+
+  it('uses a tolerance of 5 px', () => {
+    expect(STRAIGHT_TOLERANCE_PX).toBe(5);
+  });
+
+  describe.each(STYLES)('%s', (style) => {
+    it.each(ORIENTATIONS.flatMap((o) => [0, 5, -5].map((across) => [o, across])))(
+      '%s: straight when the ends are %d apart across the layout',
+      (orientation, across) => {
+        const { pts, end } = elbow(style, orientation as Orientation, across as number);
+        expect(pts).toEqual([[10, 20], end]);
+      },
+    );
+
+    it.each(ORIENTATIONS.flatMap((o) => [6, -6].map((across) => [o, across])))(
+      '%s: a jog when the ends are %d apart across the layout',
+      (orientation, across) => {
+        const { pts, end } = elbow(style, orientation as Orientation, across as number);
+        expect(pts[0]).toEqual([10, 20]);
+        expect(pts[pts.length - 1]).toEqual(end);
+        expect(pts.length).toBeGreaterThanOrEqual(4);
+      },
+    );
   });
 });

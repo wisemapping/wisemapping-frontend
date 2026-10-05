@@ -36,6 +36,7 @@ import ElementPeer from './components/peer/svg/ElementPeer';
 import type { FontStyle } from './components/peer/svg/FontPeer';
 import type { CustomEventMap, EventDetail } from './components/peer/svg/ElementPeer';
 import type StyleAttributes from './components/StyleAttributes';
+import { STRAIGHT_TOLERANCE_PX } from './components/peer/utils/PolyLineUtils';
 
 export {
   Arrow,
@@ -54,6 +55,7 @@ export {
   Text,
   Workspace,
   ElementPeer,
+  STRAIGHT_TOLERANCE_PX,
 };
 
 export type { Line, StyleAttributes, FontStyle, CustomEventMap, EventDetail };

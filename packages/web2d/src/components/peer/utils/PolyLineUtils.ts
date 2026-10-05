@@ -21,8 +21,21 @@ export const CURVED_CHAMFER = 5;
 /** The corner chamfer of the `MiddleCurved` style. */
 export const MIDDLE_CURVED_CHAMFER = 10;
 
-/** Below this offset across the line, the curved styles draw a single straight segment. */
-export const CURVED_STRAIGHT_THRESHOLD = 2;
+/**
+ * A connection whose ends are at most this far apart across the layout (in y for a mind map, in x
+ * for a tree) is drawn as a straight segment: a tiny jog or S-curve only reads as a wobble. Decided
+ * with the user: 5 px. The elbow styles here and mindplot's curved connections share it.
+ */
+export const STRAIGHT_TOLERANCE_PX = 5;
+
+/** Whether the ends of an elbow are close enough across `orientation` to draw it straight. */
+export const isWithinStraightTolerance = (
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  orientation: 'horizontal' | 'vertical',
+): boolean => Math.abs(orientation === 'vertical' ? x2 - x1 : y2 - y1) <= STRAIGHT_TOLERANCE_PX;
 
 const fixed = (value: number): string => {
   const result = value.toFixed(1);
@@ -36,7 +49,7 @@ const pointsToStr = (points: [number, number][]): string =>
  * An elbow that breaks at 50% of the distance along the main axis (x when horizontal, y when
  * vertical), with both corners chamfered by the same amount. The chamfer is clamped to half of
  * each leg, so the line never overshoots an end nor turns back (W-HCURVE, W-VCURVE). When the
- * ends are at most CURVED_STRAIGHT_THRESHOLD apart across the main axis, it is a straight segment.
+ * ends are at most STRAIGHT_TOLERANCE_PX apart across the main axis, it is a straight segment.
  */
 export const buildChamferedElbowPath = (
   x1: number,
@@ -54,7 +67,7 @@ export const buildChamferedElbowPath = (
   const b2 = vertical ? x2 : y2;
   const toXY = ([a, b]: [number, number]): [number, number] => (vertical ? [b, a] : [a, b]);
 
-  if (Math.abs(b2 - b1) <= CURVED_STRAIGHT_THRESHOLD) {
+  if (isWithinStraightTolerance(x1, y1, x2, y2, orientation)) {
     return pointsToStr([
       [x1, y1],
       [x2, y2],
@@ -90,6 +103,9 @@ export const buildStraightPath = (
   x2: number,
   y2: number,
 ) => {
+  if (isWithinStraightTolerance(x1, y1, x2, y2, 'horizontal')) {
+    return `${x1}, ${y1} ${x2}, ${y2}`;
+  }
   // For horizontal layout, break at 50% of the horizontal distance
   const middlex = x1 + (x2 - x1) * 0.5;
   return `${x1}, ${y1} ${middlex}, ${y1} ${middlex}, ${y2} ${x2}, ${y2}`;
@@ -102,6 +118,9 @@ export const buildVerticalStraightPath = (
   x2: number,
   y2: number,
 ) => {
+  if (isWithinStraightTolerance(x1, y1, x2, y2, 'vertical')) {
+    return `${x1}, ${y1} ${x2}, ${y2}`;
+  }
   // For vertical layout, break at 50% of the vertical distance
   const middley = y1 + (y2 - y1) * 0.5;
   return `${x1}, ${y1} ${x1}, ${middley} ${x2}, ${middley} ${x2}, ${y2}`;

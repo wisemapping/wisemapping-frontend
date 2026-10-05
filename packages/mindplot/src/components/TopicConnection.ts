@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { CurvedLine, PolyLine } from '@wisemapping/web2d';
+import { CurvedLine, PolyLine, STRAIGHT_TOLERANCE_PX } from '@wisemapping/web2d';
 import type { Line } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import PositionType from './PositionType';
@@ -32,9 +32,10 @@ export { LineType };
 /**
  * A curved connection (THIN_CURVED, THICK_CURVED, THICK_CURVED_ORGANIC) whose ends are at most
  * this far apart across the layout (in y for a mind map, in x for a tree) is drawn as a straight
- * segment, as a tiny S-curve only reads as a wobble. Decided with the user: 5 px.
+ * segment, as a tiny S-curve only reads as a wobble. Decided with the user: 5 px. web2d's elbow
+ * styles (POLYLINE_*) use the same tolerance, so it is defined there.
  */
-export const STRAIGHT_TOLERANCE_PX = 5;
+export { STRAIGHT_TOLERANCE_PX };
 
 /**
  * TopicConnection represents hierarchical parent-child connections in the mindmap
