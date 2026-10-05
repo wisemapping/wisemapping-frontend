@@ -55,6 +55,7 @@ const freeIdToEmoji: Record<string, string> = {
   desktop_new: '📌',
   flag: '🚩',
   'flag-black': '🏴',
+  // Only used to export the emoji: the blue flag is imported as a flag (freeIdToSvgId).
   'flag-blue': '🔵',
   'flag-green': '🟢',
   'flag-orange': '🟠',
@@ -102,6 +103,12 @@ const freeIdToEmoji: Record<string, string> = {
   redo: '🔄',
 };
 
+// FreeMind builtin icons imported as a WiseMapping SVG icon, because no emoji matches them.
+// There is no blue flag emoji, and 🔵 would turn the flag into a circle.
+const freeIdToSvgId: Record<string, string> = {
+  'flag-blue': 'flag_blue',
+};
+
 // The same emoji can be written with or without the emoji variation selector (U+FE0F).
 const withoutVariationSelector = (emoji: string): string => emoji.replace(/\uFE0F/g, '');
 
@@ -138,6 +145,9 @@ const svgIdToFreeId: Record<string, string> = {
 
 export default class FreemindIconConverter {
   public static toWiseIcon(iconId: string): WiseIcon | null {
+    if (Object.prototype.hasOwnProperty.call(freeIdToSvgId, iconId)) {
+      return { type: 'icon', id: freeIdToSvgId[iconId] };
+    }
     const emoji = Object.prototype.hasOwnProperty.call(freeIdToEmoji, iconId)
       ? freeIdToEmoji[iconId]
       : undefined;

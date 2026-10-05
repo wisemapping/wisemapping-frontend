@@ -191,6 +191,18 @@ describe('FreemindImporter', () => {
     expect(icons.map((icon) => icon.getAttribute('id'))).toEqual(['💡', '1️⃣', '✅', '⚠️']);
   });
 
+  test('imports the blue flag as the WiseMapping blue flag icon, not a circle (BL5-14)', async () => {
+    const mm = `<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root">
+        <node ID="ID_2" TEXT="Child" POSITION="right"><icon BUILTIN="flag-blue"/></node>
+      </node>
+    </map>`;
+
+    const topic = topicById(await importMap(mm), '2');
+    expect(topic.querySelector(':scope > icon')?.getAttribute('id')).toBe('flag_blue');
+    expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
+  });
+
   test('keeps the WiseMapping icons written by the FreeMind exporter', async () => {
     const mm = `<map version="1.0.1">
       <node ID="ID_1" TEXT="Root">

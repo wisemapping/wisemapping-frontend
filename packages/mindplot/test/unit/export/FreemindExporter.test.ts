@@ -254,6 +254,18 @@ describe('FreemindExporter', () => {
     expect(imported.map((icon) => icon.getAttribute('id'))).toEqual(['tag_blue', 'flag_purple']);
   });
 
+  test('the blue flag survives a FreeMind export and import round trip (BL5-14)', async () => {
+    const mm = await new FreemindExporter(
+      buildMindmap((topic) => topic.addFeature(new SvgIconModel({ id: 'flag_blue' }))),
+    ).export();
+
+    const xml = await new FreemindImporter(mm).import('test', '');
+    const doc = new DOMParser().parseFromString(xml, 'text/xml');
+    const topic = doc.querySelector('topic[id="2"]')!;
+    expect(topic.querySelector(':scope > icon')?.getAttribute('id')).toBe('flag_blue');
+    expect(topic.querySelectorAll(':scope > eicon')).toHaveLength(0);
+  });
+
   test('exports emoji icons written without the emoji variation selector', async () => {
     const doc = await exportMindmap(
       buildMindmap((topic) => topic.addFeature(new EmojiIconModel({ id: '\u26A0' }))),
