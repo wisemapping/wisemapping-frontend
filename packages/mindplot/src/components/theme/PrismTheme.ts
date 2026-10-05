@@ -106,7 +106,7 @@ class PrismTheme extends DefaultTheme {
 
     if (!result) {
       let colors: string[] = [];
-      const resolvedColors = this.resolve('backgroundColor', topic) as string[] | string;
+      const resolvedColors = this.resolve('backgroundColor', topic);
       colors = colors.concat(resolvedColors);
 
       // if the element is an array, use topic order to decide color ..

@@ -23,6 +23,11 @@ import { TopicShapeType } from '../model/INodeModel';
 import { TopicType, ThemeVariant } from './Theme';
 import type { BackgroundPatternType } from '../model/CanvasStyleType';
 import { isMsgKey, type MsgKey } from '../lang/en';
+import {
+  isFontStyleType,
+  isFontWeightType,
+  isTopicShapeType,
+} from '../persistence/TopicAttributeTypes';
 
 // Import JSON files
 import prismDefault from './styles/prism-default.json';
@@ -372,15 +377,19 @@ export class ThemeStyle {
     }
     if (jsonStyle.fontFamily !== undefined) result.fontFamily = jsonStyle.fontFamily;
     if (jsonStyle.fontSize !== undefined) result.fontSize = jsonStyle.fontSize;
-    if (jsonStyle.fontStyle !== undefined) result.fontStyle = jsonStyle.fontStyle as FontStyleType;
+    if (jsonStyle.fontStyle !== undefined) {
+      result.fontStyle = ThemeStyle.checked(jsonStyle.fontStyle, isFontStyleType, 'font style');
+    }
     if (jsonStyle.fontWeight !== undefined) {
-      result.fontWeight = jsonStyle.fontWeight as FontWeightType;
+      result.fontWeight = ThemeStyle.checked(jsonStyle.fontWeight, isFontWeightType, 'font weight');
     }
     if (jsonStyle.fontColor !== undefined) result.fontColor = jsonStyle.fontColor;
     if (jsonStyle.msgKey !== undefined && isMsgKey(jsonStyle.msgKey)) {
       result.msgKey = jsonStyle.msgKey;
     }
-    if (jsonStyle.shapeType !== undefined) result.shapeType = jsonStyle.shapeType as TopicShapeType;
+    if (jsonStyle.shapeType !== undefined) {
+      result.shapeType = ThemeStyle.checked(jsonStyle.shapeType, isTopicShapeType, 'shape type');
+    }
     if (jsonStyle.outerBackgroundColor !== undefined) {
       result.outerBackgroundColor = jsonStyle.outerBackgroundColor;
     }
@@ -389,6 +398,18 @@ export class ThemeStyle {
     }
 
     return result;
+  }
+
+  /** A value of a theme's JSON, checked against its type: like an unknown connection style, it throws. */
+  private static checked<T extends string>(
+    value: string,
+    isValid: (v: string) => v is T,
+    name: string,
+  ): T {
+    if (!isValid(value)) {
+      throw new Error(`Unknown ${name}: ${value}`);
+    }
+    return value;
   }
 
   /**

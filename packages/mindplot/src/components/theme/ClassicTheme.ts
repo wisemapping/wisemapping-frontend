@@ -54,7 +54,7 @@ class ClassicTheme extends DefaultTheme {
 
     // Use theme colors from style system. Palettes are arrays, so use topic order to decide color ..
     let colors: string[] = [];
-    colors = colors.concat(this.resolve('backgroundColor', topic) as string[] | string);
+    colors = colors.concat(this.resolve('backgroundColor', topic));
 
     let order = topic.getOrder();
     order = order || 0;

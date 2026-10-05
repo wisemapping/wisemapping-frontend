@@ -34,26 +34,37 @@ import ThemeResolutionCache from './ThemeResolutionCache';
 // Re-export TopicStyleType for backward compatibility
 export type { TopicStyleType } from './ThemeStyle';
 
-type StyleType = string | string[] | number | undefined | LineType;
+/** The styles a topic's model can set, each read by its getter (the type the theme uses). */
+type ModelStyleKey =
+  | 'borderColor'
+  | 'backgroundColor'
+  | 'shapeType'
+  | 'connectionStyle'
+  | 'connectionColor'
+  | 'fontFamily'
+  | 'fontColor'
+  | 'fontWeight'
+  | 'fontSize'
+  | 'fontStyle';
 
-// eslint-disable-next-line no-spaced-func
-const keyToModel = new Map<keyof TopicStyleType, (model: NodeModel) => StyleType>([
-  ['borderColor', (m: NodeModel) => m.getBorderColor()],
-  ['backgroundColor', (m: NodeModel) => m.getBackgroundColor()],
-  ['shapeType', (m: NodeModel) => m.getShapeType()],
-  ['connectionStyle', (m: NodeModel) => m.getConnectionStyle()],
-  ['connectionColor', (m: NodeModel) => m.getConnectionColor()],
-  ['fontFamily', (m: NodeModel) => m.getFontFamily()],
-  ['fontColor', (m: NodeModel) => m.getFontColor()],
-  ['fontWeight', (m: NodeModel) => m.getFontWeight()],
-  ['fontSize', (m: NodeModel) => m.getFontSize()],
-  ['fontStyle', (m: NodeModel) => m.getFontStyle()],
-]);
+const keyToModel: {
+  [K in ModelStyleKey]: (model: NodeModel) => TopicStyleType[K] | undefined;
+} = {
+  borderColor: (m) => m.getBorderColor(),
+  backgroundColor: (m) => m.getBackgroundColor(),
+  shapeType: (m) => m.getShapeType(),
+  connectionStyle: (m) => m.getConnectionStyle(),
+  connectionColor: (m) => m.getConnectionColor(),
+  fontFamily: (m) => m.getFontFamily(),
+  fontColor: (m) => m.getFontColor(),
+  fontWeight: (m) => m.getFontWeight(),
+  fontSize: (m) => m.getFontSize(),
+  fontStyle: (m) => m.getFontStyle(),
+};
 
 // Some style values are numeric enums whose first member is 0 (LineType.THIN_CURVED),
 // so "not set" must be checked explicitly rather than by truthiness.
-const isUnset = (value: StyleType): boolean =>
-  value === undefined || value === null || value === '';
+const isUnset = (value: unknown): boolean => value === undefined || value === null || value === '';
 
 // The least WCAG contrast a theme text colour keeps with what is behind it: 3:1, the AA level for
 // large text and user interface components. Below it, the text is drawn black or white instead.
@@ -95,23 +106,39 @@ class DefaultTheme implements Theme {
     return canvasStyle.gridPattern || 'grid';
   }
 
-  protected resolve(key: keyof TopicStyleType, topic: Topic, resolveDefault = true): StyleType {
+  /**
+   * The style of the topic: set on its model or the closest ancestor's, else the theme default
+   * for its kind of topic (unless resolveDefault is false, when it may be undefined).
+   */
+  protected resolve<K extends ModelStyleKey>(key: K, topic: Topic): TopicStyleType[K];
+
+  protected resolve<K extends ModelStyleKey>(
+    key: K,
+    topic: Topic,
+    resolveDefault: boolean,
+  ): TopicStyleType[K] | undefined;
+
+  protected resolve<K extends ModelStyleKey>(
+    key: K,
+    topic: Topic,
+    resolveDefault = true,
+  ): TopicStyleType[K] | undefined {
     // Search parent value. It only reads the models, so during a redraw pass it is
     // found once per topic and key, and a descendant stops at its parent's value ...
-    const recurviveModelStrategy = (value: keyof TopicStyleType, t: Topic): StyleType =>
+    const recurviveModelStrategy = (t: Topic): TopicStyleType[K] | undefined =>
       ThemeResolutionCache.memo(t, `model:${key}`, () => {
         const model = t.getModel();
-        let result: StyleType = keyToModel.get(key)!(model);
+        let result = keyToModel[key](model);
 
         const parent = t.getParent();
         if (isUnset(result) && parent) {
-          result = recurviveModelStrategy(value, parent);
+          result = recurviveModelStrategy(parent);
         }
         return result;
       });
 
     // Can be found in the model or parent  ?
-    let result = recurviveModelStrategy(key, topic);
+    let result = recurviveModelStrategy(topic);
     if (isUnset(result) && resolveDefault) {
       result = this.getStyles(topic)[key];
     }
@@ -140,28 +167,27 @@ class DefaultTheme implements Theme {
   }
 
   getShapeType(topic: Topic): TopicShapeType {
-    const result = this.resolve('shapeType', topic) as TopicShapeType;
-    return result;
+    return this.resolve('shapeType', topic);
   }
 
   getConnectionType(topic: Topic): LineType {
-    return this.resolve('connectionStyle', topic) as LineType;
+    return this.resolve('connectionStyle', topic);
   }
 
   getFontFamily(topic: Topic): string {
-    return this.resolve('fontFamily', topic) as string;
+    return this.resolve('fontFamily', topic);
   }
 
   getFontSize(topic: Topic): number {
-    return this.resolve('fontSize', topic) as number;
+    return this.resolve('fontSize', topic);
   }
 
   getFontStyle(topic: Topic): FontStyleType {
-    return this.resolve('fontStyle', topic) as FontStyleType;
+    return this.resolve('fontStyle', topic);
   }
 
   getFontWeight(topic: Topic): FontWeightType {
-    return this.resolve('fontWeight', topic) as FontWeightType;
+    return this.resolve('fontWeight', topic);
   }
 
   getInnerPadding(topic: Topic): number {
@@ -182,7 +208,7 @@ class DefaultTheme implements Theme {
   // Variant-aware methods - default implementation falls back to non-variant methods
   getFontColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
-    return this.resolve('fontColor', topic) as string;
+    return this.resolve('fontColor', topic);
   }
 
   getBackgroundColor(topic: Topic): string {
@@ -199,7 +225,7 @@ class DefaultTheme implements Theme {
 
     if (!result) {
       let colors: string[] = [];
-      colors = colors.concat(this.resolve('backgroundColor', topic) as string[] | string);
+      colors = colors.concat(this.resolve('backgroundColor', topic));
 
       // if the element is an array, use topic order to decide color ..
       let order = topic.getOrder();
@@ -308,7 +334,7 @@ class DefaultTheme implements Theme {
 
     if (!result) {
       let colors: string[] = [];
-      colors = colors.concat(this.resolve('connectionColor', topic) as string[] | string);
+      colors = colors.concat(this.resolve('connectionColor', topic));
 
       // if the element is an array, use topic order to decide color ..
       let order = topic.getOrder();

@@ -37,7 +37,7 @@ class SunriseTheme extends DefaultTheme {
 
     if (!result) {
       let colors: string[] = [];
-      colors = colors.concat(this.resolve('connectionColor', topic) as string[] | string);
+      colors = colors.concat(this.resolve('connectionColor', topic));
 
       // if the element is an array, use topic order to decide color ..
       let order = topic.getOrder();
@@ -57,7 +57,7 @@ class SunriseTheme extends DefaultTheme {
     // border color. The dark variant has its own palette, so it is not lightened as in Prism ...
     if (!result) {
       let colors: string[] = [];
-      colors = colors.concat(this.resolve('borderColor', topic) as string[] | string);
+      colors = colors.concat(this.resolve('borderColor', topic));
 
       // if the element is an array, use topic order to decide color ..
       let order = topic.getOrder();
