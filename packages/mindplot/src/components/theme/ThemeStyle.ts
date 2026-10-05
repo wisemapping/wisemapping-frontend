@@ -134,13 +134,6 @@ export class ThemeStyle {
   }
 
   /**
-   * Get all merged styles
-   */
-  getAllStyles(): Map<TopicType, TopicStyleType> {
-    return this._mergedStyles;
-  }
-
-  /**
    * Get canvas styles
    */
   getCanvasStyle(): CanvasStyleType {
