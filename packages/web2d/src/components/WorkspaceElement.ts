@@ -17,10 +17,13 @@
  */
 
 import { $defined } from './peer/utils/assert';
-import ElementPeer, { ElementListener } from './peer/svg/ElementPeer';
+import ElementPeer, { CustomEventMap, ElementListener, EventDetail } from './peer/svg/ElementPeer';
 import StyleAttributes from './StyleAttributes';
 
-abstract class WorkspaceElement<T extends ElementPeer> {
+/**
+ * `M` maps the element's custom event names to their detail type (see CustomEventMap).
+ */
+abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap = CustomEventMap> {
   peer: T;
 
   constructor(peer: T, attributes: StyleAttributes, delayInit?: boolean) {
@@ -108,12 +111,15 @@ abstract class WorkspaceElement<T extends ElementPeer> {
    * The following events types are supported:
    *
    */
-  addEvent(type: string, listener: ElementListener) {
-    this.peer.addEvent(type, listener);
+  addEvent<K extends string>(
+    type: K,
+    listener: (event: Event, detail?: EventDetail<M, K>) => void,
+  ) {
+    this.peer.addEvent(type, listener as ElementListener);
   }
 
-  /** Fires a custom event: listeners get `detail` as their second argument. */
-  trigger<D = unknown>(type: string, detail?: D) {
+  /** Fires a custom event of the element's map: listeners get `detail` as their second argument. */
+  trigger<K extends keyof M & string>(type: K, detail?: M[K]) {
     this.peer.trigger(type, detail);
   }
 
@@ -139,8 +145,11 @@ abstract class WorkspaceElement<T extends ElementPeer> {
    *     This interace will be invoked passing an event as argument and
    * the 'this' referece in the function will be the element.
    */
-  removeEvent(type: string, listener: ElementListener) {
-    this.peer.removeEvent(type, listener);
+  removeEvent<K extends string>(
+    type: K,
+    listener: (event: Event, detail?: EventDetail<M, K>) => void,
+  ) {
+    this.peer.removeEvent(type, listener as ElementListener);
   }
 
   /**

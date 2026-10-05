@@ -204,6 +204,45 @@ describe('ElementPeer events', () => {
     expect(workspace.peer.getChildren()).toEqual([group.peer]);
   });
 
+  // BL5-79 (W-TRIGGER): custom event names and their detail were untyped strings. An element can
+  // now take a map of its custom events (mindplot supplies its own).
+  it('BL5-79: a custom event map types trigger and the listener detail', () => {
+    type TestEvents = { ontfocus: { id: number }; ontblur: { id: number } };
+    const group = new Group<TestEvents>();
+    const ids: number[] = [];
+    const onFocus = (_e: Event, detail?: { id: number }) => {
+      if (detail) ids.push(detail.id);
+    };
+    group.addEvent('ontfocus', onFocus);
+    group.trigger('ontfocus', { id: 7 });
+    // Compile-time checks only (never run).
+    const typeChecks = () => {
+      // @ts-expect-error an event that is not in the map
+      group.trigger('ontmove', { id: 1 });
+      // @ts-expect-error a detail of the wrong type
+      group.trigger('ontfocus', { id: 'x' });
+      // @ts-expect-error a listener expecting another detail type
+      group.addEvent('ontblur', (_e: Event, detail?: string) => detail);
+    };
+    expect(typeChecks).toBeInstanceOf(Function);
+    // Native events keep an unknown detail.
+    const onClick = jest.fn((e: Event) => e.type);
+    group.addEvent('click', onClick);
+    click(group.peer);
+    group.removeEvent('ontfocus', onFocus);
+    group.trigger('ontfocus', { id: 8 });
+    expect(ids).toEqual([7]);
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('BL5-79: without a map, any event name and detail are accepted', () => {
+    const rect = new Rect(0);
+    const fn = jest.fn();
+    rect.addEvent('anything', fn);
+    rect.trigger('anything', 5);
+    expect(fn.mock.calls[0]![1]).toBe(5);
+  });
+
   it('WorkspaceElement delegates addEvent, removeEvent and trigger', () => {
     const rect = new Rect(0);
     const fn = jest.fn();

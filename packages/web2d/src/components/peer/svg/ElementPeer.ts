@@ -20,6 +20,18 @@ import SizeType from '../../SizeType';
 
 export type ElementListener = (event: Event, detail?: unknown) => void;
 
+/**
+ * Custom event names (fired with trigger()) mapped to the type of their detail. web2d fires none
+ * itself: an element user such as mindplot passes its own map as a type argument (W-TRIGGER).
+ * The default accepts any name and detail.
+ */
+export type CustomEventMap = Record<string, unknown>;
+
+/** The detail a listener of `type` receives: the mapped type of a custom event, else unknown. */
+export type EventDetail<M extends CustomEventMap, K extends string> = K extends keyof M
+  ? M[K]
+  : unknown;
+
 export type StrokeStyle = 'solid' | 'dot' | 'dash' | 'dashdot' | 'longdash';
 
 /** Formats a coordinate or length with at most 2 decimals and no trailing zeros. */

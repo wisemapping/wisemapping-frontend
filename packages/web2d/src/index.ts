@@ -34,6 +34,7 @@ import WorkspaceElement from './components/WorkspaceElement';
 import type Line from './components/Line';
 import ElementPeer from './components/peer/svg/ElementPeer';
 import type { FontStyle } from './components/peer/svg/FontPeer';
+import type { CustomEventMap, EventDetail } from './components/peer/svg/ElementPeer';
 import type StyleAttributes from './components/StyleAttributes';
 
 export {
@@ -55,4 +56,4 @@ export {
   ElementPeer,
 };
 
-export type { Line, StyleAttributes, FontStyle };
+export type { Line, StyleAttributes, FontStyle, CustomEventMap, EventDetail };

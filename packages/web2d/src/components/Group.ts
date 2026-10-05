@@ -18,16 +18,16 @@
 
 import { $defined } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
-import ElementPeer from './peer/svg/ElementPeer';
+import ElementPeer, { CustomEventMap } from './peer/svg/ElementPeer';
 import GroupPeer from './peer/svg/GroupPeer';
 import SizeType from './SizeType';
 import StyleAttributes from './StyleAttributes';
 import PositionType from './PositionType';
 
 /**
- * A group object can be used to collect shapes.
+ * A group object can be used to collect shapes. `M` types its custom events (see CustomEventMap).
  */
-class Group extends WorkspaceElement<GroupPeer> {
+class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<GroupPeer, M> {
   constructor(attributes?: StyleAttributes) {
     const peer = new GroupPeer();
     const defaultAttributes: StyleAttributes = {
