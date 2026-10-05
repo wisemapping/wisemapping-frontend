@@ -44,11 +44,22 @@ class ControlPivotLine {
 
   private _isVisible: boolean;
 
+  private _wasDragged: boolean;
+
   private _mouseMoveHandler: (e: Event) => void;
 
   private _mouseUpHandler: () => void;
 
   private _mouseDownHandler: (event: Event) => void;
+
+  private _keyDownHandler: (event: KeyboardEvent) => void;
+
+  // The control point as it was when the drag started, put back if Escape abandons the drag ...
+  private _dragStart: {
+    controlPoint: PositionType;
+    isCustom: boolean;
+    linePosition: PositionType;
+  } | null;
 
   constructor(
     pivotType: PivotType,
@@ -93,15 +104,34 @@ class ControlPivotLine {
     };
     this._mouseUpHandler = () => this.mouseUpHandler();
     this._mouseDownHandler = (event: Event) => this.mouseDownHandler(event);
+    this._keyDownHandler = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        this.cancelDrag();
+      }
+    };
+    this._dragStart = null;
 
     this._isVisible = false;
+    this._wasDragged = false;
     this._canvas = null;
   }
 
   private mouseDownHandler(event: Event) {
-    const screenManager = this.getWorkspace().getScreenManager();
-    screenManager.addEvent('mousemove', this._mouseMoveHandler);
-    screenManager.addEvent('mouseup', this._mouseUpHandler);
+    this._wasDragged = false;
+    const line = this._relationship.getLine();
+    const isStart = this._pivotType === PivotType.Start;
+    this._dragStart = {
+      controlPoint: line.getControlPoints()[this._pivotType],
+      isCustom: isStart ? line.isSrcControlPointCustom() : line.isDestControlPointCustom(),
+      linePosition: isStart ? line.getFrom() : line.getTo(),
+    };
+    // Listen on the document, so that a release outside the container still ends the drag. If the
+    // window loses focus the release may never reach the page, so the drag ends there too ...
+    window.document.addEventListener('mousemove', this._mouseMoveHandler);
+    window.document.addEventListener('mouseup', this._mouseUpHandler);
+    window.addEventListener('blur', this._mouseUpHandler);
+    // ... and Escape abandons it, leaving the control point where it was.
+    window.document.addEventListener('keydown', this._keyDownHandler);
 
     event.preventDefault();
     event.stopPropagation();
@@ -109,10 +139,10 @@ class ControlPivotLine {
 
   setVisibility(value: boolean) {
     if (this._isVisible !== value) {
-      const screenManager = this.getWorkspace().getScreenManager();
       if (!value) {
-        screenManager.removeEvent('mousemove', this._mouseMoveHandler);
-        screenManager.removeEvent('mouseup', this._mouseUpHandler);
+        // Hiding the dot ends a drag ...
+        this.removeDragListeners();
+        this._dragStart = null;
         this._dot.removeEvent('mousedown', this._mouseDownHandler);
       } else {
         // Register events ...
@@ -136,6 +166,11 @@ class ControlPivotLine {
   getPosition(): PositionType {
     const line = this._relationship.getLine();
     return line.getControlPoints()[this._pivotType];
+  }
+
+  /** True from the mousedown on the dot until the drag ends. */
+  isDragging(): boolean {
+    return this._dragStart !== null;
   }
 
   redraw(): void {
@@ -168,6 +203,15 @@ class ControlPivotLine {
     // Use the shared snap point calculation from Relationship
     const relPos = Relationship.calculateSnapPoint(topic, mousePosition);
 
+    // The control point is relative to that snap point: move the line end there, so that the
+    // handle of the curve is under the cursor ...
+    const line = this._relationship.getLine();
+    if (this._pivotType === PivotType.Start) {
+      line.setFrom(relPos.x, relPos.y);
+    } else {
+      line.setTo(relPos.x, relPos.y);
+    }
+
     const ctlPoint = { x: mousePosition.x - relPos.x, y: mousePosition.y - relPos.y };
     this._moveRelHandler(ctlPoint);
 
@@ -181,14 +225,48 @@ class ControlPivotLine {
         ? this._relationship.getLine().getFrom()
         : this._relationship.getLine().getTo();
     this._line.setFrom(linePos.x, linePos.y);
+    this._wasDragged = true;
+  }
+
+  private removeDragListeners(): void {
+    window.document.removeEventListener('mousemove', this._mouseMoveHandler);
+    window.document.removeEventListener('mouseup', this._mouseUpHandler);
+    window.removeEventListener('blur', this._mouseUpHandler);
+    window.document.removeEventListener('keydown', this._keyDownHandler);
+  }
+
+  private cancelDrag() {
+    this.removeDragListeners();
+
+    const dragStart = this._dragStart;
+    if (this._wasDragged && dragStart) {
+      // Put the control point back, without recording a move ...
+      const line = this._relationship.getLine();
+      const { controlPoint, isCustom, linePosition } = dragStart;
+      if (this._pivotType === PivotType.Start) {
+        line.setFrom(linePosition.x, linePosition.y);
+        line.setSrcControlPoint(controlPoint);
+        line.setIsSrcControlPointCustom(isCustom);
+      } else {
+        line.setTo(linePosition.x, linePosition.y);
+        line.setDestControlPoint(controlPoint);
+        line.setIsDestControlPointCustom(isCustom);
+      }
+      this._relationship.redraw();
+    }
+    this._wasDragged = false;
+    this._dragStart = null;
   }
 
   private mouseUpHandler() {
-    const screenManager = this.getWorkspace().getScreenManager();
-    screenManager.removeEvent('mousemove', this._mouseMoveHandler);
-    screenManager.removeEvent('mouseup', this._mouseUpHandler);
+    this.removeDragListeners();
+    this._dragStart = null;
 
-    this._changeHander();
+    // A plain click on the dot does not move the control point, so there is nothing to record ...
+    if (this._wasDragged) {
+      this._wasDragged = false;
+      this._changeHander();
+    }
   }
 
   addToWorkspace(workspace: Canvas): void {
@@ -205,10 +283,6 @@ class ControlPivotLine {
     // Remove elements ...
     workspace.removeChild(this._line);
     workspace.removeChild(this._dot);
-  }
-
-  private getWorkspace(): Canvas {
-    return this._canvas!;
   }
 }
 
@@ -282,6 +356,11 @@ class RelationshipControlPoints {
 
   getControlPointPosition(pivotType: PivotType): PositionType {
     return this._pivotLines[pivotType].getPosition();
+  }
+
+  /** True while the control point of that end is being dragged. */
+  isDragging(pivotType: PivotType): boolean {
+    return this._pivotLines[pivotType].isDragging();
   }
 }
 

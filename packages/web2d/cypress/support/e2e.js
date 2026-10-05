@@ -33,18 +33,28 @@
 // Import commands.js using ES2015 syntax:
 import './commands';
 
+// The spies are kept here, not read back from win.console: the Vite dev client wraps
+// console.error/warn after the page starts loading when it forwards the browser console to the
+// terminal (server.forwardConsole, on by default under AI agents). The wrapper still calls the
+// spy, but win.console.warn is then no longer the spy.
+const consoleSpies = new WeakMap();
+
 Cypress.on('window:before:load', (win) => {
-  cy.spy(win.console, 'error');
-  cy.spy(win.console, 'warn');
+  consoleSpies.set(win, {
+    error: cy.spy(win.console, 'error'),
+    warn: cy.spy(win.console, 'warn'),
+  });
 });
 
 afterEach(() => {
   cy.window().then((win) => {
-    if (win.console.error && typeof win.console.error.callCount === 'number') {
-      expect(win.console.error).to.have.callCount(0);
+    const spies = consoleSpies.get(win);
+    if (!spies) {
+      // Only a test that never loaded a page has no spies ...
+      expect(win.location.href, 'page without console spies').to.equal('about:blank');
+      return;
     }
-    if (win.console.warn && typeof win.console.warn.callCount === 'number') {
-      expect(win.console.warn).to.have.callCount(0);
-    }
+    expect(spies.error).to.have.callCount(0);
+    expect(spies.warn).to.have.callCount(0);
   });
 });

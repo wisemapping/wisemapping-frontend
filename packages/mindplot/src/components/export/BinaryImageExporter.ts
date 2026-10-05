@@ -21,6 +21,9 @@ import SVGExporter from './SVGExporter';
  * Based on https://mybyways.com/blog/convert-svg-to-png-using-your-browser
  */
 class BinaryImageExporter extends Exporter {
+  // Largest canvas area (in pixels) that all supported browsers can render ...
+  private static MAX_CANVAS_AREA = 16e6;
+
   private svgElement: Element;
 
   private width: number;
@@ -56,7 +59,7 @@ class BinaryImageExporter extends Exporter {
     const svgUrl = svgExporter.exportAndEncode();
     return svgUrl.then((value: string) => {
       // Get the device pixel ratio, falling back to 1. But, I will double the resolution to look nicer.
-      const dpr = (window.devicePixelRatio || 1) * 2;
+      let dpr = (window.devicePixelRatio || 1) * 2;
 
       // Create canvas size ...
       const canvas = document.createElement('canvas');
@@ -73,28 +76,46 @@ class BinaryImageExporter extends Exporter {
         height = this.height * dpr;
       }
 
+      // Browsers render bigger canvases as a blank image (Safari's limit is about 16.7 MP),
+      // so reduce the resolution keeping the aspect ratio ...
+      const area = width * height;
+      if (area > BinaryImageExporter.MAX_CANVAS_AREA) {
+        const reduction = Math.sqrt(BinaryImageExporter.MAX_CANVAS_AREA / area);
+        width *= reduction;
+        height *= reduction;
+        dpr *= reduction;
+      }
+
       console.log(`Export size: ${width}:${height}`);
-      canvas.setAttribute('width', width.toFixed(0));
-      canvas.setAttribute('height', height.toFixed(0));
+      canvas.setAttribute('width', Math.floor(width).toFixed(0));
+      canvas.setAttribute('height', Math.floor(height).toFixed(0));
 
       // Render the image and wait for the response ...
       const img = new Image();
-      const result = new Promise<string>((resolve) => {
+      const result = new Promise<string>((resolve, reject) => {
         img.onload = () => {
-          const ctx = canvas.getContext('2d')!;
-          // Fill background first so JPEG/PNG have a solid fill ...
-          ctx.fillStyle = this.backgroundColor;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          // Scale for retina ...
-          ctx.scale(dpr, dpr);
-          ctx.drawImage(img, 0, 0);
+          try {
+            const ctx = canvas.getContext('2d')!;
+            // Fill background first so JPEG/PNG have a solid fill ...
+            ctx.fillStyle = this.backgroundColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Scale for retina ...
+            ctx.scale(dpr, dpr);
+            ctx.drawImage(img, 0, 0);
 
-          const imgDataUri = canvas
-            .toDataURL(this.getContentType())
-            .replace('image/png', 'octet/stream');
-
+            const imgDataUri = canvas
+              .toDataURL(this.getContentType())
+              .replace('image/png', 'octet/stream');
+            resolve(imgDataUri);
+          } catch (error) {
+            reject(error);
+          } finally {
+            URL.revokeObjectURL(value);
+          }
+        };
+        img.onerror = () => {
           URL.revokeObjectURL(value);
-          resolve(imgDataUri);
+          reject(new Error('The map image could not be rendered for export.'));
         };
       });
       img.src = value;

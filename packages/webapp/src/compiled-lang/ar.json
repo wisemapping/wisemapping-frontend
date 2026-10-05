@@ -1085,6 +1085,12 @@
       "value": "error"
     }
   ],
+  "import.error-unsupported-file": [
+    {
+      "type": 0,
+      "value": "نوع الملف غير مدعوم. يمكنك استيراد خرائط WiseMapping وFreeMind وFreeplane وXMind وMindManager وOPML."
+    }
+  ],
   "import.title": [
     {
       "type": 0,

@@ -25,10 +25,15 @@ import SizeType from './SizeType';
 import PositionType from './PositionType';
 import CanvasElement from './CanvasElement';
 import type TopicEventDispatcher from './TopicEventDispatcher';
+import type Designer from './Designer';
+
+type Web2DListener = (event: Event, detail?: unknown) => void;
 
 export type NodeOption = {
   readOnly: boolean;
   topicEventDispatcher?: TopicEventDispatcher;
+  // The designer the node belongs to. Undefined for nodes built without one (e.g. in tests).
+  designer?: Designer;
 };
 
 abstract class NodeGraph implements CanvasElement {
@@ -62,6 +67,10 @@ abstract class NodeGraph implements CanvasElement {
     return this._options.readOnly;
   }
 
+  getDesigner(): Designer | undefined {
+    return this._options.designer;
+  }
+
   getType(): string {
     const model = this.getModel();
     return model.getType();
@@ -83,22 +92,25 @@ abstract class NodeGraph implements CanvasElement {
     return this._elem2d;
   }
 
-  abstract setPosition(point: PositionType, fireEvent): void;
+  abstract setPosition(point: PositionType, fireEvent?: boolean): void;
 
-  /** */
-  addEvent(type: string, listener) {
+  /**
+   * Listeners receive the DOM event and, for events fired with fireEvent, its payload as detail.
+   * They may narrow both, as web2d does not type them.
+   */
+  addEvent<E extends Event, D>(type: string, listener: (event: E, detail: D) => void) {
     const elem = this.get2DElement();
-    elem.addEvent(type, listener);
+    elem.addEvent(type, listener as Web2DListener);
   }
 
   /** */
-  removeEvent(type: string, listener) {
+  removeEvent<E extends Event, D>(type: string, listener: (event: E, detail: D) => void) {
     const elem = this.get2DElement();
-    elem.removeEvent(type, listener);
+    elem.removeEvent(type, listener as Web2DListener);
   }
 
   /** */
-  fireEvent(type: string, event) {
+  fireEvent(type: string, event: unknown) {
     const elem = this.get2DElement();
     elem.trigger(type, event);
   }
@@ -154,16 +166,32 @@ abstract class NodeGraph implements CanvasElement {
   }
 
   createDragNode(layoutManager: LayoutManager): DragTopic {
+    // CentralTopic has no drag shape: the Designer never registers it for dragging.
     const dragShape = this.buildDragShape();
+    if (!dragShape) {
+      throw new Error(`${this.getType()} has no drag shape: it can not be dragged`);
+    }
 
     return new DragTopic(dragShape, this, layoutManager);
   }
 
-  abstract buildDragShape();
+  abstract buildDragShape(): Group | undefined;
 
+  /**
+   * A model may have no position yet: a topic gets its own on the first layout. Until then, fall
+   * back as the layout does (EventBusDispatcher._initialPosition): the closest ancestor position,
+   * or the origin.
+   */
   getPosition(): PositionType {
-    const model = this.getModel();
-    return model.getPosition();
+    let model: NodeModel | null = this.getModel();
+    while (model) {
+      const position = model.getPosition();
+      if (position) {
+        return position;
+      }
+      model = model.getParent();
+    }
+    return { x: 0, y: 0 };
   }
 
   isCentralTopic(): boolean {

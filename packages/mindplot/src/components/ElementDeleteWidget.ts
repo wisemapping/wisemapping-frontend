@@ -21,9 +21,13 @@ import debounce from 'lodash/debounce';
 import { $assert } from './util/assert';
 import Icon from './Icon';
 import PositionType from './PositionType';
+import type Designer from './Designer';
 
 class ElementDeleteWidget {
+  // Shared by the nodes built without a designer (e.g. in tests).
   private static _instance: ElementDeleteWidget | null = null;
+
+  private static _instanceByDesigner = new WeakMap<Designer, ElementDeleteWidget>();
 
   private _activeIcon: Icon | null;
 
@@ -33,14 +37,31 @@ class ElementDeleteWidget {
 
   private _debouncedClose: ReturnType<typeof debounce>;
 
+  // Icons that already show this widget on hover.
+  private _decoratedIcons: WeakSet<Icon>;
+
   private constructor() {
     this._activeIcon = null;
     this._widget = null;
     this._widgetGroup = null;
     this._debouncedClose = debounce(() => this._closeNow(), 200);
+    this._decoratedIcons = new WeakSet<Icon>();
   }
 
-  static getInstance(): ElementDeleteWidget {
+  /**
+   * Each designer has its own widget, so showing or closing it on one map doesn't affect
+   * another map on the page.
+   */
+  static getInstance(designer?: Designer): ElementDeleteWidget {
+    if (designer) {
+      let result = ElementDeleteWidget._instanceByDesigner.get(designer);
+      if (!result) {
+        result = new ElementDeleteWidget();
+        ElementDeleteWidget._instanceByDesigner.set(designer, result);
+      }
+      return result;
+    }
+
     if (!ElementDeleteWidget._instance) {
       ElementDeleteWidget._instance = new ElementDeleteWidget();
     }
@@ -51,13 +72,8 @@ class ElementDeleteWidget {
     $assert(icon, 'icon can not be null');
     $assert(group, 'group can not be null');
 
-    // Check if the map is read-only - don't show delete widget in read-only mode
-    const designer = (globalThis as Record<string, unknown>).designer as
-      | { isReadOnly: () => boolean }
-      | undefined;
-    if (designer?.isReadOnly()) {
-      return;
-    }
+    // No read-only check here: only removable icons are decorated, and read-only topics
+    // never decorate theirs.
 
     // Nothing to do ...
     if (this._activeIcon !== icon) {
@@ -252,8 +268,7 @@ class ElementDeleteWidget {
   }
 
   decorate(topicId: number, icon: Icon, group: Group) {
-    const iconWithRemove = icon as Icon & { __remove?: boolean };
-    if (!iconWithRemove.__remove) {
+    if (!this._decoratedIcons.has(icon)) {
       icon.addEvent('mouseover', () => {
         this.show(topicId, icon, group);
       });
@@ -262,7 +277,7 @@ class ElementDeleteWidget {
         this.hide();
       });
 
-      iconWithRemove.__remove = true;
+      this._decoratedIcons.add(icon);
     }
   }
 }

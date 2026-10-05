@@ -102,3 +102,85 @@ export const createCurvedLine = ({ fillColor, strokeColor, strokeWidth, strokeSt
 
   return divElem;
 };
+
+// Vertical connections, as in the tree and org layouts: the ends are `dx` apart horizontally and
+// 100 apart vertically, with the control points along y. dx = 0 is a straight vertical line.
+// W-TAPER (fixed): with width >= 1 the taper is offset along the curve's normal, symmetrically,
+// so vertical lines keep their thickness.
+export const createVerticalCurvedLine = ({
+  fillColor,
+  strokeColor,
+  strokeWidth,
+  strokeStyle,
+  width,
+  dx,
+}) => {
+  const divElem = document.createElement('div');
+  const workspace = createCenteredWorkspaceForCurves();
+
+  [
+    [0, -150, dx, -50],
+    [0, 50, -dx, 150],
+    [-100, -100, -100 + dx, 0],
+    [100, 0, 100 - dx, 100],
+  ].forEach(([x1, y1, x2, y2]) => {
+    const line = new CurvedLine();
+    line.setFrom(x1, y1);
+    line.setTo(x2, y2);
+    line.setSrcControlPoint(new Point(0, (y2 - y1) / 2));
+    line.setDestControlPoint(new Point(0, -(y2 - y1) / 2));
+    line.setStroke(strokeWidth, strokeStyle, strokeColor, 1);
+    line.setFill(fillColor, 1);
+    line.setWidth(width);
+    workspace.append(line);
+    addEnd(workspace, x1, y1);
+    addEnd(workspace, x2, y2);
+  });
+
+  workspace.addItAsChildTo(divElem);
+  return divElem;
+};
+
+// No control points given: CurvedLinePeer works them out from the ends, a third of the way along
+// the chord (W-DEFCP, fixed: vertical and near-vertical lines no longer overshoot their ends).
+export const createDefaultControlPointsCurvedLine = ({ strokeColor, strokeWidth, strokeStyle }) => {
+  const divElem = document.createElement('div');
+  const workspace = createCenteredWorkspaceForCurves();
+
+  [
+    [-150, -150, 150, -100],
+    [150, -50, -150, -50],
+    [-150, 0, -150, 150],
+    [-50, 0, -49.95, 150],
+    [50, 150, 50, 0],
+    [150, 0, 120, 150],
+  ].forEach(([x1, y1, x2, y2]) => {
+    const line = new CurvedLine();
+    line.setFrom(x1, y1);
+    line.setTo(x2, y2);
+    line.setStroke(strokeWidth, strokeStyle, strokeColor, 1);
+    line.setWidth(0);
+    workspace.append(line);
+    addEnd(workspace, x1, y1);
+    addEnd(workspace, x2, y2);
+  });
+
+  workspace.addItAsChildTo(divElem);
+  return divElem;
+};
+
+function createCenteredWorkspaceForCurves() {
+  const workspace = new Workspace();
+  workspace.setSize('400px', '400px');
+  workspace.setCoordSize(400, 400);
+  workspace.setCoordOrigin(-200, -200);
+  return workspace;
+}
+
+function addEnd(workspace, x, y) {
+  const e = new Ellipse();
+  e.setSize(6, 6);
+  e.setPosition(x, y);
+  e.setFill('red');
+  workspace.append(e);
+}

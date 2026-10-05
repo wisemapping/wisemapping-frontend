@@ -20,31 +20,38 @@ import ActionConfig from '../../../../classes/action/action-config';
 import Editor from '../../../../classes/model/editor';
 import { ToolbarMenuItem } from '../../../toolbar';
 
+// The designer's modelUpdate event (DesignerUndoManager.buildEvent).
+type UndoRedoEvent = { undoSteps: number; redoSteps: number };
+
 type UndoAndRedo = {
   configuration: ActionConfig;
-  disabledCondition: (event) => boolean;
+  disabledCondition: (event: UndoRedoEvent) => boolean;
   model: Editor | undefined;
 };
 
 const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo): ReactElement => {
   const [disabled, setDisabled] = useState(true);
+  const mapLoaded = model?.isMapLoadded() ?? false;
 
+  // Subscribes again when the model changes, or once its map has loaded ...
   useEffect(() => {
-    if (model?.isMapLoadded()) {
-      const handleUpdate = (event) => {
-        const isDisabled = disabledCondition(event);
-        setDisabled(!isDisabled);
-
-        return () => {
-          model.getDesigner().removeEvent('modelUpdate', handleUpdate);
-        };
-      };
-
-      if (model.getDesigner()) {
-        model.getDesigner().addEvent('modelUpdate', handleUpdate);
-      }
+    if (!model || !mapLoaded) {
+      return undefined;
     }
-  }, [model?.isMapLoadded()]);
+    const designer = model.getDesigner();
+    if (!designer) {
+      return undefined;
+    }
+
+    const handleUpdate = (event?: unknown) => {
+      const isDisabled = disabledCondition(event as UndoRedoEvent);
+      setDisabled(!isDisabled);
+    };
+    designer.addEvent('modelUpdate', handleUpdate);
+    return () => {
+      designer.removeEvent('modelUpdate', handleUpdate);
+    };
+  }, [model, mapLoaded]);
 
   return (
     <ToolbarMenuItem

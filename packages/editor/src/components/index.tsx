@@ -40,6 +40,7 @@ import { createEditorTheme } from '../theme';
 import { ThemeVariantStorage } from '../types/ThemeVariantStorage';
 import EditorLoadingSkeleton from './editor-loading-skeleton';
 import { useDeepLinkFocus } from '../hooks/useDeepLinkFocus';
+import { useCanvasViewportInsets } from '../hooks/useCanvasViewportInsets';
 
 const EMBED_READY_ATTRIBUTE = 'data-wisemapping-embed-loaded';
 
@@ -79,6 +80,9 @@ const EditorContent = ({
 
   // Reveal and centre the node named by `?node=<id>`, if any.
   useDeepLinkFocus(model, initialSearchParams);
+
+  // Zoom to fit keeps the map clear of the app bar and the floating toolbars.
+  useCanvasViewportInsets(designer);
 
   // Get the current theme mode from the theme context
   const mode = internalMode;

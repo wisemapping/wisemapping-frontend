@@ -17,6 +17,9 @@
  */
 
 import LayoutManager from '../../../src/components/layout/LayoutManager';
+import BalancedSorter from '../../../src/components/layout/BalancedSorter';
+import Node from '../../../src/components/layout/Node';
+import RootedTreeSet from '../../../src/components/layout/RootedTreeSet';
 
 const ROOT_NODE_SIZE = { width: 140, height: 90 };
 const NODE_SIZE = { width: 80, height: 60 };
@@ -126,3 +129,69 @@ describe('BalancedSorter Layout Tests', () => {
   });
 });
 
+describe('BalancedSorter.verify', () => {
+  const sorter = new BalancedSorter();
+
+  /** A root with one child per given order, wired directly so verify sees them as-is. */
+  const treeWithOrders = (orders: number[]): { treeSet: RootedTreeSet; root: Node } => {
+    const treeSet = new RootedTreeSet();
+    const root = new Node(0, ROOT_NODE_SIZE, { x: 0, y: 0 }, sorter);
+    treeSet.setRoot(root);
+    orders.forEach((order, index) => {
+      const child = new Node(index + 1, NODE_SIZE, { x: 0, y: 0 }, sorter);
+      child.setOrder(order);
+      treeSet.add(child);
+      treeSet.connect(0, child.getId());
+    });
+    return { treeSet, root };
+  };
+
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('accepts continuous orders on both sides', () => {
+    const { treeSet, root } = treeWithOrders([0, 1, 2, 3, 4, 5]);
+    expect(() => sorter.verify(treeSet, root)).not.toThrow();
+  });
+
+  it('accepts a single child on the left side', () => {
+    const { treeSet, root } = treeWithOrders([1]);
+    expect(() => sorter.verify(treeSet, root)).not.toThrow();
+  });
+
+  it('rejects a hole on the right (even) side', () => {
+    const { treeSet, root } = treeWithOrders([0, 1, 4]);
+    expect(() => sorter.verify(treeSet, root)).toThrow();
+  });
+
+  it('rejects a hole on the left (odd) side', () => {
+    const { treeSet, root } = treeWithOrders([0, 1, 2, 5]);
+    expect(() => sorter.verify(treeSet, root)).toThrow();
+  });
+
+  it('rejects a left side that does not start at 1', () => {
+    const { treeSet, root } = treeWithOrders([0, 3]);
+    expect(() => sorter.verify(treeSet, root)).toThrow();
+  });
+
+  it('keeps passing through connect and disconnect on both sides', () => {
+    const manager = new LayoutManager(0, ROOT_NODE_SIZE);
+    const position = { x: 0, y: 0 };
+    [0, 1, 2, 3, 4, 5].forEach((order, index) => {
+      manager.addNode(index + 1, NODE_SIZE, position).connectNode(0, index + 1, order);
+    });
+    // connectNode and disconnectNode both run verify on the root.
+    expect(() => manager.disconnectNode(2)).not.toThrow();
+    expect(() => manager.connectNode(0, 2, 5)).not.toThrow();
+    expect(() => manager.disconnectNode(4)).not.toThrow();
+    expect(() => manager.connectNode(0, 4, 1)).not.toThrow();
+    expect(() => manager.disconnectNode(1)).not.toThrow();
+    expect(() => manager.connectNode(0, 1, 9)).not.toThrow();
+    manager.layout();
+  });
+});

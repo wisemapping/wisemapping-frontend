@@ -19,18 +19,14 @@ import { $defined } from './util/assert';
 import Bundle from './lang/Bundle';
 
 class Messages {
-  public static __bundle;
+  public static __bundle: Record<string, string> | undefined;
 
   static init(locale: string) {
-    let userLocale = $defined(locale) ? locale : 'en';
-    let bundle = Bundle[userLocale];
+    const userLocale = $defined(locale) && locale ? locale : 'en';
 
-    if (bundle == null && locale.indexOf('_') !== -1) {
-      // Try to locate without the specialization ...
-      userLocale = locale.substring(0, locale.indexOf('_'));
-      bundle = Bundle[userLocale];
-    }
-    this.__bundle = bundle;
+    // Try the full locale (zh-CN), then its base language (zh), then English.
+    const baseLanguage = userLocale.split(/[-_]/)[0].toLowerCase();
+    this.__bundle = Bundle[userLocale] || Bundle[baseLanguage] || Bundle.en;
   }
 }
 
@@ -38,8 +34,8 @@ const $msg = function $msg(key: string) {
   if (!Messages.__bundle) {
     Messages.init('en');
   }
-  const msg = Messages.__bundle[key];
-  return msg || key;
+  // init() always sets the bundle.
+  return Messages.__bundle![key] || Bundle.en[key] || key;
 };
 
 export default Messages;

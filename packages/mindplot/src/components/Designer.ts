@@ -70,6 +70,17 @@ import Theme, { ThemeVariant } from './theme/Theme';
 import ChangeEvent from './layout/ChangeEvent';
 import HTMLTopicSelected from './HTMLTopicSelected';
 
+/** How far zoomOut() goes: workspace units per screen pixel. */
+const MAX_ZOOM = 7;
+
+/** How far zoomIn() goes. */
+const MIN_ZOOM = 0.3;
+
+/** The part of each edge of the canvas covered by the host's chrome, in pixels. */
+export type ViewportInsets = { top?: number; right?: number; bottom?: number; left?: number };
+
+export type ZoomToFitOptions = { insets?: ViewportInsets };
+
 type DesignerEventType = 'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess' | 'featureEdit';
 
 class Designer extends EventDispispatcher<DesignerEventType> {
@@ -101,6 +112,19 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   private _topicEventDispatcher: TopicEventDispatcher;
 
   private _selectionShadows: Map<Topic, HTMLTopicSelected> = new Map();
+
+  // Removes the LayoutEventBus handlers of the selection shadows, set once a map is loaded ...
+  private _unsubscribeSelectionShadows: (() => void) | null = null;
+
+  private _autoPanOnFocusListener: ((nodeModel: NodeModel) => void) | null = null;
+
+  private _wheelListener: ((event: WheelEvent) => void) | null = null;
+
+  private _keyboard: DesignerKeyboard | undefined;
+
+  private _disposed = false;
+
+  private _viewportInsets: ViewportInsets | (() => ViewportInsets) = {};
 
   constructor(options: DesignerOptions) {
     super();
@@ -144,6 +168,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
       // Register keyboard events ...
       DesignerKeyboard.register(this);
+      this._keyboard = DesignerKeyboard.getInstance();
 
       this._dragManager = this._buildDragManager(this._canvas);
     }
@@ -166,39 +191,36 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   private _registerWheelEvents(): void {
-    this.getContainer().addEventListener(
-      'wheel',
-      (event: WheelEvent) => {
-        // Avoid managing wheel events if mindplot kb shortcuts are disabled.
-        if (DesignerKeyboard.isDisabled()) return;
+    this._wheelListener = (event: WheelEvent) => {
+      // Avoid managing wheel events if mindplot kb shortcuts are disabled.
+      if (DesignerKeyboard.isDisabled()) return;
 
-        const isZoomGesture = event.ctrlKey || event.metaKey || event.altKey;
+      const isZoomGesture = event.ctrlKey || event.metaKey || event.altKey;
 
-        if (isZoomGesture) {
-          if (event.deltaY === 0) return;
+      if (isZoomGesture) {
+        if (event.deltaY === 0) return;
 
-          // Scale the zoom step by the wheel magnitude so trackpad gestures feel
-          // continuous instead of stepped. exp(-deltaY * k) maps deltaY<0 (scroll
-          // up) to zoom-in and deltaY>0 (scroll down) to zoom-out symmetrically.
-          // Clamp magnitude so a single mouse-wheel notch (deltaY≈100) doesn't
-          // overshoot while keeping trackpad gestures (deltaY≈1–30) smooth.
-          const clamped = Math.max(-50, Math.min(50, event.deltaY));
-          const factor = Math.exp(-clamped * 0.01);
-          if (factor > 1) {
-            this.zoomIn(factor);
-          } else {
-            this.zoomOut(1 / factor);
-          }
+        // Scale the zoom step by the wheel magnitude so trackpad gestures feel
+        // continuous instead of stepped. exp(-deltaY * k) maps deltaY<0 (scroll
+        // up) to zoom-in and deltaY>0 (scroll down) to zoom-out symmetrically.
+        // Clamp magnitude so a single mouse-wheel notch (deltaY≈100) doesn't
+        // overshoot while keeping trackpad gestures (deltaY≈1–30) smooth.
+        const clamped = Math.max(-50, Math.min(50, event.deltaY));
+        const factor = Math.exp(-clamped * 0.01);
+        if (factor > 1) {
+          this.zoomIn(factor);
         } else {
-          // No modifier: a two-finger trackpad swipe (or a plain wheel) pans the
-          // canvas instead of zooming it.
-          if (event.deltaX === 0 && event.deltaY === 0) return;
-          this.panBy(event.deltaX, event.deltaY);
+          this.zoomOut(1 / factor);
         }
-        event.preventDefault();
-      },
-      { passive: false },
-    );
+      } else {
+        // No modifier: a two-finger trackpad swipe (or a plain wheel) pans the
+        // canvas instead of zooming it.
+        if (event.deltaX === 0 && event.deltaY === 0) return;
+        this.panBy(event.deltaX, event.deltaY);
+      }
+      event.preventDefault();
+    };
+    this.getContainer().addEventListener('wheel', this._wheelListener, { passive: false });
   }
 
   getActionDispatcher(): StandaloneActionDispatcher {
@@ -227,7 +249,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Deselect on click ...
     screenManager.addEvent('click', (event: Event) => {
-      me.onObjectFocusEvent(undefined, event);
+      // ScreenManager always dispatches 'click' as a synthetic MouseEvent.
+      me.onObjectFocusEvent(undefined, event as MouseEvent);
     });
 
     // Create nodes on double click...
@@ -251,11 +274,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const designerModel = this.getModel();
     const dragConnector = new DragConnector(designerModel, this._canvas);
     const dragManager = new DragManager(workspace, this._eventBussDispatcher);
-    const topics = designerModel.getTopics();
 
-    // Enable all mouse events.
+    // Enable all mouse events. Read the topics on each drag: the list changes as topics come and go.
     dragManager.addEvent('startdragging', () => {
-      topics.forEach((topic) => topic.setMouseEventsEnabled(false));
+      designerModel.getTopics().forEach((topic) => topic.setMouseEventsEnabled(false));
     });
 
     dragManager.addEvent('dragging', (event: MouseEvent, dragTopic: DragTopic) => {
@@ -267,9 +289,12 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       }
     });
 
+    // Also fired when the drag is cancelled (Escape, window blur): the topic must then stay put.
     dragManager.addEvent('enddragging', (event: MouseEvent, dragTopic: DragTopic) => {
-      topics.forEach((topic) => topic.setMouseEventsEnabled(true));
-      dragTopic.applyChanges(workspace);
+      designerModel.getTopics().forEach((topic) => topic.setMouseEventsEnabled(true));
+      if (!dragTopic.isCancelled()) {
+        dragTopic.applyChanges(workspace);
+      }
     });
 
     return dragManager;
@@ -280,7 +305,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const orientation = this._eventBussDispatcher.getLayoutManager().getOrientation();
     const topic = TopicFactory.create(
       model,
-      { readOnly, topicEventDispatcher: this._topicEventDispatcher },
+      { readOnly, topicEventDispatcher: this._topicEventDispatcher, designer: this },
       this._themeVariant,
       orientation,
     );
@@ -289,7 +314,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // Add Topic events ...
     if (!readOnly) {
       // If a node had gained focus, clean the rest of the nodes ...
-      topic.addEvent('mousedown', (event) => {
+      topic.addEvent('mousedown', (event: MouseEvent) => {
         me.onObjectFocusEvent(topic, event);
       });
 
@@ -307,8 +332,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const targetTopicModel = model.getParent();
 
       // Find target topic with the same model ...
-      const topics = this.getModel().getTopics();
-      const targetTopic = topics.find((t) => t.getModel() === targetTopicModel);
+      const targetTopic = targetTopicModel
+        ? this.getModel().findTopicByModel(targetTopicModel)
+        : undefined;
       if (targetTopic) {
         model.disconnect();
       } else {
@@ -347,7 +373,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     return topic;
   }
 
-  onObjectFocusEvent(currentObject?: Topic, event?): void {
+  onObjectFocusEvent(currentObject?: Topic, event?: MouseEvent): void {
     // Close node editors ..
     this.closeNodeEditors();
 
@@ -398,130 +424,85 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     this._canvas.panBy(deltaX, deltaY);
   }
 
-  zoomToFit(): void {
-    const topics = this.getModel().getTopics();
-    if (!topics || topics.length === 0) {
-      // If no topics, just center on origin
-      this.getModel().setZoom(1);
-      this._canvas.setZoom(1, true);
-      return;
-    }
+  /**
+   * Sets the insets `zoomToFit()` uses when it is called without any: the part of each edge of
+   * the canvas the host covers with its own chrome (an app bar, floating toolbars). The canvas
+   * cannot see that chrome, so the host tells it. A function is measured on every fit, so the
+   * insets follow the host's layout without having to be pushed again.
+   */
+  setViewportInsets(insets: ViewportInsets | (() => ViewportInsets)): void {
+    this._viewportInsets = insets;
+  }
 
-    // Calculate bounding box of all topics
+  /**
+   * Zooms and pans so that the whole map is visible, centred in the part of the canvas that the
+   * insets leave uncovered. It never zooms in beyond 1x (a small map is only centred), nor out
+   * beyond the zoomOut() limit (a bigger map is centred, and overflows).
+   *
+   * @param options.insets the covered part of each edge, in pixels. Defaults to the insets set
+   * with setViewportInsets(), or none.
+   */
+  zoomToFit(options?: ZoomToFitOptions): void {
+    const configured =
+      typeof this._viewportInsets === 'function' ? this._viewportInsets() : this._viewportInsets;
+    const insets = options?.insets ?? configured;
+    const inset = (value: number | undefined): number =>
+      Number.isFinite(value) ? Math.max(value as number, 0) : 0;
+    const top = inset(insets.top);
+    const right = inset(insets.right);
+    const bottom = inset(insets.bottom);
+    const left = inset(insets.left);
+
+    const screenManager = this._canvas.getScreenManager();
+    const containerWidth = screenManager.getContainerWidth();
+    const containerHeight = screenManager.getContainerHeight();
+    const visibleWidth = Math.max(containerWidth - left - right, 1);
+    const visibleHeight = Math.max(containerHeight - top - bottom, 1);
+
+    // Bounding box of all topics, with a 10% padding on each side. An empty map is centred on
+    // the origin.
     let minX = Infinity;
     let maxX = -Infinity;
     let minY = Infinity;
     let maxY = -Infinity;
+    this.getModel()
+      .getTopics()
+      .forEach((topic) => {
+        // A topic without a position yet sits at the origin, as the layout places it.
+        const position = (topic.getPosition() as PositionType | undefined) ?? { x: 0, y: 0 };
+        const size = topic.getSize();
+        minX = Math.min(minX, position.x - size.width / 2);
+        maxX = Math.max(maxX, position.x + size.width / 2);
+        minY = Math.min(minY, position.y - size.height / 2);
+        maxY = Math.max(maxY, position.y + size.height / 2);
+      });
 
-    topics.forEach((topic) => {
-      const position = topic.getPosition();
-      const size = topic.getSize();
-
-      // Topic position is the center, so calculate bounds
-      const halfWidth = size.width / 2;
-      const halfHeight = size.height / 2;
-
-      minX = Math.min(minX, position.x - halfWidth);
-      maxX = Math.max(maxX, position.x + halfWidth);
-      minY = Math.min(minY, position.y - halfHeight);
-      maxY = Math.max(maxY, position.y + halfHeight);
-    });
-
-    // Add padding (10% on each side)
-    const paddingX = (maxX - minX) * 0.1;
-    const paddingY = (maxY - minY) * 0.1;
-    minX -= paddingX;
-    maxX += paddingX;
-    minY -= paddingY;
-    maxY += paddingY;
-
-    const contentWidth = maxX - minX;
-    const contentHeight = maxY - minY;
-    const contentCenterX = (minX + maxX) / 2;
-    const contentCenterY = (minY + maxY) / 2;
-
-    // Get container dimensions
-    const screenManager = this._canvas.getScreenManager();
-    const containerWidth = screenManager.getContainerWidth();
-    let containerHeight = screenManager.getContainerHeight();
-
-    // Subtract AppBar height from available height
-    // Find the main AppBar (not the toolbars which are positioned absolutely)
-    // The main AppBar is typically at the top of the page
-    const allAppBars = Array.from(document.querySelectorAll('.MuiAppBar-root')) as HTMLElement[];
-
-    // Find the top AppBar height (not absolutely positioned toolbars)
-    const topAppBarHeight = allAppBars
-      .map((appBarElement) => {
-        const appBarRect = appBarElement.getBoundingClientRect();
-        const style = window.getComputedStyle(appBarElement);
-
-        // Check if this is the top AppBar (not absolutely positioned toolbars)
-        // Toolbars use position: absolute, main AppBar uses position: fixed or static
-        if (appBarRect.height > 0 && appBarRect.top >= 0 && style.position !== 'absolute') {
-          return appBarRect.height;
-        }
-        return 0;
-      })
-      .reduce((max, height) => Math.max(max, height), 0);
-
-    // Subtract the top AppBar height from available height
-    if (topAppBarHeight > 0) {
-      containerHeight = Math.max(containerHeight - topAppBarHeight, containerWidth * 0.1); // Ensure minimum height
+    let contentWidth = 0;
+    let contentHeight = 0;
+    let contentCenter: PositionType = { x: 0, y: 0 };
+    if (minX <= maxX && minY <= maxY) {
+      contentWidth = (maxX - minX) * 1.2;
+      contentHeight = (maxY - minY) * 1.2;
+      contentCenter = { x: (minX + maxX) / 2, y: (minY + maxY) / 2 };
     }
 
-    // Handle edge cases where content has no size
-    if (contentWidth <= 0 || contentHeight <= 0) {
-      // Content has no size, just center on content center
-      this.getModel().setZoom(1);
-      this._canvas.setZoomValue(1);
-      const visibleWidth = containerWidth;
-      const visibleHeight = containerHeight;
-      const coordOriginX = contentCenterX - visibleWidth / 2;
-      const coordOriginY = contentCenterY - visibleHeight / 2;
-      this._canvas.setCoordOrigin(coordOriginX, coordOriginY);
-      this._canvas.setCoordSize(visibleWidth, visibleHeight);
-      screenManager.setOffset(coordOriginX, coordOriginY);
-      screenManager.setScale(1);
-      screenManager.fireEvent('update');
-      return;
-    }
+    // Workspace units per screen pixel, as everywhere else: above 1 shows more of the map.
+    const zoom = Math.min(
+      Math.max(contentWidth / visibleWidth, contentHeight / visibleHeight, 1),
+      MAX_ZOOM,
+    );
 
-    // Calculate zoom to fit content in container
-    const zoomX = containerWidth / contentWidth;
-    const zoomY = containerHeight / contentHeight;
-    const zoom = Math.min(zoomX, zoomY, 1); // Don't zoom in beyond 1x
-
-    // Calculate coordinate origin to center content in view
-    // The visible area in workspace coordinates is: coordOrigin to coordOrigin + (containerSize / zoom)
-    const visibleWidth = containerWidth / zoom;
-    const visibleHeight = containerHeight / zoom;
-
-    // Center the content in the visible area
-    const coordOriginX = contentCenterX - visibleWidth / 2;
-    const coordOriginY = contentCenterY - visibleHeight / 2;
-
-    // Update zoom in model and canvas
     this.getModel().setZoom(zoom);
-    this._canvas.setZoomValue(zoom);
-
-    // Update canvas zoom and coordinate origin
-    this._canvas.setCoordOrigin(coordOriginX, coordOriginY);
-    this._canvas.setCoordSize(visibleWidth, visibleHeight);
-
-    // Update screen manager
-    screenManager.setOffset(coordOriginX, coordOriginY);
-    screenManager.setScale(zoom);
-
-    // Fire update events
-    screenManager.fireEvent('update');
-    LayoutEventBus.fireEvent('canvasZoomed', { zoom });
+    this._canvas.setZoomAt(zoom, contentCenter, {
+      x: left + visibleWidth / 2,
+      y: top + visibleHeight / 2,
+    });
   }
 
   zoomOut(factor = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() * factor;
-    if (scale <= 7.0) {
+    if (scale <= MAX_ZOOM) {
       model.setZoom(scale);
       this._canvas.setZoom(scale);
     } else {
@@ -533,7 +514,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const model = this.getModel();
     const scale = model.getZoom() / factor;
 
-    if (scale >= 0.3) {
+    if (scale >= MIN_ZOOM) {
       model.setZoom(scale);
       this._canvas.setZoom(scale);
     } else {
@@ -634,7 +615,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
           if (enableImageSupport) {
             // Create image blob ...
-            const workspace = globalThis.designer.getWorkSpace();
+            const workspace = this.getWorkSpace();
             const svgElement = workspace.getSVGElement();
             const size = { width: window.innerWidth, height: window.innerHeight };
 
@@ -731,7 +712,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
       // Change position to avoid overlap ...
       children.forEach((m) => {
-        const pos = m.getPosition();
+        const pos = m.getPosition() ?? { x: 0, y: 0 };
         m.setPosition(pos.x + Math.random() * 60, pos.y + Math.random() * 30);
       });
 
@@ -771,11 +752,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       return;
     }
 
-    // Expand the parent if collapsed, so the pasted topics are visible right away ...
-    if (parent.areChildrenShrunken()) {
-      this._actionDispatcher.shrinkBranch([parentId], false);
-    }
-
     const text = await this._readClipboardText();
     if (!text || text.indexOf('</map>') === -1) {
       $notify($msg('CLIPBOARD_IS_EMPTY'));
@@ -788,15 +764,24 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       return;
     }
 
-    // Detach the copied nodes from the clipboard mindmap and let the layout
-    // decide where each one lands under the new parent ...
+    // A collapsed parent is expanded by AddTopicCommand, in the same undo step as the paste.
+    // Collapsed children keep their place in the layout, so predict is not affected.
+    //
+    // Detach the copied nodes from the clipboard mindmap and let the layout give
+    // each one its own order up front, as none is inserted yet: given the same
+    // order, each insert would push the previous ones down and reverse them.
+    // Under the central topic of a mindmap layout they are spread over both
+    // sides, as adding them one by one would; elsewhere they follow each other
+    // in clipboard order ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
-    const clones = branches[0].getChildren().map((child) => {
+    const predicted = layoutManager.predict(parentId, null, null);
+    const children = branches[0].getChildren();
+    const orders = layoutManager.getOrdersForNewChildren(parentId, children.length);
+    const clones = children.map((child, index) => {
       child.disconnect();
       const clone = child.deepCopy();
-      const predicted = layoutManager.predict(parentId, null, null);
       clone.setPosition(predicted.position.x, predicted.position.y);
-      clone.setOrder(predicted.order);
+      clone.setOrder(orders[index]);
       return clone;
     });
 
@@ -835,10 +820,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const mindmap = parentModel.getMindmap();
     const childModel = mindmap.createNode();
 
-    // If node is shink, expand ...
-    if (topic.areChildrenShrunken()) {
-      topic.setChildrenShrunken(false);
-    }
+    // A collapsed parent is expanded by AddTopicCommand, in the same undo step as the add.
+    // Collapsed children keep their place in the layout, so predict is not affected.
 
     // Create a new node ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
@@ -892,25 +875,26 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       result = mindmap.createNode();
 
       // Get the current topic's order to insert right after it
+      const layoutManager = this._eventBussDispatcher.getLayoutManager();
       const currentOrder = topic.getOrder();
       let newOrder: number;
 
       if (currentOrder !== undefined) {
-        // Insert right after the current topic (currentOrder + 1)
-        // The layout manager's insert method will automatically shift
-        // all siblings with order >= (currentOrder + 1) by incrementing their order
-        newOrder = currentOrder + 1;
+        // Insert right after the current topic. The parent's sorter decides what that
+        // order is: usually currentOrder + 1, but the central topic's balanced sorter
+        // encodes the side in the order parity, so there it is currentOrder + 2.
+        // The layout manager's insert method will shift the siblings from there on.
+        newOrder = layoutManager.getOrderAfter(parentTopic.getId(), currentOrder);
       } else {
         // If current topic has no order, fall back to layout manager prediction
         // This should not happen in normal cases, but handle it gracefully
-        const layoutManager = this._eventBussDispatcher.getLayoutManager();
         const prediction = layoutManager.predict(parentTopic.getId(), null, null);
         newOrder = prediction.order;
       }
 
       // Set the order on the new sibling
       // When the topic is connected, the layout manager's insert method will:
-      // 1. Shift all siblings with order >= newOrder by incrementing their order
+      // 1. Shift the siblings at or after newOrder
       // 2. Set the new sibling's order to newOrder
       result.setOrder(newOrder);
 
@@ -918,7 +902,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       // The position will be recalculated during layout after connection,
       // but we need an initial position. The layout system will position it
       // correctly based on the order we set.
-      const layoutManager = this._eventBussDispatcher.getLayoutManager();
       // Predict position - the layout system will use the order to position it correctly
       const prediction = layoutManager.predict(parentTopic.getId(), null, null);
       result.setPosition(prediction.position.x, prediction.position.y);
@@ -972,7 +955,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         if (position) {
           topic.setPosition(position);
         }
-        if (order !== null) {
+        // No order means the layout does not order this topic: keep the one it has.
+        if (order !== undefined) {
           topic.setOrder(order);
         }
       }
@@ -980,20 +964,30 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     this._eventBussDispatcher.setLayoutManager(layoutManager);
 
-    // Building node graph ...
+    // Building node graph. The render queue adds the topics to the canvas, which connects each
+    // one to the layout: lay the map out once, when they all are, not once per connection ...
     const branches = mindmap.getBranches();
+    const dispatcher = this._eventBussDispatcher;
+    dispatcher.beginBatch();
 
     const nodesGraph: Topic[] = [];
-    branches.forEach((branch) => {
-      const nodeGraph = this.nodeModelToTopic(branch);
-      nodesGraph.push(nodeGraph);
-    });
+    let centralTopic: Topic;
+    try {
+      branches.forEach((branch) => {
+        const nodeGraph = this.nodeModelToTopic(branch);
+        nodesGraph.push(nodeGraph);
+      });
 
-    // Place the focus on the Central Topic
-    const centralTopic = this.getModel().getCentralTopic();
+      // Place the focus on the Central Topic
+      centralTopic = this.getModel().getCentralTopic();
+    } catch (e) {
+      dispatcher.endBatch();
+      throw e;
+    }
     this.goToNode(centralTopic);
 
-    return this._canvas.enableQueueRender(false).then(() => {
+    const rendered = this._canvas.enableQueueRender(false).finally(() => dispatcher.endBatch());
+    return rendered.then(() => {
       // Connect relationships ...
       const relationships = mindmap.getRelationships();
       relationships.forEach((relationship) => {
@@ -1021,7 +1015,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       this._canvas.registerEvents();
 
       // Initialize selection shadows if enabled
-      HTMLTopicSelected.initializeSelectionShadows(this);
+      this._unsubscribeSelectionShadows = HTMLTopicSelected.initializeSelectionShadows(this);
 
       // Finally, sort the map ...
       LayoutEventBus.fireEvent('forceLayout');
@@ -1073,17 +1067,26 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         topic.setOrientation(orientation);
       });
 
-    // Reset DragPivot to clear any stale connection state
-    if (DragTopic._dragPivot) {
-      DragTopic._dragPivot.reset();
-    }
+    // Reset this designer's DragPivot to clear any stale connection state (none when read-only)
+    this._dragManager?.getDragPivot().reset();
 
-    // Redraw all topics immediately (no queue rendering during editing)
+    // Redraw all topics immediately (no queue rendering during editing). Each topic is
+    // redrawn once, parents before children: redrawing every topic with its subtree
+    // redrew each one once per ancestor.
+    const variant = this.getThemeVariant();
     this.getModel()
       .getTopics()
-      .forEach((topic) => {
-        topic.redraw(this.getThemeVariant(), true);
-      });
+      .filter((topic) => !topic.getParent())
+      .forEach((root) => Designer.redrawTree(root, variant));
+  }
+
+  /**
+   * Redraws a topic and then each of its descendants once, parents first, including the
+   * children of collapsed topics (a topic redraw does not recurse into those).
+   */
+  private static redrawTree(topic: Topic, variant: ThemeVariant): void {
+    topic.redraw(variant, false);
+    topic.getChildren().forEach((child) => Designer.redrawTree(child, variant));
   }
 
   getLayout(): LayoutType {
@@ -1123,8 +1126,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // If mindmap is already loaded, apply the theme variant immediately
     if (this._mindmap && this.getModel()) {
-      this.refreshTheme();
-      this.updateTopicsThemeVariant();
+      this.refreshThemeVariant();
     }
   }
 
@@ -1148,8 +1150,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
       // Check if mindmap is loaded
       if (this._mindmap && this.getModel()) {
-        this.refreshTheme();
-        this.updateTopicsThemeVariant();
+        this.refreshThemeVariant();
       }
       // Note: We don't need to store the variant for later application
       // because the editor's useEffect will call this method again
@@ -1158,32 +1159,18 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   /**
-   * Refresh the mindmap theme based on current variant
+   * Re-renders the canvas and the topics with the current theme variant: the variant is
+   * set on every topic first, then each topic is redrawn once and the map is laid out once.
    */
-  private refreshTheme(): void {
+  private refreshThemeVariant(): void {
     if (this._mindmap) {
       // Re-render canvas with new theme variant
       this.applyCanvasStyle();
 
-      // Redraw the central topic and all its children
       const centralTopic = this.getModel().getCentralTopic();
       if (centralTopic) {
-        centralTopic.redraw(this._themeVariant, true);
-      }
-
-      // Force layout refresh to update the display
-      LayoutEventBus.fireEvent('forceLayout');
-    }
-  }
-
-  /**
-   * Update theme variant for all topics in the mindmap
-   */
-  private updateTopicsThemeVariant(): void {
-    if (this._mindmap) {
-      const centralTopic = this.getModel().getCentralTopic();
-      if (centralTopic) {
-        this.updateTopicThemeVariant(centralTopic);
+        Designer.setTreeThemeVariant(centralTopic, this._themeVariant);
+        Designer.redrawTree(centralTopic, this._themeVariant);
 
         // Force a layout refresh to ensure all changes are applied
         LayoutEventBus.fireEvent('forceLayout');
@@ -1192,20 +1179,11 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   /**
-   * Recursively update theme variant for a topic and its children
+   * Sets the theme variant on a topic and all its descendants.
    */
-  private updateTopicThemeVariant(topic: Topic): void {
-    // Set the theme variant on the topic
-    topic.setThemeVariant(this._themeVariant);
-
-    // Update the topic's theme-related properties by redrawing with current variant
-    topic.redraw(this._themeVariant, false);
-
-    // Update children
-    const children = topic.getChildren();
-    children.forEach((child: Topic) => {
-      this.updateTopicThemeVariant(child);
-    });
+  private static setTreeThemeVariant(topic: Topic, variant: ThemeVariant): void {
+    topic.setThemeVariant(variant);
+    topic.getChildren().forEach((child) => Designer.setTreeThemeVariant(child, variant));
   }
 
   nodeModelToTopic(nodeModel: NodeModel): Topic {
@@ -1425,7 +1403,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     );
 
     // Build relationship line (sourceTopic and targetTopic are guaranteed non-null by asserts above)
-    const result = new Relationship(sourceTopic!, targetTopic!, model);
+    const result = new Relationship(sourceTopic, targetTopic, model);
     result.addEvent('ontblur', () => {
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
@@ -1460,28 +1438,33 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   removeTopic(node: Topic): void {
     if (!node.isCentralTopic()) {
-      this._clearFocusRecursively(node);
       const parent = node.getParent();
-      // Ensure any inline editors bound to this topic or its descendants are closed before removal
-      node.closeEditors();
-      node.disconnect(this._canvas);
+      this._removeTopicTree(node);
 
-      // remove children
-      while (node.getChildren().length > 0) {
-        this.removeTopic(node.getChildren()[0]);
-      }
-
-      this._canvas.removeChild(node);
-      this.getModel().removeTopic(node);
-
-      // Delete this node from the model...
-      const model = node.getModel();
-      model.deleteNode();
-
+      // Only the removed topic hands the focus over: its descendants are gone with it.
       if (parent) {
         this.goToNode(parent);
       }
     }
+  }
+
+  private _removeTopicTree(node: Topic): void {
+    this._clearFocusRecursively(node);
+    // Ensure any inline editors bound to this topic or its descendants are closed before removal
+    node.closeEditors();
+    node.disconnect(this._canvas);
+
+    // remove children
+    while (node.getChildren().length > 0) {
+      this._removeTopicTree(node.getChildren()[0]);
+    }
+
+    this._canvas.removeChild(node);
+    this.getModel().removeTopic(node);
+
+    // Delete this node from the model...
+    const model = node.getModel();
+    model.deleteNode();
   }
 
   private _resetEdition() {
@@ -1795,7 +1778,11 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       return;
     }
 
-    const position = node.getPosition();
+    // A topic focused before the layout places it (AddTopicCommand) may have no position yet ...
+    const position = node.getPosition() as PositionType | undefined;
+    if (!position) {
+      return;
+    }
     const size = node.getSize();
     const bounds = {
       left: position.x - size.width / 2,
@@ -1808,18 +1795,69 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   private _registerAutoPanOnFocus(): void {
-    LayoutEventBus.addEvent(
-      'topicSelected',
-      (nodeModel: NodeModel) => {
-        const topic = this.getModel()
-          .getTopics()
-          .find((candidate) => candidate.getModel() === nodeModel);
-        if (topic) {
-          this.ensureNodeVisible(topic);
-        }
-      },
-      true,
-    );
+    this._autoPanOnFocusListener = (nodeModel: NodeModel) => {
+      const topic = this.getModel()
+        .getTopics()
+        .find((candidate) => candidate.getModel() === nodeModel);
+      if (topic) {
+        this.ensureNodeVisible(topic);
+      }
+    };
+    LayoutEventBus.addEvent('topicSelected', this._autoPanOnFocusListener);
+  }
+
+  /**
+   * Releases what the designer registered outside its own objects: the LayoutEventBus handlers
+   * (a module-level bus shared by every designer), the keyboard, a topic drag in progress, the
+   * canvas listeners on the window and the container, the canvas SVG, and the ActionDispatcher
+   * instance and `globalThis.designer` if they still point at this designer.
+   *
+   * The PersistenceManager instance is kept: MindplotWebComponent saves and unlocks the map
+   * through it after the designer is disposed.
+   *
+   * The model is left intact, so that the map can still be read and saved (the editor flushes
+   * pending changes after the component is removed).
+   */
+  dispose(): void {
+    if (this._disposed) {
+      return;
+    }
+    this._disposed = true;
+
+    if (this._unsubscribeSelectionShadows) {
+      this._unsubscribeSelectionShadows();
+      this._unsubscribeSelectionShadows = null;
+    }
+    HTMLTopicSelected.cleanupSelectionShadows(this);
+
+    if (this._autoPanOnFocusListener) {
+      LayoutEventBus.removeEvent('topicSelected', this._autoPanOnFocusListener);
+      this._autoPanOnFocusListener = null;
+    }
+    this._eventBussDispatcher.dispose();
+
+    if (this._keyboard) {
+      this._keyboard.dispose();
+      this._keyboard = undefined;
+    }
+
+    if (this._wheelListener) {
+      this.getContainer().removeEventListener('wheel', this._wheelListener);
+      this._wheelListener = null;
+    }
+
+    // Read-only designers have no drag manager ...
+    this._dragManager?.cancel();
+    this._canvas.dispose();
+
+    ActionDispatcher.clearInstance(this._actionDispatcher);
+    if (globalThis.designer === this) {
+      Reflect.deleteProperty(globalThis, 'designer');
+    }
+  }
+
+  isDisposed(): boolean {
+    return this._disposed;
   }
 
   getWorkSpace(): Canvas {

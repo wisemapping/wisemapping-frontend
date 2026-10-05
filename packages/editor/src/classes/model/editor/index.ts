@@ -32,6 +32,12 @@ class Editor {
 
   private pendingFlushPromise: Promise<void> | null = null;
 
+  private beforeUnloadHandler: (() => void) | null = null;
+
+  // The debounced autosave and the designer it listens on, released by dispose() ...
+  private autoSave: { designer: Designer; save: (() => void) & { cancel: () => void } } | null =
+    null;
+
   constructor(component: MindplotWebComponent) {
     this.component = component;
   }
@@ -40,11 +46,15 @@ class Editor {
     return this.component.isLoaded();
   }
 
-  save(minor: boolean): Promise<void> {
+  /**
+   * @param saveHistory true for an explicit save that records a history entry;
+   * false for a minor save (autosave, flush), skipped when nothing changed.
+   */
+  save(saveHistory: boolean): Promise<void> {
     if (!this.component) {
       throw new Error('Designer object has not been initialized.');
     }
-    return this.component.save(minor);
+    return this.component.save(saveHistory);
   }
 
   getDesigner(): Designer {
@@ -122,14 +132,17 @@ class Editor {
       // Is the save action enabled ... ?
       if (!capability.isHidden('save')) {
         // Register unload save ...
-        window.addEventListener('beforeunload', () => {
-          this.flushPendingChangesOnce().catch((error) => {
+        this.removeBeforeUnloadHandler();
+        this.beforeUnloadHandler = () => {
+          this.flushPendingChangesOnce(true).catch((error) => {
             console.error('Save failed on beforeunload:', error);
           });
-        });
+        };
+        window.addEventListener('beforeunload', this.beforeUnloadHandler);
 
         // Debounced autosave triggered by model updates
         // Waits 15 seconds after the last change before saving
+        this.removeAutoSave();
         const debouncedAutoSave = debounce(() => {
           component.save(false).catch((error) => {
             console.error('Autosave failed:', error);
@@ -138,37 +151,79 @@ class Editor {
 
         // Trigger autosave on model updates
         designer.addEvent('modelUpdate', debouncedAutoSave);
+        this.autoSave = { designer, save: debouncedAutoSave };
       }
     }
   }
 
-  async flushPendingChanges(): Promise<void> {
+  /**
+   * Saves the pending changes and unlocks the map.
+   * @param unloading the page is unloading: the save response would arrive after the page is gone,
+   * so the unlock is sent right away instead of after the save.
+   */
+  async flushPendingChanges(unloading = false): Promise<void> {
     // If the map is not loaded, there is no need to flush or unlock
     if (!this.isMapLoadded()) {
       return;
     }
 
+    let unlocked = false;
     try {
-      await this.save(false);
+      const saved = this.component.save(false, { urgent: true });
+      if (unloading) {
+        this.unlockMap();
+        unlocked = true;
+      }
+      await saved;
     } catch (error) {
       console.error('Save failed while leaving editor:', error);
       // We don't rethrow here to ensure unlocking happens (if possible) and cleanup continues
     } finally {
-      try {
-        this.component.unlockMap();
-      } catch (e) {
-        console.warn('Failed to unlock map:', e);
+      if (!unlocked) {
+        this.unlockMap();
       }
     }
   }
 
-  flushPendingChangesOnce(): Promise<void> {
+  flushPendingChangesOnce(unloading = false): Promise<void> {
     if (!this.pendingFlushPromise) {
-      this.pendingFlushPromise = this.flushPendingChanges().finally(() => {
+      this.pendingFlushPromise = this.flushPendingChanges(unloading).finally(() => {
         this.pendingFlushPromise = null;
       });
     }
     return this.pendingFlushPromise;
+  }
+
+  /**
+   * Releases the listeners added by registerEvents. A pending autosave is dropped, not run: the
+   * caller flushes the pending changes before disposing.
+   */
+  dispose(): void {
+    this.removeBeforeUnloadHandler();
+    this.removeAutoSave();
+  }
+
+  private removeAutoSave(): void {
+    if (this.autoSave) {
+      this.autoSave.save.cancel();
+      this.autoSave.designer.removeEvent('modelUpdate', this.autoSave.save);
+      this.autoSave = null;
+    }
+  }
+
+  private removeBeforeUnloadHandler(): void {
+    if (this.beforeUnloadHandler) {
+      window.removeEventListener('beforeunload', this.beforeUnloadHandler);
+      this.beforeUnloadHandler = null;
+    }
+  }
+
+  private unlockMap(): void {
+    try {
+      this.component.unlockMap();
+    } catch (e) {
+      console.warn('Failed to unlock map:', e);
+    }
   }
 }
 

@@ -41,6 +41,7 @@ jest.mock('@wisemapping/web2d', () => {
       }),
       getCoordOrigin: jest.fn().mockReturnValue({ x: 0, y: 0 }),
       setCoordOrigin: jest.fn(),
+      setSize: jest.fn(),
       setCoordSize: jest.fn(),
       getCoordSize: jest.fn().mockReturnValue({ width: 1000, height: 800 }),
       getSVGElement: jest.fn().mockReturnValue(svgElement),
@@ -57,10 +58,6 @@ jest.mock('../../src/components/layout/LayoutEventBus', () => ({
   },
 }));
 
-jest.mock('../../src/components/SvgImageIcon', () => ({
-  default: jest.fn(),
-}));
-
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class {},
@@ -69,6 +66,7 @@ jest.mock('../../src/components/export/PDFExporter', () => ({
 jest.mock('../../src/components/DesignerKeyboard', () => ({
   isDisabled: jest.fn().mockReturnValue(false),
   register: jest.fn(),
+  getInstance: jest.fn(),
 }));
 
 const buildTopic = (position: { x: number; y: number }): Topic =>

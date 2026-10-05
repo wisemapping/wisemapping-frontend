@@ -19,7 +19,7 @@ import { Arrow, CurvedLine } from '@wisemapping/web2d';
 import type { Line } from '@wisemapping/web2d';
 import BaseConnectionLine, { LineType } from './BaseConnectionLine';
 import ArcLine from './model/ArcLine';
-import RelationshipControlPoints from './RelationshipControlPoints';
+import RelationshipControlPoints, { PivotType } from './RelationshipControlPoints';
 import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
 import PositionType from './PositionType';
 import Topic from './Topic';
@@ -86,12 +86,8 @@ class Relationship extends BaseConnectionLine {
     this._focusShape.setIsSrcControlPointCustom(false);
     this._focusShape.setIsDestControlPointCustom(false);
     // Focus shape is barely visible but always present for event handling
-    this._focusShape.setVisibility(true);
-    this._focusShape.setOpacity(0.01); // Barely visible so it gets rendered
+    this.showHitShape();
     this._focusShape.setCursor('pointer');
-
-    // Critical: Use thick stroke (12px) to ensure coverage of gaps in dotted line
-    this._focusShape.setStroke(12, 'solid', '#3f96ff');
     this._focusShape.setFill('none', 1);
     this._focusShape.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
 
@@ -125,14 +121,11 @@ class Relationship extends BaseConnectionLine {
     this._isInWorkspace = false;
     this._controlPointsController = new RelationshipControlPoints(this);
 
-    // For all relationships, use default curved behavior to apply new pattern
-    // This ensures both new and existing relationships follow the new control point pattern
-    this._line.setIsSrcControlPointCustom(false);
-    this._line.setIsDestControlPointCustom(false);
+    // Control points placed by the user are stored in the model. The others follow the topics ...
+    this.applyModelControlPoints();
 
     // Reposition all nodes ...
     this.updatePositions();
-    this._controlPointsController = new RelationshipControlPoints(this);
 
     // Initialize handler ..
 
@@ -190,7 +183,9 @@ class Relationship extends BaseConnectionLine {
     let ctrlPoints: [PositionType, PositionType];
 
     // Position line ...
-    if (!line2d.isDestControlPointCustom() && !line2d.isSrcControlPointCustom()) {
+    const srcCustom = line2d.isSrcControlPointCustom();
+    const destCustom = line2d.isDestControlPointCustom();
+    if (!destCustom && !srcCustom) {
       // Use default control points and basic connection points
       ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos) as [PositionType, PositionType];
       line2d.setFrom(sPos.x, sPos.y);
@@ -198,6 +193,19 @@ class Relationship extends BaseConnectionLine {
     } else {
       // Control points have been manually moved - recalculate best connection points
       ctrlPoints = this.recalculateCustomControlPoints(line2d, sourceTopic, targetTopic);
+
+      // An end the user did not shape keeps following its topic, with a default control point ...
+      if (!srcCustom || !destCustom) {
+        const from = srcCustom ? line2d.getFrom() : sPos;
+        const to = destCustom ? line2d.getTo() : tPos;
+        line2d.setFrom(from.x, from.y);
+        line2d.setTo(to.x, to.y);
+        const defaults = Shape.calculateDefaultControlPoints(from, to);
+        ctrlPoints = [
+          srcCustom ? ctrlPoints[0] : defaults[0],
+          destCustom ? ctrlPoints[1] : defaults[1],
+        ];
+      }
     }
 
     // Apply control points to create curved line
@@ -217,14 +225,15 @@ class Relationship extends BaseConnectionLine {
     // Apply stroke style only once at the end of redraw
     this._applyStrokeStyle(this._model.getStrokeStyle());
 
-    this._line.moveToFront();
+    // Relationships are kept below topics (see addToWorkspace). Raising the line or
+    // the focus shape here would put them on top of every topic on each redraw, and
+    // a relationship crossing a topic would then take the topic's clicks.
     this._startArrow.moveToBack();
     this._endArrow.moveToBack();
 
     this._endArrow.setVisibility(this.isVisible() && this._showEndArrow);
     this._startArrow.setVisibility(this.isVisible() && this._showStartArrow);
 
-    this._focusShape.moveToFront();
     this._controlPointsController.redraw();
   }
 
@@ -262,6 +271,7 @@ class Relationship extends BaseConnectionLine {
 
     if (workspace.isReadOnly()) {
       this._line.setCursor('default');
+      this._focusShape.setCursor('default');
     } else {
       this._line.addEvent('click', this._onFocusHandler);
       this._focusShape.addEvent('click', this._onFocusHandler);
@@ -376,6 +386,61 @@ class Relationship extends BaseConnectionLine {
     return { x: closest.x, y: closest.y };
   }
 
+  /**
+   * Applies the control points stored in the model, and marks them as custom. A stored point is
+   * relative to the connection point it was placed from, the snap point facing it.
+   */
+  private applyModelControlPoints(): void {
+    this.applyModelControlPoint(PivotType.Start);
+    this.applyModelControlPoint(PivotType.End);
+  }
+
+  /**
+   * Applies the control point stored in the model for one end: custom if there is one, default
+   * otherwise. Call redraw afterwards.
+   */
+  applyModelControlPoint(pivot: PivotType): void {
+    const line = this._line;
+    if (pivot === PivotType.Start) {
+      const srcCtrlPoint = this._model.getSrcCtrlPoint();
+      if (srcCtrlPoint) {
+        const from = Relationship.calculateConnectionPointFor(this._sourceTopic, srcCtrlPoint);
+        line.setFrom(from.x, from.y);
+        line.setSrcControlPoint({ ...srcCtrlPoint });
+      }
+      line.setIsSrcControlPointCustom(Boolean(srcCtrlPoint));
+    } else {
+      const destCtrlPoint = this._model.getDestCtrlPoint();
+      if (destCtrlPoint) {
+        const to = Relationship.calculateConnectionPointFor(this._targetTopic, destCtrlPoint);
+        line.setTo(to.x, to.y);
+        line.setDestControlPoint({ ...destCtrlPoint });
+      }
+      line.setIsDestControlPointCustom(Boolean(destCtrlPoint));
+    }
+  }
+
+  /**
+   * Finds the snap point a control point is relative to: the one facing the control point
+   * placed from it.
+   */
+  private static calculateConnectionPointFor(topic: Topic, ctrlPoint: PositionType): PositionType {
+    let result = topic.getPosition();
+    // The snap point depends on where the control point lands, which depends on the snap point.
+    // Starting from the center of the topic, it settles in a step or two ...
+    for (let i = 0; i < 3; i++) {
+      const next = Relationship.calculateSnapPoint(topic, {
+        x: result.x + ctrlPoint.x,
+        y: result.y + ctrlPoint.y,
+      });
+      if (next.x === result.x && next.y === result.y) {
+        break;
+      }
+      result = next;
+    }
+    return result;
+  }
+
   private calculateRelationshipConnectionPoint(topic: Topic): PositionType {
     // Determine which topic we're calculating for
     const isSourceTopic = topic === this._sourceTopic;
@@ -386,63 +451,37 @@ class Relationship extends BaseConnectionLine {
     return Relationship.calculateSnapPoint(topic, otherPos);
   }
 
-  private calculateBestConnectionPoint(topic: Topic, controlPoint: PositionType): PositionType {
-    // Use the shared snap point calculation
-    return Relationship.calculateSnapPoint(topic, controlPoint);
-  }
-
   /**
-   * Recalculates connection points and control points when control points have been customized.
-   * This ensures control points maintain their absolute positions while connection points
-   * are optimized based on the control point directions.
+   * Places the ends of a line whose control points have been customized. A custom control point is
+   * relative to the connection point it was placed from, as the model stores it: the end is placed
+   * as on load (applyModelControlPoint), so the curve keeps its shape relative to its topics when
+   * they move, and is drawn as it is saved. The end being dragged stays where the drag put it, on
+   * the snap point under the cursor.
    *
    * @param line2d The line to update
    * @param sourceTopic Source topic
    * @param targetTopic Target topic
-   * @returns Updated control points relative to new connection points
+   * @returns The control points, relative to the connection points
    */
   private recalculateCustomControlPoints(
     line2d: Line,
     sourceTopic: Topic,
     targetTopic: Topic,
   ): [PositionType, PositionType] {
-    // Get current control points (relative to current line positions)
-    const ctrlPoints = line2d.getControlPoints();
+    const [srcCtrlPoint, destCtrlPoint] = line2d.getControlPoints();
+    const controlPoints = this._controlPointsController;
 
-    // Use CURRENT line positions (what the control points are actually relative to)
-    // NOT freshly calculated positions which may be different
-    const currentFrom = line2d.getFrom();
-    const currentTo = line2d.getTo();
+    const from = controlPoints.isDragging(PivotType.Start)
+      ? line2d.getFrom()
+      : Relationship.calculateConnectionPointFor(sourceTopic, srcCtrlPoint);
+    const to = controlPoints.isDragging(PivotType.End)
+      ? line2d.getTo()
+      : Relationship.calculateConnectionPointFor(targetTopic, destCtrlPoint);
 
-    // Calculate control point absolute positions based on current line positions
-    const srcCtrlAbsolute = {
-      x: currentFrom.x + ctrlPoints[0].x,
-      y: currentFrom.y + ctrlPoints[0].y,
-    };
-    const destCtrlAbsolute = {
-      x: currentTo.x + ctrlPoints[1].x,
-      y: currentTo.y + ctrlPoints[1].y,
-    };
+    line2d.setFrom(from.x, from.y);
+    line2d.setTo(to.x, to.y);
 
-    // Find best connection points based on control point directions
-    const bestSrcPos = this.calculateBestConnectionPoint(sourceTopic, srcCtrlAbsolute);
-    const bestDestPos = this.calculateBestConnectionPoint(targetTopic, destCtrlAbsolute);
-
-    // Update line positions to new connection points
-    line2d.setFrom(bestSrcPos.x, bestSrcPos.y);
-    line2d.setTo(bestDestPos.x, bestDestPos.y);
-
-    // Recalculate control points relative to new connection points
-    return [
-      {
-        x: srcCtrlAbsolute.x - bestSrcPos.x,
-        y: srcCtrlAbsolute.y - bestSrcPos.y,
-      },
-      {
-        x: destCtrlAbsolute.x - bestDestPos.x,
-        y: destCtrlAbsolute.y - bestDestPos.y,
-      },
-    ];
+    return [{ ...srcCtrlPoint }, { ...destCtrlPoint }];
   }
 
   setOnFocus(focus: boolean): void {
@@ -465,9 +504,9 @@ class Relationship extends BaseConnectionLine {
         this._focusStartArrow.moveToBack();
         this._focusEndArrow.moveToBack();
       } else {
-        // Completely hide focus shape when unfocusing
-        this._focusShape.setVisibility(false);
-        this._focusShape.setOpacity(0);
+        // Back to the barely visible hit shape: hiding it would leave only the 2px
+        // line clickable.
+        this.showHitShape();
 
         // Hide focus arrows
         this._focusStartArrow.setVisibility(false);
@@ -478,6 +517,18 @@ class Relationship extends BaseConnectionLine {
       this._onFocus = focus;
       this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
     }
+  }
+
+  /**
+   * Puts the focus shape in its unfocused state: a 12px stroke, barely visible but
+   * rendered, so that clicks near the line (or in the gaps of a dashed or dotted
+   * stroke) still reach the relationship.
+   */
+  private showHitShape(): void {
+    this._focusShape.setVisibility(true);
+    this._focusShape.setOpacity(0.01); // Barely visible so it gets rendered
+    // Critical: Use thick stroke (12px) to ensure coverage of gaps in dotted line
+    this._focusShape.setStroke(12, 'solid', '#3f96ff');
   }
 
   private positionRefreshShape(): void {
@@ -544,8 +595,9 @@ class Relationship extends BaseConnectionLine {
     // Hide on focus shade when relationship is hidden
     this._endArrow.setVisibility(this._showEndArrow && value);
     this._startArrow.setVisibility(this._showStartArrow && value, fade);
-    // Focus shape should only be visible when focused AND relationship is visible
-    this._focusShape.setVisibility(false);
+    // The focus shape is the hit area of the relationship: present whenever the
+    // relationship is visible.
+    this._focusShape.setVisibility(value);
   }
 
   setOpacity(opacity: number): void {
@@ -594,7 +646,7 @@ class Relationship extends BaseConnectionLine {
 
   setDestControlPoint(control: PositionType) {
     this._line.setDestControlPoint(control);
-    this._focusShape.setSrcControlPoint(control);
+    this._focusShape.setDestControlPoint(control);
     this._endArrow?.setControlPoint(control);
   }
 

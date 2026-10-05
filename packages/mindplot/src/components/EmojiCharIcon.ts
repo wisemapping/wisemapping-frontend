@@ -19,7 +19,7 @@ import { Text, Group } from '@wisemapping/web2d';
 
 import Icon from './Icon';
 import IconGroup from './IconGroup';
-import SvgIconModel from './model/SvgIconModel';
+import EmojiIconModel from './model/EmojiIconModel';
 import SizeType from './SizeType';
 import Topic from './Topic';
 import ActionDispatcher from './ActionDispatcher';
@@ -30,11 +30,11 @@ class EmojiCharIcon implements Icon {
 
   private _iconGroup: IconGroup | null;
 
-  private _iconModel: SvgIconModel;
+  private _iconModel: EmojiIconModel;
 
   private _topic: Topic;
 
-  constructor(topic: Topic, iconModel: SvgIconModel, readOnly: boolean) {
+  constructor(topic: Topic, iconModel: EmojiIconModel, readOnly: boolean) {
     this._iconModel = iconModel;
     this._topic = topic;
 
@@ -50,6 +50,11 @@ class EmojiCharIcon implements Icon {
     const iconText = new Text();
     iconText.setText(iconModel.getIconType());
     this._group.append(iconText);
+
+    // Follow the emoji when a command changes it, e.g. on undo.
+    iconModel.setChangeListener(() => {
+      iconText.setText(iconModel.getIconType());
+    });
 
     // Add events ...
     if (!readOnly) {
@@ -88,7 +93,7 @@ class EmojiCharIcon implements Icon {
     actionDispatcher.removeFeatureFromTopic(this._topic.getId(), featureId);
   }
 
-  getModel(): SvgIconModel {
+  getModel(): EmojiIconModel {
     return this._iconModel;
   }
 }

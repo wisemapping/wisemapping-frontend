@@ -29,7 +29,7 @@
       "../mindplot/src",
       "../web2d/src"
     ],
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "strictNullChecks": true,
     "jsxImportSource": "@emotion/react",
     "paths": {

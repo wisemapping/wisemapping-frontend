@@ -20,13 +20,19 @@ import PositionType from '../PositionType';
 import AbstractBasicSorter from './AbstractBasicSorter';
 import Node from './Node';
 import RootedTreeSet from './RootedTreeSet';
+import { sideOf } from '../util/side';
 
 class BalancedSorter extends AbstractBasicSorter {
   private static INTERNODE_VERTICAL_PADDING = 5;
 
   private static INTERNODE_HORIZONTAL_PADDING = 30;
 
-  predict(graph, parent, node: Node, position: PositionType): [number, PositionType] {
+  predict(
+    graph: RootedTreeSet,
+    parent: Node,
+    node: Node | null,
+    position: PositionType | null,
+  ): [number, PositionType] {
     const rootNode = graph.getRootNode(parent);
 
     // If it is a dragged node...
@@ -49,7 +55,8 @@ class BalancedSorter extends AbstractBasicSorter {
       const left = this._getChildrenForOrder(parent, graph, 1);
       order = right.length - left.length > 0 ? 1 : 0;
     } else {
-      order = position.x > rootNode.getPosition().x ? 0 : 1;
+      // Same rule as _getRelativeDirection above: the root's own x is the right side.
+      order = sideOf(position.x, rootNode.getPosition().x) > 0 ? 0 : 1;
     }
 
     const direction = order % 2 === 0 ? 1 : -1;
@@ -73,6 +80,10 @@ class BalancedSorter extends AbstractBasicSorter {
       ];
     }
 
+    // Order of the dragged node among these children, if it is one of them. Detaching it
+    // shifts the later siblings on its own side up by two (see detach) ...
+    const nodeOrder = node && graph.getParent(node) === parent ? node.getOrder() : undefined;
+
     // Try to fit within ...
     let result: [number, PositionType] | null = null;
     const last = children[children.length - 1];
@@ -84,15 +95,19 @@ class BalancedSorter extends AbstractBasicSorter {
           child === last
             ? child.getSize().height + BalancedSorter.INTERNODE_VERTICAL_PADDING * 2
             : (children[index + 1].getPosition().y - child.getPosition().y) / 2;
-        result = [(child.getOrder() ?? 0) + 2, { x: cpos.x, y: cpos.y + yOffset }];
+        const childOrder = child.getOrder() ?? 0;
+        const shifted =
+          nodeOrder !== undefined && nodeOrder % 2 === childOrder % 2 && childOrder > nodeOrder;
+        result = [shifted ? childOrder : childOrder + 2, { x: cpos.x, y: cpos.y + yOffset }];
       }
     });
 
-    // Position wasn't below any node, so it must be inserted above
+    // Position wasn't below any node, so it must be inserted above. On the side
+    // computed above (against the root, not the origin), which `children` are from.
     if (!result) {
       const first = children[0];
       result = [
-        position.x > 0 ? 0 : 1,
+        order,
         {
           x: first.getPosition().x,
           y:
@@ -151,7 +166,11 @@ class BalancedSorter extends AbstractBasicSorter {
     }
   }
 
-  computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
+  computeOffsets(
+    treeSet: RootedTreeSet,
+    node: Node,
+    extentById?: Map<number, number>,
+  ): Map<number, PositionType> {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(node, 'node can no be null.');
 
@@ -163,7 +182,7 @@ class BalancedSorter extends AbstractBasicSorter {
         id: child.getId(),
         order: child.getOrder() ?? 0,
         width: child.getSize().width,
-        height: this._computeChildrenHeight(treeSet, child),
+        height: this._getBranchHeight(treeSet, child, extentById),
       }))
       .reverse();
 
@@ -212,26 +231,49 @@ class BalancedSorter extends AbstractBasicSorter {
 
   verify(treeSet: RootedTreeSet, node: Node): void {
     // Check that all is consistent ...
-    const nodeOrder = node.getOrder() ?? 0;
-    const children = this._getChildrenForOrder(node, treeSet, nodeOrder);
-
-    // All odd ordered nodes should be "continuous" by themselves
-    // All even numbered nodes should be "continuous" by themselves
-    const factor = nodeOrder % 2 === 0 ? 2 : 1;
-    for (let i = 0; i < children.length; i++) {
-      const order = i === 0 && factor === 1 ? 1 : factor * i;
-      const childOrder = children[i].getOrder() ?? 0;
-      $assert(
-        childOrder === order,
-        `Missing order elements. Missing order: ${
-          i * factor
-        }. Parent:${node.getId()},Node:${children[i].getId()}`,
-      );
-    }
+    // All even ordered nodes (right side) should be "continuous" by themselves: 0, 2, 4 ...
+    // All odd ordered nodes (left side) should be "continuous" by themselves: 1, 3, 5 ...
+    [0, 1].forEach((side) => {
+      const children = this._getChildrenForOrder(node, treeSet, side);
+      for (let i = 0; i < children.length; i++) {
+        const order = 2 * i + side;
+        const childOrder = children[i].getOrder() ?? 0;
+        $assert(
+          childOrder === order,
+          `Missing order elements. Missing order: ${order}. Parent:${node.getId()},Node:${children[i].getId()}`,
+        );
+      }
+    });
   }
 
   getChildDirection(treeSet: RootedTreeSet, child: Node): 1 | -1 {
     return (child.getOrder() ?? 0) % 2 === 0 ? 1 : -1;
+  }
+
+  getOrderAfter(order: number): number {
+    // The order parity is the side, so the next slot on the same side is two away.
+    return order + 2;
+  }
+
+  /**
+   * Spreads the new children over both sides, as adding them one by one would: each goes to
+   * the side with fewer children (the right one on a tie, as predict does), after the
+   * children already there.
+   */
+  override getOrdersForNewChildren(graph: RootedTreeSet, parent: Node, count: number): number[] {
+    let right = this._getChildrenForOrder(parent, graph, 0).length;
+    let left = this._getChildrenForOrder(parent, graph, 1).length;
+    const orders: number[] = [];
+    for (let i = 0; i < count; i++) {
+      if (right - left > 0) {
+        orders.push(left * 2 + 1);
+        left++;
+      } else {
+        orders.push(right * 2);
+        right++;
+      }
+    }
+    return orders;
   }
 
   toString(): string {

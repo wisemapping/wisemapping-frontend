@@ -25,6 +25,13 @@ export type FontStyle = {
   color?: string | null;
 };
 
+/**
+ * Pixels per font point, shared by the SVG text and the HTML inline editor so both render the
+ * same size. It is 43/32 (about 1.344), not the CSS 4/3: every stored map is laid out with it, so
+ * changing it would resize every topic.
+ */
+export const FONT_PT_TO_PX = 43 / 32;
+
 class FontPeer {
   private _size: number;
 
@@ -53,13 +60,22 @@ class FontPeer {
     }
   }
 
+  /** A copy of this font with another family; size, style and (semantic) weight are kept. */
+  withFontName(fontName: string): FontPeer {
+    const result = new FontPeer(fontName);
+    result._size = this._size;
+    result._style = this._style;
+    result._weight = this._weight;
+    return result;
+  }
+
+  /** The CSS pixel size of the HTML inline editor: the rendered SVG size times the screen scale. */
   getHtmlSize(scale: SizeType): string {
-    const result = (this._size * scale.height * 42) / 32;
-    return result.toFixed();
+    return (Number(this.getGraphSize()) * scale.height).toFixed(1);
   }
 
   getGraphSize(): string {
-    return ((this._size * 43) / 32).toFixed(1);
+    return (this._size * FONT_PT_TO_PX).toFixed(1);
   }
 
   getSize(): number {
@@ -70,10 +86,11 @@ class FontPeer {
     return this._style;
   }
 
+  /**
+   * The rendered weight. Text is drawn heavier on purpose (e4e0602b): normal renders as 600 and
+   * bold as 900, about 1.5 times the CSS 400/700. The semantic value is kept internally.
+   */
   getWeight(): string {
-    // Increase font weight by 50% for visualization only
-    // Normal: 400 -> 600 (400 * 1.5)
-    // Bold: 700 -> 1050 (700 * 1.5)
     if (this._weight === 'normal') {
       return '600';
     }
@@ -92,12 +109,7 @@ class FontPeer {
   }
 
   setWeight(weight: string) {
-    // Use semantic weights; map to browser-supported numeric if needed at render time
-    if (weight === 'normal' || weight === 'bold') {
-      this._weight = weight;
-    } else {
-      this._weight = weight;
-    }
+    this._weight = weight;
   }
 
   getFontName(): string {

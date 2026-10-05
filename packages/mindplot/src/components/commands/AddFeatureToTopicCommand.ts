@@ -17,7 +17,7 @@
  */
 import Command from '../Command';
 import CommandContext from '../CommandContext';
-import FeatureModel from '../model/FeatureModel';
+import FeatureModel, { FeatureAttributes } from '../model/FeatureModel';
 import FeatureType from '../model/FeatureType';
 
 class AddFeatureToTopicCommand extends Command {
@@ -25,9 +25,11 @@ class AddFeatureToTopicCommand extends Command {
 
   private _featureType: FeatureType;
 
-  private _attributes: object;
+  private _attributes: FeatureAttributes;
 
-  private _featureModel: FeatureModel | null;
+  // One feature per topic, keyed by topic id. Created on the first execute and reused on redo,
+  // so later commands that refer to a feature by id keep working.
+  private _featureModels: Map<number, FeatureModel>;
 
   /*
    * @classdesc This command class handles do/undo of adding features to topics, e.g. an
@@ -39,30 +41,32 @@ class AddFeatureToTopicCommand extends Command {
    * @extends mindplot.Command
    * @see mindplot.model.FeatureModel and subclasses
    */
-  constructor(topicIds: number[], featureType: FeatureType, attributes: object) {
+  constructor(topicIds: number[], featureType: FeatureType, attributes: FeatureAttributes) {
     super();
     this._topicIds = topicIds;
     this._featureType = featureType;
     this._attributes = attributes;
-    this._featureModel = null;
+    this._featureModels = new Map();
   }
 
   execute(commandContext: CommandContext): void {
     const topics = commandContext.findTopics(this._topicIds);
     topics.forEach((topic) => {
       // Feature must be created only one time.
-      if (!this._featureModel) {
+      let featureModel = this._featureModels.get(topic.getId());
+      if (!featureModel) {
         const model = topic.getModel();
-        this._featureModel = model.createFeature(this._featureType, this._attributes);
+        featureModel = model.createFeature(this._featureType, this._attributes);
+        this._featureModels.set(topic.getId(), featureModel);
       }
-      topic.addFeature(this._featureModel);
+      topic.addFeature(featureModel);
     });
   }
 
   undoExecute(commandContext: CommandContext) {
     const topics = commandContext.findTopics(this._topicIds);
     topics.forEach((topic) => {
-      topic.removeFeature(this._featureModel!);
+      topic.removeFeature(this._featureModels.get(topic.getId())!);
     });
   }
 }

@@ -18,6 +18,7 @@
 import { $assert, $defined } from '../util/assert';
 import Node from './Node';
 import TreeSorter from './TreeSorter';
+import LayoutPass from './LayoutPass';
 import RootedTreeSet from './RootedTreeSet';
 import SizeType from '../SizeType';
 import PositionType from '../PositionType';
@@ -76,11 +77,8 @@ class TreeLayout {
   layout(): void {
     const roots = this._treeSet.getTreeRoots();
     roots.forEach((node) => {
-      // Calculate all node widths (horizontal extent)
-      const sorter = node.getSorter();
-      const widthById = sorter.computeChildrenIdByHeights(this._treeSet, node);
-
-      this.layoutChildren(node, widthById);
+      // The branch widths are measured once, the first time a parent needs them.
+      this.layoutChildren(node, new LayoutPass(this._treeSet, node));
     });
   }
 
@@ -119,45 +117,30 @@ class TreeLayout {
     });
   }
 
-  private layoutChildren(node: Node, widthById: Map<number, number>): void {
-    const nodeId = node.getId();
+  /**
+   * Places the children of `node` under it, then their own children, down the tree. Every
+   * parent is laid out on every pass, as in OriginalLayout.layoutChildren: with the branches
+   * measured once per pass it costs a walk of its children, and a child already in place is not
+   * moved.
+   */
+  private layoutChildren(node: Node, pass: LayoutPass): void {
     const children = this._treeSet.getChildren(node);
-    const parent = this._treeSet.getParent(node);
-
-    const childrenOrderMoved = children.some((child) => child.hasOrderChanged());
-    const childrenSizeChanged = children.some((child) => child.hasSizeChanged());
-
-    // If any of the nodes changed position or size, children must be repositioned
-    const newBranchWidth = widthById.get(nodeId)!;
-
-    const parentWidthChanged = parent ? parent._heightChanged : false;
-    const widthChanged = node._branchHeight !== newBranchWidth;
-    node._heightChanged = widthChanged || parentWidthChanged;
-
-    if (childrenOrderMoved || childrenSizeChanged || widthChanged || parentWidthChanged) {
-      const sorter = node.getSorter();
-      const offsetById = sorter.computeOffsets(this._treeSet, node);
-      const parentPosition = node.getPosition();
-
-      children.forEach((child) => {
-        const offset = offsetById.get(child.getId())!;
-
-        const parentX = parentPosition.x;
-        const parentY = parentPosition.y;
-
-        const newPos = {
-          x: parentX + offset.x,
-          y: parentY + offset.y,
-        };
-        this._treeSet.updateBranchPosition(child, newPos);
-      });
-
-      node._branchHeight = newBranchWidth;
+    if (children.length === 0) {
+      return;
     }
+
+    const sorter = node.getSorter();
+    const offsetById = sorter.computeOffsets(this._treeSet, node, pass.extentsFor(sorter));
+    const parentPosition = node.getPosition();
+
+    children.forEach((child) => {
+      const offset = offsetById.get(child.getId())!;
+      pass.moveBranch(child, { x: parentPosition.x + offset.x, y: parentPosition.y + offset.y });
+    });
 
     // Continue reordering the children nodes
     children.forEach((child) => {
-      this.layoutChildren(child, widthById);
+      this.layoutChildren(child, pass);
     });
   }
 

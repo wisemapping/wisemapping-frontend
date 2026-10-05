@@ -1,0 +1,13 @@
+<map name="mindmanager-real-blumind-mm8" theme="prism" layout="mindmap" version="tango">
+    <topic central="true" text="Central Topic" id="1">
+        <eicon id="🟢"/>
+        <topic position="200,0" order="0" text="Main Topic" shape="line" id="2">
+            <note contentType="html"><![CDATA[<p>Hello, World</p>]]></note>
+        </topic>
+        <topic position="300,75" order="2" text="Main Topic" shape="line" id="3"/>
+        <topic position="-200,0" order="1" text="Main Topic" shape="line" id="4">
+            <eicon id="😃"/>
+        </topic>
+    </topic>
+    <relationship srcTopicId="1" destTopicId="2" lineType="3" endArrow="true" startArrow="false" strokeStyle="dashed"/>
+</map>

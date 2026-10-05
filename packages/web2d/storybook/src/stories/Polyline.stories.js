@@ -26,6 +26,10 @@ export default {
       control: { type: 'select' },
       options: ['Straight', 'MiddleStraight', 'MiddleCurved', 'Curved'],
     },
+    orientation: {
+      control: { type: 'select' },
+      options: ['horizontal', 'vertical'],
+    },
     strokeColor: { control: 'color' },
     strokeStyle: {
       control: { type: 'select' },
@@ -82,4 +86,42 @@ Size.args = {
   strokeWidth: 5,
   strokeStyle: 'solid',
   strokeColor: 'blue',
+};
+
+// Vertical orientation (tree and org layouts). W-VCURVE (fixed): VerticalCurved chamfers both
+// corners, so it no longer looks exactly like VerticalStraight.
+export const VerticalStraight = Template.bind({});
+VerticalStraight.args = {
+  strokeWidth: 1,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+  style: 'Straight',
+  orientation: 'vertical',
+};
+
+export const VerticalMiddleStraight = Template.bind({});
+VerticalMiddleStraight.args = {
+  strokeWidth: 1,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+  style: 'MiddleStraight',
+  orientation: 'vertical',
+};
+
+export const VerticalMiddleCurved = Template.bind({});
+VerticalMiddleCurved.args = {
+  strokeWidth: 1,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+  style: 'MiddleCurved',
+  orientation: 'vertical',
+};
+
+export const VerticalCurved = Template.bind({});
+VerticalCurved.args = {
+  strokeWidth: 1,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+  style: 'Curved',
+  orientation: 'vertical',
 };

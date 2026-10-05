@@ -126,7 +126,7 @@ describe('Copy link to node toolbar entry', () => {
     const entry = findCopyEntry(buildConfig([12], getDeepLink));
 
     expect(entry.disabled!()).toBe(false);
-    entry.onClick!(undefined);
+    entry.onClick!(undefined as unknown as React.MouseEvent<HTMLElement>);
     await Promise.resolve();
 
     // The id comes from the designer's selection, not from the rendered SVG.
@@ -142,7 +142,7 @@ describe('Copy link to node toolbar entry', () => {
     const entry = findCopyEntry(
       buildConfig([12], (id) => `https://host/n/${id}`),
     );
-    entry.onClick!(undefined);
+    entry.onClick!(undefined as unknown as React.MouseEvent<HTMLElement>);
     await Promise.resolve();
     await Promise.resolve();
 
@@ -157,7 +157,7 @@ describe('Copy link to node toolbar entry', () => {
     const entry = findCopyEntry(
       buildConfig([12], (id) => `https://host/n/${id}`),
     );
-    entry.onClick!(undefined);
+    entry.onClick!(undefined as unknown as React.MouseEvent<HTMLElement>);
 
     expect(notify).toHaveBeenCalledWith('Could not copy the link to the clipboard');
     jest.restoreAllMocks();

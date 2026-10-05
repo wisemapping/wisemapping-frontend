@@ -54,7 +54,7 @@
                                 </body>
                             </html>
                         </richcontent>
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_361" POSITION="left" STYLE="fork">
                         <richcontent TYPE="NODE">
@@ -77,7 +77,7 @@
                                 </body>
                             </html>
                         </richcontent>
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_363" POSITION="left" STYLE="fork">
                         <richcontent TYPE="NODE">
@@ -89,13 +89,13 @@
                                 </body>
                             </html>
                         </richcontent>
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_364" POSITION="left" STYLE="fork" TEXT="Increase in the number of innovative companies with in-house R&amp;D">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_365" POSITION="left" STYLE="fork" TEXT="Increase in th number of innovative companies without in-house R&amp;D">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_366" POSITION="left" STYLE="fork">
                         <richcontent TYPE="NODE">
@@ -107,7 +107,7 @@
                                 </body>
                             </html>
                         </richcontent>
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_367" POSITION="left" STYLE="fork">
                         <richcontent TYPE="NODE">
@@ -119,7 +119,7 @@
                                 </body>
                             </html>
                         </richcontent>
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_368" POSITION="left" STYLE="fork">
                         <richcontent TYPE="NODE">
@@ -131,20 +131,20 @@
                                 </body>
                             </html>
                         </richcontent>
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_369" POSITION="left" STYLE="fork" TEXT="Number of international patents">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_370" POSITION="left" STYLE="fork" TEXT="Start-up activity (as a percentage of start-up activity in the whole Federation)"/>
                     <node ID="ID_393" POSITION="left" STYLE="fork" TEXT="Number of innovative companies to the number of students ">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_394" POSITION="left" STYLE="fork" TEXT="Number of innovative companies to the number of researchers  ">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_400" POSITION="left" STYLE="fork" TEXT="Volume of license agreements to the volume of R&amp;D support from the regional budget ">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                 </node>
             </node>
@@ -174,17 +174,17 @@
                 </node>
                 <node ID="ID_86" POSITION="right" STYLE="fork" TEXT="Productivity">
                     <node ID="ID_190" POSITION="right" STYLE="fork" TEXT="Labor productivity">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_191" POSITION="right" STYLE="fork" TEXT="Labor productivity growth rate"/>
                 </node>
                 <node ID="ID_87" POSITION="right" STYLE="fork" TEXT="Jobs">
                     <node ID="ID_13" POSITION="right" STYLE="fork" TEXT="Share of high-productive jobs">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_88" POSITION="right" STYLE="fork" TEXT="Share of creative industries jobs"/>
                     <node ID="ID_336" POSITION="right" STYLE="fork" TEXT="Uneployment rate of university graduates">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                 </node>
                 <node ID="ID_89" POSITION="right" STYLE="fork" TEXT="Income">
@@ -208,7 +208,7 @@
                             </html>
                         </richcontent>
                         <node ID="ID_412" POSITION="right" STYLE="fork" TEXT="Level of administrative barriers (number and cost of administrative procedures) ">
-                            <icon BUILTIN="sign_warning"/>
+                            <icon BUILTIN="messagebox_warning"/>
                         </node>
                     </node>
                     <node ID="ID_18" POSITION="right" STYLE="fork" TEXT="Competition index">
@@ -232,7 +232,7 @@
                                 </html>
                             </richcontent>
                             <node ID="ID_337" POSITION="right" STYLE="fork" TEXT="Inrease in the number of International students">
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                         </node>
                         <node ID="ID_121" POSITION="right" STYLE="fork" TEXT="Quantity of education">
@@ -245,10 +245,10 @@
                                         </body>
                                     </html>
                                 </richcontent>
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                             <node ID="ID_333" POSITION="right" STYLE="fork" TEXT="Increase in literarecy ">
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                             <node ID="ID_188" POSITION="right" STYLE="fork">
                                 <richcontent TYPE="NODE">
@@ -273,11 +273,11 @@
                                 </richcontent>
                             </node>
                             <node ID="ID_332" POSITION="right" STYLE="fork" TEXT="Increase in University students">
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                             <node ID="ID_351" POSITION="right" STYLE="fork" TEXT="Government expenditure on General University Funding"/>
                             <node ID="ID_409" POSITION="right" STYLE="fork" TEXT="Access to training, information, and consulting support ">
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                         </node>
                         <node ID="ID_285" POSITION="right" STYLE="fork" TEXT="Science &amp; engineering workforce">
@@ -292,7 +292,7 @@
                                 </richcontent>
                             </node>
                             <node ID="ID_189" POSITION="right" STYLE="fork" TEXT="Amount of researches per 10 thousands population">
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                             <node ID="ID_284" POSITION="right" STYLE="fork" TEXT="Average wage of researches per average wage in the region"/>
                             <node ID="ID_286" POSITION="right" STYLE="fork" TEXT="Share of researchers in the total number of employees in the region"/>
@@ -309,7 +309,7 @@
                             <node ID="ID_348" POSITION="right" STYLE="fork" TEXT="Amount of public co-funding of business R&amp;D"/>
                             <node ID="ID_385" POSITION="right" STYLE="fork" TEXT="Number of startups received venture financing "/>
                             <node ID="ID_386" POSITION="right" STYLE="fork" TEXT="Number of companies received equity investments ">
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                         </node>
                         <node ID="ID_388" POSITION="right" STYLE="fork" TEXT="Available">
@@ -363,7 +363,7 @@
                                         </body>
                                     </html>
                                 </richcontent>
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                             <node ID="ID_375" POSITION="right" STYLE="fork">
                                 <richcontent TYPE="NODE">
@@ -375,7 +375,7 @@
                                         </body>
                                     </html>
                                 </richcontent>
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                             <node ID="ID_377" POSITION="right" STYLE="fork">
                                 <richcontent TYPE="NODE">
@@ -387,7 +387,7 @@
                                         </body>
                                     </html>
                                 </richcontent>
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                         </node>
                         <node ID="ID_338" POSITION="right" STYLE="fork" TEXT="Share of high-technology products in government procurements"/>
@@ -493,7 +493,7 @@
                             </richcontent>
                         </node>
                         <node ID="ID_129" POSITION="right" STYLE="fork" TEXT="Number of purchased new technologies">
-                            <icon BUILTIN="sign_warning"/>
+                            <icon BUILTIN="messagebox_warning"/>
                         </node>
                         <node ID="ID_354" POSITION="right" STYLE="fork">
                             <richcontent TYPE="NODE">
@@ -518,10 +518,10 @@
                                     </body>
                                 </html>
                             </richcontent>
-                            <icon BUILTIN="sign_warning"/>
+                            <icon BUILTIN="messagebox_warning"/>
                         </node>
                         <node ID="ID_374" POSITION="right" STYLE="fork" TEXT="Share of wastes in the total volume of production (by sector)">
-                            <icon BUILTIN="sign_warning"/>
+                            <icon BUILTIN="messagebox_warning"/>
                         </node>
                     </node>
                     <node ID="ID_123" POSITION="right" STYLE="fork" TEXT="Innovation activities in firms">
@@ -543,11 +543,11 @@
                         <node ID="ID_398" POSITION="right" STYLE="fork" TEXT="Outpus">
                             <node ID="ID_124" POSITION="right" STYLE="fork" TEXT="Volume of new to Russian market production per GRP"/>
                             <node ID="ID_376" POSITION="right" STYLE="fork" TEXT="Volume of new to world market production per total production">
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                             <node ID="ID_389" POSITION="right" STYLE="fork" TEXT="Growth of the volume of production of innovative companies "/>
                             <node ID="ID_397" POSITION="right" STYLE="fork" TEXT="Volume of innovation production per capita ">
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                         </node>
                     </node>
@@ -599,7 +599,7 @@
                                         </body>
                                     </html>
                                 </richcontent>
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                             <node ID="ID_283" POSITION="right" STYLE="fork" TEXT="Publication activity of regional scientists and researches"/>
                         </node>
@@ -647,7 +647,7 @@
                                         </body>
                                     </html>
                                 </richcontent>
-                                <icon BUILTIN="sign_warning"/>
+                                <icon BUILTIN="messagebox_warning"/>
                             </node>
                         </node>
                         <node ID="ID_184" POSITION="right" STYLE="fork" TEXT="Resources">
@@ -702,7 +702,13 @@
                             <node ID="ID_309" POSITION="right" STYLE="fork" TEXT="Spin-offs">
                                 <node ID="ID_300" POSITION="right" STYLE="fork">
                                     <richcontent TYPE="NODE">
-                                        <parsererror xmlns="http://www.mozilla.org/newlayout/xml/parsererror.xml">1:146: unclosed tag: p</parsererror>
+                                        <html xmlns="http://www.w3.org/1999/xhtml">
+                                            <head></head>
+                                            <body>
+                                                <p>Number of spin-offs with external private financing</p>
+                                                <p>as a share of the institution's R&amp;D budget</p>
+                                            </body>
+                                        </html>
                                     </richcontent>
                                 </node>
                             </node>
@@ -723,7 +729,13 @@
                                 <node ID="ID_307" POSITION="right" STYLE="fork" TEXT="Share of industry income from foreign companies"/>
                                 <node ID="ID_90" POSITION="right" STYLE="fork">
                                     <richcontent TYPE="NODE">
-                                        <parsererror xmlns="http://www.mozilla.org/newlayout/xml/parsererror.xml">1:142: unclosed tag: p</parsererror>
+                                        <html xmlns="http://www.w3.org/1999/xhtml">
+                                            <head></head>
+                                            <body>
+                                                <p>Revenue raised from industry R&amp;D as a fraction</p>
+                                                <p>of total institutional budget (up to a cap)</p>
+                                            </body>
+                                        </html>
                                     </richcontent>
                                 </node>
                                 <node ID="ID_311" POSITION="right" STYLE="fork" TEXT="Difficulties faced by research organization in collaborating with SMEs"/>
@@ -848,7 +860,7 @@
                                     </body>
                                 </html>
                             </richcontent>
-                            <icon BUILTIN="sign_warning"/>
+                            <icon BUILTIN="messagebox_warning"/>
                         </node>
                     </node>
                     <node ID="ID_183" POSITION="left" STYLE="fork">
@@ -861,7 +873,7 @@
                                 </body>
                             </html>
                         </richcontent>
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                 </node>
                 <node ID="ID_176" POSITION="left" STYLE="fork" TEXT="Number of applicants">
@@ -889,7 +901,7 @@
                     <node ID="ID_106" POSITION="left" STYLE="fork" TEXT="Target vs. actual KPIs"/>
                     <node ID="ID_287" POSITION="left" STYLE="fork" TEXT="Intermediate outputs per budget"/>
                     <node ID="ID_372" POSITION="left" STYLE="fork" TEXT="Qualification of staff">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                 </node>
                 <node ID="ID_58" POSITION="left" STYLE="fork" TEXT="Output of measure">
@@ -910,10 +922,10 @@
                 <node ID="ID_104" POSITION="left" STYLE="fork" TEXT="Hard metrics">
                     <node ID="ID_331" POSITION="left" STYLE="fork" TEXT="Increase in number of small innovation enterprises "/>
                     <node ID="ID_402" POSITION="left" STYLE="fork" TEXT="Growth of the total volume of salary in the supported companies (excluding inflation) ">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_403" POSITION="left" STYLE="fork" TEXT="Growth of the volume of regional taxes paid by the supported companies ">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_405" POSITION="left" STYLE="fork" TEXT="Growth of the volume of export at the supported companies "/>
                     <node ID="ID_406" POSITION="left" STYLE="fork" TEXT="Number of new products/projects at the companies that received support "/>
@@ -929,7 +941,7 @@
                             </body>
                         </html>
                     </richcontent>
-                    <icon BUILTIN="sign_warning"/>
+                    <icon BUILTIN="messagebox_warning"/>
                 </node>
                 <node ID="ID_296" POSITION="left" STYLE="fork">
                     <richcontent TYPE="NODE">
@@ -941,7 +953,7 @@
                             </body>
                         </html>
                     </richcontent>
-                    <icon BUILTIN="sign_warning"/>
+                    <icon BUILTIN="messagebox_warning"/>
                 </node>
             </node>
             <arrowlink DESTINATION="ID_114" STARTARROW="Default"/>
@@ -961,7 +973,7 @@
                     <node ID="ID_60" POSITION="right" STYLE="fork" TEXT="Cluster EU star rating"/>
                     <node ID="ID_318" POSITION="right" STYLE="fork" TEXT="Share of value added of cluster enterprises in GRP"/>
                     <node ID="ID_320" POSITION="right" STYLE="fork" TEXT="Share of cluster products in the relevant world market segment ">
-                        <icon BUILTIN="sign_warning"/>
+                        <icon BUILTIN="messagebox_warning"/>
                     </node>
                     <node ID="ID_321" POSITION="right" STYLE="fork" TEXT="Share of export in cluster total volume of sales"/>
                     <node ID="ID_379" POSITION="right" STYLE="fork" TEXT="Growth of the volume of production in the cluster companies"/>

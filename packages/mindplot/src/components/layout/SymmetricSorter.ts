@@ -20,6 +20,7 @@ import AbstractBasicSorter from './AbstractBasicSorter';
 import RootedTreeSet from './RootedTreeSet';
 import Node from './Node';
 import PositionType from '../PositionType';
+import { sideOf } from '../util/side';
 
 class SymmetricSorter extends AbstractBasicSorter {
   /**
@@ -40,7 +41,7 @@ class SymmetricSorter extends AbstractBasicSorter {
       $assert(position, 'position cannot be null for predict in free positioning');
       $assert(node, 'node cannot be null for predict in free positioning');
 
-      const direction = this._getRelativeDirection(rootNode.getPosition(), parent.getPosition());
+      const direction = this._getChildrenDirection(graph, parent);
       const limitXPos =
         parent.getPosition().x +
         direction *
@@ -59,10 +60,7 @@ class SymmetricSorter extends AbstractBasicSorter {
 
     // Its not a dragged node (it is being added)
     if (!node) {
-      const parentDirection = self._getRelativeDirection(
-        rootNode.getPosition(),
-        parent.getPosition(),
-      );
+      const parentDirection = self._getChildrenDirection(graph, parent);
 
       const result = {
         x:
@@ -87,11 +85,12 @@ class SymmetricSorter extends AbstractBasicSorter {
 
     const parentChildren = graph.getChildren(parent);
     if (parentChildren.length === 0) {
-      // Fit as a child of the parent node...
+      // Fit as a child of the parent node, on the side the layout puts its children, whatever
+      // side the mouse is on ...
       const result = {
         x:
           parent.getPosition().x +
-          positionDirection *
+          this._getChildrenDirection(graph, parent) *
             (parent.getSize().width + SymmetricSorter.INTERNODE_HORIZONTAL_PADDING),
         y: parent.getPosition().y,
       };
@@ -123,17 +122,21 @@ class SymmetricSorter extends AbstractBasicSorter {
         return [order, result];
       }
 
-      // Fit after this node
+      // Fit after this node. Exactly at the centre of the node after counts as the pixel above
+      // it, as in BalancedSorter: excluding it fell through to "above the first", a jump.
       if (
         nodeAfter &&
         position.y > parentChild.getPosition().y &&
-        position.y < nodeAfter.getPosition().y
+        position.y <= nodeAfter.getPosition().y
       ) {
         if (nodeAfter.getId() === node.getId() || parentChild.getId() === node.getId()) {
           return [node.getOrder() ?? 0, node.getPosition()];
         }
+        // Moving down within the same parent: detaching the node first shifts the
+        // siblings below it up by one, so the slot is one less than nodeAfter's order.
+        // A node coming from another parent shifts nothing here.
         const orderResult =
-          position.y > node.getPosition().y
+          sameParent && position.y > node.getPosition().y
             ? (nodeAfter.getOrder() ?? 0) - 1
             : (parentChild.getOrder() ?? 0) + 1;
 
@@ -235,11 +238,11 @@ class SymmetricSorter extends AbstractBasicSorter {
   detach(treeSet: RootedTreeSet, node: Node) {
     const parent = treeSet.getParent(node);
     $assert(parent != null, 'can not detach null parent');
-    const children = this._getSortedChildren(treeSet, parent!);
+    const children = this._getSortedChildren(treeSet, parent);
     const order = node.getOrder();
     $assert(order !== undefined, 'Node must have an order to be detached');
     // TypeScript doesn't understand $assert narrows the type, so we use non-null assertion
-    $assert(children[order!] === node, 'Node seems not to be in the right position');
+    $assert(children[order] === node, 'Node seems not to be in the right position');
 
     // Shift all the nodes ...
     const nodeOrder = node.getOrder();
@@ -255,7 +258,11 @@ class SymmetricSorter extends AbstractBasicSorter {
     node.setOrder(0);
   }
 
-  computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
+  computeOffsets(
+    treeSet: RootedTreeSet,
+    node: Node,
+    extentById?: Map<number, number>,
+  ): Map<number, PositionType> {
     const children = this._getSortedChildren(treeSet, node);
 
     // Compute heights ...
@@ -266,7 +273,7 @@ class SymmetricSorter extends AbstractBasicSorter {
         order: child.getOrder(),
         position: child.getPosition(),
         width: child.getSize().width,
-        height: this._computeChildrenHeight(treeSet, child),
+        height: this._getBranchHeight(treeSet, child, extentById),
       }))
       .reverse();
 
@@ -313,15 +320,16 @@ class SymmetricSorter extends AbstractBasicSorter {
    * @param treeSet
    * @param child
    * @return direction of the given child from its parent or from the root node, if isolated */
-  getChildDirection(treeSet: RootedTreeSet, child: Node) {
+  getChildDirection(treeSet: RootedTreeSet, child: Node): 1 | -1 {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(treeSet.getParent(child), 'This should not happen');
 
-    let result;
+    let result: 1 | -1;
     const rootNode = treeSet.getRootNode(child);
     if (treeSet.getParent(child) === rootNode) {
       // This is the case of a isolated child ... In this case, the directions is based on the root.
-      result = Math.sign(rootNode.getPosition().x);
+      // Not Math.sign: it is 0 for a root at x === 0, which stacked its children on top of it.
+      result = sideOf(rootNode.getPosition().x);
     } else {
       // if this is not the case, honor the direction of the parent ...
       const parent = treeSet.getParent(child)!;
@@ -330,6 +338,21 @@ class SymmetricSorter extends AbstractBasicSorter {
       result = sorter.getChildDirection(treeSet, parent);
     }
     return result;
+  }
+
+  /**
+   * The side the layout puts the children of the given node on, as getChildDirection works it
+   * out for them. It does not need a child, so it also answers for a node that has none yet.
+   */
+  private _getChildrenDirection(treeSet: RootedTreeSet, parent: Node): 1 | -1 {
+    const rootNode = treeSet.getRootNode(parent);
+    if (parent === rootNode) {
+      // The children of an isolated root go to the side of the map the root is on. Compared with
+      // itself, the root would always say "right".
+      return sideOf(rootNode.getPosition().x);
+    }
+    const grandParent = treeSet.getParent(parent)!;
+    return grandParent.getSorter().getChildDirection(treeSet, parent);
   }
 
   /** @return {String} the print name of this class */

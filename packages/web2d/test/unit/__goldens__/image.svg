@@ -1,0 +1,5 @@
+<svg focusable="true" height="400" preserveAspectRatio="none" viewBox="-200 -200 400 400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <image height="32" preserveAspectRatio="none" width="32" x="-150" xlink:href="../../../storybook/src/stories/assets/colors.svg" y="-150"/>
+  <image height="32" preserveAspectRatio="none" width="64" x="0" xlink:href="../../../storybook/src/stories/assets/colors.svg" y="-150"/>
+  <image height="100" preserveAspectRatio="none" width="100" x="-150" xlink:href="../../../storybook/src/stories/assets/colors.svg" y="0"/>
+</svg>

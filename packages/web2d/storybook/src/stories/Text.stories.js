@@ -52,3 +52,49 @@ Multiline.args = {
   color: 'red',
   style: 'normal',
 };
+
+// Edge cases: empty lines, a trailing newline, CRLF line ends, an empty text.
+export const EmptyLines = Template.bind({});
+EmptyLines.args = {
+  fontFamily: 'Arial',
+  text: 'First line\n\nThird line',
+  weight: 'normal',
+  color: 'black',
+  style: 'normal',
+};
+
+export const TrailingNewline = Template.bind({});
+TrailingNewline.args = {
+  fontFamily: 'Arial',
+  text: 'Trailing newline\n',
+  weight: 'normal',
+  color: 'black',
+  style: 'normal',
+};
+
+export const Crlf = Template.bind({});
+Crlf.args = {
+  fontFamily: 'Arial',
+  text: 'CRLF line 1\r\nCRLF line 2',
+  weight: 'normal',
+  color: 'black',
+  style: 'normal',
+};
+
+export const Empty = Template.bind({});
+Empty.args = {
+  fontFamily: 'Arial',
+  text: '',
+  weight: 'normal',
+  color: 'black',
+  style: 'normal',
+};
+
+export const BoldItalic = Template.bind({});
+BoldItalic.args = {
+  fontFamily: 'Verdana',
+  text: 'Bold italic\nsecond line',
+  weight: 'bold',
+  color: '#1e88e5',
+  style: 'italic',
+};

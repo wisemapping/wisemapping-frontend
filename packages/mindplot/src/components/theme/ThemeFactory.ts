@@ -67,8 +67,12 @@ class ThemeFactory {
         result = new RetroTheme(variant);
         break;
       default: {
-        const exhaustiveCheck: never = actualId;
-        throw new Error(exhaustiveCheck);
+        // The id comes from the map XML without validation, so do not prevent the map from opening.
+        // The fallback is cached under the unknown key, so the warning is logged only once.
+        const unknownId: never = actualId;
+        console.warn(`Unknown theme '${unknownId}', falling back to 'classic'.`);
+        result = ThemeFactory.createById('classic', variant);
+        break;
       }
     }
 

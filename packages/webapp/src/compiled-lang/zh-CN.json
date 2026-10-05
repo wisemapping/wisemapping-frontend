@@ -1085,6 +1085,12 @@
       "value": "error"
     }
   ],
+  "import.error-unsupported-file": [
+    {
+      "type": 0,
+      "value": "不支持此文件类型。您可以导入 WiseMapping、FreeMind、Freeplane、XMind、MindManager 和 OPML 导图。"
+    }
+  ],
   "import.title": [
     {
       "type": 0,

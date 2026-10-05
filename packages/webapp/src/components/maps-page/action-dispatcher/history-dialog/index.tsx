@@ -49,7 +49,7 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     onClose();
   };
 
-  const handleOnClick = (event, vid: number): void => {
+  const handleOnClick = (event: React.MouseEvent, vid: number): void => {
     event.preventDefault();
     client.revertHistory(mapId, vid).then(() => {
       handleOnClose();

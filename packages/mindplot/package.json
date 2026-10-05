@@ -38,7 +38,9 @@
     "storybook": "STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p ${PORT:-6006} --quiet",
     "test": "yarn test:unit && yarn test:integration",
     "test:integration": "PORT=6107 node ../../scripts/run-storybook-cypress.js",
-    "test:unit": "jest ./test/unit/**/*.test.ts --verbose --silent --detectOpenHandles"
+    "test:unit": "jest ./test/unit --coverage --silent --detectOpenHandles",
+    "test:visual": "VISUAL_SNAPSHOTS=verify yarn test:integration",
+    "test:visual:update": "VISUAL_SNAPSHOTS=update yarn test:integration"
   },
   "dependencies": {
     "@wisemapping/web2d": "*",
@@ -53,10 +55,12 @@
     "@babel/preset-typescript": "^8.0.1",
     "@jest/globals": "^30.5.2",
     "@mdx-js/react": "^3.1.1",
+    "@simonsmith/cypress-image-snapshot": "^11.0.0",
     "@storybook/addon-docs": "^10.6.1",
     "@storybook/addon-links": "^10.6.1",
     "@storybook/html": "^10.6.1",
     "@storybook/html-vite": "^10.6.1",
+    "@types/lodash": "^4.17.25",
     "blob-polyfill": "^9.0.20240710",
     "cypress": "^16.1.1",
     "eslint": "^10.12.0",

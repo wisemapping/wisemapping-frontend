@@ -61,7 +61,7 @@ interface AppBarProps {
   mapInfo: MapInfo;
   capability: Capability;
   onAction: (type: ToolbarActionType) => void;
-  accountConfig?;
+  accountConfig?: React.ReactElement;
 }
 
 const appBarDivisor = {
@@ -565,6 +565,7 @@ const AppBar = ({
       visible: !capability.isHidden('share'),
     },
     {
+      // Renders nothing when no account configuration is provided.
       render: () => accountConfig,
       visible: !capability.isHidden('account'),
     },
@@ -593,6 +594,7 @@ const AppBar = ({
       <MaterialAppBar
         role="menubar"
         position="absolute"
+        data-canvas-inset="top"
         color="default"
         className="material-menubar"
         sx={{

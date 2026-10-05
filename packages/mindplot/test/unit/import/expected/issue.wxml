@@ -1,6 +1,6 @@
 <map name="issue" theme="prism" layout="mindmap" version="tango">
-    <topic central="true" text="La computadora" id="1" bgColor="#cc0000">
-        <topic position="200,0" order="0" shape="rounded rectangle" id="21" bgColor="#4c1130">
+    <topic central="true" text="La computadora" id="1" bgColor="#cc0000" connColor="#660000">
+        <topic position="200,0" order="0" shape="rounded rectangle" id="21" bgColor="#a64d79" connColor="#4c1130">
             <text><![CDATA[
                     
                     
@@ -8,7 +8,7 @@
                         <p>(componentes físicos)</p>
                     
                 ]]></text>
-            <topic position="200,-100" order="0" shape="rounded rectangle" id="25" bgColor="#4c1130">
+            <topic position="290,-37" order="0" shape="rounded rectangle" id="25" bgColor="#c27ba0" connColor="#4c1130">
                 <text><![CDATA[
                         
                         
@@ -16,7 +16,7 @@
                             <p></p>
                         
                     ]]></text>
-                <topic position="200,0" order="0" shape="rounded rectangle" id="28" bgColor="#4c1130">
+                <topic position="380,-49" order="0" shape="rounded rectangle" id="28" bgColor="#ead1dc" connColor="#4c1130">
                     <text><![CDATA[
                             
                             
@@ -26,8 +26,8 @@
                         ]]></text>
                 </topic>
             </topic>
-            <topic position="-290,-12" order="1" text="Salida de datos" shape="rounded rectangle" id="29" bgColor="#4c1130">
-                <topic position="290,-24" order="0" shape="rounded rectangle" id="30" bgColor="#4c1130">
+            <topic position="290,-12" order="1" text="Salida de datos" shape="rounded rectangle" id="29" bgColor="#c27ba0" connColor="#4c1130">
+                <topic position="380,-24" order="0" shape="rounded rectangle" id="30" bgColor="#ead1dc" connColor="#4c1130">
                     <text><![CDATA[
                             
                             
@@ -37,8 +37,8 @@
                         ]]></text>
                 </topic>
             </topic>
-            <topic position="-380,13" order="2" text="Almacenamiento" shape="rounded rectangle" id="31" bgColor="#4c1130">
-                <topic position="380,1" order="0" shape="rounded rectangle" id="32" bgColor="#4c1130">
+            <topic position="290,13" order="2" text="Almacenamiento" shape="rounded rectangle" id="31" bgColor="#c27ba0" connColor="#4c1130">
+                <topic position="380,1" order="0" shape="rounded rectangle" id="32" bgColor="#ead1dc" connColor="#4c1130">
                     <text><![CDATA[
                             
                             
@@ -49,7 +49,7 @@
                 </topic>
             </topic>
         </topic>
-        <topic position="-290,0" order="1" shape="rectangle" id="59" bgColor="#7f6000">
+        <topic position="-200,-50" order="1" shape="rectangle" id="59" bgColor="#bf9000" connColor="#7f6000">
             <text><![CDATA[
                     
                     
@@ -58,7 +58,7 @@
                         <p></p>
                     
                 ]]></text>
-            <topic position="290,-37" order="0" shape="rectangle" id="92" bgColor="#7f6000">
+            <topic position="-290,-87" order="0" shape="rectangle" id="92" bgColor="#f1c232" connColor="#7f6000">
                 <text><![CDATA[
                         
                         
@@ -66,11 +66,11 @@
                             <p>entre el usuario y la maquina.</p>
                         
                     ]]></text>
-                <topic position="-290,-74" order="0" text="Microsoft Windows" shape="rectangle" id="101" bgColor="#7f6000"/>
-                <topic position="-380,-49" order="1" text="GNU/LINUX" shape="rectangle" id="106" bgColor="#7f6000"/>
-                <topic position="-470,-24" order="2" text="MAC " shape="rectangle" id="107" bgColor="#7f6000"/>
+                <topic position="-380,-124" order="0" text="Microsoft Windows" shape="rectangle" id="101" bgColor="#ffd966" connColor="#7f6000"/>
+                <topic position="-380,-99" order="1" text="GNU/LINUX" shape="rectangle" id="106" bgColor="#ffd966" connColor="#7f6000"/>
+                <topic position="-380,-74" order="2" text="MAC " shape="rectangle" id="107" bgColor="#ffd966" connColor="#7f6000"/>
             </topic>
-            <topic position="380,-12" order="1" shape="rectangle" id="93" bgColor="#7f6000">
+            <topic position="-290,-62" order="1" shape="rectangle" id="93" bgColor="#f1c232" connColor="#7f6000">
                 <text><![CDATA[
                         
                         
@@ -78,12 +78,12 @@
                             <p>calculo navegar en internet, base de datos, etc.</p>
                         
                     ]]></text>
-                <topic position="-380,-62" order="0" text="Office" shape="rectangle" id="108" bgColor="#783f04"/>
-                <topic position="-470,-37" order="1" text="Libre Office" shape="rectangle" id="109" bgColor="#7f6000"/>
-                <topic position="-560,-12" order="2" text="Navegadores" shape="rectangle" id="110" bgColor="#7f6000"/>
-                <topic position="-650,13" order="3" text="Msn" shape="rectangle" id="111" bgColor="#783f04"/>
+                <topic position="-380,-112" order="0" text="Office" shape="rectangle" id="108" bgColor="#ffd966" connColor="#783f04"/>
+                <topic position="-380,-87" order="1" text="Libre Office" shape="rectangle" id="109" bgColor="#ffd966" connColor="#7f6000"/>
+                <topic position="-380,-62" order="2" text="Navegadores" shape="rectangle" id="110" bgColor="#ffd966" connColor="#7f6000"/>
+                <topic position="-380,-37" order="3" text="Msn" shape="rectangle" id="111" bgColor="#ffd966" connColor="#783f04"/>
             </topic>
-            <topic position="470,13" order="2" shape="rectangle" id="94" bgColor="#7f6000">
+            <topic position="-290,-37" order="2" shape="rectangle" id="94" bgColor="#f1c232" connColor="#7f6000">
                 <text><![CDATA[
                         
                         
@@ -93,9 +93,9 @@
                     ]]></text>
             </topic>
         </topic>
-        <topic position="-380,25" order="2" text="Tipos de computadora" shape="rounded rectangle" id="3">
-            <topic position="380,-37" order="0" text="Computadora personal de escritorio o Desktop" shape="rounded rectangle" id="8"/>
-            <topic position="470,-12" order="1" shape="rounded rectangle" id="10">
+        <topic position="-200,50" order="2" text="Tipos de computadora" shape="rounded rectangle" id="3">
+            <topic position="-290,-12" order="0" text="Computadora personal de escritorio o Desktop" shape="rounded rectangle" id="8"/>
+            <topic position="-290,13" order="1" shape="rounded rectangle" id="10">
                 <text><![CDATA[
                         
                         
@@ -104,9 +104,9 @@
                         
                     ]]></text>
             </topic>
-            <topic position="560,13" order="2" text="Laptop" shape="rounded rectangle" id="11"/>
-            <topic position="650,38" order="3" text="Servidor" shape="rounded rectangle" id="12"/>
-            <topic position="740,63" order="4" text="Tablet PC" shape="rounded rectangle" id="13"/>
+            <topic position="-290,38" order="2" text="Laptop" shape="rounded rectangle" id="11"/>
+            <topic position="-290,63" order="3" text="Servidor" shape="rounded rectangle" id="12"/>
+            <topic position="-290,88" order="4" text="Tablet PC" shape="rounded rectangle" id="13"/>
         </topic>
     </topic>
 </map>

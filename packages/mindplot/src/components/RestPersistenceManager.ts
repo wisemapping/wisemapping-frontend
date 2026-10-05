@@ -15,10 +15,23 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import throttle from 'lodash/throttle';
 import { $assert } from './util/assert';
 import { $msg } from './Messages';
-import PersistenceManager, { PersistenceError, ServerError } from './PersistenceManager';
+import { AjaxUtils } from './util/AjaxUtils';
+import PersistenceManager, {
+  PersistenceError,
+  SaveEvents,
+  SaveOptions,
+  ServerError,
+} from './PersistenceManager';
+
+type PendingSave = {
+  mapId: string;
+  data: { id: string; xml: string; properties: string };
+  saveHistory: boolean;
+  urgent: boolean;
+  events: SaveEvents[];
+};
 
 class RESTPersistenceManager extends PersistenceManager {
   private documentUrl: string;
@@ -41,102 +54,206 @@ class RESTPersistenceManager extends PersistenceManager {
     this.jwt = options.jwt;
   }
 
-  private _handleError(error: PersistenceError, events): void {
+  private _handleError(error: PersistenceError, events: SaveEvents[]): void {
     this.triggerError(error);
-    events.onError(error);
+    events.forEach((e) => e.onError(error));
   }
 
-  // Throttle saves to prevent multiple saves within 10 seconds
-  private _throttledSave = throttle(
-    (
-      mapId: string,
-      data: { id: string; xml: string; properties: string },
-      query: string,
-      events,
-    ) => {
-      const headers = this._buildHttpHeader('application/json; charset=utf-8', 'application/json');
-      fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
-        method: 'PUT',
-        // Blob helps to reduce the memory on large payload.
-        body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
-        headers,
-      })
-        .then(async (response: Response) => {
-          if (response.ok) {
-            events.onSuccess();
-          } else {
-            let error: PersistenceError;
-            switch (response.status) {
-              case 401:
-              case 403:
-                console.warn(`Saving error: ${response.status} - session expired`);
-                error = {
-                  severity: 'FATAL',
-                  errorType: 'auth',
-                  message: $msg('SESSION_EXPIRED'),
-                };
-                break;
-              default: {
-                console.error(`Saving error: ${response.status}`);
-                error = await this._buildError(response);
-              }
-            }
-            this._handleError(error, events);
-          }
-        })
-        .catch(() => {
-          const error: PersistenceError = {
-            severity: 'SEVERE',
-            errorType: 'unexpected',
-            message: $msg('SAVE_COULD_NOT_BE_COMPLETED'),
-          };
-          this._handleError(error, events);
-        });
-    },
-    10000,
-    { leading: true, trailing: false },
-  );
+  // Server writes are rate limited: one request in flight and at most one request every
+  // MIN_SAVE_INTERVAL_MS. Saves requested in between are coalesced per map into a single
+  // pending save of the latest payload; every caller is notified when that save completes.
+  // An urgent save (a flush, e.g. when leaving the editor) skips the interval, but still never
+  // overlaps the request in flight.
+  private static readonly MIN_SAVE_INTERVAL_MS = 10000;
 
-  saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events): void {
+  // Browsers cap the bodies of all the in flight keepalive requests at 64 KB. Leave some room for
+  // the unlock request; larger saves are sent as regular requests.
+  private static readonly KEEPALIVE_MAX_BODY_BYTES = 60 * 1024;
+
+  private _saveInFlight = false;
+
+  private _lastSaveStartedAt: number | undefined;
+
+  private _saveTimer: ReturnType<typeof setTimeout> | undefined;
+
+  private _pendingSaves = new Map<string, PendingSave>();
+
+  private _scheduleNextSave(): void {
+    if (this._saveInFlight || this._pendingSaves.size === 0) {
+      return;
+    }
+
+    const pendingSaves = Array.from(this._pendingSaves.values());
+    const next = pendingSaves.find((p) => p.urgent) ?? pendingSaves[0];
+    const wait =
+      next.urgent || this._lastSaveStartedAt === undefined
+        ? 0
+        : this._lastSaveStartedAt + RESTPersistenceManager.MIN_SAVE_INTERVAL_MS - Date.now();
+    if (wait > 0) {
+      if (!this._saveTimer) {
+        this._saveTimer = setTimeout(() => {
+          this._saveTimer = undefined;
+          this._scheduleNextSave();
+        }, wait);
+      }
+      return;
+    }
+
+    if (this._saveTimer) {
+      clearTimeout(this._saveTimer);
+      this._saveTimer = undefined;
+    }
+    this._pendingSaves.delete(next.mapId);
+    this._sendSave(next);
+  }
+
+  private _sendSave(pending: PendingSave): void {
+    this._saveInFlight = true;
+    this._lastSaveStartedAt = Date.now();
+
+    const { mapId, data, saveHistory, urgent, events } = pending;
+    const query = `minor=${!saveHistory}`;
+    const headers = this._buildHttpHeader('application/json; charset=utf-8', 'application/json');
+    // Blob helps to reduce the memory on large payload.
+    const body = new Blob([JSON.stringify(data)], { type: 'text/plain' });
+    fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
+      method: 'PUT',
+      body,
+      headers,
+      // An urgent save may be sent while the page unloads: keepalive lets it outlive the page.
+      keepalive: urgent && body.size <= RESTPersistenceManager.KEEPALIVE_MAX_BODY_BYTES,
+    })
+      .then(async (response: Response): Promise<PersistenceError | undefined> => {
+        if (response.ok) {
+          return undefined;
+        }
+        switch (response.status) {
+          case 401:
+          case 403:
+            console.warn(`Saving error: ${response.status} - session expired`);
+            return {
+              severity: 'FATAL',
+              errorType: 'auth',
+              message: $msg('SESSION_EXPIRED'),
+            };
+          default: {
+            console.error(`Saving error: ${response.status}`);
+            return this._buildError(response);
+          }
+        }
+      })
+      .catch((): PersistenceError => ({
+        severity: 'SEVERE',
+        errorType: 'unexpected',
+        message: $msg('SAVE_COULD_NOT_BE_COMPLETED'),
+      }))
+      .then((error) => {
+        this._saveInFlight = false;
+        try {
+          if (error) {
+            this._handleError(error, events);
+          } else {
+            events.forEach((e) => e.onSuccess());
+          }
+        } finally {
+          this._scheduleNextSave();
+        }
+      });
+  }
+
+  saveMapXml(
+    mapId: string,
+    mapXml: Document,
+    pref: string,
+    saveHistory: boolean,
+    events?: SaveEvents,
+    options?: SaveOptions,
+  ): void {
+    const urgent = Boolean(options?.urgent);
     const data = {
       id: mapId,
       xml: new XMLSerializer().serializeToString(mapXml),
       properties: pref,
     };
 
-    const query = `minor=${!saveHistory}`;
-    this._throttledSave(mapId, data, query, events);
+    const pending = this._pendingSaves.get(mapId);
+    if (pending) {
+      pending.data = data;
+      pending.saveHistory = pending.saveHistory || saveHistory;
+      pending.urgent = pending.urgent || urgent;
+      if (events) {
+        pending.events.push(events);
+      }
+    } else {
+      this._pendingSaves.set(mapId, {
+        mapId,
+        data,
+        saveHistory,
+        urgent,
+        events: events ? [events] : [],
+      });
+    }
+    this._scheduleNextSave();
   }
 
-  discardChanges(mapId: string): void {
+  discardChanges(mapId: string): Promise<void> {
     const headers = this._buildHttpHeader('application/json; charset=utf-8');
-    fetch(this.revertUrl.replace('{id}', mapId), {
-      method: 'POST',
-      headers,
-    });
+    return RESTPersistenceManager._settle(
+      'Discard changes',
+      fetch(this.revertUrl.replace('{id}', mapId), {
+        method: 'POST',
+        headers,
+      }),
+    );
   }
 
-  unlockMap(mapId: string): void {
+  unlockMap(mapId: string): Promise<void> {
     const headers = this._buildHttpHeader('text/plain; charset=utf-8');
-    fetch(this.lockUrl.replace('{id}', mapId), {
-      method: 'PUT',
-      headers,
-      body: 'false',
-    });
+    return RESTPersistenceManager._settle(
+      'Unlock',
+      fetch(this.lockUrl.replace('{id}', mapId), {
+        method: 'PUT',
+        headers,
+        body: 'false',
+        // Usually sent while leaving the editor: keepalive lets it outlive the page.
+        keepalive: true,
+      }),
+    );
+  }
+
+  // Best effort requests: failures are logged, the returned promise never rejects.
+  private static _settle(action: string, request: Promise<Response>): Promise<void> {
+    return request
+      .then((response) => {
+        if (!response.ok) {
+          console.error(`${action} error: ${response.status}`);
+        }
+      })
+      .catch((error) => {
+        console.error(`${action} could not be completed:`, error);
+      });
   }
 
   private async _buildError(response: Response): Promise<PersistenceError> {
     let result: PersistenceError;
     const responseText = await response.text();
-    const contentType = response.headers['Content-Type'];
+    const contentType = response.headers.get('Content-Type');
+
+    let serverError: ServerError | undefined;
+    if (contentType?.includes('application/json')) {
+      try {
+        serverError = JSON.parse(responseText);
+      } catch {
+        serverError = undefined;
+      }
+    }
 
     // This is a wise client server error ...
-    if (contentType?.indexOf('application/json') !== -1) {
-      const serverError: ServerError = JSON.parse(responseText);
+    if (serverError) {
       result = {
         severity: serverError.globalSeverity,
         errorType: 'expected',
-        message: serverError.globalErrors[0],
+        message: serverError.globalErrors?.[0] ?? $msg('SAVE_COULD_NOT_BE_COMPLETED'),
       };
     } else {
       // Unexpected error from the server ...
@@ -164,11 +281,11 @@ class RESTPersistenceManager extends PersistenceManager {
         }
         return response.text();
       })
-      .then((xmlStr) => new DOMParser().parseFromString(xmlStr, 'text/xml'));
+      .then((xmlStr) => AjaxUtils.parseXML(xmlStr));
   }
 
   private _buildHttpHeader(contentType: string, accept?: string) {
-    const headers = {
+    const headers: Record<string, string> = {
       'Content-Type': contentType,
     };
 

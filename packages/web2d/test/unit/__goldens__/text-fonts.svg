@@ -1,0 +1,17 @@
+<svg focusable="true" height="400" preserveAspectRatio="none" viewBox="0 0 400 400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <text fill="#222222" font-family="Arial" font-size="13.4" font-style="normal" font-weight="600" x="20" y="20">
+    <tspan dy="1em" x="20">Arial normal</tspan>
+  </text>
+  <text fill="#222222" font-family="Verdana" font-size="16.1" font-style="normal" font-weight="900" x="20" y="100">
+    <tspan dy="1em" x="20">Verdana bold</tspan>
+  </text>
+  <text fill="#222222" font-family="Times" font-size="18.8" font-style="italic" font-weight="600" x="20" y="180">
+    <tspan dy="1em" x="20">Times italic</tspan>
+  </text>
+  <text fill="#222222" font-family="Tahoma" font-size="26.9" font-style="italic" font-weight="900" x="20" y="260">
+    <tspan dy="1em" x="20">Tahoma 20 bold italic</tspan>
+  </text>
+  <text fill="#cc3333" font-family="Arial" font-size="13.4" font-style="normal" font-weight="600" x="20" y="340">
+    <tspan dy="1em" x="20">Coloured</tspan>
+  </text>
+</svg>

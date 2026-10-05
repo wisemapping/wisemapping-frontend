@@ -94,9 +94,7 @@ describe('Storybook Editor Components - Tests', () => {
         .click({ force: true });
 
       // Verify bold button reacts to click (toggle state or remains clickable)
-      cy.get('[aria-label*="Bold"]')
-        .first()
-        .should('exist'); // Verifies component is interactive
+      cy.get('[aria-label*="Bold"]').first().should('exist'); // Verifies component is interactive
     });
   });
 
@@ -105,7 +103,9 @@ describe('Storybook Editor Components - Tests', () => {
       visitStory('editor-topiclinkeditor--default');
 
       // Check URL input exists
-      cy.get('input[type="url"], input[placeholder*="URL"], input[placeholder*="url"]').should('exist');
+      cy.get('input[type="url"], input[placeholder*="URL"], input[placeholder*="url"]').should(
+        'exist',
+      );
     });
 
     it('should render with existing URL variant', () => {
@@ -119,13 +119,14 @@ describe('Storybook Editor Components - Tests', () => {
       visitStory('editor-topiclinkeditor--default');
 
       // Type in URL input and verify it accepts input
-      cy.get('input[type="url"], input[placeholder*="URL"], input[placeholder*="url"]', { timeout: 10000 })
+      cy.get('input[type="url"], input[placeholder*="URL"], input[placeholder*="url"]', {
+        timeout: 10000,
+      })
         .first()
         .should('be.visible')
-        .type('https://example.com')
-        .should('have.value', 'https://example.com');
+        .type('https://example.com');
 
-      // Verify the input maintains the value
+      // Verify the input took the value (a new query: chaining after type() is unsafe)
       cy.get('input[type="url"], input[placeholder*="URL"], input[placeholder*="url"]')
         .first()
         .should('have.value', 'https://example.com');
@@ -156,8 +157,10 @@ describe('Storybook Editor Components - Tests', () => {
       cy.get('[role="tablist"]', { timeout: 10000 }).should('be.visible');
 
       // Emoji picker should be rendered by default (first tab)
-      cy.get('.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]', { timeout: 5000 })
-        .should('exist');
+      cy.get(
+        '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
+        { timeout: 5000 },
+      ).should('exist');
     });
 
     it('should display emoji variant', () => {
@@ -167,8 +170,10 @@ describe('Storybook Editor Components - Tests', () => {
       cy.get('[role="tablist"]', { timeout: 10000 }).should('be.visible');
 
       // Emoji tab should be active - look for emoji picker elements
-      cy.get('.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]', { timeout: 5000 })
-        .should('exist');
+      cy.get(
+        '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
+        { timeout: 5000 },
+      ).should('exist');
     });
 
     it('should display image variant', () => {
@@ -226,16 +231,20 @@ describe('Storybook Editor Components - Tests', () => {
       visitStory('editor-iconpicker--default');
 
       // Should have emoji picker visible by default
-      cy.get('.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]', { timeout: 10000 })
-        .should('exist');
+      cy.get(
+        '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
+        { timeout: 10000 },
+      ).should('exist');
     });
 
     it('should display emoji picker variant', () => {
       visitStory('editor-iconpicker--with-emoji');
 
       // Emoji picker should be visible
-      cy.get('.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]', { timeout: 10000 })
-        .should('exist');
+      cy.get(
+        '.epr-emoji-category-label, .epr-search, input[placeholder*="Search"], input[placeholder*="search"]',
+        { timeout: 10000 },
+      ).should('exist');
     });
 
     it('should trigger action when icon is selected', () => {
@@ -245,9 +254,7 @@ describe('Storybook Editor Components - Tests', () => {
       cy.get('.epr-emoji-category-label, .epr-search', { timeout: 10000 }).should('exist');
 
       // Toggle to show images using the switch (force click because input has opacity: 0)
-      cy.contains('Show images', { timeout: 5000 })
-        .should('exist')
-        .click({ force: true });
+      cy.contains('Show images', { timeout: 5000 }).should('exist').click({ force: true });
 
       // Verify that the emoji picker is no longer visible (switched to images)
       cy.get('.epr-emoji-category-label').should('not.exist');
@@ -331,17 +338,43 @@ describe('Storybook Editor Components - Tests', () => {
   });
 
   describe('KeyboardShortcutHelp', () => {
+    // The story iframe also holds Storybook's hidden args table
+    // (table.sb-argstableBlock), so every table query is scoped to the story.
+    const story = '#storybook-root';
+
     it('should render keyboard shortcuts list', () => {
       visitStory('editor-keyboardshortcuthelp--default');
 
       // Should have a table with keyboard shortcuts
-      cy.get('table', { timeout: 10000 }).should('be.visible');
+      cy.get(`${story} table`, { timeout: 10000 }).should('be.visible');
 
-      // Table should have headers - at least 3 (Action, Windows/Linux, Mac OS X)
-      cy.get('table thead tr th').should('have.length.at.least', 3);
+      // Action plus one key column. Windows/Linux and Mac used to be shown side
+      // by side, so half the table was always for someone else's keyboard.
+      cy.get(`${story} table thead tr th`).should('have.length', 2);
 
       // Verify Action header exists
-      cy.get('table thead').should('contain.text', 'Action');
+      cy.get(`${story} table thead`).should('contain.text', 'Action');
+    });
+
+    it('should render only the running platform column', () => {
+      visitStory('editor-keyboardshortcuthelp--default');
+
+      cy.get(`${story} table thead`, { timeout: 10000 }).should('be.visible');
+      cy.window().then((win) => {
+        const platform =
+          (win.navigator as Navigator & { userAgentData?: { platform?: string } }).userAgentData
+            ?.platform ??
+          win.navigator.platform ??
+          '';
+        const isMac = platform.toUpperCase().includes('MAC');
+
+        const shown = isMac ? 'Mac OS X' : 'Windows - Linux';
+        const hidden = isMac ? 'Windows - Linux' : 'Mac OS X';
+        cy.get(`${story} table thead`).should('contain.text', shown);
+        cy.get(`${story} table thead`).should('not.contain.text', hidden);
+        // Select-all is Ctrl+A or Cmd+A, so the modifier tracks the platform.
+        cy.get(`${story} table tbody`).should('contain.text', isMac ? '\u2318' : 'Ctrl');
+      });
     });
 
     it('should display multiple shortcuts', () => {
@@ -355,7 +388,7 @@ describe('Storybook Editor Components - Tests', () => {
       const counted: number[] = [];
       cy.get('[role="tab"]').each(($tab) => {
         cy.wrap($tab).click();
-        cy.get('table tbody tr').then(($rows) => {
+        cy.get(`${story} table tbody tr`).then(($rows) => {
           expect($rows.length, 'every category lists at least one shortcut').to.be.at.least(1);
           counted.push($rows.length);
         });
@@ -365,15 +398,19 @@ describe('Storybook Editor Components - Tests', () => {
         expect(total, 'shortcuts across all categories').to.be.at.least(15);
       });
 
-      // Verify some shortcut content is visible (e.g., "Ctrl" or "⌘")
-      cy.get('table tbody').should('contain.text', 'Ctrl');
+      // The modifier shown depends on the platform, so it is asserted in the
+      // platform-column test rather than pinned to 'Ctrl' here.
     });
 
     it('should draw each key as its own cap', () => {
       visitStory('editor-keyboardshortcuthelp--default');
 
       // Combinations render one <kbd> per key rather than as 'Ctrl + Shift + A'.
-      cy.get('kbd', { timeout: 10000 }).should('have.length.at.least', 10);
+      // Only the open tab is mounted, so check one combination (Ctrl/Cmd + Shift
+      // + A on either platform) instead of counting caps across the whole list.
+      cy.contains(`${story} table tbody tr`, 'Deselect all topics', { timeout: 10000 })
+        .find('kbd')
+        .should('have.length', 3);
     });
 
     it('should illustrate arrow-key navigation with a map', () => {

@@ -27,7 +27,7 @@ class TxtExporter extends Exporter {
   private mindmap: Mindmap;
 
   constructor(mindmap: Mindmap) {
-    super('txt', 'text/pain');
+    super('txt', 'text/plain');
     this.mindmap = mindmap;
   }
 
@@ -67,8 +67,8 @@ class TxtExporter extends Exporter {
           const noteModel = f as NoteModel;
           const noteText =
             noteModel.getContentType() === ContentType.HTML
-              ? noteModel.getText()
-              : noteModel.getPlainText();
+              ? noteModel.getPlainText()
+              : noteModel.getText();
           result = `${result}\n${indent}  [Note: ${noteText}]`;
         }
       });

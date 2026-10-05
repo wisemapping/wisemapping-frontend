@@ -20,7 +20,7 @@ import Designer from './Designer';
 import buildDesigner from './DesignerBuilder';
 import DesignerOptionsBuilder from './DesignerOptionsBuilder';
 import EditorRenderMode from './EditorRenderMode';
-import PersistenceManager from './PersistenceManager';
+import PersistenceManager, { SaveOptions } from './PersistenceManager';
 import WidgetBuilder from './WidgetBuilder';
 import mindplotStyles from './styles/mindplot-styles';
 import { $notify } from './model/ToolbarNotifier';
@@ -40,6 +40,10 @@ class MindplotWebComponent extends HTMLElement {
   private _designer: Designer | undefined;
 
   private _saveRequired: boolean;
+
+  // Incremented on every model change, so a save can tell whether the model changed
+  // after it was serialized.
+  private _revision: number;
 
   private _isLoaded: boolean;
 
@@ -125,6 +129,7 @@ class MindplotWebComponent extends HTMLElement {
     this._shadowRoot.appendChild(wrapper);
     this._isLoaded = false;
     this._saveRequired = false;
+    this._revision = 0;
   }
 
   /**
@@ -153,7 +158,7 @@ class MindplotWebComponent extends HTMLElement {
 
     const persistenceManager =
       persistence || new LocalStorageManager('map.xml', false, undefined, false);
-    const mode = editorRenderMode || 'viewonly';
+    const mode: EditorRenderMode = editorRenderMode || 'viewonly-private';
 
     const mindplodElem = this._shadowRoot.getElementById('mindplot-canvas');
     $assert(mindplodElem, 'Root mindplot element could not be loaded');
@@ -162,7 +167,7 @@ class MindplotWebComponent extends HTMLElement {
       persistenceManager,
       mode,
       widgetManager,
-      divContainer: mindplodElem!,
+      divContainer: mindplodElem,
       zoom: zoom ? Number.parseFloat(zoom) : 1,
       locale: locale || 'en',
     });
@@ -170,6 +175,7 @@ class MindplotWebComponent extends HTMLElement {
     this._designer = buildDesigner(options);
     this._designer.addEvent('modelUpdate', () => {
       if (this._isLoaded) {
+        this._revision += 1;
         this.setSaveRequired(true);
       }
     });
@@ -186,6 +192,19 @@ class MindplotWebComponent extends HTMLElement {
 
   isLoaded(): boolean {
     return this._isLoaded;
+  }
+
+  /**
+   * Disposes the designer once the element has left the page. A move (removed and inserted
+   * again in the same task) keeps it. The designer stays reachable, so that pending changes can
+   * still be saved.
+   */
+  disconnectedCallback(): void {
+    queueMicrotask(() => {
+      if (!this.isConnected && this._designer) {
+        this._designer.dispose();
+      }
+    });
   }
 
   private registerShortcuts() {
@@ -215,7 +234,10 @@ class MindplotWebComponent extends HTMLElement {
     return instance.load(id).then((mindmap) => this._designer!.loadMap(mindmap));
   }
 
-  save(saveHistory: boolean): Promise<void> {
+  /**
+   * @param options.urgent a flush (e.g. when leaving the editor): skips the save rate limit.
+   */
+  save(saveHistory: boolean, options?: SaveOptions): Promise<void> {
     if (!saveHistory && !this.getSaveRequired()) {
       return Promise.resolve();
     }
@@ -231,34 +253,46 @@ class MindplotWebComponent extends HTMLElement {
 
     // Call persistence manager for saving ...
     const persistenceManager = PersistenceManager.getInstance();
+    // The map is serialized synchronously by save(), so this is the revision being sent.
+    const savedRevision = this._revision;
     return new Promise<void>((resolve, reject) => {
-      persistenceManager.save(mindmap, mindmapProp, saveHistory, {
-        onSuccess: () => {
-          if (saveHistory) {
-            $notify($msg('SAVE_COMPLETE'));
-          }
-          this.setSaveRequired(false);
-          resolve();
+      persistenceManager.save(
+        mindmap,
+        mindmapProp,
+        saveHistory,
+        {
+          onSuccess: () => {
+            if (saveHistory) {
+              $notify($msg('SAVE_COMPLETE'));
+            }
+            // Changes made while the save was in flight are not included, keep them pending.
+            if (this._revision === savedRevision) {
+              this.setSaveRequired(false);
+            }
+            resolve();
+          },
+          onError: (error) => {
+            if (saveHistory) {
+              $notify(error.message);
+            }
+            reject(error);
+          },
         },
-        onError: (error) => {
-          if (saveHistory) {
-            $notify(error.message);
-          }
-          reject(error);
-        },
-      });
+        options,
+      );
     });
   }
 
-  unlockMap() {
+  unlockMap(): Promise<void> {
     const mindmap = this._designer!.getMindmap();
     const persistenceManager = PersistenceManager.getInstance();
 
     // If the map could not be loaded, partial map load could happen.
-    const mapId = mindmap.getId();
-    if (mindmap && mapId) {
-      persistenceManager.unlockMap(mapId);
+    const mapId = mindmap?.getId();
+    if (mapId) {
+      return Promise.resolve(persistenceManager.unlockMap(mapId));
     }
+    return Promise.resolve();
   }
 }
 

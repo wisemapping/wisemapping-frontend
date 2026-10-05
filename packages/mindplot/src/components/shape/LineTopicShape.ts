@@ -24,7 +24,7 @@ class LineTopicShape extends DefaultTopicShape<StraightLine> {
 
   constructor(borderColor: string) {
     const shape = new StraightLine({ strokeWidth: 2, strokeColor: borderColor });
-    super(shape, 'image');
+    super(shape, 'line');
     this._size = null;
   }
 

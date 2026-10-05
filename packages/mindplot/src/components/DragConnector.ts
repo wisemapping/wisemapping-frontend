@@ -22,11 +22,14 @@ import SizeType from './SizeType';
 import Topic from './Topic';
 import Canvas from './Canvas';
 import PositionType from './PositionType';
+import { sideOf } from './util/side';
 
 class DragConnector {
   private _designerModel: DesignerModel;
 
   private _workspace: Canvas;
+
+  private _draggedBranches = new WeakMap<DragTopic, Set<number>>();
 
   constructor(designerModel: DesignerModel, workspace: Canvas) {
     $assert(designerModel, 'designerModel can not be null');
@@ -56,74 +59,94 @@ class DragConnector {
   }
 
   private _searchConnectionCandidates(dragTopic: DragTopic): Topic[] {
-    let topics = this._designerModel.getTopics();
     const draggedNode = dragTopic.getDraggedTopic();
     // Get orientation from topic - it should be updated when layout changes
     const orientation = draggedNode.getOrientation();
 
-    // Drag node connects to the border ...
-    // const dragTopicWidth = dragTopic.getSize ? dragTopic.getSize().width : 0; // Hack...
-    const dragTopicWidth = 0;
-    const xMouseGap = dragTopic.getPosition().x > 0 ? 0 : dragTopicWidth;
-    const sPos = { x: dragTopic.getPosition().x - xMouseGap, y: dragTopic.getPosition().y };
+    const sPos = dragTopic.getPosition();
 
-    // Perform a initial filter to discard topics:
-    //  - Exclude dragged topic
-    //  - Exclude dragTopic pivot
-    //  - Nodes that are collapsed
-    //  - It's not part of the branch dragged itself
-    topics = topics.filter((topic: Topic) => {
-      let result = draggedNode !== topic;
-      result = result && topic !== draggedNode;
-      result = result && !topic.areChildrenShrunken() && !topic.isCollapsed();
-      result = result && !draggedNode.isChildTopic(topic);
-      return result;
-    });
-
-    // Filter based on layout orientation
+    // Filter based on layout orientation first: it is the cheap test, and it leaves few topics.
+    let inReach: (topic: Topic) => boolean;
     if (orientation === 'vertical') {
       // Tree layout: filter by vertical position (Y axis)
       // Only consider topics that are above the dragged topic
-      topics = topics.filter((topic: Topic) => {
+      inReach = (topic: Topic) => {
         const tpos = topic.getPosition();
         const tborder = tpos.y - topic.getSize().height / 2;
         const distance = sPos.y - tborder;
         return distance > 0 && distance < DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE;
-      });
+      };
     } else {
       // Mindmap layout: filter by horizontal position (X axis)
       // Filter all the nodes that are outside the horizontal boundary:
       //  * The node is to out of the x scope
       //  * The x distance greater the tolerated distance
-      topics = topics.filter((topic: Topic) => {
+      // Not Math.sign: at x === 0 it zeroed the distance and left no candidates.
+      const side = sideOf(sPos.x);
+      inReach = (topic: Topic) => {
         const tpos = topic.getPosition();
         // Center topic has different alignment than the rest of the nodes.
         // That's why i need to divide it by two...
-        const txborder = tpos.x + (topic.getSize().width / 2) * Math.sign(sPos.x);
-        const distance = (sPos.x - txborder) * Math.sign(sPos.x);
+        const txborder = tpos.x + (topic.getSize().width / 2) * side;
+        const distance = (sPos.x - txborder) * side;
         return distance > 0 && distance < DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE;
-      });
+      };
     }
+
+    // Then discard, of the topics in reach:
+    //  - the dragged topic and its branch, which it can not be connected to
+    //  - the collapsed ones, and the ones inside a collapsed branch
+    const branch = this._getDraggedBranch(dragTopic);
+    const topics = this._designerModel
+      .getTopics()
+      .filter(
+        (topic: Topic) =>
+          inReach(topic) &&
+          !branch.has(topic.getId()) &&
+          !topic.areChildrenShrunken() &&
+          !topic.isCollapsed(),
+      );
 
     // Assign a priority based on the distance:
     // - Alignment with the targetNode
     // - Vertical/Horizontal distance (depending on orientation)
     // - Proximity
     // - It's already connected.
+    // Weighed once per topic, not on each comparison. The sort is stable, so ties keep their order.
     const currentConnection = dragTopic.getConnectedToTopic();
-    const me = this;
-    topics = topics.sort((a, b) => {
-      const aPos = a.getPosition();
-      const bPos = b.getPosition();
+    return topics
+      .map((topic) => ({
+        topic,
+        weight: this._proximityWeight(
+          this._isAligned(topic.getSize(), topic.getPosition(), sPos, orientation),
+          topic,
+          sPos,
+          currentConnection!,
+        ),
+      }))
+      .sort((a, b) => a.weight - b.weight)
+      .map(({ topic }) => topic);
+  }
 
-      const av = me._isAligned(a.getSize(), aPos, sPos, orientation);
-      const bv = me._isAligned(b.getSize(), bPos, sPos, orientation);
-      return (
-        me._proximityWeight(av, a, sPos, currentConnection!) -
-        me._proximityWeight(bv, b, sPos, currentConnection!)
-      );
-    });
-    return topics;
+  /**
+   * Ids of the dragged topic and of every topic of its branch, as Topic.isChildTopic tells them.
+   * A drag does not change the branch, so it is walked once per drag (per DragTopic), not for
+   * every topic on every mousemove.
+   */
+  private _getDraggedBranch(dragTopic: DragTopic): Set<number> {
+    let result = this._draggedBranches.get(dragTopic);
+    if (!result) {
+      const ids = new Set<number>();
+      const pending: Topic[] = [dragTopic.getDraggedTopic()];
+      while (pending.length > 0) {
+        const topic = pending.pop()!;
+        ids.add(topic.getId());
+        pending.push(...topic.getChildren());
+      }
+      result = ids;
+      this._draggedBranches.set(dragTopic, result);
+    }
+    return result;
   }
 
   private _proximityWeight(

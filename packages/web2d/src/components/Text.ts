@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
 import { FontWeightType } from './FontWeightType';
 import TextPeer from './peer/svg/TextPeer';
@@ -39,11 +38,6 @@ class Text extends WorkspaceElement<TextPeer> {
 
   setText(text: string): void {
     this.peer.setText(text);
-  }
-
-  setTextAlignment(align: string) {
-    $assert(align, 'align can not be null');
-    this.peer.setTextAlignment(align);
   }
 
   getText(): string {
@@ -95,8 +89,9 @@ class Text extends WorkspaceElement<TextPeer> {
     return this.peer.getShapeHeight();
   }
 
+  /** The height of one line. An empty text has no lines and measures 0, not NaN. */
   getFontHeight(): number {
-    return this.getShapeHeight() / this.peer.getTextLines().length;
+    return this.getShapeHeight() / Math.max(1, this.peer.getTextLines().length);
   }
 
   getPosition(): PositionType {

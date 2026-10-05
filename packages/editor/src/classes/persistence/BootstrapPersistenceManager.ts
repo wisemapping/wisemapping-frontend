@@ -17,7 +17,7 @@
  */
 
 import { PersistenceManager } from '@wisemapping/mindplot';
-import type { PersistenceErrorCallback } from '@wisemapping/mindplot';
+import type { PersistenceErrorCallback, SaveEvents, SaveOptions } from '@wisemapping/mindplot';
 
 /**
  * A PersistenceManager wrapper that uses bootstrap XML instead of fetching from server.
@@ -59,9 +59,10 @@ class BootstrapPersistenceManager extends PersistenceManager {
     mapXml: Document,
     pref?: string,
     saveHistory?: boolean,
-    events?: unknown,
+    events?: SaveEvents,
+    options?: SaveOptions,
   ): void {
-    this.wrappedManager.saveMapXml(mapId, mapXml, pref, saveHistory, events);
+    this.wrappedManager.saveMapXml(mapId, mapXml, pref, saveHistory, events, options);
   }
 
   unlockMap(mapId: string): void {

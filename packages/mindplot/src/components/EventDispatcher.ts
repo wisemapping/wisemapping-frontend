@@ -48,9 +48,14 @@ class EventDispispatcher<T> {
     const type = EventDispispatcher._normalizeEventName(typeName);
     const events = this._handlerByType.get(type);
     if (events) {
-      const args: any = arg ? [arg] : [];
-      events.forEach((fn) => {
-        fn.apply(this, args);
+      // Falsy payloads (0, false, '') are still payloads ...
+      const args: any = arg !== undefined ? [arg] : [];
+      // Iterate over a copy, so a handler removing itself does not skip the next one.
+      // A handler removed by an earlier one during this dispatch is not called ...
+      [...events].forEach((fn) => {
+        if (events.includes(fn)) {
+          fn.apply(this, args);
+        }
       });
     }
   }

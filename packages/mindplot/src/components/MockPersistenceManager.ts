@@ -28,8 +28,15 @@ class MockPersistenceManager extends PersistenceManager {
     this.exampleMap = exampleMapAsXml;
   }
 
-  saveMapXml(): void {
-    // Ignore, no implementation required ...
+  saveMapXml(
+    _mapId: string,
+    _mapXml: Document,
+    _pref?: string,
+    _saveHistory?: boolean,
+    events?: { onSuccess: () => void },
+  ): void {
+    // Nothing is persisted, but the caller must still be settled.
+    events?.onSuccess();
   }
 
   discardChanges() {

@@ -17,5 +17,11 @@
  */
 
 export default abstract class Importer {
+  /**
+   * Converts the file into a WiseMapping map.
+   *
+   * @returns the map XML. When the file can not be imported, the promise rejects with an
+   * ImportError whose message can be shown to the user. It never resolves to a placeholder map.
+   */
   abstract import(nameMap: string, description?: string): Promise<string>;
 }

@@ -22,11 +22,12 @@ import Relationship from '../Relationship';
 class GenericRelationshipFunctionCommand<T> extends Command {
   private _value: T;
 
-  private _relationships: Relationship[];
+  // Ids, not objects: undoing a delete rebuilds relationships as new objects.
+  private _relationshipIds: number[];
 
   private _commandFunc: (relationship: Relationship, value: T) => T;
 
-  private _oldValues: T[];
+  private _oldValues: Map<number, T>;
 
   private _applied: boolean;
 
@@ -37,20 +38,21 @@ class GenericRelationshipFunctionCommand<T> extends Command {
   ) {
     super();
     this._value = value;
-    this._relationships = relationships;
+    this._relationshipIds = relationships.map((relationship) => relationship.getId());
     this._commandFunc = commandFunc;
-    this._oldValues = [];
+    this._oldValues = new Map();
     this._applied = false;
   }
 
   /**
    * Overrides abstract parent method
    */
-  execute(_commandContext: CommandContext): void {
+  execute(commandContext: CommandContext): void {
     if (!this._applied) {
-      this._relationships.forEach((relationship: Relationship) => {
+      const relationships = commandContext.findRelationships(this._relationshipIds);
+      relationships.forEach((relationship: Relationship) => {
         const oldValue = this._commandFunc(relationship, this._value);
-        this._oldValues.push(oldValue);
+        this._oldValues.set(relationship.getId(), oldValue);
       });
       this._applied = true;
     } else {
@@ -58,14 +60,15 @@ class GenericRelationshipFunctionCommand<T> extends Command {
     }
   }
 
-  undoExecute(_commandContext: CommandContext): void {
+  undoExecute(commandContext: CommandContext): void {
     if (this._applied) {
-      this._relationships.forEach((relationship: Relationship, index: number) => {
-        this._commandFunc(relationship, this._oldValues[index]);
+      const relationships = commandContext.findRelationships(this._relationshipIds);
+      relationships.forEach((relationship: Relationship) => {
+        this._commandFunc(relationship, this._oldValues.get(relationship.getId()) as T);
       });
 
       this._applied = false;
-      this._oldValues = [];
+      this._oldValues = new Map();
     } else {
       throw new Error('undo can not be applied.');
     }

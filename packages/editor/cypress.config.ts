@@ -1,11 +1,13 @@
 import { defineConfig } from 'cypress';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { visualSnapshotExpose } = require('./cypress/plugins/index.ts');
+
 export default defineConfig({
   projectId: 'it9g7s',
   video: process.env.CYPRESS_VIDEO === 'true',
-  expose: {
-    imageSnaphots: !!process.env.CYPRESS_imageSnaphots,
-  },
+  // Image-snapshot mode (VISUAL_SNAPSHOTS=verify, the default, or update), see cypress/plugins/index.ts.
+  expose: visualSnapshotExpose(),
   includeShadowDom: true,
   viewportWidth: 1000,
   viewportHeight: 660,

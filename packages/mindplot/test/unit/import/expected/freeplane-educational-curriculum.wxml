@@ -1,272 +1,80 @@
-<map name="freeplane-educational-curriculum" version="tango" theme="prism" layout="mindmap">
+<map name="freeplane-educational-curriculum" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Educational Curriculum" id="1">
         <topic position="200,0" order="0" text="Core Subjects" shape="line" id="2">
             <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Algebra, Geometry, Calculus, Statistics</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Physics, Chemistry, Biology, Earth Science</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Reading, Writing, Literature, Grammar</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>History, Geography, Civics, Economics</p>
-            </body>
-          </html>]]></note>
-                <topic position="200,0" order="0" text="Mathematics" shape="line" id="3">
-                    <eicon id="💡"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Algebra, Geometry, Calculus, Statistics</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="-200,0" order="1" text="Science" shape="line" id="4">
-                    <eicon id="💡"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Physics, Chemistry, Biology, Earth Science</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="300,75" order="2" text="Language Arts" shape="line" id="5">
-                    <eicon id="💡"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Reading, Writing, Literature, Grammar</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="-300,75" order="3" text="Social Studies" shape="line" id="6">
-                    <eicon id="💡"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>History, Geography, Civics, Economics</p>
-            </body>
-          </html>]]></note>
-                </topic>
+            <topic position="200,0" order="0" text="Mathematics" shape="line" id="3">
+                <eicon id="💡"/>
+                <note contentType="html"><![CDATA[<p>Algebra, Geometry, Calculus, Statistics</p>]]></note>
+            </topic>
+            <topic position="-200,0" order="1" text="Science" shape="line" id="4">
+                <eicon id="💡"/>
+                <note contentType="html"><![CDATA[<p>Physics, Chemistry, Biology, Earth Science</p>]]></note>
+            </topic>
+            <topic position="300,75" order="2" text="Language Arts" shape="line" id="5">
+                <eicon id="💡"/>
+                <note contentType="html"><![CDATA[<p>Reading, Writing, Literature, Grammar</p>]]></note>
+            </topic>
+            <topic position="-300,75" order="3" text="Social Studies" shape="line" id="6">
+                <eicon id="💡"/>
+                <note contentType="html"><![CDATA[<p>History, Geography, Civics, Economics</p>]]></note>
+            </topic>
         </topic>
         <topic position="-200,0" order="1" text="Elective Courses" shape="line" id="7">
             <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💻"/>
-            <eicon id="⚽"/>
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Visual Arts, Music, Drama, Dance</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Computer Science, Programming, Digital Media</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Sports, Fitness, Health Education</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Spanish, French, German, Mandarin</p>
-            </body>
-          </html>]]></note>
-                <topic position="200,0" order="0" text="Arts" shape="line" id="8">
-                    <eicon id="💡"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Visual Arts, Music, Drama, Dance</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="-200,0" order="1" text="Technology" shape="line" id="9">
-                    <eicon id="💻"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Computer Science, Programming, Digital Media</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="300,75" order="2" text="Physical Education" shape="line" id="10">
-                    <eicon id="⚽"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Sports, Fitness, Health Education</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="-300,75" order="3" text="Foreign Languages" shape="line" id="11">
-                    <eicon id="💡"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Spanish, French, German, Mandarin</p>
-            </body>
-          </html>]]></note>
-                </topic>
+            <topic position="200,0" order="0" text="Arts" shape="line" id="8">
+                <eicon id="💡"/>
+                <note contentType="html"><![CDATA[<p>Visual Arts, Music, Drama, Dance</p>]]></note>
+            </topic>
+            <topic position="-200,0" order="1" text="Technology" shape="line" id="9">
+                <eicon id="💻"/>
+                <note contentType="html"><![CDATA[<p>Computer Science, Programming, Digital Media</p>]]></note>
+            </topic>
+            <topic position="300,75" order="2" text="Physical Education" shape="line" id="10">
+                <eicon id="⚽"/>
+                <note contentType="html"><![CDATA[<p>Sports, Fitness, Health Education</p>]]></note>
+            </topic>
+            <topic position="-300,75" order="3" text="Foreign Languages" shape="line" id="11">
+                <eicon id="💡"/>
+                <note contentType="html"><![CDATA[<p>Spanish, French, German, Mandarin</p>]]></note>
+            </topic>
         </topic>
         <topic position="300,75" order="2" text="Assessment Methods" shape="line" id="12">
             <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="💡"/>
-            <eicon id="📁"/>
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Quizzes, homework, class participation</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Exams, projects, presentations</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Student portfolios and work samples</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Peer review and collaborative evaluation</p>
-            </body>
-          </html>]]></note>
-                <topic position="200,0" order="0" text="Formative Assessment" shape="line" id="13">
-                    <eicon id="💡"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Quizzes, homework, class participation</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="-200,0" order="1" text="Summative Assessment" shape="line" id="14">
-                    <eicon id="💡"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Exams, projects, presentations</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="300,75" order="2" text="Portfolio Assessment" shape="line" id="15">
-                    <eicon id="📁"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Student portfolios and work samples</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="-300,75" order="3" text="Peer Assessment" shape="line" id="16">
-                    <eicon id="💡"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Peer review and collaborative evaluation</p>
-            </body>
-          </html>]]></note>
-                </topic>
+            <topic position="200,0" order="0" text="Formative Assessment" shape="line" id="13">
+                <eicon id="💡"/>
+                <note contentType="html"><![CDATA[<p>Quizzes, homework, class participation</p>]]></note>
+            </topic>
+            <topic position="-200,0" order="1" text="Summative Assessment" shape="line" id="14">
+                <eicon id="💡"/>
+                <note contentType="html"><![CDATA[<p>Exams, projects, presentations</p>]]></note>
+            </topic>
+            <topic position="300,75" order="2" text="Portfolio Assessment" shape="line" id="15">
+                <eicon id="📁"/>
+                <note contentType="html"><![CDATA[<p>Student portfolios and work samples</p>]]></note>
+            </topic>
+            <topic position="-300,75" order="3" text="Peer Assessment" shape="line" id="16">
+                <eicon id="💡"/>
+                <note contentType="html"><![CDATA[<p>Peer review and collaborative evaluation</p>]]></note>
+            </topic>
         </topic>
         <topic position="-300,75" order="3" text="Learning Objectives" shape="line" id="17">
             <eicon id="💡"/>
-            <eicon id="📚"/>
-            <eicon id="💡"/>
-            <eicon id="💬"/>
-            <eicon id="💡"/>
-            <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Students will acquire foundational knowledge</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Develop analytical and problem-solving skills</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Enhance written and oral communication</p>
-            </body>
-          </html>
-<html>
-            <head/>
-            <body>
-              <p>Work effectively in teams and groups</p>
-            </body>
-          </html>]]></note>
-                <topic position="200,0" order="0" text="Knowledge Acquisition" shape="line" id="18">
-                    <eicon id="📚"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Students will acquire foundational knowledge</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="-200,0" order="1" text="Critical Thinking" shape="line" id="19">
-                    <eicon id="💡"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Develop analytical and problem-solving skills</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="300,75" order="2" text="Communication Skills" shape="line" id="20">
-                    <eicon id="💬"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Enhance written and oral communication</p>
-            </body>
-          </html>]]></note>
-                </topic>
-                <topic position="-300,75" order="3" text="Collaboration" shape="line" id="21">
-                    <eicon id="💡"/>
-                    <note><![CDATA[<html>
-            <head/>
-            <body>
-              <p>Work effectively in teams and groups</p>
-            </body>
-          </html>]]></note>
-                </topic>
+            <topic position="200,0" order="0" text="Knowledge Acquisition" shape="line" id="18">
+                <eicon id="📚"/>
+                <note contentType="html"><![CDATA[<p>Students will acquire foundational knowledge</p>]]></note>
+            </topic>
+            <topic position="-200,0" order="1" text="Critical Thinking" shape="line" id="19">
+                <eicon id="💡"/>
+                <note contentType="html"><![CDATA[<p>Develop analytical and problem-solving skills</p>]]></note>
+            </topic>
+            <topic position="300,75" order="2" text="Communication Skills" shape="line" id="20">
+                <eicon id="💬"/>
+                <note contentType="html"><![CDATA[<p>Enhance written and oral communication</p>]]></note>
+            </topic>
+            <topic position="-300,75" order="3" text="Collaboration" shape="line" id="21">
+                <eicon id="💡"/>
+                <note contentType="html"><![CDATA[<p>Work effectively in teams and groups</p>]]></note>
+            </topic>
         </topic>
     </topic>
 </map>

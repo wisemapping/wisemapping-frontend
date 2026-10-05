@@ -15,31 +15,73 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-export const buildCurvedPath = (_dist: number, x1: number, y1: number, x2: number, y2: number) => {
-  let signx = 1;
-  let signy = 1;
-  if (x2 < x1) {
-    signx = -1;
-  }
-  if (y2 < y1) {
-    signy = -1;
-  }
+/** The corner chamfer of the `Curved` style. */
+export const CURVED_CHAMFER = 5;
 
-  let path;
-  if (Math.abs(y1 - y2) > 2) {
-    // For horizontal layout, break at 50% of the horizontal distance
-    const middlex = x1 + (x2 - x1) * 0.5;
-    path = `${x1.toFixed(1)}, ${y1.toFixed(1)} ${middlex.toFixed(1)}, ${y1.toFixed(
-      1,
-    )} ${middlex.toFixed(1)}, ${(y2 - 5 * signy).toFixed(1)} ${(middlex + 5 * signx).toFixed(
-      1,
-    )}, ${y2.toFixed(1)} ${x2.toFixed(1)}, ${y2.toFixed(1)}`;
-  } else {
-    path = `${x1.toFixed(1)}, ${y1.toFixed(1)} ${x2.toFixed(1)}, ${y2.toFixed(1)}`;
-  }
+/** The corner chamfer of the `MiddleCurved` style. */
+export const MIDDLE_CURVED_CHAMFER = 10;
 
-  return path;
+/** Below this offset across the line, the curved styles draw a single straight segment. */
+export const CURVED_STRAIGHT_THRESHOLD = 2;
+
+const fixed = (value: number): string => {
+  const result = value.toFixed(1);
+  return result === '-0.0' ? '0.0' : result;
 };
+
+const pointsToStr = (points: [number, number][]): string =>
+  points.map(([x, y]) => `${fixed(x)}, ${fixed(y)}`).join(' ');
+
+/**
+ * An elbow that breaks at 50% of the distance along the main axis (x when horizontal, y when
+ * vertical), with both corners chamfered by the same amount. The chamfer is clamped to half of
+ * each leg, so the line never overshoots an end nor turns back (W-HCURVE, W-VCURVE). When the
+ * ends are at most CURVED_STRAIGHT_THRESHOLD apart across the main axis, it is a straight segment.
+ */
+export const buildChamferedElbowPath = (
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  chamfer: number,
+  orientation: 'horizontal' | 'vertical',
+): string => {
+  // Work in (along, across) coordinates: along the main axis, and across it.
+  const vertical = orientation === 'vertical';
+  const a1 = vertical ? y1 : x1;
+  const b1 = vertical ? x1 : y1;
+  const a2 = vertical ? y2 : x2;
+  const b2 = vertical ? x2 : y2;
+  const toXY = ([a, b]: [number, number]): [number, number] => (vertical ? [b, a] : [a, b]);
+
+  if (Math.abs(b2 - b1) <= CURVED_STRAIGHT_THRESHOLD) {
+    return pointsToStr([
+      [x1, y1],
+      [x2, y2],
+    ]);
+  }
+
+  const signA = a2 < a1 ? -1 : 1;
+  const signB = b2 < b1 ? -1 : 1;
+  const middle = a1 + (a2 - a1) * 0.5;
+  const c = Math.min(chamfer, Math.abs(a2 - a1) / 2, Math.abs(b2 - b1) / 2);
+
+  return pointsToStr(
+    (
+      [
+        [a1, b1],
+        [middle - c * signA, b1],
+        [middle, b1 + c * signB],
+        [middle, b2 - c * signB],
+        [middle + c * signA, b2],
+        [a2, b2],
+      ] as [number, number][]
+    ).map(toXY),
+  );
+};
+
+export const buildCurvedPath = (_dist: number, x1: number, y1: number, x2: number, y2: number) =>
+  buildChamferedElbowPath(x1, y1, x2, y2, CURVED_CHAMFER, 'horizontal');
 
 export const buildStraightPath = (
   _dist: number,
@@ -71,25 +113,4 @@ export const buildVerticalCurvedPath = (
   y1: number,
   x2: number,
   y2: number,
-) => {
-  let signx = 1;
-  if (x2 < x1) {
-    signx = -1;
-  }
-
-  let path;
-  if (Math.abs(x1 - x2) > 2) {
-    // For vertical layout, break at 50% of the vertical distance
-    const middley = y1 + (y2 - y1) * 0.5;
-    // Horizontal segment should stay at same Y (middley), only curve in X direction
-    path = `${x1.toFixed(1)}, ${y1.toFixed(1)} ${x1.toFixed(1)}, ${middley.toFixed(
-      1,
-    )} ${(x1 + 5 * signx).toFixed(1)}, ${middley.toFixed(1)} ${(x2 - 5 * signx).toFixed(
-      1,
-    )}, ${middley.toFixed(1)} ${x2.toFixed(1)}, ${middley.toFixed(1)} ${x2.toFixed(1)}, ${y2.toFixed(1)}`;
-  } else {
-    path = `${x1.toFixed(1)}, ${y1.toFixed(1)} ${x2.toFixed(1)}, ${y2.toFixed(1)}`;
-  }
-
-  return path;
-};
+) => buildChamferedElbowPath(x1, y1, x2, y2, CURVED_CHAMFER, 'vertical');

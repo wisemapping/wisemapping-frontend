@@ -19,6 +19,7 @@ import PositionType from '../PositionType';
 import ChildrenSorterStrategy from './ChildrenSorterStrategy';
 import Node from './Node';
 import RootedTreeSet from './RootedTreeSet';
+import { sideOf } from '../util/side';
 
 abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
   private INTERNODE_VERTICAL_PADDING = 5;
@@ -29,8 +30,30 @@ abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
     return result;
   }
 
+  computeBranchExtents(treeSet: RootedTreeSet, node: Node): Map<number, number> {
+    return this.computeChildrenIdByHeights(treeSet, node);
+  }
+
+  getBranchExtentKey(): string {
+    return AbstractBasicSorter.heightExtentKey(this.getVerticalPadding());
+  }
+
+  /** The extent key of branch heights measured with the given vertical padding. */
+  static heightExtentKey(verticalPadding: number): string {
+    return `height:${verticalPadding}`;
+  }
+
   getVerticalPadding(): number {
     return this.INTERNODE_VERTICAL_PADDING;
+  }
+
+  /** Height of the branch of `child`: from the given extents when they have it, else measured. */
+  protected _getBranchHeight(
+    treeSet: RootedTreeSet,
+    child: Node,
+    extentById?: Map<number, number>,
+  ): number {
+    return extentById?.get(child.getId()) ?? this._computeChildrenHeight(treeSet, child);
   }
 
   _computeChildrenHeight(
@@ -67,8 +90,7 @@ abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
   }
 
   protected _getRelativeDirection(reference: PositionType, position: PositionType): 1 | -1 {
-    const offset = position.x - reference.x;
-    return offset >= 0 ? 1 : -1;
+    return sideOf(position.x, reference.x);
   }
 }
 

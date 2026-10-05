@@ -102,12 +102,14 @@ export const useEditor = ({
     }
   }, [mindplotRef, options, mapInfo, effectivePersistenceManager, capability]);
 
+  // A pause/resume pair, as DesignerKeyboard pauses nest: while keyboard events are disabled the
+  // editor holds one pause, released when they are enabled again or the editor unmounts.
   useEffect(() => {
     if (options?.enableKeyboardEvents) {
-      DesignerKeyboard.resume();
-    } else {
-      DesignerKeyboard.pause();
+      return undefined;
     }
+    DesignerKeyboard.pause();
+    return () => DesignerKeyboard.resume();
   }, [options?.enableKeyboardEvents]);
 
   useEffect(() => {
@@ -119,6 +121,7 @@ export const useEditor = ({
       model.flushPendingChangesOnce().catch((error) => {
         logCriticalError('Unexpected error saving map before leaving editor', error);
       });
+      model.dispose();
     };
   }, [model]);
 

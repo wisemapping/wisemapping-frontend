@@ -29,7 +29,7 @@ describe('XMind Icon Mapping Tests', () => {
     test('should map priority icons correctly', () => {
       // Access the private method through type assertion
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('priority-1')).toBe('🔴'); // 🔴
       expect(mapIcon('priority-2')).toBe('🟡'); // 🟡
       expect(mapIcon('priority-3')).toBe('🟢'); // 🟢
@@ -39,7 +39,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should map star icons correctly', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('star')).toBe('⭐'); // ⭐
       expect(mapIcon('star-1')).toBe('⭐'); // ⭐
       expect(mapIcon('star-2')).toBe('⭐'); // ⭐
@@ -48,7 +48,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should map task icons correctly', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('task')).toBe('📋'); // 📋
       expect(mapIcon('task-done')).toBe('✅'); // ✅
       expect(mapIcon('task-start')).toBe('🟡'); // 🟡
@@ -58,7 +58,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should map emotion icons correctly', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('smile')).toBe('😊'); // 😊
       expect(mapIcon('happy')).toBe('😃'); // 😃
       expect(mapIcon('thinking')).toBe('🤔'); // 🤔
@@ -68,7 +68,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should map number icons correctly', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('1')).toBe('1️⃣'); // 1️⃣
       expect(mapIcon('2')).toBe('2️⃣'); // 2️⃣
       expect(mapIcon('3')).toBe('3️⃣'); // 3️⃣
@@ -77,7 +77,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should map letter icons correctly', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('a')).toBe('🅰️'); // 🅰️
       expect(mapIcon('b')).toBe('🅱️'); // 🅱️
       expect(mapIcon('c')).toBe('🅲'); // 🅲
@@ -86,7 +86,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should map animal icons correctly', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('dog')).toBe('🐶'); // 🐶
       expect(mapIcon('cat')).toBe('🐱'); // 🐱
       expect(mapIcon('bird')).toBe('🐦'); // 🐦
@@ -95,7 +95,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should map food icons correctly', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('apple')).toBe('🍎'); // 🍎
       expect(mapIcon('pizza')).toBe('🍕'); // 🍕
       expect(mapIcon('coffee')).toBe('☕'); // ☕
@@ -104,7 +104,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should map technology icons correctly', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('computer')).toBe('💻'); // 💻
       expect(mapIcon('phone-mobile')).toBe('📱'); // 📱
       expect(mapIcon('camera')).toBe('📷'); // 📷
@@ -113,7 +113,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should map weather icons correctly', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('sun')).toBe('☀️'); // ☀️
       expect(mapIcon('rain')).toBe('🌧️'); // 🌧️
       expect(mapIcon('snow')).toBe('❄️'); // ❄️
@@ -122,7 +122,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should map sports icons correctly', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('football')).toBe('⚽'); // ⚽
       expect(mapIcon('basketball')).toBe('🏀'); // 🏀
       expect(mapIcon('tennis')).toBe('🎾'); // 🎾
@@ -131,7 +131,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should handle case insensitive mapping', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('PRIORITY-1')).toBe('🔴'); // 🔴
       expect(mapIcon('STAR')).toBe('⭐'); // ⭐
       expect(mapIcon('SMILE')).toBe('😊'); // 😊
@@ -139,7 +139,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should return default icon for unknown icons', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('unknown-icon')).toBe('💡'); // 💡 (default)
       expect(mapIcon('non-existent')).toBe('💡'); // 💡 (default)
       expect(mapIcon('')).toBe('💡'); // 💡 (default)
@@ -147,7 +147,7 @@ describe('XMind Icon Mapping Tests', () => {
 
     test('should handle edge cases', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       expect(mapIcon('priority-0')).toBe('💡'); // 💡 (default)
       expect(mapIcon('priority-6')).toBe('💡'); // 💡 (default)
       expect(mapIcon('star-4')).toBe('💡'); // 💡 (default)
@@ -157,73 +157,147 @@ describe('XMind Icon Mapping Tests', () => {
   describe('Icon Mapping Coverage', () => {
     test('should have comprehensive icon coverage', () => {
       const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
-      
+
       // Test a sample from each major category
       const testIcons = [
         // Priority
-        'priority-1', 'priority-2', 'priority-3',
+        'priority-1',
+        'priority-2',
+        'priority-3',
         // Stars
-        'star', 'star-1', 'star-2',
+        'star',
+        'star-1',
+        'star-2',
         // Tasks
-        'task', 'task-done', 'task-start',
+        'task',
+        'task-done',
+        'task-start',
         // Emotions
-        'smile', 'happy', 'thinking', 'sad', 'angry',
+        'smile',
+        'happy',
+        'thinking',
+        'sad',
+        'angry',
         // Numbers
-        '1', '2', '3', '10',
+        '1',
+        '2',
+        '3',
+        '10',
         // Letters
-        'a', 'b', 'c', 'z',
+        'a',
+        'b',
+        'c',
+        'z',
         // Animals
-        'dog', 'cat', 'bird', 'butterfly',
+        'dog',
+        'cat',
+        'bird',
+        'butterfly',
         // Food
-        'apple', 'pizza', 'coffee', 'cake',
+        'apple',
+        'pizza',
+        'coffee',
+        'cake',
         // Technology
-        'computer', 'phone-mobile', 'camera', 'keyboard',
+        'computer',
+        'phone-mobile',
+        'camera',
+        'keyboard',
         // Weather
-        'sun', 'rain', 'snow', 'lightning',
+        'sun',
+        'rain',
+        'snow',
+        'lightning',
         // Sports
-        'football', 'basketball', 'tennis', 'swimming',
+        'football',
+        'basketball',
+        'tennis',
+        'swimming',
         // Arrows
-        'arrow-up', 'arrow-down', 'arrow-left', 'arrow-right',
+        'arrow-up',
+        'arrow-down',
+        'arrow-left',
+        'arrow-right',
         // Flags
-        'flag', 'flag-red', 'flag-green',
+        'flag',
+        'flag-red',
+        'flag-green',
         // People
-        'person', 'people',
+        'person',
+        'people',
         // Time
-        'clock', 'calendar', 'time',
+        'clock',
+        'calendar',
+        'time',
         // Communication
-        'phone', 'email', 'message',
+        'phone',
+        'email',
+        'message',
         // Files
-        'file', 'folder', 'attachment',
+        'file',
+        'folder',
+        'attachment',
         // Warnings
-        'warning', 'info', 'question', 'exclamation',
+        'warning',
+        'info',
+        'question',
+        'exclamation',
         // Hearts
-        'heart', 'like', 'dislike',
+        'heart',
+        'like',
+        'dislike',
         // Ideas
-        'lightbulb', 'idea', 'bulb',
+        'lightbulb',
+        'idea',
+        'bulb',
         // Money
-        'money', 'dollar', 'euro',
+        'money',
+        'dollar',
+        'euro',
         // Location
-        'location', 'home', 'building',
+        'location',
+        'home',
+        'building',
         // Transport
-        'car', 'plane', 'train', 'bus',
+        'car',
+        'plane',
+        'train',
+        'bus',
         // Nature
-        'tree', 'flower', 'leaf', 'mountain',
+        'tree',
+        'flower',
+        'leaf',
+        'mountain',
         // Holidays
-        'gift', 'party', 'fireworks', 'christmas',
+        'gift',
+        'party',
+        'fireworks',
+        'christmas',
         // Tools
-        'tool', 'wrench', 'hammer', 'key',
+        'tool',
+        'wrench',
+        'hammer',
+        'key',
         // Medical
-        'medical', 'health', 'pill',
+        'medical',
+        'health',
+        'pill',
         // Shopping
-        'shopping', 'cart', 'bag',
+        'shopping',
+        'cart',
+        'bag',
         // Security
-        'security', 'shield', 'lock',
+        'security',
+        'shield',
+        'lock',
         // Science
-        'science', 'microscope', 'telescope',
+        'science',
+        'microscope',
+        'telescope',
       ];
 
       // Count how many icons are successfully mapped (not default)
-      const mappedIcons = testIcons.filter(icon => {
+      const mappedIcons = testIcons.filter((icon) => {
         const result = mapIcon(icon);
         return result !== 'emoji-1f4a1'; // Not the default lightbulb
       });
@@ -231,8 +305,10 @@ describe('XMind Icon Mapping Tests', () => {
       // Should have mapped at least 80% of test icons
       const coveragePercentage = (mappedIcons.length / testIcons.length) * 100;
       expect(coveragePercentage).toBeGreaterThan(80);
-      
-      console.log(`Icon mapping coverage: ${coveragePercentage.toFixed(1)}% (${mappedIcons.length}/${testIcons.length} icons mapped)`);
+
+      console.log(
+        `Icon mapping coverage: ${coveragePercentage.toFixed(1)}% (${mappedIcons.length}/${testIcons.length} icons mapped)`,
+      );
     });
   });
 });

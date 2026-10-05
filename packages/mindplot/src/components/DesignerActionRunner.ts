@@ -50,12 +50,19 @@ class DesignerActionRunner {
   }
 
   undo(): void {
+    // Nothing changed: do not report an update, it would mark the map dirty and autosave ...
+    if (!this._undoManager.canUndo()) {
+      return;
+    }
     this._undoManager.execUndo(this._context);
     this.fireChangeEvent();
     LayoutEventBus.fireEvent('forceLayout');
   }
 
   redo(): void {
+    if (!this._undoManager.canRedo()) {
+      return;
+    }
     this._undoManager.execRedo(this._context);
     this.fireChangeEvent();
     LayoutEventBus.fireEvent('forceLayout');

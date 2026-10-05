@@ -26,9 +26,10 @@ import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import PositionType from './PositionType';
 import LayoutEventBusType from './LayoutEventBusType';
+import type { FeatureAttributes } from './model/FeatureModel';
 
 abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
-  private static _instance: ActionDispatcher;
+  private static _instance: ActionDispatcher | undefined;
 
   private _commandContext: CommandContext;
 
@@ -97,9 +98,13 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
 
   abstract shrinkBranch(topicsIds: number[], collapse: boolean): void;
 
-  abstract addFeatureToTopic(topicIds: number[], type: string, attributes: object): void;
+  abstract addFeatureToTopic(topicIds: number[], type: string, attributes: FeatureAttributes): void;
 
-  abstract changeFeatureToTopic(topicId: number, featureId: number, attributes: object): void;
+  abstract changeFeatureToTopic(
+    topicId: number,
+    featureId: number,
+    attributes: FeatureAttributes,
+  ): void;
 
   abstract removeFeatureFromTopic(topicId: number, featureId: number): void;
 
@@ -107,7 +112,21 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
     this._instance = dispatcher;
   };
 
-  static getInstance = (): ActionDispatcher => ActionDispatcher._instance;
+  /** Drops the instance if it is still the given one: a newer designer may have replaced it. */
+  static clearInstance = (dispatcher: ActionDispatcher) => {
+    if (this._instance === dispatcher) {
+      this._instance = undefined;
+    }
+  };
+
+  static getInstance = (): ActionDispatcher => {
+    if (!ActionDispatcher._instance) {
+      throw new Error(
+        'There is no ActionDispatcher: no designer has been built, or it was disposed',
+      );
+    }
+    return ActionDispatcher._instance;
+  };
 }
 
 export default ActionDispatcher;

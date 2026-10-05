@@ -17,6 +17,7 @@
  */
 import React from 'react';
 import { IntlProvider } from 'react-intl';
+import type { Decorator } from '@storybook/react';
 import { EditorThemeProvider } from '../src/contexts/ThemeContext';
 import { MockThemeVariantStorage } from './mocks/ThemeVariantStorage';
 import enMessages from '../src/compiled-lang/en.json';
@@ -28,13 +29,13 @@ const preview = {
     actions: { argTypesRegex: '^on.*' },
   },
   decorators: [
-    (Story) => (
+    ((Story) => (
       <EditorThemeProvider themeVariantStorage={mockThemeStorage}>
         <IntlProvider locale="en" defaultLocale="en" messages={enMessages}>
           <Story />
         </IntlProvider>
       </EditorThemeProvider>
-    ),
+    )) as Decorator,
   ],
 };
 

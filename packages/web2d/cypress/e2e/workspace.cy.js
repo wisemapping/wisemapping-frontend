@@ -18,21 +18,35 @@
 describe('Workspace Suite', () => {
   it('Workspace Visibility', () => {
     cy.visit('/iframe.html?args=&id=shapes-workspace--visibility&viewMode=story');
-    cy.screenshot('workspace-visibility');
+    cy.matchImageSnapshot('workspace-visibility');
   });
 
   it('Workspace Position', () => {
     cy.visit('/iframe.html?args=&id=shapes-workspace--position&viewMode=story');
-    cy.screenshot('workspace-position');
+    cy.matchImageSnapshot('workspace-position');
   });
 
   it('Workspace Coords Size', () => {
     cy.visit('/iframe.html?args=&id=shapes-workspace--coords-size&viewMode=story');
-    cy.screenshot('workspace-coord-size');
+    cy.matchImageSnapshot('workspace-coord-size');
   });
 
   it('Workspace Coords Origin', () => {
     cy.visit('/iframe.html?args=&id=shapes-workspace--coords-origin&viewMode=story');
-    cy.screenshot('workspace-coord-origin');
+    cy.matchImageSnapshot('workspace-coord-origin');
+  });
+
+  it('Workspace Fractional Coords', () => {
+    cy.visit('/iframe.html?args=&id=shapes-workspace--fractional-coords&viewMode=story');
+    cy.get('svg').first().should('have.attr', 'viewBox', '-68.65 -68.65 137.3 137.3');
+    cy.get('svg')
+      .eq(1)
+      .invoke('attr', 'viewBox')
+      .then((viewBox) => {
+        const [x, y] = viewBox.split(' ').map(Number);
+        expect(x).to.be.closeTo(-57, 0.0001);
+        expect(y).to.be.closeTo(-57, 0.0001);
+      });
+    cy.matchImageSnapshot('workspace-fractional-coords');
   });
 });

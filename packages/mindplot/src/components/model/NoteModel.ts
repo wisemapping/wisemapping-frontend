@@ -16,18 +16,18 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureModel from './FeatureModel';
+import FeatureModel, { FeatureAttributes } from './FeatureModel';
 import ContentType from '../ContentType';
 
 class NoteModel extends FeatureModel {
-  constructor(attributes) {
+  constructor(attributes: FeatureAttributes) {
     super('note');
     const noteText = attributes.text ? attributes.text : ' ';
     this.setText(noteText);
 
     // Set contentType if provided (for rich text notes)
     if (attributes.contentType) {
-      this.setContentType(attributes.contentType);
+      this.setContentType(attributes.contentType as ContentType);
     }
   }
 
@@ -45,20 +45,29 @@ class NoteModel extends FeatureModel {
   /** */
   getPlainText(): string {
     const htmlContent = this.getText();
-    // Create a temporary DOM element to strip HTML tags
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-    return tempDiv.textContent || tempDiv.innerText || '';
+    // Parse in an inert document so embedded markup (e.g. <img onerror>) never runs
+    const parsed = new DOMParser().parseFromString(htmlContent, 'text/html');
+    return parsed.body.textContent || '';
   }
 
   /** */
-  setContentType(contentType: ContentType | undefined): void {
+  setContentType(contentType: ContentType): void {
     this.setAttribute('contentType', contentType);
   }
 
   /** */
   getContentType(): ContentType {
     return (this.getAttribute('contentType') as ContentType) || ContentType.PLAIN;
+  }
+
+  applyAttribute(key: string, value: unknown): void {
+    if (key === 'text') {
+      this.setText(value as string);
+    } else if (key === 'contentType') {
+      this.setContentType(value as ContentType);
+    } else {
+      super.applyAttribute(key, value);
+    }
   }
 }
 

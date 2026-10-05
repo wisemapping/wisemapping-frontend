@@ -44,9 +44,16 @@ class Canvas {
 
   private _queueRenderEnabled: boolean;
 
-  private _mouseMoveListener;
+  private _mouseMoveListener: ((event: Event) => void) | null;
 
-  private _mouseUpListener;
+  private _mouseUpListener: (() => void) | null;
+
+  // Ends the pan in progress without treating it as a release (window blur, dispose) ...
+  private _cancelPan: (() => void) | null;
+
+  private _mouseDownListener: ((event: Event) => void) | null;
+
+  private _resizeListener: (() => void) | null;
 
   constructor(
     screenManager: ScreenManager,
@@ -80,6 +87,9 @@ class Canvas {
     this._queueRenderEnabled = delayRenderQueue;
     this._mouseMoveListener = null;
     this._mouseUpListener = null;
+    this._cancelPan = null;
+    this._mouseDownListener = null;
+    this._resizeListener = null;
   }
 
   private _adjustWorkspace(): void {
@@ -87,14 +97,42 @@ class Canvas {
   }
 
   registerEvents() {
-    // Register drag events ...
-    this._registerDragEvents();
-    this._eventsEnabled = true;
+    // Called on every map load: the listeners must be registered only once ...
+    if (!this._mouseDownListener) {
+      // Register drag events ...
+      this._registerDragEvents();
 
-    // Readjust if the window is resized ...
-    window.addEventListener('resize', () => {
-      this._adjustWorkspace();
-    });
+      // Readjust if the window is resized ...
+      this._resizeListener = () => {
+        this._adjustWorkspace();
+      };
+      window.addEventListener('resize', this._resizeListener);
+    }
+    this._eventsEnabled = true;
+  }
+
+  /**
+   * Removes the listeners registered on the window and the container, ending any pan in progress,
+   * and the workspace SVG from the container: a designer built again on it adds its own.
+   */
+  dispose(): void {
+    if (this._cancelPan) {
+      this._cancelPan();
+    }
+
+    if (this._resizeListener) {
+      window.removeEventListener('resize', this._resizeListener);
+      this._resizeListener = null;
+    }
+
+    if (this._mouseDownListener) {
+      this._screenManager.removeEvent('mousedown', this._mouseDownListener);
+      this._screenManager.removeEvent('touchstart', this._mouseDownListener);
+      this._mouseDownListener = null;
+    }
+    this._eventsEnabled = false;
+
+    this._workspace._getHtmlContainer().remove();
   }
 
   isReadOnly(): boolean {
@@ -130,8 +168,7 @@ class Canvas {
   }
 
   private appendInternal(shape: CanvasElement | ElementClass<ElementPeer>): void {
-    // eslint-disable-next-line dot-notation
-    if (typeof shape['addToWorkspace'] === 'function') {
+    if (typeof (shape as Partial<CanvasElement>).addToWorkspace === 'function') {
       (shape as CanvasElement).addToWorkspace(this);
     } else {
       this._workspace.append(shape as ElementClass<ElementPeer>);
@@ -181,8 +218,7 @@ class Canvas {
   }
 
   removeChild(shape: ElementClass<ElementPeer> | CanvasElement): void {
-    // eslint-disable-next-line dot-notation
-    if (typeof shape['removeFromWorkspace'] === 'function') {
+    if (typeof (shape as Partial<CanvasElement>).removeFromWorkspace === 'function') {
       (shape as CanvasElement).removeFromWorkspace(this);
     } else {
       this._workspace.removeChild(shape as ElementClass<ElementPeer>);
@@ -210,12 +246,6 @@ class Canvas {
     const containerHeight = this._screenManager.getContainerHeight();
     const newVisibleAreaSize = { width: containerWidth, height: containerHeight };
 
-    // - svg must fit container size
-    const svgElement = this._screenManager.findInContainer('svg');
-    if (svgElement) {
-      svgElement.setAttribute('width', containerWidth.toString());
-      svgElement.setAttribute('height', containerHeight.toString());
-    }
     // - svg viewPort must fit container size with zoom adjustment
     const newCoordWidth = containerWidth * zoom;
     const newCoordHeight = containerHeight * zoom;
@@ -242,9 +272,34 @@ class Canvas {
       coordOriginY = visibleCenterY - newCoordHeight / 2;
     }
 
+    this._applyViewport(zoom, coordOriginX, coordOriginY);
+  }
+
+  /**
+   * Sets the zoom and pans so that `position` (in workspace coordinates) is drawn at
+   * `screenPoint` (in pixels from the container's top-left corner).
+   */
+  setZoomAt(zoom: number, position: PositionType, screenPoint: PositionType): void {
+    this._applyViewport(zoom, position.x - screenPoint.x * zoom, position.y - screenPoint.y * zoom);
+  }
+
+  /**
+   * The one place the viewport changes zoom: the SVG fills the container, the viewBox is the
+   * container scaled by `zoom` (workspace units per screen pixel), and the zoom kept here, the
+   * screen manager's scale and the viewBox all agree.
+   */
+  private _applyViewport(zoom: number, coordOriginX: number, coordOriginY: number): void {
+    const workspace = this._workspace;
+    const containerWidth = this._screenManager.getContainerWidth();
+    const containerHeight = this._screenManager.getContainerHeight();
+
+    // - svg must fit container size. Go through the workspace so its size stays in sync: the inline
+    // editor's font size is scaled by it (W-HTMLFONT).
+    workspace.setSize(`${containerWidth}px`, `${containerHeight}px`);
+
     this._zoom = zoom;
     workspace.setCoordOrigin(coordOriginX, coordOriginY);
-    workspace.setCoordSize(newCoordWidth, newCoordHeight);
+    workspace.setCoordSize(containerWidth * zoom, containerHeight * zoom);
 
     // Update screen.
     this._screenManager.setOffset(coordOriginX, coordOriginY);
@@ -319,17 +374,18 @@ class Canvas {
     const mouseDownListener = (event: Event) => {
       if (!this._mouseMoveListener) {
         if (mWorkspace.isWorkspaceEventsEnabled()) {
-          mWorkspace.enableWorkspaceEvents(false);
-
           // Don't prevent default on touchstart to allow node selection
           // Multi-touch (pinch-zoom) should not trigger panning
           if (event.type === 'touchstart') {
             const touchEvent = event as TouchEvent;
             if (touchEvent.touches.length > 1) {
-              // Multi-touch detected (pinch), don't handle it - let browser handle zoom
+              // Multi-touch detected (pinch), don't handle it - let browser handle zoom.
+              // Checked before disabling workspace events, as nothing would re-enable them.
               return;
             }
           }
+
+          mWorkspace.enableWorkspaceEvents(false);
 
           const originalEvent = event;
           const mouseDownPosition = screenManager.getWorkspaceMousePosition(
@@ -372,17 +428,25 @@ class Canvas {
             schedulePanUpdate();
             wasDragged = true;
           };
-          screenManager.addEvent('mousemove', this._mouseMoveListener);
+          // Mouse events are listened on the document, so that a release outside the container
+          // still ends the pan. Touch events always go to the element the touch started on.
+          window.document.addEventListener('mousemove', this._mouseMoveListener);
           screenManager.addEvent('touchmove', this._mouseMoveListener);
 
-          // Register mouse up listeners ...
-          this._mouseUpListener = () => {
-            screenManager.removeEvent('mousemove', this._mouseMoveListener);
-            screenManager.removeEvent('mouseup', this._mouseUpListener);
-            screenManager.removeEvent('touchmove', this._mouseUpListener);
-            screenManager.removeEvent('touchend', this._mouseMoveListener);
+          const endPan = (isRelease: boolean) => {
+            // The listeners are all set together when the pan starts, before it can end.
+            const mouseMoveListener = this._mouseMoveListener!;
+            const mouseUpListener = this._mouseUpListener!;
+            const cancelPan = this._cancelPan!;
+            window.document.removeEventListener('mousemove', mouseMoveListener);
+            window.document.removeEventListener('mouseup', mouseUpListener);
+            screenManager.removeEvent('touchmove', mouseMoveListener);
+            screenManager.removeEvent('touchend', mouseUpListener);
+            screenManager.removeEvent('touchcancel', cancelPan);
+            window.removeEventListener('blur', cancelPan);
             this._mouseUpListener = null;
             this._mouseMoveListener = null;
+            this._cancelPan = null;
             window.document.body.style.cursor = 'default';
 
             // Update screen manager offset.
@@ -390,17 +454,27 @@ class Canvas {
             screenManager.setOffset(coordOrigin.x, coordOrigin.y);
             mWorkspace.enableWorkspaceEvents(true);
 
-            if (!wasDragged) {
+            if (isRelease && !wasDragged) {
               screenManager.fireEvent('click');
             }
           };
-          screenManager.addEvent('mouseup', this._mouseUpListener);
+          // The button can be released where no mouseup reaches the page (another window) ...
+          this._cancelPan = () => endPan(false);
+
+          // Register mouse up listeners ...
+          this._mouseUpListener = () => endPan(true);
+          window.document.addEventListener('mouseup', this._mouseUpListener);
           screenManager.addEvent('touchend', this._mouseUpListener);
+          screenManager.addEvent('touchcancel', this._cancelPan);
+          window.addEventListener('blur', this._cancelPan);
         }
       } else {
-        this._mouseUpListener();
+        // A press while a pan is in progress (the release never reached the page, or a second
+        // button or finger): end the pan, but it is not a release, so it must not fire a click.
+        this._cancelPan!();
       }
     };
+    this._mouseDownListener = mouseDownListener;
     screenManager.addEvent('mousedown', mouseDownListener);
     screenManager.addEvent('touchstart', mouseDownListener);
   }

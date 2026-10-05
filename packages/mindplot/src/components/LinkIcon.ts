@@ -49,24 +49,18 @@ class LinkIcon extends ImageIcon {
     const topic = this._topic;
 
     // Hover tooltip ...
-    const designerInstance = (globalThis as Record<string, unknown>).designer as
-      | {
-          getWidgetManager: () => { createTooltipForLink: (...args: unknown[]) => void };
-          fireEvent: (...args: unknown[]) => void;
-        }
-      | undefined;
-
-    if (!designerInstance) {
+    const designer = topic.getDesigner();
+    if (!designer) {
       console.warn('LinkIcon: designer not provided. Tooltips will be disabled.');
       return;
     }
 
-    const wm = designerInstance.getWidgetManager();
+    const wm = designer.getWidgetManager();
     wm.createTooltipForLink(this._topic, this._linksModel, this);
 
     if (!this._readOnly) {
       this.getElement().addEvent('click', (evt) => {
-        designerInstance.fireEvent('featureEdit', { event: 'link', topic });
+        designer.fireEvent('featureEdit', { event: 'link', topic });
         evt.stopPropagation();
       });
     }

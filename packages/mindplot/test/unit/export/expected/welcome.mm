@@ -1,6 +1,6 @@
 <map version="1.0.1">
     <node ID="ID_1" TEXT="Welcome To WiseMapping" COLOR="#ffffff">
-        <icon BUILTIN="sign_info"/>
+        <icon BUILTIN="info"/>
         <node ID="ID_30" POSITION="right" STYLE="fork" LINK="https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE">
             <richcontent TYPE="NODE">
                 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,7 +14,7 @@
             <arrowlink DESTINATION="ID_11" STARTARROW="Default"/>
         </node>
         <node ID="ID_11" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Try it Now!">
-            <edge COLOR="#080559"/>
+            <icon BUILTIN="smiley-oh"/>
             <node ID="ID_12" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Double Click"/>
             <node ID="ID_13" POSITION="left" STYLE="fork">
                 <richcontent TYPE="NODE">
@@ -39,7 +39,9 @@
                 <node ID="ID_18" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Topic Color"/>
             </node>
             <node ID="ID_20" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Icons"/>
-            <node ID="ID_21" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="History Changes"/>
+            <node ID="ID_21" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="History Changes">
+                <icon BUILTIN="back"/>
+            </node>
         </node>
         <node ID="ID_6" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Mind Mapping">
             <node ID="ID_7" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Share with Collegues"/>
@@ -48,20 +50,24 @@
             <node ID="ID_10" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Free!!!"/>
         </node>
         <node ID="ID_2" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Productivity">
-            <node ID="ID_3" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Share your ideas"/>
+            <node ID="ID_3" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Share your ideas">
+                <icon BUILTIN="idea"/>
+            </node>
             <node ID="ID_4" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Brainstorming"/>
             <node ID="ID_5" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Visual "/>
         </node>
         <node ID="ID_27" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Install In Your Server">
             <node ID="ID_29" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Open Source" LINK="http://www.wisemapping.org/">
-                <icon BUILTIN="soft_penguin"/>
+                <icon BUILTIN="penguin"/>
             </node>
             <node ID="ID_28" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Download" LINK="http://www.wisemapping.com/inyourserver.html"/>
         </node>
         <node ID="ID_32" POSITION="left" STYLE="fork" TEXT="Collaborate">
             <node ID="ID_33" POSITION="left" STYLE="fork" TEXT="Embed"/>
             <node ID="ID_34" POSITION="left" STYLE="fork" TEXT="Publish"/>
-            <node ID="ID_35" POSITION="left" STYLE="fork" TEXT="Share for Edition"/>
+            <node ID="ID_35" POSITION="left" STYLE="fork" TEXT="Share for Edition">
+                <icon BUILTIN="Mail"/>
+            </node>
         </node>
     </node>
 </map>

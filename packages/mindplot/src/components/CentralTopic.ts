@@ -21,7 +21,7 @@ import Topic from './Topic';
 import Shape from './util/Shape';
 
 class CentralTopic extends Topic {
-  buildDragShape() {
+  buildDragShape(): undefined {
     // Ignore ..
   }
 
@@ -56,10 +56,6 @@ class CentralTopic extends Topic {
 
   setCursor(type: string): void {
     super.setCursor(type === 'move' ? 'default' : type);
-  }
-
-  updateTopicShape(): boolean {
-    return true;
   }
 
   updatePositionOnChangeSize(): void {

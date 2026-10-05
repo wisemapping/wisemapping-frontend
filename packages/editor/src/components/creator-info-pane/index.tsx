@@ -32,7 +32,7 @@ const CreatorInfoPanel = ({ mapInfo, showInfo = true }: CreatorInfoPanel): React
   const logoSrc = mode === 'dark' ? LogoTextWhiteSvg : LogoTextBlackSvg;
 
   return (
-    <CreatorInfoContainer>
+    <CreatorInfoContainer data-canvas-inset="bottom">
       <a href="https://www.wisemapping.com/" target="_blanc">
         <img
           src={logoSrc}

@@ -23,6 +23,8 @@ import RootedTreeSet from './RootedTreeSet';
 import SizeType from '../SizeType';
 import PositionType from '../PositionType';
 import ChildrenSorterStrategy from './ChildrenSorterStrategy';
+import AbstractBasicSorter from './AbstractBasicSorter';
+import LayoutPass from './LayoutPass';
 import type { OrientationType } from './LayoutType';
 
 class OriginalLayout {
@@ -83,7 +85,14 @@ class OriginalLayout {
       const sorter = node.getSorter();
       const heightById = sorter.computeChildrenIdByHeights(this._treeSet, node);
 
-      this.layoutChildren(node, heightById);
+      // The mind map sorters lay the branches out by these same heights: measure them only once.
+      const pass = new LayoutPass(this._treeSet, node);
+      pass.seedExtents(
+        AbstractBasicSorter.heightExtentKey(sorter.getVerticalPadding()),
+        heightById,
+      );
+
+      this.layoutChildren(node, heightById, pass);
       // this.fixOverlapping(node, heightById);
     });
   }
@@ -145,59 +154,62 @@ class OriginalLayout {
     });
   }
 
-  private layoutChildren(node: Node, heightById: Map<number, number>): void {
-    const nodeId = node.getId();
+  /**
+   * Places the children of `node` around it, then their own children, down the tree. Every
+   * parent is laid out on every pass: where its children go depends on their sizes, orders and
+   * branches, on its own size, position and side, and on the shape of the tree, which is more
+   * than a change flag can tell. With the branches measured once per pass, laying a parent out
+   * costs a walk of its children, and a child already in place is not moved, so a pass that
+   * changes nothing moves nothing.
+   */
+  private layoutChildren(node: Node, heightById: Map<number, number>, pass: LayoutPass): void {
     const children = this._treeSet.getChildren(node);
-    const parent = this._treeSet.getParent(node);
-
-    const childrenOrderMoved = children.some((child) => child.hasOrderChanged());
-    const childrenSizeChanged = children.some((child) => child.hasSizeChanged());
-
-    // If ether any of the nodes has been changed of position or the height of the children is not
-    // the same, children nodes must be repositioned ....
-    const newBranchHeight = heightById.get(nodeId)!;
-
-    const parentHeightChanged = parent ? parent._heightChanged : false;
-    const heightChanged = node._branchHeight !== newBranchHeight;
-    node._heightChanged = heightChanged || parentHeightChanged;
-
-    if (childrenOrderMoved || childrenSizeChanged || heightChanged || parentHeightChanged) {
-      const sorter = node.getSorter();
-      const offsetById = sorter.computeOffsets(this._treeSet, node);
-      const parentPosition = node.getPosition();
-
-      children.forEach((child) => {
-        const offset = offsetById.get(child.getId())!;
-
-        const parentX = parentPosition.x;
-        const parentY = parentPosition.y;
-
-        const newPos = {
-          x: parentX + offset.x,
-          y: parentY + offset.y + this.calculateAlignOffset(node, child, heightById),
-        };
-        this._treeSet.updateBranchPosition(child, newPos);
-      });
-
-      node._branchHeight = newBranchHeight;
+    if (children.length === 0) {
+      return;
     }
+
+    const sorter = node.getSorter();
+    const offsetById = sorter.computeOffsets(this._treeSet, node, pass.extentsFor(sorter));
+    const parentPosition = node.getPosition();
+    const hasSiblings = children.length > 1;
+
+    children.forEach((child) => {
+      const offset = offsetById.get(child.getId())!;
+
+      const newPos = {
+        x: parentPosition.x + offset.x,
+        y:
+          parentPosition.y +
+          offset.y +
+          this.calculateAlignOffset(node, child, heightById, hasSiblings),
+      };
+      pass.moveBranch(child, newPos);
+    });
 
     // Continue reordering the children nodes ...
     children.forEach((child) => {
-      this.layoutChildren(child, heightById);
+      this.layoutChildren(child, heightById, pass);
     });
   }
 
-  private calculateAlignOffset(node: Node, child: Node, heightById: Map<number, number>): number {
+  /**
+   * @param hasSiblings whether `node` has other children than `child`, as getSiblings(child)
+   * would tell, without filtering the children of `node` for each of them.
+   */
+  private calculateAlignOffset(
+    node: Node,
+    child: Node,
+    heightById: Map<number, number>,
+    hasSiblings: boolean,
+  ): number {
     let offset = 0;
 
     const nodeHeight = node.getSize().height;
     const childHeight = child.getSize().height;
 
-    if (
-      this._treeSet.isStartOfSubBranch(child) &&
-      OriginalLayout._branchIsTaller(child, heightById)
-    ) {
+    // The start of a sub-branch: a child with siblings and a single child of its own.
+    const isStartOfSubBranch = hasSiblings && this._treeSet.getChildren(child).length === 1;
+    if (isStartOfSubBranch && OriginalLayout._branchIsTaller(child, heightById)) {
       if (this._treeSet.hasSinglePathToSingleLeaf(child)) {
         offset =
           heightById.get(child.getId())! / 2 -
@@ -206,13 +218,13 @@ class OriginalLayout {
         offset = this._treeSet.isLeaf(child) ? 0 : -(childHeight - nodeHeight) / 2;
       }
     } else if (nodeHeight > childHeight) {
-      if (this._treeSet.getSiblings(child).length > 0) {
+      if (hasSiblings) {
         offset = 0;
       } else {
         offset = nodeHeight / 2 - childHeight / 2;
       }
     } else if (childHeight > nodeHeight) {
-      if (this._treeSet.getSiblings(child).length > 0) {
+      if (hasSiblings) {
         offset = 0;
       } else {
         offset = -(childHeight / 2 - nodeHeight / 2);

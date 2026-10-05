@@ -189,8 +189,8 @@ class Mindmap extends IMindmap {
     this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
-  findNodeById(id: number) {
-    let result;
+  findNodeById(id: number): INodeModel | undefined {
+    let result: INodeModel | undefined;
     for (let i = 0; i < this._branches.length; i++) {
       const branch = this._branches[i];
       result = branch.findNodeById(id);
@@ -198,6 +198,24 @@ class Mindmap extends IMindmap {
         break;
       }
     }
+    return result;
+  }
+
+  /**
+   * The ids of every node of the map, in one walk: to check many ids, use this rather than
+   * findNodeById, which walks the map on each call. findNodeById finds no node for NaN, so it is
+   * left out.
+   */
+  getNodeIds(): Set<number> {
+    const result = new Set<number>();
+    const collect = (node: INodeModel): void => {
+      const id = node.getId();
+      if (!Number.isNaN(id)) {
+        result.add(id);
+      }
+      node.getChildren().forEach(collect);
+    };
+    this._branches.forEach(collect);
     return result;
   }
 

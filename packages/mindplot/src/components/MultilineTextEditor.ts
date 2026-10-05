@@ -36,6 +36,9 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 
   private _onClose: () => void;
 
+  // Animation frame of the pending layout of the live preview, if any.
+  private _pendingRelayout: number | null = null;
+
   constructor(topic: Topic, onClose: () => void) {
     super();
     this._topic = topic;
@@ -47,7 +50,8 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       mindmapComp.parentElement.appendChild(this._containerElem);
     }
     this.registerEvents(this._containerElem);
-    this._oldText = topic.getText();
+    // Use the model text: getText() falls back to the theme placeholder for empty topics ...
+    this._oldText = topic.getModel().getText();
     this._onClose = onClose;
   }
 
@@ -87,13 +91,20 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
   private registerEvents(containerElem: HTMLElement): void {
     const textareaElem = this.getTextareaElem();
     EventManager.bind(textareaElem, 'keydown', (event: Event) => {
-      switch ((event as KeyboardEvent).code) {
+      const keyboardEvent = event as KeyboardEvent;
+
+      // Keys pressed while an IME (zh, ja, ko) is composing belong to the IME ...
+      if (keyboardEvent.isComposing || keyboardEvent.keyCode === 229) {
+        event.stopPropagation();
+        return;
+      }
+
+      switch (keyboardEvent.code) {
         case 'Escape':
           // Revert to previous text ...
           this.close(false);
           break;
         case 'Enter': {
-          const keyboardEvent = event as KeyboardEvent;
           if (keyboardEvent.metaKey || keyboardEvent.ctrlKey) {
             keyboardEvent.preventDefault();
 
@@ -111,6 +122,9 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
             const newCursorPosition = selectionStart + 1;
             textareaElem.setSelectionRange(newCursorPosition, newCursorPosition);
           } else {
+            // Without this, the browser adds the new line to the textarea after closing,
+            // and the input listener would write it into the topic ...
+            keyboardEvent.preventDefault();
             this.close(true);
           }
           break;
@@ -122,24 +136,26 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       event.stopPropagation();
     });
 
+    // The designer opens the editor on keypress, so keep it from reaching the document ...
     EventManager.bind(textareaElem, 'keypress', (event: Event) => {
-      const keyboardEvent = event as KeyboardEvent;
-      const c = keyboardEvent.key;
-
-      // Skip special keys that shouldn't be added to text
-      if (
-        c.length === 1 &&
-        !keyboardEvent.ctrlKey &&
-        !keyboardEvent.metaKey &&
-        !keyboardEvent.altKey
-      ) {
-        const text = DOMUtils.val(this.getTextareaElem()) + c;
-        this._topic.setText(text);
-        this.resize(text);
-
-        this.fireEvent('input', [event, text]);
-      }
       event.stopPropagation();
+    });
+
+    // Sync the topic on every change, including paste, delete and IME input ...
+    EventManager.bind(textareaElem, 'input', (event: Event) => {
+      // Once closed, the text has been committed and the editor is gone ...
+      if (!containerElem.isConnected) {
+        return;
+      }
+      const text = this.getTextAreaText();
+      this._topic.setText(text);
+
+      // Size the editor now, but lay the map out once per frame: several input events
+      // can arrive within a frame (fast typing on a large map, key repeat, IME).
+      this.sizeToText(text);
+      this.scheduleRelayout();
+
+      this.fireEvent('input', [event, text]);
     });
 
     // If the user clicks on the input, all event must be ignored ...
@@ -163,6 +179,37 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
   }
 
   private resize(text?: string): void {
+    this.relayout();
+    this.sizeToText(text || this.getTextAreaText());
+  }
+
+  private scheduleRelayout(): void {
+    if (typeof requestAnimationFrame !== 'function') {
+      this.relayout();
+      return;
+    }
+    if (this._pendingRelayout === null) {
+      this._pendingRelayout = requestAnimationFrame(() => {
+        this._pendingRelayout = null;
+        // Closing lays the map out itself ...
+        if (this._containerElem.isConnected) {
+          this.relayout();
+        }
+      });
+    }
+  }
+
+  private cancelRelayout(): void {
+    if (this._pendingRelayout !== null) {
+      cancelAnimationFrame(this._pendingRelayout);
+      this._pendingRelayout = null;
+    }
+  }
+
+  private relayout(): void {
+    // A synchronous layout makes the pending one useless ...
+    this.cancelRelayout();
+
     // Force relayout ...
     LayoutEventBus.fireEvent('forceLayout');
 
@@ -175,8 +222,10 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 
     const mindmapCompData = document.getElementById('mindmap-comp')?.getBoundingClientRect();
     const maxWidth = mindmapCompData ? mindmapCompData.width - left : 0;
+    DOMUtils.css(this._containerElem, 'maxWidth', `${maxWidth}px`);
+  }
 
-    const textValue = text || this.getTextAreaText();
+  private sizeToText(textValue: string): void {
     const textElem = this.getTextareaElem();
 
     const rows = [...textValue].filter((x) => x === '\n').length + 1;
@@ -185,7 +234,6 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     DOMUtils.attr(textElem, 'cols', maxLineLength.toString());
     DOMUtils.attr(textElem, 'rows', rows.toString());
 
-    DOMUtils.css(this._containerElem, 'maxWidth', `${maxWidth}px`);
     DOMUtils.css(this._containerElem, 'width', `${maxLineLength + 2}em`);
     DOMUtils.css(this._containerElem, 'height', '0');
   }
@@ -264,7 +312,7 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       // No need to assign to itself, just keep the existing value
     }
 
-    const cssStyle = {
+    const cssStyle: Record<string, string> = {
       'font-size': `${fontStyle.size}px`,
       'font-family': fontStyle.fontFamily,
       'font-style': fontStyle.style,
@@ -302,6 +350,8 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
   }
 
   close(update: boolean): void {
+    this.cancelRelayout();
+
     // Revert to all text ...
     this._topic.setText(this._oldText);
 

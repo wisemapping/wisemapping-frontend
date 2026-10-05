@@ -24,27 +24,7 @@ import iconFamily from './model/SvgIconFamily.json';
 import Topic from './Topic';
 import SvgIconModel from './model/SvgIconModel';
 import { mapIconNameToAsset } from './IconMapping';
-
-// Create icon URL mapping using webpack's require.context
-// This works consistently in both development and production since webpack
-// inlines SVG files as data URLs in both environments
-const images: { [key: string]: string } = {};
-
-// Initialize icon URLs using webpack's require.context
-// Initialize icon URLs using Vite's import.meta.glob
-const initializeIcons = () => {
-  const iconModules = import.meta.glob('../../assets/icons/*.{svg,png}', { eager: true });
-
-  Object.keys(iconModules).forEach((path) => {
-    // path is like "../../assets/icons/iconName.svg"
-    const filenameWithExt = path.split('/').pop();
-    if (filenameWithExt) {
-      const mod = iconModules[path] as { default: string } | string;
-      const url = typeof mod === 'object' && 'default' in mod ? mod.default : (mod as string);
-      images[filenameWithExt] = url;
-    }
-  });
-};
+import images from './SvgIconAssets';
 
 // Get image URL with fallback handling
 const originalGetImageUrl = (iconId: string): string => {
@@ -63,8 +43,6 @@ const originalGetImageUrl = (iconId: string): string => {
   return result;
 };
 
-initializeIcons();
-
 class SvgImageIcon extends ImageIcon {
   private _topicId: number;
 
@@ -82,16 +60,22 @@ class SvgImageIcon extends ImageIcon {
     this._topicId = topic.getId();
     this._featureModel = iconModel;
 
+    // Follow the icon type when a command changes it, e.g. on click or undo.
+    iconModel.setChangeListener(() => {
+      const url = SvgImageIcon.getImageUrl(iconModel.getIconType());
+      (this.getElement() as Image).setHref(url);
+    });
+
     if (!readOnly) {
       // Icon
       const image = this.getElement();
       image.addEvent('click', () => {
         const iconTypeClick = iconModel.getIconType();
         const newIconType = SvgImageIcon._getNextFamilyIconId(iconTypeClick);
-        iconModel.setIconType(newIconType);
-
-        const url = SvgImageIcon.getImageUrl(newIconType);
-        (this.getElement() as Image).setHref(url);
+        // Through the dispatcher, so it can be undone and the map is saved.
+        ActionDispatcher.getInstance().changeFeatureToTopic(this._topicId, iconModel.getId(), {
+          id: newIconType,
+        });
       });
       this.getElement().setCursor('pointer');
     }
@@ -107,7 +91,9 @@ class SvgImageIcon extends ImageIcon {
     return this._featureModel;
   }
 
-  private static _getNextFamilyIconId(iconId: string): string {
+  private static _getNextFamilyIconId(storedIconId: string): string {
+    // Icons can be stored with a descriptive name (e.g. 'home'): cycle from the icon it shows.
+    const iconId = mapIconNameToAsset(storedIconId.toLowerCase());
     const familyIcons = SvgImageIcon._getFamilyIcons(iconId);
     $assert(familyIcons !== null, `Family Icon not found: ${iconId}`);
 

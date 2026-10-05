@@ -421,7 +421,7 @@ export default class RestClient implements Client {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
         .post(`${this.baseUrl}/api/restful/maps/${id}/history/${hid}`, null, {
-          headers: { 'Content-Type': 'text/pain' },
+          headers: { 'Content-Type': 'text/plain' },
         })
         .then(() => {
           success();

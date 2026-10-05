@@ -39,10 +39,6 @@ class Node {
 
   _children!: Node[];
 
-  _branchHeight: number;
-
-  _heightChanged: boolean;
-
   constructor(id: number, size: SizeType, position: PositionType, sorter: ChildrenSorterStrategy) {
     $assert(typeof id === 'number' && Number.isFinite(id), 'id can not be null');
     this._id = id;
@@ -52,8 +48,6 @@ class Node {
     this.setSize(size);
     this.setPosition(position);
     this.setShrunken(false);
-    this._branchHeight = -1;
-    this._heightChanged = false;
   }
 
   getId(): number {
@@ -140,7 +134,7 @@ class Node {
     // Position is always set in constructor, but TypeScript can't verify this
     // Use assertion since we know it's always defined
     $assert(position !== undefined, 'Position should always be defined');
-    return position!;
+    return position;
   }
 
   setSize(size: SizeType): void {
@@ -165,7 +159,7 @@ class Node {
     // Size is always set in constructor, but TypeScript can't verify this
     // Use assertion since we know it's always defined
     $assert(size !== undefined, 'Size should always be defined');
-    return size!;
+    return size;
   }
 
   setFreeDisplacement(displacement: PositionType): void {
@@ -190,9 +184,12 @@ class Node {
 
   setPosition(position: PositionType): void {
     // This is a performance improvement to avoid movements that really could be avoided.
+    // A current position without finite coordinates compares as NaN: always replace it.
     const currentPos = this.getProperty('position') as PositionType | undefined;
     if (
       !currentPos ||
+      !Number.isFinite(currentPos.x) ||
+      !Number.isFinite(currentPos.y) ||
       Math.abs(currentPos.x - position.x) > 0.5 ||
       Math.abs(currentPos.y - position.y) > 0.5
     ) {

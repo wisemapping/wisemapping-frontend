@@ -16,54 +16,76 @@
  *   limitations under the License.
  */
 
+import { unzipSync } from 'fflate';
 import Importer from './Importer';
+import ImportError from './ImportError';
 import SecureXmlParser from '../security/SecureXmlParser';
+import Mindmap from '../model/Mindmap';
+import NodeModel from '../model/NodeModel';
+import NoteModel from '../model/NoteModel';
+import FeatureModelFactory from '../model/FeatureModelFactory';
+import { StrokeStyle } from '../model/RelationshipModel';
+import ContentType from '../ContentType';
+import HtmlSanitizer from '../security/HtmlSanitizer';
+import { decodeUtf8 } from './support/Utf8Decoder';
+import toWiseMappingXml from './support/MindmapXml';
 
 interface MindManagerTopic {
-  id: string;
+  // Topics without an ID or OId can not be referenced, so they are not mapped.
+  id?: string;
   text: string;
   notes?: string;
+  // The XHTML of the note, sanitized. Preferred to the plain text notes.
+  notesHtml?: string;
   hyperlink?: string;
-  icon?: string;
-  color?: string;
+  icons: string[];
+  fillColor?: string;
+  lineColor?: string;
+  // In millimeters. For a floating topic, its position from the central topic. For a subtopic, a
+  // layout hint: CX is the distance from the parent, its sign the side; CY is not a position.
+  offset?: { x: number; y: number };
   children?: MindManagerTopic[];
+  floating?: MindManagerTopic[];
 }
 
+// The prefix of the MindManager stock icon types (urn:mindjet:SmileyHappy) and task priorities.
+const MINDJET_URN = 'urn:mindjet:';
+
+// Offsets are in millimeters; WiseMapping positions are in pixels (96 dpi).
+const PIXELS_PER_MILLIMETER = 96 / 25.4;
+
+type MindManagerRawInput = string | ArrayBuffer | Uint8Array;
+
+// The style defaults of a topic: those of the central topic and its subtopics, of the floating
+// topics of the map or of the callouts of a topic (StyleGroup/RootTopicDefaultsGroup, ...).
+type TopicKind = 'Root' | 'Label' | 'Callout';
+
 class MindManagerImporter extends Importer {
-  private mindManagerInput: string;
+  private mindManagerInput: MindManagerRawInput;
 
   private idCounter: number = 1;
 
-  private topicIdMap: Map<string, string>;
+  private topicIdMap: Map<string, number>;
 
-  constructor(map: string) {
+  private styleGroup: Element | null = null;
+
+  constructor(map: MindManagerRawInput) {
     super();
     this.mindManagerInput = map;
     this.topicIdMap = new Map();
   }
 
-  private generateId(): string {
-    return (this.idCounter++).toString();
+  private generateId(): number {
+    return this.idCounter++;
   }
 
-  private calculatePosition(order: number): { x: number; y: number } {
-    // Even orders go to the right, odd orders go to the left
-    const side = order % 2 === 0 ? 1 : -1;
-    const sideIndex = Math.floor(order / 2);
-
+  // The initial position of the topic at the given index among the siblings on its side. The
+  // layout places the topics by their order.
+  private calculatePosition(sideIndex: number, side: number): { x: number; y: number } {
     const x = side * (200 + sideIndex * 100);
     const y = sideIndex * 75;
 
     return { x, y };
-  }
-
-  private escapeXml(text: string): string {
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
   }
 
   private buildNoteContent(notes?: string): string {
@@ -152,107 +174,279 @@ class MindManagerImporter extends Importer {
       email: '📧',
       internet: '🌐',
 
+      // Stock icons of the MindManager document schema (IconType="urn:mindjet:...")
+      SmileyHappy: '😃',
+      SmileyNeutral: '😐',
+      SmileySad: '😢',
+      SmileyAngry: '😠',
+      SmileyScreaming: '😱',
+      Clock: '🕐',
+      Calendar: '📅',
+      Letter: '✉️',
+      Email: '📧',
+      Mailbox: '📫',
+      Megaphone: '📣',
+      House: '🏠',
+      Rolodex: '📇',
+      Dollar: '💲',
+      Euro: '💶',
+      FlagRed: '🔴',
+      FlagBlue: '🔵',
+      FlagGreen: '🟢',
+      FlagBlack: '⚫',
+      FlagOrange: '🟠',
+      FlagYellow: '🟡',
+      FlagPurple: '🟣',
+      TrafficLightsRed: '🚦',
+      PadlockLocked: '🔒',
+      PadlockUnlocked: '🔓',
+      ArrowUp: '⬆️',
+      ArrowDown: '⬇️',
+      ArrowLeft: '⬅️',
+      ArrowRight: '➡️',
+      TwoEndArrow: '↔️',
+      Phone: '📞',
+      Cellphone: '📱',
+      Camera: '📷',
+      Fax: '📠',
+      Stop: '🛑',
+      ExclamationMark: '❗',
+      QuestionMark: '❓',
+      ThumbsUp: '👍',
+      ThumbsDown: '👎',
+      OnHold: '⏸️',
+      Hourglass: '⏳',
+      Emergency: '🚨',
+      NoEntry: '⛔',
+      Bomb: '💣',
+      Key: '🔑',
+      Glasses: '👓',
+      JudgeHammer: '🔨',
+      Rocket: '🚀',
+      Scales: '⚖️',
+      Redo: '🔁',
+      Lightbulb: '💡',
+      CoffeeCup: '☕',
+      TwoFeet: '👣',
+      Meeting: '👥',
+      Check: '✅',
+      Note: '📝',
+      Book: '📖',
+      MagnifyingGlass: '🔍',
+      BrokenConnection: '⛓️',
+      Information: 'ℹ️',
+      Folder: '📁',
+      // Task priorities (TaskPriority="urn:mindjet:Prio1")
+      Prio1: '🔴',
+      Prio2: '🟡',
+      Prio3: '🟢',
+      Prio4: '🔵',
+      Prio5: '🟣',
+      Prio6: '6️⃣',
+      Prio7: '7️⃣',
+      Prio8: '8️⃣',
+      Prio9: '9️⃣',
+
       // Default fallback
     };
 
-    return iconMappings[iconId.toLowerCase()] || '💡';
+    return iconMappings[iconId] || iconMappings[iconId.toLowerCase()] || '💡';
   }
 
-  private generateWiseMappingXML(
-    rootTopic: MindManagerTopic,
-    nameMap: string,
-    _description?: string,
-  ): string {
-    const centralId = this.generateId();
-    this.topicIdMap.set(rootTopic.id, centralId.toString());
+  private buildMindmap(rootTopic: MindManagerTopic, nameMap: string, doc: Document): Mindmap {
+    const mindmap = new Mindmap(nameMap);
+    mindmap.setTheme('prism');
+    mindmap.setLayout('mindmap');
 
-    let xml = `<map name='${nameMap}' version='tango' theme='prism' layout='mindmap'>\n`;
+    const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
+    this.mapTopicId(rootTopic, centralTopic);
+    centralTopic.setText(rootTopic.text);
+    this.addFeatures(centralTopic, rootTopic);
+    mindmap.addBranch(centralTopic);
 
-    // Generate central topic
-    xml += `    <topic central='true' text='${this.escapeXml(rootTopic.text)}' id='${centralId}'>\n`;
-
-    // Generate child topics recursively
-    if (rootTopic.children && rootTopic.children.length > 0) {
-      xml += this.generateChildTopicsXML(rootTopic.children, 0);
-    }
-
-    xml += '    </topic>\n';
-
-    // Add relationships if present
-    const relationshipsXML = this.generateRelationshipsXML();
-    if (relationshipsXML) {
-      xml += relationshipsXML;
-    }
-
-    xml += '</map>';
-
-    return xml;
-  }
-
-  private generateChildTopicsXML(topics: MindManagerTopic[], depth: number): string {
-    let xml = '';
-
-    topics.forEach((topic, index) => {
-      const topicId = this.generateId();
-      this.topicIdMap.set(topic.id, topicId.toString());
-      const position = this.calculatePosition(index);
-
-      xml += `        <topic position='${position.x},${position.y}' order='${index}' text='${this.escapeXml(topic.text)}' shape='line' id='${topicId}'`;
-
-      // Add color if present
-      if (topic.color) {
-        xml += ` bgColor='${topic.color}' brColor='${topic.color}'`;
-      }
-
-      xml += '>\n';
-
-      // Add icon if present
-      if (topic.icon) {
-        const emojiIcon = this.mapMindManagerIconToEmojiIcon(topic.icon);
-        xml += `            <eicon id='${emojiIcon}'/>\n`;
-      }
-
-      // Add notes if present
-      const noteContent = this.buildNoteContent(topic.notes);
-      if (noteContent) {
-        xml += `            <note><![CDATA[${noteContent}]]></note>\n`;
-      }
-
-      // Add hyperlink if present
-      if (topic.hyperlink) {
-        xml += `            <link url='${this.escapeXml(topic.hyperlink)}'/>\n`;
-      }
-
-      // Generate child topics recursively
-      if (topic.children && topic.children.length > 0) {
-        xml += this.generateChildTopicsXML(topic.children, depth + 1);
-      }
-
-      xml += '        </topic>\n';
+    // The main topics go on the side of their offset or, without one, on the side with fewer
+    // topics. Even orders are on the right, odd ones on the left, in document order on each side.
+    let right = 0;
+    let left = 0;
+    rootTopic.children?.forEach((topic) => {
+      const atLeft = topic.offset ? topic.offset.x < 0 : left < right;
+      const sideIndex = atLeft ? left++ : right++;
+      const order = atLeft ? 2 * sideIndex + 1 : 2 * sideIndex;
+      centralTopic.append(this.convertTopic(mindmap, topic, order, sideIndex, atLeft ? -1 : 1));
     });
 
-    return xml;
+    // Floating topics are isolated topics, placed at their offset from the central topic.
+    rootTopic.floating?.forEach((topic, index) => {
+      const node = this.convertTopic(mindmap, topic, index, index, 1);
+      const offset = topic.offset ?? { x: 0, y: (index + 1) * 100 };
+      node.setPosition(
+        Math.round(offset.x * PIXELS_PER_MILLIMETER),
+        Math.round(offset.y * PIXELS_PER_MILLIMETER),
+      );
+      mindmap.addBranch(node);
+    });
+
+    this.addRelationships(mindmap, doc);
+
+    return mindmap;
   }
 
-  private parseMindManagerXML(xmlContent: string): MindManagerTopic {
-    const doc = SecureXmlParser.parseSecureXml(xmlContent);
-    if (!doc) {
-      throw new Error('Failed to parse MindManager XML - content may be unsafe');
+  private convertTopic(
+    mindmap: Mindmap,
+    topic: MindManagerTopic,
+    order: number,
+    sideIndex: number,
+    side: number,
+  ): NodeModel {
+    const node = mindmap.createNode('MainTopic', this.generateId());
+    this.mapTopicId(topic, node);
+    const position = this.calculatePosition(sideIndex, side);
+    node.setText(topic.text);
+    node.setPosition(position.x, position.y);
+    node.setOrder(order);
+    node.setShapeType('line');
+    this.addFeatures(node, topic);
+
+    // Generate child topics recursively. They are on the side of their parent.
+    topic.children?.forEach((child, index) => {
+      node.append(this.convertTopic(mindmap, child, index, index, side));
+    });
+
+    // The floating topics of a topic are callouts attached to it: they are imported as its last
+    // children.
+    const childCount = topic.children?.length ?? 0;
+    topic.floating?.forEach((callout, index) => {
+      const calloutOrder = childCount + index;
+      node.append(this.convertTopic(mindmap, callout, calloutOrder, calloutOrder, side));
+    });
+
+    return node;
+  }
+
+  private mapTopicId(topic: MindManagerTopic, node: NodeModel): void {
+    if (topic.id) {
+      this.topicIdMap.set(topic.id, node.getId());
+    }
+  }
+
+  // The colors, icons, notes and link of a topic, the central one included.
+  private addFeatures(node: NodeModel, topic: MindManagerTopic): void {
+    if (topic.fillColor) {
+      node.setBackgroundColor(topic.fillColor);
+    }
+    const borderColor = topic.lineColor || topic.fillColor;
+    if (borderColor) {
+      node.setBorderColor(borderColor);
     }
 
+    topic.icons.forEach((icon) => {
+      const emojiIcon = this.mapMindManagerIconToEmojiIcon(icon);
+      node.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
+    });
+
+    if (topic.notesHtml) {
+      const note = new NoteModel({ text: topic.notesHtml });
+      note.setContentType(ContentType.HTML);
+      node.addFeature(note);
+    } else {
+      const noteContent = this.buildNoteContent(topic.notes);
+      if (noteContent) {
+        node.addFeature(new NoteModel({ text: noteContent }));
+      }
+    }
+
+    if (topic.hyperlink) {
+      node.addFeature(FeatureModelFactory.createModel('link', { url: topic.hyperlink }));
+    }
+  }
+
+  /**
+   * MindManager colors are 4 bytes in hex, alpha first (ff96b3df). A transparent color is no
+   * color. Colors written as #rrggbb are kept.
+   */
+  private static toColor(color: string | null | undefined): string | undefined {
+    const value = color?.trim();
+    if (!value) {
+      return undefined;
+    }
+    const argb = /^([0-9a-f]{2})([0-9a-f]{6})$/i.exec(value);
+    if (argb) {
+      return argb[1] === '00' ? undefined : `#${argb[2].toLowerCase()}`;
+    }
+    return value;
+  }
+
+  /**
+   * MindManager saves .mmap files as ZIP archives whose map is Document.xml. Plain XML is
+   * accepted too.
+   */
+  private static readDocument(input: MindManagerRawInput): string {
+    let bytes: Uint8Array;
+    if (typeof input === 'string') {
+      if (!input.startsWith('PK')) {
+        return input;
+      }
+      // A binary string, as read by FileReader.readAsBinaryString.
+      bytes = Uint8Array.from(input, (char) => char.charCodeAt(0) % 0x100);
+    } else {
+      bytes = input instanceof Uint8Array ? input : new Uint8Array(input);
+      const isZip = bytes.length > 1 && bytes[0] === 0x50 && bytes[1] === 0x4b; // "PK"
+      if (!isZip) {
+        return decodeUtf8(bytes);
+      }
+    }
+
+    const isDocument = (name: string): boolean => name.toLowerCase() === 'document.xml';
+    const files = unzipSync(bytes, { filter: (file) => isDocument(file.name) });
+    const entry = Object.keys(files).find(isDocument);
+    if (!entry) {
+      throw new Error('The MindManager archive does not contain Document.xml');
+    }
+    return decodeUtf8(files[entry]);
+  }
+
+  private parseMindManagerXML(doc: Document): MindManagerTopic {
     // Find Map element by tag name (ignoring namespace)
     const mapElement = this.findElementByTagName(doc, 'Map');
     if (!mapElement) {
       throw new Error('Invalid MindManager XML: missing Map element');
     }
 
-    // Find root Topic element
-    const rootTopic = this.findElementByTagName(mapElement, 'Topic');
+    // Find root Topic element. MindManager documents keep it in OneTopic.
+    const oneTopic = this.findChildByTagName(mapElement, 'OneTopic');
+    const rootTopic =
+      (oneTopic && this.findChildByTagName(oneTopic, 'Topic')) ||
+      this.findElementByTagName(mapElement, 'Topic');
     if (!rootTopic) {
       throw new Error('Invalid MindManager XML: missing root Topic');
     }
 
-    return this.parseTopic(rootTopic);
+    this.styleGroup = this.findChildByTagName(mapElement, 'StyleGroup');
+    return this.parseTopic(rootTopic, 'Root', 0);
+  }
+
+  /**
+   * MindManager does not write the text of a topic that keeps the default one of its level, for
+   * example "Main Topic". The default is the PlainText of the DefaultText of the StyleGroup:
+   * RootTopicDefaultsGroup for the central topic, and the RootSubTopicDefaultsGroup of the Level
+   * (depth - 1) for its subtopics. The deepest level that is defined applies below it.
+   */
+  private defaultText(kind: TopicKind, depth: number): string | undefined {
+    if (!this.styleGroup) {
+      return undefined;
+    }
+    let defaults: Element | null;
+    if (depth === 0) {
+      defaults = this.findChildByTagName(this.styleGroup, `${kind}TopicDefaultsGroup`);
+    } else {
+      const levels = this.findChildrenByTagName(this.styleGroup, `${kind}SubTopicDefaultsGroup`)
+        .map((group) => ({ group, level: Number(group.getAttribute('Level')) }))
+        .filter(({ level }) => Number.isInteger(level) && level <= depth - 1)
+        .sort((a, b) => b.level - a.level);
+      defaults = levels.length > 0 ? levels[0].group : null;
+    }
+    const text = defaults && this.findChildByTagName(defaults, 'DefaultText');
+    return text?.getAttribute('PlainText') || undefined;
   }
 
   private findElementByTagName(parent: Element | Document, tagName: string): Element | null {
@@ -271,103 +465,224 @@ class MindManagerImporter extends Importer {
     return null;
   }
 
-  private parseTopic(topicElement: Element): MindManagerTopic {
-    const id = topicElement.getAttribute('ID') || this.generateId();
-    const text = topicElement.getAttribute('Text') || 'Untitled';
+  // Only direct children: a descendant search would pick up the data of nested topics.
+  private findChildByTagName(parent: Element, tagName: string): Element | null {
+    return (
+      Array.from(parent.children).find(
+        (child) => child.localName === tagName || child.tagName === tagName,
+      ) || null
+    );
+  }
+
+  private findChildrenByTagName(parent: Element, tagName: string): Element[] {
+    return Array.from(parent.children).filter(
+      (child) => child.localName === tagName || child.tagName === tagName,
+    );
+  }
+
+  // Topics are written as <Topic ID Text> or, by MindManager, as <ap:Topic OId> with the text,
+  // notes and subtopics in child elements.
+  private parseTopic(topicElement: Element, kind: TopicKind, depth: number): MindManagerTopic {
+    const id = topicElement.getAttribute('ID') || topicElement.getAttribute('OId') || undefined;
+    const textElement = this.findChildByTagName(topicElement, 'Text');
+    const text =
+      topicElement.getAttribute('Text') ||
+      textElement?.getAttribute('PlainText') ||
+      this.defaultText(kind, depth) ||
+      'Untitled';
 
     const topic: MindManagerTopic = {
       id,
       text,
+      icons: [],
     };
 
     // Parse notes
-    const notesElement = this.findElementByTagName(topicElement, 'Notes');
+    const notesElement = this.findChildByTagName(topicElement, 'Notes');
+    const notesGroup = this.findChildByTagName(topicElement, 'NotesGroup');
+    const notesData = notesGroup && this.findChildByTagName(notesGroup, 'NotesXhtmlData');
     if (notesElement) {
       topic.notes = notesElement.textContent || '';
+    } else if (notesData) {
+      topic.notesHtml = MindManagerImporter.notesHtml(notesData);
+      topic.notes = notesData.getAttribute('PreviewPlainText') || '';
     }
 
     // Parse hyperlink
-    const hyperlinkElement = this.findElementByTagName(topicElement, 'Hyperlink');
+    const hyperlinkElement = this.findChildByTagName(topicElement, 'Hyperlink');
     if (hyperlinkElement) {
-      topic.hyperlink = hyperlinkElement.getAttribute('URL') || '';
+      topic.hyperlink =
+        hyperlinkElement.getAttribute('URL') || hyperlinkElement.getAttribute('Url') || '';
     }
 
-    // Parse icon
-    const iconElement = this.findElementByTagName(topicElement, 'Icon');
-    if (iconElement) {
-      topic.icon = iconElement.getAttribute('Name') || iconElement.textContent || '';
+    // Parse icons: <Icon Name>, or the stock icons of IconsGroup/Icons and the task priority
+    const iconElement = this.findChildByTagName(topicElement, 'Icon');
+    const iconName = iconElement && (iconElement.getAttribute('Name') || iconElement.textContent);
+    if (iconName) {
+      topic.icons.push(iconName);
     }
-
-    // Parse color
-    const colorElement = this.findElementByTagName(topicElement, 'Color');
-    if (colorElement) {
-      topic.color = colorElement.getAttribute('Value') || colorElement.textContent || '';
-    }
-
-    // Parse child topics - find direct child Topic elements
-    const childTopics: Element[] = [];
-    const allChildren = topicElement.children;
-    for (let i = 0; i < allChildren.length; i++) {
-      const child = allChildren[i];
-      if (child.localName === 'Topic' || child.tagName === 'Topic') {
-        childTopics.push(child);
+    const iconsGroup = this.findChildByTagName(topicElement, 'IconsGroup');
+    const icons = iconsGroup && this.findChildByTagName(iconsGroup, 'Icons');
+    (icons ? this.findChildrenByTagName(icons, 'Icon') : []).forEach((icon) => {
+      const iconType = icon.getAttribute('IconType');
+      if (iconType) {
+        topic.icons.push(iconType.replace(MINDJET_URN, ''));
       }
+    });
+    const priority = this.findChildByTagName(topicElement, 'Task')?.getAttribute('TaskPriority');
+    if (priority) {
+      topic.icons.push(priority.replace(MINDJET_URN, ''));
     }
+
+    // Parse colors: <Color Value>, or the FillColor and LineColor of the document schema
+    const colorElement = this.findChildByTagName(topicElement, 'Color');
+    if (colorElement) {
+      topic.fillColor = MindManagerImporter.toColor(
+        colorElement.getAttribute('FillColor') ||
+          colorElement.getAttribute('Value') ||
+          colorElement.textContent,
+      );
+      topic.lineColor = MindManagerImporter.toColor(colorElement.getAttribute('LineColor'));
+    }
+
+    const offsetElement = this.findChildByTagName(topicElement, 'Offset');
+    if (offsetElement) {
+      topic.offset = {
+        x: Number(offsetElement.getAttribute('CX')) || 0,
+        y: Number(offsetElement.getAttribute('CY')) || 0,
+      };
+    }
+
+    // Parse child topics: direct Topic children, or the Topics of SubTopics
+    const subTopics = this.findChildByTagName(topicElement, 'SubTopics');
+    const childTopics = [
+      ...this.findChildrenByTagName(topicElement, 'Topic'),
+      ...(subTopics ? this.findChildrenByTagName(subTopics, 'Topic') : []),
+    ];
 
     if (childTopics.length > 0) {
-      topic.children = childTopics.map((child) => this.parseTopic(child));
+      topic.children = childTopics.map((child) => this.parseTopic(child, kind, depth + 1));
+    }
+
+    // The floating topics of the central topic are the floating topics of the map; those of any
+    // other topic are its callouts.
+    const floatingTopics = this.findChildByTagName(topicElement, 'FloatingTopics');
+    if (floatingTopics) {
+      const floatingKind = kind === 'Root' && depth === 0 ? 'Label' : 'Callout';
+      topic.floating = this.findChildrenByTagName(floatingTopics, 'Topic').map((child) =>
+        this.parseTopic(child, floatingKind, 0),
+      );
     }
 
     return topic;
   }
 
-  private generateRelationshipsXML(): string {
-    // Parse the XML to find relationships
-    const doc = SecureXmlParser.parseSecureXml(this.mindManagerInput);
-    if (!doc) return '';
-
-    const relationshipsElement = this.findElementByTagName(doc, 'Relationships');
-    if (!relationshipsElement) return '';
-
-    let relationshipsXML = '';
-    const relationshipElements = relationshipsElement.getElementsByTagName('Relationship');
-
-    Array.from(relationshipElements).forEach((rel) => {
-      relationshipsXML += this.generateRelationshipXML(rel as Element);
-    });
-
-    return relationshipsXML;
+  /**
+   * NotesXhtmlData holds the note as an XHTML document (<html xmlns="http://www.w3.org/1999/xhtml">).
+   * It is sanitized like FreeMind notes, which drops the <html> and <body> wrappers and any script.
+   * Undefined if there is no XHTML, or it can not be sanitized: the preview text is used instead.
+   */
+  private static notesHtml(notesData: Element): string | undefined {
+    if (notesData.children.length === 0) {
+      return undefined;
+    }
+    try {
+      return HtmlSanitizer.sanitize(notesData.innerHTML).trim() || undefined;
+    } catch (error) {
+      console.warn('MindManager note could not be imported as HTML:', error);
+      return undefined;
+    }
   }
 
-  private generateRelationshipXML(relationshipElement: Element): string {
-    const fromTopicId = relationshipElement.getAttribute('FromTopicID');
-    const toTopicId = relationshipElement.getAttribute('ToTopicID');
-    const label = relationshipElement.getAttribute('Label') || '';
+  private addRelationships(mindmap: Mindmap, doc: Document): void {
+    const relationshipsElement = this.findElementByTagName(doc, 'Relationships');
+    if (!relationshipsElement) return;
+
+    // The style of the relationships that do not have their own (StyleGroup/RelationshipDefaultsGroup)
+    const defaults = this.findElementByTagName(doc, 'RelationshipDefaultsGroup');
+    const defaultLineStyle = defaults && this.findChildByTagName(defaults, 'DefaultLineStyle');
+    const defaultStrokeStyle =
+      MindManagerImporter.toStrokeStyle(defaultLineStyle?.getAttribute('LineDashStyle')) ??
+      // MindManager draws relationships dashed by default.
+      StrokeStyle.DASHED;
+
+    this.findChildrenByTagName(relationshipsElement, 'Relationship').forEach((rel) => {
+      this.addRelationship(mindmap, rel, defaultStrokeStyle);
+    });
+  }
+
+  /**
+   * The stroke style of a LineDashStyle (urn:mindjet:Solid, RoundDot, SquareDot, Dash, DashDot,
+   * LongDash, LongDashDot, LongDashDotDot), undefined if it is not one.
+   */
+  private static toStrokeStyle(lineDashStyle: string | null | undefined): StrokeStyle | undefined {
+    switch (lineDashStyle?.replace(MINDJET_URN, '')) {
+      case 'Solid':
+        return StrokeStyle.SOLID;
+      case 'RoundDot':
+      case 'SquareDot':
+        return StrokeStyle.DOTTED;
+      case 'Dash':
+      case 'DashDot':
+      case 'LongDash':
+      case 'LongDashDot':
+      case 'LongDashDotDot':
+        return StrokeStyle.DASHED;
+      default:
+        return undefined;
+    }
+  }
+
+  // MindManager writes the ends of a relationship as ConnectionGroups (Index 0 and 1) that
+  // reference the topic OIds.
+  private connectionEnd(relationshipElement: Element, index: string): string | null {
+    const group = this.findChildrenByTagName(relationshipElement, 'ConnectionGroup').find(
+      (candidate) => candidate.getAttribute('Index') === index,
+    );
+    const connection = group && this.findChildByTagName(group, 'Connection');
+    const reference = connection && this.findChildByTagName(connection, 'ObjectReference');
+    return reference ? reference.getAttribute('OIdRef') : null;
+  }
+
+  private addRelationship(
+    mindmap: Mindmap,
+    relationshipElement: Element,
+    defaultStrokeStyle: StrokeStyle,
+  ): void {
+    const fromTopicId =
+      relationshipElement.getAttribute('FromTopicID') ||
+      this.connectionEnd(relationshipElement, '0');
+    const toTopicId =
+      relationshipElement.getAttribute('ToTopicID') || this.connectionEnd(relationshipElement, '1');
     const lineStyle = relationshipElement.getAttribute('LineStyle') || '';
 
-    if (!fromTopicId || !toTopicId) return '';
+    if (!fromTopicId || !toTopicId) return;
 
     // Map MindManager IDs to WiseMapping IDs
     const srcTopicId = this.topicIdMap.get(fromTopicId);
     const destTopicId = this.topicIdMap.get(toTopicId);
 
-    if (!srcTopicId || !destTopicId) return '';
+    if (!srcTopicId || !destTopicId) return;
 
-    let relationshipXML = `    <relationship srcTopicId='${srcTopicId}' destTopicId='${destTopicId}'`;
+    const relationship = mindmap.createRelationship(srcTopicId, destTopicId);
 
-    if (label) {
-      relationshipXML += ` label='${this.escapeXml(label)}'`;
-    }
-
-    // Map line style
+    // Map line style: the LineStyle attribute, or the LineDashStyle of the LineStyle element of
+    // the document schema
+    const lineStyleElement = this.findChildByTagName(relationshipElement, 'LineStyle');
     if (lineStyle === 'Dashed') {
-      relationshipXML += " lineType='1'";
+      relationship.setStrokeStyle(StrokeStyle.DASHED);
     } else if (lineStyle === 'Dotted') {
-      relationshipXML += " lineType='2'";
+      relationship.setStrokeStyle(StrokeStyle.DOTTED);
+    } else if (lineStyle === 'Solid') {
+      relationship.setStrokeStyle(StrokeStyle.SOLID);
+    } else {
+      relationship.setStrokeStyle(
+        MindManagerImporter.toStrokeStyle(lineStyleElement?.getAttribute('LineDashStyle')) ??
+          defaultStrokeStyle,
+      );
     }
 
-    relationshipXML += '/>\n';
-    return relationshipXML;
+    mindmap.addRelationship(relationship);
   }
 
   public import(nameMap: string, _description?: string): Promise<string> {
@@ -378,19 +693,19 @@ class MindManagerImporter extends Importer {
       this.idCounter = 1;
       this.topicIdMap.clear();
 
-      const rootTopic = this.parseMindManagerXML(this.mindManagerInput);
-      const xml = this.generateWiseMappingXML(rootTopic, nameMap, _description);
+      const xmlContent = MindManagerImporter.readDocument(this.mindManagerInput);
+      const doc = SecureXmlParser.parseSecureXml(xmlContent);
+      if (!doc) {
+        throw new Error('Failed to parse MindManager XML - content may be unsafe');
+      }
 
-      return Promise.resolve(xml);
+      const rootTopic = this.parseMindManagerXML(doc);
+      const mindmap = this.buildMindmap(rootTopic, nameMap, doc);
+
+      return Promise.resolve(toWiseMappingXml(mindmap));
     } catch (error) {
       console.error('MindManager import failed:', error);
-      return Promise.resolve(
-        '<map name="MindManager Import" version="tango" theme="prism" layout="mindmap">\n' +
-          '    <topic central="true" text="Import Error" id="1">\n' +
-          `      <note><![CDATA[MindManager import failed: ${(error as Error).message}]]></note>\n` +
-          '    </topic>\n' +
-          '</map>',
-      );
+      return Promise.reject(ImportError.from(error, 'MindManager'));
     }
   }
 }

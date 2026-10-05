@@ -30,6 +30,7 @@ import Tabs from '@mui/material/Tabs';
 import Paper from '@mui/material/Paper';
 import CloseIcon from '@mui/icons-material/Close';
 import type { Theme } from '@mui/material/styles';
+import { isMacPlatform } from '@wisemapping/mindplot';
 import ComboList from './key-cap';
 import NavigationDiagram from './navigation-diagram';
 import { SHORTCUT_CATEGORIES } from './shortcuts';
@@ -66,10 +67,16 @@ const HEADER_CELL_SX = {
  * into tabs, and the navigation tab opens with a map showing what each arrow
  * key does -- the one group whose key names genuinely do not explain it.
  *
+ * Only the running platform's column is rendered -- the table used to show
+ * Windows/Linux and Mac side by side, so half of it was always noise.
+ *
  * The rows themselves come from `shortcuts.ts`; this file is layout only.
  */
 const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactElement => {
   const [tab, setTab] = useState(0);
+  // One column, not two: the reader only has one keyboard. isMacPlatform is the
+  // same check the visualization toolbar uses to label its tooltips.
+  const isMac = isMacPlatform();
   const category = SHORTCUT_CATEGORIES[tab];
 
   return (
@@ -78,7 +85,7 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
         pt: 1.5,
         px: 1.5,
         pb: 1,
-        width: '560px',
+        width: '470px',
         maxWidth: '92vw',
         maxHeight: '70vh',
         display: 'flex',
@@ -149,11 +156,12 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
         <Table size="small" stickyHeader sx={{ width: '100%', fontSize: '0.75rem' }}>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ ...HEADER_CELL_SX, width: '38%' }}>
+              <TableCell sx={{ ...HEADER_CELL_SX, width: '55%' }}>
                 <FormattedMessage id="shortcut-help-pane.action" defaultMessage="Action" />
               </TableCell>
-              <TableCell sx={{ ...HEADER_CELL_SX, width: '31%' }}>Windows - Linux</TableCell>
-              <TableCell sx={{ ...HEADER_CELL_SX, width: '31%' }}>Mac OS X</TableCell>
+              <TableCell sx={{ ...HEADER_CELL_SX, width: '45%' }}>
+                {isMac ? 'Mac OS X' : 'Windows - Linux'}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -163,10 +171,7 @@ const KeyboardShorcutsHelp = ({ closeModal }: KeyboardShorcutsHelpProps): ReactE
                   <FormattedMessage id={shortcut.id} defaultMessage={shortcut.defaultMessage} />
                 </TableCell>
                 <TableCell>
-                  <ComboList combos={shortcut.win} />
-                </TableCell>
-                <TableCell>
-                  <ComboList combos={shortcut.mac} />
+                  <ComboList combos={isMac ? shortcut.mac : shortcut.win} />
                 </TableCell>
               </TableRow>
             ))}

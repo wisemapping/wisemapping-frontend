@@ -43,7 +43,7 @@ class TopicShapeFactory {
         result = new NoneTopicShape();
         break;
       case 'image':
-        result = new NoneTopicShape();
+        result = new NoneTopicShape(value);
         break;
       default: {
         const exhaustiveCheck: never = value;

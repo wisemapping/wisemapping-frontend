@@ -19,7 +19,7 @@
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
-import { Importer, TextImporterFactory } from '@wisemapping/editor';
+import { ImportError, Importer, TextImporterFactory } from '@wisemapping/editor';
 import React, { useContext } from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -74,7 +74,34 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     setError(undefined);
+    // Nothing to save until a file has been imported.
+    if (errorFile.error || !model.content) {
+      return;
+    }
     mutation.mutate(model);
+  };
+
+  const showFileError = (message: string): void => {
+    setErrorFile({
+      error: true,
+      message: intl.formatMessage(
+        {
+          id: 'import.error-file',
+          defaultMessage: 'Import error {error}',
+        },
+        {
+          error: message,
+        },
+      ),
+    });
+  };
+
+  // An ImportError explains why the file can not be imported. Anything else is unexpected.
+  const showImportError = (e: unknown): void => {
+    if (!(e instanceof ImportError)) {
+      console.error('Unexpected error importing the map:', e);
+    }
+    showFileError(e instanceof Error ? e.message : String(e));
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -94,6 +121,10 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
       const extensionFile = file.name.split('.').pop()?.toLowerCase();
       // Closure to capture the file information.
       reader.onload = (event) => {
+        // Forget the previous file.
+        model.content = undefined;
+        setErrorFile({ error: false, message: '' });
+
         // Suggest file name ...
         const fileName = file.name;
         if (fileName) {
@@ -108,17 +139,13 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         if (!extensionFile || !extensionAccept.includes(extensionFile)) {
           setErrorFile({
             error: true,
-            message: intl.formatMessage(
-              {
-                id: 'import.error-file',
-                defaultMessage: 'Import error {error}',
-              },
-              {
-                error:
-                  'You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import.',
-              },
-            ),
+            message: intl.formatMessage({
+              id: 'import.error-unsupported-file',
+              defaultMessage:
+                'The file type is not supported. You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps.',
+            }),
           });
+          return;
         }
 
         model.contentType =
@@ -137,30 +164,21 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         try {
           const importer: Importer = TextImporterFactory.create(extensionFile, mapContent);
 
-          importer.import(model.title, model.description).then((res) => {
-            model.content = res;
-            setModel({ ...model });
-          });
+          // A file that can not be imported rejects with an ImportError: show it, never save it.
+          importer
+            .import(model.title, model.description)
+            .then((res) => {
+              model.content = res;
+              setModel({ ...model });
+            })
+            .catch(showImportError);
         } catch (e) {
-          if (e instanceof Error) {
-            setErrorFile({
-              error: true,
-              message: intl.formatMessage(
-                {
-                  id: 'import.error-file',
-                  defaultMessage: 'Import error {error}',
-                },
-                {
-                  error: e.message,
-                },
-              ),
-            });
-          }
+          showImportError(e);
         }
       };
 
-      // Read in the image file as a data URL.
-      if (extensionFile === 'xmind') {
+      // XMind and MindManager (.mmap) files are ZIP archives.
+      if (extensionFile === 'xmind' || extensionFile === 'mmap') {
         reader.readAsArrayBuffer(file);
       } else {
         reader.readAsText(file);

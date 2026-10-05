@@ -45,24 +45,18 @@ class MoveControlPointCommand extends Command {
       case PivotType.Start:
         oldCtlPoint = model.getSrcCtrlPoint();
         model.setSrcCtrlPoint(this._controlPoint!);
-        relationship.setIsSrcControlPointCustom(this._controlPoint != null);
-        if (this._controlPoint) {
-          relationship.setSrcControlPoint(this._controlPoint);
-        }
         break;
       case PivotType.End:
         oldCtlPoint = model.getDestCtrlPoint();
         model.setDestCtrlPoint(this._controlPoint!);
-        relationship.setIsDestControlPointCustom(this._controlPoint != null);
-        if (this._controlPoint) {
-          relationship.setDestControlPoint(this._controlPoint);
-        }
         break;
       default:
         throw new Error('Illegal state exception');
     }
     this._controlPoint = oldCtlPoint ? { ...oldCtlPoint } : null;
 
+    // Placed from its connection point, as on load, so that undo and redo give back the same curve ...
+    relationship.applyModelControlPoint(this._ctrIndex);
     relationship.redraw();
     relationship.setOnFocus(true);
   }

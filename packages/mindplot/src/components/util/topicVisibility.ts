@@ -24,7 +24,7 @@ import type Topic from '../Topic';
  * Pure and dependency-free (a type-only import of Topic) so it is
  * independently unit-testable without constructing a Designer or Topic --
  * unlike Designer.ts, this file has no transitive import that pulls in
- * DOM/Vite-only code (e.g. WidgetBuilder -> SvgImageIcon's `import.meta.glob`),
+ * DOM/Vite-only code (e.g. SvgImageIcon -> SvgIconAssets' `import.meta.glob`),
  * so it loads cleanly under Jest.
  */
 export default function getCollapsedAncestorIds(topic: Topic): number[] {

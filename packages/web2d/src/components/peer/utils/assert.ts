@@ -33,12 +33,14 @@
  *   limitations under the License.
  */
 
-export const $defined = (obj: unknown): boolean => obj !== undefined && obj !== null;
+export function $defined<T>(obj: T): obj is NonNullable<T> {
+  return obj !== undefined && obj !== null;
+}
 
-export const $assert = (assert: unknown, message: string): void => {
+export function $assert(assert: unknown, message: string): asserts assert {
   if (!$defined(assert) || !assert) {
     // eslint-disable-next-line no-console
     console.error(message);
     throw new Error(message);
   }
-};
+}

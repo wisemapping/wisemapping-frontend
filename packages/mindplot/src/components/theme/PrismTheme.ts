@@ -36,9 +36,14 @@ class PrismTheme extends DefaultTheme {
       result = this.resolve('connectionColor', parent, false) as string;
     }
 
+    // A color picked by the user (on the topic or an ancestor) is used as is ...
+    if (!result) {
+      result = this.resolve('connectionColor', topic, false) as string;
+    }
+
     if (!result) {
       let colors: string[] = [];
-      colors = colors.concat(this.resolve('connectionColor', topic) as string[] | string);
+      colors = colors.concat(this.getStyles(topic).connectionColor as string[] | string);
 
       // if the element is an array, use topic order to decide color ..
       let order = topic.getOrder();
@@ -46,24 +51,25 @@ class PrismTheme extends DefaultTheme {
 
       const index = order % colors.length;
       result = colors[index];
+
+      if (result && this._variant === 'dark') {
+        // Lighten the theme connection color for better visibility on dark background
+        result = ColorUtil.lightenColor(result, 20);
+      }
     }
 
-    if (result) {
-      // Lighten the connection color for better visibility on dark background
-      result = ColorUtil.lightenColor(result, 20);
-    }
-
-    return result!;
+    return result;
   }
 
   getBorderColor(topic: Topic): string {
     const model = topic.getModel();
-    let result = model.getBorderColor();
+    // A color picked by the user (on the topic or an ancestor) is used as is ...
+    let result = model.getBorderColor() || (this.resolve('borderColor', topic, false) as string);
 
-    // If border color has not been defined, use the connection color for the border ...
+    // If border color has not been defined, use the theme border color ...
     if (!result) {
       let colors: string[] = [];
-      colors = colors.concat(this.resolve('borderColor', topic) as string[] | string);
+      colors = colors.concat(this.getStyles(topic).borderColor as string[] | string);
 
       // if the element is an array, use topic order to decide color ..
       let order = topic.getOrder();
@@ -71,12 +77,11 @@ class PrismTheme extends DefaultTheme {
 
       const index = order % colors.length;
       result = colors[index];
-    }
 
-    // For dark mode, make borders more visible
-    if (result) {
-      // Lighten the border color for better visibility on dark background
-      result = ColorUtil.lightenColor(result, 15);
+      if (result && this._variant === 'dark') {
+        // Lighten the theme border color for better visibility on dark background
+        result = ColorUtil.lightenColor(result, 15);
+      }
     }
 
     return result;

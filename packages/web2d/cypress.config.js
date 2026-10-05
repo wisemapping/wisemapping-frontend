@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 const { defineConfig } = require('cypress');
+const { visualSnapshotExpose } = require('./cypress/plugins/index.js');
 
 module.exports = defineConfig({
   video: process.env.CYPRESS_VIDEO === 'true',
-  expose: {
-    imageSnaphots: !!process.env.CYPRESS_imageSnaphots,
-  },
+  // Image-snapshot mode (VISUAL_SNAPSHOTS=verify, the default, or update), see cypress/plugins/index.js.
+  expose: visualSnapshotExpose(),
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

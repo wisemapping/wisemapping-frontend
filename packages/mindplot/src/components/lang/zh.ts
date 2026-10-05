@@ -26,7 +26,6 @@ const ZH = {
   ONE_TOPIC_MUST_BE_SELECTED: '无法创建主题。必须选择一个主题。',
   ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE: '无法折叠子节点，必须只选择一个主题。',
   SAVE_COULD_NOT_BE_COMPLETED: '无法完成保存，请稍后再试。',
-  UNEXPECTED_ERROR_LOADING: '我们很抱歉，发生了意外错误。\n再次尝试重新加载编辑器。如果问题仍然存在，请联系我们support@wisemapping.com。',
   MAIN_TOPIC: '重点主题',
   SUB_TOPIC: '子主题',
   ISOLATED_TOPIC: '独立主题',
@@ -36,10 +35,14 @@ const ZH = {
   CENTRAL_TOPIC_CAN_NOT_BE_DELETED: '无法删除中心主题。',
   RELATIONSHIP_COULD_NOT_BE_CREATED: '无法创建关系。必须先选择要建立关系的主题。',
   SESSION_EXPIRED: '您的会话已过期，请重新登录。',
+  CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: '无法更改中心主题的连接样式。',
+  CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: '无法将中心主题更改为线条样式。',
   TAB_TO_CREATE_CHILD: '创建子主题',
   ENTER_TO_CREATE_SIBLING: '创建同级主题',
   PLUS_TOOLTIP_CREATE_CHILD: '创建子主题',
   PLUS_TOOLTIP_CREATE_SIBLING: '创建同级主题',
+  LINK: '链接',
+  NOTE: '笔记',
 };
 
 export default ZH;

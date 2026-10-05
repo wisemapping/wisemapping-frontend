@@ -186,8 +186,8 @@ class ImageEmojiFeature {
 
   setupDeleteWidget(): void {
     if (!this._topic.isReadOnly() && this.hasEmoji()) {
-      // Get singleton instance of remove tip
-      this._emojiRemoveTip = ElementDeleteWidget.getInstance();
+      // The remove tip of the topic's designer
+      this._emojiRemoveTip = ElementDeleteWidget.getInstance(this._topic.getDesigner());
 
       // Always create and decorate emoji icon (in case it was removed and re-added)
       const emojiIcon = this._createEmojiIcon();

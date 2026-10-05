@@ -17,7 +17,7 @@
  */
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { DesignerKeyboard } from '@wisemapping/mindplot';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
 
 /**
  *
@@ -25,18 +25,36 @@ import React, { ReactElement, useEffect } from 'react';
  * @returns wrapped mui TextField, that disable mindplot keyboard events on focus and enable it on blur
  */
 const Input = (props: TextFieldProps): ReactElement => {
+  // DesignerKeyboard pauses nest: resume only the pause this field took, once, so a pane
+  // around it keeps the shortcuts paused after the field blurs or unmounts.
+  const pausedRef = useRef(false);
+
+  const pause = () => {
+    if (!pausedRef.current) {
+      pausedRef.current = true;
+      DesignerKeyboard.pause();
+    }
+  };
+
+  const resume = () => {
+    if (pausedRef.current) {
+      pausedRef.current = false;
+      DesignerKeyboard.resume();
+    }
+  };
+
   useEffect(() => {
-    return () => DesignerKeyboard.resume();
+    return () => resume();
   }, []);
   return (
     <TextField
       {...props}
       onFocus={(e) => {
-        DesignerKeyboard.pause();
+        pause();
         props.onFocus?.(e);
       }}
       onBlur={(e) => {
-        DesignerKeyboard.resume();
+        resume();
         props.onBlur?.(e);
       }}
     ></TextField>

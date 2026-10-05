@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import PositionType from '../../PositionType';
-import ElementPeer from './ElementPeer';
+import ElementPeer, { formatLength } from './ElementPeer';
 
 class ElipsePeer extends ElementPeer {
   private _position: PositionType;
@@ -31,19 +31,19 @@ class ElipsePeer extends ElementPeer {
 
   setSize(width: number, height: number) {
     super.setSize(width, height);
-    this._native.setAttribute('rx', (width / 2).toFixed(0));
-    this._native.setAttribute('ry', (height / 2).toFixed(0));
+    this._native.setAttribute('rx', formatLength(width / 2));
+    this._native.setAttribute('ry', formatLength(height / 2));
   }
 
   setPosition(pcx: number, pcy: number) {
     this._position = { x: pcx, y: pcy };
 
-    this._native.setAttribute('cx', pcx.toFixed(0));
-    this._native.setAttribute('cy', pcy.toFixed(0));
+    this._native.setAttribute('cx', formatLength(pcx));
+    this._native.setAttribute('cy', formatLength(pcy));
   }
 
-  getPosition() {
-    return this._position;
+  getPosition(): PositionType {
+    return { x: this._position.x, y: this._position.y };
   }
 }
 

@@ -19,17 +19,48 @@ import { $assert } from '../util/assert';
 import PositionType from '../PositionType';
 import Node from './Node';
 
+/** The subset of a Raphael.js element used by plot(). */
+type RaphaelElement = {
+  attr(name: string): number;
+  attr(name: string, value: string): RaphaelElement;
+  click(handler: () => void): RaphaelElement;
+};
+
+/**
+ * The subset of a Raphael.js paper used by plot(). Raphael (and its drawGrid plugin) is only
+ * loaded by the layout stories.
+ */
+export type RaphaelPaper = {
+  width: number;
+  height: number;
+  rect(x: number, y: number, width: number, height: number): RaphaelElement;
+  text(x: number, y: number, text: string): RaphaelElement;
+  drawGrid(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    wv: number,
+    hv: number,
+  ): RaphaelElement;
+};
+
 class RootedTreeSet {
   private _rootNodes: Node[];
+
+  // Every node reachable from the roots, by id: find() used to search the trees for each lookup.
+  private _nodesById: Map<number, Node>;
 
   protected _children!: Node[];
 
   constructor() {
     this._rootNodes = [];
+    this._nodesById = new Map();
   }
 
   setRoot(root: Node) {
     this._rootNodes.push(this._decodate(root));
+    this._index(root);
   }
 
   getTreeRoots(): Node[] {
@@ -47,6 +78,25 @@ class RootedTreeSet {
     }
     $assert(!node._children, 'node already added');
     this._rootNodes.push(this._decodate(node));
+    this._index(node);
+  }
+
+  /**
+   * Indexes a node that just became reachable. A search finds the first match in the trees, so a
+   * node already indexed under the same id keeps its place.
+   */
+  private _index(node: Node): void {
+    if (!this._nodesById.has(node.getId())) {
+      this._nodesById.set(node.getId(), node);
+    }
+  }
+
+  /** Drops a branch that is not reachable from the roots any more from the index. */
+  private _unindexBranch(node: Node): void {
+    if (this._nodesById.get(node.getId()) === node) {
+      this._nodesById.delete(node.getId());
+    }
+    node._children.forEach((child) => this._unindexBranch(child));
   }
 
   /**
@@ -64,6 +114,9 @@ class RootedTreeSet {
 
     // Remove from root nodes array
     this._rootNodes = this._rootNodes.filter((n) => n !== node);
+
+    // Its whole branch can not be found any more ...
+    this._unindexBranch(node);
 
     // Clean up the node's own children array to prevent memory leaks
     node._children = [];
@@ -117,7 +170,7 @@ class RootedTreeSet {
     const node = this.find(nodeId);
     $assert(node._parent, 'Node is not connected');
 
-    node._parent!._children = node._parent!._children.filter((n) => node !== n);
+    node._parent._children = node._parent._children.filter((n) => node !== n);
     this._rootNodes.push(node);
     node._parent = null;
   }
@@ -130,15 +183,7 @@ class RootedTreeSet {
    * @return node
    */
   find(id: number, validate = true): Node {
-    const graphs = this._rootNodes;
-    let result: Node | null = null;
-    for (let i = 0; i < graphs.length; i++) {
-      const node = graphs[i];
-      result = this._find(id, node);
-      if (result) {
-        break;
-      }
-    }
+    const result = this._nodesById.get(id) ?? null;
 
     if (validate && !result) {
       throw new Error(`node could not be found id:${id}\n,RootedTreeSet${this.dump()}`);
@@ -178,7 +223,7 @@ class RootedTreeSet {
    * @throws will throw an error if node is null or undefined
    * @return root node or the provided node, if it has no parent
    */
-  getRootNode(node: Node) {
+  getRootNode(node: Node): Node {
     $assert(node, 'node cannot be null');
     const parent = this.getParent(node);
     if (parent) {
@@ -318,7 +363,7 @@ class RootedTreeSet {
    * Plot the tree structure using Raphael.js (for testing/debugging only)
    * @param canvas - Raphael canvas object
    */
-  plot(canvas) {
+  plot(canvas: RaphaelPaper) {
     this.traverse((node, isRoot) => {
       // Calculate position on canvas
       const cx = node.getPosition().x + canvas.width / 2 - node.getSize().width / 2;

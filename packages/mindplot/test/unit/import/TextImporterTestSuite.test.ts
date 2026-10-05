@@ -19,10 +19,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
 import fs from 'fs';
-import { test } from '@jest/globals';
+import { expect, test } from '@jest/globals';
 import { exporterAssert, parseXMLFile } from './Helper';
 import FreemindMap from '../../../src/components/export/freemind/Map';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
+import ImportError from '../../../src/components/import/ImportError';
+
+// Not a MindManager document (it has no Map element), so it can not be imported.
+const notImportable = ['mindmanager'];
 
 const testNames = fs
   .readdirSync(path.resolve(__dirname, './input/'))
@@ -57,7 +61,11 @@ describe('package/', () => {
     } else {
       // For other formats, use the raw content
       const importer = TextImporterFactory.create(fileType, mapContent);
-      await exporterAssert(testName, importer);
+      if (notImportable.includes(testName)) {
+        await expect(importer.import(testName, '')).rejects.toBeInstanceOf(ImportError);
+      } else {
+        await exporterAssert(testName, importer);
+      }
     }
   });
 });

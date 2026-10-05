@@ -23,9 +23,12 @@ import { test } from '@jest/globals';
 import { exporterAssert } from './Helper';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
 
+// The plain XML maps. The .mmap archives saved by MindManager, in real/, are tested by
+// MindManagerRealFiles.test.ts.
 const testNames = fs
-  .readdirSync(path.resolve(__dirname, './input/mindmanager/'))
-  .map((filename: string) => filename.split('.')[0]);
+  .readdirSync(path.resolve(__dirname, './input/mindmanager/'), { withFileTypes: true })
+  .filter((entry) => entry.isFile() && entry.name.endsWith('.mmap'))
+  .map((entry) => entry.name.split('.')[0]);
 
 describe('MindManager Importer Test Suite', () => {
   test.each(testNames)('Importing MindManager %p suite', async (testName: string) => {

@@ -20,6 +20,7 @@ import { Mindmap } from '../..';
 import INodeModel, { TopicShapeType } from '../model/INodeModel';
 import RelationshipModel from '../model/RelationshipModel';
 import SvgIconModel from '../model/SvgIconModel';
+import EmojiIconModel from '../model/EmojiIconModel';
 import FeatureModel from '../model/FeatureModel';
 import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
@@ -36,6 +37,7 @@ import Richcontent from './freemind/Richcontent';
 import Icon from './freemind/Icon';
 import Edge from './freemind/Edge';
 import Font from './freemind/Font';
+import FreemindIconConverter from '../import/FreemindIconConverter';
 
 class FreemindExporter extends Exporter {
   private mindmap: Mindmap;
@@ -62,19 +64,11 @@ class FreemindExporter extends Exporter {
 
   private static parserXMLString(xmlStr: string, mimeType: DOMParserSupportedType): Document {
     const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlStr, mimeType);
+    return parser.parseFromString(xmlStr, mimeType);
+  }
 
-    // FIXME: Fix error "unclosed tag: p" when exporting bug3 and enc
-    // Is there any parsing error ?.
-    /*
-    if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
-      const xmmStr = new XMLSerializer().serializeToString(xmlDoc);
-      console.log(xmmStr);
-      throw new Error(`Unexpected error parsing: ${xmlStr}. Error: ${xmmStr}`);
-    }
-    */
-
-    return xmlDoc;
+  private static hasParserError(xmlDoc: Document): boolean {
+    return xmlDoc.getElementsByTagName('parsererror').length > 0;
   }
 
   extension(): string {
@@ -155,7 +149,7 @@ class FreemindExporter extends Exporter {
     if (text) {
       if (mindmapTopic.getContentType() === ContentType.HTML) {
         // For rich text, always use richcontent to preserve HTML
-        const richcontent: Richcontent = this.buildRichcontent(text, 'NODE');
+        const richcontent: Richcontent = this.buildRichcontent(text, 'NODE', true);
         freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
       } else if (!text.includes('\n')) {
         freemindNode.setText(text);
@@ -208,30 +202,44 @@ class FreemindExporter extends Exporter {
 
       this.addNodeFromTopic(currentTopic, newNode);
 
-      const position: PositionNodeType = currentTopic.getPosition();
+      const position: PositionNodeType | undefined = currentTopic.getPosition();
       if (position) {
         const xPos: number = position.x;
         newNode.setPosition(xPos < 0 ? 'left' : 'right');
-      } else newNode.setPosition('left');
+      } else newNode.setPosition('right');
     });
   }
 
-  private buildRichcontent(text: string, type: string): Richcontent {
+  private buildRichcontent(text: string, type: string, isHtml = false): Richcontent {
     const richconent: Richcontent = this.objectFactory.createRichcontent();
 
     richconent.setType(type);
 
-    const textSplit = text.split('\n');
+    const richconentDocument: Document = FreemindExporter.parserXMLString(
+      '<html><head></head><body></body></html>',
+      'application/xml',
+    );
+    const body = richconentDocument.getElementsByTagName('body')[0];
 
-    let html = '<html><head></head><body>';
+    // Well formed rich text is kept as markup. Anything else is added as text, so it is escaped.
+    const markup = isHtml
+      ? FreemindExporter.parserXMLString(`<body>${text}</body>`, 'application/xml')
+      : undefined;
+    if (markup && !FreemindExporter.hasParserError(markup)) {
+      Array.from(markup.documentElement.childNodes).forEach((node) => {
+        body.appendChild(richconentDocument.importNode(node, true));
+      });
+    } else {
+      const plainText = isHtml
+        ? new DOMParser().parseFromString(text, 'text/html').body.textContent || ''
+        : text;
+      plainText.split('\n').forEach((line: string) => {
+        const paragraph = richconentDocument.createElement('p');
+        paragraph.textContent = line.trim();
+        body.appendChild(paragraph);
+      });
+    }
 
-    textSplit.forEach((line: string) => {
-      html += `<p>${line.trim()}</p>`;
-    });
-
-    html += '</body></html>';
-
-    const richconentDocument: Document = FreemindExporter.parserXMLString(html, 'application/xml');
     const xmlResult = new XMLSerializer().serializeToString(richconentDocument);
     richconent.setHtml(xmlResult);
 
@@ -251,26 +259,41 @@ class FreemindExporter extends Exporter {
 
       if (type === 'note') {
         const note = feature as NoteModel;
-        const richcontent: Richcontent = this.buildRichcontent(note.getText(), 'NOTE');
+        const richcontent: Richcontent = this.buildRichcontent(
+          note.getText(),
+          'NOTE',
+          note.getContentType() === ContentType.HTML,
+        );
         freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
       }
 
       if (type === 'icon') {
         const icon = feature as SvgIconModel;
         const freemindIcon: Icon = new Icon();
-        freemindIcon.setBuiltin(icon.getIconType());
+        freemindIcon.setBuiltin(FreemindIconConverter.svgToFreemindIcon(icon.getIconType()));
         freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);
+      }
+
+      // Emoji icons are exported as the equivalent FreeMind builtin icon, if there is one.
+      if (type === 'eicon') {
+        const icon = feature as EmojiIconModel;
+        const builtin = FreemindIconConverter.toFreemindIcon(icon.getIconType());
+        if (builtin) {
+          const freemindIcon: Icon = new Icon();
+          freemindIcon.setBuiltin(builtin);
+          freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);
+        }
       }
     });
   }
 
+  // A FreeMind edge is the line that connects the node to its parent, the WiseMapping connection.
+  // FreeMind has no border color, so it is not exported.
   private addEdgeNode(freemainMap: FreeminNode, mindmapTopic: INodeModel): void {
-    if (mindmapTopic.getBorderColor()) {
+    const color = mindmapTopic.getConnectionColor();
+    if (color) {
       const edgeNode: Edge = this.objectFactory.createEdge();
-      const color = mindmapTopic.getBorderColor();
-      if (color) {
-        edgeNode.setColor(this.rgbToHex(color));
-      }
+      edgeNode.setColor(this.rgbToHex(color));
       freemainMap.setArrowlinkOrCloudOrEdge(edgeNode);
     }
   }
@@ -303,12 +326,11 @@ class FreemindExporter extends Exporter {
         freemindNode.setColor(fontColor);
       }
 
-      if (fontWeigth) {
-        if (typeof fontWeigth === 'boolean') {
-          font.setBold(String(fontWeigth));
-        } else {
-          font.setBold(String(true));
-        }
+      // 'normal' (or any weight under 600) is not bold. Legacy maps may hold a boolean.
+      const weight = String(fontWeigth);
+      const isBold = weight === 'bold' || weight === 'true' || Number(weight) >= 600;
+      if (isBold) {
+        font.setBold(String(true));
         fontNodeNeeded = true;
       }
 
@@ -331,17 +353,13 @@ class FreemindExporter extends Exporter {
   private rgbToHex(color: string): string {
     let result: string = color;
     if (result) {
-      const isRgb = /^rgb\([0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}\)$/;
+      const rgb = /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/i.exec(result.trim());
 
-      if (isRgb.test(result)) {
-        const rgb: string[] = color.substring(4, color.length - 1).split(',');
-        const r: string = rgb[0].trim();
-        const g: string = rgb[1].trim();
-        const b: string = rgb[2].trim();
-
-        result = `#${r.length === 1 ? `0${r}` : r}${g.length === 1 ? `0${g}` : g}${
-          b.length === 1 ? `0${b}` : b
-        }`;
+      if (rgb) {
+        const hex = rgb
+          .slice(1)
+          .map((channel) => Math.min(255, parseInt(channel, 10)).toString(16).padStart(2, '0'));
+        result = `#${hex.join('')}`;
       }
     }
     return result;

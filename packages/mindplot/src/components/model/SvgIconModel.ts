@@ -16,10 +16,10 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureModel from './FeatureModel';
+import FeatureModel, { FeatureAttributes } from './FeatureModel';
 
 class SvgIconModel extends FeatureModel {
-  constructor(attributes) {
+  constructor(attributes: FeatureAttributes) {
     super('icon');
     this.setIconType(attributes.id);
   }
@@ -31,6 +31,14 @@ class SvgIconModel extends FeatureModel {
   setIconType(iconType: string): void {
     $assert(iconType, 'iconType id can not be null');
     this.setAttribute('id', iconType);
+  }
+
+  applyAttribute(key: string, value: unknown): void {
+    if (key === 'id') {
+      this.setIconType(value as string);
+    } else {
+      super.applyAttribute(key, value);
+    }
   }
 }
 

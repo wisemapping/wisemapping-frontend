@@ -62,9 +62,9 @@ The importer automatically detects XMind format:
 
 ### Error Handling
 
-- **Graceful degradation**: Invalid XMind files produce error maps
+- **Rejection**: Invalid XMind files reject the import with an `ImportError`
 - **Detailed feedback**: Error messages explain import failures
-- **Fallback content**: Always produces valid WiseMapping XML
+- **No placeholder maps**: A failed import never resolves to an error map
 
 ## 📊 Test Coverage
 
@@ -94,7 +94,7 @@ try {
   const result = await importer.import('Map Name', 'Description');
   // Success: result contains valid WiseMapping XML
 } catch (error) {
-  // Error: result contains error map with details
+  // Error: an ImportError whose message can be shown to the user
   console.error('Import failed:', error.message);
 }
 ```

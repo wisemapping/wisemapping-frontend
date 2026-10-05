@@ -43,7 +43,7 @@ describe('Topic Note Suite', () => {
     // Click Accept/Save button
     cy.contains('Accept').should('be.visible').click();
 
-    cy.screenshot('note-added-to-topic');
+    cy.matchImageSnapshot('note-added-to-topic');
   });
 
   it('Remove note from topic', () => {
@@ -74,7 +74,7 @@ describe('Topic Note Suite', () => {
     // Click Delete button to remove the note
     cy.contains('Delete').should('be.visible').click();
 
-    cy.screenshot('note-removed-from-topic');
+    cy.matchImageSnapshot('note-removed-from-topic');
   });
 
   it('Edit existing note', () => {
@@ -103,7 +103,7 @@ describe('Topic Note Suite', () => {
     cy.get('[contenteditable="true"]').first().clear().type('Updated note text');
     cy.contains('Accept').should('be.visible').click();
 
-    cy.screenshot('note-edited-successfully');
+    cy.matchImageSnapshot('note-edited-successfully');
   });
 
   it('Verify note content is saved and persists', () => {
@@ -129,7 +129,7 @@ describe('Topic Note Suite', () => {
     // Verify the note content is still there
     cy.get('[contenteditable="true"]').should('contain.text', noteContent);
 
-    cy.screenshot('note-content-persists');
+    cy.matchImageSnapshot('note-content-persists');
   });
 
   it('shows note tooltip on hover', () => {

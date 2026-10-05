@@ -34,6 +34,7 @@ import ChangeLayoutCommand from './commands/ChangeLayoutCommand';
 import LayoutEventBus from './layout/LayoutEventBus';
 import type { CanvasStyleType } from './model/CanvasStyleType';
 import CommandContext from './CommandContext';
+import type { FeatureAttributes } from './model/FeatureModel';
 import NodeModel from './model/NodeModel';
 import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
 import Topic from './Topic';
@@ -133,8 +134,9 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   changeTextToTopic(topicsIds: number[], text: string): void {
     $assert($defined(topicsIds), 'topicsIds can not be null');
 
-    const commandFunc = (topic: Topic, value: string) => {
-      const result = topic.getText();
+    const commandFunc = (topic: Topic, value: string | undefined) => {
+      // Keep the model value (undefined when empty): getText() returns the theme placeholder.
+      const result = topic.getModel().getText();
       topic.setText(value);
       return result;
     };
@@ -161,8 +163,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
   changeFontColorToTopic(topicsIds: number[], color: string | undefined) {
     const commandFunc = (topic: Topic, commandColor: string | undefined) => {
-      const variant = this._actionRunner.getCommandContext().designer.getThemeVariant();
-      const result = topic.getFontColor(variant);
+      // Keep the model value (undefined when the theme decides) so undo does not pin the theme color.
+      const result = topic.getModel().getFontColor();
       topic.setFontColor(commandColor);
       return result;
     };
@@ -174,8 +176,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
   changeBackgroundColorToTopic(topicsIds: number[], color: string | undefined) {
     const commandFunc = (topic: Topic, value: string | undefined) => {
-      const variant = this._actionRunner.getCommandContext().designer.getThemeVariant();
-      const result = topic.getBackgroundColor(variant);
+      const result = topic.getModel().getBackgroundColor();
       topic.setBackgroundColor(value);
       return result;
     };
@@ -188,8 +189,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   /** */
   changeBorderColorToTopic(topicsIds: number[], color: string | undefined): void {
     const commandFunc = (topic: Topic, commandColor: string | undefined) => {
-      const variant = this._actionRunner.getCommandContext().designer.getThemeVariant();
-      const result = topic.getBorderColor(variant);
+      const result = topic.getModel().getBorderColor();
       topic.setBorderColor(commandColor);
       return result;
     };
@@ -278,8 +278,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
   changeConnectionColorToTopic(topicsIds: number[], value: string | undefined) {
     const commandFunc = (topic: Topic, color: string | undefined) => {
-      const variant = this._actionRunner.getCommandContext().designer.getThemeVariant();
-      const result: string = topic.getConnectionColor(variant);
+      const result = topic.getModel().getConnectionColor();
       topic.setConnectionColor(color);
       return result;
     };
@@ -382,21 +381,23 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicsIds can not be null');
 
     const commandFunc = (topic: Topic, isShrink: boolean) => {
+      // Collapse/expand all also hits branches already in that state: undo must leave them as they were.
+      const result = topic.getModel().areChildrenShrunken();
       topic.setChildrenShrunken(isShrink);
-      return !isShrink;
+      return result;
     };
 
     const command = new GenericFunctionCommand(commandFunc, topicsIds, collapse);
     this.execute(command);
   }
 
-  addFeatureToTopic(topicId: number[], featureType: FeatureType, attributes) {
+  addFeatureToTopic(topicId: number[], featureType: FeatureType, attributes: FeatureAttributes) {
     const command = new AddFeatureToTopicCommand(topicId, featureType, attributes);
     this.execute(command);
   }
 
   /** */
-  changeFeatureToTopic(topicId: number, featureId: number, attributes) {
+  changeFeatureToTopic(topicId: number, featureId: number, attributes: FeatureAttributes) {
     const command = new ChangeFeatureToTopicCommand(topicId, featureId, attributes);
     this.execute(command);
   }

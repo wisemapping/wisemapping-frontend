@@ -21,7 +21,7 @@ import { CSSObject } from '@emotion/react';
 import { Theme, useTheme } from '@mui/material/styles';
 import useClasses from '../../theme/useStyles';
 
-const openedMixin = (theme: Theme, drawerWidth): CSSObject => ({
+const openedMixin = (theme: Theme, drawerWidth: number): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
@@ -61,7 +61,7 @@ export const mobileAppbarButton = {
     padding: 10,
   },
 };
-export function useStyles(drawerOpen) {
+export function useStyles(drawerOpen: boolean) {
   const drawerWidth = drawerOpen ? 240 : 66;
   const theme = useTheme();
   const smMediaQuery = theme.breakpoints.down('sm');

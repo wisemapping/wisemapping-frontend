@@ -42,6 +42,8 @@ interface LanguageStrings {
   ENTER_TO_CREATE_SIBLING: string;
   PLUS_TOOLTIP_CREATE_CHILD: string;
   PLUS_TOOLTIP_CREATE_SIBLING: string;
+  LINK: string;
+  NOTE: string;
 }
 
 const HI: LanguageStrings = {
@@ -52,23 +54,29 @@ const HI: LanguageStrings = {
   ZOOM_ERROR: 'अधिक ज़ूम नहीं किया जा सकता।',
   ONLY_ONE_TOPIC_MUST_BE_SELECTED: 'विषय नहीं बनाया जा सका। केवल एक विषय का चयन किया जाना चाहिए।',
   ONE_TOPIC_MUST_BE_SELECTED: 'विषय नहीं बनाया जा सका। एक विषय का चयन किया जाना चाहिए।',
-  ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE: 'बच्चों को समेटा नहीं जा सकता। एक विषय का चयन किया जाना चाहिए।',
+  ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE:
+    'बच्चों को समेटा नहीं जा सकता। एक विषय का चयन किया जाना चाहिए।',
   SAVE_COULD_NOT_BE_COMPLETED: 'सहेजना पूरा नहीं हो सका, कृपया बाद में फिर से कोशिश करें।',
   MAIN_TOPIC: 'मुख्य विषय',
   SUB_TOPIC: 'उप विषय',
   ISOLATED_TOPIC: 'अलग विषय',
   CENTRAL_TOPIC: 'केंद्रीय विषय',
-  ENTITIES_COULD_NOT_BE_DELETED: 'विषय या संबंध नहीं हटाया जा सका। कम से कम एक मानचित्र इकाई का चयन किया जाना चाहिए।',
+  ENTITIES_COULD_NOT_BE_DELETED:
+    'विषय या संबंध नहीं हटाया जा सका। कम से कम एक मानचित्र इकाई का चयन किया जाना चाहिए।',
   CLIPBOARD_IS_EMPTY: 'कॉपी करने के लिए कुछ नहीं। क्लिपबोर्ड खाली है।',
   CENTRAL_TOPIC_CAN_NOT_BE_DELETED: 'केंद्रीय विषय को हटाया नहीं जा सकता।',
-  RELATIONSHIP_COULD_NOT_BE_CREATED: 'संबंध नहीं बनाया जा सका। पहले एक मूल संबंध विषय का चयन किया जाना चाहिए।',
+  RELATIONSHIP_COULD_NOT_BE_CREATED:
+    'संबंध नहीं बनाया जा सका। पहले एक मूल संबंध विषय का चयन किया जाना चाहिए।',
   SESSION_EXPIRED: 'आपका सत्र समाप्त हो गया है, कृपया फिर से लॉग इन करें।',
-  CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'केंद्रीय विषय के लिए कनेक्शन शैली नहीं बदली जा सकती।',
+  CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED:
+    'केंद्रीय विषय के लिए कनेक्शन शैली नहीं बदली जा सकती।',
   CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'केंद्रीय विषय को लाइन शैली में नहीं बदला जा सकता।',
   TAB_TO_CREATE_CHILD: 'बच्चा बनाने के लिए',
   ENTER_TO_CREATE_SIBLING: 'सहोदर बनाने के लिए',
   PLUS_TOOLTIP_CREATE_CHILD: 'बच्चा विषय बनाएं',
   PLUS_TOOLTIP_CREATE_SIBLING: 'सहोदर विषय बनाएं',
+  LINK: 'लिंक',
+  NOTE: 'नोट',
 };
 
 export default HI;

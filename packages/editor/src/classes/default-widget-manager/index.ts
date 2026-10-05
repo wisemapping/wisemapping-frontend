@@ -26,7 +26,8 @@ export class DefaultWidgetBuilder extends WidgetBuilder {
 
   buildEditorForLink(topic: Topic): React.ReactElement {
     const model = {
-      getValue: () => topic.getLinkValue(),
+      // A topic without a link has no value.
+      getValue: (): string => topic.getLinkValue() ?? '',
       setValue: (value: string) => topic.setLinkValue(value),
     };
 

@@ -35,11 +35,26 @@ class ImageEmojiFeature {
 
   private _emojiRemoveTip: ElementDeleteWidget | undefined;
 
+  // Delete-widget icon of the current _emojiText. Reused across redraws, as
+  // ElementDeleteWidget.decorate only skips icons it has already decorated.
+  private _emojiIcon: Icon | undefined;
+
+  private _emojiIconText: Text | undefined;
+
+  // Values last applied to _emojiText, so that a redraw only updates the changed ones.
+  private _appliedChar: string | undefined;
+
+  private _appliedFontSize: number | undefined;
+
+  private _appliedFontStyle: string | undefined;
+
   constructor(topic: Topic) {
     $assert(topic, 'topic can not be null');
     this._topic = topic;
     this._emojiText = undefined;
     this._emojiRemoveTip = undefined;
+    this._emojiIcon = undefined;
+    this._emojiIconText = undefined;
   }
 
   getEmojiChar(): string | undefined {
@@ -51,15 +66,12 @@ class ImageEmojiFeature {
     const model = this._topic.getModel();
     model.setImageEmojiChar(emojiChar);
 
-    // If removing emoji, properly clean up the visual elements
-    if (!emojiChar && this._emojiText) {
-      // Remove emoji text from DOM
-      const group = this._topic.get2DElement();
-      group.removeChild(this._emojiText);
-      this._emojiText = undefined;
-    } else {
-      this._emojiText = undefined; // Clear to force rebuild
+    // Remove the current emoji text from DOM, whether the emoji is being removed
+    // or replaced, and clear it to force a rebuild
+    if (this._emojiText) {
+      this.removeFromGroup(this._topic.get2DElement());
     }
+    this._emojiText = undefined;
 
     this._emojiRemoveTip = undefined; // Clear remove tip
     this._topic.redraw(this._topic.getThemeVariant(), false);
@@ -74,25 +86,41 @@ class ImageEmojiFeature {
         '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", "EmojiSymbols", "EmojiOne Mozilla", "Twemoji Mozilla", "Segoe UI Symbol", sans-serif',
       );
       // Ensure emoji text inherits the same font style as the main text
-      emojiText.setStyle(this._topic.getFontStyle());
+      const fontStyle = this._topic.getFontStyle();
+      emojiText.setStyle(fontStyle);
       emojiText.setText(emojiChar);
 
       this._emojiText = emojiText;
+      this._appliedChar = emojiChar;
+      this._appliedFontSize = this._topic.getFontSize() * 3;
+      this._appliedFontStyle = fontStyle;
     } else if (!emojiChar && this._emojiText) {
       // Remove emoji text if no emoji character
       this._emojiText = undefined;
     } else if (emojiChar && this._emojiText) {
-      // Update emoji text if emoji character changed
-      this._emojiText.setText(emojiChar);
-      // Always update font size and style to reflect current font changes
-      this._emojiText.setFontSize(this._topic.getFontSize() * 3);
-      this._emojiText.setStyle(this._topic.getFontStyle());
+      // Update the emoji text, its font size and its style when they changed: setting
+      // the text rebuilds its tspans, and this runs several times per redraw.
+      if (this._appliedChar !== emojiChar) {
+        this._emojiText.setText(emojiChar);
+        this._appliedChar = emojiChar;
+      }
+      const fontSize = this._topic.getFontSize() * 3;
+      if (this._appliedFontSize !== fontSize) {
+        this._emojiText.setFontSize(fontSize);
+        this._appliedFontSize = fontSize;
+      }
+      const fontStyle = this._topic.getFontStyle();
+      if (this._appliedFontStyle !== fontStyle) {
+        this._emojiText.setStyle(fontStyle);
+        this._appliedFontStyle = fontStyle;
+      }
     }
     return this._emojiText;
   }
 
+  /** Whether the topic has an emoji. It does not build nor update the emoji text. */
   hasEmoji(): boolean {
-    return this.getOrBuildEmojiTextShape() !== undefined;
+    return Boolean(this.getEmojiChar());
   }
 
   getEmojiTextShape(): Text | undefined {
@@ -133,13 +161,25 @@ class ImageEmojiFeature {
 
   addToGroup(group: Group): void {
     const emojiTextShape = this.getOrBuildEmojiTextShape();
-    if (emojiTextShape) {
+    if (emojiTextShape && !ImageEmojiFeature.isLastChild(group, emojiTextShape)) {
       // Only remove if the element is already in the group
       this.removeFromGroup(group);
       group.append(emojiTextShape);
       // Move emoji text to front to ensure it appears above other elements
       emojiTextShape.moveToFront();
     }
+  }
+
+  /**
+   * Whether the element is already the front (last) child of the group, which is where
+   * addToGroup puts it: then there is nothing to move.
+   */
+  static isLastChild(group: Group, element: Text): boolean {
+    const children = group.peer.getChildren();
+    return (
+      children[children.length - 1] === element.peer &&
+      group.peer._native.lastChild === element.peer._native
+    );
   }
 
   removeFromGroup(group: Group): void {
@@ -193,13 +233,22 @@ class ImageEmojiFeature {
   }
 
   setupDeleteWidget(): void {
-    if (!this._topic.isReadOnly() && this.hasEmoji()) {
-      // Get singleton instance of remove tip
-      this._emojiRemoveTip = ElementDeleteWidget.getInstance();
+    // The icon needs the emoji text: build it if the emoji was set since the last redraw
+    if (!this._topic.isReadOnly() && this.getOrBuildEmojiTextShape()) {
+      // The remove tip of the topic's designer
+      this._emojiRemoveTip = ElementDeleteWidget.getInstance(this._topic.getDesigner());
 
-      // Always create and decorate emoji icon (in case it was removed and re-added)
-      const emojiIcon = this._createEmojiIcon();
-      this._emojiRemoveTip.decorate(this._topic.getId(), emojiIcon, this._topic.get2DElement());
+      // Build the icon once per emoji text (it is rebuilt when the emoji is removed and
+      // re-added), so decorate() recognizes it and doesn't add listeners on every redraw
+      if (!this._emojiIcon || this._emojiIconText !== this._emojiText) {
+        this._emojiIcon = this._createEmojiIcon();
+        this._emojiIconText = this._emojiText;
+      }
+      this._emojiRemoveTip.decorate(
+        this._topic.getId(),
+        this._emojiIcon,
+        this._topic.get2DElement(),
+      );
     }
   }
 

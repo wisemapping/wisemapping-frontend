@@ -47,7 +47,7 @@ const TopicLinkEditor = (props: {
     }
   };
 
-  const keyDownHandler = (event) => {
+  const keyDownHandler = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       submitHandler();

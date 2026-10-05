@@ -245,6 +245,9 @@
   "import.error-file": {
     "defaultMessage": "خطأ في الاستيراد {error}"
   },
+  "import.error-unsupported-file": {
+    "defaultMessage": "نوع الملف غير مدعوم. يمكنك استيراد خرائط WiseMapping وFreeMind وFreeplane وXMind وMindManager وOPML."
+  },
   "import.title": {
     "defaultMessage": "استيراد خريطة ذهنية موجودة"
   },

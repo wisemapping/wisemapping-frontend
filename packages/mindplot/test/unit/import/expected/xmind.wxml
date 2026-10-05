@@ -1,4 +1,3 @@
-<map name='xmind' version='tango' theme='prism' layout='mindmap'>
-    <topic central='true' text='Central Topic' id='1'>
-    </topic>
+<map name="xmind" theme="prism" layout="mindmap" version="tango">
+    <topic central="true" text="Central Topic" id="1"/>
 </map>

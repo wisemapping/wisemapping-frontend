@@ -48,7 +48,6 @@ class NodePropertyBuilder {
   private topicIconModel: NodeProperty<string | undefined> | undefined;
   private connetionStyleModel: NodeProperty<LineType | undefined> | undefined;
   private connectionColoreModel: NodeProperty<string | undefined> | undefined;
-  private relationshipStyleModel: NodeProperty<LineType> | undefined;
   private relationshipColorModel: NodeProperty<string | undefined> | undefined;
   private relationshipStrokeStyleModel: NodeProperty<StrokeStyle> | undefined;
   private relationshipEndArrowModel: NodeProperty<boolean> | undefined;
@@ -106,7 +105,7 @@ class NodePropertyBuilder {
           if (!this.selectedTopic()) {
             return;
           }
-          let newValue;
+          let newValue = this.getFontSize();
           if (direction === SwitchValueDirection.down) {
             newValue = getPreviousValue(fontSizes, this.getFontSize());
           }
@@ -325,20 +324,6 @@ class NodePropertyBuilder {
         setValue: (value: string | undefined) => this.designer.changeConnectionColor(value),
       };
     return this.connectionColoreModel;
-  }
-
-  /**
-   *
-   * @returns model to get and set relationship line style
-   */
-  getRelationshipStyleModel(): NodeProperty<LineType> {
-    if (!this.relationshipStyleModel)
-      this.relationshipStyleModel = {
-        getValue: () =>
-          this.selectedRelationship()?.getModel().getLineType() ?? LineType.THIN_CURVED,
-        setValue: (value: LineType) => this.designer.changeRelationshipStyle(value),
-      };
-    return this.relationshipStyleModel;
   }
 
   /**

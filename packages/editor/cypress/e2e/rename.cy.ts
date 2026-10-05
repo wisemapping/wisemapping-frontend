@@ -40,7 +40,7 @@ describe('Rename Suite', () => {
     cy.get('[data-testid="app-bar-title"] input').should('have.value', 'My New Mind Map Title');
     
     // Take snapshot
-    cy.screenshot('rename-mindmap-title');
+    cy.matchImageSnapshot('rename-mindmap-title');
   });
 
   it('should cancel rename when pressing Escape', () => {
@@ -61,7 +61,7 @@ describe('Rename Suite', () => {
       cy.get('[data-testid="app-bar-title"] input').should('have.value', originalTitle);
       
       // Take snapshot
-      cy.screenshot('cancel-rename-mindmap-title');
+      cy.matchImageSnapshot('cancel-rename-mindmap-title');
     });
   });
 
@@ -73,7 +73,7 @@ describe('Rename Suite', () => {
     cy.get('[role="tooltip"]').should('contain', 'Rename');
     
     // Take snapshot
-    cy.screenshot('title-tooltip-hover');
+    cy.matchImageSnapshot('title-tooltip-hover');
   });
 });
 

@@ -17,6 +17,7 @@
  */
 
 import debounce from 'lodash/debounce';
+import { ElementPeer } from '@wisemapping/web2d';
 import DOMUtils from './util/DOMUtils';
 import LinkIcon from './LinkIcon';
 import LinkModel from './model/LinkModel';
@@ -24,6 +25,8 @@ import NoteModel from './model/NoteModel';
 import NoteIcon from './NoteIcon';
 import Topic from './Topic';
 import { $msg } from './Messages';
+import ContentType from './ContentType';
+import HtmlSanitizer from './security/HtmlSanitizer';
 
 export type WidgetEventType = 'none' | 'link' | 'note';
 
@@ -58,7 +61,7 @@ abstract class WidgetBuilder {
   }
 
   private createTooltip(
-    mindmapElement,
+    mindmapElement: ElementPeer,
     title: string,
     linkModel?: LinkModel,
     noteModel?: NoteModel,
@@ -80,7 +83,7 @@ abstract class WidgetBuilder {
       const tooltipHTML =
         '<div id="mindplot-svg-tooltip" class="mindplot-svg-tooltip">' +
         '<div id="mindplot-svg-tooltip-content" class="mindplot-svg-tooltip-content">' +
-        '<a id="mindplot-svg-tooltip-content-link" alt="Open in new window ..." class="mindplot-svg-tooltip-content-link" target="_blank" rel="nofollow"></a>' +
+        '<a id="mindplot-svg-tooltip-content-link" alt="Open in new window ..." class="mindplot-svg-tooltip-content-link" target="_blank" rel="nofollow noopener noreferrer"></a>' +
         '<p id="mindplot-svg-tooltip-content-note" class="mindplot-svg-tooltip-content-note"></p>' +
         '</div>' +
         '<div id="mindplot-svg-tooltip-title" class="mindplot-svg-tooltip-title"></div>' +
@@ -106,7 +109,7 @@ abstract class WidgetBuilder {
       }
     }
 
-    mindmapElement.addEvent('mouseenter', (evt: MouseEvent) => {
+    mindmapElement.addEvent('mouseenter', (evt: Event) => {
       // Cancel any pending hide operation
       this._hideTooltip.cancel();
 
@@ -116,7 +119,7 @@ abstract class WidgetBuilder {
       // Delay showing tooltip to avoid flashing on quick hover
       this._showTimeout = window.setTimeout(() => {
         const tooltipTitle = webcomponentShadowRoot.getElementById('mindplot-svg-tooltip-title')!;
-        DOMUtils.html(tooltipTitle, title);
+        DOMUtils.text(tooltipTitle, title);
 
         // Configure content based on tooltip type
         if (linkModel) {
@@ -124,8 +127,8 @@ abstract class WidgetBuilder {
             'mindplot-svg-tooltip-content-link',
           )! as HTMLAnchorElement;
           DOMUtils.attr(tooltipLink, 'href', linkModel.getUrl());
-          DOMUtils.attr(tooltipLink, 'rel', 'nofollow');
-          DOMUtils.html(tooltipLink, linkModel.getUrl());
+          DOMUtils.attr(tooltipLink, 'rel', 'nofollow noopener noreferrer');
+          DOMUtils.text(tooltipLink, linkModel.getUrl());
           DOMUtils.css(tooltipLink, 'display', 'block');
 
           const tooltipNote = webcomponentShadowRoot.getElementById(
@@ -138,7 +141,16 @@ abstract class WidgetBuilder {
           const tooltipNote = webcomponentShadowRoot.getElementById(
             'mindplot-svg-tooltip-content-note',
           )!;
-          DOMUtils.html(tooltipNote, noteModel.getText());
+          if (noteModel.getContentType() === ContentType.HTML) {
+            try {
+              DOMUtils.html(tooltipNote, HtmlSanitizer.sanitize(noteModel.getText()));
+            } catch {
+              // Too large to sanitize: show its text instead.
+              DOMUtils.text(tooltipNote, noteModel.getPlainText());
+            }
+          } else {
+            DOMUtils.text(tooltipNote, noteModel.getText());
+          }
           DOMUtils.css(tooltipNote, 'display', 'block');
 
           const tooltipLink = webcomponentShadowRoot.getElementById(
@@ -198,7 +210,7 @@ abstract class WidgetBuilder {
       evt.stopPropagation();
     });
 
-    mindmapElement.addEvent('mouseleave', (evt: MouseEvent) => {
+    mindmapElement.addEvent('mouseleave', (evt: Event) => {
       // Cancel pending show if mouse left before delay completed
       if (this._showTimeout) {
         clearTimeout(this._showTimeout);

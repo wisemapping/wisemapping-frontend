@@ -17,7 +17,6 @@
  */
 import DesignerKeyboard from '../../src/components/DesignerKeyboard';
 
-jest.mock('../../src/components/SvgImageIcon', () => ({ default: jest.fn() }));
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class {},
@@ -178,6 +177,30 @@ describe('DesignerKeyboard horizontal navigation', () => {
     it('descends into the side the arrow points at', () => {
       expect(press(map, central, central, 'LEFT')).toBe('left');
       expect(press(map, central, central, 'RIGHT')).toBe('right');
+    });
+  });
+
+  describe('a child at x === 0 (BL-28)', () => {
+    it('is on the right of the central topic', () => {
+      // Regression: tested as `x >= 0` for LEFT and `x <= 0` for RIGHT, it was
+      // excluded from both, and RIGHT fell back to the first child, 'leftOnly'.
+      const root = topic('central', 0, 0, true);
+      attach(root, topic('leftOnly', -200, 0));
+      attach(root, topic('centred', 0, 60));
+
+      expect(press([root], root, root, 'RIGHT')).toBe('centred');
+      expect(press([root], root, root, 'LEFT')).toBe('leftOnly');
+    });
+
+    it('is not a left-side child when descending on the left', () => {
+      // Regression: the preferred-side filter counted x === 0 on both sides, so
+      // the nearer 'centred' child won over the left one.
+      const root = topic('central', 0, 0, true);
+      const parent = attach(root, topic('parent', -200, 0));
+      attach(parent, topic('farLeft', -400, 40));
+      attach(parent, topic('centred', 0, 0));
+
+      expect(press([root], root, parent, 'LEFT')).toBe('farLeft');
     });
   });
 });

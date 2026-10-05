@@ -45,12 +45,23 @@ import { FontStyleType } from './FontStyleType';
 import { FontWeightType } from './FontWeightType';
 import DragTopic from './DragTopic';
 import ThemeFactory from './theme/ThemeFactory';
-import { ThemeVariant } from './theme/Theme';
+import ThemeResolutionCache from './theme/ThemeResolutionCache';
+import Theme, { ThemeVariant } from './theme/Theme';
 import TopicShape from './shape/TopicShape';
 import TopicShapeFactory from './shape/TopicShapeFactory';
 import type { OrientationType } from './layout/LayoutType';
 
 const ICON_SCALING_FACTOR = 1.3;
+
+/** The text values last applied to a topic text shape. */
+type AppliedTextValues = {
+  color?: string;
+  size?: number;
+  weight?: string;
+  style?: string;
+  family?: string;
+  text?: string;
+};
 
 export type TopicCornerCoordinates = {
   topLeft: PositionType;
@@ -65,6 +76,9 @@ abstract class Topic extends NodeGraph {
   private _relationships: Relationship[];
 
   private _isInWorkspace: boolean;
+
+  /** The canvas the topic was added to. Each Designer has its own. */
+  private _workspace: Canvas | null;
 
   private _children: Topic[];
 
@@ -90,6 +104,13 @@ abstract class Topic extends NodeGraph {
 
   private _topicEventDispatcher?: TopicEventDispatcher;
 
+  // Values last applied to the text shape: a redraw skips the setters of unchanged ones,
+  // as setting the text rebuilds its tspans. Only the topic sets them.
+  private _appliedText: AppliedTextValues = {};
+
+  // Font height measured by the redraw in progress, so the text is measured once per redraw.
+  private _measuredFontHeight: number | undefined;
+
   constructor(
     model: NodeModel,
     options: NodeOption,
@@ -101,6 +122,7 @@ abstract class Topic extends NodeGraph {
     this._parent = null;
     this._relationships = [];
     this._isInWorkspace = false;
+    this._workspace = null;
     this._innerShape = null;
     this._themeVariant = themeVariant;
     this._orientation = orientation;
@@ -203,21 +225,29 @@ abstract class Topic extends NodeGraph {
   }
 
   getShapeType(): TopicShapeType {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getShapeType(this);
+    return this.resolveStyle('shapeType', this.getThemeVariant(), (theme) =>
+      theme.getShapeType(this),
+    );
   }
 
   getConnectionStyle(): LineType {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getConnectionType(this);
+    return this.resolveStyle('connectionStyle', this.getThemeVariant(), (theme) =>
+      theme.getConnectionType(this),
+    );
   }
 
   getConnectionColor(variant: ThemeVariant): string {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, variant);
-    return theme.getConnectionColor(this);
+    return this.resolveStyle('connectionColor', variant, (theme) => theme.getConnectionColor(this));
+  }
+
+  /**
+   * Resolves a style of the topic with the theme of the given variant. During a redraw
+   * pass, each style is resolved once (see ThemeResolutionCache).
+   */
+  private resolveStyle<T>(key: string, variant: ThemeVariant, resolve: (theme: Theme) => T): T {
+    return ThemeResolutionCache.memo(this, `${key}:${variant}`, () =>
+      resolve(ThemeFactory.create(this.getModel(), variant)),
+    );
   }
 
   private removeInnerShape(): TopicShape {
@@ -308,9 +338,18 @@ abstract class Topic extends NodeGraph {
       // @todo: Review this. Get should not modify the state ....
       const text = this.getText();
       this._text.setText(text);
+      this._appliedText = { text };
     }
 
     return this._text;
+  }
+
+  /**
+   * The height of a line of the topic text. During a redraw, it is the one the redraw
+   * measured, so that the theme and the features do not measure the text again.
+   */
+  getTextFontHeight(): number {
+    return this._measuredFontHeight ?? this.getOrBuildTextShape().getFontHeight();
   }
 
   getOrBuildImageEmojiTextShape(): Text | undefined {
@@ -340,9 +379,9 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     const theme = ThemeFactory.create(model, this.getThemeVariant());
 
-    const textHeight = this.getOrBuildTextShape().getFontHeight();
+    const textHeight = this.getTextFontHeight();
     const iconSize = textHeight * ICON_SCALING_FACTOR;
-    const result = new IconGroup(this.getId(), iconSize);
+    const result = new IconGroup(this.getId(), iconSize, this.getDesigner());
     const padding = theme.getInnerPadding(this);
     result.setPosition(padding, padding);
 
@@ -467,33 +506,31 @@ abstract class Topic extends NodeGraph {
   }
 
   getFontWeight(): FontWeightType {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getFontWeight(this);
+    return this.resolveStyle('fontWeight', this.getThemeVariant(), (theme) =>
+      theme.getFontWeight(this),
+    );
   }
 
   getFontFamily(): string {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getFontFamily(this);
+    return this.resolveStyle('fontFamily', this.getThemeVariant(), (theme) =>
+      theme.getFontFamily(this),
+    );
   }
 
   getFontColor(variant: ThemeVariant): string {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, variant);
-    return theme.getFontColor(this);
+    return this.resolveStyle('fontColor', variant, (theme) => theme.getFontColor(this));
   }
 
   getFontStyle(): FontStyleType {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getFontStyle(this);
+    return this.resolveStyle('fontStyle', this.getThemeVariant(), (theme) =>
+      theme.getFontStyle(this),
+    );
   }
 
   getFontSize(): number {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getFontSize(this);
+    return this.resolveStyle('fontSize', this.getThemeVariant(), (theme) =>
+      theme.getFontSize(this),
+    );
   }
 
   getImageEmojiChar(): string | undefined {
@@ -538,7 +575,32 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setText(modelText);
 
-    this.redraw(this.getThemeVariant(), true);
+    // The text does not change how the descendants render, only where the lines that
+    // meet this topic are drawn: redraw this topic and the descendants' connection and
+    // relationship lines, as a redraw of the whole subtree did, but not the topics.
+    this.redraw(this.getThemeVariant(), false);
+    if (this._isInWorkspace) {
+      this.redrawDescendantLines();
+    }
+  }
+
+  /**
+   * Redraws the connection and relationship lines of the visible descendants, in the
+   * order a redraw of the subtree redraws them.
+   */
+  private redrawDescendantLines(): void {
+    if (this.areChildrenShrunken()) {
+      return;
+    }
+    this.getChildren().forEach((child) => {
+      if (child._isInWorkspace) {
+        if (child._workspace) {
+          child.getOutgoingLine()?.redraw();
+        }
+        child._relationships.forEach((r) => r.redraw());
+        child.redrawDescendantLines();
+      }
+    });
   }
 
   getText(): string {
@@ -571,9 +633,7 @@ abstract class Topic extends NodeGraph {
   }
 
   getBackgroundColor(variant: ThemeVariant): string {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, variant);
-    return theme.getBackgroundColor(this);
+    return this.resolveStyle('backgroundColor', variant, (theme) => theme.getBackgroundColor(this));
   }
 
   setBorderColor(color: string | undefined): void {
@@ -584,9 +644,7 @@ abstract class Topic extends NodeGraph {
   }
 
   getBorderColor(variant: ThemeVariant): string {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, variant);
-    return theme.getBorderColor(this);
+    return this.resolveStyle('borderColor', variant, (theme) => theme.getBorderColor(this));
   }
 
   setBorderStyle(style: string | undefined): void {
@@ -817,9 +875,12 @@ abstract class Topic extends NodeGraph {
     const dispatcher = ActionDispatcher.getInstance();
     const notes = model.findFeatureByType('note');
 
-    if (!$defined(value) && notes.length > 0) {
-      const featureId = notes[0].getId();
-      dispatcher.removeFeatureFromTopic(topicId, featureId);
+    if (!$defined(value)) {
+      // Nothing to clear when the topic has no note ...
+      if (notes.length > 0) {
+        const featureId = notes[0].getId();
+        dispatcher.removeFeatureFromTopic(topicId, featureId);
+      }
     } else if (notes.length > 0) {
       dispatcher.changeFeatureToTopic(topicId, notes[0].getId(), {
         text: value,
@@ -833,15 +894,14 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  getLinkValue(): string {
+  getLinkValue(): string | undefined {
     const model = this.getModel();
     // @param {mindplot.model.LinkModel[]} links
     const links = model.findFeatureByType('link');
-    let result;
+    let result: string | undefined;
     if (links.length > 0) {
       result = (links[0] as LinkModel).getUrl();
     }
-
     return result;
   }
 
@@ -852,8 +912,11 @@ abstract class Topic extends NodeGraph {
     const links = model.findFeatureByType('link');
 
     if (!$defined(value)) {
-      const featureId = links[0].getId();
-      dispatcher.removeFeatureFromTopic(topicId, featureId);
+      // Nothing to clear when the topic has no link ...
+      if (links.length > 0) {
+        const featureId = links[0].getId();
+        dispatcher.removeFeatureFromTopic(topicId, featureId);
+      }
     } else if (links.length > 0) {
       dispatcher.changeFeatureToTopic(topicId, links[0].getId(), {
         url: value,
@@ -1050,29 +1113,40 @@ abstract class Topic extends NodeGraph {
   }
 
   setSize(size: SizeType, force?: boolean): void {
+    // A failed measurement (NaN or infinite) would be seen as a change on every redraw
+    // (NaN !== NaN): keep the previous size instead.
+    const isMeasured = Number.isFinite(size.width) && Number.isFinite(size.height);
+    if (!isMeasured && !force) {
+      return;
+    }
+    const newSize = isMeasured ? size : this.getSize();
+
     const roundedSize = {
-      width: Math.ceil(size.width),
-      height: Math.ceil(size.height),
+      width: Math.ceil(newSize.width),
+      height: Math.ceil(newSize.height),
     };
 
+    // Note: oldSize is the live size object, so it already holds the new size once
+    // super.setSize() runs. Read it only before that. Topics are re-centred on their
+    // model position and the layout manager, which owns positions, moves them if needed.
     const oldSize = this.getSize();
     const hasSizeChanged =
       oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;
     if (hasSizeChanged || force) {
-      super.setSize(size);
+      super.setSize(roundedSize);
 
       const outerShape = this.getOuterShape();
       const innerShape = this.getInnerShape();
-      outerShape.setSize(size.width + 6, size.height + 6);
-      innerShape.setSize(size.width, size.height);
+      outerShape.setSize(roundedSize.width + 6, roundedSize.height + 6);
+      innerShape.setSize(roundedSize.width, roundedSize.height);
 
       // Update the figure position(ej: central topic must be centered) and children position.
-      this.updatePositionOnChangeSize(oldSize, size);
+      this.updatePositionOnChangeSize();
 
       if (hasSizeChanged) {
         LayoutEventBus.fireEvent('topicResize', {
           node: this.getModel(),
-          size,
+          size: roundedSize,
         });
       }
     }
@@ -1208,6 +1282,7 @@ abstract class Topic extends NodeGraph {
       workspace.removeChild(line);
     }
     this._isInWorkspace = false;
+    this._workspace = null;
     LayoutEventBus.fireEvent('topicRemoved', this.getModel());
   }
 
@@ -1228,6 +1303,7 @@ abstract class Topic extends NodeGraph {
       }
     }
     this._isInWorkspace = true;
+    this._workspace = workspace;
     this.redraw(this.getThemeVariant(), false);
   }
 
@@ -1249,14 +1325,14 @@ abstract class Topic extends NodeGraph {
 
   private updateConnection(): boolean {
     let result = false;
-    if (this._isInWorkspace) {
+    const workspace = this._workspace;
+    if (this._isInWorkspace && workspace) {
       if (this._outgoingLine) {
         // Has the style change ?
         const connStyleChanged =
           this._outgoingLine.getLineType() !== this.getParent()!.getConnectionStyle();
 
         if (connStyleChanged) {
-          const workspace = designer.getWorkSpace();
           this._outgoingLine.removeFromWorkspace(workspace);
 
           const targetTopic = this.getOutgoingConnectedTopic()!;
@@ -1274,7 +1350,7 @@ abstract class Topic extends NodeGraph {
 
         // Force the repaint in case that the main topic color has changed.
         const borderColor = this.getBorderColor(this.getThemeVariant());
-        this._connector!.setColor(borderColor);
+        this._connector.setColor(borderColor);
 
         this._outgoingLine.redraw();
       }
@@ -1283,7 +1359,13 @@ abstract class Topic extends NodeGraph {
   }
 
   redraw(variant: ThemeVariant, redrawChildren = false): void {
+    // The styles are resolved once per topic for the whole pass, children included ...
+    ThemeResolutionCache.run(() => this.redrawInPass(variant, redrawChildren));
+  }
+
+  private redrawInPass(variant: ThemeVariant, redrawChildren: boolean): void {
     if (this._isInWorkspace) {
+      this._measuredFontHeight = undefined;
       const theme = ThemeFactory.create(this.getModel(), variant);
       const textShape = this.getOrBuildTextShape();
 
@@ -1292,24 +1374,21 @@ abstract class Topic extends NodeGraph {
 
       // Update font ...
       const fontColor = this.getFontColor(variant);
-      textShape.setColor(fontColor);
-
       const fontSize = this.getFontSize();
-      textShape.setFontSize(fontSize);
-
       const fontWeight = this.getFontWeight();
       // Map theme weight '600' to a concrete weight for rendering
       const web2dWeight = fontWeight === '600' ? 'bold' : fontWeight;
-      textShape.setWeight(web2dWeight as 'normal' | 'bold');
-
       const fontStyle = this.getFontStyle();
-      textShape.setStyle(fontStyle);
-
       const fontFamily = this.getFontFamily();
-      textShape.setFontName(fontFamily);
-
       const text = this.getText();
-      textShape.setText(text);
+      this.applyTextValues(textShape, {
+        color: fontColor,
+        size: fontSize,
+        weight: web2dWeight,
+        style: fontStyle,
+        family: fontFamily,
+        text,
+      });
 
       // Update outer shape style ...
       const outerShape = this.getOuterShape();
@@ -1319,14 +1398,16 @@ abstract class Topic extends NodeGraph {
       outerShape.setFill(outerFillColor);
       outerShape.setStroke(1, 'solid', outerBorderColor);
 
-      // Calculate topic size and adjust elements ...
+      // Calculate topic size and adjust elements. The text is measured once: the font
+      // height is the height of one of its lines (Text.getFontHeight) ...
       const textWidth = textShape.getShapeWidth();
       const textHeight = textShape.getShapeHeight();
+      const fontHeight = textHeight / textShape.peer.getTextLines().length;
+      this._measuredFontHeight = fontHeight;
       const padding = theme.getInnerPadding(this);
 
       // Adjust icons group based on the font size ...
       const iconGroup = this.getOrBuildIconGroup();
-      const fontHeight = textShape.getFontHeight();
       const iconHeight = ICON_SCALING_FACTOR * fontHeight;
       iconGroup.seIconSize(iconHeight, iconHeight);
 
@@ -1472,10 +1553,40 @@ abstract class Topic extends NodeGraph {
       const bgColor = this.getBackgroundColor(variant);
       innerShape.setFill(bgColor);
 
+      // The measurement is only valid until the text changes ...
+      this._measuredFontHeight = undefined;
+
       if ((redrawChildren || shapeChanged || connectionChanged) && !this.areChildrenShrunken()) {
         this.getChildren().forEach((t) => t.redraw(variant, true));
       }
     }
+  }
+
+  /**
+   * Applies the text values that changed since the last redraw, in the order the redraw
+   * always set them. The text shape keeps the others.
+   */
+  private applyTextValues(textShape: Text, values: Required<AppliedTextValues>): void {
+    const applied = this._appliedText;
+    if (applied.color !== values.color) {
+      textShape.setColor(values.color);
+    }
+    if (applied.size !== values.size) {
+      textShape.setFontSize(values.size);
+    }
+    if (applied.weight !== values.weight) {
+      textShape.setWeight(values.weight as 'normal' | 'bold');
+    }
+    if (applied.style !== values.style) {
+      textShape.setStyle(values.style);
+    }
+    if (applied.family !== values.family) {
+      textShape.setFontName(values.family);
+    }
+    if (applied.text !== values.text) {
+      textShape.setText(values.text);
+    }
+    this._appliedText = { ...values };
   }
 
   private flatten2DElements(topic: Topic): (Topic | Relationship | TopicConnection)[] {
@@ -1532,7 +1643,7 @@ abstract class Topic extends NodeGraph {
 
   abstract workoutIncomingConnectionPoint(position: PositionType): PositionType;
 
-  protected abstract updatePositionOnChangeSize(oldSize: SizeType, roundedSize: SizeType): void;
+  protected abstract updatePositionOnChangeSize(): void;
 }
 
 export default Topic;

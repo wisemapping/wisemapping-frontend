@@ -27,19 +27,18 @@ import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import TopicEventDispatcher from '../../../src/components/TopicEventDispatcher';
 import { TopicShapeType } from '../../../src/components/model/INodeModel';
 import ThemeType from '../../../src/components/model/ThemeType';
+import type Designer from '../../../src/components/Designer';
 
-const ensureDesignerStub = () => {
-  const globalDesigner = (globalThis as unknown as { designer?: unknown }).designer;
-  if (!globalDesigner) {
-    (globalThis as Record<string, unknown>).designer = {
-      getWidgetManager: () => ({
-        configureTooltipForNode: () => {},
-        createTooltipForLink: () => {},
-      }),
-      fireEvent: () => {},
-    };
-  }
-};
+// The stories render a lone topic, without a Designer. The note and link icons get the designer
+// from the topic (NodeOption.designer) to register their tooltips and edit handlers: this one
+// provides those as no-ops.
+const storyDesigner = {
+  getWidgetManager: () => ({
+    configureTooltipForNode: () => {},
+    createTooltipForLink: () => {},
+  }),
+  fireEvent: () => {},
+} as unknown as Designer;
 
 const registerRefreshHook = (topic: Topic) => {
   // Trigger a redraw after the node is added ...
@@ -90,7 +89,6 @@ const createTopic = ({
   theme = undefined,
   readOnly = true,
 }: TopicArgs, options?: CreateTopicOptions) => {
-  ensureDesignerStub();
   // Build basic container ...
   const divElem = document.createElement('div');
   divElem.style.height = '600px';
@@ -143,7 +141,11 @@ const createTopic = ({
 
   // Create topic UI element ...
   mindmap.addBranch(model);
-  const centralTopic = new CentralTopic(model, { readOnly, topicEventDispatcher }, 'light'); // Default to light for storybook
+  const centralTopic = new CentralTopic(
+    model,
+    { readOnly, topicEventDispatcher, designer: storyDesigner },
+    'light',
+  ); // Default to light for storybook
   workspace.append(centralTopic);
 
   // Register refresh hook ..

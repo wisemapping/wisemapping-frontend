@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
+import { $msg } from './Messages';
 import { Mindmap } from '..';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
@@ -32,26 +33,47 @@ export type ServerError = {
 
 export type PersistenceErrorCallback = (error: PersistenceError) => void;
 
+export type SaveEvents = {
+  onSuccess: () => void;
+  onError: (error: PersistenceError) => void;
+};
+
+export type SaveOptions = {
+  // A flush (e.g. when leaving the editor): sent as soon as no other save is in flight.
+  urgent?: boolean;
+};
+
 abstract class PersistenceManager {
   private static _instance: PersistenceManager;
 
   private _errorHandlers: PersistenceErrorCallback[] = [];
 
-  save(mindmap: Mindmap, editorProperties, saveHistory: boolean, events?) {
+  save(
+    mindmap: Mindmap,
+    editorProperties: object,
+    saveHistory: boolean,
+    events?: SaveEvents,
+    options?: SaveOptions,
+  ): void {
     $assert(mindmap, 'mindmap can not be null');
     $assert(editorProperties, 'editorProperties can not be null');
 
     const mapId = mindmap.getId() || 'WiseMapping';
     $assert(mapId, 'mapId can not be null');
 
-    const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
-    const domMap = serializer.toXML(mindmap);
-    const pref = JSON.stringify(editorProperties);
     try {
-      this.saveMapXml(mapId, domMap, pref, saveHistory, events);
+      // A map that can not be serialized is a failed save too, reported through onError ...
+      const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
+      const domMap = serializer.toXML(mindmap);
+      const pref = JSON.stringify(editorProperties);
+      this.saveMapXml(mapId, domMap, pref, saveHistory, events, options);
     } catch (e) {
       console.error(e);
-      events.onError(e);
+      events?.onError({
+        severity: 'SEVERE',
+        errorType: 'unexpected',
+        message: $msg('SAVE_COULD_NOT_BE_COMPLETED'),
+      });
     }
   }
 
@@ -80,13 +102,20 @@ abstract class PersistenceManager {
     }
   }
 
-  abstract discardChanges(mapId: string): void;
+  abstract discardChanges(mapId: string): void | Promise<void>;
 
   abstract loadMapDom(mapId: string): Promise<Document>;
 
-  abstract saveMapXml(mapId: string, mapXml: Document, pref?, saveHistory?: boolean, events?);
+  abstract saveMapXml(
+    mapId: string,
+    mapXml: Document,
+    pref?: string,
+    saveHistory?: boolean,
+    events?: SaveEvents,
+    options?: SaveOptions,
+  ): void;
 
-  abstract unlockMap(mapId: string): void;
+  abstract unlockMap(mapId: string): void | Promise<void>;
 
   static init = (instance: PersistenceManager) => {
     this._instance = instance;

@@ -242,6 +242,9 @@
   "import.error-file": {
     "defaultMessage": "インポートエラー {error}"
   },
+  "import.error-unsupported-file": {
+    "defaultMessage": "このファイル形式はサポートされていません。WiseMapping、FreeMind、Freeplane、XMind、MindManager、OPML のマップをインポートできます。"
+  },
   "import.title": {
     "defaultMessage": "既存のマインドマップをインポート"
   },

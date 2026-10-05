@@ -15,7 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createCurvedLine } from './CurvedLine';
+import {
+  createCurvedLine,
+  createDefaultControlPointsCurvedLine,
+  createVerticalCurvedLine,
+} from './CurvedLine';
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
@@ -30,6 +34,7 @@ export default {
       options: ['dash', 'dot', 'solid', 'longdash', 'dashdot'],
     },
     strokeWidth: { control: { type: 'number', min: 0, max: 30, step: 1 } },
+    dx: { control: { type: 'number', min: 0, max: 200, step: 1 } },
   },
 };
 
@@ -59,4 +64,44 @@ Fill.args = {
   width: 10,
   strokeWidth: 0,
   fillColor: 'red',
+};
+
+const VerticalTemplate = ({ label, ...args }) => createVerticalCurvedLine({ label, ...args });
+
+export const Vertical = VerticalTemplate.bind({});
+Vertical.args = {
+  width: 10,
+  dx: 60,
+  strokeWidth: 1,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+  fillColor: 'red',
+};
+
+export const NearVertical = VerticalTemplate.bind({});
+NearVertical.args = {
+  width: 10,
+  dx: 2,
+  strokeWidth: 1,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+  fillColor: 'red',
+};
+
+export const VerticalThin = VerticalTemplate.bind({});
+VerticalThin.args = {
+  width: 0,
+  dx: 60,
+  strokeWidth: 2,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+  fillColor: 'none',
+};
+
+export const DefaultControlPoints = (({ label, ...args }) =>
+  createDefaultControlPointsCurvedLine({ label, ...args })).bind({});
+DefaultControlPoints.args = {
+  strokeWidth: 2,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
 };

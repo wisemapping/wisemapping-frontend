@@ -30,6 +30,7 @@ export default {
     onMouseOver: { action: 'onMouseOver' },
     onMouseOut: { action: 'onMouseOut' },
     onDblClick: { action: 'onDblClick' },
+    eventLog: { control: 'boolean' },
   },
 };
 
@@ -40,4 +41,5 @@ EventsRegistration.args = {
   enableForInnerCircle: false,
   enableForOuterCircle: false,
   stopEventPropagation: true,
+  eventLog: true,
 };

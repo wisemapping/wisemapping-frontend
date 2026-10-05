@@ -17,27 +17,35 @@
  */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { ComponentType } from 'react';
+import type { CSSObject } from '@emotion/react';
+import type { Theme } from '@mui/material/styles';
 
-function withEmotionStyles<T>(styles) {
+type Styles = CSSObject | ((theme: Theme) => CSSObject);
+
+// The wrapped component's props are forwarded untouched.
+type HocProps = { papercss?: CSSObject; [prop: string]: unknown };
+
+function withEmotionStyles<T>(styles: Styles) {
   return (Component: ComponentType<T>) => {
-    const WithEmotionStyles = (hocProps): React.ReactElement => {
+    const Styled = Component as ComponentType<HocProps>;
+    const WithEmotionStyles = (hocProps: HocProps): React.ReactElement => {
       // `styles` may be a `(theme) => ({ ... })` callback. Spreading a function
       // yields `{}` -- functions carry no own enumerable properties -- so the
       // callback has to be forwarded for Emotion to resolve against the theme,
       // not spread into an object literal.
       const css =
         typeof styles === 'function'
-          ? (theme) => ({ ...styles(theme), ...hocProps.papercss })
+          ? (theme: Theme) => ({ ...styles(theme), ...hocProps.papercss })
           : { ...styles, ...hocProps.papercss };
 
-      return <Component {...hocProps} css={css} />;
+      return <Styled {...hocProps} css={css} />;
     };
     WithEmotionStyles.displayName = `withEmotionStyles(${getDisplayName(Component)})`;
     return WithEmotionStyles;
   };
 }
 
-function getDisplayName(WrappedComponent) {
+function getDisplayName(WrappedComponent: { displayName?: string; name?: string }) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 

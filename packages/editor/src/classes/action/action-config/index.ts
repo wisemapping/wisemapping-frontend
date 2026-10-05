@@ -38,11 +38,11 @@ interface ActionConfig {
   /**
    * the event handler for a common button
    */
-  onClick?: (event) => void;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   /**
-   * custom element for a menu entry
+   * custom element for a menu entry; undefined renders nothing
    */
-  render?: (closeMenu: () => void) => React.ReactElement;
+  render?: (closeMenu: () => void) => React.ReactElement | undefined;
   /**
    * submenu options. If null, a divider will be inserted.
    */

@@ -15,7 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import PersistenceManager from './PersistenceManager';
+import PersistenceManager, { SaveEvents } from './PersistenceManager';
+import { AjaxUtils } from './util/AjaxUtils';
 
 class LocalStorageManager extends PersistenceManager {
   private documentUrl: string;
@@ -39,13 +40,19 @@ class LocalStorageManager extends PersistenceManager {
     this.jwtToken = jwtToken;
   }
 
-  saveMapXml(mapId: string, mapDoc: Document, _pref: string, _saveHistory: boolean, events): void {
-    const mapXml = new XMLSerializer().serializeToString(mapDoc);
+  saveMapXml(
+    mapId: string,
+    mapDoc: Document,
+    _pref: string,
+    _saveHistory: boolean,
+    events?: SaveEvents,
+  ): void {
     if (!this.readOnly) {
+      const mapXml = new XMLSerializer().serializeToString(mapDoc);
       localStorage.setItem(`${mapId}-xml`, mapXml);
-      events.onSuccess();
     }
-    console.log(`Map XML to save => ${mapXml}`);
+    // A read-only manager has nothing to persist, but the caller must still be settled.
+    events?.onSuccess();
   }
 
   discardChanges(mapId: string) {
@@ -56,7 +63,7 @@ class LocalStorageManager extends PersistenceManager {
 
   private buildHeader() {
     // const csrfToken = this.getCSRFToken();
-    const result = {
+    const result: Record<string, string> = {
       'Content-Type': 'text/plain',
       Accept: 'application/xml',
     };
@@ -105,10 +112,13 @@ class LocalStorageManager extends PersistenceManager {
           }
           return response.text();
         })
-        .then((xmlStr) => new DOMParser().parseFromString(xmlStr, 'text/xml'));
+        .then((xmlStr) => AjaxUtils.parseXML(xmlStr));
     } else {
-      const doc = new DOMParser().parseFromString(localStorate, 'text/xml');
-      result = Promise.resolve(doc);
+      try {
+        result = Promise.resolve(AjaxUtils.parseXML(localStorate));
+      } catch (e) {
+        result = Promise.reject(e);
+      }
     }
     return result;
   }

@@ -17,6 +17,27 @@
  */
 
 /// <reference types="cypress" />
+
+// A module, so that the types and helpers below stay local to this spec.
+export {};
+
+type DesignerHandle = {
+  getMindmap(): { getId(): string | undefined };
+  getModel(): { getTopics(): unknown[] };
+};
+
+/** Asserts that the page shows the requested map: its id, and as many topics as its file has. */
+const assertMapLoaded = (mapId: string) => {
+  cy.readFile(`test/playground/map-render/samples/${mapId}.wxml`).then((xml: string) => {
+    const topicsInFile = (xml.match(/<topic[\s>]/g) || []).length;
+    cy.window().then((win) => {
+      const designer = (win as unknown as { designer: DesignerHandle }).designer;
+      expect(designer.getMindmap().getId(), 'loaded map').to.equal(mapId);
+      expect(designer.getModel().getTopics(), 'topics').to.have.length(topicsInFile);
+    });
+  });
+};
+
 describe('Render all sample maps', () => {
   [
     'complex',
@@ -63,7 +84,8 @@ describe('Render all sample maps', () => {
         cy.wait(2000); // Extra time for large maps to finish rendering
       }
 
-      cy.screenshot(`map-${mapId}`);
+      assertMapLoaded(mapId);
+      cy.matchImageSnapshot(`map-${mapId}`);
     });
   });
 });

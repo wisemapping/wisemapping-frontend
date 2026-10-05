@@ -40,20 +40,24 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
     $assert($defined(mapId), 'mapId can not be null');
     const mindmap = this._pelaSerializer.loadFromDom(dom, mapId);
     mindmap.setVersion(ModelCodeName.TANGO);
-    this._fixOrder(mindmap);
-    this._fixPosition(mindmap);
+    // An empty map has no central topic: there is nothing to fix.
+    const centralNode = mindmap.getBranches()[0];
+    if (centralNode) {
+      // Positions first: the order fix reads them to tell the left and right sides apart.
+      this._fixPosition(centralNode);
+      this._fixOrder(centralNode);
+    }
     return mindmap;
   }
 
-  private _fixOrder(mindmap: Mindmap) {
+  private _fixOrder(centralNode: NodeModel) {
     // First level node policies has been changed.
-    const centralNode: NodeModel = mindmap.getBranches()[0];
     const children: NodeModel[] = centralNode.getChildren();
     const leftNodes: NodeModel[] = [];
     const rightNodes: NodeModel[] = [];
 
     children.forEach((child) => {
-      const position = child.getPosition();
+      const position = child.getPositionOrThrow();
       if (position.x < 0) {
         leftNodes.push(child);
       } else {
@@ -72,14 +76,15 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
     }
   }
 
-  private _fixPosition(mindmap: Mindmap): void {
+  private _fixPosition(centralNode: NodeModel): void {
     // Position was not required in previous versions. Try to synthesize one .
-    const centralNode = mindmap.getBranches()[0];
     const children = centralNode.getChildren();
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
-      const position = child.getPosition();
-      this._fixNodePosition(child, position);
+      if (!child.hasPosition()) {
+        child.setPosition(0, 0);
+      }
+      this._fixNodePosition(child, child.getPositionOrThrow());
     }
   }
 

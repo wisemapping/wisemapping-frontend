@@ -1,10 +1,22 @@
 <map version="1.0.1">
     <node ID="ID_1" TEXT="Artigos GF comentários interessantes">
         <node ID="ID_5" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#cccccc" TEXT="Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant communities">
-            <edge COLOR="#cccccc"/>
             <node ID="ID_6" POSITION="left" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <parsererror xmlns="http://www.mozilla.org/newlayout/xml/parsererror.xml">1:590: disallowed character in entity name.</parsererror>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head></head>
+                        <body>
+                            <p>Therecent growth of large functional trait data</p>
+                            <p>bases has been fuelled by standardized protocols forthe</p>
+                            <p>measurement of individual functional traits and intensive</p>
+                            <p>efforts to compile trait data(Cornelissen etal. 2003; Chave etal. 2009). Nonetheless, there remains no consensusfor</p>
+                            <p>the most appropriate sampling design so that traits can be</p>
+                            <p>scaled from the individuals on whom measurements are</p>
+                            <p>made to the community or ecosystem levels at which infer-</p>
+                            <p>ences are drawn (Swenson etal. 2006,2007,Reich,Wright</p>
+                            <p>&amp; Lusk 2007;Kraft,Valencia &amp; Ackerly 2008).</p>
+                        </body>
+                    </html>
                 </richcontent>
             </node>
             <node ID="ID_7" POSITION="left" STYLE="fork">
@@ -60,7 +72,12 @@
                     </html>
                 </richcontent>
                 <richcontent TYPE="NOTE">
-                    <parsererror xmlns="http://www.mozilla.org/newlayout/xml/parsererror.xml">1:134: unclosed tag: p</parsererror>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head></head>
+                        <body>
+                            <p>Isso significa que estudos de característica de história de vida compensam? Ver nos m&amp;m.</p>
+                        </body>
+                    </html>
                 </richcontent>
             </node>
             <node ID="ID_15" POSITION="left" STYLE="fork">
@@ -85,7 +102,6 @@
             </node>
         </node>
         <node ID="ID_17" POSITION="right" STYLE="rectangle" BACKGROUND_COLOR="#cccccc" COLOR="#000000" TEXT="Chazdon 2010. Biotropica. 42(1): 31–40">
-            <edge COLOR="#cccccc"/>
             <node ID="ID_24" POSITION="right" STYLE="fork" TEXT="Falar no artigo que esse trabalho fala que é inadequada a divisão entre pioneira e não pioneira devido a grande variação que há entre elas. Além de terem descoberto que durante a ontogenia a resposta a luminosidade muda dentro de uma mesma espécie. Porém recomendar que essa classificação continue sendo usada em curto prazo enquanto não há informações confiáveis suficiente para esta simples classificação. Outras classificações como esta do artigo são bem vinda, contanto que tenham dados confiáveis. Porém dados estáticos já são difíceis de se obter, dados temporais, como taxa de crescimento em diâmetro ou altura, são mais difíceis ainda. Falar que vários tipos de classificações podem ser utilizadas e quanto mais detalhe melhor, porém os dados é que são mais limitantes. Se focarmos em dados de germinação e crescimento limitantes, como sugerem sainete e whitmore, da uma idéia maismrápida e a curto prazo da classificação destas espécies. Depois com o tempo conseguiremos construir classificações mais detalhadas e com mais dados confiáveis. "/>
             <node ID="ID_22" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
@@ -151,17 +167,70 @@
             </node>
             <node ID="ID_27" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <parsererror xmlns="http://www.mozilla.org/newlayout/xml/parsererror.xml">1:325: unclosed tag: p</parsererror>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head></head>
+                        <body>
+                            <p>These results allow us to move beyond earlier conceptual</p>
+                            <p>frameworks of tropical forest secondary succession developed</p>
+                            <p>by Finegan (1996) and Chazdon (2008) based on subjective groupings,</p>
+                            <p>such as pioneers and shade-tolerant species (Swaine &amp;</p>
+                            <p>Whitmore 1988).</p>
+                        </body>
+                    </html>
                 </richcontent>
             </node>
             <node ID="ID_28" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <parsererror xmlns="http://www.mozilla.org/newlayout/xml/parsererror.xml">1:691: unclosed tag: p</parsererror>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head></head>
+                        <body>
+                            <p>Reproductive traits, such as dispersal mode, pollination mode,</p>
+                            <p>and sexual system, were ultimately not useful in delimiting tree</p>
+                            <p>functional types for the tree species examined here (Salgado-Negret</p>
+                            <p>2007). Thus, although reproductive traits do vary quantitatively in</p>
+                            <p>abundance between secondary and mature forests in our landscape</p>
+                            <p>(Chazdon et al. 2003), they do not seem to be important drivers of</p>
+                            <p>successional dynamics of trees Z10 cm dbh. For seedlings, however,</p>
+                            <p>dispersal mode and seed size are likely to play an important</p>
+                            <p>role in community dynamics during succession (Dalling&amp;Hubbell</p>
+                            <p>2002).</p>
+                        </body>
+                    </html>
                 </richcontent>
             </node>
             <node ID="ID_29" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <parsererror xmlns="http://www.mozilla.org/newlayout/xml/parsererror.xml">1:1875: unclosed tag: p</parsererror>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head></head>
+                        <body>
+                            <p>Our classification of colonization groups defies the traditional</p>
+                            <p>dichotomy between ‘late successional’ shade-tolerant and ‘early successional’</p>
+                            <p>pioneer species. Many tree species, classified here as</p>
+                            <p>regenerating pioneers on the basis of their population structure in</p>
+                            <p>secondary forests, are common in both young secondary forest and</p>
+                            <p>mature forests in this region (Guariguata et al. 1997), and many are</p>
+                            <p>important timber species (Vilchez et al. 2008). These generalists are</p>
+                            <p>by far the most abundant species of seedlings and saplings, conferring</p>
+                            <p>a high degree of resilience in the wet tropical forests of NE</p>
+                            <p>Costa Rica (Norden et al. 2009, Letcher &amp; Chazdon 2009). The</p>
+                            <p>high abundance of regenerating pioneers in seedling and sapling</p>
+                            <p>size classes clearly shows that species with shade-tolerant seedlings</p>
+                            <p>can also recruit as trees early in succession. For these species, early</p>
+                            <p>tree colonization enhances seedling and sapling recruitment during</p>
+                            <p>the first 20–30 yr of succession, due to local seed rain. Species</p>
+                            <p>abundance and size distribution depend strongly on chance colonization</p>
+                            <p>events early in succession (Chazdon 2008). Other studies</p>
+                            <p>have shown that mature forest species are able to colonize early in</p>
+                            <p>succession (Finegan 1996, van Breugel et al. 2007, Franklin &amp; Rey</p>
+                            <p>2007, Ochoa-Gaona et al. 2007), emphasizing the importance of</p>
+                            <p>initial floristic composition in the determination of successional</p>
+                            <p>pathways and rates of forest regrowth. On the other hand, significant</p>
+                            <p>numbers of species in our sites (40% overall and the majority</p>
+                            <p>of rare species) colonized only after canopy closure, and these species</p>
+                            <p>may not occur as mature individuals until decades after agricultural</p>
+                            <p>abandonment.</p>
+                        </body>
+                    </html>
                 </richcontent>
             </node>
             <node ID="ID_30" POSITION="right" STYLE="fork">
@@ -207,7 +276,6 @@
             </node>
         </node>
         <node ID="ID_2" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#cccccc" COLOR="#000000" TEXT="Poorter 1999. Functional Ecology. 13:396-410">
-            <edge COLOR="#cccccc"/>
             <node ID="ID_3" POSITION="left" STYLE="fork" TEXT="Espécies pioneiras crescem mais rápido do que as não pioneiras">
                 <node ID="ID_4" POSITION="left" STYLE="fork" TEXT="Tolerância a sombra está relacionada com persistência e não com crescimento"/>
             </node>

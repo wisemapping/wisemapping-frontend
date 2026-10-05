@@ -16,10 +16,12 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureModel from './FeatureModel';
+import FeatureModel, { FeatureAttributes } from './FeatureModel';
 
 class LinkModel extends FeatureModel {
-  constructor(attributes) {
+  private static readonly ALLOWED_PROTOCOLS = new Set(['http:', 'https:', 'mailto:']);
+
+  constructor(attributes: FeatureAttributes) {
     super('link');
     this.setUrl(attributes.url);
   }
@@ -40,24 +42,34 @@ class LinkModel extends FeatureModel {
 
   // url format is already checked in LinkEditor.checkUrl
   static _fixUrl(url: string): string {
-    let result = url;
-    if (
-      !result.includes('http://') &&
-      !result.includes('https://') &&
-      !result.includes('mailto://')
-    ) {
-      result = `http://${result}`;
+    // Keep urls whose scheme is allowed. Anything else (no scheme, or a scheme such as
+    // javascript:) gets the http:// prefix, so the resulting href can never run script.
+    let protocol: string | null = null;
+    try {
+      protocol = new URL(url).protocol;
+    } catch {
+      // Not an absolute url, so it has no scheme yet.
     }
-    return result;
+    return protocol && LinkModel.ALLOWED_PROTOCOLS.has(protocol) ? url : `http://${url}`;
   }
 
   /**
    * @param {String} urlType the url type, either 'mail' or 'url'
    * @throws will throw an error if urlType is null or undefined
    */
-  setUrlType(urlType) {
+  setUrlType(urlType: string) {
     $assert(urlType, 'urlType can not be null');
     this.setAttribute('urlType', urlType);
+  }
+
+  applyAttribute(key: string, value: unknown): void {
+    if (key === 'url') {
+      this.setUrl(value as string);
+    } else if (key === 'urlType') {
+      this.setUrlType(value as string);
+    } else {
+      super.applyAttribute(key, value);
+    }
   }
 }
 export default LinkModel;

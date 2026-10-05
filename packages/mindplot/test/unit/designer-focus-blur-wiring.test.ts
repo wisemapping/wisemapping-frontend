@@ -42,6 +42,7 @@ jest.mock('@wisemapping/web2d', () => {
       }),
       getCoordOrigin: jest.fn().mockReturnValue({ x: 0, y: 0 }),
       setCoordOrigin: jest.fn(),
+      setSize: jest.fn(),
       setCoordSize: jest.fn(),
       getCoordSize: jest.fn().mockReturnValue({ width: 1000, height: 800 }),
       getSVGElement: jest.fn().mockReturnValue(svgElement),
@@ -54,8 +55,6 @@ jest.mock('../../src/components/layout/LayoutEventBus', () => ({
   default: { fireEvent: jest.fn(), addEvent: jest.fn(), removeEvent: jest.fn() },
 }));
 
-jest.mock('../../src/components/SvgImageIcon', () => ({ default: jest.fn() }));
-
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class {},
@@ -64,6 +63,7 @@ jest.mock('../../src/components/export/PDFExporter', () => ({
 jest.mock('../../src/components/DesignerKeyboard', () => ({
   isDisabled: jest.fn().mockReturnValue(false),
   register: jest.fn(),
+  getInstance: jest.fn(),
 }));
 
 /**
@@ -103,7 +103,7 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
     // Capture what Designer registers on the topic instead of building a real one.
     jest
       .spyOn(Topic.prototype, 'addEvent')
-      .mockImplementation((type: string, callback: () => void) => {
+      .mockImplementation((type: string, callback: (...args: never[]) => void) => {
         handlers[type] = callback;
       });
     jest.spyOn(designer, 'fireEvent').mockImplementation((event: string) => {

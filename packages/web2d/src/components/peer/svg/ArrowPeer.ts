@@ -21,6 +21,8 @@ import PositionType from '../../PositionType';
 import ElementPeer from './ElementPeer';
 
 class ArrowPeer extends ElementPeer {
+  static readonly WING_LENGTH = 6;
+
   private _fromPoint: PositionType;
 
   private _controlPoint: PositionType | null;
@@ -37,8 +39,9 @@ class ArrowPeer extends ElementPeer {
     this._redraw();
   }
 
+  /** The direction the arrow points away from, relative to the tip. It is copied. */
   setControlPoint(point: PositionType) {
-    this._controlPoint = point;
+    this._controlPoint = { x: point.x, y: point.y };
     this._redraw();
   }
 
@@ -52,43 +55,32 @@ class ArrowPeer extends ElementPeer {
 
   setDashed(isDashed: boolean, length: number, spacing: number) {
     if ($defined(isDashed) && isDashed && $defined(length) && $defined(spacing)) {
-      this._native.setAttribute('stroke-dasharray', `${length}${spacing}`);
+      this._native.setAttribute('stroke-dasharray', `${length},${spacing}`);
     } else {
-      this._native.setAttribute('stroke-dasharray', '');
+      this._native.removeAttribute('stroke-dasharray');
     }
   }
 
+  /**
+   * Two wings of WING_LENGTH from the tip, each at 45° from the control point direction. A zero
+   * control point is taken as pointing down.
+   */
   private _redraw() {
-    let x: number;
-    let y: number;
-    let xp: number;
-    let yp: number;
     if (this._fromPoint && this._controlPoint) {
-      if (this._controlPoint.y === 0) this._controlPoint.y = 1;
+      const length = Math.hypot(this._controlPoint.x, this._controlPoint.y);
+      const ux = length > 0 ? this._controlPoint.x / length : 0;
+      const uy = length > 0 ? this._controlPoint.y / length : 1;
 
-      const y0 = this._controlPoint.y;
-      const x0 = this._controlPoint.x;
-      const x2 = x0 + y0;
-      const y2 = y0 - x0;
-      const x3 = x0 - y0;
-      const y3 = y0 + x0;
-      const m = y2 / x2;
-      const mp = y3 / x3;
-      const l = 6;
+      // The control direction turned by -45° and by +45°.
+      const cos = Math.SQRT1_2;
+      const l = ArrowPeer.WING_LENGTH;
+      const x = (ux * cos + uy * cos) * l;
+      const y = (uy * cos - ux * cos) * l;
+      const xp = (ux * cos - uy * cos) * l;
+      const yp = (uy * cos + ux * cos) * l;
 
-      x = x2 === 0 ? 0 : Math.sqrt(l ** 2 / (1 + m ** 2));
-      x *= Math.sign(x2);
-      y = x2 === 0 ? l * Math.sign(y2) : m * x;
-      xp = x3 === 0 ? 0 : Math.sqrt(l ** 2 / (1 + mp ** 2));
-      xp *= Math.sign(x3);
-      yp = x3 === 0 ? l * Math.sign(y3) : mp * xp;
-
-      const path =
-        `M${this._fromPoint.x},${this._fromPoint.y} ` +
-        `L${x + this._fromPoint.x},${y + this._fromPoint.y} M${this._fromPoint.x},${
-          this._fromPoint.y
-        } ` +
-        `L${xp + this._fromPoint.x},${yp + this._fromPoint.y}`;
+      const { x: fx, y: fy } = this._fromPoint;
+      const path = `M${fx},${fy} L${x + fx},${y + fy} M${fx},${fy} L${xp + fx},${yp + fy}`;
       this._native.setAttribute('d', path);
     }
   }

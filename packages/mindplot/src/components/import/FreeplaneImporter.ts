@@ -16,14 +16,24 @@
  *   limitations under the License.
  */
 import Importer from './Importer';
+import ImportError from './ImportError';
 import SecureXmlParser from '../security/SecureXmlParser';
+import Mindmap from '../model/Mindmap';
+import NodeModel from '../model/NodeModel';
+import NoteModel from '../model/NoteModel';
+import FeatureModelFactory from '../model/FeatureModelFactory';
+import { StrokeStyle } from '../model/RelationshipModel';
+import ContentType from '../ContentType';
+import HtmlSanitizer from '../security/HtmlSanitizer';
+import toWiseMappingXml from './support/MindmapXml';
+import { legacyIconEmoji } from './support/LegacyIconMap';
 
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
 
   private idCounter: number = 1;
 
-  private topicIdMap: Map<string, string>;
+  private topicIdMap: Map<string, number>;
 
   constructor(map: string) {
     super();
@@ -49,109 +59,119 @@ class FreeplaneImporter extends Importer {
       this.idCounter = 1;
       this.topicIdMap.clear();
 
-      // Generate WiseMapping XML directly
-      const wiseMappingXML = this.generateWiseMappingXML(rootNode, nameMap);
-
-      return Promise.resolve(wiseMappingXML);
+      const mindmap = this.buildMindmap(rootNode, nameMap);
+      return Promise.resolve(toWiseMappingXml(mindmap));
     } catch (error) {
       console.error('Error importing Freeplane map:', error);
-      // Fallback to basic map
-      return Promise.resolve(this.createFallbackMap(nameMap, error as Error));
+      return Promise.reject(ImportError.from(error, 'Freeplane'));
     }
   }
 
-  private generateWiseMappingXML(rootNode: Element, mapName: string): string {
-    const centralTitle = rootNode.getAttribute('TEXT') || 'Central Topic';
-    const centralId = this.generateId();
-    const rootNodeId = rootNode.getAttribute('ID') || 'ID_1';
-    this.topicIdMap.set(rootNodeId, centralId.toString());
+  private buildMindmap(rootNode: Element, mapName: string): Mindmap {
+    const mindmap = new Mindmap(mapName);
+    mindmap.setTheme('prism');
+    mindmap.setLayout('mindmap');
 
-    let xml = `<map name="${this.escapeXml(mapName)}" version="tango" theme="prism" layout="mindmap">\n`;
-    xml += `    <topic central="true" text="${this.escapeXml(centralTitle)}" id="${centralId}">\n`;
+    const centralTitle = rootNode.getAttribute('TEXT') || 'Central Topic';
+    const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
+    this.mapNodeId(rootNode, centralTopic);
+    centralTopic.setText(centralTitle);
+    this.addFeatures(centralTopic, rootNode);
+    mindmap.addBranch(centralTopic);
 
     // Process child nodes
     const childNodes = rootNode.querySelectorAll(':scope > node');
     childNodes.forEach((childNode, index) => {
-      xml += this.generateChildTopicXML(childNode as Element, index);
+      centralTopic.append(this.convertNode(mindmap, childNode as Element, index));
     });
 
-    xml += '    </topic>\n';
+    this.addRelationships(mindmap, rootNode);
 
-    // Add relationships if present
-    const relationshipsXML = this.generateRelationshipsXML(rootNode);
-    if (relationshipsXML) {
-      xml += relationshipsXML;
-    }
-
-    xml += '</map>';
-
-    return xml;
+    return mindmap;
   }
 
-  private generateChildTopicXML(freeplaneNode: Element, order: number, depth: number = 0): string {
-    const topicId = this.generateId();
-    const freeplaneNodeId = freeplaneNode.getAttribute('ID') || `ID_${this.idCounter}`;
-    this.topicIdMap.set(freeplaneNodeId, topicId.toString());
+  private convertNode(mindmap: Mindmap, freeplaneNode: Element, order: number): NodeModel {
+    const topic = mindmap.createNode('MainTopic', this.generateId());
+    this.mapNodeId(freeplaneNode, topic);
 
     const title = freeplaneNode.getAttribute('TEXT') || 'Untitled';
     const position = this.calculatePosition(order);
-
-    const indent = '        '.repeat(depth + 1);
-    let xml = `${indent}<topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(title)}" shape="line" id="${topicId}">\n`;
-
-    // Add icons if present
-    const icons = freeplaneNode.querySelectorAll('icon');
-    if (icons.length > 0) {
-      icons.forEach((icon) => {
-        const builtin = icon.getAttribute('BUILTIN');
-        if (builtin) {
-          const emojiIcon = this.mapFreeplaneIconToEmojiIcon(builtin);
-          xml += `${indent}    <eicon id="${emojiIcon}"/>\n`;
-        }
-      });
-    }
-
-    // Add notes if present
-    const noteContent = this.buildNoteContent(freeplaneNode);
-    if (noteContent) {
-      xml += `${indent}    <note><![CDATA[${noteContent}]]></note>\n`;
-    }
-
-    // Add links if present
-    const link = freeplaneNode.getAttribute('LINK');
-    if (link) {
-      xml += `${indent}    <link url="${this.escapeXml(link)}" urlType="url"/>\n`;
-    }
+    topic.setText(title);
+    topic.setPosition(position.x, position.y);
+    topic.setOrder(order);
+    topic.setShapeType('line');
+    this.addFeatures(topic, freeplaneNode);
 
     // Process child nodes recursively
     const childNodes = freeplaneNode.querySelectorAll(':scope > node');
     childNodes.forEach((childNode, childIndex) => {
-      xml += this.generateChildTopicXML(childNode as Element, childIndex, depth + 1);
+      topic.append(this.convertNode(mindmap, childNode as Element, childIndex));
     });
 
-    xml += `${indent}</topic>\n`;
+    return topic;
+  }
 
-    return xml;
+  // Nodes without an ID can not be the end of an arrowlink, so they are not mapped. A made up key
+  // could be the ID of another node.
+  private mapNodeId(freeplaneNode: Element, topic: NodeModel): void {
+    const freeplaneNodeId = freeplaneNode.getAttribute('ID');
+    if (freeplaneNodeId) {
+      this.topicIdMap.set(freeplaneNodeId, topic.getId());
+    }
+  }
+
+  // The icons, notes and links of a node, the central one included.
+  private addFeatures(topic: NodeModel, freeplaneNode: Element): void {
+    const icons = freeplaneNode.querySelectorAll(':scope > icon');
+    icons.forEach((icon) => {
+      const builtin = icon.getAttribute('BUILTIN');
+      if (builtin) {
+        const emojiIcon = this.mapFreeplaneIconToEmojiIcon(builtin);
+        topic.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
+      }
+    });
+
+    // Freeplane notes are HTML, as in FreeMind.
+    const noteContent = this.buildNoteContent(freeplaneNode);
+    if (noteContent) {
+      const note = new NoteModel({ text: noteContent });
+      note.setContentType(ContentType.HTML);
+      topic.addFeature(note);
+    }
+
+    const link = freeplaneNode.getAttribute('LINK');
+    if (link) {
+      topic.addFeature(FeatureModelFactory.createModel('link', { url: link }));
+    }
   }
 
   private buildNoteContent(freeplaneNode: Element): string | null {
     const parts: string[] = [];
 
     // Handle Freeplane notes
-    const noteElements = freeplaneNode.querySelectorAll('richcontent[TYPE="NOTE"]');
+    const noteElements = freeplaneNode.querySelectorAll(':scope > richcontent[TYPE="NOTE"]');
     noteElements.forEach((noteElement) => {
-      const htmlContent = noteElement.innerHTML;
+      // Sanitized like FreeMind notes: it drops the <html> and <body> wrappers and any script.
+      const note = noteElement.cloneNode(true) as Element;
+      FreeplaneImporter.cdataToText(note);
+      const htmlContent = HtmlSanitizer.sanitize(note.innerHTML).trim();
       if (htmlContent) {
-        // For simple HTML like <p>text</p>, preserve the original format
-        // Don't sanitize for now to preserve the exact format
-        const trimmedContent = htmlContent.trim();
-        if (trimmedContent) {
-          parts.push(trimmedContent);
-        }
+        parts.push(htmlContent);
       }
     });
 
     return parts.length > 0 ? parts.join('\n') : null;
+  }
+
+  // HTML has no CDATA sections, it would drop them: their text is kept as (escaped) text.
+  private static cdataToText(node: Node): void {
+    Array.from(node.childNodes).forEach((child) => {
+      if (child.nodeType === Node.CDATA_SECTION_NODE) {
+        child.replaceWith(child.ownerDocument!.createTextNode(child.textContent || ''));
+      } else {
+        FreeplaneImporter.cdataToText(child);
+      }
+    });
   }
 
   private mapFreeplaneIconToEmojiIcon(builtin: string): string {
@@ -486,12 +506,12 @@ class FreeplaneImporter extends Importer {
       graduation: '🎓',
     };
 
-    // Return mapped emoji or default if not found
-    return iconMap[builtin.toLowerCase()] || '💡'; // Default to lightbulb
+    // Return mapped emoji, the emoji of a legacy WiseMapping icon id, or default if not found
+    return iconMap[builtin.toLowerCase()] || legacyIconEmoji(builtin) || '💡'; // Default to lightbulb
   }
 
-  private generateId(): string {
-    return (this.idCounter++).toString();
+  private generateId(): number {
+    return this.idCounter++;
   }
 
   private calculatePosition(order: number): { x: number; y: number } {
@@ -507,69 +527,57 @@ class FreeplaneImporter extends Importer {
     return { x, y };
   }
 
-  private generateRelationshipsXML(rootNode: Element): string {
+  private addRelationships(mindmap: Mindmap, rootNode: Element): void {
     // Find all arrowlink elements in the document
     const arrowlinks = rootNode.ownerDocument?.querySelectorAll('arrowlink') || [];
-    if (arrowlinks.length === 0) return '';
-
-    let relationshipsXML = '';
     arrowlinks.forEach((arrowlink) => {
-      relationshipsXML += this.generateRelationshipXML(arrowlink as Element);
+      this.addRelationship(mindmap, arrowlink as Element);
     });
-
-    return relationshipsXML;
   }
 
-  private generateRelationshipXML(arrowlinkElement: Element): string {
+  private addRelationship(mindmap: Mindmap, arrowlinkElement: Element): void {
     const destination = arrowlinkElement.getAttribute('DESTINATION');
-    const dash = arrowlinkElement.getAttribute('DASH') || '';
 
-    if (!destination) return '';
+    if (!destination) return;
 
     // Find the source node (parent of the arrowlink)
     const sourceNode = arrowlinkElement.parentElement;
-    if (!sourceNode) return '';
+    if (!sourceNode) return;
 
     const sourceId = sourceNode.getAttribute('ID');
-    const destId = destination;
-
-    if (!sourceId) return '';
+    if (!sourceId) return;
 
     // Map Freeplane IDs to WiseMapping IDs
     const srcTopicId = this.topicIdMap.get(sourceId);
-    const destTopicId = this.topicIdMap.get(destId);
+    const destTopicId = this.topicIdMap.get(destination);
 
-    if (!srcTopicId || !destTopicId) return '';
+    if (!srcTopicId || !destTopicId) return;
 
-    let relationshipXML = `    <relationship srcTopicId='${srcTopicId}' destTopicId='${destTopicId}'`;
+    const relationship = mindmap.createRelationship(srcTopicId, destTopicId);
 
-    // Map line style based on dash pattern
-    if (dash.includes('3 3')) {
-      relationshipXML += " lineType='1'"; // Dashed
-    } else if (dash.includes('5 5')) {
-      relationshipXML += " lineType='2'"; // Dotted
+    relationship.setStrokeStyle(
+      FreeplaneImporter.strokeStyle(arrowlinkElement.getAttribute('DASH')),
+    );
+
+    mindmap.addRelationship(relationship);
+  }
+
+  /**
+   * DASH is the dash pattern of the connector, its lengths separated by spaces. Freeplane writes
+   * those of its Dash enum: none (SOLID), "3 3" (CLOSE_DOTS), "7 7" (DASHES), "2 7" (DISTANT_DOTS)
+   * and "2 7 7 7" (DOTS_AND_DASHES). Short dashes are dots; any longer one makes the line dashed.
+   */
+  private static strokeStyle(dash: string | null): StrokeStyle {
+    const lengths = (dash || '')
+      .trim()
+      .split(/\s+/)
+      .map(Number)
+      .filter((length) => length > 0);
+    if (lengths.length === 0) {
+      return StrokeStyle.SOLID;
     }
-
-    relationshipXML += '/>\n';
-    return relationshipXML;
-  }
-
-  private escapeXml(text: string): string {
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
-  private createFallbackMap(nameMap: string, error: Error): string {
-    return `<map name="${this.escapeXml(nameMap)}" version="tango" layout="mindmap">
-        <topic central="true" text="Freeplane Import Error" id="1">
-            <note><![CDATA[Freeplane import failed: ${this.escapeXml(error.message)}
-Please check the file format and try again.]]></note>
-        </topic>
-    </map>`;
+    const dashLengths = lengths.filter((_, index) => index % 2 === 0);
+    return dashLengths.every((length) => length <= 3) ? StrokeStyle.DOTTED : StrokeStyle.DASHED;
   }
 }
 

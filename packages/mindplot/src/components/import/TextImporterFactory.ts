@@ -27,32 +27,25 @@ import { decodeUtf8 } from './support/Utf8Decoder';
 
 export default class TextImporterFactory {
   static create(type: string | undefined, map: string | ArrayBuffer | Uint8Array): Importer {
-    let result: Importer;
     const mapAsString = TextImporterFactory.asString(map);
     switch (type) {
       case 'wxml':
-        result = new WisemappingImporter(mapAsString);
-        return result;
+        return new WisemappingImporter(mapAsString);
       case 'mm':
         // Check if it's Freeplane or FreeMind
         if (mapAsString.includes('freeplane') || mapAsString.includes('version="freeplane')) {
-          result = new FreeplaneImporter(mapAsString);
-        } else {
-          result = new FreemindImporter(mapAsString);
+          return new FreeplaneImporter(mapAsString);
         }
-        return result;
+        return new FreemindImporter(mapAsString);
       case 'mmx':
-        result = new FreeplaneImporter(mapAsString);
-        return result;
+        return new FreeplaneImporter(mapAsString);
       case 'xmind':
-        result = new XMindImporter(map);
-        return result;
+        return new XMindImporter(map);
       case 'mmap':
-        result = new MindManagerImporter(mapAsString);
-        return result;
+        // A .mmap file is usually a ZIP archive, so it is passed as it was read.
+        return new MindManagerImporter(map);
       case 'opml':
-        result = new OPMLImporter(mapAsString);
-        return result;
+        return new OPMLImporter(mapAsString);
       default:
         throw new Error(`Unsupported type ${type}`);
     }

@@ -18,7 +18,6 @@
 import Designer from '../../src/components/Designer';
 import type Topic from '../../src/components/Topic';
 
-jest.mock('../../src/components/SvgImageIcon', () => ({ default: jest.fn() }));
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class {},
@@ -31,6 +30,7 @@ type Stub = {
   getChildren(): Topic[];
   isCentralTopic(): boolean;
   getPosition(): { x: number; y: number };
+  getModel(): { getMindmap(): { getLayout(): string } };
 };
 
 const node = (
@@ -49,6 +49,9 @@ const node = (
     getChildren: () => state.children as unknown as Topic[],
     isCentralTopic: () => options.central ?? false,
     getPosition: () => options.position ?? { x: 10, y: 20 },
+    // Tree layout: the fixtures use contiguous orders under the central topic,
+    // which in the mindmap layout would put siblings on alternate sides.
+    getModel: () => ({ getMindmap: () => ({ getLayout: () => 'tree' }) }),
   };
   return self;
 };

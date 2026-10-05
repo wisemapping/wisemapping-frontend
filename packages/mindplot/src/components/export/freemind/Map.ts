@@ -22,6 +22,7 @@ import Arrowlink from './Arrowlink';
 import Cloud from './Cloud';
 import Edge from './Edge';
 import Font from './Font';
+import Hook from './Hook';
 import Icon from './Icon';
 import Node, { Choise } from './Node';
 import Richcontent from './Richcontent';
@@ -66,8 +67,7 @@ export default class Freemap {
 
     const childNodes: Array<Choise> = mainNode.getArrowlinkOrCloudOrEdge();
     childNodes.forEach((childNode: Choise) => {
-      const node = this.nodeToXml(childNode, mainNodeElem, document);
-      mainNodeElem.appendChild(node);
+      this.nodeToXml(childNode, mainNodeElem, document);
     });
 
     return document;
@@ -85,7 +85,6 @@ export default class Freemap {
     );
 
     // Verify that the version attribute exists
-    console.log(rootElem.getAttribute('version'));
     $assert(rootElem.getAttribute('version') !== null, 'Freemind version not found');
 
     // Start the loading process...
@@ -93,22 +92,14 @@ export default class Freemap {
     const freemap: Freemap = new Freemap();
     freemap.setVesion(version);
 
-    const mainTopicElement = rootElem.firstElementChild;
+    // Other elements, such as attribute_registry, can precede the root node.
+    const mainTopicElement = Array.from(rootElem.children).find(
+      (child) => child.tagName === 'node',
+    );
     if (mainTopicElement) {
-      const mainTopic: Node = new Node().loadFromElement(mainTopicElement);
+      // The root node keeps its icons, notes, arrowlinks... like any other node.
+      const mainTopic = this.domToNode(mainTopicElement) as Node;
       freemap.setNode(mainTopic);
-
-      const childNodes = Array.from(mainTopicElement.childNodes);
-      const childsNodes = childNodes
-        .filter((child: ChildNode) => child.nodeType === 1 && (child as Element).tagName === 'node')
-        .map((c) => c as Element);
-
-      childsNodes.forEach((child: Element) => {
-        const node = this.domToNode(child);
-        if (node) {
-          mainTopic.setArrowlinkOrCloudOrEdge(node);
-        }
-      });
     }
     return freemap;
   }
@@ -122,8 +113,9 @@ export default class Freemap {
         (child as Element).tagName === 'font' ||
         (child as Element).tagName === 'edge' ||
         (child as Element).tagName === 'arrowlink' ||
-        (child as Element).tagName === 'clud' ||
-        (child as Element).tagName === 'icon'
+        (child as Element).tagName === 'cloud' ||
+        (child as Element).tagName === 'icon' ||
+        (child as Element).tagName === 'hook'
       ) {
         element = child as Element;
       }
@@ -239,6 +231,18 @@ export default class Freemap {
       }
     }
 
+    if (nodeElem.tagName === 'hook') {
+      node = new Hook();
+      const nameAttr = nodeElem.getAttribute('NAME');
+      if (nameAttr) {
+        node.setName(nameAttr);
+      }
+      const textElem = Array.from(nodeElem.children).find((child) => child.tagName === 'text');
+      if (textElem && textElem.textContent) {
+        node.setText(textElem.textContent);
+      }
+    }
+
     if (nodeElem.tagName === 'richcontent') {
       node = new Richcontent();
 
@@ -248,7 +252,12 @@ export default class Freemap {
       }
       if (nodeElem.firstChild && nodeElem.getElementsByTagName('html')) {
         const content = nodeElem.getElementsByTagName('html');
-        const html = content[0] ? content[0].outerHTML : '';
+        let html = '';
+        if (content[0]) {
+          const htmlElem = content[0].cloneNode(true) as Element;
+          Freemap.cdataToText(htmlElem);
+          html = htmlElem.outerHTML;
+        }
         node.setHtml(html);
       }
     }
@@ -256,7 +265,26 @@ export default class Freemap {
     return node;
   }
 
-  private nodeToXml(childNode: Choise, parentNode: HTMLElement, document: Document): HTMLElement {
+  // The content is read as HTML, which has no CDATA sections and would drop them: their text is
+  // kept as (escaped) text.
+  private static cdataToText(node: ChildNode): void {
+    Array.from(node.childNodes).forEach((child) => {
+      // 4 is Node.CDATA_SECTION_NODE (Node is the FreeMind node here).
+      if (child.nodeType === 4) {
+        child.replaceWith(child.ownerDocument!.createTextNode(child.textContent || ''));
+      } else {
+        Freemap.cdataToText(child);
+      }
+    });
+  }
+
+  // Appends the element to its parent and returns it. Returns null for elements of an unknown type,
+  // which are skipped.
+  private nodeToXml(
+    childNode: Choise,
+    parentNode: HTMLElement,
+    document: Document,
+  ): HTMLElement | null {
     if (childNode instanceof Node) {
       childNode.setCentralTopic(false);
       const childNodeXml = childNode.toXml(document);
@@ -265,8 +293,7 @@ export default class Freemap {
       const childrens = childNode.getArrowlinkOrCloudOrEdge();
       if (childrens.length > 0) {
         childrens.forEach((node: Choise) => {
-          const nodeXml = this.nodeToXml(node, childNodeXml, document);
-          childNodeXml.appendChild(nodeXml);
+          this.nodeToXml(node, childNodeXml, document);
         });
       }
 
@@ -315,6 +342,13 @@ export default class Freemap {
       return childNodeXml;
     }
 
-    return parentNode;
+    if (childNode instanceof Hook) {
+      const childNodeXml = childNode.toXml(document);
+      parentNode.appendChild(childNodeXml);
+
+      return childNodeXml;
+    }
+
+    return null;
   }
 }

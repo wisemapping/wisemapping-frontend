@@ -28,7 +28,7 @@ export default class VersionNumber {
   }
 
   public isGreaterThan(versionNumber: VersionNumber): boolean {
-    return this.compareTo(versionNumber) < 0;
+    return this.compareTo(versionNumber) > 0;
   }
 
   public compareTo(otherObject: VersionNumber): number {
@@ -39,26 +39,21 @@ export default class VersionNumber {
     const ownTokinizer = this.getTokinizer();
     const otherTokinizer = otherObject.getTokinizer();
 
-    for (let i = 0; i < ownTokinizer.length; i++) {
-      let ownNumber: number;
-      let ohterNumber: number;
+    // Missing or non numeric tokens count as 0, so "1.0" and "1.0.0" are the same version.
+    const length = Math.max(ownTokinizer.length, otherTokinizer.length);
+    for (let i = 0; i < length; i++) {
+      const ownNumber = parseInt(ownTokinizer[i], 10) || 0;
+      const otherNumber = parseInt(otherTokinizer[i], 10) || 0;
 
-      try {
-        ownNumber = parseInt(ownTokinizer[i], 10);
-        ohterNumber = parseInt(otherTokinizer[i], 10);
-      } catch {
+      if (ownNumber > otherNumber) {
         return 1;
       }
-
-      if (ownNumber > ohterNumber) {
-        return 1;
-      }
-      if (ownNumber < ohterNumber) {
+      if (ownNumber < otherNumber) {
         return -1;
       }
     }
 
-    return -1;
+    return 0;
   }
 
   public equals<T>(o: T): boolean {

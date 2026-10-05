@@ -426,8 +426,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     setPage(0);
   };
 
-  const handleActionClick = (mapId: number): ((event) => void) => {
-    return (event): void => {
+  const handleActionClick = (mapId: number): ((event: React.MouseEvent<HTMLElement>) => void) => {
+    return (event: React.MouseEvent<HTMLElement>): void => {
       setActiveRowAction({
         mapId: mapId,
         el: event.currentTarget,

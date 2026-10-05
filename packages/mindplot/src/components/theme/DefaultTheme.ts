@@ -29,6 +29,7 @@ import { $msg } from '../Messages';
 import { ThemeStyle } from './ThemeStyle';
 import type { TopicStyleType } from './ThemeStyle';
 import type { BackgroundPatternType } from '../model/CanvasStyleType';
+import ThemeResolutionCache from './ThemeResolutionCache';
 
 // Re-export TopicStyleType for backward compatibility
 export type { TopicStyleType } from './ThemeStyle';
@@ -48,6 +49,11 @@ const keyToModel = new Map<keyof TopicStyleType, (model: NodeModel) => StyleType
   ['fontSize', (m: NodeModel) => m.getFontSize()],
   ['fontStyle', (m: NodeModel) => m.getFontStyle()],
 ]);
+
+// Some style values are numeric enums whose first member is 0 (LineType.THIN_CURVED),
+// so "not set" must be checked explicitly rather than by truthiness.
+const isUnset = (value: StyleType): boolean =>
+  value === undefined || value === null || value === '';
 
 class DefaultTheme implements Theme {
   private _themeStyle: ThemeStyle;
@@ -72,7 +78,7 @@ class DefaultTheme implements Theme {
 
   getCanvasOpacity(): number {
     const canvasStyle = this._themeStyle.getCanvasStyle();
-    return canvasStyle.opacity || 1;
+    return canvasStyle.opacity ?? 1;
   }
 
   getCanvasShowGrid(): boolean {
@@ -86,21 +92,23 @@ class DefaultTheme implements Theme {
   }
 
   protected resolve(key: keyof TopicStyleType, topic: Topic, resolveDefault = true): StyleType {
-    // Search parent value ...
-    const recurviveModelStrategy = (value: keyof TopicStyleType, t: Topic): StyleType => {
-      const model = t.getModel();
-      let result: StyleType = keyToModel.get(key)!(model);
+    // Search parent value. It only reads the models, so during a redraw pass it is
+    // found once per topic and key, and a descendant stops at its parent's value ...
+    const recurviveModelStrategy = (value: keyof TopicStyleType, t: Topic): StyleType =>
+      ThemeResolutionCache.memo(t, `model:${key}`, () => {
+        const model = t.getModel();
+        let result: StyleType = keyToModel.get(key)!(model);
 
-      const parent = t.getParent();
-      if (!result && parent) {
-        result = recurviveModelStrategy(value, parent);
-      }
-      return result;
-    };
+        const parent = t.getParent();
+        if (isUnset(result) && parent) {
+          result = recurviveModelStrategy(value, parent);
+        }
+        return result;
+      });
 
     // Can be found in the model or parent  ?
     let result = recurviveModelStrategy(key, topic);
-    if (!result && resolveDefault) {
+    if (isUnset(result) && resolveDefault) {
       result = this.getStyles(topic)[key];
     }
     return result;
@@ -153,7 +161,7 @@ class DefaultTheme implements Theme {
   }
 
   getInnerPadding(topic: Topic): number {
-    return topic.getOrBuildTextShape().getFontHeight() * 0.8;
+    return topic.getTextFontHeight() * 0.8;
   }
 
   getText(topic: Topic): string {
@@ -163,7 +171,7 @@ class DefaultTheme implements Theme {
 
   getEmojiSpacing(topic: Topic): number {
     // Default spacing: central topics get more spacing than main topics
-    const fontHeight = topic.getOrBuildTextShape().getFontHeight();
+    const fontHeight = topic.getTextFontHeight();
     return topic.isCentralTopic() ? fontHeight * 1.0 : fontHeight * 0.7;
   }
 
@@ -275,7 +283,7 @@ class DefaultTheme implements Theme {
       const index = order % colors.length;
       result = colors[index];
     }
-    return result!;
+    return result;
   }
 }
 export default DefaultTheme;

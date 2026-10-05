@@ -31,9 +31,9 @@ describe('Icon Mapping Validation', () => {
     );
     const imageSVGFeatureContent = fs.readFileSync(imageSVGFeaturePath, 'utf8');
 
-    // Extract the materialIcons object
+    // Extract the module-level codepoint table
     const materialIconsMatch = imageSVGFeatureContent.match(
-      /const materialIcons: \{ \[key: string\]: string \} = \{([\s\S]*?)\n    \};/
+      /const MATERIAL_ICON_CODEPOINTS: \{ readonly \[key: string\]: string \} = \{([\s\S]*?)\n\};/
     );
 
     if (materialIconsMatch) {

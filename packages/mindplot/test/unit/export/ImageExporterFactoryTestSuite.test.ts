@@ -42,14 +42,7 @@ describe('ImageExporterFactory background color forwarding', () => {
   };
 
   test('SVG exporter receives custom background color', async () => {
-    const exporter = ImageExporterFactory.create(
-      'svg',
-      loadSvg(),
-      800,
-      600,
-      true,
-      '#123456',
-    );
+    const exporter = ImageExporterFactory.create('svg', loadSvg(), 800, 600, true, '#123456');
     expect(exporter).toBeInstanceOf(SVGExporter);
 
     const result = await (exporter as SVGExporter).export();

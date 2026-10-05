@@ -17,7 +17,7 @@
  */
 import { $assert, $defined } from '../util/assert';
 import EventDispispatcher from '../EventDispatcher';
-import RootedTreeSet from './RootedTreeSet';
+import RootedTreeSet, { RaphaelPaper } from './RootedTreeSet';
 import OriginalLayout from './OriginalLayout';
 import TreeLayout from './TreeLayout';
 import ChangeEvent from './ChangeEvent';
@@ -38,6 +38,10 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
 
   private _events: ChangeEvent[];
 
+  // The pending change of each node in _events: a layout that is not flushed leaves its changes
+  // for the next one to update.
+  private _eventsById: Map<number, ChangeEvent>;
+
   constructor(rootNodeId: number, rootSize: SizeType, layoutType: LayoutType = 'mindmap') {
     super();
     $assert($defined(rootNodeId), 'rootNodeId can not be null');
@@ -56,6 +60,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     );
     this._treeSet.setRoot(rootNode);
     this._events = [];
+    this._eventsById = new Map();
   }
 
   private _getCurrentLayout(): OriginalLayout | TreeLayout {
@@ -115,10 +120,15 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
    * @param size
    * @param position
    * @throws will throw an error if id is null or undefined
+   * @throws will throw an error if position is missing, or its x or y is not a finite number
    * @return this
    */
   addNode(id: number, size: SizeType, position: PositionType) {
     $assert($defined(id), 'id can not be null');
+    $assert(
+      $defined(position) && Number.isFinite(position.x) && Number.isFinite(position.y),
+      'position must have finite x and y',
+    );
     const result = this._getCurrentLayout().createNode(id, size, position, 'topic');
     this._treeSet.add(result);
 
@@ -152,6 +162,20 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     return { order: result[0], position: result[1] };
   }
 
+  /**
+   * Order that inserts a new child of the parent right after its child with the given order.
+   */
+  getOrderAfter(parentId: number, order: number): number {
+    const parent = this._treeSet.find(parentId);
+    return parent.getSorter().getOrderAfter(order);
+  }
+
+  /** Orders for `count` new children of `parentId` added in one go (see the sorter). */
+  getOrdersForNewChildren(parentId: number, count: number): number[] {
+    const parent = this._treeSet.find(parentId);
+    return parent.getSorter().getOrdersForNewChildren(this._treeSet, parent, count);
+  }
+
   dump() {
     console.log(this._treeSet.dump());
   }
@@ -159,13 +183,16 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
   plot(containerId: string, size = { width: 200, height: 200 }) {
     // this method is only used from tests that include Raphael
 
-    if (!globalThis.Raphael) {
+    const global = globalThis as typeof globalThis & {
+      Raphael?: (container: string, width: number, height: number) => RaphaelPaper;
+    };
+    if (!global.Raphael) {
       console.warn('Raphael.js not found, exiting plot()');
       return null;
     }
     $assert(containerId, 'containerId cannot be null');
     const squaresize = 10;
-    const canvas = globalThis.Raphael(containerId, size.width, size.height);
+    const canvas = global.Raphael(containerId, size.width, size.height);
     canvas.drawGrid(
       0,
       0,
@@ -224,6 +251,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
       this.fireEvent('change', event);
     });
     this._events = [];
+    this._eventsById.clear();
   }
 
   private _collectChanges(nodes: Node[]) {
@@ -231,9 +259,10 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
       if (node.hasOrderChanged() || node.hasPositionChanged()) {
         // Find or create a event ...
         const id = node.getId();
-        let event: ChangeEvent | undefined = this._events.find((e) => e.getId() === id);
+        let event = this._eventsById.get(id);
         if (!event) {
           event = new ChangeEvent(id);
+          this._eventsById.set(id, event);
         }
 
         // Update nodes ...

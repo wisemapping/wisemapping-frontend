@@ -49,8 +49,13 @@ class TreeSorter extends AbstractBasicSorter {
       return [node.getOrder() ?? 0, node.getPosition()];
     }
 
-    // Node is being dragged - determine order based on horizontal position
-    const parentChildren = graph.getChildren(parent).filter((child) => child !== node);
+    // Node is being dragged - determine order based on horizontal position.
+    // Once the node is detached its remaining siblings are renumbered 0..n-1 in this
+    // sorted order, so an index into this array is also the order to insert at.
+    const parentChildren = graph
+      .getChildren(parent)
+      .filter((child) => child !== node)
+      .sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
 
     if (parentChildren.length === 0) {
       const result = {
@@ -65,7 +70,7 @@ class TreeSorter extends AbstractBasicSorter {
     for (let i = 0; i < parentChildren.length; i++) {
       const child = parentChildren[i];
       if (position.x > child.getPosition().x) {
-        order = (child.getOrder() ?? 0) + 1;
+        order = i + 1;
       }
     }
 
@@ -163,11 +168,11 @@ class TreeSorter extends AbstractBasicSorter {
   detach(treeSet: RootedTreeSet, node: Node): void {
     const parent = treeSet.getParent(node);
     $assert(parent != null, 'cannot detach node with null parent');
-    const children = this._getSortedChildren(treeSet, parent!);
+    const children = this._getSortedChildren(treeSet, parent);
     const order = node.getOrder();
     $assert(order !== undefined, 'Node must have an order to be detached');
     // TypeScript doesn't understand $assert narrows the type, so we use non-null assertion
-    $assert(children[order!] === node, 'Node seems not to be in the right position');
+    $assert(children[order] === node, 'Node seems not to be in the right position');
 
     // Shift all nodes after the removed node
     const nodeOrder = node.getOrder();
@@ -183,14 +188,18 @@ class TreeSorter extends AbstractBasicSorter {
     node.setOrder(0);
   }
 
-  computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
+  computeOffsets(
+    treeSet: RootedTreeSet,
+    node: Node,
+    extentById?: Map<number, number>,
+  ): Map<number, PositionType> {
     const children = this._getSortedChildren(treeSet, node);
 
     // Calculate total width needed for all children
     const childrenWidths = children.map((child) => ({
       id: child.getId(),
       order: child.getOrder(),
-      width: this._computeChildrenWidth(treeSet, child),
+      width: extentById?.get(child.getId()) ?? this._computeChildrenWidth(treeSet, child),
       height: child.getSize().height,
     }));
 
@@ -217,6 +226,20 @@ class TreeSorter extends AbstractBasicSorter {
     }
 
     return result;
+  }
+
+  /**
+   * Siblings sit side by side in the tree, so a branch is measured by its width: the sum of the
+   * widths of its children, or its own if wider. Its height does not move its siblings.
+   */
+  computeBranchExtents(treeSet: RootedTreeSet, node: Node): Map<number, number> {
+    const result = new Map<number, number>();
+    this._computeChildrenWidth(treeSet, node, result);
+    return result;
+  }
+
+  getBranchExtentKey(): string {
+    return `width:${TreeSorter.INTERNODE_HORIZONTAL_PADDING}`;
   }
 
   private _computeChildrenWidth(

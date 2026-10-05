@@ -19,16 +19,36 @@ describe('CurvedLine Suite', () => {
   // CurvedLine tests ...
   it('CurvedLine Width', () => {
     cy.visit('/iframe.html?args=&id=shapes-curvedline--width&viewMode=story');
-    cy.screenshot('curvedline-width');
+    cy.matchImageSnapshot('curvedline-width');
   });
 
   it('CurvedLine Stroke', () => {
     cy.visit('/iframe.html?args=&id=shapes-curvedline--stroke&viewMode=story');
-    cy.screenshot('curvedline-stroke');
+    cy.matchImageSnapshot('curvedline-stroke');
   });
 
   it('CurvedLine Middle Curved', () => {
     cy.visit('/iframe.html?args=&id=shapes-curvedline--fill&viewMode=story');
-    cy.screenshot('curvedline-fill');
+    cy.matchImageSnapshot('curvedline-fill');
+  });
+
+  it('CurvedLine Vertical', () => {
+    cy.visit('/iframe.html?args=&id=shapes-curvedline--vertical&viewMode=story');
+    cy.matchImageSnapshot('curvedline-vertical');
+  });
+
+  it('CurvedLine Near Vertical', () => {
+    cy.visit('/iframe.html?args=&id=shapes-curvedline--near-vertical&viewMode=story');
+    cy.matchImageSnapshot('curvedline-near-vertical');
+  });
+
+  it('CurvedLine Vertical Thin', () => {
+    cy.visit('/iframe.html?args=&id=shapes-curvedline--vertical-thin&viewMode=story');
+    cy.matchImageSnapshot('curvedline-vertical-thin');
+  });
+
+  it('CurvedLine Default Control Points', () => {
+    cy.visit('/iframe.html?args=&id=shapes-curvedline--default-control-points&viewMode=story');
+    cy.matchImageSnapshot('curvedline-default-control-points');
   });
 });

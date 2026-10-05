@@ -18,6 +18,9 @@
 import { $assert } from '../util/assert';
 import FeatureType from './FeatureType';
 
+/** Feature attributes as stored in the map XML: attribute name to value. */
+export type FeatureAttributes = Record<string, string>;
+
 class FeatureModel {
   static _nextId = 0;
 
@@ -25,7 +28,9 @@ class FeatureModel {
 
   private _type: FeatureType;
 
-  private _attributes;
+  private _attributes: FeatureAttributes;
+
+  private _changeListener: (() => void) | undefined;
 
   /**
    * @constructs
@@ -39,33 +44,52 @@ class FeatureModel {
 
     this._type = type;
     this._attributes = {};
-
-    // Create type method ...
-    this[`is${FeatureModel.capitalize(type)}Model`] = () => true;
+    this._changeListener = undefined;
   }
 
-  getAttributes() {
+  getAttributes(): FeatureAttributes {
     return { ...this._attributes };
   }
 
-  static capitalize(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-
-  setAttributes(attributes) {
-    Object.keys(attributes).forEach((attr) => {
-      const funName = `set${FeatureModel.capitalize(attr)}`;
-      const value = attributes[attr];
-      this[funName](value);
+  /**
+   * Applies the given attributes. An undefined value removes the attribute, so a snapshot that
+   * also lists the keys the feature lacked restores it exactly.
+   */
+  setAttributes(attributes: Record<string, unknown>): void {
+    Object.keys(attributes).forEach((key) => {
+      const value = attributes[key];
+      if (value === undefined) {
+        delete this._attributes[key];
+      } else {
+        this.applyAttribute(key, value);
+      }
     });
+    this._changeListener?.();
   }
 
-  setAttribute(key: string, value: unknown) {
+  /**
+   * Sets the function called after setAttributes, so the icon showing the feature can follow
+   * changes made by commands (e.g. an undo).
+   */
+  setChangeListener(listener: (() => void) | undefined): void {
+    this._changeListener = listener;
+  }
+
+  /**
+   * Sets one attribute. Subclasses override it to map their attributes to their setters, so values
+   * are validated and normalized. Any other attribute is stored as it is.
+   */
+  applyAttribute(key: string, value: unknown): void {
+    // Attribute values are strings (see FeatureAttributes), as the subclasses also assume.
+    this.setAttribute(key, value as string);
+  }
+
+  setAttribute(key: string, value: string) {
     $assert(key, 'key id can not be null');
     this._attributes[key] = value;
   }
 
-  getAttribute(key: string) {
+  getAttribute(key: string): string {
     $assert(key, 'key id can not be null');
 
     return this._attributes[key];

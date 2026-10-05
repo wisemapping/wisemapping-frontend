@@ -306,8 +306,7 @@ const buildRouter = () =>
     ),
   );
 
-// eslint-disable-next-line react/prop-types
-function Redirect({ to }) {
+function Redirect({ to }: { to: string }) {
   const navigate = useNavigate();
   useEffect(() => {
     navigate(to);

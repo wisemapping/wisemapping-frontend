@@ -1,4 +1,3 @@
-/* eslint-disable no-bitwise */
 /*
  *    Copyright [2007-2025] [wisemapping]
  *
@@ -17,32 +16,39 @@
  *   limitations under the License.
  */
 
-class ColorUtil {
-  static lightenColor(col: string, amt: number): string {
-    let usePound = false;
+const clampChannel = (value: number): number => Math.min(255, Math.max(0, value));
 
-    if (col[0] === '#') {
-      col = col.slice(1);
-      usePound = true;
+const toHex = (value: number): string => value.toString(16).padStart(2, '0');
+
+class ColorUtil {
+  /**
+   * Lightens (positive amt) or darkens (negative amt) a hex colour by adding amt to
+   * each RGB channel. Accepts #RGB, #RGBA, #RRGGBB and #RRGGBBAA (the pound is
+   * optional and preserved); alpha is kept as is. Anything else, such as rgb(...)
+   * or a colour name, is returned unchanged.
+   */
+  static lightenColor(col: string, amt: number): string {
+    const usePound = col[0] === '#';
+    let hex = usePound ? col.slice(1) : col;
+
+    if (!/^([0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(hex)) {
+      return col;
     }
 
-    const num = parseInt(col, 16);
-    let r = (num >> 16) + amt;
+    // Expand the short forms (#RGB, #RGBA) to one byte per channel.
+    if (hex.length <= 4) {
+      hex = hex
+        .split('')
+        .map((c) => c + c)
+        .join('');
+    }
 
-    if (r > 255) r = 255;
-    else if (r < 0) r = 0;
+    const r = clampChannel(parseInt(hex.slice(0, 2), 16) + amt);
+    const g = clampChannel(parseInt(hex.slice(2, 4), 16) + amt);
+    const b = clampChannel(parseInt(hex.slice(4, 6), 16) + amt);
+    const alpha = hex.slice(6);
 
-    let b = ((num >> 8) & 0x00ff) + amt;
-
-    if (b > 255) b = 255;
-    else if (b < 0) b = 0;
-
-    let g = (num & 0x0000ff) + amt;
-
-    if (g > 255) g = 255;
-    else if (g < 0) g = 0;
-
-    return (usePound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16);
+    return (usePound ? '#' : '') + toHex(r) + toHex(g) + toHex(b) + alpha;
   }
 }
 

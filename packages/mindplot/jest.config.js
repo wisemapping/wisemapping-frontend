@@ -26,8 +26,18 @@ const config = {
   },
   moduleNameMapper: {
     '\\.(svg|png|jpg|jpeg|gif)$': 'jest-transform-stub',
+    // Uses Vite's import.meta.glob, which ts-jest can not compile: list the icons from disk.
+    '/SvgIconAssets$': '<rootDir>/test/unit/__mocks__/SvgIconAssets.ts',
     '^@wisemapping/web2d$': '<rootDir>/../web2d/src/index.ts',
     '^@wisemapping/web2d/(.*)$': '<rootDir>/../web2d/src/$1',
+  },
+  // Unit tests only: Cypress specs and the legacy bundle test run elsewhere.
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/cypress/', '/__tests__/'],
+  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts', '!src/index.ts'],
+  coverageReporters: ['text-summary', 'lcov', 'json-summary'],
+  // Ratchet these up as coverage improves; never lower them.
+  coverageThreshold: {
+    global: { statements: 76, branches: 65, functions: 73, lines: 76 },
   },
 };
 

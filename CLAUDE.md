@@ -60,14 +60,19 @@ yarn workspace @wisemapping/editor i18n:compile   # produce compiled-lang/*.json
 
 ## Image-snapshot tests
 
-`cypress-image-snapshot` is host-sensitive (fonts/AA differ between machines). Run snapshot tests via Docker to match CI:
+The web2d, mindplot and editor Cypress specs compare their screenshots with committed baselines through `@simonsmith/cypress-image-snapshot` (`cy.matchImageSnapshot('name')`). Baselines live in `packages/{web2d,mindplot,editor}/cypress/snapshots/<spec>/<name>.snap.png`; diffs go to `.../__diff_output__/` (git-ignored). **Baselines are rendered natively on macOS** (headless Chrome, via Cypress). Fonts and anti-aliasing differ between operating systems, so another OS does not match them.
 
 ```sh
-docker-compose -f docker-compose.snapshots.yml up                # verify
-docker-compose -f docker-compose.snapshots.update.yml up         # accept changes
+yarn workspace @wisemapping/editor test:visual          # verify: fails on a diff or a missing baseline
+yarn workspace @wisemapping/editor test:visual:update   # write missing / changed baselines
+# same for @wisemapping/web2d and @wisemapping/mindplot
 ```
 
-Commit updated PNGs alongside the code change.
+- Visual regression is part of the normal run: `test:integration` (and so `yarn test` and the pre-push hook) compares in `verify` mode. `test:visual` runs the same Storybook (web2d, mindplot) or playground (editor) + Cypress flow with `VISUAL_SNAPSHOTS=verify`; `test:visual:update` with `VISUAL_SNAPSHOTS=update`. The editor's visual suite is the playground one (`test:integration:playground`); its Storybook smoke specs take no snapshots.
+- The flow is `scripts/run-storybook-cypress.js`: it starts the server, runs `cypress run --browser chrome` and stops it. It unsets `ELECTRON_RUN_AS_NODE`, which Electron-based hosts set and which keeps the Cypress binary from starting. Each package's `cypress/plugins` launches headless Chrome with a 1600x1200 window, so screenshots are taken at the configured 1000x660 viewport: with the default 1280x720 window, Cypress shrinks the page while it captures, and the resize lands in the middle of the capture.
+- After an intended visual change, regenerate the affected baselines with `test:visual:update`, review every changed PNG (`git status`, open the old and new image, or the `__diff_output__` diff from the failing verify run) and commit them with the code. `update` only rewrites the baselines that differ; to drop obsolete ones, delete the spec's snapshot folder before updating.
+- Threshold (each package's `cypress/support/commands.*`): a snapshot fails when more than 10 pixels differ, with a per-pixel YIQ tolerance of 0.01, which still flags a darker shade of the same colour. Repeated native runs are pixel-identical for web2d and mindplot; for the editor 3 of 128 snapshots differed by 2 px. Before capturing, snapshots wait for the story/map to load and its markup to settle, freeze CSS transitions, animations and the caret, hide MUI hover tooltips (timer races) and click ripples (frozen mid-animation), and black out the third-party emoji-picker grid.
+- The specs also fail on `console.error` (web2d, editor) and `console.warn` (web2d, mindplot). The checks keep their own reference to the spies, because the Vite dev client wraps the console when it forwards it to the terminal (`server.forwardConsole`, on by default under AI agents).
 
 ## Contributing flow
 

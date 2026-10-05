@@ -48,4 +48,18 @@ export default class Hook {
   setName(value: string): void {
     this.NAME = value;
   }
+
+  toXml(document: Document): HTMLElement {
+    const hookElem = document.createElement('hook');
+    if (this.NAME) {
+      hookElem.setAttribute('NAME', this.NAME);
+    }
+    if (this.TEXT) {
+      const textElem = document.createElement('text');
+      textElem.textContent = this.TEXT;
+      hookElem.appendChild(textElem);
+    }
+
+    return hookElem;
+  }
 }

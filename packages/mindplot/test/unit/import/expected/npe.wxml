@@ -1,3 +1,5 @@
 <map name="npe" theme="prism" layout="mindmap" version="tango">
-    <topic central="true" text="NIF (NORMAS DE INFORMACIÓN FINANCIERA)" id="1" bgColor="#d5a6bd"/>
+    <topic central="true" text="NIF (NORMAS DE INFORMACIÓN FINANCIERA)" id="1" bgColor="#d5a6bd" connColor="#e69138">
+        <eicon id="✏️"/>
+    </topic>
 </map>

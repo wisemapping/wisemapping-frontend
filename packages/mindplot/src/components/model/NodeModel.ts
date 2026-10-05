@@ -19,7 +19,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { $assert, $defined } from '../util/assert';
 import INodeModel, { NodeModelType } from './INodeModel';
 import FeatureModelFactory from './FeatureModelFactory';
-import FeatureModel from './FeatureModel';
+import FeatureModel, { FeatureAttributes } from './FeatureModel';
 import Mindmap from './Mindmap';
 import FeatureType from './FeatureType';
 
@@ -50,7 +50,7 @@ class NodeModel extends INodeModel {
    * @param attributes
    * @return {mindplot.model.FeatureModel} the created feature model
    */
-  createFeature(type: FeatureType, attributes): FeatureModel {
+  createFeature(type: FeatureType, attributes: FeatureAttributes): FeatureModel {
     return FeatureModelFactory.createModel(type, attributes);
   }
 

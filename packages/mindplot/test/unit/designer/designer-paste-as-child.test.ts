@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/SvgImageIcon', () => ({
-  __esModule: true,
-  default: class MockSvgImageIcon {},
-}));
-
 // jspdf pulls in a TextEncoder that jsdom does not provide, and nothing here exports.
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
@@ -99,9 +94,15 @@ const designerWith = (
   const internals = designer as unknown as DesignerInternals;
   internals._model = model;
   internals._actionDispatcher = actionDispatcher as unknown as StandaloneActionDispatcher;
-  // predict() is the only layout call these paths make.
+  // predict(), getOrderAfter() and getOrdersForNewChildren() are the only layout calls these
+  // paths make. The orders follow each other from the predicted one, as for a non-root parent.
+  const getOrderAfter = jest.fn((_parentId: number, order: number) => order + 1);
+  const getOrdersForNewChildren = jest.fn((_parentId: number, count: number) =>
+    Array.from({ length: count }, (_, i) => (options.predictedOrder ?? 2) + i),
+  );
   internals._eventBussDispatcher = {
-    getLayoutManager: () => ({ predict }) as unknown as LayoutManager,
+    getLayoutManager: () =>
+      ({ predict, getOrderAfter, getOrdersForNewChildren }) as unknown as LayoutManager,
   } as unknown as EventBusDispatcher;
   internals._internalClipboard = options.internalClipboard ?? null;
 
@@ -161,7 +162,8 @@ describe('Designer.pasteClipboardAsChild', () => {
     expect(actionDispatcher.addTopics).not.toHaveBeenCalled();
   });
 
-  it('expands the parent branch when the parent is collapsed', async () => {
+  // AddTopicCommand expands it, in the same undo step as the paste (BL4-06).
+  it('leaves expanding a collapsed parent to addTopics', async () => {
     const { designer, actionDispatcher } = designerWith({
       topics: [topicStub(20, { shrunken: true })],
       internalClipboard: mapWith('    <topic id="2" text="A" position="100,50" order="0" />'),
@@ -169,7 +171,18 @@ describe('Designer.pasteClipboardAsChild', () => {
 
     await designer.pasteClipboardAsChild(20);
 
-    expect(actionDispatcher.shrinkBranch).toHaveBeenCalledWith([20], false);
+    expect(actionDispatcher.shrinkBranch).not.toHaveBeenCalled();
+    expect(actionDispatcher.addTopics).toHaveBeenCalledWith([expect.anything()], [20]);
+  });
+
+  it('leaves a collapsed parent alone when there is nothing to paste', async () => {
+    const { designer, actionDispatcher } = designerWith({
+      topics: [topicStub(22, { shrunken: true })],
+    });
+
+    await designer.pasteClipboardAsChild(22);
+
+    expect(actionDispatcher.shrinkBranch).not.toHaveBeenCalled();
   });
 
   it('leaves an already expanded parent alone', async () => {
@@ -218,6 +231,7 @@ describe('Designer.pasteClipboardAsChild', () => {
 
     await designer.pasteClipboardAsChild(40);
 
+    expect(predict).toHaveBeenCalledTimes(1);
     expect(predict).toHaveBeenCalledWith(40, null, null);
     expect(actionDispatcher.addTopics).toHaveBeenCalledTimes(1);
 
@@ -225,8 +239,9 @@ describe('Designer.pasteClipboardAsChild', () => {
     expect(parentIds).toEqual([40, 40]);
     expect(clones).toHaveLength(2);
     expect(clones.map((c) => c.getText())).toEqual(['Copied Node A', 'Copied Node B']);
+    // The first takes the predicted order, the next one the order right after it.
+    expect(clones.map((c) => c.getOrder())).toEqual([5, 6]);
     clones.forEach((clone) => {
-      expect(clone.getOrder()).toBe(5);
       expect(clone.getPosition()).toEqual(predictedPosition);
     });
   });

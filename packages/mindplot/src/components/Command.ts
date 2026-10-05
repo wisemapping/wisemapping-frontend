@@ -53,6 +53,15 @@ abstract class Command {
   setDiscardDuplicated(value: string) {
     this._discardDuplicated = value;
   }
+
+  /**
+   * Called when this command has just been executed right after a command with the same
+   * discardDuplicated key. Returning true means this command now also covers the previous
+   * one (its undo restores the state before both), so the previous one can be dropped.
+   */
+  mergeWith(_previous: Command): boolean {
+    return false;
+  }
 }
 
 export default Command;

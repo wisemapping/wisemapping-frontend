@@ -80,62 +80,6 @@ class EventManager {
 
     element.dispatchEvent(event);
   }
-
-  /**
-   * Add event listener with delegation (for dynamically added elements)
-   * Replaces: $(parent).on(event, selector, handler)
-   */
-  static delegate(
-    parent: HTMLElement,
-    event: string,
-    selector: string,
-    handler: EventListener,
-  ): void {
-    parent.addEventListener(event, (e) => {
-      const target = e.target as HTMLElement;
-      if (target && target.matches && target.matches(selector)) {
-        handler.call(target, e);
-      }
-    });
-  }
-
-  /**
-   * Add event listener that fires only once
-   * Replaces: $(element).one(event, handler)
-   */
-  static once(
-    element: HTMLElement | Document | Window,
-    event: string,
-    handler: EventListener,
-  ): void {
-    const onceHandler = (e: Event) => {
-      handler(e);
-      element.removeEventListener(event, onceHandler);
-    };
-    element.addEventListener(event, onceHandler);
-  }
-
-  /**
-   * Prevent default action and stop propagation
-   * Replaces: e.preventDefault(); e.stopPropagation();
-   */
-  static stopEvent(event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
-  /**
-   * DOM ready event handler
-   * Replaces: $(document).ready(handler)
-   */
-  static ready(handler: () => void): void {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', handler);
-    } else {
-      // Document is already ready
-      handler();
-    }
-  }
 }
 
 export default EventManager;

@@ -27,8 +27,13 @@ class SecureXmlParser {
   // Maximum depth for XML parsing to prevent XML bomb attacks
   private static readonly MAX_XML_DEPTH = 100;
 
-  // Maximum number of nodes to prevent DoS
-  private static readonly MAX_XML_NODES = 10000;
+  // Maximum number of elements, to prevent DoS. Entity expansion (billion laughs) is already
+  // blocked, as entity declarations are rejected, so this only has to stop absurd documents:
+  // a large map with rich notes easily has tens of thousands of elements.
+  private static readonly MAX_XML_NODES = 200000;
+
+  // Entities every XML parser defines. They can not be used for XXE attacks.
+  private static readonly PREDEFINED_ENTITY = /^&(?:amp|lt|gt|quot|apos);$/;
 
   /**
    * Safely parse XML content with security protections
@@ -49,6 +54,12 @@ class SecureXmlParser {
 
       // Remove potential XXE attacks before parsing
       const sanitizedXml = this.sanitizeXmlContent(xmlContent);
+
+      // The element count is checked again on the DOM, but building it is the expensive part:
+      // reject documents that obviously have too many elements before parsing them.
+      if (this.estimateElementCount(sanitizedXml) > this.MAX_XML_NODES) {
+        throw new Error('Too many XML nodes');
+      }
 
       // Create parser with security restrictions
       const parser = new DOMParser();
@@ -78,24 +89,49 @@ class SecureXmlParser {
    * @returns Sanitized XML content
    */
   private static sanitizeXmlContent(xmlContent: string): string {
-    let sanitized = xmlContent;
+    // Tokens are matched in document order, so markup inside CDATA sections is left untouched.
+    const tokens =
+      /<!\[CDATA\[[\s\S]*?\]\]>|<!--[\s\S]*?-->|<\?[\s\S]*?\?>|<!DOCTYPE(?:[^[>]|\[[\s\S]*?\])*>|<!ENTITY[^>]*>|&[a-zA-Z][a-zA-Z0-9]*;/gi;
 
-    // Remove DOCTYPE declarations that could contain external entities
-    sanitized = sanitized.replace(/<!DOCTYPE[^>]*>/gi, '');
+    return xmlContent.replace(tokens, (token: string) => {
+      if (token.startsWith('<![CDATA[')) {
+        return token;
+      }
 
-    // Remove any remaining ENTITY declarations
-    sanitized = sanitized.replace(/<!ENTITY[^>]*>/gi, '');
+      // Entity declarations enable XXE and entity expansion (billion laughs) attacks: reject them.
+      if (/<!ENTITY/i.test(token)) {
+        throw new Error('XML entity declarations are not allowed');
+      }
 
-    // Remove external entity references
-    sanitized = sanitized.replace(/&[a-zA-Z][a-zA-Z0-9]*;/g, '');
+      // Keep the predefined XML entities. References to any other entity are removed, as
+      // they can not be declared and would make the document invalid.
+      if (token.startsWith('&')) {
+        return this.PREDEFINED_ENTITY.test(token) ? token : '';
+      }
 
-    // Remove processing instructions that could be dangerous
-    sanitized = sanitized.replace(/<\?[^>]*\?>/g, '');
+      // Remove DOCTYPE declarations, processing instructions and comments
+      return '';
+    });
+  }
 
-    // Remove comments that might contain malicious content
-    sanitized = sanitized.replace(/<!--[\s\S]*?-->/g, '');
-
-    return sanitized;
+  /**
+   * Rough upper bound of the number of elements: every "<" outside CDATA sections that does not
+   * open an end tag, a declaration or a processing instruction. Comments have already been
+   * removed. Stops counting once the cap is exceeded.
+   * @param xmlContent - The sanitized XML content
+   * @returns Estimated number of elements
+   */
+  private static estimateElementCount(xmlContent: string): number {
+    const tokens = /<!\[CDATA\[[\s\S]*?\]\]>|<[^/!?]/g;
+    let count = 0;
+    let match = tokens.exec(xmlContent);
+    while (match && count <= this.MAX_XML_NODES) {
+      if (!match[0].startsWith('<![CDATA[')) {
+        count += 1;
+      }
+      match = tokens.exec(xmlContent);
+    }
+    return count;
   }
 
   /**
@@ -210,7 +246,7 @@ class SecureXmlParser {
     const dangerousPatterns = [
       /<!DOCTYPE[^>]*\[[^\]]*ENTITY[^\]]*\]/gi,
       /<!ENTITY[^>]*>/gi,
-      /&[a-zA-Z][a-zA-Z0-9]*;/g,
+      /&(?!(?:amp|lt|gt|quot|apos);)[a-zA-Z][a-zA-Z0-9]*;/g,
       /<\?xml-stylesheet[^>]*>/gi,
       /<\?xml-stylesheet[^>]*>/gi,
       /<script[^>]*>/gi,

@@ -30,6 +30,7 @@ import {
   ImageExporterFactory,
   Exporter,
   Importer,
+  ImportError,
   TextImporterFactory,
   XMLSerializerFactory,
 } from '@wisemapping/mindplot';
@@ -66,6 +67,7 @@ export {
   ImageExporterFactory,
   Exporter,
   Importer,
+  ImportError,
   TextImporterFactory,
   XMLSerializerFactory,
   useEditor,

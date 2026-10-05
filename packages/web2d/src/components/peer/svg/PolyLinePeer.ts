@@ -19,6 +19,8 @@ import { $defined } from '../utils/assert';
 import * as PolyLineUtils from '../utils/PolyLineUtils';
 import ElementPeer from './ElementPeer';
 
+export type PolyLineStyle = 'Straight' | 'MiddleStraight' | 'MiddleCurved' | 'Curved';
+
 class PolyLinePeer extends ElementPeer {
   private _breakDistance: number;
 
@@ -85,16 +87,22 @@ class PolyLinePeer extends ElementPeer {
     return this._orientation;
   }
 
+  /** Redraws the line in its style. An empty or unknown style draws the `Curved` path. */
   private _updatePath() {
-    if (this._style === 'Straight') {
-      this._updateStraightPath();
-    }
-    if (this._style === 'MiddleStraight') {
-      this._updateMiddleStraightPath();
-    } else if (this._style === 'MiddleCurved') {
-      this._updateMiddleCurvePath();
-    } else if (this._style === 'Curved' || !this._style) {
-      this._updateCurvePath();
+    switch (this._style as PolyLineStyle) {
+      case 'Straight':
+        this._updateStraightPath();
+        break;
+      case 'MiddleStraight':
+        this._updateMiddleStraightPath();
+        break;
+      case 'MiddleCurved':
+        this._updateMiddleCurvePath();
+        break;
+      case 'Curved':
+      default:
+        this._updateCurvePath();
+        break;
     }
   }
 
@@ -120,50 +128,22 @@ class PolyLinePeer extends ElementPeer {
     }
   }
 
+  /** An elbow with both corners chamfered by MIDDLE_CURVED_CHAMFER (W-MIDCURVE). */
   private _updateMiddleCurvePath() {
-    const x1 = this._x1;
-    const y1 = this._y1;
-    const x2 = this._x2;
-    const y2 = this._y2;
-
-    if ($defined(x1) && $defined(x2) && $defined(y1) && $defined(y2)) {
-      let path: string;
-      if (this._orientation === 'vertical') {
-        // For vertical tree layout: vertical down, horizontal across, vertical down
-        const diff = y2 - y1;
-        const middley = diff / 2 + y1;
-        let signx = 1;
-        if (x2 < x1) {
-          signx = -1;
-        }
-        // Horizontal segment stays at middley (no Y offset for horizontal transition)
-        path = `${x1}, ${y1} ${x1}, ${middley.toFixed(0)} ${
-          x1 + 10 * signx
-        }, ${middley.toFixed(0)} ${x2 - 10 * signx}, ${middley.toFixed(0)} ${x2}, ${middley.toFixed(
-          0,
-        )} ${x2}, ${y2}`;
-      } else {
-        // For horizontal mindmap layout
-        const diff = x2 - x1;
-        const middlex = diff / 2 + x1;
-        let signx = 0;
-        let signy = 1;
-        if (diff < 0) {
-          signx = -1;
-        }
-        if (y2 < y1) {
-          signy = -1;
-        }
-        path = `${x1}, ${y1} ${(middlex - 10 * signx).toFixed(0)}, ${y1} ${middlex.toFixed(
-          0,
-        )}, ${y1 + 10 * signy} ${middlex}, ${y2 - 10 * signy} ${
-          middlex + 10 * signx
-        }, ${y2} ${x2}, ${y2}`;
-      }
+    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
+      const path = PolyLineUtils.buildChamferedElbowPath(
+        this._x1,
+        this._y1,
+        this._x2,
+        this._y2,
+        PolyLineUtils.MIDDLE_CURVED_CHAMFER,
+        this._orientation,
+      );
       this._native.setAttribute('points', path);
     }
   }
 
+  /** An elbow that breaks at the middle, which is rounded to whole units. */
   private _updateMiddleStraightPath() {
     const x1 = this._x1;
     const y1 = this._y1;
@@ -173,14 +153,12 @@ class PolyLinePeer extends ElementPeer {
       let path: string;
       if (this._orientation === 'vertical') {
         // For vertical tree layout: go down, then horizontal, then down
-        const diff = y2 - y1;
-        const middley = (diff * 0.5 + y1).toFixed(0);
-        path = `${x1}, ${y1} ${x1}, ${middley} ${x1}, ${middley} ${x2}, ${middley} ${x2}, ${middley} ${x2}, ${y2}`;
+        const middley = ((y2 - y1) * 0.5 + y1).toFixed(0);
+        path = `${x1}, ${y1} ${x1}, ${middley} ${x2}, ${middley} ${x2}, ${y2}`;
       } else {
         // For horizontal mindmap layout: go horizontal, then vertical, then horizontal
-        const diff = x2 - x1;
-        const middlex = (diff * 0.5 + x1).toFixed(0);
-        path = `${x1}, ${y1} ${middlex}, ${y1} ${middlex}, ${y1} ${middlex}, ${y2} ${middlex}, ${y2} ${x2}, ${y2}`;
+        const middlex = ((x2 - x1) * 0.5 + x1).toFixed(0);
+        path = `${x1}, ${y1} ${middlex}, ${y1} ${middlex}, ${y2} ${x2}, ${y2}`;
       }
       this._native.setAttribute('points', path);
     }

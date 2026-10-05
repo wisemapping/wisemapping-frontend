@@ -28,16 +28,21 @@ import ContentType from '../ContentType';
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
 
 export type TopicShapeType =
-  | 'rectangle'
-  | 'rounded rectangle'
-  | 'elipse'
-  | 'line'
-  | 'none'
-  | 'image';
+  'rectangle' | 'rounded rectangle' | 'elipse' | 'line' | 'none' | 'image';
 
 // regex taken from https://stackoverflow.com/a/34763398/58128
 const parseJsObject = (str: string) =>
   JSON.parse(str.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": '));
+
+// Parses a stored {key:number,...} value. Corrupted values (e.g. NaN) are reported as missing.
+const parseFiniteObject = <T>(str: string, keys: string[]): T | undefined => {
+  try {
+    const result = parseJsObject(str);
+    return keys.every((key) => Number.isFinite(result?.[key])) ? result : undefined;
+  } catch {
+    return undefined;
+  }
+};
 
 abstract class INodeModel {
   static MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE = 220;
@@ -83,7 +88,7 @@ abstract class INodeModel {
     this.putProperty('text', text);
   }
 
-  getText(): string | null {
+  getText(): string | undefined {
     return this.getProperty('text') as string;
   }
 
@@ -100,29 +105,57 @@ abstract class INodeModel {
     if (!text) return '';
 
     if (this.getContentType() === ContentType.HTML) {
-      // Create a temporary DOM element to strip HTML tags
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = text;
-      return tempDiv.textContent || tempDiv.innerText || '';
+      // Parse in an inert document so embedded markup (e.g. <img onerror>) never runs
+      const parsed = new DOMParser().parseFromString(text, 'text/html');
+      return parsed.body.textContent || '';
     }
 
     return text;
   }
 
   setPosition(x: number, y: number): void {
+    if (!Number.isFinite(x) || !Number.isFinite(y)) {
+      console.warn(`Ignoring invalid position (${x},${y}) for topic ${this.getId()}`);
+      return;
+    }
     this.putProperty('position', `{x:${x},y:${y}}`);
   }
 
-  getPosition(): PositionType {
+  /**
+   * Returns undefined when the topic has no position, or a corrupted one. Prefer hasPosition and
+   * getPositionOrThrow, which make that explicit.
+   */
+  getPosition(): PositionType | undefined {
     const value = this.getProperty('position') as string;
-    let result;
+    let result: PositionType | undefined;
     if (value != null) {
-      result = parseJsObject(value);
+      result = parseFiniteObject<PositionType>(value, ['x', 'y']);
+    }
+    return result;
+  }
+
+  /** @return true if the topic has a valid position */
+  hasPosition(): boolean {
+    return this.getPosition() !== undefined;
+  }
+
+  /**
+   * @return the position of the topic
+   * @throws will throw an error if the topic has no position, or a corrupted one
+   */
+  getPositionOrThrow(): PositionType {
+    const result = this.getPosition();
+    if (result === undefined) {
+      throw new Error(`Topic ${this.getId()} has no position`);
     }
     return result;
   }
 
   setImageSize(width: number, height: number): void {
+    if (!Number.isFinite(width) || !Number.isFinite(height)) {
+      console.warn(`Ignoring invalid image size (${width},${height}) for topic ${this.getId()}`);
+      return;
+    }
     this.putProperty('imageSize', `{width:${width},height:${height}}`);
   }
 
@@ -130,7 +163,7 @@ abstract class INodeModel {
     const value = this.getProperty('imageSize') as string;
     let result: SizeType | undefined;
     if (value) {
-      result = parseJsObject(value);
+      result = parseFiniteObject<SizeType>(value, ['width', 'height']);
     }
     return result;
   }

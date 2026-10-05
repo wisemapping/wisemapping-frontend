@@ -15,179 +15,42 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '../util/assert';
-import { createDocument } from '../util/DOMUtils';
 import ModelCodeName from './ModelCodeName';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
+import emojiToIconMap from './iconToEmoji.json';
+import { isFontStyleType, isFontWeightType, isTopicShapeType } from './TopicAttributeTypes';
 
 class XMLSerializerBeta implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
 
-  toXML(mindmap: Mindmap) {
-    $assert(mindmap, 'Can not save a null mindmap');
-
-    const document = createDocument();
-
-    // Store map attributes ...
-    const mapElem = document.createElement('map');
-    const name = mindmap.getId();
-    if (name) {
-      mapElem.setAttribute('name', name);
-    }
-    document.append(mapElem);
-
-    // Create branches ...
-    const topics = mindmap.getBranches();
-    topics.forEach((topic) => {
-      const topicDom = this._topicToXML(document, topic);
-      mapElem.append(topicDom);
-    });
-
-    return document;
+  /**
+   * Beta is a read-only format: loaded maps are migrated to Tango (see XMLSerializerFactory), whose
+   * serializer writes them.
+   */
+  toXML(): Document {
+    throw new Error('Saving maps in the beta format is not supported');
   }
 
-  _topicToXML(document: Document, topic: NodeModel) {
-    const parentTopic = document.createElement('topic');
-
-    // Set topic attributes...
-    if (topic.getType() === 'CentralTopic') {
-      parentTopic.setAttribute('central', true.toString());
-    } else {
-      const parent = topic.getParent();
-      if (parent == null || parent.getType() === 'CentralTopic') {
-        const pos = topic.getPosition();
-        parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
-      } else {
-        const order = topic.getOrder();
-        if (order !== undefined) {
-          parentTopic.setAttribute('order', order.toString());
-        }
-      }
-    }
-
-    const text = topic.getText();
-    if (text) {
-      parentTopic.setAttribute('text', text);
-    }
-
-    // Topic text is always plain, no contentType needed
-
-    // Save the model's explicit shape (undefined means use theme default)
-    const shape = topic.getShapeType();
-    if (shape !== undefined) {
-      parentTopic.setAttribute('shape', shape);
-    }
-
-    if (topic.areChildrenShrunken()) {
-      parentTopic.setAttribute('shrink', true.toString());
-    }
-
-    // Font properties ...
-    let font = '';
-
-    const fontFamily = topic.getFontFamily();
-    font += `${fontFamily || ''};`;
-
-    const fontSize = topic.getFontSize();
-    font += `${fontSize || ''};`;
-
-    const fontColor = topic.getFontColor();
-    font += `${fontColor || ''};`;
-
-    const fontWeight = topic.getFontWeight();
-    font += `${fontWeight || ''};`;
-
-    const fontStyle = topic.getFontStyle();
-    font += `${fontStyle || ''};`;
-
-    if (
-      $defined(fontFamily) ||
-      $defined(fontSize) ||
-      $defined(fontColor) ||
-      $defined(fontWeight) ||
-      $defined(fontStyle)
-    ) {
-      parentTopic.setAttribute('fontStyle', font);
-    }
-
-    const bgColor = topic.getBackgroundColor();
-    if (bgColor) {
-      parentTopic.setAttribute('bgColor', bgColor);
-    }
-
-    const brColor = topic.getBorderColor();
-    if (brColor) {
-      parentTopic.setAttribute('brColor', brColor);
-    }
-
-    // ICONS
-    const icons = topic.findFeatureByType('icons');
-    icons.forEach((icon) => {
-      const iconDom = this._iconToXML(document, icon);
-      parentTopic.append(iconDom);
-    });
-
-    // LINKS
-    const links = topic.findFeatureByType('links');
-    links.forEach((link) => {
-      const linkDom = this._linkToXML(document, link);
-      parentTopic.append(linkDom);
-    });
-
-    const notes = topic.findFeatureByType('note');
-    notes.forEach((note) => {
-      const noteDom = this._noteToXML(document, note);
-      parentTopic.append(noteDom);
-    });
-
-    // CHILDREN TOPICS
-    const childTopics = topic.getChildren();
-    childTopics.forEach((childTopic) => {
-      const childDom = this._topicToXML(document, childTopic);
-      parentTopic.append(childDom);
-    });
-
-    return parentTopic;
-  }
-
-  _iconToXML(document, icon) {
-    const iconDom = document.createElement('icon');
-    iconDom.setAttribute('id', icon.getIconType());
-    return iconDom;
-  }
-
-  _linkToXML(document, link) {
-    const linkDom = document.createElement('link');
-    linkDom.setAttribute('url', link.getUrl());
-    return linkDom;
-  }
-
-  _noteToXML(document, note) {
-    const noteDom = document.createElement('note');
-    noteDom.setAttribute('text', note.getText());
-    return noteDom;
-  }
-
-  loadFromDom(dom, mapId) {
+  loadFromDom(dom: Document, mapId: string): Mindmap {
     $assert(dom, 'Dom can not be null');
     $assert(mapId, 'mapId can not be null');
 
-    // Is a valid object ?
+    // Is a valid object ? The messages are only built on failure: they are expensive.
     const { documentElement } = dom;
-    $assert(
-      documentElement.nodeName !== 'parsererror',
-      `Error while parsing: '${documentElement.childNodes[0].nodeValue}`,
-    );
+    if (documentElement.nodeName === 'parsererror') {
+      $assert(false, `Error while parsing: '${documentElement.textContent}`);
+    }
 
     // Is a wisemap?.
-    $assert(
-      documentElement.tagName === XMLSerializerBeta.MAP_ROOT_NODE,
-      `This seem not to be a map document. Root Tag: '${documentElement.tagName}',HTML:${
-        dom.innerHTML
-      }, XML:,${new XMLSerializer().serializeToString(dom)}`,
-    );
+    if (documentElement.tagName !== XMLSerializerBeta.MAP_ROOT_NODE) {
+      $assert(
+        false,
+        `This seem not to be a map document. Root Tag: '${documentElement.tagName}', XML:${new XMLSerializer().serializeToString(dom)}`,
+      );
+    }
 
     // Start the loading process ...
     let version = documentElement.getAttribute('version');
@@ -202,7 +65,8 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
 
     const children = documentElement.childNodes;
     for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+      // Only element nodes (nodeType 1) are read.
+      const child = children[i] as Element;
       if (child.nodeType === 1) {
         const topic = this._deserializeNode(child, mindmap);
         mindmap.addBranch(topic);
@@ -212,7 +76,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     return mindmap;
   }
 
-  _deserializeNode(domElem, mindmap) {
+  _deserializeNode(domElem: Element, mindmap: Mindmap): NodeModel {
     const type = domElem.getAttribute('central') != null ? 'CentralTopic' : 'MainTopic';
     const topic = mindmap.createNode(type);
 
@@ -238,12 +102,16 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     if ($defined(shape)) {
       // Hack for legacy mapping loading ...
       shape = shape === 'rectagle' ? 'rectangle' : shape;
-      topic.setShapeType(shape);
+      if (isTopicShapeType(shape)) {
+        topic.setShapeType(shape);
+      } else {
+        console.warn(`Unknown shape '${shape}' for topic ${topic.getId()}, ignoring it.`);
+      }
     }
 
     const isShrink = domElem.getAttribute('shrink');
     if ($defined(isShrink)) {
-      topic.setChildrenShrunken(isShrink);
+      topic.setChildrenShrunken(isShrink === 'true');
     }
 
     const fontStyle = domElem.getAttribute('fontStyle');
@@ -254,20 +122,36 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
         topic.setFontFamily(font[0]);
       }
 
-      if (font[1]) {
-        topic.setFontSize(font[1]);
+      const fontSize = Number.parseInt(font[1], 10);
+      if (Number.isFinite(fontSize)) {
+        topic.setFontSize(fontSize);
       }
 
       if (font[2]) {
         topic.setFontColor(font[2]);
       }
 
-      if (font[3]) {
-        topic.setFontWeight(font[3]);
+      // Unknown values are ignored, so the theme default applies.
+      const fontWeight = font[3];
+      if (fontWeight) {
+        if (isFontWeightType(fontWeight)) {
+          topic.setFontWeight(fontWeight);
+        } else {
+          console.warn(
+            `Unknown font weight '${fontWeight}' for topic ${topic.getId()}, ignoring it.`,
+          );
+        }
       }
 
-      if (font[4]) {
-        topic.setFontStyle(font[4]);
+      const fontStyleValue = font[4];
+      if (fontStyleValue) {
+        if (isFontStyleType(fontStyleValue)) {
+          topic.setFontStyle(fontStyleValue);
+        } else {
+          console.warn(
+            `Unknown font style '${fontStyleValue}' for topic ${topic.getId()}, ignoring it.`,
+          );
+        }
       }
     }
 
@@ -284,13 +168,18 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     const position = domElem.getAttribute('position');
     if ($defined(position)) {
       const pos = position.split(',');
-      topic.setPosition(pos[0], pos[1]);
+      const x = Number.parseInt(pos[0], 10);
+      const y = Number.parseInt(pos[1], 10);
+      if (Number.isFinite(x) && Number.isFinite(y)) {
+        topic.setPosition(x, y);
+      }
     }
 
     // Creating icons and children nodes
     const children = domElem.childNodes;
     for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+      // Only element nodes (nodeType 1) are read.
+      const child = children[i] as Element;
       if (child.nodeType === 1) {
         $assert(
           child.tagName === 'topic' ||
@@ -302,9 +191,16 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
         if (child.tagName === 'topic') {
           const childTopic = this._deserializeNode(child, mindmap);
           childTopic.connectTo(topic);
+        } else if (child.tagName === 'icon') {
+          const icon = this._deserializeIcon(child);
+          if (icon) {
+            topic.addFeature(icon);
+          }
         } else if (child.tagName === 'link') {
           const link = this._deserializeLink(child);
-          topic.addFeature(link);
+          if (link) {
+            topic.addFeature(link);
+          }
         } else if (child.tagName === 'note') {
           const note = this._deserializeNote(child);
           topic.addFeature(note);
@@ -315,13 +211,28 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     return topic;
   }
 
+  _deserializeIcon(domElem: Element) {
+    const id = domElem.getAttribute('id');
+    if (!id) {
+      return undefined;
+    }
+    // Same migration as the Tango loader: legacy icons become emojis when there is one.
+    const emoji = (emojiToIconMap as Record<string, string>)[id];
+    return emoji
+      ? FeatureModelFactory.createModel('eicon', { id: emoji })
+      : FeatureModelFactory.createModel('icon', { id });
+  }
+
   _deserializeLink(domElem: Element) {
-    return FeatureModelFactory.createModel('link', { url: domElem.getAttribute('url') });
+    // A link without url can not be shown: skip it rather than failing to load the map.
+    const url = domElem.getAttribute('url');
+    return url ? FeatureModelFactory.createModel('link', { url }) : undefined;
   }
 
   _deserializeNote(domElem: Element) {
+    // Beta notes are escape()-encoded, as the legacy pela ones read by the Tango serializer.
     const text = domElem.getAttribute('text');
-    return FeatureModelFactory.createModel('note', { text: text == null ? ' ' : text });
+    return FeatureModelFactory.createModel('note', { text: text ? unescape(text) : ' ' });
   }
 }
 
