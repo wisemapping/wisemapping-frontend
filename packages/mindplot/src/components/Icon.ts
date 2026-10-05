@@ -21,11 +21,14 @@ import FeatureModel from './model/FeatureModel';
 import PositionType from './PositionType';
 import SizeType from './SizeType';
 
-interface Icon {
+/**
+ * Something on a topic the ElementDeleteWidget can offer to remove: an icon of the topic's
+ * IconGroup, or the gallery SVG and the emoji drawn next to the text, which have no feature model.
+ */
+export interface Removable {
   getElement(): Group | Image;
 
-  setGroup(group: IconGroup): void;
-
+  /** The IconGroup it is in, whose scale the widget accounts for; null when it is in none. */
   getGroup(): IconGroup | null;
 
   getSize(): SizeType | undefined;
@@ -35,6 +38,11 @@ interface Icon {
   addEvent(type: string, fnc: () => void): void;
 
   remove(): void;
+}
+
+/** An icon of a topic's IconGroup, built from one of its features. */
+interface Icon extends Removable {
+  setGroup(group: IconGroup): void;
 
   getModel(): FeatureModel;
 }

@@ -19,7 +19,7 @@
 import { Group, Rect, StraightLine } from '@wisemapping/web2d';
 import debounce from 'lodash/debounce';
 import { $assert } from './util/assert';
-import Icon from './Icon';
+import { Removable } from './Icon';
 import PositionType from './PositionType';
 import type Designer from './Designer';
 
@@ -29,7 +29,7 @@ class ElementDeleteWidget {
 
   private static _instanceByDesigner = new WeakMap<Designer, ElementDeleteWidget>();
 
-  private _activeIcon: Icon | null;
+  private _activeIcon: Removable | null;
 
   private _widget: Group | null;
 
@@ -38,14 +38,14 @@ class ElementDeleteWidget {
   private _debouncedClose: ReturnType<typeof debounce>;
 
   // Icons that already show this widget on hover.
-  private _decoratedIcons: WeakSet<Icon>;
+  private _decoratedIcons: WeakSet<Removable>;
 
   private constructor() {
     this._activeIcon = null;
     this._widget = null;
     this._widgetGroup = null;
     this._debouncedClose = debounce(() => this._closeNow(), 200);
-    this._decoratedIcons = new WeakSet<Icon>();
+    this._decoratedIcons = new WeakSet<Removable>();
   }
 
   /**
@@ -68,7 +68,7 @@ class ElementDeleteWidget {
     return ElementDeleteWidget._instance;
   }
 
-  show(topicId: number, icon: Icon, group: Group) {
+  show(topicId: number, icon: Removable, group: Group) {
     $assert(icon, 'icon can not be null');
     $assert(group, 'group can not be null');
 
@@ -267,7 +267,7 @@ class ElementDeleteWidget {
     return result;
   }
 
-  decorate(topicId: number, icon: Icon, group: Group) {
+  decorate(topicId: number, icon: Removable, group: Group) {
     if (!this._decoratedIcons.has(icon)) {
       icon.addEvent('mouseover', () => {
         this.show(topicId, icon, group);
