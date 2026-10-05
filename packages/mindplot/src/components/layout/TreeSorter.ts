@@ -81,19 +81,13 @@ class TreeSorter extends AbstractBasicSorter {
     // Calculate X position - between siblings or at edges
     let xPos: number;
     if (order === 0 && parentChildren.length > 0) {
-      // Before first child
+      // Before first child: half a gap left of it, as between two children
       const firstChild = parentChildren[0];
-      xPos =
-        firstChild.getPosition().x -
-        firstChild.getSize().width / 2 -
-        TreeSorter.INTERNODE_HORIZONTAL_PADDING;
+      xPos = firstChild.getPosition().x - this._halfSiblingGapX(parentChildren, 0);
     } else if (order >= parentChildren.length) {
-      // After last child
-      const lastChild = parentChildren[parentChildren.length - 1];
-      xPos =
-        lastChild.getPosition().x +
-        lastChild.getSize().width / 2 +
-        TreeSorter.INTERNODE_HORIZONTAL_PADDING;
+      // After last child: half a gap right of it
+      const index = parentChildren.length - 1;
+      xPos = parentChildren[index].getPosition().x + this._halfSiblingGapX(parentChildren, index);
     } else {
       // Between two children
       const prevChild = parentChildren[order - 1];
@@ -102,6 +96,20 @@ class TreeSorter extends AbstractBasicSorter {
     }
 
     return [order, { x: xPos, y: yPos }];
+  }
+
+  /**
+   * Half the gap, in x, between the centre of children[index] and the next child in the list (the
+   * one before it, for the last), as AbstractBasicSorter._halfSiblingGap in y. A lone child counts
+   * the gap the layout leaves between two leaves of its width.
+   */
+  private _halfSiblingGapX(children: Node[], index: number): number {
+    const child = children[index];
+    const neighbour = children[index === 0 ? 1 : index - 1];
+    const gap = neighbour
+      ? Math.abs(neighbour.getPosition().x - child.getPosition().x)
+      : child.getSize().width + TreeSorter.INTERNODE_HORIZONTAL_PADDING * 2;
+    return gap / 2;
   }
 
   insert(treeSet: RootedTreeSet, parent: Node, child: Node, order: number): void {

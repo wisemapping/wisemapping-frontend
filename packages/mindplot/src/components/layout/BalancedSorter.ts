@@ -91,10 +91,16 @@ class BalancedSorter extends AbstractBasicSorter {
     children.forEach((child, index) => {
       const cpos = child.getPosition();
       if (newestPosition.y > cpos.y) {
-        const yOffset =
-          child === last
-            ? child.getSize().height + BalancedSorter.INTERNODE_VERTICAL_PADDING * 2
-            : (children[index + 1].getPosition().y - child.getPosition().y) / 2;
+        // After the last child: half a gap below it when dragging, as between two children. A new
+        // child (no position) still goes where the next child would sit.
+        let yOffset: number;
+        if (child !== last) {
+          yOffset = (children[index + 1].getPosition().y - child.getPosition().y) / 2;
+        } else if (position) {
+          yOffset = this._halfSiblingGap(children, index);
+        } else {
+          yOffset = child.getSize().height + BalancedSorter.INTERNODE_VERTICAL_PADDING * 2;
+        }
         const childOrder = child.getOrder() ?? 0;
         const shifted =
           nodeOrder !== undefined && nodeOrder % 2 === childOrder % 2 && childOrder > nodeOrder;
@@ -110,10 +116,8 @@ class BalancedSorter extends AbstractBasicSorter {
         order,
         {
           x: first.getPosition().x,
-          y:
-            first.getPosition().y -
-            first.getSize().height -
-            BalancedSorter.INTERNODE_VERTICAL_PADDING * 2,
+          // Half a gap above it, as between two children.
+          y: first.getPosition().y - this._halfSiblingGap(children, 0),
         },
       ];
     }

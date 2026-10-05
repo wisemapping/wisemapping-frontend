@@ -92,12 +92,10 @@ class SymmetricSorter extends AbstractBasicSorter {
             ? lastOrderValue
             : lastOrderValue + 1;
 
+        // Half a gap below the last child, as between two children.
         const result = {
           x: parentChild.getPosition().x,
-          y:
-            parentChild.getPosition().y +
-            parentChild.getSize().height +
-            SymmetricSorter.INTERNODE_VERTICAL_PADDING * 2,
+          y: parentChild.getPosition().y + this._halfSiblingGap(parentChildren, i),
         };
         return [order, result];
       }
@@ -133,12 +131,10 @@ class SymmetricSorter extends AbstractBasicSorter {
 
     // Position wasn't below any node, so it must be fitted above the first
     const first = parentChildren[0];
+    // ... half a gap above it, as between two children.
     const resultPosition = {
       x: first.getPosition().x,
-      y:
-        first.getPosition().y -
-        first.getSize().height -
-        SymmetricSorter.INTERNODE_VERTICAL_PADDING * 2,
+      y: first.getPosition().y - this._halfSiblingGap(parentChildren, 0),
     };
     return [0, resultPosition];
   }
