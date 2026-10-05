@@ -100,7 +100,24 @@ export type EditorPropsType = {
 const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher'));
 const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
-const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.ReactElement => {
+// While the router loads another page (leaving the editor, or another map), only the skeleton is
+// shown. Deciding it here, before the editor's own hooks, keeps their order the same on every render.
+const EditorPage = (props: EditorPropsType): React.ReactElement => {
+  const navigation = useNavigation();
+  const editorMetadata = useLoaderData() as EditorMetadata | undefined;
+  if (navigation.state === 'loading' || !editorMetadata) {
+    return <EditorLoadingSkeleton />;
+  }
+  return <LoadedEditorPage {...props} editorMetadata={editorMetadata} />;
+};
+
+const LoadedEditorPage = ({
+  mapId,
+  pageMode,
+  zoom,
+  hid,
+  editorMetadata,
+}: EditorPropsType & { editorMetadata: EditorMetadata }): React.ReactElement => {
   const [activeDialog, setActiveDialog] = useState<ActionType | null>(null);
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
   const mapInfoRef = useRef<MapInfoImpl | undefined>(undefined);
@@ -110,7 +127,6 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   const theme = useMuiTheme(); // Get MUI theme object
   const client = useContext(ClientContext);
   const { hotkeyEnabled } = useContext(KeyboardContext);
-  const editorMetadata: EditorMetadata = useLoaderData() as EditorMetadata;
 
   // Parse query parameters for hideCreatorInfo and theme
   const [searchParams] = useSearchParams();
@@ -125,11 +141,6 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   // If zoom has been define, overwrite the stored value.
   if (zoom) {
     editorMetadata.zoom = zoom;
-  }
-
-  const navigation = useNavigation();
-  if (navigation.state === 'loading') {
-    return <EditorLoadingSkeleton />;
   }
 
   useEffect(() => {
@@ -156,71 +167,61 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
 
   // Account loads asynchronously and should NOT block editor rendering.
   // AppI18n.getUserLocale() handles undefined account gracefully by falling back to default locale.
-  // Editor should render immediately once editorMetadata is available.
-  const loadCompleted = !!editorMetadata;
-
-  let persistence: PersistenceManager;
-  let mapInfo: MapInfo | undefined;
-  let editorOptions: EditorOptions | undefined;
-  let editorConfig: EditorConfiguration | undefined;
-
   const enableAppBar = pageMode !== 'view-private' && pageMode !== 'view-public';
-  if (loadCompleted) {
-    // Configure
-    editorOptions = {
-      enableKeyboardEvents: hotkeyEnabled,
-      locale: userLocale.code,
-      mode: editorMetadata.editorMode,
-      enableAppBar: enableAppBar,
-      zoom: editorMetadata.zoom,
-      hideCreatorInfo: hideCreatorInfoParam === 'true',
-      initialThemeVariant: themeParam === 'dark' || themeParam === 'light' ? themeParam : undefined,
-      bootstrapXML: editorMetadata.bootstrapXML,
-    };
+  const editorOptions: EditorOptions = {
+    enableKeyboardEvents: hotkeyEnabled,
+    locale: userLocale.code,
+    mode: editorMetadata.editorMode,
+    enableAppBar: enableAppBar,
+    zoom: editorMetadata.zoom,
+    hideCreatorInfo: hideCreatorInfoParam === 'true',
+    initialThemeVariant: themeParam === 'dark' || themeParam === 'light' ? themeParam : undefined,
+    bootstrapXML: editorMetadata.bootstrapXML,
+  };
 
-    persistence = buildPersistenceManagerForEditor(
-      editorMetadata.editorMode,
-      setSessionExpired,
-      hid,
+  const persistence: PersistenceManager = buildPersistenceManagerForEditor(
+    editorMetadata.editorMode,
+    setSessionExpired,
+    hid,
+  );
+
+  const existingMapInfo = mapInfoRef.current;
+  if (!existingMapInfo || existingMapInfo.getId() !== mapId.toString()) {
+    mapInfoRef.current = new MapInfoImpl(
+      mapId,
+      client,
+      editorMetadata.mapMetadata.title,
+      editorMetadata.mapMetadata.creatorFullName,
+      editorMetadata.mapMetadata.isLocked,
+      editorMetadata.mapMetadata.isLockedBy,
+      editorMetadata.zoom,
+      editorMetadata.mapMetadata.starred,
     );
-
-    const existingMapInfo = mapInfoRef.current;
-    if (!existingMapInfo || existingMapInfo.getId() !== mapId.toString()) {
-      mapInfoRef.current = new MapInfoImpl(
-        mapId,
-        client,
-        editorMetadata.mapMetadata.title,
-        editorMetadata.mapMetadata.creatorFullName,
-        editorMetadata.mapMetadata.isLocked,
-        editorMetadata.mapMetadata.isLockedBy,
-        editorMetadata.zoom,
-        editorMetadata.mapMetadata.starred,
-      );
-    } else {
-      existingMapInfo.updateMetadata({
-        locked: editorMetadata.mapMetadata.isLocked,
-        lockedMsg: editorMetadata.mapMetadata.isLockedBy,
-        zoom: editorMetadata.zoom,
-        starred: editorMetadata.mapMetadata.starred,
-        creatorFullName: editorMetadata.mapMetadata.creatorFullName,
-      });
-    }
-    mapInfo = mapInfoRef.current!;
-
-    editorConfig = useEditor({
-      mapInfo,
-      options: editorOptions,
-      persistenceManager: persistence,
+  } else {
+    existingMapInfo.updateMetadata({
+      locked: editorMetadata.mapMetadata.isLocked,
+      lockedMsg: editorMetadata.mapMetadata.isLockedBy,
+      zoom: editorMetadata.zoom,
+      starred: editorMetadata.mapMetadata.starred,
+      creatorFullName: editorMetadata.mapMetadata.creatorFullName,
     });
   }
+  const mapInfo: MapInfo = mapInfoRef.current!;
 
+  const editorConfig: EditorConfiguration = useEditor({
+    mapInfo,
+    options: editorOptions,
+    persistenceManager: persistence,
+  });
+
+  const mapTitle = mapInfo.getTitle();
   useEffect(() => {
-    if (mapInfo?.getTitle()) {
-      document.title = `${mapInfo.getTitle()} | WiseMapping `;
+    if (mapTitle) {
+      document.title = `${mapTitle} | WiseMapping `;
     }
-  }, [mapInfo?.getTitle()]);
+  }, [mapTitle]);
 
-  return loadCompleted && editorConfig !== undefined && editorOptions !== undefined ? (
+  return (
     <IntlProvider
       locale={userLocale.code}
       defaultLocale={Locales.EN.code}
@@ -279,8 +280,6 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
         </Suspense>
       )}
     </IntlProvider>
-  ) : (
-    <EditorLoadingSkeleton />
   );
 };
 
