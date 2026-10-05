@@ -20,7 +20,7 @@ import {
   buildStraightPath,
   buildVerticalCurvedPath,
   buildVerticalStraightPath,
-} from '../../src/components/peer/utils/PolyLineUtils';
+} from '../../src/components/geometry/polyline';
 import { parsePoints } from '../helpers/geometry';
 
 type Builder = typeof buildCurvedPath;

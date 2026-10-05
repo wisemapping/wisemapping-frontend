@@ -20,6 +20,7 @@ import {
   fixed,
   formatPoint,
   fullPrecision,
+  pointsData,
   unsignedFixed,
 } from '../../../src/components/geometry/path';
 
@@ -81,6 +82,25 @@ describe('geometry/path number formats', () => {
   it('formatPoint joins the coordinates with a comma, or the given separator', () => {
     expect(formatPoint({ x: 1, y: -2.5 }, fullPrecision)).toBe('1,-2.5');
     expect(formatPoint({ x: 1, y: -2.5 }, fixed(1), ', ')).toBe('1.0, -2.5');
+  });
+});
+
+describe('geometry/path pointsData', () => {
+  it('writes `x, y` pairs separated by a space', () => {
+    expect(
+      pointsData(
+        [
+          { x: 0, y: 1.5 },
+          { x: -2, y: 3 },
+        ],
+        fullPrecision,
+      ),
+    ).toBe('0, 1.5 -2, 3');
+  });
+
+  it('formats every coordinate, and is empty without points', () => {
+    expect(pointsData([{ x: -0.04, y: 2 / 3 }], unsignedFixed(1))).toBe('0.0, 0.7');
+    expect(pointsData([], fullPrecision)).toBe('');
   });
 });
 

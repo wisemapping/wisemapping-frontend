@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $defined } from '../utils/assert';
-import * as PolyLineUtils from '../utils/PolyLineUtils';
+import * as PolyLineUtils from '../../geometry/polyline';
 import ElementPeer from './ElementPeer';
 
 export type PolyLineStyle = 'Straight' | 'MiddleStraight' | 'MiddleCurved' | 'Curved';
@@ -166,23 +166,14 @@ class PolyLinePeer extends ElementPeer {
 
   /** An elbow that breaks at the middle, which is rounded to whole units. */
   private _updateMiddleStraightPath() {
-    const x1 = this._x1;
-    const y1 = this._y1;
-    const x2 = this._x2;
-    const y2 = this._y2;
-    if ($defined(x1) && $defined(x2) && $defined(y1) && $defined(y2)) {
-      let path: string;
-      if (PolyLineUtils.isWithinStraightTolerance(x1, y1, x2, y2, this._orientation)) {
-        path = `${x1}, ${y1} ${x2}, ${y2}`;
-      } else if (this._orientation === 'vertical') {
-        // For vertical tree layout: go down, then horizontal, then down
-        const middley = ((y2 - y1) * 0.5 + y1).toFixed(0);
-        path = `${x1}, ${y1} ${x1}, ${middley} ${x2}, ${middley} ${x2}, ${y2}`;
-      } else {
-        // For horizontal mindmap layout: go horizontal, then vertical, then horizontal
-        const middlex = ((x2 - x1) * 0.5 + x1).toFixed(0);
-        path = `${x1}, ${y1} ${middlex}, ${y1} ${middlex}, ${y2} ${x2}, ${y2}`;
-      }
+    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
+      const path = PolyLineUtils.buildMiddleStraightPath(
+        this._x1,
+        this._y1,
+        this._x2,
+        this._y2,
+        this._orientation,
+      );
       this.attr('points', path);
     }
   }

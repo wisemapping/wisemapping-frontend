@@ -49,6 +49,10 @@ export const unsignedFixed = (digits: number): NumberFormat => {
 export const formatPoint = (p: Vec, format: NumberFormat, separator = ','): string =>
   `${format(p.x)}${separator}${format(p.y)}`;
 
+/** A `points` list (of a polyline): `x, y x, y …`, each coordinate written by `format`. */
+export const pointsData = (points: readonly Vec[], format: NumberFormat): string =>
+  points.map((p) => formatPoint(p, format, ', ')).join(' ');
+
 /**
  * Builds the `d` attribute of a path: commands separated by a space, each command letter
  * followed by its points, which are separated by a space too. For example

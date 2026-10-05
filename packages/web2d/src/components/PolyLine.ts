@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import WorkspaceElement from './WorkspaceElement';
-import * as PolyLineUtils from './peer/utils/PolyLineUtils';
+import * as PolyLineUtils from './geometry/polyline';
 import Line from './Line';
 import PositionType from './PositionType';
 import StyleAttributes from './StyleAttributes';

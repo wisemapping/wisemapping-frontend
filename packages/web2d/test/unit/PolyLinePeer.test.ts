@@ -17,7 +17,7 @@
  */
 import PolyLinePeer from '../../src/components/peer/svg/PolyLinePeer';
 import PolyLine from '../../src/components/PolyLine';
-import { STRAIGHT_TOLERANCE_PX } from '../../src/components/peer/utils/PolyLineUtils';
+import { STRAIGHT_TOLERANCE_PX } from '../../src/components/geometry/polyline';
 import { parsePoints } from '../helpers/geometry';
 
 type Orientation = 'horizontal' | 'vertical';
