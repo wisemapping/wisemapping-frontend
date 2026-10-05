@@ -31,6 +31,7 @@ import HtmlSanitizer from '../security/HtmlSanitizer';
 import { decodeUtf8 } from './support/Utf8Decoder';
 import { normalizeHtmlWhitespace } from './support/HtmlText';
 import toWiseMappingXml from './support/MindmapXml';
+import TopicIdSequence from './support/TopicIdSequence';
 
 interface MindManagerTopic {
   // Topics without an ID or OId can not be referenced, so they are not mapped.
@@ -230,7 +231,7 @@ const MINDMANAGER_ICONS_BY_LOWER_CASE: ReadonlyMap<string, string> = new Map(
 class MindManagerImporter extends Importer {
   private mindManagerInput: MindManagerRawInput;
 
-  private idCounter: number = 1;
+  private readonly ids = new TopicIdSequence();
 
   private topicIdMap: Map<string, number>;
 
@@ -243,10 +244,6 @@ class MindManagerImporter extends Importer {
     super();
     this.mindManagerInput = map;
     this.topicIdMap = new Map();
-  }
-
-  private generateId(): number {
-    return this.idCounter++;
   }
 
   // The initial position of the topic at the given index among the siblings on its side. The
@@ -276,7 +273,7 @@ class MindManagerImporter extends Importer {
     mindmap.setTheme('prism');
     mindmap.setLayout('mindmap');
 
-    const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
+    const centralTopic = mindmap.createNode('CentralTopic', this.ids.next());
     this.mapTopicId(rootTopic, centralTopic);
     centralTopic.setText(rootTopic.text);
     this.addFeatures(centralTopic, rootTopic);
@@ -344,7 +341,7 @@ class MindManagerImporter extends Importer {
     sideIndex: number,
     side: number,
   ): NodeModel {
-    const node = mindmap.createNode('MainTopic', this.generateId());
+    const node = mindmap.createNode('MainTopic', this.ids.next());
     this.mapTopicId(topic, node);
     const position = this.calculatePosition(sideIndex, side);
     node.setText(topic.text);
@@ -986,7 +983,7 @@ class MindManagerImporter extends Importer {
       console.log(`Importing MindManager map: ${nameMap}, description: ${_description}`);
 
       // Reset counters and ID map
-      this.idCounter = 1;
+      this.ids.reset();
       this.topicIdMap.clear();
 
       const xmlContent = MindManagerImporter.readDocument(this.mindManagerInput);

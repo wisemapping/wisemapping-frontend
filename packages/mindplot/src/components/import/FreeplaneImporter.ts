@@ -29,13 +29,14 @@ import toWiseMappingXml from './support/MindmapXml';
 import { legacyIconEmoji } from './support/LegacyIconMap';
 import { htmlToPlainText } from './support/HtmlText';
 import { applyFreemindFont } from './support/FreemindFont';
+import TopicIdSequence from './support/TopicIdSequence';
 import FreemindIconConverter, { WiseIcon } from './FreemindIconConverter';
 import { TopicShapeType } from '../model/INodeModel';
 
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
 
-  private idCounter: number = 1;
+  private readonly ids = new TopicIdSequence();
 
   private topicIdMap: Map<string, number>;
 
@@ -60,7 +61,7 @@ class FreeplaneImporter extends Importer {
       }
 
       // Reset counters and ID map
-      this.idCounter = 1;
+      this.ids.reset();
       this.topicIdMap.clear();
 
       const mindmap = this.buildMindmap(rootNode, nameMap);
@@ -76,7 +77,7 @@ class FreeplaneImporter extends Importer {
     mindmap.setTheme('prism');
     mindmap.setLayout('mindmap');
 
-    const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
+    const centralTopic = mindmap.createNode('CentralTopic', this.ids.next());
     this.mapNodeId(rootNode, centralTopic);
     centralTopic.setText(FreeplaneImporter.nodeText(rootNode) || 'Central Topic');
     const centralShape = FreeplaneImporter.styleToShape(rootNode.getAttribute('STYLE'));
@@ -99,7 +100,7 @@ class FreeplaneImporter extends Importer {
   }
 
   private convertNode(mindmap: Mindmap, freeplaneNode: Element, order: number): NodeModel {
-    const topic = mindmap.createNode('MainTopic', this.generateId());
+    const topic = mindmap.createNode('MainTopic', this.ids.next());
     this.mapNodeId(freeplaneNode, topic);
 
     const position = this.calculatePosition(order);
@@ -624,10 +625,6 @@ class FreeplaneImporter extends Importer {
     const key = builtin.toLowerCase().replace(/-/g, '_');
     const mapped = Object.prototype.hasOwnProperty.call(iconMap, key) ? iconMap[key] : undefined;
     return mapped || legacyIconEmoji(builtin) || '💡'; // Default to lightbulb
-  }
-
-  private generateId(): number {
-    return this.idCounter++;
   }
 
   private calculatePosition(order: number): { x: number; y: number } {

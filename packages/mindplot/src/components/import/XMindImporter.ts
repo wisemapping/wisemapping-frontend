@@ -76,6 +76,7 @@ import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import { decodeUtf8, tryDecodeUtf8 } from './support/Utf8Decoder';
 import toWiseMappingXml from './support/MindmapXml';
+import TopicIdSequence from './support/TopicIdSequence';
 
 // XMind data structures
 interface XMindTopic {
@@ -652,7 +653,7 @@ const XMIND_ICON_EMOJIS: Readonly<Record<string, string>> = {
 class XMindImporter extends Importer {
   private xmindInput: XMindRawInput;
 
-  private idCounter = 1;
+  private readonly ids = new TopicIdSequence();
 
   private topicIdMap: Map<string, number>;
 
@@ -685,7 +686,7 @@ class XMindImporter extends Importer {
   }
 
   private resetState(): void {
-    this.idCounter = 1;
+    this.ids.reset();
     this.topicIdMap.clear();
     this.currentLayout = 'mindmap';
   }
@@ -960,10 +961,6 @@ class XMindImporter extends Importer {
     return xmindColor;
   }
 
-  private generateId(): number {
-    return this.idCounter++;
-  }
-
   private calculatePosition(
     order: number,
     depth: number,
@@ -1002,7 +999,7 @@ class XMindImporter extends Importer {
   }
 
   private createTopic(mindmap: Mindmap, xmindTopicId: string, title: string): NodeModel {
-    const topic = mindmap.createNode('MainTopic', this.generateId());
+    const topic = mindmap.createNode('MainTopic', this.ids.next());
     this.topicIdMap.set(xmindTopicId, topic.getId());
     topic.setText(title);
     topic.setShapeType('line');
@@ -1038,7 +1035,7 @@ class XMindImporter extends Importer {
   private buildMindmapFromXML(rootTopic: Element, nameMap: string): Mindmap {
     const mindmap = this.createMindmap(nameMap);
 
-    const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
+    const centralTopic = mindmap.createNode('CentralTopic', this.ids.next());
     const rootTopicId = rootTopic.getAttribute('id') || 'topic1';
     this.topicIdMap.set(rootTopicId, centralTopic.getId());
     centralTopic.setText(
@@ -1097,7 +1094,7 @@ class XMindImporter extends Importer {
   }
 
   private convertXMLTopic(mindmap: Mindmap, xmlTopic: Element, depth: number): NodeModel {
-    const xmindTopicId = xmlTopic.getAttribute('id') || `topic${this.idCounter + 1}`;
+    const xmindTopicId = xmlTopic.getAttribute('id') || `topic${this.ids.peek() + 1}`;
     const title = XMindImporter.childElement(xmlTopic, 'title')?.textContent || 'Untitled';
     const topic = this.createTopic(mindmap, xmindTopicId, title);
     this.addXMLTopicFeatures(topic, xmlTopic);
@@ -1158,7 +1155,7 @@ class XMindImporter extends Importer {
     const { rootTopic } = sheet;
     const mindmap = this.createMindmap(nameMap);
 
-    const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
+    const centralTopic = mindmap.createNode('CentralTopic', this.ids.next());
     this.topicIdMap.set(rootTopic.id, centralTopic.getId());
     centralTopic.setText(rootTopic.title || 'Central Topic');
     this.addJsonTopicFeatures(centralTopic, rootTopic);

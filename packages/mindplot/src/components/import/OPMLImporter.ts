@@ -24,13 +24,14 @@ import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import ContentType from '../ContentType';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import SecureXmlParser from '../security/SecureXmlParser';
+import TopicIdSequence from './support/TopicIdSequence';
 
 class OPMLImporter extends Importer {
   private opmlInput: string;
 
   private mindmap!: Mindmap;
 
-  private idCounter = 0;
+  private readonly ids = new TopicIdSequence();
 
   constructor(map: string) {
     super();
@@ -46,7 +47,7 @@ class OPMLImporter extends Importer {
       }
 
       this.mindmap = new Mindmap(nameMap);
-      this.idCounter = 0;
+      this.ids.reset();
       if (description) {
         this.mindmap.setDescription(description);
       }
@@ -84,8 +85,7 @@ class OPMLImporter extends Importer {
   }
 
   private createCentralTopic(text: string): NodeModel {
-    this.idCounter += 1;
-    const node = new NodeModel('CentralTopic', this.mindmap, this.idCounter);
+    const node = new NodeModel('CentralTopic', this.mindmap, this.ids.next());
     node.setText(text);
     return node;
   }
@@ -98,8 +98,7 @@ class OPMLImporter extends Importer {
   ): NodeModel {
     const text = outlineElement.getAttribute('text') || outlineElement.getAttribute('title') || '';
     const nodeType = parent ? 'MainTopic' : 'CentralTopic';
-    this.idCounter += 1;
-    const node = new NodeModel(nodeType, mindmap, this.idCounter);
+    const node = new NodeModel(nodeType, mindmap, this.ids.next());
     node.setText(text);
 
     // Non central topics require an order and a position to be serialized
