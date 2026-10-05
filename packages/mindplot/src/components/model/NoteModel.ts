@@ -19,6 +19,12 @@ import { $assert } from '../util/assert';
 import FeatureModel, { FeatureAttributes } from './FeatureModel';
 import ContentType from '../ContentType';
 
+const CONTENT_TYPES: readonly string[] = Object.values(ContentType);
+
+// The content type comes from the map XML (or a command), so any value can show up.
+const isContentType = (value: unknown): value is ContentType =>
+  typeof value === 'string' && CONTENT_TYPES.includes(value);
+
 class NoteModel extends FeatureModel {
   constructor(attributes: FeatureAttributes) {
     super('note');
@@ -27,7 +33,7 @@ class NoteModel extends FeatureModel {
 
     // Set contentType if provided (for rich text notes)
     if (attributes.contentType) {
-      this.setContentType(attributes.contentType as ContentType);
+      this.applyContentType(attributes.contentType);
     }
   }
 
@@ -57,14 +63,24 @@ class NoteModel extends FeatureModel {
 
   /** */
   getContentType(): ContentType {
-    return (this.getAttribute('contentType') as ContentType) || ContentType.PLAIN;
+    const contentType = this.getAttribute('contentType');
+    return isContentType(contentType) ? contentType : ContentType.PLAIN;
+  }
+
+  /** Sets a content type read from untrusted input: an unknown one is ignored. */
+  private applyContentType(value: unknown): void {
+    if (isContentType(value)) {
+      this.setContentType(value);
+    } else {
+      console.warn(`Unknown note content type '${value}', ignoring it.`);
+    }
   }
 
   applyAttribute(key: string, value: unknown): void {
     if (key === 'text') {
       this.setText(value as string);
     } else if (key === 'contentType') {
-      this.setContentType(value as ContentType);
+      this.applyContentType(value);
     } else {
       super.applyAttribute(key, value);
     }
