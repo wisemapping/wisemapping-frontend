@@ -303,6 +303,7 @@ class RelationshipControlPoints {
         relationship.redraw();
       },
       () => {
+        relationship.rememberReleasedControlPoint(PivotType.Start);
         const actionDispatcher = ActionDispatcher.getInstance();
         actionDispatcher.moveControlPoint(
           relationship.getModel(),
@@ -322,6 +323,7 @@ class RelationshipControlPoints {
         relationship.redraw();
       },
       () => {
+        relationship.rememberReleasedControlPoint(PivotType.End);
         const actionDispatcher = ActionDispatcher.getInstance();
         actionDispatcher.moveControlPoint(
           relationship.getModel(),

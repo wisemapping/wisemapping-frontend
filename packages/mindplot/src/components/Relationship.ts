@@ -58,11 +58,17 @@ class Relationship extends BaseConnectionLine {
 
   private _model: RelationshipModel;
 
+  // The connection point each control point was released at in this session, as an offset from
+  // the centre of its topic, by end and control point. A stored control point is relative to a
+  // snap point, and it fits several of them (BL5-41): this places it again where the drag left it.
+  private _releasedOffsets: [Map<string, PositionType>, Map<string, PositionType>];
+
   constructor(sourceNode: Topic, targetNode: Topic, model: RelationshipModel) {
     super(LineType.THIN_CURVED);
     this._sourceTopic = sourceNode;
     this._targetTopic = targetNode;
     this._model = model;
+    this._releasedOffsets = [new Map(), new Map()];
 
     // Initialize line after setting topics
     this.initializeLine();
@@ -192,7 +198,7 @@ class Relationship extends BaseConnectionLine {
       line2d.setTo(tPos.x, tPos.y);
     } else {
       // Control points have been manually moved - recalculate best connection points
-      ctrlPoints = this.recalculateCustomControlPoints(line2d, sourceTopic, targetTopic);
+      ctrlPoints = this.recalculateCustomControlPoints(line2d);
 
       // An end the user did not shape keeps following its topic, with a default control point ...
       if (!srcCustom || !destCustom) {
@@ -404,7 +410,7 @@ class Relationship extends BaseConnectionLine {
     if (pivot === PivotType.Start) {
       const srcCtrlPoint = this._model.getSrcCtrlPoint();
       if (srcCtrlPoint) {
-        const from = Relationship.calculateConnectionPointFor(this._sourceTopic, srcCtrlPoint);
+        const from = this.connectionPointFor(PivotType.Start, srcCtrlPoint);
         line.setFrom(from.x, from.y);
         line.setSrcControlPoint({ ...srcCtrlPoint });
       }
@@ -412,7 +418,7 @@ class Relationship extends BaseConnectionLine {
     } else {
       const destCtrlPoint = this._model.getDestCtrlPoint();
       if (destCtrlPoint) {
-        const to = Relationship.calculateConnectionPointFor(this._targetTopic, destCtrlPoint);
+        const to = this.connectionPointFor(PivotType.End, destCtrlPoint);
         line.setTo(to.x, to.y);
         line.setDestControlPoint({ ...destCtrlPoint });
       }
@@ -441,6 +447,49 @@ class Relationship extends BaseConnectionLine {
     return result;
   }
 
+  /**
+   * Remembers where the end of a released control point is: the snap point the drag placed it
+   * from. Placing the control point again (redraw, undo, redo) then keeps that end, rather than
+   * another snap point of the edge the control point also fits.
+   */
+  rememberReleasedControlPoint(pivot: PivotType): void {
+    const line = this._line;
+    const topic = pivot === PivotType.Start ? this._sourceTopic : this._targetTopic;
+    const end = pivot === PivotType.Start ? line.getFrom() : line.getTo();
+    const ctrlPoint = line.getControlPoints()[pivot];
+    const pos = topic.getPosition();
+    this._releasedOffsets[pivot].set(Relationship.keyOf(ctrlPoint), {
+      x: end.x - pos.x,
+      y: end.y - pos.y,
+    });
+  }
+
+  /**
+   * The connection point a custom control point of an end is placed from: where it was released,
+   * if that is still a snap point the control point fits, otherwise as on load.
+   */
+  private connectionPointFor(pivot: PivotType, ctrlPoint: PositionType): PositionType {
+    const topic = pivot === PivotType.Start ? this._sourceTopic : this._targetTopic;
+    const offset = this._releasedOffsets[pivot].get(Relationship.keyOf(ctrlPoint));
+    if (offset) {
+      const pos = topic.getPosition();
+      const released = { x: pos.x + offset.x, y: pos.y + offset.y };
+      const snap = Relationship.calculateSnapPoint(topic, {
+        x: released.x + ctrlPoint.x,
+        y: released.y + ctrlPoint.y,
+      });
+      // The offset went through a subtraction: compare with a tolerance ...
+      if (Math.abs(snap.x - released.x) < 0.01 && Math.abs(snap.y - released.y) < 0.01) {
+        return snap;
+      }
+    }
+    return Relationship.calculateConnectionPointFor(topic, ctrlPoint);
+  }
+
+  private static keyOf(point: PositionType): string {
+    return `${point.x},${point.y}`;
+  }
+
   private calculateRelationshipConnectionPoint(topic: Topic): PositionType {
     // Determine which topic we're calculating for
     const isSourceTopic = topic === this._sourceTopic;
@@ -454,29 +503,23 @@ class Relationship extends BaseConnectionLine {
   /**
    * Places the ends of a line whose control points have been customized. A custom control point is
    * relative to the connection point it was placed from, as the model stores it: the end is placed
-   * as on load (applyModelControlPoint), so the curve keeps its shape relative to its topics when
-   * they move, and is drawn as it is saved. The end being dragged stays where the drag put it, on
-   * the snap point under the cursor.
+   * as by applyModelControlPoint (where it was released, or as on load), so the curve keeps its
+   * shape relative to its topics when they move. The end being dragged stays where the drag put
+   * it, on the snap point under the cursor.
    *
    * @param line2d The line to update
-   * @param sourceTopic Source topic
-   * @param targetTopic Target topic
    * @returns The control points, relative to the connection points
    */
-  private recalculateCustomControlPoints(
-    line2d: Line,
-    sourceTopic: Topic,
-    targetTopic: Topic,
-  ): [PositionType, PositionType] {
+  private recalculateCustomControlPoints(line2d: Line): [PositionType, PositionType] {
     const [srcCtrlPoint, destCtrlPoint] = line2d.getControlPoints();
     const controlPoints = this._controlPointsController;
 
     const from = controlPoints.isDragging(PivotType.Start)
       ? line2d.getFrom()
-      : Relationship.calculateConnectionPointFor(sourceTopic, srcCtrlPoint);
+      : this.connectionPointFor(PivotType.Start, srcCtrlPoint);
     const to = controlPoints.isDragging(PivotType.End)
       ? line2d.getTo()
-      : Relationship.calculateConnectionPointFor(targetTopic, destCtrlPoint);
+      : this.connectionPointFor(PivotType.End, destCtrlPoint);
 
     line2d.setFrom(from.x, from.y);
     line2d.setTo(to.x, to.y);

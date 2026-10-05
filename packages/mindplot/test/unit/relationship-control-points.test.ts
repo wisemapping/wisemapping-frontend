@@ -81,6 +81,7 @@ describe('Relationship control points', () => {
       setTo: jest.Mock;
     };
     let redraw: jest.Mock;
+    let rememberReleasedControlPoint: jest.Mock;
 
     const pivot = (type: PivotType) =>
       (
@@ -117,6 +118,7 @@ describe('Relationship control points', () => {
         setTo: jest.fn(),
       };
       redraw = jest.fn();
+      rememberReleasedControlPoint = jest.fn();
       const topic = { getId: () => 1 };
       const relationship = {
         getSourceTopic: () => topic,
@@ -124,6 +126,7 @@ describe('Relationship control points', () => {
         getLine: () => line,
         getModel: () => ({ getId: () => 7 }),
         redraw,
+        rememberReleasedControlPoint,
       } as unknown as Relationship;
 
       controlPoints = new RelationshipControlPoints(relationship);
@@ -164,6 +167,11 @@ describe('Relationship control points', () => {
 
         expect(moveControlPoint).toHaveBeenCalledTimes(1);
         expect(moveControlPoint.mock.calls[0][2]).toBe(type);
+        // ... where the drag left the end, before the move places it again (BL5-99).
+        expect(rememberReleasedControlPoint).toHaveBeenCalledWith(type);
+        expect(rememberReleasedControlPoint.mock.invocationCallOrder[0]).toBeLessThan(
+          moveControlPoint.mock.invocationCallOrder[0],
+        );
       },
     );
 

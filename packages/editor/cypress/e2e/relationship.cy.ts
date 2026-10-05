@@ -141,19 +141,12 @@ describe('Relationship Topics', () => {
       });
       cy.matchImageSnapshot('move ctl pont 0');
 
-      // Move control point end. On release the end is placed again from the saved control point
-      // (Relationship.recalculateCustomControlPoints), which can settle on another snap point of
-      // "Try it Now!" than the one under the pointer: only check that the handle moved ...
+      // Move control point end: on release the handle stays under the pointer (BL5-99) ...
       const end = { clientX: 350, clientY: 100 };
-      dotCenter(1).then((before) => {
-        dragControlPoint(1, end);
-        dotCenter(1).should((center) => {
-          const moved = Math.hypot(
-            center.clientX - before.clientX,
-            center.clientY - before.clientY,
-          );
-          expect(moved, 'end handle moved (px)').to.be.greaterThan(50);
-        });
+      dragControlPoint(1, end);
+      dotCenter(1).should((center) => {
+        expect(center.clientX).to.be.closeTo(end.clientX, 1);
+        expect(center.clientY).to.be.closeTo(end.clientY, 1);
       });
       controlPoints().then((points) => {
         expect(points.src, 'source control point').to.not.deep.equal(initial.src);
