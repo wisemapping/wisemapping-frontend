@@ -20,6 +20,8 @@ import WorkspaceElement from './WorkspaceElement';
 import type ElementPeer from './peer/svg/ElementPeer';
 import WorkspacePeer from './peer/svg/WorkspacePeer';
 import type PositionType from './PositionType';
+import type SizeType from './SizeType';
+import { IDENTITY, applyMatrix, invertMatrix } from './geometry/matrix';
 import {
   pointArguments,
   sizeArguments,
@@ -254,6 +256,69 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     }
 
     this.peer.removeChild(element.peer);
+  }
+
+  /**
+   * The workspace coordinates (the user units elements are placed in) of a point given in client
+   * pixels, such as a mouse or pointer event's clientX and clientY. The zoom (coordinate size), the
+   * pan (coordinate origin) and the position of the workspace on the page are all applied, through
+   * the inverse of the SVG screen matrix. A workspace with no area maps nothing, and returns the
+   * point unchanged.
+   */
+  clientToWorld(clientX: number, clientY: number): PositionType {
+    const inverse = invertMatrix(this.peer.getScreenMatrix()) ?? IDENTITY;
+    return applyMatrix(inverse, { x: clientX, y: clientY });
+  }
+
+  /** The client pixels of a point in workspace coordinates: the reverse of clientToWorld(). */
+  worldToClient(x: number, y: number): PositionType {
+    return applyMatrix(this.peer.getScreenMatrix(), { x, y });
+  }
+
+  /**
+   * Calls `callback` with the new content size of `target` each time it changes, and returns a
+   * function that stops observing. `target` defaults to the element the workspace was added to
+   * (addItAsChildTo), or its own container before that. The size observed when the call is made is
+   * the starting point, so only a change is reported.
+   *
+   * It uses a ResizeObserver, so a container resized by the page layout (a side panel opening) is
+   * seen as well as a window resize. Without ResizeObserver, it listens to window resizes.
+   */
+  observeResize(callback: (size: SizeType) => void, target?: Element): () => void {
+    const observed = target ?? this._htmlContainer.parentElement ?? this._htmlContainer;
+    let last = Workspace.contentSize(observed);
+    const notify = (size: SizeType) => {
+      if (size.width !== last.width || size.height !== last.height) {
+        last = size;
+        callback(size);
+      }
+    };
+
+    if (typeof ResizeObserver !== 'undefined') {
+      const observer = new ResizeObserver((entries) => {
+        entries.forEach(({ contentRect }) =>
+          notify({ width: contentRect.width, height: contentRect.height }),
+        );
+      });
+      observer.observe(observed);
+      return () => observer.disconnect();
+    }
+
+    const win = observed.ownerDocument.defaultView ?? window;
+    const onResize = () => notify(Workspace.contentSize(observed));
+    win.addEventListener('resize', onResize);
+    return () => win.removeEventListener('resize', onResize);
+  }
+
+  /** The content box size of an element: its client size without the padding. */
+  private static contentSize(element: Element): SizeType {
+    const style = element.ownerDocument.defaultView?.getComputedStyle(element);
+    const padding = (a?: string, b?: string) =>
+      (Number.parseFloat(a ?? '') || 0) + (Number.parseFloat(b ?? '') || 0);
+    return {
+      width: element.clientWidth - padding(style?.paddingLeft, style?.paddingRight),
+      height: element.clientHeight - padding(style?.paddingTop, style?.paddingBottom),
+    };
   }
 
   /** The root <svg> node, the only child of the HTML container. */

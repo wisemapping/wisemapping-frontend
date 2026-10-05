@@ -20,6 +20,7 @@ import WorkspacePeer from '../../src/components/peer/svg/WorkspacePeer';
 import Rect from '../../src/components/Rect';
 import Group from '../../src/components/Group';
 import type { StrokeStyle } from '../../src/components/types';
+import { FakeResizeObserver } from '../setup';
 
 describe('WorkspacePeer viewBox (W-VIEWBOX, BL-71)', () => {
   it('starts without a viewBox: size defaults to 1, origin to 0', () => {
@@ -271,5 +272,166 @@ describe('size attributes written around the peer (BL5-64)', () => {
     const peer = new WorkspacePeer();
     peer.setSize(400.555, 300.125);
     expect(peer.getSize()).toEqual({ width: 400.555, height: 300.125 });
+  });
+});
+
+// W5: client (viewport) pixels to workspace coordinates through the SVG screen matrix.
+describe('Workspace.clientToWorld and worldToClient (W5)', () => {
+  // 400 × 400 px showing a 200 × 200 viewBox from (-100, -50): zoom 2, panned.
+  const zoomedWorkspace = () => {
+    const workspace = new Workspace({ width: '400px', height: '400px' });
+    workspace.setCoordSize(200, 200);
+    workspace.setCoordOrigin(-100, -50);
+    return workspace;
+  };
+
+  it('maps client pixels through the zoom and the pan', () => {
+    const workspace = zoomedWorkspace();
+    expect(workspace.clientToWorld(0, 0)).toEqual({ x: -100, y: -50 });
+    expect(workspace.clientToWorld(200, 100)).toEqual({ x: 0, y: 0 });
+    expect(workspace.clientToWorld(400, 400)).toEqual({ x: 100, y: 150 });
+  });
+
+  it('worldToClient is its reverse', () => {
+    const workspace = zoomedWorkspace();
+    expect(workspace.worldToClient(0, 0)).toEqual({ x: 200, y: 100 });
+    const back = workspace.clientToWorld(
+      ...(Object.values(workspace.worldToClient(12.5, -7)) as [number, number]),
+    );
+    expect(back.x).toBeCloseTo(12.5, 10);
+    expect(back.y).toBeCloseTo(-7, 10);
+  });
+
+  it("uses the browser's screen matrix, which includes the page position", () => {
+    const workspace = zoomedWorkspace();
+    const svg = workspace.getSVGElement();
+    // A DOMMatrix-like CTM: zoom 2, the viewBox origin at client (30, 40).
+    svg.getScreenCTM = () => ({ a: 2, b: 0, c: 0, d: 2, e: 30, f: 40 }) as DOMMatrix;
+    expect(workspace.clientToWorld(50, 60)).toEqual({ x: 10, y: 10 });
+    expect(workspace.worldToClient(10, 10)).toEqual({ x: 50, y: 60 });
+  });
+
+  it('falls back to the viewBox and the <svg> box when there is no screen matrix', () => {
+    const workspace = zoomedWorkspace();
+    const svg = workspace.getSVGElement();
+    svg.getScreenCTM = () => null;
+    svg.getBoundingClientRect = () => ({ left: 10, top: 20, width: 400, height: 400 }) as DOMRect;
+    expect(workspace.clientToWorld(10, 20)).toEqual({ x: -100, y: -50 });
+    expect(workspace.clientToWorld(210, 120)).toEqual({ x: 0, y: 0 });
+  });
+
+  it('the fallback uses the workspace size when the <svg> box is empty (not laid out)', () => {
+    const workspace = zoomedWorkspace();
+    const svg = workspace.getSVGElement();
+    Object.defineProperty(svg, 'getScreenCTM', { value: undefined });
+    expect(workspace.clientToWorld(200, 100)).toEqual({ x: 0, y: 0 });
+  });
+
+  it('the fallback without a viewBox maps pixels one to one', () => {
+    const workspace = new Workspace({ width: '300px', height: '200px' });
+    const svg = workspace.getSVGElement();
+    svg.removeAttribute('viewBox');
+    svg.getScreenCTM = () => null;
+    expect(workspace.clientToWorld(30, 40)).toEqual({ x: 30, y: 40 });
+  });
+
+  it('a workspace with no area returns the point unchanged', () => {
+    const workspace = new Workspace();
+    workspace.getSVGElement().setAttribute('width', '0');
+    expect(workspace.clientToWorld(30, 40)).toEqual({ x: 30, y: 40 });
+  });
+});
+
+// W5: the container size is observed with a ResizeObserver (BL5-143 adopts it in mindplot).
+describe('Workspace.observeResize (W5)', () => {
+  const sized = (element: HTMLElement, width: number, height: number) => {
+    Object.defineProperty(element, 'clientWidth', { value: width, configurable: true });
+    Object.defineProperty(element, 'clientHeight', { value: height, configurable: true });
+  };
+
+  it('reports a new content size of the element the workspace was added to', () => {
+    const parent = document.createElement('div');
+    const workspace = new Workspace();
+    workspace.addItAsChildTo(parent);
+    const sizes: unknown[] = [];
+    const stop = workspace.observeResize((size) => sizes.push(size));
+    FakeResizeObserver.trigger(parent, 300, 200);
+    // The same size again is not a change.
+    FakeResizeObserver.trigger(parent, 300, 200);
+    FakeResizeObserver.trigger(parent, 320, 200);
+    expect(sizes).toEqual([
+      { width: 300, height: 200 },
+      { width: 320, height: 200 },
+    ]);
+    stop();
+    FakeResizeObserver.trigger(parent, 500, 500);
+    expect(sizes).toHaveLength(2);
+  });
+
+  it('starts from the size observed when called, so the first notification is not a change', () => {
+    const parent = document.createElement('div');
+    sized(parent, 300, 200);
+    const workspace = new Workspace();
+    workspace.addItAsChildTo(parent);
+    const callback = jest.fn();
+    workspace.observeResize(callback);
+    FakeResizeObserver.trigger(parent, 300, 200);
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('observes its own container before it is added, or the element passed in', () => {
+    const workspace = new Workspace();
+    const own = jest.fn();
+    workspace.observeResize(own);
+    FakeResizeObserver.trigger(workspace._getHtmlContainer(), 10, 20);
+    expect(own).toHaveBeenCalledWith({ width: 10, height: 20 });
+
+    const target = document.createElement('section');
+    const other = jest.fn();
+    workspace.observeResize(other, target);
+    FakeResizeObserver.trigger(target, 30, 40);
+    expect(other).toHaveBeenCalledWith({ width: 30, height: 40 });
+  });
+
+  describe('without ResizeObserver', () => {
+    const original = globalThis.ResizeObserver;
+    beforeEach(() => {
+      Reflect.deleteProperty(globalThis, 'ResizeObserver');
+    });
+    afterEach(() => {
+      globalThis.ResizeObserver = original;
+    });
+
+    it('reports the content size on a window resize, until stopped', () => {
+      const parent = document.createElement('div');
+      parent.style.padding = '5px 10px';
+      document.body.append(parent);
+      const workspace = new Workspace();
+      workspace.addItAsChildTo(parent);
+      const callback = jest.fn();
+      const stop = workspace.observeResize(callback);
+      window.dispatchEvent(new Event('resize'));
+      expect(callback).not.toHaveBeenCalled();
+      sized(parent, 320, 210);
+      window.dispatchEvent(new Event('resize'));
+      expect(callback).toHaveBeenCalledWith({ width: 300, height: 200 });
+      stop();
+      sized(parent, 500, 500);
+      window.dispatchEvent(new Event('resize'));
+      expect(callback).toHaveBeenCalledTimes(1);
+      parent.remove();
+    });
+
+    it('listens on the global window for an element of a document without one', () => {
+      const doc = document.implementation.createHTMLDocument('detached');
+      const target = doc.createElement('div');
+      const workspace = new Workspace();
+      const callback = jest.fn();
+      const stop = workspace.observeResize(callback, target);
+      sized(target, 40, 50);
+      window.dispatchEvent(new Event('resize'));
+      expect(callback).toHaveBeenCalledWith({ width: 40, height: 50 });
+      stop();
+    });
   });
 });

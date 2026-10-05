@@ -19,6 +19,7 @@ import { $defined } from '../utils/assert';
 import ElementPeer, { formatLength } from './ElementPeer';
 import type SizeType from '../../SizeType';
 import type PositionType from '../../PositionType';
+import { viewBoxMatrix, type Matrix } from '../../geometry/matrix';
 
 /** The viewBox numbers: <min-x> <min-y> <width> <height>. */
 type ViewBox = readonly [x: number, y: number, width: number, height: number];
@@ -119,6 +120,28 @@ class WorkspacePeer extends ElementPeer<SVGSVGElement> {
 
   getPosition(): PositionType {
     return { x: 0, y: 0 };
+  }
+
+  /**
+   * The matrix from workspace coordinates (user units) to client (viewport) pixels: the browser's
+   * getScreenCTM(), which accounts for the zoom (viewBox size), the pan (viewBox origin) and the
+   * position of the <svg> on the page. Where it is missing or null (an <svg> that is not
+   * rendered, an environment without layout), it is computed from the viewBox and the <svg>
+   * bounding box, or its size when the box is empty.
+   */
+  getScreenMatrix(): Matrix {
+    const ctm =
+      typeof this._native.getScreenCTM === 'function' ? this._native.getScreenCTM() : null;
+    if (ctm) {
+      return ctm;
+    }
+    const rect = this._native.getBoundingClientRect();
+    const { width, height } = rect.width > 0 && rect.height > 0 ? rect : this.getSize();
+    const [x, y, viewBoxWidth, viewBoxHeight] = this.viewBox() ?? [0, 0, width, height];
+    return viewBoxMatrix(
+      { x, y, width: viewBoxWidth, height: viewBoxHeight },
+      { x: rect.left, y: rect.top, width, height },
+    );
   }
 }
 
