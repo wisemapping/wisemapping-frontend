@@ -18,7 +18,7 @@
 
 import { $defined } from '../utils/assert';
 import PositionType from '../../PositionType';
-import { neuronPathData, neuronSeed } from '../../geometry/neuron';
+import { neuronPathData, neuronSeed, neuronSteps } from '../../geometry/neuron';
 import ElementPeer, { StrokeStyle } from './ElementPeer';
 
 /**
@@ -44,12 +44,13 @@ class NeuronLinePeer extends ElementPeer {
 
   private _y2: number;
 
-  // Whether setFrom and setTo have been called: the seed is fixed on the first draw with both.
+  // Whether setFrom and setTo have been called: the shape is fixed on the first draw with both.
   private _hasFrom: boolean;
 
   private _hasTo: boolean;
 
-  private _seed: number | null;
+  // The seed and the segment count of the fixed shape, or null until it is fixed.
+  private _shape: { readonly seed: number; readonly steps: number } | null;
 
   constructor() {
     const svgElement = window.document.createElementNS(
@@ -74,7 +75,7 @@ class NeuronLinePeer extends ElementPeer {
     this._y2 = 0;
     this._hasFrom = false;
     this._hasTo = false;
-    this._seed = null;
+    this._shape = null;
 
     this._applyStroke();
   }
@@ -174,7 +175,8 @@ class NeuronLinePeer extends ElementPeer {
       $defined(to.x) &&
       $defined(to.y) &&
       (from.x !== to.x || from.y !== to.y);
-    const d = drawable ? neuronPathData(from, to, this._seedFor()) : null;
+    const shape = drawable ? this._shapeFor() : null;
+    const d = shape ? neuronPathData(from, to, shape.seed, shape.steps) : null;
     if (d === null) {
       // Nothing to draw: clear the previous path rather than leave it on screen (W-STALEPATH).
       this.removeAttr('d');
@@ -184,20 +186,21 @@ class NeuronLinePeer extends ElementPeer {
   }
 
   /**
-   * The seed belongs to the line: it comes from the length of its first draw with both ends set,
-   * and is then kept. So moving the whole line, or dragging one end, stretches the same shape
-   * instead of reshuffling it (W-STALEPATH, BL5-74), and a static render stays deterministic.
+   * The shape belongs to the line: its seed and its segment count come from the length of its
+   * first draw with both ends set, and are then kept. So moving the whole line, or dragging one
+   * end, stretches the same shape instead of reshuffling it (W-STALEPATH, BL5-74) or adding and
+   * dropping segments in jumps (BL5-119), and a static render stays deterministic.
    */
-  private _seedFor(): number {
-    if (this._seed !== null) {
-      return this._seed;
+  private _shapeFor(): { readonly seed: number; readonly steps: number } {
+    if (this._shape !== null) {
+      return this._shape;
     }
     const length = Math.hypot(this._x2 - this._x1, this._y2 - this._y1);
-    const seed = neuronSeed(length);
+    const shape = { seed: neuronSeed(length), steps: neuronSteps(length) };
     if (this._hasFrom && this._hasTo) {
-      this._seed = seed;
+      this._shape = shape;
     }
-    return seed;
+    return shape;
   }
 }
 

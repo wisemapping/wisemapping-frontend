@@ -37,11 +37,21 @@ export const neuronRand = (seed: number, iteration: number, amplitude: number): 
   return (value - Math.floor(value)) * 2 * amplitude - amplitude;
 };
 
+/** The number of cubic segments for a line of `length`: one per 35 units, between 6 and 18. */
+export const neuronSteps = (length: number): number =>
+  Math.min(18, Math.max(6, Math.round(length / 35)));
+
 /**
- * The cubic segments from `from` to `to`: between 6 and 18 of them (one per 35 units). The last
- * one ends exactly at `to` (W-NEURONEND). `null` when the ends coincide: there is nothing to draw.
+ * The cubic segments from `from` to `to`: `steps` of them, by default neuronSteps of the length.
+ * The last one ends exactly at `to` (W-NEURONEND). `null` when the ends coincide: there is
+ * nothing to draw.
  */
-export const neuronSegments = (from: Vec, to: Vec, seed: number): NeuronSegment[] | null => {
+export const neuronSegments = (
+  from: Vec,
+  to: Vec,
+  seed: number,
+  steps?: number,
+): NeuronSegment[] | null => {
   if (from.x === to.x && from.y === to.y) {
     return null;
   }
@@ -53,14 +63,14 @@ export const neuronSegments = (from: Vec, to: Vec, seed: number): NeuronSegment[
   const perpX = -unitY;
   const perpY = unitX;
 
-  const steps = Math.min(18, Math.max(6, Math.round(distance / 35)));
+  const count = steps ?? neuronSteps(distance);
   const amplitude = Math.min(60, distance * 0.35);
   const rand = (iteration: number, amp: number) => neuronRand(seed, iteration, amp);
   const segments: NeuronSegment[] = [];
 
   let prevPoint = from;
-  for (let i = 1; i <= steps; i += 1) {
-    const t = i / steps;
+  for (let i = 1; i <= count; i += 1) {
+    const t = i / count;
     const baseX = from.x + dx * t;
     const baseY = from.y + dy * t;
 
@@ -73,11 +83,11 @@ export const neuronSegments = (from: Vec, to: Vec, seed: number): NeuronSegment[
     const spikePhase = (Math.sin(t * Math.PI * 4 + seed * 10) + 1) / 2;
     const spike = spikePhase > 0.8 ? (spikePhase - 0.8) * 5 : 0;
 
-    const last = i === steps;
+    const last = i === count;
     const targetX = last ? to.x : baseX + perpX * lateral + unitX * forward;
     const targetY = last ? to.y : baseY + perpY * lateral + unitY * forward;
 
-    const ctrlOffset = distance / steps / 3;
+    const ctrlOffset = distance / count / 3;
     const c1 = {
       x: prevPoint.x + unitX * ctrlOffset + perpX * rand(i * 2, 0.4) * ctrlOffset,
       y: prevPoint.y + unitY * ctrlOffset + perpY * rand(i * 2 + 1, 0.4) * ctrlOffset,
@@ -98,8 +108,8 @@ export const neuronSegments = (from: Vec, to: Vec, seed: number): NeuronSegment[
 };
 
 /** The `d` of the spline (see neuronSegments), or `null` when the ends coincide. */
-export const neuronPathData = (from: Vec, to: Vec, seed: number): string | null => {
-  const segments = neuronSegments(from, to, seed);
+export const neuronPathData = (from: Vec, to: Vec, seed: number, steps?: number): string | null => {
+  const segments = neuronSegments(from, to, seed, steps);
   if (!segments) {
     return null;
   }

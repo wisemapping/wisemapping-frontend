@@ -20,6 +20,7 @@ import {
   neuronRand,
   neuronSeed,
   neuronSegments,
+  neuronSteps,
 } from '../../../src/components/geometry/neuron';
 import { pathCommands } from '../../helpers/geometry';
 
@@ -153,5 +154,23 @@ describe('geometry/neuron neuronPathData', () => {
     expect(pathCommands(d)).toEqual(['M', ...Array(10).fill('C')]);
     expect(d.startsWith('M1.0,2.0 C')).toBe(true);
     expect(d.endsWith(' 351.0,2.0')).toBe(true);
+  });
+});
+
+describe('geometry/neuron neuronSteps', () => {
+  it('is one segment per 35 units, between 6 and 18', () => {
+    expect(neuronSteps(0)).toBe(6);
+    expect(neuronSteps(227)).toBe(6);
+    expect(neuronSteps(228)).toBe(7);
+    expect(neuronSteps(350)).toBe(10);
+    expect(neuronSteps(1e6)).toBe(18);
+  });
+
+  it('is the default segment count, and an explicit count overrides it (BL5-119)', () => {
+    const to = { x: 400, y: 0 };
+    expect(neuronSegments(O, to, SEED)).toHaveLength(neuronSteps(400));
+    expect(neuronSegments(O, to, SEED, 6)).toHaveLength(6);
+    expect(neuronSegments(O, to, SEED, neuronSteps(400))).toEqual(neuronSegments(O, to, SEED));
+    expect(pathCommands(neuronPathData(O, to, SEED, 6)).filter((c) => c === 'C')).toHaveLength(6);
   });
 });

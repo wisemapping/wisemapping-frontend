@@ -19,7 +19,7 @@ import HeartbeatLinePeer from '../../src/components/peer/svg/HeartbeatLinePeer';
 import NeuronLinePeer from '../../src/components/peer/svg/NeuronLinePeer';
 import HeartbeatLine from '../../src/components/HeartbeatLine';
 import NeuronLine from '../../src/components/NeuronLine';
-import { hasNaN, parsePathPoints } from '../helpers/geometry';
+import { hasNaN, parsePathPoints, pathCommands } from '../helpers/geometry';
 
 type WavePeer = HeartbeatLinePeer | NeuronLinePeer;
 
@@ -235,6 +235,30 @@ describe('NeuronLinePeer', () => {
     const before = offsets(peer);
     peer.setTo(210, 0);
     expect(offsets(peer)).toEqual(before);
+  });
+
+  // BL5-119: the segment count came from the current length, round(distance / 35), so a drag
+  // across a rounding boundary added or dropped a segment and the whole line jumped. The count is
+  // now fixed with the seed, and the same segments stretch.
+  it('BL5-119: keeps its segment count when one end moves (drag)', () => {
+    const peer = draw(() => new NeuronLinePeer(), 0, 0, 200, 0);
+    const segments = pathCommands(d(peer)).filter((c) => c === 'C').length;
+    expect(segments).toBe(6);
+    peer.setTo(400, 0);
+    expect(pathCommands(d(peer)).filter((c) => c === 'C').length).toBe(segments);
+  });
+
+  it('BL5-119: a one-unit drag across a rounding boundary moves the line by about a unit', () => {
+    // 227 units draw round(6.49) = 6 segments, 228 units round(6.51) = 7.
+    const peer = draw(() => new NeuronLinePeer(), 0, 0, 227, 0);
+    const before = parsePathPoints(d(peer));
+    peer.setTo(228, 0);
+    const after = parsePathPoints(d(peer));
+    expect(after).toHaveLength(before.length);
+    const jump = Math.max(
+      ...after.map(([x, y], i) => Math.hypot(x - before[i]![0], y - before[i]![1])),
+    );
+    expect(jump).toBeLessThan(2);
   });
 
   it('BL5-74: a static render does not depend on how its ends were set', () => {
