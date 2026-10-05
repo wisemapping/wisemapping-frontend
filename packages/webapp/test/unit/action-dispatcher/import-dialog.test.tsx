@@ -45,7 +45,22 @@ const selectFile = (file: File): void => {
   fireEvent.change(input, { target: { files: [file] } });
 };
 
+// React reports each warning once per run, whichever test triggers it first: keep every
+// console error of this file, so the check below does not depend on the order of the tests.
+const consoleErrors: string[] = [];
+const originalConsoleError = console.error;
+
 describe('ImportDialog', () => {
+  beforeAll(() => {
+    console.error = (...args: unknown[]) => {
+      consoleErrors.push(args.map(String).join(' '));
+    };
+  });
+
+  afterAll(() => {
+    console.error = originalConsoleError;
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
     mockCreateImporter.mockImplementation(unsupportedType);
@@ -128,5 +143,16 @@ describe('ImportDialog', () => {
       contentType: 'application/xml',
       content: '<map name="alpha"/>',
     });
+  });
+
+  test('the description field is controlled from the start', () => {
+    renderWithProviders(<ImportDialog onClose={jest.fn()} />, { client });
+
+    fireEvent.change(screen.getByLabelText(/Description/), {
+      target: { name: 'description', value: 'My notes' },
+    });
+
+    expect(screen.getByLabelText(/Description/)).toHaveProperty('value', 'My notes');
+    expect(consoleErrors.filter((message) => message.includes('uncontrolled'))).toEqual([]);
   });
 });

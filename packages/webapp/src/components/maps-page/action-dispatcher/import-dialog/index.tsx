@@ -45,7 +45,7 @@ type ErrorFile = {
   message: string;
 };
 
-const defaultModel: ImportModel = { title: '' };
+const defaultModel: ImportModel = { title: '', description: '' };
 const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
   const client = useContext(ClientContext);
   const [model, setModel] = React.useState<ImportModel>(defaultModel);
