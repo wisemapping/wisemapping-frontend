@@ -109,16 +109,16 @@ class OriginalLayout {
   }
 
   private _migrateNodeOrdering(node: Node, isRoot: boolean): void {
-    const children = this._treeSet.getChildren(node);
+    // Update sorter strategy based on node type, also for a node without children yet: it would
+    // otherwise keep the sorter of the other layout for the children it gets.
+    node.setSorter(isRoot ? OriginalLayout.BALANCED_SORTER : OriginalLayout.SYMMETRIC_SORTER);
 
+    const children = this._treeSet.getChildren(node);
     if (children.length === 0) {
       return;
     }
 
-    // Update sorter strategy based on node type
     if (isRoot) {
-      node.setSorter(OriginalLayout.BALANCED_SORTER);
-
       // Sort children by current order
       const sortedChildren = [...children].sort(
         (a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0),
@@ -137,9 +137,7 @@ class OriginalLayout {
         }
       });
     } else {
-      // For non-root nodes, use SymmetricSorter and ensure continuous ordering
-      node.setSorter(OriginalLayout.SYMMETRIC_SORTER);
-
+      // For non-root nodes, ensure continuous ordering
       const sortedChildren = [...children].sort(
         (a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0),
       );
