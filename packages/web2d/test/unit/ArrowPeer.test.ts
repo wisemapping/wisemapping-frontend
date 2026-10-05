@@ -131,7 +131,7 @@ describe('ArrowPeer', () => {
     peer.setDashed(true, 5, 3);
     expect(peer._native.getAttribute('stroke-dasharray')).toBe('5,3');
     peer.setDashed(false, 5, 5);
-    expect(peer._native.getAttribute('stroke-dasharray')).toBe('');
+    expect(peer._native.getAttribute('stroke-dasharray')).toBeNull();
   });
 
   // W-ARROWDASH: `${length}${spacing}` used to give "55".

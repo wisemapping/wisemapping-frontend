@@ -57,7 +57,7 @@ class ArrowPeer extends ElementPeer {
     if ($defined(isDashed) && isDashed && $defined(length) && $defined(spacing)) {
       this._native.setAttribute('stroke-dasharray', `${length},${spacing}`);
     } else {
-      this._native.setAttribute('stroke-dasharray', '');
+      this._native.removeAttribute('stroke-dasharray');
     }
   }
 
