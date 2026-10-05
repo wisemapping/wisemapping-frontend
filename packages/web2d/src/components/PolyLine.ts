@@ -17,8 +17,8 @@
  */
 import WorkspaceElement from './WorkspaceElement';
 import * as PolyLineUtils from './geometry/polyline';
-import Line from './Line';
-import PositionType from './PositionType';
+import type Line from './Line';
+import type PositionType from './PositionType';
 import type { ElementAttributes } from './StyleAttributes';
 import PolyLinePeer from './peer/svg/PolyLinePeer';
 import type { ElementType, Orientation, PolyLineStyle } from './types';

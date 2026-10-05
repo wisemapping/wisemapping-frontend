@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.test.json",
+  "compilerOptions": {
+    // ts-jest emits CommonJS, where ES module syntax kept verbatim is an error. Type checking
+    // with the flag on is done by tsc on tsconfig.json and tsconfig.test.json.
+    "verbatimModuleSyntax": false
+  }
+}

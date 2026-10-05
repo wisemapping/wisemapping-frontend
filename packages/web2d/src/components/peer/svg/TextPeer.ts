@@ -17,10 +17,11 @@
  */
 import { $defined } from '../utils/assert';
 import { getPosition } from '../utils/DomUtils';
-import FontPeer, { FontStyle } from './FontPeer';
+import { type FontStyle } from './FontPeer';
+import type FontPeer from './FontPeer';
 import ElementPeer from './ElementPeer';
-import SizeType from '../../SizeType';
-import PositionType from '../../PositionType';
+import type SizeType from '../../SizeType';
+import type PositionType from '../../PositionType';
 
 // A no-break space: unlike a plain space it is never collapsed, so an empty line keeps its height.
 const EMPTY_LINE = '\u00A0';

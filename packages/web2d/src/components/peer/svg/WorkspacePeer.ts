@@ -17,8 +17,8 @@
  */
 import { $defined } from '../utils/assert';
 import ElementPeer, { formatLength } from './ElementPeer';
-import SizeType from '../../SizeType';
-import PositionType from '../../PositionType';
+import type SizeType from '../../SizeType';
+import type PositionType from '../../PositionType';
 
 /** The viewBox numbers: <min-x> <min-y> <width> <height>. */
 type ViewBox = readonly [x: number, y: number, width: number, height: number];

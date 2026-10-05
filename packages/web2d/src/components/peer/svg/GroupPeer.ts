@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import ElementPeer from './ElementPeer';
-import PositionType from '../../PositionType';
-import SizeType from '../../SizeType';
+import type PositionType from '../../PositionType';
+import type SizeType from '../../SizeType';
 
 class GroupPeer extends ElementPeer<SVGGElement> {
   private _coordSize: SizeType;

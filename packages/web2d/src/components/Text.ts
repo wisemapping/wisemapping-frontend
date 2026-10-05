@@ -25,9 +25,9 @@ import {
   type AttributeSetter,
   type ShapeAttributes,
 } from './StyleAttributes';
-import PositionType from './PositionType';
-import SizeType from './SizeType';
-import FontPeer, { FontStyle } from './peer/svg/FontPeer';
+import type PositionType from './PositionType';
+import type SizeType from './SizeType';
+import FontPeer, { type FontStyle } from './peer/svg/FontPeer';
 import type { ElementType, FontWeightType } from './types';
 
 class Text extends WorkspaceElement<TextPeer> {

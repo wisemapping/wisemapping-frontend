@@ -21,7 +21,7 @@ const config = {
   preset: 'ts-jest',
   moduleFileExtensions: ['js', 'ts'],
   transform: {
-    '^.+\\.ts$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.test.json' }],
+    '^.+\\.ts$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.jest.json' }],
   },
   // jsdom has no layout: getBBox, getScreenCTM, getComputedTextLength and ResizeObserver are faked.
   setupFiles: ['<rootDir>/test/setup.ts'],

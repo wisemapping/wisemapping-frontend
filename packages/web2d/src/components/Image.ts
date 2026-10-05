@@ -17,14 +17,14 @@
  */
 import WorkspaceElement from './WorkspaceElement';
 import ImagePeer from './peer/svg/ImagePeer';
-import SizeType from './SizeType';
+import type SizeType from './SizeType';
 import {
   pointArguments,
   type AttributeArguments,
   type AttributeSetter,
   type ShapeAttributes,
 } from './StyleAttributes';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 import type { ElementType } from './types';
 
 class Image extends WorkspaceElement<ImagePeer> {

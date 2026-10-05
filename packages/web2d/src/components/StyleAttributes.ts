@@ -195,4 +195,6 @@ export const sizeArguments = (
   toNumber(args[1]) ?? current.height,
 ];
 
-export default StyleAttributes;
+// A type cannot be `export default`ed by name under verbatimModuleSyntax.
+// eslint-disable-next-line no-restricted-exports
+export type { StyleAttributes as default };

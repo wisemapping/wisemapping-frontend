@@ -21,4 +21,6 @@ type SizeType = Readonly<{
   height: number;
 }>;
 
-export default SizeType;
+// A type cannot be `export default`ed by name under verbatimModuleSyntax.
+// eslint-disable-next-line no-restricted-exports
+export type { SizeType as default };

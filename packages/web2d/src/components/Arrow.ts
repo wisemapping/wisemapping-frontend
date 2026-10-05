@@ -18,7 +18,7 @@
  */
 import WorkspaceElement from './WorkspaceElement';
 import ArrowPeer from './peer/svg/ArrowPeer';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 import type { ElementAttributes } from './StyleAttributes';
 import type { ElementType } from './types';
 

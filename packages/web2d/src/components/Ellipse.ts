@@ -17,14 +17,14 @@
  */
 import WorkspaceElement from './WorkspaceElement';
 import ElipsePeer from './peer/svg/ElipsePeer';
-import SizeType from './SizeType';
+import type SizeType from './SizeType';
 import {
   pointArguments,
   type AttributeArguments,
   type AttributeSetter,
   type ShapeAttributes,
 } from './StyleAttributes';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 import type { ElementType } from './types';
 
 class Ellipse extends WorkspaceElement<ElipsePeer> {

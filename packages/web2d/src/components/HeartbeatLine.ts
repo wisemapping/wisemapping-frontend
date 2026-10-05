@@ -18,10 +18,10 @@
 
 import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
-import Line from './Line';
+import type Line from './Line';
 import type { ElementAttributes } from './StyleAttributes';
 import HeartbeatLinePeer from './peer/svg/HeartbeatLinePeer';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 import type { ElementType } from './types';
 
 class HeartbeatLine extends WorkspaceElement<HeartbeatLinePeer> implements Line {

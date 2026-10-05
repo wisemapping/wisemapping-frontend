@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $defined } from '../utils/assert';
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
 import { curvePathData, defaultControlPoints } from '../../geometry/curve';
 import ElementPeer from './ElementPeer';
 

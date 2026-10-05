@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
 import ElementPeer from './ElementPeer';
 
 class ImagePeer extends ElementPeer<SVGImageElement> {

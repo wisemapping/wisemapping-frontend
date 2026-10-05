@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $defined } from '../utils/assert';
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
 import { arcPathData } from '../../geometry/arc';
 import ElementPeer from './ElementPeer';
 import type { Orientation } from '../../types';

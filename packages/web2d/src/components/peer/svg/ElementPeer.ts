@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '../utils/assert';
-import SizeType from '../../SizeType';
+import type SizeType from '../../SizeType';
 import { isStrokeStyle, type StrokeStyle } from '../../types';
 
 export type ElementListener = (event: Event, detail?: unknown) => void;

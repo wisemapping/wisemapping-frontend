@@ -17,9 +17,9 @@
  */
 
 import WorkspaceElement from './WorkspaceElement';
-import Line from './Line';
+import type Line from './Line';
 import StraightLinePeer from './peer/svg/StraightPeer';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 import type { ElementAttributes } from './StyleAttributes';
 import type { ElementType } from './types';
 

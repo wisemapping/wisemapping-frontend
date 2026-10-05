@@ -19,7 +19,7 @@ import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
 import type { ControlPointLine } from './Line';
 import CurvedLinePeer from './peer/svg/CurvedLinePeer';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 import type { ElementAttributes } from './StyleAttributes';
 import type { ElementType } from './types';
 

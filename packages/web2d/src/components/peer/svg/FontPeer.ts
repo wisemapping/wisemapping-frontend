@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import SizeType from '../../SizeType';
+import type SizeType from '../../SizeType';
 
 export type FontStyle = {
   fontFamily?: string;

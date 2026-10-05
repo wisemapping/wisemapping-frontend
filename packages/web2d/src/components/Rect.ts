@@ -24,7 +24,7 @@ import {
   type AttributeSetter,
   type ShapeAttributes,
 } from './StyleAttributes';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 import type { ElementType } from './types';
 
 /**

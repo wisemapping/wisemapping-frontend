@@ -18,9 +18,10 @@
 
 import { $defined } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
-import ElementPeer, { CustomEventMap } from './peer/svg/ElementPeer';
+import { type CustomEventMap } from './peer/svg/ElementPeer';
+import type ElementPeer from './peer/svg/ElementPeer';
 import GroupPeer from './peer/svg/GroupPeer';
-import SizeType from './SizeType';
+import type SizeType from './SizeType';
 import {
   pointArguments,
   sizeArguments,
@@ -28,7 +29,7 @@ import {
   type AttributeSetter,
   type GroupAttributes,
 } from './StyleAttributes';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 import type { ElementType } from './types';
 
 /**

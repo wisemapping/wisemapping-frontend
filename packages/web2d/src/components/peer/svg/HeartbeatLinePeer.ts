@@ -17,7 +17,7 @@
  */
 
 import { $defined } from '../utils/assert';
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
 import { heartbeatPathData } from '../../geometry/heartbeat';
 import ElementPeer from './ElementPeer';
 import type { StrokeStyle } from '../../types';

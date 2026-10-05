@@ -18,8 +18,8 @@
 import fs from 'fs';
 import path from 'path';
 import Workspace from '../../src/components/Workspace';
-import WorkspaceElement from '../../src/components/WorkspaceElement';
-import ElementPeer from '../../src/components/peer/svg/ElementPeer';
+import type WorkspaceElement from '../../src/components/WorkspaceElement';
+import type ElementPeer from '../../src/components/peer/svg/ElementPeer';
 
 /*
  * SVG golden files (layer 1 of the visual regression plan, WEB2D_REVIEW_PLAN.md section 7.3).

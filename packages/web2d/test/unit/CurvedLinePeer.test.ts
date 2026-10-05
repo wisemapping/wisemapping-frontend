@@ -362,10 +362,10 @@ describe('CurvedLinePeer taper constants (BL5-147)', () => {
 describe('ControlPointLine (typing T5)', () => {
   it('CurvedLine is the line with control points', () => {
     // Checked by tsc: a CurvedLine is a ControlPointLine.
-    const line: ControlPointLine = new CurvedLine();
-    line.setSrcControlPoint({ x: 1, y: 2 });
-    line.setIsSrcControlPointCustom(true);
-    expect(line.getControlPoints()[0]).toEqual({ x: 1, y: 2 });
-    expect(line.isSrcControlPointCustom()).toBe(true);
+    const curved: ControlPointLine = new CurvedLine();
+    curved.setSrcControlPoint({ x: 1, y: 2 });
+    curved.setIsSrcControlPointCustom(true);
+    expect(curved.getControlPoints()[0]).toEqual({ x: 1, y: 2 });
+    expect(curved.isSrcControlPointCustom()).toBe(true);
   });
 });

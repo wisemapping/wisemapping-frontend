@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 
-import SizeType from '../../SizeType';
-import ElementPeer from '../svg/ElementPeer';
+import type SizeType from '../../SizeType';
+import type ElementPeer from '../svg/ElementPeer';
 import GroupPeer from '../svg/GroupPeer';
 import WorkspacePeer from '../svg/WorkspacePeer';
 

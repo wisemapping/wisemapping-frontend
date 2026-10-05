@@ -16,13 +16,15 @@
  *   limitations under the License.
  */
 
-import ElementPeer, {
-  CustomEventMap,
-  ElementEvent,
-  ElementListener,
-  EventDetail,
+import {
+  type CustomEventMap,
+  type ElementEvent,
+  type ElementListener,
+  type EventDetail,
 } from './peer/svg/ElementPeer';
-import StyleAttributes, {
+import type ElementPeer from './peer/svg/ElementPeer';
+import type StyleAttributes from './StyleAttributes';
+import {
   collectAttributeCalls,
   toNumber,
   toText,

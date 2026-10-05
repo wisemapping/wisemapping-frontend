@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import WorkspaceElement from './WorkspaceElement';
-import ElementPeer from './peer/svg/ElementPeer';
-import PositionType from './PositionType';
+import type WorkspaceElement from './WorkspaceElement';
+import type ElementPeer from './peer/svg/ElementPeer';
+import type PositionType from './PositionType';
 import type { ElementType } from './types';
 
 /**
@@ -97,4 +97,6 @@ export interface ControlPointLine extends Line {
   setIsDestControlPointCustom(value: boolean): void;
 }
 
-export default Line;
+// A type cannot be `export default`ed by name under verbatimModuleSyntax.
+// eslint-disable-next-line no-restricted-exports
+export type { Line as default };

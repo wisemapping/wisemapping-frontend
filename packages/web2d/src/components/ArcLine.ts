@@ -17,10 +17,10 @@
  */
 import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
-import Line from './Line';
+import type Line from './Line';
 import type { ElementAttributes } from './StyleAttributes';
 import ArcLinePeer from './peer/svg/ArcLinePeer';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 import type { ElementType, Orientation } from './types';
 
 class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
