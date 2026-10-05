@@ -38,6 +38,10 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
 
   private _events: ChangeEvent[];
 
+  // The pending change of each node in _events: a layout that is not flushed leaves its changes
+  // for the next one to update.
+  private _eventsById: Map<number, ChangeEvent>;
+
   constructor(rootNodeId: number, rootSize: SizeType, layoutType: LayoutType = 'mindmap') {
     super();
     $assert($defined(rootNodeId), 'rootNodeId can not be null');
@@ -56,6 +60,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     );
     this._treeSet.setRoot(rootNode);
     this._events = [];
+    this._eventsById = new Map();
   }
 
   private _getCurrentLayout(): OriginalLayout | TreeLayout {
@@ -246,6 +251,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
       this.fireEvent('change', event);
     });
     this._events = [];
+    this._eventsById.clear();
   }
 
   private _collectChanges(nodes: Node[]) {
@@ -253,9 +259,10 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
       if (node.hasOrderChanged() || node.hasPositionChanged()) {
         // Find or create a event ...
         const id = node.getId();
-        let event: ChangeEvent | undefined = this._events.find((e) => e.getId() === id);
+        let event = this._eventsById.get(id);
         if (!event) {
           event = new ChangeEvent(id);
+          this._eventsById.set(id, event);
         }
 
         // Update nodes ...
