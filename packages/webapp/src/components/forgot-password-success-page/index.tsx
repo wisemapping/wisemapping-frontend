@@ -35,8 +35,12 @@ const ForgotPasswordSuccessPage = (): React.ReactElement => {
       id: 'forgotsuccess.page-title',
       defaultMessage: 'Password Recovered | WiseMapping',
     });
+  }, [intl]);
+
+  // Once per visit: a language change retitles the page but is not a new page view.
+  useEffect(() => {
     trackPageView(window.location.pathname, 'ForgotPassword:Success');
-  });
+  }, []);
 
   const canonicalUrl = getCanonicalUrl('/c/forgot-password-success');
   const alternateLanguages = getAlternateLanguageUrls('/c/forgot-password-success');

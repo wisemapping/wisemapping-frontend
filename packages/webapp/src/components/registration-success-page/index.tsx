@@ -35,8 +35,12 @@ const RegistrationSuccessPage = (): React.ReactElement => {
       id: 'registation.success-title',
       defaultMessage: 'Registation Success | WiseMapping',
     });
+  }, [intl]);
+
+  // Once per visit: a language change retitles the page but is not a new page view.
+  useEffect(() => {
     trackPageView(window.location.pathname, 'Registration:Success');
-  });
+  }, []);
 
   const canonicalUrl = getCanonicalUrl('/c/registration-success');
   const alternateLanguages = getAlternateLanguageUrls('/c/registration-success');
