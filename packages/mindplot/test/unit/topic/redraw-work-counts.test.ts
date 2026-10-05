@@ -29,6 +29,8 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
 import { Group, Text } from '@wisemapping/web2d';
 import { buildDesigner, Harness } from '../commands/designer-harness';
 import Topic from '../../../src/components/Topic';
+import ThemeFactory from '../../../src/components/theme/ThemeFactory';
+import DefaultTheme from '../../../src/components/theme/DefaultTheme';
 import ImageSVGFeature from '../../../src/components/ImageSVGFeature';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import MultitTextEditor from '../../../src/components/MultilineTextEditor';
@@ -48,14 +50,15 @@ const countCalls = <T extends object>(
 ): number => {
   let count = 0;
   const original = proto[method] as unknown as (...args: unknown[]) => unknown;
-  const spy = jest
-    .spyOn(proto, method as never)
-    .mockImplementation(function counted(this: unknown, ...args: unknown[]) {
-      if (!filter || filter(this, args)) {
-        count += 1;
-      }
-      return original.apply(this, args);
-    } as never);
+  const spy = jest.spyOn(proto, method as never).mockImplementation(function counted(
+    this: unknown,
+    ...args: unknown[]
+  ) {
+    if (!filter || filter(this, args)) {
+      count += 1;
+    }
+    return original.apply(this, args);
+  } as never);
   try {
     fn();
   } finally {
@@ -289,5 +292,73 @@ describe('emoji and gallery icon', () => {
     console.info(`unknown gallery icon: ${lookups} lookups for 2 redraws`);
     expect(topic.getOrBuildImageSVGElement()).toBeUndefined();
     expect(lookups).toBe(1);
+  });
+});
+
+describe('theme resolution', () => {
+  // A chain of topics, each the only child of the previous one, with a rectangle shape so
+  // that the border colour is inherited from the parent.
+  const chainMap = (depth: number): string => {
+    const lines = ['<map name="chain" version="tango">', '<topic id="0" central="true" text="C">'];
+    for (let i = 1; i <= depth; i++) {
+      lines.push(
+        `<topic id="${i}" text="T${i}" position="${i * 150},0" order="0" shape="rectangle">`,
+      );
+    }
+    for (let i = 1; i <= depth; i++) {
+      lines.push('</topic>');
+    }
+    lines.push('</topic>', '</map>');
+    return lines.join('\n');
+  };
+  const resolveProto = DefaultTheme.prototype as unknown as { resolve: () => unknown };
+  const depth = 20;
+  let chain: Harness;
+
+  beforeAll(async () => {
+    chain = await buildDesigner(chainMap(depth));
+  });
+
+  it('resolves the styles of a deep topic in O(depth), not O(depth²)', () => {
+    const leaf = chain.topic(depth);
+    const redraw = () => leaf.redraw(leaf.getThemeVariant(), false);
+
+    const resolves = countCalls(resolveProto, 'resolve', redraw);
+    const creates = countCalls(ThemeFactory, 'create', redraw);
+    const ancestorSteps = countCalls(Topic.prototype, 'getParent', redraw);
+
+    console.info(
+      `leaf redraw at depth ${depth}: ${resolves} resolve, ${creates} ThemeFactory.create, ${ancestorSteps} getParent`,
+    );
+    expect(resolves).toBeLessThanOrEqual(depth + 15);
+    expect(creates).toBeLessThanOrEqual(4 * depth);
+    expect(ancestorSteps).toBeLessThanOrEqual(12 * depth);
+  });
+
+  it('walks the ancestors a linear number of times when redrawing from the root', () => {
+    const root = chain.designer.getModel().getCentralTopic();
+    const ancestorSteps = countCalls(Topic.prototype, 'getParent', () =>
+      root.redraw(root.getThemeVariant(), true),
+    );
+    console.info(`root redraw of a chain of ${depth}: ${ancestorSteps} getParent`);
+    expect(ancestorSteps).toBeLessThanOrEqual(15 * (depth + 1));
+  });
+
+  it('walks the ancestors a linear number of times when redrawing the medium map', () => {
+    const root = harness.designer.getModel().getCentralTopic();
+    const ancestorSteps = countCalls(Topic.prototype, 'getParent', () =>
+      root.redraw(root.getThemeVariant(), true),
+    );
+    console.info(`root redraw of ${topics.length} topics: ${ancestorSteps} getParent`);
+    expect(ancestorSteps).toBeLessThanOrEqual(15 * topics.length);
+  });
+
+  it('resolves nothing from a cache outside a redraw', () => {
+    const topic = harness.topic(1);
+    const resolves = countCalls(resolveProto, 'resolve', () => {
+      topic.getFontSize();
+      topic.getFontSize();
+    });
+    expect(resolves).toBe(2);
   });
 });

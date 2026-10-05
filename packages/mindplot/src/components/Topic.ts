@@ -45,7 +45,8 @@ import { FontStyleType } from './FontStyleType';
 import { FontWeightType } from './FontWeightType';
 import DragTopic from './DragTopic';
 import ThemeFactory from './theme/ThemeFactory';
-import { ThemeVariant } from './theme/Theme';
+import ThemeResolutionCache from './theme/ThemeResolutionCache';
+import Theme, { ThemeVariant } from './theme/Theme';
 import TopicShape from './shape/TopicShape';
 import TopicShapeFactory from './shape/TopicShapeFactory';
 import type { OrientationType } from './layout/LayoutType';
@@ -224,21 +225,29 @@ abstract class Topic extends NodeGraph {
   }
 
   getShapeType(): TopicShapeType {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getShapeType(this);
+    return this.resolveStyle('shapeType', this.getThemeVariant(), (theme) =>
+      theme.getShapeType(this),
+    );
   }
 
   getConnectionStyle(): LineType {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getConnectionType(this);
+    return this.resolveStyle('connectionStyle', this.getThemeVariant(), (theme) =>
+      theme.getConnectionType(this),
+    );
   }
 
   getConnectionColor(variant: ThemeVariant): string {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, variant);
-    return theme.getConnectionColor(this);
+    return this.resolveStyle('connectionColor', variant, (theme) => theme.getConnectionColor(this));
+  }
+
+  /**
+   * Resolves a style of the topic with the theme of the given variant. During a redraw
+   * pass, each style is resolved once (see ThemeResolutionCache).
+   */
+  private resolveStyle<T>(key: string, variant: ThemeVariant, resolve: (theme: Theme) => T): T {
+    return ThemeResolutionCache.memo(this, `${key}:${variant}`, () =>
+      resolve(ThemeFactory.create(this.getModel(), variant)),
+    );
   }
 
   private removeInnerShape(): TopicShape {
@@ -497,33 +506,31 @@ abstract class Topic extends NodeGraph {
   }
 
   getFontWeight(): FontWeightType {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getFontWeight(this);
+    return this.resolveStyle('fontWeight', this.getThemeVariant(), (theme) =>
+      theme.getFontWeight(this),
+    );
   }
 
   getFontFamily(): string {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getFontFamily(this);
+    return this.resolveStyle('fontFamily', this.getThemeVariant(), (theme) =>
+      theme.getFontFamily(this),
+    );
   }
 
   getFontColor(variant: ThemeVariant): string {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, variant);
-    return theme.getFontColor(this);
+    return this.resolveStyle('fontColor', variant, (theme) => theme.getFontColor(this));
   }
 
   getFontStyle(): FontStyleType {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getFontStyle(this);
+    return this.resolveStyle('fontStyle', this.getThemeVariant(), (theme) =>
+      theme.getFontStyle(this),
+    );
   }
 
   getFontSize(): number {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, this.getThemeVariant());
-    return theme.getFontSize(this);
+    return this.resolveStyle('fontSize', this.getThemeVariant(), (theme) =>
+      theme.getFontSize(this),
+    );
   }
 
   getImageEmojiChar(): string | undefined {
@@ -626,9 +633,7 @@ abstract class Topic extends NodeGraph {
   }
 
   getBackgroundColor(variant: ThemeVariant): string {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, variant);
-    return theme.getBackgroundColor(this);
+    return this.resolveStyle('backgroundColor', variant, (theme) => theme.getBackgroundColor(this));
   }
 
   setBorderColor(color: string | undefined): void {
@@ -639,9 +644,7 @@ abstract class Topic extends NodeGraph {
   }
 
   getBorderColor(variant: ThemeVariant): string {
-    const model = this.getModel();
-    const theme = ThemeFactory.create(model, variant);
-    return theme.getBorderColor(this);
+    return this.resolveStyle('borderColor', variant, (theme) => theme.getBorderColor(this));
   }
 
   setBorderStyle(style: string | undefined): void {
@@ -1356,6 +1359,11 @@ abstract class Topic extends NodeGraph {
   }
 
   redraw(variant: ThemeVariant, redrawChildren = false): void {
+    // The styles are resolved once per topic for the whole pass, children included ...
+    ThemeResolutionCache.run(() => this.redrawInPass(variant, redrawChildren));
+  }
+
+  private redrawInPass(variant: ThemeVariant, redrawChildren: boolean): void {
     if (this._isInWorkspace) {
       this._measuredFontHeight = undefined;
       const theme = ThemeFactory.create(this.getModel(), variant);

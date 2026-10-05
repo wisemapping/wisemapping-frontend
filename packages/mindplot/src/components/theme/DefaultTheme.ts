@@ -29,6 +29,7 @@ import { $msg } from '../Messages';
 import { ThemeStyle } from './ThemeStyle';
 import type { TopicStyleType } from './ThemeStyle';
 import type { BackgroundPatternType } from '../model/CanvasStyleType';
+import ThemeResolutionCache from './ThemeResolutionCache';
 
 // Re-export TopicStyleType for backward compatibility
 export type { TopicStyleType } from './ThemeStyle';
@@ -91,17 +92,19 @@ class DefaultTheme implements Theme {
   }
 
   protected resolve(key: keyof TopicStyleType, topic: Topic, resolveDefault = true): StyleType {
-    // Search parent value ...
-    const recurviveModelStrategy = (value: keyof TopicStyleType, t: Topic): StyleType => {
-      const model = t.getModel();
-      let result: StyleType = keyToModel.get(key)!(model);
+    // Search parent value. It only reads the models, so during a redraw pass it is
+    // found once per topic and key, and a descendant stops at its parent's value ...
+    const recurviveModelStrategy = (value: keyof TopicStyleType, t: Topic): StyleType =>
+      ThemeResolutionCache.memo(t, `model:${key}`, () => {
+        const model = t.getModel();
+        let result: StyleType = keyToModel.get(key)!(model);
 
-      const parent = t.getParent();
-      if (isUnset(result) && parent) {
-        result = recurviveModelStrategy(value, parent);
-      }
-      return result;
-    };
+        const parent = t.getParent();
+        if (isUnset(result) && parent) {
+          result = recurviveModelStrategy(value, parent);
+        }
+        return result;
+      });
 
     // Can be found in the model or parent  ?
     let result = recurviveModelStrategy(key, topic);
