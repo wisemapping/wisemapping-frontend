@@ -23,6 +23,7 @@ import DesignerKeyboard from '../../../src/components/DesignerKeyboard';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import DragManager from '../../../src/components/DragManager';
 import DragTopic from '../../../src/components/DragTopic';
+import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import PersistenceManager from '../../../src/components/PersistenceManager';
@@ -250,6 +251,33 @@ describe('Designer dispose (BL-48)', () => {
     expect(ActionDispatcher.getInstance()).toBe(second.designer.getActionDispatcher());
   });
 
+  it('closes a text editor open on one of its topics, without saving it', async () => {
+    const designer = await build();
+    const topic = designer.getModel().findTopicById(1)!;
+    const textBefore = topic.getModel().getText();
+    topic.showTextEditor('typed');
+    const editor = MultitTextEditor.getInstance();
+    expect(editor.getActiveTopic()).toBe(topic);
+
+    designer.dispose();
+
+    expect(editor.isActive()).toBe(false);
+    expect(topic.getModel().getText()).toBe(textBefore);
+  });
+
+  it('leaves a text editor open on another designer alone', async () => {
+    const other = await buildHarness();
+    built.push(other.designer);
+    const designer = await build();
+    const topic = other.topic(1);
+    topic.showTextEditor('typed');
+
+    designer.dispose();
+
+    expect(MultitTextEditor.getInstance().getActiveTopic()).toBe(topic);
+    MultitTextEditor.getInstance().close(false);
+  });
+
   it('can be disposed twice', async () => {
     const designer = await build();
     designer.dispose();
@@ -294,5 +322,91 @@ describe('Designer enddragging (BL-49)', () => {
     expect(applyChanges).not.toHaveBeenCalled();
     // The topics get their mouse events back either way ...
     expect(enable).toHaveBeenCalledWith(true);
+  });
+});
+
+describe('Designer dispose leaves no listener behind (T3)', () => {
+  type Target = 'window' | 'document' | 'fonts';
+
+  /** Tracks the listeners added to and removed from window, document and document.fonts. */
+  const trackListeners = () => {
+    const fonts = new EventTarget();
+    Object.defineProperty(document, 'fonts', { value: fonts, configurable: true });
+    const live = new Map<Target, Set<string>>([
+      ['window', new Set()],
+      ['document', new Set()],
+      ['fonts', new Set()],
+    ]);
+    const ids = new WeakMap<object, number>();
+    let next = 0;
+    const key = (type: string, listener: unknown): string => {
+      const fn = listener as object;
+      if (!ids.has(fn)) {
+        next += 1;
+        ids.set(fn, next);
+      }
+      return `${type}#${ids.get(fn)}`;
+    };
+    const spies = (
+      [
+        ['window', window],
+        ['document', document],
+        ['fonts', fonts],
+      ] as [Target, EventTarget][]
+    ).flatMap(([name, target]) => {
+      const add = target.addEventListener.bind(target);
+      const remove = target.removeEventListener.bind(target);
+      return [
+        jest.spyOn(target, 'addEventListener').mockImplementation((type, listener, options) => {
+          if (listener) live.get(name)!.add(key(type, listener));
+          add(type, listener, options);
+        }),
+        jest.spyOn(target, 'removeEventListener').mockImplementation((type, listener, options) => {
+          if (listener) live.get(name)!.delete(key(type, listener));
+          remove(type, listener, options);
+        }),
+      ];
+    });
+    return {
+      counts: () => Object.fromEntries([...live].map(([name, set]) => [name, set.size])),
+      restore: () => {
+        spies.forEach((spy) => spy.mockRestore());
+        delete (document as unknown as { fonts?: unknown }).fonts;
+      },
+    };
+  };
+
+  /** Builds a designer and uses it: selects a topic (selection shadow), zooms and pans. */
+  const buildAndUse = async (): Promise<Designer> => {
+    const { designer } = await buildHarness();
+    designer.goToNode(designer.getModel().findTopicById(1)!);
+    designer.zoomIn();
+    designer.panBy(10, 10);
+    return designer;
+  };
+
+  it('returns window, document, font and bus listeners to the baseline after 3 designers', async () => {
+    const tracker = trackListeners();
+    try {
+      // The first designer of a page adds listeners that stay, once per page: the page-wide
+      // shortcuts (KeyboardManager), web2d's text measurement cache (fonts) and jsdom's own.
+      const first = await buildAndUse();
+      first.dispose();
+      first.getContainer().remove();
+      const baseline = tracker.counts();
+
+      const designers = await Promise.all([buildAndUse(), buildAndUse(), buildAndUse()]);
+      expect(tracker.counts()).not.toEqual(baseline);
+
+      designers.forEach((designer) => designer.dispose());
+
+      expect(tracker.counts()).toEqual(baseline);
+      designers.forEach((designer) => {
+        expect(designer.getLayoutEventBus().listenerCount()).toBe(0);
+        designer.getContainer().remove();
+      });
+    } finally {
+      tracker.restore();
+    }
   });
 });

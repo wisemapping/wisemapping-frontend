@@ -1905,6 +1905,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     }
     this._disposed = true;
 
+    // The text editor is appended to the page, outside the canvas ...
+    this._topicEventDispatcher.closeFor(this);
+
     if (this._unsubscribeSelectionShadows) {
       this._unsubscribeSelectionShadows();
       this._unsubscribeSelectionShadows = null;

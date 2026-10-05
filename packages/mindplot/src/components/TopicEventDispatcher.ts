@@ -19,6 +19,7 @@ import EventDispispatcher from './EventDispatcher';
 import Topic from './Topic';
 import MultitTextEditor from './MultilineTextEditor';
 import type NodeModel from './model/NodeModel';
+import type Designer from './Designer';
 
 type TopicEventPayload = { model: NodeModel; readOnly: boolean };
 
@@ -39,6 +40,17 @@ class TopicEventDispatcher extends EventDispispatcher<TopicEvents> {
     const editor = MultitTextEditor.getInstance();
     if (editor.isActive()) {
       editor.close(update);
+    }
+  }
+
+  /**
+   * Closes the text editor without saving it, if it is open on a topic of `designer`. The editor
+   * is one per page: one open on another designer's topic is left alone.
+   */
+  closeFor(designer: Designer): void {
+    const editor = MultitTextEditor.getInstance();
+    if (editor.getActiveTopic()?.getDesigner() === designer) {
+      editor.close(false);
     }
   }
 

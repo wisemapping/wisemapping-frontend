@@ -38,6 +38,9 @@ class Editor {
   private autoSave: { designer: Designer; save: (() => void) & { cancel: () => void } } | null =
     null;
 
+  // The designer loadMindmap built, disposed by dispose() ...
+  private designer: Designer | null = null;
+
   // Removes the designer handlers added by registerEvents; called by dispose() ...
   private removeDesignerHandlersFn: (() => void) | null = null;
 
@@ -76,7 +79,7 @@ class Editor {
     persistenceManager: PersistenceManager,
     widgetBuilder: WidgetBuilder,
   ): Promise<void> {
-    this.component.buildDesigner(persistenceManager, widgetBuilder);
+    this.designer = this.component.buildDesigner(persistenceManager, widgetBuilder);
     return this.component.loadMap(mapId);
   }
 
@@ -205,13 +208,17 @@ class Editor {
   }
 
   /**
-   * Releases the listeners added by registerEvents. A pending autosave is dropped, not run: the
-   * caller flushes the pending changes before disposing.
+   * Releases the listeners added by registerEvents and disposes the designer. A pending autosave
+   * is dropped, not run: the caller flushes the pending changes before disposing. The designer
+   * keeps its map, so a flush still in flight can save and unlock it.
    */
   dispose(): void {
     this.removeBeforeUnloadHandler();
     this.removeAutoSave();
     this.removeDesignerHandlers();
+    // The element disposes it too once it leaves the page; disposing twice is a no-op.
+    this.designer?.dispose();
+    this.designer = null;
   }
 
   private removeDesignerHandlers(): void {

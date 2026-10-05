@@ -218,6 +218,29 @@ describe('Editor dispose (BL5-25)', () => {
     expect(canvasUpdate).not.toHaveBeenCalled();
   });
 
+  it('disposes the designer it built, after the flush took the map (T3)', async () => {
+    const { component } = buildComponent();
+    const designer = { dispose: jest.fn() };
+    const loaded = {
+      ...component,
+      buildDesigner: jest.fn(() => designer),
+      loadMap: jest.fn(() => Promise.resolve()),
+    };
+    const editor = new Editor(loaded as unknown as MindplotWebComponent);
+    await editor.loadMindmap('1', {} as never, {} as WidgetBuilder);
+
+    const flushed = editor.flushPendingChangesOnce();
+    editor.dispose();
+    await flushed;
+
+    expect(designer.dispose).toHaveBeenCalledTimes(1);
+    expect(loaded.save.mock.invocationCallOrder[0]).toBeLessThan(
+      designer.dispose.mock.invocationCallOrder[0],
+    );
+    editor.dispose();
+    expect(designer.dispose).toHaveBeenCalledTimes(1);
+  });
+
   it('keeps a single set of handlers when events are registered again', () => {
     const { component, fire } = buildComponent();
     const editor = new Editor(component as unknown as MindplotWebComponent);
