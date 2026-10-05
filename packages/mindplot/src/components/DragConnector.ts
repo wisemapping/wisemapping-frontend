@@ -39,7 +39,7 @@ const lowerBound = (list: Candidate[], value: number): number => {
   let low = 0;
   let high = list.length;
   while (low < high) {
-    const middle = (low + high) >>> 1;
+    const middle = Math.floor((low + high) / 2);
     if (list[middle].border < value) {
       low = middle + 1;
     } else {
