@@ -1196,10 +1196,18 @@ class HTMLTopicSelected {
     const selectionShadows = designer.getSelectionShadows();
 
     // Update shadows when layout changes (position, size, etc.)
+    // Use double requestAnimationFrame to ensure DOM updates are complete
+    // This is especially important for zoom changes where coordinates need to be recalculated
+    // The events until the first frame share one update: selecting every topic, or a layout,
+    // fires one per topic. An event after it gets its own, two frames later as before.
+    let updatePending = false;
     const updateShadows = () => {
-      // Use double requestAnimationFrame to ensure DOM updates are complete
-      // This is especially important for zoom changes where coordinates need to be recalculated
+      if (updatePending) {
+        return;
+      }
+      updatePending = true;
       requestAnimationFrame(() => {
+        updatePending = false;
         requestAnimationFrame(() => {
           selectionShadows.forEach((shadow) => shadow.update());
         });
