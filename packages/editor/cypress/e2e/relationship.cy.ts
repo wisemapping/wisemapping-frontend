@@ -47,9 +47,6 @@ const controlPoints = () =>
     return { src: copy(model.getSrcCtrlPoint()), dest: copy(model.getDestCtrlPoint()) };
   });
 
-// RelationshipControlPoints.redraw() centres the handle 5 px up and left of the control point.
-const HANDLE_OFFSET = 5;
-
 const controlDot = (pivot: 0 | 1) => cy.get(`[test-id="relctl:${pivot}:15-11"]`).first();
 
 /** The viewport centre of a control point handle. */
@@ -134,8 +131,9 @@ describe('Relationship Topics', () => {
       const start = { clientX: 350, clientY: 380 };
       dragControlPoint(0, start);
       dotCenter(0).should((center) => {
-        expect(center.clientX).to.be.closeTo(start.clientX - HANDLE_OFFSET, 1);
-        expect(center.clientY).to.be.closeTo(start.clientY - HANDLE_OFFSET, 1);
+        // The handle is centred on the control point, under the pointer ...
+        expect(center.clientX).to.be.closeTo(start.clientX, 1);
+        expect(center.clientY).to.be.closeTo(start.clientY, 1);
       });
       controlPoints().then((points) => {
         expect(points.src, 'source control point').to.not.deep.equal(initial.src);

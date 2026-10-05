@@ -313,9 +313,9 @@ describe('Relationship control point handle follows the cursor (BL4-30)', () => 
     document.dispatchEvent(move);
     const cursor = designer.getScreenManager().getWorkspaceMousePosition(move);
 
-    // The curve is drawn with its handle under the cursor, where the dot is ...
+    // The curve is drawn with its handle under the cursor, where the dot is centred (BL5-100) ...
     expectPoint(handles(relationship)[type], cursor);
-    expectPoint(pivot._dot.getPosition(), { x: cursor.x - 5, y: cursor.y - 5 });
+    expectPoint(pivot._dot.getPosition(), cursor);
 
     document.dispatchEvent(new MouseEvent('mouseup', { clientX: x, clientY: y }));
   });

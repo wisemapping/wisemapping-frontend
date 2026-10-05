@@ -276,6 +276,44 @@ describe('Relationship control points', () => {
       expect(moveControlPoint).not.toHaveBeenCalled();
     });
 
+    // The handle is an ellipse, positioned by its centre: it is drawn on the control point
+    // (BL5-100), at its end of the guide line.
+    type Handle = {
+      _isVisible: boolean;
+      redraw(): void;
+      _dot: { getPosition(): { x: number; y: number } };
+      _line: { getTo(): { x: number; y: number } };
+    };
+    const handle = (type: PivotType) =>
+      (controlPoints as unknown as { _pivotLines: Handle[] })._pivotLines[type];
+    // Shown as when the relationship is focused (the stub canvas holds no SVG nodes) ...
+    const show = (type: PivotType) => {
+      handle(type)._isVisible = true;
+      handle(type).redraw();
+    };
+
+    it.each([
+      [PivotType.Start, { x: 10, y: 10 }],
+      [PivotType.End, { x: 90, y: 90 }],
+    ])('centres the handle on the control point (pivot %s)', (type, expected) => {
+      show(type);
+
+      expect(handle(type)._dot.getPosition()).toEqual(expected);
+      expect(handle(type)._line.getTo()).toEqual(expected);
+    });
+
+    it('keeps the handle centred under the cursor while dragging', () => {
+      show(PivotType.End);
+      pivot(PivotType.End).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      container.dispatchEvent(
+        new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
+      );
+
+      expect(handle(PivotType.End)._dot.getPosition()).toEqual({ x: 40, y: 30 });
+      expect(handle(PivotType.End)._line.getTo()).toEqual({ x: 40, y: 30 });
+      document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    });
+
     it('ignores other keys during the drag', () => {
       pivot(PivotType.Start).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
       container.dispatchEvent(
