@@ -17,6 +17,7 @@
  */
 import { $defined } from '../utils/assert';
 import PositionType from '../../PositionType';
+import { arcPathData } from '../../geometry/arc';
 import ElementPeer from './ElementPeer';
 
 class ArcLinePeer extends ElementPeer {
@@ -82,31 +83,11 @@ class ArcLinePeer extends ElementPeer {
     return this._orientation;
   }
 
-  private static pointToStr(x: number, y: number) {
-    return `${x.toFixed(1)},${y.toFixed(1)} `;
-  }
-
   private _updatePath() {
-    // Update style based on width ....
     if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
-      const fromPoint = ArcLinePeer.pointToStr(this._x1, this._y1);
-      const toPoint = ArcLinePeer.pointToStr(this._x2, this._y2);
-
-      let curveP1: string;
-      let curveP2: string;
-
-      if (this._orientation === 'vertical') {
-        // For vertical tree layout: arc curves horizontally (concave in X direction)
-        curveP1 = ArcLinePeer.pointToStr(this._x1 + (this._x2 - this._x1) / 8, this._y1);
-        curveP2 = ArcLinePeer.pointToStr(this._x2, this._y2 - (this._y2 - this._y1));
-      } else {
-        // For horizontal mindmap layout: arc curves vertically (concave in Y direction)
-        curveP1 = ArcLinePeer.pointToStr(this._x1, this._y1 + (this._y2 - this._y1) / 8);
-        curveP2 = ArcLinePeer.pointToStr(this._x2 - (this._x2 - this._x1), this._y2);
-      }
-
-      const path = `M${fromPoint} C${curveP1},${curveP2} ${toPoint}`;
-      this.attr('d', path);
+      const from = { x: this._x1, y: this._y1 };
+      const to = { x: this._x2, y: this._y2 };
+      this.attr('d', arcPathData(from, to, this._orientation));
     }
   }
 }
