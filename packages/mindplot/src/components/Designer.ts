@@ -332,8 +332,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const targetTopicModel = model.getParent();
 
       // Find target topic with the same model ...
-      const topics = this.getModel().getTopics();
-      const targetTopic = topics.find((t) => t.getModel() === targetTopicModel);
+      const targetTopic = targetTopicModel
+        ? this.getModel().findTopicByModel(targetTopicModel)
+        : undefined;
       if (targetTopic) {
         model.disconnect();
       } else {

@@ -42,11 +42,11 @@ class CommandContext {
 
   findTopics(topicIds: number[]): Topic[] {
     const topicsIds = Array.isArray(topicIds) ? topicIds : [topicIds];
-    const designerTopics = this._designer.getModel().getTopics();
-    const result = designerTopics.filter((topic) => topicsIds.includes(topic.getId()));
+    const model = this._designer.getModel();
+    const result = model.findTopicsByIds(topicsIds);
 
     if (result.length !== topicsIds.length) {
-      const ids = designerTopics.map((topic) => topic.getId());
+      const ids = model.getTopics().map((topic) => topic.getId());
       throw new Error(
         `Could not find topic. Result:${result} Filter Criteria:${topicsIds} Current Topics: [${ids}])`,
       );

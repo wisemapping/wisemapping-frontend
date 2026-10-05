@@ -20,6 +20,7 @@ import CentralTopic from './CentralTopic';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 import Relationship from './Relationship';
 import Topic from './Topic';
+import NodeModel from './model/NodeModel';
 import { $notify } from './model/ToolbarNotifier';
 
 class DesignerModel {
@@ -29,10 +30,15 @@ class DesignerModel {
 
   private _relationships: Relationship[];
 
+  // Topics by id: lookups used to scan _topics. A topic's id is not expected to change once it
+  // is added; if one does, the lookup falls back to the scan.
+  private _topicsById: Map<number, Topic>;
+
   constructor(options: DesignerOptions) {
     this._zoom = options.zoom;
     this._topics = [];
     this._relationships = [];
+    this._topicsById = new Map();
   }
 
   getZoom(): number {
@@ -106,6 +112,7 @@ class DesignerModel {
   removeTopic(topic: Topic): void {
     $assert(topic, 'topic can not be null');
     this._topics = this._topics.filter((t) => t !== topic);
+    this._unindex(topic);
   }
 
   removeRelationship(rel: Relationship): void {
@@ -117,6 +124,27 @@ class DesignerModel {
     $assert(topic, 'topic can not be null');
     $assert(typeof topic.getId() === 'number', `id is not a number:${topic.getId()}`);
     this._topics.push(topic);
+    this._index(topic);
+  }
+
+  /** A lookup answers the first topic of _topics that matches: an earlier one keeps its place. */
+  private _index(topic: Topic): void {
+    const id = topic.getId();
+    if (!this._topicsById.has(id)) {
+      this._topicsById.set(id, topic);
+    }
+  }
+
+  private _unindex(topic: Topic): void {
+    const id = topic.getId();
+    if (this._topicsById.get(id) === topic) {
+      this._topicsById.delete(id);
+      // Another topic with the same id, if any, takes its place ...
+      const other = this._topics.find((t) => t.getId() === id);
+      if (other) {
+        this._topicsById.set(id, other);
+      }
+    }
   }
 
   addRelationship(rel: Relationship): void {
@@ -156,7 +184,34 @@ class DesignerModel {
   }
 
   findTopicById(id: number): Topic | undefined {
-    return this._topics.find((t) => t.getId() === id);
+    const topic = this._topicsById.get(id);
+    if (topic && topic.getId() === id) {
+      return topic;
+    }
+    // Not indexed under this id (absent, or its id changed): search, and index what is found.
+    const result = this._topics.find((t) => t.getId() === id);
+    if (result) {
+      this._topicsById.set(id, result);
+    }
+    return result;
+  }
+
+  /** The topic of a model. A topic has the id of its model, so the id index finds it. */
+  findTopicByModel(model: NodeModel): Topic | undefined {
+    const topic = this._topicsById.get(model.getId());
+    if (topic && topic.getModel() === model) {
+      return topic;
+    }
+    return this._topics.find((t) => t.getModel() === model);
+  }
+
+  /**
+   * The topics with the given ids, in the order the model keeps them. Ids that match no topic
+   * are left out.
+   */
+  findTopicsByIds(ids: number[]): Topic[] {
+    const idSet = new Set(ids);
+    return this._topics.filter((t) => idSet.has(t.getId()));
   }
 }
 
