@@ -1,5 +1,6 @@
 <map name="mindmanager-real-mindm-test-dom-mm23" theme="prism" layout="mindmap" version="tango">
     <topic central="true" text="Test" id="1" bgColor="#ecf4fa" brColor="#3283c0">
+        <icon id="task_50"/>
         <topic position="200,0" order="0" text="1" shape="rounded rectangle" id="2" bgColor="#ecf4fa" brColor="#3283c0">
             <link url="https://www.microsoft.com" urlType="url"/>
             <topic position="200,0" order="0" text="11" shape="line" id="3">
@@ -41,7 +42,9 @@
 
 </p>]]></note>
         </topic>
-        <topic position="400,150" order="4" text="5" shape="rounded rectangle" id="10" bgColor="#abe595" brColor="#3283c0"/>
+        <topic position="400,150" order="4" text="5" shape="rounded rectangle" id="10" bgColor="#abe595" brColor="#3283c0">
+            <icon id="task_100"/>
+        </topic>
         <topic position="-300,75" order="3" text="6" shape="rounded rectangle" id="11" bgColor="#ecf4fa" brColor="#3283c0">
             <eicon id="❗"/>
         </topic>

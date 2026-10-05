@@ -322,3 +322,24 @@ describe('MindManager default colors of the real files (BL5-138)', () => {
     expect([five.getBackgroundColor(), five.getBorderColor()]).toEqual(['#abe595', '#3283c0']);
   });
 });
+
+describe('MindManager task progress of the real files (BL5-139)', () => {
+  test('imports the TaskPercentage of the topics as task progress icons (mindm-test-dom-mm23)', async () => {
+    const mindmap = await importReal('mindm-test-dom-mm23');
+    const central = centralOf(mindmap);
+    const progress = (node: NodeModel) =>
+      node.findFeatureByType('icon').map((icon) => icon.getAttribute('id'));
+
+    expect(progress(central)).toEqual(['task_50']);
+    expect(progress(central.getChildren().find((node) => node.getText() === '5')!)).toEqual([
+      'task_100',
+    ]);
+    // The TaskPercentageMarkers of the marker sets are not topics.
+    expect(
+      mindmap
+        .getBranches()
+        .flatMap((branch) => [branch, ...branch.getChildren()])
+        .filter((node) => progress(node).length > 0),
+    ).toHaveLength(2);
+  });
+});

@@ -40,6 +40,8 @@ interface MindManagerTopic {
   notesHtml?: string;
   hyperlink?: string;
   icons: string[];
+  // The WiseMapping task progress icon (task_0 ... task_100) of the TaskPercentage.
+  progressIcon?: string;
   fillColor?: string;
   lineColor?: string;
   shape?: TopicShapeType;
@@ -398,6 +400,9 @@ class MindManagerImporter extends Importer {
         console.warn(`MindManager icon '${icon}' has no emoji: it is not imported.`);
       }
     });
+    if (topic.progressIcon) {
+      node.addFeature(FeatureModelFactory.createModel('icon', { id: topic.progressIcon }));
+    }
 
     if (topic.notesHtml) {
       const note = new NoteModel({ text: topic.notesHtml });
@@ -681,10 +686,12 @@ class MindManagerImporter extends Importer {
         );
       }
     });
-    const priority = this.findChildByTagName(topicElement, 'Task')?.getAttribute('TaskPriority');
+    const task = this.findChildByTagName(topicElement, 'Task');
+    const priority = task?.getAttribute('TaskPriority');
     if (priority) {
       topic.icons.push(priority.replace(MINDJET_URN, ''));
     }
+    topic.progressIcon = MindManagerImporter.progressIcon(task?.getAttribute('TaskPercentage'));
 
     // Parse colors: <Color Value>, or the FillColor and LineColor of the document schema. A color
     // the topic does not set is the DefaultColor of the defaults group of its level.
@@ -741,6 +748,19 @@ class MindManagerImporter extends Importer {
     }
 
     return topic;
+  }
+
+  /**
+   * The task progress icon closest to a TaskPercentage (0 to 100): task_0, task_25, task_50,
+   * task_75 or task_100. Undefined if there is no percentage.
+   */
+  private static progressIcon(percentage: string | null | undefined): string | undefined {
+    const value = percentage?.trim() ? Number(percentage) : NaN;
+    if (!Number.isFinite(value)) {
+      return undefined;
+    }
+    const quarter = Math.round(Math.min(100, Math.max(0, value)) / 25) * 25;
+    return `task_${quarter}`;
   }
 
   /**

@@ -840,3 +840,48 @@ describe('MindManagerImporter default colors of the StyleGroup (BL5-138)', () =>
     expect(findByText(mindmap, 'Own').getBorderColor()).toBe('#abe595');
   });
 });
+
+describe('MindManagerImporter task progress (BL5-139)', () => {
+  test('imports the TaskPercentage as the closest task progress icon', async () => {
+    const percentages = ['0', '25', '50', '75', '100', '60', '90', '150'];
+    const mindManager = schemaMap(
+      percentages
+        .map(
+          (percentage) =>
+            `<ap:Topic OId="t${percentage}"><ap:Text PlainText="T${percentage}"/><ap:Task TaskPercentage="${percentage}" TaskPriority="urn:mindjet:Prio2"/></ap:Topic>`,
+        )
+        .join(''),
+    );
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    expect(
+      percentages.map((percentage) =>
+        findByText(mindmap, `T${percentage}`)
+          .findFeatureByType('icon')
+          .map((icon) => icon.getAttribute('id')),
+      ),
+    ).toEqual([
+      ['task_0'],
+      ['task_25'],
+      ['task_50'],
+      ['task_75'],
+      ['task_100'],
+      ['task_50'],
+      ['task_100'],
+      ['task_100'],
+    ]);
+    // The priority is still imported.
+    expect(findByText(mindmap, 'T0').findFeatureByType('eicon')).toHaveLength(1);
+  });
+
+  test('a task without a percentage has no progress icon', async () => {
+    const mindManager = schemaMap(
+      `<ap:Topic OId="t"><ap:Text PlainText="T"/><ap:Task TaskPercentage="" TaskPriority="urn:mindjet:Prio1"/></ap:Topic>`,
+    );
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    expect(findByText(mindmap, 'T').findFeatureByType('icon')).toEqual([]);
+  });
+});
