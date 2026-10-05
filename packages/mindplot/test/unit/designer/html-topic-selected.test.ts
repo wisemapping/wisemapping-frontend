@@ -133,6 +133,7 @@ const buildDesigner = (topics: FakeTopic[]) => {
       getTopics: () => topics,
       findTopicByModel: (model: object) => topics.find((t) => t.getModel() === model),
       filterSelectedTopics: () => topics.filter((t) => t.isOnFocus()),
+      countSelectedTopics: () => topics.filter((t) => t.isOnFocus()).length,
     }),
     getSelectionShadows: () => shadows,
     getScreenManager: () => ({}) as ScreenManager,

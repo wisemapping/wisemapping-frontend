@@ -18,7 +18,10 @@
 
 import { buildDesigner } from '../commands/designer-harness';
 import { buildMediumMap, useTextSizedBoxes } from './medium-map';
+import Canvas from '../../../src/components/Canvas';
+import Designer from '../../../src/components/Designer';
 import HTMLTopicSelected from '../../../src/components/HTMLTopicSelected';
+import NodeGraph from '../../../src/components/NodeGraph';
 import Topic from '../../../src/components/Topic';
 import TopicEventDispatcher from '../../../src/components/TopicEventDispatcher';
 
@@ -88,6 +91,29 @@ const useFrameQueue = async () => {
   return { requests, runFrame, runFrames };
 };
 
+const countEvents = (designer: Designer) => {
+  const fired: Record<string, number> = {
+    onfocus: 0,
+    onblur: 0,
+    topicSelected: 0,
+    topicUnselected: 0,
+  };
+  designer.addEvent('onfocus', () => {
+    fired.onfocus += 1;
+  });
+  designer.addEvent('onblur', () => {
+    fired.onblur += 1;
+  });
+  const bus = designer.getLayoutEventBus();
+  bus.addEvent('topicSelected', () => {
+    fired.topicSelected += 1;
+  });
+  bus.addEvent('topicUnselected', () => {
+    fired.topicUnselected += 1;
+  });
+  return fired;
+};
+
 describe('Selection work', () => {
   let restoreBoxes: () => void;
 
@@ -108,6 +134,102 @@ describe('Selection work', () => {
   afterEach(() => {
     restores.splice(0).forEach((restore) => restore());
     jest.restoreAllMocks();
+  });
+
+  it('selects every topic in one pass, with one designer event and at most one pan', async () => {
+    const { designer } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    const topics = designer.getModel().getTopics();
+    const relationships = designer.getModel().getRelationships();
+    expect(topics).toHaveLength(TOPICS);
+    const fired = countEvents(designer);
+    const focusReads = countCalls(NodeGraph.prototype, 'isOnFocus');
+    const pans = jest.spyOn(Canvas.prototype, 'ensureVisible');
+    // The central topic is selected when the map loads.
+    const alreadySelected = designer.getModel().filterSelectedTopics().length;
+    focusReads.count = 0;
+
+    designer.selectAll();
+    const reads = focusReads.count;
+
+    expect(topics.every((topic) => topic.isOnFocus())).toBe(true);
+    expect(relationships.every((relationship) => relationship.isOnFocus())).toBe(true);
+    // Each topic still reports its own selection, as before.
+    expect(fired.topicSelected).toBe(TOPICS - alreadySelected);
+    // Before: 511, one per topic and relationship selected.
+    expect(fired.onfocus).toBe(1);
+    // Before: 499, one per topic selected.
+    expect(pans.mock.calls.length).toBeLessThanOrEqual(1);
+    // Before: 63,005,749: each topic selected counted the selection, and each pan updated every
+    // overlay, which counted it again. Now a few per topic.
+    expect(reads).toBeLessThan(10 * TOPICS);
+  });
+
+  it('deselects every topic in one pass, with one designer event', async () => {
+    const { designer } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    designer.selectAll();
+    const fired = countEvents(designer);
+    const focusReads = countCalls(NodeGraph.prototype, 'isOnFocus');
+
+    designer.deselectAll();
+    const reads = focusReads.count;
+
+    expect(designer.getModel().filterSelectedTopics()).toHaveLength(0);
+    expect(designer.getModel().filterSelectedRelationships()).toHaveLength(0);
+    expect(fired.topicUnselected).toBe(TOPICS);
+    // Fired once, when the selection became empty: as before.
+    expect(fired.onblur).toBe(1);
+    expect(fired.onfocus).toBe(0);
+    // Before: 257,000. Now a few per topic.
+    expect(reads).toBeLessThan(10 * TOPICS);
+  });
+
+  it('selecting all again fires nothing and does not pan', async () => {
+    const { designer } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    designer.selectAll();
+    const fired = countEvents(designer);
+    const pans = jest.spyOn(Canvas.prototype, 'ensureVisible');
+
+    designer.selectAll();
+
+    // Nothing changed: as before.
+    expect(fired).toEqual({ onfocus: 0, onblur: 0, topicSelected: 0, topicUnselected: 0 });
+    expect(pans).not.toHaveBeenCalled();
+  });
+
+  it('selecting every topic updates each selection overlay at most twice', async () => {
+    const { designer } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    const { requests, runFrames } = await useFrameQueue();
+    const updates = countCalls(HTMLTopicSelected.prototype, 'update');
+
+    designer.selectAll();
+    // Before: 998 frame requests, two per topic selected.
+    expect(requests.mock.calls.length).toBeLessThanOrEqual(2);
+    runFrames();
+    // One overlay per selected topic, updated when the canvas pans to the last topic selected,
+    // and in the frame. Before: every overlay for each pan and each topic selected.
+    expect(designer.getSelectionShadows().size).toBe(TOPICS);
+    expect(updates.count).toBeLessThanOrEqual(2 * TOPICS);
+  });
+
+  it('a single selected topic still shows its overlay, and two hide it', async () => {
+    const { designer, topic } = await buildDesigner(buildMediumMap({ topics: 50 }));
+    const { runFrames } = await useFrameQueue();
+    const shadowOf = (id: number) => designer.getSelectionShadows().get(topic(id))!;
+    const visible = (id: number) => (shadowOf(id) as unknown as { _isVisible: boolean })._isVisible;
+
+    designer.onObjectFocusEvent(topic(3));
+    topic(3).setOnFocus(true);
+    runFrames();
+    expect(visible(3)).toBe(true);
+
+    topic(4).setOnFocus(true);
+    runFrames();
+    expect(visible(3)).toBe(false);
+    expect(visible(4)).toBe(false);
+
+    topic(4).setOnFocus(false);
+    runFrames();
+    expect(visible(3)).toBe(true);
   });
 
   it('updates the selection overlays once per frame, whatever the number of events', async () => {

@@ -737,6 +737,7 @@ abstract class Topic extends NodeGraph {
     if (this.isOnFocus() !== focus) {
       const theme = ThemeFactory.create(this.getModel(), this.getThemeVariant());
       this._onFocus = focus;
+      this.getDesigner()?.getModel().setTopicSelected(this, focus);
       const outerShape = this.getOuterShape();
 
       const fillColor = theme.getOuterBackgroundColor(this, focus);

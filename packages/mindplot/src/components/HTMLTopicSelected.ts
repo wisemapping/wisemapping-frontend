@@ -159,8 +159,7 @@ class HTMLTopicSelected {
       const designer = this._topic.getDesigner();
       if (designer) {
         try {
-          const selectedTopics = designer.getModel().filterSelectedTopics();
-          if (selectedTopics.length > 1) {
+          if (designer.getModel().countSelectedTopics() > 1) {
             // Multiple topics selected - hide shadow
             this.hide();
             return;
@@ -996,8 +995,7 @@ class HTMLTopicSelected {
     // Check if multiple topics are selected
     const designer = this._topic.getDesigner();
     if (designer) {
-      const selectedTopics = designer.getModel().filterSelectedTopics();
-      if (selectedTopics.length > 1) {
+      if (designer.getModel().countSelectedTopics() > 1) {
         // Multiple topics selected - hide shadow
         if (this._isVisible) {
           this.hide();

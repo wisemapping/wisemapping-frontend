@@ -126,6 +126,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   private _topicEventDispatcher: TopicEventDispatcher;
 
+  // Set while selectAll or deselectAll changes the selection of every entity: the designer fires
+  // its 'onfocus' or 'onblur' event, and pans to the last topic selected, once at the end.
+  private _selectionBatch: { panTo?: Topic } | null = null;
+
   private _selectionShadows: Map<Topic, HTMLTopicSelected> = new Map();
 
   // Removes the LayoutEventBus handlers of the selection shadows, set once a map is loaded ...
@@ -411,6 +415,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     }
 
     topic.addEvent('ontblur', () => {
+      if (me._selectionBatch) return;
       const topics = me.getModel().filterSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
 
@@ -423,6 +428,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     });
 
     topic.addEvent('ontfocus', () => {
+      if (me._selectionBatch) return;
       const topics = me.getModel().filterSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
 
@@ -460,19 +466,45 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   /** sets focus to all model entities, i.e. relationships and topics */
   selectAll(): void {
-    const model = this.getModel();
-    const objects = model.getEntities();
-    objects.forEach((object) => {
-      object.setOnFocus(true);
-    });
+    this._setFocusOfAll(true);
   }
 
   /** removes focus from all model entities, i.e. relationships and topics */
   deselectAll(): void {
-    const objects = this.getModel().getEntities();
-    objects.forEach((object) => {
-      object.setOnFocus(false);
-    });
+    this._setFocusOfAll(false);
+  }
+
+  /**
+   * Sets the focus of every entity in one pass. Each entity still fires its own events, and
+   * each topic its 'topicSelected' or 'topicUnselected' on the LayoutEventBus; the designer fires
+   * 'onfocus' or 'onblur' once, and pans to the last topic selected once, at the end.
+   */
+  private _setFocusOfAll(focus: boolean): void {
+    const batch: { panTo?: Topic } = {};
+    let changed = false;
+    this._selectionBatch = batch;
+    try {
+      this.getModel()
+        .getEntities()
+        .forEach((object) => {
+          changed = changed || object.isOnFocus() !== focus;
+          object.setOnFocus(focus);
+        });
+    } finally {
+      this._selectionBatch = null;
+    }
+
+    if (batch.panTo) {
+      this.ensureNodeVisible(batch.panTo);
+    }
+    if (changed) {
+      const model = this.getModel();
+      const empty = isSelectionEmpty(
+        model.filterSelectedTopics().length,
+        model.filterSelectedRelationships().length,
+      );
+      this.fireEvent(empty ? 'onblur' : 'onfocus');
+    }
   }
 
   setZoom(zoom: number): void {
@@ -1504,6 +1536,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // Build relationship line (sourceTopic and targetTopic are guaranteed non-null by asserts above)
     const result = new Relationship(sourceTopic, targetTopic, model);
     result.addEvent('ontblur', () => {
+      if (this._selectionBatch) return;
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
 
@@ -1513,6 +1546,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     });
 
     result.addEvent('ontfocus', () => {
+      if (this._selectionBatch) return;
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
 
@@ -1886,7 +1920,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   private _registerAutoPanOnFocus(): void {
     this._autoPanOnFocusListener = (nodeModel: NodeModel) => {
       const topic = this.getModel().findTopicByModel(nodeModel);
-      if (topic) {
+      if (topic && this._selectionBatch) {
+        // Pan once, when the batch ends ...
+        this._selectionBatch.panTo = topic;
+      } else if (topic) {
         this.ensureNodeVisible(topic);
       }
     };
