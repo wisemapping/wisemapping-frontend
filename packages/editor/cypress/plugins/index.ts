@@ -17,8 +17,7 @@
  */
 
 /// <reference types="cypress" />
-/* eslint-disable @typescript-eslint/no-require-imports */
-const { addMatchImageSnapshotPlugin } = require('@simonsmith/cypress-image-snapshot/plugin');
+import { addMatchImageSnapshotPlugin } from '@simonsmith/cypress-image-snapshot/plugin';
 
 /**
  * Visual regression mode, read from the VISUAL_SNAPSHOTS environment variable.
@@ -41,7 +40,7 @@ const visualSnapshotMode = (): string => {
 };
 
 /** `expose` values read by @simonsmith/cypress-image-snapshot. */
-const visualSnapshotExpose = (): Record<string, string | boolean> => {
+export const visualSnapshotExpose = (): Record<string, string | boolean> => {
   const mode = visualSnapshotMode();
   return {
     visualSnapshots: mode,
@@ -51,10 +50,11 @@ const visualSnapshotExpose = (): Record<string, string | boolean> => {
   };
 };
 
-/**
- * @type {Cypress.PluginConfig}
- */
-module.exports = (on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) => {
+/** The `setupNodeEvents` of both Cypress configs. */
+const setupNodeEvents = (
+  on: Cypress.PluginEvents,
+  config: Cypress.PluginConfigOptions,
+): Cypress.PluginConfigOptions => {
   addMatchImageSnapshotPlugin(on);
   // Headless Chrome opens a 1280x720 window, too small for the 1000x660 viewport and the Cypress
   // runner around it: Cypress then shrinks the page to 1000x633 while it takes a screenshot, and
@@ -68,4 +68,5 @@ module.exports = (on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions)
   });
   return config;
 };
-module.exports.visualSnapshotExpose = visualSnapshotExpose;
+
+export default setupNodeEvents;
