@@ -1585,6 +1585,16 @@
       "value": "Seleziona tutto"
     }
   ],
+  "maps.select-map": [
+    {
+      "type": 0,
+      "value": "Seleziona "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    }
+  ],
   "maps.tooltip-open": [
     {
       "type": 0,

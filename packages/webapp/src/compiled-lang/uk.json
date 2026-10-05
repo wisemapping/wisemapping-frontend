@@ -1585,6 +1585,16 @@
       "value": "Вибрати все"
     }
   ],
+  "maps.select-map": [
+    {
+      "type": 0,
+      "value": "Вибрати "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    }
+  ],
   "maps.tooltip-open": [
     {
       "type": 0,

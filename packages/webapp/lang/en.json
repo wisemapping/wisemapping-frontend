@@ -1229,6 +1229,9 @@
   "maps.select-all": {
     "defaultMessage": "Select all"
   },
+  "maps.select-map": {
+    "defaultMessage": "Select {title}"
+  },
   "maps.tooltip-open": {
     "defaultMessage": "Open for edition"
   },

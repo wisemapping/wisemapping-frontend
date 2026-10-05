@@ -156,16 +156,14 @@ describe('MapsList', () => {
     expect(within(rowFor('Alpha plan')).getByText('Research')).toBeTruthy();
   });
 
-  // BUG: the row checkbox is meant to be named after the map title (it points
-  // `aria-labelledby` at the title link, src/components/maps-page/maps-list/index.tsx:796),
-  // but the "Open for edition" Tooltip wrapping that link (index.tsx:802-809) gives the link
-  // an `aria-label`, which wins in the name computation: every row checkbox is announced
-  // as "Open for edition", so screen-reader users can not tell the rows apart.
-  test.failing('names each row checkbox after its map title', async () => {
+  // The row checkbox used to point `aria-labelledby` at the title link, whose "Open for
+  // edition" tooltip label won the name computation: every row was announced alike.
+  test('names each row checkbox after its map title', async () => {
     renderList();
     await screen.findAllByText('Alpha plan');
 
-    expect(screen.getByRole('checkbox', { name: 'Alpha plan' })).toBeTruthy();
+    expect(screen.getByRole('checkbox', { name: 'Select Alpha plan' })).toBeTruthy();
+    expect(screen.queryByRole('checkbox', { name: 'Open for edition' })).toBeNull();
   });
 
   test('shows the empty message when there are no maps', async () => {

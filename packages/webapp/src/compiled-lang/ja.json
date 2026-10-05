@@ -1585,6 +1585,16 @@
       "value": "すべて選択"
     }
   ],
+  "maps.select-map": [
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": " を選択"
+    }
+  ],
   "maps.tooltip-open": [
     {
       "type": 0,

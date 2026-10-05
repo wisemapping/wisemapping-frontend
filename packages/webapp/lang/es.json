@@ -958,5 +958,8 @@
   },
   "maps.select-all": {
     "defaultMessage": "Seleccionar todo"
+  },
+  "maps.select-map": {
+    "defaultMessage": "Seleccionar {title}"
   }
 }

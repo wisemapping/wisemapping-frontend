@@ -1585,6 +1585,16 @@
       "value": "全选"
     }
   ],
+  "maps.select-map": [
+    {
+      "type": 0,
+      "value": "选择 "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    }
+  ],
   "maps.tooltip-open": [
     {
       "type": 0,
