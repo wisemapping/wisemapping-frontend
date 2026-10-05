@@ -22,7 +22,7 @@ class Messages {
   public static __bundle: LocaleMessages | undefined;
 
   static init(locale: string) {
-    const userLocale = locale ? locale : 'en';
+    const userLocale = locale || 'en';
 
     // Try the full locale (zh-CN), then its base language (zh), then English.
     const baseLanguage = userLocale.split(/[-_]/)[0].toLowerCase();
