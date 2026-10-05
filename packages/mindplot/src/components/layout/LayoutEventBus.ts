@@ -60,6 +60,5 @@ class LayoutEventBus {
   }
 }
 
-const layoutEventBus = new LayoutEventBus();
-export default layoutEventBus;
+export default LayoutEventBus;
 export { LayoutEventBus };

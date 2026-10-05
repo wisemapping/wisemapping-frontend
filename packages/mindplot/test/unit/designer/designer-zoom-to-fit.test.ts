@@ -18,7 +18,6 @@
 
 import { buildDesigner } from '../commands/designer-harness';
 import Designer from '../../../src/components/Designer';
-import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import PositionType from '../../../src/components/PositionType';
 import ScreenManager from '../../../src/components/ScreenManager';
 
@@ -196,7 +195,7 @@ describe('Designer.zoomToFit on a map bigger than the container', () => {
 
   it('fires canvasZoomed with the zoom it applied', async () => {
     const designer = await build(WIDTH, HEIGHT);
-    const fired = jest.spyOn(LayoutEventBus, 'fireEvent');
+    const fired = jest.spyOn(designer.getLayoutEventBus(), 'fireEvent');
 
     designer.zoomToFit();
 

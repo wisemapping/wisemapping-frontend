@@ -30,7 +30,6 @@ import Topic from '../../../src/components/Topic';
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
 import LinkModel from '../../../src/components/model/LinkModel';
 import NoteModel from '../../../src/components/model/NoteModel';
-import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
 // jsdom does not lay out SVG text, so give every element a fixed box.
@@ -116,9 +115,6 @@ export type Harness = {
 };
 
 export const buildDesigner = async (xml: string = SAMPLE_MAP): Promise<Harness> => {
-  // The layout bus is a module singleton: drop listeners left by earlier designers.
-  LayoutEventBus.reset();
-
   const container = document.createElement('div');
   document.body.appendChild(container);
 

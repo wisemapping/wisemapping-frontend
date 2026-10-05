@@ -25,6 +25,9 @@ import { LayoutEventBusType, LayoutEvents } from '../LayoutEventBusType';
 class EventBusDispatcher {
   private _layoutManager: LayoutManager | null;
 
+  // The bus of the designer whose layout this dispatcher drives.
+  private _layoutEventBus: LayoutEventBus;
+
   // Removes the LayoutEventBus handlers registerBusEvents added; called by dispose() ...
   private _busRemovals: (() => void)[] = [];
 
@@ -35,7 +38,8 @@ class EventBusDispatcher {
 
   private _batchDepth = 0;
 
-  constructor() {
+  constructor(layoutEventBus: LayoutEventBus) {
+    this._layoutEventBus = layoutEventBus;
     this.registerBusEvents();
     this._layoutManager = null;
   }
@@ -86,8 +90,9 @@ class EventBusDispatcher {
 
   /** Adds a handler, checked against the payload of its event, and keeps how to remove it. */
   private _on<T extends LayoutEventBusType>(type: T, handler: (payload: LayoutEvents[T]) => void) {
-    LayoutEventBus.addEvent(type, handler);
-    this._busRemovals.push(() => LayoutEventBus.removeEvent(type, handler));
+    const bus = this._layoutEventBus;
+    bus.addEvent(type, handler);
+    this._busRemovals.push(() => bus.removeEvent(type, handler));
   }
 
   /**

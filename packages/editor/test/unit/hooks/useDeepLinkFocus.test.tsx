@@ -26,24 +26,14 @@ import { useDeepLinkFocus } from '../../../src/hooks/useDeepLinkFocus';
 
 type Handler = () => void;
 
-// A stand-in for mindplot's LayoutEventBus singleton. The hook keys off its
+// A stand-in for the designer's LayoutEventBus. The hook keys off its
 // 'forceLayout' event as the "layout has settled" signal, so the test drives
 // that event directly rather than advancing timers.
-jest.mock('@wisemapping/mindplot', () => ({
-  LayoutEventBus: {
-    addEvent: jest.fn(),
-    removeEvent: jest.fn(),
-    fireEvent: jest.fn(),
-  },
-}));
-
 const busHandlers = new Map<string, Set<Handler>>();
-const { LayoutEventBus: layoutEventBus } = jest.requireMock('@wisemapping/mindplot') as {
-  LayoutEventBus: {
-    addEvent: jest.Mock;
-    removeEvent: jest.Mock;
-    fireEvent: jest.Mock;
-  };
+const layoutEventBus = {
+  addEvent: jest.fn(),
+  removeEvent: jest.fn(),
+  fireEvent: jest.fn(),
 };
 
 layoutEventBus.addEvent.mockImplementation((event: string, h: Handler) => {
@@ -76,6 +66,7 @@ function makeDesigner() {
     revealNode: jest.fn(),
     goToNode: jest.fn(),
     getModel: jest.fn(() => designerModel),
+    getLayoutEventBus: () => layoutEventBus,
   };
 }
 

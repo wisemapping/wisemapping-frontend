@@ -123,7 +123,9 @@ const asTopic = (t: FakeTopic): Topic => t as unknown as Topic;
 const buildDesigner = (topics: FakeTopic[]) => {
   const shadows = new Map<Topic, HTMLTopicSelected>();
   const container = document.createElement('div');
+  const layoutEventBus = new LayoutEventBus();
   const designer = {
+    getLayoutEventBus: () => layoutEventBus,
     isReadOnly: () => false,
     closeNodeEditors: () => undefined,
     getModel: () => ({
@@ -250,7 +252,7 @@ describe('HTMLTopicSelected', () => {
       const second = HTMLTopicSelected.initializeSelectionShadows(designer);
       ensure.mockClear();
 
-      LayoutEventBus.fireEvent('topicSelected', topic.getModel() as NodeModel);
+      designer.getLayoutEventBus().fireEvent('topicSelected', topic.getModel() as NodeModel);
       expect(ensure).toHaveBeenCalledTimes(1);
 
       first();
@@ -266,7 +268,7 @@ describe('HTMLTopicSelected', () => {
       unsubscribe();
       ensure.mockClear();
 
-      LayoutEventBus.fireEvent('topicSelected', topic.getModel() as NodeModel);
+      designer.getLayoutEventBus().fireEvent('topicSelected', topic.getModel() as NodeModel);
       expect(ensure).not.toHaveBeenCalled();
     });
 
@@ -281,7 +283,8 @@ describe('HTMLTopicSelected', () => {
       const unsubscribeSecond = HTMLTopicSelected.initializeSelectionShadows(second);
       ensure.mockClear();
 
-      LayoutEventBus.fireEvent('topicSelected', b.getModel() as NodeModel);
+      second.getLayoutEventBus().fireEvent('topicSelected', b.getModel() as NodeModel);
+      expect(ensure).toHaveBeenCalledTimes(1);
       expect(ensure).toHaveBeenCalledWith(second, b);
 
       unsubscribeFirst();

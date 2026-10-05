@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import { buildTopics, stubSvgMeasurement, TEXT_WIDTH } from './Helper';
 
 const resizeEvents = (spy: jest.SpyInstance) =>
@@ -42,7 +41,7 @@ describe('Topic.setSize', () => {
   it('does not fire topicResize when a redraw keeps the same fractional size', () => {
     const { child } = buildTopics();
 
-    const spy = jest.spyOn(LayoutEventBus, 'fireEvent');
+    const spy = jest.spyOn(child.getLayoutEventBus(), 'fireEvent');
     child.redraw(child.getThemeVariant(), false);
     child.redraw(child.getThemeVariant(), false);
 
@@ -53,7 +52,7 @@ describe('Topic.setSize', () => {
     const { child } = buildTopics();
     const before = { ...child.getSize() };
 
-    const spy = jest.spyOn(LayoutEventBus, 'fireEvent');
+    const spy = jest.spyOn(child.getLayoutEventBus(), 'fireEvent');
     stubSvgMeasurement(TEXT_WIDTH + 30);
     child.redraw(child.getThemeVariant(), false);
 
@@ -90,7 +89,7 @@ describe('Topic.setSize with a failed measurement (BL-13)', () => {
       const { child } = buildTopics();
       const before = { ...child.getSize() };
 
-      const spy = jest.spyOn(LayoutEventBus, 'fireEvent');
+      const spy = jest.spyOn(child.getLayoutEventBus(), 'fireEvent');
       stubSvgMeasurement(width);
       child.redraw(child.getThemeVariant(), false);
       child.redraw(child.getThemeVariant(), false);

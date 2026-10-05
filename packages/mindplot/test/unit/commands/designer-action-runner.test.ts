@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import { buildDesigner } from './designer-harness';
 
@@ -36,7 +35,7 @@ describe('DesignerActionRunner undo/redo on an empty stack', () => {
 
     const modelUpdate = jest.fn();
     designer.addEvent('modelUpdate', modelUpdate);
-    const fireLayoutEvent = jest.spyOn(LayoutEventBus, 'fireEvent');
+    const fireLayoutEvent = jest.spyOn(designer.getLayoutEventBus(), 'fireEvent');
 
     designer[action]();
 

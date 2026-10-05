@@ -19,7 +19,6 @@
 import { buildDesigner } from '../commands/designer-harness';
 import Designer from '../../../src/components/Designer';
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
-import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import Mindmap from '../../../src/components/model/Mindmap';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
@@ -34,7 +33,6 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
  */
 
 const loadMindmap = async (mindmap: Mindmap): Promise<Designer> => {
-  LayoutEventBus.reset();
   const container = document.createElement('div');
   document.body.appendChild(container);
   const designer = new Designer({

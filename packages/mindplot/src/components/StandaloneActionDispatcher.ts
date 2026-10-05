@@ -31,7 +31,6 @@ import ChangeFeatureToTopicCommand from './commands/ChangeFeatureToTopicCommand'
 import ChangeCanvasStyleCommand from './commands/ChangeCanvasStyleCommand';
 import ChangeThemeCommand from './commands/ChangeThemeCommand';
 import ChangeLayoutCommand from './commands/ChangeLayoutCommand';
-import LayoutEventBus from './layout/LayoutEventBus';
 import type { CanvasStyleType } from './model/CanvasStyleType';
 import CommandContext from './CommandContext';
 import type { FeatureAttributes } from './model/FeatureModel';
@@ -98,7 +97,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic, pos: PositionType) => {
       const result = topic.getPosition();
-      LayoutEventBus.fireEvent('topicMoved', {
+      topic.getLayoutEventBus().fireEvent('topicMoved', {
         node: topic.getModel(),
         position: pos,
       });

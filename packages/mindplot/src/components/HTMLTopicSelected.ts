@@ -23,7 +23,7 @@ import ColorUtil from './theme/ColorUtil';
 import type { ThemeVariant } from './theme/Theme';
 import type { OrientationType } from './layout/LayoutType';
 import { $msg } from './Messages';
-import LayoutEventBus, { LayoutEventPayloads } from './layout/LayoutEventBus';
+import { LayoutEventPayloads } from './layout/LayoutEventBus';
 import { LayoutEventBusType } from './LayoutEventBusType';
 import NodeModel from './model/NodeModel';
 
@@ -1171,7 +1171,7 @@ class HTMLTopicSelected {
    * Returns a function that removes the LayoutEventBus handlers it registered.
    */
   static initializeSelectionShadows(designer: Designer): Unsubscribe {
-    // LayoutEventBus is module-level, so drop the handlers of a previous call first
+    // Drop the handlers of a previous call first
     unsubscribeByDesigner.get(designer)?.();
 
     // Don't initialize selection shadows in read-only mode
@@ -1240,12 +1240,13 @@ class HTMLTopicSelected {
 
     // Each handler is checked against the payload its event sends.
     const removals: Unsubscribe[] = [];
+    const bus = designer.getLayoutEventBus();
     const on = <T extends LayoutEventBusType>(
       type: T,
       handler: (payload: LayoutEventPayloads[T]) => void,
     ): void => {
-      LayoutEventBus.addEvent(type, handler);
-      removals.push(() => LayoutEventBus.removeEvent(type, handler));
+      bus.addEvent(type, handler);
+      removals.push(() => bus.removeEvent(type, handler));
     };
     on('topicSelected', onTopicSelected);
     on('topicUnselected', onTopicUnselected);

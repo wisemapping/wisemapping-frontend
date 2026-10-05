@@ -63,11 +63,15 @@ class Canvas {
 
   private _resizeHandler: (() => void) | null = null;
 
+  // Receives canvasPanned and canvasZoomed: the bus of the designer the canvas belongs to.
+  private _layoutEventBus: LayoutEventBus;
+
   constructor(
     screenManager: ScreenManager,
     zoom: number,
     isReadOnly: boolean,
     delayRenderQueue: boolean,
+    layoutEventBus: LayoutEventBus = new LayoutEventBus(),
   ) {
     // Create a suitable container ...
     $assert(screenManager, 'Div container can not be null');
@@ -75,6 +79,7 @@ class Canvas {
 
     this._zoom = zoom;
     this._screenManager = screenManager;
+    this._layoutEventBus = layoutEventBus;
     this._isReadOnly = isReadOnly;
 
     const divContainer = screenManager.getContainer();
@@ -342,7 +347,7 @@ class Canvas {
     // Some changes in the screen. Let's fire an update event...
     this._screenManager.fireEvent('update');
     // Also fire LayoutEventBus event for canvas zooming
-    LayoutEventBus.fireEvent('canvasZoomed', { zoom });
+    this._layoutEventBus.fireEvent('canvasZoomed', { zoom });
   }
 
   getScreenManager(): ScreenManager {
@@ -366,7 +371,7 @@ class Canvas {
     this._workspace.setCoordOrigin(newOriginX, newOriginY);
     this._screenManager.setOffset(newOriginX, newOriginY);
     this._screenManager.fireEvent('update');
-    LayoutEventBus.fireEvent('canvasPanned');
+    this._layoutEventBus.fireEvent('canvasPanned');
   }
 
   setCoordSize(width: number, height: number): void {
@@ -403,7 +408,7 @@ class Canvas {
       if (!panUpdateScheduled) {
         panUpdateScheduled = true;
         requestAnimationFrame(() => {
-          LayoutEventBus.fireEvent('canvasPanned');
+          this._layoutEventBus.fireEvent('canvasPanned');
           panUpdateScheduled = false;
         });
       }
@@ -569,7 +574,7 @@ class Canvas {
       workspace.setCoordOrigin(newOriginX, newOriginY);
       this._screenManager.setOffset(newOriginX, newOriginY);
       this._screenManager.fireEvent('update');
-      LayoutEventBus.fireEvent('canvasPanned');
+      this._layoutEventBus.fireEvent('canvasPanned');
       return true;
     }
     return false;
@@ -601,7 +606,7 @@ class Canvas {
     workspace.setCoordOrigin(newOriginX, newOriginY);
     this._screenManager.setOffset(newOriginX, newOriginY);
     this._screenManager.fireEvent('update');
-    LayoutEventBus.fireEvent('canvasPanned');
+    this._layoutEventBus.fireEvent('canvasPanned');
     return true;
   }
 

@@ -17,7 +17,6 @@
  */
 import { $assert, $defined } from './util/assert';
 import { Designer } from '..';
-import LayoutEventBus from './layout/LayoutEventBus';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
 import PositionType from './PositionType';
@@ -105,7 +104,7 @@ class CommandContext {
   moveTopic(topic: Topic, position: PositionType): void {
     $assert(topic, 'topic cannot be null');
     $assert(position, 'position cannot be null');
-    LayoutEventBus.fireEvent('topicMoved', {
+    this._designer.getLayoutEventBus().fireEvent('topicMoved', {
       node: topic.getModel(),
       position,
     });

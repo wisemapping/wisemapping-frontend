@@ -21,6 +21,12 @@ import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import Mindmap from '../../../src/components/model/Mindmap';
 
+// The bus of the designer the dispatcher belongs to: a new one for each test.
+let bus: LayoutEventBus;
+beforeEach(() => {
+  bus = new LayoutEventBus();
+});
+
 describe('EventBusDispatcher payloads (BL4-35)', () => {
   let dispatcher: EventBusDispatcher;
 
@@ -37,20 +43,20 @@ describe('EventBusDispatcher payloads (BL4-35)', () => {
     child.connectTo(central);
 
     const manager = new LayoutManager(0, { width: 100, height: 40 });
-    dispatcher = new EventBusDispatcher();
+    dispatcher = new EventBusDispatcher(bus);
     dispatcher.setLayoutManager(manager);
 
-    LayoutEventBus.fireEvent('topicAdded', child);
-    LayoutEventBus.fireEvent('topicResize', { node: child, size: { width: 60, height: 20 } });
-    LayoutEventBus.fireEvent('topicConnected', { parentNode: central, childNode: child });
+    bus.fireEvent('topicAdded', child);
+    bus.fireEvent('topicResize', { node: child, size: { width: 60, height: 20 } });
+    bus.fireEvent('topicConnected', { parentNode: central, childNode: child });
 
     // The model had no order: it gets the next one among its siblings.
     expect(child.getOrder()).toBe(0);
     expect(manager.find(1).getSize()).toEqual({ width: 60, height: 20 });
     expect(manager.find(1).getOrder()).toBe(0);
 
-    LayoutEventBus.fireEvent('topicDisconect', child);
-    LayoutEventBus.fireEvent('topicRemoved', child);
+    bus.fireEvent('topicDisconect', child);
+    bus.fireEvent('topicRemoved', child);
     expect(() => manager.find(1)).toThrow();
   });
 
@@ -62,14 +68,14 @@ describe('EventBusDispatcher payloads (BL4-35)', () => {
     // Never run: ts-jest type-checks the tests, so these fail to compile while fireEvent takes any
     // payload.
     const typeChecks = () => {
-      LayoutEventBus.fireEvent('topicRemoved', model);
-      LayoutEventBus.fireEvent('forceLayout');
+      bus.fireEvent('topicRemoved', model);
+      bus.fireEvent('forceLayout');
       // @ts-expect-error topics are sent as their model
-      LayoutEventBus.fireEvent('topicRemoved', notAModel);
+      bus.fireEvent('topicRemoved', notAModel);
       // @ts-expect-error topicMoved needs a position
-      LayoutEventBus.fireEvent('topicMoved', { node: model });
+      bus.fireEvent('topicMoved', { node: model });
       // @ts-expect-error topicConnected needs its payload
-      LayoutEventBus.fireEvent('topicConnected');
+      bus.fireEvent('topicConnected');
     };
     expect(typeChecks).toBeInstanceOf(Function);
   });
@@ -99,12 +105,12 @@ describe('EventBusDispatcher layout coalescing', () => {
       return child;
     });
     const manager = new LayoutManager(0, { width: 100, height: 40 });
-    dispatcher = new EventBusDispatcher();
+    dispatcher = new EventBusDispatcher(bus);
     dispatcher.setLayoutManager(manager);
     const layout = jest.spyOn(manager, 'layout');
     const connect = (child: (typeof models)[number]) => {
-      LayoutEventBus.fireEvent('topicAdded', child);
-      LayoutEventBus.fireEvent('topicConnected', { parentNode: central, childNode: child });
+      bus.fireEvent('topicAdded', child);
+      bus.fireEvent('topicConnected', { parentNode: central, childNode: child });
     };
     return { manager, models, layout, connect };
   };
@@ -136,7 +142,7 @@ describe('EventBusDispatcher layout coalescing', () => {
 
     // What Topic.connectTo does: topicConnected, then forceLayout ...
     connect(models[0]);
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('forceLayout');
     expect(layout).toHaveBeenCalledTimes(1);
     expect(changes).toContain(1);
 
@@ -214,19 +220,19 @@ describe('EventBusDispatcher forceLayout with nothing pending', () => {
     child.setOrder(0);
     child.connectTo(central);
     const manager = new LayoutManager(0, { width: 100, height: 40 });
-    dispatcher = new EventBusDispatcher();
+    dispatcher = new EventBusDispatcher(bus);
     dispatcher.setLayoutManager(manager);
-    LayoutEventBus.fireEvent('topicAdded', child);
-    LayoutEventBus.fireEvent('topicConnected', { parentNode: central, childNode: child });
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('topicAdded', child);
+    bus.fireEvent('topicConnected', { parentNode: central, childNode: child });
+    bus.fireEvent('forceLayout');
     const layout = jest.spyOn(manager, 'layout');
     return { manager, central, child, layout };
   };
 
   it('does not lay out again when nothing changed', () => {
     const { layout } = setUp();
-    LayoutEventBus.fireEvent('forceLayout');
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('forceLayout');
+    bus.fireEvent('forceLayout');
     expect(layout).not.toHaveBeenCalled();
   });
 
@@ -234,48 +240,48 @@ describe('EventBusDispatcher forceLayout with nothing pending', () => {
     const { manager, central, child, layout } = setUp();
     const before = manager.find(1).getPosition().x;
 
-    LayoutEventBus.fireEvent('topicResize', { node: central, size: { width: 300, height: 40 } });
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('topicResize', { node: central, size: { width: 300, height: 40 } });
+    bus.fireEvent('forceLayout');
     expect(layout).toHaveBeenCalledTimes(1);
     expect(manager.find(1).getPosition().x).toBeGreaterThan(before);
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('forceLayout');
     expect(layout).toHaveBeenCalledTimes(1);
 
     // A resize the layout does not see (half a pixel or less) changes nothing.
-    LayoutEventBus.fireEvent('topicResize', { node: central, size: { width: 300.5, height: 40 } });
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('topicResize', { node: central, size: { width: 300.5, height: 40 } });
+    bus.fireEvent('forceLayout');
     expect(layout).toHaveBeenCalledTimes(1);
 
     child.setChildrenShrunken(true);
-    LayoutEventBus.fireEvent('childShrinked', child);
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('childShrinked', child);
+    bus.fireEvent('forceLayout');
     expect(layout).toHaveBeenCalledTimes(2);
 
-    LayoutEventBus.fireEvent('topicMoved', { node: central, position: { x: 50, y: 0 } });
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('topicMoved', { node: central, position: { x: 50, y: 0 } });
+    bus.fireEvent('forceLayout');
     expect(layout).toHaveBeenCalledTimes(3);
   });
 
   it('lays out after a connection, a disconnection or a removal', () => {
     const { child, layout } = setUp();
-    LayoutEventBus.fireEvent('topicDisconect', child);
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('topicDisconect', child);
+    bus.fireEvent('forceLayout');
     expect(layout).toHaveBeenCalledTimes(1);
 
-    LayoutEventBus.fireEvent('topicRemoved', child);
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('topicRemoved', child);
+    bus.fireEvent('forceLayout');
     expect(layout).toHaveBeenCalledTimes(2);
   });
 
   it('flushes the changes a layout that was not flushed left', () => {
     const { manager, central, layout } = setUp();
-    LayoutEventBus.fireEvent('topicResize', { node: central, size: { width: 300, height: 40 } });
+    bus.fireEvent('topicResize', { node: central, size: { width: 300, height: 40 } });
     manager.layout(false);
     layout.mockClear();
     const changes: number[] = [];
     manager.addEvent('change', (event: { getId: () => number }) => changes.push(event.getId()));
 
-    LayoutEventBus.fireEvent('forceLayout');
+    bus.fireEvent('forceLayout');
     expect(layout).toHaveBeenCalledTimes(1);
     expect(changes).toContain(1);
   });

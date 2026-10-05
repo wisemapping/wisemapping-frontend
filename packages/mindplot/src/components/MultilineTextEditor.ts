@@ -22,7 +22,6 @@ import DOMUtils from './util/DOMUtils';
 import EventManager from './util/EventManager';
 import ActionDispatcher from './ActionDispatcher';
 import EventDispatcher from './EventDispatcher';
-import LayoutEventBus from './layout/LayoutEventBus';
 import Topic from './Topic';
 
 /** 'input' sends the DOM event and the new text. */
@@ -212,7 +211,7 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
     this.cancelRelayout();
 
     // Force relayout ...
-    LayoutEventBus.fireEvent('forceLayout');
+    this._topic.getLayoutEventBus().fireEvent('forceLayout');
 
     // Adjust position: the editor is absolute, so place it relative to its offset parent ...
     const textShape = this._topic.getOrBuildTextShape();

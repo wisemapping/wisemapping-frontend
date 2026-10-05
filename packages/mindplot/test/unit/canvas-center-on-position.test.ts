@@ -93,14 +93,15 @@ describe('Canvas.centerOnPosition', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockScreenManager = new MockedScreenManager({} as any) as jest.Mocked<ScreenManager>;
-    canvas = new Canvas(mockScreenManager, 1.0, false, false);
+    const bus = new LayoutEventBus();
+    canvas = new Canvas(mockScreenManager, 1.0, false, false, bus);
 
     // The constructor calls setZoom(zoom, true), which already moved the origin.
     coordOrigin = { x: 0, y: 0 };
     mockSetCoordOrigin.mockClear();
     setOffset.mockClear();
     fireEvent.mockClear();
-    busFireEvent = jest.spyOn(LayoutEventBus, 'fireEvent').mockImplementation();
+    busFireEvent = jest.spyOn(bus, 'fireEvent').mockImplementation();
   });
 
   afterEach(() => {

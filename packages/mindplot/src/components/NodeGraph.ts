@@ -28,6 +28,7 @@ import CanvasElement from './CanvasElement';
 import type TopicEventDispatcher from './TopicEventDispatcher';
 import type Designer from './Designer';
 import type Topic from './Topic';
+import LayoutEventBus from './layout/LayoutEventBus';
 
 /**
  * The custom events of a topic's group: a topic fires them, with itself as the detail, when it
@@ -40,6 +41,8 @@ export type NodeOption = {
   topicEventDispatcher?: TopicEventDispatcher;
   // The designer the node belongs to. Undefined for nodes built without one (e.g. in tests).
   designer?: Designer;
+  // The bus the node fires its layout events on, for a node built without a designer.
+  layoutEventBus?: LayoutEventBus;
 };
 
 abstract class NodeGraph implements CanvasElement {
@@ -54,6 +57,9 @@ abstract class NodeGraph implements CanvasElement {
   private _model: NodeModel;
 
   private _elem2d: Group | undefined;
+
+  // The bus of a node with neither a designer nor an injected bus: nobody listens to it.
+  private _ownLayoutEventBus: LayoutEventBus | undefined;
 
   constructor(nodeModel: NodeModel, options: NodeOption) {
     $assert(nodeModel, 'model can not be null');
@@ -75,6 +81,24 @@ abstract class NodeGraph implements CanvasElement {
 
   getDesigner(): Designer | undefined {
     return this._options.designer;
+  }
+
+  /**
+   * The layout bus of the node's designer (or the one it was built with): each designer has its
+   * own, so that a topic never drives the layout of another designer's map.
+   */
+  getLayoutEventBus(): LayoutEventBus {
+    const { layoutEventBus, designer } = this._options;
+    if (layoutEventBus) {
+      return layoutEventBus;
+    }
+    if (designer) {
+      return designer.getLayoutEventBus();
+    }
+    if (!this._ownLayoutEventBus) {
+      this._ownLayoutEventBus = new LayoutEventBus();
+    }
+    return this._ownLayoutEventBus;
   }
 
   getType(): string {

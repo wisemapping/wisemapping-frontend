@@ -109,6 +109,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   private _canvas: Canvas;
 
+  // The layout events of this designer: its topics, canvas and commands fire them.
+  private _layoutEventBus: LayoutEventBus;
+
   _eventBussDispatcher: EventBusDispatcher;
 
   private _dragManager!: DragManager;
@@ -150,6 +153,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   constructor(options: DesignerOptions) {
     super();
+    this._layoutEventBus = new LayoutEventBus();
     // Set up i18n location ...
     Messages.init(options.locale ? options.locale : 'en');
     const divElem = options.divContainer;
@@ -176,13 +180,19 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     // Init Screen manager..
     const screenManager = new ScreenManager(divElem);
-    this._canvas = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly(), false);
+    this._canvas = new Canvas(
+      screenManager,
+      this._model.getZoom(),
+      this.isReadOnly(),
+      false,
+      this._layoutEventBus,
+    );
 
     this._registerAutoPanOnFocus();
     this._canvas.setResizeHandler(() => this._onContainerResize());
 
     // Init layout manager ...
-    this._eventBussDispatcher = new EventBusDispatcher();
+    this._eventBussDispatcher = new EventBusDispatcher(this._layoutEventBus);
 
     // Register events
     if (!this.isReadOnly()) {
@@ -210,6 +220,11 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     this._widgetManager = options.widgetManager;
   }
 
+  /** The layout events of this designer. No other designer fires or listens to them. */
+  getLayoutEventBus(): LayoutEventBus {
+    return this._layoutEventBus;
+  }
+
   getContainer(): HTMLDivElement {
     return this._canvas.getScreenManager().getContainer();
   }
@@ -233,7 +248,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
         this._fontLoadFrame = null;
         if (this._mindmap && !this._disposed) {
           this.redrawAllTopics();
-          LayoutEventBus.fireEvent('forceLayout');
+          this._layoutEventBus.fireEvent('forceLayout');
         }
       });
     };
@@ -1085,7 +1100,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       this._unsubscribeSelectionShadows = HTMLTopicSelected.initializeSelectionShadows(this);
 
       // Finally, sort the map ...
-      LayoutEventBus.fireEvent('forceLayout');
+      this._layoutEventBus.fireEvent('forceLayout');
       this.fireEvent('loadSuccess');
     });
   }
@@ -1252,7 +1267,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
         roots.forEach((root) => Designer.redrawTree(root, this._themeVariant));
 
         // Force a layout refresh to ensure all changes are applied
-        LayoutEventBus.fireEvent('forceLayout');
+        this._layoutEventBus.fireEvent('forceLayout');
       }
     }
   }
@@ -1869,14 +1884,14 @@ class Designer extends EventDispispatcher<DesignerEvents> {
         this.ensureNodeVisible(topic);
       }
     };
-    LayoutEventBus.addEvent('topicSelected', this._autoPanOnFocusListener);
+    this._layoutEventBus.addEvent('topicSelected', this._autoPanOnFocusListener);
   }
 
   /**
-   * Releases what the designer registered outside its own objects: the LayoutEventBus handlers
-   * (a module-level bus shared by every designer), the keyboard, a topic drag in progress, the
-   * canvas listeners on the window and the container, the canvas SVG, and the ActionDispatcher
-   * instance and `globalThis.designer` if they still point at this designer.
+   * Releases what the designer registered outside its own objects: the handlers on its
+   * LayoutEventBus (a topic or the host may still hold the bus), the keyboard, a topic drag in
+   * progress, the canvas listeners on the window and the container, the canvas SVG, and the
+   * ActionDispatcher instance and `globalThis.designer` if they still point at this designer.
    *
    * The PersistenceManager instance is kept: MindplotWebComponent saves and unlocks the map
    * through it after the designer is disposed.
@@ -1897,7 +1912,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     HTMLTopicSelected.cleanupSelectionShadows(this);
 
     if (this._autoPanOnFocusListener) {
-      LayoutEventBus.removeEvent('topicSelected', this._autoPanOnFocusListener);
+      this._layoutEventBus.removeEvent('topicSelected', this._autoPanOnFocusListener);
       this._autoPanOnFocusListener = null;
     }
     this._eventBussDispatcher.dispose();

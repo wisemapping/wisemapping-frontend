@@ -32,7 +32,7 @@ import ChangeEvent from '../../../src/components/layout/ChangeEvent';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import { $assert } from '../../../src/components/util/assert';
 
-const registerRefreshHook = (topics: Topic[]) => {
+const registerRefreshHook = (topics: Topic[], layoutEventBus: LayoutEventBus) => {
   // Trigger a redraw after the node is added ...
   if (globalThis.observer) {
     globalThis.observer.disconnect();
@@ -41,7 +41,7 @@ const registerRefreshHook = (topics: Topic[]) => {
   globalThis.observer = new MutationObserver(() => {
     // Relayout...
     topics.forEach((t) => t.redraw(t.getThemeVariant(), false)); // Use actual theme variant
-    LayoutEventBus.fireEvent('forceLayout');
+    layoutEventBus.fireEvent('forceLayout');
   });
   const rootElement = document.getElementById('root') || document.body;
   globalThis.observer.observe(rootElement, { childList: true });
@@ -54,7 +54,8 @@ export type TopicArgs = {
 };
 
 const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => {
-  LayoutEventBus.reset();
+  // The layout bus of this story: a designer would own it.
+  const layoutEventBus = new LayoutEventBus();
 
   // Build basic container ...
   const divElem = document.createElement('div');
@@ -64,7 +65,7 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
 
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);
-  const canvas = new Canvas(screenManager, 0.7, readOnly, true);
+  const canvas = new Canvas(screenManager, 0.7, readOnly, true, layoutEventBus);
   const topicEventDispatcher = new TopicEventDispatcher(readOnly);
 
   // Register event propagation ..
@@ -108,7 +109,7 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
   }
 
   // Create and add to canvas..
-  const topicOptions = { readOnly, topicEventDispatcher } as const;
+  const topicOptions = { readOnly, topicEventDispatcher, layoutEventBus } as const;
 
   const centralTopic = new CentralTopic(central, topicOptions, 'light'); // Default to light for storybook
 
@@ -130,7 +131,7 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
   ];
 
   // Configure event dispatcher ...
-  const dispatcher = new EventBusDispatcher();
+  const dispatcher = new EventBusDispatcher(layoutEventBus);
   const size = { width: 25, height: 25 };
   const layoutManager = new LayoutManager(mindmap.getCentralTopic().getId(), size);
   dispatcher.setLayoutManager(layoutManager);
@@ -173,7 +174,7 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
   canvas.append(subchild2Topic);
 
   // Register refresh hook ..
-  registerRefreshHook(topics);
+  registerRefreshHook(topics, layoutEventBus);
   void canvas.enableQueueRender(false);
 
   return divElem;

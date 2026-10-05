@@ -52,7 +52,14 @@ jest.mock('@wisemapping/web2d', () => {
 
 jest.mock('../../src/components/layout/LayoutEventBus', () => ({
   __esModule: true,
-  default: { fireEvent: jest.fn(), addEvent: jest.fn(), removeEvent: jest.fn() },
+  // A bus that drops every event.
+  default: class {
+    fireEvent = jest.fn();
+
+    addEvent = jest.fn();
+
+    removeEvent = jest.fn();
+  },
 }));
 
 jest.mock('../../src/components/export/PDFExporter', () => ({

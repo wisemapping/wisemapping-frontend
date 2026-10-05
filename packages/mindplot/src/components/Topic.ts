@@ -26,7 +26,6 @@ import TopicConnection, { LineType } from './TopicConnection';
 import IconGroup from './IconGroup';
 import ImageEmojiFeature from './ImageEmojiFeature';
 import ImageSVGFeature, { GalleryIconShape } from './ImageSVGFeature';
-import LayoutEventBus from './layout/LayoutEventBus';
 import ShirinkConnector from './ShrinkConnector';
 import ActionDispatcher from './ActionDispatcher';
 
@@ -759,9 +758,9 @@ abstract class Topic extends NodeGraph {
 
       // Fire LayoutEventBus event for global selection tracking (includes topic model/ID)
       if (focus) {
-        LayoutEventBus.fireEvent('topicSelected', this.getModel());
+        this.getLayoutEventBus().fireEvent('topicSelected', this.getModel());
       } else {
-        LayoutEventBus.fireEvent('topicUnselected', this.getModel());
+        this.getLayoutEventBus().fireEvent('topicUnselected', this.getModel());
       }
     }
   }
@@ -823,7 +822,7 @@ abstract class Topic extends NodeGraph {
       elem.setVisibility(!value, 250);
     });
 
-    LayoutEventBus.fireEvent('childShrinked', model);
+    this.getLayoutEventBus().fireEvent('childShrinked', model);
   }
 
   getShrinkConnector(): ShirinkConnector | null {
@@ -1153,7 +1152,7 @@ abstract class Topic extends NodeGraph {
       this.updatePositionOnChangeSize();
 
       if (hasSizeChanged) {
-        LayoutEventBus.fireEvent('topicResize', {
+        this.getLayoutEventBus().fireEvent('topicResize', {
           node: this.getModel(),
           size: roundedSize,
         });
@@ -1189,7 +1188,7 @@ abstract class Topic extends NodeGraph {
       }
 
       // Remove from workspace.
-      LayoutEventBus.fireEvent('topicDisconect', this.getModel());
+      this.getLayoutEventBus().fireEvent('topicDisconect', this.getModel());
 
       this.redraw(this.getThemeVariant(), true);
     }
@@ -1242,13 +1241,13 @@ abstract class Topic extends NodeGraph {
 
     // Fire connection event ...
     if (this._isInWorkspace) {
-      LayoutEventBus.fireEvent('topicConnected', {
+      this.getLayoutEventBus().fireEvent('topicConnected', {
         parentNode: targetTopic.getModel(),
         childNode: this.getModel(),
       });
 
       // Hack for the case of first node created, it needs to review the positioning problem.
-      LayoutEventBus.fireEvent('forceLayout');
+      this.getLayoutEventBus().fireEvent('forceLayout');
       this.redraw(this.getThemeVariant(), false);
     }
   }
@@ -1292,7 +1291,7 @@ abstract class Topic extends NodeGraph {
     }
     this._isInWorkspace = false;
     this._workspace = null;
-    LayoutEventBus.fireEvent('topicRemoved', this.getModel());
+    this.getLayoutEventBus().fireEvent('topicRemoved', this.getModel());
   }
 
   addToWorkspace(workspace: Canvas): void {
@@ -1300,12 +1299,12 @@ abstract class Topic extends NodeGraph {
     workspace.append(elem);
     if (!this._isInWorkspace) {
       if (!this.isCentralTopic()) {
-        LayoutEventBus.fireEvent('topicAdded', this.getModel());
+        this.getLayoutEventBus().fireEvent('topicAdded', this.getModel());
       }
 
       const outgoingTopic = this.getOutgoingConnectedTopic();
       if (this.getModel().isConnected() && outgoingTopic) {
-        LayoutEventBus.fireEvent('topicConnected', {
+        this.getLayoutEventBus().fireEvent('topicConnected', {
           parentNode: outgoingTopic.getModel(),
           childNode: this.getModel(),
         });

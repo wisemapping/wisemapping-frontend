@@ -21,7 +21,6 @@
  * their ends are where a fresh redraw puts them.
  */
 import { buildDesigner, Harness } from './commands/designer-harness';
-import LayoutEventBus from '../../src/components/layout/LayoutEventBus';
 import Relationship from '../../src/components/Relationship';
 import Topic from '../../src/components/Topic';
 import { stubTextMeasurement } from './topic/RenderFixture';
@@ -99,7 +98,7 @@ describe('relationships follow the layout', () => {
 
     // A longer text widens B: the layout moves B and B1 ...
     harness.topic(3).setText('B, with a much longer text than before');
-    LayoutEventBus.fireEvent('forceLayout');
+    harness.designer.getLayoutEventBus().fireEvent('forceLayout');
 
     const moved = [3, 4].map((id) => harness.topic(id));
     moved.forEach((topic) => expect(topic.getPosition()).not.toEqual(before.get(topic)));

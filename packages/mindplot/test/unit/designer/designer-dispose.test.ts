@@ -23,7 +23,6 @@ import DesignerKeyboard from '../../../src/components/DesignerKeyboard';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import DragManager from '../../../src/components/DragManager';
 import DragTopic from '../../../src/components/DragTopic';
-import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import PersistenceManager from '../../../src/components/PersistenceManager';
@@ -76,11 +75,6 @@ const build = async (): Promise<Designer> => {
 };
 
 describe('Designer dispose (BL-48)', () => {
-  beforeAll(() => {
-    // Drop the listeners other suites in this worker left on the module-level bus.
-    LayoutEventBus.reset();
-  });
-
   afterEach(() => {
     built.splice(0).forEach((designer) => {
       designer.dispose();
@@ -114,8 +108,11 @@ describe('Designer dispose (BL-48)', () => {
     const second = await build();
     const secondLayout = jest.spyOn(layoutManagerOf(second), 'needsLayout');
 
-    LayoutEventBus.fireEvent('forceLayout');
-    LayoutEventBus.fireEvent('topicSelected', first.getModel().getCentralTopic().getModel());
+    // Something still holding the disposed designer's bus fires on it ...
+    const firstBus = first.getLayoutEventBus();
+    firstBus.fireEvent('forceLayout');
+    firstBus.fireEvent('topicSelected', first.getModel().getCentralTopic().getModel());
+    second.getLayoutEventBus().fireEvent('forceLayout');
 
     expect(firstLayout).not.toHaveBeenCalled();
     expect(firstEnsureVisible).not.toHaveBeenCalled();
@@ -140,13 +137,14 @@ describe('Designer dispose (BL-48)', () => {
   it('removes its selection shadows and their bus listeners', async () => {
     const designer = await build();
     const central = designer.getModel().getCentralTopic();
-    LayoutEventBus.fireEvent('topicSelected', central.getModel());
+    const bus = designer.getLayoutEventBus();
+    bus.fireEvent('topicSelected', central.getModel());
     expect(designer.getSelectionShadows().size).toBeGreaterThan(0);
 
     designer.dispose();
     expect(designer.getSelectionShadows().size).toBe(0);
 
-    LayoutEventBus.fireEvent('topicSelected', central.getModel());
+    bus.fireEvent('topicSelected', central.getModel());
     expect(designer.getSelectionShadows().size).toBe(0);
   });
 
