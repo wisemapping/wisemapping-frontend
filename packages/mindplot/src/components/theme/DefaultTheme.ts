@@ -70,6 +70,10 @@ const isUnset = (value: unknown): boolean => value === undefined || value === nu
 // large text and user interface components. Below it, the text is drawn black or white instead.
 const MIN_TEXT_CONTRAST = 3;
 
+// The opacities, strongest first, of the topic colour a halo is painted with over the canvas when
+// the usual halo would hide the topic text. A hovered topic skips the first, so it stays fainter.
+const HALO_TINT_ALPHAS = [0.25, 0.15, 0.08];
+
 class DefaultTheme implements Theme {
   private _themeStyle: ThemeStyle;
 
@@ -264,8 +268,7 @@ class DefaultTheme implements Theme {
    * otherwise the fill as seen over the canvas (a transparent fill shows the canvas).
    */
   protected getTextBackdropColor(topic: Topic): string {
-    const canvasStyle = topic.getModel().getMindmap().getCanvasStyle();
-    const canvasColor = canvasStyle?.backgroundColor || this.getCanvasBackgroundColor();
+    const canvasColor = this.getMapCanvasColor(topic);
     const shapeType = this.getShapeType(topic);
     if (shapeType === 'line' || shapeType === 'none') {
       return canvasColor;
@@ -289,17 +292,70 @@ class DefaultTheme implements Theme {
     return black >= white ? '#000000' : '#FFFFFF';
   }
 
+  /** The canvas colour of the map: the one the map sets, or else the theme one. */
+  private getMapCanvasColor(topic: Topic): string {
+    const canvasStyle = topic.getModel().getMindmap().getCanvasStyle();
+    return canvasStyle?.backgroundColor || this.getCanvasBackgroundColor();
+  }
+
   getOuterBackgroundColor(topic: Topic, onFocus: boolean): string {
     // Default implementation ignores variant, subclasses can override
     let result: string;
+    let tint: string;
     if (topic.getShapeType() === 'line') {
       const color = this.getStyles(topic).outerBackgroundColor;
       result = onFocus ? color : ColorUtil.lightenColor(color, 30);
+      tint = color;
     } else {
       const innerBgColor = this.getBackgroundColor(topic);
       result = ColorUtil.lightenColor(innerBgColor, 70);
+      tint = innerBgColor;
     }
-    return result;
+    return this.readableHaloColor(topic, result, tint, onFocus);
+  }
+
+  /**
+   * A halo (the outer shape of a selected or hovered topic) the topic text can be read on. The
+   * halo is behind the text when the shape draws no fill (line, none) or a see-through one. When
+   * the text does not contrast MIN_TEXT_CONTRAST with it there, the halo is instead the tint colour
+   * (or, when it is transparent, the connection colour) painted over the canvas, fainter and
+   * fainter until the text contrasts: the theme text colour is readable on the canvas, so at worst
+   * the halo is the canvas and only its border shows.
+   */
+  private readableHaloColor(topic: Topic, halo: string, tint: string, onFocus: boolean): string {
+    const shapeType = this.getShapeType(topic);
+    const fill =
+      shapeType === 'line' || shapeType === 'none' ? undefined : this.getBackgroundColor(topic);
+    if (fill !== undefined && (ColorUtil.parse(fill)?.a ?? 1) >= 1) {
+      // An opaque fill hides the halo behind the text.
+      return halo;
+    }
+
+    const textColor = this.getFontColor(topic);
+    const readableOn = (candidate: string): boolean => {
+      const backdrop = fill !== undefined ? (ColorUtil.over(fill, candidate) ?? fill) : candidate;
+      const contrast = ColorUtil.contrastRatio(textColor, backdrop);
+      return contrast === undefined || contrast >= MIN_TEXT_CONTRAST;
+    };
+    if (readableOn(halo)) {
+      return halo;
+    }
+
+    const canvas = this.getMapCanvasColor(topic);
+    const rgb = [tint, this.getConnectionColor(topic)]
+      .map((color) => ColorUtil.parse(color))
+      .find((color) => color !== undefined && color.a > 0);
+    if (rgb) {
+      const alphas = onFocus ? HALO_TINT_ALPHAS : HALO_TINT_ALPHAS.slice(1);
+      const tinted = alphas
+        .map((alpha) => ColorUtil.over(`rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`, canvas))
+        .find((candidate) => candidate !== undefined && readableOn(candidate));
+      if (tinted) {
+        return tinted;
+      }
+    }
+    // A text colour picked by the user may not be readable on the canvas either: keep the halo.
+    return readableOn(canvas) ? canvas : halo;
   }
 
   getOuterBorderColor(topic: Topic): string {
