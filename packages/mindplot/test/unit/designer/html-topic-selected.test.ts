@@ -130,6 +130,7 @@ const buildDesigner = (topics: FakeTopic[]) => {
     getModel: () => ({
       getEntities: () => topics,
       getTopics: () => topics,
+      findTopicByModel: (model: object) => topics.find((t) => t.getModel() === model),
       filterSelectedTopics: () => topics.filter((t) => t.isOnFocus()),
     }),
     getSelectionShadows: () => shadows,

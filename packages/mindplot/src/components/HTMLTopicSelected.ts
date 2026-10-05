@@ -1190,12 +1190,8 @@ class HTMLTopicSelected {
       .filterSelectedTopics()
       .forEach((topic) => HTMLTopicSelected.ensureTopicShadow(designer, topic));
 
-    // Helper to find topic by model
     const findTopicByModel = (nodeModel: NodeModel): Topic | undefined =>
-      designer
-        .getModel()
-        .getTopics()
-        .find((t) => t.getModel() === nodeModel);
+      designer.getModel().findTopicByModel(nodeModel);
 
     const selectionShadows = designer.getSelectionShadows();
 

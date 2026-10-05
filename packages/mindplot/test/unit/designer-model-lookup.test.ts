@@ -184,3 +184,24 @@ describe('Topic.setId', () => {
     expect(designer.getModel().findTopicByModel(floating.getModel())).toBe(floating);
   });
 });
+
+// BL5-93: selecting a topic looked it up by scanning every topic, in the auto-pan and in the
+// selection shadow handlers.
+describe('Selecting a topic', () => {
+  it('finds it through the index, without scanning the topics', async () => {
+    const { designer, topic } = await buildDesigner();
+    const getTopics = jest.spyOn(designer.getModel(), 'getTopics');
+    // The auto-pan is asked to show the topic; it does not pan here (a pan closes the editors of
+    // every topic, which reads the topic list).
+    const ensureVisible = jest
+      .spyOn(designer.getWorkSpace(), 'ensureVisible')
+      .mockReturnValue(false);
+
+    topic(4).setOnFocus(true);
+
+    expect(ensureVisible).toHaveBeenCalled();
+    expect(designer.getSelectionShadows().has(topic(4))).toBe(true);
+    // Before: two scans, one per handler.
+    expect(getTopics).not.toHaveBeenCalled();
+  });
+});

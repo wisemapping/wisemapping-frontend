@@ -1815,9 +1815,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   private _registerAutoPanOnFocus(): void {
     this._autoPanOnFocusListener = (nodeModel: NodeModel) => {
-      const topic = this.getModel()
-        .getTopics()
-        .find((candidate) => candidate.getModel() === nodeModel);
+      const topic = this.getModel().findTopicByModel(nodeModel);
       if (topic) {
         this.ensureNodeVisible(topic);
       }
