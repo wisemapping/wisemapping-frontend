@@ -257,7 +257,11 @@ class SymmetricSorter extends AbstractBasicSorter {
     node.setOrder(0);
   }
 
-  computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
+  computeOffsets(
+    treeSet: RootedTreeSet,
+    node: Node,
+    extentById?: Map<number, number>,
+  ): Map<number, PositionType> {
     const children = this._getSortedChildren(treeSet, node);
 
     // Compute heights ...
@@ -268,7 +272,7 @@ class SymmetricSorter extends AbstractBasicSorter {
         order: child.getOrder(),
         position: child.getPosition(),
         width: child.getSize().width,
-        height: this._computeChildrenHeight(treeSet, child),
+        height: this._getBranchHeight(treeSet, child, extentById),
       }))
       .reverse();
 

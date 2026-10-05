@@ -30,8 +30,30 @@ abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
     return result;
   }
 
+  computeBranchExtents(treeSet: RootedTreeSet, node: Node): Map<number, number> {
+    return this.computeChildrenIdByHeights(treeSet, node);
+  }
+
+  getBranchExtentKey(): string {
+    return AbstractBasicSorter.heightExtentKey(this.getVerticalPadding());
+  }
+
+  /** The extent key of branch heights measured with the given vertical padding. */
+  static heightExtentKey(verticalPadding: number): string {
+    return `height:${verticalPadding}`;
+  }
+
   getVerticalPadding(): number {
     return this.INTERNODE_VERTICAL_PADDING;
+  }
+
+  /** Height of the branch of `child`: from the given extents when they have it, else measured. */
+  protected _getBranchHeight(
+    treeSet: RootedTreeSet,
+    child: Node,
+    extentById?: Map<number, number>,
+  ): number {
+    return extentById?.get(child.getId()) ?? this._computeChildrenHeight(treeSet, child);
   }
 
   _computeChildrenHeight(

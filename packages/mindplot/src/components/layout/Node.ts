@@ -39,10 +39,6 @@ class Node {
 
   _children!: Node[];
 
-  _branchHeight: number;
-
-  _heightChanged: boolean;
-
   constructor(id: number, size: SizeType, position: PositionType, sorter: ChildrenSorterStrategy) {
     $assert(typeof id === 'number' && Number.isFinite(id), 'id can not be null');
     this._id = id;
@@ -52,8 +48,6 @@ class Node {
     this.setSize(size);
     this.setPosition(position);
     this.setShrunken(false);
-    this._branchHeight = -1;
-    this._heightChanged = false;
   }
 
   getId(): number {

@@ -188,14 +188,18 @@ class TreeSorter extends AbstractBasicSorter {
     node.setOrder(0);
   }
 
-  computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
+  computeOffsets(
+    treeSet: RootedTreeSet,
+    node: Node,
+    extentById?: Map<number, number>,
+  ): Map<number, PositionType> {
     const children = this._getSortedChildren(treeSet, node);
 
     // Calculate total width needed for all children
     const childrenWidths = children.map((child) => ({
       id: child.getId(),
       order: child.getOrder(),
-      width: this._computeChildrenWidth(treeSet, child),
+      width: extentById?.get(child.getId()) ?? this._computeChildrenWidth(treeSet, child),
       height: child.getSize().height,
     }));
 
@@ -222,6 +226,20 @@ class TreeSorter extends AbstractBasicSorter {
     }
 
     return result;
+  }
+
+  /**
+   * Siblings sit side by side in the tree, so a branch is measured by its width: the sum of the
+   * widths of its children, or its own if wider. Its height does not move its siblings.
+   */
+  computeBranchExtents(treeSet: RootedTreeSet, node: Node): Map<number, number> {
+    const result = new Map<number, number>();
+    this._computeChildrenWidth(treeSet, node, result);
+    return result;
+  }
+
+  getBranchExtentKey(): string {
+    return `width:${TreeSorter.INTERNODE_HORIZONTAL_PADDING}`;
   }
 
   private _computeChildrenWidth(

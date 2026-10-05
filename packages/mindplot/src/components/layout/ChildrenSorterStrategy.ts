@@ -20,9 +20,32 @@ import Node from './Node';
 import PositionType from '../PositionType';
 
 abstract class ChildrenSorterStrategy {
+  /** Height of the branch of every node under `node` (and of its own), by node id. */
   abstract computeChildrenIdByHeights(treeSet: RootedTreeSet, node: Node): Map<number, number>;
 
-  abstract computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType>;
+  /**
+   * Extent of the branch of every node under `node` (and of its own), by node id, along the axis
+   * this sorter lays siblings out on: their height for the mind map sorters, their width for the
+   * tree one. It is what computeOffsets measures each child branch by.
+   */
+  abstract computeBranchExtents(treeSet: RootedTreeSet, node: Node): Map<number, number>;
+
+  /**
+   * Names how computeBranchExtents measures a branch. Sorters with the same key measure branches
+   * the same way, so the extents one of them computed can be given to the other's computeOffsets.
+   */
+  abstract getBranchExtentKey(): string;
+
+  /**
+   * Offset of each child of `node` from it, by child id. Sorts the children of `node` by order.
+   * @param extentById the extents of the branches under `node`, from computeBranchExtents of a
+   * sorter with the same getBranchExtentKey. Without them, every child branch is measured here.
+   */
+  abstract computeOffsets(
+    treeSet: RootedTreeSet,
+    node: Node,
+    extentById?: Map<number, number>,
+  ): Map<number, PositionType>;
 
   abstract insert(treeSet: RootedTreeSet, parent: Node, child: Node, order?: number): void;
 

@@ -166,7 +166,11 @@ class BalancedSorter extends AbstractBasicSorter {
     }
   }
 
-  computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
+  computeOffsets(
+    treeSet: RootedTreeSet,
+    node: Node,
+    extentById?: Map<number, number>,
+  ): Map<number, PositionType> {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(node, 'node can no be null.');
 
@@ -178,7 +182,7 @@ class BalancedSorter extends AbstractBasicSorter {
         id: child.getId(),
         order: child.getOrder() ?? 0,
         width: child.getSize().width,
-        height: this._computeChildrenHeight(treeSet, child),
+        height: this._getBranchHeight(treeSet, child, extentById),
       }))
       .reverse();
 
