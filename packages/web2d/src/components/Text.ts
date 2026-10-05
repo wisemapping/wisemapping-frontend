@@ -22,6 +22,7 @@ import TextPeer from './peer/svg/TextPeer';
 import TransformUtil from './peer/utils/TransformUtils';
 import StyleAttributes from './StyleAttributes';
 import PositionType from './PositionType';
+import SizeType from './SizeType';
 import FontPeer, { FontStyle } from './peer/svg/FontPeer';
 
 class Text extends WorkspaceElement<TextPeer> {
@@ -78,6 +79,14 @@ class Text extends WorkspaceElement<TextPeer> {
     return this.peer.getHtmlFontSize(scale);
   }
 
+  /**
+   * The text bounding box size, measured once: a redraw that needs both the width and the height
+   * should call this rather than getShapeWidth and getShapeHeight. The result is a copy.
+   */
+  measure(): SizeType {
+    return this.peer.measure();
+  }
+
   getShapeWidth(): number {
     return this.peer.getShapeWidth();
   }
@@ -88,7 +97,7 @@ class Text extends WorkspaceElement<TextPeer> {
 
   /** The height of one line. An empty text has no lines and measures 0, not NaN. */
   getFontHeight(): number {
-    return this.getShapeHeight() / Math.max(1, this.peer.getTextLines().length);
+    return this.measure().height / Math.max(1, this.peer.getTextLines().length);
   }
 
   getPosition(): PositionType {

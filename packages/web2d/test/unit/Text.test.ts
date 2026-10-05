@@ -337,6 +337,28 @@ describe('Text measurement cache', () => {
     expect(calls.n).toBe(1);
   });
 
+  // BL5-87: a redraw read the width and the height with two calls. measure() returns both from
+  // one getBBox, also when the result can not be cached (a detached node).
+  it('BL5-87: measure() returns the width and height from one getBBox', () => {
+    const { text, calls } = attached(() => ({ width: 30, height: 12 }));
+    text.peer._native.remove();
+    expect(text.measure()).toEqual({ width: 30, height: 12 });
+    expect(calls.n).toBe(1);
+    expect(text.getShapeWidth()).toBe(30);
+    expect(text.getShapeHeight()).toBe(12);
+  });
+
+  it('BL5-87: measure() shares the cache with getShapeWidth and getShapeHeight', () => {
+    const { text, calls } = attached(() => ({ width: 30, height: 12 }));
+    text.getShapeWidth();
+    const size = text.measure();
+    expect(size).toEqual({ width: 30, height: 12 });
+    // A copy: changing it does not change the cached measurement.
+    size.width = 0;
+    expect(text.measure().width).toBe(30);
+    expect(calls.n).toBe(1);
+  });
+
   it.each([
     ['the text', (t: Text) => t.setText('abcd')],
     ['the size', (t: Text) => t.setFontSize(12)],

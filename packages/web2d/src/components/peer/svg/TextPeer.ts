@@ -244,7 +244,7 @@ class TextPeer extends ElementPeer {
    * Measuring a detached or undisplayed node throws in some browsers (older Firefox) and gives
    * zeros in others, so a failure counts as an empty box, and neither is cached.
    */
-  private measure(): SizeType {
+  measure(): SizeType {
     const key = [
       currentMeasurementGeneration(),
       this._font.getFontName(),
