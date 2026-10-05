@@ -1316,8 +1316,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // Re-render with new theme (preserves custom canvas style if it exists)
     this.applyCanvasStyle();
 
-    const centralTopic = this.getModel().getCentralTopic();
-    centralTopic.redraw(this._themeVariant, true);
+    // Every tree: the central topic's and the floating topics'.
+    this.redrawAllTopics();
   }
 
   /**

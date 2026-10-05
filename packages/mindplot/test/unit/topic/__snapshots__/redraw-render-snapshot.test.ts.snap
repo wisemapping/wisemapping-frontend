@@ -84,7 +84,7 @@ exports[`redraw render snapshot of a medium map renders the loaded map 1`] = `
 
 exports[`redraw render snapshot of a medium map renders the same after changing the theme: prism 1`] = `
 {
-  "canvas": "f9fc800f499d",
+  "canvas": "5d06632b4c58",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=cda20a02aff1 line=da39a3ee5e6b",
   "topic 1": "pos=154.5,-358.5 size=126x68 order=0 group=46a0f173670d line=6ea12aa97c6d",
   "topic 10": "pos=572.5,-315.5 size=272x68 order=0 group=badf85dc8482 line=cae3f994797b",
@@ -132,7 +132,7 @@ exports[`redraw render snapshot of a medium map renders the same after changing 
   "topic 49": "pos=-385,-251.5 size=69x34 order=0 group=75542821b117 line=90da39a3f710",
   "topic 5": "pos=922,-574.5 size=159x68 order=1 group=afa4059305c9 line=a720033d6434",
   "topic 50": "pos=-393.5,-207.5 size=86x34 order=1 group=c91d9aa3ec43 line=38459de63849",
-  "topic 500": "pos=600,500 size=69x34 order=undefined group=7773ea4733a6 line=da39a3ee5e6b",
+  "topic 500": "pos=600,500 size=69x34 order=undefined group=a93672263858 line=da39a3ee5e6b",
   "topic 51": "pos=-130.5,-12.5 size=78x38 order=3 group=dfa299e30a32 line=7f4c5696cc3c",
   "topic 52": "pos=-243,-100.5 size=87x47 order=0 group=5f8da694bd5d line=9515fe389332",
   "topic 53": "pos=-419.5,-163.5 size=206x34 order=0 group=5241a36c697d line=7ef1e5e71f58",
