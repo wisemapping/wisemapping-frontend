@@ -19,7 +19,6 @@
 // jQuery removed - using native DOM APIs
 import { $assert } from '../../../../src/components/util/assert';
 import LayoutManager from '../../../../src/components/layout/LayoutManager';
-import ChildrenSorterStrategy from '../../../../src/components/layout/ChildrenSorterStrategy';
 import type PositionType from '../../../../src/components/PositionType';
 import type SizeType from '../../../../src/components/SizeType';
 
@@ -28,12 +27,11 @@ interface Prediction {
   order: number;
 }
 
-class TestSuite extends ChildrenSorterStrategy {
+class TestSuite {
   static NODE_SIZE: SizeType = { width: 80, height: 30 };
   static ROOT_NODE_SIZE: SizeType = { width: 120, height: 40 };
 
   constructor() {
-    super();
     const basicTestElement = document.getElementById('basicTest');
     if (basicTestElement) {
       basicTestElement.style.display = 'block';
