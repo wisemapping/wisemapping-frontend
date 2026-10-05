@@ -39,43 +39,40 @@ abstract class WidgetBuilder {
 
   private _showTimeout: number | null = null;
 
-  private _hideTooltip: ReturnType<typeof debounce>;
+  // Hides the tooltip it is given last, once the pointer has been away from it for a while.
+  private _hideTooltip: ReturnType<typeof debounce<(tooltip: HTMLElement) => void>>;
 
   constructor() {
     this._listener = () => {};
 
     // Initialize debounced hide function for tooltips
-    this._hideTooltip = debounce(() => {
-      const tooltip = this.getTooltipElement();
-      if (tooltip) {
-        DOMUtils.css(tooltip, 'display', 'none');
-      }
+    this._hideTooltip = debounce((tooltip: HTMLElement) => {
+      DOMUtils.css(tooltip, 'display', 'none');
     }, TOOLTIP_HIDE_DELAY);
   }
 
-  private getTooltipElement(): HTMLElement | null {
-    const mindmapComp = document.getElementById('mindmap-comp') as HTMLElement & {
-      shadowRoot: ShadowRoot;
-    };
-    return mindmapComp?.shadowRoot?.getElementById('mindplot-svg-tooltip') || null;
+  /**
+   * The shadow root of the web component of the topic's designer, which holds its tooltip: each
+   * map on the page has its own. Undefined when the topic's map is not in a web component.
+   */
+  private static shadowRootOf(topic: Topic): ShadowRoot | undefined {
+    const root = topic.getDesigner()?.getContainer().getRootNode();
+    return root instanceof ShadowRoot ? root : undefined;
   }
 
   private createTooltip(
+    topic: Topic,
     mindmapElement: ElementClass<ElementPeer>,
     title: string,
     linkModel?: LinkModel,
     noteModel?: NoteModel,
   ) {
-    const mindmapComp = document.getElementById('mindmap-comp') as HTMLElement & {
-      shadowRoot: ShadowRoot;
-    };
-
-    if (!mindmapComp || !mindmapComp.shadowRoot) {
-      console.warn('mindmap-comp element or shadowRoot not found');
+    const webcomponentShadowRoot = WidgetBuilder.shadowRootOf(topic);
+    if (!webcomponentShadowRoot) {
+      console.warn('The map of the topic is not in a web component: it has no tooltips');
       return;
     }
-
-    const webcomponentShadowRoot = mindmapComp.shadowRoot;
+    const mindmapComp = webcomponentShadowRoot.host;
 
     let tooltip = webcomponentShadowRoot.getElementById('mindplot-svg-tooltip');
 
@@ -97,13 +94,12 @@ abstract class WidgetBuilder {
         tooltip.addEventListener('mouseover', (evt) => {
           // Cancel any pending hide when hovering over tooltip
           this._hideTooltip.cancel();
-          const tt = this.getTooltipElement();
-          if (tt) DOMUtils.css(tt, 'display', 'block');
+          DOMUtils.css(evt.currentTarget as HTMLElement, 'display', 'block');
           evt.stopPropagation();
         });
         tooltip.addEventListener('mouseleave', (evt) => {
           // Schedule hiding with debounce
-          this._hideTooltip();
+          this._hideTooltip(evt.currentTarget as HTMLElement);
           evt.stopPropagation();
         });
       }
@@ -218,7 +214,9 @@ abstract class WidgetBuilder {
       }
 
       // Schedule hiding with debounce delay
-      this._hideTooltip();
+      if (tooltip) {
+        this._hideTooltip(tooltip);
+      }
       evt.stopPropagation();
     });
   }
@@ -231,20 +229,21 @@ abstract class WidgetBuilder {
     this._listener(event, topic);
   }
 
-  createTooltipForLink(_topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
-    this.createTooltip(linkIcon.getElement(), $msg('LINK'), linkModel, undefined);
+  createTooltipForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
+    this.createTooltip(topic, linkIcon.getElement(), $msg('LINK'), linkModel, undefined);
   }
 
-  configureTooltipForNode(_topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void {
-    this.createTooltip(noteIcon.getElement(), $msg('NOTE'), undefined, noteModel);
+  configureTooltipForNode(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void {
+    this.createTooltip(topic, noteIcon.getElement(), $msg('NOTE'), undefined, noteModel);
   }
 
   abstract buildEditorForLink(topic: Topic): React.ReactElement;
 
   abstract buidEditorForNote(topic: Topic): React.ReactElement;
 
-  getContainerSize(): { width: number; height: number } {
-    const mindmapComp = document.getElementById('mindmap-comp');
+  /** The size of the web component of the topic's map, or of the window outside one. */
+  getContainerSize(topic: Topic): { width: number; height: number } {
+    const mindmapComp = WidgetBuilder.shadowRootOf(topic)?.host;
     if (mindmapComp) {
       const rect = mindmapComp.getBoundingClientRect();
       return { width: rect.width, height: rect.height };

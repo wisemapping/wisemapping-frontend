@@ -55,10 +55,9 @@ const fakeIcon = () => {
   return { icon, hover };
 };
 
-const topic = {} as Topic;
-
 describe('WidgetBuilder tooltips', () => {
   let shadowRoot: ShadowRoot;
+  let topic: Topic;
   let restoreProbe: () => void;
 
   beforeEach(() => {
@@ -67,6 +66,9 @@ describe('WidgetBuilder tooltips', () => {
     host.id = 'mindmap-comp';
     shadowRoot = host.attachShadow({ mode: 'open' });
     document.body.appendChild(host);
+    // A topic of a map whose canvas is in the web component.
+    const container = shadowRoot.appendChild(document.createElement('div'));
+    topic = { getDesigner: () => ({ getContainer: () => container }) } as unknown as Topic;
     restoreProbe = installLiveParseProbe();
   });
 
