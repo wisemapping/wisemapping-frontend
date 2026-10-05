@@ -74,6 +74,11 @@ describe('topic attributes validation (BL4-18)', () => {
     expect(warn).toHaveBeenCalledTimes(4);
   });
 
+  test('tango ignores a non numeric font size (BL5-04)', () => {
+    expect(tangoTopic('fontStyle="Arial;big;#000000;;;"').getFontSize()).toBeUndefined();
+    expect(tangoTopic('fontStyle="Arial;12;#000000;;;"').getFontSize()).toBe(12);
+  });
+
   test('tango ignores a non numeric connection style', () => {
     expect(tangoTopic('connStyle="curved"').getConnectionStyle()).toBeUndefined();
     expect(tangoTopic('connStyle="-1"').getConnectionStyle()).toBeUndefined();

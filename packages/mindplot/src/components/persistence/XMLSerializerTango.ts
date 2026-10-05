@@ -520,9 +520,10 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         topic.setFontFamily(fontFamily);
       }
 
-      const fontSize = fontParts[1];
-      if (fontSize) {
-        topic.setFontSize(Number.parseInt(fontSize, 10));
+      // A non numeric size is ignored, so the theme default applies.
+      const fontSize = Number.parseInt(fontParts[1], 10);
+      if (Number.isFinite(fontSize)) {
+        topic.setFontSize(fontSize);
       }
 
       const fontColor = fontParts[2];
