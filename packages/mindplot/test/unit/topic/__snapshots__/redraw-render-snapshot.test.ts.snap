@@ -2,7 +2,7 @@
 
 exports[`redraw render snapshot of a medium map renders the loaded map 1`] = `
 {
-  "canvas": "a1f472dfbe8a",
+  "canvas": "b4288d32ef3c",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=52b253bec858 line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=7d6db44d84b8 line=14465d00ae9e",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=f29f9e8bd3f5 line=ca9c29b657b7",
