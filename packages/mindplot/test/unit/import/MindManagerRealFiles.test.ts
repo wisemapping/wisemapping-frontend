@@ -19,7 +19,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import fs from 'fs';
 import path from 'path';
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, jest, test } from '@jest/globals';
 import { strFromU8, unzipSync } from 'fflate';
 import { exporterAssert } from './Helper';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
@@ -27,12 +27,18 @@ import XMLSerializerFactory from '../../../src/components/persistence/XMLSeriali
 import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
 import NoteModel from '../../../src/components/model/NoteModel';
+import LinkModel from '../../../src/components/model/LinkModel';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import { StrokeStyle } from '../../../src/components/model/RelationshipModel';
 import ContentType from '../../../src/components/ContentType';
 
 // .mmap files saved by MindManager itself: see input/mindmanager/real/README.md.
-const REAL_FILES = ['blumind-mm8', 'mmap2json-2017'];
+const REAL_FILES = [
+  'blumind-mm8',
+  'mmap2json-2017',
+  'mindm-test-dom-mm23',
+  'jvm-classloader-mm2016',
+];
 
 const readArchive = (name: string): ArrayBuffer => {
   const buffer = fs.readFileSync(path.resolve(__dirname, `./input/mindmanager/real/${name}.mmap`));
@@ -115,7 +121,10 @@ describe('MindManager 8 file (blumind-mm8)', () => {
     expect(relationships[0].getStrokeStyle()).toBe(StrokeStyle.DASHED);
     // DefaultColor LineColor="ffe0666e"; DefaultConnectionStyle NoArrow (Index 0), Arrow (Index 1)
     expect(relationships[0].getStrokeColor()).toBe('#e0666e');
-    expect([relationships[0].getStartArrow(), relationships[0].getEndArrow()]).toEqual([false, true]);
+    expect([relationships[0].getStartArrow(), relationships[0].getEndArrow()]).toEqual([
+      false,
+      true,
+    ]);
   });
 });
 
@@ -161,6 +170,101 @@ describe('MindManager 2017 file (mmap2json-2017)', () => {
     const all = nodes(centralOf(mindmap));
     expect(all).toHaveLength(7);
     all.forEach((node) => expect(node.getFeatures()).toEqual([]));
+  });
+});
+
+const byText = (mindmap: Mindmap, text: string): NodeModel[] => {
+  const nodes = (node: NodeModel): NodeModel[] => [node, ...node.getChildren().flatMap(nodes)];
+  return mindmap
+    .getBranches()
+    .flatMap(nodes)
+    .filter((node) => node.getText() === text);
+};
+
+describe('MindManager 23 file (mindm-test-dom-mm23)', () => {
+  test('imports the web link and skips the link to a topic', async () => {
+    const mindmap = await importReal('mindm-test-dom-mm23');
+
+    const [one] = byText(mindmap, '1');
+    expect((one.findFeatureByType('link')[0] as LinkModel).getUrl()).toBe(
+      'https://www.microsoft.com',
+    );
+    // Url="#xpointer(/descendant-or-self::ap:Topic[@OId='...'])"
+    expect(byText(mindmap, '3')[0].findFeatureByType('link')).toEqual([]);
+  });
+
+  test('imports the colour, the stock icons and the notes, and skips the custom icon', async () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    try {
+      const mindmap = await importReal('mindm-test-dom-mm23');
+
+      expect(byText(mindmap, '5')[0].getBackgroundColor()).toBe('#abe595');
+      expect(emojis(byText(mindmap, '6')[0])).toEqual(['❗']);
+      expect(emojis(byText(mindmap, 'Main Topic')[0])).toEqual(['⬆️']);
+      expect(emojis(byText(mindmap, '11')[0])).toEqual([]);
+      expect(warn).toHaveBeenCalledWith(expect.stringContaining('custom icon'));
+      const note = byText(mindmap, '2')[0].findFeatureByType('note')[0] as NoteModel;
+      expect(note.getText()).toBe('<p>Notes for 2</p>');
+    } finally {
+      warn.mockRestore();
+    }
+  });
+
+  test('main topics on the right in document order, on the left clockwise', async () => {
+    const mindmap = await importReal('mindm-test-dom-mm23');
+    const main = centralOf(mindmap).getChildren();
+    const orderOf = (text: string) => main.find((node) => node.getText() === text)!.getOrder();
+
+    expect(['1', '3', '5'].map(orderOf)).toEqual([0, 2, 4]);
+    expect(['Main Topic', '6', '2', '4'].map(orderOf)).toEqual([1, 3, 5, 7]);
+  });
+
+  test('imports the relationships with the default colour and an arrow at the end', async () => {
+    const mindmap = await importReal('mindm-test-dom-mm23');
+
+    const relationships = mindmap.getRelationships();
+    expect(relationships).toHaveLength(2);
+    expect(relationships[0].getFromNode()).toBe(byText(mindmap, '1')[0].getId());
+    expect(relationships[0].getToNode()).toBe(byText(mindmap, '4')[0].getId());
+    relationships.forEach((relationship) => {
+      expect(relationship.getStrokeColor()).toBe('#cf4d0c');
+      expect(relationship.getStrokeStyle()).toBe(StrokeStyle.SOLID);
+      expect([relationship.getStartArrow(), relationship.getEndArrow()]).toEqual([false, true]);
+    });
+  });
+});
+
+describe('MindManager 2016 file (jvm-classloader-mm2016)', () => {
+  test('imports the floating topics at their Offset, with their shapes', async () => {
+    const mindmap = await importReal('jvm-classloader-mm2016');
+
+    const [classFile] = byText(mindmap, 'class文件');
+    expect(mindmap.getBranches()).toContain(classFile);
+    // Offset CX="10." CY="0." (millimeters); its own LabelFloatingTopicShape is a Circle.
+    expect(classFile.getPosition()).toEqual({ x: 38, y: 0 });
+    expect(classFile.getShapeType()).toBe('elipse');
+    // The others take the RoundedRectangle of the LabelTopicDefaultsGroup.
+    const [boot] = byText(mindmap, 'BootClassLoader');
+    expect(boot.getPosition()).toEqual({ x: -76, y: -302 });
+    expect(boot.getShapeType()).toBe('rounded rectangle');
+    expect(byText(mindmap, '(new)类实例')).toHaveLength(3);
+  });
+
+  test('imports the relationships and their labels as plain text floating topics', async () => {
+    const mindmap = await importReal('jvm-classloader-mm2016');
+
+    expect(mindmap.getRelationships()).toHaveLength(10);
+    const labels = [
+      ...byText(mindmap, '/JRE/lib/*.jar'),
+      ...byText(mindmap, '/classpath/*.class(*.jar)'),
+    ];
+    expect(labels).toHaveLength(3);
+    labels.forEach((label) => {
+      expect(mindmap.getBranches()).toContain(label);
+      expect(label.getShapeType()).toBe('none');
+    });
+    // Between BootClassLoader (-76, -302) and ExtClassLoader (38, -227), 10 mm above
+    expect(labels[0].getPosition()).toEqual({ x: -18, y: -302 });
   });
 });
 

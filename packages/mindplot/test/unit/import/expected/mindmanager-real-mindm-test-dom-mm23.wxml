@@ -1,0 +1,54 @@
+<map name="mindmanager-real-mindm-test-dom-mm23" theme="prism" layout="mindmap" version="tango">
+    <topic central="true" text="Test" id="1">
+        <topic position="200,0" order="0" text="1" shape="rounded rectangle" id="2">
+            <link url="https://www.microsoft.com" urlType="url"/>
+            <topic position="200,0" order="0" text="11" shape="line" id="3">
+                <topic position="200,0" order="0" text="111" shape="line" id="4"/>
+            </topic>
+            <topic position="300,75" order="1" text="12" shape="line" id="5"/>
+        </topic>
+        <topic position="-500,225" order="7" text="4" shape="rounded rectangle" id="6">
+            <topic position="-200,0" order="0" text="Text with formatting" shape="line" id="7"/>
+        </topic>
+        <topic position="-400,150" order="5" text="2" shape="rounded rectangle" id="8">
+            <note contentType="html"><![CDATA[<p>Notes for 2</p>]]></note>
+        </topic>
+        <topic position="300,75" order="2" text="3" shape="rounded rectangle" id="9">
+            <note contentType="html"><![CDATA[<p><b>This&nbsp;</b>
+
+
+
+
+<span><span style=" font-size:26pt">is a</span>
+
+
+
+
+</span>
+
+
+
+
+&nbsp;<span><span style=" font-size:48pt">test</span>
+
+
+
+
+</span>
+
+
+
+
+</p>]]></note>
+        </topic>
+        <topic position="400,150" order="4" text="5" shape="rounded rectangle" id="10" bgColor="#abe595" brColor="#abe595"/>
+        <topic position="-300,75" order="3" text="6" shape="rounded rectangle" id="11">
+            <eicon id="❗"/>
+        </topic>
+        <topic position="-200,0" order="1" text="Main Topic" shape="rounded rectangle" id="12">
+            <eicon id="⬆️"/>
+        </topic>
+    </topic>
+    <relationship srcTopicId="2" destTopicId="6" lineType="3" endArrow="true" startArrow="false" strokeColor="#cf4d0c" strokeStyle="solid"/>
+    <relationship srcTopicId="5" destTopicId="4" lineType="3" endArrow="true" startArrow="false" strokeColor="#cf4d0c" strokeStyle="solid"/>
+</map>
