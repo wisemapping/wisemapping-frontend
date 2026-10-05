@@ -20,7 +20,6 @@ import { IntlProvider } from 'react-intl';
 import {
   Route,
   RouterProvider,
-  useNavigate,
   useParams,
   createRoutesFromElements,
   createBrowserRouter,
@@ -56,6 +55,7 @@ import queryClient from './queryClient';
 import { ClientContext } from './classes/provider/client-context';
 import { KeyboardContext, useKeyboardContextValue } from './classes/provider/keyboard-context';
 import CommonPage from './components/common-page';
+import Redirect from './components/redirect';
 import AppConfig from './classes/app-config';
 import { useFetchAccount } from './classes/middleware';
 
@@ -305,14 +305,6 @@ const buildRouter = () =>
       </Route>,
     ),
   );
-
-function Redirect({ to }: { to: string }) {
-  const navigate = useNavigate();
-  useEffect(() => {
-    navigate(to);
-  });
-  return null;
-}
 
 const AppWithTheme = (): ReactElement => {
   const keyboardContext = useKeyboardContextValue();
