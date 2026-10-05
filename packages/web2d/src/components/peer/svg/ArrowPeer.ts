@@ -21,17 +21,29 @@ import PositionType from '../../PositionType';
 import ElementPeer from './ElementPeer';
 
 class ArrowPeer extends ElementPeer {
+  /** The wing length of a thin arrow (stroke width up to 2, the default and mindplot's). */
   static readonly WING_LENGTH = 6;
+
+  /** Wider strokes get wings of this many stroke widths, so a thick arrow is not stubby. */
+  static readonly WING_LENGTH_PER_WIDTH = 3;
 
   private _fromPoint: PositionType;
 
   private _controlPoint: PositionType | null;
+
+  private _strokeWidth: number;
 
   constructor() {
     const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'path');
     super(svgElement);
     this._fromPoint = { x: 0, y: 0 };
     this._controlPoint = null;
+    this._strokeWidth = 1;
+  }
+
+  /** The wings scale with the stroke width (BL5-73), but never below WING_LENGTH. */
+  static wingLength(strokeWidth: number): number {
+    return Math.max(ArrowPeer.WING_LENGTH, strokeWidth * ArrowPeer.WING_LENGTH_PER_WIDTH);
   }
 
   setFrom(x: number, y: number) {
@@ -64,6 +76,19 @@ class ArrowPeer extends ElementPeer {
     this.setStroke(width);
   }
 
+  override setStroke(
+    width: number | null,
+    style?: string | null,
+    color?: string | null,
+    opacity?: number,
+  ) {
+    super.setStroke(width, style, color, opacity);
+    if ($defined(width) && width !== null && width !== this._strokeWidth) {
+      this._strokeWidth = Number(width);
+      this._redraw();
+    }
+  }
+
   setDashed(isDashed: boolean, length: number, spacing: number) {
     if ($defined(isDashed) && isDashed && $defined(length) && $defined(spacing)) {
       this.attr('stroke-dasharray', `${length},${spacing}`);
@@ -73,7 +98,7 @@ class ArrowPeer extends ElementPeer {
   }
 
   /**
-   * Two wings of WING_LENGTH from the tip, each at 45° from the control point direction. A zero
+   * Two wings from the tip (see wingLength), each at 45° from the control point direction. A zero
    * control point is taken as pointing down.
    */
   private _redraw() {
@@ -84,7 +109,7 @@ class ArrowPeer extends ElementPeer {
 
       // The control direction turned by -45° and by +45°.
       const cos = Math.SQRT1_2;
-      const l = ArrowPeer.WING_LENGTH;
+      const l = ArrowPeer.wingLength(this._strokeWidth);
       const x = (ux * cos + uy * cos) * l;
       const y = (uy * cos - ux * cos) * l;
       const xp = (ux * cos - uy * cos) * l;

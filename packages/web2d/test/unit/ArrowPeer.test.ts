@@ -102,12 +102,26 @@ describe('ArrowPeer', () => {
     expect(cp).toEqual({ x: 10, y: 0 });
   });
 
-  it('characterization: the wing length does not scale with the stroke width', () => {
+  // BL5-73: the wings were 6 long whatever the stroke width, so a thick arrow looked stubby.
+  it.each([
+    [1, 6],
+    [2, 6],
+    [3, 9],
+    [5, 15],
+  ])('BL5-73: a stroke width of %d draws wings %d long', (width, length) => {
     const peer = arrow([0, 0], { x: 10, y: 5 });
-    peer.setStrokeWidth(5);
+    peer.setStrokeWidth(width);
+    const [w1, w2] = wings(peer);
+    expect(Math.hypot(...w1!)).toBeCloseTo(length);
+    expect(Math.hypot(...w2!)).toBeCloseTo(length);
+  });
+
+  it('BL5-73: the wings follow a width set before the arrow is placed', () => {
+    const peer = new ArrowPeer();
+    peer.setStroke(5, 'solid', 'red');
     peer.setFrom(0, 0);
-    const [w1] = wings(peer);
-    expect(Math.hypot(...w1!)).toBeCloseTo(6);
+    peer.setControlPoint({ x: 10, y: 5 });
+    expect(Math.hypot(...wings(peer)[0]!)).toBeCloseTo(15);
   });
 
   it('moves with the tip', () => {
