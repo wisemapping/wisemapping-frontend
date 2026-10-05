@@ -301,8 +301,9 @@ describe('CurvedLinePeer misc', () => {
     const peer = line(0, 0, 90, 0);
     peer.setDashed(5, 3);
     expect(peer._native.getAttribute('stroke-dasharray')).toBe('5,3');
+    // W2 follow-up: it wrote an empty (invalid) stroke-dasharray instead of removing it.
     peer.setDashed(undefined as unknown as number, undefined as unknown as number);
-    expect(peer._native.getAttribute('stroke-dasharray')).toBe('');
+    expect(peer._native.hasAttribute('stroke-dasharray')).toBe(false);
   });
 
   it('setStrokeWidth writes stroke-width', () => {

@@ -278,7 +278,8 @@ class CurvedLinePeer extends ElementPeer {
     if ($defined(length) && $defined(spacing)) {
       this.attr('stroke-dasharray', `${length},${spacing}`);
     } else {
-      this.attr('stroke-dasharray', '');
+      // No dash removes the attribute: an empty value is invalid SVG.
+      this.removeAttr('stroke-dasharray');
     }
   }
 }
