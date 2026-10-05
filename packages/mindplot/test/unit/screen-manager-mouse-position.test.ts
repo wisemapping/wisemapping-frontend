@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { Workspace } from '@wisemapping/web2d';
 import ScreenManager from '../../src/components/ScreenManager';
 
 const setWindowScroll = (x: number, y: number): void => {
@@ -101,5 +102,80 @@ describe('ScreenManager.getWorkspaceMousePosition', () => {
     setWindowScroll(200, 300);
 
     expect(screenManager.getContainerPosition()).toEqual({ left: 300, top: 350 });
+  });
+});
+
+// W5: positions go through the SVG screen matrix (Workspace.clientToWorld) where the browser has
+// one. jsdom has none, so the tests below give the SVG a getScreenCTM.
+describe('ScreenManager.getWorkspaceMousePosition through the workspace screen matrix (W5)', () => {
+  let container: HTMLDivElement;
+  let screenManager: ScreenManager;
+  let workspace: Workspace;
+
+  // The container at viewport (100, 50); zoom 2 (2 workspace units per pixel), panned to
+  // (-400, -300), as Canvas sets them.
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    jest
+      .spyOn(container, 'getBoundingClientRect')
+      .mockReturnValue({ left: 100, top: 50, width: 800, height: 600 } as DOMRect);
+    screenManager = new ScreenManager(container);
+    workspace = new Workspace({ width: '800px', height: '600px' });
+    workspace.addItAsChildTo(container);
+    workspace.setCoordSize(1600, 1200);
+    workspace.setCoordOrigin(-400, -300);
+    screenManager.setScale(2);
+    screenManager.setOffset(-400, -300);
+  });
+
+  afterEach(() => {
+    container.remove();
+    jest.restoreAllMocks();
+  });
+
+  /** The screen matrix of the SVG drawn with its top-left corner at viewport (left, top). */
+  const svgAt = (left: number, top: number) => {
+    const { x, y } = workspace.getCoordOrigin();
+    workspace.getSVGElement().getScreenCTM = () =>
+      ({ a: 0.5, b: 0, c: 0, d: 0.5, e: left - x * 0.5, f: top - y * 0.5 }) as DOMMatrix;
+  };
+
+  it('gives what the container maths gave, for an SVG at the container corner', () => {
+    const event = new MouseEvent('mousemove', { clientX: 150, clientY: 80 });
+    const fromContainer = screenManager.getWorkspaceMousePosition(event);
+
+    screenManager.setWorkspace(workspace);
+    svgAt(100, 50);
+
+    expect(fromContainer).toEqual({ x: -300, y: -240 });
+    expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: -300, y: -240 });
+  });
+
+  it('accounts for where the SVG really is, such as inside a container border', () => {
+    screenManager.setWorkspace(workspace);
+    // A 10 px border moves the SVG 10 px right and down: 20 workspace units at zoom 2.
+    svgAt(110, 60);
+    const event = new MouseEvent('mousemove', { clientX: 150, clientY: 80 });
+
+    expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: -320, y: -260 });
+  });
+
+  it('maps touches the same way', () => {
+    screenManager.setWorkspace(workspace);
+    svgAt(100, 50);
+    const event = touchEvent('touchmove', [{ clientX: 150, clientY: 80 }], []);
+
+    expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: -300, y: -240 });
+  });
+
+  it('uses the container maths without a screen matrix (jsdom) or a workspace', () => {
+    const event = new MouseEvent('mousemove', { clientX: 150, clientY: 80 });
+    screenManager.setWorkspace(workspace);
+    expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: -300, y: -240 });
+
+    svgAt(110, 60);
+    screenManager.setWorkspace(null);
+    expect(screenManager.getWorkspaceMousePosition(event)).toEqual({ x: -300, y: -240 });
   });
 });

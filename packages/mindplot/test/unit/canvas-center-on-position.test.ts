@@ -84,6 +84,7 @@ describe('Canvas.centerOnPosition', () => {
           }),
           setOffset,
           setScale: jest.fn(),
+          setWorkspace: jest.fn(),
           fireEvent,
           addEvent: jest.fn(),
           removeEvent: jest.fn(),

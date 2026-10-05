@@ -95,6 +95,8 @@ class Canvas {
 
     // Append to the workspace...
     workspace.addItAsChildTo(divContainer as HTMLDivElement);
+    // Mouse positions map through the workspace screen matrix ...
+    screenManager.setWorkspace(workspace);
 
     this.setZoom(zoom, true);
     this._renderQueue = [];
@@ -161,6 +163,7 @@ class Canvas {
     // Every listener added to the workspace and the shapes in it, in one go ...
     this._workspace.dispose();
     this._workspace._getHtmlContainer().remove();
+    this._screenManager.setWorkspace(null);
   }
 
   isReadOnly(): boolean {

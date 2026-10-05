@@ -81,6 +81,7 @@ describe('Canvas', () => {
         }),
         setOffset: jest.fn(),
         setScale: jest.fn(),
+        setWorkspace: jest.fn(),
         fireEvent: jest.fn(),
         addEvent: jest.fn(),
         removeEvent: jest.fn(),
