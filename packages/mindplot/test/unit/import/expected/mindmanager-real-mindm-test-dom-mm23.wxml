@@ -1,19 +1,19 @@
 <map name="mindmanager-real-mindm-test-dom-mm23" theme="prism" layout="mindmap" version="tango">
-    <topic central="true" text="Test" id="1">
-        <topic position="200,0" order="0" text="1" shape="rounded rectangle" id="2">
+    <topic central="true" text="Test" id="1" bgColor="#ecf4fa" brColor="#3283c0">
+        <topic position="200,0" order="0" text="1" shape="rounded rectangle" id="2" bgColor="#ecf4fa" brColor="#3283c0">
             <link url="https://www.microsoft.com" urlType="url"/>
             <topic position="200,0" order="0" text="11" shape="line" id="3">
                 <topic position="200,0" order="0" text="111" shape="line" id="4"/>
             </topic>
             <topic position="300,75" order="1" text="12" shape="line" id="5"/>
         </topic>
-        <topic position="-500,225" order="7" text="4" shape="rounded rectangle" id="6">
+        <topic position="-500,225" order="7" text="4" shape="rounded rectangle" id="6" bgColor="#ecf4fa" brColor="#3283c0">
             <topic position="-200,0" order="0" text="Text with formatting" shape="line" id="7"/>
         </topic>
-        <topic position="-400,150" order="5" text="2" shape="rounded rectangle" id="8">
+        <topic position="-400,150" order="5" text="2" shape="rounded rectangle" id="8" bgColor="#ecf4fa" brColor="#3283c0">
             <note contentType="html"><![CDATA[<p>Notes for 2</p>]]></note>
         </topic>
-        <topic position="300,75" order="2" text="3" shape="rounded rectangle" id="9">
+        <topic position="300,75" order="2" text="3" shape="rounded rectangle" id="9" bgColor="#ecf4fa" brColor="#3283c0">
             <note contentType="html"><![CDATA[<p><b>This&nbsp;</b>
 
 
@@ -41,11 +41,11 @@
 
 </p>]]></note>
         </topic>
-        <topic position="400,150" order="4" text="5" shape="rounded rectangle" id="10" bgColor="#abe595" brColor="#abe595"/>
-        <topic position="-300,75" order="3" text="6" shape="rounded rectangle" id="11">
+        <topic position="400,150" order="4" text="5" shape="rounded rectangle" id="10" bgColor="#abe595" brColor="#3283c0"/>
+        <topic position="-300,75" order="3" text="6" shape="rounded rectangle" id="11" bgColor="#ecf4fa" brColor="#3283c0">
             <eicon id="❗"/>
         </topic>
-        <topic position="-200,0" order="1" text="Main Topic" shape="rounded rectangle" id="12">
+        <topic position="-200,0" order="1" text="Main Topic" shape="rounded rectangle" id="12" bgColor="#ecf4fa" brColor="#3283c0">
             <eicon id="⬆️"/>
         </topic>
     </topic>

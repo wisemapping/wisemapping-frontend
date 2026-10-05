@@ -686,16 +686,22 @@ class MindManagerImporter extends Importer {
       topic.icons.push(priority.replace(MINDJET_URN, ''));
     }
 
-    // Parse colors: <Color Value>, or the FillColor and LineColor of the document schema
+    // Parse colors: <Color Value>, or the FillColor and LineColor of the document schema. A color
+    // the topic does not set is the DefaultColor of the defaults group of its level.
     const colorElement = this.findChildByTagName(topicElement, 'Color');
-    if (colorElement) {
-      topic.fillColor = MindManagerImporter.toColor(
-        colorElement.getAttribute('FillColor') ||
-          colorElement.getAttribute('Value') ||
-          colorElement.textContent,
-      );
-      topic.lineColor = MindManagerImporter.toColor(colorElement.getAttribute('LineColor'));
-    }
+    const defaults = this.defaultsGroup(kind, depth);
+    const defaultColor = defaults && this.findChildByTagName(defaults, 'DefaultColor');
+    const ownFill =
+      colorElement &&
+      (colorElement.getAttribute('FillColor') ||
+        colorElement.getAttribute('Value') ||
+        colorElement.textContent);
+    topic.fillColor = MindManagerImporter.toColor(
+      ownFill || defaultColor?.getAttribute('FillColor'),
+    );
+    topic.lineColor = MindManagerImporter.toColor(
+      colorElement?.getAttribute('LineColor') || defaultColor?.getAttribute('LineColor'),
+    );
 
     // Collapsed in the first view (ViewIndex 0), the one MindManager opens
     const views = this.findChildrenByTagName(topicElement, 'TopicViewGroup');
@@ -912,7 +918,12 @@ class MindManagerImporter extends Importer {
     const dest = MindManagerImporter.approximatePosition(mindmap.findNodeById(destTopicId));
     this.findChildrenByTagName(floatingTopics, 'Topic').forEach((labelElement, index) => {
       const label = this.parseTopic(labelElement, 'Label', 0);
-      // MindManager draws them as plain text, not with the shape of the floating topics.
+      // MindManager draws them as plain text, not with the shape (or the default colors) of the
+      // floating topics.
+      if (!this.findChildByTagName(labelElement, 'Color')) {
+        label.fillColor = undefined;
+        label.lineColor = undefined;
+      }
       const shape = this.findChildByTagName(labelElement, 'LabelFloatingTopicShape');
       label.shape =
         MindManagerImporter.toShapeType(shape?.getAttribute('LabelFloatingTopicShape')) ?? 'none';

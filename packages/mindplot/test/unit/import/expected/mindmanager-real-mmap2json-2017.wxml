@@ -1,12 +1,12 @@
 <map name="mindmanager-real-mmap2json-2017" theme="prism" layout="mindmap" version="tango">
-    <topic central="true" text="A" id="1">
-        <topic position="200,0" order="0" text="B" shape="rounded rectangle" id="2">
-            <topic position="200,0" order="0" text="D" shape="rounded rectangle" id="3"/>
-            <topic position="300,75" order="1" text="E" shape="rounded rectangle" id="4">
-                <topic position="200,0" order="0" text="G" shape="line" id="5"/>
+    <topic central="true" text="A" id="1" bgColor="#f4f4f4" brColor="#333333">
+        <topic position="200,0" order="0" text="B" shape="rounded rectangle" id="2" bgColor="#eef4fa" brColor="#3170af">
+            <topic position="200,0" order="0" text="D" shape="rounded rectangle" id="3" bgColor="#edf6f0" brColor="#6ebb89"/>
+            <topic position="300,75" order="1" text="E" shape="rounded rectangle" id="4" bgColor="#edf6f0" brColor="#6ebb89">
+                <topic position="200,0" order="0" text="G" shape="line" id="5" brColor="#999999"/>
             </topic>
-            <topic position="400,150" order="2" text="F" shape="rounded rectangle" id="6"/>
+            <topic position="400,150" order="2" text="F" shape="rounded rectangle" id="6" bgColor="#edf6f0" brColor="#6ebb89"/>
         </topic>
-        <topic position="300,75" order="2" text="C" shape="rounded rectangle" id="7"/>
+        <topic position="300,75" order="2" text="C" shape="rounded rectangle" id="7" bgColor="#eef4fa" brColor="#3170af"/>
     </topic>
 </map>

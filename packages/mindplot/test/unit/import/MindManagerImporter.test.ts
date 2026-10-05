@@ -800,3 +800,43 @@ describe('MindManagerImporter growth direction of the main topics', () => {
     },
   );
 });
+
+describe('MindManagerImporter default colors of the StyleGroup (BL5-138)', () => {
+  const styleGroup = `<ap:StyleGroup>
+      <ap:RootTopicDefaultsGroup><ap:DefaultColor FillColor="ff111111" LineColor="ff222222"/></ap:RootTopicDefaultsGroup>
+      <ap:RootSubTopicDefaultsGroup Level="0"><ap:DefaultColor FillColor="ffeef4fa" LineColor="ff3170af"/></ap:RootSubTopicDefaultsGroup>
+      <ap:RootSubTopicDefaultsGroup Level="1"><ap:DefaultColor FillColor="00000000" LineColor="ff999999"/></ap:RootSubTopicDefaultsGroup>
+    </ap:StyleGroup>`;
+  const topics = `
+    <ap:Topic OId="main"><ap:Text PlainText="Main"/>
+      <ap:SubTopics>
+        <ap:Topic OId="sub"><ap:Text PlainText="Sub"/></ap:Topic>
+        <ap:Topic OId="own"><ap:Text PlainText="Own"/><ap:Color FillColor="ffabe595"/></ap:Topic>
+      </ap:SubTopics>
+    </ap:Topic>
+    <ap:Topic OId="clear"><ap:Text PlainText="Clear"/><ap:Color FillColor="00000000"/></ap:Topic>`;
+
+  test('each topic takes the fill and line colors of its level, unless it has its own', async () => {
+    const mindmap = loadMindmap(
+      await new MindManagerImporter(schemaMap(topics, styleGroup)).import('test'),
+    );
+    const colors = (node: NodeModel) => [node.getBackgroundColor(), node.getBorderColor()];
+
+    expect(colors(mindmap.getCentralTopic() as NodeModel)).toEqual(['#111111', '#222222']);
+    expect(colors(findByText(mindmap, 'Main'))).toEqual(['#eef4fa', '#3170af']);
+    // A transparent fill is no fill.
+    expect(colors(findByText(mindmap, 'Sub'))).toEqual([undefined, '#999999']);
+    // Its own fill, the line of its level.
+    expect(colors(findByText(mindmap, 'Own'))).toEqual(['#abe595', '#999999']);
+    // Its own transparent fill is kept.
+    expect(colors(findByText(mindmap, 'Clear'))).toEqual([undefined, '#3170af']);
+  });
+
+  test('without a StyleGroup, only the own colors are imported', async () => {
+    const mindmap = loadMindmap(await new MindManagerImporter(schemaMap(topics)).import('test'));
+
+    expect(findByText(mindmap, 'Main').getBackgroundColor()).toBeUndefined();
+    expect(findByText(mindmap, 'Own').getBackgroundColor()).toBe('#abe595');
+    expect(findByText(mindmap, 'Own').getBorderColor()).toBe('#abe595');
+  });
+});

@@ -1,13 +1,13 @@
 <map name="mindmanager-real-jvm-classloader-mm2016" theme="prism" layout="mindmap" version="tango">
-    <topic central="true" text="c" id="1"/>
-    <topic position="38,0" order="0" text="class文件" shape="elipse" id="2"/>
-    <topic position="38,-151" order="1" text="AppClassLoader" shape="rounded rectangle" id="3"/>
-    <topic position="38,-227" order="2" text="ExtClassLoader" shape="rounded rectangle" id="4"/>
-    <topic position="-76,-302" order="3" text="BootClassLoader" shape="rounded rectangle" id="5"/>
-    <topic position="151,76" order="4" text="class对象" shape="rounded rectangle" id="6"/>
-    <topic position="227,0" order="5" text="(new)类实例" shape="rounded rectangle" id="7"/>
-    <topic position="265,113" order="6" text="(new)类实例" shape="rounded rectangle" id="8"/>
-    <topic position="113,151" order="7" text="(new)类实例" shape="rounded rectangle" id="9"/>
+    <topic central="true" text="c" id="1" brColor="#333333"/>
+    <topic position="38,0" order="0" text="class文件" shape="elipse" id="2" bgColor="#f8f8f8" brColor="#333333"/>
+    <topic position="38,-151" order="1" text="AppClassLoader" shape="rounded rectangle" id="3" bgColor="#f8f8f8" brColor="#333333"/>
+    <topic position="38,-227" order="2" text="ExtClassLoader" shape="rounded rectangle" id="4" bgColor="#f8f8f8" brColor="#333333"/>
+    <topic position="-76,-302" order="3" text="BootClassLoader" shape="rounded rectangle" id="5" bgColor="#f8f8f8" brColor="#333333"/>
+    <topic position="151,76" order="4" text="class对象" shape="rounded rectangle" id="6" bgColor="#f8f8f8" brColor="#333333"/>
+    <topic position="227,0" order="5" text="(new)类实例" shape="rounded rectangle" id="7" bgColor="#f8f8f8" brColor="#333333"/>
+    <topic position="265,113" order="6" text="(new)类实例" shape="rounded rectangle" id="8" bgColor="#f8f8f8" brColor="#333333"/>
+    <topic position="113,151" order="7" text="(new)类实例" shape="rounded rectangle" id="9" bgColor="#f8f8f8" brColor="#333333"/>
     <topic position="-18,-302" order="0" text="/JRE/lib/*.jar" shape="none" id="10"/>
     <topic position="97,-227" order="0" text="/JRE/lib/*.jar" shape="none" id="11"/>
     <topic position="135,-151" order="1" text="/classpath/*.class(*.jar)" shape="none" id="12"/>

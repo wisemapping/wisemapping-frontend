@@ -297,3 +297,28 @@ describe('MindManager stock icons of the real files', () => {
     expect(emojis(central)[0]).not.toBe('💡');
   });
 });
+
+describe('MindManager default colors of the real files (BL5-138)', () => {
+  test('each level takes the DefaultColor of its StyleGroup level (mmap2json-2017)', async () => {
+    const mindmap = await importReal('mmap2json-2017');
+    const central = centralOf(mindmap);
+    const colors = (node: NodeModel) => [node.getBackgroundColor(), node.getBorderColor()];
+    const [b] = central.getChildren();
+    const [, e] = b.getChildren();
+
+    expect(colors(central)).toEqual(['#f4f4f4', '#333333']);
+    expect(colors(b)).toEqual(['#eef4fa', '#3170af']);
+    expect(colors(e)).toEqual(['#edf6f0', '#6ebb89']);
+    // Level 2 has a transparent fill.
+    expect(colors(e.getChildren()[0])).toEqual([undefined, '#999999']);
+  });
+
+  test('a topic with its own fill keeps the line color of its level (mindm-test-dom-mm23)', async () => {
+    const mindmap = await importReal('mindm-test-dom-mm23');
+    const five = centralOf(mindmap)
+      .getChildren()
+      .find((node) => node.getText() === '5')!;
+
+    expect([five.getBackgroundColor(), five.getBorderColor()]).toEqual(['#abe595', '#3283c0']);
+  });
+});
