@@ -158,20 +158,27 @@ describe('PolyLine', () => {
     expect(line.peer._native.getAttribute('stroke-width')).toBe('1');
   });
 
+  // Section 3.6: getFrom/getTo threw although the peer has the ends.
+  it('getFrom and getTo return the ends', () => {
+    const line = new PolyLine();
+    line.setFrom(1, 2);
+    line.setTo(30, 40);
+    expect(line.getFrom()).toEqual({ x: 1, y: 2 });
+    expect(line.getTo()).toEqual({ x: 30, y: 40 });
+  });
+
+  // Typing T5: only CurvedLine (a ControlPointLine) has control points; the throwing stubs are gone.
   it.each([
-    'getTo',
-    'getFrom',
     'setIsSrcControlPointCustom',
     'setIsDestControlPointCustom',
-    'setDashed',
     'setSrcControlPoint',
     'setDestControlPoint',
     'isDestControlPointCustom',
     'isSrcControlPointCustom',
     'getControlPoints',
-  ])('characterization: %s is a throwing Line stub (typing step T5)', (method) => {
-    const line = new PolyLine() as unknown as Record<string, () => unknown>;
-    expect(() => line[method]!()).toThrow('Method not implemented.');
+    'setDashed',
+  ])('has no %s (typing T5)', (method) => {
+    expect((new PolyLine() as unknown as Record<string, unknown>)[method]).toBeUndefined();
   });
 });
 

@@ -69,36 +69,8 @@ class NeuronLine extends WorkspaceElement<NeuronLinePeer> implements Line {
     return this;
   }
 
-  setIsSrcControlPointCustom(value: boolean): void {
-    throw new Error(`Method not implemented. Received value: ${value}`);
-  }
-
-  setIsDestControlPointCustom(value: boolean): void {
-    throw new Error(`Method not implemented. Received value: ${value}`);
-  }
-
   setDashed(length: number, spacing: number): void {
     this.peer.setDashPattern(length, spacing);
-  }
-
-  setSrcControlPoint(value: PositionType): void {
-    throw new Error(`Method not implemented. Received value: ${JSON.stringify(value)}`);
-  }
-
-  setDestControlPoint(value: PositionType): void {
-    throw new Error(`Method not implemented. Received value: ${JSON.stringify(value)}`);
-  }
-
-  isDestControlPointCustom(): boolean {
-    return false;
-  }
-
-  isSrcControlPointCustom(): boolean {
-    return false;
-  }
-
-  getControlPoints(): [PositionType, PositionType] {
-    throw new Error('Method not implemented.');
   }
 }
 

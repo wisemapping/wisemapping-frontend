@@ -42,43 +42,11 @@ class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
   }
 
   getTo(): PositionType {
-    throw new Error('Method not implemented.');
+    return this.peer.getTo();
   }
 
   getFrom(): PositionType {
-    throw new Error('Method not implemented.');
-  }
-
-  setIsSrcControlPointCustom(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setIsDestControlPointCustom(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setDashed(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setSrcControlPoint(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setDestControlPoint(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  isDestControlPointCustom(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  isSrcControlPointCustom(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  getControlPoints(): [PositionType, PositionType] {
-    throw new Error('Method not implemented.');
+    return this.peer.getFrom();
   }
 
   getType(): ElementType {

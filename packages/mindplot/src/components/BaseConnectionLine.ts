@@ -33,10 +33,11 @@ export enum LineType {
 }
 
 /**
- * Base class for all connection lines (both hierarchical and relationship)
+ * Base class for all connection lines (both hierarchical and relationship). `L` is the type of
+ * the web2d line it draws: any Line for a topic connection, a CurvedLine for a relationship.
  */
-abstract class BaseConnectionLine {
-  protected _line!: Line;
+abstract class BaseConnectionLine<L extends Line = Line> {
+  protected _line!: L;
 
   private _type: LineType;
 
@@ -48,8 +49,11 @@ abstract class BaseConnectionLine {
   }
 
   protected initializeLine(): void {
-    this._line = this.createLine(this._type);
+    this._line = this.buildLine();
   }
+
+  /** Builds the web2d line of this connection. */
+  protected abstract buildLine(): L;
 
   protected getLineTypeValue(): LineType {
     return this._type;
@@ -71,16 +75,13 @@ abstract class BaseConnectionLine {
         (line as PolyLine).setStyle('Straight');
         break;
       case LineType.THIN_CURVED:
-        line = new CurvedLine();
-        (line as CurvedLine).setWidth(10);
+        line = BaseConnectionLine.createCurvedLine(10);
         break;
       case LineType.THICK_CURVED:
-        line = new CurvedLine();
-        (line as CurvedLine).setWidth(this.getLineWidth());
+        line = BaseConnectionLine.createCurvedLine(this.getLineWidth());
         break;
       case LineType.THICK_CURVED_ORGANIC:
-        line = new CurvedLine();
-        (line as CurvedLine).setWidth(this.getLineWidthOrganic());
+        line = BaseConnectionLine.createCurvedLine(this.getLineWidthOrganic());
         break;
       case LineType.ARC:
         line = this.createArcLine();
@@ -96,6 +97,13 @@ abstract class BaseConnectionLine {
         throw new Error(exhaustiveCheck);
       }
     }
+    return line;
+  }
+
+  /** A curved line of `width` (the thin curve is 10). */
+  protected static createCurvedLine(width: number): CurvedLine {
+    const line = new CurvedLine();
+    line.setWidth(width);
     return line;
   }
 
@@ -136,7 +144,7 @@ abstract class BaseConnectionLine {
     return this._type;
   }
 
-  getLine(): Line {
+  getLine(): L {
     return this._line;
   }
 

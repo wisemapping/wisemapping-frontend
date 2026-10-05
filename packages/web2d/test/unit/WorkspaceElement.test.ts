@@ -229,23 +229,25 @@ describe('StraightLine', () => {
     expect(line.peer._native.getAttribute('stroke-opacity')).toBe('1');
   });
 
+  // Typing T5: only CurvedLine (a ControlPointLine) has control points; the throwing stubs are gone.
   it.each([
     'setIsSrcControlPointCustom',
     'setIsDestControlPointCustom',
-    'setDashed',
     'setSrcControlPoint',
     'setDestControlPoint',
     'isDestControlPointCustom',
     'isSrcControlPointCustom',
     'getControlPoints',
-  ])('characterization: %s is a throwing Line stub (typing step T5)', (method) => {
-    const line = new StraightLine() as unknown as Record<string, () => unknown>;
-    expect(() => line[method]!()).toThrow('Method not implemented.');
+    'setDashed',
+  ])('has no %s (typing T5)', (method) => {
+    expect((new StraightLine() as unknown as Record<string, unknown>)[method]).toBeUndefined();
   });
 
-  it('characterization: the static stubs throw and are dead', () => {
-    expect(() => StraightLine.setPosition()).toThrow();
-    expect(() => StraightLine.setSize()).toThrow();
-    expect(() => StraightLine.setFill()).toThrow();
+  // Section 3.6: the dead static setPosition/setSize/setFill stubs are deleted.
+  it('has no static setPosition, setSize or setFill stubs', () => {
+    const statics = StraightLine as unknown as Record<string, unknown>;
+    expect(statics.setPosition).toBeUndefined();
+    expect(statics.setSize).toBeUndefined();
+    expect(statics.setFill).toBeUndefined();
   });
 });

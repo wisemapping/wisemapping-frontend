@@ -29,12 +29,12 @@ import Canvas from './Canvas';
 /**
  * Relationship represents arbitrary connections between topics (not hierarchical)
  */
-class Relationship extends BaseConnectionLine {
+class Relationship extends BaseConnectionLine<CurvedLine> {
   private _sourceTopic: Topic;
 
   private _targetTopic: Topic;
 
-  private _focusShape: Line;
+  private _focusShape: CurvedLine;
 
   private _onFocus: boolean;
 
@@ -80,7 +80,7 @@ class Relationship extends BaseConnectionLine {
     this._line.setIsDestControlPointCustom(false);
     this._line.setCursor('pointer');
     // Set width to 0 to avoid closed path that creates double line effect
-    (this._line as CurvedLine).setWidth(0);
+    this._line.setWidth(0);
     // Use stroke width (2px) for relationships
     this._line.setStroke(2, 'solid', strokeColor);
     this._line.setFill('none', 1);
@@ -88,7 +88,7 @@ class Relationship extends BaseConnectionLine {
     this._line.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
 
     // Build focus shape ...
-    this._focusShape = this.createLine(LineType.THIN_CURVED);
+    this._focusShape = BaseConnectionLine.createCurvedLine(10);
     this._focusShape.setIsSrcControlPointCustom(false);
     this._focusShape.setIsDestControlPointCustom(false);
     // Focus shape is barely visible but always present for event handling
@@ -98,7 +98,7 @@ class Relationship extends BaseConnectionLine {
     this._focusShape.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
 
     // Ensure focus shape uses solid stroke rendering for continuous hit area
-    (this._focusShape as CurvedLine).setWidth(0); // Force simple stroke rendering
+    this._focusShape.setWidth(0); // Force simple stroke rendering
 
     // Always create both arrows, but show them based on model
     this._startArrow = new Arrow();
@@ -156,6 +156,11 @@ class Relationship extends BaseConnectionLine {
 
   protected getLineWidthOrganic(): number {
     return 5; // Slightly thicker for organic style
+  }
+
+  /** A relationship is always a thin curve (LineType.THIN_CURVED). */
+  protected buildLine(): CurvedLine {
+    return BaseConnectionLine.createCurvedLine(10);
   }
 
   protected createArcLine(): Line {
@@ -517,7 +522,7 @@ class Relationship extends BaseConnectionLine {
    * @param line2d The line to update
    * @returns The control points, relative to the connection points
    */
-  private recalculateCustomControlPoints(line2d: Line): [PositionType, PositionType] {
+  private recalculateCustomControlPoints(line2d: CurvedLine): [PositionType, PositionType] {
     const [srcCtrlPoint, destCtrlPoint] = line2d.getControlPoints();
     const controlPoints = this._controlPointsController;
 
@@ -731,7 +736,7 @@ class Relationship extends BaseConnectionLine {
     switch (strokeStyle) {
       case StrokeStyle.SOLID:
         // Removes the dash array (a '0,0' one would be a dash of zero length)
-        (this._line as CurvedLine).setDashed();
+        this._line.setDashed();
         break;
       case StrokeStyle.DASHED:
         // 8px dashes, 4px gaps

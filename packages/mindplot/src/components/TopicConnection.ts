@@ -76,6 +76,10 @@ class TopicConnection extends BaseConnectionLine {
     return new ArcLine(this._childTopic, this._parentTopic);
   }
 
+  protected buildLine(): Line {
+    return this.createLine(this.getLineTypeValue());
+  }
+
   protected override initializeLine(): void {
     super.initializeLine();
     // Set orientation for polylines and arc lines based on parent topic
@@ -236,14 +240,11 @@ class TopicConnection extends BaseConnectionLine {
       line2d.setOrientation(orientation);
     }
 
-    if (
-      this.getLineType() === LineType.THICK_CURVED ||
-      this.getLineType() === LineType.THIN_CURVED ||
-      this.getLineType() === LineType.THICK_CURVED_ORGANIC
-    ) {
+    // The curved line types (thin, thick and organic) draw a CurvedLine.
+    if (line2d instanceof CurvedLine) {
       const ctrlPoints = this._getCtrlPoints(this._childTopic, this._parentTopic);
-      (line2d as CurvedLine).setSrcControlPoint(ctrlPoints[0]);
-      (line2d as CurvedLine).setDestControlPoint(ctrlPoints[1]);
+      line2d.setSrcControlPoint(ctrlPoints[0]);
+      line2d.setDestControlPoint(ctrlPoints[1]);
     }
 
     // Add connector ...

@@ -296,8 +296,6 @@ describe.each([
     expect(line.getTo()).toEqual({ x: 100, y: 50 });
     line.setDashed(3, 3);
     expect(line.peer._native.getAttribute('stroke-dasharray')).toBe('3,3');
-    expect(line.isSrcControlPointCustom()).toBe(false);
-    expect(line.isDestControlPointCustom()).toBe(false);
     expect(line.peer._native.getAttribute('stroke')).toBe(color);
     expect(line.peer._native.getAttribute('stroke-width')).toBe('3.0');
   });
@@ -308,12 +306,10 @@ describe.each([
     expect(() => line.setTo(0, Number.NaN)).toThrow();
   });
 
-  it('characterization: control point methods are throwing Line stubs (typing step T5)', () => {
-    const line = create();
-    expect(() => line.setIsSrcControlPointCustom(true)).toThrow();
-    expect(() => line.setIsDestControlPointCustom(true)).toThrow();
-    expect(() => line.setSrcControlPoint({ x: 0, y: 0 })).toThrow();
-    expect(() => line.setDestControlPoint({ x: 0, y: 0 })).toThrow();
-    expect(() => line.getControlPoints()).toThrow();
+  it('has no control point methods (typing T5)', () => {
+    const line = create() as unknown as Record<string, unknown>;
+    expect(line.setSrcControlPoint).toBeUndefined();
+    expect(line.getControlPoints).toBeUndefined();
+    expect(line.isSrcControlPointCustom).toBeUndefined();
   });
 });

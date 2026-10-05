@@ -108,17 +108,17 @@ describe('ArcLine', () => {
     expect(() => line.setTo(0, Number.NaN)).toThrow();
   });
 
+  // Typing T5: only CurvedLine (a ControlPointLine) has control points; the throwing stubs are gone.
   it.each([
     'setIsSrcControlPointCustom',
     'setIsDestControlPointCustom',
-    'setDashed',
     'setSrcControlPoint',
     'setDestControlPoint',
     'isDestControlPointCustom',
     'isSrcControlPointCustom',
     'getControlPoints',
-  ])('characterization: %s is a throwing Line stub (typing step T5)', (method) => {
-    const line = new ArcLine() as unknown as Record<string, () => unknown>;
-    expect(() => line[method]!()).toThrow('Method not implemented.');
+    'setDashed',
+  ])('has no %s (typing T5)', (method) => {
+    expect((new ArcLine() as unknown as Record<string, unknown>)[method]).toBeUndefined();
   });
 });

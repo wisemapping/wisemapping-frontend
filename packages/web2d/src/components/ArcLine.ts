@@ -20,7 +20,6 @@ import WorkspaceElement from './WorkspaceElement';
 import type Line from './Line';
 import type { ElementAttributes } from './StyleAttributes';
 import ArcLinePeer from './peer/svg/ArcLinePeer';
-import type PositionType from './PositionType';
 import type { ElementType, Orientation } from './types';
 
 class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
@@ -66,38 +65,6 @@ class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
 
   getElementClass(): ArcLine {
     return this;
-  }
-
-  setIsSrcControlPointCustom(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setIsDestControlPointCustom(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setDashed(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setSrcControlPoint(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  setDestControlPoint(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  isDestControlPointCustom(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  isSrcControlPointCustom(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  getControlPoints(): [PositionType, PositionType] {
-    throw new Error('Method not implemented.');
   }
 
   setOrientation(orientation: Orientation): void {

@@ -19,6 +19,7 @@ import { $defined } from '../utils/assert';
 import * as PolyLineUtils from '../../geometry/polyline';
 import ElementPeer from './ElementPeer';
 import type { Orientation, PolyLineStyle } from '../../types';
+import type PositionType from '../../PositionType';
 
 class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
   private _breakDistance: number;
@@ -64,6 +65,14 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
     this._x2 = x2;
     this._y2 = y2;
     this._refreshPath(changed);
+  }
+
+  getFrom(): PositionType {
+    return { x: this._x1, y: this._y1 };
+  }
+
+  getTo(): PositionType {
+    return { x: this._x2, y: this._y2 };
   }
 
   setStrokeWidth(width: number) {

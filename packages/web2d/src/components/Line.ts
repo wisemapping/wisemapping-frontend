@@ -22,19 +22,16 @@ import type { ElementType, StrokeStyle } from './types';
 
 /**
  * A line between two points, as mindplot draws connections: its ends, stroke, fill, visibility,
- * opacity, z-order and events.
- *
- * The control point members are only implemented by CurvedLine (see ControlPointLine); the other
- * lines throw. They move to ControlPointLine once mindplot types its curved lines with it.
+ * opacity, z-order and events. Every line class implements all of it.
  */
 interface Line {
   setFrom(x: number, y: number): void;
 
   setTo(x: number, y: number): void;
 
-  setIsSrcControlPointCustom(value: boolean): void;
+  getFrom(): PositionType;
 
-  setIsDestControlPointCustom(value: boolean): void;
+  getTo(): PositionType;
 
   setCursor(value: string): void;
 
@@ -42,35 +39,19 @@ interface Line {
 
   setFill(color: string, opacity: number): void;
 
-  setDashed(v: number, v2: number): void;
-
   setVisibility(value: boolean, fade?: number): void;
 
   isVisible(): boolean;
 
   setOpacity(value: number): void;
 
+  moveToFront(): void;
+
   moveToBack(): void;
 
   setTestId(value: string): void;
 
-  setSrcControlPoint(value: PositionType): void;
-
-  setDestControlPoint(value: PositionType): void;
-
-  isDestControlPointCustom(): boolean;
-
-  isSrcControlPointCustom(): boolean;
-
-  getControlPoints(): [PositionType, PositionType];
-
   trigger(value: string, event: unknown): void;
-
-  getTo(): PositionType;
-
-  getFrom(): PositionType;
-
-  moveToFront(): void;
 
   getType(): ElementType;
 
@@ -80,7 +61,8 @@ interface Line {
 
   getElementClass(): WorkspaceElement<ElementPeer>;
 }
-/** A line whose curve is shaped by two control points (CurvedLine). */
+
+/** A line whose curve is shaped by two control points, and that can be dashed (CurvedLine). */
 export interface ControlPointLine extends Line {
   setSrcControlPoint(value: PositionType): void;
 
@@ -95,6 +77,9 @@ export interface ControlPointLine extends Line {
   setIsSrcControlPointCustom(value: boolean): void;
 
   setIsDestControlPointCustom(value: boolean): void;
+
+  /** Dashes the line; no length or spacing makes it solid again. */
+  setDashed(length?: number, spacing?: number): void;
 }
 
 // A type cannot be `export default`ed by name under verbatimModuleSyntax.
