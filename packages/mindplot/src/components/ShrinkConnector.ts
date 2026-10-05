@@ -99,10 +99,6 @@ class ShirinkConnector {
     this._ellipse.setPosition(x + 3, y + 3);
   }
 
-  moveToBack(): void {
-    this._ellipse.moveToBack();
-  }
-
   moveToFront(): void {
     this._ellipse.moveToFront();
   }

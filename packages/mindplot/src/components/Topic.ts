@@ -1022,18 +1022,6 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  protected moveToBack(): void {
-    // Update relationship lines
-    this._relationships.forEach((r) => r.moveToBack());
-
-    const connector = this.getShrinkConnector();
-    if (connector) {
-      connector.moveToBack();
-    }
-
-    this.get2DElement().moveToBack();
-  }
-
   protected moveToFront(): void {
     this.get2DElement().moveToFront();
     const connector = this.getShrinkConnector();
