@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import { $defined } from '../utils/assert';
 import type PositionType from '../../PositionType';
 import { heartbeatPathData } from '../../geometry/heartbeat';
 import ElementPeer from './ElementPeer';
@@ -74,8 +73,8 @@ class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
     opacity?: number,
   ) {
     // The spike amplitude depends on the width, so a new width re-paths (W-STALEPATH).
-    const repath = $defined(width) && width !== null && width !== this._strokeWidth;
-    if ($defined(width) && width !== null) {
+    const repath = width != null && width !== this._strokeWidth;
+    if (width != null) {
       this._strokeWidth = width;
     }
 
@@ -101,7 +100,7 @@ class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   setDashPattern(length: number, spacing: number): void {
-    if ($defined(length) && $defined(spacing)) {
+    if (length != null && spacing != null) {
       this._dashPattern = `${length},${spacing}`;
     } else {
       this._dashPattern = null;
@@ -157,7 +156,7 @@ class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
 
   private _updatePath(): void {
     const d =
-      $defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)
+      this._x1 != null && this._y1 != null && this._x2 != null && this._y2 != null
         ? heartbeatPathData(
             { x: this._x1, y: this._y1 },
             { x: this._x2, y: this._y2 },

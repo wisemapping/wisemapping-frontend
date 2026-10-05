@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import { $defined } from '../utils/assert';
 import type PositionType from '../../PositionType';
 import { arrowPathData } from '../../geometry/arrow';
 import ElementPeer from './ElementPeer';
@@ -73,14 +72,14 @@ class ArrowPeer extends ElementPeer<SVGPathElement> {
     opacity?: number,
   ) {
     super.setStroke(width, style, color, opacity);
-    if ($defined(width) && width !== null && width !== this._strokeWidth) {
+    if (width != null && width !== this._strokeWidth) {
       this._strokeWidth = Number(width);
       this._redraw();
     }
   }
 
   setDashed(isDashed: boolean, length: number, spacing: number) {
-    if ($defined(isDashed) && isDashed && $defined(length) && $defined(spacing)) {
+    if (isDashed && length != null && spacing != null) {
       this.attr('stroke-dasharray', `${length},${spacing}`);
     } else {
       this.removeAttr('stroke-dasharray');

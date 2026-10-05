@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '../utils/assert';
 import * as PolyLineUtils from '../../geometry/polyline';
 import ElementPeer from './ElementPeer';
 import type { Orientation, PolyLineStyle } from '../../types';
@@ -135,7 +134,7 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
   }
 
   private _updateStraightPath() {
-    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
+    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
       const path =
         this._orientation === 'vertical'
           ? PolyLineUtils.buildVerticalStraightPath(
@@ -158,7 +157,7 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
 
   /** An elbow with both corners chamfered by MIDDLE_CURVED_CHAMFER (W-MIDCURVE). */
   private _updateMiddleCurvePath() {
-    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
+    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
       const path = PolyLineUtils.buildChamferedElbowPath(
         this._x1,
         this._y1,
@@ -173,7 +172,7 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
 
   /** An elbow that breaks at the middle, which is rounded to whole units. */
   private _updateMiddleStraightPath() {
-    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
+    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
       const path = PolyLineUtils.buildMiddleStraightPath(
         this._x1,
         this._y1,
@@ -186,7 +185,7 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
   }
 
   private _updateCurvePath() {
-    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
+    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
       const path =
         this._orientation === 'vertical'
           ? PolyLineUtils.buildVerticalCurvedPath(

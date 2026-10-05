@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import { $defined } from '../utils/assert';
 import type PositionType from '../../PositionType';
 import { neuronPathData, neuronSeed, neuronSteps } from '../../geometry/neuron';
 import ElementPeer from './ElementPeer';
@@ -83,7 +82,7 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
     color?: string | null,
     opacity?: number,
   ) {
-    if ($defined(width) && width !== null) {
+    if (width != null) {
       this._strokeWidth = width;
     }
 
@@ -106,7 +105,7 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   setDashPattern(length: number, spacing: number): void {
-    if ($defined(length) && $defined(spacing)) {
+    if (length != null && spacing != null) {
       this._dashPattern = `${length},${spacing}`;
     } else {
       this._dashPattern = null;
@@ -167,10 +166,10 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
     const to = { x: this._x2, y: this._y2 };
     // The ends are checked before the seed is taken: a draw with coinciding ends must not fix it.
     const drawable =
-      $defined(from.x) &&
-      $defined(from.y) &&
-      $defined(to.x) &&
-      $defined(to.y) &&
+      from.x != null &&
+      from.y != null &&
+      to.x != null &&
+      to.y != null &&
       (from.x !== to.x || from.y !== to.y);
     const shape = drawable ? this._shapeFor() : null;
     const d = shape ? neuronPathData(from, to, shape.seed, shape.steps) : null;

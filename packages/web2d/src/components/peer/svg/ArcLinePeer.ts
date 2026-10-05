@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '../utils/assert';
 import type PositionType from '../../PositionType';
 import { arcPathData } from '../../geometry/arc';
 import ElementPeer from './ElementPeer';
@@ -84,7 +83,7 @@ class ArcLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   private _updatePath() {
-    if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
+    if (this._x1 != null && this._y1 != null && this._x2 != null && this._y2 != null) {
       const from = { x: this._x1, y: this._y1 };
       const to = { x: this._x2, y: this._y2 };
       this.attr('d', arcPathData(from, to, this._orientation));

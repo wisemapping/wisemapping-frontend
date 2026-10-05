@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '../utils/assert';
 import { getPosition } from '../utils/DomUtils';
 import { type FontStyle } from './FontPeer';
 import type FontPeer from './FontPeer';
@@ -176,7 +175,7 @@ class TextPeer extends ElementPeer<SVGTextElement> {
     if (weight) {
       this._font.setWeight(weight);
     }
-    if ($defined(size)) {
+    if (size != null) {
       this._font.setSize(size);
     }
     this.updateFontStyle();

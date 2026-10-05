@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '../utils/assert';
 import type PositionType from '../../PositionType';
 import ElementPeer, { formatLength } from './ElementPeer';
 
@@ -34,11 +33,11 @@ class RectPeer extends ElementPeer<SVGRectElement> {
   }
 
   setPosition(x: number, y: number) {
-    if ($defined(x)) {
+    if (x != null) {
       this._position = { ...this._position, x };
       this.attr('x', formatLength(x));
     }
-    if ($defined(y)) {
+    if (y != null) {
       this._position = { ...this._position, y };
       this.attr('y', formatLength(y));
     }
@@ -57,7 +56,7 @@ class RectPeer extends ElementPeer<SVGRectElement> {
     // The kept size: a missing width or height keeps the current one.
     const min = Math.min(this._size.width, this._size.height);
 
-    if ($defined(this._arc)) {
+    if (this._arc != null) {
       // Transform percentages to SVG format.
       const arc = (min / 2) * this._arc;
       this.attr('rx', formatLength(arc));

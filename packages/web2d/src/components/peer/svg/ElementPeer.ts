@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../utils/assert';
+import { $assert } from '../utils/assert';
 import type SizeType from '../../SizeType';
 import { isStrokeStyle, type StrokeStyle } from '../../types';
 
@@ -182,14 +182,14 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
    */
   setSize(width?: number | null, height?: number | null): void {
     const writeAttributes = this.hasSizeAttributes();
-    if ($defined(width)) {
+    if (width != null) {
       this._size = { ...this._size, width };
       if (writeAttributes) {
         this.attr('width', formatLength(width));
       }
     }
 
-    if ($defined(height)) {
+    if (height != null) {
       this._size = { ...this._size, height };
       if (writeAttributes) {
         this.attr('height', formatLength(height));
@@ -210,7 +210,7 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
     if (color) {
       this.attr('fill', color);
     }
-    if ($defined(opacity)) {
+    if (opacity != null) {
       this.attr('fill-opacity', String(opacity));
     }
   }
@@ -246,7 +246,7 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
     color?: string | null,
     opacity?: number,
   ): void {
-    if ($defined(width)) {
+    if (width != null) {
       this.attr('stroke-width', `${width}`);
     }
 
@@ -266,11 +266,11 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
       } else {
         this.removeAttr('stroke-linecap');
       }
-    } else if ($defined(width)) {
+    } else if (width != null) {
       this.rescaleTableDash();
     }
 
-    if ($defined(opacity)) {
+    if (opacity != null) {
       this.attr('stroke-opacity', String(opacity));
     }
   }
