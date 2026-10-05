@@ -15,71 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Topic from '../Topic';
-import DefaultTheme from './DefaultTheme';
+import PaletteTheme from './PaletteTheme';
 import { ThemeVariant } from './Theme';
-import { ThemeStyle } from './ThemeStyle';
-import pickByOrder from './pickByOrder';
 
-class OceanTheme extends DefaultTheme {
+class OceanTheme extends PaletteTheme {
   constructor(variant: ThemeVariant) {
-    const themeStyle = new ThemeStyle('ocean', variant);
-    super(themeStyle, variant);
-  }
-
-  getConnectionColor(topic: Topic): string {
-    let result: string | null = null;
-
-    // Color of the node is the connection is the color of the parent ...
-    const parent = topic.getParent();
-    if (parent && !parent.isCentralTopic()) {
-      result = this.resolve('connectionColor', parent, false) as string;
-    }
-
-    if (!result) {
-      const colors = this.resolve('connectionColor', topic);
-      result = pickByOrder(colors, topic.getOrder());
-    }
-    return result;
-  }
-
-  getBorderColor(topic: Topic): string {
-    const model = topic.getModel();
-    let result = model.getBorderColor();
-
-    // If border color has not been defined, use the one picked on an ancestor, or else the theme
-    // border color. The dark variant has its own palette, so it is not lightened as in Prism ...
-    if (!result) {
-      const colors = this.resolve('borderColor', topic);
-      result = pickByOrder(colors, topic.getOrder());
-    }
-    return result;
-  }
-
-  getBackgroundColor(topic: Topic): string {
-    const result = topic.getModel().getBackgroundColor();
-
-    // If topic has a custom background color, always use it
-    if (result && result.trim() !== '') {
-      return result;
-    }
-
-    // Get theme colors directly from ThemeStyle, bypassing DefaultTheme logic
-    return pickByOrder(this.getStyles(topic).backgroundColor, topic.getOrder());
-  }
-
-  getFontColor(topic: Topic): string {
-    const model = topic.getModel();
-    let result = model.getFontColor();
-
-    // If topic has a custom font color, always use it
-    if (result) {
-      return result;
-    }
-
-    // Use theme colors from style system
-    result = this.resolve('fontColor', topic) as string;
-    return result;
+    super('ocean', variant);
   }
 }
 
