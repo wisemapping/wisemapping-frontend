@@ -33,9 +33,12 @@ import Topic from './Topic';
 import ThemeFactory from './theme/ThemeFactory';
 import ImageEmojiFeature from './ImageEmojiFeature';
 
-// Material Icons Unicode codepoints: the actual codepoints of the Material Icons font.
+// Material Icons Unicode codepoints: the codepoints of the 'Material Icons' font that
+// MindplotWebComponent loads, as listed in google/material-design-icons
+// font/MaterialIcons-Regular.codepoints (checked by test/unit/features/material-icon-codepoints.test.ts).
+// A name that is not a Material Icons name stands for the icon the editor's image picker shows.
 // Built once: it was rebuilt on every lookup, several times per redraw.
-const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
+export const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   // Basic actions
   star: '\ue838',
   favorite: '\ue87d',
@@ -55,7 +58,7 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   // Navigation
   home: '\ue88a',
   work: '\ue8f9',
-  business: '\ue7ee',
+  business: '\ue0af',
 
   // Communication
   email: '\ue0be',
@@ -75,8 +78,8 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   train: '\ue570',
   'directions-bike': '\ue52f',
   'directions-walk': '\ue536',
-  'location-on': '\ue55f',
-  'two-wheeler': '\ue9ca',
+  'location-on': '\ue0c8',
+  'two-wheeler': '\ue9f9',
   'directions-run': '\ue566',
 
   // Education & Creative
@@ -88,7 +91,7 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   flash: '\ue3e7', // Same as flash-on
   security: '\ue32a',
   lock: '\ue897',
-  'menu-book': '\ue421',
+  'menu-book': '\uea19',
   assignment: '\ue85d',
   build: '\ue869',
   science: '\uea4b',
@@ -98,12 +101,12 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   'shopping-cart': '\ue8cc',
   'local-grocery-store': '\ue547',
   'local-hospital': '\ue548',
-  'sports-soccer': '\uea2c',
+  'sports-soccer': '\uea2f',
   'sports-basketball': '\uea26',
   gamepad: '\ue30f',
   book: '\ue865',
   'local-cafe': '\ue541',
-  'shopping-bag': '\ue8cb',
+  'shopping-bag': '\uf1cc',
 
   // Media & Controls
   play: '\ue037',
@@ -116,7 +119,7 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   'volume-up': '\ue050',
   'volume-down': '\ue04d',
   'volume-off': '\ue04f',
-  mic: '\ue31d',
+  mic: '\ue029',
   'mic-off': '\ue02b',
   videocam: '\ue04b',
   'videocam-off': '\ue04c',
@@ -136,11 +139,11 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   // Technology & Devices
   'phone-android': '\ue324',
   tv: '\ue333',
-  headphones: '\ue30f',
+  headphones: '\uf01f',
   camera: '\ue3af',
   image: '\ue3f4',
-  'video-file': '\ue1a2',
-  'audio-file': '\ue1a0',
+  'video-file': '\ueb87',
+  'audio-file': '\ueb82',
   folder: '\ue2c7',
   'cloud-upload': '\ue2c3',
   wifi: '\ue63e',
@@ -151,10 +154,10 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   // Business & Finance
   money: '\ue227',
   'trending-up': '\ue8e5',
-  'pie-chart': '\ue6c3',
+  'pie-chart': '\ue6c4',
   'bar-chart': '\ue26b',
   timeline: '\ue922',
-  assessment: '\ue85f',
+  assessment: '\ue85c',
   description: '\ue873',
   schedule: '\ue8b5',
   'calendar-today': '\ue935',
@@ -169,7 +172,7 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   history: '\ue889',
 
   // Transportation & Location
-  location: '\ue55f',
+  location: '\ue0c8',
   car: '\ue531',
   bike: '\ue52f',
   walk: '\ue536',
@@ -177,7 +180,7 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   // Lifestyle & Activities
   'grocery-store': '\ue547',
   hospital: '\ue548',
-  soccer: '\uea2c',
+  soccer: '\uea2f',
   basketball: '\uea26',
   tennis: '\uea32',
   fitness: '\ueb43',
@@ -186,8 +189,8 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
 
   // Creative & Design
   'photo-camera': '\ue412',
-  'color-lens': '\ue40a',
-  'auto-fix': '\ue3e0',
+  'color-lens': '\ue3b7',
+  'auto-fix': '\ue663',
   'filter-vintage': '\ue3e3',
   gradient: '\ue3e9',
   texture: '\ue421',
@@ -198,26 +201,27 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   fire: '\ue80e',
   'invert-colors': '\ue891',
   opacity: '\ue91c',
-  park: '\ue63f',
+  park: '\uea63',
   nature: '\ue406',
 
   // Food & Drink
-  'wine-bar': '\ue7eb',
-  coffee: '\uef4a',
+  'wine-bar': '\uf1e8',
+  coffee: '\uefef',
   cake: '\ue7e9',
   'ice-cream': '\uea69',
   cookie: '\ueaac',
   bakery: '\uea53',
 
   // Health & Medical
-  'medical-services': '\uef4d',
-  'health-safety': '\ue1f5',
+  'medical-services': '\uf109',
+  'health-safety': '\ue1d5',
   coronavirus: '\uf221',
   vaccines: '\ue138',
-  medication: '\uef4e',
-  sick: '\uef80',
+  medication: '\uf033',
+  sick: '\uf220',
 
-  // Social Media
+  // Social Media. The font has no Twitter, Instagram, LinkedIn, YouTube or WhatsApp icon, so
+  // those codepoints draw another glyph (or none).
   facebook: '\uf234',
   twitter: '\uf099',
   instagram: '\uf16d',
@@ -252,17 +256,17 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   undo: '\ue166',
   redo: '\ue15a',
   print: '\ue8ad',
-  'print-disabled': '\ue8ae',
+  'print-disabled': '\ue9cf',
   pdf: '\ue415',
-  download: '\ue2c4',
-  upload: '\ue2c6',
+  download: '\uf090',
+  upload: '\uf09b',
   refresh: '\ue5d5',
 
   // Documents & Notes
   article: '\uef42',
-  note: '\ue8d9',
-  'sticky-note': '\ue1fc',
-  task: '\ue8f5',
+  note: '\ue06f',
+  'sticky-note': '\uf1fc',
+  task: '\uf075',
   checklist: '\ue6b1',
   list: '\ue896',
 
@@ -271,26 +275,26 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   'view-module': '\ue8f0',
   dashboard: '\ue871',
   table: '\ue265',
-  'view-column': '\ue8f1',
-  'view-headline': '\ue8f2',
-  'view-stream': '\ue8f3',
-  'view-week': '\ue8f4',
-  'view-day': '\ue8ee',
-  'view-agenda': '\ue8ed',
-  'view-carousel': '\ue8f6',
-  'view-comfy': '\ue8f7',
-  'view-compact': '\ue8f8',
-  'view-sidebar': '\ue8f9',
-  'view-quilt': '\ue8fa',
-  'view-array': '\ue8fb',
-  'view-kanban': '\ue8fc',
-  'view-timeline': '\ue8fd',
-  'view-ar': '\ue8fe',
+  'view-column': '\ue8ec',
+  'view-headline': '\ue8ee',
+  'view-stream': '\ue8f2',
+  'view-week': '\ue8f3',
+  'view-day': '\ue8ed',
+  'view-agenda': '\ue8e9',
+  'view-carousel': '\ue8eb',
+  'view-comfy': '\ue42a',
+  'view-compact': '\ue42b',
+  'view-sidebar': '\uf114',
+  'view-quilt': '\ue8f1',
+  'view-array': '\ue8ea',
+  'view-kanban': '\ueb7f',
+  'view-timeline': '\ueb85',
+  'view-ar': '\ue9fe',
 
   // Additional Business & Productivity Icons (40 new icons)
   'account-balance': '\ue84f',
   'business-center': '\ueb3f',
-  'work-outline': '\ue940',
+  'work-outline': '\ue943',
   badge: '\uea67',
   contacts: '\ue0ba',
   store: '\ue8d1',
@@ -323,7 +327,7 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   'dashboard-customize': '\ue99b',
 
   // Transportation
-  'directions-subway': '\ue534',
+  'directions-subway': '\ue533',
   'directions-bus': '\ue530',
   'local-shipping': '\ue558',
 
@@ -333,13 +337,13 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   engineering: '\uea3d',
 
   // Emotions & Feedback
-  'sentiment-satisfied': '\ue815',
+  'sentiment-satisfied': '\ue813',
   mood: '\ue7f2',
   'emoji-emotions': '\uea22',
 
   // Time & Productivity
   alarm: '\ue855',
-  'alarm-on': '\ue857',
+  'alarm-on': '\ue858',
   'hourglass-empty': '\ue88b',
   pending: '\uef64',
 
@@ -347,35 +351,35 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   analytics: '\uef3e',
   insights: '\uf092',
   'data-usage': '\ue1af',
-  'cloud-done': '\ue876',
-  'cloud-off': '\ue16a',
+  'cloud-done': '\ue2bf',
+  'cloud-off': '\ue2c1',
   'cloud-queue': '\ue2c2',
   'table-view': '\uf1be',
   api: '\uf1b7',
-  query: '\ue8b5',
+  query: '\ue4fc',
   'bar-chart-outlined': '\ue26b',
 
   // Industry & Professional (15 icons)
   factory: '\uebbc',
   agriculture: '\uea79',
   biotech: '\uea3a',
-  'real-estate': '\ue59d',
-  'local-pharmacy': '\ue54c',
+  'real-estate': '\ue73a',
+  'local-pharmacy': '\ue550',
   'medical-information': '\uebed',
   'school-outlined': '\ue80c',
   'local-library': '\ue54b',
   museum: '\uea36',
-  theater: '\ue8da',
-  'sports-esports': '\uea36',
+  theater: '\uea66',
+  'sports-esports': '\uea28',
   apartment: '\uea40',
   domain: '\ue7ee',
   'local-cafe-outlined': '\ue541',
-  'local-dining': '\ue56c',
+  'local-dining': '\ue556',
 
   // Actions & Controls (20 icons)
-  'play-circle': '\ue038',
-  'pause-circle': '\ue039',
-  'stop-circle': '\ue047',
+  'play-circle': '\ue1c4',
+  'pause-circle': '\ue1a2',
+  'stop-circle': '\uef71',
   replay: '\ue042',
   'forward-10': '\ue056',
   'replay-10': '\ue059',
@@ -390,8 +394,8 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   'find-replace': '\ue881',
   visibility: '\ue8f4',
   'visibility-off': '\ue8f5',
-  compare: '\ue3ba',
-  flip: '\ue3e1',
+  compare: '\ue3b9',
+  flip: '\ue3e8',
   'rotate-left': '\ue419',
 
   // Status & Indicators (15 icons)
@@ -400,11 +404,11 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   'fiber-new': '\ue05e',
   verified: '\uef76',
   'verified-user': '\ue8e8',
-  'workspace-premium': '\ue99b',
+  'workspace-premium': '\ue7af',
   stars: '\ue8d0',
   grade: '\ue885',
   'military-tech': '\uea3f',
-  'trending-flat': '\ue8e2',
+  'trending-flat': '\ue8e4',
   'trending-down': '\ue8e3',
   circle: '\uef4a',
   'radio-button-checked': '\ue837',
@@ -416,7 +420,7 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   'photo-library': '\ue413',
   'video-library': '\ue04a',
   collections: '\ue3b6',
-  'perm-media': '\ue8aa',
+  'perm-media': '\ue8a7',
   slideshow: '\ue41b',
   theaters: '\ue8da',
   'live-tv': '\ue639',
@@ -426,7 +430,7 @@ const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   'library-music': '\ue030',
   'library-add': '\ue02e',
   'video-call': '\ue070',
-  'photo-camera-front': '\ue412',
+  'photo-camera-front': '\uef69',
 };
 
 class ImageSVGFeature {
