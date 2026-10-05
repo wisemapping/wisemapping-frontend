@@ -8,9 +8,6 @@
   "account.delete-confirm": {
     "defaultMessage": "Delete Account"
   },
-  "account.delete-confirmation-error": {
-    "defaultMessage": "Please type \"DELETE\" to confirm account deletion."
-  },
   "account.delete-confirmation-instruction": {
     "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
   },

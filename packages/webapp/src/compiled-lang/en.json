@@ -25,12 +25,6 @@
       "value": "Delete Account"
     }
   ],
-  "account.delete-confirmation-error": [
-    {
-      "type": 0,
-      "value": "Please type \"DELETE\" to confirm account deletion."
-    }
-  ],
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
