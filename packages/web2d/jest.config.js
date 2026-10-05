@@ -31,7 +31,7 @@ const config = {
   coverageReporters: ['text-summary', 'lcov', 'json-summary'],
   // Set at the measured baseline (rounded down). Ratchet these up as coverage improves; never lower them.
   coverageThreshold: {
-    global: { statements: 99, branches: 93, functions: 99, lines: 99 },
+    global: { statements: 99, branches: 94, functions: 99, lines: 99 },
     // Pure path geometry and DOM helpers.
     './src/components/peer/utils/': { lines: 98, branches: 93 },
     // Pure geometry (no DOM): every function has direct unit tests.
