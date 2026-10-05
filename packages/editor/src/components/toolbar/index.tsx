@@ -270,6 +270,7 @@ const defaultPosition: ToolbarPosition = {
     top: EDITOR_LAYOUT.formattingToolbar.top,
   },
   zIndex: EDITOR_Z_INDEX.formattingToolbar,
+  canvasInset: 'right',
 };
 
 type ToolbarProps = {
@@ -352,6 +353,7 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
         zIndex: pos.zIndex ?? EDITOR_Z_INDEX.formattingToolbar,
       }}
       role="menu"
+      data-canvas-inset={pos.canvasInset}
       aria-orientation={pos.vertical ? 'vertical' : 'horizontal'}
     >
       {configurations.map((c, i) => {

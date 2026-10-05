@@ -594,6 +594,7 @@ const AppBar = ({
       <MaterialAppBar
         role="menubar"
         position="absolute"
+        data-canvas-inset="top"
         color="default"
         className="material-menubar"
         sx={{

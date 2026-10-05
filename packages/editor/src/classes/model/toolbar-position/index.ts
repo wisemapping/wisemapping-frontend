@@ -47,5 +47,10 @@ interface ToolbarPosition {
    * whether its own `top` value contained '100%'.
    */
   zIndex?: number;
+  /**
+   * The edge of the canvas the toolbar floats over, so that zoom to fit keeps the map clear of
+   * it. Unset for a toolbar that covers no edge.
+   */
+  canvasInset?: 'top' | 'right' | 'bottom' | 'left';
 }
 export default ToolbarPosition;

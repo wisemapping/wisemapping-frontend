@@ -369,6 +369,7 @@ const VisualizationToolbar = ({ model, capability }: VisualizationToolbarProps):
         },
         vertical: false,
         zIndex: EDITOR_Z_INDEX.canvasChrome,
+        canvasInset: 'bottom',
       }}
     />
   );
