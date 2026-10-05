@@ -24,7 +24,7 @@ import StyleAttributes from './StyleAttributes';
 import { isStrokeStyle, type ElementType, type StrokeStyle } from './types';
 
 class Workspace extends WorkspaceElement<WorkspacePeer> {
-  private _htmlContainer: HTMLElement;
+  private readonly _htmlContainer: HTMLElement;
 
   constructor(attributes?: StyleAttributes) {
     const htmlContainer = Workspace._createDivContainer();
@@ -212,8 +212,9 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     this.peer.removeChild(element.peer);
   }
 
-  getSVGElement(): Element {
-    return this._htmlContainer.firstChild as Element;
+  /** The root <svg> node, the only child of the HTML container. */
+  getSVGElement(): SVGSVGElement {
+    return this.peer._native;
   }
 }
 

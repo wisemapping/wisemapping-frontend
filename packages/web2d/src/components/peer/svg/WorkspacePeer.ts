@@ -20,13 +20,12 @@ import ElementPeer, { formatLength } from './ElementPeer';
 import SizeType from '../../SizeType';
 import PositionType from '../../PositionType';
 
-class WorkspacePeer extends ElementPeer {
+/** The viewBox numbers: <min-x> <min-y> <width> <height>. */
+type ViewBox = readonly [x: number, y: number, width: number, height: number];
+
+class WorkspacePeer extends ElementPeer<SVGSVGElement> {
   constructor() {
-    const svgElement: SVGElement = window.document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'svg',
-    );
-    super(svgElement);
+    super(ElementPeer.createNode('svg'));
     // The viewBox (the coordinate size and origin) stretches to the SVG size on both axes.
     this.attr('preserveAspectRatio', 'none');
   }
@@ -62,7 +61,7 @@ class WorkspacePeer extends ElementPeer {
   // reads and writes the origin, so it should not parse the string each time.
   private _viewBoxSource: string | null = null;
 
-  private _viewBoxCoords: number[] | null = null;
+  private _viewBox: ViewBox | null = null;
 
   /**
    * The coordinate size and origin are the SVG viewBox: <min-x> <min-y> <width> <height> in user
@@ -71,62 +70,54 @@ class WorkspacePeer extends ElementPeer {
    * Values are kept at full precision: mindplot maps the mouse with the exact origin and
    * scale, so rounding them here makes slow pans stall and the mouse mapping drift.
    */
-  setCoordSize(width: number, height: number) {
-    const coords = this.viewBoxCoords() ?? [0, 0, 0, 0];
-    coords[2] = width;
-    coords[3] = height;
-    this.writeViewBox(coords);
+  setCoordSize(width: number, height: number): void {
+    const [x, y] = this.viewBox() ?? [0, 0, 0, 0];
+    this.writeViewBox([x, y, width, height]);
   }
 
   getCoordSize(): SizeType {
-    const coords = this.viewBoxCoords() ?? [1, 1, 1, 1];
-    return { width: coords[2]!, height: coords[3]! };
+    const [, , width, height] = this.viewBox() ?? [1, 1, 1, 1];
+    return { width, height };
   }
 
   setCoordOrigin(x: number, y: number): void {
     // ViewBox min-x ,min-y by default initializated with 0 and 0.
-    const coords = this.viewBoxCoords() ?? [0, 0, 0, 0];
-
-    if ($defined(x)) {
-      coords[0] = x;
-    }
-
-    if ($defined(y)) {
-      coords[1] = y;
-    }
-
-    this.writeViewBox(coords);
+    const [currentX, currentY, width, height] = this.viewBox() ?? [0, 0, 0, 0];
+    this.writeViewBox([$defined(x) ? x : currentX, $defined(y) ? y : currentY, width, height]);
   }
 
   getCoordOrigin(): PositionType {
-    const coords = this.viewBoxCoords() ?? [0, 0, 0, 0];
-    return { x: coords[0]!, y: coords[1]! };
+    const [x, y] = this.viewBox() ?? [0, 0, 0, 0];
+    return { x, y };
   }
 
   /**
-   * A copy of the viewBox numbers, or null without a viewBox. The string is parsed only when it
-   * is not the one last seen, for example after a write around the peer.
+   * The viewBox numbers, or null without a viewBox. The string is parsed only when it is not the
+   * one last seen, for example after a write around the peer. A missing number is NaN.
    */
-  private viewBoxCoords(): number[] | null {
+  private viewBox(): ViewBox | null {
     const viewBox = this._native.getAttribute('viewBox');
     if (viewBox === null) {
       return null;
     }
-    if (viewBox !== this._viewBoxSource || !this._viewBoxCoords) {
+    if (viewBox !== this._viewBoxSource || !this._viewBox) {
+      const [x = NaN, y = NaN, width = NaN, height = NaN] = viewBox
+        .split(/ /)
+        .map((e: string) => Number.parseFloat(e));
       this._viewBoxSource = viewBox;
-      this._viewBoxCoords = viewBox.split(/ /).map((e: string) => Number.parseFloat(e));
+      this._viewBox = [x, y, width, height];
     }
-    return [...this._viewBoxCoords];
+    return this._viewBox;
   }
 
-  private writeViewBox(coords: number[]): void {
-    const viewBox = coords.join(' ');
-    this.attr('viewBox', viewBox);
-    this._viewBoxSource = viewBox;
-    this._viewBoxCoords = [...coords];
+  private writeViewBox(viewBox: ViewBox): void {
+    const value = viewBox.join(' ');
+    this.attr('viewBox', value);
+    this._viewBoxSource = value;
+    this._viewBox = viewBox;
   }
 
-  getPosition() {
+  getPosition(): PositionType {
     return { x: 0, y: 0 };
   }
 }

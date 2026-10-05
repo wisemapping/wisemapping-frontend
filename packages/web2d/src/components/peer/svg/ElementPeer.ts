@@ -38,8 +38,14 @@ export type { StrokeStyle };
 /** Formats a coordinate or length with at most 2 decimals and no trailing zeros. */
 export const formatLength = (value: number): string => String(Math.round(value * 100) / 100 || 0);
 
-class ElementPeer {
-  _native: SVGElement;
+/** The SVG namespace, typed so that createElementNS returns the element type of the tag. */
+export const SVG_NAMESPACE = 'http://www.w3.org/2000/svg' as const;
+
+/**
+ * The SVG implementation behind an element. `N` is the type of its SVG node.
+ */
+class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
+  readonly _native: N;
 
   private _parent: ElementPeer | null;
 
@@ -59,7 +65,7 @@ class ElementPeer {
   // The dash array last written from the style table, to rescale it when the width changes.
   private _tableDash: string | null;
 
-  constructor(svgElement: SVGElement) {
+  constructor(svgElement: N) {
     this._native = svgElement;
     this._size = { width: 1, height: 1 };
     this._handlers = new Map();
@@ -171,14 +177,14 @@ class ElementPeer {
   setSize(width: number, height: number): void {
     const writeAttributes = this.hasSizeAttributes();
     if ($defined(width)) {
-      this._size.width = width;
+      this._size = { ...this._size, width };
       if (writeAttributes) {
         this.attr('width', formatLength(width));
       }
     }
 
     if ($defined(height)) {
-      this._size.height = height;
+      this._size = { ...this._size, height };
       if (writeAttributes) {
         this.attr('height', formatLength(height));
       }
@@ -417,7 +423,12 @@ class ElementPeer {
     };
   }
 
-  protected static svgNamespace = 'http://www.w3.org/2000/svg';
+  /** Creates an SVG node of `tag`, typed as its element (SVGRectElement for 'rect', ...). */
+  protected static createNode<K extends keyof SVGElementTagNameMap>(
+    tag: K,
+  ): SVGElementTagNameMap[K] {
+    return window.document.createElementNS(SVG_NAMESPACE, tag);
+  }
 
   protected static linkNamespace = 'http://www.w3.org/1999/xlink';
 }

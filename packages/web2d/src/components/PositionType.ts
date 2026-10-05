@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-type PositionType = { x: number; y: number };
+/** A point. Read-only: an element never hands out its internal state for writing. */
+type PositionType = Readonly<{ x: number; y: number }>;
 
 export default PositionType;

@@ -19,7 +19,7 @@ import ElementPeer from './ElementPeer';
 import PositionType from '../../PositionType';
 import SizeType from '../../SizeType';
 
-class GroupPeer extends ElementPeer {
+class GroupPeer extends ElementPeer<SVGGElement> {
   private _coordSize: SizeType;
 
   private _position: PositionType;
@@ -27,8 +27,7 @@ class GroupPeer extends ElementPeer {
   private _coordOrigin: PositionType;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    super(svgElement);
+    super(ElementPeer.createNode('g'));
     this._coordSize = {
       width: 1,
       height: 1,
@@ -45,8 +44,7 @@ class GroupPeer extends ElementPeer {
 
   setCoordSize(width: number, height: number): void {
     const change = this._coordSize.width !== width || this._coordSize.height !== height;
-    this._coordSize.width = width;
-    this._coordSize.height = height;
+    this._coordSize = { width, height };
 
     if (change) {
       this.updateTransform();
@@ -114,8 +112,7 @@ class GroupPeer extends ElementPeer {
 
   setCoordOrigin(x: number, y: number) {
     const change = x !== this._coordOrigin.x || y !== this._coordOrigin.y;
-    this._coordOrigin.x = x;
-    this._coordOrigin.y = y;
+    this._coordOrigin = { x, y };
 
     if (change) {
       this.updateTransform();
@@ -132,8 +129,7 @@ class GroupPeer extends ElementPeer {
 
   setPosition(x: number, y: number) {
     const change = x !== this._position.x || y !== this._position.y;
-    this._position.x = x;
-    this._position.y = y;
+    this._position = { x, y };
     if (change) {
       this.updateTransform();
     }

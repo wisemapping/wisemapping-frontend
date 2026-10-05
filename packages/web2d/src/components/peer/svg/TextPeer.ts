@@ -46,8 +46,8 @@ export const invalidateTextMeasurements = (): void => {
   measurementGeneration += 1;
 };
 
-class TextPeer extends ElementPeer {
-  private _position: { x: number; y: number };
+class TextPeer extends ElementPeer<SVGTextElement> {
+  private _position: PositionType;
 
   private _font: FontPeer;
 
@@ -65,8 +65,7 @@ class TextPeer extends ElementPeer {
   private _measured: SizeType;
 
   constructor(fontPeer: FontPeer) {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    super(svgElement);
+    super(ElementPeer.createNode('text'));
     this._position = { x: 0, y: 0 };
     this._font = fontPeer;
     this._text = '';
@@ -94,7 +93,7 @@ class TextPeer extends ElementPeer {
     this.getTextLines().forEach((line, i) => {
       let tspan = this._tspans[i];
       if (!tspan) {
-        tspan = window.document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+        tspan = ElementPeer.createNode('tspan');
         tspan.setAttribute('dy', '1em');
         this._native.appendChild(tspan);
         this._tspans.push(tspan);
@@ -110,9 +109,7 @@ class TextPeer extends ElementPeer {
     });
 
     const lineCount = this.getTextLines().length;
-    while (this._tspans.length > lineCount) {
-      this._native.removeChild(this._tspans.pop() as SVGTSpanElement);
-    }
+    this._tspans.splice(lineCount).forEach((tspan) => this._native.removeChild(tspan));
   }
 
   /** Whether the node holds exactly the line tspans, in order. */
@@ -149,7 +146,7 @@ class TextPeer extends ElementPeer {
   }
 
   getPosition(): PositionType {
-    return this._position;
+    return { x: this._position.x, y: this._position.y };
   }
 
   /**
@@ -268,7 +265,7 @@ class TextPeer extends ElementPeer {
 
     let box: SizeType;
     try {
-      const { width, height } = (this._native as SVGGraphicsElement).getBBox();
+      const { width, height } = this._native.getBBox();
       box = { width, height };
     } catch {
       return { width: 0, height: 0 };

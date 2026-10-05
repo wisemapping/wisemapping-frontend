@@ -20,7 +20,8 @@ import Rect from '../../src/components/Rect';
 import Workspace from '../../src/components/Workspace';
 import Group from '../../src/components/Group';
 
-const svgNode = (tag = 'rect') => document.createElementNS('http://www.w3.org/2000/svg', tag);
+const svgNode = (tag: 'rect' | 'g' = 'rect') =>
+  document.createElementNS('http://www.w3.org/2000/svg', tag);
 
 const click = (peer: ElementPeer, type = 'click') =>
   peer._native.dispatchEvent(new MouseEvent(type, { bubbles: true }));

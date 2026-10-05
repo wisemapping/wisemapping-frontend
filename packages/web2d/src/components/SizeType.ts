@@ -15,9 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-type SizeType = {
+/** A width and a height. Read-only: an element never hands out its internal state for writing. */
+type SizeType = Readonly<{
   width: number;
   height: number;
-};
+}>;
 
 export default SizeType;

@@ -20,7 +20,7 @@ import PositionType from '../../PositionType';
 import { curvePathData, defaultControlPoints } from '../../geometry/curve';
 import ElementPeer from './ElementPeer';
 
-class CurvedLinePeer extends ElementPeer {
+class CurvedLinePeer extends ElementPeer<SVGPathElement> {
   // Whether the user placed the control point. Only set through setIs*ControlPointCustom: the
   // setters below also take default points, which must not be reported as custom ...
   private _customControlPoint_1: boolean;
@@ -48,8 +48,7 @@ class CurvedLinePeer extends ElementPeer {
   private _width: number;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    super(svgElement);
+    super(ElementPeer.createNode('path'));
     this._customControlPoint_1 = false;
     this._customControlPoint_2 = false;
     this._fixedControlPoint_1 = false;
@@ -186,12 +185,10 @@ class CurvedLinePeer extends ElementPeer {
       { x: this._x2, y: this._y2 },
     );
     if (!this._customControlPoint_1 && !this._fixedControlPoint_1 && !avoidControlPointFix) {
-      this._control1.x = defaultpoints[0].x;
-      this._control1.y = defaultpoints[0].y;
+      this._control1 = { x: defaultpoints[0].x, y: defaultpoints[0].y };
     }
     if (!this._customControlPoint_2 && !this._fixedControlPoint_2 && !avoidControlPointFix) {
-      this._control2.x = defaultpoints[1].x;
-      this._control2.y = defaultpoints[1].y;
+      this._control2 = { x: defaultpoints[1].x, y: defaultpoints[1].y };
     }
   }
 

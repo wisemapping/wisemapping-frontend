@@ -19,33 +19,29 @@
 import SizeType from '../../SizeType';
 import ElementPeer from '../svg/ElementPeer';
 import GroupPeer from '../svg/GroupPeer';
-import TextPeer from '../svg/TextPeer';
 import WorkspacePeer from '../svg/WorkspacePeer';
 
 class TransformUtil {
-  static workoutScale(elementPeer: TextPeer): SizeType {
+  /**
+   * The screen scale of an element: the product of the size / coordinate size ratio of every
+   * group and workspace above it.
+   */
+  static workoutScale(elementPeer: ElementPeer): SizeType {
     let width = 1;
     let height = 1;
-    let current: ElementPeer | null = elementPeer.getParent();
+    let current = elementPeer.getParent();
     while (current) {
-      if (
-        !(current instanceof GroupPeer) &&
-        !(current instanceof WorkspacePeer) &&
-        !(current instanceof TextPeer)
-      ) {
-        throw new Error(
-          `Not supported element as part of the parent hierarchy.${current instanceof GroupPeer}`,
-        );
+      if (!(current instanceof GroupPeer) && !(current instanceof WorkspacePeer)) {
+        throw new Error('Not supported element as part of the parent hierarchy.');
       }
 
-      const container = current as GroupPeer;
-      const coordSize = container.getCoordSize();
+      const coordSize = current.getCoordSize();
       // A workspace reads its size from the <svg> attributes (W-HTMLFONT).
-      const size = container.getSize();
+      const size = current.getSize();
 
       width *= size.width / coordSize.width;
       height *= size.height / coordSize.height;
-      current = container.getParent();
+      current = current.getParent();
     }
     return { width, height };
   }

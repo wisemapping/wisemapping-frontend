@@ -101,6 +101,15 @@ describe('DomUtils', () => {
     expect(getOffset(div)).toEqual({ top: 10 + window.pageYOffset, left: 20 + window.pageXOffset });
   });
 
+  it('getOffset of an element of a document without a window adds no scroll', () => {
+    const doc = document.implementation.createHTMLDocument('detached');
+    const div = doc.createElement('div');
+    doc.body.append(div);
+    mockRect(div, 10, 20);
+    expect(doc.defaultView).toBeNull();
+    expect(getOffset(div)).toEqual({ top: 10, left: 20 });
+  });
+
   it('getPosition of a fixed element is its viewport position', () => {
     const div = document.createElement('div');
     div.style.position = 'fixed';

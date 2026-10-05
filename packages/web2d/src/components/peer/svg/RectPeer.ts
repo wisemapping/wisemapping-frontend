@@ -22,25 +22,24 @@ import ElementPeer, { formatLength } from './ElementPeer';
 /**
  * http://www.w3.org/TR/SVG/shapes.html#RectElement
  */
-class RectPeer extends ElementPeer {
+class RectPeer extends ElementPeer<SVGRectElement> {
   private _arc: number;
 
   private _position: PositionType;
 
   constructor(arc: number) {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    super(svgElement);
+    super(ElementPeer.createNode('rect'));
     this._arc = arc;
     this._position = { x: 0, y: 0 };
   }
 
   setPosition(x: number, y: number) {
     if ($defined(x)) {
-      this._position.x = x;
+      this._position = { ...this._position, x };
       this.attr('x', formatLength(x));
     }
     if ($defined(y)) {
-      this._position.y = y;
+      this._position = { ...this._position, y };
       this.attr('y', formatLength(y));
     }
   }

@@ -21,7 +21,7 @@ import { arcPathData } from '../../geometry/arc';
 import ElementPeer from './ElementPeer';
 import type { Orientation } from '../../types';
 
-class ArcLinePeer extends ElementPeer {
+class ArcLinePeer extends ElementPeer<SVGPathElement> {
   private _x1: number;
 
   private _y1: number;
@@ -33,8 +33,7 @@ class ArcLinePeer extends ElementPeer {
   private _orientation: Orientation;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    super(svgElement);
+    super(ElementPeer.createNode('path'));
     this._x1 = 0;
     this._x2 = 0;
     this._y1 = 0;

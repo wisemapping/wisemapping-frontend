@@ -21,7 +21,7 @@ import ElementPeer from './ElementPeer';
 /** The ends are written with 2 decimals. */
 const format = fixed(2);
 
-class StraightLinePeer extends ElementPeer {
+class StraightLinePeer extends ElementPeer<SVGLineElement> {
   private _x1: number;
 
   private _y1: number;
@@ -31,8 +31,7 @@ class StraightLinePeer extends ElementPeer {
   private _y2: number;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    super(svgElement);
+    super(ElementPeer.createNode('line'));
 
     this._x1 = 0;
     this._x2 = 0;

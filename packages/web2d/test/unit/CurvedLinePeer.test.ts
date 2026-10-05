@@ -117,7 +117,7 @@ describe('CurvedLinePeer control points (W-CTRLFLAG, BL-69)', () => {
     peer.setSrcControlPoint(control);
     control.x = 99;
     const [c1] = peer.getControlPoints();
-    c1.x = 42;
+    (c1 as { x: number }).x = 42;
     expect(peer.getControlPoints()[0]).toEqual({ x: 1, y: 2 });
   });
 

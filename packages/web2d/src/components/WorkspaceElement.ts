@@ -25,7 +25,7 @@ import { isStrokeStyle, type ElementType } from './types';
  * `M` maps the element's custom event names to their detail type (see CustomEventMap).
  */
 abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap = CustomEventMap> {
-  peer: T;
+  readonly peer: T;
 
   constructor(peer: T, attributes: StyleAttributes, delayInit?: boolean) {
     this.peer = peer;

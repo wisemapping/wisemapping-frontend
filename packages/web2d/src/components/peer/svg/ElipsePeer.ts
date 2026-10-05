@@ -18,12 +18,11 @@
 import PositionType from '../../PositionType';
 import ElementPeer, { formatLength } from './ElementPeer';
 
-class ElipsePeer extends ElementPeer {
+class ElipsePeer extends ElementPeer<SVGEllipseElement> {
   private _position: PositionType;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-    super(svgElement);
+    super(ElementPeer.createNode('ellipse'));
 
     this._position = { x: 0, y: 0 };
   }

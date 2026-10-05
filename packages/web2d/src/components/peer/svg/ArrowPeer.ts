@@ -22,7 +22,7 @@ import { arrowPathData } from '../../geometry/arrow';
 import ElementPeer from './ElementPeer';
 import type { StrokeStyle } from '../../types';
 
-class ArrowPeer extends ElementPeer {
+class ArrowPeer extends ElementPeer<SVGPathElement> {
   private _fromPoint: PositionType;
 
   private _controlPoint: PositionType | null;
@@ -30,8 +30,7 @@ class ArrowPeer extends ElementPeer {
   private _strokeWidth: number;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    super(svgElement);
+    super(ElementPeer.createNode('path'));
     this._fromPoint = { x: 0, y: 0 };
     this._controlPoint = null;
     this._strokeWidth = 1;

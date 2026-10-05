@@ -26,7 +26,7 @@ import type { StrokeStyle } from '../../types';
  * NeuronLinePeer renders an irregular spline that mimics the branching impulse
  * of neurons. Each connection gets a deterministic but organic-looking path.
  */
-class NeuronLinePeer extends ElementPeer {
+class NeuronLinePeer extends ElementPeer<SVGPathElement> {
   private _strokeWidth: number;
 
   private _strokeOpacity: number;
@@ -54,11 +54,7 @@ class NeuronLinePeer extends ElementPeer {
   private _shape: { readonly seed: number; readonly steps: number } | null;
 
   constructor() {
-    const svgElement = window.document.createElementNS(
-      NeuronLinePeer.svgNamespace,
-      'path',
-    ) as SVGPathElement;
-    super(svgElement);
+    super(ElementPeer.createNode('path'));
 
     this.attr('fill', 'none');
     this.attr('stroke-linecap', 'round');
@@ -102,8 +98,8 @@ class NeuronLinePeer extends ElementPeer {
       this._strokeColor = color;
     }
 
-    if ($defined(opacity)) {
-      this._strokeOpacity = opacity as number;
+    if (opacity != null) {
+      this._strokeOpacity = opacity;
     }
 
     this._applyStroke();

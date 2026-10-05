@@ -67,7 +67,7 @@ describe('GroupPeer.updateTransform', () => {
     expect(peer.getCoordSize()).toEqual({ width: 30, height: 40 });
     expect(peer.getPosition()).toEqual({ x: 1, y: 2 });
     expect(peer.getCoordOrigin()).toEqual({ x: 3, y: 4 });
-    peer.getPosition().x = 99;
+    (peer.getPosition() as { x: number }).x = 99;
     expect(peer.getPosition().x).toBe(1);
   });
 

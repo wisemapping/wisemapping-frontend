@@ -88,6 +88,23 @@ describe('WorkspacePeer viewBox (W-VIEWBOX, BL-71)', () => {
     expect(peer._native.getAttribute('viewBox')).toBe('5 6 3 4');
   });
 
+  it('reads the numbers a short viewBox lacks as NaN (typing T4: no non-null assertions)', () => {
+    const peer = new WorkspacePeer();
+    peer._native.setAttribute('viewBox', '1');
+    expect(peer.getCoordOrigin()).toEqual({ x: 1, y: NaN });
+    expect(peer.getCoordSize()).toEqual({ width: NaN, height: NaN });
+    peer._native.setAttribute('viewBox', '');
+    expect(peer.getCoordOrigin()).toEqual({ x: NaN, y: NaN });
+  });
+
+  it('setCoordOrigin keeps the current value of a missing coordinate', () => {
+    const peer = new WorkspacePeer();
+    peer.setCoordOrigin(1, 2);
+    peer.setCoordOrigin(undefined as unknown as number, 5);
+    peer.setCoordOrigin(7, null as unknown as number);
+    expect(peer.getCoordOrigin()).toEqual({ x: 7, y: 5 });
+  });
+
   it('stretches the viewBox (no aspect ratio)', () => {
     expect(new WorkspacePeer()._native.getAttribute('preserveAspectRatio')).toBe('none');
   });

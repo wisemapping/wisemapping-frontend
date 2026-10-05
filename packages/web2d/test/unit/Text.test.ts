@@ -354,7 +354,7 @@ describe('Text measurement cache', () => {
     const size = text.measure();
     expect(size).toEqual({ width: 30, height: 12 });
     // A copy: changing it does not change the cached measurement.
-    size.width = 0;
+    (size as { width: number }).width = 0;
     expect(text.measure().width).toBe(30);
     expect(calls.n).toBe(1);
   });

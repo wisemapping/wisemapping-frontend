@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import Text from '../../src/components/Text';
 import Rect from '../../src/components/Rect';
 import Ellipse from '../../src/components/Ellipse';
 import Image from '../../src/components/Image';
@@ -50,7 +51,7 @@ describe('Rect', () => {
 
   it('getPosition of a new rect peer is the origin, and a copy', () => {
     const rect = new Rect(0, { x: 7, y: 8 });
-    rect.getPosition().x = 99;
+    (rect.getPosition() as { x: number }).x = 99;
     expect(rect.getPosition()).toEqual({ x: 7, y: 8 });
   });
 });
@@ -107,5 +108,19 @@ describe('Image', () => {
     const peer = new ImagePeer();
     expect(peer.getPosition()).toEqual({ x: 0, y: 0 });
     expect(peer.getHref()).toBe('');
+  });
+});
+
+// Typing T7: getPosition() hands out a copy, so a caller cannot change the element through it.
+describe.each([
+  ['Text', () => new Text()],
+  ['Image', () => new Image()],
+  ['Ellipse', () => new Ellipse()],
+] as [string, () => Text | Image | Ellipse][])('%s getPosition (typing T7)', (_name, create) => {
+  it('returns a copy', () => {
+    const element = create();
+    element.setPosition(7, 8);
+    (element.getPosition() as { x: number }).x = 99;
+    expect(element.getPosition()).toEqual({ x: 7, y: 8 });
   });
 });

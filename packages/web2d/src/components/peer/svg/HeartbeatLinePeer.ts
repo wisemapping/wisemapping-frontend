@@ -27,7 +27,7 @@ import type { StrokeStyle } from '../../types';
  * runs between the source and destination points. It gives a rhythmic, animated feel
  * that differs from the bezier-based connectors.
  */
-class HeartbeatLinePeer extends ElementPeer {
+class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
   private _strokeWidth: number;
 
   private _strokeOpacity: number;
@@ -47,11 +47,7 @@ class HeartbeatLinePeer extends ElementPeer {
   private _y2: number;
 
   constructor() {
-    const svgElement = window.document.createElementNS(
-      HeartbeatLinePeer.svgNamespace,
-      'path',
-    ) as SVGPathElement;
-    super(svgElement);
+    super(ElementPeer.createNode('path'));
 
     this.attr('fill', 'none');
     this.attr('stroke-linejoin', 'round');
@@ -94,8 +90,8 @@ class HeartbeatLinePeer extends ElementPeer {
       this._strokeColor = color;
     }
 
-    if ($defined(opacity)) {
-      this._strokeOpacity = opacity as number;
+    if (opacity != null) {
+      this._strokeOpacity = opacity;
     }
 
     this._applyStroke();

@@ -39,10 +39,11 @@ export const getOffset = (elem: Element | null): { top: number; left: number } =
   }
   // Get document-relative position by adding viewport scroll to viewport-relative gBCR
   const rect = elem.getBoundingClientRect();
+  // A document without a window (not rendered) has no scroll to add.
   const win = elem.ownerDocument.defaultView;
   return {
-    top: rect.top + win!.pageYOffset,
-    left: rect.left + win!.pageXOffset,
+    top: rect.top + (win?.pageYOffset ?? 0),
+    left: rect.left + (win?.pageXOffset ?? 0),
   };
 };
 

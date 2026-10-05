@@ -20,7 +20,7 @@ import * as PolyLineUtils from '../../geometry/polyline';
 import ElementPeer from './ElementPeer';
 import type { Orientation, PolyLineStyle } from '../../types';
 
-class PolyLinePeer extends ElementPeer {
+class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
   private _breakDistance: number;
 
   private _x1: number;
@@ -40,8 +40,7 @@ class PolyLinePeer extends ElementPeer {
   private _pathDirty: boolean;
 
   constructor() {
-    const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-    super(svgElement);
+    super(ElementPeer.createNode('polyline'));
     this.setFill('none');
     this._breakDistance = 10;
     this._x1 = 0;
