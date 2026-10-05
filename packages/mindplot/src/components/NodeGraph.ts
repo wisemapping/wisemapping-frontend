@@ -170,9 +170,9 @@ abstract class NodeGraph implements CanvasElement {
     return this._size;
   }
 
+  /** Replaces the size: a size getSize() handed out before keeps its value. */
   setSize(size: SizeType) {
-    this._size.width = size.width;
-    this._size.height = size.height;
+    this._size = { width: size.width, height: size.height };
   }
 
   getModel(): NodeModel {

@@ -178,20 +178,15 @@ class Shape {
     const size = targetNode.getSize();
 
     const isAtRight = Shape.isAtRight(sourcePosition, pos);
-    const result = Shape.calculateRectConnectionPoint(pos, size, isAtRight);
-    if (targetNode.getShapeType() === 'line') {
-      result.y += targetNode.getSize().height / 2;
-    }
+    const point = Shape.calculateRectConnectionPoint(pos, size, isAtRight);
+    const lineOffset = targetNode.getShapeType() === 'line' ? targetNode.getSize().height / 2 : 0;
 
     // Move a little the position...
     const offset = TopicConfig.CONNECTOR_WIDTH / 2;
-    if (!isAtRight) {
-      result.x += offset;
-    } else {
-      result.x -= offset;
-    }
-
-    return result;
+    return {
+      x: point.x + (isAtRight ? -offset : offset),
+      y: point.y + lineOffset,
+    };
   }
 }
 

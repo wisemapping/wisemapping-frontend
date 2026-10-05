@@ -48,6 +48,24 @@ describe('Topic.setSize', () => {
     expect(resizeEvents(spy)).toHaveLength(0);
   });
 
+  // SizeType is read-only (T5): setSize used to write the new size into the object getSize()
+  // had handed out, so a caller holding the old size saw it change under it.
+  it('leaves a size handed out before unchanged when it grows', () => {
+    const { child } = buildTopics();
+    const before = child.getSize();
+    const snapshot = { ...before };
+
+    const spy = jest.spyOn(child.getLayoutEventBus(), 'fireEvent');
+    stubSvgMeasurement(TEXT_WIDTH + 30);
+    child.redraw(child.getThemeVariant(), false);
+
+    expect(child.getSize().width).toBe(snapshot.width + 30);
+    expect(before).toEqual(snapshot);
+    // Nor does the size reported to the layout change with the topic.
+    const { size } = resizeEvents(spy)[0][1];
+    expect(size).not.toBe(child.getSize());
+  });
+
   it('fires topicResize with the rounded size when the text grows', () => {
     const { child } = buildTopics();
     const before = { ...child.getSize() };

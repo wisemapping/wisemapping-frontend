@@ -72,7 +72,8 @@ class SVGExporter extends Exporter {
     const translates: SizeType[] = rectElems.map((rect: Element) => {
       const g = rect.parentElement;
       const transformStr = g?.getAttribute('transform');
-      let result: SizeType = { width: 0, height: 0 };
+      // Built here, so it can be filled in field by field.
+      let result: { width: number; height: number } = { width: 0, height: 0 };
       if (transformStr) {
         // Looking to parse translate(220.00000,279.00000) scale(1.00000,1.00000)
         const match = transformStr.match(SVGExporter.regexpTranslate);

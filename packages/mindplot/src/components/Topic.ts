@@ -1129,9 +1129,8 @@ abstract class Topic extends NodeGraph {
       height: Math.ceil(newSize.height),
     };
 
-    // Note: oldSize is the live size object, so it already holds the new size once
-    // super.setSize() runs. Read it only before that. Topics are re-centred on their
-    // model position and the layout manager, which owns positions, moves them if needed.
+    // Topics are re-centred on their model position and the layout manager, which owns
+    // positions, moves them if needed.
     const oldSize = this.getSize();
     const hasSizeChanged =
       oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;

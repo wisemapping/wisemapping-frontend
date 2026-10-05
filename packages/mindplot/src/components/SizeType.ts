@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-type SizeType = {
+type SizeType = Readonly<{
   width: number;
   height: number;
-};
+}>;
 
 export default SizeType;

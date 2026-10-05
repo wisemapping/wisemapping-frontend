@@ -119,7 +119,8 @@ class MainTopic extends Topic {
     const isAtRight = Shape.isAtRight(targetPosition, pos);
     const size = this.getSize();
 
-    let result: PositionType = { x: 0, y: 0 };
+    // Built here, so it can be filled in field by field.
+    let result: { x: number; y: number } = { x: 0, y: 0 };
     if (this.getShapeType() === 'line') {
       const groupPosition = this.get2DElement().getPosition();
       const innerShareSize = this.getInnerShape().getSize();
