@@ -45,6 +45,23 @@ describe('TextImporterFactory', () => {
     expect(importer).toBeInstanceOf(FreeplaneImporter);
   });
 
+  test('should tell a Freeplane .mm by its map header only', () => {
+    const header =
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      "<map version='freeplane 1.11.5'>\n" +
+      '<!--To view this file, download free mind mapping software Freeplane from https://www.freeplane.org -->\n' +
+      '<node TEXT="test"/></map>';
+    expect(TextImporterFactory.create('mm', header)).toBeInstanceOf(FreeplaneImporter);
+  });
+
+  test('should keep a FreeMind .mm that mentions freeplane in its content with FreemindImporter', () => {
+    const freemindContent =
+      '<map version="1.0.1"><node TEXT="Compare freemind and freeplane">' +
+      '<node TEXT="version=&quot;freeplane"/></node></map>';
+    const importer = TextImporterFactory.create('mm', freemindContent);
+    expect(importer).toBeInstanceOf(FreemindImporter);
+  });
+
   test('should create FreeplaneImporter for mmx type', () => {
     const importer = TextImporterFactory.create('mmx', sampleContent);
     expect(importer).toBeInstanceOf(FreeplaneImporter);
