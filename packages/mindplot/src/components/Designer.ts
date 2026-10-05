@@ -456,14 +456,15 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const visibleWidth = Math.max(containerWidth - left - right, 1);
     const visibleHeight = Math.max(containerHeight - top - bottom, 1);
 
-    // Bounding box of all topics, with a 10% padding on each side. An empty map is centred on
-    // the origin.
+    // Bounding box of the visible topics (not the ones under a collapsed branch), with a 10%
+    // padding on each side. An empty map is centred on the origin.
     let minX = Infinity;
     let maxX = -Infinity;
     let minY = Infinity;
     let maxY = -Infinity;
     this.getModel()
       .getTopics()
+      .filter((topic) => topic.isVisible())
       .forEach((topic) => {
         const position = topic.getPosition();
         const size = topic.getSize();

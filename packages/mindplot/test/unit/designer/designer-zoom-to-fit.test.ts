@@ -347,6 +347,20 @@ describe('Designer.zoomToFit edge cases', () => {
     expect(center.y).toBeCloseTo(64 + (800 - 64) / 2, 6);
   });
 
+  // BL5-66: a collapsed branch hides its topics, which must not widen the fit.
+  it('ignores the topics hidden under a collapsed branch', async () => {
+    const designer = await build(2000, 1600);
+    designer.getActionDispatcher().shrinkBranch([1], true);
+    const hidden = designer.getModel().findTopicById(2)!;
+    expect(hidden.isVisible()).toBe(false);
+    // A big hidden subtree, far from the visible map.
+    jest.spyOn(hidden, 'getPosition').mockReturnValue({ x: 6000, y: 4000 });
+
+    designer.zoomToFit();
+
+    expect(designer.getModel().getZoom()).toBe(1);
+  });
+
   it('centres an empty map on the origin at 1x', async () => {
     const designer = await build(1000, 800);
     jest.spyOn(designer.getModel(), 'getTopics').mockReturnValue([]);
