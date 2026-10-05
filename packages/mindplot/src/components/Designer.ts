@@ -308,10 +308,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // Initialize workspace event listeners.
     screenManager.addEvent('update', () => {
       // Topic must be set to his original state. All editors must be closed.
-      const topics = me.getModel().getTopics();
-      topics.forEach((object) => {
-        object.closeEditors();
-      });
+      me.closeNodeEditors();
 
       // Clean some selected nodes on event ..
       if (me._cleanScreen) me._cleanScreen();
@@ -456,9 +453,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     });
   }
 
+  /** Closes the text editor, saving it: there is one per designer, whatever its topic. */
   closeNodeEditors() {
-    const topics = this.getModel().getTopics();
-    topics.forEach((topic) => topic.closeEditors());
+    this._topicEventDispatcher.close(true);
   }
 
   /** sets focus to all model entities, i.e. relationships and topics */
