@@ -17,6 +17,39 @@
  */
 
 /// <reference types="cypress" />
+
+// The part of the mindplot Designer these tests drive.
+type ClipboardDesigner = {
+  copyToClipboard(): Promise<void>;
+  pasteClipboard(): Promise<void>;
+};
+
+// <mindplot-component> exposes its designer through getDesigner() (MindplotWebComponent).
+type DesignerHost = HTMLElement & { getDesigner(): ClipboardDesigner };
+
+// Copies the selected topics and pastes them through the designer, as Ctrl+C / Ctrl+V do.
+// Headless Chrome usually denies the system clipboard, so both fall back to the internal one.
+const copyAndPaste = () => {
+  cy.get<DesignerHost>('mindplot-component').then(async ($host) => {
+    const designer = $host[0].getDesigner();
+    await designer.copyToClipboard();
+
+    // The paste offsets each pasted topic by a random amount: pin it so the snapshot is stable.
+    const win = $host[0].ownerDocument.defaultView as Window & typeof globalThis;
+    const { random } = win.Math;
+    win.Math.random = () => 0.5;
+    try {
+      await designer.pasteClipboard();
+    } finally {
+      win.Math.random = random;
+    }
+  });
+};
+
+// The text of every topic whose text is exactly `text`.
+const topicsWithText = (text: string) =>
+  cy.get('[test-id] > text').filter((_, el) => el.textContent === text);
+
 describe('Topic Copy and Paste Suite', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
@@ -25,53 +58,29 @@ describe('Topic Copy and Paste Suite', () => {
   });
 
   it('Copy and Paste topic', () => {
-    // Select the topic to copy
+    // Topic 2 is "Productivity", with its subtopics.
     cy.focusTopicById(2);
-    
-    // Get the original topic text to verify later
-    cy.get('[test-id="2"]').invoke('text').then((originalText) => {
-      // Call copy method directly via window object
-      cy.window().then((win) => {
-        // Access the designer instance and call copyToClipboard
-        const mindplotComponent = win.document.querySelector('mindplot-component');
-        if (mindplotComponent && mindplotComponent.designer) {
-          mindplotComponent.designer.copyToClipboard();
-          
-          // Now paste (clipboard operation completes synchronously, replaced cy.wait(500))
-          mindplotComponent.designer.pasteClipboard().then(() => {
-            // Verify a new topic was created with the same text (replaces cy.wait(500))
-            // The pasted topic should have the same text as the original
-            // Using assertion which auto-waits for the DOM to update
-            cy.contains(originalText).should('have.length.at.least', 2);
-            
-            cy.matchImageSnapshot('copyandpaste');
-          });
-        }
+    cy.get('[test-id="2"] > text')
+      .invoke('text')
+      .then((originalText) => {
+        topicsWithText(originalText).should('have.length', 1);
+
+        copyAndPaste();
+
+        // The original and the pasted copy.
+        topicsWithText(originalText).should('have.length', 2);
+        cy.matchImageSnapshot('copyandpaste');
       });
-    });
   });
 
   it('Copy topic and verify duplicate created', () => {
-    // Focus on a topic with identifiable text
     cy.focusTopicByText('Features');
-    
-    // Copy using keyboard shortcut (this calls designer.copyToClipboard internally)
-    cy.window().then((win) => {
-      const mindplotComponent = win.document.querySelector('mindplot-component');
-      if (mindplotComponent && mindplotComponent.designer) {
-        // Perform copy
-        mindplotComponent.designer.copyToClipboard();
-        
-        // Perform paste (replaces cy.wait(500))
-        mindplotComponent.designer.pasteClipboard().then(() => {
-          // Verify that we now have at least 2 topics with "Features" text (replaces cy.wait(500))
-          // (the original and the pasted copy)
-          // Using assertion which auto-waits for DOM update
-          cy.contains('Features').should('exist');
-          
-          cy.matchImageSnapshot('copy-and-paste-duplicate');
-        });
-      }
-    });
+    topicsWithText('Features').should('have.length', 1);
+
+    copyAndPaste();
+
+    // The original and the pasted copy.
+    topicsWithText('Features').should('have.length', 2);
+    cy.matchImageSnapshot('copy-and-paste-duplicate');
   });
 });
