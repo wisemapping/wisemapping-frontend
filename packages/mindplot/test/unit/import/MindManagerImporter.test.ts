@@ -619,6 +619,8 @@ describe('MindManagerImporter relationship labels', () => {
     );
     // The middle of Start (378, 0) and End (378, 189), moved by the Offset of the label (38, 0)
     expect(label.getPosition()).toEqual({ x: 416, y: 95 });
+    // MindManager draws relationship labels as plain text.
+    expect(label.getShapeType()).toBe('none');
     expect(mindmap.getRelationships()).toHaveLength(1);
   });
 });

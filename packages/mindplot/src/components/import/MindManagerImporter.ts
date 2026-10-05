@@ -895,7 +895,8 @@ class MindManagerImporter extends Importer {
 
   /**
    * WiseMapping relationships have no text: the labels of a relationship (its FloatingTopics) are
-   * imported as floating topics in the middle of its ends, moved by their Offset.
+   * imported as floating topics in the middle of its ends, moved by their Offset (in the real
+   * files, a few millimeters from the middle of the relationship).
    */
   private addRelationshipLabels(
     mindmap: Mindmap,
@@ -911,6 +912,10 @@ class MindManagerImporter extends Importer {
     const dest = MindManagerImporter.approximatePosition(mindmap.findNodeById(destTopicId));
     this.findChildrenByTagName(floatingTopics, 'Topic').forEach((labelElement, index) => {
       const label = this.parseTopic(labelElement, 'Label', 0);
+      // MindManager draws them as plain text, not with the shape of the floating topics.
+      const shape = this.findChildByTagName(labelElement, 'LabelFloatingTopicShape');
+      label.shape =
+        MindManagerImporter.toShapeType(shape?.getAttribute('LabelFloatingTopicShape')) ?? 'none';
       const node = this.convertTopic(mindmap, label, index, index, 1);
       const offset = label.offset ?? { x: 0, y: 0 };
       node.setPosition(
