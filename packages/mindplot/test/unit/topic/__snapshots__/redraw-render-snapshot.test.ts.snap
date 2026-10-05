@@ -2,7 +2,7 @@
 
 exports[`redraw render snapshot of a medium map renders the loaded map 1`] = `
 {
-  "canvas": "08423ea9d667",
+  "canvas": "28810db0a92b",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=31b0cded508b line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=694223b8f0ba line=73486457fe69",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=1a64fc1d9011 line=6491fa4aae55",
@@ -78,17 +78,17 @@ exports[`redraw render snapshot of a medium map renders the loaded map 1`] = `
   "topic 73": "pos=-641.5,475.5 size=206x34 order=0 group=88abfc810e04 line=e0b2e1b26408",
   "topic 74": "pos=-573,519.5 size=69x34 order=1 group=9e09df3f8943 line=d47b49308a13",
   "topic 8": "pos=447.5,-386.5 size=104x47 order=1 group=d64d7e44327b line=a32848cd2412",
-  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=6ca70d696411 line=606a614b8f3e",
+  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=10dbf5e4a3ca line=606a614b8f3e",
 }
 `;
 
 exports[`redraw render snapshot of a medium map renders the same after changing the theme: prism 1`] = `
 {
-  "canvas": "28fd3b506b2f",
+  "canvas": "690c80b8ee47",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=77dbc125755d line=da39a3ee5e6b",
   "topic 1": "pos=154.5,-358.5 size=126x68 order=0 group=8bfa7f94a2fb line=0c84999458f2",
   "topic 10": "pos=572.5,-315.5 size=272x68 order=0 group=c2a0d93df96d line=afbd5146efe5",
-  "topic 11": "pos=496.5,-216.5 size=120x110 order=1 group=201b92d69a26 line=9471854abcdd",
+  "topic 11": "pos=496.5,-216.5 size=120x110 order=1 group=31c29d8fa57d line=9471854abcdd",
   "topic 12": "pos=350.5,-78.5 size=206x93 order=2 group=fb2027cd368d line=51354e615c06",
   "topic 13": "pos=688,-117.5 size=409x68 order=0 group=9b923275f730 line=c88ffcd3ef3a",
   "topic 14": "pos=552,-39.5 size=137x68 order=1 group=14216e856eed line=6b134b66afca",
@@ -160,17 +160,17 @@ exports[`redraw render snapshot of a medium map renders the same after changing 
   "topic 73": "pos=-641.5,475.5 size=206x34 order=0 group=531fdbc1ec39 line=21a83375c7f5",
   "topic 74": "pos=-573,519.5 size=69x34 order=1 group=624b9f63626a line=d0956081015d",
   "topic 8": "pos=825.5,-406 size=206x93 order=1 group=3cc8d3d2d29a line=d4796982939f",
-  "topic 9": "pos=327,-255.5 size=159x125 order=1 group=25bbfee086fe line=770d56413c1f",
+  "topic 9": "pos=327,-255.5 size=159x125 order=1 group=2606bc0edd9c line=770d56413c1f",
 }
 `;
 
 exports[`redraw render snapshot of a medium map renders the same after changing the theme: prism dark 1`] = `
 {
-  "canvas": "2e7406bb0962",
+  "canvas": "c0718523502e",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=d0b6922e04e2 line=da39a3ee5e6b",
   "topic 1": "pos=154.5,-358.5 size=126x68 order=0 group=8bfa7f94a2fb line=bb96e6d0312e",
   "topic 10": "pos=572.5,-315.5 size=272x68 order=0 group=05b1e77fce38 line=77340f404032",
-  "topic 11": "pos=496.5,-216.5 size=120x110 order=1 group=201b92d69a26 line=56c2c6058a68",
+  "topic 11": "pos=496.5,-216.5 size=120x110 order=1 group=31c29d8fa57d line=56c2c6058a68",
   "topic 12": "pos=350.5,-78.5 size=206x93 order=2 group=604e646914f9 line=527bf452d000",
   "topic 13": "pos=688,-117.5 size=409x68 order=0 group=b86fc87a9f89 line=c3fc3a79d61e",
   "topic 14": "pos=552,-39.5 size=137x68 order=1 group=8368284e441d line=ffaf467bf992",
@@ -242,17 +242,17 @@ exports[`redraw render snapshot of a medium map renders the same after changing 
   "topic 73": "pos=-641.5,475.5 size=206x34 order=0 group=3cccf37b09c2 line=6af651494b80",
   "topic 74": "pos=-573,519.5 size=69x34 order=1 group=03edcc2744ba line=e560b7db881d",
   "topic 8": "pos=825.5,-406 size=206x93 order=1 group=6311e56ee2d0 line=a77f94b279d9",
-  "topic 9": "pos=327,-255.5 size=159x125 order=1 group=455e40ace205 line=e8b5fe97453e",
+  "topic 9": "pos=327,-255.5 size=159x125 order=1 group=54acc469274c line=e8b5fe97453e",
 }
 `;
 
 exports[`redraw render snapshot of a medium map renders the same after style, feature and image changes: styled 1`] = `
 {
-  "canvas": "f3381679a008",
+  "canvas": "597ad143be7e",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=31b0cded508b line=da39a3ee5e6b",
   "topic 1": "pos=154.5,-358.5 size=126x68 order=0 group=2e2617a5178a line=a051b803eb95",
   "topic 10": "pos=572.5,-315.5 size=272x68 order=0 group=9800abec1526 line=656e55ec490d",
-  "topic 11": "pos=496.5,-216.5 size=120x110 order=1 group=72332d8a2a34 line=d915ae1c715e",
+  "topic 11": "pos=496.5,-216.5 size=120x110 order=1 group=4949fdafb2c0 line=d915ae1c715e",
   "topic 12": "pos=350.5,-78.5 size=206x93 order=2 group=33fce70fac7a line=b799379f19e3",
   "topic 13": "pos=688,-117.5 size=409x68 order=0 group=e5521c9de3b0 line=dfd6783612ec",
   "topic 14": "pos=552,-39.5 size=137x68 order=1 group=f57e8e83f813 line=d36412cd3429",
@@ -324,13 +324,13 @@ exports[`redraw render snapshot of a medium map renders the same after style, fe
   "topic 73": "pos=-641.5,475.5 size=206x34 order=0 group=88abfc810e04 line=e0b2e1b26408",
   "topic 74": "pos=-573,519.5 size=69x34 order=1 group=9e09df3f8943 line=d47b49308a13",
   "topic 8": "pos=825.5,-406 size=206x93 order=1 group=738fe170cce3 line=f7e69ed85401",
-  "topic 9": "pos=327,-255.5 size=159x125 order=1 group=8891417a69e5 line=ecbb32f32569",
+  "topic 9": "pos=327,-255.5 size=159x125 order=1 group=8b1729464ec3 line=ecbb32f32569",
 }
 `;
 
 exports[`redraw render snapshot of a medium map renders the same after switching to the tree layout and back: mindmap 1`] = `
 {
-  "canvas": "e8fecf2afcc0",
+  "canvas": "780f2a6ab18e",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=31b0cded508b line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=694223b8f0ba line=73486457fe69",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=1a64fc1d9011 line=6491fa4aae55",
@@ -406,13 +406,13 @@ exports[`redraw render snapshot of a medium map renders the same after switching
   "topic 73": "pos=-641.5,475.5 size=206x34 order=0 group=88abfc810e04 line=e0b2e1b26408",
   "topic 74": "pos=-573,519.5 size=69x34 order=1 group=9e09df3f8943 line=d47b49308a13",
   "topic 8": "pos=447.5,-386.5 size=104x47 order=1 group=d64d7e44327b line=a32848cd2412",
-  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=6ca70d696411 line=606a614b8f3e",
+  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=10dbf5e4a3ca line=606a614b8f3e",
 }
 `;
 
 exports[`redraw render snapshot of a medium map renders the same after switching to the tree layout and back: tree 1`] = `
 {
-  "canvas": "2a7ba1192445",
+  "canvas": "29e44420ca30",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=31b0cded508b line=da39a3ee5e6b",
   "topic 1": "pos=-2021.5,110 size=71x38 order=0 group=dffc69cb0bda line=543bf1a100e4",
   "topic 10": "pos=-2035.5,350 size=86x34 order=0 group=3c611883b3cf line=cb01c4de0525",
@@ -488,13 +488,13 @@ exports[`redraw render snapshot of a medium map renders the same after switching
   "topic 73": "pos=2293.5,333 size=206x34 order=0 group=c8aa150441ae line=43d0a323e679",
   "topic 74": "pos=2441,333 size=69x34 order=1 group=19d53b81058d line=6cd7562e2e5c",
   "topic 8": "pos=-2140.5,430.5 size=104x47 order=1 group=24a659d2004c line=49b24a9bd813",
-  "topic 9": "pos=-1970.5,231 size=80x64 order=1 group=b1b256020f80 line=2dbc15158ac5",
+  "topic 9": "pos=-1970.5,231 size=80x64 order=1 group=a8e09e40216f line=2dbc15158ac5",
 }
 `;
 
 exports[`redraw render snapshot of a medium map renders the same after toggling the theme variant: dark 1`] = `
 {
-  "canvas": "c47023708980",
+  "canvas": "e677d5bb66ed",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=31b0cded508b line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=694223b8f0ba line=73486457fe69",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=1a64fc1d9011 line=6491fa4aae55",
@@ -570,13 +570,13 @@ exports[`redraw render snapshot of a medium map renders the same after toggling 
   "topic 73": "pos=-641.5,475.5 size=206x34 order=0 group=88abfc810e04 line=e0b2e1b26408",
   "topic 74": "pos=-573,519.5 size=69x34 order=1 group=9e09df3f8943 line=d47b49308a13",
   "topic 8": "pos=447.5,-386.5 size=104x47 order=1 group=d64d7e44327b line=a32848cd2412",
-  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=6ca70d696411 line=606a614b8f3e",
+  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=10dbf5e4a3ca line=606a614b8f3e",
 }
 `;
 
 exports[`redraw render snapshot of a medium map renders the same after toggling the theme variant: initialized dark 1`] = `
 {
-  "canvas": "c47023708980",
+  "canvas": "e677d5bb66ed",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=31b0cded508b line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=694223b8f0ba line=73486457fe69",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=1a64fc1d9011 line=6491fa4aae55",
@@ -652,13 +652,13 @@ exports[`redraw render snapshot of a medium map renders the same after toggling 
   "topic 73": "pos=-641.5,475.5 size=206x34 order=0 group=88abfc810e04 line=e0b2e1b26408",
   "topic 74": "pos=-573,519.5 size=69x34 order=1 group=9e09df3f8943 line=d47b49308a13",
   "topic 8": "pos=447.5,-386.5 size=104x47 order=1 group=d64d7e44327b line=a32848cd2412",
-  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=6ca70d696411 line=606a614b8f3e",
+  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=10dbf5e4a3ca line=606a614b8f3e",
 }
 `;
 
 exports[`redraw render snapshot of a medium map renders the same after toggling the theme variant: light 1`] = `
 {
-  "canvas": "c47023708980",
+  "canvas": "e677d5bb66ed",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=31b0cded508b line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=694223b8f0ba line=73486457fe69",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=1a64fc1d9011 line=6491fa4aae55",
@@ -734,13 +734,13 @@ exports[`redraw render snapshot of a medium map renders the same after toggling 
   "topic 73": "pos=-641.5,475.5 size=206x34 order=0 group=88abfc810e04 line=e0b2e1b26408",
   "topic 74": "pos=-573,519.5 size=69x34 order=1 group=9e09df3f8943 line=d47b49308a13",
   "topic 8": "pos=447.5,-386.5 size=104x47 order=1 group=d64d7e44327b line=a32848cd2412",
-  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=6ca70d696411 line=606a614b8f3e",
+  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=10dbf5e4a3ca line=606a614b8f3e",
 }
 `;
 
 exports[`redraw render snapshot of a medium map renders the same while typing in the text editor and after committing: committed 1`] = `
 {
-  "canvas": "68a7aace5dab",
+  "canvas": "3b6f1f4f73c7",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=31b0cded508b line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=694223b8f0ba line=73486457fe69",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=1a64fc1d9011 line=6491fa4aae55",
@@ -816,13 +816,13 @@ exports[`redraw render snapshot of a medium map renders the same while typing in
   "topic 73": "pos=-641.5,475.5 size=206x34 order=0 group=88abfc810e04 line=e0b2e1b26408",
   "topic 74": "pos=-573,519.5 size=69x34 order=1 group=9e09df3f8943 line=d47b49308a13",
   "topic 8": "pos=513.5,-386.5 size=104x47 order=1 group=32c3cc78d155 line=0c42a27e86dc",
-  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=6ca70d696411 line=606a614b8f3e",
+  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=10dbf5e4a3ca line=606a614b8f3e",
 }
 `;
 
 exports[`redraw render snapshot of a medium map renders the same while typing in the text editor and after committing: typing 1`] = `
 {
-  "canvas": "56b554fe2222",
+  "canvas": "1c02e9948108",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=31b0cded508b line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=694223b8f0ba line=73486457fe69",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=1a64fc1d9011 line=6491fa4aae55",
@@ -898,6 +898,6 @@ exports[`redraw render snapshot of a medium map renders the same while typing in
   "topic 73": "pos=-641.5,475.5 size=206x34 order=0 group=88abfc810e04 line=e0b2e1b26408",
   "topic 74": "pos=-573,519.5 size=69x34 order=1 group=9e09df3f8943 line=d47b49308a13",
   "topic 8": "pos=513.5,-386.5 size=104x47 order=1 group=32c3cc78d155 line=0c42a27e86dc",
-  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=6ca70d696411 line=606a614b8f3e",
+  "topic 9": "pos=232.5,-301.5 size=80x64 order=1 group=10dbf5e4a3ca line=606a614b8f3e",
 }
 `;

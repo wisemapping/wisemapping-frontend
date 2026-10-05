@@ -41,6 +41,13 @@ class ImageEmojiFeature {
 
   private _emojiIconText: Text | undefined;
 
+  // Values last applied to _emojiText, so that a redraw only updates the changed ones.
+  private _appliedChar: string | undefined;
+
+  private _appliedFontSize: number | undefined;
+
+  private _appliedFontStyle: string | undefined;
+
   constructor(topic: Topic) {
     $assert(topic, 'topic can not be null');
     this._topic = topic;
@@ -79,25 +86,41 @@ class ImageEmojiFeature {
         '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", "EmojiSymbols", "EmojiOne Mozilla", "Twemoji Mozilla", "Segoe UI Symbol", sans-serif',
       );
       // Ensure emoji text inherits the same font style as the main text
-      emojiText.setStyle(this._topic.getFontStyle());
+      const fontStyle = this._topic.getFontStyle();
+      emojiText.setStyle(fontStyle);
       emojiText.setText(emojiChar);
 
       this._emojiText = emojiText;
+      this._appliedChar = emojiChar;
+      this._appliedFontSize = this._topic.getFontSize() * 3;
+      this._appliedFontStyle = fontStyle;
     } else if (!emojiChar && this._emojiText) {
       // Remove emoji text if no emoji character
       this._emojiText = undefined;
     } else if (emojiChar && this._emojiText) {
-      // Update emoji text if emoji character changed
-      this._emojiText.setText(emojiChar);
-      // Always update font size and style to reflect current font changes
-      this._emojiText.setFontSize(this._topic.getFontSize() * 3);
-      this._emojiText.setStyle(this._topic.getFontStyle());
+      // Update the emoji text, its font size and its style when they changed: setting
+      // the text rebuilds its tspans, and this runs several times per redraw.
+      if (this._appliedChar !== emojiChar) {
+        this._emojiText.setText(emojiChar);
+        this._appliedChar = emojiChar;
+      }
+      const fontSize = this._topic.getFontSize() * 3;
+      if (this._appliedFontSize !== fontSize) {
+        this._emojiText.setFontSize(fontSize);
+        this._appliedFontSize = fontSize;
+      }
+      const fontStyle = this._topic.getFontStyle();
+      if (this._appliedFontStyle !== fontStyle) {
+        this._emojiText.setStyle(fontStyle);
+        this._appliedFontStyle = fontStyle;
+      }
     }
     return this._emojiText;
   }
 
+  /** Whether the topic has an emoji. It does not build nor update the emoji text. */
   hasEmoji(): boolean {
-    return this.getOrBuildEmojiTextShape() !== undefined;
+    return Boolean(this.getEmojiChar());
   }
 
   getEmojiTextShape(): Text | undefined {
@@ -138,13 +161,25 @@ class ImageEmojiFeature {
 
   addToGroup(group: Group): void {
     const emojiTextShape = this.getOrBuildEmojiTextShape();
-    if (emojiTextShape) {
+    if (emojiTextShape && !ImageEmojiFeature.isLastChild(group, emojiTextShape)) {
       // Only remove if the element is already in the group
       this.removeFromGroup(group);
       group.append(emojiTextShape);
       // Move emoji text to front to ensure it appears above other elements
       emojiTextShape.moveToFront();
     }
+  }
+
+  /**
+   * Whether the element is already the front (last) child of the group, which is where
+   * addToGroup puts it: then there is nothing to move.
+   */
+  static isLastChild(group: Group, element: Text): boolean {
+    const children = group.peer.getChildren();
+    return (
+      children[children.length - 1] === element.peer &&
+      group.peer._native.lastChild === element.peer._native
+    );
   }
 
   removeFromGroup(group: Group): void {
@@ -198,7 +233,8 @@ class ImageEmojiFeature {
   }
 
   setupDeleteWidget(): void {
-    if (!this._topic.isReadOnly() && this.hasEmoji()) {
+    // The icon needs the emoji text: build it if the emoji was set since the last redraw
+    if (!this._topic.isReadOnly() && this.getOrBuildEmojiTextShape()) {
       // The remove tip of the topic's designer
       this._emojiRemoveTip = ElementDeleteWidget.getInstance(this._topic.getDesigner());
 

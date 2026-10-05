@@ -26,9 +26,10 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
   default: class MockPDFExporter {},
 }));
 
-import { Text } from '@wisemapping/web2d';
+import { Group, Text } from '@wisemapping/web2d';
 import { buildDesigner, Harness } from '../commands/designer-harness';
 import Topic from '../../../src/components/Topic';
+import ImageSVGFeature from '../../../src/components/ImageSVGFeature';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import { buildMediumMap, stubTextMeasurement } from './RenderFixture';
@@ -233,5 +234,60 @@ describe('Topic.redraw of an unchanged topic', () => {
     );
     console.info(`redraw: ${measures} text getBBox calls`);
     expect(measures).toBe(2);
+  });
+});
+
+describe('emoji and gallery icon', () => {
+  it('does not rewrite nor re-append the emoji on a redraw', () => {
+    const topic = harness.topic(9);
+    const emoji = topic.getOrBuildImageEmojiTextShape();
+    expect(emoji).toBeDefined();
+
+    const rewrites = countCalls(
+      Text.prototype,
+      'setText',
+      () => topic.redraw(topic.getThemeVariant(), false),
+      (self) => self === emoji,
+    );
+    const appends = countCalls(
+      Group.prototype,
+      'append',
+      () => topic.redraw(topic.getThemeVariant(), false),
+      (self, args) => args[0] === emoji,
+    );
+    console.info(`emoji redraw: ${rewrites} setText, ${appends} appends`);
+    expect(rewrites).toBe(0);
+    expect(appends).toBe(0);
+  });
+
+  it('does not re-append the gallery icon on a redraw', () => {
+    const topic = harness.topic(15);
+    const svg = topic.getOrBuildImageSVGElement();
+    expect(svg).toBeDefined();
+
+    const appends = countCalls(
+      Group.prototype,
+      'append',
+      () => topic.redraw(topic.getThemeVariant(), false),
+      (self, args) => args[0] === svg,
+    );
+    console.info(`gallery icon redraw: ${appends} appends`);
+    expect(appends).toBe(0);
+  });
+
+  it('looks an unknown gallery icon up once, not on every call', () => {
+    const topic = harness.topic(16);
+    const createMaterialIcon = jest.spyOn(
+      ImageSVGFeature.prototype as unknown as { createMaterialIcon: () => unknown },
+      'createMaterialIcon',
+    );
+    topic.setImageGalleryIconName('no-such-icon');
+    topic.redraw(topic.getThemeVariant(), false);
+    const lookups = createMaterialIcon.mock.calls.length;
+    createMaterialIcon.mockRestore();
+
+    console.info(`unknown gallery icon: ${lookups} lookups for 2 redraws`);
+    expect(topic.getOrBuildImageSVGElement()).toBeUndefined();
+    expect(lookups).toBe(1);
   });
 });
