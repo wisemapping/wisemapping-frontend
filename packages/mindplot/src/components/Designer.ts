@@ -70,11 +70,11 @@ import Theme, { ThemeVariant } from './theme/Theme';
 import ChangeEvent from './layout/ChangeEvent';
 import HTMLTopicSelected from './HTMLTopicSelected';
 
-/** How far zoomOut() goes: workspace units per screen pixel. */
-const MAX_ZOOM = 7;
-
-/** How far zoomIn() goes. */
-const MIN_ZOOM = 0.3;
+/**
+ * The zoom range, in workspace units per screen pixel, shared by setZoom(), zoomIn() (down to
+ * min), zoomOut() and zoomToFit() (up to max).
+ */
+const ZOOM_RANGE = { min: 0.3, max: 7 } as const;
 
 /** The part of each edge of the canvas covered by the host's chrome, in pixels. */
 export type ViewportInsets = { top?: number; right?: number; bottom?: number; left?: number };
@@ -409,7 +409,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   setZoom(zoom: number): void {
-    if (zoom > 1.9 || zoom < 0.3) {
+    if (zoom > ZOOM_RANGE.max || zoom < ZOOM_RANGE.min) {
       $notify($msg('ZOOM_IN_ERROR'));
       return;
     }
@@ -486,7 +486,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // Workspace units per screen pixel, as everywhere else: above 1 shows more of the map.
     const zoom = Math.min(
       Math.max(contentWidth / visibleWidth, contentHeight / visibleHeight, 1),
-      MAX_ZOOM,
+      ZOOM_RANGE.max,
     );
 
     this.getModel().setZoom(zoom);
@@ -499,7 +499,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   zoomOut(factor = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() * factor;
-    if (scale <= MAX_ZOOM) {
+    if (scale <= ZOOM_RANGE.max) {
       model.setZoom(scale);
       this._canvas.setZoom(scale);
     } else {
@@ -511,7 +511,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const model = this.getModel();
     const scale = model.getZoom() / factor;
 
-    if (scale >= MIN_ZOOM) {
+    if (scale >= ZOOM_RANGE.min) {
       model.setZoom(scale);
       this._canvas.setZoom(scale);
     } else {

@@ -387,3 +387,27 @@ describe('Designer.zoomToFit edge cases', () => {
     expect(scaleOf(designer)).toBeCloseTo(k, 6);
   });
 });
+
+// BL5-67: setZoom accepted 0.3-1.9 while zoomIn/zoomOut go from 0.3 to 7, so a zoom reached
+// by zooming out was rejected when set back.
+describe('Designer.setZoom range', () => {
+  it('accepts every zoom zoomIn and zoomOut can reach', async () => {
+    const designer = await build(1000, 800);
+
+    designer.setZoom(7);
+    expect(designer.getModel().getZoom()).toBe(7);
+    expect(designer.getWorkSpace().getZoom()).toBe(7);
+
+    designer.setZoom(0.3);
+    expect(designer.getModel().getZoom()).toBe(0.3);
+  });
+
+  it('rejects a zoom outside that range', async () => {
+    const designer = await build(1000, 800);
+
+    designer.setZoom(7.5);
+    designer.setZoom(0.2);
+
+    expect(designer.getModel().getZoom()).toBe(1);
+  });
+});
