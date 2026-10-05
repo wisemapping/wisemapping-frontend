@@ -36,6 +36,9 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 
   private _onClose: () => void;
 
+  // Animation frame of the pending layout of the live preview, if any.
+  private _pendingRelayout: number | null = null;
+
   constructor(topic: Topic, onClose: () => void) {
     super();
     this._topic = topic;
@@ -146,7 +149,11 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       }
       const text = this.getTextAreaText();
       this._topic.setText(text);
-      this.resize(text);
+
+      // Size the editor now, but lay the map out once per frame: several input events
+      // can arrive within a frame (fast typing on a large map, key repeat, IME).
+      this.sizeToText(text);
+      this.scheduleRelayout();
 
       this.fireEvent('input', [event, text]);
     });
@@ -172,6 +179,37 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
   }
 
   private resize(text?: string): void {
+    this.relayout();
+    this.sizeToText(text || this.getTextAreaText());
+  }
+
+  private scheduleRelayout(): void {
+    if (typeof requestAnimationFrame !== 'function') {
+      this.relayout();
+      return;
+    }
+    if (this._pendingRelayout === null) {
+      this._pendingRelayout = requestAnimationFrame(() => {
+        this._pendingRelayout = null;
+        // Closing lays the map out itself ...
+        if (this._containerElem.isConnected) {
+          this.relayout();
+        }
+      });
+    }
+  }
+
+  private cancelRelayout(): void {
+    if (this._pendingRelayout !== null) {
+      cancelAnimationFrame(this._pendingRelayout);
+      this._pendingRelayout = null;
+    }
+  }
+
+  private relayout(): void {
+    // A synchronous layout makes the pending one useless ...
+    this.cancelRelayout();
+
     // Force relayout ...
     LayoutEventBus.fireEvent('forceLayout');
 
@@ -184,8 +222,10 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 
     const mindmapCompData = document.getElementById('mindmap-comp')?.getBoundingClientRect();
     const maxWidth = mindmapCompData ? mindmapCompData.width - left : 0;
+    DOMUtils.css(this._containerElem, 'maxWidth', `${maxWidth}px`);
+  }
 
-    const textValue = text || this.getTextAreaText();
+  private sizeToText(textValue: string): void {
     const textElem = this.getTextareaElem();
 
     const rows = [...textValue].filter((x) => x === '\n').length + 1;
@@ -194,7 +234,6 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     DOMUtils.attr(textElem, 'cols', maxLineLength.toString());
     DOMUtils.attr(textElem, 'rows', rows.toString());
 
-    DOMUtils.css(this._containerElem, 'maxWidth', `${maxWidth}px`);
     DOMUtils.css(this._containerElem, 'width', `${maxLineLength + 2}em`);
     DOMUtils.css(this._containerElem, 'height', '0');
   }
@@ -311,6 +350,8 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
   }
 
   close(update: boolean): void {
+    this.cancelRelayout();
+
     // Revert to all text ...
     this._topic.setText(this._oldText);
 

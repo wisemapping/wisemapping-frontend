@@ -87,11 +87,14 @@ describe('redraw render snapshot of a medium map', () => {
     const topic = harness.topic(2);
     MultitTextEditor.getInstance().show(topic);
     const textarea = document.querySelector('#textContainer textarea') as HTMLTextAreaElement;
-    ['T', 'Ty', 'Typ', 'Typed text', 'Typed text\nwith a second line'].forEach((value) => {
+    // One keystroke per frame, as a person types. The editor lays the map out once per
+    // frame, so several keystrokes in one frame are laid out together.
+    for (const value of ['T', 'Ty', 'Typ', 'Typed text', 'Typed text\nwith a second line']) {
       textarea.value = value;
       textarea.dispatchEvent(new Event('input', { bubbles: true }));
-    });
-    await nextFrame();
+      // eslint-disable-next-line no-await-in-loop
+      await nextFrame();
+    }
     expect(renderSnapshot(harness.designer)).toMatchSnapshot('typing');
 
     textarea.dispatchEvent(

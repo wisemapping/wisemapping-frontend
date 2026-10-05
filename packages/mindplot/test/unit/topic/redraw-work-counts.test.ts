@@ -29,7 +29,13 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
 import { buildDesigner, Harness } from '../commands/designer-harness';
 import Topic from '../../../src/components/Topic';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
+import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import { buildMediumMap, stubTextMeasurement } from './RenderFixture';
+
+const nextFrame = (): Promise<void> =>
+  new Promise((resolve) => {
+    requestAnimationFrame(() => resolve());
+  });
 
 /** Calls of a prototype method while fn runs. */
 const countCalls = <T extends object>(
@@ -65,6 +71,9 @@ const depthOf = (topic: Topic): number => {
   }
   return depth;
 };
+
+const subtreeSize = (topic: Topic): number =>
+  1 + topic.getChildren().reduce((sum, child) => sum + subtreeSize(child), 0);
 
 let harness: Harness;
 let topics: Topic[];
@@ -136,5 +145,48 @@ describe('Designer theme variant toggle', () => {
 
     expect(seen.length).toBeGreaterThan(0);
     expect(seen.every((variant) => variant === 'dark')).toBe(true);
+  });
+});
+
+describe('text editor', () => {
+  afterEach(() => {
+    MultitTextEditor.getInstance().close(false);
+  });
+
+  it('redraws only the edited topic on each keystroke, not its subtree', async () => {
+    const topic = harness.topic(1);
+    expect(subtreeSize(topic)).toBeGreaterThan(5);
+    MultitTextEditor.getInstance().show(topic);
+    await nextFrame();
+    const textarea = document.querySelector('#textContainer textarea') as HTMLTextAreaElement;
+
+    const redraws = countCalls(Topic.prototype, 'redraw', () => {
+      textarea.value = 'Typed';
+      textarea.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    console.info(`keystroke: ${redraws} redraws (subtree of ${subtreeSize(topic)} topics)`);
+    expect(redraws).toBe(1);
+  });
+
+  it('lays out once per frame however many keystrokes arrive in it', async () => {
+    const topic = harness.topic(1);
+    MultitTextEditor.getInstance().show(topic);
+    await nextFrame();
+    const textarea = document.querySelector('#textContainer textarea') as HTMLTextAreaElement;
+
+    let layouts = countCalls(LayoutManager.prototype, 'layout', () => {
+      ['T', 'Ty', 'Typ', 'Type', 'Typed'].forEach((value) => {
+        textarea.value = value;
+        textarea.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+    });
+    const spy = jest.spyOn(LayoutManager.prototype, 'layout');
+    await nextFrame();
+    layouts += spy.mock.calls.length;
+    spy.mockRestore();
+
+    console.info(`5 keystrokes in a frame: ${layouts} layouts`);
+    expect(layouts).toBe(1);
   });
 });

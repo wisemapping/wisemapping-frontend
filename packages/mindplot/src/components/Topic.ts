@@ -542,7 +542,32 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setText(modelText);
 
-    this.redraw(this.getThemeVariant(), true);
+    // The text does not change how the descendants render, only where the lines that
+    // meet this topic are drawn: redraw this topic and the descendants' connection and
+    // relationship lines, as a redraw of the whole subtree did, but not the topics.
+    this.redraw(this.getThemeVariant(), false);
+    if (this._isInWorkspace) {
+      this.redrawDescendantLines();
+    }
+  }
+
+  /**
+   * Redraws the connection and relationship lines of the visible descendants, in the
+   * order a redraw of the subtree redraws them.
+   */
+  private redrawDescendantLines(): void {
+    if (this.areChildrenShrunken()) {
+      return;
+    }
+    this.getChildren().forEach((child) => {
+      if (child._isInWorkspace) {
+        if (child._workspace) {
+          child.getOutgoingLine()?.redraw();
+        }
+        child._relationships.forEach((r) => r.redraw());
+        child.redrawDescendantLines();
+      }
+    });
   }
 
   getText(): string {
