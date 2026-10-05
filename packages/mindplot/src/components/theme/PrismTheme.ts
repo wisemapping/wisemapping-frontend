@@ -19,6 +19,7 @@ import Topic from '../Topic';
 import DefaultTheme from './DefaultTheme';
 import { ThemeVariant } from './Theme';
 import { ThemeStyle } from './ThemeStyle';
+import pickByOrder from './pickByOrder';
 import ColorUtil from './ColorUtil';
 
 class PrismTheme extends DefaultTheme {
@@ -42,15 +43,8 @@ class PrismTheme extends DefaultTheme {
     }
 
     if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.getStyles(topic).connectionColor as string[] | string);
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
+      const colors = this.getStyles(topic).connectionColor;
+      result = pickByOrder(colors, topic.getOrder());
 
       if (result && this._variant === 'dark') {
         // Lighten the theme connection color for better visibility on dark background
@@ -68,15 +62,8 @@ class PrismTheme extends DefaultTheme {
 
     // If border color has not been defined, use the theme border color ...
     if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.getStyles(topic).borderColor as string[] | string);
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
+      const colors = this.getStyles(topic).borderColor;
+      result = pickByOrder(colors, topic.getOrder());
 
       if (result && this._variant === 'dark') {
         // Lighten the theme border color for better visibility on dark background
@@ -105,16 +92,8 @@ class PrismTheme extends DefaultTheme {
     }
 
     if (!result) {
-      let colors: string[] = [];
-      const resolvedColors = this.resolve('backgroundColor', topic);
-      colors = colors.concat(resolvedColors);
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
+      const colors = this.resolve('backgroundColor', topic);
+      result = pickByOrder(colors, topic.getOrder());
     }
 
     return result;

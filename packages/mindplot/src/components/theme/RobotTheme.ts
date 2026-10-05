@@ -36,6 +36,7 @@ import Topic from '../Topic';
 import DefaultTheme from './DefaultTheme';
 import { ThemeVariant } from './Theme';
 import { ThemeStyle } from './ThemeStyle';
+import pickByOrder from './pickByOrder';
 
 class RobotTheme extends DefaultTheme {
   constructor(variant: ThemeVariant) {
@@ -53,14 +54,8 @@ class RobotTheme extends DefaultTheme {
     }
 
     // Use theme colors from style system. Palettes are arrays, so use topic order to decide color ..
-    let colors: string[] = [];
-    colors = colors.concat(this.resolve('backgroundColor', topic));
-
-    let order = topic.getOrder();
-    order = order || 0;
-
-    const index = order % colors.length;
-    result = colors[index];
+    const colors = this.resolve('backgroundColor', topic);
+    result = pickByOrder(colors, topic.getOrder());
     return result;
   }
 
@@ -88,15 +83,8 @@ class RobotTheme extends DefaultTheme {
     }
 
     if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.resolve('connectionColor', topic));
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
+      const colors = this.resolve('connectionColor', topic);
+      result = pickByOrder(colors, topic.getOrder());
     }
     return result;
   }
@@ -108,15 +96,8 @@ class RobotTheme extends DefaultTheme {
     // If border color has not been defined, use the one picked on an ancestor, or else the theme
     // border color. The dark variant has its own palette, so it is not lightened as in Prism ...
     if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.resolve('borderColor', topic));
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
+      const colors = this.resolve('borderColor', topic);
+      result = pickByOrder(colors, topic.getOrder());
     }
     return result;
   }

@@ -29,6 +29,7 @@ import { ThemeStyle } from './ThemeStyle';
 import type { TopicStyleType } from './ThemeStyle';
 import type { BackgroundPatternType } from '../model/CanvasStyleType';
 import ThemeResolutionCache from './ThemeResolutionCache';
+import pickByOrder from './pickByOrder';
 
 // Re-export TopicStyleType for backward compatibility
 export type { TopicStyleType } from './ThemeStyle';
@@ -223,15 +224,8 @@ class DefaultTheme implements Theme {
     }
 
     if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.resolve('backgroundColor', topic));
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
+      const colors = this.resolve('backgroundColor', topic);
+      result = pickByOrder(colors, topic.getOrder());
     }
     return result;
   }
@@ -332,15 +326,8 @@ class DefaultTheme implements Theme {
     }
 
     if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.resolve('connectionColor', topic));
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
+      const colors = this.resolve('connectionColor', topic);
+      result = pickByOrder(colors, topic.getOrder());
     }
     return result;
   }

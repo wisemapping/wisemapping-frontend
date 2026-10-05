@@ -36,6 +36,7 @@ import Topic from '../Topic';
 import DefaultTheme from './DefaultTheme';
 import { ThemeVariant } from './Theme';
 import { ThemeStyle } from './ThemeStyle';
+import pickByOrder from './pickByOrder';
 
 class ClassicTheme extends DefaultTheme {
   constructor(variant: ThemeVariant) {
@@ -53,14 +54,8 @@ class ClassicTheme extends DefaultTheme {
     }
 
     // Use theme colors from style system. Palettes are arrays, so use topic order to decide color ..
-    let colors: string[] = [];
-    colors = colors.concat(this.resolve('backgroundColor', topic));
-
-    let order = topic.getOrder();
-    order = order || 0;
-
-    const index = order % colors.length;
-    result = colors[index];
+    const colors = this.resolve('backgroundColor', topic);
+    result = pickByOrder(colors, topic.getOrder());
     return result;
   }
 
