@@ -21,10 +21,13 @@ import Canvas from './Canvas';
 import PositionType from './PositionType';
 import Relationship from './Relationship';
 
-export enum PivotType {
-  Start = 0,
-  End = 1,
-}
+/** Which end of a relationship a control point belongs to. */
+export const PivotType = {
+  Start: 0,
+  End: 1,
+} as const;
+
+export type PivotType = (typeof PivotType)[keyof typeof PivotType];
 
 class ControlPivotLine {
   private _dot: Ellipse;

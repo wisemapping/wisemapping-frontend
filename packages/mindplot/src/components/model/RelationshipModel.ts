@@ -18,11 +18,14 @@
 import { $assert, $defined } from '../util/assert';
 import PositionType from '../PositionType';
 
-export enum StrokeStyle {
-  SOLID = 'solid',
-  DASHED = 'dashed',
-  DOTTED = 'dotted',
-}
+/** A relationship's stroke: persisted as its strokeStyle attribute, so the values are fixed. */
+export const StrokeStyle = {
+  SOLID: 'solid',
+  DASHED: 'dashed',
+  DOTTED: 'dotted',
+} as const;
+
+export type StrokeStyle = (typeof StrokeStyle)[keyof typeof StrokeStyle];
 
 class RelationshipModel {
   static _nextUuid = 0;

@@ -16,9 +16,12 @@
  *   limitations under the License.
  */
 
-export enum ContentType {
-  PLAIN = 'plain',
-  HTML = 'html',
-}
+/** How a topic's text is stored: persisted as the text's contentType, so the values are fixed. */
+export const ContentType = {
+  PLAIN: 'plain',
+  HTML: 'html',
+} as const;
+
+export type ContentType = (typeof ContentType)[keyof typeof ContentType];
 
 export default ContentType;
