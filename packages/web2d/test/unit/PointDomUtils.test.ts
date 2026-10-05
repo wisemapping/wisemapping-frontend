@@ -17,7 +17,7 @@
  */
 import Point from '../../src/components/Point';
 import { getOffset, getPosition, getPositionIn } from '../../src/components/peer/utils/DomUtils';
-import { $assert, $defined } from '../../src/components/peer/utils/assert';
+import { $assert } from '../../src/components/peer/utils/assert';
 
 describe('Point', () => {
   it('parses "x,y"', () => {
@@ -54,15 +54,10 @@ describe('Point', () => {
 });
 
 describe('assert', () => {
-  it('$defined', () => {
-    expect($defined(0)).toBe(true);
-    expect($defined(null)).toBe(false);
-    expect($defined(undefined)).toBe(false);
-  });
-
   it('$assert throws with the message', () => {
     expect(() => $assert(false, 'boom')).toThrow('boom');
     expect(() => $assert(null, 'boom')).toThrow('boom');
+    expect(() => $assert(undefined, 'boom')).toThrow('boom');
     expect(() => $assert(1, 'boom')).not.toThrow();
   });
 });

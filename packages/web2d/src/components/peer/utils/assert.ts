@@ -33,12 +33,8 @@
  *   limitations under the License.
  */
 
-export function $defined<T>(obj: T): obj is NonNullable<T> {
-  return obj !== undefined && obj !== null;
-}
-
 export function $assert(assert: unknown, message: string): asserts assert {
-  if (!$defined(assert) || !assert) {
+  if (!assert) {
     // eslint-disable-next-line no-console
     console.error(message);
     throw new Error(message);
