@@ -595,15 +595,19 @@ describe('RestClient OAuth callbacks', () => {
     },
   );
 
-  // Bug: rest-client/index.ts:800 (and :839) pass the request config as the POST body,
-  // so the backend receives `{"headers":{"Content-Type":"application/json"}}` as payload.
-  it.failing('processGoogleCallback sends no request body', async () => {
-    const { client, calls } = newClient([{ data: { email: 'o' } }]);
+  // The code travels in the query string, so the body is a JSON null like confirmAccountSync's;
+  // the request config used to be sent as the body (`{"headers":{"Content-Type":...}}`).
+  it.each(['processGoogleCallback', 'processFacebookCallback'] as const)(
+    '%s sends no payload, only the JSON content type',
+    async (method) => {
+      const { client, calls } = newClient([{ data: { email: 'o' } }]);
 
-    await client.processGoogleCallback('c');
+      await client[method]('c');
 
-    expect(calls[0].data).toBeUndefined();
-  });
+      expect(calls[0].data).toBe('null');
+      expect(calls[0].header('Content-Type')).toBe('application/json');
+    },
+  );
 
   it('confirmAccountSync puts email, code and provider and stores the token', async () => {
     const { client, calls } = newClient([oauthReply, { data: { email: 'o' } }]);

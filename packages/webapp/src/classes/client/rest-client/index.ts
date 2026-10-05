@@ -796,7 +796,7 @@ export default class RestClient implements Client {
       reject: (error: ErrorInfo) => void,
     ) => {
       this.axios
-        .post(`${this.baseUrl}/api/restful/oauth2/googlecallback?code=${code}`, {
+        .post(`${this.baseUrl}/api/restful/oauth2/googlecallback?code=${code}`, null, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
@@ -835,7 +835,7 @@ export default class RestClient implements Client {
       reject: (error: ErrorInfo) => void,
     ) => {
       this.axios
-        .post(`${this.baseUrl}/api/restful/oauth2/facebookcallback?code=${code}`, {
+        .post(`${this.baseUrl}/api/restful/oauth2/facebookcallback?code=${code}`, null, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
