@@ -123,13 +123,18 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
 
   /** A group has no fill of its own: this is a no-op (fill its children instead). */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setFill(_color?: string, _opacity?: number): void {
+  override setFill(_color?: string, _opacity?: number): void {
     // No-op.
   }
 
   /** A group has no stroke of its own: this is a no-op (stroke its children instead). */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setStroke(_width?: number | null, _style?: string, _color?: string, _opacity?: number): void {
+  override setStroke(
+    _width?: number | null,
+    _style?: string,
+    _color?: string,
+    _opacity?: number,
+  ): void {
     // No-op.
   }
 

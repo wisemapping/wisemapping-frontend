@@ -122,7 +122,7 @@ class GroupPeer extends ElementPeer {
     }
   }
 
-  setSize(width: number, height: number) {
+  override setSize(width: number, height: number) {
     const change = width !== this._size.width || height !== this._size.height;
     super.setSize(width, height);
     if (change) {

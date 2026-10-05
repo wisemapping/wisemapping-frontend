@@ -53,7 +53,7 @@ class RectPeer extends ElementPeer {
     return true;
   }
 
-  setSize(width: number, height: number): void {
+  override setSize(width: number, height: number): void {
     super.setSize(width, height);
     const min = width < height ? width : height;
 

@@ -20,6 +20,7 @@
     "noFallthroughCasesInSwitch": true,
     "exactOptionalPropertyTypes": true,
     "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
     "rootDirs": [

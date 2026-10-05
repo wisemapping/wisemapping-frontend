@@ -28,7 +28,7 @@ class ElipsePeer extends ElementPeer {
     this._position = { x: 0, y: 0 };
   }
 
-  setSize(width: number, height: number) {
+  override setSize(width: number, height: number) {
     super.setSize(width, height);
     this.attr('rx', formatLength(width / 2));
     this.attr('ry', formatLength(height / 2));

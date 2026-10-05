@@ -105,7 +105,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
    * pt (points; 1pt=1/72in)
    * pc (picas; 1pc=12pt)
    */
-  setSize(width: string | number, height: string | number) {
+  override setSize(width: string | number, height: string | number) {
     // HTML container must have the size of the group element.
     if (width) {
       this._htmlContainer.style.width = String(width);
@@ -146,7 +146,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
 
   /** Sets the container background. The opacity is not supported and is ignored. */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setFill(color: string, _opacity?: number) {
+  override setFill(color: string, _opacity?: number) {
     if (color) {
       this._htmlContainer.style.backgroundColor = color;
     }
@@ -162,7 +162,12 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
    * styles map to the closest CSS border style, and the opacity is not supported and is ignored.
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setStroke(width: number | string | null, style?: string, color?: string, _opacity?: number) {
+  override setStroke(
+    width: number | string | null,
+    style?: string,
+    color?: string,
+    _opacity?: number,
+  ) {
     const borderWidth = typeof width === 'number' ? `${width}px` : width;
     const borderStyle = Workspace._BORDER_STYLES[style || 'solid'];
     if (!borderStyle) {
