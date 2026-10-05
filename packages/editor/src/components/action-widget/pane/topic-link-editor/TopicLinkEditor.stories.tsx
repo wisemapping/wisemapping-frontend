@@ -27,6 +27,7 @@ const TopicLinkEditorWithActions = (props: {
   initialUrl?: string;
   onUrlChange?: (url: string) => void;
 }): React.ReactElement => {
+  const { onUrlChange } = props;
   const [url, setUrl] = React.useState<string>(props.initialUrl || '');
 
   const urlModel: NodeProperty<string> = React.useMemo(
@@ -34,10 +35,10 @@ const TopicLinkEditorWithActions = (props: {
       getValue: () => url,
       setValue: (v: string) => {
         setUrl(v);
-        props.onUrlChange?.(v);
+        onUrlChange?.(v);
       },
     }),
-    [url, props.onUrlChange],
+    [url, onUrlChange],
   );
 
   return <TopicLinkEditor closeModal={props.closeModal} urlModel={urlModel} />;

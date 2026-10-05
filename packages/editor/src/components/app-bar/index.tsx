@@ -257,15 +257,25 @@ const AppBar = ({
   );
 
   useEffect(() => {
-    if (!capability.isHidden('starred')) {
-      mapInfo
-        .isStarred()
-        .then((value) => setStarred(value))
-        .catch((e) => {
-          console.error(`Unexpected error loading starred status-> ${e}`);
-        });
+    if (capability.isHidden('starred')) {
+      return undefined;
     }
-  }, []);
+    // A late answer for a previous map must not overwrite the current one ...
+    let active = true;
+    mapInfo
+      .isStarred()
+      .then((value) => {
+        if (active) {
+          setStarred(value);
+        }
+      })
+      .catch((e) => {
+        console.error(`Unexpected error loading starred status-> ${e}`);
+      });
+    return () => {
+      active = false;
+    };
+  }, [capability, mapInfo]);
 
   useEffect(() => {
     if (!model) {

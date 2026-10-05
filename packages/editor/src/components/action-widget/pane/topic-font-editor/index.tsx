@@ -81,29 +81,33 @@ const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {
   );
   const [currentStyle, setCurrentStyle] = useState<string>(props.fontStyleModel.getValue());
 
+  const { model, fontFamilyModel, fontWeightModel, fontStyleModel } = props;
+  const mapLoaded = model?.isMapLoadded() ?? false;
+
+  // Subscribes again when the model or a font property changes, or once the map has loaded ...
   useEffect(() => {
-    if (props.model?.isMapLoadded()) {
-      const handleUpdate = () => {
-        setCurrentFont(props.fontFamilyModel.getValue());
-        setCurrentWeight(props.fontWeightModel.getValue());
-        setCurrentStyle(props.fontStyleModel.getValue());
-      };
-
-      if (props.model.getDesigner()) {
-        props.model.getDesigner().addEvent('modelUpdate', handleUpdate);
-        props.model.getDesigner().addEvent('onfocus', handleUpdate);
-        props.model.getDesigner().addEvent('onblur', handleUpdate);
-      }
-
-      return () => {
-        if (props.model?.getDesigner()) {
-          props.model.getDesigner().removeEvent('modelUpdate', handleUpdate);
-          props.model.getDesigner().removeEvent('onfocus', handleUpdate);
-          props.model.getDesigner().removeEvent('onblur', handleUpdate);
-        }
-      };
+    if (!model || !mapLoaded) {
+      return undefined;
     }
-  }, [props.model?.isMapLoadded()]);
+    const designer = model.getDesigner();
+    if (!designer) {
+      return undefined;
+    }
+
+    const handleUpdate = () => {
+      setCurrentFont(fontFamilyModel.getValue());
+      setCurrentWeight(fontWeightModel.getValue());
+      setCurrentStyle(fontStyleModel.getValue());
+    };
+    designer.addEvent('modelUpdate', handleUpdate);
+    designer.addEvent('onfocus', handleUpdate);
+    designer.addEvent('onblur', handleUpdate);
+    return () => {
+      designer.removeEvent('modelUpdate', handleUpdate);
+      designer.removeEvent('onfocus', handleUpdate);
+      designer.removeEvent('onblur', handleUpdate);
+    };
+  }, [model, mapLoaded, fontFamilyModel, fontWeightModel, fontStyleModel]);
 
   const handleFontFamilyChange = (event: SelectChangeEvent) => {
     const setValue = props.fontFamilyModel.setValue;

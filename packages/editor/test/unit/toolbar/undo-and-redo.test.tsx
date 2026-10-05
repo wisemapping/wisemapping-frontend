@@ -137,4 +137,25 @@ describe('UndoAndRedo (BL4-58)', () => {
 
     expect(undoButton()).toBeDisabled();
   });
+
+  it('uses the latest condition without subscribing again (BL5-30)', () => {
+    const { model, listeners, fire } = createModel();
+    const config = { icon: <UndoOutlinedIcon />, ariaLabel: 'Undo', onClick: jest.fn() };
+    const { rerender } = render(
+      <UndoAndRedo configuration={config} disabledCondition={() => false} model={model} />,
+    );
+    const subscribed = listeners[0];
+
+    rerender(
+      <UndoAndRedo
+        configuration={config}
+        disabledCondition={(event) => event.undoSteps > 0}
+        model={model}
+      />,
+    );
+    fire(1);
+
+    expect(listeners).toEqual([subscribed]);
+    expect(undoButton()).toBeEnabled();
+  });
 });

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, useEffect, useMemo, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -61,23 +61,26 @@ const FindInMapPanel = ({ designer, closeModal }: FindInMapPanelProps): ReactEle
 
   const matches = useMemo(() => filterSearchableNodes(allNodes, query), [allNodes, query]);
 
-  const navigateToMatch = (index: number): void => {
-    const match = matches[index];
-    if (!match) {
-      return;
-    }
-    setActiveIndex(index);
-    const topic = designer.getModel().findTopicById(match.id);
-    if (topic) {
-      designer.revealNode(topic);
-    }
-  };
+  const navigateToMatch = useCallback(
+    (index: number): void => {
+      const match = matches[index];
+      if (!match) {
+        return;
+      }
+      setActiveIndex(index);
+      const topic = designer.getModel().findTopicById(match.id);
+      if (topic) {
+        designer.revealNode(topic);
+      }
+    },
+    [matches, designer],
+  );
 
   // Jump to (and select) the first match every time the result set changes,
   // mirroring the browser's own find-in-page behavior.
   useEffect(() => {
     navigateToMatch(0);
-  }, [matches]);
+  }, [navigateToMatch]);
 
   // Picking a result is a terminal action: jump to the node and get the panel
   // out of the way, which also hands the map's keyboard shortcuts back.

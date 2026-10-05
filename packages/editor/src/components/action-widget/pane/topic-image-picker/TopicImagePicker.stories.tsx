@@ -29,6 +29,7 @@ const TopicImagePickerWithActions = (props: {
   onEmojiChange?: (emoji: string | undefined) => void;
   onIconsGalleryChange?: (icon: string | undefined) => void;
 }): React.ReactElement => {
+  const { onEmojiChange, onIconsGalleryChange } = props;
   const [emoji, setEmoji] = React.useState<string | undefined>(props.initialEmoji);
   const [iconsGallery, setIconsGallery] = React.useState<string | undefined>(
     props.initialIconsGallery,
@@ -39,10 +40,10 @@ const TopicImagePickerWithActions = (props: {
       getValue: () => emoji,
       setValue: (v: string | undefined) => {
         setEmoji(v);
-        props.onEmojiChange?.(v);
+        onEmojiChange?.(v);
       },
     }),
-    [emoji, props.onEmojiChange],
+    [emoji, onEmojiChange],
   );
 
   const iconsGalleryModel: NodeProperty<string | undefined> = React.useMemo(
@@ -50,10 +51,10 @@ const TopicImagePickerWithActions = (props: {
       getValue: () => iconsGallery,
       setValue: (v: string | undefined) => {
         setIconsGallery(v);
-        props.onIconsGalleryChange?.(v);
+        onIconsGalleryChange?.(v);
       },
     }),
-    [iconsGallery, props.onIconsGalleryChange],
+    [iconsGallery, onIconsGalleryChange],
   );
 
   return (
