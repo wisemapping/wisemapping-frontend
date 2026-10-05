@@ -1,5 +1,5 @@
 <map version="1.0.1">
-    <node ID="ID_1" TEXT="Observation">
+    <node ID="ID_1" TEXT="Observation" STYLE="rectangle">
         <richcontent TYPE="NOTE">
             <html xmlns="http://www.w3.org/1999/xhtml">
                 <head></head>

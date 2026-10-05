@@ -26,6 +26,7 @@ import FreemindExporter from '../../../src/components/export/FreemindExporter';
 import FreemindImporter from '../../../src/components/import/FreemindImporter';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import SvgIconModel from '../../../src/components/model/SvgIconModel';
+import LinkModel from '../../../src/components/model/LinkModel';
 
 const buildMindmap = (configure: (topic: NodeModel) => void): Mindmap => {
   const mindmap = new Mindmap('test');
@@ -105,6 +106,28 @@ describe('FreemindExporter', () => {
     expect(central.getAttribute('connColor')).toBe('#0000ff');
     expect(topic.getAttribute('connColor')).toBe('#ff0000');
     expect(topic.getAttribute('brColor')).toBeNull();
+  });
+
+  test('exports the link and style of the central topic (BL5-12)', async () => {
+    const mindmap = buildMindmap(() => undefined);
+    const central = mindmap.getBranches()[0];
+    central.setShapeType('rectangle');
+    central.addFeature(new LinkModel({ url: 'https://www.wisemapping.com' }));
+
+    const doc = await exportMindmap(mindmap);
+    const root = doc.querySelector('map > node')!;
+    expect(root.getAttribute('LINK')).toBe('https://www.wisemapping.com');
+    expect(root.getAttribute('STYLE')).toBe('rectangle');
+
+    // The link survives the round trip.
+    const xml = await new FreemindImporter(await new FreemindExporter(mindmap).export()).import(
+      'test',
+      '',
+    );
+    const imported = new DOMParser().parseFromString(xml, 'text/xml');
+    expect(imported.querySelector('topic[central="true"] > link')?.getAttribute('url')).toBe(
+      'https://www.wisemapping.com',
+    );
   });
 
   test('exports topics without a position on the right side', async () => {

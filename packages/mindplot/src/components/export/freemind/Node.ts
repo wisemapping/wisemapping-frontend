@@ -26,8 +26,7 @@ import Richcontent from './Richcontent';
 
 class Node {
   protected arrowlinkOrCloudOrEdge:
-    | Array<Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this>
-    | undefined;
+    Array<Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this> | undefined;
 
   protected BACKGROUND_COLOR: string | undefined;
 
@@ -221,20 +220,9 @@ class Node {
     // Set node attributes
     const nodeElem = document.createElement('node');
 
-    if (this.centralTopic) {
-      if (this.ID) nodeElem.setAttribute('ID', this.ID);
-      if (this.TEXT) nodeElem.setAttribute('TEXT', this.TEXT);
-      if (this.BACKGROUND_COLOR) nodeElem.setAttribute('BACKGROUND_COLOR', this.BACKGROUND_COLOR);
-      if (this.COLOR) nodeElem.setAttribute('COLOR', this.COLOR);
-      if (this.TEXT) {
-        nodeElem.setAttribute('TEXT', this.TEXT);
-      } else {
-        nodeElem.setAttribute('TEXT', '');
-      }
-      return nodeElem;
-    }
-
     if (this.ID) nodeElem.setAttribute('ID', this.ID);
+    // The central node always has a text, even if empty, and comes right after its id.
+    if (this.centralTopic) nodeElem.setAttribute('TEXT', this.TEXT || '');
     if (this.POSITION) nodeElem.setAttribute('POSITION', this.POSITION);
     if (this.STYLE) nodeElem.setAttribute('STYLE', this.STYLE);
     if (this.BACKGROUND_COLOR) nodeElem.setAttribute('BACKGROUND_COLOR', this.BACKGROUND_COLOR);

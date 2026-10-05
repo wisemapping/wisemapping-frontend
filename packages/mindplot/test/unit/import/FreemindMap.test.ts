@@ -49,6 +49,32 @@ describe('FreemindMap', () => {
     ]);
   });
 
+  test('keeps the attributes of the root node (BL5-12)', () => {
+    const doc = roundTrip(`<map version="1.0.1">
+      <node ID="ID_1" TEXT="Root" STYLE="bubble" LINK="https://www.wisemapping.com" FOLDED="true"
+        BACKGROUND_COLOR="#ff0000" COLOR="#00ff00" CREATED="1" MODIFIED="2"/>
+    </map>`);
+
+    const root = doc.querySelector('map > node')!;
+    expect(Object.fromEntries(Array.from(root.attributes).map((a) => [a.name, a.value]))).toEqual({
+      ID: 'ID_1',
+      TEXT: 'Root',
+      STYLE: 'bubble',
+      LINK: 'https://www.wisemapping.com',
+      FOLDED: 'true',
+      BACKGROUND_COLOR: '#ff0000',
+      COLOR: '#00ff00',
+      CREATED: '1',
+      MODIFIED: '2',
+    });
+  });
+
+  test('writes an empty text for a root node without text', () => {
+    const doc = roundTrip('<map version="1.0.1"><node ID="ID_1"/></map>');
+
+    expect(doc.querySelector('map > node')?.getAttribute('TEXT')).toBe('');
+  });
+
   test('finds the root node when other elements precede it', () => {
     const doc = roundTrip(`<map version="1.0.1">
       <attribute_registry SHOW_ATTRIBUTES="hide"/>
