@@ -46,9 +46,8 @@ describe('MockClient maps', () => {
     await expect(client.fetchMapInfo(2)).resolves.toMatchObject({ title: 'My New Project' });
   });
 
-  // Bug: mock-client/index.ts:225 throws synchronously instead of returning a rejected
-  // promise, so `client.fetchMapInfo(id).catch(...)` never sees the error.
-  it.failing('fetchMapInfo rejects for an unknown map', async () => {
+  // It used to throw synchronously, so `client.fetchMapInfo(id).catch(...)` never saw the error.
+  it('fetchMapInfo rejects for an unknown map', async () => {
     await expect(client.fetchMapInfo(9999)).rejects.toThrow('Map could not be found 9999');
   });
 

@@ -222,7 +222,7 @@ class MockClient implements Client {
   fetchMapInfo(id: number): Promise<MapInfo> {
     const map = this.maps.find((m) => m.id === id);
     if (!map) {
-      throw new Error(`Map could not be found ${id}`);
+      return Promise.reject(new Error(`Map could not be found ${id}`));
     }
     return Promise.resolve(map);
   }
