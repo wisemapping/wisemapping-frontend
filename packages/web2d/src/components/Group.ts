@@ -94,6 +94,14 @@ class Group extends WorkspaceElement<GroupPeer> {
   }
 
   /**
+   * Removes every listener added with addEvent() to this element and to every element in it,
+   * for example when a map is torn down. The elements stay usable.
+   */
+  override dispose(): void {
+    this.peer.disposeTree();
+  }
+
+  /**
    * The size of the group's own coordinate system: its children are laid out in these units,
    * which are scaled to the group size (an SVG translate + scale transform).
    */

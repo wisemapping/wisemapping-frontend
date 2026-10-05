@@ -18,6 +18,7 @@
 import ElementPeer from '../../src/components/peer/svg/ElementPeer';
 import Rect from '../../src/components/Rect';
 import Workspace from '../../src/components/Workspace';
+import Group from '../../src/components/Group';
 
 const svgNode = (tag = 'rect') => document.createElementNS('http://www.w3.org/2000/svg', tag);
 
@@ -167,6 +168,40 @@ describe('ElementPeer events', () => {
     rect.dispose();
     click(rect.peer);
     expect(fn).not.toHaveBeenCalled();
+  });
+
+  // BL5-78: dispose() only removed the element's own listeners, so tearing down a map left the
+  // listeners of every shape inside its groups.
+  it('BL5-78: Group.dispose() removes the listeners of its children, recursively', () => {
+    const outer = new Group();
+    const inner = new Group();
+    const rect = new Rect(0);
+    outer.append(inner);
+    inner.append(rect);
+    const fns = [jest.fn(), jest.fn(), jest.fn()];
+    outer.addEvent('ping', fns[0]!);
+    inner.addEvent('ping', fns[1]!);
+    rect.addEvent('ping', fns[2]!);
+    outer.dispose();
+    [outer, inner, rect].forEach((element) => element.trigger('ping'));
+    fns.forEach((fn) => expect(fn).not.toHaveBeenCalled());
+  });
+
+  it('BL5-78: Workspace.dispose() removes the listeners of the whole tree', () => {
+    const workspace = new Workspace();
+    const group = new Group();
+    const rect = new Rect(0);
+    workspace.append(group);
+    group.append(rect);
+    const fns = [jest.fn(), jest.fn(), jest.fn()];
+    workspace.addEvent('ping', fns[0]!);
+    group.addEvent('ping', fns[1]!);
+    rect.addEvent('ping', fns[2]!);
+    workspace.dispose();
+    [workspace, group, rect].forEach((element) => element.trigger('ping'));
+    fns.forEach((fn) => expect(fn).not.toHaveBeenCalled());
+    // The tree is kept and still usable.
+    expect(workspace.peer.getChildren()).toEqual([group.peer]);
   });
 
   it('WorkspaceElement delegates addEvent, removeEvent and trigger', () => {

@@ -137,6 +137,12 @@ class ElementPeer {
     this._handlers.clear();
   }
 
+  /** dispose() on this element and on every element appended to it, recursively. */
+  disposeTree(): void {
+    this.dispose();
+    this._children.forEach((child) => child.disposeTree());
+  }
+
   /**
    * Keeps the element size. Only the elements whose geometry is a width and a height (<svg>,
    * <rect>, <image>) write them as attributes: on <g>, <text>, <path>, <line>, <polyline> and

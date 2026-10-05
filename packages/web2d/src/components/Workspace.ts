@@ -52,6 +52,14 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
   }
 
   /**
+   * Removes every listener added with addEvent() to this element and to every element in it,
+   * for example when a map is torn down. The elements stay usable.
+   */
+  override dispose(): void {
+    this.peer.disposeTree();
+  }
+
+  /**
    * Appends an element as a child to the object.
    */
   append(element: WorkspaceElement<ElementPeer>) {
