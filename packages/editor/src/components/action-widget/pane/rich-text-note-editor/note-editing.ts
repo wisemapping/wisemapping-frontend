@@ -642,13 +642,19 @@ export const attachNoteEditing = (root: HTMLElement, options: NoteEditingOptions
     // Browsers keep typing inside the element the caret is at the end of: write after it.
     event.preventDefault();
     const next = element.nextSibling;
-    if (next && next.nodeType === Node.TEXT_NODE) {
-      (next as Text).insertData(0, input.data);
-      setCaret(root, next, input.data.length);
+    const following = next && next.nodeType === Node.TEXT_NODE ? (next as Text) : null;
+    // A space with no text after it is not shown, and the browser drops it: it is written as a
+    // non-breaking one, as browsers do.
+    const data = /^$|^\s/.test(following?.data ?? '')
+      ? input.data.replace(/ $/, '\u00a0')
+      : input.data;
+    if (following) {
+      following.insertData(0, data);
+      setCaret(root, following, data.length);
     } else {
-      const text = root.ownerDocument.createTextNode(input.data);
+      const text = root.ownerDocument.createTextNode(data);
       element.parentNode!.insertBefore(text, next);
-      setCaret(root, text, input.data.length);
+      setCaret(root, text, data.length);
     }
     options.onChange();
   };

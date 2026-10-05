@@ -215,6 +215,17 @@ describe('Markdown spans typed in a line', () => {
   });
 
   test.each([
+    ['at the end of the line', '', '<strong>b</strong>&nbsp;'],
+    ['before a space', ' x', '<strong>b</strong>&nbsp; x'],
+    ['before text', 'x', '<strong>b</strong> x'],
+  ])('a space typed right after a span %s is kept visible', (_, after, expected) => {
+    root.innerHTML = after;
+    caretAt(root, 0);
+    type('**b** ');
+    expect(root.innerHTML).toBe(expected);
+  });
+
+  test.each([
     '[x](javascript:alert(1))',
     '[x](JaVaScRiPt:alert)',
     '[x](data:text/html,hi)',
