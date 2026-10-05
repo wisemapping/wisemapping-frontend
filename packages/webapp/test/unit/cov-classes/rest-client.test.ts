@@ -528,9 +528,9 @@ describe('RestClient login and logout', () => {
     expect(JwtTokenConfig.retreiveToken()).toBeUndefined();
     expect(calls[0]).toMatchObject({ method: 'POST', url: `${API}/api/restful/logout` });
   });
-  // Bug: rest-client/index.ts:116-122 wraps the un-awaited axios.post in try/catch, so a
-  // failed backend logout is never logged and surfaces as an unhandled promise rejection.
-  it.failing('logout logs a backend failure', async () => {
+  // The backend call is awaited, so a failed logout is logged (it used to escape the try/catch
+  // as an unhandled promise rejection).
+  it('logout logs a backend failure', async () => {
     const client = new RestClient(API);
     // Already handled here, so the test run itself sees no unhandled rejection.
     const failure = Promise.reject(new Error('backend down'));

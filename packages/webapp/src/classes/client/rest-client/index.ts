@@ -108,19 +108,18 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
-  logout(): Promise<void> {
+  async logout(): Promise<void> {
     JwtTokenConfig.removeToken();
     clearAnalyticsUserId();
 
     // Kill backend session ...
     try {
-      this.axios.post(`${this.baseUrl}/api/restful/logout`, null, {
+      await this.axios.post(`${this.baseUrl}/api/restful/logout`, null, {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (e) {
       log.error('Error logging out from backend', e);
     }
-    return Promise.resolve();
   }
 
   login(model: JwtAuth): Promise<void> {
