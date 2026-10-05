@@ -16,7 +16,9 @@
  *   limitations under the License.
  */
 
-const PT = {
+import type { LocaleMessages } from './en';
+
+const PT: LocaleMessages = {
   LOADING: 'Carregando...',
   SAVING: 'Salvando...',
   SAVE_COMPLETE: 'Salvamento concluído',

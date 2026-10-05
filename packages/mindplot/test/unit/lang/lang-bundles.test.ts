@@ -18,17 +18,18 @@
 import fs from 'fs';
 import path from 'path';
 import Bundle from '../../../src/components/lang/Bundle';
+import { isMsgKey } from '../../../src/components/lang/en';
 
 const enKeys = Object.keys(Bundle.en).sort();
 const locales = Object.keys(Bundle).filter((l) => l !== 'en');
 
 describe('mindplot language bundles', () => {
   it.each(locales)('%s has exactly the English key set', (locale) => {
-    expect(Object.keys(Bundle[locale]).sort()).toEqual(enKeys);
+    expect(Object.keys(Bundle[locale] ?? {}).sort()).toEqual(enKeys);
   });
 
   it.each(Object.keys(Bundle))('%s has a non-empty translation for every key', (locale) => {
-    const empty = Object.entries(Bundle[locale])
+    const empty = Object.entries(Bundle[locale] ?? {})
       .filter(([, value]) => typeof value !== 'string' || value.trim() === '')
       .map(([key]) => key);
     expect(empty).toEqual([]);
@@ -57,6 +58,19 @@ describe('mindplot language bundles', () => {
     expect(missing).toEqual([]);
     expect(used.has('LINK')).toBe(true);
     expect(used.has('NOTE')).toBe(true);
+  });
+
+  it('every theme style msgKey is a message key (unknown ones are ignored)', () => {
+    const stylesDir = path.resolve(__dirname, '../../../src/components/theme/styles');
+    const keys = fs
+      .readdirSync(stylesDir)
+      .filter((name) => name.endsWith('.json'))
+      .flatMap((name) => [
+        ...fs.readFileSync(path.join(stylesDir, name), 'utf8').matchAll(/"msgKey":\s*"([^"]+)"/g),
+      ])
+      .map((m) => m[1]);
+    expect(keys.length).toBeGreaterThan(0);
+    expect(keys.filter((key) => !isMsgKey(key))).toEqual([]);
   });
 
   it('labels link and note tooltips in English', () => {

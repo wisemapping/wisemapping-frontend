@@ -16,7 +16,9 @@
  *   limitations under the License.
  */
 
-const JA = {
+import type { LocaleMessages } from './en';
+
+const JA: LocaleMessages = {
   LOADING: '読み込み中...',
   SAVING: '保存中...',
   SAVE_COMPLETE: '保存しました',

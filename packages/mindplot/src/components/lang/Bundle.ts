@@ -25,11 +25,12 @@ import JA from './ja';
 import PT from './pt';
 import IT from './it';
 import HI from './hi';
+import type { LocaleMessages } from './en';
 
+// Looked up by the user locale, so any other locale is missing. English is the fallback.
 interface LanguageBundle {
-  [key: string]: {
-    [key: string]: string;
-  };
+  en: LocaleMessages;
+  [locale: string]: LocaleMessages | undefined;
 }
 
 const Bundle: LanguageBundle = {

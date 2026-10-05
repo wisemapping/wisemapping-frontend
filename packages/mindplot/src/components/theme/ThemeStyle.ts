@@ -22,6 +22,7 @@ import { FontWeightType } from '../FontWeightType';
 import { TopicShapeType } from '../model/INodeModel';
 import { TopicType, ThemeVariant } from './Theme';
 import type { BackgroundPatternType } from '../model/CanvasStyleType';
+import { isMsgKey, type MsgKey } from '../lang/en';
 
 // Import JSON files
 import prismDefault from './styles/prism-default.json';
@@ -57,7 +58,7 @@ export type TopicStyleType = {
   fontStyle: FontStyleType;
   fontWeight: FontWeightType;
   fontColor: string;
-  msgKey: string;
+  msgKey: MsgKey;
   shapeType: TopicShapeType;
   outerBackgroundColor: string;
   outerBorderColor: string;
@@ -376,7 +377,9 @@ export class ThemeStyle {
       result.fontWeight = jsonStyle.fontWeight as FontWeightType;
     }
     if (jsonStyle.fontColor !== undefined) result.fontColor = jsonStyle.fontColor;
-    if (jsonStyle.msgKey !== undefined) result.msgKey = jsonStyle.msgKey;
+    if (jsonStyle.msgKey !== undefined && isMsgKey(jsonStyle.msgKey)) {
+      result.msgKey = jsonStyle.msgKey;
+    }
     if (jsonStyle.shapeType !== undefined) result.shapeType = jsonStyle.shapeType as TopicShapeType;
     if (jsonStyle.outerBackgroundColor !== undefined) {
       result.outerBackgroundColor = jsonStyle.outerBackgroundColor;

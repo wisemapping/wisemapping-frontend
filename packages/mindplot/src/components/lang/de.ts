@@ -16,7 +16,9 @@
  *   limitations under the License.
  */
 
-const DE = {
+import type { LocaleMessages } from './en';
+
+const DE: LocaleMessages = {
   LOADING: 'Lädt ...',
   SAVING: 'Speichern ...',
   SAVE_COMPLETE: 'Speichern abgeschlossen',
