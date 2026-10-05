@@ -17,7 +17,10 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { MATERIAL_ICON_CODEPOINTS } from '../../../src/components/ImageSVGFeature';
+import {
+  BRAND_ICON_PATHS,
+  MATERIAL_ICON_CODEPOINTS,
+} from '../../../src/components/ImageSVGFeature';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
@@ -77,7 +80,7 @@ const ALIASES: Record<string, string> = {
   'local-cafe-outlined': 'local_cafe',
 };
 
-// Brand icons the picker offers that the font does not have (follow-up: draw them another way).
+// Brand icons the picker offers that the font does not have: they are drawn from a path (BL5-123).
 const NOT_IN_FONT = ['twitter', 'instagram', 'linkedin', 'youtube', 'whatsapp'];
 
 const officialName = (name: string): string => ALIASES[name] ?? name.replace(/-/g, '_');
@@ -95,7 +98,6 @@ describe('Material Icons gallery codepoints', () => {
 
   it('maps every name to the official codepoint of its icon', () => {
     const wrong = names
-      .filter((name) => !NOT_IN_FONT.includes(name))
       .filter((name) => official.get(officialName(name)) !== hex(MATERIAL_ICON_CODEPOINTS[name]))
       .map(
         (name) =>
@@ -111,8 +113,10 @@ describe('Material Icons gallery codepoints', () => {
     });
   });
 
-  it('only the brand icons are missing from the font', () => {
+  it('maps no name the font does not have: the brand icons are drawn from a path', () => {
     const missing = names.filter((name) => !official.has(officialName(name)));
-    expect(missing).toEqual(NOT_IN_FONT);
+    expect(missing).toEqual([]);
+    NOT_IN_FONT.forEach((name) => expect(official.has(name)).toBe(false));
+    expect(Object.keys(BRAND_ICON_PATHS).sort()).toEqual([...NOT_IN_FONT].sort());
   });
 });

@@ -21,7 +21,7 @@
  * It provides functionality to set, get, and render Material UI icons on topics.
  */
 
-import { Text, Group } from '@wisemapping/web2d';
+import { Text, Group, Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
 import ActionDispatcher from './ActionDispatcher';
@@ -220,14 +220,9 @@ export const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   medication: '\uf033',
   sick: '\uf220',
 
-  // Social Media. The font has no Twitter, Instagram, LinkedIn, YouTube or WhatsApp icon, so
-  // those codepoints draw another glyph (or none).
+  // Social Media. The font has no Twitter, Instagram, LinkedIn, YouTube or WhatsApp icon: those
+  // are drawn from BRAND_ICON_PATHS.
   facebook: '\uf234',
-  twitter: '\uf099',
-  instagram: '\uf16d',
-  linkedin: '\uf08c',
-  youtube: '\uf167',
-  whatsapp: '\uf232',
 
   // Additional General Icons
   close: '\ue5cd',
@@ -433,10 +428,43 @@ export const MATERIAL_ICON_CODEPOINTS: { readonly [key: string]: string } = {
   'photo-camera-front': '\uef69',
 };
 
+// Brand icons the 'Material Icons' font does not have. They are drawn from the path of the
+// @mui/icons-material icon the editor's image picker shows for them, on its 24×24 grid
+// (@mui/icons-material 9.4.0, MIT licence, Copyright (c) 2014 Call-Em-All).
+/* eslint-disable max-len -- path data copied verbatim */
+export const BRAND_ICON_PATHS: { readonly [key: string]: string } = {
+  twitter:
+    'M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z',
+  instagram:
+    'M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z',
+  linkedin:
+    'M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z',
+  youtube:
+    'M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z',
+  whatsapp:
+    'M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z',
+};
+/* eslint-enable max-len */
+
+// The gallery icon size: the font size of a glyph icon, the grid of a brand icon.
+const ICON_SIZE = 24;
+
+// The colour of an icon left uncoloured: a glyph without a fill draws black (the SVG default).
+const DEFAULT_ICON_COLOR = '#000000';
+
+/** A gallery icon: a Material Icons glyph, or a brand icon drawn from its path. */
+export type GalleryIconShape = Text | Image;
+
+/** A self-contained SVG image of a brand icon, so that it also renders in an exported map. */
+export const brandIconHref = (path: string, color: string): string =>
+  `data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${ICON_SIZE} ${ICON_SIZE}" width="${ICON_SIZE}" height="${ICON_SIZE}"><path fill="${color}" d="${path}"/></svg>`,
+  )}`;
+
 class ImageSVGFeature {
   private _topic: Topic;
 
-  private _svgText: Text | undefined;
+  private _svgText: GalleryIconShape | undefined;
 
   private _svgRemoveTip: ElementDeleteWidget | undefined;
 
@@ -444,7 +472,7 @@ class ImageSVGFeature {
   // ElementDeleteWidget.decorate only skips icons it has already decorated.
   private _svgIcon: Icon | undefined;
 
-  private _svgIconText: Text | undefined;
+  private _svgIconText: GalleryIconShape | undefined;
 
   // Gallery icon name that has no codepoint, so that it is not looked up on every call.
   private _unknownIconName: string | undefined;
@@ -489,17 +517,43 @@ class ImageSVGFeature {
    */
   updateIconColor(): void {
     if (this._svgText) {
-      const shapeType = this._topic.getShapeType();
-      if (shapeType !== 'line') {
-        const model = this._topic.getModel();
-        const theme = ThemeFactory.create(model, this._topic.getThemeVariant());
-        const fontColor = theme.getFontColor(this._topic);
-        this._svgText.setColor(fontColor);
+      const color = this.iconColor();
+      if (this._svgText instanceof Image) {
+        this.colorBrandIcon(this._svgText, color);
+      } else if (color) {
+        this._svgText.setColor(color);
       }
     }
   }
 
-  getOrBuildSVGElement(): Text | undefined {
+  /** The topic font colour, or none for a line shape (the icon keeps its default colour). */
+  private iconColor(): string | undefined {
+    const shapeType = this._topic.getShapeType();
+    if (shapeType === 'line') {
+      return undefined;
+    }
+    const model = this._topic.getModel();
+    const theme = ThemeFactory.create(model, this._topic.getThemeVariant());
+    return theme.getFontColor(this._topic);
+  }
+
+  /** Draws the brand icon in a colour, rewriting the image only when it changes. */
+  private colorBrandIcon(image: Image, color: string | undefined): void {
+    const path = BRAND_ICON_PATHS[this.getGalleryIconName() ?? ''];
+    if (path) {
+      const href = brandIconHref(path, color ?? DEFAULT_ICON_COLOR);
+      if (image.getHref() !== href) {
+        image.setHref(href);
+      }
+    }
+  }
+
+  /** The icon size: a glyph is measured, a brand icon is drawn on its grid. */
+  private static iconSize(shape: GalleryIconShape): SizeType {
+    return shape instanceof Text ? shape.measure() : { width: ICON_SIZE, height: ICON_SIZE };
+  }
+
+  getOrBuildSVGElement(): GalleryIconShape | undefined {
     const galleryIconName = this.getGalleryIconName();
     if (!galleryIconName) {
       return undefined;
@@ -512,8 +566,10 @@ class ImageSVGFeature {
       return undefined;
     }
 
-    // Create Text element for Material UI icon
-    const text = this.createMaterialIcon(galleryIconName);
+    // A Text element for a Material Icons glyph, an Image for a brand icon
+    const text = BRAND_ICON_PATHS[galleryIconName]
+      ? this.createBrandIcon()
+      : this.createMaterialIcon(galleryIconName);
     if (!text) {
       this._unknownIconName = galleryIconName;
     }
@@ -553,6 +609,13 @@ class ImageSVGFeature {
     // Don't call redraw here to avoid infinite recursion
   }
 
+  private createBrandIcon(): Image {
+    const image = new Image();
+    image.setSize(ICON_SIZE, ICON_SIZE);
+    this.colorBrandIcon(image, this.iconColor());
+    return image;
+  }
+
   private createMaterialIcon(iconName: string): Text | undefined {
     try {
       // Get the Material Icons Unicode codepoint for the icon
@@ -565,7 +628,7 @@ class ImageSVGFeature {
         text.setFontName('Material Icons');
 
         // Set the text properties
-        text.setFontSize(24); // Standard icon size
+        text.setFontSize(ICON_SIZE); // Standard icon size
 
         // Set the text content with the Unicode codepoint
         text.setText(iconUnicode);
@@ -577,11 +640,8 @@ class ImageSVGFeature {
         }
 
         // Set icon color to match topic font color (only for non-line shapes)
-        const shapeType = this._topic.getShapeType();
-        if (shapeType !== 'line') {
-          const model = this._topic.getModel();
-          const theme = ThemeFactory.create(model, this._topic.getThemeVariant());
-          const fontColor = theme.getFontColor(this._topic);
+        const fontColor = this.iconColor();
+        if (fontColor) {
           text.setColor(fontColor);
         }
 
@@ -614,8 +674,8 @@ class ImageSVGFeature {
     }
 
     // Standard icon size
-    const svgHeight = 24;
-    const svgWidth = svgText.getShapeWidth();
+    const svgHeight = ICON_SIZE;
+    const svgWidth = ImageSVGFeature.iconSize(svgText).width;
 
     return { height: svgHeight, width: svgWidth };
   }
@@ -666,7 +726,7 @@ class ImageSVGFeature {
     }
 
     // Center SVG horizontally in the middle of the topic
-    const svgX = (topicWidth - svgText.getShapeWidth()) / 2;
+    const svgX = (topicWidth - ImageSVGFeature.iconSize(svgText).width) / 2;
 
     // Position text and icons below the SVG with balanced spacing
     const spacing = 12; // More space between SVG and text
@@ -730,10 +790,7 @@ class ImageSVGFeature {
         return null;
       },
       getSize(): SizeType | undefined {
-        return {
-          width: svgText.getShapeWidth(),
-          height: svgText.getShapeHeight(),
-        };
+        return ImageSVGFeature.iconSize(svgText);
       },
       getPosition(): PositionType {
         return svgText.getPosition();

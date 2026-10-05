@@ -17,6 +17,7 @@
  */
 
 import { Text, Group } from '@wisemapping/web2d';
+import type { Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
 import ActionDispatcher from './ActionDispatcher';
@@ -174,7 +175,7 @@ class ImageEmojiFeature {
    * Whether the element is already the front (last) child of the group, which is where
    * addToGroup puts it: then there is nothing to move.
    */
-  static isLastChild(group: Group, element: Text): boolean {
+  static isLastChild(group: Group, element: Text | Image): boolean {
     const children = group.peer.getChildren();
     return (
       children[children.length - 1] === element.peer &&

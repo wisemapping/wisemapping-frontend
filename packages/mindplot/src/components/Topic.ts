@@ -24,7 +24,7 @@ import TopicFeatureFactory from './TopicFeature';
 import TopicConnection, { LineType } from './TopicConnection';
 import IconGroup from './IconGroup';
 import ImageEmojiFeature from './ImageEmojiFeature';
-import ImageSVGFeature from './ImageSVGFeature';
+import ImageSVGFeature, { GalleryIconShape } from './ImageSVGFeature';
 import LayoutEventBus from './layout/LayoutEventBus';
 import ShirinkConnector from './ShrinkConnector';
 import ActionDispatcher from './ActionDispatcher';
@@ -356,7 +356,7 @@ abstract class Topic extends NodeGraph {
     return this._imageEmojiFeature.getOrBuildEmojiTextShape();
   }
 
-  getOrBuildImageSVGElement(): Text | undefined {
+  getOrBuildImageSVGElement(): GalleryIconShape | undefined {
     return this._imageSVGFeature.getOrBuildSVGElement();
   }
 

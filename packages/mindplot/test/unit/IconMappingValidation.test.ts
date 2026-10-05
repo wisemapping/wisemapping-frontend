@@ -43,6 +43,18 @@ describe('Icon Mapping Validation', () => {
       });
     }
 
+    // The brand icons the font does not have are drawn from a path instead (BL5-123)
+    const brandIconsMatch = imageSVGFeatureContent.match(
+      /const BRAND_ICON_PATHS: \{ readonly \[key: string\]: string \} = \{([\s\S]*?)\n\};/,
+    );
+    if (brandIconsMatch) {
+      const brandNameRegex = /^ {2}(\w+):/gm;
+      let match;
+      while ((match = brandNameRegex.exec(brandIconsMatch[1])) !== null) {
+        materialIconsMapping[match[1]] = 'path';
+      }
+    }
+
     // Read and parse image-icon-tab/index.tsx to extract icon names
     const iconTabPath = path.join(
       __dirname,
