@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { Point } from '@wisemapping/web2d';
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import { createDocument } from '../util/DOMUtils';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
@@ -73,7 +73,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     this._persistCanvasStyle(mapElem, mindmap);
 
     const version = mindmap.getVersion();
-    if ($defined(version)) {
+    if (version != null) {
       mapElem.setAttribute('version', version);
     }
 
@@ -241,11 +241,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     font += `${fontStyle || ''};`;
 
     if (
-      $defined(fontFamily) ||
-      $defined(fontSize) ||
-      $defined(fontColor) ||
-      $defined(fontWeight) ||
-      $defined(fontStyle)
+      fontFamily != null ||
+      fontSize != null ||
+      fontColor != null ||
+      fontWeight != null ||
+      fontStyle != null
     ) {
       parentTopic.setAttribute('fontStyle', font);
     }
@@ -272,7 +272,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const metadata = topic.getMetadata();
-    if ($defined(metadata)) {
+    if (metadata != null) {
       parentTopic.setAttribute('metadata', metadata);
     }
 
@@ -479,14 +479,14 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     // Set text property is it;s defined...
     const text = domElem.getAttribute('text');
-    if ($defined(text) && text) {
+    if (text) {
       topic.setText(text);
     }
 
     // Topic text is always plain, no contentType needed
 
     const fontStyle = domElem.getAttribute('fontStyle');
-    if ($defined(fontStyle) && fontStyle) {
+    if (fontStyle) {
       // Optimized font parsing: split once and assign directly
       const fontParts = fontStyle.split(';');
 
@@ -574,7 +574,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const connStyle = domElem.getAttribute('connStyle');
-    if ($defined(connStyle) && connStyle) {
+    if (connStyle) {
       const lineType = Number.parseInt(connStyle, 10);
       if (isLineType(lineType)) {
         topic.setConnectionStyle(lineType);
@@ -586,7 +586,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const connColor = domElem.getAttribute('connColor');
-    if ($defined(connColor) && connColor) {
+    if (connColor) {
       topic.setConnectionColor(connColor);
     }
 
@@ -608,7 +608,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const isShrink = domElem.getAttribute('shrink');
     // Hack: Some production maps has been stored with the central topic collapsed. This is a bug.
-    if ($defined(isShrink) && type !== 'CentralTopic') {
+    if (isShrink != null && type !== 'CentralTopic') {
       topic.setChildrenShrunken(isShrink === 'true');
     }
 

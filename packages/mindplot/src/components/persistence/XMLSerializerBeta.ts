@@ -14,7 +14,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import ModelCodeName from './ModelCodeName';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
@@ -54,7 +54,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
 
     // Start the loading process ...
     let version = documentElement.getAttribute('version');
-    version = !$defined(version) ? ModelCodeName.BETA : version;
+    version = version ?? ModelCodeName.BETA;
     const mindmap = new Mindmap(mapId, version);
 
     // Default to classic theme for beta version maps
@@ -82,14 +82,14 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
 
     // Load attributes...
     const text = domElem.getAttribute('text');
-    if ($defined(text)) {
+    if (text != null) {
       topic.setText(text);
     }
 
     // Topic text is always plain, no contentType needed
 
     const order = domElem.getAttribute('order');
-    if ($defined(order)) {
+    if (order != null) {
       const parsedOrder = parseInt(order, 10);
       if (Number.isFinite(parsedOrder)) {
         topic.setOrder(parsedOrder);
@@ -99,7 +99,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     let shape = domElem.getAttribute('shape');
-    if ($defined(shape)) {
+    if (shape != null) {
       // Hack for legacy mapping loading ...
       shape = shape === 'rectagle' ? 'rectangle' : shape;
       if (isTopicShapeType(shape)) {
@@ -110,12 +110,12 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     const isShrink = domElem.getAttribute('shrink');
-    if ($defined(isShrink)) {
+    if (isShrink != null) {
       topic.setChildrenShrunken(isShrink === 'true');
     }
 
     const fontStyle = domElem.getAttribute('fontStyle');
-    if ($defined(fontStyle)) {
+    if (fontStyle != null) {
       const font = fontStyle.split(';');
 
       if (font[0]) {
@@ -156,17 +156,17 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     const bgColor = domElem.getAttribute('bgColor');
-    if ($defined(bgColor)) {
+    if (bgColor != null) {
       topic.setBackgroundColor(bgColor);
     }
 
     const borderColor = domElem.getAttribute('brColor');
-    if ($defined(borderColor)) {
+    if (borderColor != null) {
       topic.setBorderColor(borderColor);
     }
 
     const position = domElem.getAttribute('position');
-    if ($defined(position)) {
+    if (position != null) {
       const pos = position.split(',');
       const x = Number.parseInt(pos[0], 10);
       const y = Number.parseInt(pos[1], 10);

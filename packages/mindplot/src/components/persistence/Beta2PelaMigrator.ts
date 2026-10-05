@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import { Mindmap } from '../..';
 import NodeModel from '../model/NodeModel';
 import { sideOf } from '../util/side';
@@ -41,7 +41,7 @@ class Beta2PelaMigrator implements XMLMindmapSerializer {
   }
 
   loadFromDom(dom: Document, mapId: string): Mindmap {
-    $assert($defined(mapId), 'mapId can not be null');
+    $assert(mapId != null, 'mapId can not be null');
     const mindmap = this._betaSerializer.loadFromDom(dom, mapId);
     mindmap.setVersion(ModelCodeName.PELA);
 

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import XMLSerializer from './XMLSerializerTango';
 import ModelCodeName from './ModelCodeName';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
@@ -37,7 +37,7 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
   }
 
   loadFromDom(dom: Document, mapId: string): Mindmap {
-    $assert($defined(mapId), 'mapId can not be null');
+    $assert(mapId != null, 'mapId can not be null');
     const mindmap = this._pelaSerializer.loadFromDom(dom, mapId);
     mindmap.setVersion(ModelCodeName.TANGO);
     // An empty map has no central topic: there is nothing to fix.
