@@ -33,7 +33,8 @@ const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo): 
   const [disabled, setDisabled] = useState(true);
   const mapLoaded = model?.isMapLoadded() ?? false;
 
-  // Subscribes again when the model changes, or once its map has loaded ...
+  // Subscribes again when the model changes, or once its map has loaded. The button starts
+  // disabled for each subscription: the previous model's undo steps say nothing about this one ...
   useEffect(() => {
     if (!model || !mapLoaded) {
       return undefined;
@@ -50,6 +51,7 @@ const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo): 
     designer.addEvent('modelUpdate', handleUpdate);
     return () => {
       designer.removeEvent('modelUpdate', handleUpdate);
+      setDisabled(true);
     };
   }, [model, mapLoaded]);
 

@@ -111,4 +111,30 @@ describe('UndoAndRedo (BL4-58)', () => {
     expect(first.listeners).toHaveLength(0);
     expect(second.listeners).toHaveLength(1);
   });
+
+  it('resets the button when the model changes (BL5-29)', () => {
+    const first = createModel();
+    const second = createModel();
+    const { rerender } = render(<Undo model={first.model} />);
+    first.fire(1);
+    expect(undoButton()).toBeEnabled();
+
+    // The new model has no undo steps until its designer reports some ...
+    rerender(<Undo model={second.model} />);
+    expect(undoButton()).toBeDisabled();
+
+    second.fire(2);
+    expect(undoButton()).toBeEnabled();
+  });
+
+  it('resets the button when the map is loaded again (BL5-29)', () => {
+    const { model, state, fire } = createModel();
+    const { rerender } = render(<Undo model={model} />);
+    fire(1);
+
+    state.loaded = false;
+    rerender(<Undo model={model} />);
+
+    expect(undoButton()).toBeDisabled();
+  });
 });
