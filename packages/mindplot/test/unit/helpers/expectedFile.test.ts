@@ -16,12 +16,11 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globals';
-import { assertExpectedFile } from './expectedFile';
+import assertExpectedFile from './expectedFile';
 import { exporterAssert as importerAssert } from '../import/Helper';
 import { exporterAssert } from '../export/Helper';
 import Importer from '../../../src/components/import/Importer';

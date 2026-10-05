@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 
+import { buildDesigner } from '../commands/designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner } from '../commands/designer-harness';
 
 /**
  * Deleting a topic removes its whole subtree. Only the topic the user deleted

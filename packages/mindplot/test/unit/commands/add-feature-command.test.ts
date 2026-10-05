@@ -16,13 +16,13 @@
  *   limitations under the License.
  */
 
+import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
+import { buildDesigner } from './designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
-import { buildDesigner } from './designer-harness';
 
 /**
  * Adding a feature (e.g. an icon) to several selected topics must give each

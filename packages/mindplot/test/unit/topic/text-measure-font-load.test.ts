@@ -22,12 +22,12 @@
  * with the fallback font, so the cache must be dropped then (document.fonts 'loadingdone'),
  * and the next redraw must measure again and size the topic with the new metrics.
  */
+import { buildDesigner } from '../commands/designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner } from '../commands/designer-harness';
 
 // jsdom has no FontFaceSet. web2d starts listening on the first measurement, so it is defined
 // before any topic is built.

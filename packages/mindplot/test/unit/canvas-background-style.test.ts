@@ -84,10 +84,10 @@ describe('Canvas Background Style Tests', () => {
         addEvent: jest.fn(),
         removeEvent: jest.fn(),
       };
-      return instance as any;
+      return instance as unknown as ScreenManager;
     });
 
-    mockScreenManager = new MockedScreenManager({} as any) as jest.Mocked<ScreenManager>;
+    mockScreenManager = new MockedScreenManager({} as HTMLElement) as jest.Mocked<ScreenManager>;
     canvas = new Canvas(mockScreenManager, 1.0, false, false);
   });
 
@@ -193,7 +193,8 @@ describe('Canvas Background Style Tests', () => {
   });
 
   test('should find correct DOM element for style application', () => {
-    const workspace = (canvas as any)._workspace;
+    const workspace = (canvas as unknown as { _workspace: { getSVGElement: jest.Mock } })
+      ._workspace;
     const mockSVGElement = {
       parentElement: {
         parentElement: {

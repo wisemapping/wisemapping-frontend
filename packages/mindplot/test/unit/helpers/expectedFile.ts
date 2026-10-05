@@ -43,7 +43,7 @@ const shouldUpdate = (): boolean => {
 };
 
 /** Compares the actual output with the expected file, writing it when updating or missing locally. */
-export const assertExpectedFile = (file: string, actual: string): void => {
+const assertExpectedFile = (file: string, actual: string): void => {
   const exists = fs.existsSync(file);
   if (shouldUpdate() || (!exists && !process.env.CI)) {
     fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -62,3 +62,5 @@ export const assertExpectedFile = (file: string, actual: string): void => {
     expect(actual).toEqual(expected);
   }
 };
+
+export default assertExpectedFile;

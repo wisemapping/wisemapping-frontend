@@ -15,14 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import fs from 'fs';
+import path from 'path';
+import { MATERIAL_ICON_CODEPOINTS } from '../../../src/components/ImageSVGFeature';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import fs from 'fs';
-import path from 'path';
-import { MATERIAL_ICON_CODEPOINTS } from '../../../src/components/ImageSVGFeature';
 
 // The gallery icons are drawn with the 'Material Icons' font (MindplotWebComponent loads
 // https://fonts.googleapis.com/icon?family=Material+Icons). MaterialIcons-Regular.codepoints is

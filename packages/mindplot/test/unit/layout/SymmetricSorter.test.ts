@@ -182,7 +182,7 @@ describe('sorter predict signatures (BL5-33, BL5-34)', () => {
   it.each([new SymmetricSorter(), new BalancedSorter(), new TreeSorter()])(
     '%s takes the nullable node and position LayoutManager passes, and nothing more',
     (sorter) => {
-      const predict: Predict = sorter.predict;
+      const { predict }: { predict: Predict } = sorter;
       // The free-positioning flag nothing passed (BL5-33) is gone.
       expect(predict).toHaveLength(4);
     },

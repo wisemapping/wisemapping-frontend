@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { SAMPLE_MAP, buildDesigner as buildHarness } from '../commands/designer-harness';
 import buildDesigner from '../../../src/components/DesignerBuilder';
 import Designer from '../../../src/components/Designer';
@@ -34,6 +29,11 @@ import LayoutManager from '../../../src/components/layout/LayoutManager';
 import PersistenceManager from '../../../src/components/PersistenceManager';
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 type DesignerInternals = {
   _eventBussDispatcher: EventBusDispatcher;

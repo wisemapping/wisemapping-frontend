@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 
+import { buildDesigner } from './designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner } from './designer-harness';
 
 // A is collapsed: its child A1 is hidden.
 const MAP = [

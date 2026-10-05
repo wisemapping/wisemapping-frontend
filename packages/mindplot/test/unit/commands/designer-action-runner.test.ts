@@ -16,14 +16,14 @@
  *   limitations under the License.
  */
 
+import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
+import LayoutManager from '../../../src/components/layout/LayoutManager';
+import { buildDesigner } from './designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
-import LayoutManager from '../../../src/components/layout/LayoutManager';
-import { buildDesigner } from './designer-harness';
 
 /**
  * Undo/redo with nothing to undo or redo must not report a model update: the

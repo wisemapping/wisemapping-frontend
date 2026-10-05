@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import fs from 'fs';
 import path from 'path';
 import { describe, expect, test } from '@jest/globals';
@@ -43,14 +42,15 @@ const positionOf = (topic: Element): { x: number; y: number } => {
 
 describe('FreemindImporter', () => {
   test('imports maps written by FreeMind versions older than 1.0.1', async () => {
-    const mm = `<map version="0.9.0"><node ID="ID_1" TEXT="Root"><node ID="ID_2" TEXT="Child" POSITION="right"/></node></map>`;
+    const mm =
+      '<map version="0.9.0"><node ID="ID_1" TEXT="Root"><node ID="ID_2" TEXT="Child" POSITION="right"/></node></map>';
 
     const doc = await importMap(mm);
     expect(topicById(doc, '2').getAttribute('text')).toBe('Child');
   });
 
   test('rejects maps written by FreeMind versions newer than the supported one', async () => {
-    const mm = `<map version="1.1.0"><node ID="ID_1" TEXT="Root"/></map>`;
+    const mm = '<map version="1.1.0"><node ID="ID_1" TEXT="Root"/></map>';
 
     let result: Promise<string> | undefined;
     expect(() => {
@@ -299,7 +299,7 @@ describe('FreemindImporter', () => {
   });
 
   test('gives each import its own ids', async () => {
-    const mm = `<map version="1.0.1"><node ID="root" TEXT="Root"/></map>`;
+    const mm = '<map version="1.0.1"><node ID="root" TEXT="Root"/></map>';
     const importer = new FreemindImporter(mm);
     const first = await importer.import('test', '');
     const second = await importer.import('test', '');

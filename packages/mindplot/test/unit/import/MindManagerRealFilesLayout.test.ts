@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies, import/first */
+/* eslint-disable import/first */
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},

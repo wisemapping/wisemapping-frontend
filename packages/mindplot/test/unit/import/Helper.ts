@@ -16,12 +16,10 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/prefer-default-export */
 import fs from 'fs';
 import path from 'path';
 import Importer from '../../../src/components/import/Importer';
-import { assertExpectedFile } from '../helpers/expectedFile';
+import assertExpectedFile from '../helpers/expectedFile';
 
 export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType) => {
   const parser = new DOMParser();

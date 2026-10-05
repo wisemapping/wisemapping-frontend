@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { test, expect } from '@jest/globals';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
 import WisemappingImporter from '../../../src/components/import/WisemappingImporter';

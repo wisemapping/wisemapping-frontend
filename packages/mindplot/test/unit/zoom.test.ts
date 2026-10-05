@@ -89,12 +89,12 @@ describe('Canvas', () => {
         addEvent: jest.fn(),
         removeEvent: jest.fn(),
       };
-      return instance as any;
+      return instance as unknown as ScreenManager;
     });
 
-    mockScreenManager = new MockedScreenManager({} as any) as jest.Mocked<ScreenManager>;
+    mockScreenManager = new MockedScreenManager({} as HTMLElement) as jest.Mocked<ScreenManager>;
     canvas = new Canvas(mockScreenManager, 1.0, false, false);
-    workspace = (canvas as any)._workspace;
+    workspace = (canvas as unknown as { _workspace: jest.Mocked<Workspace> })._workspace;
   });
 
   describe('zoom', () => {

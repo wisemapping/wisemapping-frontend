@@ -16,16 +16,16 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { buildDesigner } from '../commands/designer-harness';
 import Designer from '../../../src/components/Designer';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import PositionType from '../../../src/components/PositionType';
 import ScreenManager from '../../../src/components/ScreenManager';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 /**
  * Zoom, everywhere in mindplot, is workspace units per screen pixel: the viewBox is the

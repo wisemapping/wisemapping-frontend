@@ -36,9 +36,8 @@ const buildIcon = (type: FeatureType, id: number): Icon & { label: string } => {
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const order = (group: IconGroup): string[] =>
-  (group as any)._icons.map((i: { label: string }) => i.label);
+  (group as unknown as { _icons: { label: string }[] })._icons.map((i) => i.label);
 
 describe('IconGroup', () => {
   describe('icon order (B-EICON)', () => {
@@ -166,7 +165,11 @@ describe('IconGroup', () => {
       );
       expect(nativeOrder(group)).toEqual(expected);
       const xs = order(group).map(
-        (label) => icons.find((i) => i.label === label)!.getElement().getPosition().x,
+        (label) =>
+          icons
+            .find((i) => i.label === label)!
+            .getElement()
+            .getPosition().x,
       );
       expect(xs).toEqual([...xs].sort((a, b) => a - b));
       // Only the icons after an inserted one move: 1 + 2 + 0 + 3, instead of all of them

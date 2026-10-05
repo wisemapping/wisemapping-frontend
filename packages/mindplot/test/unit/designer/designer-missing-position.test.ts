@@ -16,16 +16,16 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { buildDesigner } from '../commands/designer-harness';
 import Designer from '../../../src/components/Designer';
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import Mindmap from '../../../src/components/model/Mindmap';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 /**
  * INodeModel.getPosition() is undefined when a topic has no position. The Tango loader fills

@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { buildDesigner } from './commands/designer-harness';
 import CommandContext from '../../src/components/CommandContext';
 import Designer from '../../src/components/Designer';
@@ -29,6 +24,11 @@ import { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
 import Topic from '../../src/components/Topic';
 import Mindmap from '../../src/components/model/Mindmap';
 import NodeModel from '../../src/components/model/NodeModel';
+
+jest.mock('../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 const TOPICS = 500;
 

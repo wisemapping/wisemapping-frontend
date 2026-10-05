@@ -119,13 +119,13 @@ const buildScenario = (file: string, layoutType: 'mindmap' | 'tree') => {
     const removed = new Set<number>([id]);
     let grew = true;
     while (grew) {
-      grew = false;
+      const before = removed.size;
       parentOf.forEach((parent, child) => {
-        if (removed.has(parent) && !removed.has(child)) {
+        if (removed.has(parent)) {
           removed.add(child);
-          grew = true;
         }
       });
+      grew = removed.size > before;
     }
     manager.removeNode(id);
     removed.forEach((removedId) => {

@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 
+import { buildDesigner } from './designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner } from './designer-harness';
 
 /**
  * Deleting a topic and undoing it rebuilds its relationships as new objects, so

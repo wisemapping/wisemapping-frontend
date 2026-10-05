@@ -17,11 +17,6 @@
  */
 
 // jspdf pulls in a TextEncoder that jsdom does not provide, and nothing here exports.
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import Designer from '../../../src/components/Designer';
 import DesignerModel from '../../../src/components/DesignerModel';
 import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
@@ -33,6 +28,11 @@ import Mindmap from '../../../src/components/model/Mindmap';
 import NodeModel from '../../../src/components/model/NodeModel';
 import ToolbarNotifier from '../../../src/components/model/ToolbarNotifier';
 import { DesignerOptions } from '../../../src/components/DesignerOptionsBuilder';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 /**
  * The paste paths only touch the model, the action dispatcher and the layout

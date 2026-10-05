@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { describe, expect, jest, test } from '@jest/globals';
 import { strToU8, zipSync } from 'fflate';
 import MindManagerImporter from '../../../src/components/import/MindManagerImporter';
@@ -472,7 +471,8 @@ describe('MindManagerImporter relationship line style', () => {
       <ap:ConnectionGroup Index="1"><ap:Connection><ap:ObjectReference OIdRef="${to}"/></ap:Connection></ap:ConnectionGroup>
       ${style}
     </ap:Relationship>`;
-  const topics = `<ap:Topic OId="a"><ap:Text PlainText="A"/></ap:Topic><ap:Topic OId="b"><ap:Text PlainText="B"/></ap:Topic>`;
+  const topics =
+    '<ap:Topic OId="a"><ap:Text PlainText="A"/></ap:Topic><ap:Topic OId="b"><ap:Text PlainText="B"/></ap:Topic>';
 
   test('reads the LineDashStyle of the LineStyle element', async () => {
     const mindManager = schemaMap(
@@ -522,7 +522,8 @@ describe('MindManagerImporter relationship line style', () => {
 });
 
 describe('MindManagerImporter relationship color and arrows', () => {
-  const topics = `<ap:Topic OId="a"><ap:Text PlainText="A"/></ap:Topic><ap:Topic OId="b"><ap:Text PlainText="B"/></ap:Topic>`;
+  const topics =
+    '<ap:Topic OId="a"><ap:Text PlainText="A"/></ap:Topic><ap:Topic OId="b"><ap:Text PlainText="B"/></ap:Topic>';
   const end = (index: number, oid: string, shape?: string): string => `
       <ap:ConnectionGroup Index="${index}">
         <ap:Connection><ap:ObjectReference OIdRef="${oid}"/></ap:Connection>
@@ -789,12 +790,13 @@ describe('MindManagerImporter growth direction of the main topics', () => {
     expect(sides(mindmap)).toEqual([1, 1, 1, 1]);
   });
 
-  test('LeftAndRight and AutomaticHorizontal still balance the sides', async () => {
-    for (const direction of ['LeftAndRight', 'AutomaticHorizontal']) {
+  test.each(['LeftAndRight', 'AutomaticHorizontal'])(
+    '%s still balances the sides',
+    async (direction) => {
       const mindmap = loadMindmap(
         await new MindManagerImporter(schemaMap(mains, styleGroup(direction))).import('test'),
       );
       expect(sides(mindmap)).toEqual([1, -1, 1, -1]);
-    }
-  });
+    },
+  );
 });

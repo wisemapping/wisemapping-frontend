@@ -16,13 +16,13 @@
  *   limitations under the License.
  */
 
+import { buildDesigner } from '../commands/designer-harness';
+import Topic from '../../../src/components/Topic';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner } from '../commands/designer-harness';
-import Topic from '../../../src/components/Topic';
 
 // BL5-85: the variant toggle walked only the central topic's tree.
 describe('Designer.setThemeVariant', () => {

@@ -109,7 +109,10 @@ describe('EventBusDispatcher layout coalescing', () => {
     return { manager, models, layout, connect };
   };
 
-  const microtasks = () => new Promise<void>((resolve) => queueMicrotask(resolve));
+  const microtasks = () =>
+    new Promise<void>((resolve) => {
+      queueMicrotask(resolve);
+    });
 
   it('lays out once for a run of connections, in a microtask', async () => {
     const { manager, models, layout, connect } = setUp(5);

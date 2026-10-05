@@ -22,15 +22,15 @@
  * setters, cached theme resolution, coalesced editor layout) must leave every
  * position, size, colour and SVG element exactly as it was.
  */
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { buildDesigner, Harness } from '../commands/designer-harness';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import { buildMediumMap, renderSnapshot, stubTextMeasurement } from './RenderFixture';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 const nextFrame = (): Promise<void> =>
   new Promise((resolve) => {
@@ -89,8 +89,9 @@ describe('redraw render snapshot of a medium map', () => {
     const textarea = document.querySelector('#textContainer textarea') as HTMLTextAreaElement;
     // One keystroke per frame, as a person types. The editor lays the map out once per
     // frame, so several keystrokes in one frame are laid out together.
-    for (const value of ['T', 'Ty', 'Typ', 'Typed text', 'Typed text\nwith a second line']) {
-      textarea.value = value;
+    const values = ['T', 'Ty', 'Typ', 'Typed text', 'Typed text\nwith a second line'];
+    for (let i = 0; i < values.length; i++) {
+      textarea.value = values[i];
       textarea.dispatchEvent(new Event('input', { bubbles: true }));
       // eslint-disable-next-line no-await-in-loop
       await nextFrame();

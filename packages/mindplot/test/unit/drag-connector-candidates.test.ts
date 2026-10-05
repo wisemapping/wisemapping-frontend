@@ -16,12 +16,6 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/first */
-jest.mock('../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 /*
  * The parents DragConnector offers a dragged topic, on a medium map (bug3.wxml, 279 topics):
  * the same candidates in the same order as the algorithm it replaced, which, on every mousemove,
@@ -38,6 +32,11 @@ import Canvas from '../../src/components/Canvas';
 import PositionType from '../../src/components/PositionType';
 import SizeType from '../../src/components/SizeType';
 import { sideOf } from '../../src/components/util/side';
+
+jest.mock('../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 const TOLERANCE = DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE;
 

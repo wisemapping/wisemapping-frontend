@@ -40,14 +40,14 @@ describe('BalancedSorter Layout Tests', () => {
     // Verify nodes are distributed on both sides
     const node1 = manager.find(1);
     const node2 = manager.find(2);
-    
+
     expect(node1).toBeDefined();
     expect(node2).toBeDefined();
-    
+
     // Nodes on opposite sides should have opposite x positions relative to root
     const node1X = node1.getPosition().x;
     const node2X = node2.getPosition().x;
-    
+
     expect(Math.sign(node1X)).not.toBe(Math.sign(node2X));
   });
 
@@ -69,7 +69,7 @@ describe('BalancedSorter Layout Tests', () => {
     for (let i = 1; i <= 6; i++) {
       const node = manager.find(i);
       expect(node).toBeDefined();
-      
+
       const pos = node.getPosition();
       expect(typeof pos.x).toBe('number');
       expect(typeof pos.y).toBe('number');
@@ -101,7 +101,7 @@ describe('BalancedSorter Layout Tests', () => {
     expect(node1).toBeDefined();
     expect(node2).toBeDefined();
     expect(node4).toBeDefined();
-    
+
     // Removed node should throw when accessed
     expect(() => manager.find(3)).toThrow();
   });
@@ -121,7 +121,7 @@ describe('BalancedSorter Layout Tests', () => {
 
     // Layout should be recalculated
     const newNode1Pos = manager.find(1).getPosition();
-    
+
     // Position should be valid after dynamic additions
     expect(newNode1Pos).toBeDefined();
     expect(typeof newNode1Pos.x).toBe('number');

@@ -37,6 +37,8 @@ const openEditor = (topic: Topic, text?: string) => {
   editor().show(topic, text);
 };
 
+let topics: Topic[] = [];
+
 beforeAll(() => {
   stubSvgMeasurement();
 });
@@ -61,8 +63,6 @@ afterEach(() => {
   editor().close(false);
   document.body.innerHTML = '';
 });
-
-let topics: Topic[] = [];
 
 describe('MultilineTextEditor Escape', () => {
   it('leaves an empty topic empty instead of saving the placeholder', () => {

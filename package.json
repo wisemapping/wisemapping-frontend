@@ -27,7 +27,7 @@
     "test:unit": "lerna run test:unit --stream"
   },
   "lint-staged": {
-    "packages/mindplot/src/**/*.{ts,tsx}": [
+    "packages/mindplot/{src,test}/**/*.{ts,tsx}": [
       "cd packages/mindplot && eslint --fix",
       "prettier --write"
     ],

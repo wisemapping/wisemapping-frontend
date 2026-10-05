@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class {},
-}));
-
 import { Group } from '@wisemapping/web2d';
 import Canvas from '../../../src/components/Canvas';
 import DesignerModel from '../../../src/components/DesignerModel';
@@ -33,6 +28,11 @@ import TopicConnection from '../../../src/components/TopicConnection';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import NodeGraph from '../../../src/components/NodeGraph';
 import { sideOf } from '../../../src/components/util/side';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class {},
+}));
 
 /**
  * Which side of the map something is on is decided in many places, and the rule is

@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { describe, expect, test } from '@jest/globals';
 import OPMLImporter from '../../../src/components/import/OPMLImporter';
 import ImportError from '../../../src/components/import/ImportError';
@@ -79,7 +78,8 @@ describe('OPMLImporter', () => {
   });
 
   test('names the central topic after the map when the OPML has no title', async () => {
-    const opml = `<opml version="2.0"><head/><body><outline text="A"/><outline text="B"/></body></opml>`;
+    const opml =
+      '<opml version="2.0"><head/><body><outline text="A"/><outline text="B"/></body></opml>';
 
     const xml = await new OPMLImporter(opml).import('My map');
 

@@ -18,6 +18,9 @@
 
 import XMindImporter from '../../../src/components/import/XMindImporter';
 
+// The private icon mapper under test.
+type IconMapper = { mapXMindIconToEmojiIcon(iconId: string): string };
+
 describe('XMind Icon Mapping Tests', () => {
   let importer: XMindImporter;
 
@@ -28,7 +31,7 @@ describe('XMind Icon Mapping Tests', () => {
   describe('Icon Mapping Functionality', () => {
     test('should map priority icons correctly', () => {
       // Access the private method through type assertion
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('priority-1')).toBe('🔴'); // 🔴
       expect(mapIcon('priority-2')).toBe('🟡'); // 🟡
@@ -38,7 +41,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should map star icons correctly', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('star')).toBe('⭐'); // ⭐
       expect(mapIcon('star-1')).toBe('⭐'); // ⭐
@@ -47,7 +50,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should map task icons correctly', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('task')).toBe('📋'); // 📋
       expect(mapIcon('task-done')).toBe('✅'); // ✅
@@ -57,7 +60,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should map emotion icons correctly', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('smile')).toBe('😊'); // 😊
       expect(mapIcon('happy')).toBe('😃'); // 😃
@@ -67,7 +70,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should map number icons correctly', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('1')).toBe('1️⃣'); // 1️⃣
       expect(mapIcon('2')).toBe('2️⃣'); // 2️⃣
@@ -76,7 +79,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should map letter icons correctly', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('a')).toBe('🅰️'); // 🅰️
       expect(mapIcon('b')).toBe('🅱️'); // 🅱️
@@ -85,7 +88,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should map animal icons correctly', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('dog')).toBe('🐶'); // 🐶
       expect(mapIcon('cat')).toBe('🐱'); // 🐱
@@ -94,7 +97,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should map food icons correctly', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('apple')).toBe('🍎'); // 🍎
       expect(mapIcon('pizza')).toBe('🍕'); // 🍕
@@ -103,7 +106,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should map technology icons correctly', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('computer')).toBe('💻'); // 💻
       expect(mapIcon('phone-mobile')).toBe('📱'); // 📱
@@ -112,7 +115,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should map weather icons correctly', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('sun')).toBe('☀️'); // ☀️
       expect(mapIcon('rain')).toBe('🌧️'); // 🌧️
@@ -121,7 +124,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should map sports icons correctly', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('football')).toBe('⚽'); // ⚽
       expect(mapIcon('basketball')).toBe('🏀'); // 🏀
@@ -130,7 +133,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should handle case insensitive mapping', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('PRIORITY-1')).toBe('🔴'); // 🔴
       expect(mapIcon('STAR')).toBe('⭐'); // ⭐
@@ -138,7 +141,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should return default icon for unknown icons', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('unknown-icon')).toBe('💡'); // 💡 (default)
       expect(mapIcon('non-existent')).toBe('💡'); // 💡 (default)
@@ -146,7 +149,7 @@ describe('XMind Icon Mapping Tests', () => {
     });
 
     test('should handle edge cases', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       expect(mapIcon('priority-0')).toBe('💡'); // 💡 (default)
       expect(mapIcon('priority-6')).toBe('💡'); // 💡 (default)
@@ -156,7 +159,7 @@ describe('XMind Icon Mapping Tests', () => {
 
   describe('Icon Mapping Coverage', () => {
     test('should have comprehensive icon coverage', () => {
-      const mapIcon = (importer as any).mapXMindIconToEmojiIcon.bind(importer);
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
 
       // Test a sample from each major category
       const testIcons = [

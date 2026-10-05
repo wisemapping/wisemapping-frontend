@@ -101,7 +101,7 @@ describe('WidgetBuilder tooltips', () => {
   };
 
   it('renders the link url as text, not markup', () => {
-    const url = `https://x.org/"><img src=x onerror="window.__mindplotXssHook()">`;
+    const url = 'https://x.org/"><img src=x onerror="window.__mindplotXssHook()">';
     const hook = installXssHook();
 
     const link = showLink(url);

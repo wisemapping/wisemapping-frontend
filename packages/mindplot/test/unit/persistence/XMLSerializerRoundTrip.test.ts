@@ -156,9 +156,9 @@ describe('XMLSerializerTango round trip', () => {
 
   describe('shrink attribute (B-SHRINK)', () => {
     const tangoXml = (shrink: string) =>
-      `<map name="m" version="tango"><topic central="true" id="1" text="C">` +
+      '<map name="m" version="tango"><topic central="true" id="1" text="C">' +
       `<topic id="2" order="0" text="A" shrink="${shrink}"><topic id="3" order="0" text="B"/></topic>` +
-      `</topic></map>`;
+      '</topic></map>';
 
     test('writer only emits shrink="true" for collapsed topics with children', () => {
       const { mindmap, central, child } = buildMap();
@@ -195,9 +195,9 @@ describe('XMLSerializerTango round trip', () => {
       ['', false],
     ])('beta loads shrink="%s" as %s', (shrink, expected) => {
       const xml =
-        `<map name="m"><topic central="true" id="1" text="C">` +
+        '<map name="m"><topic central="true" id="1" text="C">' +
         `<topic id="2" order="0" text="A" shrink="${shrink}"><topic id="3" order="0" text="B"/></topic>` +
-        `</topic></map>`;
+        '</topic></map>';
       const dom = new DOMParser().parseFromString(xml, 'text/xml');
       const mindmap = new XMLSerializerBeta().loadFromDom(dom, 'm');
       const topic = mindmap.getCentralTopic().getChildren()[0];

@@ -36,7 +36,7 @@ const node = (mindmap: Mindmap, id: number): NodeModel => mindmap.findNodeById(i
 const tangoTopic = (attributes: string): NodeModel =>
   node(
     load(
-      `<map version="tango"><topic central="true" id="1" text="c">` +
+      '<map version="tango"><topic central="true" id="1" text="c">' +
         `<topic id="2" position="200,0" order="0" text="t" ${attributes}/></topic></map>`,
     ),
     2,
@@ -46,7 +46,7 @@ const tangoTopic = (attributes: string): NodeModel =>
 const betaTopic = (attributes: string): NodeModel =>
   load(
     `<map><topic central="true" text="c"><topic position="200,0" text="t" ${attributes}/>` +
-      `</topic></map>`,
+      '</topic></map>',
   )
     .getBranches()[0]
     .getChildren()[0];

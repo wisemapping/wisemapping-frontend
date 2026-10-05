@@ -255,7 +255,9 @@ describe('MindplotWebComponent', () => {
       document.body.appendChild(component);
 
       component.remove();
-      await new Promise<void>((resolve) => setTimeout(resolve, 0));
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, 0);
+      });
 
       expect(PersistenceManager.getInstance()).toBeUndefined();
       // Pending changes can still be saved and the map unlocked ...
@@ -270,14 +272,19 @@ describe('MindplotWebComponent', () => {
       document.body.appendChild(component);
 
       component.remove();
-      await new Promise<void>((resolve) => setTimeout(resolve, 0));
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, 0);
+      });
 
       expect(PersistenceManager.getInstance()).toBe(another);
     });
   });
 
   describe('disconnect (BL-48)', () => {
-    const flushMicrotasks = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+    const flushMicrotasks = () =>
+      new Promise<void>((resolve) => {
+        setTimeout(resolve, 0);
+      });
 
     afterEach(() => {
       component.remove();

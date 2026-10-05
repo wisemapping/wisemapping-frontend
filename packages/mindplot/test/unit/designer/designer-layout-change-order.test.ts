@@ -16,16 +16,16 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { buildDesigner } from '../commands/designer-harness';
 import ChangeEvent from '../../../src/components/layout/ChangeEvent';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
 import Designer from '../../../src/components/Designer';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 const layoutManagerOf = (designer: Designer): LayoutManager =>
   (

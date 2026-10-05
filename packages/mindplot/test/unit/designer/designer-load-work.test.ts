@@ -16,11 +16,6 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { buildDesigner } from '../commands/designer-harness';
 import { buildMediumMap, useTextSizedBoxes } from './medium-map';
 import Designer from '../../../src/components/Designer';
@@ -28,6 +23,11 @@ import NodeGraph from '../../../src/components/NodeGraph';
 import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import Node from '../../../src/components/layout/Node';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 /*
  * Loading a map must not do work that grows with the square of its size. These tests count the
@@ -43,7 +43,10 @@ const layoutManagerOf = (designer: Designer): LayoutManager =>
     designer as unknown as { _eventBussDispatcher: EventBusDispatcher }
   )._eventBussDispatcher.getLayoutManager();
 
-const microtasks = () => new Promise<void>((resolve) => queueMicrotask(resolve));
+const microtasks = () =>
+  new Promise<void>((resolve) => {
+    queueMicrotask(resolve);
+  });
 
 /** The ids of layout nodes read: a search of the tree reads the id of each node it visits. */
 const spyOnTreeVisits = () => jest.spyOn(Node.prototype, 'getId');

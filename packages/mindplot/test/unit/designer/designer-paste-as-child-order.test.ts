@@ -16,14 +16,14 @@
  *   limitations under the License.
  */
 
+import { buildDesigner } from '../commands/designer-harness';
+import Designer from '../../../src/components/Designer';
+import Topic from '../../../src/components/Topic';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner } from '../commands/designer-harness';
-import Designer from '../../../src/components/Designer';
-import Topic from '../../../src/components/Topic';
 
 const clipboardWith = (...texts: string[]): string =>
   [

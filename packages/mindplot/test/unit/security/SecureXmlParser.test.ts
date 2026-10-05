@@ -16,18 +16,17 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { describe, expect, jest, test } from '@jest/globals';
 import SecureXmlParser from '../../../src/components/security/SecureXmlParser';
 
 describe('SecureXmlParser', () => {
   test('keeps the predefined XML entities and character references', () => {
     const doc = SecureXmlParser.parseSecureXml(
-      `<node TEXT="R&amp;D &lt;tag&gt; &quot;q&quot; &apos;a&apos;">caf&#233; &#x2713;</node>`,
+      '<node TEXT="R&amp;D &lt;tag&gt; &quot;q&quot; &apos;a&apos;">caf&#233; &#x2713;</node>',
     );
 
     expect(doc).not.toBeNull();
-    expect(doc!.documentElement.getAttribute('TEXT')).toBe(`R&D <tag> "q" 'a'`);
+    expect(doc!.documentElement.getAttribute('TEXT')).toBe('R&D <tag> "q" \'a\'');
     expect(doc!.documentElement.textContent).toBe('café ✓');
   });
 
@@ -41,7 +40,7 @@ describe('SecureXmlParser', () => {
 
   test('removes comments and processing instructions', () => {
     const doc = SecureXmlParser.parseSecureXml(
-      `<?xml version="1.0"?><?xml-stylesheet href="x.xsl"?><map><!-- comment --><node/></map>`,
+      '<?xml version="1.0"?><?xml-stylesheet href="x.xsl"?><map><!-- comment --><node/></map>',
     );
 
     expect(doc).not.toBeNull();
@@ -59,13 +58,14 @@ describe('SecureXmlParser', () => {
 <map><node TEXT="&xxe;"/></map>`;
     expect(SecureXmlParser.parseSecureXml(xxe)).toBeNull();
 
-    const bomb = `<!DOCTYPE lolz [<!ENTITY lol "lol"><!ENTITY lol2 "&lol;&lol;">]><lolz>&lol2;</lolz>`;
+    const bomb =
+      '<!DOCTYPE lolz [<!ENTITY lol "lol"><!ENTITY lol2 "&lol;&lol;">]><lolz>&lol2;</lolz>';
     expect(SecureXmlParser.parseSecureXml(bomb)).toBeNull();
   });
 
   test('ignores a DOCTYPE without entity declarations', () => {
     const doc = SecureXmlParser.parseSecureXml(
-      `<!DOCTYPE map SYSTEM "map.dtd"><map><node TEXT="ok"/></map>`,
+      '<!DOCTYPE map SYSTEM "map.dtd"><map><node TEXT="ok"/></map>',
     );
 
     expect(doc).not.toBeNull();
@@ -73,7 +73,7 @@ describe('SecureXmlParser', () => {
   });
 
   test('drops references to undeclared entities', () => {
-    const doc = SecureXmlParser.parseSecureXml(`<node>a&nbsp;b</node>`);
+    const doc = SecureXmlParser.parseSecureXml('<node>a&nbsp;b</node>');
 
     expect(doc).not.toBeNull();
     expect(doc!.documentElement.textContent).toBe('ab');

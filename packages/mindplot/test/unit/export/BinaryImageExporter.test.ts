@@ -56,7 +56,12 @@ class FakeImage {
 
 const PENDING = 'still pending';
 const settle = <T>(promise: Promise<T>): Promise<T | string> =>
-  Promise.race([promise, new Promise<string>((r) => setTimeout(() => r(PENDING), 50))]);
+  Promise.race([
+    promise,
+    new Promise<string>((r) => {
+      setTimeout(() => r(PENDING), 50);
+    }),
+  ]);
 
 describe('BinaryImageExporter', () => {
   const originalImage = globalThis.Image;

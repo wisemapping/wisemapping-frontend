@@ -113,7 +113,6 @@ class FakeTopic {
     return [];
   }
 
-  // eslint-disable-next-line class-methods-use-this
   _getTopicEventDispatcher(): null {
     return null;
   }

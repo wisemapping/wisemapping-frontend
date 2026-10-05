@@ -22,16 +22,18 @@
  */
 import Designer from '../../../src/components/Designer';
 
+/* eslint-disable no-bitwise -- mulberry32 is integer bit mixing */
 /** A small seeded generator (mulberry32), so the generated map never changes. */
 const random = (seed: number): (() => number) => {
   let state = seed;
   return () => {
     state = (state + 0x6d2b79f5) | 0;
     let t = Math.imul(state ^ (state >>> 15), 1 | state);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 };
+/* eslint-enable no-bitwise */
 
 const WORDS = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta', 'iota'];
 
@@ -112,7 +114,6 @@ export const buildMediumMap = ({
 
   all.forEach((topic) => {
     if (topic !== central && topic.children.length > 0 && next() < 0.08) {
-      // eslint-disable-next-line no-param-reassign
       topic.shrink = true;
     }
   });
@@ -141,7 +142,8 @@ export const buildMediumMap = ({
     }
     xml.push(`${indent}<topic ${attributes.join(' ')}>`);
     topic.children.forEach((child, index) => {
-      const childSide = topic === central ? (index % 2 === 0 ? 1 : -1) : side;
+      const alternatingSide = index % 2 === 0 ? 1 : -1;
+      const childSide = topic === central ? alternatingSide : side;
       write(child, depth + 1, index, childSide);
     });
     xml.push(`${indent}</topic>`);
@@ -169,11 +171,11 @@ export const buildMediumMap = ({
  */
 export const useTextSizedBoxes = (): (() => void) => {
   type BBoxPrototype = { getBBox: () => { x: number; y: number; width: number; height: number } };
-  const prototype = (window as unknown as { SVGElement: { prototype: BBoxPrototype } }).SVGElement
-    .prototype;
+  const { prototype } = (window as unknown as { SVGElement: { prototype: BBoxPrototype } })
+    .SVGElement;
   const previous = prototype.getBBox;
   prototype.getBBox = function getBBox(this: Element) {
-    const length = (this.textContent ?? '').length;
+    const { length } = this.textContent ?? '';
     return { x: 0, y: 0, width: 20 + length * 6, height: 14 + (length % 3) * 4 };
   };
   return () => {

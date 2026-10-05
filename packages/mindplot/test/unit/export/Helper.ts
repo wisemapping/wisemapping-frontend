@@ -19,7 +19,7 @@ import { Blob } from 'blob-polyfill';
 import path from 'path';
 import fs from 'fs';
 import Exporter from '../../../src/components/export/Exporter';
-import { assertExpectedFile } from '../helpers/expectedFile';
+import assertExpectedFile from '../helpers/expectedFile';
 
 export const setupBlob = () => {
   // Workaround for partial implementations on Jest:

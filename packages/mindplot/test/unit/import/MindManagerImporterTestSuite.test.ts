@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
 import fs from 'fs';
 import { test } from '@jest/globals';

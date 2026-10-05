@@ -16,16 +16,16 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { createHash } from 'crypto';
 import { buildDesigner } from '../commands/designer-harness';
 import { buildMediumMap, useTextSizedBoxes } from './medium-map';
 import Canvas from '../../../src/components/Canvas';
 import Designer from '../../../src/components/Designer';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 /*
  * A map load queues what it builds and adds it to the canvas in batches once every topic is
@@ -71,14 +71,14 @@ describe('Map load render queue', () => {
       append: (element: Queued) => void;
       appendInternal: (element: Queued) => void;
     };
-    const append = canvas.append;
+    const { append } = canvas;
     jest.spyOn(canvas, 'append').mockImplementation(function record(this: Canvas, element) {
       if ((this as unknown as { _queueRenderEnabled: boolean })._queueRenderEnabled) {
         queued += 1;
       }
       append.call(this, element);
     });
-    const appendInternal = canvas.appendInternal;
+    const { appendInternal } = canvas;
     jest.spyOn(canvas, 'appendInternal').mockImplementation(function record(this: Canvas, element) {
       added.push(element);
       appendInternal.call(this, element);

@@ -16,15 +16,15 @@
  *   limitations under the License.
  */
 
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { buildDesigner } from '../commands/designer-harness';
 import Topic from '../../../src/components/Topic';
 import { LineType } from '../../../src/components/BaseConnectionLine';
 import { STRAIGHT_TOLERANCE_PX } from '../../../src/components/TopicConnection';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 /**
  * The map below, as MindManager draws it (mmap2json `test.mmap`):

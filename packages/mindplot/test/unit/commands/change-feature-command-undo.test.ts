@@ -16,14 +16,14 @@
  *   limitations under the License.
  */
 
+import SvgIconModel from '../../../src/components/model/SvgIconModel';
+import NoteModel from '../../../src/components/model/NoteModel';
+import { buildDesigner } from './designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import SvgIconModel from '../../../src/components/model/SvgIconModel';
-import NoteModel from '../../../src/components/model/NoteModel';
-import { buildDesigner } from './designer-harness';
 
 // A carries an emoji icon, a legacy plain note (no contentType) and a link.
 const MAP = [

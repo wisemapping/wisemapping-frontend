@@ -15,13 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { LineType } from '../../../src/components/BaseConnectionLine';
+import { buildDesigner } from '../commands/designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { LineType } from '../../../src/components/BaseConnectionLine';
-import { buildDesigner } from '../commands/designer-harness';
 
 describe('Topic with two designers on the page', () => {
   it('redraws a changed connection into its own canvas, not the last designer built', async () => {

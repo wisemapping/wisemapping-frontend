@@ -16,14 +16,14 @@
  *   limitations under the License.
  */
 
+import Relationship from '../../src/components/Relationship';
+import Topic from '../../src/components/Topic';
+import { buildDesigner } from './commands/designer-harness';
+
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import Relationship from '../../src/components/Relationship';
-import Topic from '../../src/components/Topic';
-import { buildDesigner } from './commands/designer-harness';
 
 /**
  * A relationship draws a 2px line, plus a 12px "focus shape" that is meant to be

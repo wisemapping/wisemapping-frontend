@@ -21,11 +21,6 @@
  * theme resolutions), so that the redraw optimizations are proven by numbers that
  * do not depend on the machine. Each bound fails on the code before the change.
  */
-jest.mock('../../../src/components/export/PDFExporter', () => ({
-  __esModule: true,
-  default: class MockPDFExporter {},
-}));
-
 import { Group, Text } from '@wisemapping/web2d';
 import { buildDesigner, Harness } from '../commands/designer-harness';
 import Topic from '../../../src/components/Topic';
@@ -35,6 +30,11 @@ import ImageSVGFeature from '../../../src/components/ImageSVGFeature';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import MultitTextEditor from '../../../src/components/MultilineTextEditor';
 import { buildMediumMap, stubTextMeasurement } from './RenderFixture';
+
+jest.mock('../../../src/components/export/PDFExporter', () => ({
+  __esModule: true,
+  default: class MockPDFExporter {},
+}));
 
 const nextFrame = (): Promise<void> =>
   new Promise((resolve) => {

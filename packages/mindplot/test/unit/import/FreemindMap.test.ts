@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { describe, expect, jest, test } from '@jest/globals';
 import FreemindMap from '../../../src/components/export/freemind/Map';
 import FreemindNode, { Choise } from '../../../src/components/export/freemind/Node';
@@ -108,7 +107,7 @@ describe('FreemindMap', () => {
   test('does not log while loading a map', () => {
     const log = jest.spyOn(console, 'log').mockImplementation(() => {});
     try {
-      roundTrip(`<map version="1.0.1"><node ID="ID_1" TEXT="Root"/></map>`);
+      roundTrip('<map version="1.0.1"><node ID="ID_1" TEXT="Root"/></map>');
       expect(log).not.toHaveBeenCalled();
     } finally {
       log.mockRestore();

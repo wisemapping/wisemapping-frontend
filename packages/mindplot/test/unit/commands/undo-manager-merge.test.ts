@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 
+import { buildDesigner, SAMPLE_MAP } from './designer-harness';
+
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
-
-import { buildDesigner, SAMPLE_MAP } from './designer-harness';
 
 /**
  * Commands flagged with the same discardDuplicated key (the color pickers) are
