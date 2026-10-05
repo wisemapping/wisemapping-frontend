@@ -92,22 +92,14 @@ class HTMLTopicSelected {
 
   private _topic: Topic;
 
-  private _designer: Designer | null;
-
   private _onTopicFocus: (() => void) | null;
 
   private _onTopicBlur: (() => void) | null;
 
-  constructor(
-    topic: Topic,
-    containerElement: HTMLDivElement,
-    screenManager: ScreenManager,
-    designer?: Designer,
-  ) {
+  constructor(topic: Topic, containerElement: HTMLDivElement, screenManager: ScreenManager) {
     this._topic = topic;
     this._containerElement = containerElement;
     this._screenManager = screenManager;
-    this._designer = designer || null;
     this._isVisible = false;
     this._helperContainer = null;
 
@@ -164,6 +156,7 @@ class HTMLTopicSelected {
       }
 
       // Check if multiple topics are selected
+      const designer = this._topic.getDesigner();
       if (designer) {
         try {
           const selectedTopics = designer.getModel().filterSelectedTopics();
@@ -211,8 +204,9 @@ class HTMLTopicSelected {
     }
 
     // If not found via parent chain (isolated topic), search all topics
-    if (!centralTopic && this._designer) {
-      const allTopics = this._designer.getModel().getTopics();
+    const designer = this._topic.getDesigner();
+    if (!centralTopic && designer) {
+      const allTopics = designer.getModel().getTopics();
       centralTopic = allTopics.find((t) => t.isCentralTopic()) || null;
     }
 
@@ -1000,8 +994,9 @@ class HTMLTopicSelected {
     }
 
     // Check if multiple topics are selected
-    if (this._designer) {
-      const selectedTopics = this._designer.getModel().filterSelectedTopics();
+    const designer = this._topic.getDesigner();
+    if (designer) {
+      const selectedTopics = designer.getModel().filterSelectedTopics();
       if (selectedTopics.length > 1) {
         // Multiple topics selected - hide shadow
         if (this._isVisible) {
@@ -1059,8 +1054,8 @@ class HTMLTopicSelected {
   }
 
   private _createSibling(): void {
-    // The designer passed in, or else the one the topic was built with
-    const designer = this._designer || this._topic.getDesigner();
+    // The designer the topic was built with
+    const designer = this._topic.getDesigner();
     if (!designer) {
       console.warn('Designer instance not available for creating sibling');
       return;
@@ -1081,8 +1076,8 @@ class HTMLTopicSelected {
   }
 
   private _createChild(): void {
-    // The designer passed in, or else the one the topic was built with
-    const designer = this._designer || this._topic.getDesigner();
+    // The designer the topic was built with
+    const designer = this._topic.getDesigner();
     if (!designer) {
       console.warn('Designer instance not available for creating child');
       return;
@@ -1164,7 +1159,7 @@ class HTMLTopicSelected {
     if (!selectionShadows.has(topic)) {
       const screenManager = designer.getScreenManager();
       const containerElement = designer.getContainer();
-      const shadow = new HTMLTopicSelected(topic, containerElement, screenManager, designer);
+      const shadow = new HTMLTopicSelected(topic, containerElement, screenManager);
       selectionShadows.set(topic, shadow);
     }
   }

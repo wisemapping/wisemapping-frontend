@@ -55,3 +55,20 @@ describe('HTMLTopicSelected with two designers on the page (BL4-22)', () => {
     },
   );
 });
+
+describe('HTMLTopicSelected reads the designer from its topic (BL5-09)', () => {
+  it('a shadow built without a designer stays hidden while several topics are selected', async () => {
+    const { designer, topic } = await buildDesigner();
+    topic(1).setOnFocus(true);
+    topic(3).setOnFocus(true);
+
+    const shadow = new HTMLTopicSelected(
+      topic(1),
+      designer.getContainer(),
+      designer.getScreenManager(),
+    );
+
+    expect((shadow as unknown as { _isVisible: boolean })._isVisible).toBe(false);
+    shadow.dispose();
+  });
+});

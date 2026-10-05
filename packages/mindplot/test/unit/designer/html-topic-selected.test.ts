@@ -44,7 +44,13 @@ class FakeTopic {
 
   connectionColor = '#3f96ff';
 
+  designer: Designer | undefined;
+
   constructor(readonly name: string) {}
+
+  getDesigner(): Designer | undefined {
+    return this.designer;
+  }
 
   addEvent(type: string, fn: Listener): void {
     const list = this.listeners.get(type) || [];
@@ -133,6 +139,10 @@ const buildDesigner = (topics: FakeTopic[]) => {
       Designer.prototype.onObjectFocusEvent.call(this, currentObject, event);
     },
   };
+  // The topics were built by this designer.
+  topics.forEach((topic) => {
+    topic.designer = designer as unknown as Designer;
+  });
   return { designer: designer as unknown as Designer & typeof designer, container };
 };
 
@@ -208,15 +218,10 @@ describe('HTMLTopicSelected', () => {
   describe('listener lifecycle (B-SHADOWLEAK)', () => {
     it('dispose() removes every listener it added to the topic', () => {
       const topic = new FakeTopic('a');
-      const { designer, container } = buildDesigner([topic]);
+      const { container } = buildDesigner([topic]);
       const before = ['ontfocus', 'ontblur', 'mousedown'].map((t) => topic.count(t));
 
-      const shadow = new HTMLTopicSelected(
-        asTopic(topic),
-        container,
-        {} as ScreenManager,
-        designer,
-      );
+      const shadow = new HTMLTopicSelected(asTopic(topic), container, {} as ScreenManager);
       shadow.dispose();
 
       expect(['ontfocus', 'ontblur', 'mousedown'].map((t) => topic.count(t))).toEqual(before);
@@ -294,13 +299,8 @@ describe('HTMLTopicSelected', () => {
 
     it('uses the current colors after they change', () => {
       const topic = new FakeTopic('a');
-      const { designer, container } = buildDesigner([topic]);
-      const shadow = new HTMLTopicSelected(
-        asTopic(topic),
-        container,
-        {} as ScreenManager,
-        designer,
-      );
+      const { container } = buildDesigner([topic]);
+      const shadow = new HTMLTopicSelected(asTopic(topic), container, {} as ScreenManager);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const internal = shadow as any;
       internal.ensurePlusButtons();
