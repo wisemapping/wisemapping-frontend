@@ -17,16 +17,20 @@
  */
 import { $defined } from '../utils/assert';
 import PositionType from '../../PositionType';
+import {
+  TAPER_AT_DEST_CONTROL,
+  TAPER_AT_SRC_CONTROL,
+  curvePathData,
+  defaultControlPoints,
+} from '../../geometry/curve';
 import ElementPeer from './ElementPeer';
 
 class CurvedLinePeer extends ElementPeer {
   /** Half the thickness of a tapered line at its source control point, as a share of the width. */
-  static readonly TAPER_AT_SRC_CONTROL = 0.35;
+  static readonly TAPER_AT_SRC_CONTROL = TAPER_AT_SRC_CONTROL;
 
   /** Half the thickness of a tapered line at its target control point, as a share of the width. */
-  static readonly TAPER_AT_DEST_CONTROL = 0.2;
-
-  private static readonly EPSILON = 1e-9;
+  static readonly TAPER_AT_DEST_CONTROL = TAPER_AT_DEST_CONTROL;
 
   // Whether the user placed the control point. Only set through setIs*ControlPointCustom: the
   // setters below also take default points, which must not be reported as custom ...
@@ -172,96 +176,23 @@ class CurvedLinePeer extends ElementPeer {
     }
   }
 
-  /**
-   * Draws the line. Below width 1 it is a plain cubic curve. From width 1 it is a filled shape
-   * that tapers from `width` at the start to a point at the end: the outgoing edge and the
-   * returning edge are the centre curve offset to either side, by the same amount, along the
-   * normal at each end (W-TAPER). Each edge point is centre ± normal × half-thickness, so the
-   * average of both edges is the centre curve itself at every t.
-   */
+  /** Draws the line: a plain curve below width 1, a tapered filled shape from 1 (geometry/curve). */
   private _renderPath() {
-    const start = { x: this._x1, y: this._y1 };
-    const end = { x: this._x2, y: this._y2 };
-    const c1 = { x: this._control1.x + this._x1, y: this._control1.y + this._y1 };
-    const c2 = { x: this._control2.x + this._x2, y: this._control2.y + this._y2 };
-
-    const str = CurvedLinePeer._pointToStr;
-    const width = this.getWidth();
-    if (width < 1) {
-      this.attr('d', `M${str(start)} C${str(c1)} ${str(c2)} ${str(end)}`);
-      return;
-    }
-
-    // Normals at the start and at the end, from the curve's tangents there.
-    const n1 = CurvedLinePeer._normal([
-      [start, c1],
-      [start, c2],
-      [start, end],
-    ]);
-    const n2 = CurvedLinePeer._normal([
-      [c2, end],
-      [c1, end],
-      [start, end],
-    ]);
-
-    // Half the thickness at each point of the control polygon.
-    const h0 = width / 2;
-    const h1 = width * CurvedLinePeer.TAPER_AT_SRC_CONTROL;
-    const h2 = width * CurvedLinePeer.TAPER_AT_DEST_CONTROL;
-
-    const offset = (p: PositionType, n: PositionType, h: number) => ({
-      x: p.x + n.x * h,
-      y: p.y + n.y * h,
-    });
-    const there = `M${str(offset(start, n1, -h0))} C${str(offset(c1, n1, -h1))} ${str(offset(c2, n2, -h2))} ${str(end)}`;
-    const back = `C${str(offset(c2, n2, h2))} ${str(offset(c1, n1, h1))} ${str(offset(start, n1, h0))} Z`;
-    this.attr('d', `${there} ${back}`);
-  }
-
-  /**
-   * The unit normal (the direction turned 90°) of the first segment, among `segments`, whose
-   * ends do not coincide. Falls back to the normal of a left-to-right line when all of them do.
-   */
-  private static _normal(segments: [PositionType, PositionType][]): PositionType {
-    for (const [a, b] of segments) {
-      const dx = b.x - a.x;
-      const dy = b.y - a.y;
-      const length = Math.hypot(dx, dy);
-      if (length > CurvedLinePeer.EPSILON) {
-        return { x: -dy / length, y: dx / length };
-      }
-    }
-    return { x: 0, y: 1 };
-  }
-
-  private static _pointToStr(p: PositionType) {
-    const fixed = (v: number) => {
-      const value = v.toFixed(1);
-      return value === '-0.0' ? '0.0' : value;
-    };
-    return `${fixed(p.x)},${fixed(p.y)}`;
-  }
-
-  /**
-   * The default control points, relative to their ends: a third of the way along the chord,
-   * each pointing towards the other end, so the default curve is the straight chord (W-DEFCP).
-   */
-  private static _calculateDefaultControlPoints(
-    srcPos: PositionType,
-    tarPos: PositionType,
-  ): [PositionType, PositionType] {
-    const x = (tarPos.x - srcPos.x) / 3;
-    const y = (tarPos.y - srcPos.y) / 3;
-    // `0 - v` rather than `-v`, so that no coordinate is -0.
-    return [
-      { x, y },
-      { x: 0 - x, y: 0 - y },
-    ];
+    this.attr(
+      'd',
+      curvePathData(
+        { x: this._x1, y: this._y1 },
+        { x: this._x2, y: this._y2 },
+        this._control1,
+        this._control2,
+        this.getWidth(),
+      ),
+    );
   }
 
   private _calculateAutoControlPoints(avoidControlPointFix: boolean) {
     // Both points available, calculate real points
-    const defaultpoints = CurvedLinePeer._calculateDefaultControlPoints(
+    const defaultpoints = defaultControlPoints(
       { x: this._x1, y: this._y1 },
       { x: this._x2, y: this._y2 },
     );
