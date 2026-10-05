@@ -211,6 +211,38 @@ describe('DragConnector candidates (bug3.wxml)', () => {
     expect(topics.length).toBeGreaterThan(250);
   });
 
+  it('reads the topics once per drag, then only the ones within reach (BL5-84)', async () => {
+    const { designer } = await load();
+    const topics = designer.getModel().getTopics();
+    const central = designer.getModel().getCentralTopic();
+    const main = central.getChildren().reduce((a, b) => (branchSize(a) >= branchSize(b) ? a : b));
+    const connector = new DragConnector(designer.getModel(), {} as Canvas) as unknown as Searcher;
+    const getPosition = jest.spyOn(Topic.prototype, 'getPosition');
+    const isCollapsed = jest.spyOn(Topic.prototype, 'isCollapsed');
+
+    let mouse: PositionType = { x: 0, y: 0 };
+    const dragTopic = dragTopicFor(
+      main,
+      () => mouse,
+      () => null,
+    );
+    const MOVES = 50;
+    let candidates = 0;
+    for (let i = 0; i < MOVES; i++) {
+      mouse = {
+        x: central.getPosition().x + central.getSize().width / 2 + 40,
+        y: central.getPosition().y - 100 + i * 4,
+      };
+      candidates += connector._searchConnectionCandidates(dragTopic).length;
+    }
+
+    expect(candidates).toBeGreaterThan(0);
+    // Before: every move read the position of every topic, about 279 * 50 = 14,000 reads. Now
+    // once per topic for the drag, then a few per move for the topics in reach.
+    expect(getPosition.mock.calls.length).toBeLessThan(topics.length + MOVES * 20);
+    expect(isCollapsed.mock.calls.length).toBeLessThanOrEqual(topics.length);
+  });
+
   it('walks the branch again for a new drag', async () => {
     const { designer } = await load();
     const central = designer.getModel().getCentralTopic();

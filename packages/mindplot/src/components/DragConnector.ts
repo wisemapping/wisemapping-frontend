@@ -24,12 +24,39 @@ import Canvas from './Canvas';
 import PositionType from './PositionType';
 import { sideOf } from './util/side';
 
+/** A topic a drag may connect to, with its place in the topic list, and a border along an axis. */
+type Candidate = { topic: Topic; index: number; border: number };
+
+/**
+ * The topics a drag may connect to, read once per drag: not of the dragged branch, not collapsed
+ * nor in a collapsed branch. Each list is sorted by one border, the one the reach test measures
+ * from: the right one (topics left of the mouse), the left one (right of it), the top one (tree).
+ */
+type DragCandidates = { right: Candidate[]; left: Candidate[]; top: Candidate[] };
+
+/** Index of the first candidate whose border is at least `value` (the list is sorted by it). */
+const lowerBound = (list: Candidate[], value: number): number => {
+  let low = 0;
+  let high = list.length;
+  while (low < high) {
+    const middle = (low + high) >>> 1;
+    if (list[middle].border < value) {
+      low = middle + 1;
+    } else {
+      high = middle;
+    }
+  }
+  return low;
+};
+
 class DragConnector {
   private _designerModel: DesignerModel;
 
   private _workspace: Canvas;
 
   private _draggedBranches = new WeakMap<DragTopic, Set<number>>();
+
+  private _dragCandidates = new WeakMap<DragTopic, DragCandidates>();
 
   constructor(designerModel: DesignerModel, workspace: Canvas) {
     $assert(designerModel, 'designerModel can not be null');
@@ -93,19 +120,31 @@ class DragConnector {
       };
     }
 
-    // Then discard, of the topics in reach:
-    //  - the dragged topic and its branch, which it can not be connected to
-    //  - the collapsed ones, and the ones inside a collapsed branch
-    const branch = this._getDraggedBranch(dragTopic);
-    const topics = this._designerModel
-      .getTopics()
-      .filter(
-        (topic: Topic) =>
-          inReach(topic) &&
-          !branch.has(topic.getId()) &&
-          !topic.areChildrenShrunken() &&
-          !topic.isCollapsed(),
-      );
+    // Only the topics whose border is within reach of the mouse along the axis are looked at:
+    // they are found in the list sorted by that border, read once per drag.
+    const candidates = this._getDragCandidates(dragTopic);
+    let list: Candidate[];
+    let from: number;
+    let to: number;
+    if (orientation === 'vertical') {
+      list = candidates.top;
+      [from, to] = [sPos.y - DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE, sPos.y];
+    } else if (sideOf(sPos.x) > 0) {
+      list = candidates.right;
+      [from, to] = [sPos.x - DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE, sPos.x];
+    } else {
+      list = candidates.left;
+      [from, to] = [sPos.x, sPos.x + DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE];
+    }
+    // A pixel more on each side: inReach, on the topics as they are, has the last word.
+    const inRange: Candidate[] = [];
+    for (let i = lowerBound(list, from - 1); i < list.length && list[i].border <= to + 1; i++) {
+      if (inReach(list[i].topic)) {
+        inRange.push(list[i]);
+      }
+    }
+    // Back in the order of the topic list, which the sort below keeps for equal weights.
+    const topics = inRange.sort((a, b) => a.index - b.index).map(({ topic }) => topic);
 
     // Assign a priority based on the distance:
     // - Alignment with the targetNode
@@ -126,6 +165,36 @@ class DragConnector {
       }))
       .sort((a, b) => a.weight - b.weight)
       .map(({ topic }) => topic);
+  }
+
+  /**
+   * The topics the drag may connect to (see DragCandidates). A drag does not change the map, so
+   * they and their borders are read once per drag (per DragTopic), not on every mousemove; a topic
+   * that moves or collapses during the drag is not seen.
+   */
+  private _getDragCandidates(dragTopic: DragTopic): DragCandidates {
+    let result = this._dragCandidates.get(dragTopic);
+    if (!result) {
+      const branch = this._getDraggedBranch(dragTopic);
+      const right: Candidate[] = [];
+      const left: Candidate[] = [];
+      const top: Candidate[] = [];
+      this._designerModel.getTopics().forEach((topic, index) => {
+        if (branch.has(topic.getId()) || topic.areChildrenShrunken() || topic.isCollapsed()) {
+          return;
+        }
+        const { x, y } = topic.getPosition();
+        const { width, height } = topic.getSize();
+        // As inReach works them out, x + (width / 2) * side, for either side.
+        right.push({ topic, index, border: x + width / 2 });
+        left.push({ topic, index, border: x - width / 2 });
+        top.push({ topic, index, border: y - height / 2 });
+      });
+      const byBorder = (a: Candidate, b: Candidate) => a.border - b.border;
+      result = { right: right.sort(byBorder), left: left.sort(byBorder), top: top.sort(byBorder) };
+      this._dragCandidates.set(dragTopic, result);
+    }
+    return result;
   }
 
   /**
