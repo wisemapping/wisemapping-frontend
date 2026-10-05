@@ -16,34 +16,20 @@
  *   limitations under the License.
  */
 
-// quick hand-made version of $.css()
-export const getStyle = (elem: Element, prop: string): string | number => {
-  const result = window.getComputedStyle(elem)[prop as keyof CSSStyleDeclaration];
-  if (typeof result === 'string' && /px$/.test(result)) {
-    return parseFloat(result);
-  }
-  return String(result || '');
-};
-
-// A length style in pixels; 0 for values that are not lengths ('auto', 'medium', '').
-const getPixels = (elem: Element, prop: string): number => {
-  const value = getStyle(elem, prop);
-  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
-};
-
-// offset and position utils extracted and adapted from jquery source
-// https://github.com/jquery/jquery/blob/main/src/offset.js
+/**
+ * The position of `elem` in document coordinates: its border box in the viewport
+ * (getBoundingClientRect) plus the page scroll. An element that is not rendered is at 0,0.
+ */
 export const getOffset = (elem: Element | null): { top: number; left: number } => {
   if (!elem || !elem.getClientRects().length) {
     return { top: 0, left: 0 };
   }
-  // Get document-relative position by adding viewport scroll to viewport-relative gBCR
   const rect = elem.getBoundingClientRect();
   // A document without a window (not rendered) has no scroll to add.
   const win = elem.ownerDocument.defaultView;
   return {
-    top: rect.top + (win?.pageYOffset ?? 0),
-    left: rect.left + (win?.pageXOffset ?? 0),
+    top: rect.top + (win?.scrollY ?? 0),
+    left: rect.left + (win?.scrollX ?? 0),
   };
 };
 
@@ -72,58 +58,18 @@ const isStaticRoot = (container: Element): boolean => {
     return false;
   }
   // An empty computed position (environments without layout) is the initial value, static.
-  const position = getStyle(container, 'position');
+  const position = doc.defaultView?.getComputedStyle(container).position ?? '';
   return position === 'static' || position === '';
 };
 
 /**
- * jQuery's position(). With a `container`, the position is relative to it (see getPositionIn).
- * Without one, or with a static <body>/<html>, an SVG element (no offsetParent) gets document
- * coordinates.
+ * The position at which an absolutely positioned element placed in `container` (its offset
+ * parent) covers `elem` (W-NATIVEPOS): relative to the container (see getPositionIn), or in
+ * document coordinates (see getOffset) without one or for a static <body>/<html>, which place an
+ * absolute element in the document.
  */
 export const getPosition = (
   elem: Element,
   container?: Element | null,
-): { top: number; left: number } => {
-  if (container && !isStaticRoot(container)) {
-    return getPositionIn(elem, container);
-  }
-
-  let offsetParent: Element | null;
-  let offset: { top: number; left: number };
-  let doc: Document;
-  let parentOffset = { top: 0, left: 0 };
-
-  // position:fixed elements are offset from the viewport, which itself always has zero offset
-  if (getStyle(elem, 'position') === 'fixed') {
-    // Assume position:fixed implies availability of getBoundingClientRect
-    const rect = elem.getBoundingClientRect();
-    offset = { top: rect.top, left: rect.left };
-  } else {
-    offset = getOffset(elem);
-
-    // Account for the *real* offset parent, which can be the document or its root element
-    // when a statically positioned element is identified
-    doc = elem.ownerDocument;
-    offsetParent = ((elem as HTMLElement).offsetParent as Element) || doc.documentElement;
-    while (
-      offsetParent &&
-      (offsetParent === doc.body || offsetParent === doc.documentElement) &&
-      getStyle(offsetParent, 'position') === 'static'
-    ) {
-      offsetParent = offsetParent.parentNode as Element;
-    }
-    if (offsetParent && offsetParent !== elem && offsetParent.nodeType === 1) {
-      // Incorporate borders into its offset, since they are outside its content origin
-      parentOffset = getOffset(offsetParent);
-      parentOffset.top += getPixels(offsetParent, 'borderTopWidth');
-      parentOffset.left += getPixels(offsetParent, 'borderLeftWidth');
-    }
-  }
-
-  // Subtract parent offsets and element margins
-  return {
-    top: offset.top - parentOffset.top - getPixels(elem, 'marginTop'),
-    left: offset.left - parentOffset.left - getPixels(elem, 'marginLeft'),
-  };
-};
+): { top: number; left: number } =>
+  container && !isStaticRoot(container) ? getPositionIn(elem, container) : getOffset(elem);
