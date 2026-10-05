@@ -57,8 +57,6 @@ const config: StorybookConfig = {
     // below come first so that they win over the vite.config.ts ones.
     const existingAliases = config.resolve.alias ?? [];
     config.resolve.alias = [
-      { find: '@wisemapping/mindplot/src/components/DesignerKeyboard', replacement: path.resolve(__dirname, './mocks/DesignerKeyboard.ts') },
-      { find: '@wisemapping/mindplot/src/components/theme/ThemeStyle', replacement: path.resolve(__dirname, './mocks/ThemeStyle.ts') },
       // Resolve workspace packages directly to source to avoid build order issues in storybook
       { find: /^@wisemapping\/mindplot$/, replacement: path.resolve(__dirname, '../../mindplot/src/index.ts') },
       { find: /^@wisemapping\/web2d$/, replacement: path.resolve(__dirname, '../../web2d/src/index.ts') },
