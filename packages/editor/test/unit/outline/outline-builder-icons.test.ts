@@ -26,7 +26,13 @@ const nodeWithIcon = (iconType: string): INodeModel =>
     getPlainText: () => 'Topic',
     getContentType: () => ContentType.PLAIN,
     getChildren: () => [],
-    getFeatures: () => [{ getType: () => 'icon', getIconType: () => iconType }],
+    getFeatures: () => [
+      {
+        getType: () => 'icon',
+        isOfType: (type: string) => type === 'icon',
+        getIconType: () => iconType,
+      },
+    ],
   }) as unknown as INodeModel;
 
 describe('OutlineBuilder icons', () => {

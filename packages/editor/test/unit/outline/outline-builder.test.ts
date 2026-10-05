@@ -22,6 +22,7 @@ import { INodeModel, ContentType } from '@wisemapping/mindplot';
 // Mock feature type for testing
 interface MockFeature {
   getType: () => string;
+  isOfType: (type: string) => boolean;
   getUrl?: () => string;
   getText?: () => string;
   getAttributes?: () => Record<string, string>;
@@ -109,6 +110,7 @@ describe('OutlineBuilder', () => {
     it('should extract link URLs from features', () => {
       const linkFeature = {
         getType: () => 'link',
+        isOfType: (type: string) => type === 'link',
         getUrl: () => 'https://example.com',
       };
       const node = createMockNode(1, 'Node with link', {
@@ -123,6 +125,7 @@ describe('OutlineBuilder', () => {
     it('should extract note text from features', () => {
       const noteFeature = {
         getType: () => 'note',
+        isOfType: (type: string) => type === 'note',
         getText: () => 'This is a note',
       };
       const node = createMockNode(1, 'Node with note', {
@@ -137,6 +140,7 @@ describe('OutlineBuilder', () => {
     it('should extract emoji characters from emoji icon features', () => {
       const emojiFeature = {
         getType: () => 'eicon',
+        isOfType: (type: string) => type === 'eicon',
         getAttributes: () => ({ id: '🚀' }),
       };
       const node = createMockNode(1, 'Node with emoji', {

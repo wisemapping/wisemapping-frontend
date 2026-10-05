@@ -30,7 +30,7 @@ import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import LinkIcon from '@mui/icons-material/Link';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Mindmap, INodeModel, LinkModel, NoteModel } from '@wisemapping/mindplot';
+import { Mindmap, INodeModel } from '@wisemapping/mindplot';
 import { OutlineBuilder, OutlineNodeData } from './OutlineBuilder';
 import {
   OutlineContainer,
@@ -330,8 +330,8 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
         {selectedNode &&
           dialogType === 'link' &&
           (() => {
-            const linkFeature = selectedNode.getFeatures().find((f) => f.getType() === 'link');
-            const linkUrl = linkFeature ? (linkFeature as LinkModel).getUrl() : '';
+            const linkFeature = selectedNode.getFeatures().find((f) => f.isOfType('link'));
+            const linkUrl = linkFeature ? linkFeature.getUrl() : '';
             return (
               <Box>
                 <TooltipContent>
@@ -370,8 +370,7 @@ const OutlineViewDialog = ({ open, onClose, mindmap }: OutlineViewDialogProps): 
         {selectedNode &&
           dialogType === 'note' &&
           (() => {
-            const noteFeature = selectedNode.getFeatures().find((f) => f.getType() === 'note');
-            const noteModel = noteFeature as NoteModel;
+            const noteModel = selectedNode.getFeatures().find((f) => f.isOfType('note'));
             const noteText = noteModel ? noteModel.getText() : '';
             const isHtml = noteModel?.getContentType() === 'html';
             return (

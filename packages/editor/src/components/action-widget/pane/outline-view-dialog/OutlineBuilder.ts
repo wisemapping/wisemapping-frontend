@@ -16,14 +16,7 @@
  *   limitations under the License.
  */
 
-import {
-  INodeModel,
-  LinkModel,
-  NoteModel,
-  SvgIconModel,
-  SvgImageIcon,
-  ContentType,
-} from '@wisemapping/mindplot';
+import { INodeModel, SvgImageIcon, ContentType } from '@wisemapping/mindplot';
 
 export interface OutlineNodeData {
   id: string;
@@ -74,16 +67,14 @@ export class OutlineBuilder {
     const emojiChars: string[] = [];
 
     features.forEach((feature) => {
-      const type = feature.getType();
-      if (type === 'icon') {
+      if (feature.isOfType('icon')) {
         // SVG icon from gallery
-        const iconModel = feature as SvgIconModel;
-        const iconType = iconModel.getIconType();
+        const iconType = feature.getIconType();
         const iconUrl = this.getIconUrl(iconType);
         if (iconUrl) {
           iconUrls.push(iconUrl);
         }
-      } else if (type === 'eicon') {
+      } else if (feature.isOfType('eicon')) {
         // Emoji icon - extract the emoji character
         // The feature attributes contain the emoji ID
         const attributes = feature.getAttributes();
@@ -95,16 +86,16 @@ export class OutlineBuilder {
 
     // Extract link URL
     let linkUrl: string | undefined;
-    const linkFeature = features.find((f) => f.getType() === 'link');
+    const linkFeature = features.find((f) => f.isOfType('link'));
     if (linkFeature) {
-      linkUrl = (linkFeature as LinkModel).getUrl();
+      linkUrl = linkFeature.getUrl();
     }
 
     // Extract note text
     let noteText: string | undefined;
-    const noteFeature = features.find((f) => f.getType() === 'note');
+    const noteFeature = features.find((f) => f.isOfType('note'));
     if (noteFeature) {
-      noteText = (noteFeature as NoteModel).getText();
+      noteText = noteFeature.getText();
     }
 
     const nodeText =
