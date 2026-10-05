@@ -29,34 +29,11 @@ class SymmetricSorter extends AbstractBasicSorter {
   predict(
     graph: RootedTreeSet,
     parent: Node,
-    node: Node,
-    position: PositionType,
-    free?: boolean,
+    node: Node | null,
+    position: PositionType | null,
   ): [number, PositionType] {
     const self = this;
     const rootNode = graph.getRootNode(parent);
-
-    // If its a free node...
-    if (free) {
-      $assert(position, 'position cannot be null for predict in free positioning');
-      $assert(node, 'node cannot be null for predict in free positioning');
-
-      const direction = this._getChildrenDirection(graph, parent);
-      const limitXPos =
-        parent.getPosition().x +
-        direction *
-          (parent.getSize().width / 2 +
-            node.getSize().width / 2 +
-            SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
-
-      let xPos: number;
-      if (direction > 0) {
-        xPos = position.x >= limitXPos ? position.x : limitXPos;
-      } else {
-        xPos = position.x <= limitXPos ? position.x : limitXPos;
-      }
-      return [0, { x: xPos, y: position.y }];
-    }
 
     // Its not a dragged node (it is being added)
     if (!node) {
