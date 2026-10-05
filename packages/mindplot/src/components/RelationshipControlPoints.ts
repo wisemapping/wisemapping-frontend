@@ -76,7 +76,9 @@ class ControlPivotLine {
     this._dot = new Ellipse({
       width: 6,
       height: 6,
-      stroke: '1 solid #6589de',
+      strokeWidth: 1,
+      strokeStyle: 'solid',
+      strokeColor: '#6589de',
       fillColor: 'gray',
       visibility: false,
     });

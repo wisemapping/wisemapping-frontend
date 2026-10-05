@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import { Ellipse } from '@wisemapping/web2d';
 import ActionDispatcher from '../../src/components/ActionDispatcher';
 import Canvas from '../../src/components/Canvas';
 import Relationship from '../../src/components/Relationship';
@@ -135,6 +136,12 @@ describe('Relationship control points', () => {
         append: (elem: { addToWorkspace?: (c: unknown) => void }) => elem.addToWorkspace?.(canvas),
       };
       controlPoints.addToWorkspace(canvas as unknown as Canvas);
+    });
+
+    // W4: the dot stroke is given with typed keys instead of the '1 solid #6589de' string.
+    it('draws the handle dots with a 1 px solid #6589de stroke', () => {
+      const { _dot: dot } = pivot(PivotType.Start) as unknown as { _dot: Ellipse };
+      expect(dot.getStroke()).toEqual({ color: '#6589de', style: 'solid', opacity: 1, width: 1 });
     });
 
     afterEach(() => {
