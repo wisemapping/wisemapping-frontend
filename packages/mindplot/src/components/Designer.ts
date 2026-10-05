@@ -1059,12 +1059,23 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // Reset this designer's DragPivot to clear any stale connection state (none when read-only)
     this._dragManager?.getDragPivot().reset();
 
-    // Redraw all topics immediately (no queue rendering during editing)
+    // Redraw all topics immediately (no queue rendering during editing). Each topic is
+    // redrawn once, parents before children: redrawing every topic with its subtree
+    // redrew each one once per ancestor.
+    const variant = this.getThemeVariant();
     this.getModel()
       .getTopics()
-      .forEach((topic) => {
-        topic.redraw(this.getThemeVariant(), true);
-      });
+      .filter((topic) => !topic.getParent())
+      .forEach((root) => Designer.redrawTree(root, variant));
+  }
+
+  /**
+   * Redraws a topic and then each of its descendants once, parents first, including the
+   * children of collapsed topics (a topic redraw does not recurse into those).
+   */
+  private static redrawTree(topic: Topic, variant: ThemeVariant): void {
+    topic.redraw(variant, false);
+    topic.getChildren().forEach((child) => Designer.redrawTree(child, variant));
   }
 
   getLayout(): LayoutType {
@@ -1104,8 +1115,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // If mindmap is already loaded, apply the theme variant immediately
     if (this._mindmap && this.getModel()) {
-      this.refreshTheme();
-      this.updateTopicsThemeVariant();
+      this.refreshThemeVariant();
     }
   }
 
@@ -1129,8 +1139,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
       // Check if mindmap is loaded
       if (this._mindmap && this.getModel()) {
-        this.refreshTheme();
-        this.updateTopicsThemeVariant();
+        this.refreshThemeVariant();
       }
       // Note: We don't need to store the variant for later application
       // because the editor's useEffect will call this method again
@@ -1139,32 +1148,18 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   /**
-   * Refresh the mindmap theme based on current variant
+   * Re-renders the canvas and the topics with the current theme variant: the variant is
+   * set on every topic first, then each topic is redrawn once and the map is laid out once.
    */
-  private refreshTheme(): void {
+  private refreshThemeVariant(): void {
     if (this._mindmap) {
       // Re-render canvas with new theme variant
       this.applyCanvasStyle();
 
-      // Redraw the central topic and all its children
       const centralTopic = this.getModel().getCentralTopic();
       if (centralTopic) {
-        centralTopic.redraw(this._themeVariant, true);
-      }
-
-      // Force layout refresh to update the display
-      LayoutEventBus.fireEvent('forceLayout');
-    }
-  }
-
-  /**
-   * Update theme variant for all topics in the mindmap
-   */
-  private updateTopicsThemeVariant(): void {
-    if (this._mindmap) {
-      const centralTopic = this.getModel().getCentralTopic();
-      if (centralTopic) {
-        this.updateTopicThemeVariant(centralTopic);
+        Designer.setTreeThemeVariant(centralTopic, this._themeVariant);
+        Designer.redrawTree(centralTopic, this._themeVariant);
 
         // Force a layout refresh to ensure all changes are applied
         LayoutEventBus.fireEvent('forceLayout');
@@ -1173,20 +1168,11 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   /**
-   * Recursively update theme variant for a topic and its children
+   * Sets the theme variant on a topic and all its descendants.
    */
-  private updateTopicThemeVariant(topic: Topic): void {
-    // Set the theme variant on the topic
-    topic.setThemeVariant(this._themeVariant);
-
-    // Update the topic's theme-related properties by redrawing with current variant
-    topic.redraw(this._themeVariant, false);
-
-    // Update children
-    const children = topic.getChildren();
-    children.forEach((child: Topic) => {
-      this.updateTopicThemeVariant(child);
-    });
+  private static setTreeThemeVariant(topic: Topic, variant: ThemeVariant): void {
+    topic.setThemeVariant(variant);
+    topic.getChildren().forEach((child) => Designer.setTreeThemeVariant(child, variant));
   }
 
   nodeModelToTopic(nodeModel: NodeModel): Topic {
