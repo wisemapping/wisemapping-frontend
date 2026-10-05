@@ -82,7 +82,7 @@ describe('ElementPeer events', () => {
     const fn = jest.fn();
     peer.addEvent('click', fn);
     peer.addEvent('mouseover', fn);
-    peer.addEvent('ping', (e: Event, detail?: unknown) => fn(e, detail));
+    peer.addEvent('ping', fn);
     peer.dispose();
     expect(remove).not.toHaveBeenCalled();
     click(peer);
@@ -96,59 +96,16 @@ describe('ElementPeer events', () => {
     expect(() => peer.dispose()).not.toThrow();
   });
 
-  // W5 compatibility shim, until mindplot's listeners read event.detail (phase 2): a listener
-  // that declares a second parameter still gets the detail there.
-  describe('deprecated (e, detail) listeners', () => {
-    it('get the detail of a triggered event as the second argument', () => {
-      const peer = new ElementPeer(svgNode());
-      const seen: unknown[] = [];
-      const legacy = (e: Event, detail?: unknown) => seen.push(e.type, detail);
-      peer.addEvent('ontfocus', legacy);
-      peer.trigger('ontfocus', { id: 7 });
-      expect(seen).toEqual(['ontfocus', { id: 7 }]);
-    });
-
-    it('get no detail for a native event', () => {
-      const peer = new ElementPeer(svgNode());
-      const seen: unknown[] = [];
-      peer.addEvent('click', (_e: Event, detail?: unknown) => seen.push(detail));
-      // UIEvent.detail is the click count, not a payload.
-      peer._native.dispatchEvent(new MouseEvent('click', { detail: 2 }));
-      expect(seen).toEqual([undefined]);
-    });
-
-    it('can be removed, per type, and are added once', () => {
-      const peer = new ElementPeer(svgNode());
-      let calls = 0;
-      // Declares the detail parameter, so it goes through the deprecated wrapper.
-      const legacy = (e: Event, detail?: unknown) => {
-        calls += e && detail === undefined ? 1 : 0;
-      };
-      peer.addEvent('click', legacy);
-      peer.addEvent('click', legacy);
-      peer.addEvent('dblclick', legacy);
-      click(peer);
-      expect(calls).toBe(1);
-      peer.removeEvent('click', legacy);
-      click(peer);
-      click(peer, 'dblclick');
-      expect(calls).toBe(2);
-      peer.removeEvent('dblclick', legacy);
-      click(peer, 'dblclick');
-      expect(calls).toBe(2);
-    });
-
-    it('are removed by dispose() and can be added again', () => {
-      const peer = new ElementPeer(svgNode());
-      const seen: unknown[] = [];
-      const legacy = (_e: Event, detail?: unknown) => seen.push(detail);
-      peer.addEvent('ping', legacy);
-      peer.dispose();
-      peer.trigger('ping', 1);
-      peer.addEvent('ping', legacy);
-      peer.trigger('ping', 2);
-      expect(seen).toEqual([2]);
-    });
+  // W5 phase 2: the jQuery-style second argument is gone, even for a listener that declares it.
+  it('W5: a listener that declares a second parameter gets only the event', () => {
+    const peer = new ElementPeer(svgNode());
+    const seen: unknown[] = [];
+    const listener = (e: Event, detail?: unknown) => seen.push(e.type, detail);
+    peer.addEvent('ontfocus', listener);
+    peer.trigger('ontfocus', { id: 7 });
+    peer.removeEvent('ontfocus', listener);
+    peer.trigger('ontfocus', { id: 8 });
+    expect(seen).toEqual(['ontfocus', undefined]);
   });
 
   it('characterization: trigger does not bubble', () => {

@@ -28,9 +28,9 @@ class RelationshipPivot {
 
   private _designer: Designer;
 
-  private _mouseMoveEvent: (event: Event, detail?: unknown) => void;
+  private _mouseMoveEvent: (event: Event) => void;
 
-  private _onClickEvent: (event: Event, detail?: unknown) => void;
+  private _onClickEvent: (event: Event) => void;
 
   private _onTopicClick: (event: CustomEvent<Topic>) => void;
 

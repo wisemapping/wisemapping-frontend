@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { Workspace as Workspace2D, ElementClass, ElementPeer } from '@wisemapping/web2d';
+import type { CustomEventMap, ElementEventListener } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ScreenManager from './ScreenManager';
 import SizeType from './SizeType';
@@ -264,11 +265,12 @@ class Canvas {
     }
   }
 
-  addEvent(type: string, listener: (event: Event, detail?: unknown) => void): void {
+  /** Listens to the workspace: a native type gives its DOM event ('mousemove' a MouseEvent). */
+  addEvent<K extends string>(type: K, listener: ElementEventListener<CustomEventMap, K>): void {
     this._workspace.addEvent(type, listener);
   }
 
-  removeEvent(type: string, listener: (event: Event, detail?: unknown) => void): void {
+  removeEvent<K extends string>(type: K, listener: ElementEventListener<CustomEventMap, K>): void {
     $assert(type, 'type can not be null');
     $assert(listener, 'listener can not be null');
     this._workspace.removeEvent(type, listener);

@@ -30,15 +30,6 @@ export type ElementListener<E extends Event = Event> = {
 }['handle'];
 
 /**
- * A listener that reads the jQuery-style second argument, the detail of an event fired with
- * trigger(). It is told apart by its declared parameter count (two or more).
- *
- * @deprecated Read `event.detail` of the CustomEvent instead. Kept only until mindplot's
- * listeners move off it (W5 phase 2).
- */
-export type LegacyElementListener = (event: Event, detail?: unknown) => void;
-
-/**
  * Custom event names (fired with trigger()) mapped to the type of their detail. web2d fires none
  * itself: an element user such as mindplot passes its own map as a type argument (W-TRIGGER).
  * The default accepts any name and detail.
@@ -88,10 +79,6 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
   // with the first listener, and replaced by dispose().
   private _listeners: AbortController | null;
 
-  // The wrappers of the deprecated two-argument listeners, by event type and then by listener, so
-  // that removeEvent() finds them.
-  private _legacyWrappers: Map<string, Map<LegacyElementListener, EventListener>>;
-
   private _children: ElementPeer[];
 
   private _stokeStyle: StrokeStyle | null;
@@ -106,7 +93,6 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
     this._native = svgElement;
     this._size = { width: 1, height: 1 };
     this._listeners = null;
-    this._legacyWrappers = new Map();
     this._children = [];
     this._parent = null;
     this._stokeStyle = null;
@@ -157,38 +143,7 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
    */
   addEvent(type: string, listener: ElementListener): void {
     this._listeners ??= new AbortController();
-    const { signal } = this._listeners;
-    if (ElementPeer.isLegacyListener(listener)) {
-      this.addLegacyEvent(type, listener, signal);
-      return;
-    }
-    this._native.addEventListener(type, listener, { signal });
-  }
-
-  /**
-   * The deprecated jQuery-style listener gets the detail of a CustomEvent as its second argument,
-   * so it is called through a wrapper that removeEvent() must find.
-   */
-  private addLegacyEvent(type: string, listener: LegacyElementListener, signal: AbortSignal): void {
-    let byListener = this._legacyWrappers.get(type);
-    if (!byListener) {
-      byListener = new Map();
-      this._legacyWrappers.set(type, byListener);
-    }
-    if (byListener.has(listener)) {
-      return;
-    }
-    const wrapper = (e: Event) =>
-      listener(e, e instanceof CustomEvent ? (e.detail as unknown) : undefined);
-    byListener.set(listener, wrapper);
-    this._native.addEventListener(type, wrapper, { signal });
-  }
-
-  /** Whether a listener declares the deprecated second (detail) parameter. */
-  private static isLegacyListener(
-    listener: ElementListener | LegacyElementListener,
-  ): listener is LegacyElementListener {
-    return listener.length >= 2;
+    this._native.addEventListener(type, listener, { signal: this._listeners.signal });
   }
 
   /**
@@ -199,16 +154,6 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
   }
 
   removeEvent(type: string, listener: ElementListener): void {
-    const byListener = this._legacyWrappers.get(type);
-    const wrapper = byListener?.get(listener);
-    if (byListener && wrapper) {
-      this._native.removeEventListener(type, wrapper);
-      byListener.delete(listener);
-      if (byListener.size === 0) {
-        this._legacyWrappers.delete(type);
-      }
-      return;
-    }
     this._native.removeEventListener(type, listener);
   }
 
@@ -219,7 +164,6 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
   dispose(): void {
     this._listeners?.abort();
     this._listeners = null;
-    this._legacyWrappers.clear();
   }
 
   /** dispose() on this element and on every element appended to it, recursively. */

@@ -57,7 +57,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
 
   private _focusEndArrow: Arrow;
 
-  private _onFocusHandler: (event: Event, detail?: unknown) => void;
+  private _onFocusHandler: (event: Event) => void;
 
   private _model: RelationshipModel;
 
