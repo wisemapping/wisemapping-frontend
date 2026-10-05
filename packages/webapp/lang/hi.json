@@ -768,31 +768,31 @@
     "defaultMessage": "Personal Details"
   },
   "account.delete-warning-title": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "खाता हटाएं"
   },
   "account.delete-warning-description": {
-    "defaultMessage": "Once you delete your account, there is no going back. Please be certain."
+    "defaultMessage": "खाता हटाने के बाद इसे वापस नहीं लाया जा सकता। कृपया पूरी तरह सुनिश्चित होकर आगे बढ़ें।"
   },
   "account.delete-warning-consequences": {
-    "defaultMessage": "This will permanently delete:"
+    "defaultMessage": "इससे स्थायी रूप से हट जाएगा:"
   },
   "account.delete-warning-mindmaps": {
-    "defaultMessage": "All your mindmaps and their content"
+    "defaultMessage": "आपके सभी माइंडमैप और उनकी सामग्री"
   },
   "account.delete-warning-data": {
-    "defaultMessage": "All your personal data and account information"
+    "defaultMessage": "आपका सारा व्यक्तिगत डेटा और खाते की जानकारी"
   },
   "account.delete-warning-collaborations": {
-    "defaultMessage": "All shared mindmaps and collaborations"
+    "defaultMessage": "सभी साझा माइंडमैप और सहयोग"
   },
   "account.delete-warning-history": {
-    "defaultMessage": "All account history and activity logs"
+    "defaultMessage": "खाते का सारा इतिहास और गतिविधि लॉग"
   },
   "account.delete-confirmation-title": {
-    "defaultMessage": "Are you absolutely sure?"
+    "defaultMessage": "क्या आप पूरी तरह से निश्चित हैं?"
   },
   "account.delete-confirmation-warning": {
-    "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+    "defaultMessage": "यह कार्रवाई पूर्ववत नहीं की जा सकती। इससे आपका खाता स्थायी रूप से हट जाएगा और हमारे सर्वर से सारा डेटा हटा दिया जाएगा।"
   },
   "account.delete-confirmation-instruction": {
     "defaultMessage": "पुष्टि करने के लिए कृपया {challengePhrase} टाइप करें:"
@@ -807,7 +807,7 @@
     "defaultMessage": "खाता हटाने की पुष्टि करने के लिए कृपया \"{challengePhrase}\" टाइप करें।"
   },
   "account.delete-confirm": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "खाता हटाएं"
   },
   "menu.admin-console": {
     "defaultMessage": "Admin Console"

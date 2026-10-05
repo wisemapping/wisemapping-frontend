@@ -22,7 +22,7 @@
   "account.delete-confirm": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "Удалить аккаунт"
     }
   ],
   "account.delete-confirmation-instruction": [
@@ -56,13 +56,13 @@
   "account.delete-confirmation-title": [
     {
       "type": 0,
-      "value": "Are you absolutely sure?"
+      "value": "Вы абсолютно уверены?"
     }
   ],
   "account.delete-confirmation-warning": [
     {
       "type": 0,
-      "value": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+      "value": "Это действие нельзя отменить. Ваш аккаунт будет удалён навсегда, а все данные будут стёрты с наших серверов."
     }
   ],
   "account.delete-warning": [
@@ -74,43 +74,43 @@
   "account.delete-warning-collaborations": [
     {
       "type": 0,
-      "value": "All shared mindmaps and collaborations"
+      "value": "Все карты, к которым вы открыли доступ, и совместная работа"
     }
   ],
   "account.delete-warning-consequences": [
     {
       "type": 0,
-      "value": "This will permanently delete:"
+      "value": "Будут безвозвратно удалены:"
     }
   ],
   "account.delete-warning-data": [
     {
       "type": 0,
-      "value": "All your personal data and account information"
+      "value": "Все ваши личные данные и информация об аккаунте"
     }
   ],
   "account.delete-warning-description": [
     {
       "type": 0,
-      "value": "Once you delete your account, there is no going back. Please be certain."
+      "value": "После удаления аккаунта восстановить его будет невозможно. Пожалуйста, примите решение обдуманно."
     }
   ],
   "account.delete-warning-history": [
     {
       "type": 0,
-      "value": "All account history and activity logs"
+      "value": "Вся история аккаунта и журналы активности"
     }
   ],
   "account.delete-warning-mindmaps": [
     {
       "type": 0,
-      "value": "All your mindmaps and their content"
+      "value": "Все ваши карты и их содержимое"
     }
   ],
   "account.delete-warning-title": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "Удалить аккаунт"
     }
   ],
   "accountinfo.button": [

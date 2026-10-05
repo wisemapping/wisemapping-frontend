@@ -22,7 +22,7 @@
   "account.delete-confirm": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "删除账户"
     }
   ],
   "account.delete-confirmation-instruction": [
@@ -56,13 +56,13 @@
   "account.delete-confirmation-title": [
     {
       "type": 0,
-      "value": "Are you absolutely sure?"
+      "value": "您真的确定吗？"
     }
   ],
   "account.delete-confirmation-warning": [
     {
       "type": 0,
-      "value": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+      "value": "此操作无法撤销。这将永久删除您的账户，并从我们的服务器中移除所有数据。"
     }
   ],
   "account.delete-warning": [
@@ -74,43 +74,43 @@
   "account.delete-warning-collaborations": [
     {
       "type": 0,
-      "value": "All shared mindmaps and collaborations"
+      "value": "所有共享的思维导图和协作"
     }
   ],
   "account.delete-warning-consequences": [
     {
       "type": 0,
-      "value": "This will permanently delete:"
+      "value": "这将永久删除："
     }
   ],
   "account.delete-warning-data": [
     {
       "type": 0,
-      "value": "All your personal data and account information"
+      "value": "您的所有个人数据和账户信息"
     }
   ],
   "account.delete-warning-description": [
     {
       "type": 0,
-      "value": "Once you delete your account, there is no going back. Please be certain."
+      "value": "账户一旦删除便无法恢复，请务必确认。"
     }
   ],
   "account.delete-warning-history": [
     {
       "type": 0,
-      "value": "All account history and activity logs"
+      "value": "所有账户历史记录和活动日志"
     }
   ],
   "account.delete-warning-mindmaps": [
     {
       "type": 0,
-      "value": "All your mindmaps and their content"
+      "value": "您的所有思维导图及其内容"
     }
   ],
   "account.delete-warning-title": [
     {
       "type": 0,
-      "value": "Delete Account"
+      "value": "删除账户"
     }
   ],
   "accountinfo.button": [

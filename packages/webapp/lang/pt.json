@@ -768,31 +768,31 @@
     "defaultMessage": "Personal Details"
   },
   "account.delete-warning-title": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Excluir conta"
   },
   "account.delete-warning-description": {
-    "defaultMessage": "Once you delete your account, there is no going back. Please be certain."
+    "defaultMessage": "Depois de excluir sua conta, não há como voltar atrás. Tenha certeza."
   },
   "account.delete-warning-consequences": {
-    "defaultMessage": "This will permanently delete:"
+    "defaultMessage": "Isto excluirá permanentemente:"
   },
   "account.delete-warning-mindmaps": {
-    "defaultMessage": "All your mindmaps and their content"
+    "defaultMessage": "Todos os seus mapas mentais e o conteúdo deles"
   },
   "account.delete-warning-data": {
-    "defaultMessage": "All your personal data and account information"
+    "defaultMessage": "Todos os seus dados pessoais e informações da conta"
   },
   "account.delete-warning-collaborations": {
-    "defaultMessage": "All shared mindmaps and collaborations"
+    "defaultMessage": "Todos os mapas mentais compartilhados e colaborações"
   },
   "account.delete-warning-history": {
-    "defaultMessage": "All account history and activity logs"
+    "defaultMessage": "Todo o histórico da conta e registros de atividade"
   },
   "account.delete-confirmation-title": {
-    "defaultMessage": "Are you absolutely sure?"
+    "defaultMessage": "Você tem certeza absoluta?"
   },
   "account.delete-confirmation-warning": {
-    "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+    "defaultMessage": "Esta ação não pode ser desfeita. Ela excluirá permanentemente sua conta e removerá todos os dados de nossos servidores."
   },
   "account.delete-confirmation-instruction": {
     "defaultMessage": "Digite {challengePhrase} para confirmar:"
@@ -807,7 +807,7 @@
     "defaultMessage": "Digite \"{challengePhrase}\" para confirmar a exclusão da conta."
   },
   "account.delete-confirm": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "Excluir conta"
   },
   "menu.admin-console": {
     "defaultMessage": "Admin Console"

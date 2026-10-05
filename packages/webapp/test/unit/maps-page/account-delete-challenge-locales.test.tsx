@@ -191,3 +191,24 @@ describe.each(Object.keys(phrases))('%s account deletion', (locale) => {
     expect(deleteAccount).not.toHaveBeenCalled();
   });
 });
+
+describe('delete-account dialog copy', () => {
+  type Source = Record<string, { defaultMessage: string } | undefined>;
+  const lang = (locale: string): Source =>
+    JSON.parse(fs.readFileSync(path.resolve(root, `lang/${locale}.json`), 'utf8'));
+  const en = lang('en');
+  const ids = Object.keys(en).filter((id) => id.startsWith('account.delete-'));
+
+  test.each(Object.keys(phrases).filter((locale) => locale !== 'en'))(
+    '%s translates every message of the dialog',
+    (locale) => {
+      const messages = lang(locale);
+      const untranslated = ids.filter(
+        (id) =>
+          messages[id]?.defaultMessage === undefined ||
+          messages[id]?.defaultMessage === en[id]?.defaultMessage,
+      );
+      expect(untranslated).toEqual([]);
+    },
+  );
+});

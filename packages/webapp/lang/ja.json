@@ -768,31 +768,31 @@
     "defaultMessage": "Personal Details"
   },
   "account.delete-warning-title": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "アカウントを削除"
   },
   "account.delete-warning-description": {
-    "defaultMessage": "Once you delete your account, there is no going back. Please be certain."
+    "defaultMessage": "アカウントを削除すると、元に戻すことはできません。よくご確認ください。"
   },
   "account.delete-warning-consequences": {
-    "defaultMessage": "This will permanently delete:"
+    "defaultMessage": "以下が完全に削除されます："
   },
   "account.delete-warning-mindmaps": {
-    "defaultMessage": "All your mindmaps and their content"
+    "defaultMessage": "すべてのマインドマップとその内容"
   },
   "account.delete-warning-data": {
-    "defaultMessage": "All your personal data and account information"
+    "defaultMessage": "すべての個人データとアカウント情報"
   },
   "account.delete-warning-collaborations": {
-    "defaultMessage": "All shared mindmaps and collaborations"
+    "defaultMessage": "共有しているすべてのマインドマップと共同編集"
   },
   "account.delete-warning-history": {
-    "defaultMessage": "All account history and activity logs"
+    "defaultMessage": "すべてのアカウント履歴とアクティビティログ"
   },
   "account.delete-confirmation-title": {
-    "defaultMessage": "Are you absolutely sure?"
+    "defaultMessage": "本当によろしいですか？"
   },
   "account.delete-confirmation-warning": {
-    "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+    "defaultMessage": "この操作は元に戻せません。アカウントは完全に削除され、すべてのデータが当社のサーバーから削除されます。"
   },
   "account.delete-confirmation-instruction": {
     "defaultMessage": "確認のため「{challengePhrase}」と入力してください："
@@ -807,7 +807,7 @@
     "defaultMessage": "アカウントの削除を確認するには「{challengePhrase}」と入力してください。"
   },
   "account.delete-confirm": {
-    "defaultMessage": "Delete Account"
+    "defaultMessage": "アカウントを削除"
   },
   "menu.admin-console": {
     "defaultMessage": "Admin Console"
