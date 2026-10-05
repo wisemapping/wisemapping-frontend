@@ -100,6 +100,25 @@ describe('Map load render queue', () => {
     expect({ count: order.length, order: hash(order.join('\n')) }).toMatchSnapshot();
   });
 
+  // BL5-95: it waited 100 ms, then 30 ms after each batch: 220 ms here, most of a load.
+  it('waits a frame between batches, not fixed delays', async () => {
+    jest.useFakeTimers();
+    try {
+      let loaded = false;
+      const loading = buildDesigner(buildMediumMap()).then(() => {
+        loaded = true;
+      });
+
+      // One frame (16 ms) before the first batch and between batches: 4 batches here.
+      await jest.advanceTimersByTimeAsync(100);
+
+      expect(loaded).toBe(true);
+      await loading;
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
   it('leaves the same canvas', async () => {
     const { designer } = await load();
 

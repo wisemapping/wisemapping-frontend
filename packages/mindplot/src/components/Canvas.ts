@@ -24,6 +24,12 @@ import LayoutEventBus from './layout/LayoutEventBus';
 import PositionType from './PositionType';
 
 const DEFAULT_VISIBILITY_PADDING = 80;
+
+/** Elements a map load adds to the canvas before it lets the browser paint (its spinner). */
+const RENDER_QUEUE_BATCH = 300;
+
+/** How long to wait for a paint where animation frames don't run (a hidden tab). */
+const NO_FRAME_TIMEOUT = 100;
 const VISIBILITY_PADDING_RATIO = 0.08;
 type BoundsType = { left: number; right: number; top: number; bottom: number };
 
@@ -192,41 +198,57 @@ class Canvas {
 
     let result = Promise.resolve();
     if (!value) {
-      // eslint-disable-next-line arrow-body-style
-      result = Canvas.delay(100).then(() => {
-        return this.processRenderQueue(this._renderQueue.reverse(), 300);
-      });
+      result = Canvas.afterNextPaint().then(() =>
+        this.processRenderQueue(this._renderQueue.reverse(), RENDER_QUEUE_BATCH),
+      );
     }
     return result;
   }
 
-  private static delay(t: number) {
+  /**
+   * Resolves once the browser could paint: just after the next animation frame, or after a
+   * timeout where frames don't run (a hidden tab, no requestAnimationFrame).
+   *
+   * A map load adds its elements in batches so that the page (the editor's loading spinner)
+   * keeps painting. It used to wait 100 ms before the first batch and 30 ms after each one,
+   * which made most of a load waiting; a frame is all a paint needs.
+   */
+  private static afterNextPaint(): Promise<void> {
     return new Promise((resolve) => {
-      setTimeout(resolve, t);
+      let timeout: ReturnType<typeof setTimeout> | undefined;
+      let done = false;
+      const finish = () => {
+        if (!done) {
+          done = true;
+          clearTimeout(timeout);
+          resolve();
+        }
+      };
+      timeout = setTimeout(finish, NO_FRAME_TIMEOUT);
+      if (typeof requestAnimationFrame === 'function') {
+        // The frame callback runs before the paint: continue in the task after it.
+        requestAnimationFrame(() => setTimeout(finish, 0));
+      }
     });
   }
 
+  /** Adds the queued elements, a batch per paint, in the order they were queued (popped). */
   private processRenderQueue(
     renderQueue: (ElementClass<ElementPeer> | CanvasElement)[],
     batch: number,
   ): Promise<void> {
-    let result: Promise<void>;
-
-    if (renderQueue.length > 0) {
-      result = new Promise(
-        (resolve: (queue: (ElementClass<ElementPeer> | CanvasElement)[]) => void) => {
-          for (let i = 0; i < batch && renderQueue.length > 0; i++) {
-            const elem = renderQueue.pop()!;
-            this.appendInternal(elem);
-          }
-
-          resolve(renderQueue);
-        },
-      ).then((queue) => Canvas.delay(30).then(() => this.processRenderQueue(queue, batch)));
-    } else {
-      result = Promise.resolve();
+    try {
+      for (let i = 0; i < batch && renderQueue.length > 0; i++) {
+        const elem = renderQueue.pop()!;
+        this.appendInternal(elem);
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return result;
+    if (renderQueue.length === 0) {
+      return Promise.resolve();
+    }
+    return Canvas.afterNextPaint().then(() => this.processRenderQueue(renderQueue, batch));
   }
 
   removeChild(shape: ElementClass<ElementPeer> | CanvasElement): void {
