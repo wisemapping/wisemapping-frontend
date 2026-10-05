@@ -35,15 +35,13 @@ import { LineType } from '../../../src/components/TopicConnection';
  * under B, and G under E. E is the middle one of three equal-height siblings, so it is at the
  * height of B and the B-E connection is a straight horizontal line.
  */
-const importedDesigner = async (): Promise<Harness> => {
-  const buffer = fs.readFileSync(
-    path.resolve(__dirname, './input/mindmanager/real/mmap2json-2017.mmap'),
-  );
+const importedDesigner = async (name = 'mmap2json-2017'): Promise<Harness> => {
+  const buffer = fs.readFileSync(path.resolve(__dirname, `./input/mindmanager/real/${name}.mmap`));
   const archive = buffer.buffer.slice(
     buffer.byteOffset,
     buffer.byteOffset + buffer.byteLength,
   ) as ArrayBuffer;
-  const xml = await TextImporterFactory.create('mmap', archive).import('mmap2json-2017', '');
+  const xml = await TextImporterFactory.create('mmap', archive).import(name, '');
   return buildDesigner(xml);
 };
 
@@ -125,5 +123,37 @@ describe('mmap2json-2017 laid out', () => {
     const ys = pathYs(d!);
     expect(ys.length).toBeGreaterThanOrEqual(4);
     ys.forEach((y) => expect(y).toBeCloseTo(ys[0]));
+  });
+});
+
+/*
+ * mindm-test-dom-mm23 as MindManager draws it (its Preview.png): 1, 3 and 5 on the right of Test,
+ * from top to bottom, and Main Topic, 6, 2 and 4 on its left. MindManager lays the main topics out
+ * clockwise: the left ones are in reverse document order (4, 2, 6, Main Topic), bottom to top.
+ */
+describe('mindm-test-dom-mm23 laid out', () => {
+  const ys = (harness: Harness, texts: string[]): number[] =>
+    texts.map((text) => byText(harness, text).getPosition().y);
+  const increasing = (values: number[]): boolean =>
+    values.every((value, index) => index === 0 || value > values[index - 1]);
+
+  it('places 1, 3 and 5 on the right, top to bottom', async () => {
+    const harness = await importedDesigner('mindm-test-dom-mm23');
+    const center = byText(harness, 'Test').getPosition();
+
+    ['1', '3', '5'].forEach((text) =>
+      expect(byText(harness, text).getPosition().x).toBeGreaterThan(center.x),
+    );
+    expect(increasing(ys(harness, ['1', '3', '5']))).toBe(true);
+  });
+
+  it('places Main Topic, 6, 2 and 4 on the left, top to bottom', async () => {
+    const harness = await importedDesigner('mindm-test-dom-mm23');
+    const center = byText(harness, 'Test').getPosition();
+
+    ['Main Topic', '6', '2', '4'].forEach((text) =>
+      expect(byText(harness, text).getPosition().x).toBeLessThan(center.x),
+    );
+    expect(increasing(ys(harness, ['Main Topic', '6', '2', '4']))).toBe(true);
   });
 });

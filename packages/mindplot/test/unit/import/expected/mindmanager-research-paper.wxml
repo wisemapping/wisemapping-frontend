@@ -17,7 +17,7 @@
                 <note><![CDATA[Explain the significance of the research]]></note>
             </topic>
         </topic>
-        <topic position="-200,0" order="1" text="Literature Review" shape="line" id="7">
+        <topic position="-400,150" order="5" text="Literature Review" shape="line" id="7">
             <note><![CDATA[Review existing literature and research]]></note>
             <topic position="-200,0" order="0" text="Theoretical Framework" shape="line" id="8">
                 <eicon id="💡"/>
@@ -83,7 +83,7 @@
                 <note><![CDATA[Suggest directions for future research]]></note>
             </topic>
         </topic>
-        <topic position="-400,150" order="5" text="Conclusion" shape="line" id="27">
+        <topic position="-200,0" order="1" text="Conclusion" shape="line" id="27">
             <note><![CDATA[Conclude the research and summarize findings]]></note>
             <topic position="-200,0" order="0" text="Summary" shape="line" id="28">
                 <note><![CDATA[Summarize key findings and contributions]]></note>

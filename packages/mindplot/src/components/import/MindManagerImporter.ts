@@ -281,19 +281,41 @@ class MindManagerImporter extends Importer {
 
     // The main topics go on the side of the growth direction of the central topic or, if it grows
     // on both sides, on the side of their offset or, without one, on the side with fewer topics.
-    // Even orders are on the right, odd ones on the left, in document order on each side.
     let right = 0;
     let left = 0;
-    rootTopic.children?.forEach((topic) => {
-      let atLeft: boolean;
+    const atLeft = (rootTopic.children ?? []).map((topic) => {
+      let result: boolean;
       if (this.mainTopicsSide) {
-        atLeft = this.mainTopicsSide < 0;
+        result = this.mainTopicsSide < 0;
       } else {
-        atLeft = topic.offset ? topic.offset.x < 0 : left < right;
+        result = topic.offset ? topic.offset.x < 0 : left < right;
       }
-      const sideIndex = atLeft ? left++ : right++;
-      const order = atLeft ? 2 * sideIndex + 1 : 2 * sideIndex;
-      centralTopic.append(this.convertTopic(mindmap, topic, order, sideIndex, atLeft ? -1 : 1));
+      if (result) {
+        left++;
+      } else {
+        right++;
+      }
+      return result;
+    });
+
+    // Even orders are on the right, odd ones on the left, from top to bottom. On both sides,
+    // MindManager lays them out clockwise: the right ones in document order from the top, the left
+    // ones from the bottom.
+    const clockwise = !this.mainTopicsSide;
+    let rightIndex = 0;
+    let leftIndex = 0;
+    rootTopic.children?.forEach((topic, index) => {
+      let sideIndex: number;
+      if (!atLeft[index]) {
+        sideIndex = rightIndex++;
+      } else {
+        sideIndex = clockwise ? left - 1 - leftIndex : leftIndex;
+        leftIndex++;
+      }
+      const order = atLeft[index] ? 2 * sideIndex + 1 : 2 * sideIndex;
+      centralTopic.append(
+        this.convertTopic(mindmap, topic, order, sideIndex, atLeft[index] ? -1 : 1),
+      );
     });
 
     // Floating topics are isolated topics, placed at their offset from the central topic.

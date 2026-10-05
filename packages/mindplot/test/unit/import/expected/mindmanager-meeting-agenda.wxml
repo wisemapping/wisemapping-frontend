@@ -13,7 +13,7 @@
                 <note><![CDATA[Establish meeting ground rules]]></note>
             </topic>
         </topic>
-        <topic position="-200,0" order="1" text="Previous Meeting" shape="line" id="6">
+        <topic position="-400,150" order="5" text="Previous Meeting" shape="line" id="6">
             <eicon id="🕐"/>
             <note><![CDATA[Review previous meeting outcomes]]></note>
             <topic position="-200,0" order="0" text="Action Items" shape="line" id="7">
@@ -74,7 +74,7 @@
                 <note><![CDATA[Schedule next meeting and agenda]]></note>
             </topic>
         </topic>
-        <topic position="-400,150" order="5" text="Closing" shape="line" id="23">
+        <topic position="-200,0" order="1" text="Closing" shape="line" id="23">
             <note><![CDATA[Meeting wrap-up and conclusion]]></note>
             <topic position="-200,0" order="0" text="Summary" shape="line" id="24">
                 <note><![CDATA[Summarize key decisions and outcomes]]></note>

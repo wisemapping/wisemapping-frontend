@@ -12,7 +12,7 @@
                 <note><![CDATA[Purchase behavior and decision-making process]]></note>
             </topic>
         </topic>
-        <topic position="-200,0" order="1" text="Marketing Channels" shape="line" id="6">
+        <topic position="-300,75" order="3" text="Marketing Channels" shape="line" id="6">
             <note><![CDATA[Select appropriate marketing channels]]></note>
             <topic position="-200,0" order="0" text="Digital Marketing" shape="line" id="7">
                 <eicon id="💻"/>
@@ -46,7 +46,7 @@
                 <note><![CDATA[Design and creative content development]]></note>
             </topic>
         </topic>
-        <topic position="-300,75" order="3" text="Brand Positioning" shape="line" id="16">
+        <topic position="-200,0" order="1" text="Brand Positioning" shape="line" id="16">
             <eicon id="⭐"/>
             <note><![CDATA[Define brand positioning and messaging]]></note>
             <topic position="-200,0" order="0" text="Value Proposition" shape="line" id="17">
