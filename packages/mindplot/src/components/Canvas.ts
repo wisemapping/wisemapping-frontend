@@ -60,7 +60,8 @@ class Canvas {
 
   private _mouseDownListener: ((event: Event) => void) | null;
 
-  private _resizeListener: (() => void) | null;
+  // Stops observing the container size (registerEvents); null before or after.
+  private _stopResizeObserver: (() => void) | null;
 
   private _resizeHandler: (() => void) | null = null;
 
@@ -103,7 +104,7 @@ class Canvas {
     this._mouseUpListener = null;
     this._cancelPan = null;
     this._mouseDownListener = null;
-    this._resizeListener = null;
+    this._stopResizeObserver = null;
   }
 
   /** Fits the viewport to the container's new size, keeping the zoom and the centre of the view. */
@@ -122,31 +123,32 @@ class Canvas {
       // Register drag events ...
       this._registerDragEvents();
 
-      // Readjust if the window is resized ...
-      this._resizeListener = () => {
+      // Readjust when the container is resized: by the window, or by the page layout around it
+      // (a side panel opening), which a window resize listener missed (BL5-143) ...
+      this._stopResizeObserver = this._workspace.observeResize(() => {
         if (this._resizeHandler) {
           this._resizeHandler();
         } else {
           this.adjustToContainer();
         }
-      };
-      window.addEventListener('resize', this._resizeListener);
+      }, this._screenManager.getContainer());
     }
     this._eventsEnabled = true;
   }
 
   /**
-   * Removes the listeners registered on the window and the container, ending any pan in progress,
-   * and the workspace SVG from the container: a designer built again on it adds its own.
+   * Removes the listeners registered on the container, stops observing the container size, ends
+   * any pan in progress, and removes the workspace SVG from the container: a designer built again
+   * on it adds its own.
    */
   dispose(): void {
     if (this._cancelPan) {
       this._cancelPan();
     }
 
-    if (this._resizeListener) {
-      window.removeEventListener('resize', this._resizeListener);
-      this._resizeListener = null;
+    if (this._stopResizeObserver) {
+      this._stopResizeObserver();
+      this._stopResizeObserver = null;
     }
 
     if (this._mouseDownListener) {

@@ -402,7 +402,8 @@ describe('Workspace.observeResize (W5)', () => {
       globalThis.ResizeObserver = original;
     });
 
-    it('reports the content size on a window resize, until stopped', () => {
+    // As the window resize listener it replaces: jsdom has no layout, so it cannot tell a change.
+    it('reports the content size on every window resize, until stopped', () => {
       const parent = document.createElement('div');
       parent.style.padding = '5px 10px';
       document.body.append(parent);
@@ -410,15 +411,17 @@ describe('Workspace.observeResize (W5)', () => {
       workspace.addItAsChildTo(parent);
       const callback = jest.fn();
       const stop = workspace.observeResize(callback);
-      window.dispatchEvent(new Event('resize'));
-      expect(callback).not.toHaveBeenCalled();
       sized(parent, 320, 210);
       window.dispatchEvent(new Event('resize'));
-      expect(callback).toHaveBeenCalledWith({ width: 300, height: 200 });
+      window.dispatchEvent(new Event('resize'));
+      expect(callback.mock.calls).toEqual([
+        [{ width: 300, height: 200 }],
+        [{ width: 300, height: 200 }],
+      ]);
       stop();
       sized(parent, 500, 500);
       window.dispatchEvent(new Event('resize'));
-      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(2);
       parent.remove();
     });
 

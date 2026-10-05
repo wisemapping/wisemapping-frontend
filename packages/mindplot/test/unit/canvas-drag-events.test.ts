@@ -21,6 +21,10 @@ import ScreenManager from '../../src/components/ScreenManager';
 
 const mockSetCoordOrigin = jest.fn();
 const mockRemoveHtmlContainer = jest.fn();
+const mockDisposeWorkspace = jest.fn();
+const mockStopObserving = jest.fn();
+// observeResize(callback, target) calls, in order.
+const mockObserveResize = jest.fn((_callback: () => void, _target: Element) => mockStopObserving);
 
 jest.mock('@wisemapping/web2d', () => ({
   Workspace: jest.fn().mockImplementation(() => ({
@@ -32,6 +36,8 @@ jest.mock('@wisemapping/web2d', () => ({
     getCoordSize: jest.fn().mockReturnValue({ width: 1000, height: 800 }),
     getSVGElement: jest.fn(),
     _getHtmlContainer: jest.fn().mockReturnValue({ remove: mockRemoveHtmlContainer }),
+    observeResize: mockObserveResize,
+    dispose: mockDisposeWorkspace,
   })),
 }));
 
@@ -277,36 +283,60 @@ describe('Canvas window listeners', () => {
     jest.restoreAllMocks();
   });
 
-  const resizeListeners = (spy: jest.SpyInstance) =>
-    spy.mock.calls.filter(([type]) => type === 'resize').map(([, listener]) => listener);
+  beforeEach(() => {
+    mockObserveResize.mockClear();
+    mockStopObserving.mockClear();
+    mockDisposeWorkspace.mockClear();
+  });
 
-  it('registers a single resize listener however many maps are loaded', () => {
-    const addSpy = jest.spyOn(window, 'addEventListener');
+  it('observes the container size once however many maps are loaded', () => {
     const canvas = buildCanvas();
 
     canvas.registerEvents();
     canvas.registerEvents();
 
-    expect(resizeListeners(addSpy)).toHaveLength(1);
+    expect(mockObserveResize).toHaveBeenCalledTimes(1);
+    expect(mockObserveResize.mock.calls[0]![1]).toBe(container);
   });
 
-  it('removes its window listeners on dispose', () => {
-    const addSpy = jest.spyOn(window, 'addEventListener');
-    const removeSpy = jest.spyOn(window, 'removeEventListener');
+  // BL5-143: only a window resize readjusted the canvas, so a container resized by the page
+  // layout (a side panel opening) left the map stretched. The container size is observed now.
+  it('BL5-143: readjusts when the container is resized, with no window resize', () => {
+    const canvas = buildCanvas();
+    canvas.registerEvents();
+    mockSetCoordOrigin.mockClear();
+
+    const onContainerResize = mockObserveResize.mock.calls[0]![0];
+    onContainerResize();
+
+    expect(mockSetCoordOrigin).toHaveBeenCalledTimes(1);
+  });
+
+  it('a resize handler replaces the default readjustment', () => {
+    const canvas = buildCanvas();
+    const handler = jest.fn();
+    canvas.setResizeHandler(handler);
+    canvas.registerEvents();
+    mockSetCoordOrigin.mockClear();
+
+    mockObserveResize.mock.calls[0]![0]();
+
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(mockSetCoordOrigin).not.toHaveBeenCalled();
+  });
+
+  it('stops observing the container on dispose', () => {
     const canvas = buildCanvas();
     canvas.registerEvents();
 
     canvas.dispose();
 
-    const added = resizeListeners(addSpy);
-    expect(added).toHaveLength(1);
-    expect(resizeListeners(removeSpy)).toEqual(added);
+    expect(mockStopObserving).toHaveBeenCalledTimes(1);
 
-    // Neither the container nor the window drive the disposed canvas any more ...
+    // The container no longer drives the disposed canvas ...
     mockSetCoordOrigin.mockClear();
     container.dispatchEvent(mouseEvent('mousedown', 10, 10));
     container.dispatchEvent(mouseEvent('mousemove', 40, 25));
-    window.dispatchEvent(new Event('resize'));
     expect(mockSetCoordOrigin).not.toHaveBeenCalled();
   });
 

@@ -278,34 +278,34 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
   /**
    * Calls `callback` with the new content size of `target` each time it changes, and returns a
    * function that stops observing. `target` defaults to the element the workspace was added to
-   * (addItAsChildTo), or its own container before that. The size observed when the call is made is
-   * the starting point, so only a change is reported.
+   * (addItAsChildTo), or its own container before that.
    *
    * It uses a ResizeObserver, so a container resized by the page layout (a side panel opening) is
-   * seen as well as a window resize. Without ResizeObserver, it listens to window resizes.
+   * seen as well as a window resize. The size observed when the call is made is the starting
+   * point, so only a change is reported.
+   *
+   * Without ResizeObserver (an old browser, jsdom), it acts as a window resize listener did: every
+   * window resize is reported, with the target's content size at that moment.
    */
   observeResize(callback: (size: SizeType) => void, target?: Element): () => void {
     const observed = target ?? this._htmlContainer.parentElement ?? this._htmlContainer;
-    let last = Workspace.contentSize(observed);
-    const notify = (size: SizeType) => {
-      if (size.width !== last.width || size.height !== last.height) {
-        last = size;
-        callback(size);
-      }
-    };
 
     if (typeof ResizeObserver !== 'undefined') {
+      let last = Workspace.contentSize(observed);
       const observer = new ResizeObserver((entries) => {
-        entries.forEach(({ contentRect }) =>
-          notify({ width: contentRect.width, height: contentRect.height }),
-        );
+        entries.forEach(({ contentRect: { width, height } }) => {
+          if (width !== last.width || height !== last.height) {
+            last = { width, height };
+            callback(last);
+          }
+        });
       });
       observer.observe(observed);
       return () => observer.disconnect();
     }
 
     const win = observed.ownerDocument.defaultView ?? window;
-    const onResize = () => notify(Workspace.contentSize(observed));
+    const onResize = () => callback(Workspace.contentSize(observed));
     win.addEventListener('resize', onResize);
     return () => win.removeEventListener('resize', onResize);
   }
