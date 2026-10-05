@@ -219,7 +219,10 @@ describe('Designer dispose (BL-48)', () => {
 
     // Press the mouse on a draggable topic: the drag listeners go on the document ...
     const topic = designer.getModel().findTopicById(1)!;
-    topic.fireEvent('mousedown', new MouseEvent('mousedown', { clientX: 10, clientY: 10 }));
+    topic
+      .get2DElement()
+      .getNode()
+      .dispatchEvent(new MouseEvent('mousedown', { clientX: 10, clientY: 10 }));
     const { _mouseMoveListener: mouseMove, _mouseUpListener: mouseUp } = dragListeners;
     expect(mouseMove).not.toBeNull();
 

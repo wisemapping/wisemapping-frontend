@@ -26,6 +26,9 @@ import Topic from './Topic';
 import Shape from './util/Shape';
 import Canvas from './Canvas';
 
+/** The relationship's own events: it fires them, with itself as detail, on a focus change. */
+export type RelationshipEventMap = { ontfocus: Relationship; ontblur: Relationship };
+
 /**
  * Relationship represents arbitrary connections between topics (not hierarchical)
  */
@@ -620,13 +623,8 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     }
   }
 
-  addEvent(eventType: string, listener: () => void) {
-    let type = eventType;
-    // Translate to web 2d events ...
-    if (type === 'onfocus') {
-      type = 'mousedown';
-    }
-
+  /** Listens to the relationship's own events (see RelationshipEventMap). */
+  addEvent(type: keyof RelationshipEventMap, listener: (event: Event) => void) {
     const line = this._line;
     line.addEvent(type, listener);
   }
@@ -727,9 +725,9 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     return this._model.getId();
   }
 
-  fireEvent(type: string, event: unknown): void {
+  fireEvent<K extends keyof RelationshipEventMap>(type: K, detail: RelationshipEventMap[K]): void {
     const elem = this._line;
-    elem.trigger(type, event);
+    elem.trigger(type, detail);
   }
 
   private _applyStrokeStyle(strokeStyle: StrokeStyle): void {

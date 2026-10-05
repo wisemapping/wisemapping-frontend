@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { Group, Rect } from '@wisemapping/web2d';
+import type { ElementEventListener } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import NodeModel from './model/NodeModel';
 import Canvas from './Canvas';
@@ -28,7 +29,11 @@ import type TopicEventDispatcher from './TopicEventDispatcher';
 import type Designer from './Designer';
 import type Topic from './Topic';
 
-type Web2DListener = (event: Event, detail?: unknown) => void;
+/**
+ * The custom events of a topic's group: a topic fires them, with itself as the detail, when it
+ * gains or loses the focus.
+ */
+export type TopicEventMap = { ontfocus: Topic; ontblur: Topic };
 
 export type NodeOption = {
   readOnly: boolean;
@@ -101,24 +106,30 @@ abstract class NodeGraph implements CanvasElement {
   abstract setPosition(point: PositionType, fireEvent?: boolean): void;
 
   /**
-   * Listeners receive the DOM event and, for events fired with fireEvent, its payload as detail.
-   * They may narrow both, as web2d does not type them.
+   * Listeners receive the DOM event (a MouseEvent for 'click') or, for the events of
+   * TopicEventMap, a CustomEvent whose detail is the topic.
    */
-  addEvent<E extends Event, D>(type: string, listener: (event: E, detail: D) => void) {
-    const elem = this.get2DElement();
-    elem.addEvent(type, listener as Web2DListener);
+  addEvent<K extends string>(type: K, listener: ElementEventListener<TopicEventMap, K>) {
+    this._eventTarget().addEvent(type, listener);
   }
 
   /** */
-  removeEvent<E extends Event, D>(type: string, listener: (event: E, detail: D) => void) {
-    const elem = this.get2DElement();
-    elem.removeEvent(type, listener as Web2DListener);
+  removeEvent<K extends string>(type: K, listener: ElementEventListener<TopicEventMap, K>) {
+    this._eventTarget().removeEvent(type, listener);
   }
 
-  /** */
-  fireEvent(type: string, event: unknown) {
-    const elem = this.get2DElement();
-    elem.trigger(type, event);
+  /** Fires one of the topic's own events, with the topic as detail. */
+  fireEvent<K extends keyof TopicEventMap>(type: K, detail: TopicEventMap[K]) {
+    this._eventTarget().trigger(type, detail);
+  }
+
+  /**
+   * The group, seen with the topic's event map. web2d's Group is invariant in its map, so a
+   * Group<TopicEventMap> could not be handed on as the plain container the features and shapes
+   * add themselves to: the group stays a Group, and only its events are typed.
+   */
+  private _eventTarget(): Group<TopicEventMap> {
+    return this.get2DElement() as unknown as Group<TopicEventMap>;
   }
 
   /** */
