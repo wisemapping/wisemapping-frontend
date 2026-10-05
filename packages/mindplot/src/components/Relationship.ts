@@ -428,10 +428,14 @@ class Relationship extends BaseConnectionLine {
 
   /**
    * Finds the snap point a control point is relative to: the one facing the control point
-   * placed from it.
+   * placed from it. The search starts from a point, the centre of the topic by default.
    */
-  private static calculateConnectionPointFor(topic: Topic, ctrlPoint: PositionType): PositionType {
-    let result = topic.getPosition();
+  private static calculateConnectionPointFor(
+    topic: Topic,
+    ctrlPoint: PositionType,
+    start: PositionType = topic.getPosition(),
+  ): PositionType {
+    let result = start;
     // The snap point depends on where the control point lands, which depends on the snap point.
     // Starting from the center of the topic, it settles in a step or two ...
     for (let i = 0; i < 3; i++) {
@@ -466,7 +470,9 @@ class Relationship extends BaseConnectionLine {
 
   /**
    * The connection point a custom control point of an end is placed from: where it was released,
-   * if that is still a snap point the control point fits, otherwise as on load.
+   * if that is still a snap point the control point fits. Otherwise (the topic was resized, so its
+   * snap points moved) the snap point the search reaches from there, and as on load if it was
+   * never released.
    */
   private connectionPointFor(pivot: PivotType, ctrlPoint: PositionType): PositionType {
     const topic = pivot === PivotType.Start ? this._sourceTopic : this._targetTopic;
@@ -482,6 +488,7 @@ class Relationship extends BaseConnectionLine {
       if (Math.abs(snap.x - released.x) < 0.01 && Math.abs(snap.y - released.y) < 0.01) {
         return snap;
       }
+      return Relationship.calculateConnectionPointFor(topic, ctrlPoint, released);
     }
     return Relationship.calculateConnectionPointFor(topic, ctrlPoint);
   }
