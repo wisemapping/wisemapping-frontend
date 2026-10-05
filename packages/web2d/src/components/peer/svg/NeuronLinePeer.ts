@@ -18,6 +18,7 @@
 
 import { $defined } from '../utils/assert';
 import PositionType from '../../PositionType';
+import { neuronPathData, neuronSeed } from '../../geometry/neuron';
 import ElementPeer, { StrokeStyle } from './ElementPeer';
 
 /**
@@ -164,83 +165,22 @@ class NeuronLinePeer extends ElementPeer {
   }
 
   private _updatePath(): void {
-    if (
-      !$defined(this._x1) ||
-      !$defined(this._y1) ||
-      !$defined(this._x2) ||
-      !$defined(this._y2) ||
-      (this._x1 === this._x2 && this._y1 === this._y2)
-    ) {
+    const from = { x: this._x1, y: this._y1 };
+    const to = { x: this._x2, y: this._y2 };
+    // The ends are checked before the seed is taken: a draw with coinciding ends must not fix it.
+    const drawable =
+      $defined(from.x) &&
+      $defined(from.y) &&
+      $defined(to.x) &&
+      $defined(to.y) &&
+      (from.x !== to.x || from.y !== to.y);
+    const d = drawable ? neuronPathData(from, to, this._seedFor()) : null;
+    if (d === null) {
       // Nothing to draw: clear the previous path rather than leave it on screen (W-STALEPATH).
       this.removeAttr('d');
       return;
     }
-
-    const dx = this._x2 - this._x1;
-    const dy = this._y2 - this._y1;
-    const distance = Math.sqrt(dx * dx + dy * dy) || 1;
-    const unitX = dx / distance;
-    const unitY = dy / distance;
-    const perpX = -unitY;
-    const perpY = unitX;
-
-    const steps = Math.min(18, Math.max(6, Math.round(distance / 35)));
-    const amplitude = Math.min(60, distance * 0.35);
-    const jitterSeed = this._seedFor();
-    const pathSegments: string[] = [];
-    pathSegments.push(`M${NeuronLinePeer._pointToStr(this._x1, this._y1)}`);
-
-    let prevPoint = { x: this._x1, y: this._y1 };
-
-    for (let i = 1; i <= steps; i += 1) {
-      const t = i / steps;
-      const baseX = this._x1 + dx * t;
-      const baseY = this._y1 + dy * t;
-
-      const lateral =
-        Math.sin(t * Math.PI * (1.5 + jitterSeed * 0.5) + jitterSeed * 6) *
-        amplitude *
-        (0.2 + this._rand(jitterSeed, i, 0.6) * 0.6);
-      const forward =
-        (Math.cos(t * Math.PI * 2 + this._rand(jitterSeed, i, 1) * 2) - 0.5) * amplitude * 0.08;
-
-      const spikePhase = (Math.sin(t * Math.PI * 4 + jitterSeed * 10) + 1) / 2;
-      const spike = spikePhase > 0.8 ? (spikePhase - 0.8) * 5 : 0;
-
-      // The last segment ends exactly at the target (W-NEURONEND).
-      const last = i === steps;
-      const targetX = last ? this._x2 : baseX + perpX * lateral + unitX * forward;
-      const targetY = last ? this._y2 : baseY + perpY * lateral + unitY * forward;
-
-      const ctrlOffset = distance / steps / 3;
-      const ctrl1 = {
-        x:
-          prevPoint.x +
-          unitX * ctrlOffset +
-          perpX * this._rand(jitterSeed, i * 2, 0.4) * ctrlOffset,
-        y:
-          prevPoint.y +
-          unitY * ctrlOffset +
-          perpY * this._rand(jitterSeed, i * 2 + 1, 0.4) * ctrlOffset,
-      };
-      const ctrl2 = {
-        x: targetX - unitX * ctrlOffset + perpX * this._rand(jitterSeed, i * 3, 0.4) * ctrlOffset,
-        y:
-          targetY -
-          unitY * ctrlOffset +
-          perpY * this._rand(jitterSeed, i * 3 + 1, 0.4) * ctrlOffset,
-      };
-
-      const adjustedTargetX = last ? targetX : targetX + perpX * spike;
-      const adjustedTargetY = last ? targetY : targetY + perpY * spike;
-
-      pathSegments.push(
-        `C${NeuronLinePeer._pointToStr(ctrl1.x, ctrl1.y)} ${NeuronLinePeer._pointToStr(ctrl2.x, ctrl2.y)} ${NeuronLinePeer._pointToStr(adjustedTargetX, adjustedTargetY)}`,
-      );
-      prevPoint = { x: adjustedTargetX, y: adjustedTargetY };
-    }
-
-    this.attr('d', pathSegments.join(' '));
+    this.attr('d', d);
   }
 
   /**
@@ -253,20 +193,11 @@ class NeuronLinePeer extends ElementPeer {
       return this._seed;
     }
     const length = Math.hypot(this._x2 - this._x1, this._y2 - this._y1);
-    const seed = (Math.sin(length * 0.37) + 1) / 2;
+    const seed = neuronSeed(length);
     if (this._hasFrom && this._hasTo) {
       this._seed = seed;
     }
     return seed;
-  }
-
-  private _rand(seed: number, iteration: number, amplitude: number): number {
-    const value = Math.sin(seed * 100 + iteration * 7.13) * 43758.5453;
-    return (value - Math.floor(value)) * 2 * amplitude - amplitude;
-  }
-
-  private static _pointToStr(x: number, y: number): string {
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
   }
 }
 

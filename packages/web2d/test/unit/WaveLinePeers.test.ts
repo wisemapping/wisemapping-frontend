@@ -244,6 +244,17 @@ describe('NeuronLinePeer', () => {
     peer.setFrom(10, 20);
     expect(d(peer)).toBe(direct);
   });
+
+  it('a draw with coinciding ends does not fix the seed', () => {
+    const collapsed = new NeuronLinePeer();
+    collapsed.setTo(100, 0);
+    collapsed.setFrom(100, 0);
+    collapsed.setFrom(0, 50);
+    collapsed.setTo(300, 20);
+    const direct = draw(() => new NeuronLinePeer(), 0, 50, 100, 0);
+    direct.setTo(300, 20);
+    expect(d(collapsed)).toBe(d(direct));
+  });
 });
 
 describe.each([
