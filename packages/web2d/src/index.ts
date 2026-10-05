@@ -37,7 +37,8 @@ import ElementPeer from './components/peer/svg/ElementPeer';
 import type { FontStyle } from './components/peer/svg/FontPeer';
 import type { CustomEventMap, EventDetail } from './components/peer/svg/ElementPeer';
 import type StyleAttributes from './components/StyleAttributes';
-import { STRAIGHT_TOLERANCE_PX } from './components/geometry/polyline';
+import { STRAIGHT_TOLERANCE_PX, isWithinStraightTolerance } from './components/geometry/polyline';
+import { defaultControlPoints } from './components/geometry/curve';
 import {
   STROKE_STYLES,
   POLYLINE_STYLES,
@@ -79,6 +80,8 @@ export {
   FONT_STYLES,
   FONT_WEIGHTS,
   ELEMENT_TYPES,
+  isWithinStraightTolerance,
+  defaultControlPoints,
 };
 
 export type {

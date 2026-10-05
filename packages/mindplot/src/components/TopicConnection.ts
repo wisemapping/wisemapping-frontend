@@ -16,7 +16,13 @@
  *   limitations under the License.
  */
 
-import { CurvedLine, PolyLine, STRAIGHT_TOLERANCE_PX } from '@wisemapping/web2d';
+import {
+  CurvedLine,
+  PolyLine,
+  STRAIGHT_TOLERANCE_PX,
+  defaultControlPoints,
+  isWithinStraightTolerance,
+} from '@wisemapping/web2d';
 import type { Line } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import PositionType from './PositionType';
@@ -91,14 +97,8 @@ class TopicConnection extends BaseConnectionLine {
 
     // Ends at (almost) the same height: control points on the chord, so the line is straight,
     // although it may be slightly inclined.
-    const chordX = childPos.x - parentPos.x;
-    const chordY = childPos.y - parentPos.y;
-    const across = orientation === 'vertical' ? chordX : chordY;
-    if (Math.abs(across) <= STRAIGHT_TOLERANCE_PX) {
-      return [
-        { x: chordX / 3, y: chordY / 3 },
-        { x: -chordX / 3, y: -chordY / 3 },
-      ];
+    if (isWithinStraightTolerance(parentPos.x, parentPos.y, childPos.x, childPos.y, orientation)) {
+      return defaultControlPoints(parentPos, childPos);
     }
 
     if (orientation === 'vertical') {
