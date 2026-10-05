@@ -93,7 +93,6 @@ class OriginalLayout {
       );
 
       this.layoutChildren(node, heightById, pass);
-      // this.fixOverlapping(node, heightById);
     });
   }
 
@@ -238,58 +237,6 @@ class OriginalLayout {
       heightById.get(node.getId())! >
       node.getSize().height + node.getSorter().getVerticalPadding() * 2
     );
-  }
-
-  private fixOverlapping(node: Node, heightById: Map<number, number>): void {
-    const children = this._treeSet.getChildren(node);
-
-    children.forEach((child) => {
-      this.fixOverlapping(child, heightById);
-    });
-  }
-
-  _shiftBranches(node: Node, heightById: Map<number, number>): void {
-    const shiftedBranches = [node];
-
-    const siblingsToShift = this._treeSet.getSiblingsInVerticalDirection(
-      node,
-      node.getFreeDisplacement().y,
-    );
-
-    siblingsToShift.forEach((sibling) => {
-      const overlappingOccurs = shiftedBranches.some((shiftedBranch) =>
-        OriginalLayout._branchesOverlap(shiftedBranch, sibling, heightById),
-      );
-      if (overlappingOccurs) {
-        const sAmount = node.getFreeDisplacement().y;
-        this._treeSet.shiftBranchPosition(sibling, 0, sAmount);
-        shiftedBranches.push(sibling);
-      }
-    });
-
-    const branchesToShift = this._treeSet
-      .getBranchesInVerticalDirection(node, node.getFreeDisplacement().y)
-      .filter((branch) => !shiftedBranches.includes(branch));
-
-    branchesToShift.forEach((branch) => {
-      const bAmount = node.getFreeDisplacement().y;
-      this._treeSet.shiftBranchPosition(branch, 0, bAmount);
-      shiftedBranches.push(branch);
-    });
-  }
-
-  static _branchesOverlap(branchA: Node, branchB: Node, heightById: Map<number, number>): boolean {
-    // a branch doesn't really overlap with itself
-    if (branchA === branchB) {
-      return false;
-    }
-
-    const topA = branchA.getPosition().y - heightById.get(branchA.getId())! / 2;
-    const bottomA = branchA.getPosition().y + heightById.get(branchA.getId())! / 2;
-    const topB = branchB.getPosition().y - heightById.get(branchB.getId())! / 2;
-    const bottomB = branchB.getPosition().y + heightById.get(branchB.getId())! / 2;
-
-    return !(topA >= bottomB || bottomA <= topB);
   }
 
   static SYMMETRIC_SORTER: ChildrenSorterStrategy = new SymmetricSorter();

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { afterEach, describe, expect, it, jest } from '@jest/globals';
+import { describe, expect, it } from '@jest/globals';
 import Node from '../../../src/components/layout/Node';
 import RootedTreeSet from '../../../src/components/layout/RootedTreeSet';
 import SymmetricSorter from '../../../src/components/layout/SymmetricSorter';
@@ -59,61 +59,5 @@ describe('RootedTreeSet.updateBranchPosition (BL5-80)', () => {
 
     expect(treeSet.find(1).getPosition()).toEqual({ x: 100, y: 0 });
     expect(treeSet.find(2).getPosition()).toEqual({ x: 200, y: 0 });
-  });
-});
-
-describe('RootedTreeSet.getBranchesInVerticalDirection (BL5-96)', () => {
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
-  // Central 0; on the right, branches 1, 2 and 3 (orders 0, 2, 4), on the left 4 (order 1).
-  // Branch 2 holds 20 then 21, the node looked up; branch 1 holds 100 more nodes.
-  const build = () => {
-    const positions: Record<number, PositionType> = {
-      0: { x: 0, y: 0 },
-      1: { x: 100, y: -100 },
-      2: { x: 100, y: 0 },
-      3: { x: 100, y: 100 },
-      4: { x: -100, y: 0 },
-      20: { x: 200, y: 0 },
-      21: { x: 300, y: 0 },
-    };
-    const edges: [number, number][] = [
-      [0, 1],
-      [0, 2],
-      [0, 3],
-      [0, 4],
-      [2, 20],
-      [20, 21],
-    ];
-    for (let id = 1000; id < 1100; id++) {
-      positions[id] = { x: 200, y: -100 };
-      edges.push([1, id]);
-    }
-    const treeSet = tree(positions, edges);
-    Object.entries({ 1: 0, 4: 1, 2: 2, 3: 4 }).forEach(([id, order]) =>
-      treeSet.find(Number(id)).setOrder(order),
-    );
-    return treeSet;
-  };
-
-  it('finds the branches of the root on the side of the node, in the direction of the offset', () => {
-    const treeSet = build();
-    const node = treeSet.find(21);
-
-    expect(treeSet.getBranchesInVerticalDirection(node, -10).map((n) => n.getId())).toEqual([1]);
-    expect(treeSet.getBranchesInVerticalDirection(node, 10).map((n) => n.getId())).toEqual([3]);
-  });
-
-  it('walks up from the node instead of searching every branch of the root', () => {
-    const treeSet = build();
-    const node = treeSet.find(21);
-    const getId = jest.spyOn(Node.prototype, 'getId');
-
-    treeSet.getBranchesInVerticalDirection(node, -10);
-
-    // Before: searched branch 1, all of its 100 children, then branch 2 down to the node.
-    expect(getId.mock.calls.length).toBeLessThan(10);
   });
 });

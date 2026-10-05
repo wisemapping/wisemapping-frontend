@@ -421,64 +421,6 @@ class RootedTreeSet {
   }
 
   /**
-   * @param node
-   * @param yOffset
-   * @return siblings in the offset (vertical) direction, i.e. with lower or higher order
-   */
-  getSiblingsInVerticalDirection(node: Node, yOffset: number): Node[] {
-    // siblings with lower or higher order
-    // (depending on the direction of the offset and on the same side as their parent)
-    const parent = this.getParent(node)!;
-    const siblings = this.getSiblings(node).filter((sibling) => {
-      const sameSide =
-        node.getPosition().x > parent.getPosition().x
-          ? sibling.getPosition().x > parent.getPosition().x
-          : sibling.getPosition().x < parent.getPosition().x;
-      const siblingOrder = sibling.getOrder() ?? 0;
-      const nodeOrder = node.getOrder() ?? 0;
-      const orderOK = yOffset < 0 ? siblingOrder < nodeOrder : siblingOrder > nodeOrder;
-      return orderOK && sameSide;
-    });
-
-    if (yOffset < 0) {
-      siblings.reverse();
-    }
-
-    return siblings;
-  }
-
-  /**
-   * @param node
-   * @param yOffset
-   * @return branches of the root node on the same side as the given node's, in the given
-   * vertical direction
-   */
-  getBranchesInVerticalDirection(node: Node, yOffset: number): Node[] {
-    // direct descendants of the root that do not contain the node and are on the same side
-    // and on the direction of the offset
-    const rootNode = this.getRootNode(node);
-
-    // The branch of the root that holds the node: its ancestor right under the root.
-    let branch = node;
-    while (branch._parent && branch._parent !== rootNode) {
-      branch = branch._parent;
-    }
-
-    const result = this.getSiblings(branch).filter((sibling) => {
-      const sameSide =
-        node.getPosition().x > rootNode.getPosition().x
-          ? sibling.getPosition().x > rootNode.getPosition().x
-          : sibling.getPosition().x < rootNode.getPosition().x;
-      const siblingOrder = sibling.getOrder() ?? 0;
-      const branchOrder = branch.getOrder() ?? 0;
-      const sameDirection = yOffset < 0 ? siblingOrder < branchOrder : siblingOrder > branchOrder;
-      return sameSide && sameDirection;
-    }, this);
-
-    return result;
-  }
-
-  /**
    * Validates tree consistency by checking for stale references
    * @returns array of validation errors found, empty if tree is consistent
    */
