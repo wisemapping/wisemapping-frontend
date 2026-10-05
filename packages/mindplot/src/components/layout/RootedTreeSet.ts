@@ -180,16 +180,20 @@ class RootedTreeSet {
    * @param validate
    * @throws will throw an error if id is null or undefined
    * @throws will throw an error if node cannot be found
-   * @return node
+   * @return node, or null when it is not found and validate is false
    */
-  find(id: number, validate = true): Node {
+  find(id: number, validate?: true): Node;
+
+  find(id: number, validate: false): Node | null;
+
+  find(id: number, validate = true): Node | null {
     const result = this._nodesById.get(id) ?? null;
 
     if (validate && !result) {
       throw new Error(`node could not be found id:${id}\n,RootedTreeSet${this.dump()}`);
     }
 
-    return result!;
+    return result;
   }
 
   /**

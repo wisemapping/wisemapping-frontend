@@ -154,6 +154,19 @@ class NodeModel extends INodeModel {
     child._parent = null;
   }
 
+  findNodeById(id: number): NodeModel | undefined {
+    if (this.getId() === id) {
+      return this;
+    }
+    for (let i = 0; i < this._children.length; i++) {
+      const result = this._children[i].findNodeById(id);
+      if (result) {
+        return result;
+      }
+    }
+    return undefined;
+  }
+
   getChildren(): NodeModel[] {
     return this._children;
   }

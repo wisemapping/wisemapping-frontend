@@ -50,7 +50,11 @@ const buildMap = (): { mindmap: Mindmap; child: NodeModel } => {
   return { mindmap, child };
 };
 
-const node = (mindmap: Mindmap, id: number): NodeModel => mindmap.findNodeById(id) as NodeModel;
+const node = (mindmap: Mindmap, id: number): NodeModel => {
+  const result = mindmap.findNodeById(id);
+  if (!result) throw new Error(`node ${id} not found`);
+  return result;
+};
 
 const noteText = (topic: NodeModel): string => {
   const note = topic.findFeatureByType('note')[0];

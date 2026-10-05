@@ -33,7 +33,11 @@ const load = (xml: string): Mindmap => {
   return XMLSerializerFactory.createFromDocument(dom).loadFromDom(dom, 'map');
 };
 
-const node = (mindmap: Mindmap, id: number): NodeModel => mindmap.findNodeById(id) as NodeModel;
+const node = (mindmap: Mindmap, id: number): NodeModel => {
+  const result = mindmap.findNodeById(id);
+  if (!result) throw new Error(`node ${id} not found`);
+  return result;
+};
 
 const noteOf = (topic: NodeModel): NoteModel => topic.findFeatureByType('note')[0];
 

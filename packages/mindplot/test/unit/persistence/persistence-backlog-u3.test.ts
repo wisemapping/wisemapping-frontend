@@ -30,7 +30,11 @@ const load = (xml: string): Mindmap => {
   return XMLSerializerFactory.createFromDocument(dom).loadFromDom(dom, 'map');
 };
 
-const node = (mindmap: Mindmap, id: number): NodeModel => mindmap.findNodeById(id) as NodeModel;
+const node = (mindmap: Mindmap, id: number): NodeModel => {
+  const result = mindmap.findNodeById(id);
+  if (!result) throw new Error(`node ${id} not found`);
+  return result;
+};
 
 // A tango map with a single child topic carrying the given attributes.
 const tangoTopic = (attributes: string): NodeModel =>

@@ -454,22 +454,8 @@ abstract class INodeModel {
     return result;
   }
 
-  findNodeById(id: number): INodeModel | undefined {
-    let result: INodeModel | undefined;
-    if (this.getId() === id) {
-      result = this;
-    } else {
-      const children = this.getChildren();
-      for (let i = 0; i < children.length; i++) {
-        const child = children[i];
-        result = child.findNodeById(id);
-        if (result) {
-          break;
-        }
-      }
-    }
-    return result;
-  }
+  /** The node with the given id in this subtree (this node included), undefined if none. */
+  abstract findNodeById(id: number): INodeModel | undefined;
 
   inspect() {
     let result = `{ type: ${this.getType()} , id: ${this.getId()} , text: ${this.getText()}`;

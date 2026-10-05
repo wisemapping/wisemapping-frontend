@@ -53,7 +53,11 @@ const roundTrip = (mindmap: Mindmap): Mindmap => {
   return new XMLSerializerTango().loadFromDom(dom, 'roundtrip');
 };
 
-const findChild = (mindmap: Mindmap): NodeModel => mindmap.findNodeById(2) as NodeModel;
+const findChild = (mindmap: Mindmap): NodeModel => {
+  const result = mindmap.findNodeById(2);
+  if (!result) throw new Error('node 2 not found');
+  return result;
+};
 
 const noteText = (topic: NodeModel): string => {
   const note = topic.findFeatureByType('note')[0];
