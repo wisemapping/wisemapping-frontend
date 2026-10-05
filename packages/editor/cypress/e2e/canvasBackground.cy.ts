@@ -29,28 +29,31 @@ describe('Canvas Background Suite', () => {
   it('Default background pattern hides color pickers', () => {
     // Click on the Background button in toolbar
     cy.get('button[aria-label*="Background"]').should('be.visible').click({ force: true });
-    
+
     // Wait for the Background Style section
     cy.contains('Background Style').should('be.visible');
-    
+
     // First select Grid to ensure tabs are visible
     cy.get('button').find('svg[data-testid="GridOnIcon"]').parent().click({ force: true });
-    
+
     // Verify tabs appeared (specifically the Tab components)
     cy.get('[role="tab"]').contains('Color').should('be.visible');
-    
+
     // Close the dialog
     cy.get('button[aria-label*="Background"]').click({ force: true });
-    
+
     // Reopen the dialog
     cy.get('button[aria-label*="Background"]').should('be.visible').click({ force: true });
-    
+
     // Now click Default to hide them
-    cy.get('button').find('svg[data-testid="NotInterestedOutlinedIcon"]').parent().click({ force: true });
-    
+    cy.get('button')
+      .find('svg[data-testid="NotInterestedOutlinedIcon"]')
+      .parent()
+      .click({ force: true });
+
     // Tabs should not be visible when Default is selected
     cy.get('[role="tab"]').should('not.exist');
-    
+
     // Take snapshot
     cy.matchImageSnapshot('default-background-no-tabs');
   });
@@ -58,17 +61,17 @@ describe('Canvas Background Suite', () => {
   it('Grid background pattern shows color pickers', () => {
     // Click on the Background button in toolbar
     cy.get('button[aria-label*="Background"]').should('be.visible').click({ force: true });
-    
+
     // Wait for the Background Style section
     cy.contains('Background Style').should('be.visible');
-    
+
     // Click the Grid background style option (GridOnIcon, third button)
     cy.get('button').find('svg[data-testid="GridOnIcon"]').parent().click({ force: true });
-    
+
     // Color and Grid Color tabs should be visible when Grid is selected
     cy.contains('Color').should('be.visible');
     cy.contains('Grid Color').should('be.visible');
-    
+
     // Take snapshot
     cy.matchImageSnapshot('grid-background-with-tabs');
   });
@@ -76,19 +79,21 @@ describe('Canvas Background Suite', () => {
   it('Dots background pattern shows color pickers', () => {
     // Click on the Background button in toolbar
     cy.get('button[aria-label*="Background"]').should('be.visible').click({ force: true });
-    
+
     // Wait for the Background Style section
     cy.contains('Background Style').should('be.visible');
-    
+
     // Click the Dots background style option (FiberManualRecordIcon, fourth button)
-    cy.get('button').find('svg[data-testid="FiberManualRecordIcon"]').parent().click({ force: true });
-    
+    cy.get('button')
+      .find('svg[data-testid="FiberManualRecordIcon"]')
+      .parent()
+      .click({ force: true });
+
     // Color and Grid Color tabs should be visible when Dots is selected
     cy.contains('Color').should('be.visible');
     cy.contains('Grid Color').should('be.visible');
-    
+
     // Take snapshot
     cy.matchImageSnapshot('dots-background-with-tabs');
   });
 });
-

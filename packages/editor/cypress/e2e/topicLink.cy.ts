@@ -30,7 +30,7 @@ describe('Topic Link Suite', () => {
 
   it('Add link to topic', () => {
     cy.focusTopicById(3);
-    
+
     cy.onClickToolbarButton('Add Link');
 
     // Wait for link panel to load
@@ -48,7 +48,7 @@ describe('Topic Link Suite', () => {
 
   it('Validate URL format shows error for invalid URL', () => {
     cy.focusTopicById(3);
-    
+
     cy.onClickToolbarButton('Add Link');
 
     // Wait for link panel to load
@@ -66,7 +66,7 @@ describe('Topic Link Suite', () => {
 
   it('Accept valid URL and save', () => {
     cy.focusTopicById(3);
-    
+
     cy.onClickToolbarButton('Add Link');
 
     // Wait for link panel to load
@@ -156,7 +156,7 @@ describe('Topic Link Suite', () => {
 
     const linkUrl = 'https://www.persistent-link.com';
     cy.get('input[type="url"]').first().type(linkUrl);
-    
+
     // Save the link
     cy.contains('Accept').should('be.visible').click();
 
@@ -235,4 +235,3 @@ describe('Topic Link Suite', () => {
       .trigger('mouseleave', { force: true });
   });
 });
-

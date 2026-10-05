@@ -31,7 +31,9 @@ describe('Expand By Level Suite', () => {
 
   it('should collapse all nodes and then expand by level incrementally', () => {
     cy.get('button[aria-label="Collapse All Nodes"]').should('be.visible').click({ force: true });
-    cy.get('button[aria-label="Expand by Level"]').find('[class*="LevelBadge"]').should('not.exist');
+    cy.get('button[aria-label="Expand by Level"]')
+      .find('[class*="LevelBadge"]')
+      .should('not.exist');
     cy.matchImageSnapshot('all-nodes-collapsed');
 
     cy.get('button[aria-label="Expand by Level"]').click({ force: true });
@@ -56,7 +58,9 @@ describe('Expand By Level Suite', () => {
 
   it('should show correct level badge number when expanding', () => {
     cy.get('button[aria-label="Collapse All Nodes"]').should('be.visible').click({ force: true });
-    cy.get('button[aria-label="Expand by Level"]').find('[class*="LevelBadge"]').should('not.exist');
+    cy.get('button[aria-label="Expand by Level"]')
+      .find('[class*="LevelBadge"]')
+      .should('not.exist');
 
     cy.get('button[aria-label="Expand by Level"]').click({ force: true });
     cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '2');
@@ -67,18 +71,22 @@ describe('Expand By Level Suite', () => {
 
   it('should reset level to max when expand all is clicked', () => {
     cy.get('button[aria-label="Collapse All Nodes"]').should('be.visible').click({ force: true });
-    cy.get('button[aria-label="Expand by Level"]').find('[class*="LevelBadge"]').should('not.exist');
+    cy.get('button[aria-label="Expand by Level"]')
+      .find('[class*="LevelBadge"]')
+      .should('not.exist');
 
     cy.get('button[aria-label="Expand by Level"]').click({ force: true });
     cy.get('[data-testid="expand-level-badge"]').should('be.visible').and('contain', '2');
 
     cy.get('button[aria-label="Expand All Nodes"]').should('be.visible').click({ force: true });
-    cy.get('[data-testid="expand-level-badge"]').should('be.visible').and(($badge) => {
-      const text = $badge.text();
-      const level = Number.parseInt(text, 10);
-      expect(level).to.be.greaterThan(2);
-      expect(level).to.be.lessThan(100);
-    });
+    cy.get('[data-testid="expand-level-badge"]')
+      .should('be.visible')
+      .and(($badge) => {
+        const text = $badge.text();
+        const level = Number.parseInt(text, 10);
+        expect(level).to.be.greaterThan(2);
+        expect(level).to.be.lessThan(100);
+      });
     cy.matchImageSnapshot('expand-all-shows-max-level');
   });
 
@@ -115,4 +123,3 @@ describe('Expand By Level Suite', () => {
     cy.matchImageSnapshot('expand-by-level-badge-styling');
   });
 });
-

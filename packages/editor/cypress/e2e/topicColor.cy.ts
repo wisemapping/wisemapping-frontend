@@ -72,7 +72,7 @@ describe('Topic Color Suite', () => {
   it('Reset topic fill color to default', () => {
     // First change the color
     cy.onClickToolbarButton('Style Topic & Connections');
-    
+
     // Select a shape first to make color picker visible
     cy.get('[aria-label="Rectangle shape"]').should('be.visible').first().click({ force: true });
 
@@ -81,7 +81,7 @@ describe('Topic Color Suite', () => {
 
     // Now reset to default by selecting the "Default" shape option
     cy.onClickToolbarButton('Style Topic & Connections');
-    
+
     // Click the default shape option (first option in the shape selector)
     cy.get('[aria-label*="Default shape"]').first().click({ force: true });
 
@@ -91,13 +91,13 @@ describe('Topic Color Suite', () => {
   it('Reset topic border color to default', () => {
     // First change the border color
     cy.onClickToolbarButton('Style Topic & Connections');
-    
+
     // First ensure topic has a shape (required for border to be visible)
     cy.get('[aria-label="Rectangle shape"]').should('be.visible').first().click({ force: true });
 
     // Click on Border tab
     cy.contains('Border').click({ force: true });
-    
+
     // Select a border style to make color picker visible
     cy.get('[aria-label="Solid Line"]').should('be.visible').first().click({ force: true });
 

@@ -30,7 +30,7 @@ describe('Topic Note Suite', () => {
 
   it('Add note to topic', () => {
     cy.focusTopicById(3);
-    
+
     cy.onClickToolbarButton('Add Note');
 
     // Wait for note panel to load dynamically
@@ -116,7 +116,7 @@ describe('Topic Note Suite', () => {
 
     const noteContent = 'This note should persist after saving';
     cy.get('[contenteditable="true"]').first().type(noteContent);
-    
+
     // Save the note
     cy.contains('Accept').should('be.visible').click();
 

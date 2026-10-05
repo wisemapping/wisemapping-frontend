@@ -18,8 +18,6 @@
 
 /// <reference types="cypress" />
 describe('Topic Icon Suite', () => {
-
-
   beforeEach(() => {
     cy.visit('/map-render/html/editor.html');
     cy.waitEditorLoaded();

@@ -16,10 +16,7 @@ export default defineConfig({
       return require('./cypress/plugins/index.ts')(on, config);
     },
     baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:8081',
-    specPattern: [
-      'cypress/e2e/**/*.cy.ts',
-      '!cypress/e2e/storybook/**/*.cy.ts',
-    ],
+    specPattern: ['cypress/e2e/**/*.cy.ts', '!cypress/e2e/storybook/**/*.cy.ts'],
     supportFile: 'cypress/support/e2e.ts',
     chromeWebSecurity: false,
   },

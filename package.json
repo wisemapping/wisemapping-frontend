@@ -36,7 +36,8 @@
       "prettier --write"
     ],
     "packages/editor/cypress/**/*.ts": [
-      "cd packages/editor && eslint --fix"
+      "cd packages/editor && eslint --fix",
+      "prettier --write"
     ],
     "packages/webapp/src/**/*.{ts,tsx}": [
       "cd packages/webapp && eslint --fix",
