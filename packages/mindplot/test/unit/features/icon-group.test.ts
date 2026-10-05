@@ -129,4 +129,49 @@ describe('IconGroup', () => {
       expect(group.getSize()).toEqual({ width: 20, height: 10 });
     });
   });
+
+  describe('adding icons (performance)', () => {
+    const nativeOrder = (group: IconGroup): Element[] =>
+      Array.from(group.getGroup().peer._native.children);
+
+    it('adds n icons with O(n) DOM operations, not O(n^2)', () => {
+      const group = new IconGroup(1, 10);
+      const removeChild = jest.spyOn(group.getGroup(), 'removeChild');
+      const append = jest.spyOn(group.getGroup(), 'append');
+      const n = 20;
+      for (let i = 0; i < n; i++) {
+        group.addIcon(buildIcon('icon', i), false);
+      }
+
+      // Re-adding every icon on each add cost n(n-1)/2 = 190 removals and 210 appends.
+      expect(removeChild.mock.calls.length).toBe(0);
+      expect(append.mock.calls.length).toBe(n);
+    });
+
+    it('keeps the DOM and the positions in icon order when an icon goes in the middle', () => {
+      const group = new IconGroup(1, 10);
+      const icons = [
+        buildIcon('link', 1),
+        buildIcon('note', 2),
+        buildIcon('icon', 3),
+        buildIcon('link', 4),
+        buildIcon('eicon', 5),
+      ];
+      const removeChild = jest.spyOn(group.getGroup(), 'removeChild');
+      icons.forEach((icon) => group.addIcon(icon, false));
+
+      expect(order(group)).toEqual(['icon-3', 'eicon-5', 'note-2', 'link-1', 'link-4']);
+      const expected = order(group).map(
+        (label) => icons.find((i) => i.label === label)!.getElement().peer._native,
+      );
+      expect(nativeOrder(group)).toEqual(expected);
+      const xs = order(group).map(
+        (label) => icons.find((i) => i.label === label)!.getElement().getPosition().x,
+      );
+      expect(xs).toEqual([...xs].sort((a, b) => a - b));
+      // Only the icons after an inserted one move: 1 + 2 + 0 + 3, instead of all of them
+      // on each add (1 + 2 + 3 + 4).
+      expect(removeChild.mock.calls.length).toBe(6);
+    });
+  });
 });

@@ -94,25 +94,30 @@ class IconGroup {
   }
 
   addIcon(icon: Icon, remove: boolean): void {
-    // Order could have change, need to re-add all.
-    const icons = this._icons.slice();
-    this._icons.forEach((i) => {
-      this._removeIcon(i);
-    });
+    // Re-adding every icon closed the delete widget once per icon: close it once.
+    if (this._icons.length > 0) {
+      this._removeTip.close(0);
+    }
 
+    // The icons are sorted by type: insert the new one after the icons of its type, as a
+    // stable sort does, and move only the icons that follow it, instead of removing and
+    // re-adding them all (O(n^2) per icon).
     icon.setGroup(this);
-    icons.push(icon);
-    this._icons = icons.sort(
-      (a, b) =>
-        ORDER_BY_TYPE.get(a.getModel().getType())! - ORDER_BY_TYPE.get(b.getModel().getType())!,
-    );
+    const rank = (i: Icon): number => ORDER_BY_TYPE.get(i.getModel().getType())!;
+    const iconRank = rank(icon);
+    let index = this._icons.findIndex((i) => rank(i) > iconRank);
+    if (index < 0) {
+      index = this._icons.length;
+    }
+    const following = this._icons.slice(index);
+    following.forEach((i) => this._group.removeChild(i.getElement()));
+    this._icons.splice(index, 0, icon);
 
-    // Add all the nodes back ...
+    // Add the new node and the ones after it back ...
     this._resize(this._icons.length);
-    this._icons.forEach((i, index) => {
-      this.positionIcon(i, index);
-      const imageShape = i.getElement();
-      this._group.append(imageShape);
+    [icon, ...following].forEach((i, offset) => {
+      this.positionIcon(i, index + offset);
+      this._group.append(i.getElement());
     });
 
     // Register event for the group ..
