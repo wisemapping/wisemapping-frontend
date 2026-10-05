@@ -258,19 +258,12 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     this._startArrow.setFrom(spos.x, spos.y);
     this._endArrow.setFrom(tpos.x, tpos.y);
 
-    if (this._line.getType() === 'CurvedLine') {
-      const controlPoints = this._line.getControlPoints();
-      // Start arrow points from source toward first control point (direction of flow)
-      this._startArrow.setControlPoint(controlPoints[0]);
-      // End arrow points from target back toward second control point (direction of flow)
-      this._endArrow.setControlPoint(controlPoints[1]);
-    } else {
-      // For straight lines:
-      // Start arrow points from source toward target
-      this._startArrow.setControlPoint(tpos);
-      // End arrow points from target back toward source
-      this._endArrow.setControlPoint(spos);
-    }
+    // The line is always a curve (buildLine)
+    const controlPoints = this._line.getControlPoints();
+    // Start arrow points from source toward first control point (direction of flow)
+    this._startArrow.setControlPoint(controlPoints[0]);
+    // End arrow points from target back toward second control point (direction of flow)
+    this._endArrow.setControlPoint(controlPoints[1]);
   }
 
   addToWorkspace(workspace: Canvas): void {
@@ -611,16 +604,10 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     this._focusStartArrow.setFrom(sPos.x, sPos.y);
     this._focusEndArrow.setFrom(tPos.x, tPos.y);
 
-    if (this._line.getType() === 'CurvedLine') {
-      // Start arrow points from source toward first control point
-      this._focusStartArrow.setControlPoint(ctrlPoints[0]);
-      // End arrow points from target back toward second control point
-      this._focusEndArrow.setControlPoint(ctrlPoints[1]);
-    } else {
-      // For straight lines
-      this._focusStartArrow.setControlPoint(tPos);
-      this._focusEndArrow.setControlPoint(sPos);
-    }
+    // Start arrow points from source toward first control point
+    this._focusStartArrow.setControlPoint(ctrlPoints[0]);
+    // End arrow points from target back toward second control point
+    this._focusEndArrow.setControlPoint(ctrlPoints[1]);
   }
 
   /** Listens to the relationship's own events (see RelationshipEventMap). */
