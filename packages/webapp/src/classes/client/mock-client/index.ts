@@ -503,7 +503,7 @@ class MockClient implements Client {
       title,
       color,
     });
-    return newId;
+    return Promise.resolve(newId);
   }
 
   deleteLabel(id: number): Promise<void> {

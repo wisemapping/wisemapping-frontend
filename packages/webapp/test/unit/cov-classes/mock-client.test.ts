@@ -170,9 +170,9 @@ describe('MockClient labels', () => {
     expect(await client.fetchLabels()).toContainEqual({ id: 4, title: 'Work', color: 'blue' });
   });
 
-  // Bug: mock-client/index.ts:506 returns the bare number, not a Promise as the Client
-  // contract requires, so `client.createLabel(...).then(...)` throws a TypeError.
-  it.failing('createLabel returns a promise', () => {
+  // The Client contract returns a Promise; it used to return the bare number, so
+  // `client.createLabel(...).then(...)` threw a TypeError.
+  it('createLabel returns a promise', () => {
     expect(client.createLabel('Work', 'blue')).toBeInstanceOf(Promise);
   });
 
