@@ -17,7 +17,6 @@
  */
 // eslint-disable-next-line max-classes-per-file
 import { Ellipse, StraightLine } from '@wisemapping/web2d';
-import ActionDispatcher from './ActionDispatcher';
 import Canvas from './Canvas';
 import PositionType from './PositionType';
 import Relationship from './Relationship';
@@ -306,7 +305,7 @@ class RelationshipControlPoints {
       },
       () => {
         relationship.rememberReleasedControlPoint(PivotType.Start);
-        const actionDispatcher = ActionDispatcher.getInstance();
+        const actionDispatcher = relationship.getSourceTopic().getActionDispatcher();
         actionDispatcher.moveControlPoint(
           relationship.getModel(),
           this.getControlPointPosition(PivotType.Start),
@@ -326,7 +325,7 @@ class RelationshipControlPoints {
       },
       () => {
         relationship.rememberReleasedControlPoint(PivotType.End);
-        const actionDispatcher = ActionDispatcher.getInstance();
+        const actionDispatcher = relationship.getSourceTopic().getActionDispatcher();
         actionDispatcher.moveControlPoint(
           relationship.getModel(),
           this.getControlPointPosition(PivotType.End),

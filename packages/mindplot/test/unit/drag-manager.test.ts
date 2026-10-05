@@ -83,6 +83,8 @@ const buildTopic = () => {
   const node = {
     getId: () => 3,
     isCentralTopic: () => false,
+    // A topic without a designer: it runs its commands through ActionDispatcher.getInstance().
+    getActionDispatcher: () => ActionDispatcher.getInstance(),
     getSize: () => ({ width: 40, height: 20 }),
     addEvent: (type: string, listener: (event: Event) => void) => {
       if (type === 'mousedown') mouseDown = listener;

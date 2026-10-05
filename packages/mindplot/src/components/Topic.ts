@@ -856,6 +856,15 @@ abstract class Topic extends NodeGraph {
     dispatcher.show(this, text);
   }
 
+  /**
+   * The dispatcher of the topic's designer, which runs its commands on its own map and undo
+   * stack. ActionDispatcher.getInstance() is the last designer built's: with two designers on a
+   * page, the other map. A topic built without a designer falls back to it.
+   */
+  getActionDispatcher(): ActionDispatcher {
+    return this.getDesigner()?.getActionDispatcher() ?? ActionDispatcher.getInstance();
+  }
+
   getNoteValue(): string | null {
     const model = this.getModel();
     const notes = model.findFeatureByType('note');
@@ -872,7 +881,7 @@ abstract class Topic extends NodeGraph {
     const topicId = this.getId();
     const model = this.getModel();
     // Fetched only when there is something to dispatch: clearing a missing note needs none.
-    const dispatcher = () => ActionDispatcher.getInstance();
+    const dispatcher = () => this.getActionDispatcher();
     const notes = model.findFeatureByType('note');
 
     if (!$defined(value)) {
@@ -909,7 +918,7 @@ abstract class Topic extends NodeGraph {
     const topicId = this.getId();
     const model = this.getModel();
     // Fetched only when there is something to dispatch: clearing a missing link needs none.
-    const dispatcher = () => ActionDispatcher.getInstance();
+    const dispatcher = () => this.getActionDispatcher();
     const links = model.findFeatureByType('link');
 
     if (!$defined(value)) {

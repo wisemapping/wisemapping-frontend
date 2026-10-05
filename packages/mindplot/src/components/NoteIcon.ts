@@ -21,7 +21,6 @@ import Topic from './Topic';
 import NoteModel from './model/NoteModel';
 import FeatureModel from './model/FeatureModel';
 import ImageIcon from './ImageIcon';
-import ActionDispatcher from './ActionDispatcher';
 
 class NoteIcon extends ImageIcon {
   private _noteModel: NoteModel;
@@ -71,7 +70,7 @@ class NoteIcon extends ImageIcon {
   }
 
   remove() {
-    const actionDispatcher = ActionDispatcher.getInstance();
+    const actionDispatcher = this._topic.getActionDispatcher();
     const featureId = this._noteModel.getId();
     actionDispatcher.removeFeatureFromTopic(this._topic.getId(), featureId);
   }

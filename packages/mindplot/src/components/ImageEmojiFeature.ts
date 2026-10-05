@@ -20,7 +20,6 @@ import { Text, Group } from '@wisemapping/web2d';
 import type { Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
-import ActionDispatcher from './ActionDispatcher';
 import Icon from './Icon';
 import IconGroup from './IconGroup';
 import SizeType from './SizeType';
@@ -216,7 +215,7 @@ class ImageEmojiFeature {
         emojiTextShape.addEvent(type, fnc);
       },
       remove(): void {
-        const actionDispatcher = ActionDispatcher.getInstance();
+        const actionDispatcher = topic.getActionDispatcher();
         actionDispatcher.changeImageEmojiCharToTopic([topic.getId()], undefined);
       },
       getModel(): FeatureModel {

@@ -24,7 +24,6 @@
 import { Text, Group, Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
-import ActionDispatcher from './ActionDispatcher';
 import Icon from './Icon';
 import SizeType from './SizeType';
 import PositionType from './PositionType';
@@ -799,7 +798,7 @@ class ImageSVGFeature {
         svgText.addEvent(type, fnc);
       },
       remove(): void {
-        const actionDispatcher = ActionDispatcher.getInstance();
+        const actionDispatcher = topic.getActionDispatcher();
         actionDispatcher.changeImageGalleryIconNameToTopic([topic.getId()], undefined);
       },
       getModel(): FeatureModel {

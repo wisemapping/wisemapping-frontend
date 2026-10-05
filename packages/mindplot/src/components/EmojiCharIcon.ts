@@ -22,7 +22,6 @@ import IconGroup from './IconGroup';
 import EmojiIconModel from './model/EmojiIconModel';
 import SizeType from './SizeType';
 import Topic from './Topic';
-import ActionDispatcher from './ActionDispatcher';
 import PositionType from './PositionType';
 
 class EmojiCharIcon implements Icon {
@@ -88,7 +87,7 @@ class EmojiCharIcon implements Icon {
   }
 
   remove() {
-    const actionDispatcher = ActionDispatcher.getInstance();
+    const actionDispatcher = this._topic.getActionDispatcher();
     const featureId = this._iconModel.getId();
     actionDispatcher.removeFeatureFromTopic(this._topic.getId(), featureId);
   }

@@ -18,7 +18,6 @@
 import { ElementClass, ElementPeer, Group } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 
-import ActionDispatcher from './ActionDispatcher';
 import DragPivot from './DragPivot';
 import LayoutManager from './layout/LayoutManager';
 import NodeGraph from './NodeGraph';
@@ -220,8 +219,8 @@ class DragTopic {
       return;
     }
 
-    const actionDispatcher = ActionDispatcher.getInstance();
     const draggedTopic = this.getDraggedTopic();
+    const actionDispatcher = draggedTopic.getActionDispatcher();
     const topicId = draggedTopic.getId();
     const position = this.getPosition();
 

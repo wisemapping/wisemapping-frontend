@@ -20,7 +20,6 @@ import type { FontStyle } from '@wisemapping/web2d';
 
 import DOMUtils from './util/DOMUtils';
 import EventManager from './util/EventManager';
-import ActionDispatcher from './ActionDispatcher';
 import EventDispatcher from './EventDispatcher';
 import Topic from './Topic';
 
@@ -242,7 +241,7 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
     const text = this.getTextAreaText();
     const topicId = this._topic.getId();
 
-    const actionDispatcher = ActionDispatcher.getInstance();
+    const actionDispatcher = this._topic.getActionDispatcher();
     const commandContext = actionDispatcher.getCommandContext();
 
     // Safety check: Verify the topic still exists in the designer before updating

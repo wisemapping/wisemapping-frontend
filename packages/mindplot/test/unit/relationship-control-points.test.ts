@@ -120,7 +120,8 @@ describe('Relationship control points', () => {
       };
       redraw = jest.fn();
       rememberReleasedControlPoint = jest.fn();
-      const topic = { getId: () => 1 };
+      // A topic without a designer: it runs its commands through ActionDispatcher.getInstance().
+      const topic = { getId: () => 1, getActionDispatcher: () => ActionDispatcher.getInstance() };
       const relationship = {
         getSourceTopic: () => topic,
         getTargetTopic: () => topic,
