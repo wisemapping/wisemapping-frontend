@@ -176,7 +176,7 @@ describe('TextPeer fonts', () => {
     expect(node.getAttribute('font-size')).toBe('26.9');
     expect(node.getAttribute('font-style')).toBe('normal');
     expect(node.getAttribute('font-weight')).toBe('900');
-    text.peer.setTextSize(8);
+    text.setFontSize(8);
     expect(node.getAttribute('font-size')).toBe('10.8');
   });
 

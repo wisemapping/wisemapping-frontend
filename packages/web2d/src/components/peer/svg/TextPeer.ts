@@ -76,10 +76,6 @@ class TextPeer extends ElementPeer {
     this._measured = { width: 0, height: 0 };
   }
 
-  append(element: ElementPeer): void {
-    this._native.appendChild(element._native);
-  }
-
   /**
    * Writes one tspan per line. The tspans are reused: a line that did not change costs no DOM
    * write, and only added or removed lines create or remove nodes.
@@ -199,11 +195,6 @@ class TextPeer extends ElementPeer {
 
   getColor(): string | null {
     return this._native.getAttribute('fill');
-  }
-
-  setTextSize(size: number) {
-    this._font.setSize(size);
-    this.updateFontStyle();
   }
 
   setStyle(style: string) {
