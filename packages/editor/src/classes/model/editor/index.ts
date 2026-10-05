@@ -27,6 +27,9 @@ import Capability from '../../action/capability';
 import { trackEditorInteraction } from '../../../utils/analytics';
 import debounce from 'lodash/debounce';
 
+type DesignerEventType = Parameters<Designer['addEvent']>[0];
+type DesignerHandler = Parameters<Designer['addEvent']>[1];
+
 class Editor {
   private component: MindplotWebComponent;
 
@@ -37,6 +40,12 @@ class Editor {
   // The debounced autosave and the designer it listens on, released by dispose() ...
   private autoSave: { designer: Designer; save: (() => void) & { cancel: () => void } } | null =
     null;
+
+  // The designer handlers added by registerEvents, removed by dispose() ...
+  private designerHandlers: {
+    designer: Designer;
+    handlers: [DesignerEventType, DesignerHandler][];
+  } | null = null;
 
   constructor(component: MindplotWebComponent) {
     this.component = component;
@@ -121,13 +130,15 @@ class Editor {
       // here re-rendered the entire editor chrome per frame. The one piece of
       // chrome that needs it -- the zoom percentage -- subscribes directly in
       // visualization-toolbar/zoom-display.tsx, so only that leaf re-renders.
-      designer.addEvent('onblur', onNodeBlurHandler);
-      designer.addEvent('onfocus', onNodeFocusHandler);
-      designer.addEvent('modelUpdate', onNodeFocusHandler);
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      designer.addEvent('featureEdit', featureEdition);
+      this.removeDesignerHandlers();
+      const handlers: [DesignerEventType, DesignerHandler][] = [
+        ['onblur', onNodeBlurHandler],
+        ['onfocus', onNodeFocusHandler],
+        ['modelUpdate', onNodeFocusHandler],
+        ['featureEdit', featureEdition as DesignerHandler],
+      ];
+      handlers.forEach(([type, handler]) => designer.addEvent(type, handler));
+      this.designerHandlers = { designer, handlers };
 
       // Is the save action enabled ... ?
       if (!capability.isHidden('save')) {
@@ -201,6 +212,15 @@ class Editor {
   dispose(): void {
     this.removeBeforeUnloadHandler();
     this.removeAutoSave();
+    this.removeDesignerHandlers();
+  }
+
+  private removeDesignerHandlers(): void {
+    if (this.designerHandlers) {
+      const { designer, handlers } = this.designerHandlers;
+      handlers.forEach(([type, handler]) => designer.removeEvent(type, handler));
+      this.designerHandlers = null;
+    }
   }
 
   private removeAutoSave(): void {

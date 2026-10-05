@@ -202,3 +202,33 @@ describe('Editor flush when leaving', () => {
     removeSpy.mockRestore();
   });
 });
+
+describe('Editor dispose (BL5-25)', () => {
+  it('stops forwarding the designer events to the editor once disposed', () => {
+    const { component, fire } = buildComponent();
+    const editor = new Editor(component as unknown as MindplotWebComponent);
+    const capability = { isHidden: () => false } as unknown as Capability;
+    const canvasUpdate = jest.fn();
+    const widgetBuilder = { fireEvent: jest.fn() } as unknown as WidgetBuilder;
+
+    editor.registerEvents(canvasUpdate, capability, widgetBuilder);
+    editor.dispose();
+    ['onblur', 'onfocus', 'modelUpdate', 'featureEdit'].forEach((type) => fire(type));
+
+    expect(canvasUpdate).not.toHaveBeenCalled();
+  });
+
+  it('keeps a single set of handlers when events are registered again', () => {
+    const { component, fire } = buildComponent();
+    const editor = new Editor(component as unknown as MindplotWebComponent);
+    const capability = { isHidden: () => true } as unknown as Capability;
+    const canvasUpdate = jest.fn();
+
+    editor.registerEvents(canvasUpdate, capability, {} as WidgetBuilder);
+    editor.registerEvents(canvasUpdate, capability, {} as WidgetBuilder);
+    fire('onfocus');
+
+    expect(canvasUpdate).toHaveBeenCalledTimes(1);
+    editor.dispose();
+  });
+});
