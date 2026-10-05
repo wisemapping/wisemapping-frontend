@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import { $defined } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
 import { type CustomEventMap } from './peer/svg/ElementPeer';
 import type ElementPeer from './peer/svg/ElementPeer';
@@ -183,7 +182,7 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
   }
 
   appendDomChild(DomElement: Element | Node) {
-    if (!$defined(DomElement)) {
+    if (DomElement == null) {
       throw new Error('Child element can not be null');
     }
 

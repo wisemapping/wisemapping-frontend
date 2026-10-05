@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
 import type ElementPeer from './peer/svg/ElementPeer';
 import WorkspacePeer from './peer/svg/WorkspacePeer';
@@ -120,7 +119,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
   }
 
   addItAsChildTo(element: HTMLDivElement) {
-    if (!$defined(element)) {
+    if (element == null) {
       throw new Error('Workspace div container can not be null');
     }
     element.append(this._htmlContainer);
