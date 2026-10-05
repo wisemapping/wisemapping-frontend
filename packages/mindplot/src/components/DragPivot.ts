@@ -24,6 +24,7 @@ import Topic from './Topic';
 import Shape from './util/Shape';
 import Canvas from './Canvas';
 import CanvasElement from './CanvasElement';
+import { STRAIGHT_TOLERANCE_PX } from './TopicConnection';
 
 class DragPivot implements CanvasElement {
   private _position: PositionType;
@@ -126,7 +127,15 @@ class DragPivot implements CanvasElement {
 
     // Set control points based on orientation
     if (line) {
-      if (orientation === 'vertical') {
+      // Ends at (almost) the same height, as TopicConnection draws it: control points on the
+      // chord, so the line is straight.
+      const chordX = targetPoint.x - pivotPoint.x;
+      const chordY = targetPoint.y - pivotPoint.y;
+      const across = orientation === 'vertical' ? chordX : chordY;
+      if (Math.abs(across) <= STRAIGHT_TOLERANCE_PX) {
+        line.setSrcControlPoint(new Point(chordX / 3, chordY / 3));
+        line.setDestControlPoint(new Point(-chordX / 3, -chordY / 3));
+      } else if (orientation === 'vertical') {
         // Vertical orientation: control points based on Y distance
         const deltaY = (targetPoint.y - pivotPoint.y) / 3;
         line.setSrcControlPoint(new Point(0, deltaY));
