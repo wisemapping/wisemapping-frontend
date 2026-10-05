@@ -28,23 +28,23 @@
   },
   "lint-staged": {
     "packages/mindplot/{src,test}/**/*.{ts,tsx}": [
-      "cd packages/mindplot && eslint --fix",
+      "sh -c 'cd packages/mindplot && eslint --fix \"$@\"' eslint",
       "prettier --write"
     ],
     "packages/editor/{src,test}/**/*.{ts,tsx}": [
-      "cd packages/editor && eslint --fix",
+      "sh -c 'cd packages/editor && eslint --fix \"$@\"' eslint",
       "prettier --write"
     ],
     "packages/editor/{cypress/**/*,cypress*.config}.ts": [
-      "cd packages/editor && eslint --fix",
+      "sh -c 'cd packages/editor && eslint --fix \"$@\"' eslint",
       "prettier --write"
     ],
     "packages/webapp/{src,test}/**/*.{ts,tsx}": [
-      "cd packages/webapp && eslint --fix",
+      "sh -c 'cd packages/webapp && eslint --fix \"$@\"' eslint",
       "prettier --write"
     ],
     "packages/web2d/{src,test}/**/*.{ts,tsx}": [
-      "cd packages/web2d && eslint --fix",
+      "sh -c 'cd packages/web2d && eslint --fix \"$@\"' eslint",
       "prettier --write"
     ],
     "packages/web2d/{storybook/**/*,cypress/**/*,cypress.config}.ts": [
