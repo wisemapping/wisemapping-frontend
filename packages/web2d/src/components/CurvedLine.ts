@@ -21,11 +21,10 @@ import Line from './Line';
 import CurvedLinePeer from './peer/svg/CurvedLinePeer';
 import PositionType from './PositionType';
 import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
 
 class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
   constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createCurvedLine();
+    const peer = new CurvedLinePeer();
     const defaultAttributes = {
       strokeColor: 'blue',
       strokeWidth: 1,

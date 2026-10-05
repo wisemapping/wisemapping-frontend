@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import WorkspaceElement from './WorkspaceElement';
-import Toolkit from './Toolkit';
 import * as PolyLineUtils from './peer/utils/PolyLineUtils';
 import Line from './Line';
 import PositionType from './PositionType';
@@ -25,7 +24,7 @@ import PolyLinePeer from './peer/svg/PolyLinePeer';
 
 class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
   constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createPolyLine();
+    const peer = new PolyLinePeer();
     const defaultAttributes = {
       strokeColor: 'blue',
       strokeWidth: 1,

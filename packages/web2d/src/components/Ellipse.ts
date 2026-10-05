@@ -19,12 +19,11 @@ import WorkspaceElement from './WorkspaceElement';
 import ElipsePeer from './peer/svg/ElipsePeer';
 import SizeType from './SizeType';
 import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
 import PositionType from './PositionType';
 
 class Ellipse extends WorkspaceElement<ElipsePeer> {
   constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createEllipse();
+    const peer = new ElipsePeer();
     const defaultAttributes = {
       width: 40,
       height: 40,

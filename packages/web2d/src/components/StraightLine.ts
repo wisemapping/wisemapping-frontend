@@ -21,11 +21,10 @@ import Line from './Line';
 import StraightLinePeer from './peer/svg/StraightPeer';
 import PositionType from './PositionType';
 import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
 
 class StraightLine extends WorkspaceElement<StraightLinePeer> implements Line {
   constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createStraightLine();
+    const peer = new StraightLinePeer();
     const defaultAttributes = { strokeColor: '#495879', strokeWidth: 1, strokeOpacity: 1 };
 
     const mergedAttr = { ...defaultAttributes, ...attributes };

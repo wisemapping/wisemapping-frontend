@@ -19,12 +19,11 @@ import WorkspaceElement from './WorkspaceElement';
 import ImagePeer from './peer/svg/ImagePeer';
 import SizeType from './SizeType';
 import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
 import PositionType from './PositionType';
 
 class Image extends WorkspaceElement<ImagePeer> {
   constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createImage();
+    const peer = new ImagePeer();
     super(peer, attributes || {});
   }
 

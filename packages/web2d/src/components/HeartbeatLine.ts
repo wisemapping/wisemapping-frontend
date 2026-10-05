@@ -20,13 +20,12 @@ import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
 import Line from './Line';
 import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
 import HeartbeatLinePeer from './peer/svg/HeartbeatLinePeer';
 import PositionType from './PositionType';
 
 class HeartbeatLine extends WorkspaceElement<HeartbeatLinePeer> implements Line {
   constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createHeartbeatLine();
+    const peer = new HeartbeatLinePeer();
     const defaultAttributes = {
       strokeColor: '#ff3366',
       strokeWidth: 3,

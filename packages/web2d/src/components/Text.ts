@@ -21,15 +21,12 @@ import { FontWeightType } from './FontWeightType';
 import TextPeer from './peer/svg/TextPeer';
 import TransformUtil from './peer/utils/TransformUtils';
 import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
 import PositionType from './PositionType';
-import { FontStyle } from './peer/svg/FontPeer';
+import FontPeer, { FontStyle } from './peer/svg/FontPeer';
 
 class Text extends WorkspaceElement<TextPeer> {
   constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createText('Arial');
-    // @ts-expect-error - Toolkit.createText returns a generic peer type that needs to be cast
-    super(peer, attributes);
+    super(new TextPeer(new FontPeer('Arial')), attributes ?? {});
   }
 
   getType(): string {

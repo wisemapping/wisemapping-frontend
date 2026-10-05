@@ -20,13 +20,12 @@ import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
 import Line from './Line';
 import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
 import NeuronLinePeer from './peer/svg/NeuronLinePeer';
 import PositionType from './PositionType';
 
 class NeuronLine extends WorkspaceElement<NeuronLinePeer> implements Line {
   constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createNeuronLine();
+    const peer = new NeuronLinePeer();
     const defaultAttributes = {
       strokeColor: '#9cf7ff',
       strokeWidth: 3,

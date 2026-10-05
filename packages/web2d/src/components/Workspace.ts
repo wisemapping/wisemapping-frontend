@@ -21,14 +21,13 @@ import ElementPeer from './peer/svg/ElementPeer';
 import WorkspacePeer from './peer/svg/WorkspacePeer';
 import PositionType from './PositionType';
 import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
 
 class Workspace extends WorkspaceElement<WorkspacePeer> {
   private _htmlContainer: HTMLElement;
 
   constructor(attributes?: StyleAttributes) {
     const htmlContainer = Workspace._createDivContainer();
-    const peer = Toolkit.createWorkspace();
+    const peer = new WorkspacePeer();
     const defaultAttributes: StyleAttributes = {
       width: '400px',
       height: '400px',

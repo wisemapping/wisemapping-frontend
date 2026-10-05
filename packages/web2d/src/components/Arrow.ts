@@ -20,11 +20,10 @@ import WorkspaceElement from './WorkspaceElement';
 import ArrowPeer from './peer/svg/ArrowPeer';
 import PositionType from './PositionType';
 import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
 
 class Arrow extends WorkspaceElement<ArrowPeer> {
   constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createArrow();
+    const peer = new ArrowPeer();
     const defaultAttributes: StyleAttributes = {
       strokeColor: 'black',
       strokeWidth: 1,

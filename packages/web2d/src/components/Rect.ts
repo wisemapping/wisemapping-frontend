@@ -19,7 +19,6 @@
 import WorkspaceElement from './WorkspaceElement';
 import RectPeer from './peer/svg/RectPeer';
 import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
 import PositionType from './PositionType';
 
 /**
@@ -33,7 +32,7 @@ class Rect extends WorkspaceElement<RectPeer> {
     if (arc && arc > 1) {
       throw new Error('Arc must be 0<=arc<=1');
     }
-    const peer = Toolkit.createRect(arc);
+    const peer = new RectPeer(arc);
     const defaultAttributes = {
       width: 40,
       height: 40,

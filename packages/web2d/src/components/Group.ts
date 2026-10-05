@@ -22,7 +22,6 @@ import ElementPeer from './peer/svg/ElementPeer';
 import GroupPeer from './peer/svg/GroupPeer';
 import SizeType from './SizeType';
 import StyleAttributes from './StyleAttributes';
-import Toolkit from './Toolkit';
 import PositionType from './PositionType';
 
 /**
@@ -30,7 +29,7 @@ import PositionType from './PositionType';
  */
 class Group extends WorkspaceElement<GroupPeer> {
   constructor(attributes?: StyleAttributes) {
-    const peer = Toolkit.createGroup();
+    const peer = new GroupPeer();
     const defaultAttributes: StyleAttributes = {
       width: 50,
       height: 50,
