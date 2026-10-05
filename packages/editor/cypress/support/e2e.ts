@@ -18,7 +18,24 @@
 
 import './commands';
 
-type ConsoleSpy = { callCount: number; getCalls: () => { args: ({ stack?: string } | null | undefined)[] }[] };
+type ConsoleArg = { stack?: string; toString?: () => string } | null | undefined;
+type ConsoleSpy = { callCount: number; getCalls: () => { args: ConsoleArg[] }[] };
+
+// console.warn calls the pages under test make on purpose. Any other warning fails the test.
+const ALLOWED_WARNINGS: RegExp[] = [
+  // Designer.copyToClipboard / pasteClipboard: headless Chrome denies the system clipboard (the
+  // page has no focus, or no clipboard-read permission), so the designer uses its internal one.
+  /^System clipboard not available(?: for reading)?, using internal clipboard/,
+  // LocalStorageManager.load: a map fetch that fails is retried before giving up with an error.
+  /^Fetch failed for \S+, retrying in 500ms/,
+];
+
+const formatArg = (arg: ConsoleArg): string => {
+  if (arg && arg.stack) {
+    return `${arg.toString?.()}\nStack: ${arg.stack}`;
+  }
+  return arg && arg.toString ? arg.toString() : JSON.stringify(arg);
+};
 
 // The spies are kept here, not read back from win.console: the Vite dev client wraps
 // console.error/warn after the page starts loading when it forwards the browser console to the
@@ -65,21 +82,24 @@ afterEach(() => {
       console.log('\n============================================\n');
 
       // Create a detailed error message
-      const errorMessages = calls.map((c, i) => {
-        const args = c.args.map((a: any) => {
-          if (a && a.stack) {
-            return `${a.toString()}\nStack: ${a.stack}`;
-          }
-          return a && a.toString ? a.toString() : JSON.stringify(a);
-        });
-        return `Error ${i + 1}: ${args.join(' ')}`;
-      });
+      const errorMessages = calls.map(
+        (c, i) => `Error ${i + 1}: ${c.args.map(formatArg).join(' ')}`,
+      );
 
-      throw new Error(`Console Errors present (${calls.length} total):\n\n${errorMessages.join('\n\n')}`);
+      throw new Error(
+        `Console Errors present (${calls.length} total):\n\n${errorMessages.join('\n\n')}`,
+      );
     }
 
-    if (warnSpy && typeof warnSpy.callCount === 'number') {
-      // expect(win.console.warn).to.have.callCount(0);
+    const warnings = warnSpy
+      .getCalls()
+      .map((c) => c.args.map(formatArg).join(' '))
+      .filter((message) => !ALLOWED_WARNINGS.some((allowed) => allowed.test(message)));
+    if (warnings.length > 0) {
+      const warningMessages = warnings.map((message, i) => `Warning ${i + 1}: ${message}`);
+      throw new Error(
+        `Console warnings present (${warnings.length} total):\n\n${warningMessages.join('\n\n')}`,
+      );
     }
   });
 });
