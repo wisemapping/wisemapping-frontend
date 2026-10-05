@@ -17,6 +17,7 @@
  */
 import { LineType } from '../../../src/components/ConnectionLine';
 import Topic from '../../../src/components/Topic';
+import Theme from '../../../src/components/theme/Theme';
 
 export type FakeModelProps = {
   borderColor?: string;
@@ -33,6 +34,22 @@ export type FakeModelProps = {
   canvasColor?: string;
 };
 
+const fakeModel = (props: FakeModelProps) => ({
+  getBorderColor: () => props.borderColor,
+  getBackgroundColor: () => props.backgroundColor,
+  getShapeType: () => props.shapeType,
+  getConnectionStyle: () => props.connectionStyle,
+  getConnectionColor: () => props.connectionColor,
+  getFontFamily: () => props.fontFamily,
+  getFontColor: () => props.fontColor,
+  getFontWeight: () => props.fontWeight,
+  getFontSize: () => props.fontSize,
+  getFontStyle: () => props.fontStyle,
+  getMindmap: () => ({
+    getCanvasStyle: () => (props.canvasColor ? { backgroundColor: props.canvasColor } : undefined),
+  }),
+});
+
 /**
  * Minimal Topic stand-in for exercising the theme resolution logic, which only
  * reads the model, the parent chain, the topic order and whether it is central.
@@ -42,22 +59,7 @@ const fakeTopic = (
   parent?: Topic,
   options: { central?: boolean; order?: number } = {},
 ): Topic => {
-  const model = {
-    getBorderColor: () => props.borderColor,
-    getBackgroundColor: () => props.backgroundColor,
-    getShapeType: () => props.shapeType,
-    getConnectionStyle: () => props.connectionStyle,
-    getConnectionColor: () => props.connectionColor,
-    getFontFamily: () => props.fontFamily,
-    getFontColor: () => props.fontColor,
-    getFontWeight: () => props.fontWeight,
-    getFontSize: () => props.fontSize,
-    getFontStyle: () => props.fontStyle,
-    getMindmap: () => ({
-      getCanvasStyle: () =>
-        props.canvasColor ? { backgroundColor: props.canvasColor } : undefined,
-    }),
-  };
+  const model = fakeModel(props);
   return {
     getModel: () => model,
     getParent: () => parent,
@@ -65,6 +67,31 @@ const fakeTopic = (
     isCentralTopic: () => Boolean(options.central),
     getOrder: () => options.order,
   } as unknown as Topic;
+};
+
+/**
+ * A fake topic that, like Topic, asks the theme for its own shape and for the border and
+ * connection colours its children inherit.
+ */
+export const themedFakeTopic = (
+  theme: Theme,
+  props: FakeModelProps,
+  parent?: Topic,
+  options: { central?: boolean; order?: number } = {},
+): Topic => {
+  const model = fakeModel(props);
+  const topic = {
+    getModel: () => model,
+    getParent: () => parent,
+    getOutgoingConnectedTopic: () => parent,
+    isCentralTopic: () => Boolean(options.central),
+    getOrder: () => options.order,
+    getShapeType: () => theme.getShapeType(topic as unknown as Topic),
+    getBorderColor: () => theme.getBorderColor(topic as unknown as Topic),
+    getConnectionColor: () => theme.getConnectionColor(topic as unknown as Topic),
+    getTextFontHeight: () => 12,
+  };
+  return topic as unknown as Topic;
 };
 
 export default fakeTopic;

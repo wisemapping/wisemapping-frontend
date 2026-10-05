@@ -27,49 +27,16 @@ import Theme, { ThemeVariant } from '../../../src/components/theme/Theme';
 import ThemeFactory from '../../../src/components/theme/ThemeFactory';
 import { THEME_TYPES } from '../../../src/components/model/ThemeType';
 import Topic from '../../../src/components/Topic';
-import { FakeModelProps } from './FakeTopic';
+import { FakeModelProps, themedFakeTopic } from './FakeTopic';
 
 type Fixture = { name: string; topic: Topic };
 
-/**
- * A Topic stand-in that, like Topic, asks the theme for its own shape and for the border and
- * connection colours its children inherit.
- */
 const buildFixtures = (theme: Theme): Fixture[] => {
   const fake = (
     props: FakeModelProps,
     parent?: Topic,
     options: { central?: boolean; order?: number } = {},
-  ): Topic => {
-    const model = {
-      getBorderColor: () => props.borderColor,
-      getBackgroundColor: () => props.backgroundColor,
-      getShapeType: () => props.shapeType,
-      getConnectionStyle: () => props.connectionStyle,
-      getConnectionColor: () => props.connectionColor,
-      getFontFamily: () => props.fontFamily,
-      getFontColor: () => props.fontColor,
-      getFontWeight: () => props.fontWeight,
-      getFontSize: () => props.fontSize,
-      getFontStyle: () => props.fontStyle,
-      getMindmap: () => ({
-        getCanvasStyle: () =>
-          props.canvasColor ? { backgroundColor: props.canvasColor } : undefined,
-      }),
-    };
-    const topic = {
-      getModel: () => model,
-      getParent: () => parent,
-      getOutgoingConnectedTopic: () => parent,
-      isCentralTopic: () => Boolean(options.central),
-      getOrder: () => options.order,
-      getShapeType: () => theme.getShapeType(topic as unknown as Topic),
-      getBorderColor: () => theme.getBorderColor(topic as unknown as Topic),
-      getConnectionColor: () => theme.getConnectionColor(topic as unknown as Topic),
-      getTextFontHeight: () => 12,
-    };
-    return topic as unknown as Topic;
-  };
+  ): Topic => themedFakeTopic(theme, props, parent, options);
 
   const central = fake({}, undefined, { central: true });
   const result: Fixture[] = [{ name: 'central', topic: central }];
