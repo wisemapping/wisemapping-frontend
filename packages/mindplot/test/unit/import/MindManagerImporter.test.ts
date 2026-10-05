@@ -639,8 +639,14 @@ describe('MindManagerImporter topic shapes', () => {
       <ap:RootTopicDefaultsGroup>
         <ap:DefaultSubTopicShape SubTopicShape="urn:mindjet:Hexagon"/>
         <ap:DefaultLabelFloatingTopicShape LabelFloatingTopicShape="urn:mindjet:None"/>
-        <ap:DefaultCalloutFloatingTopicShape CalloutFloatingTopicShape="urn:mindjet:RoundedRectangleBalloon"/>
+        <ap:DefaultCalloutFloatingTopicShape CalloutFloatingTopicShape="urn:mindjet:None"/>
       </ap:RootTopicDefaultsGroup>
+      <ap:LabelTopicDefaultsGroup>
+        <ap:DefaultLabelFloatingTopicShape LabelFloatingTopicShape="urn:mindjet:Capsule"/>
+      </ap:LabelTopicDefaultsGroup>
+      <ap:CalloutTopicDefaultsGroup>
+        <ap:DefaultCalloutFloatingTopicShape CalloutFloatingTopicShape="urn:mindjet:RectangleBalloon"/>
+      </ap:CalloutTopicDefaultsGroup>
       <ap:RootSubTopicDefaultsGroup Level="0"><ap:DefaultSubTopicShape SubTopicShape="urn:mindjet:RoundedRectangle"/></ap:RootSubTopicDefaultsGroup>
       <ap:RootSubTopicDefaultsGroup Level="1"><ap:DefaultSubTopicShape SubTopicShape="urn:mindjet:Rectangle"/></ap:RootSubTopicDefaultsGroup>
       <ap:RootSubTopicDefaultsGroup Level="2"><ap:DefaultSubTopicShape SubTopicShape="urn:mindjet:Line"/></ap:RootSubTopicDefaultsGroup>
@@ -671,9 +677,10 @@ describe('MindManagerImporter topic shapes', () => {
     expect(shape('Sub')).toBe('rectangle');
     expect(shape('Deep')).toBe('line');
     expect(shape('Own')).toBe('elipse');
-    // The floating topics and callouts take the shapes of the RootTopicDefaultsGroup.
-    expect(shape('Label')).toBe('none');
-    expect(shape('Callout')).toBe('rounded rectangle');
+    // The floating topics and callouts take the shapes of the Label and CalloutTopicDefaultsGroup,
+    // not the ones of the RootTopicDefaultsGroup (as in the real files).
+    expect(shape('Label')).toBe('rounded rectangle');
+    expect(shape('Callout')).toBe('rectangle');
     // The central topic keeps the shape of the theme.
     expect(mindmap.getCentralTopic().getShapeType()).toBeUndefined();
   });

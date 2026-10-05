@@ -515,7 +515,8 @@ class MindManagerImporter extends Importer {
   /**
    * The shape of a topic: its own SubTopicShape, or the DefaultSubTopicShape of the defaults group
    * of its level. Floating topics and callouts have a LabelFloatingTopicShape or a
-   * CalloutFloatingTopicShape, by default the one of the RootTopicDefaultsGroup. Undefined for the
+   * CalloutFloatingTopicShape, by default the one of the Label or CalloutTopicDefaultsGroup (the
+   * ones of the RootTopicDefaultsGroup are not those MindManager draws). Undefined for the
    * central topic, which keeps the shape of the theme, or when there is no shape that maps.
    */
   private topicShape(
@@ -527,7 +528,7 @@ class MindManagerImporter extends Importer {
       return undefined;
     }
     const name = depth === 0 ? `${kind}FloatingTopicShape` : 'SubTopicShape';
-    const defaults = depth === 0 ? this.defaultsGroup('Root', 0) : this.defaultsGroup(kind, depth);
+    const defaults = this.defaultsGroup(kind, depth);
     const own = this.findChildByTagName(topicElement, name)?.getAttribute(name);
     const byDefault = defaults && this.findChildByTagName(defaults, `Default${name}`);
     return (
