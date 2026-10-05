@@ -694,7 +694,7 @@ class MindManagerImporter extends Importer {
       StrokeStyle.DASHED;
 
     this.findChildrenByTagName(relationshipsElement, 'Relationship').forEach((rel) => {
-      this.addRelationship(mindmap, rel, defaultStrokeStyle);
+      this.addRelationship(mindmap, rel, defaults, defaultStrokeStyle);
     });
   }
 
@@ -720,20 +720,47 @@ class MindManagerImporter extends Importer {
     }
   }
 
-  // MindManager writes the ends of a relationship as ConnectionGroups (Index 0 and 1) that
-  // reference the topic OIds.
-  private connectionEnd(relationshipElement: Element, index: string): string | null {
-    const group = this.findChildrenByTagName(relationshipElement, 'ConnectionGroup').find(
+  // MindManager writes the ends of a relationship as ConnectionGroups (Index 0 and 1).
+  private connectionGroup(relationshipElement: Element, index: string): Element | undefined {
+    return this.findChildrenByTagName(relationshipElement, 'ConnectionGroup').find(
       (candidate) => candidate.getAttribute('Index') === index,
     );
+  }
+
+  // The topic OId referenced by an end of a relationship.
+  private connectionEnd(relationshipElement: Element, index: string): string | null {
+    const group = this.connectionGroup(relationshipElement, index);
     const connection = group && this.findChildByTagName(group, 'Connection');
     const reference = connection && this.findChildByTagName(connection, 'ObjectReference');
     return reference ? reference.getAttribute('OIdRef') : null;
   }
 
+  /**
+   * Whether an end of a relationship (Index 0 its start, 1 its end) has an arrow: the
+   * ConnectionShape (urn:mindjet:NoArrow, Arrow, OpenArrow...) of its ConnectionStyle, or of the
+   * DefaultConnectionStyle of the same Index. Undefined if neither is written.
+   */
+  private hasArrow(
+    relationshipElement: Element,
+    defaults: Element | null,
+    index: string,
+  ): boolean | undefined {
+    const group = this.connectionGroup(relationshipElement, index);
+    const own = group && this.findChildByTagName(group, 'ConnectionStyle');
+    const byDefault =
+      defaults &&
+      this.findChildrenByTagName(defaults, 'DefaultConnectionStyle').find(
+        (style) => style.getAttribute('Index') === index,
+      );
+    const shape =
+      own?.getAttribute('ConnectionShape') || byDefault?.getAttribute('ConnectionShape');
+    return shape ? shape.replace(MINDJET_URN, '') !== 'NoArrow' : undefined;
+  }
+
   private addRelationship(
     mindmap: Mindmap,
     relationshipElement: Element,
+    defaults: Element | null,
     defaultStrokeStyle: StrokeStyle,
   ): void {
     const fromTopicId =
@@ -767,6 +794,26 @@ class MindManagerImporter extends Importer {
         MindManagerImporter.toStrokeStyle(lineStyleElement?.getAttribute('LineDashStyle')) ??
           defaultStrokeStyle,
       );
+    }
+
+    // The LineColor of its Color, or of the DefaultColor of the RelationshipDefaultsGroup
+    const color = this.findChildByTagName(relationshipElement, 'Color');
+    const defaultColor = defaults && this.findChildByTagName(defaults, 'DefaultColor');
+    const strokeColor =
+      MindManagerImporter.toColor(color?.getAttribute('LineColor')) ??
+      MindManagerImporter.toColor(defaultColor?.getAttribute('LineColor'));
+    if (strokeColor) {
+      relationship.setStrokeColor(strokeColor);
+    }
+
+    // Without a ConnectionStyle, the arrow is at the end, as in the model.
+    const startArrow = this.hasArrow(relationshipElement, defaults, '0');
+    if (startArrow !== undefined) {
+      relationship.setStartArrow(startArrow);
+    }
+    const endArrow = this.hasArrow(relationshipElement, defaults, '1');
+    if (endArrow !== undefined) {
+      relationship.setEndArrow(endArrow);
     }
 
     mindmap.addRelationship(relationship);

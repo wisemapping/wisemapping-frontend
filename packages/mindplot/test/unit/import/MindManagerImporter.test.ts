@@ -474,6 +474,72 @@ describe('MindManagerImporter relationship line style', () => {
   });
 });
 
+describe('MindManagerImporter relationship color and arrows', () => {
+  const topics = `<ap:Topic OId="a"><ap:Text PlainText="A"/></ap:Topic><ap:Topic OId="b"><ap:Text PlainText="B"/></ap:Topic>`;
+  const end = (index: number, oid: string, shape?: string): string => `
+      <ap:ConnectionGroup Index="${index}">
+        <ap:Connection><ap:ObjectReference OIdRef="${oid}"/></ap:Connection>
+        ${shape ? `<ap:ConnectionStyle ConnectionShape="urn:mindjet:${shape}"/>` : ''}
+      </ap:ConnectionGroup>`;
+  const defaults = `<ap:StyleGroup>
+      <ap:RelationshipDefaultsGroup>
+        <ap:DefaultColor FillColor="00000000" LineColor="ffe0666e"/>
+        <ap:DefaultConnectionStyle ConnectionShape="urn:mindjet:Arrow" Index="0"/>
+        <ap:DefaultConnectionStyle ConnectionShape="urn:mindjet:NoArrow" Index="1"/>
+      </ap:RelationshipDefaultsGroup>
+    </ap:StyleGroup>`;
+
+  test('reads the LineColor and the ConnectionShape of each end of the relationship', async () => {
+    const mindManager = schemaMap(
+      topics,
+      `<ap:Relationships>
+        <ap:Relationship OId="r1">${end(0, 'a', 'OpenArrow')}${end(1, 'b', 'NoArrow')}
+          <ap:Color LineColor="ff3170af"/>
+        </ap:Relationship>
+      </ap:Relationships>`,
+    );
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    const [relationship] = mindmap.getRelationships();
+    expect(relationship.getStrokeColor()).toBe('#3170af');
+    expect(relationship.getStartArrow()).toBe(true);
+    expect(relationship.getEndArrow()).toBe(false);
+  });
+
+  test('uses the RelationshipDefaultsGroup when the relationship has no color or arrows', async () => {
+    const mindManager = schemaMap(
+      topics,
+      `<ap:Relationships>
+        <ap:Relationship OId="r1">${end(0, 'a')}${end(1, 'b')}</ap:Relationship>
+      </ap:Relationships>${defaults}`,
+    );
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    const [relationship] = mindmap.getRelationships();
+    expect(relationship.getStrokeColor()).toBe('#e0666e');
+    expect(relationship.getStartArrow()).toBe(true);
+    expect(relationship.getEndArrow()).toBe(false);
+  });
+
+  test('without any style, an arrow at the end and the color of the theme', async () => {
+    const mindManager = schemaMap(
+      topics,
+      `<ap:Relationships>
+        <ap:Relationship OId="r1">${end(0, 'a')}${end(1, 'b')}</ap:Relationship>
+      </ap:Relationships>`,
+    );
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    const [relationship] = mindmap.getRelationships();
+    expect(relationship.getStrokeColor()).toBeUndefined();
+    expect(relationship.getStartArrow()).toBe(false);
+    expect(relationship.getEndArrow()).toBe(true);
+  });
+});
+
 describe('MindManagerImporter default topic texts', () => {
   test('takes the text of a topic without ap:Text from the StyleGroup of its level', async () => {
     const level = (n: number, text: string) =>

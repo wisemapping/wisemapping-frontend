@@ -113,6 +113,9 @@ describe('MindManager 8 file (blumind-mm8)', () => {
     expect(relationships[0].getToNode()).toBe(noted.getId());
     // RelationshipDefaultsGroup/DefaultLineStyle LineDashStyle="urn:mindjet:Dash"
     expect(relationships[0].getStrokeStyle()).toBe(StrokeStyle.DASHED);
+    // DefaultColor LineColor="ffe0666e"; DefaultConnectionStyle NoArrow (Index 0), Arrow (Index 1)
+    expect(relationships[0].getStrokeColor()).toBe('#e0666e');
+    expect([relationships[0].getStartArrow(), relationships[0].getEndArrow()]).toEqual([false, true]);
   });
 });
 

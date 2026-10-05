@@ -9,5 +9,5 @@
             <eicon id="😃"/>
         </topic>
     </topic>
-    <relationship srcTopicId="1" destTopicId="2" lineType="3" endArrow="true" startArrow="false" strokeStyle="dashed"/>
+    <relationship srcTopicId="1" destTopicId="2" lineType="3" endArrow="true" startArrow="false" strokeColor="#e0666e" strokeStyle="dashed"/>
 </map>
