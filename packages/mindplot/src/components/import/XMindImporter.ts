@@ -1277,8 +1277,13 @@ class XMindImporter extends Importer {
     // Merge additional mappings
     const allMappings = { ...iconMap, ...additionalMappings };
 
-    // Return mapped EmojiIcon ID or default if not found
-    return allMappings[iconId.toLowerCase()] || '💡'; // Default to lightbulb
+    // Return mapped EmojiIcon ID or default if not found. Only own entries:
+    // allMappings.constructor is the Object function.
+    const key = iconId.toLowerCase();
+    const mapped = Object.prototype.hasOwnProperty.call(allMappings, key)
+      ? allMappings[key]
+      : undefined;
+    return mapped || '💡'; // Default to lightbulb
   }
 
   // Only direct children: descendant queries would pick up the data of nested topics.

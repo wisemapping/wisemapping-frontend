@@ -506,8 +506,11 @@ class FreeplaneImporter extends Importer {
       graduation: '🎓',
     };
 
-    // Return mapped emoji, the emoji of a legacy WiseMapping icon id, or default if not found
-    return iconMap[builtin.toLowerCase()] || legacyIconEmoji(builtin) || '💡'; // Default to lightbulb
+    // Return mapped emoji, the emoji of a legacy WiseMapping icon id, or default if not found.
+    // Only own entries: iconMap.constructor is the Object function.
+    const key = builtin.toLowerCase();
+    const mapped = Object.prototype.hasOwnProperty.call(iconMap, key) ? iconMap[key] : undefined;
+    return mapped || legacyIconEmoji(builtin) || '💡'; // Default to lightbulb
   }
 
   private generateId(): number {

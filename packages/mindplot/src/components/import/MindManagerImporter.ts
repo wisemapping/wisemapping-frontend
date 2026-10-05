@@ -250,7 +250,10 @@ class MindManagerImporter extends Importer {
       // Default fallback
     };
 
-    return iconMappings[iconId] || iconMappings[iconId.toLowerCase()] || '💡';
+    // Only own entries: iconMappings.constructor is the Object function.
+    const lookup = (key: string): string | undefined =>
+      Object.prototype.hasOwnProperty.call(iconMappings, key) ? iconMappings[key] : undefined;
+    return lookup(iconId) || lookup(iconId.toLowerCase()) || '💡';
   }
 
   private buildMindmap(rootTopic: MindManagerTopic, nameMap: string, doc: Document): Mindmap {
