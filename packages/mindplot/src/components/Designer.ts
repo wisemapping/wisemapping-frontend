@@ -120,6 +120,11 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   private _wheelListener: ((event: WheelEvent) => void) | null = null;
 
+  // Re-lays out the map once a web font finishes loading (see _registerFontLoadRelayout).
+  private _fontLoadListener: (() => void) | null = null;
+
+  private _fontLoadFrame: number | null = null;
+
   private _keyboard: DesignerKeyboard | undefined;
 
   private _disposed = false;
@@ -178,6 +183,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       this._dragManager = this._buildDragManager(this._canvas);
     }
     this._registerWheelEvents();
+    this._registerFontLoadRelayout();
 
     this._relPivot = new RelationshipPivot(this._canvas, this);
 
@@ -193,6 +199,32 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   getContainer(): HTMLDivElement {
     return this._canvas.getScreenManager().getContainer();
+  }
+
+  /**
+   * A web font that finishes loading changes the size of the text drawn with the fallback font
+   * until then. web2d drops its cached text measurements on the same 'loadingdone' event, so the
+   * topics are redrawn (measured again) and the map laid out, once per frame however many fonts
+   * load in it. The frame also runs after every listener of the event, web2d's included.
+   */
+  private _registerFontLoadRelayout(): void {
+    const { fonts } = document as { fonts?: Pick<FontFaceSet, 'addEventListener'> };
+    if (!fonts?.addEventListener) {
+      return;
+    }
+    this._fontLoadListener = () => {
+      if (this._fontLoadFrame !== null) {
+        return;
+      }
+      this._fontLoadFrame = requestAnimationFrame(() => {
+        this._fontLoadFrame = null;
+        if (this._mindmap && !this._disposed) {
+          this.redrawAllTopics();
+          LayoutEventBus.fireEvent('forceLayout');
+        }
+      });
+    };
+    fonts.addEventListener('loadingdone', this._fontLoadListener);
   }
 
   private _registerWheelEvents(): void {
@@ -1870,6 +1902,16 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     if (this._wheelListener) {
       this.getContainer().removeEventListener('wheel', this._wheelListener);
       this._wheelListener = null;
+    }
+
+    if (this._fontLoadListener) {
+      const { fonts } = document as { fonts?: Pick<FontFaceSet, 'removeEventListener'> };
+      fonts?.removeEventListener('loadingdone', this._fontLoadListener);
+      this._fontLoadListener = null;
+    }
+    if (this._fontLoadFrame !== null) {
+      cancelAnimationFrame(this._fontLoadFrame);
+      this._fontLoadFrame = null;
     }
 
     // Read-only designers have no drag manager ...
