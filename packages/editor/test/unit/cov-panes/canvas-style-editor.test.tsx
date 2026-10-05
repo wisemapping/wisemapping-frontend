@@ -173,10 +173,9 @@ describe('CanvasStyleEditor', () => {
     );
   });
 
-  // Bug: on the Grid Color tab, switching the pattern to Solid disables that tab but leaves it
-  // selected, so the pane shows neither tab's content -- no colour palette at all -- until the
-  // user clicks "Color".
-  it.failing('shows the background palette after switching from grid to solid', () => {
+  // Switching to Solid while on the Grid Color tab disables that tab, so the pane moves to the
+  // Color tab (it used to stay on the disabled tab and show no palette at all).
+  it('shows the background palette after switching from grid to solid', () => {
     renderPane(
       <CanvasStyleEditor
         closeModal={jest.fn()}

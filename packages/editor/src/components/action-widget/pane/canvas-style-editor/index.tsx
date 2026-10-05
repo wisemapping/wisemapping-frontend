@@ -130,6 +130,10 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
     if ((newPattern === 'grid' || newPattern === 'dots') && !style.backgroundGridColor) {
       newStyle.backgroundGridColor = '#ebe9e7'; // Default grid color
     }
+    // Only grid and dots have a Grid Color tab; leave it before it becomes disabled.
+    if (newPattern !== 'grid' && newPattern !== 'dots') {
+      setActiveTab(0);
+    }
 
     setStyle(newStyle);
     props.onStyleChange(newStyle);
