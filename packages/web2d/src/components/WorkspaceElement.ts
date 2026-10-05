@@ -20,7 +20,6 @@ import {
   type CustomEventMap,
   type ElementEvent,
   type ElementListener,
-  type EventDetail,
 } from './peer/svg/ElementPeer';
 import type ElementPeer from './peer/svg/ElementPeer';
 import type StyleAttributes from './StyleAttributes';
@@ -35,13 +34,12 @@ import {
 import { isStrokeStyle, type ElementType, type StrokeStyle } from './types';
 
 /**
- * A listener of the `type` event of an element: it gets the typed event (see ElementEvent) and,
- * for a custom event, its detail as a second argument.
+ * A listener of the `type` event of an element: it gets the typed event (see ElementEvent). A
+ * custom event fired with trigger() is a CustomEvent, whose `detail` is the payload.
  */
-export type ElementEventListener<M extends CustomEventMap, K extends string> = (
-  event: ElementEvent<M, K>,
-  detail?: EventDetail<M, K>,
-) => void;
+export type ElementEventListener<M extends CustomEventMap, K extends string> = ElementListener<
+  ElementEvent<M, K>
+>;
 
 /**
  * `M` maps the element's custom event names to their detail type (see CustomEventMap).
@@ -115,11 +113,10 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
    *
    */
   addEvent<K extends string>(type: K, listener: ElementEventListener<M, K>): void {
-    // The DOM boundary: the peer dispatches plain Events, of the type K names.
-    this.peer.addEvent(type, listener as ElementListener);
+    this.peer.addEvent(type, listener);
   }
 
-  /** Fires a custom event of the element's map: listeners get `detail` as their second argument. */
+  /** Fires a custom event of the element's map: listeners read `detail` from the CustomEvent. */
   trigger<K extends keyof M & string>(type: K, detail?: M[K]): void {
     this.peer.trigger(type, detail);
   }
@@ -147,7 +144,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
    * the 'this' referece in the function will be the element.
    */
   removeEvent<K extends string>(type: K, listener: ElementEventListener<M, K>): void {
-    this.peer.removeEvent(type, listener as ElementListener);
+    this.peer.removeEvent(type, listener);
   }
 
   /**
@@ -228,6 +225,30 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
 
   setCursor(type: string) {
     this.peer.setCursor(type);
+  }
+
+  /**
+   * Adds CSS classes to the element, for a visual state (hover, selected, ...) a stylesheet can
+   * style instead of attributes rewritten on every change.
+   */
+  addClass(...names: string[]): void {
+    this.peer.addClass(...names);
+  }
+
+  removeClass(...names: string[]): void {
+    this.peer.removeClass(...names);
+  }
+
+  /**
+   * Toggles a CSS class, or adds it when `force` is true and removes it when false. Returns whether
+   * the element has the class afterwards.
+   */
+  toggleClass(name: string, force?: boolean): boolean {
+    return this.peer.toggleClass(name, force);
+  }
+
+  hasClass(name: string): boolean {
+    return this.peer.hasClass(name);
   }
 
   /**

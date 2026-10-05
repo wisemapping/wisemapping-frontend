@@ -35,7 +35,13 @@ import type Line from './components/Line';
 import type { ControlPointLine } from './components/Line';
 import ElementPeer from './components/peer/svg/ElementPeer';
 import type { FontStyle } from './components/peer/svg/FontPeer';
-import type { CustomEventMap, EventDetail } from './components/peer/svg/ElementPeer';
+import type {
+  CustomEventMap,
+  ElementEvent,
+  ElementListener,
+  EventDetail,
+} from './components/peer/svg/ElementPeer';
+import type { ElementEventListener } from './components/WorkspaceElement';
 import type StyleAttributes from './components/StyleAttributes';
 import { STRAIGHT_TOLERANCE_PX, isWithinStraightTolerance } from './components/geometry/polyline';
 import { defaultControlPoints } from './components/geometry/curve';
@@ -90,6 +96,9 @@ export type {
   StyleAttributes,
   FontStyle,
   CustomEventMap,
+  ElementEvent,
+  ElementEventListener,
+  ElementListener,
   EventDetail,
   StrokeStyle,
   PolyLineStyle,

@@ -19,7 +19,24 @@ import { $assert, $defined } from '../utils/assert';
 import type SizeType from '../../SizeType';
 import { isStrokeStyle, type StrokeStyle } from '../../types';
 
-export type ElementListener = (event: Event, detail?: unknown) => void;
+/**
+ * A listener of an element event. It is declared with method syntax, so that its parameter is
+ * checked bivariantly: a listener of a specific event (a MouseEvent, a CustomEvent<D>) is accepted
+ * where the DOM expects an Event, as addEventListener's own typing does. The event a type
+ * dispatches is the one its name maps to (see ElementEvent).
+ */
+export type ElementListener<E extends Event = Event> = {
+  handle(event: E): void;
+}['handle'];
+
+/**
+ * A listener that reads the jQuery-style second argument, the detail of an event fired with
+ * trigger(). It is told apart by its declared parameter count (two or more).
+ *
+ * @deprecated Read `event.detail` of the CustomEvent instead. Kept only until mindplot's
+ * listeners move off it (W5 phase 2).
+ */
+export type LegacyElementListener = (event: Event, detail?: unknown) => void;
 
 /**
  * Custom event names (fired with trigger()) mapped to the type of their detail. web2d fires none
@@ -30,8 +47,8 @@ export type CustomEventMap = Record<string, unknown>;
 
 /**
  * The event a listener of `type` receives: a CustomEvent for a custom event of a specific map `M`
- * (fired with trigger()), the DOM event for a native type ('click' gets a MouseEvent), else an
- * Event.
+ * (fired with trigger()), the DOM event for a native type ('click' gets a MouseEvent,
+ * 'pointerdown' a PointerEvent), else an Event.
  */
 export type ElementEvent<M extends CustomEventMap, K extends string> = string extends keyof M
   ? NativeEvent<K>
@@ -67,9 +84,13 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
 
   protected _size: SizeType;
 
-  // Native wrappers, by event type and then by listener, so that one listener can be registered
-  // for several types and removed from each of them.
-  private _handlers: Map<string, Map<ElementListener, EventListener>>;
+  // Aborts every listener added with addEvent(): each one is registered with its signal. Created
+  // with the first listener, and replaced by dispose().
+  private _listeners: AbortController | null;
+
+  // The wrappers of the deprecated two-argument listeners, by event type and then by listener, so
+  // that removeEvent() finds them.
+  private _legacyWrappers: Map<string, Map<LegacyElementListener, EventListener>>;
 
   private _children: ElementPeer[];
 
@@ -84,7 +105,8 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
   constructor(svgElement: N) {
     this._native = svgElement;
     this._size = { width: 1, height: 1 };
-    this._handlers = new Map();
+    this._listeners = null;
+    this._legacyWrappers = new Map();
     this._children = [];
     this._parent = null;
     this._stokeStyle = null;
@@ -128,52 +150,76 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
   }
 
   /**
-   * http://www.w3.org/TR/DOM-Level-3-Events/events.html
-   * http://developer.mozilla.org/en/docs/addEvent
+   * Adds a listener of the `type` events of the element, as addEventListener does: adding the same
+   * listener to one type again is a no-op. A native type passes through unchanged, so Pointer
+   * Events ('pointerdown', 'pointermove', 'pointerup', 'pointercancel') work like mouse events. An
+   * event fired with trigger() is a CustomEvent whose `detail` is the payload.
    */
   addEvent(type: string, listener: ElementListener): void {
-    let byListener = this._handlers.get(type);
+    this._listeners ??= new AbortController();
+    const { signal } = this._listeners;
+    if (ElementPeer.isLegacyListener(listener)) {
+      this.addLegacyEvent(type, listener, signal);
+      return;
+    }
+    this._native.addEventListener(type, listener, { signal });
+  }
+
+  /**
+   * The deprecated jQuery-style listener gets the detail of a CustomEvent as its second argument,
+   * so it is called through a wrapper that removeEvent() must find.
+   */
+  private addLegacyEvent(type: string, listener: LegacyElementListener, signal: AbortSignal): void {
+    let byListener = this._legacyWrappers.get(type);
     if (!byListener) {
       byListener = new Map();
-      this._handlers.set(type, byListener);
+      this._legacyWrappers.set(type, byListener);
     }
-    // Like addEventListener, adding the same listener twice to one type is a no-op.
     if (byListener.has(listener)) {
       return;
     }
-
-    // The listener gets the event and, for an event fired with trigger(), its payload.
-    const wrappedListener = (e: Event) =>
+    const wrapper = (e: Event) =>
       listener(e, e instanceof CustomEvent ? (e.detail as unknown) : undefined);
-    byListener.set(listener, wrappedListener);
-    this._native.addEventListener(type, wrappedListener);
+    byListener.set(listener, wrapper);
+    this._native.addEventListener(type, wrapper, { signal });
   }
 
-  /** Fires a (non-bubbling) custom event: listeners get `detail` as their second argument. */
+  /** Whether a listener declares the deprecated second (detail) parameter. */
+  private static isLegacyListener(
+    listener: ElementListener | LegacyElementListener,
+  ): listener is LegacyElementListener {
+    return listener.length >= 2;
+  }
+
+  /**
+   * Fires a non-bubbling CustomEvent of `type`: listeners read the payload from `event.detail`.
+   */
   trigger<D = unknown>(type: string, detail?: D): void {
     this._native.dispatchEvent(new CustomEvent(type, { detail }));
   }
 
   removeEvent(type: string, listener: ElementListener): void {
-    const byListener = this._handlers.get(type);
-    const eventListener = byListener?.get(listener);
-    if (byListener && eventListener) {
-      this._native.removeEventListener(type, eventListener);
+    const byListener = this._legacyWrappers.get(type);
+    const wrapper = byListener?.get(listener);
+    if (byListener && wrapper) {
+      this._native.removeEventListener(type, wrapper);
       byListener.delete(listener);
       if (byListener.size === 0) {
-        this._handlers.delete(type);
+        this._legacyWrappers.delete(type);
       }
+      return;
     }
+    this._native.removeEventListener(type, listener);
   }
 
-  /** Removes every listener added with addEvent(). The element can still be used afterwards. */
+  /**
+   * Removes every listener added with addEvent(), in one go, by aborting their signal. The element
+   * can still be used afterwards.
+   */
   dispose(): void {
-    this._handlers.forEach((byListener, type) => {
-      byListener.forEach((eventListener) => {
-        this._native.removeEventListener(type, eventListener);
-      });
-    });
-    this._handlers.clear();
+    this._listeners?.abort();
+    this._listeners = null;
+    this._legacyWrappers.clear();
   }
 
   /** dispose() on this element and on every element appended to it, recursively. */
@@ -409,6 +455,25 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
 
   setCursor(type: string) {
     this.writeStyle('cursor', type);
+  }
+
+  addClass(...names: string[]): void {
+    this._native.classList.add(...names);
+  }
+
+  removeClass(...names: string[]): void {
+    this._native.classList.remove(...names);
+  }
+
+  /** Toggles a class (see DOMTokenList.toggle); returns whether the element has it afterwards. */
+  toggleClass(name: string, force?: boolean): boolean {
+    return force === undefined
+      ? this._native.classList.toggle(name)
+      : this._native.classList.toggle(name, force);
+  }
+
+  hasClass(name: string): boolean {
+    return this._native.classList.contains(name);
   }
 
   /** The single dash table, shared by every element type, for a stroke width of 1. */

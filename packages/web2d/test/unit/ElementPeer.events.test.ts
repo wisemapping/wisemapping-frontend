@@ -51,14 +51,104 @@ describe('ElementPeer events', () => {
     expect(fn.mock.calls[0]![0]).toBeInstanceOf(MouseEvent);
   });
 
-  it('trigger dispatches a CustomEvent and passes its detail as the second argument', () => {
+  it('trigger dispatches a CustomEvent whose detail is the payload', () => {
     const peer = new ElementPeer(svgNode());
     const fn = jest.fn();
     peer.addEvent('ontfocus', fn);
     peer.trigger('ontfocus', { id: 7 });
     expect(fn).toHaveBeenCalledTimes(1);
-    expect(fn.mock.calls[0]![0]).toBeInstanceOf(CustomEvent);
-    expect(fn.mock.calls[0]![1]).toEqual({ id: 7 });
+    const [event] = fn.mock.calls[0]!;
+    expect(event).toBeInstanceOf(CustomEvent);
+    expect((event as CustomEvent).detail).toEqual({ id: 7 });
+    // W5: no jQuery-style second argument.
+    expect(fn.mock.calls[0]).toHaveLength(1);
+  });
+
+  // W5: the listener is registered as it is, with no wrapper, and with the element's signal.
+  it('W5: addEvent registers the listener itself, with an abort signal', () => {
+    const peer = new ElementPeer(svgNode());
+    const add = jest.spyOn(peer._native, 'addEventListener');
+    const fn = jest.fn();
+    peer.addEvent('click', fn);
+    expect(add).toHaveBeenCalledWith('click', fn, { signal: expect.any(AbortSignal) });
+    const { signal } = add.mock.calls[0]![2] as AddEventListenerOptions;
+    peer.dispose();
+    expect(signal!.aborted).toBe(true);
+  });
+
+  it('W5: dispose() aborts in one go, without removing listeners one by one', () => {
+    const peer = new ElementPeer(svgNode());
+    const remove = jest.spyOn(peer._native, 'removeEventListener');
+    const fn = jest.fn();
+    peer.addEvent('click', fn);
+    peer.addEvent('mouseover', fn);
+    peer.addEvent('ping', (e: Event, detail?: unknown) => fn(e, detail));
+    peer.dispose();
+    expect(remove).not.toHaveBeenCalled();
+    click(peer);
+    click(peer, 'mouseover');
+    peer.trigger('ping');
+    expect(fn).not.toHaveBeenCalled();
+  });
+
+  it('W5: dispose() of an element without listeners is a no-op', () => {
+    const peer = new ElementPeer(svgNode());
+    expect(() => peer.dispose()).not.toThrow();
+  });
+
+  // W5 compatibility shim, until mindplot's listeners read event.detail (phase 2): a listener
+  // that declares a second parameter still gets the detail there.
+  describe('deprecated (e, detail) listeners', () => {
+    it('get the detail of a triggered event as the second argument', () => {
+      const peer = new ElementPeer(svgNode());
+      const seen: unknown[] = [];
+      const legacy = (e: Event, detail?: unknown) => seen.push(e.type, detail);
+      peer.addEvent('ontfocus', legacy);
+      peer.trigger('ontfocus', { id: 7 });
+      expect(seen).toEqual(['ontfocus', { id: 7 }]);
+    });
+
+    it('get no detail for a native event', () => {
+      const peer = new ElementPeer(svgNode());
+      const seen: unknown[] = [];
+      peer.addEvent('click', (_e: Event, detail?: unknown) => seen.push(detail));
+      // UIEvent.detail is the click count, not a payload.
+      peer._native.dispatchEvent(new MouseEvent('click', { detail: 2 }));
+      expect(seen).toEqual([undefined]);
+    });
+
+    it('can be removed, per type, and are added once', () => {
+      const peer = new ElementPeer(svgNode());
+      let calls = 0;
+      // Declares the detail parameter, so it goes through the deprecated wrapper.
+      const legacy = (e: Event, detail?: unknown) => {
+        calls += e && detail === undefined ? 1 : 0;
+      };
+      peer.addEvent('click', legacy);
+      peer.addEvent('click', legacy);
+      peer.addEvent('dblclick', legacy);
+      click(peer);
+      expect(calls).toBe(1);
+      peer.removeEvent('click', legacy);
+      click(peer);
+      click(peer, 'dblclick');
+      expect(calls).toBe(2);
+      peer.removeEvent('dblclick', legacy);
+      click(peer, 'dblclick');
+      expect(calls).toBe(2);
+    });
+
+    it('are removed by dispose() and can be added again', () => {
+      const peer = new ElementPeer(svgNode());
+      const seen: unknown[] = [];
+      const legacy = (_e: Event, detail?: unknown) => seen.push(detail);
+      peer.addEvent('ping', legacy);
+      peer.dispose();
+      peer.trigger('ping', 1);
+      peer.addEvent('ping', legacy);
+      peer.trigger('ping', 2);
+      expect(seen).toEqual([2]);
+    });
   });
 
   it('characterization: trigger does not bubble', () => {
@@ -91,15 +181,6 @@ describe('ElementPeer events', () => {
     click(peer);
     expect(a).not.toHaveBeenCalled();
     expect(b).toHaveBeenCalledTimes(1);
-  });
-
-  // W-TRIGGER: a native event has no payload, even though UIEvent.detail is the click count.
-  it('W-TRIGGER: native events pass no detail', () => {
-    const peer = new ElementPeer(svgNode());
-    const fn = jest.fn();
-    peer.addEvent('click', fn);
-    peer._native.dispatchEvent(new MouseEvent('click', { detail: 2 }));
-    expect(fn.mock.calls[0]![1]).toBeUndefined();
   });
 
   // W-EVTMAP: wrappers were keyed only by the listener, so registering one function for two
@@ -211,8 +292,8 @@ describe('ElementPeer events', () => {
     type TestEvents = { ontfocus: { id: number }; ontblur: { id: number } };
     const group = new Group<TestEvents>();
     const ids: number[] = [];
-    const onFocus = (_e: Event, detail?: { id: number }) => {
-      if (detail) ids.push(detail.id);
+    const onFocus = (e: CustomEvent<{ id: number }>) => {
+      ids.push(e.detail.id);
     };
     group.addEvent('ontfocus', onFocus);
     group.trigger('ontfocus', { id: 7 });
@@ -223,7 +304,7 @@ describe('ElementPeer events', () => {
       // @ts-expect-error a detail of the wrong type
       group.trigger('ontfocus', { id: 'x' });
       // @ts-expect-error a listener expecting another detail type
-      group.addEvent('ontblur', (_e: Event, detail?: string) => detail);
+      group.addEvent('ontblur', (e: CustomEvent<string>) => e.detail);
     };
     expect(typeChecks).toBeInstanceOf(Function);
     // Native events keep an unknown detail.
@@ -241,7 +322,7 @@ describe('ElementPeer events', () => {
     const fn = jest.fn();
     rect.addEvent('anything', fn);
     rect.trigger('anything', 5);
-    expect(fn.mock.calls[0]![1]).toBe(5);
+    expect((fn.mock.calls[0]![0] as CustomEvent).detail).toBe(5);
   });
 
   it('WorkspaceElement delegates addEvent, removeEvent and trigger', () => {
@@ -252,7 +333,7 @@ describe('ElementPeer events', () => {
     rect.removeEvent('ping', fn);
     rect.trigger('ping', 'payload');
     expect(fn).toHaveBeenCalledTimes(1);
-    expect(fn.mock.calls[0]![1]).toBe('payload');
+    expect((fn.mock.calls[0]![0] as CustomEvent).detail).toBe('payload');
   });
 });
 
@@ -343,13 +424,52 @@ describe('typed element events (typing T6)', () => {
   it('a custom event of a typed map gives a CustomEvent of its detail', () => {
     const group = new Group<{ moved: { dx: number } }>();
     const seen: number[] = [];
-    const listener = (event: CustomEvent<{ dx: number }>, detail?: { dx: number }) => {
-      seen.push(event.detail.dx, detail?.dx ?? -1);
+    const listener = (event: CustomEvent<{ dx: number }>) => {
+      seen.push(event.detail.dx);
     };
     group.addEvent('moved', listener);
     group.trigger('moved', { dx: 3 });
     group.removeEvent('moved', listener);
     group.trigger('moved', { dx: 4 });
-    expect(seen).toEqual([3, 3]);
+    expect(seen).toEqual([3]);
+  });
+
+  // W5: Pointer Events pass through like any native type, typed PointerEvent. (jsdom has no
+  // PointerEvent, so a MouseEvent of that type stands in at run time.)
+  it('W5: pointer event types pass through, typed PointerEvent', () => {
+    const rect = new Rect(0);
+    const seen: string[] = [];
+    const types = ['pointerdown', 'pointermove', 'pointerup', 'pointercancel'] as const;
+    rect.addEvent('pointerdown', (event) => {
+      const pointer: PointerEvent = event;
+      seen.push(pointer.type);
+    });
+    rect.addEvent('pointermove', (event: PointerEvent) => seen.push(event.type));
+    rect.addEvent('pointerup', (event: PointerEvent) => seen.push(event.type));
+    rect.addEvent('pointercancel', (event: PointerEvent) => seen.push(event.type));
+    types.forEach((type) => rect.peer._native.dispatchEvent(new MouseEvent(type)));
+    expect(seen).toEqual([...types]);
+    const typeChecks = () => {
+      // @ts-expect-error a pointer event is not a keyboard event
+      rect.addEvent('pointerdown', (event: KeyboardEvent) => event.key);
+    };
+    expect(typeChecks).toBeInstanceOf(Function);
+  });
+});
+
+// W5: CSS classes for visual states.
+describe('element CSS classes (W5)', () => {
+  it('adds, removes, toggles and reads classes', () => {
+    const rect = new Rect(0);
+    rect.addClass('wm-hover', 'wm-selected');
+    expect(rect.getNode().getAttribute('class')).toBe('wm-hover wm-selected');
+    expect(rect.hasClass('wm-hover')).toBe(true);
+    rect.removeClass('wm-hover');
+    expect(rect.hasClass('wm-hover')).toBe(false);
+    expect(rect.toggleClass('wm-hover')).toBe(true);
+    expect(rect.toggleClass('wm-hover')).toBe(false);
+    expect(rect.toggleClass('wm-selected', true)).toBe(true);
+    expect(rect.toggleClass('wm-selected', false)).toBe(false);
+    expect(rect.getNode().getAttribute('class')).toBe('');
   });
 });
