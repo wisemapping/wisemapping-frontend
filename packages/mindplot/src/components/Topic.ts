@@ -576,8 +576,9 @@ abstract class Topic extends NodeGraph {
     model.setText(modelText);
 
     // The text does not change how the descendants render, only where the lines that
-    // meet this topic are drawn: redraw this topic and the descendants' connection and
-    // relationship lines, as a redraw of the whole subtree did, but not the topics.
+    // meet this topic are drawn: redraw this topic and the descendants' connection
+    // lines, as a redraw of the whole subtree did, but not the topics. Their
+    // relationships follow them when the layout moves them (setPosition).
     this.redraw(this.getThemeVariant(), false);
     if (this._isInWorkspace) {
       this.redrawDescendantLines();
@@ -585,8 +586,8 @@ abstract class Topic extends NodeGraph {
   }
 
   /**
-   * Redraws the connection and relationship lines of the visible descendants, in the
-   * order a redraw of the subtree redraws them.
+   * Redraws the connection lines of the visible descendants, in the order a redraw of
+   * the subtree redraws them.
    */
   private redrawDescendantLines(): void {
     if (this.areChildrenShrunken()) {
@@ -597,7 +598,6 @@ abstract class Topic extends NodeGraph {
         if (child._workspace) {
           child.getOutgoingLine()?.redraw();
         }
-        child._relationships.forEach((r) => r.redraw());
         child.redrawDescendantLines();
       }
     });
@@ -942,6 +942,8 @@ abstract class Topic extends NodeGraph {
   setPosition(point: PositionType): void {
     // allowed param reassign to avoid risks of existing code relying in this side-effect
     const model = this.getModel();
+    const previous = model.getPosition();
+    const moved = !previous || previous.x !== point.x || previous.y !== point.y;
     model.setPosition(point.x, point.y);
 
     // Elements are positioned in the center.
@@ -956,6 +958,11 @@ abstract class Topic extends NodeGraph {
 
     // Update connection lines ...
     this.updateConnection();
+
+    // ... and the relationships attached to it, whose ends follow the topic.
+    if (moved) {
+      this._relationships.forEach((r) => r.redraw());
+    }
 
     // Check object state.
     this.invariant();

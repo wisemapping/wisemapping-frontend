@@ -248,7 +248,7 @@ exports[`redraw render snapshot of a medium map renders the same after changing 
 
 exports[`redraw render snapshot of a medium map renders the same after style, feature and image changes: styled 1`] = `
 {
-  "canvas": "1d751a662b30",
+  "canvas": "8e61104a08c7",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=74ec918771de line=da39a3ee5e6b",
   "topic 1": "pos=154.5,-358.5 size=126x68 order=0 group=047f3b3311d0 line=ea72607da671",
   "topic 10": "pos=572.5,-315.5 size=272x68 order=0 group=e883f7ffebb2 line=44d42bcc4659",
@@ -822,7 +822,7 @@ exports[`redraw render snapshot of a medium map renders the same while typing in
 
 exports[`redraw render snapshot of a medium map renders the same while typing in the text editor and after committing: typing 1`] = `
 {
-  "canvas": "701a29bb5394",
+  "canvas": "92f654fbc539",
   "topic 0": "pos=0,0 size=123x42 order=undefined group=74ec918771de line=da39a3ee5e6b",
   "topic 1": "pos=127,-358.5 size=71x38 order=0 group=162c190a3cd4 line=14465d00ae9e",
   "topic 10": "pos=345.5,-336 size=86x34 order=0 group=a88d627b1c49 line=ca9c29b657b7",
