@@ -91,8 +91,16 @@ const formatXml = (xml: string): string => {
 
       const indentedLine = tab.repeat(indent) + trimmed;
 
-      // Increase indent for opening tags (but not self-closing)
-      if (trimmed.startsWith('<') && !trimmed.startsWith('</') && !trimmed.endsWith('/>')) {
+      // Increase indent for opening tags (but not self-closing, nor a whole element such as
+      // `<text>Idea</text>`, nor a declaration or comment)
+      if (
+        trimmed.startsWith('<') &&
+        !trimmed.startsWith('</') &&
+        !trimmed.startsWith('<?') &&
+        !trimmed.startsWith('<!') &&
+        !trimmed.endsWith('/>') &&
+        !trimmed.includes('</')
+      ) {
         indent++;
       }
 

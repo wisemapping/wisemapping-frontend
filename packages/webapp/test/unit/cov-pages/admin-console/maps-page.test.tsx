@@ -376,12 +376,13 @@ describe('MapsManagement', () => {
       );
     });
 
-    // BUG: formatXml (src/components/admin-console/maps-page/index.tsx:95) raises the indent for
-    // any line that starts with an opening tag, including a whole element on one line such as
-    // `<text>Idea</text>`; the closing tag on that line never lowers it again, so every following
-    // line drifts one level to the right (here `</topic>` lands under its own child).
-    test.failing('keeps the indentation of an element that holds inline text', async () => {
-      client.getAdminMapXml.mockResolvedValue('<topic><text>Idea</text></topic>');
+    // formatXml used to raise the indent for a whole element on one line such as
+    // `<text>Idea</text>` (and for the XML declaration), so every following line drifted one
+    // level to the right.
+    test('keeps the indentation of an element that holds inline text', async () => {
+      client.getAdminMapXml.mockResolvedValue(
+        '<?xml version="1.0"?><topic><text>Idea</text><!-- c --></topic>',
+      );
       setup();
       await waitForRows();
 
@@ -390,7 +391,7 @@ describe('MapsManagement', () => {
 
       await waitFor(() =>
         expect((within(dialog).getByRole('textbox') as HTMLTextAreaElement).value).toBe(
-          '<topic>\n  <text>Idea</text>\n</topic>',
+          '<?xml version="1.0"?>\n<topic>\n  <text>Idea</text>\n  <!-- c -->\n</topic>',
         ),
       );
     });
