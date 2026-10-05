@@ -156,7 +156,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
   /**
    * Todo: Doc
    */
-  getFill() {
+  getFill(): { color: string | null; opacity: number } {
     return this.peer.getFill();
   }
 
@@ -219,11 +219,16 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
     this.peer.moveToBack();
   }
 
-  getStroke() {
+  getStroke(): {
+    color: string | null;
+    style: StrokeStyle | null;
+    opacity: number;
+    width: number | null;
+  } {
     return this.peer.getStroke();
   }
 
-  setCursor(type: string) {
+  setCursor(type: string): void {
     this.peer.setCursor(type);
   }
 
@@ -259,7 +264,7 @@ abstract class WorkspaceElement<T extends ElementPeer, M extends CustomEventMap 
     return this.peer._native;
   }
 
-  setTestId(testId: string) {
+  setTestId(testId: string): void {
     this.peer._native.setAttribute('test-id', testId);
   }
 }

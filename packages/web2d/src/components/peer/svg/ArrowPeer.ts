@@ -35,7 +35,7 @@ class ArrowPeer extends ElementPeer<SVGPathElement> {
     this._strokeWidth = 1;
   }
 
-  setFrom(x: number, y: number) {
+  setFrom(x: number, y: number): void {
     if (this._fromPoint.x === x && this._fromPoint.y === y && this.hasPath()) {
       return;
     }
@@ -44,7 +44,7 @@ class ArrowPeer extends ElementPeer<SVGPathElement> {
   }
 
   /** The direction the arrow points away from, relative to the tip. It is copied. */
-  setControlPoint(point: PositionType) {
+  setControlPoint(point: PositionType): void {
     const current = this._controlPoint;
     if (current && current.x === point.x && current.y === point.y) {
       return;
@@ -57,11 +57,11 @@ class ArrowPeer extends ElementPeer<SVGPathElement> {
     return this._native.hasAttribute('d');
   }
 
-  setStrokeColor(color: string) {
+  setStrokeColor(color: string): void {
     this.setStroke(null, null, color);
   }
 
-  setStrokeWidth(width: number) {
+  setStrokeWidth(width: number): void {
     this.setStroke(width);
   }
 
@@ -70,7 +70,7 @@ class ArrowPeer extends ElementPeer<SVGPathElement> {
     style?: StrokeStyle | null,
     color?: string | null,
     opacity?: number,
-  ) {
+  ): void {
     super.setStroke(width, style, color, opacity);
     if (width != null && width !== this._strokeWidth) {
       this._strokeWidth = Number(width);
@@ -78,7 +78,7 @@ class ArrowPeer extends ElementPeer<SVGPathElement> {
     }
   }
 
-  setDashed(isDashed: boolean, length: number, spacing: number) {
+  setDashed(isDashed: boolean, length: number, spacing: number): void {
     if (isDashed && length != null && spacing != null) {
       this.attr('stroke-dasharray', `${length},${spacing}`);
     } else {

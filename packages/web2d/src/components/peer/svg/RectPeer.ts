@@ -32,7 +32,7 @@ class RectPeer extends ElementPeer<SVGRectElement> {
     this._position = { x: 0, y: 0 };
   }
 
-  setPosition(x: number, y: number) {
+  setPosition(x: number, y: number): void {
     if (x != null) {
       this._position = { ...this._position, x };
       this.attr('x', formatLength(x));

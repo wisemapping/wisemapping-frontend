@@ -44,11 +44,11 @@ class StraightLine extends WorkspaceElement<StraightLinePeer> implements Line {
     return 'Line';
   }
 
-  setFrom(x: number, y: number) {
+  setFrom(x: number, y: number): void {
     this.peer.setFrom(x, y);
   }
 
-  setTo(x: number, y: number) {
+  setTo(x: number, y: number): void {
     this.peer.setTo(x, y);
   }
 

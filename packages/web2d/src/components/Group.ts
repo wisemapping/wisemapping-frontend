@@ -55,7 +55,7 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
   /**
    * Remove an element as a child to the object.
    */
-  removeChild(element: WorkspaceElement<ElementPeer>) {
+  removeChild(element: WorkspaceElement<ElementPeer>): void {
     if (!element) {
       throw new Error('Child element can not be null');
     }
@@ -75,7 +75,7 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
   /**
    * Appends an element as a child to the object.
    */
-  append(element: WorkspaceElement<ElementPeer>) {
+  append(element: WorkspaceElement<ElementPeer>): void {
     if (!element) {
       throw Error('Child element can not be null');
     }
@@ -143,11 +143,11 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
    * The size of the group's own coordinate system: its children are laid out in these units,
    * which are scaled to the group size (an SVG translate + scale transform).
    */
-  setCoordSize(width: number, height: number) {
+  setCoordSize(width: number, height: number): void {
     this.peer.setCoordSize(width, height);
   }
 
-  setCoordOrigin(x: number, y: number) {
+  setCoordOrigin(x: number, y: number): void {
     this.peer.setCoordOrigin(x, y);
   }
 
@@ -177,11 +177,11 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
     // No-op.
   }
 
-  getCoordSize() {
+  getCoordSize(): SizeType {
     return this.peer.getCoordSize();
   }
 
-  appendDomChild(DomElement: Element | Node) {
+  appendDomChild(DomElement: Element | Node): void {
     if (DomElement == null) {
       throw new Error('Child element can not be null');
     }
@@ -195,7 +195,7 @@ class Group<M extends CustomEventMap = CustomEventMap> extends WorkspaceElement<
     return this.peer.getPosition();
   }
 
-  setPosition(x: number, y: number) {
+  setPosition(x: number, y: number): void {
     this.peer.setPosition(x, y);
   }
 }

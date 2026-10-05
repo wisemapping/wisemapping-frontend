@@ -56,7 +56,7 @@ class Arrow extends WorkspaceElement<ArrowPeer> {
     this.peer.setStrokeWidth(width);
   }
 
-  setDashed(isDashed: boolean, length: number, spacing: number) {
+  setDashed(isDashed: boolean, length: number, spacing: number): void {
     this.peer.setDashed(isDashed, length, spacing);
   }
 }

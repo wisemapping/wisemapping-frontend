@@ -46,11 +46,11 @@ class Image extends WorkspaceElement<ImagePeer> {
     return 'Image';
   }
 
-  setHref(href: string) {
+  setHref(href: string): void {
     this.peer.setHref(href);
   }
 
-  getHref() {
+  getHref(): string {
     return this.peer.getHref();
   }
 
@@ -62,7 +62,7 @@ class Image extends WorkspaceElement<ImagePeer> {
     return this.peer.getPosition();
   }
 
-  setPosition(x: number, y: number) {
+  setPosition(x: number, y: number): void {
     this.peer.setPosition(x, y);
   }
 }

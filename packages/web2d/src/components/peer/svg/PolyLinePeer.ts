@@ -52,14 +52,14 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
     this._pathDirty = true;
   }
 
-  setFrom(x1: number, y1: number) {
+  setFrom(x1: number, y1: number): void {
     const changed = this._x1 !== x1 || this._y1 !== y1;
     this._x1 = x1;
     this._y1 = y1;
     this._refreshPath(changed);
   }
 
-  setTo(x2: number, y2: number) {
+  setTo(x2: number, y2: number): void {
     const changed = this._x2 !== x2 || this._y2 !== y2;
     this._x2 = x2;
     this._y2 = y2;
@@ -74,16 +74,16 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
     return { x: this._x2, y: this._y2 };
   }
 
-  setStrokeWidth(width: number) {
+  setStrokeWidth(width: number): void {
     // Through setStroke, so a dash from the style table is rescaled (BL5-77).
     this.setStroke(width);
   }
 
-  setColor(color: string) {
+  setColor(color: string): void {
     this.attr('stroke', color);
   }
 
-  setStyle(style: PolyLineStyle) {
+  setStyle(style: PolyLineStyle): void {
     const changed = this._style !== style;
     this._style = style;
     this._refreshPath(changed);
@@ -93,7 +93,7 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
     return this._style;
   }
 
-  setOrientation(orientation: Orientation) {
+  setOrientation(orientation: Orientation): void {
     const changed = this._orientation !== orientation;
     this._orientation = orientation;
     this._refreshPath(changed);

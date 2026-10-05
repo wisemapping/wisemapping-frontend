@@ -64,7 +64,7 @@ class Ellipse extends WorkspaceElement<ElipsePeer> {
     return this.peer.getPosition();
   }
 
-  setPosition(x: number, y: number) {
+  setPosition(x: number, y: number): void {
     this.peer.setPosition(x, y);
   }
 }

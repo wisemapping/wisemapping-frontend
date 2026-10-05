@@ -361,7 +361,7 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
     return this._opacity;
   }
 
-  setVisibility(value: boolean, fade?: number) {
+  setVisibility(value: boolean, fade?: number): void {
     this.attr('visibility', value ? 'visible' : 'hidden');
     // Shown at the opacity set with setOpacity(), and faded through the same property.
     this.writeStyle('opacity', String(value ? this._opacity : 0));
@@ -380,7 +380,7 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
   /**
    * Move element to the front
    */
-  moveToFront() {
+  moveToFront(): void {
     if (!this._native.parentNode) {
       throw new Error('node not connected to parent');
     }
@@ -390,14 +390,14 @@ class ElementPeer<N extends SVGGraphicsElement = SVGGraphicsElement> {
   /**
    * Move element to the back
    */
-  moveToBack() {
+  moveToBack(): void {
     if (!this._native.parentNode) {
       throw new Error('node not connected to parent');
     }
     this._native.parentNode.insertBefore(this._native, this._native.parentNode.firstChild);
   }
 
-  setCursor(type: string) {
+  setCursor(type: string): void {
     this.writeStyle('cursor', type);
   }
 

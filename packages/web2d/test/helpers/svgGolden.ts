@@ -138,9 +138,9 @@ export const createScene = (
   elements: WorkspaceElement<ElementPeer>[] = [],
   {
     size = 400,
-    coordSize = [400, 400] as [number, number],
-    coordOrigin = [-200, -200] as [number, number],
-  } = {},
+    coordSize = [400, 400],
+    coordOrigin = [-200, -200],
+  }: { size?: number; coordSize?: [number, number]; coordOrigin?: [number, number] } = {},
 ): Scene => {
   const workspace = new Workspace();
   workspace.setSize(`${size}px`, `${size}px`);

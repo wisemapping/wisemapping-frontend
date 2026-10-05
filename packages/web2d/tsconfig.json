@@ -5,11 +5,13 @@
     "module": "es2020",
     "moduleResolution": "bundler",
     "target": "es2022",
-    "allowJs": true,
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "declaration": true,
+    // Every exported function, method and property has an explicit type, so declarations can be
+    // emitted file by file without type checking.
+    "isolatedDeclarations": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -30,7 +32,6 @@
   },
   "include": [
     "src/**/*",
-    "storybook/src/stories",
   ],
   "exclude": [
     "./node_modules",

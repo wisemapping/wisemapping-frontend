@@ -81,7 +81,7 @@ class NeuronLinePeer extends ElementPeer<SVGPathElement> {
     style?: StrokeStyle | null,
     color?: string | null,
     opacity?: number,
-  ) {
+  ): void {
     if (width != null) {
       this._strokeWidth = width;
     }

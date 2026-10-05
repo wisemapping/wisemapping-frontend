@@ -50,7 +50,7 @@ class ArcLinePeer extends ElementPeer<SVGPathElement> {
     }
   }
 
-  setTo(x2: number, y2: number) {
+  setTo(x2: number, y2: number): void {
     const change = this._x2 !== x2 || this._y2 !== y2;
     this._x2 = x2;
     this._y2 = y2;

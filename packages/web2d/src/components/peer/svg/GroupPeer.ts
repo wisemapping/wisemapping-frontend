@@ -91,7 +91,7 @@ class GroupPeer extends ElementPeer<SVGGElement> {
    *    * skewY(<skew-angle>), which specifies a skew transformation along the y-axis.
    * */
 
-  updateTransform() {
+  updateTransform(): void {
     // An empty coordinate axis has no scale: keep 1 there, so the group is still translated
     // and never gets NaN or Infinity.
     const sx = this._coordSize.width > 0 ? this._size.width / this._coordSize.width : 1;
@@ -110,7 +110,7 @@ class GroupPeer extends ElementPeer<SVGGElement> {
     return String(Number(value.toFixed(6)));
   }
 
-  setCoordOrigin(x: number, y: number) {
+  setCoordOrigin(x: number, y: number): void {
     const change = x !== this._coordOrigin.x || y !== this._coordOrigin.y;
     this._coordOrigin = { x, y };
 
@@ -127,7 +127,7 @@ class GroupPeer extends ElementPeer<SVGGElement> {
     }
   }
 
-  setPosition(x: number, y: number) {
+  setPosition(x: number, y: number): void {
     const change = x !== this._position.x || y !== this._position.y;
     this._position = { x, y };
     if (change) {
@@ -142,7 +142,7 @@ class GroupPeer extends ElementPeer<SVGGElement> {
     };
   }
 
-  getCoordOrigin() {
+  getCoordOrigin(): { x: number; y: number } {
     return {
       x: this._coordOrigin.x,
       y: this._coordOrigin.y,

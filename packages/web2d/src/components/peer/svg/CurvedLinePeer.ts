@@ -117,7 +117,7 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
     }
   }
 
-  setTo(x2: number, y2: number) {
+  setTo(x2: number, y2: number): void {
     const change = this._x2 !== x2 || this._y2 !== y2;
     this._x2 = x2;
     this._y2 = y2;
@@ -137,7 +137,7 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
     this.setStroke(width);
   }
 
-  updateLine(avoidControlPointFix: boolean) {
+  updateLine(avoidControlPointFix: boolean): void {
     if (this._x1 != null && this._y1 != null && this._x2 != null && this._y2 != null) {
       this._calculateAutoControlPoints(avoidControlPointFix);
       this._renderPath();
@@ -191,7 +191,7 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
     }
   }
 
-  setDashed(length?: number, spacing?: number) {
+  setDashed(length?: number, spacing?: number): void {
     if (length != null && spacing != null) {
       this.attr('stroke-dasharray', `${length},${spacing}`);
     } else {

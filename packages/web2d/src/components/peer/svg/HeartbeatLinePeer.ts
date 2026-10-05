@@ -71,7 +71,7 @@ class HeartbeatLinePeer extends ElementPeer<SVGPathElement> {
     style?: StrokeStyle | null,
     color?: string | null,
     opacity?: number,
-  ) {
+  ): void {
     // The spike amplitude depends on the width, so a new width re-paths (W-STALEPATH).
     const repath = width != null && width !== this._strokeWidth;
     if (width != null) {
