@@ -120,10 +120,6 @@ class Node {
     return this.isPropertyChanged('position');
   }
 
-  hasSizeChanged(): boolean {
-    return this.isPropertyChanged('size');
-  }
-
   /**
    * Get the position of this node.
    * Position is always defined (initialized in constructor).
