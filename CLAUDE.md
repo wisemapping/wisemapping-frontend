@@ -76,4 +76,6 @@ yarn workspace @wisemapping/editor test:visual:update   # write missing / change
 
 ## Contributing flow
 
-Branch from `develop` (not `main`) using `feature/*` or `bugfix/*`. Husky pre-commit runs `lint-staged` (eslint + prettier per package); pre-push runs `yarn lint && yarn test`. Don't bypass these — CI runs the same checks.
+Branch from `develop` (not `main`) using `feature/*` or `bugfix/*`. Husky pre-commit runs `lint-staged` (eslint per package + `prettier --check`) on the staged files; pre-push runs `yarn lint && yarn test`. Don't bypass these — CI runs the same checks.
+
+The pre-commit hook only checks, it does not fix: a lint or formatting error refuses the commit and leaves the index and working tree as they were. Fix them with `yarn lint:fix` (or `cd packages/<pkg> && npx eslint --fix <files>`) and `npx prettier --write <files>`, re-stage and commit again. Being check-only lets it run with `--no-stash`: lint-staged's backup would go to `git stash`, which every worktree of the repo shares, so parallel commits in different worktrees raced on it. `yarn test:precommit` (`scripts/test-precommit-concurrency.sh`) commits concurrently in several worktrees of a scratch repo to prove the hook neither loses changes nor touches `git stash list`.
