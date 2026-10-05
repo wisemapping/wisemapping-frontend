@@ -18,15 +18,10 @@
 
 import { $defined } from '../utils/assert';
 import PositionType from '../../PositionType';
+import { arrowPathData } from '../../geometry/arrow';
 import ElementPeer from './ElementPeer';
 
 class ArrowPeer extends ElementPeer {
-  /** The wing length of a thin arrow (stroke width up to 2, the default and mindplot's). */
-  static readonly WING_LENGTH = 6;
-
-  /** Wider strokes get wings of this many stroke widths, so a thick arrow is not stubby. */
-  static readonly WING_LENGTH_PER_WIDTH = 3;
-
   private _fromPoint: PositionType;
 
   private _controlPoint: PositionType | null;
@@ -39,11 +34,6 @@ class ArrowPeer extends ElementPeer {
     this._fromPoint = { x: 0, y: 0 };
     this._controlPoint = null;
     this._strokeWidth = 1;
-  }
-
-  /** The wings scale with the stroke width (BL5-73), but never below WING_LENGTH. */
-  static wingLength(strokeWidth: number): number {
-    return Math.max(ArrowPeer.WING_LENGTH, strokeWidth * ArrowPeer.WING_LENGTH_PER_WIDTH);
   }
 
   setFrom(x: number, y: number) {
@@ -97,27 +87,10 @@ class ArrowPeer extends ElementPeer {
     }
   }
 
-  /**
-   * Two wings from the tip (see wingLength), each at 45° from the control point direction. A zero
-   * control point is taken as pointing down.
-   */
+  /** Two wings from the tip (geometry/arrow). Nothing is drawn until a control point is set. */
   private _redraw() {
     if (this._fromPoint && this._controlPoint) {
-      const length = Math.hypot(this._controlPoint.x, this._controlPoint.y);
-      const ux = length > 0 ? this._controlPoint.x / length : 0;
-      const uy = length > 0 ? this._controlPoint.y / length : 1;
-
-      // The control direction turned by -45° and by +45°.
-      const cos = Math.SQRT1_2;
-      const l = ArrowPeer.wingLength(this._strokeWidth);
-      const x = (ux * cos + uy * cos) * l;
-      const y = (uy * cos - ux * cos) * l;
-      const xp = (ux * cos - uy * cos) * l;
-      const yp = (uy * cos + ux * cos) * l;
-
-      const { x: fx, y: fy } = this._fromPoint;
-      const path = `M${fx},${fy} L${x + fx},${y + fy} M${fx},${fy} L${xp + fx},${yp + fy}`;
-      this.attr('d', path);
+      this.attr('d', arrowPathData(this._fromPoint, this._controlPoint, this._strokeWidth));
     }
   }
 }
