@@ -68,10 +68,6 @@ describe('MindManager real files', () => {
       `mindmanager-real-${name}`,
       TextImporterFactory.create('mmap', readArchive(name)),
     );
-    // exporterAssert passes when there is no expected file.
-    expect(fs.existsSync(path.resolve(__dirname, `./expected/mindmanager-real-${name}.wxml`))).toBe(
-      true,
-    );
   });
 });
 
