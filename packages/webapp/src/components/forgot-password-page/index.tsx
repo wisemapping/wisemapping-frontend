@@ -127,6 +127,10 @@ const ForgotPasswordPage = (): React.ReactElement => {
       id: 'forgot.page-title',
       defaultMessage: 'Forgot Password | WiseMapping',
     });
+  }, [intl]);
+
+  // Once per visit: a language change retitles the page but is not a new page view.
+  useEffect(() => {
     trackPageView(window.location.pathname, 'ForgotPassword:Init');
   }, []);
 

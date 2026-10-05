@@ -409,6 +409,10 @@ const RegistationPage = (): React.ReactElement => {
       id: 'registration.page-title',
       defaultMessage: 'Registration | WiseMapping',
     });
+  }, [intl]);
+
+  // Once per visit: a language change retitles the page but is not a new page view.
+  useEffect(() => {
     trackPageView(window.location.pathname, 'Registration:Init');
   }, []);
 

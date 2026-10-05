@@ -42,6 +42,10 @@ const ActivationPage = (): React.ReactElement => {
       id: 'activation.page-title',
       defaultMessage: 'Account Activation | WiseMapping',
     });
+  }, [intl]);
+
+  // Once per visit: a language change retitles the page but is not a new page view.
+  useEffect(() => {
     trackPageView(window.location.pathname, 'Activation');
   }, []);
 
@@ -69,7 +73,7 @@ const ActivationPage = (): React.ReactElement => {
         setError(err.msg || 'Activation failed');
         setLoading(false);
       });
-  }, []);
+  }, [client]);
 
   return (
     <>

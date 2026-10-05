@@ -153,7 +153,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
       const currentLocale = account?.locale || AppI18n.getDefaultLocale().code;
       setSelectedLanguage(currentLocale as LocaleCode);
     }
-  }, [account?.email, account?.locale]);
+  }, [account]);
 
   const handleOnClose = (): void => {
     onClose();

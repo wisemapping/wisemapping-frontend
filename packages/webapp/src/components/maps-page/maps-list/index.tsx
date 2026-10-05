@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useEffect, useMemo, CSSProperties, useContext } from 'react';
+import React, { useEffect, useMemo, CSSProperties, useContext, useRef } from 'react';
 
 import { useStyles } from './styled';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -332,12 +332,18 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   }, [userLocale.code]);
 
   const filterLabelId = isLabelFilter(props.filter) ? props.filter.label.id : undefined;
+  // The filter the menu last chose. The list resets only when its type or label changes: the menu
+  // hands over a new object even when the same entry is chosen again.
+  const latestFilter = useRef(props.filter);
+  useEffect(() => {
+    latestFilter.current = props.filter;
+  }, [props.filter]);
 
   useEffect(() => {
     setSelected([]);
     setPage(0);
     setFilter((prevFilter) => {
-      const nextFilter = props.filter;
+      const nextFilter = latestFilter.current;
 
       if (prevFilter.type === nextFilter.type) {
         if (isLabelFilter(nextFilter) && isLabelFilter(prevFilter)) {

@@ -86,7 +86,7 @@ const ActionDispatcher = ({
           break;
       }
     }
-  }, [action, mapsId, onClose]);
+  }, [action, mapsId, onClose, pageMode]);
 
   const handleOnClose = (success?: boolean): void => {
     onClose(success);

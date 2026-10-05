@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import BaseDialog from '../base-dialog';
 import { useStyles } from './style';
@@ -61,7 +61,6 @@ const ExportDialog = ({
   designer,
 }: ExportDialogProps): React.ReactElement => {
   const intl = useIntl();
-  const [submit, setSubmit] = React.useState<boolean>(false);
   const { data: mapMetadata } = useFetchMapMetadata(mapId);
 
   const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
@@ -101,10 +100,6 @@ const ExportDialog = ({
 
   const handleOnClose = (): void => {
     onClose();
-  };
-
-  const handleOnSubmit = (): void => {
-    setSubmit(true);
   };
 
   const handleOnZoomToFit = (): void => {
@@ -204,34 +199,32 @@ const ExportDialog = ({
     return exporter;
   };
 
-  useEffect(() => {
-    if (submit) {
-      exporter(exportFormat)
-        .then((url: string) => {
-          // Track specific export format in Google Analytics
-          trackExport(exportFormat, exportGroup);
+  const handleOnSubmit = (): void => {
+    exporter(exportFormat)
+      .then((url: string) => {
+        // Track specific export format in Google Analytics
+        trackExport(exportFormat, exportGroup);
 
-          // Create hidden anchor to force download ...
-          const anchor: HTMLAnchorElement = document.createElement('a');
-          anchor.style.display = 'display: none';
-          anchor.download = `${mapMetadata?.title ?? 'mindmap'}.${exportFormat}`;
-          anchor.href = url;
-          document.body.appendChild(anchor);
+        // Create hidden anchor to force download ...
+        const anchor: HTMLAnchorElement = document.createElement('a');
+        anchor.style.display = 'display: none';
+        anchor.download = `${mapMetadata?.title ?? 'mindmap'}.${exportFormat}`;
+        anchor.href = url;
+        document.body.appendChild(anchor);
 
-          // Trigger click ...
-          anchor.click();
+        // Trigger click ...
+        anchor.click();
 
-          // Clean up ...
-          URL.revokeObjectURL(url);
-          document.body.removeChild(anchor);
-        })
-        .catch((fail) => {
-          console.error('Unexpected error during export:' + fail);
-        });
+        // Clean up ...
+        URL.revokeObjectURL(url);
+        document.body.removeChild(anchor);
+      })
+      .catch((fail) => {
+        console.error('Unexpected error during export:' + fail);
+      });
 
-      onClose();
-    }
-  }, [submit]);
+    onClose();
+  };
 
   return (
     <div>

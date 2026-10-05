@@ -154,6 +154,9 @@ const OAuthCallbackPage = (): React.ReactElement => {
         setError(errorInfo);
         logCriticalError(`Unexpected error on ${provider} OAuth callback`, errorInfo);
       });
+    // Once, on arrival: the OAuth code in the URL is single-use, and initializeThemeFromSystem is a
+    // new function on every ThemeContext render, so re-running would post the spent code again.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const confirmAccountSynching = (): void => {

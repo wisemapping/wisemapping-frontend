@@ -55,13 +55,14 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
   const previousModelRef = useRef<boolean>(map?.public ?? false);
 
   // Sync model state when map data changes (e.g., after refetch or initial load)
+  const loadedMapId = map?.id;
+  const loadedPublic = map ? (map.public ?? false) : undefined;
   useEffect(() => {
-    if (map) {
-      const newValue = map.public ?? false;
-      setModel(newValue);
-      previousModelRef.current = newValue;
+    if (loadedPublic !== undefined) {
+      setModel(loadedPublic);
+      previousModelRef.current = loadedPublic;
     }
-  }, [map?.id, map?.public]);
+  }, [loadedMapId, loadedPublic]);
 
   const mutation = useMutation<void, ErrorInfo, boolean>({
     mutationFn: (model: boolean) => {
