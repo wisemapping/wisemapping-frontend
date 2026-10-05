@@ -74,28 +74,14 @@ describe('LanguageMenu', () => {
       .getAllByRole('menuitem')
       .map((item) => item.textContent);
     expect(labels).toEqual([
-      ...[
-        Locales.EN,
-        Locales.ES,
-        Locales.DE,
-        Locales.FR,
-        Locales.RU,
-        Locales.ZH,
-        Locales.ZH_CN,
-        Locales.JA,
-        Locales.PT,
-        Locales.IT,
-        Locales.HI,
-        Locales.AR,
-      ].map((locale) => locale.label),
+      ...Object.values(Locales).map((locale) => locale.label),
       'Help to Translate',
     ]);
   });
 
-  // Bug: Ukrainian (Locales.UK) is a supported locale -- compiled, and offered by the account
-  // settings dialog, which lists Object.values(Locales) -- but the menu was never given its item,
-  // so it can not be picked here.
-  test.failing('offers every supported language, Ukrainian included', async () => {
+  // The items come from the supported locales; Ukrainian used to be missing from a hand-written
+  // list.
+  test('offers every supported language, Ukrainian included', async () => {
     setup();
     const menu = await openMenu();
     expect(within(menu).getByRole('menuitem', { name: Locales.UK.label })).toBeTruthy();

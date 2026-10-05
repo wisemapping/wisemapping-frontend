@@ -112,53 +112,12 @@ const LanguageMenu = (): React.ReactElement => {
           horizontal: 'right',
         }}
       >
-        <MenuItem onClick={handleOnClick} id={Locales.EN.code}>
-          {Locales.EN.label}
-        </MenuItem>
-
-        <MenuItem onClick={handleOnClick} id={Locales.ES.code}>
-          {Locales.ES.label}
-        </MenuItem>
-
-        <MenuItem onClick={handleOnClick} id={Locales.DE.code}>
-          {Locales.DE.label}
-        </MenuItem>
-
-        <MenuItem onClick={handleOnClick} id={Locales.FR.code}>
-          {Locales.FR.label}
-        </MenuItem>
-
-        <MenuItem onClick={handleOnClick} id={Locales.RU.code}>
-          {Locales.RU.label}
-        </MenuItem>
-
-        <MenuItem onClick={handleOnClick} id={Locales.ZH.code}>
-          {Locales.ZH.label}
-        </MenuItem>
-
-        <MenuItem onClick={handleOnClick} id={Locales.ZH_CN.code}>
-          {Locales.ZH_CN.label}
-        </MenuItem>
-
-        <MenuItem onClick={handleOnClick} id={Locales.JA.code}>
-          {Locales.JA.label}
-        </MenuItem>
-
-        <MenuItem onClick={handleOnClick} id={Locales.PT.code}>
-          {Locales.PT.label}
-        </MenuItem>
-
-        <MenuItem onClick={handleOnClick} id={Locales.IT.code}>
-          {Locales.IT.label}
-        </MenuItem>
-
-        <MenuItem onClick={handleOnClick} id={Locales.HI.code}>
-          {Locales.HI.label}
-        </MenuItem>
-
-        <MenuItem onClick={handleOnClick} id={Locales.AR.code}>
-          {Locales.AR.label}
-        </MenuItem>
+        {/* Every supported locale, so none can be left out of the menu. */}
+        {Object.values(Locales).map((locale) => (
+          <MenuItem key={locale.code} onClick={handleOnClick} id={locale.code}>
+            {locale.label}
+          </MenuItem>
+        ))}
 
         <Divider />
 
