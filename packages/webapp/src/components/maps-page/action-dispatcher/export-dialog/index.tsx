@@ -112,49 +112,65 @@ const ExportDialog = ({
   };
 
   const exporter = async (formatType: ExportFormat): Promise<string> => {
-    let svgElement: Element | undefined;
-    let size: SizeType;
-    let mindmap: Mindmap;
-    let originalTheme: ThemeType | undefined;
-    let backgroundColor = '#ffffff';
-
     // exporting from editor toolbar action
     if (designer != null) {
-      // Depending on the type of export. It will require differt POST.
-      const workspace = designer.getWorkSpace();
-      svgElement = workspace.getSVGElement();
-      size = { width: window.innerWidth, height: window.innerHeight };
-      mindmap = designer.getMindmap();
-
-      // Store original theme and apply export theme
-      originalTheme = mindmap.getTheme();
-      if (originalTheme !== exportTheme) {
-        designer.applyTheme(exportTheme);
-        // Re-render to apply new theme
-        workspace.getSVGElement();
-      }
-
-      // Resolve the canvas background color applied by the Designer so exports
-      // include it (SVG, PNG, JPEG, PDF). Designer sets the style on the SVG's
-      // grandparent element (see Canvas.setBackgroundStyle). Read after
-      // applyTheme so the color matches the export theme.
-      const canvasContainer = svgElement?.parentElement?.parentElement;
-      if (canvasContainer) {
-        const resolved = window.getComputedStyle(canvasContainer).backgroundColor;
-        if (resolved && resolved !== 'rgba(0, 0, 0, 0)' && resolved !== 'transparent') {
-          backgroundColor = resolved;
+      // The export is rendered in the export theme on the live canvas, so put the
+      // map's own theme back once it is done (or failed): the editor saves this model.
+      const originalTheme = designer.getMindmap().getTheme();
+      const swapTheme = originalTheme !== exportTheme;
+      try {
+        if (swapTheme) {
+          designer.applyTheme(exportTheme);
         }
-      }
-    } else {
-      // exporting from map list
-      mindmap = await fetchMindmap(mapId);
-      // Store original theme and apply export theme
-      originalTheme = mindmap.getTheme();
-      if (originalTheme !== exportTheme) {
-        mindmap.setTheme(exportTheme);
+        return await exportFromDesigner(designer, formatType);
+      } finally {
+        if (swapTheme) {
+          designer.applyTheme(originalTheme);
+        }
       }
     }
 
+    // exporting from map list: a fresh copy of the map, so it can take the export theme.
+    const mindmap = await fetchMindmap(mapId);
+    if (mindmap.getTheme() !== exportTheme) {
+      mindmap.setTheme(exportTheme);
+    }
+    return createExporter(formatType, mindmap).exportAndEncode();
+  };
+
+  const exportFromDesigner = (current: Designer, formatType: ExportFormat): Promise<string> => {
+    const svgElement = current.getWorkSpace().getSVGElement();
+    const size: SizeType = { width: window.innerWidth, height: window.innerHeight };
+
+    // Resolve the canvas background color applied by the Designer so exports
+    // include it (SVG, PNG, JPEG, PDF). Designer sets the style on the SVG's
+    // grandparent element (see Canvas.setBackgroundStyle). Read after
+    // applyTheme so the color matches the export theme.
+    let backgroundColor = '#ffffff';
+    const canvasContainer = svgElement?.parentElement?.parentElement;
+    if (canvasContainer) {
+      const resolved = window.getComputedStyle(canvasContainer).backgroundColor;
+      if (resolved && resolved !== 'rgba(0, 0, 0, 0)' && resolved !== 'transparent') {
+        backgroundColor = resolved;
+      }
+    }
+
+    return createExporter(
+      formatType,
+      current.getMindmap(),
+      svgElement,
+      size,
+      backgroundColor,
+    ).exportAndEncode();
+  };
+
+  const createExporter = (
+    formatType: ExportFormat,
+    mindmap: Mindmap,
+    svgElement?: Element,
+    size?: SizeType,
+    backgroundColor = '#ffffff',
+  ): Exporter => {
     let exporter: Exporter;
     switch (formatType) {
       case 'png':
@@ -185,7 +201,7 @@ const ExportDialog = ({
       }
     }
 
-    return exporter.exportAndEncode();
+    return exporter;
   };
 
   useEffect(() => {

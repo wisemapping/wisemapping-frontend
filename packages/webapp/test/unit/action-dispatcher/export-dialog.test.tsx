@@ -20,7 +20,8 @@ import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 // The dialog only needs the exporter factories from the editor bundle.
-const mockExporter = { exportAndEncode: () => Promise.resolve('blob:export') };
+const mockExportAndEncode = jest.fn(() => Promise.resolve('blob:export'));
+const mockExporter = { exportAndEncode: () => mockExportAndEncode() };
 const mockCreateTextExporter = jest.fn((_type: string, _mindmap: unknown) => mockExporter);
 const mockCreateImageExporter = jest.fn(
   (_type: string, _svg: Element, _width: number, _height: number) => mockExporter,
@@ -49,23 +50,36 @@ const client = {
   fetchMapMetadata: () => Promise.resolve({ title: 'Map' }),
 } as unknown as Client;
 
-const fakeMindmap = (name: string) => ({ name, getTheme: () => 'prism', setTheme: jest.fn() });
+const fakeMindmap = (name: string, theme = 'prism') => {
+  const mindmap = {
+    name,
+    theme,
+    getTheme: () => mindmap.theme,
+    setTheme: jest.fn((value: string) => {
+      mindmap.theme = value;
+    }),
+  };
+  return mindmap;
+};
 
 // A designer showing its own map on its own canvas.
-const fakeDesigner = (name: string) => {
+const fakeDesigner = (name: string, theme = 'prism') => {
   const container = document.createElement('div');
   const parent = document.createElement('div');
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   container.appendChild(parent);
   parent.appendChild(svg);
-  const mindmap = fakeMindmap(name);
+  const mindmap = fakeMindmap(name, theme);
+  // Like Designer.applyTheme: the theme goes to the model the editor saves.
+  const applyTheme = jest.fn((value: string) => mindmap.setTheme(value));
   return {
     svg,
     mindmap,
+    applyTheme,
     designer: {
       getWorkSpace: () => ({ getSVGElement: () => svg }),
       getMindmap: () => mindmap,
-      applyTheme: jest.fn(),
+      applyTheme,
     } as unknown as Designer,
   };
 };
@@ -115,5 +129,84 @@ describe('ExportDialog', () => {
     await waitFor(() => expect(mockCreateTextExporter).toHaveBeenCalled());
     expect(mockFetchMindmap).toHaveBeenCalledWith(7);
     expect(mockCreateTextExporter).toHaveBeenCalledWith('txt', selected);
+  });
+
+  describe('from the editor, leaves the live map theme as it was', () => {
+    const renderOwn = (own: ReturnType<typeof fakeDesigner>, enableImgExport = true) =>
+      renderWithProviders(
+        <ExportDialog
+          mapId={1}
+          enableImgExport={enableImgExport}
+          designer={own.designer}
+          onClose={jest.fn()}
+        />,
+        { client },
+      );
+
+    test('after an image export, rendered in the export theme', async () => {
+      const own = fakeDesigner('own map', 'classic');
+      let themeWhileExporting: string | undefined;
+      mockExportAndEncode.mockImplementationOnce(() => {
+        themeWhileExporting = own.mindmap.getTheme();
+        return Promise.resolve('blob:export');
+      });
+      renderOwn(own);
+
+      submit();
+
+      await waitFor(() => expect(own.applyTheme).toHaveBeenCalledTimes(2));
+      expect(themeWhileExporting).toBe('prism');
+      expect(own.applyTheme.mock.calls).toEqual([['prism'], ['classic']]);
+      expect(own.mindmap.getTheme()).toBe('classic');
+    });
+
+    test('after a text export', async () => {
+      const own = fakeDesigner('own map', 'classic');
+      renderOwn(own, false);
+
+      submit();
+
+      await waitFor(() => expect(mockCreateTextExporter).toHaveBeenCalled());
+      await waitFor(() => expect(own.mindmap.getTheme()).toBe('classic'));
+    });
+
+    test('when the export fails', async () => {
+      const own = fakeDesigner('own map', 'classic');
+      const consoleError = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+      mockExportAndEncode.mockImplementationOnce(() => Promise.reject(new Error('boom')));
+      renderOwn(own);
+
+      submit();
+
+      await waitFor(() => expect(consoleError).toHaveBeenCalled());
+      expect(own.applyTheme.mock.calls).toEqual([['prism'], ['classic']]);
+      expect(own.mindmap.getTheme()).toBe('classic');
+    });
+
+    test('when the exporter cannot be created', async () => {
+      const own = fakeDesigner('own map', 'classic');
+      const consoleError = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+      mockCreateImageExporter.mockImplementationOnce(() => {
+        throw new Error('boom');
+      });
+      renderOwn(own);
+
+      submit();
+
+      await waitFor(() => expect(consoleError).toHaveBeenCalled());
+      expect(own.mindmap.getTheme()).toBe('classic');
+    });
+
+    test('without re-rendering a map already in the export theme', async () => {
+      const own = fakeDesigner('own map', 'prism');
+      renderOwn(own);
+
+      submit();
+
+      await waitFor(() => expect(mockCreateImageExporter).toHaveBeenCalled());
+      await waitFor(() => expect(mockExportAndEncode).toHaveBeenCalled());
+      expect(own.applyTheme).not.toHaveBeenCalled();
+      expect(own.mindmap.getTheme()).toBe('prism');
+    });
   });
 });
