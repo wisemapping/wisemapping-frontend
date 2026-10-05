@@ -378,6 +378,16 @@ describe('RestClient account', () => {
     });
   });
 
+  it('fetchAccountInfo falls back to English for a locale the frontend does not support', async () => {
+    const { client } = newClient([{ data: { email: 'a@b.c', locale: 'xx' } }]);
+
+    const account = await client.fetchAccountInfo();
+
+    expect(account.email).toBe('a@b.c');
+    expect(account.locale?.code).toBe('en');
+    expect(appLogger.warn).toHaveBeenCalledWith("Unsupported account locale 'xx', using English");
+  });
+
   it('updateAccountInfo puts the first name and then the last name', async () => {
     const { client, calls } = newClient();
 
