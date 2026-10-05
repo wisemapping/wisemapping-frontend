@@ -18,6 +18,7 @@
 import { $assert, $defined } from '../util/assert';
 import PositionType from '../PositionType';
 import AbstractBasicSorter from './AbstractBasicSorter';
+import type { SorterPrediction } from './ChildrenSorterStrategy';
 import Node from './Node';
 import RootedTreeSet from './RootedTreeSet';
 import { sideOf } from '../util/side';
@@ -32,7 +33,7 @@ class BalancedSorter extends AbstractBasicSorter {
     parent: Node,
     node: Node | null,
     position: PositionType | null,
-  ): [number, PositionType] {
+  ): SorterPrediction {
     const rootNode = graph.getRootNode(parent);
 
     // If it is a dragged node...
@@ -44,7 +45,7 @@ class BalancedSorter extends AbstractBasicSorter {
 
       const sameParent = parent === graph.getParent(node);
       if (siblings.length === 0 && nodeDirection === positionDirection && sameParent) {
-        return [node.getOrder() ?? 0, node.getPosition()];
+        return { order: node.getOrder() ?? 0, position: node.getPosition() };
       }
     }
 
@@ -68,16 +69,16 @@ class BalancedSorter extends AbstractBasicSorter {
 
     // No children?
     if (children.length === 0) {
-      return [
+      return {
         order,
-        {
+        position: {
           x:
             parent.getPosition().x +
             direction *
               (parent.getSize().width / 2 + BalancedSorter.INTERNODE_HORIZONTAL_PADDING * 2),
           y: parent.getPosition().y,
         },
-      ];
+      };
     }
 
     // Order of the dragged node among these children, if it is one of them. Detaching it
@@ -85,7 +86,7 @@ class BalancedSorter extends AbstractBasicSorter {
     const nodeOrder = node && graph.getParent(node) === parent ? node.getOrder() : undefined;
 
     // Try to fit within ...
-    let result: [number, PositionType] | null = null;
+    let result: SorterPrediction | null = null;
     const last = children[children.length - 1];
     const newestPosition = position || { x: last.getPosition().x, y: last.getPosition().y + 1 };
     children.forEach((child, index) => {
@@ -104,7 +105,10 @@ class BalancedSorter extends AbstractBasicSorter {
         const childOrder = child.getOrder() ?? 0;
         const shifted =
           nodeOrder !== undefined && nodeOrder % 2 === childOrder % 2 && childOrder > nodeOrder;
-        result = [shifted ? childOrder : childOrder + 2, { x: cpos.x, y: cpos.y + yOffset }];
+        result = {
+          order: shifted ? childOrder : childOrder + 2,
+          position: { x: cpos.x, y: cpos.y + yOffset },
+        };
       }
     });
 
@@ -112,14 +116,14 @@ class BalancedSorter extends AbstractBasicSorter {
     // computed above (against the root, not the origin), which `children` are from.
     if (!result) {
       const first = children[0];
-      result = [
+      result = {
         order,
-        {
+        position: {
           x: first.getPosition().x,
           // Half a gap above it, as between two children.
           y: first.getPosition().y - this._halfSiblingGap(children, 0),
         },
-      ];
+      };
     }
 
     return result;

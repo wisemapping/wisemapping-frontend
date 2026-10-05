@@ -25,6 +25,7 @@ import SizeType from '../SizeType';
 import Node from './Node';
 import PositionType from '../PositionType';
 import LayoutEventType from './LayoutEventType';
+import type { SorterPrediction } from './ChildrenSorterStrategy';
 
 import type { LayoutType, OrientationType } from './LayoutType';
 
@@ -203,13 +204,12 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
     parentId: number,
     nodeId: number | null,
     position: PositionType | null,
-  ): { order: number; position: PositionType } {
+  ): SorterPrediction {
     const parent = this._treeSet.find(parentId);
     const node = nodeId ? this._treeSet.find(nodeId) : null;
     const sorter = parent.getSorter();
 
-    const result = sorter.predict(this._treeSet, parent, node, position);
-    return { order: result[0], position: result[1] };
+    return sorter.predict(this._treeSet, parent, node, position);
   }
 
   /**

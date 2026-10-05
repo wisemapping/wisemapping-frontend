@@ -20,8 +20,9 @@ import LayoutManager from '../../../src/components/layout/LayoutManager';
 import SymmetricSorter from '../../../src/components/layout/SymmetricSorter';
 import BalancedSorter from '../../../src/components/layout/BalancedSorter';
 import TreeSorter from '../../../src/components/layout/TreeSorter';
-import ChildrenSorterStrategy from '../../../src/components/layout/ChildrenSorterStrategy';
-import PositionType from '../../../src/components/PositionType';
+import ChildrenSorterStrategy, {
+  SorterPrediction,
+} from '../../../src/components/layout/ChildrenSorterStrategy';
 
 const ROOT_NODE_SIZE = { width: 140, height: 90 };
 const NODE_SIZE = { width: 80, height: 60 };
@@ -177,7 +178,8 @@ describe('sorter predict signatures (BL5-33, BL5-34)', () => {
   // LayoutManager.predict hands the sorters a null node (a new child) and a null position. As a
   // method, SymmetricSorter.predict could narrow them to non-null and still override the abstract
   // one; as plain functions, it does not compile (ts-jest type-checks this file).
-  type Predict = (...args: Parameters<ChildrenSorterStrategy['predict']>) => [number, PositionType];
+  // It returns the order and position by name (T5), not a tuple callers index by position.
+  type Predict = (...args: Parameters<ChildrenSorterStrategy['predict']>) => SorterPrediction;
 
   it.each([new SymmetricSorter(), new BalancedSorter(), new TreeSorter()])(
     '%s takes the nullable node and position LayoutManager passes, and nothing more',

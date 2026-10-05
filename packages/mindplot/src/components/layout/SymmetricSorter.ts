@@ -17,6 +17,7 @@
  */
 import { $assert } from '../util/assert';
 import AbstractBasicSorter from './AbstractBasicSorter';
+import type { SorterPrediction } from './ChildrenSorterStrategy';
 import RootedTreeSet from './RootedTreeSet';
 import Node from './Node';
 import PositionType from '../PositionType';
@@ -31,7 +32,7 @@ class SymmetricSorter extends AbstractBasicSorter {
     parent: Node,
     node: Node | null,
     position: PositionType | null,
-  ): [number, PositionType] {
+  ): SorterPrediction {
     const self = this;
     const rootNode = graph.getRootNode(parent);
 
@@ -45,7 +46,7 @@ class SymmetricSorter extends AbstractBasicSorter {
           parentDirection * (parent.getSize().width + SymmetricSorter.INTERNODE_HORIZONTAL_PADDING),
         y: parent.getPosition().y,
       };
-      return [graph.getChildren(parent).length, result];
+      return { order: graph.getChildren(parent).length, position: result };
     }
 
     // If it is a dragged node...
@@ -57,7 +58,7 @@ class SymmetricSorter extends AbstractBasicSorter {
     // node has no siblings and its trying to reconnect to its own parent
     const sameParent = parent === graph.getParent(node);
     if (siblings.length === 0 && nodeDirection === positionDirection && sameParent) {
-      return [node.getOrder() ?? 0, node.getPosition()];
+      return { order: node.getOrder() ?? 0, position: node.getPosition() };
     }
 
     // By order, top to bottom. A copy: the children array is in whatever order a layout last left.
@@ -75,7 +76,7 @@ class SymmetricSorter extends AbstractBasicSorter {
         y: parent.getPosition().y,
       };
 
-      return [0, result];
+      return { order: 0, position: result };
     }
 
     // Try to fit within ...
@@ -97,7 +98,7 @@ class SymmetricSorter extends AbstractBasicSorter {
           x: parentChild.getPosition().x,
           y: parentChild.getPosition().y + this._halfSiblingGap(parentChildren, i),
         };
-        return [order, result];
+        return { order, position: result };
       }
 
       // Fit after this node. Exactly at the centre of the node after counts as the pixel above
@@ -108,7 +109,7 @@ class SymmetricSorter extends AbstractBasicSorter {
         position.y <= nodeAfter.getPosition().y
       ) {
         if (nodeAfter.getId() === node.getId() || parentChild.getId() === node.getId()) {
-          return [node.getOrder() ?? 0, node.getPosition()];
+          return { order: node.getOrder() ?? 0, position: node.getPosition() };
         }
         // Moving down within the same parent: detaching the node first shifts the
         // siblings below it up by one, so the slot is one less than nodeAfter's order.
@@ -125,7 +126,7 @@ class SymmetricSorter extends AbstractBasicSorter {
             (nodeAfter.getPosition().y - parentChild.getPosition().y) / 2,
         };
 
-        return [orderResult, positionResult];
+        return { order: orderResult, position: positionResult };
       }
     }
 
@@ -136,7 +137,7 @@ class SymmetricSorter extends AbstractBasicSorter {
       x: first.getPosition().x,
       y: first.getPosition().y - this._halfSiblingGap(parentChildren, 0),
     };
-    return [0, resultPosition];
+    return { order: 0, position: resultPosition };
   }
 
   /**

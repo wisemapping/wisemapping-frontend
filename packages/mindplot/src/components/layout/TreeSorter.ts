@@ -17,6 +17,7 @@
  */
 import { $assert } from '../util/assert';
 import AbstractBasicSorter from './AbstractBasicSorter';
+import type { SorterPrediction } from './ChildrenSorterStrategy';
 import RootedTreeSet from './RootedTreeSet';
 import Node from './Node';
 import PositionType from '../PositionType';
@@ -31,7 +32,7 @@ class TreeSorter extends AbstractBasicSorter {
     parent: Node,
     node: Node | null,
     position: PositionType | null,
-  ): [number, PositionType] {
+  ): SorterPrediction {
     // If node is being added (not dragged)
     if (!node) {
       const parentChildren = graph.getChildren(parent);
@@ -41,12 +42,12 @@ class TreeSorter extends AbstractBasicSorter {
         x: parent.getPosition().x,
         y: parent.getPosition().y + parent.getSize().height + TreeSorter.INTERNODE_VERTICAL_PADDING,
       };
-      return [order, result];
+      return { order, position: result };
     }
 
     // If position not provided, keep current position
     if (!position) {
-      return [node.getOrder() ?? 0, node.getPosition()];
+      return { order: node.getOrder() ?? 0, position: node.getPosition() };
     }
 
     // Node is being dragged - determine order based on horizontal position.
@@ -62,7 +63,7 @@ class TreeSorter extends AbstractBasicSorter {
         x: parent.getPosition().x,
         y: parent.getPosition().y + parent.getSize().height + TreeSorter.INTERNODE_VERTICAL_PADDING,
       };
-      return [0, result];
+      return { order: 0, position: result };
     }
 
     // Find position in order based on X coordinate
@@ -95,7 +96,7 @@ class TreeSorter extends AbstractBasicSorter {
       xPos = (prevChild.getPosition().x + nextChild.getPosition().x) / 2;
     }
 
-    return [order, { x: xPos, y: yPos }];
+    return { order, position: { x: xPos, y: yPos } };
   }
 
   /**
