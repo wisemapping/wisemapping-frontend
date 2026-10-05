@@ -1,4 +1,3 @@
-/* eslint-disable func-call-spacing */
 /*
  *    Copyright [2007-2025] [wisemapping]
  *

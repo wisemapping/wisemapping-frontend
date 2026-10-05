@@ -26,6 +26,7 @@ import {
 } from '../../../src/components/persistence/TopicAttributeTypes';
 import ClassicTheme from '../../../src/components/theme/ClassicTheme';
 import { TopicType } from '../../../src/components/theme/Theme';
+import Topic from '../../../src/components/Topic';
 import { ThemeStyle } from '../../../src/components/theme/ThemeStyle';
 import fakeTopic from './FakeTopic';
 
@@ -60,21 +61,35 @@ describe('ThemeStyle checks the JSON values (BL5-186)', () => {
   });
 });
 
+// Its typed values, read through a subclass: resolve is protected. ts-jest type-checks the
+// return types below, which were all the union of every style value.
+class ResolvingTheme extends ClassicTheme {
+  shapeType(topic: Topic): TopicShapeType {
+    return this.resolve('shapeType', topic);
+  }
+
+  fontStyle(topic: Topic): FontStyleType {
+    return this.resolve('fontStyle', topic);
+  }
+
+  connectionStyle(topic: Topic): LineType {
+    return this.resolve('connectionStyle', topic);
+  }
+
+  ownFontColor(topic: Topic): string | undefined {
+    return this.resolve('fontColor', topic, false);
+  }
+}
+
 describe('DefaultTheme.resolve is typed by key (BL5-186)', () => {
-  const theme = new ClassicTheme('light');
+  const theme = new ResolvingTheme('light');
   const central = fakeTopic({}, undefined, { central: true });
   const main = fakeTopic({ fontStyle: 'italic' }, central);
 
   it('returns the style type, without a cast', () => {
-    // Bracket access reaches the protected method; ts-jest type-checks these assignments.
-    const shapeType: TopicShapeType = theme['resolve']('shapeType', main);
-    const fontStyle: FontStyleType = theme['resolve']('fontStyle', main);
-    const connection: LineType = theme['resolve']('connectionStyle', main);
-    const fontColor: string | undefined = theme['resolve']('fontColor', main, false);
-
-    expect(shapeType).toBe(theme.getShapeType(main));
-    expect(fontStyle).toBe('italic');
-    expect(connection).toBe(theme.getConnectionType(main));
-    expect(fontColor).toBeUndefined();
+    expect(theme.shapeType(main)).toBe(theme.getShapeType(main));
+    expect(theme.fontStyle(main)).toBe('italic');
+    expect(theme.connectionStyle(main)).toBe(theme.getConnectionType(main));
+    expect(theme.ownFontColor(main)).toBeUndefined();
   });
 });
