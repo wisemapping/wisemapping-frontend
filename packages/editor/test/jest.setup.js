@@ -19,11 +19,11 @@
 // jsdom ships without TextEncoder/TextDecoder. The @wisemapping/mindplot bundle
 // pulls in jspdf, which touches both at module scope, so anything importing
 // mindplot from a jsdom test fails to even load without these.
-const { TextEncoder, TextDecoder } = require('util');
+const util = require('util');
 
 if (typeof global.TextEncoder === 'undefined') {
-  global.TextEncoder = TextEncoder;
+  global.TextEncoder = util.TextEncoder;
 }
 if (typeof global.TextDecoder === 'undefined') {
-  global.TextDecoder = TextDecoder;
+  global.TextDecoder = util.TextDecoder;
 }

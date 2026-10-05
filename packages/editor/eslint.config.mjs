@@ -78,4 +78,19 @@ export default defineConfig([globalIgnores(["**/dist/**/*"]), {
             patterns: ["@mui/*/*/*", "!@mui/material/test-utils/*"],
         }],
     },
+}, {
+    // The jest setup and module mocks are CommonJS, run by Node.
+    files: ["test/**/*.js"],
+
+    languageOptions: {
+        globals: {
+            ...globals.node,
+        },
+
+        sourceType: "commonjs",
+    },
+
+    rules: {
+        "@typescript-eslint/no-require-imports": "off",
+    },
 }]);

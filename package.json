@@ -31,7 +31,7 @@
       "cd packages/mindplot && eslint --fix",
       "prettier --write"
     ],
-    "packages/editor/src/**/*.{ts,tsx}": [
+    "packages/editor/{src,test}/**/*.{ts,tsx}": [
       "cd packages/editor && eslint --fix",
       "prettier --write"
     ],
