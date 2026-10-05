@@ -61,8 +61,12 @@ const OAuthCallbackPage = (): React.ReactElement => {
       id: 'registation.success-title',
       defaultMessage: 'Registation Success | WiseMapping',
     });
+  }, [intl]);
+
+  // Once per visit: a language change retitles the page but is not a new page view.
+  useEffect(() => {
     trackPageView(window.location.pathname, 'Registration:Success');
-  });
+  }, []);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
