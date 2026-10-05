@@ -468,7 +468,7 @@ class MockClient implements Client {
     if (!exists) {
       const newMap: MapInfo = {
         id: Math.random() * 1000,
-        description: String(basicInfo.description),
+        description: basicInfo.description || '',
         title: basicInfo.title,
         starred: false,
         createdBy: 'current user',

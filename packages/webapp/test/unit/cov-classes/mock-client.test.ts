@@ -105,9 +105,8 @@ describe('MockClient maps', () => {
     });
   });
 
-  // Bug: mock-client/index.ts:471 stores String(undefined), so a copy made without a
-  // description shows the literal text "undefined".
-  it.failing('duplicateMap leaves the description empty when none is given', async () => {
+  // It used to store String(undefined), so the copy showed the literal text "undefined".
+  it('duplicateMap leaves the description empty when none is given', async () => {
     const id = await client.duplicateMap(1, { title: 'Bare copy' });
 
     const maps = await client.fetchAllMaps();
