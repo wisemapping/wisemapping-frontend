@@ -52,16 +52,22 @@ const config: StorybookConfig = {
     }
 
     config.resolve = config.resolve || {};
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@wisemapping/mindplot/src/components/DesignerKeyboard': path.resolve(__dirname, './mocks/DesignerKeyboard.ts'),
-      '@wisemapping/mindplot/src/components/theme/ThemeStyle': path.resolve(__dirname, './mocks/ThemeStyle.ts'),
+    // vite.config.ts gives its aliases as an array of { find, replacement }: spreading it into an
+    // object made entries whose replacement is an object, which Vite can not apply. The aliases
+    // below come first so that they win over the vite.config.ts ones.
+    const existingAliases = config.resolve.alias ?? [];
+    config.resolve.alias = [
+      { find: '@wisemapping/mindplot/src/components/DesignerKeyboard', replacement: path.resolve(__dirname, './mocks/DesignerKeyboard.ts') },
+      { find: '@wisemapping/mindplot/src/components/theme/ThemeStyle', replacement: path.resolve(__dirname, './mocks/ThemeStyle.ts') },
       // Resolve workspace packages directly to source to avoid build order issues in storybook
-      '@wisemapping/mindplot': path.resolve(__dirname, '../../mindplot/src/index.ts'),
-      '@wisemapping/web2d': path.resolve(__dirname, '../../web2d/src/index.ts'),
+      { find: /^@wisemapping\/mindplot$/, replacement: path.resolve(__dirname, '../../mindplot/src/index.ts') },
+      { find: /^@wisemapping\/web2d$/, replacement: path.resolve(__dirname, '../../web2d/src/index.ts') },
       // Add explicit alias for MUI icons to fix workspace resolution
-      '@mui/icons-material': path.resolve(__dirname, '../../../node_modules/@mui/icons-material'),
-    };
+      { find: '@mui/icons-material', replacement: path.resolve(__dirname, '../../../node_modules/@mui/icons-material') },
+      ...(Array.isArray(existingAliases)
+        ? existingAliases
+        : Object.entries(existingAliases).map(([find, replacement]) => ({ find, replacement }))),
+    ];
 
     // Add dedupe for MUI packages to fix workspace resolution
     config.resolve.dedupe = config.resolve.dedupe || [];
