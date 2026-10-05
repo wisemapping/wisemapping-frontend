@@ -212,6 +212,18 @@
   "shortcut-help-pane.cancel-text-changes": {
     "defaultMessage": "Скасувати зміни тексту"
   },
+  "shortcut-help-pane.category-editing": {
+    "defaultMessage": "Редагування"
+  },
+  "shortcut-help-pane.category-format": {
+    "defaultMessage": "Формат"
+  },
+  "shortcut-help-pane.category-navigation": {
+    "defaultMessage": "Навігація"
+  },
+  "shortcut-help-pane.category-view": {
+    "defaultMessage": "Вигляд"
+  },
   "shortcut-help-pane.change-font-bold": {
     "defaultMessage": "Змінити текст на жирний"
   },
@@ -242,8 +254,29 @@
   "shortcut-help-pane.deselect-all-topics": {
     "defaultMessage": "Скасувати вибір всіх тем"
   },
+  "shortcut-help-pane.diagram-aria": {
+    "defaultMessage": "Стрілка ліворуч переходить до батьківської теми, стрілка праворуч — до дочірньої, вгору й униз — між сестринськими темами."
+  },
+  "shortcut-help-pane.diagram-caption": {
+    "defaultMessage": "У лівій половині карти ← і → міняються ролями."
+  },
+  "shortcut-help-pane.diagram-child": {
+    "defaultMessage": "Дочірня"
+  },
+  "shortcut-help-pane.diagram-parent": {
+    "defaultMessage": "Батьківська"
+  },
+  "shortcut-help-pane.diagram-selected": {
+    "defaultMessage": "Вибрана"
+  },
+  "shortcut-help-pane.diagram-sibling": {
+    "defaultMessage": "Сестринська"
+  },
   "shortcut-help-pane.drag-disconnect": {
     "defaultMessage": "Відключити тему"
+  },
+  "shortcut-help-pane.drag-disconnect-key": {
+    "defaultMessage": "перетягнути тему"
   },
   "shortcut-help-pane.edit-multiline": {
     "defaultMessage": "Додати багаторядковий текст теми"
@@ -696,43 +729,43 @@
     "defaultMessage": "Вибрати тему"
   },
   "theme.classic.description": {
-    "defaultMessage": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+    "defaultMessage": "Чистий професійний дизайн із синіми акцентами. Ідеально підходить для ділових презентацій та офіційних документів."
   },
   "theme.classic.name": {
     "defaultMessage": "Класичний"
   },
   "theme.aurora.description": {
-    "defaultMessage": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    "defaultMessage": "Градієнтна тема в неоновому стилі з ефектами світіння, жирною типографікою та контрастними з'єднувачами для захопливої розповіді."
   },
   "theme.aurora.name": {
     "defaultMessage": "Аврора"
   },
   "theme.retro.description": {
-    "defaultMessage": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    "defaultMessage": "Палітра синтвейву 80-х із неоновими контурами, хромованими градієнтами та полотнами в сітку, натхненна ретровечірками."
   },
   "theme.retro.name": {
     "defaultMessage": "80s Ретро Ніч"
   },
   "theme.ocean.description": {
-    "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+    "defaultMessage": "Синя тема в морському стилі зі світлим і темним варіантами. Спокійні професійні кольори, ідеальні для ділових і творчих проєктів."
   },
   "theme.ocean.name": {
     "defaultMessage": "Океан"
   },
   "theme.robot.description": {
-    "defaultMessage": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+    "defaultMessage": "Зелена тема в технологічному стилі. Ідеально підходить для технічної документації та футуристичних презентацій."
   },
   "theme.robot.name": {
     "defaultMessage": "Робот"
   },
   "theme.summer.description": {
-    "defaultMessage": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+    "defaultMessage": "Яскрава й насичена помаранчева тема. Чудово підходить для творчих проєктів та енергійних презентацій."
   },
   "theme.summer.name": {
     "defaultMessage": "Літо"
   },
   "theme.sunrise.description": {
-    "defaultMessage": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+    "defaultMessage": "Тема «Схід сонця» зі світлим і темним режимами. Покращені кольори та контраст для кращої читабельності."
   },
   "theme.sunrise.name": {
     "defaultMessage": "Схід сонця"
@@ -747,40 +780,40 @@
     "defaultMessage": "Введення заголовка"
   },
   "canvas-style.tab-color": {
-    "defaultMessage": "Color"
+    "defaultMessage": "Колір"
   },
   "canvas-style.tab-grid": {
-    "defaultMessage": "Grid Color"
+    "defaultMessage": "Колір сітки"
   },
   "canvas-style.background-style": {
-    "defaultMessage": "Background Style"
+    "defaultMessage": "Стиль фону"
   },
   "canvas-style.pattern-default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "За замовчуванням - Усі стилі буде автоматично вибрано на основі теми"
   },
   "icon-collection.shape.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "За замовчуванням"
   },
   "icon-collection.border.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "За замовчуванням"
   },
   "icon-collection.border.default-tooltip": {
     "defaultMessage": "За замовчуванням - Кольори буде автоматично взято з вибраної теми"
   },
   "icon-collection.connection.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "За замовчуванням"
   },
   "icon-collection.default-tooltip": {
     "defaultMessage": "За замовчуванням - Усі стилі буде автоматично вибрано на основі теми"
   },
   "unified-styling.shape-type": {
-    "defaultMessage": "Shape Type"
+    "defaultMessage": "Тип форми"
   },
   "unified-styling.background-color": {
-    "defaultMessage": "Background Color"
+    "defaultMessage": "Колір фону"
   },
   "topic-font-editor.reset-to-default": {
-    "defaultMessage": "Reset to Default"
+    "defaultMessage": "Скинути до значень за замовчуванням"
   },
   "appbar.tooltip-change-layout": {
     "defaultMessage": "Змінити макет"

@@ -311,6 +311,18 @@
   "shortcut-help-pane.cancel-text-changes": {
     "defaultMessage": "取消文本更改"
   },
+  "shortcut-help-pane.category-editing": {
+    "defaultMessage": "编辑"
+  },
+  "shortcut-help-pane.category-format": {
+    "defaultMessage": "格式"
+  },
+  "shortcut-help-pane.category-navigation": {
+    "defaultMessage": "导航"
+  },
+  "shortcut-help-pane.category-view": {
+    "defaultMessage": "视图"
+  },
   "shortcut-help-pane.change-font-bold": {
     "defaultMessage": "将文本改为粗体"
   },
@@ -341,8 +353,29 @@
   "shortcut-help-pane.deselect-all-topics": {
     "defaultMessage": "取消选择所有主题"
   },
+  "shortcut-help-pane.diagram-aria": {
+    "defaultMessage": "左箭头移到父主题，右箭头移到子主题，上下箭头在同级主题之间移动。"
+  },
+  "shortcut-help-pane.diagram-caption": {
+    "defaultMessage": "在导图的左半部分，← 和 → 的作用互换。"
+  },
+  "shortcut-help-pane.diagram-child": {
+    "defaultMessage": "子主题"
+  },
+  "shortcut-help-pane.diagram-parent": {
+    "defaultMessage": "父主题"
+  },
+  "shortcut-help-pane.diagram-selected": {
+    "defaultMessage": "已选中"
+  },
+  "shortcut-help-pane.diagram-sibling": {
+    "defaultMessage": "同级主题"
+  },
   "shortcut-help-pane.drag-disconnect": {
     "defaultMessage": "断开主题连接"
+  },
+  "shortcut-help-pane.drag-disconnect-key": {
+    "defaultMessage": "拖动主题"
   },
   "shortcut-help-pane.edit-multiline": {
     "defaultMessage": "添加多行主题文本"
@@ -696,43 +729,43 @@
     "defaultMessage": "选择主题"
   },
   "theme.classic.description": {
-    "defaultMessage": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+    "defaultMessage": "简洁专业的设计，搭配蓝色点缀。非常适合商务演示和正式文档。"
   },
   "theme.classic.name": {
     "defaultMessage": "经典"
   },
   "theme.aurora.description": {
-    "defaultMessage": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    "defaultMessage": "霓虹风格的渐变主题，带有发光效果、粗体字体和高对比度连接线，专为沉浸式叙事而设计。"
   },
   "theme.aurora.name": {
     "defaultMessage": "极光"
   },
   "theme.retro.description": {
-    "defaultMessage": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    "defaultMessage": "80 年代合成波配色，搭配霓虹轮廓、镀铬渐变和网格画布，灵感来自复古夜间派对。"
   },
   "theme.retro.name": {
     "defaultMessage": "80年代复古之夜"
   },
   "theme.ocean.description": {
-    "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+    "defaultMessage": "海洋风格的蓝色主题，提供浅色和深色两种变体。沉稳专业的配色，非常适合商务和创意项目。"
   },
   "theme.ocean.name": {
     "defaultMessage": "海洋"
   },
   "theme.robot.description": {
-    "defaultMessage": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+    "defaultMessage": "科技风格的绿色主题。非常适合技术文档和未来感演示。"
   },
   "theme.robot.name": {
     "defaultMessage": "机器人"
   },
   "theme.summer.description": {
-    "defaultMessage": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+    "defaultMessage": "明亮活泼的橙色主题。非常适合创意项目和充满活力的演示。"
   },
   "theme.summer.name": {
     "defaultMessage": "夏季"
   },
   "theme.sunrise.description": {
-    "defaultMessage": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+    "defaultMessage": "日出主题，提供浅色和深色模式。增强的颜色和对比度带来更好的可读性。"
   },
   "theme.sunrise.name": {
     "defaultMessage": "日出"
@@ -747,40 +780,40 @@
     "defaultMessage": "标题输入"
   },
   "canvas-style.tab-color": {
-    "defaultMessage": "Color"
+    "defaultMessage": "颜色"
   },
   "canvas-style.tab-grid": {
-    "defaultMessage": "Grid Color"
+    "defaultMessage": "网格颜色"
   },
   "canvas-style.background-style": {
-    "defaultMessage": "Background Style"
+    "defaultMessage": "背景样式"
   },
   "canvas-style.pattern-default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "默认 - 所有样式将根据主题自动选择"
   },
   "icon-collection.shape.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "默认"
   },
   "icon-collection.border.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "默认"
   },
   "icon-collection.border.default-tooltip": {
     "defaultMessage": "預設 - 顏色將根據所選主題自動設定"
   },
   "icon-collection.connection.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "默认"
   },
   "icon-collection.default-tooltip": {
     "defaultMessage": "預設 - 所有樣式將根據主題自動選擇"
   },
   "unified-styling.shape-type": {
-    "defaultMessage": "Shape Type"
+    "defaultMessage": "形状类型"
   },
   "unified-styling.background-color": {
-    "defaultMessage": "Background Color"
+    "defaultMessage": "背景颜色"
   },
   "topic-font-editor.reset-to-default": {
-    "defaultMessage": "Reset to Default"
+    "defaultMessage": "恢复默认"
   },
   "appbar.tooltip-change-layout": {
     "defaultMessage": "更改佈局"

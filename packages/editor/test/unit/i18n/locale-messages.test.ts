@@ -31,8 +31,47 @@ const locales = fs
   .map((file) => path.basename(file, '.json'))
   .filter((lang) => lang !== 'en');
 
+// Messages a locale rightly writes as English does: names, loanwords and the URL placeholder.
+const SAME_AS_ENGLISH: Record<string, string[]> = {
+  'link.placeholder': locales,
+  'appbar.logo-aria-label': ['de'],
+  'canvas-style.tab-color': ['es'],
+  'color-picker.color': ['es'],
+  'creator-info-pane.description': ['fr'],
+  'editor-panel.link-panel-title': ['pt'],
+  'editor-panel.note-panel-title': ['fr'],
+  'icon-collection.connection.arc': ['fr'],
+  'icon-collection.connection.neuron': ['de'],
+  'icon-collection.shape.ellipse': ['de', 'fr'],
+  'icon-collection.shape.rectangle': ['fr'],
+  'icon-picker.emojis': ['de', 'es', 'fr', 'pt'],
+  'layout.mindmap.name': ['de'],
+  'outline.link': ['de', 'it', 'pt'],
+  'outline.note': ['fr'],
+  'shortcut-help-pane.action': ['fr'],
+  'shortcut-help-pane.category-format': ['de', 'fr'],
+  'shortcut-help-pane.diagram-parent': ['fr'],
+  'shortcut-help-pane.navigation': ['de'],
+  'theme.aurora.name': ['de', 'es', 'fr', 'it', 'pt'],
+  'theme.robot.name': ['es', 'fr', 'it'],
+};
+
 describe.each(locales)('%s messages', (lang) => {
   const messages = readLang(lang);
+
+  // BL5-176: keys added to English never reached the locales, and others were left in English.
+  test('has every English message', () => {
+    expect(Object.keys(en).filter((id) => !messages[id])).toEqual([]);
+  });
+
+  test('translates every English message', () => {
+    const untranslated = Object.keys(en).filter(
+      (id) =>
+        messages[id]?.defaultMessage === en[id].defaultMessage &&
+        !SAME_AS_ENGLISH[id]?.includes(lang),
+    );
+    expect(untranslated).toEqual([]);
+  });
 
   test.each(['icon-collection.default-tooltip', 'icon-collection.border.default-tooltip'])(
     'translates %s',

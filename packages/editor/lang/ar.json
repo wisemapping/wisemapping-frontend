@@ -224,6 +224,18 @@
   "shortcut-help-pane.cancel-text-changes": {
     "defaultMessage": "إلغاء تغييرات النص"
   },
+  "shortcut-help-pane.category-editing": {
+    "defaultMessage": "التحرير"
+  },
+  "shortcut-help-pane.category-format": {
+    "defaultMessage": "التنسيق"
+  },
+  "shortcut-help-pane.category-navigation": {
+    "defaultMessage": "التنقل"
+  },
+  "shortcut-help-pane.category-view": {
+    "defaultMessage": "العرض"
+  },
   "shortcut-help-pane.change-font-bold": {
     "defaultMessage": "تغيير النص إلى غامق"
   },
@@ -254,8 +266,29 @@
   "shortcut-help-pane.deselect-all-topics": {
     "defaultMessage": "إلغاء تحديد جميع المواضيع"
   },
+  "shortcut-help-pane.diagram-aria": {
+    "defaultMessage": "ينتقل السهم الأيسر إلى الموضوع الأصل، والسهم الأيمن إلى موضوع فرعي، والسهمان لأعلى ولأسفل بين المواضيع الشقيقة."
+  },
+  "shortcut-help-pane.diagram-caption": {
+    "defaultMessage": "في النصف الأيسر من الخريطة، يتبادل ← و → دوريهما."
+  },
+  "shortcut-help-pane.diagram-child": {
+    "defaultMessage": "فرعي"
+  },
+  "shortcut-help-pane.diagram-parent": {
+    "defaultMessage": "أصل"
+  },
+  "shortcut-help-pane.diagram-selected": {
+    "defaultMessage": "محدد"
+  },
+  "shortcut-help-pane.diagram-sibling": {
+    "defaultMessage": "شقيق"
+  },
   "shortcut-help-pane.drag-disconnect": {
     "defaultMessage": "فصل الموضوع"
+  },
+  "shortcut-help-pane.drag-disconnect-key": {
+    "defaultMessage": "اسحب الموضوع"
   },
   "shortcut-help-pane.edit-multiline": {
     "defaultMessage": "إضافة نص موضوع متعدد الأسطر"

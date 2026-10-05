@@ -209,6 +209,18 @@
   "shortcut-help-pane.cancel-text-changes": {
     "defaultMessage": "पाठ परिवर्तन रद्द करें"
   },
+  "shortcut-help-pane.category-editing": {
+    "defaultMessage": "संपादन"
+  },
+  "shortcut-help-pane.category-format": {
+    "defaultMessage": "फ़ॉर्मेट"
+  },
+  "shortcut-help-pane.category-navigation": {
+    "defaultMessage": "नेविगेशन"
+  },
+  "shortcut-help-pane.category-view": {
+    "defaultMessage": "दृश्य"
+  },
   "shortcut-help-pane.change-font-bold": {
     "defaultMessage": "पाठ को बोल्ड करें"
   },
@@ -239,8 +251,29 @@
   "shortcut-help-pane.deselect-all-topics": {
     "defaultMessage": "सभी विषयों का चयन रद्द करें"
   },
+  "shortcut-help-pane.diagram-aria": {
+    "defaultMessage": "बायाँ तीर पैरेंट विषय पर ले जाता है, दायाँ तीर चाइल्ड विषय पर, और ऊपर-नीचे के तीर सिबलिंग विषयों के बीच।"
+  },
+  "shortcut-help-pane.diagram-caption": {
+    "defaultMessage": "मैप के बाएँ आधे भाग में ← और → की भूमिकाएँ आपस में बदल जाती हैं।"
+  },
+  "shortcut-help-pane.diagram-child": {
+    "defaultMessage": "चाइल्ड"
+  },
+  "shortcut-help-pane.diagram-parent": {
+    "defaultMessage": "पैरेंट"
+  },
+  "shortcut-help-pane.diagram-selected": {
+    "defaultMessage": "चयनित"
+  },
+  "shortcut-help-pane.diagram-sibling": {
+    "defaultMessage": "सिबलिंग"
+  },
   "shortcut-help-pane.drag-disconnect": {
     "defaultMessage": "विषय डिस्कनेक्ट करें"
+  },
+  "shortcut-help-pane.drag-disconnect-key": {
+    "defaultMessage": "विषय खींचें"
   },
   "shortcut-help-pane.edit-multiline": {
     "defaultMessage": "मल्टी-लाइन पाठ जोड़ें"
@@ -504,10 +537,10 @@
     "defaultMessage": "विषय और कनेक्शन शैली"
   },
   "color-picker.color": {
-    "defaultMessage": "Color"
+    "defaultMessage": "रंग"
   },
   "color-picker.default-color": {
-    "defaultMessage": "Default color"
+    "defaultMessage": "डिफ़ॉल्ट रंग"
   },
   "relationship-style-editor.color": {
     "defaultMessage": "संबंध रंग"
@@ -516,34 +549,34 @@
     "defaultMessage": "रेखा शैली और तीर"
   },
   "relationship-style-editor.solid-line": {
-    "defaultMessage": "Solid Line"
+    "defaultMessage": "ठोस रेखा"
   },
   "relationship-style-editor.solid-line-tooltip": {
-    "defaultMessage": "Solid line style"
+    "defaultMessage": "ठोस रेखा शैली"
   },
   "relationship-style-editor.dashed-line": {
-    "defaultMessage": "Dashed Line"
+    "defaultMessage": "डैश वाली रेखा"
   },
   "relationship-style-editor.dashed-line-tooltip": {
-    "defaultMessage": "Dashed line style"
+    "defaultMessage": "डैश वाली रेखा शैली"
   },
   "relationship-style-editor.dotted-line": {
-    "defaultMessage": "Dotted Line"
+    "defaultMessage": "बिंदुदार रेखा"
   },
   "relationship-style-editor.dotted-line-tooltip": {
-    "defaultMessage": "Dotted line style"
+    "defaultMessage": "बिंदुदार रेखा शैली"
   },
   "relationship-style-editor.end-arrow": {
-    "defaultMessage": "End Arrow"
+    "defaultMessage": "अंतिम तीर"
   },
   "relationship-style-editor.end-arrow-tooltip": {
-    "defaultMessage": "Toggle end arrow"
+    "defaultMessage": "अंतिम तीर टॉगल करें"
   },
   "relationship-style-editor.start-arrow": {
-    "defaultMessage": "Start Arrow"
+    "defaultMessage": "प्रारंभिक तीर"
   },
   "relationship-style-editor.start-arrow-tooltip": {
-    "defaultMessage": "Toggle start arrow"
+    "defaultMessage": "प्रारंभिक तीर टॉगल करें"
   },
   "topic-font-editor.font-color": {
     "defaultMessage": "फ़ॉन्ट रंग"
@@ -555,31 +588,31 @@
     "defaultMessage": "फ़ॉन्ट आकार और शैली"
   },
   "topic-font-editor.increase-size": {
-    "defaultMessage": "Bigger"
+    "defaultMessage": "बड़ा"
   },
   "topic-font-editor.increase-size-tooltip": {
-    "defaultMessage": "Increase font size"
+    "defaultMessage": "फ़ॉन्ट आकार बढ़ाएँ"
   },
   "topic-font-editor.decrease-size": {
-    "defaultMessage": "Smaller"
+    "defaultMessage": "छोटा"
   },
   "topic-font-editor.decrease-size-tooltip": {
-    "defaultMessage": "Decrease font size"
+    "defaultMessage": "फ़ॉन्ट आकार घटाएँ"
   },
   "topic-font-editor.bold": {
-    "defaultMessage": "Bold"
+    "defaultMessage": "बोल्ड"
   },
   "topic-font-editor.bold-tooltip": {
-    "defaultMessage": "Toggle bold"
+    "defaultMessage": "बोल्ड टॉगल करें"
   },
   "topic-font-editor.italic": {
-    "defaultMessage": "Italic"
+    "defaultMessage": "इटैलिक"
   },
   "topic-font-editor.italic-tooltip": {
-    "defaultMessage": "Toggle italic"
+    "defaultMessage": "इटैलिक टॉगल करें"
   },
   "topic-font-editor.active": {
-    "defaultMessage": "active"
+    "defaultMessage": "सक्रिय"
   },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "कोई आकार नहीं"
@@ -588,34 +621,34 @@
     "defaultMessage": "हेडर सूचक"
   },
   "icon-collection.shape.none": {
-    "defaultMessage": "None"
+    "defaultMessage": "कोई नहीं"
   },
   "icon-collection.shape.none-tooltip": {
-    "defaultMessage": "None - No visible shape background"
+    "defaultMessage": "कोई नहीं - कोई दृश्य आकार पृष्ठभूमि नहीं"
   },
   "icon-collection.shape.line": {
-    "defaultMessage": "Line"
+    "defaultMessage": "रेखा"
   },
   "icon-collection.shape.rectangle": {
-    "defaultMessage": "Rectangle"
+    "defaultMessage": "आयत"
   },
   "icon-collection.shape.rounded": {
-    "defaultMessage": "Rounded"
+    "defaultMessage": "गोलाकार कोने"
   },
   "icon-collection.shape.ellipse": {
-    "defaultMessage": "Ellipse"
+    "defaultMessage": "दीर्घवृत्त"
   },
   "icon-collection.border.solid": {
-    "defaultMessage": "Solid"
+    "defaultMessage": "ठोस"
   },
   "icon-collection.border.dashed": {
-    "defaultMessage": "Dashed"
+    "defaultMessage": "डैश वाली"
   },
   "icon-collection.border.dotted": {
-    "defaultMessage": "Dotted"
+    "defaultMessage": "बिंदुदार"
   },
   "icon-collection.connection.thick-curved": {
-    "defaultMessage": "Thick Curved"
+    "defaultMessage": "मोटी घुमावदार"
   },
   "icon-collection.connection.arc": {
     "defaultMessage": "चाप"
@@ -636,16 +669,16 @@
     "defaultMessage": "हाथ से खींची गई शैली जिसमें नाटकीय कर्व हैं - रचनात्मक और अभिव्यंजक माइंडमैप के लिए परफेक्ट"
   },
   "icon-collection.connection.thin-curved": {
-    "defaultMessage": "Thin Curved"
+    "defaultMessage": "पतली घुमावदार"
   },
   "icon-collection.connection.simple-polyline": {
-    "defaultMessage": "Simple Polyline"
+    "defaultMessage": "सरल पॉलीलाइन"
   },
   "icon-collection.connection.simple-polyline-tooltip": {
-    "defaultMessage": "Direct straight line connection - Clean and minimalist style for simple relationships"
+    "defaultMessage": "सीधी रेखा वाला सीधा कनेक्शन - सरल संबंधों के लिए साफ़ और न्यूनतम शैली"
   },
   "icon-collection.connection.curved-polyline": {
-    "defaultMessage": "Curved Polyline"
+    "defaultMessage": "घुमावदार पॉलीलाइन"
   },
   "icon-picker.emojis": {
     "defaultMessage": "इमोजी"
@@ -696,43 +729,43 @@
     "defaultMessage": "थीम चुनें"
   },
   "theme.classic.description": {
-    "defaultMessage": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+    "defaultMessage": "नीले रंग के लहजे के साथ साफ़ और पेशेवर डिज़ाइन। व्यावसायिक प्रस्तुतियों और औपचारिक दस्तावेज़ों के लिए उत्तम।"
   },
   "theme.classic.name": {
     "defaultMessage": "क्लासिक"
   },
   "theme.aurora.description": {
-    "defaultMessage": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    "defaultMessage": "नियॉन से प्रेरित ग्रेडिएंट थीम, जिसमें ग्लो इफ़ेक्ट, बोल्ड टाइपोग्राफ़ी और हाई-कॉन्ट्रास्ट कनेक्टर हैं, जो प्रभावशाली कहानी कहने के लिए बनाई गई है।"
   },
   "theme.aurora.name": {
-    "defaultMessage": "Aurora"
+    "defaultMessage": "ऑरोरा"
   },
   "theme.retro.description": {
-    "defaultMessage": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    "defaultMessage": "80 के दशक का सिंथवेव पैलेट, जिसमें नियॉन किनारे, क्रोम ग्रेडिएंट और ग्रिड वाले कैनवास हैं, जो रेट्रो नाइट पार्टियों से प्रेरित हैं।"
   },
   "theme.retro.name": {
     "defaultMessage": "80s रेट्रो नाइट"
   },
   "theme.ocean.description": {
-    "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+    "defaultMessage": "समुद्र से प्रेरित नीली थीम, लाइट/डार्क वेरिएंट के साथ। शांत और पेशेवर रंग, व्यावसायिक और रचनात्मक परियोजनाओं के लिए उत्तम।"
   },
   "theme.ocean.name": {
     "defaultMessage": "महासागर"
   },
   "theme.robot.description": {
-    "defaultMessage": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+    "defaultMessage": "तकनीक से प्रेरित हरी थीम। तकनीकी दस्तावेज़ों और भविष्यवादी प्रस्तुतियों के लिए उत्तम।"
   },
   "theme.robot.name": {
     "defaultMessage": "रोबोट"
   },
   "theme.summer.description": {
-    "defaultMessage": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+    "defaultMessage": "चमकीली और जीवंत नारंगी थीम। रचनात्मक परियोजनाओं और ऊर्जावान प्रस्तुतियों के लिए बढ़िया।"
   },
   "theme.summer.name": {
     "defaultMessage": "गर्मी"
   },
   "theme.sunrise.description": {
-    "defaultMessage": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+    "defaultMessage": "लाइट/डार्क मोड वेरिएंट वाली सूर्योदय थीम। बेहतर पठनीयता के लिए उन्नत रंग और कॉन्ट्रास्ट।"
   },
   "theme.sunrise.name": {
     "defaultMessage": "सूर्योदय"
@@ -747,40 +780,40 @@
     "defaultMessage": "शीर्षक इनपुट"
   },
   "canvas-style.tab-color": {
-    "defaultMessage": "Color"
+    "defaultMessage": "रंग"
   },
   "canvas-style.tab-grid": {
-    "defaultMessage": "Grid Color"
+    "defaultMessage": "ग्रिड रंग"
   },
   "canvas-style.background-style": {
-    "defaultMessage": "Background Style"
+    "defaultMessage": "पृष्ठभूमि शैली"
   },
   "canvas-style.pattern-default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "डिफ़ॉल्ट - थीम के आधार पर सभी शैलियाँ स्वचालित रूप से चुनी जाएँगी"
   },
   "icon-collection.shape.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "डिफ़ॉल्ट"
   },
   "icon-collection.border.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "डिफ़ॉल्ट"
   },
   "icon-collection.border.default-tooltip": {
     "defaultMessage": "डिफ़ॉल्ट - चयनित थीम के आधार पर रंग स्वचालित रूप से लिए जाएँगे"
   },
   "icon-collection.connection.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "डिफ़ॉल्ट"
   },
   "icon-collection.default-tooltip": {
     "defaultMessage": "डिफ़ॉल्ट - थीम के आधार पर सभी शैलियाँ स्वचालित रूप से चुनी जाएँगी"
   },
   "unified-styling.shape-type": {
-    "defaultMessage": "Shape Type"
+    "defaultMessage": "आकार का प्रकार"
   },
   "unified-styling.background-color": {
-    "defaultMessage": "Background Color"
+    "defaultMessage": "पृष्ठभूमि रंग"
   },
   "topic-font-editor.reset-to-default": {
-    "defaultMessage": "Reset to Default"
+    "defaultMessage": "डिफ़ॉल्ट पर रीसेट करें"
   },
   "appbar.tooltip-change-layout": {
     "defaultMessage": "लेआउट बदलें"

@@ -215,6 +215,18 @@
   "shortcut-help-pane.cancel-text-changes": {
     "defaultMessage": "Отменить изменения текста"
   },
+  "shortcut-help-pane.category-editing": {
+    "defaultMessage": "Редактирование"
+  },
+  "shortcut-help-pane.category-format": {
+    "defaultMessage": "Формат"
+  },
+  "shortcut-help-pane.category-navigation": {
+    "defaultMessage": "Навигация"
+  },
+  "shortcut-help-pane.category-view": {
+    "defaultMessage": "Вид"
+  },
   "shortcut-help-pane.change-font-bold": {
     "defaultMessage": "Изменить текст на жирный"
   },
@@ -245,8 +257,29 @@
   "shortcut-help-pane.deselect-all-topics": {
     "defaultMessage": "Отменить выбор всех тем"
   },
+  "shortcut-help-pane.diagram-aria": {
+    "defaultMessage": "Стрелка влево переходит к родительской теме, стрелка вправо — к дочерней, вверх и вниз — между соседними темами."
+  },
+  "shortcut-help-pane.diagram-caption": {
+    "defaultMessage": "В левой половине карты ← и → меняются ролями."
+  },
+  "shortcut-help-pane.diagram-child": {
+    "defaultMessage": "Дочерняя"
+  },
+  "shortcut-help-pane.diagram-parent": {
+    "defaultMessage": "Родительская"
+  },
+  "shortcut-help-pane.diagram-selected": {
+    "defaultMessage": "Выбранная"
+  },
+  "shortcut-help-pane.diagram-sibling": {
+    "defaultMessage": "Соседняя"
+  },
   "shortcut-help-pane.drag-disconnect": {
     "defaultMessage": "Отключить тему"
+  },
+  "shortcut-help-pane.drag-disconnect-key": {
+    "defaultMessage": "перетащить тему"
   },
   "shortcut-help-pane.edit-multiline": {
     "defaultMessage": "Добавить многострочный текст темы"
@@ -696,43 +729,43 @@
     "defaultMessage": "Выбрать тему"
   },
   "theme.classic.description": {
-    "defaultMessage": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+    "defaultMessage": "Чистый профессиональный дизайн с синими акцентами. Идеально подходит для деловых презентаций и официальных документов."
   },
   "theme.classic.name": {
     "defaultMessage": "Классический"
   },
   "theme.aurora.description": {
-    "defaultMessage": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    "defaultMessage": "Градиентная тема в неоновом стиле с эффектами свечения, жирной типографикой и контрастными соединителями для захватывающего повествования."
   },
   "theme.aurora.name": {
     "defaultMessage": "Аврора"
   },
   "theme.retro.description": {
-    "defaultMessage": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    "defaultMessage": "Палитра синтвейва 80-х с неоновыми контурами, хромированными градиентами и холстами в сетку, вдохновлённая ретро-вечеринками."
   },
   "theme.retro.name": {
     "defaultMessage": "80s Ретро Ночь"
   },
   "theme.ocean.description": {
-    "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+    "defaultMessage": "Синяя тема в морском стиле со светлым и тёмным вариантами. Спокойные профессиональные цвета, идеальные для деловых и творческих проектов."
   },
   "theme.ocean.name": {
     "defaultMessage": "Океан"
   },
   "theme.robot.description": {
-    "defaultMessage": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+    "defaultMessage": "Зелёная тема в технологическом стиле. Идеально подходит для технической документации и футуристических презентаций."
   },
   "theme.robot.name": {
     "defaultMessage": "Робот"
   },
   "theme.summer.description": {
-    "defaultMessage": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+    "defaultMessage": "Яркая и насыщенная оранжевая тема. Отлично подходит для творческих проектов и энергичных презентаций."
   },
   "theme.summer.name": {
     "defaultMessage": "Лето"
   },
   "theme.sunrise.description": {
-    "defaultMessage": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+    "defaultMessage": "Тема «Рассвет» со светлым и тёмным режимами. Улучшенные цвета и контраст для лучшей читаемости."
   },
   "theme.sunrise.name": {
     "defaultMessage": "Рассвет"
@@ -747,40 +780,40 @@
     "defaultMessage": "Ввод заголовка"
   },
   "canvas-style.tab-color": {
-    "defaultMessage": "Color"
+    "defaultMessage": "Цвет"
   },
   "canvas-style.tab-grid": {
-    "defaultMessage": "Grid Color"
+    "defaultMessage": "Цвет сетки"
   },
   "canvas-style.background-style": {
-    "defaultMessage": "Background Style"
+    "defaultMessage": "Стиль фона"
   },
   "canvas-style.pattern-default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "По умолчанию - Все стили будут автоматически выбраны на основе темы"
   },
   "icon-collection.shape.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "По умолчанию"
   },
   "icon-collection.border.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "По умолчанию"
   },
   "icon-collection.border.default-tooltip": {
     "defaultMessage": "По умолчанию - Цвета будут автоматически взяты из выбранной темы"
   },
   "icon-collection.connection.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "По умолчанию"
   },
   "icon-collection.default-tooltip": {
     "defaultMessage": "По умолчанию - Все стили будут автоматически выбраны на основе темы"
   },
   "unified-styling.shape-type": {
-    "defaultMessage": "Shape Type"
+    "defaultMessage": "Тип формы"
   },
   "unified-styling.background-color": {
-    "defaultMessage": "Background Color"
+    "defaultMessage": "Цвет фона"
   },
   "topic-font-editor.reset-to-default": {
-    "defaultMessage": "Reset to Default"
+    "defaultMessage": "Сбросить до значений по умолчанию"
   },
   "appbar.tooltip-change-layout": {
     "defaultMessage": "Изменить макет"

@@ -209,6 +209,18 @@
   "shortcut-help-pane.cancel-text-changes": {
     "defaultMessage": "テキスト変更をキャンセル"
   },
+  "shortcut-help-pane.category-editing": {
+    "defaultMessage": "編集"
+  },
+  "shortcut-help-pane.category-format": {
+    "defaultMessage": "書式"
+  },
+  "shortcut-help-pane.category-navigation": {
+    "defaultMessage": "ナビゲーション"
+  },
+  "shortcut-help-pane.category-view": {
+    "defaultMessage": "表示"
+  },
   "shortcut-help-pane.change-font-bold": {
     "defaultMessage": "テキストを太字に変更"
   },
@@ -239,8 +251,29 @@
   "shortcut-help-pane.deselect-all-topics": {
     "defaultMessage": "すべてのトピックの選択を解除"
   },
+  "shortcut-help-pane.diagram-aria": {
+    "defaultMessage": "左矢印で親トピックへ、右矢印で子トピックへ、上下矢印で兄弟トピック間を移動します。"
+  },
+  "shortcut-help-pane.diagram-caption": {
+    "defaultMessage": "マップの左半分では、← と → の役割が入れ替わります。"
+  },
+  "shortcut-help-pane.diagram-child": {
+    "defaultMessage": "子"
+  },
+  "shortcut-help-pane.diagram-parent": {
+    "defaultMessage": "親"
+  },
+  "shortcut-help-pane.diagram-selected": {
+    "defaultMessage": "選択中"
+  },
+  "shortcut-help-pane.diagram-sibling": {
+    "defaultMessage": "兄弟"
+  },
   "shortcut-help-pane.drag-disconnect": {
     "defaultMessage": "トピックを切断"
+  },
+  "shortcut-help-pane.drag-disconnect-key": {
+    "defaultMessage": "トピックをドラッグ"
   },
   "shortcut-help-pane.edit-multiline": {
     "defaultMessage": "複数行トピックテキストを追加"
@@ -504,10 +537,10 @@
     "defaultMessage": "トピックと接続のスタイル"
   },
   "color-picker.color": {
-    "defaultMessage": "Color"
+    "defaultMessage": "色"
   },
   "color-picker.default-color": {
-    "defaultMessage": "Default color"
+    "defaultMessage": "デフォルトの色"
   },
   "relationship-style-editor.color": {
     "defaultMessage": "関係の色"
@@ -516,34 +549,34 @@
     "defaultMessage": "線のスタイルと矢印"
   },
   "relationship-style-editor.solid-line": {
-    "defaultMessage": "Solid Line"
+    "defaultMessage": "実線"
   },
   "relationship-style-editor.solid-line-tooltip": {
-    "defaultMessage": "Solid line style"
+    "defaultMessage": "実線のスタイル"
   },
   "relationship-style-editor.dashed-line": {
-    "defaultMessage": "Dashed Line"
+    "defaultMessage": "破線"
   },
   "relationship-style-editor.dashed-line-tooltip": {
-    "defaultMessage": "Dashed line style"
+    "defaultMessage": "破線のスタイル"
   },
   "relationship-style-editor.dotted-line": {
-    "defaultMessage": "Dotted Line"
+    "defaultMessage": "点線"
   },
   "relationship-style-editor.dotted-line-tooltip": {
-    "defaultMessage": "Dotted line style"
+    "defaultMessage": "点線のスタイル"
   },
   "relationship-style-editor.end-arrow": {
-    "defaultMessage": "End Arrow"
+    "defaultMessage": "終点の矢印"
   },
   "relationship-style-editor.end-arrow-tooltip": {
-    "defaultMessage": "Toggle end arrow"
+    "defaultMessage": "終点の矢印を切り替え"
   },
   "relationship-style-editor.start-arrow": {
-    "defaultMessage": "Start Arrow"
+    "defaultMessage": "始点の矢印"
   },
   "relationship-style-editor.start-arrow-tooltip": {
-    "defaultMessage": "Toggle start arrow"
+    "defaultMessage": "始点の矢印を切り替え"
   },
   "topic-font-editor.font-color": {
     "defaultMessage": "フォントの色"
@@ -555,31 +588,31 @@
     "defaultMessage": "フォントサイズとスタイル"
   },
   "topic-font-editor.increase-size": {
-    "defaultMessage": "Bigger"
+    "defaultMessage": "大きく"
   },
   "topic-font-editor.increase-size-tooltip": {
-    "defaultMessage": "Increase font size"
+    "defaultMessage": "フォントサイズを大きくする"
   },
   "topic-font-editor.decrease-size": {
-    "defaultMessage": "Smaller"
+    "defaultMessage": "小さく"
   },
   "topic-font-editor.decrease-size-tooltip": {
-    "defaultMessage": "Decrease font size"
+    "defaultMessage": "フォントサイズを小さくする"
   },
   "topic-font-editor.bold": {
-    "defaultMessage": "Bold"
+    "defaultMessage": "太字"
   },
   "topic-font-editor.bold-tooltip": {
-    "defaultMessage": "Toggle bold"
+    "defaultMessage": "太字を切り替え"
   },
   "topic-font-editor.italic": {
-    "defaultMessage": "Italic"
+    "defaultMessage": "斜体"
   },
   "topic-font-editor.italic-tooltip": {
-    "defaultMessage": "Toggle italic"
+    "defaultMessage": "斜体を切り替え"
   },
   "topic-font-editor.active": {
-    "defaultMessage": "active"
+    "defaultMessage": "有効"
   },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "形状なし"
@@ -588,34 +621,34 @@
     "defaultMessage": "ヘッダー通知"
   },
   "icon-collection.shape.none": {
-    "defaultMessage": "None"
+    "defaultMessage": "なし"
   },
   "icon-collection.shape.none-tooltip": {
-    "defaultMessage": "None - No visible shape background"
+    "defaultMessage": "なし - 図形の背景を表示しません"
   },
   "icon-collection.shape.line": {
-    "defaultMessage": "Line"
+    "defaultMessage": "線"
   },
   "icon-collection.shape.rectangle": {
-    "defaultMessage": "Rectangle"
+    "defaultMessage": "長方形"
   },
   "icon-collection.shape.rounded": {
-    "defaultMessage": "Rounded"
+    "defaultMessage": "角丸"
   },
   "icon-collection.shape.ellipse": {
-    "defaultMessage": "Ellipse"
+    "defaultMessage": "楕円"
   },
   "icon-collection.border.solid": {
-    "defaultMessage": "Solid"
+    "defaultMessage": "実線"
   },
   "icon-collection.border.dashed": {
-    "defaultMessage": "Dashed"
+    "defaultMessage": "破線"
   },
   "icon-collection.border.dotted": {
-    "defaultMessage": "Dotted"
+    "defaultMessage": "点線"
   },
   "icon-collection.connection.thick-curved": {
-    "defaultMessage": "Thick Curved"
+    "defaultMessage": "太い曲線"
   },
   "icon-collection.connection.arc": {
     "defaultMessage": "アーク"
@@ -636,16 +669,16 @@
     "defaultMessage": "手描きスタイルで劇的な曲線 - 創造的で表現力豊かなマインドマップに最適"
   },
   "icon-collection.connection.thin-curved": {
-    "defaultMessage": "Thin Curved"
+    "defaultMessage": "細い曲線"
   },
   "icon-collection.connection.simple-polyline": {
-    "defaultMessage": "Simple Polyline"
+    "defaultMessage": "シンプルなポリライン"
   },
   "icon-collection.connection.simple-polyline-tooltip": {
-    "defaultMessage": "Direct straight line connection - Clean and minimalist style for simple relationships"
+    "defaultMessage": "直線による直接接続 - シンプルな関係に適した、すっきりとしたミニマルなスタイル"
   },
   "icon-collection.connection.curved-polyline": {
-    "defaultMessage": "Curved Polyline"
+    "defaultMessage": "曲線ポリライン"
   },
   "icon-picker.emojis": {
     "defaultMessage": "絵文字"
@@ -696,43 +729,43 @@
     "defaultMessage": "テーマを選択"
   },
   "theme.classic.description": {
-    "defaultMessage": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+    "defaultMessage": "青のアクセントが効いた、すっきりとしたプロフェッショナルなデザイン。ビジネスプレゼンテーションや正式な文書に最適です。"
   },
   "theme.classic.name": {
     "defaultMessage": "クラシック"
   },
   "theme.aurora.description": {
-    "defaultMessage": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    "defaultMessage": "ネオンにインスパイアされたグラデーションテーマ。グロー効果、太字のタイポグラフィ、高コントラストのコネクタで、没入感のあるストーリーテリングを演出します。"
   },
   "theme.aurora.name": {
     "defaultMessage": "オーロラ"
   },
   "theme.retro.description": {
-    "defaultMessage": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    "defaultMessage": "80年代のシンセウェイヴ風パレット。ネオンの縁取り、クロームのグラデーション、グリッド状のキャンバスで、レトロなナイトパーティーを再現します。"
   },
   "theme.retro.name": {
     "defaultMessage": "80s レトロナイト"
   },
   "theme.ocean.description": {
-    "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+    "defaultMessage": "海をイメージした青いテーマで、ライト/ダークの各バリエーションがあります。落ち着いたプロフェッショナルな配色で、ビジネスにもクリエイティブなプロジェクトにも最適です。"
   },
   "theme.ocean.name": {
     "defaultMessage": "オーシャン"
   },
   "theme.robot.description": {
-    "defaultMessage": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+    "defaultMessage": "テクノロジーをイメージした緑のテーマ。技術文書や未来的なプレゼンテーションに最適です。"
   },
   "theme.robot.name": {
     "defaultMessage": "ロボット"
   },
   "theme.summer.description": {
-    "defaultMessage": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+    "defaultMessage": "明るく鮮やかなオレンジのテーマ。クリエイティブなプロジェクトやエネルギッシュなプレゼンテーションにぴったりです。"
   },
   "theme.summer.name": {
     "defaultMessage": "サマー"
   },
   "theme.sunrise.description": {
-    "defaultMessage": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+    "defaultMessage": "ライト/ダークモードに対応した日の出テーマ。色とコントラストを強化し、読みやすさを向上させました。"
   },
   "theme.sunrise.name": {
     "defaultMessage": "日の出"
@@ -747,40 +780,40 @@
     "defaultMessage": "タイトル入力"
   },
   "canvas-style.tab-color": {
-    "defaultMessage": "Color"
+    "defaultMessage": "色"
   },
   "canvas-style.tab-grid": {
-    "defaultMessage": "Grid Color"
+    "defaultMessage": "グリッド色"
   },
   "canvas-style.background-style": {
-    "defaultMessage": "Background Style"
+    "defaultMessage": "背景スタイル"
   },
   "canvas-style.pattern-default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "デフォルト - テーマに基づいてすべてのスタイルが自動的に選択されます"
   },
   "icon-collection.shape.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "デフォルト"
   },
   "icon-collection.border.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "デフォルト"
   },
   "icon-collection.border.default-tooltip": {
     "defaultMessage": "デフォルト - 選択したテーマに基づいて色が自動的に設定されます"
   },
   "icon-collection.connection.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "デフォルト"
   },
   "icon-collection.default-tooltip": {
     "defaultMessage": "デフォルト - テーマに基づいてすべてのスタイルが自動的に選択されます"
   },
   "unified-styling.shape-type": {
-    "defaultMessage": "Shape Type"
+    "defaultMessage": "形状の種類"
   },
   "unified-styling.background-color": {
-    "defaultMessage": "Background Color"
+    "defaultMessage": "背景色"
   },
   "topic-font-editor.reset-to-default": {
-    "defaultMessage": "Reset to Default"
+    "defaultMessage": "デフォルトに戻す"
   },
   "appbar.tooltip-change-layout": {
     "defaultMessage": "レイアウト変更"

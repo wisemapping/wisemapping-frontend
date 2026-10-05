@@ -182,7 +182,7 @@
   "canvas-style.background-style": [
     {
       "type": 0,
-      "value": "Background Style"
+      "value": "Стиль фона"
     }
   ],
   "canvas-style.colors": [
@@ -236,7 +236,7 @@
   "canvas-style.pattern-default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "По умолчанию - Все стили будут автоматически выбраны на основе темы"
     }
   ],
   "canvas-style.pattern-dots": [
@@ -278,13 +278,13 @@
   "canvas-style.tab-color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "Цвет"
     }
   ],
   "canvas-style.tab-grid": [
     {
       "type": 0,
-      "value": "Grid Color"
+      "value": "Цвет сетки"
     }
   ],
   "canvas-style.title": [
@@ -786,7 +786,7 @@
   "icon-collection.border.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "По умолчанию"
     }
   ],
   "icon-collection.border.default-tooltip": [
@@ -834,7 +834,7 @@
   "icon-collection.connection.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "По умолчанию"
     }
   ],
   "icon-collection.connection.default-tooltip": [
@@ -924,7 +924,7 @@
   "icon-collection.shape.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "По умолчанию"
     }
   ],
   "icon-collection.shape.ellipse": [
@@ -1357,6 +1357,30 @@
       "value": "Отменить изменения текста"
     }
   ],
+  "shortcut-help-pane.category-editing": [
+    {
+      "type": 0,
+      "value": "Редактирование"
+    }
+  ],
+  "shortcut-help-pane.category-format": [
+    {
+      "type": 0,
+      "value": "Формат"
+    }
+  ],
+  "shortcut-help-pane.category-navigation": [
+    {
+      "type": 0,
+      "value": "Навигация"
+    }
+  ],
+  "shortcut-help-pane.category-view": [
+    {
+      "type": 0,
+      "value": "Вид"
+    }
+  ],
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
@@ -1393,10 +1417,52 @@
       "value": "Отменить выбор всех тем"
     }
   ],
+  "shortcut-help-pane.diagram-aria": [
+    {
+      "type": 0,
+      "value": "Стрелка влево переходит к родительской теме, стрелка вправо — к дочерней, вверх и вниз — между соседними темами."
+    }
+  ],
+  "shortcut-help-pane.diagram-caption": [
+    {
+      "type": 0,
+      "value": "В левой половине карты ← и → меняются ролями."
+    }
+  ],
+  "shortcut-help-pane.diagram-child": [
+    {
+      "type": 0,
+      "value": "Дочерняя"
+    }
+  ],
+  "shortcut-help-pane.diagram-parent": [
+    {
+      "type": 0,
+      "value": "Родительская"
+    }
+  ],
+  "shortcut-help-pane.diagram-selected": [
+    {
+      "type": 0,
+      "value": "Выбранная"
+    }
+  ],
+  "shortcut-help-pane.diagram-sibling": [
+    {
+      "type": 0,
+      "value": "Соседняя"
+    }
+  ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
       "value": "Отключить тему"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect-key": [
+    {
+      "type": 0,
+      "value": "перетащить тему"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
@@ -1600,7 +1666,7 @@
   "theme.aurora.description": [
     {
       "type": 0,
-      "value": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+      "value": "Градиентная тема в неоновом стиле с эффектами свечения, жирной типографикой и контрастными соединителями для захватывающего повествования."
     }
   ],
   "theme.aurora.name": [
@@ -1612,7 +1678,7 @@
   "theme.classic.description": [
     {
       "type": 0,
-      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+      "value": "Чистый профессиональный дизайн с синими акцентами. Идеально подходит для деловых презентаций и официальных документов."
     }
   ],
   "theme.classic.name": [
@@ -1636,7 +1702,7 @@
   "theme.ocean.description": [
     {
       "type": 0,
-      "value": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+      "value": "Синяя тема в морском стиле со светлым и тёмным вариантами. Спокойные профессиональные цвета, идеальные для деловых и творческих проектов."
     }
   ],
   "theme.ocean.name": [
@@ -1648,7 +1714,7 @@
   "theme.retro.description": [
     {
       "type": 0,
-      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+      "value": "Палитра синтвейва 80-х с неоновыми контурами, хромированными градиентами и холстами в сетку, вдохновлённая ретро-вечеринками."
     }
   ],
   "theme.retro.name": [
@@ -1660,7 +1726,7 @@
   "theme.robot.description": [
     {
       "type": 0,
-      "value": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+      "value": "Зелёная тема в технологическом стиле. Идеально подходит для технической документации и футуристических презентаций."
     }
   ],
   "theme.robot.name": [
@@ -1672,7 +1738,7 @@
   "theme.summer.description": [
     {
       "type": 0,
-      "value": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+      "value": "Яркая и насыщенная оранжевая тема. Отлично подходит для творческих проектов и энергичных презентаций."
     }
   ],
   "theme.summer.name": [
@@ -1684,7 +1750,7 @@
   "theme.sunrise.description": [
     {
       "type": 0,
-      "value": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+      "value": "Тема «Рассвет» со светлым и тёмным режимами. Улучшенные цвета и контраст для лучшей читаемости."
     }
   ],
   "theme.sunrise.name": [
@@ -1792,13 +1858,13 @@
   "topic-font-editor.reset-to-default": [
     {
       "type": 0,
-      "value": "Reset to Default"
+      "value": "Сбросить до значений по умолчанию"
     }
   ],
   "unified-styling.background-color": [
     {
       "type": 0,
-      "value": "Background Color"
+      "value": "Цвет фона"
     }
   ],
   "unified-styling.border-color": [
@@ -1828,7 +1894,7 @@
   "unified-styling.shape-type": [
     {
       "type": 0,
-      "value": "Shape Type"
+      "value": "Тип формы"
     }
   ],
   "unified-styling.tab.border": [

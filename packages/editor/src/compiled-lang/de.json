@@ -182,7 +182,7 @@
   "canvas-style.background-style": [
     {
       "type": 0,
-      "value": "Background Style"
+      "value": "Hintergrundstil"
     }
   ],
   "canvas-style.colors": [
@@ -236,7 +236,7 @@
   "canvas-style.pattern-default-tooltip": [
     {
       "type": 0,
-      "value": "Default - All styles will be automatically selected based on the theme"
+      "value": "Standard - Alle Stile werden automatisch basierend auf dem Thema ausgewählt"
     }
   ],
   "canvas-style.pattern-dots": [
@@ -278,13 +278,13 @@
   "canvas-style.tab-color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "Farbe"
     }
   ],
   "canvas-style.tab-grid": [
     {
       "type": 0,
-      "value": "Grid Color"
+      "value": "Rasterfarbe"
     }
   ],
   "canvas-style.title": [
@@ -786,7 +786,7 @@
   "icon-collection.border.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "Standard"
     }
   ],
   "icon-collection.border.default-tooltip": [
@@ -834,7 +834,7 @@
   "icon-collection.connection.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "Standard"
     }
   ],
   "icon-collection.connection.default-tooltip": [
@@ -924,7 +924,7 @@
   "icon-collection.shape.default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "Standard"
     }
   ],
   "icon-collection.shape.ellipse": [
@@ -1357,6 +1357,30 @@
       "value": "Textänderungen verwerfen"
     }
   ],
+  "shortcut-help-pane.category-editing": [
+    {
+      "type": 0,
+      "value": "Bearbeiten"
+    }
+  ],
+  "shortcut-help-pane.category-format": [
+    {
+      "type": 0,
+      "value": "Format"
+    }
+  ],
+  "shortcut-help-pane.category-navigation": [
+    {
+      "type": 0,
+      "value": "Navigieren"
+    }
+  ],
+  "shortcut-help-pane.category-view": [
+    {
+      "type": 0,
+      "value": "Ansicht"
+    }
+  ],
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
@@ -1393,10 +1417,52 @@
       "value": "Alle Themen abwählen"
     }
   ],
+  "shortcut-help-pane.diagram-aria": [
+    {
+      "type": 0,
+      "value": "Pfeil nach links wechselt zum übergeordneten Thema, Pfeil nach rechts zu einem Kindthema, nach oben und unten zwischen Geschwisterthemen."
+    }
+  ],
+  "shortcut-help-pane.diagram-caption": [
+    {
+      "type": 0,
+      "value": "In der linken Hälfte der Karte tauschen ← und → ihre Rollen."
+    }
+  ],
+  "shortcut-help-pane.diagram-child": [
+    {
+      "type": 0,
+      "value": "Kind"
+    }
+  ],
+  "shortcut-help-pane.diagram-parent": [
+    {
+      "type": 0,
+      "value": "Eltern"
+    }
+  ],
+  "shortcut-help-pane.diagram-selected": [
+    {
+      "type": 0,
+      "value": "Ausgewählt"
+    }
+  ],
+  "shortcut-help-pane.diagram-sibling": [
+    {
+      "type": 0,
+      "value": "Geschwister"
+    }
+  ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
       "value": "Thema isolieren"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect-key": [
+    {
+      "type": 0,
+      "value": "Thema ziehen"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
@@ -1600,7 +1666,7 @@
   "theme.aurora.description": [
     {
       "type": 0,
-      "value": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+      "value": "Neon-inspiriertes Farbverlaufsthema mit Leuchteffekten, kräftiger Typografie und kontrastreichen Verbindungen für immersives Storytelling."
     }
   ],
   "theme.aurora.name": [
@@ -1612,7 +1678,7 @@
   "theme.classic.description": [
     {
       "type": 0,
-      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+      "value": "Klares, professionelles Design mit blauen Akzenten. Ideal für Geschäftspräsentationen und formelle Dokumente."
     }
   ],
   "theme.classic.name": [
@@ -1636,7 +1702,7 @@
   "theme.ocean.description": [
     {
       "type": 0,
-      "value": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+      "value": "Vom Ozean inspiriertes blaues Thema mit hellen und dunklen Varianten. Ruhige, professionelle Farben, ideal für geschäftliche und kreative Projekte."
     }
   ],
   "theme.ocean.name": [
@@ -1648,19 +1714,19 @@
   "theme.retro.description": [
     {
       "type": 0,
-      "value": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+      "value": "Synthwave-Palette der 80er mit Neonrändern, Chromverläufen und gerasterten Leinwänden, inspiriert von Retro-Partynächten."
     }
   ],
   "theme.retro.name": [
     {
       "type": 0,
-      "value": "80s Retro Night"
+      "value": "80er Retro-Nacht"
     }
   ],
   "theme.robot.description": [
     {
       "type": 0,
-      "value": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+      "value": "Technisch inspiriertes grünes Thema. Ideal für technische Dokumentation und futuristische Präsentationen."
     }
   ],
   "theme.robot.name": [
@@ -1672,7 +1738,7 @@
   "theme.summer.description": [
     {
       "type": 0,
-      "value": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+      "value": "Helles, lebendiges orangefarbenes Thema. Ideal für kreative Projekte und energiegeladene Präsentationen."
     }
   ],
   "theme.summer.name": [
@@ -1684,7 +1750,7 @@
   "theme.sunrise.description": [
     {
       "type": 0,
-      "value": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+      "value": "Sonnenaufgang-Thema mit hellem und dunklem Modus. Verbesserte Farben und Kontraste für bessere Lesbarkeit."
     }
   ],
   "theme.sunrise.name": [
@@ -1792,13 +1858,13 @@
   "topic-font-editor.reset-to-default": [
     {
       "type": 0,
-      "value": "Reset to Default"
+      "value": "Auf Standard zurücksetzen"
     }
   ],
   "unified-styling.background-color": [
     {
       "type": 0,
-      "value": "Background Color"
+      "value": "Hintergrundfarbe"
     }
   ],
   "unified-styling.border-color": [
@@ -1828,7 +1894,7 @@
   "unified-styling.shape-type": [
     {
       "type": 0,
-      "value": "Shape Type"
+      "value": "Formtyp"
     }
   ],
   "unified-styling.tab.border": [

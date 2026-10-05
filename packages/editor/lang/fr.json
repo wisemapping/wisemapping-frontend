@@ -179,6 +179,18 @@
   "shortcut-help-pane.cancel-text-changes": {
     "defaultMessage": "Annuler les modifications du texte"
   },
+  "shortcut-help-pane.category-editing": {
+    "defaultMessage": "Édition"
+  },
+  "shortcut-help-pane.category-format": {
+    "defaultMessage": "Format"
+  },
+  "shortcut-help-pane.category-navigation": {
+    "defaultMessage": "Navigation"
+  },
+  "shortcut-help-pane.category-view": {
+    "defaultMessage": "Affichage"
+  },
   "shortcut-help-pane.change-font-bold": {
     "defaultMessage": "Passer le texte en gras"
   },
@@ -208,6 +220,24 @@
   },
   "shortcut-help-pane.deselect-all-topics": {
     "defaultMessage": "Désélectionner tous les noeuds"
+  },
+  "shortcut-help-pane.diagram-aria": {
+    "defaultMessage": "La flèche gauche va au noeud parent, la flèche droite à un enfant, haut et bas entre les noeuds frères."
+  },
+  "shortcut-help-pane.diagram-caption": {
+    "defaultMessage": "Sur la moitié gauche de la carte, ← et → inversent leurs rôles."
+  },
+  "shortcut-help-pane.diagram-child": {
+    "defaultMessage": "Enfant"
+  },
+  "shortcut-help-pane.diagram-parent": {
+    "defaultMessage": "Parent"
+  },
+  "shortcut-help-pane.diagram-selected": {
+    "defaultMessage": "Sélectionné"
+  },
+  "shortcut-help-pane.diagram-sibling": {
+    "defaultMessage": "Frère"
   },
   "shortcut-help-pane.edit-multiline": {
     "defaultMessage": "Ajouter une ligne au noeud"
@@ -298,6 +328,9 @@
   },
   "shortcut-help-pane.drag-disconnect": {
     "defaultMessage": "Déconnecter le noeud"
+  },
+  "shortcut-help-pane.drag-disconnect-key": {
+    "defaultMessage": "faire glisser le noeud"
   },
   "creator-info-pane.description": {
     "defaultMessage": "Description"
@@ -696,43 +729,43 @@
     "defaultMessage": "Choisir un thème"
   },
   "theme.classic.description": {
-    "defaultMessage": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
+    "defaultMessage": "Design épuré et professionnel aux accents bleus. Parfait pour les présentations professionnelles et les documents formels."
   },
   "theme.classic.name": {
     "defaultMessage": "Classique"
   },
   "theme.aurora.description": {
-    "defaultMessage": "Neon-inspired gradient theme with glow effects, bold typography, and high-contrast connectors designed for immersive storytelling."
+    "defaultMessage": "Thème en dégradé d'inspiration néon, avec effets lumineux, typographie grasse et connecteurs très contrastés, conçu pour une narration immersive."
   },
   "theme.aurora.name": {
     "defaultMessage": "Aurora"
   },
   "theme.retro.description": {
-    "defaultMessage": "80s synthwave palette with neon rims, chrome gradients, and grid-lined canvases inspired by retro night parties."
+    "defaultMessage": "Palette synthwave des années 80 avec contours néon, dégradés chromés et canevas quadrillés inspirés des soirées rétro."
   },
   "theme.retro.name": {
     "defaultMessage": "Nuit Rétro 80s"
   },
   "theme.ocean.description": {
-    "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
+    "defaultMessage": "Thème bleu inspiré de l'océan, avec variantes claire et sombre. Des couleurs calmes et professionnelles, parfaites pour les projets professionnels et créatifs."
   },
   "theme.ocean.name": {
     "defaultMessage": "Océan"
   },
   "theme.robot.description": {
-    "defaultMessage": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
+    "defaultMessage": "Thème vert d'inspiration technologique. Parfait pour la documentation technique et les présentations futuristes."
   },
   "theme.robot.name": {
     "defaultMessage": "Robot"
   },
   "theme.summer.description": {
-    "defaultMessage": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
+    "defaultMessage": "Thème orange lumineux et éclatant. Idéal pour les projets créatifs et les présentations dynamiques."
   },
   "theme.summer.name": {
     "defaultMessage": "Été"
   },
   "theme.sunrise.description": {
-    "defaultMessage": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
+    "defaultMessage": "Thème Lever de soleil avec variantes en mode clair et sombre. Couleurs et contraste améliorés pour une meilleure lisibilité."
   },
   "theme.sunrise.name": {
     "defaultMessage": "Lever de soleil"
@@ -747,40 +780,40 @@
     "defaultMessage": "Saisie de titre"
   },
   "canvas-style.tab-color": {
-    "defaultMessage": "Color"
+    "defaultMessage": "Couleur"
   },
   "canvas-style.tab-grid": {
-    "defaultMessage": "Grid Color"
+    "defaultMessage": "Couleur de grille"
   },
   "canvas-style.background-style": {
-    "defaultMessage": "Background Style"
+    "defaultMessage": "Style d'arrière-plan"
   },
   "canvas-style.pattern-default-tooltip": {
-    "defaultMessage": "Default - All styles will be automatically selected based on the theme"
+    "defaultMessage": "Par défaut - Tous les styles seront automatiquement sélectionnés selon le thème"
   },
   "icon-collection.shape.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "Par défaut"
   },
   "icon-collection.border.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "Par défaut"
   },
   "icon-collection.border.default-tooltip": {
     "defaultMessage": "Par défaut - Les couleurs seront automatiquement choisies selon le thème sélectionné"
   },
   "icon-collection.connection.default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "Par défaut"
   },
   "icon-collection.default-tooltip": {
     "defaultMessage": "Par défaut - Tous les styles seront automatiquement sélectionnés selon le thème"
   },
   "unified-styling.shape-type": {
-    "defaultMessage": "Shape Type"
+    "defaultMessage": "Type de forme"
   },
   "unified-styling.background-color": {
-    "defaultMessage": "Background Color"
+    "defaultMessage": "Couleur d'arrière-plan"
   },
   "topic-font-editor.reset-to-default": {
-    "defaultMessage": "Reset to Default"
+    "defaultMessage": "Rétablir les valeurs par défaut"
   },
   "appbar.tooltip-change-layout": {
     "defaultMessage": "Changer la disposition"
