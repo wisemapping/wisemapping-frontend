@@ -61,14 +61,30 @@ export const getPositionIn = (elem: Element, container: Element): { top: number;
 };
 
 /**
+ * Whether an absolute element with this offset parent is placed in the initial containing block
+ * (the document) rather than in the parent: a static <body> or <html> is reported as the offset
+ * parent without being a containing block.
+ */
+const isStaticRoot = (container: Element): boolean => {
+  const doc = container.ownerDocument;
+  if (container !== doc.body && container !== doc.documentElement) {
+    return false;
+  }
+  // An empty computed position (environments without layout) is the initial value, static.
+  const position = getStyle(container, 'position');
+  return position === 'static' || position === '';
+};
+
+/**
  * jQuery's position(). With a `container`, the position is relative to it (see getPositionIn).
- * Without one, an SVG element (no offsetParent) gets document coordinates.
+ * Without one, or with a static <body>/<html>, an SVG element (no offsetParent) gets document
+ * coordinates.
  */
 export const getPosition = (
   elem: Element,
   container?: Element | null,
 ): { top: number; left: number } => {
-  if (container) {
+  if (container && !isStaticRoot(container)) {
     return getPositionIn(elem, container);
   }
 

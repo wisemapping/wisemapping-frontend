@@ -152,8 +152,12 @@ class TextPeer extends ElementPeer {
     return this._position;
   }
 
-  getNativePosition(): { left: number; top: number } {
-    return getPosition(this._native);
+  /**
+   * The text position in pixels, relative to `container` when given (the offset parent of an
+   * absolutely positioned element placed over the text), else in document coordinates.
+   */
+  getNativePosition(container?: Element | null): { left: number; top: number } {
+    return getPosition(this._native, container);
   }
 
   setFont(fontName: string, size: number, style: string, weight: string): void {

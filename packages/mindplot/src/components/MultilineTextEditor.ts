@@ -213,10 +213,10 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     // Force relayout ...
     LayoutEventBus.fireEvent('forceLayout');
 
-    // Adjust position ...
+    // Adjust position: the editor is absolute, so place it relative to its offset parent ...
     const textShape = this._topic.getOrBuildTextShape();
-    const { top, left } = textShape.getNativePosition();
     this._containerElem.style.position = 'absolute';
+    const { top, left } = textShape.getNativePosition(this._containerElem.offsetParent);
     this._containerElem.style.top = `${top}px`;
     this._containerElem.style.left = `${left}px`;
 

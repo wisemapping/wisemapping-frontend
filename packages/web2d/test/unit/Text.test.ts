@@ -585,4 +585,39 @@ describe('Text native position (DomUtils.getPosition, W-NATIVEPOS)', () => {
     expect(text.getNativePosition()).toEqual({ top: 30, left: 40 });
     workspace._getHtmlContainer().remove();
   });
+
+  // BL5-76: the inline editor is absolutely positioned inside its offset parent, but got document
+  // coordinates. A container passed in makes the position relative to it.
+  it('BL5-76: is relative to the container passed in', () => {
+    const container = document.createElement('div');
+    container.style.position = 'relative';
+    document.body.append(container);
+    const workspace = new Workspace();
+    workspace.addItAsChildTo(container);
+    const text = new Text();
+    workspace.append(text);
+    container.getBoundingClientRect = () => ({ top: 100, left: 20 }) as DOMRect;
+    text.peer._native.getBoundingClientRect = () => ({ top: 130, left: 60 }) as DOMRect;
+    expect(text.getNativePosition(container)).toEqual({ top: 30, left: 40 });
+    container.remove();
+  });
+
+  // An absolute element whose offset parent is a static <body> is placed in the initial containing
+  // block, which is the document: the body's own offset (its margin) must not be subtracted.
+  it('BL5-76: a static body container gives document coordinates', () => {
+    const workspace = new Workspace();
+    document.body.append(workspace._getHtmlContainer());
+    const text = new Text();
+    workspace.append(text);
+    const node = text.peer._native;
+    node.getClientRects = () => [{}] as unknown as DOMRectList;
+    node.getBoundingClientRect = () => ({ top: 30, left: 40 }) as DOMRect;
+    const bodyRect = jest
+      .spyOn(document.body, 'getBoundingClientRect')
+      .mockReturnValue({ top: 8, left: 8 } as DOMRect);
+    expect(text.getNativePosition(document.body)).toEqual({ top: 30, left: 40 });
+    expect(text.getNativePosition(document.documentElement)).toEqual({ top: 30, left: 40 });
+    bodyRect.mockRestore();
+    workspace._getHtmlContainer().remove();
+  });
 });

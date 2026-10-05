@@ -108,8 +108,12 @@ class Text extends WorkspaceElement<TextPeer> {
     this.peer.setPosition(x, y);
   }
 
-  getNativePosition() {
-    return this.peer.getNativePosition();
+  /**
+   * The text position in pixels. Pass the offset parent of an absolutely positioned element that
+   * should be placed over the text (BL5-76); without it, the position is in document coordinates.
+   */
+  getNativePosition(container?: Element | null) {
+    return this.peer.getNativePosition(container);
   }
 }
 

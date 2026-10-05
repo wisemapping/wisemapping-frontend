@@ -174,3 +174,35 @@ describe('MultilineTextEditor input', () => {
     expect(textarea().getAttribute('cols')).toBe('1');
   });
 });
+
+// BL5-76 (W-NATIVEPOS): the editor is absolutely positioned inside its offset parent (the map
+// component's wrapper), but was placed with the text's document coordinates, so it was off by the
+// wrapper's offset whenever the wrapper was not at the page origin.
+describe('MultilineTextEditor position', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('is placed over the text, relative to its offset parent', () => {
+    const { child } = buildTopics();
+    topics = [child];
+    const wrapper = mindmapComp.parentElement!;
+    wrapper.style.position = 'relative';
+    jest
+      .spyOn(HTMLElement.prototype, 'offsetParent', 'get')
+      .mockImplementation(function offsetParent(this: HTMLElement) {
+        return this.parentElement;
+      });
+    wrapper.getBoundingClientRect = () => ({ top: 100, left: 20, width: 800 }) as DOMRect;
+    const textNode = child.getOrBuildTextShape().peer._native;
+    textNode.getClientRects = () => [{}] as unknown as DOMRectList;
+    textNode.getBoundingClientRect = () => ({ top: 130, left: 60 }) as DOMRect;
+
+    openEditor(child);
+
+    const container = textarea().parentElement as HTMLElement;
+    expect(container.style.position).toBe('absolute');
+    expect(container.style.top).toBe('30px');
+    expect(container.style.left).toBe('40px');
+  });
+});
