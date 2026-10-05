@@ -189,3 +189,91 @@ describe('EventBusDispatcher layout coalescing', () => {
     expect(layout).not.toHaveBeenCalled();
   });
 });
+
+/**
+ * BL5-94: forceLayout skips the layout when nothing it depends on changed since the last one (it
+ * would move nothing), and runs it after any change.
+ */
+describe('EventBusDispatcher forceLayout with nothing pending', () => {
+  let dispatcher: EventBusDispatcher;
+
+  afterEach(() => {
+    dispatcher?.dispose();
+    jest.restoreAllMocks();
+  });
+
+  const setUp = () => {
+    const mindmap = new Mindmap();
+    const central = mindmap.createNode('CentralTopic', 0);
+    mindmap.addBranch(central);
+    const child = mindmap.createNode('MainTopic', 1);
+    child.setPosition(100, 0);
+    child.setOrder(0);
+    child.connectTo(central);
+    const manager = new LayoutManager(0, { width: 100, height: 40 });
+    dispatcher = new EventBusDispatcher();
+    dispatcher.setLayoutManager(manager);
+    LayoutEventBus.fireEvent('topicAdded', child);
+    LayoutEventBus.fireEvent('topicConnected', { parentNode: central, childNode: child });
+    LayoutEventBus.fireEvent('forceLayout');
+    const layout = jest.spyOn(manager, 'layout');
+    return { manager, central, child, layout };
+  };
+
+  it('does not lay out again when nothing changed', () => {
+    const { layout } = setUp();
+    LayoutEventBus.fireEvent('forceLayout');
+    LayoutEventBus.fireEvent('forceLayout');
+    expect(layout).not.toHaveBeenCalled();
+  });
+
+  it('lays out after a change of size, shrink state or position, and only once', () => {
+    const { manager, central, child, layout } = setUp();
+    const before = manager.find(1).getPosition().x;
+
+    LayoutEventBus.fireEvent('topicResize', { node: central, size: { width: 300, height: 40 } });
+    LayoutEventBus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(1);
+    expect(manager.find(1).getPosition().x).toBeGreaterThan(before);
+    LayoutEventBus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(1);
+
+    // A resize the layout does not see (half a pixel or less) changes nothing.
+    LayoutEventBus.fireEvent('topicResize', { node: central, size: { width: 300.5, height: 40 } });
+    LayoutEventBus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(1);
+
+    child.setChildrenShrunken(true);
+    LayoutEventBus.fireEvent('childShrinked', child);
+    LayoutEventBus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(2);
+
+    LayoutEventBus.fireEvent('topicMoved', { node: central, position: { x: 50, y: 0 } });
+    LayoutEventBus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(3);
+  });
+
+  it('lays out after a connection, a disconnection or a removal', () => {
+    const { child, layout } = setUp();
+    LayoutEventBus.fireEvent('topicDisconect', child);
+    LayoutEventBus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(1);
+
+    LayoutEventBus.fireEvent('topicRemoved', child);
+    LayoutEventBus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(2);
+  });
+
+  it('flushes the changes a layout that was not flushed left', () => {
+    const { manager, central, layout } = setUp();
+    LayoutEventBus.fireEvent('topicResize', { node: central, size: { width: 300, height: 40 } });
+    manager.layout(false);
+    layout.mockClear();
+    const changes: number[] = [];
+    manager.addEvent('change', (event: { getId: () => number }) => changes.push(event.getId()));
+
+    LayoutEventBus.fireEvent('forceLayout');
+    expect(layout).toHaveBeenCalledTimes(1);
+    expect(changes).toContain(1);
+  });
+});

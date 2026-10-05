@@ -22,6 +22,7 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
 }));
 
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
+import LayoutManager from '../../../src/components/layout/LayoutManager';
 import { buildDesigner } from './designer-harness';
 
 /**
@@ -57,5 +58,28 @@ describe('DesignerActionRunner undo/redo on an empty stack', () => {
 
     designer.redo();
     expect(modelUpdate).toHaveBeenLastCalledWith({ undoSteps: 1, redoSteps: 0 });
+  });
+});
+
+/**
+ * BL5-94: a command that connects a topic lays out in Topic.connectTo (its forceLayout), then the
+ * runner fired forceLayout again with nothing left to lay out. Layout is idempotent, so that
+ * second one is skipped; a command that leaves a change for the layout still gets one.
+ */
+describe('DesignerActionRunner layouts per command (BL5-94)', () => {
+  it('lays out once for a command whose connection laid out already', async () => {
+    const { designer, topic } = await buildDesigner();
+    const layout = jest.spyOn(LayoutManager.prototype, 'layout');
+
+    const model = designer.getMindmap().createNode('MainTopic');
+    model.setText('A2');
+    model.setPosition(350, 0);
+    model.setOrder(1);
+    designer.getActionDispatcher().addTopics([model], [1]);
+
+    expect(topic(model.getId()).getParent()?.getId()).toBe(1);
+    // Before: 2, the second one moving nothing.
+    expect(layout).toHaveBeenCalledTimes(1);
+    layout.mockRestore();
   });
 });

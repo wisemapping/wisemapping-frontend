@@ -42,6 +42,11 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
   // for the next one to update.
   private _eventsById: Map<number, ChangeEvent>;
 
+  // Whether something the layout depends on (the trees, the orders, sizes, shrink states and the
+  // positions of the roots) changed since it last ran. The layout is idempotent: without such a
+  // change it would move nothing (see needsLayout).
+  private _changedSinceLayout = true;
+
   constructor(rootNodeId: number, rootSize: SizeType, layoutType: LayoutType = 'mindmap') {
     super();
     $assert($defined(rootNodeId), 'rootNodeId can not be null');
@@ -71,7 +76,12 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     $assert($defined(id), 'id can not be null');
 
     const node = this._treeSet.find(id);
+    const before = node.getSize();
     node.setSize(size);
+    // Node.setSize ignores a change of half a pixel or less: the layout would not see it either.
+    if (node.getSize() !== before) {
+      this._changedSinceLayout = true;
+    }
   }
 
   updateShrinkState(id: number, value: boolean): void {
@@ -79,7 +89,10 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     $assert($defined(value), 'value can not be null');
 
     const node = this._treeSet.find(id);
-    node.setShrunken(value);
+    if (node.areChildrenShrunken() !== value) {
+      node.setShrunken(value);
+      this._changedSinceLayout = true;
+    }
   }
 
   find(id: number): Node {
@@ -101,11 +114,16 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     $assert($defined(position.y), 'y can not be null');
 
     const node = this._treeSet.find(id);
+    const before = node.getPosition();
     node.setPosition(position);
+    if (node.getPosition() !== before) {
+      this._changedSinceLayout = true;
+    }
   }
 
   connectNode(parentId: number, childId: number, order: number) {
     this._getCurrentLayout().connectNode(parentId, childId, order);
+    this._changedSinceLayout = true;
 
     return this;
   }
@@ -113,6 +131,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
   disconnectNode(id: number): void {
     $assert($defined(id), 'id can not be null');
     this._getCurrentLayout().disconnectNode(id);
+    this._changedSinceLayout = true;
   }
 
   /**
@@ -131,6 +150,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     );
     const result = this._getCurrentLayout().createNode(id, size, position, 'topic');
     this._treeSet.add(result);
+    this._changedSinceLayout = true;
 
     return this;
   }
@@ -145,6 +165,7 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
 
     // Remove the all the branch ...
     this._treeSet.remove(id);
+    this._changedSinceLayout = true;
 
     return this;
   }
@@ -206,9 +227,19 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
     return canvas;
   }
 
+  /**
+   * Whether a layout would do anything: something it depends on changed since it last ran, through
+   * this manager, or a layout that was not flushed left changes to fire. Nodes changed directly
+   * (through find()) are not seen.
+   */
+  needsLayout(): boolean {
+    return this._changedSinceLayout || this._events.length > 0;
+  }
+
   layout(flush?: boolean): LayoutManager {
     // File repositioning ...
     this._getCurrentLayout().layout();
+    this._changedSinceLayout = false;
 
     // Collect changes ...
     this._collectChanges(this._treeSet.getTreeRoots());

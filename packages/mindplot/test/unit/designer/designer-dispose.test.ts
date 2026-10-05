@@ -106,12 +106,13 @@ describe('Designer dispose (BL-48)', () => {
 
   it('stops the disposed designer from handling layout bus events', async () => {
     const first = await build();
-    const firstLayout = jest.spyOn(layoutManagerOf(first), 'layout');
+    // forceLayout asks the layout manager whether a layout would do anything (BL5-94).
+    const firstLayout = jest.spyOn(layoutManagerOf(first), 'needsLayout');
     const firstEnsureVisible = jest.spyOn(first.getWorkSpace(), 'ensureVisible');
     first.dispose();
 
     const second = await build();
-    const secondLayout = jest.spyOn(layoutManagerOf(second), 'layout');
+    const secondLayout = jest.spyOn(layoutManagerOf(second), 'needsLayout');
 
     LayoutEventBus.fireEvent('forceLayout');
     LayoutEventBus.fireEvent('topicSelected', first.getModel().getCentralTopic().getModel());

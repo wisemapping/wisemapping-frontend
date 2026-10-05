@@ -200,10 +200,17 @@ class EventBusDispatcher {
     this.getLayoutManager().removeNode(node.getId());
   }
 
+  /**
+   * Lays out, unless nothing changed since the last layout: it would move nothing. A command runs
+   * Topic.connectTo, which lays out, and the action runner then asks for another one (BL5-94).
+   */
   private _forceLayout(): void {
     // This layout includes any a connection asked for ...
     this._layoutPending = false;
-    this.getLayoutManager().layout(true);
+    const layoutManager = this.getLayoutManager();
+    if (layoutManager.needsLayout()) {
+      layoutManager.layout(true);
+    }
   }
 }
 

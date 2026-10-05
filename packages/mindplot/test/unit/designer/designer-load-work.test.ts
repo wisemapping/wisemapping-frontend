@@ -109,7 +109,7 @@ describe('Map load work', () => {
     expect(getId.mock.calls.length).toBeLessThanOrEqual(2 * TOPICS);
   });
 
-  it('lays out an interactive connect once, then once more for the command', async () => {
+  it('lays out an interactive connect once, and not again for the command', async () => {
     const { designer } = await buildDesigner(buildMediumMap({ topics: 50 }));
     const layout = jest.spyOn(LayoutManager.prototype, 'layout');
 
@@ -119,8 +119,9 @@ describe('Map load work', () => {
     model.setOrder(0);
     designer.getActionDispatcher().addTopics([model], [7]);
 
-    // Before: 3, as connecting laid out twice before the command's own layout.
-    expect(layout.mock.calls.length).toBe(2);
+    // Before: 3, as connecting laid out twice before the command's own layout; then 2, the
+    // command's own layout moving nothing (BL5-94).
+    expect(layout.mock.calls.length).toBe(1);
 
     // ... and the new topic is laid out when the command returns, not later.
     const added = designer.getModel().findTopicById(model.getId())!;
@@ -128,7 +129,7 @@ describe('Map load work', () => {
       layoutManagerOf(designer).find(model.getId()).getPosition(),
     );
     await microtasks();
-    expect(layout.mock.calls.length).toBe(2);
+    expect(layout.mock.calls.length).toBe(1);
   });
 
   it('settles the layout of an undone delete when the undo returns', async () => {
