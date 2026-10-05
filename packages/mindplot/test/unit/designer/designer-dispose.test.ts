@@ -94,6 +94,22 @@ describe('Designer dispose (BL-48)', () => {
     expect(globalDesigner()).toBe(second);
   });
 
+  // W5: a disposed designer left every listener on the shapes of its map, each holding its topic
+  // (and through it the designer) for as long as the nodes lived. Disposing the canvas now disposes
+  // the web2d workspace tree, which aborts them all.
+  it('W5: removes the listeners of every shape of the map', async () => {
+    const designer = await build();
+    const topic = designer.getModel().getCentralTopic();
+    const listener = jest.fn();
+    topic.addEvent('click', listener);
+    const node = topic.get2DElement().getNode();
+
+    designer.dispose();
+    node.dispatchEvent(new MouseEvent('click'));
+
+    expect(listener).not.toHaveBeenCalled();
+  });
+
   it('still refuses a second designer while the first one is live', async () => {
     await build();
     await expect(build()).rejects.toThrow('multiple initializations');

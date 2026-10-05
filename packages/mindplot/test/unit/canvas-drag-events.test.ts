@@ -325,13 +325,14 @@ describe('Canvas window listeners', () => {
     expect(mockSetCoordOrigin).not.toHaveBeenCalled();
   });
 
-  it('stops observing the container on dispose', () => {
+  it('stops observing the container and disposes the workspace on dispose', () => {
     const canvas = buildCanvas();
     canvas.registerEvents();
 
     canvas.dispose();
 
     expect(mockStopObserving).toHaveBeenCalledTimes(1);
+    expect(mockDisposeWorkspace).toHaveBeenCalledTimes(1);
 
     // The container no longer drives the disposed canvas ...
     mockSetCoordOrigin.mockClear();

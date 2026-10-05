@@ -137,9 +137,9 @@ class Canvas {
   }
 
   /**
-   * Removes the listeners registered on the container, stops observing the container size, ends
-   * any pan in progress, and removes the workspace SVG from the container: a designer built again
-   * on it adds its own.
+   * Removes the listeners registered on the container, the workspace and every shape in it, stops
+   * observing the container size, ends any pan in progress, and removes the workspace SVG from the
+   * container: a designer built again on it adds its own.
    */
   dispose(): void {
     if (this._cancelPan) {
@@ -158,6 +158,8 @@ class Canvas {
     }
     this._eventsEnabled = false;
 
+    // Every listener added to the workspace and the shapes in it, in one go ...
+    this._workspace.dispose();
     this._workspace._getHtmlContainer().remove();
   }
 
