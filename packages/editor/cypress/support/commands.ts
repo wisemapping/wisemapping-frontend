@@ -37,14 +37,6 @@ declare global {
     | 'Font Style'
     | 'Style Topic & Connections';
 
-  type PointerDragOptions = {
-    /**
-     * Fire the mousedown at this element instead of at the element under `from`: for a handle
-     * that another element covers (as `force: true` does for cy.trigger()).
-     */
-    pressOn?: Element;
-  };
-
   namespace Cypress {
     interface Chainable {
       waitForLoad(): void;
@@ -61,7 +53,7 @@ declare global {
       triggerUndo(): void;
       triggerRedo(): void;
       getEmoji(): Chainable<JQuery<HTMLElement>>;
-      pointerDrag(from: PointerPosition, to: PointerPosition, options?: PointerDragOptions): void;
+      pointerDrag(from: PointerPosition, to: PointerPosition): void;
       waitForEmojiTab(): void;
       waitForIconsGalleryTab(): void;
     }
@@ -260,9 +252,8 @@ const dispatchPointerEvent = (
   win: Cypress.AUTWindow,
   type: 'mousedown' | 'mousemove' | 'mouseup',
   position: PointerPosition,
-  target: Element = elementUnderPointer(win.document, position),
 ): void => {
-  target.dispatchEvent(
+  elementUnderPointer(win.document, position).dispatchEvent(
     new win.MouseEvent(type, {
       bubbles: true,
       cancelable: true,
@@ -280,32 +271,29 @@ const dispatchPointerEvent = (
 /**
  * Drags with the left button the way a real pointer does: mousedown on the element under `from`,
  * a few mousemoves on the way to `to`, and the mouseup on the element under `to`. Each event is a
- * bubbling, composed MouseEvent fired at the element under the pointer (see `options.pressOn`).
+ * bubbling, composed MouseEvent fired at the element under the pointer.
  *
  * Do not use `cy.get('body').trigger('mousemove')` for drags: trigger() dispatches a plain,
  * non-composed Event at the element in the middle of the body, which here is inside the mindplot
  * shadow root, so it never reaches the drag listeners on the document.
  */
-Cypress.Commands.add(
-  'pointerDrag',
-  (from: PointerPosition, to: PointerPosition, options: PointerDragOptions = {}) => {
-    cy.window({ log: false }).then((win) => {
-      Cypress.log({
-        name: 'pointerDrag',
-        message: `(${from.clientX}, ${from.clientY}) -> (${to.clientX}, ${to.clientY})`,
-      });
-      dispatchPointerEvent(win, 'mousedown', from, options.pressOn);
-      const steps = 4;
-      for (let step = 1; step <= steps; step++) {
-        dispatchPointerEvent(win, 'mousemove', {
-          clientX: from.clientX + ((to.clientX - from.clientX) * step) / steps,
-          clientY: from.clientY + ((to.clientY - from.clientY) * step) / steps,
-        });
-      }
-      dispatchPointerEvent(win, 'mouseup', to);
+Cypress.Commands.add('pointerDrag', (from: PointerPosition, to: PointerPosition) => {
+  cy.window({ log: false }).then((win) => {
+    Cypress.log({
+      name: 'pointerDrag',
+      message: `(${from.clientX}, ${from.clientY}) -> (${to.clientX}, ${to.clientY})`,
     });
-  },
-);
+    dispatchPointerEvent(win, 'mousedown', from);
+    const steps = 4;
+    for (let step = 1; step <= steps; step++) {
+      dispatchPointerEvent(win, 'mousemove', {
+        clientX: from.clientX + ((to.clientX - from.clientX) * step) / steps,
+        clientY: from.clientY + ((to.clientY - from.clientY) * step) / steps,
+      });
+    }
+    dispatchPointerEvent(win, 'mouseup', to);
+  });
+});
 
 Cypress.Commands.add('getEmoji', () => {
   return cy.get('button.epr-emoji:visible');
