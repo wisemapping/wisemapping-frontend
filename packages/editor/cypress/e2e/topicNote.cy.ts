@@ -100,7 +100,8 @@ describe('Topic Note Suite', () => {
     cy.get('[contenteditable="true"]').should('contain.text', initialNote);
 
     // Clear and type new text
-    cy.get('[contenteditable="true"]').first().clear().type('Updated note text');
+    cy.get('[contenteditable="true"]').first().clear();
+    cy.get('[contenteditable="true"]').first().type('Updated note text');
     cy.contains('Accept').should('be.visible').click();
 
     cy.matchImageSnapshot('note-edited-successfully');
@@ -139,7 +140,8 @@ describe('Topic Note Suite', () => {
     cy.onClickToolbarButton('Add Note');
     waitForNotePanel();
 
-    cy.get('[contenteditable="true"]').first().clear().type(tooltipNote);
+    cy.get('[contenteditable="true"]').first().clear();
+    cy.get('[contenteditable="true"]').first().type(tooltipNote);
     cy.contains('Accept').should('be.visible').click();
 
     cy.get('mindplot-component')

@@ -74,7 +74,8 @@ describe('Topic Link Suite', () => {
 
     // Type a valid URL
     const validUrl = 'https://www.example.com';
-    cy.get('input[type="url"]').first().clear().type(validUrl);
+    cy.get('input[type="url"]').first().clear();
+    cy.get('input[type="url"]').first().type(validUrl);
 
     // Error message should not be shown for valid URL
     cy.contains('Address is not valid').should('not.exist');
@@ -139,7 +140,8 @@ describe('Topic Link Suite', () => {
     cy.get('input[type="url"]').should('have.value', initialUrl);
 
     // Clear and type new URL
-    cy.get('input[type="url"]').first().clear().type('https://www.updated-url.com');
+    cy.get('input[type="url"]').first().clear();
+    cy.get('input[type="url"]').first().type('https://www.updated-url.com');
     cy.contains('Accept').should('be.visible').click();
 
     cy.matchImageSnapshot('link-edited-successfully');
@@ -209,7 +211,8 @@ describe('Topic Link Suite', () => {
     cy.onClickToolbarButton('Add Link');
     waitForLinkPanel();
 
-    cy.get('input[type="url"]').first().clear().type(linkUrl);
+    cy.get('input[type="url"]').first().clear();
+    cy.get('input[type="url"]').first().type(linkUrl);
     cy.contains('Accept').should('be.visible').click();
 
     cy.get('mindplot-component')

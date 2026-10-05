@@ -55,7 +55,8 @@ describe.skip('Mobile Text Editing Suite', () => {
 
         // The key test: can we type immediately?
         // Clear and type new text
-        cy.get('@textarea').clear().type('Updated Text');
+        cy.get('@textarea').clear();
+        cy.get('@textarea').type('Updated Text');
 
         // Verify the text was updated
         cy.get('@textarea').should('have.value', 'Updated Text');
@@ -70,18 +71,16 @@ describe.skip('Mobile Text Editing Suite', () => {
 
         // Add a child topic first
         cy.get('body').type('{tab}');
-        cy.wait(300);
 
-        // Type some text for the new topic
+        // Type some text for the new topic, once its editor is open
         cy.get('#textContainer textarea').should('be.visible');
         cy.get('#textContainer textarea').type('Test Topic{enter}');
-        cy.wait(300);
+
+        // Wait for the new topic to show its text
+        cy.get('svg > g > g').contains('Test Topic').should('be.visible');
 
         // Now select this new topic (which should show helper elements)
         cy.focusTopicByText('Test Topic');
-
-        // Wait for any helper elements to potentially appear
-        cy.wait(500);
 
         // Double-click to edit
         cy.get('svg > g > g').contains('Test Topic').parent().parent().dblclick();

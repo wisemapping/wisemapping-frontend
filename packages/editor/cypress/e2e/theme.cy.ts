@@ -48,7 +48,8 @@ describe('Theme Suite', () => {
     cy.onClickToolbarButton('Theme');
     
     // Select Ocean theme - scroll into view first to ensure it's visible
-    cy.contains('Ocean').scrollIntoView().should('be.visible').click({ force: true });
+    cy.contains('Ocean').scrollIntoView();
+    cy.contains('Ocean').should('be.visible').click({ force: true });
     
     // Click Apply Theme button
     cy.contains('Apply Theme').click({ force: true });
@@ -62,7 +63,8 @@ describe('Theme Suite', () => {
     cy.onClickToolbarButton('Theme');
     
     // Select Classic theme - scroll into view first to ensure it's visible
-    cy.contains('Classic').scrollIntoView().should('be.visible').click({ force: true });
+    cy.contains('Classic').scrollIntoView();
+    cy.contains('Classic').should('be.visible').click({ force: true });
     
     // Click Apply Theme button
     cy.contains('Apply Theme').click({ force: true });

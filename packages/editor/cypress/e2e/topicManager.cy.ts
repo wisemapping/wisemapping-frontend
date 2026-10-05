@@ -27,14 +27,20 @@ describe('Node manager', () => {
   });
 
   it('shortcut add sibling node', () => {
-    cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
+    cy.get('body').type('{enter}');
+    cy.get('body').type('Mind Mapping rocks!!');
+    cy.get('body').type('{enter}');
     cy.get('[test-id=36] > text > tspan').should('exist');
     cy.matchImageSnapshot('editor-shortcut-edit');
   });
 
   it('shortcut add child node', () => {
-    cy.get('body').type('{insert}').type('Child 1 mind Mapping rocks!!').type('{enter}');
-    cy.get('body').type('{enter}').type('Child 2 mind Mapping rocks!!').type('{enter}');
+    cy.get('body').type('{insert}');
+    cy.get('body').type('Child 1 mind Mapping rocks!!');
+    cy.get('body').type('{enter}');
+    cy.get('body').type('{enter}');
+    cy.get('body').type('Child 2 mind Mapping rocks!!');
+    cy.get('body').type('{enter}');
 
     cy.focusTopicById(36);
     cy.focusTopicById(37);
@@ -43,7 +49,9 @@ describe('Node manager', () => {
   });
 
   it('Delete topic', () => {
-    cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
+    cy.get('body').type('{enter}');
+    cy.get('body').type('Mind Mapping rocks!!');
+    cy.get('body').type('{enter}');
     cy.focusTopicById(36);
     cy.get('body').type('{del}');
 
@@ -53,7 +61,9 @@ describe('Node manager', () => {
   });
 
   it('undo changes', () => {
-    cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
+    cy.get('body').type('{enter}');
+    cy.get('body').type('Mind Mapping rocks!!');
+    cy.get('body').type('{enter}');
     cy.focusTopicByText('Mind Mapping rocks!!');
     cy.triggerUndo();
 
@@ -61,7 +71,9 @@ describe('Node manager', () => {
   });
 
   it('redo changes', () => {
-    cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
+    cy.get('body').type('{enter}');
+    cy.get('body').type('Mind Mapping rocks!!');
+    cy.get('body').type('{enter}');
     cy.focusTopicByText('Mind Mapping rocks!!');
 
     cy.triggerUndo();

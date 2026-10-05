@@ -31,7 +31,8 @@ describe('Rename Suite', () => {
     cy.get('[data-testid="app-bar-title"]').click();
     
     // Clear the existing title and type new title
-    cy.get('[data-testid="app-bar-title"] input').clear().type('My New Mind Map Title');
+    cy.get('[data-testid="app-bar-title"] input').clear();
+    cy.get('[data-testid="app-bar-title"] input').type('My New Mind Map Title');
     
     // Press Enter to save
     cy.get('[data-testid="app-bar-title"] input').type('{enter}');
@@ -52,7 +53,8 @@ describe('Rename Suite', () => {
       cy.get('[data-testid="app-bar-title"]').click();
       
       // Type new title
-      cy.get('[data-testid="app-bar-title"] input').clear().type('This should be cancelled');
+      cy.get('[data-testid="app-bar-title"] input').clear();
+      cy.get('[data-testid="app-bar-title"] input').type('This should be cancelled');
       
       // Press Escape to cancel
       cy.get('[data-testid="app-bar-title"] input').type('{esc}');
