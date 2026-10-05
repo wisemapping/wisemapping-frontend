@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from './util/assert';
+import { $assert } from './util/assert';
 import { Designer } from '..';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
@@ -93,7 +93,7 @@ class CommandContext {
 
   /** */
   findRelationships(relationshipIds: number[]): Relationship[] {
-    $assert($defined(relationshipIds), 'relId can not be null');
+    $assert(relationshipIds != null, 'relId can not be null');
     const relIds = Array.isArray(relationshipIds) ? relationshipIds : [relationshipIds];
 
     const designerRel = this._designer.getModel().getRelationships();

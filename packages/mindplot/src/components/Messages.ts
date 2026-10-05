@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from './util/assert';
 import Bundle from './lang/Bundle';
 import type { LocaleMessages, MsgKey } from './lang/en';
 
@@ -23,7 +22,7 @@ class Messages {
   public static __bundle: LocaleMessages | undefined;
 
   static init(locale: string) {
-    const userLocale = $defined(locale) && locale ? locale : 'en';
+    const userLocale = locale ? locale : 'en';
 
     // Try the full locale (zh-CN), then its base language (zh), then English.
     const baseLanguage = userLocale.split(/[-_]/)[0].toLowerCase();

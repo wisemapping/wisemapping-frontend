@@ -17,7 +17,7 @@
  */
 import { Text, Group, ElementClass, ElementPeer, Rect } from '@wisemapping/web2d';
 import type { StrokeStyle, FontWeightType as TextWeight } from '@wisemapping/web2d';
-import { $assert, $defined } from './util/assert';
+import { $assert } from './util/assert';
 import isMacPlatform from './util/platform';
 
 import NodeGraph, { NodeOption } from './NodeGraph';
@@ -883,7 +883,7 @@ abstract class Topic extends NodeGraph {
     const dispatcher = () => this.getActionDispatcher();
     const notes = model.findFeatureByType('note');
 
-    if (!$defined(value)) {
+    if (value == null) {
       // Nothing to clear when the topic has no note ...
       if (notes.length > 0) {
         const featureId = notes[0].getId();
@@ -920,7 +920,7 @@ abstract class Topic extends NodeGraph {
     const dispatcher = () => this.getActionDispatcher();
     const links = model.findFeatureByType('link');
 
-    if (!$defined(value)) {
+    if (value == null) {
       // Nothing to clear when the topic has no link ...
       if (links.length > 0) {
         const featureId = links[0].getId();
@@ -984,7 +984,7 @@ abstract class Topic extends NodeGraph {
   getIncomingLines(): TopicConnection[] {
     const children = this.getChildren();
     return children
-      .filter((node) => $defined(node.getOutgoingLine()))
+      .filter((node) => node.getOutgoingLine() != null)
       .map((node) => node.getOutgoingLine()!);
   }
 
@@ -1264,7 +1264,7 @@ abstract class Topic extends NodeGraph {
 
   getChildren(): Topic[] {
     let result = this._children;
-    if (!$defined(result)) {
+    if (result == null) {
       this._children = [];
       result = this._children;
     }

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from './util/assert';
+import { $assert } from './util/assert';
 import DOMUtils from './util/DOMUtils';
 import getCollapsedAncestorIds from './util/topicVisibility';
 import resolveTopicMove, { TopicMove } from './util/topicReorder';
@@ -451,7 +451,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     const objects = model.getEntities();
     objects.forEach((object) => {
       // Disable all nodes on focus but not the current if Ctrl key isn't being pressed
-      if (!$defined(event) || (!event.ctrlKey && !event.metaKey)) {
+      if (event == null || (!event.ctrlKey && !event.metaKey)) {
         if (object.isOnFocus() && object !== currentObject) {
           object.setOnFocus(false);
         }

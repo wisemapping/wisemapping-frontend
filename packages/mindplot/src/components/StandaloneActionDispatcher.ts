@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from './util/assert';
+import { $assert } from './util/assert';
 import ActionDispatcher, { ActionDispatcherCommands } from './ActionDispatcher';
 import DesignerActionRunner from './DesignerActionRunner';
 import AddTopicCommand from './commands/AddTopicCommand';
@@ -92,8 +92,8 @@ class StandaloneActionDispatcher extends ActionDispatcher implements ActionDispa
 
   /** */
   moveTopic(topicId: number, position: PositionType): void {
-    $assert($defined(topicId), 'topicsId can not be null');
-    $assert($defined(position), 'position can not be null');
+    $assert(topicId != null, 'topicsId can not be null');
+    $assert(position != null, 'position can not be null');
 
     const commandFunc = (topic: Topic, pos: PositionType) => {
       const result = topic.getPosition();
@@ -131,7 +131,7 @@ class StandaloneActionDispatcher extends ActionDispatcher implements ActionDispa
   }
 
   changeTextToTopic(topicsIds: number[], text: string): void {
-    $assert($defined(topicsIds), 'topicsIds can not be null');
+    $assert(topicsIds != null, 'topicsIds can not be null');
 
     const commandFunc = (topic: Topic, value: string | undefined) => {
       // Keep the model value (undefined when empty): getText() returns the theme placeholder.
