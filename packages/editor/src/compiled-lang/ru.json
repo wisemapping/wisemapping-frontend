@@ -1129,6 +1129,12 @@
       "value": "Свернуть"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "Свернуть все"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1139,6 +1145,12 @@
     {
       "type": 0,
       "value": "Развернуть"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "Развернуть все"
     }
   ],
   "outline.has-note": [
@@ -1847,6 +1859,20 @@
     {
       "type": 0,
       "value": "Раскрыть по уровню"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "Раскрыть по уровню (уровень "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

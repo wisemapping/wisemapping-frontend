@@ -1137,6 +1137,12 @@
       "value": "折叠"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "全部折疊"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1147,6 +1153,12 @@
     {
       "type": 0,
       "value": "展开"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "全部展開"
     }
   ],
   "outline.has-note": [
@@ -1855,6 +1867,20 @@
     {
       "type": 0,
       "value": "按級別展開"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "按級別展開（級別 "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": "）"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

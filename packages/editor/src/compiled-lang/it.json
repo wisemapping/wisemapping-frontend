@@ -1129,6 +1129,12 @@
       "value": "Comprimi"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "Comprimi tutto"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1139,6 +1145,12 @@
     {
       "type": 0,
       "value": "Espandi"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "Espandi tutto"
     }
   ],
   "outline.has-note": [
@@ -1847,6 +1859,20 @@
     {
       "type": 0,
       "value": "Espandi per livello"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "Espandi per livello (livello "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

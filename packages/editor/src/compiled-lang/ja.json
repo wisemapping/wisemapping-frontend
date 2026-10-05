@@ -1129,6 +1129,12 @@
       "value": "折りたたむ"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "すべて折りたたむ"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1139,6 +1145,12 @@
     {
       "type": 0,
       "value": "展開"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "すべて展開"
     }
   ],
   "outline.has-note": [
@@ -1847,6 +1859,20 @@
     {
       "type": 0,
       "value": "レベルごとに展開"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "レベルごとに展開（レベル "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": "）"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

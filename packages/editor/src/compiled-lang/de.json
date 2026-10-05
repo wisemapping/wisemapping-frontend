@@ -1129,6 +1129,12 @@
       "value": "Einklappen"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "Alle einklappen"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1139,6 +1145,12 @@
     {
       "type": 0,
       "value": "Erweitern"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "Alle erweitern"
     }
   ],
   "outline.has-note": [
@@ -1847,6 +1859,20 @@
     {
       "type": 0,
       "value": "Nach Ebene erweitern"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "Nach Ebene erweitern (Ebene "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

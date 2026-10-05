@@ -1117,6 +1117,12 @@
       "value": "طي"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "طي الكل"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1127,6 +1133,12 @@
     {
       "type": 0,
       "value": "توسيع"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "توسيع الكل"
     }
   ],
   "outline.has-note": [
@@ -1835,6 +1847,20 @@
     {
       "type": 0,
       "value": "توسيع حسب المستوى"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "توسيع حسب المستوى (المستوى "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [

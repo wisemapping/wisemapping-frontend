@@ -1129,6 +1129,12 @@
       "value": "Recolher"
     }
   ],
+  "outline.collapse-all": [
+    {
+      "type": 0,
+      "value": "Recolher tudo"
+    }
+  ],
   "outline.empty": [
     {
       "type": 0,
@@ -1139,6 +1145,12 @@
     {
       "type": 0,
       "value": "Expandir"
+    }
+  ],
+  "outline.expand-all": [
+    {
+      "type": 0,
+      "value": "Expandir tudo"
     }
   ],
   "outline.has-note": [
@@ -1847,6 +1859,20 @@
     {
       "type": 0,
       "value": "Expandir por Nível"
+    }
+  ],
+  "visualization-toolbar.tooltip-expand-level-current": [
+    {
+      "type": 0,
+      "value": "Expandir por Nível (Nível "
+    },
+    {
+      "type": 1,
+      "value": "level"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "visualization-toolbar.tooltip-find-in-map": [
