@@ -38,6 +38,29 @@ const centralOf = (mindmap: Mindmap): NodeModel => mindmap.getCentralTopic() as 
 const noteOf = (node: NodeModel): NoteModel | undefined =>
   node.findFeatureByType('note')[0] as NoteModel | undefined;
 
+describe('FreeplaneImporter big notes', () => {
+  test('a note over 100 KB is truncated, it does not fail the import', async () => {
+    const big = 'x'.repeat(150_000);
+    const freeplane = `<map version="freeplane 1.9.13">
+  <node TEXT="Root" ID="ID_1">
+    <node TEXT="Big" ID="ID_2">
+      <richcontent TYPE="NOTE"><html><body><p>${big}</p></body></html></richcontent>
+    </node>
+    <node TEXT="Next" ID="ID_3"/>
+  </node>
+</map>`;
+
+    const mindmap = loadMindmap(await new FreeplaneImporter(freeplane).import('test'));
+
+    const [bigNode, next] = centralOf(mindmap).getChildren();
+    expect(next.getText()).toBe('Next');
+    const note = noteOf(bigNode)!.getText();
+    expect(note.startsWith('<p>xxx')).toBe(true);
+    expect(note.length).toBeGreaterThan(90_000);
+    expect(note.length).toBeLessThanOrEqual(100_010);
+  });
+});
+
 describe('FreeplaneImporter notes', () => {
   const freeplane = `<map version="freeplane 1.9.13">
   <node TEXT="Root" ID="ID_1">

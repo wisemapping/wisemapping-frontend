@@ -101,4 +101,25 @@ describe('HtmlSanitizer.sanitize', () => {
 
     expect(hook).not.toHaveBeenCalled();
   });
+
+  it('truncates content over 100 KB and still sanitizes it, instead of throwing', () => {
+    const padding = 'a'.repeat(99_950);
+    // The limit cuts the second image in the middle of its tag.
+    const html = `<p>${padding}<img src=x onerror=alert(1)><img src=x onerror=alert(2)></p>${'b'.repeat(50_000)}`;
+
+    const result = HtmlSanitizer.sanitize(html);
+
+    expect(findUnsafe(result)).toEqual([]);
+    expect(result.startsWith(`<p>${padding}<img src="x">`)).toBe(true);
+    expect(result).not.toContain('b');
+    expect(result.length).toBeLessThan(100_100);
+  });
+
+  it('does not split a surrogate pair when it truncates', () => {
+    const html = `${'a'.repeat(99_999)}😀${'b'.repeat(10)}`;
+
+    const result = HtmlSanitizer.sanitize(html);
+
+    expect(result).toBe('a'.repeat(99_999));
+  });
 });
