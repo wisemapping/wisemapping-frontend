@@ -25,9 +25,10 @@ import EventDispatcher from './EventDispatcher';
 import LayoutEventBus from './layout/LayoutEventBus';
 import Topic from './Topic';
 
-type EditorEventType = 'input';
+/** 'input' sends the DOM event and the new text. */
+type EditorEvents = { input: [Event, string] };
 
-class EditorComponent extends EventDispatcher<EditorEventType> {
+class EditorComponent extends EventDispatcher<EditorEvents> {
   private _topic: Topic;
 
   private _oldText: string | undefined;

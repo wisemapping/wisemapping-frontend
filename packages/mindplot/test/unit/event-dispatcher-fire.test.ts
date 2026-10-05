@@ -17,7 +17,7 @@
  */
 import EventDispispatcher from '../../src/components/EventDispatcher';
 
-type Events = 'change';
+type Events = { change: unknown; ping: void };
 
 describe('EventDispatcher.fireEvent', () => {
   it.each([0, false, '', null])('passes the falsy payload %p to the handlers', (payload) => {
@@ -33,9 +33,9 @@ describe('EventDispatcher.fireEvent', () => {
   it('calls the handlers with no argument when there is no payload', () => {
     const dispatcher = new EventDispispatcher<Events>();
     const handler = jest.fn();
-    dispatcher.addEvent('change', handler);
+    dispatcher.addEvent('ping', handler);
 
-    dispatcher.fireEvent('change');
+    dispatcher.fireEvent('ping');
 
     expect(handler).toHaveBeenCalledWith();
   });
@@ -78,5 +78,54 @@ describe('EventDispatcher.fireEvent', () => {
 
     dispatcher.fireEvent('change', 2);
     expect(late).toHaveBeenCalledWith(2);
+  });
+});
+
+describe('EventDispatcher typing and registration', () => {
+  type Typed = { moved: { x: number }; done: void };
+
+  it('checks each handler and fireEvent against the payload of its event', () => {
+    const dispatcher = new EventDispispatcher<Typed>();
+    const moved = jest.fn((payload: { x: number }) => payload.x);
+    dispatcher.addEvent('moved', moved);
+    // Checked by tsc only: never run.
+    const misuses = (): void => {
+      // @ts-expect-error a handler for another payload is rejected
+      dispatcher.addEvent('moved', (payload: string) => payload);
+      // @ts-expect-error an event without a payload takes no argument
+      dispatcher.fireEvent('done', 1);
+      // @ts-expect-error an event with a payload needs it
+      dispatcher.fireEvent('moved');
+      // @ts-expect-error unknown events are rejected
+      dispatcher.addEvent('unknown', () => undefined);
+    };
+    expect(misuses).toBeInstanceOf(Function);
+
+    dispatcher.fireEvent('moved', { x: 3 });
+
+    expect(moved).toHaveBeenCalledWith({ x: 3 });
+  });
+
+  it('keeps an internal handler on removeEvent, and drops the mark when added again', () => {
+    const dispatcher = new EventDispispatcher<Typed>();
+    const handler = jest.fn();
+    dispatcher.addEvent('done', handler, true);
+
+    dispatcher.removeEvent('done', handler);
+    expect(dispatcher.listenerCount('done')).toBe(1);
+
+    dispatcher.addEvent('done', handler);
+    dispatcher.removeEvent('done', handler);
+    expect(dispatcher.listenerCount('done')).toBe(0);
+  });
+
+  it('counts the handlers of one event or of all of them', () => {
+    const dispatcher = new EventDispispatcher<Typed>();
+    dispatcher.addEvent('done', () => undefined);
+    dispatcher.addEvent('moved', () => undefined);
+    dispatcher.addEvent('moved', () => undefined);
+
+    expect(dispatcher.listenerCount('moved')).toBe(2);
+    expect(dispatcher.listenerCount()).toBe(3);
   });
 });

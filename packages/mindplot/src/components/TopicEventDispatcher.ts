@@ -18,10 +18,16 @@
 import EventDispispatcher from './EventDispatcher';
 import Topic from './Topic';
 import MultitTextEditor from './MultilineTextEditor';
+import type NodeModel from './model/NodeModel';
 
-type TopicEventType = 'editnode' | 'clicknode';
+type TopicEventPayload = { model: NodeModel; readOnly: boolean };
 
-class TopicEventDispatcher extends EventDispispatcher<TopicEventType> {
+/** The events of a topic the dispatcher does not handle itself. */
+export type TopicEvents = { editnode: TopicEventPayload; clicknode: TopicEventPayload };
+
+type TopicEventType = keyof TopicEvents;
+
+class TopicEventDispatcher extends EventDispispatcher<TopicEvents> {
   private _readOnly: boolean;
 
   constructor(readOnly: boolean) {

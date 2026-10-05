@@ -68,6 +68,7 @@ import ThemeType from './model/ThemeType';
 import ThemeFactory from './theme/ThemeFactory';
 import Theme, { ThemeVariant } from './theme/Theme';
 import ChangeEvent from './layout/ChangeEvent';
+import type { ModelUpdateEvent } from './DesignerUndoManager';
 import HTMLTopicSelected from './HTMLTopicSelected';
 
 /**
@@ -81,9 +82,21 @@ export type ViewportInsets = { top?: number; right?: number; bottom?: number; le
 
 export type ZoomToFitOptions = { insets?: ViewportInsets };
 
-type DesignerEventType = 'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess' | 'featureEdit';
+/** The payload of 'featureEdit': open the link or note editor of a topic, or close it. */
+export type FeatureEditEvent = { event: 'link' | 'note'; topic: Topic } | { event: 'close' };
 
-class Designer extends EventDispispatcher<DesignerEventType> {
+/** The events a designer fires to its host (the editor) and their payloads. */
+export type DesignerEvents = {
+  modelUpdate: ModelUpdateEvent;
+  featureEdit: FeatureEditEvent;
+  onfocus: void;
+  onblur: void;
+  loadSuccess: void;
+};
+
+export type DesignerEventType = keyof DesignerEvents;
+
+class Designer extends EventDispispatcher<DesignerEvents> {
   private _mindmap: Mindmap | null;
 
   private _options: DesignerOptions;
@@ -262,10 +275,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   getActionDispatcher(): StandaloneActionDispatcher {
     return this._actionDispatcher;
-  }
-
-  addEvent(type: DesignerEventType, listener: (event?: unknown) => void): void {
-    super.addEvent(type, listener);
   }
 
   private _registerMouseEvents() {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /*
  *    Copyright [2007-2025] [wisemapping]
  *
@@ -16,57 +15,90 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-class EventDispispatcher<T> {
-  private _handlerByType: Map<T, ((args?: any) => void)[]>;
+/**
+ * The handler of an event: it receives the payload its event map gives that event. An event
+ * whose payload is `void` calls it with no argument.
+ */
+export type EventHandler<P> = (payload: P) => void;
+
+/** The arguments fireEvent takes after the event name: none for an event without a payload. */
+export type EventArgs<P> = [P] extends [void] ? [] : [P];
+
+/** The names of an event map. */
+export type EventName<M> = keyof M & string;
+
+/**
+ * Dispatches the events of the map M, which gives the payload of each event name. A handler is
+ * checked against the payload of its event, and fireEvent against the payload it sends.
+ */
+class EventDispispatcher<M extends object> {
+  // Handlers of different events take different payloads: the map is typed per call ...
+  private _handlerByType: Map<string, EventHandler<never>[]>;
+
+  // Handlers added as internal: removeEvent leaves them in place.
+  private _internalHandlers: WeakSet<EventHandler<never>>;
 
   constructor() {
     this._handlerByType = new Map();
+    this._internalHandlers = new WeakSet();
   }
 
-  private static _normalizeEventName<K>(value: K): K {
-    return String(value).replace(/^on([A-Z])/, (_full, first) => first.toLowerCase()) as K;
+  private static _normalizeEventName(value: string): string {
+    return value.replace(/^on([A-Z])/, (_full, first: string) => first.toLowerCase());
   }
 
-  addEvent(typeName: T, fn: (args?: any) => void, internal?: boolean): void {
+  addEvent<K extends EventName<M>>(typeName: K, fn: EventHandler<M[K]>, internal?: boolean): void {
     const type = EventDispispatcher._normalizeEventName(typeName);
 
-    let events = this._handlerByType.get(type);
     // Add function had not been added yet
-    events = events || [];
-    if (events && !events.includes(fn)) {
+    const events = this._handlerByType.get(type) || [];
+    if (!events.includes(fn)) {
       events.push(fn);
       this._handlerByType.set(type, events);
     }
 
     // Mark reference ...
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    fn.internal = Boolean(internal);
+    if (internal) {
+      this._internalHandlers.add(fn);
+    } else {
+      this._internalHandlers.delete(fn);
+    }
   }
 
-  fireEvent(typeName: T, arg?: any): void {
+  fireEvent<K extends EventName<M>>(typeName: K, ...args: EventArgs<M[K]>): void {
     const type = EventDispispatcher._normalizeEventName(typeName);
-    const events = this._handlerByType.get(type);
+    const events = this._handlerByType.get(type) as ((...a: unknown[]) => void)[] | undefined;
     if (events) {
       // Falsy payloads (0, false, '') are still payloads ...
-      const args: any = arg !== undefined ? [arg] : [];
+      const payload: unknown[] = args[0] !== undefined ? [args[0]] : [];
       // Iterate over a copy, so a handler removing itself does not skip the next one.
       // A handler removed by an earlier one during this dispatch is not called ...
       [...events].forEach((fn) => {
         if (events.includes(fn)) {
-          fn.apply(this, args);
+          fn.apply(this, payload);
         }
       });
     }
   }
 
-  removeEvent(typeName: T, fn: (...args: any) => void): void {
+  /** The number of handlers registered, for one event or for all of them. */
+  listenerCount(typeName?: EventName<M>): number {
+    if (typeName !== undefined) {
+      const type = EventDispispatcher._normalizeEventName(typeName);
+      return this._handlerByType.get(type)?.length ?? 0;
+    }
+    let count = 0;
+    this._handlerByType.forEach((events) => {
+      count += events.length;
+    });
+    return count;
+  }
+
+  removeEvent<K extends EventName<M>>(typeName: K, fn: EventHandler<M[K]>): void {
     const type = EventDispispatcher._normalizeEventName(typeName);
     const events = this._handlerByType.get(type);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    if (events && !fn.internal) {
+    if (events && !this._internalHandlers.has(fn)) {
       const index = events.indexOf(fn);
       if (index !== -1) {
         events.splice(index, 1);

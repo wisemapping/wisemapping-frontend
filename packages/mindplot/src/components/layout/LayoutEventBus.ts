@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /*
  *    Copyright [2007-2025] [wisemapping]
  *
@@ -16,56 +15,48 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import EventDispatcher from '../EventDispatcher';
-import { LayoutEventBusType } from '../LayoutEventBusType';
-import type NodeModel from '../model/NodeModel';
-import type PositionType from '../PositionType';
-import type SizeType from '../SizeType';
+import EventDispatcher, { EventArgs, EventHandler } from '../EventDispatcher';
+import { LayoutEventBusType, LayoutEvents } from '../LayoutEventBusType';
 
 /** The payload of each event. Topics send their model, not themselves. */
-export type LayoutEventPayloads = {
-  topicResize: { node: NodeModel; size: SizeType };
-  topicMoved: { node: NodeModel; position: PositionType };
-  forceLayout: void;
-  childShrinked: NodeModel;
-  topicConnected: { parentNode: NodeModel; childNode: NodeModel };
-  topicAdded: NodeModel;
-  topicRemoved: NodeModel;
-  topicDisconect: NodeModel;
-  topicSelected: NodeModel;
-  topicUnselected: NodeModel;
-  canvasPanned: void;
-  canvasZoomed: { zoom: number };
-  // Fired by the ActionDispatcher, which shares the event names, never on this bus.
-  modelUpdate: unknown;
-};
+export type LayoutEventPayloads = LayoutEvents;
+export type { LayoutEvents };
 
-/** The arguments fireEvent takes after the event type: none for the events without a payload. */
-type PayloadArgs<T extends LayoutEventBusType> = LayoutEventPayloads[T] extends void
-  ? []
-  : [LayoutEventPayloads[T]];
-
+/**
+ * The layout events of one designer: its topics, canvas and commands fire them, and its layout,
+ * selection overlays and auto-pan listen. Each designer has its own bus, so two designers on a
+ * page never see each other's events.
+ */
 class LayoutEventBus {
-  private _dispatcher: EventDispatcher<LayoutEventBusType>;
+  private _dispatcher: EventDispatcher<LayoutEvents>;
 
   constructor() {
-    this._dispatcher = new EventDispatcher<LayoutEventBusType>();
+    this._dispatcher = new EventDispatcher<LayoutEvents>();
   }
 
-  fireEvent<T extends LayoutEventBusType>(type: T, ...args: PayloadArgs<T>): void {
-    this._dispatcher.fireEvent(type, args[0]);
+  fireEvent<T extends LayoutEventBusType>(type: T, ...args: EventArgs<LayoutEvents[T]>): void {
+    this._dispatcher.fireEvent(type, ...args);
   }
 
-  addEvent(type: LayoutEventBusType, fn: (arg?: any) => void, internal?: boolean): void {
+  addEvent<T extends LayoutEventBusType>(
+    type: T,
+    fn: EventHandler<LayoutEvents[T]>,
+    internal?: boolean,
+  ): void {
     this._dispatcher.addEvent(type, fn, internal);
   }
 
-  removeEvent(type: LayoutEventBusType, fn: (arg?: any) => void): void {
+  removeEvent<T extends LayoutEventBusType>(type: T, fn: EventHandler<LayoutEvents[T]>): void {
     this._dispatcher.removeEvent(type, fn);
   }
 
+  /** The number of handlers registered, for one event or for all of them. */
+  listenerCount(type?: LayoutEventBusType): number {
+    return this._dispatcher.listenerCount(type);
+  }
+
   reset(): void {
-    this._dispatcher = new EventDispatcher<LayoutEventBusType>();
+    this._dispatcher = new EventDispatcher<LayoutEvents>();
   }
 }
 

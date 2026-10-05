@@ -25,7 +25,11 @@ import SizeType from '../SizeType';
 import Node from './Node';
 import PositionType from '../PositionType';
 import LayoutEventType from './LayoutEventType';
+
 import type { LayoutType, OrientationType } from './LayoutType';
+
+/** The events of the layout manager: 'change' sends each node the layout moved. */
+export type LayoutManagerEvents = Record<LayoutEventType, ChangeEvent>;
 
 /**
  * A layout node as LayoutManager.find gives it: without its setters. The manager tracks what
@@ -47,7 +51,7 @@ export type NodeView = Omit<
   | '_parent'
 >;
 
-class LayoutManager extends EventDispispatcher<LayoutEventType> {
+class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
   private _treeSet: RootedTreeSet;
 
   private _mindmapLayout: OriginalLayout;

@@ -243,8 +243,8 @@ describe('LayoutManager change events (BL5-97)', () => {
     manager.layout(true);
 
     const fired: { id: number; y: number }[] = [];
-    manager.addEvent('change', (event: { getId: () => number; getPosition: () => { y: number } }) =>
-      fired.push({ id: event.getId(), y: event.getPosition().y }),
+    manager.addEvent('change', (event) =>
+      fired.push({ id: event.getId(), y: event.getPosition()!.y }),
     );
 
     // Node 1 moves in a layout that is not flushed, and again in the next one.

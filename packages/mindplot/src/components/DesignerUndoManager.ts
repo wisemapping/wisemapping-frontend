@@ -19,6 +19,9 @@ import { $assert } from './util/assert';
 import Command from './Command';
 import CommandContext from './CommandContext';
 
+/** The 'modelUpdate' payload: how many steps can be undone and redone. */
+export type ModelUpdateEvent = { undoSteps: number; redoSteps: number };
+
 class DesignerUndoManager {
   private _undoQueue: Command[];
 
@@ -82,7 +85,7 @@ class DesignerUndoManager {
     return this._redoQueue.length > 0;
   }
 
-  buildEvent() {
+  buildEvent(): ModelUpdateEvent {
     return { undoSteps: this._undoQueue.length, redoSteps: this._redoQueue.length };
   }
 

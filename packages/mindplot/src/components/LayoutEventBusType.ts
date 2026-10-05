@@ -16,19 +16,26 @@
  *   limitations under the License.
  */
 
-export type LayoutEventBusType =
-  | 'topicResize'
-  | 'topicMoved'
-  | 'forceLayout'
-  | 'childShrinked'
-  | 'topicConnected'
-  | 'topicAdded'
-  | 'topicRemoved'
-  | 'topicDisconect'
-  | 'topicSelected'
-  | 'topicUnselected'
-  | 'canvasPanned'
-  | 'canvasZoomed'
-  | 'modelUpdate';
+import type NodeModel from './model/NodeModel';
+import type PositionType from './PositionType';
+import type SizeType from './SizeType';
+
+/** The events of the layout bus and their payloads. Topics send their model, not themselves. */
+export type LayoutEvents = {
+  topicResize: { node: NodeModel; size: SizeType };
+  topicMoved: { node: NodeModel; position: PositionType };
+  forceLayout: void;
+  childShrinked: NodeModel;
+  topicConnected: { parentNode: NodeModel; childNode: NodeModel };
+  topicAdded: NodeModel;
+  topicRemoved: NodeModel;
+  topicDisconect: NodeModel;
+  topicSelected: NodeModel;
+  topicUnselected: NodeModel;
+  canvasPanned: void;
+  canvasZoomed: { zoom: number };
+};
+
+export type LayoutEventBusType = keyof LayoutEvents;
 
 export default LayoutEventBusType;
