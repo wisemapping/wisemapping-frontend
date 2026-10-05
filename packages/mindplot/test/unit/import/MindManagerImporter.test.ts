@@ -401,6 +401,34 @@ describe('MindManagerImporter floating topics and priorities', () => {
     ).toEqual(['Sub', 'Callout']);
   });
 
+  test('a callout above its topic (negative Offset CY) comes before the subtopics', async () => {
+    const mindManager = schemaMap(`
+        <ap:Topic OId="a">
+          <ap:SubTopics>
+            <ap:Topic OId="a1"><ap:Text PlainText="Sub 1"/></ap:Topic>
+            <ap:Topic OId="a2"><ap:Text PlainText="Sub 2"/></ap:Topic>
+          </ap:SubTopics>
+          <ap:FloatingTopics>
+            <ap:Topic OId="c1"><ap:Text PlainText="Below"/><ap:Offset CX="20." CY="15."/></ap:Topic>
+            <ap:Topic OId="c2"><ap:Text PlainText="Above"/><ap:Offset CX="10." CY="-20."/></ap:Topic>
+            <ap:Topic OId="c3"><ap:Text PlainText="No offset"/></ap:Topic>
+          </ap:FloatingTopics>
+          <ap:Text PlainText="Parent"/>
+        </ap:Topic>`);
+
+    const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
+
+    const children = findByText(mindmap, 'Parent').getChildren();
+    expect(children.map((c) => c.getText())).toEqual([
+      'Above',
+      'Sub 1',
+      'Sub 2',
+      'Below',
+      'No offset',
+    ]);
+    expect(children.map((c) => c.getOrder())).toEqual([0, 1, 2, 3, 4]);
+  });
+
   test('maps each task priority to its own emoji', async () => {
     const topics = [1, 2, 3, 4, 5, 6, 7, 8, 9]
       .map(

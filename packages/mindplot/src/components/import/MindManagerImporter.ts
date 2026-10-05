@@ -329,17 +329,20 @@ class MindManagerImporter extends Importer {
     node.setShapeType(topic.shape ?? 'line');
     this.addFeatures(node, topic);
 
-    // Generate child topics recursively. They are on the side of their parent.
-    topic.children?.forEach((child, index) => {
-      node.append(this.convertTopic(mindmap, child, index, index, side));
-    });
+    // The floating topics of a topic are callouts attached to it: they are imported as its
+    // children. Their Offset is their position from the topic: the callouts above it (negative
+    // CY) go before its subtopics, the others after them.
+    const callouts = topic.floating ?? [];
+    const isAbove = (callout: MindManagerTopic): boolean => (callout.offset?.y ?? 0) < 0;
+    const children = [
+      ...callouts.filter(isAbove),
+      ...(topic.children ?? []),
+      ...callouts.filter((callout) => !isAbove(callout)),
+    ];
 
-    // The floating topics of a topic are callouts attached to it: they are imported as its last
-    // children.
-    const childCount = topic.children?.length ?? 0;
-    topic.floating?.forEach((callout, index) => {
-      const calloutOrder = childCount + index;
-      node.append(this.convertTopic(mindmap, callout, calloutOrder, calloutOrder, side));
+    // Generate child topics recursively. They are on the side of their parent.
+    children.forEach((child, index) => {
+      node.append(this.convertTopic(mindmap, child, index, index, side));
     });
 
     if (topic.collapsed && node.getChildren().length > 0) {
