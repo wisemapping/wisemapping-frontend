@@ -20,6 +20,16 @@ import HeartbeatLinePeer from '../../src/components/peer/svg/HeartbeatLinePeer';
 import Rect from '../../src/components/Rect';
 import Group from '../../src/components/Group';
 import Workspace from '../../src/components/Workspace';
+import RectPeer from '../../src/components/peer/svg/RectPeer';
+import WorkspacePeer from '../../src/components/peer/svg/WorkspacePeer';
+import ImagePeer from '../../src/components/peer/svg/ImagePeer';
+import GroupPeer from '../../src/components/peer/svg/GroupPeer';
+import TextPeer from '../../src/components/peer/svg/TextPeer';
+import FontPeer from '../../src/components/peer/svg/FontPeer';
+import ElipsePeer from '../../src/components/peer/svg/ElipsePeer';
+import StraightLinePeer from '../../src/components/peer/svg/StraightPeer';
+import PolyLinePeer from '../../src/components/peer/svg/PolyLinePeer';
+import CurvedLinePeer from '../../src/components/peer/svg/CurvedLinePeer';
 
 const peer = () => new ElementPeer(document.createElementNS('http://www.w3.org/2000/svg', 'rect'));
 const attr = (p: ElementPeer, name: string) => p._native.getAttribute(name);
@@ -133,7 +143,7 @@ describe('ElementPeer fill', () => {
 
 describe('ElementPeer size', () => {
   it('writes width and height with at most 2 decimals, keeps the exact cache', () => {
-    const p = peer();
+    const p = new RectPeer(0);
     p.setSize(10.6, 20.256);
     expect(attr(p, 'width')).toBe('10.6');
     expect(attr(p, 'height')).toBe('20.26');
@@ -142,6 +152,28 @@ describe('ElementPeer size', () => {
     expect(attr(p, 'width')).toBe('0');
     expect(attr(p, 'height')).toBe('40');
   });
+
+  it.each([
+    ['svg', () => new WorkspacePeer(), true],
+    ['rect', () => new RectPeer(0), true],
+    ['image', () => new ImagePeer(), true],
+    ['g', () => new GroupPeer(), false],
+    ['text', () => new TextPeer(new FontPeer('Arial')), false],
+    ['ellipse', () => new ElipsePeer(), false],
+    ['line', () => new StraightLinePeer(), false],
+    ['polyline', () => new PolyLinePeer(), false],
+    ['path', () => new CurvedLinePeer(), false],
+  ] as [string, () => ElementPeer, boolean][])(
+    '<%s> writes width and height attributes: %s',
+    (tag, create, written) => {
+      const p = create();
+      expect(p._native.localName).toBe(tag);
+      p.setSize(30, 40);
+      expect(p.getSize()).toEqual({ width: 30, height: 40 });
+      expect(attr(p, 'width')).toBe(written ? '30' : null);
+      expect(attr(p, 'height')).toBe(written ? '40' : null);
+    },
+  );
 });
 
 describe('opacity and visibility', () => {

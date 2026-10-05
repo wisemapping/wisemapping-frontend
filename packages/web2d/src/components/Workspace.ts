@@ -110,14 +110,8 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
   }
 
   /**
-   * The workspace element is a containing blocks for this content
-   * - they define a CSS2 "block level box".
-   * Inside the containing block a local coordinate system is
-   * defined for any sub-elements using the coordsize and coordorigin attributes.
-   * All CSS2 positioning information is expressed in terms of this local coordinate space.
-   * Consequently CSS2 position attributes (left, top, width, height
-   * and so on) have no unit specifier -
-   * they are simple numbers, not CSS length quantities.
+   * The size of the workspace coordinate system, in user units: the SVG viewBox width and height,
+   * stretched to the workspace size.
    */
   setCoordSize(width: number | string, height: number | string): void {
     this.peer.setCoordSize(Number.parseFloat(String(width)), Number.parseFloat(String(height)));

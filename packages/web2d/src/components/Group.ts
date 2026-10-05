@@ -94,14 +94,8 @@ class Group extends WorkspaceElement<GroupPeer> {
   }
 
   /**
-   * The group element is a containing blocks for this content
-   * - they define a CSS2 "block level box".
-   * Inside the containing block a local coordinate system is
-   * defined for any sub-elements using the coordsize and coordorigin attributes.
-   * All CSS2 positioning information is expressed in terms of this local coordinate space.
-   * Consequently CSS2 position attributes (left, top, width, height and so on)
-   * have no unit specifier -
-   * they are simple numbers, not CSS length quantities.
+   * The size of the group's own coordinate system: its children are laid out in these units,
+   * which are scaled to the group size (an SVG translate + scale transform).
    */
   setCoordSize(width: number, height: number) {
     this.peer.setCoordSize(width, height);

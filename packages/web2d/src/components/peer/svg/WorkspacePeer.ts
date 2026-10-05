@@ -27,33 +27,22 @@ class WorkspacePeer extends ElementPeer {
       'svg',
     );
     super(svgElement);
-    this._native.setAttribute('focusable', 'true');
-    // this._native.setAttribute('id', 'workspace');
+    // The viewBox (the coordinate size and origin) stretches to the SVG size on both axes.
     this._native.setAttribute('preserveAspectRatio', 'none');
   }
 
+  /** The root <svg> is sized with its width and height attributes. */
+  protected override hasSizeAttributes(): boolean {
+    return true;
+  }
+
   /**
-   * http://www.w3.org/TR/SVG/coords.html 7.7 The viewBox  attribute
-   * It is often desirable to specify that a given set of graphics
-   * stretch to fit a particular container element. The viewBox attribute
-   * provides this capability.
-   *
-   * All elements that establish a new viewport (see elements that establish viewports),
-   * plus the 'marker', 'pattern' and 'view' elements have attribute viewBox.
-   * The value of the viewBox attribute is a list of four numbers <min-x>, <min-y>,
-   * <width> and <height>, separated by whitespace and/or a comma, which specify a rectangle
-   * in user space which should be mapped to the bounds of the viewport established by
-   * the given element, taking into account attribute preserveAspectRatio. If specified,
-   * an additional transformation is applied to all descendants of the given element to
-   * achieve the specified effect.
-   *
-   * A negative value for <width> or <height> is an error (see Error processing).
-   * A value of zero disables rendering of the element.
+   * The coordinate size and origin are the SVG viewBox: <min-x> <min-y> <width> <height> in user
+   * units, mapped onto the whole <svg> (preserveAspectRatio="none").
    *
    * Values are kept at full precision: mindplot maps the mouse with the exact origin and
    * scale, so rounding them here makes slow pans stall and the mouse mapping drift.
    */
-
   setCoordSize(width: number, height: number) {
     const viewBox = this._native.getAttribute('viewBox');
     let coords = [0, 0, 0, 0];
@@ -63,7 +52,6 @@ class WorkspacePeer extends ElementPeer {
     coords[2] = width;
     coords[3] = height;
     this._native.setAttribute('viewBox', coords.join(' '));
-    this._native.setAttribute('preserveAspectRatio', 'none');
   }
 
   getCoordSize(): SizeType {

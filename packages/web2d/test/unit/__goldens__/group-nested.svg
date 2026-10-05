@@ -1,7 +1,7 @@
-<svg focusable="true" height="400" preserveAspectRatio="none" viewBox="-200 -200 400 400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <g focusable="true" height="200" preserveAspectRatio="none" transform="translate(-100,-100) scale(2,2)" width="200">
+<svg height="400" preserveAspectRatio="none" viewBox="-200 -200 400 400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g transform="translate(-100,-100) scale(2,2)">
     <rect fill="#eeeeee" height="100" rx="0" ry="0" stroke="black" stroke-width="1" width="100" x="0" y="0"/>
-    <g focusable="true" height="50" preserveAspectRatio="none" transform="translate(50,50) scale(0.5,0.5)" width="50">
+    <g transform="translate(50,50) scale(0.5,0.5)">
       <rect fill="green" height="100" rx="0" ry="0" stroke="black" stroke-width="1" width="100" x="-50" y="-50"/>
     </g>
   </g>

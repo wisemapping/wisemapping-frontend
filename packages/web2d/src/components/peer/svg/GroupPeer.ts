@@ -29,12 +29,10 @@ class GroupPeer extends ElementPeer {
   constructor() {
     const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'g');
     super(svgElement);
-    this._native.setAttribute('preserveAspectRatio', 'none');
     this._coordSize = {
       width: 1,
       height: 1,
     };
-    this._native.setAttribute('focusable', 'true');
     this._position = {
       x: 0,
       y: 0,

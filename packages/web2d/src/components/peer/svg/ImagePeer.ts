@@ -31,6 +31,10 @@ class ImagePeer extends ElementPeer {
     this._native.setAttribute('preserveAspectRatio', 'none');
   }
 
+  protected override hasSizeAttributes(): boolean {
+    return true;
+  }
+
   setPosition(x: number, y: number): void {
     this._position = { x, y };
     this._native.setAttribute('y', String(y));
