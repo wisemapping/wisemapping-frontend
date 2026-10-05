@@ -58,6 +58,12 @@ class WorkspacePeer extends ElementPeer {
     return Number.isNaN(parsed) ? kept : parsed;
   }
 
+  // The viewBox as numbers, and the attribute value they were parsed from or written as. A pan
+  // reads and writes the origin, so it should not parse the string each time.
+  private _viewBoxSource: string | null = null;
+
+  private _viewBoxCoords: number[] | null = null;
+
   /**
    * The coordinate size and origin are the SVG viewBox: <min-x> <min-y> <width> <height> in user
    * units, mapped onto the whole <svg> (preserveAspectRatio="none").
@@ -66,33 +72,20 @@ class WorkspacePeer extends ElementPeer {
    * scale, so rounding them here makes slow pans stall and the mouse mapping drift.
    */
   setCoordSize(width: number, height: number) {
-    const viewBox = this._native.getAttribute('viewBox');
-    let coords = [0, 0, 0, 0];
-    if (viewBox != null) {
-      coords = viewBox.split(/ /).map((e: string) => Number.parseFloat(e));
-    }
+    const coords = this.viewBoxCoords() ?? [0, 0, 0, 0];
     coords[2] = width;
     coords[3] = height;
-    this.attr('viewBox', coords.join(' '));
+    this.writeViewBox(coords);
   }
 
   getCoordSize(): SizeType {
-    const viewBox = this._native.getAttribute('viewBox');
-    let coords = [1, 1, 1, 1];
-    if (viewBox != null) {
-      coords = viewBox.split(/ /).map((e) => Number.parseFloat(e));
-    }
+    const coords = this.viewBoxCoords() ?? [1, 1, 1, 1];
     return { width: coords[2]!, height: coords[3]! };
   }
 
   setCoordOrigin(x: number, y: number): void {
-    const viewBox = this._native.getAttribute('viewBox');
-
     // ViewBox min-x ,min-y by default initializated with 0 and 0.
-    let coords = [0, 0, 0, 0];
-    if (viewBox != null) {
-      coords = viewBox.split(/ /).map((e: string) => Number.parseFloat(e));
-    }
+    const coords = this.viewBoxCoords() ?? [0, 0, 0, 0];
 
     if ($defined(x)) {
       coords[0] = x;
@@ -102,16 +95,35 @@ class WorkspacePeer extends ElementPeer {
       coords[1] = y;
     }
 
-    this.attr('viewBox', coords.join(' '));
+    this.writeViewBox(coords);
   }
 
   getCoordOrigin(): PositionType {
-    const viewBox = this._native.getAttribute('viewBox');
-    let coords = [0, 0, 0, 0];
-    if (viewBox != null) {
-      coords = viewBox.split(/ /).map((e) => Number.parseFloat(e));
-    }
+    const coords = this.viewBoxCoords() ?? [0, 0, 0, 0];
     return { x: coords[0]!, y: coords[1]! };
+  }
+
+  /**
+   * A copy of the viewBox numbers, or null without a viewBox. The string is parsed only when it
+   * is not the one last seen, for example after a write around the peer.
+   */
+  private viewBoxCoords(): number[] | null {
+    const viewBox = this._native.getAttribute('viewBox');
+    if (viewBox === null) {
+      return null;
+    }
+    if (viewBox !== this._viewBoxSource || !this._viewBoxCoords) {
+      this._viewBoxSource = viewBox;
+      this._viewBoxCoords = viewBox.split(/ /).map((e: string) => Number.parseFloat(e));
+    }
+    return [...this._viewBoxCoords];
+  }
+
+  private writeViewBox(coords: number[]): void {
+    const viewBox = coords.join(' ');
+    this.attr('viewBox', viewBox);
+    this._viewBoxSource = viewBox;
+    this._viewBoxCoords = [...coords];
   }
 
   getPosition() {

@@ -61,6 +61,32 @@ describe('WorkspacePeer viewBox (W-VIEWBOX, BL-71)', () => {
     expect(peer._native.getAttribute('viewBox')).toBe('5 6 7 8');
   });
 
+  // W2 follow-up: every pan parsed the viewBox string twice (get and set the origin).
+  it('pans without parsing the viewBox string', () => {
+    const peer = new WorkspacePeer();
+    peer.setCoordSize(1000, 1000);
+    const split = jest.spyOn(String.prototype, 'split');
+    for (let i = 0; i < 10; i++) {
+      const { x, y } = peer.getCoordOrigin();
+      peer.setCoordOrigin(x + 1, y + 1);
+      peer.getCoordSize();
+    }
+    const calls = split.mock.calls.length;
+    split.mockRestore();
+    expect(calls).toBe(0);
+    expect(peer._native.getAttribute('viewBox')).toBe('10 10 1000 1000');
+  });
+
+  it('reads a viewBox written around the peer', () => {
+    const peer = new WorkspacePeer();
+    peer.setCoordSize(100, 100);
+    peer._native.setAttribute('viewBox', '1 2 3 4');
+    expect(peer.getCoordOrigin()).toEqual({ x: 1, y: 2 });
+    expect(peer.getCoordSize()).toEqual({ width: 3, height: 4 });
+    peer.setCoordOrigin(5, 6);
+    expect(peer._native.getAttribute('viewBox')).toBe('5 6 3 4');
+  });
+
   it('stretches the viewBox (no aspect ratio)', () => {
     expect(new WorkspacePeer()._native.getAttribute('preserveAspectRatio')).toBe('none');
   });
