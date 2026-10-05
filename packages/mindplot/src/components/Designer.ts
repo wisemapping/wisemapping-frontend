@@ -95,8 +95,6 @@ export type DesignerEvents = {
   loadSuccess: void;
 };
 
-export type DesignerEventType = keyof DesignerEvents;
-
 class Designer extends EventDispispatcher<DesignerEvents> {
   private _mindmap: Mindmap | null;
 
