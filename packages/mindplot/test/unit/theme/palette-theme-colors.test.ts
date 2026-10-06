@@ -44,8 +44,13 @@ type Json = {
 };
 
 // The JSON a variant reads a key from: the variant file, else light, else default.
-const pick = <T>(files: Json[], read: (json: Json) => T | undefined): T =>
-  files.map(read).find((value) => value !== undefined) as T;
+const pick = <T>(files: Json[], read: (json: Json) => T | undefined): T => {
+  const value = files.map(read).find((found): found is T => found !== undefined);
+  if (value === undefined) {
+    throw new Error('No theme file sets the key');
+  }
+  return value;
+};
 
 const themes: Array<[string, (variant: ThemeVariant) => PaletteTheme, Json, Json, Json]> = [
   ['ocean', (v) => new OceanTheme(v), oceanDefault, oceanLight, oceanDark],
