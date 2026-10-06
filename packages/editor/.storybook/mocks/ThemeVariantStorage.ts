@@ -29,14 +29,13 @@ export class MockThemeVariantStorage implements ThemeVariantStorage {
 
   setThemeVariant(variant: PaletteMode): void {
     this.variant = variant;
-    this.listeners.forEach(listener => listener(variant));
+    this.listeners.forEach((listener) => listener(variant));
   }
 
   subscribe(listener: (variant: PaletteMode) => void): () => void {
     this.listeners.push(listener);
     return () => {
-      this.listeners = this.listeners.filter(l => l !== listener);
+      this.listeners = this.listeners.filter((l) => l !== listener);
     };
   }
 }
-
