@@ -150,6 +150,24 @@ describe('MultilineTextEditor on a live designer', () => {
     expect(editorOf(harness).isActive()).toBe(true);
   });
 
+  it('takes the colour of the topic text, and none from a text without one', async () => {
+    const harness = await open();
+    const editor = editorOf(harness);
+    const color = harness.topic(3).getOrBuildTextShape().getColor();
+    expect(color).toBeTruthy();
+    editor.show(harness.topic(3), 'B');
+    expect(textarea()!.style.color).not.toBe('');
+    expect(container()!.style.color).toBe(textarea()!.style.color);
+    editor.close(false);
+
+    jest.spyOn(harness.topic(1).getOrBuildTextShape(), 'getColor').mockReturnValue(null);
+    editor.show(harness.topic(1), 'A');
+
+    // Not the colour of the topic edited before.
+    expect(textarea()!.style.color).toBe('');
+    expect(container()!.style.color).toBe('');
+  });
+
   it('closes a previous editor, unsaved, when opened on another topic', async () => {
     const harness = await open();
     const editor = editorOf(harness);

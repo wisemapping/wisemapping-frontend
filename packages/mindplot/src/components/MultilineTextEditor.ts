@@ -299,9 +299,7 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
 
     // Set the element focus and select the current text ...
     const textAreaElem = this.getTextareaElem();
-    if (textAreaElem) {
-      this.positionCursor(textAreaElem, textOverwrite === undefined);
-    }
+    this.positionCursor(textAreaElem, textOverwrite === undefined);
     textAreaElem.focus();
   }
 
@@ -326,7 +324,9 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
       'font-family': fontStyle.fontFamily,
       'font-style': fontStyle.style,
       'font-weight': fontStyle.weight,
-      color: fontStyle.color!,
+      // A text without a colour of its own: the empty value removes the one of the topic edited
+      // before, so that the editor inherits one.
+      color: fontStyle.color ?? '',
     };
     Object.entries(cssStyle).forEach(([prop, value]) => {
       inputField.style.setProperty(prop, value);
