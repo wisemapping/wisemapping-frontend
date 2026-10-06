@@ -36,7 +36,6 @@ import type Topic from '../Topic';
 import DefaultTheme from './DefaultTheme';
 import type { ThemeVariant } from './Theme';
 import { ThemeStyle } from './ThemeStyle';
-import pickByOrder from './pickByOrder';
 
 class ClassicTheme extends DefaultTheme {
   constructor(variant: ThemeVariant) {
@@ -45,18 +44,7 @@ class ClassicTheme extends DefaultTheme {
   }
 
   override getBackgroundColor(topic: Topic): string {
-    const model = topic.getModel();
-    let result = model.getBackgroundColor();
-
-    // If topic has a custom background color, always use it
-    if (result) {
-      return result;
-    }
-
-    // Use theme colors from style system. Palettes are arrays, so use topic order to decide color ..
-    const colors = this.resolve('backgroundColor', topic);
-    result = pickByOrder(colors, topic.getOrder());
-    return result;
+    return this.getInheritedBackgroundColor(topic);
   }
 }
 

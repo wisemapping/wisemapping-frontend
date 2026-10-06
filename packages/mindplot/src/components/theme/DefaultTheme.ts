@@ -249,6 +249,25 @@ class DefaultTheme implements Theme {
     return result;
   }
 
+  /**
+   * The fill set on the topic, else the one picked on its closest ancestor, else the theme
+   * palette entry of the topic order (Classic and Robot).
+   */
+  protected getInheritedBackgroundColor(topic: Topic): string {
+    const model = topic.getModel();
+    let result = model.getBackgroundColor();
+
+    // If topic has a custom background color, always use it
+    if (result) {
+      return result;
+    }
+
+    // Use theme colors from style system. Palettes are arrays, so use topic order to decide color ..
+    const colors = this.resolve('backgroundColor', topic);
+    result = pickByOrder(colors, topic.getOrder());
+    return result;
+  }
+
   getBorderColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();

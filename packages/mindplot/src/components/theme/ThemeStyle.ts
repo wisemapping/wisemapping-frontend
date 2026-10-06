@@ -24,6 +24,7 @@ import type { TopicType, ThemeVariant } from './Theme';
 import type { BackgroundPatternType } from '../model/CanvasStyleType';
 import { isMsgKey, type MsgKey } from '../lang/en';
 import {
+  isBackgroundPatternType,
   isFontStyleType,
   isFontWeightType,
   isTopicShapeType,
@@ -97,7 +98,7 @@ type JsonCanvasStyleType = {
   gridColor?: string;
   opacity?: number;
   showGrid?: boolean;
-  gridPattern?: BackgroundPatternType;
+  gridPattern?: string;
 };
 
 type JsonThemeStyles = {
@@ -105,6 +106,33 @@ type JsonThemeStyles = {
 } & {
   Canvas?: JsonCanvasStyleType;
 };
+
+/** The style files of the bundled themes, by file name. */
+const STYLE_FILES: Record<string, JsonThemeStyles> = {
+  'prism-default.json': prismDefault,
+  'prism-light.json': prismLight,
+  'prism-dark.json': prismDark,
+  'classic-default.json': classicDefault,
+  'classic-light.json': classicLight,
+  'classic-dark.json': classicDark,
+  'robot-default.json': robotDefault,
+  'robot-light.json': robotLight,
+  'robot-dark.json': robotDark,
+  'sunrise-default.json': sunriseDefault,
+  'sunrise-light.json': sunriseLight,
+  'sunrise-dark.json': sunriseDark,
+  'ocean-default.json': oceanDefault,
+  'ocean-light.json': oceanLight,
+  'ocean-dark.json': oceanDark,
+  'aurora-default.json': auroraDefault,
+  'aurora-light.json': auroraLight,
+  'aurora-dark.json': auroraDark,
+  'retro-default.json': retroDefault,
+  'retro-light.json': retroLight,
+  'retro-dark.json': retroDark,
+};
+
+const TOPIC_TYPES: TopicType[] = ['CentralTopic', 'MainTopic', 'SubTopic', 'IsolatedTopic'];
 
 /**
  * ThemeStyle class responsible for loading JSON style files and merging them based on variant
@@ -155,8 +183,7 @@ export class ThemeStyle {
     const variantStyles = this.loadJsonStyles(`${themeName}-${variant}.json`);
 
     // Merge topic styles: default -> light -> variant
-    const mergedLight = this.mergeStyles(defaultStyles, lightStyles);
-    const topicStyles = this.mergeStylesFromMap(themeName, mergedLight, variantStyles);
+    const topicStyles = this.mergeStyles(themeName, defaultStyles, [lightStyles, variantStyles]);
 
     // Merge canvas styles: default -> light -> variant
     const canvasStyle = this.mergeCanvasStyles(defaultStyles, lightStyles, variantStyles);
@@ -180,118 +207,34 @@ export class ThemeStyle {
    * Load styles by filename using imported JSON files
    */
   private loadStylesByFilename(filename: string): JsonThemeStyles {
-    switch (filename) {
-      case 'prism-default.json':
-        return prismDefault;
-      case 'prism-light.json':
-        return prismLight;
-      case 'prism-dark.json':
-        return prismDark;
-      case 'classic-default.json':
-        return classicDefault;
-      case 'classic-light.json':
-        return classicLight;
-      case 'classic-dark.json':
-        return classicDark;
-      case 'robot-default.json':
-        return robotDefault;
-      case 'robot-light.json':
-        return robotLight;
-      case 'robot-dark.json':
-        return robotDark;
-      case 'sunrise-default.json':
-        return sunriseDefault;
-      case 'sunrise-light.json':
-        return sunriseLight;
-      case 'sunrise-dark.json':
-        return sunriseDark;
-      case 'ocean-default.json':
-        return oceanDefault;
-      case 'ocean-light.json':
-        return oceanLight;
-      case 'ocean-dark.json':
-        return oceanDark;
-      case 'aurora-default.json':
-        return auroraDefault;
-      case 'aurora-light.json':
-        return auroraLight as JsonThemeStyles;
-      case 'aurora-dark.json':
-        return auroraDark;
-      case 'retro-default.json':
-        return retroDefault as JsonThemeStyles;
-      case 'retro-light.json':
-        return retroLight;
-      case 'retro-dark.json':
-        return retroDark;
-      default:
-        console.warn(`Unknown style file: ${filename}`);
-        return {};
+    const styles = STYLE_FILES[filename];
+    if (!styles) {
+      console.warn(`Unknown style file: ${filename}`);
+      return {};
     }
+    return styles;
   }
 
   /**
-   * Merge default styles with variant-specific overrides
+   * Merge the default styles of each topic type with the overrides, in order
    */
   private mergeStyles(
+    themeName: string,
     defaultStyles: JsonThemeStyles,
-    variantStyles: JsonThemeStyles,
-  ): Map<TopicType, Partial<TopicStyleType>> {
-    const result = new Map<TopicType, Partial<TopicStyleType>>();
+    overrides: JsonThemeStyles[],
+  ): Map<TopicType, TopicStyleType> {
+    const result = new Map<TopicType, TopicStyleType>();
 
-    // Process each topic type
-    const topicTypes: TopicType[] = ['CentralTopic', 'MainTopic', 'SubTopic', 'IsolatedTopic'];
-
-    topicTypes.forEach((topicType) => {
+    TOPIC_TYPES.forEach((topicType) => {
       const defaultStyle = defaultStyles[topicType];
-      const variantStyle = variantStyles[topicType];
-
       if (!defaultStyle) {
         throw new Error(`Default styles not found for topic type: ${topicType}`);
       }
 
-      // Merge default with variant overrides
-      const defaultConverted = this.convertJsonToTopicStyle(defaultStyle);
-      const variantConverted = variantStyle ? this.convertJsonToTopicStyle(variantStyle) : {};
-
-      const mergedStyle: Partial<TopicStyleType> = {
-        ...defaultConverted,
-        ...variantConverted,
-      };
-
-      result.set(topicType, mergedStyle);
-    });
-
-    return result;
-  }
-
-  /**
-   * Merge Map styles with variant-specific overrides
-   */
-  private mergeStylesFromMap(
-    themeName: string,
-    baseStyles: Map<TopicType, Partial<TopicStyleType>>,
-    variantStyles: JsonThemeStyles,
-  ): Map<TopicType, TopicStyleType> {
-    const result = new Map<TopicType, TopicStyleType>();
-
-    // Process each topic type
-    const topicTypes: TopicType[] = ['CentralTopic', 'MainTopic', 'SubTopic', 'IsolatedTopic'];
-
-    topicTypes.forEach((topicType) => {
-      const baseStyle = baseStyles.get(topicType);
-      const variantStyle = variantStyles[topicType];
-
-      if (!baseStyle) {
-        throw new Error(`Base styles not found for topic type: ${topicType}`);
-      }
-
-      // Merge base with variant overrides
-      const variantConverted = variantStyle ? this.convertJsonToTopicStyle(variantStyle) : {};
-
-      const mergedStyle: Partial<TopicStyleType> = {
-        ...baseStyle,
-        ...variantConverted,
-      };
+      const mergedStyle = overrides.reduce<Partial<TopicStyleType>>((merged, styles) => {
+        const override = styles[topicType];
+        return override ? { ...merged, ...this.convertJsonToTopicStyle(override) } : merged;
+      }, this.convertJsonToTopicStyle(defaultStyle));
 
       result.set(topicType, ThemeStyle.complete(mergedStyle, themeName, topicType));
     });
@@ -330,14 +273,11 @@ export class ThemeStyle {
       showGrid = defaultCanvas.showGrid;
     }
 
-    let gridPattern: BackgroundPatternType | undefined;
-    if (variantCanvas.gridPattern) {
-      gridPattern = variantCanvas.gridPattern;
-    } else if (lightCanvas.gridPattern) {
-      gridPattern = lightCanvas.gridPattern;
-    } else if (defaultCanvas.gridPattern) {
-      gridPattern = defaultCanvas.gridPattern;
-    }
+    const gridPatternName =
+      variantCanvas.gridPattern || lightCanvas.gridPattern || defaultCanvas.gridPattern;
+    const gridPattern = gridPatternName
+      ? ThemeStyle.checked(gridPatternName, isBackgroundPatternType, 'grid pattern')
+      : undefined;
 
     const merged: CanvasStyleType = {
       backgroundColor:
