@@ -107,6 +107,12 @@
       "value": "Видалити акаунт"
     }
   ],
+  "accountinfo.account-settings": [
+    {
+      "type": 0,
+      "value": "Налаштування акаунта"
+    }
+  ],
   "accountinfo.button": [
     {
       "type": 0,
@@ -140,7 +146,13 @@
   "accountinfo.personal-details": [
     {
       "type": 0,
-      "value": "Personal Details"
+      "value": "Особисті дані"
+    }
+  ],
+  "accountinfo.personal-info": [
+    {
+      "type": 0,
+      "value": "Особиста інформація"
     }
   ],
   "accountinfo.title": [
@@ -278,37 +290,127 @@
   "activation.error.message": [
     {
       "type": 0,
-      "value": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+      "value": "Не вдалося активувати ваш акаунт. Посилання для активації може бути недійсним або застарілим. Будь ласка, зверніться до служби підтримки за допомогою."
     }
   ],
   "activation.error.title": [
     {
       "type": 0,
-      "value": "Activation Failed"
+      "value": "Активація не вдалася"
     }
   ],
   "activation.loading.desc": [
     {
       "type": 0,
-      "value": "Please wait while we activate your account..."
+      "value": "Будь ласка, зачекайте, поки ми активуємо ваш акаунт..."
     }
   ],
   "activation.loading.title": [
     {
       "type": 0,
-      "value": "Activating Your Account"
+      "value": "Активація вашого акаунта"
+    }
+  ],
+  "activation.page-title": [
+    {
+      "type": 0,
+      "value": "Активація акаунта | WiseMapping"
     }
   ],
   "activation.success.message": [
     {
       "type": 0,
-      "value": "Your account has been activated. You can now sign in and start creating mind maps."
+      "value": "Ваш акаунт активовано. Тепер ви можете увійти та почати створювати карти розуму."
     }
   ],
   "activation.success.title": [
     {
       "type": 0,
-      "value": "Account Activated Successfully"
+      "value": "Акаунт успішно активовано"
+    }
+  ],
+  "admin.accounts.add-user": [
+    {
+      "type": 0,
+      "value": "Додати нового користувача"
+    }
+  ],
+  "admin.accounts.create": [
+    {
+      "type": 0,
+      "value": "Створити користувача"
+    }
+  ],
+  "admin.accounts.create-user": [
+    {
+      "type": 0,
+      "value": "Створити користувача"
+    }
+  ],
+  "admin.accounts.edit-user": [
+    {
+      "type": 0,
+      "value": "Редагувати користувача"
+    }
+  ],
+  "admin.accounts.filters": [
+    {
+      "type": 0,
+      "value": "Пошук і фільтри"
+    }
+  ],
+  "admin.accounts.no-users": [
+    {
+      "type": 0,
+      "value": "Користувачів не знайдено"
+    }
+  ],
+  "admin.accounts.refresh": [
+    {
+      "type": 0,
+      "value": "Оновити"
+    }
+  ],
+  "admin.accounts.refresh-tooltip": [
+    {
+      "type": 0,
+      "value": "Оновити дані"
+    }
+  ],
+  "admin.accounts.search": [
+    {
+      "type": 0,
+      "value": "Пошук користувачів..."
+    }
+  ],
+  "admin.accounts.subtitle": [
+    {
+      "type": 0,
+      "value": "Керування акаунтами користувачів, дозволами та налаштуваннями"
+    }
+  ],
+  "admin.accounts.title": [
+    {
+      "type": 0,
+      "value": "Керування користувачами"
+    }
+  ],
+  "admin.action.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "позначити як не спам"
+    }
+  ],
+  "admin.action.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "позначити як спам"
+    }
+  ],
+  "admin.activate-user": [
+    {
+      "type": 0,
+      "value": "Активувати користувача"
     }
   ],
   "admin.auth-type": [
@@ -317,22 +419,64 @@
       "value": "Тип авторизації"
     }
   ],
+  "admin.auth.database": [
+    {
+      "type": 0,
+      "value": "База даних"
+    }
+  ],
+  "admin.auth.facebook": [
+    {
+      "type": 0,
+      "value": "Facebook"
+    }
+  ],
+  "admin.auth.google": [
+    {
+      "type": 0,
+      "value": "Google"
+    }
+  ],
+  "admin.auth.ldap": [
+    {
+      "type": 0,
+      "value": "LDAP"
+    }
+  ],
+  "admin.button.update-user": [
+    {
+      "type": 0,
+      "value": "Оновити користувача"
+    }
+  ],
+  "admin.button.updating": [
+    {
+      "type": 0,
+      "value": "Оновлення..."
+    }
+  ],
+  "admin.cancel": [
+    {
+      "type": 0,
+      "value": "Скасувати"
+    }
+  ],
   "admin.change-password": [
     {
       "type": 0,
-      "value": "Change password"
+      "value": "Змінити пароль"
     }
   ],
   "admin.change-password-button": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "Змінити пароль"
     }
   ],
   "admin.change-password-description": [
     {
       "type": 0,
-      "value": "Change password for user: "
+      "value": "Змінити пароль користувача: "
     },
     {
       "type": 1,
@@ -342,19 +486,77 @@
   "admin.change-password-title": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "Зміна пароля"
     }
   ],
   "admin.close": [
     {
       "type": 0,
-      "value": "Close"
+      "value": "Закрити"
     }
   ],
   "admin.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm Password"
+      "value": "Підтвердити пароль"
+    }
+  ],
+  "admin.confirm.delete-map": [
+    {
+      "type": 0,
+      "value": "Ви впевнені, що хочете видалити карту «"
+    },
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": "»?"
+    }
+  ],
+  "admin.confirm.spam-action": [
+    {
+      "type": 0,
+      "value": "Ви впевнені, що хочете "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": " цю карту?"
+    }
+  ],
+  "admin.console.description": [
+    {
+      "type": 0,
+      "value": "Керування користувачами, системними налаштуваннями та конфігурацією застосунку."
+    }
+  ],
+  "admin.console.page-title": [
+    {
+      "type": 0,
+      "value": "Консоль адміністратора | WiseMapping"
+    }
+  ],
+  "admin.console.subtitle": [
+    {
+      "type": 0,
+      "value": "Системне адміністрування"
+    }
+  ],
+  "admin.console.title": [
+    {
+      "type": 0,
+      "value": "Консоль адміністратора"
+    }
+  ],
+  "admin.current-suspension-reason": [
+    {
+      "type": 0,
+      "value": "Поточна причина призупинення:"
     }
   ],
   "admin.delete": [
@@ -381,6 +583,108 @@
       "value": "Редагувати користувача"
     }
   ],
+  "admin.error.access-denied": [
+    {
+      "type": 0,
+      "value": "Доступ заборонено. Потрібні права адміністратора."
+    }
+  ],
+  "admin.error.create-user-failed": [
+    {
+      "type": 0,
+      "value": "Не вдалося створити користувача. Будь ласка, спробуйте ще раз."
+    }
+  ],
+  "admin.error.load-users": [
+    {
+      "type": 0,
+      "value": "Не вдалося завантажити користувачів: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
+  "admin.error.unknown": [
+    {
+      "type": 0,
+      "value": "Невідома помилка"
+    }
+  ],
+  "admin.error.update-map-failed": [
+    {
+      "type": 0,
+      "value": "Не вдалося оновити карту. Будь ласка, спробуйте ще раз."
+    }
+  ],
+  "admin.error.update-user-failed": [
+    {
+      "type": 0,
+      "value": "Не вдалося оновити користувача. Будь ласка, спробуйте ще раз."
+    }
+  ],
+  "admin.facebook.filter-tooltip": [
+    {
+      "type": 0,
+      "value": "Пошук для видалення даних Facebook"
+    }
+  ],
+  "admin.facebook.lookup-button": [
+    {
+      "type": 0,
+      "value": "Знайти акаунт"
+    }
+  ],
+  "admin.facebook.lookup-not-found": [
+    {
+      "type": 0,
+      "value": "Для цього ідентифікатора користувача Facebook акаунт не знайдено."
+    }
+  ],
+  "admin.facebook.remove": [
+    {
+      "type": 0,
+      "value": "Видалити"
+    }
+  ],
+  "admin.facebook.remove-button": [
+    {
+      "type": 0,
+      "value": "Видалити акаунт Facebook"
+    }
+  ],
+  "admin.facebook.remove-confirm": [
+    {
+      "type": 0,
+      "value": "Видалити прив'язку Facebook для «"
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "»?"
+    }
+  ],
+  "admin.facebook.remove-dialog-title": [
+    {
+      "type": 0,
+      "value": "Видалити акаунт Facebook"
+    }
+  ],
+  "admin.facebook.remove-warning": [
+    {
+      "type": 0,
+      "value": "Це від'єднає автентифікацію Facebook від цього акаунта. Користувач отримає електронний лист для скидання пароля, щоб відновити доступ."
+    }
+  ],
+  "admin.facebook.removing": [
+    {
+      "type": 0,
+      "value": "Видалення..."
+    }
+  ],
   "admin.lock-status": [
     {
       "type": 0,
@@ -393,40 +697,346 @@
       "value": "Заблоковано"
     }
   ],
+  "admin.maps.clean-tooltip": [
+    {
+      "type": 0,
+      "value": "Не позначено як спам"
+    }
+  ],
+  "admin.maps.creator-suspended-tooltip": [
+    {
+      "type": 0,
+      "value": "Акаунт створювача карти призупинено адміністратором"
+    }
+  ],
+  "admin.maps.delete": [
+    {
+      "type": 0,
+      "value": "Видалити карту"
+    }
+  ],
+  "admin.maps.description": [
+    {
+      "type": 0,
+      "value": "Опис"
+    }
+  ],
+  "admin.maps.edit": [
+    {
+      "type": 0,
+      "value": "Редагувати карту"
+    }
+  ],
+  "admin.maps.edit-title": [
+    {
+      "type": 0,
+      "value": "Редагування карти"
+    }
+  ],
+  "admin.maps.filter.date": [
+    {
+      "type": 0,
+      "value": "Діапазон дат"
+    }
+  ],
+  "admin.maps.filter.spam": [
+    {
+      "type": 0,
+      "value": "Спам"
+    }
+  ],
+  "admin.maps.locked-tooltip": [
+    {
+      "type": 0,
+      "value": "Зараз редагується користувачем "
+    },
+    {
+      "type": 1,
+      "value": "user"
+    }
+  ],
+  "admin.maps.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "Позначити як не спам"
+    }
+  ],
+  "admin.maps.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "Позначити як спам"
+    }
+  ],
+  "admin.maps.no-maps": [
+    {
+      "type": 0,
+      "value": "Карт не знайдено"
+    }
+  ],
+  "admin.maps.page-title": [
+    {
+      "type": 0,
+      "value": "Керування картами"
+    }
+  ],
+  "admin.maps.private-tooltip": [
+    {
+      "type": 0,
+      "value": "Лише співавтори можуть переглядати цю карту"
+    }
+  ],
+  "admin.maps.public-tooltip": [
+    {
+      "type": 0,
+      "value": "Будь-хто може переглядати цю карту"
+    }
+  ],
+  "admin.maps.search": [
+    {
+      "type": 0,
+      "value": "Пошук карт... (#123 для пошуку за ID, email для пошуку за створювачем)"
+    }
+  ],
+  "admin.maps.search-by-email": [
+    {
+      "type": 0,
+      "value": "🔍 Пошук за електронною поштою створювача"
+    }
+  ],
+  "admin.maps.search-by-id": [
+    {
+      "type": 0,
+      "value": "🔍 Пошук за ID карти"
+    }
+  ],
+  "admin.maps.search-by-text": [
+    {
+      "type": 0,
+      "value": "🔍 Пошук у назвах та описах"
+    }
+  ],
+  "admin.maps.spam-tooltip": [
+    {
+      "type": 0,
+      "value": "Визначено як спам "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
+  "admin.maps.spam-tooltip-no-date": [
+    {
+      "type": 0,
+      "value": "Позначено як спам"
+    }
+  ],
+  "admin.maps.suspend-user": [
+    {
+      "type": 0,
+      "value": "Призупинити акаунт користувача"
+    }
+  ],
+  "admin.maps.suspend-user.confirm": [
+    {
+      "type": 0,
+      "value": "Ви впевнені, що хочете призупинити акаунт користувача «"
+    },
+    {
+      "type": 1,
+      "value": "userName"
+    },
+    {
+      "type": 0,
+      "value": "» (ID: "
+    },
+    {
+      "type": 1,
+      "value": "userId"
+    },
+    {
+      "type": 0,
+      "value": ")? Призупинення буде позначено як результат ручної перевірки."
+    }
+  ],
+  "admin.maps.suspend-user.confirm-button": [
+    {
+      "type": 0,
+      "value": "Призупинити користувача"
+    }
+  ],
+  "admin.maps.suspend-user.title": [
+    {
+      "type": 0,
+      "value": "Призупинення акаунта користувача"
+    }
+  ],
+  "admin.maps.suspend-user.warning": [
+    {
+      "type": 0,
+      "value": "Ця дія призупинить акаунт користувача й позбавить його доступу до системи."
+    }
+  ],
+  "admin.maps.table.actions": [
+    {
+      "type": 0,
+      "value": "Дії"
+    }
+  ],
+  "admin.maps.table.created": [
+    {
+      "type": 0,
+      "value": "Створено"
+    }
+  ],
+  "admin.maps.table.description": [
+    {
+      "type": 0,
+      "value": "Опис"
+    }
+  ],
+  "admin.maps.table.id": [
+    {
+      "type": 0,
+      "value": "ID карти"
+    }
+  ],
+  "admin.maps.table.modified": [
+    {
+      "type": 0,
+      "value": "Змінено"
+    }
+  ],
+  "admin.maps.table.spam": [
+    {
+      "type": 0,
+      "value": "Спам"
+    }
+  ],
+  "admin.maps.table.spam-status": [
+    {
+      "type": 0,
+      "value": "Статус спаму"
+    }
+  ],
+  "admin.maps.table.status": [
+    {
+      "type": 0,
+      "value": "Статус"
+    }
+  ],
+  "admin.maps.table.title": [
+    {
+      "type": 0,
+      "value": "Назва"
+    }
+  ],
+  "admin.maps.title": [
+    {
+      "type": 0,
+      "value": "Назва"
+    }
+  ],
+  "admin.maps.unlocked-tooltip": [
+    {
+      "type": 0,
+      "value": "Зараз ніхто не редагує"
+    }
+  ],
+  "admin.maps.view-xml": [
+    {
+      "type": 0,
+      "value": "Переглянути XML"
+    }
+  ],
+  "admin.maps.xml-viewer.copy": [
+    {
+      "type": 0,
+      "value": "Копіювати відформатований XML"
+    }
+  ],
+  "admin.maps.xml-viewer.info": [
+    {
+      "type": 0,
+      "value": "Це необроблений XML-вміст карти розуму. Ви можете скопіювати його для резервного копіювання або аналізу."
+    }
+  ],
+  "admin.maps.xml-viewer.loading": [
+    {
+      "type": 0,
+      "value": "Завантаження XML-вмісту..."
+    }
+  ],
+  "admin.maps.xml-viewer.no-content": [
+    {
+      "type": 0,
+      "value": "XML-вміст недоступний"
+    }
+  ],
+  "admin.maps.xml-viewer.title": [
+    {
+      "type": 0,
+      "value": "XML-вміст карти"
+    }
+  ],
+  "admin.menu.accounts": [
+    {
+      "type": 0,
+      "value": "Акаунти"
+    }
+  ],
+  "admin.menu.maps": [
+    {
+      "type": 0,
+      "value": "Карти"
+    }
+  ],
+  "admin.menu.system": [
+    {
+      "type": 0,
+      "value": "Система"
+    }
+  ],
   "admin.new-password": [
     {
       "type": 0,
-      "value": "New Password"
+      "value": "Новий пароль"
     }
   ],
   "admin.password-error-facebook": [
     {
       "type": 0,
-      "value": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+      "value": "Цей користувач автентифікований через Facebook. Зміна пароля для акаунтів Facebook недоступна. Будь ласка, попросіть користувача керувати паролем через свій акаунт Facebook."
     }
   ],
   "admin.password-error-failed": [
     {
       "type": 0,
-      "value": "Failed to change password"
+      "value": "Не вдалося змінити пароль"
     }
   ],
   "admin.password-error-google": [
     {
       "type": 0,
-      "value": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+      "value": "Цей користувач автентифікований через Google. Зміна пароля для акаунтів Google недоступна. Будь ласка, попросіть користувача керувати паролем через свій акаунт Google."
     }
   ],
   "admin.password-error-length": [
     {
       "type": 0,
-      "value": "Password must be at least 6 characters"
+      "value": "Пароль має містити щонайменше 6 символів"
     }
   ],
   "admin.password-error-mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match"
+      "value": "Паролі не збігаються"
+    }
+  ],
+  "admin.prompt.new-user-password": [
+    {
+      "type": 0,
+      "value": "Введіть пароль для нового користувача:"
     }
   ],
   "admin.public": [
@@ -453,16 +1063,72 @@
       "value": "Активний"
     }
   ],
+  "admin.status-active-tooltip": [
+    {
+      "type": 0,
+      "value": "Акаунт активовано, обмежень немає"
+    }
+  ],
+  "admin.status-active-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "Акаунт активовано, обмежень немає | Натисніть, щоб змінити статус"
+    }
+  ],
   "admin.status-clean": [
     {
       "type": 0,
       "value": "Очистити"
     }
   ],
+  "admin.status-not-activated": [
+    {
+      "type": 0,
+      "value": "Не активовано"
+    }
+  ],
+  "admin.status-not-activated-tooltip": [
+    {
+      "type": 0,
+      "value": "Користувач ще не підтвердив свою адресу електронної пошти"
+    }
+  ],
+  "admin.status-not-activated-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "Користувач ще не підтвердив свою адресу електронної пошти | Натисніть, щоб змінити статус"
+    }
+  ],
   "admin.status-suspended": [
     {
       "type": 0,
       "value": "Призупинено"
+    }
+  ],
+  "admin.status.click-to-change": [
+    {
+      "type": 0,
+      "value": "Натисніть, щоб змінити статус"
+    }
+  ],
+  "admin.status.reason": [
+    {
+      "type": 0,
+      "value": "Причина: "
+    },
+    {
+      "type": 1,
+      "value": "reason"
+    }
+  ],
+  "admin.status.suspended-on": [
+    {
+      "type": 0,
+      "value": "Дата призупинення: "
+    },
+    {
+      "type": 1,
+      "value": "date"
     }
   ],
   "admin.suspend-user": [
@@ -519,10 +1185,70 @@
       "value": "Порушення умов"
     }
   ],
+  "admin.system.app.name": [
+    {
+      "type": 0,
+      "value": "Назва"
+    }
+  ],
+  "admin.system.app.port": [
+    {
+      "type": 0,
+      "value": "Порт"
+    }
+  ],
+  "admin.system.application": [
+    {
+      "type": 0,
+      "value": "Застосунок"
+    }
+  ],
+  "admin.system.database": [
+    {
+      "type": 0,
+      "value": "База даних"
+    }
+  ],
+  "admin.system.database.info": [
+    {
+      "type": 0,
+      "value": "База даних"
+    }
+  ],
+  "admin.system.db.ddl": [
+    {
+      "type": 0,
+      "value": "Hibernate DDL"
+    }
+  ],
+  "admin.system.db.driver": [
+    {
+      "type": 0,
+      "value": "Драйвер"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,
       "value": "URL"
+    }
+  ],
+  "admin.system.db.username": [
+    {
+      "type": 0,
+      "value": "Ім'я користувача"
+    }
+  ],
+  "admin.system.error": [
+    {
+      "type": 0,
+      "value": "Не вдалося завантажити системну інформацію"
+    }
+  ],
+  "admin.system.health": [
+    {
+      "type": 0,
+      "value": "Стан системи"
     }
   ],
   "admin.system.jvm": [
@@ -531,16 +1257,172 @@
       "value": "JVM"
     }
   ],
+  "admin.system.jvm.load": [
+    {
+      "type": 0,
+      "value": "Навантаження системи"
+    }
+  ],
+  "admin.system.jvm.processors": [
+    {
+      "type": 0,
+      "value": "Процесори"
+    }
+  ],
+  "admin.system.jvm.start": [
+    {
+      "type": 0,
+      "value": "Час запуску"
+    }
+  ],
+  "admin.system.jvm.uptime": [
+    {
+      "type": 0,
+      "value": "Час роботи"
+    }
+  ],
+  "admin.system.jvm.vendor": [
+    {
+      "type": 0,
+      "value": "Постачальник"
+    }
+  ],
+  "admin.system.jvm.version": [
+    {
+      "type": 0,
+      "value": "Версія Java"
+    }
+  ],
+  "admin.system.loading": [
+    {
+      "type": 0,
+      "value": "Завантаження системної інформації..."
+    }
+  ],
   "admin.system.memory": [
     {
       "type": 0,
       "value": "Пам'ять"
     }
   ],
+  "admin.system.memory.info": [
+    {
+      "type": 0,
+      "value": "Пам'ять"
+    }
+  ],
+  "admin.system.memory.max": [
+    {
+      "type": 0,
+      "value": "Максимальна пам'ять"
+    }
+  ],
+  "admin.system.memory.total": [
+    {
+      "type": 0,
+      "value": "Загальна пам'ять"
+    }
+  ],
+  "admin.system.memory.usage": [
+    {
+      "type": 0,
+      "value": "Використання пам'яті"
+    }
+  ],
+  "admin.system.memory.used": [
+    {
+      "type": 0,
+      "value": "Використана пам'ять"
+    }
+  ],
+  "admin.system.mindmapMetrics.collaborations": [
+    {
+      "type": 0,
+      "value": "Враховані співпраці"
+    }
+  ],
+  "admin.system.mindmapMetrics.disabled": [
+    {
+      "type": 0,
+      "value": "Установіть `app.monitoring.performance.log-mindmap-listing` у значення true, щоб збирати метрики."
+    }
+  ],
+  "admin.system.mindmapMetrics.entityLoads": [
+    {
+      "type": 0,
+      "value": "Завантаження сутностей"
+    }
+  ],
+  "admin.system.mindmapMetrics.executedStatements": [
+    {
+      "type": 0,
+      "value": "Підготовлені запити"
+    }
+  ],
+  "admin.system.mindmapMetrics.lastUpdated": [
+    {
+      "type": 0,
+      "value": "Останнє оновлення"
+    }
+  ],
+  "admin.system.mindmapMetrics.mapCount": [
+    {
+      "type": 0,
+      "value": "Повернуто карт"
+    }
+  ],
+  "admin.system.mindmapMetrics.pending": [
+    {
+      "type": 0,
+      "value": "Очікування наступного запиту списку карт розуму для збору метрик."
+    }
+  ],
+  "admin.system.mindmapMetrics.segments": [
+    {
+      "type": 0,
+      "value": "Сегменти виконання"
+    }
+  ],
+  "admin.system.mindmapMetrics.title": [
+    {
+      "type": 0,
+      "value": "Продуктивність списку карт розуму"
+    }
+  ],
+  "admin.system.mindmapMetrics.topQueries": [
+    {
+      "type": 0,
+      "value": "Основні запити"
+    }
+  ],
+  "admin.system.mindmapMetrics.totalTime": [
+    {
+      "type": 0,
+      "value": "Загальний час (мс)"
+    }
+  ],
   "admin.system.refresh": [
     {
       "type": 0,
       "value": "Оновити"
+    }
+  ],
+  "admin.system.statistics": [
+    {
+      "type": 0,
+      "value": "Статистика"
+    }
+  ],
+  "admin.system.stats.mindmaps": [
+    {
+      "type": 0,
+      "value": "Усього карт розуму"
+    }
+  ],
+  "admin.system.stats.users": [
+    {
+      "type": 0,
+      "value": "Усього користувачів"
     }
   ],
   "admin.system.title": [
@@ -553,6 +1435,106 @@
     {
       "type": 0,
       "value": "Відновити користувача"
+    }
+  ],
+  "admin.user-info.auth-type": [
+    {
+      "type": 0,
+      "value": "Автентифікація"
+    }
+  ],
+  "admin.user-info.created": [
+    {
+      "type": 0,
+      "value": "Створено"
+    }
+  ],
+  "admin.user-info.status": [
+    {
+      "type": 0,
+      "value": "Статус"
+    }
+  ],
+  "admin.user-info.suspension-reason": [
+    {
+      "type": 0,
+      "value": "Причина призупинення:"
+    }
+  ],
+  "admin.user-info.title": [
+    {
+      "type": 0,
+      "value": "Інформація про користувача"
+    }
+  ],
+  "admin.user-info.total-maps": [
+    {
+      "type": 0,
+      "value": "Усього карт"
+    }
+  ],
+  "admin.user-maps-dialog.loading": [
+    {
+      "type": 0,
+      "value": "Завантаження користувача..."
+    }
+  ],
+  "admin.user-maps-dialog.no-maps": [
+    {
+      "type": 0,
+      "value": "У цього користувача немає карт."
+    }
+  ],
+  "admin.user-maps-dialog.title": [
+    {
+      "type": 0,
+      "value": "Карти користувача "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " (ID: #"
+    },
+    {
+      "type": 1,
+      "value": "id"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
+  "admin.validation.email-invalid": [
+    {
+      "type": 0,
+      "value": "Недійсний формат електронної пошти"
+    }
+  ],
+  "admin.validation.email-required": [
+    {
+      "type": 0,
+      "value": "Електронна пошта обов'язкова"
+    }
+  ],
+  "admin.validation.firstname-required": [
+    {
+      "type": 0,
+      "value": "Ім'я обов'язкове"
+    }
+  ],
+  "admin.validation.lastname-required": [
+    {
+      "type": 0,
+      "value": "Прізвище обов'язкове"
+    }
+  ],
+  "admin.view-user-maps": [
+    {
+      "type": 0,
+      "value": "Переглянути карти користувача"
     }
   ],
   "admin.view-xml": [
@@ -585,6 +1567,24 @@
       "value": "Паролі не співпадають. Будь ласка, спробуйте ще раз."
     }
   ],
+  "changepwd.password-max-length": [
+    {
+      "type": 0,
+      "value": "Пароль не може бути довшим за 39 символів."
+    }
+  ],
+  "changepwd.password-min-length": [
+    {
+      "type": 0,
+      "value": "Пароль має містити щонайменше 8 символів."
+    }
+  ],
+  "changepwd.password-required": [
+    {
+      "type": 0,
+      "value": "Пароль не може бути порожнім."
+    }
+  ],
   "changepwd.title": [
     {
       "type": 0,
@@ -595,6 +1595,18 @@
     {
       "type": 0,
       "value": "Дозволити сповіщення email"
+    }
+  ],
+  "common.cancel": [
+    {
+      "type": 0,
+      "value": "Скасувати"
+    }
+  ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Закрити"
     }
   ],
   "common.delete": [
@@ -609,16 +1621,28 @@
       "value": "Видалити тег"
     }
   ],
+  "common.disabled": [
+    {
+      "type": 0,
+      "value": "Вимкнено"
+    }
+  ],
   "common.email": [
     {
       "type": 0,
-      "value": "Email"
+      "value": "Електронна пошта"
     }
   ],
   "common.emails": [
     {
       "type": 0,
       "value": "Електронні листи"
+    }
+  ],
+  "common.enabled": [
+    {
+      "type": 0,
+      "value": "Увімкнено"
     }
   ],
   "common.first-name": [
@@ -657,6 +1681,12 @@
       "value": "Список карт"
     }
   ],
+  "common.na": [
+    {
+      "type": 0,
+      "value": "Н/Д"
+    }
+  ],
   "common.open-drawer": [
     {
       "type": 0,
@@ -687,6 +1717,12 @@
       "value": "Повторити"
     }
   ],
+  "common.save": [
+    {
+      "type": 0,
+      "value": "Зберегти"
+    }
+  ],
   "common.settings": [
     {
       "type": 0,
@@ -696,7 +1732,7 @@
   "common.terms-notice": [
     {
       "type": 0,
-      "value": "By continuing, you agree to our "
+      "value": "Продовжуючи, ви погоджуєтеся з нашими "
     },
     {
       "type": 8,
@@ -704,13 +1740,13 @@
       "children": [
         {
           "type": 0,
-          "value": "Terms of Service"
+          "value": "Умовами використання"
         }
       ]
     },
     {
       "type": 0,
-      "value": " and "
+      "value": " та "
     },
     {
       "type": 8,
@@ -718,7 +1754,7 @@
       "children": [
         {
           "type": 0,
-          "value": "Privacy Policy"
+          "value": "Політикою конфіденційності"
         }
       ]
     },
@@ -798,19 +1834,25 @@
   "error.go-back": [
     {
       "type": 0,
-      "value": "Go Back"
+      "value": "Назад"
     }
   ],
   "error.go-home": [
     {
       "type": 0,
-      "value": "Go to Home"
+      "value": "На головну"
     }
   ],
   "error.go-to-login": [
     {
       "type": 0,
-      "value": "Sign In"
+      "value": "Увійти"
+    }
+  ],
+  "error.invalid-map-id": [
+    {
+      "type": 0,
+      "value": "Недійсний ID карти"
     }
   ],
   "error.map-title-required": [
@@ -1312,7 +2354,7 @@
   "login.generic-error": [
     {
       "type": 0,
-      "value": "An error occurred during authentication. Please try again."
+      "value": "Під час автентифікації сталася помилка. Будь ласка, спробуйте ще раз."
     }
   ],
   "login.google.button": [
@@ -1324,7 +2366,7 @@
   "login.oauth-error": [
     {
       "type": 0,
-      "value": "OAuth authentication failed. Please try again or use a different sign-in method."
+      "value": "Не вдалося виконати автентифікацію OAuth. Будь ласка, спробуйте ще раз або скористайтеся іншим способом входу."
     }
   ],
   "login.page-title": [
@@ -1348,7 +2390,7 @@
   "login.server-error": [
     {
       "type": 0,
-      "value": "An unexpected error occurred. Please try again later."
+      "value": "Сталася неочікувана помилка. Будь ласка, спробуйте пізніше."
     }
   ],
   "login.shared-map-notice": [
@@ -1426,25 +2468,25 @@
   "maps.auth-required-default-message": [
     {
       "type": 0,
-      "value": "You need to sign in to view your maps."
+      "value": "Щоб переглянути свої карти, потрібно увійти."
     }
   ],
   "maps.auth-required-heading": [
     {
       "type": 0,
-      "value": "Sign in to access your maps"
+      "value": "Увійдіть, щоб отримати доступ до своїх карт"
     }
   ],
   "maps.auth-required-login": [
     {
       "type": 0,
-      "value": "Go to login"
+      "value": "Перейти до входу"
     }
   ],
   "maps.auth-required-title": [
     {
       "type": 0,
-      "value": "Sign In Required | WiseMapping"
+      "value": "Потрібен вхід | WiseMapping"
     }
   ],
   "maps.choose-file": [
@@ -1622,7 +2664,7 @@
   "menu.admin-console": [
     {
       "type": 0,
-      "value": "Admin Console"
+      "value": "Консоль адміністратора"
     }
   ],
   "menu.change-password": [
@@ -1646,7 +2688,7 @@
   "publish.copied": [
     {
       "type": 0,
-      "value": "Copied to clipboard!"
+      "value": "Скопійовано в буфер обміну!"
     }
   ],
   "publish.description": [
@@ -1774,7 +2816,7 @@
   "registration.form-legend": [
     {
       "type": 0,
-      "value": "Account Information"
+      "value": "Інформація про акаунт"
     }
   ],
   "registration.google.button": [
@@ -1844,25 +2886,25 @@
   "registration.success.already-activated": [
     {
       "type": 0,
-      "value": "Already activated your account?"
+      "value": "Уже активували свій акаунт?"
     }
   ],
   "registration.success.check-spam": [
     {
       "type": 0,
-      "value": "If you don't see the email, please check your spam folder."
+      "value": "Якщо ви не бачите листа, перевірте папку «Спам»."
     }
   ],
   "registration.success.email-sent": [
     {
       "type": 0,
-      "value": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+      "value": "Ми надіслали лист для активації на вашу поштову скриньку. Будь ласка, перевірте пошту й натисніть посилання для активації, щоб активувати свій акаунт."
     }
   ],
   "registration.success.title": [
     {
       "type": 0,
-      "value": "Registration Successful!"
+      "value": "Реєстрація успішна!"
     }
   ],
   "registration.title": [
@@ -1886,67 +2928,67 @@
   "reset-password.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm new password"
+      "value": "Підтвердьте новий пароль"
     }
   ],
   "reset-password.desc": [
     {
       "type": 0,
-      "value": "Enter your new password below."
+      "value": "Введіть новий пароль нижче."
     }
   ],
   "reset-password.invalid-link": [
     {
       "type": 0,
-      "value": "Invalid password reset link. Please request a new one."
+      "value": "Недійсне посилання для скидання пароля. Будь ласка, запросіть нове."
     }
   ],
   "reset-password.mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match."
+      "value": "Паролі не збігаються."
     }
   ],
   "reset-password.page-title": [
     {
       "type": 0,
-      "value": "Reset Password | WiseMapping"
+      "value": "Скидання пароля | WiseMapping"
     }
   ],
   "reset-password.password": [
     {
       "type": 0,
-      "value": "New password"
+      "value": "Новий пароль"
     }
   ],
   "reset-password.request-new": [
     {
       "type": 0,
-      "value": "Request new link"
+      "value": "Запросити нове посилання"
     }
   ],
   "reset-password.submit": [
     {
       "type": 0,
-      "value": "Set new password"
+      "value": "Установити новий пароль"
     }
   ],
   "reset-password.title": [
     {
       "type": 0,
-      "value": "Set a new password"
+      "value": "Установіть новий пароль"
     }
   ],
   "reset-password.too-long": [
     {
       "type": 0,
-      "value": "Password must be less than 40 characters."
+      "value": "Пароль має містити менше 40 символів."
     }
   ],
   "reset-password.too-short": [
     {
       "type": 0,
-      "value": "Password must be at least 8 characters."
+      "value": "Пароль має містити щонайменше 8 символів."
     }
   ],
   "role.editor": [
@@ -1982,7 +3024,7 @@
   "share.adding-button": [
     {
       "type": 0,
-      "value": "Sharing..."
+      "value": "Надання доступу..."
     }
   ],
   "share.can-edit": [
@@ -2018,19 +3060,19 @@
   "share.table.actions": [
     {
       "type": 0,
-      "value": "Actions"
+      "value": "Дії"
     }
   ],
   "share.table.collaborator": [
     {
       "type": 0,
-      "value": "Collaborator"
+      "value": "Співавтор"
     }
   ],
   "share.table.role": [
     {
       "type": 0,
-      "value": "Role"
+      "value": "Роль"
     }
   ],
   "theme.dark": [
