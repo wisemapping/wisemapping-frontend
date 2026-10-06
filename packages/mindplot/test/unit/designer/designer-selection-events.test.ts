@@ -18,6 +18,7 @@
 import type { Harness } from '../commands/designer-harness';
 import { buildDesigner } from '../commands/designer-harness';
 import DesignerKeyboard from '../../../src/components/DesignerKeyboard';
+import type Relationship from '../../../src/components/Relationship';
 import type Topic from '../../../src/components/Topic';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
@@ -217,6 +218,96 @@ describe('Designer selection on a click with a modifier', () => {
     mouseDown(3, { metaKey: true });
 
     expect(designer.getModel().filterSelectedTopics()).toEqual([topic(3)]);
+  });
+});
+
+describe('Designer selection on a click on a relationship', () => {
+  const lineOf = (relationship: Relationship): SVGElement =>
+    (relationship.getLine() as unknown as { peer: { _native: SVGElement } }).peer._native;
+
+  /** A click as the browser sends it: mousedown, mouseup, then click, on the line. */
+  const clickOn = (relationship: Relationship, init: MouseEventInit = {}) => {
+    const line = lineOf(relationship);
+    ['mousedown', 'mouseup', 'click'].forEach((type) =>
+      line.dispatchEvent(new MouseEvent(type, { bubbles: true, cancelable: true, ...init })),
+    );
+  };
+
+  const openWithRelationship = async () => {
+    const harness = await open();
+    const relationship = harness.designer.getModel().getRelationships()[0]!;
+    const selectedRelationships = () => harness.designer.getModel().filterSelectedRelationships();
+    // A whole click on a topic: the release ends the drag its press starts, which would otherwise
+    // keep the canvas from reacting to the next press.
+    const mouseDown = (id: number, init: MouseEventInit = {}) => {
+      harness.mouseDown(id, init);
+      document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, ...init }));
+    };
+    return { ...harness, mouseDown, relationship, selectedRelationships };
+  };
+
+  it('a click selects the relationship alone, with one event', async () => {
+    const { designer, events, mouseDown, relationship, selectedRelationships } =
+      await openWithRelationship();
+    mouseDown(1);
+    events.splice(0);
+
+    clickOn(relationship);
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([]);
+    expect(selectedRelationships()).toEqual([relationship]);
+    // Before: 'onblur:0', from the background click the canvas sent for the press, then
+    // 'onfocus:0' from the relationship.
+    expect(events).toEqual(['onfocus:0']);
+  });
+
+  it('a click on the only selected relationship fires nothing', async () => {
+    const { events, relationship } = await openWithRelationship();
+    clickOn(relationship);
+    events.splice(0);
+
+    clickOn(relationship);
+
+    // Before: 'onblur:0', then 'onfocus:0'.
+    expect(events).toEqual([]);
+  });
+
+  it('a Ctrl or Cmd click adds the relationship to the selection', async () => {
+    const { designer, events, mouseDown, relationship, selectedRelationships, topic } =
+      await openWithRelationship();
+    mouseDown(1);
+    events.splice(0);
+
+    clickOn(relationship, { ctrlKey: true });
+
+    // Before: the canvas unselected topic 1 all the same.
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(1)]);
+    expect(selectedRelationships()).toEqual([relationship]);
+    expect(events).toEqual(['onfocus:1']);
+  });
+
+  it('a Ctrl or Cmd click on a selected relationship unselects it', async () => {
+    const { designer, events, mouseDown, relationship, selectedRelationships, topic } =
+      await openWithRelationship();
+    mouseDown(1);
+    clickOn(relationship, { ctrlKey: true });
+    events.splice(0);
+
+    clickOn(relationship, { ctrlKey: true });
+
+    // Before: it stayed selected.
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(1)]);
+    expect(selectedRelationships()).toEqual([]);
+    expect(events).toEqual(['onfocus:1']);
+  });
+
+  it('a click closes the text editor', async () => {
+    const { designer, relationship } = await openWithRelationship();
+    const close = jest.spyOn(designer, 'closeNodeEditors');
+
+    clickOn(relationship);
+
+    expect(close).toHaveBeenCalled();
   });
 });
 

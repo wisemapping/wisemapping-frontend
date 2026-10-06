@@ -59,17 +59,23 @@ afterEach(() => {
 });
 
 describe('Relationship selection', () => {
-  it('takes the focus on a click on its line, without letting the click through', async () => {
+  it('takes the focus on a press on its line, without letting the press or click through', async () => {
     const relationship = await editable();
     const reached = jest.fn();
+    document.addEventListener('mousedown', reached);
     document.addEventListener('click', reached);
     try {
+      lineOf(relationship!).dispatchEvent(
+        new MouseEvent('mousedown', { bubbles: true, cancelable: true }),
+      );
+      expect(relationship!.isOnFocus()).toBe(true);
       const click = new MouseEvent('click', { bubbles: true, cancelable: true });
       lineOf(relationship!).dispatchEvent(click);
       expect(relationship!.isOnFocus()).toBe(true);
       expect(click.defaultPrevented).toBe(true);
       expect(reached).not.toHaveBeenCalled();
     } finally {
+      document.removeEventListener('mousedown', reached);
       document.removeEventListener('click', reached);
     }
   });
@@ -77,7 +83,9 @@ describe('Relationship selection', () => {
   it('is not selectable, and shows the default cursor, on a read-only map', async () => {
     const relationship = await readOnly();
     expect(lineOf(relationship!).style.cursor).toBe('default');
-    lineOf(relationship!).dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    ['mousedown', 'click'].forEach((type) =>
+      lineOf(relationship!).dispatchEvent(new MouseEvent(type, { bubbles: true })),
+    );
     expect(relationship!.isOnFocus()).toBe(false);
   });
 

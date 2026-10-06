@@ -427,19 +427,19 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   }
 
   /**
-   * Changes the selection for a mousedown on a topic, as one change: the topic is selected, or
-   * toggled by a Cmd click on a Mac or a Ctrl click elsewhere (`focus`), and a plain click
-   * unselects every other entity. The editor gets one event, with the selection the click leaves.
-   * Called by the topic's mousedown handler.
+   * Changes the selection for a mousedown on a topic or a relationship, as one change: the entity
+   * is selected, or toggled by a Cmd click on a Mac or a Ctrl click elsewhere (`focus`), and a
+   * plain click unselects every other entity. The editor gets one event, with the selection the
+   * click leaves. Called by the entity's mousedown handler.
    */
-  selectOnClick(topic: Topic, focus: boolean, event: MouseEvent): void {
+  selectOnClick(entity: Topic | Relationship, focus: boolean, event: MouseEvent): void {
     this._batchSelection(() => {
-      topic.setOnFocus(focus);
-      this.onObjectFocusEvent(topic, event);
+      entity.setOnFocus(focus);
+      this.onObjectFocusEvent(entity, event);
     });
   }
 
-  onObjectFocusEvent(currentObject?: Topic, event?: MouseEvent): void {
+  onObjectFocusEvent(currentObject?: Topic | Relationship, event?: MouseEvent): void {
     // Close node editors ..
     this.closeNodeEditors();
 
@@ -470,7 +470,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * Each entity still fires its own events, and each topic its 'topicSelected' or
    * 'topicUnselected' on the LayoutEventBus.
    */
-  private _setFocusOfAll(focus: boolean, except?: Topic): void {
+  private _setFocusOfAll(focus: boolean, except?: Topic | Relationship): void {
     this._batchSelection(() => {
       this.getModel()
         .getEntities()
