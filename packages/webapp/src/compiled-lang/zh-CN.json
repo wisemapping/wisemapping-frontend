@@ -107,6 +107,12 @@
       "value": "删除账户"
     }
   ],
+  "accountinfo.account-settings": [
+    {
+      "type": 0,
+      "value": "账户设置"
+    }
+  ],
   "accountinfo.button": [
     {
       "type": 0,
@@ -140,7 +146,13 @@
   "accountinfo.personal-details": [
     {
       "type": 0,
-      "value": "Personal Details"
+      "value": "个人详细信息"
+    }
+  ],
+  "accountinfo.personal-info": [
+    {
+      "type": 0,
+      "value": "个人信息"
     }
   ],
   "accountinfo.title": [
@@ -278,37 +290,127 @@
   "activation.error.message": [
     {
       "type": 0,
-      "value": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+      "value": "我们无法激活您的账户。激活链接可能无效或已过期。请联系技术支持获取帮助。"
     }
   ],
   "activation.error.title": [
     {
       "type": 0,
-      "value": "Activation Failed"
+      "value": "激活失败"
     }
   ],
   "activation.loading.desc": [
     {
       "type": 0,
-      "value": "Please wait while we activate your account..."
+      "value": "正在激活您的账户，请稍候..."
     }
   ],
   "activation.loading.title": [
     {
       "type": 0,
-      "value": "Activating Your Account"
+      "value": "正在激活您的账户"
+    }
+  ],
+  "activation.page-title": [
+    {
+      "type": 0,
+      "value": "账户激活 | WiseMapping"
     }
   ],
   "activation.success.message": [
     {
       "type": 0,
-      "value": "Your account has been activated. You can now sign in and start creating mind maps."
+      "value": "您的账户已激活。现在您可以登录并开始创建思维导图。"
     }
   ],
   "activation.success.title": [
     {
       "type": 0,
-      "value": "Account Activated Successfully"
+      "value": "账户激活成功"
+    }
+  ],
+  "admin.accounts.add-user": [
+    {
+      "type": 0,
+      "value": "添加新用户"
+    }
+  ],
+  "admin.accounts.create": [
+    {
+      "type": 0,
+      "value": "创建用户"
+    }
+  ],
+  "admin.accounts.create-user": [
+    {
+      "type": 0,
+      "value": "创建用户"
+    }
+  ],
+  "admin.accounts.edit-user": [
+    {
+      "type": 0,
+      "value": "编辑用户"
+    }
+  ],
+  "admin.accounts.filters": [
+    {
+      "type": 0,
+      "value": "搜索和筛选"
+    }
+  ],
+  "admin.accounts.no-users": [
+    {
+      "type": 0,
+      "value": "未找到用户"
+    }
+  ],
+  "admin.accounts.refresh": [
+    {
+      "type": 0,
+      "value": "刷新"
+    }
+  ],
+  "admin.accounts.refresh-tooltip": [
+    {
+      "type": 0,
+      "value": "刷新数据"
+    }
+  ],
+  "admin.accounts.search": [
+    {
+      "type": 0,
+      "value": "搜索用户..."
+    }
+  ],
+  "admin.accounts.subtitle": [
+    {
+      "type": 0,
+      "value": "管理用户账户、权限和设置"
+    }
+  ],
+  "admin.accounts.title": [
+    {
+      "type": 0,
+      "value": "用户管理"
+    }
+  ],
+  "admin.action.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "标记为非垃圾内容"
+    }
+  ],
+  "admin.action.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "标记为垃圾内容"
+    }
+  ],
+  "admin.activate-user": [
+    {
+      "type": 0,
+      "value": "激活用户"
     }
   ],
   "admin.auth-type": [
@@ -317,22 +419,64 @@
       "value": "认证类型"
     }
   ],
+  "admin.auth.database": [
+    {
+      "type": 0,
+      "value": "数据库"
+    }
+  ],
+  "admin.auth.facebook": [
+    {
+      "type": 0,
+      "value": "Facebook"
+    }
+  ],
+  "admin.auth.google": [
+    {
+      "type": 0,
+      "value": "Google"
+    }
+  ],
+  "admin.auth.ldap": [
+    {
+      "type": 0,
+      "value": "LDAP"
+    }
+  ],
+  "admin.button.update-user": [
+    {
+      "type": 0,
+      "value": "更新用户"
+    }
+  ],
+  "admin.button.updating": [
+    {
+      "type": 0,
+      "value": "更新中..."
+    }
+  ],
+  "admin.cancel": [
+    {
+      "type": 0,
+      "value": "取消"
+    }
+  ],
   "admin.change-password": [
     {
       "type": 0,
-      "value": "Change password"
+      "value": "更改密码"
     }
   ],
   "admin.change-password-button": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "更改密码"
     }
   ],
   "admin.change-password-description": [
     {
       "type": 0,
-      "value": "Change password for user: "
+      "value": "更改用户密码："
     },
     {
       "type": 1,
@@ -342,19 +486,77 @@
   "admin.change-password-title": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "更改密码"
     }
   ],
   "admin.close": [
     {
       "type": 0,
-      "value": "Close"
+      "value": "关闭"
     }
   ],
   "admin.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm Password"
+      "value": "确认密码"
+    }
+  ],
+  "admin.confirm.delete-map": [
+    {
+      "type": 0,
+      "value": "您确定要删除地图“"
+    },
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": "”吗？"
+    }
+  ],
+  "admin.confirm.spam-action": [
+    {
+      "type": 0,
+      "value": "您确定要将此地图"
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "吗？"
+    }
+  ],
+  "admin.console.description": [
+    {
+      "type": 0,
+      "value": "管理用户、系统设置和应用程序配置。"
+    }
+  ],
+  "admin.console.page-title": [
+    {
+      "type": 0,
+      "value": "管理控制台 | WiseMapping"
+    }
+  ],
+  "admin.console.subtitle": [
+    {
+      "type": 0,
+      "value": "系统管理"
+    }
+  ],
+  "admin.console.title": [
+    {
+      "type": 0,
+      "value": "管理控制台"
+    }
+  ],
+  "admin.current-suspension-reason": [
+    {
+      "type": 0,
+      "value": "当前暂停原因："
     }
   ],
   "admin.delete": [
@@ -381,6 +583,108 @@
       "value": "编辑用户"
     }
   ],
+  "admin.error.access-denied": [
+    {
+      "type": 0,
+      "value": "访问被拒绝。需要管理员权限。"
+    }
+  ],
+  "admin.error.create-user-failed": [
+    {
+      "type": 0,
+      "value": "创建用户失败。请重试。"
+    }
+  ],
+  "admin.error.load-users": [
+    {
+      "type": 0,
+      "value": "加载用户失败："
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
+  "admin.error.unknown": [
+    {
+      "type": 0,
+      "value": "未知错误"
+    }
+  ],
+  "admin.error.update-map-failed": [
+    {
+      "type": 0,
+      "value": "更新地图失败。请重试。"
+    }
+  ],
+  "admin.error.update-user-failed": [
+    {
+      "type": 0,
+      "value": "更新用户失败。请重试。"
+    }
+  ],
+  "admin.facebook.filter-tooltip": [
+    {
+      "type": 0,
+      "value": "Facebook 数据删除查询"
+    }
+  ],
+  "admin.facebook.lookup-button": [
+    {
+      "type": 0,
+      "value": "查找账户"
+    }
+  ],
+  "admin.facebook.lookup-not-found": [
+    {
+      "type": 0,
+      "value": "未找到与此 Facebook 用户 ID 关联的账户。"
+    }
+  ],
+  "admin.facebook.remove": [
+    {
+      "type": 0,
+      "value": "移除"
+    }
+  ],
+  "admin.facebook.remove-button": [
+    {
+      "type": 0,
+      "value": "移除 Facebook 账户"
+    }
+  ],
+  "admin.facebook.remove-confirm": [
+    {
+      "type": 0,
+      "value": "移除“"
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "”的 Facebook 关联？"
+    }
+  ],
+  "admin.facebook.remove-dialog-title": [
+    {
+      "type": 0,
+      "value": "移除 Facebook 账户"
+    }
+  ],
+  "admin.facebook.remove-warning": [
+    {
+      "type": 0,
+      "value": "这将断开此账户的 Facebook 身份验证。用户将收到一封密码重置邮件，以重新获得访问权限。"
+    }
+  ],
+  "admin.facebook.removing": [
+    {
+      "type": 0,
+      "value": "移除中..."
+    }
+  ],
   "admin.lock-status": [
     {
       "type": 0,
@@ -393,40 +697,354 @@
       "value": "已锁定"
     }
   ],
+  "admin.maps.clean-tooltip": [
+    {
+      "type": 0,
+      "value": "未标记为垃圾内容"
+    }
+  ],
+  "admin.maps.creator-suspended-tooltip": [
+    {
+      "type": 0,
+      "value": "地图创建者的账户已被管理员暂停"
+    }
+  ],
+  "admin.maps.delete": [
+    {
+      "type": 0,
+      "value": "删除地图"
+    }
+  ],
+  "admin.maps.description": [
+    {
+      "type": 0,
+      "value": "描述"
+    }
+  ],
+  "admin.maps.edit": [
+    {
+      "type": 0,
+      "value": "编辑地图"
+    }
+  ],
+  "admin.maps.edit-title": [
+    {
+      "type": 0,
+      "value": "编辑地图"
+    }
+  ],
+  "admin.maps.filter.date": [
+    {
+      "type": 0,
+      "value": "日期范围"
+    }
+  ],
+  "admin.maps.filter.spam": [
+    {
+      "type": 0,
+      "value": "垃圾内容"
+    }
+  ],
+  "admin.maps.locked-tooltip": [
+    {
+      "type": 0,
+      "value": "当前正由 "
+    },
+    {
+      "type": 1,
+      "value": "user"
+    },
+    {
+      "type": 0,
+      "value": " 编辑"
+    }
+  ],
+  "admin.maps.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "标记为非垃圾内容"
+    }
+  ],
+  "admin.maps.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "标记为垃圾内容"
+    }
+  ],
+  "admin.maps.no-maps": [
+    {
+      "type": 0,
+      "value": "未找到地图"
+    }
+  ],
+  "admin.maps.page-title": [
+    {
+      "type": 0,
+      "value": "地图管理"
+    }
+  ],
+  "admin.maps.private-tooltip": [
+    {
+      "type": 0,
+      "value": "只有协作者可以查看此地图"
+    }
+  ],
+  "admin.maps.public-tooltip": [
+    {
+      "type": 0,
+      "value": "任何人都可以查看此地图"
+    }
+  ],
+  "admin.maps.search": [
+    {
+      "type": 0,
+      "value": "搜索地图...（输入 #123 按 ID 搜索，输入电子邮件按创建者搜索）"
+    }
+  ],
+  "admin.maps.search-by-email": [
+    {
+      "type": 0,
+      "value": "🔍 按创建者电子邮件搜索"
+    }
+  ],
+  "admin.maps.search-by-id": [
+    {
+      "type": 0,
+      "value": "🔍 按地图 ID 搜索"
+    }
+  ],
+  "admin.maps.search-by-text": [
+    {
+      "type": 0,
+      "value": "🔍 在标题和描述中搜索"
+    }
+  ],
+  "admin.maps.spam-tooltip": [
+    {
+      "type": 0,
+      "value": "于 "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    },
+    {
+      "type": 0,
+      "value": " 被检测为垃圾内容"
+    }
+  ],
+  "admin.maps.spam-tooltip-no-date": [
+    {
+      "type": 0,
+      "value": "已标记为垃圾内容"
+    }
+  ],
+  "admin.maps.suspend-user": [
+    {
+      "type": 0,
+      "value": "暂停用户账户"
+    }
+  ],
+  "admin.maps.suspend-user.confirm": [
+    {
+      "type": 0,
+      "value": "您确定要暂停用户“"
+    },
+    {
+      "type": 1,
+      "value": "userName"
+    },
+    {
+      "type": 0,
+      "value": "”（ID："
+    },
+    {
+      "type": 1,
+      "value": "userId"
+    },
+    {
+      "type": 0,
+      "value": "）的账户吗？此操作将被记录为人工审核暂停。"
+    }
+  ],
+  "admin.maps.suspend-user.confirm-button": [
+    {
+      "type": 0,
+      "value": "暂停用户"
+    }
+  ],
+  "admin.maps.suspend-user.title": [
+    {
+      "type": 0,
+      "value": "暂停用户账户"
+    }
+  ],
+  "admin.maps.suspend-user.warning": [
+    {
+      "type": 0,
+      "value": "此操作将暂停该用户账户，使其无法访问系统。"
+    }
+  ],
+  "admin.maps.table.actions": [
+    {
+      "type": 0,
+      "value": "操作"
+    }
+  ],
+  "admin.maps.table.created": [
+    {
+      "type": 0,
+      "value": "创建时间"
+    }
+  ],
+  "admin.maps.table.description": [
+    {
+      "type": 0,
+      "value": "描述"
+    }
+  ],
+  "admin.maps.table.id": [
+    {
+      "type": 0,
+      "value": "地图 ID"
+    }
+  ],
+  "admin.maps.table.modified": [
+    {
+      "type": 0,
+      "value": "修改时间"
+    }
+  ],
+  "admin.maps.table.spam": [
+    {
+      "type": 0,
+      "value": "垃圾内容"
+    }
+  ],
+  "admin.maps.table.spam-status": [
+    {
+      "type": 0,
+      "value": "垃圾内容状态"
+    }
+  ],
+  "admin.maps.table.status": [
+    {
+      "type": 0,
+      "value": "状态"
+    }
+  ],
+  "admin.maps.table.title": [
+    {
+      "type": 0,
+      "value": "标题"
+    }
+  ],
+  "admin.maps.title": [
+    {
+      "type": 0,
+      "value": "标题"
+    }
+  ],
+  "admin.maps.unlocked-tooltip": [
+    {
+      "type": 0,
+      "value": "当前未在编辑"
+    }
+  ],
+  "admin.maps.view-xml": [
+    {
+      "type": 0,
+      "value": "查看 XML"
+    }
+  ],
+  "admin.maps.xml-viewer.copy": [
+    {
+      "type": 0,
+      "value": "复制格式化的 XML"
+    }
+  ],
+  "admin.maps.xml-viewer.info": [
+    {
+      "type": 0,
+      "value": "这是该思维导图的原始 XML 内容。您可以复制此内容用于备份或分析。"
+    }
+  ],
+  "admin.maps.xml-viewer.loading": [
+    {
+      "type": 0,
+      "value": "正在加载 XML 内容..."
+    }
+  ],
+  "admin.maps.xml-viewer.no-content": [
+    {
+      "type": 0,
+      "value": "没有可用的 XML 内容"
+    }
+  ],
+  "admin.maps.xml-viewer.title": [
+    {
+      "type": 0,
+      "value": "地图 XML 内容"
+    }
+  ],
+  "admin.menu.accounts": [
+    {
+      "type": 0,
+      "value": "账户"
+    }
+  ],
+  "admin.menu.maps": [
+    {
+      "type": 0,
+      "value": "地图"
+    }
+  ],
+  "admin.menu.system": [
+    {
+      "type": 0,
+      "value": "系统"
+    }
+  ],
   "admin.new-password": [
     {
       "type": 0,
-      "value": "New Password"
+      "value": "新密码"
     }
   ],
   "admin.password-error-facebook": [
     {
       "type": 0,
-      "value": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+      "value": "此用户通过 Facebook 进行身份验证。Facebook 账户无法更改密码。请让该用户通过其 Facebook 账户管理密码。"
     }
   ],
   "admin.password-error-failed": [
     {
       "type": 0,
-      "value": "Failed to change password"
+      "value": "更改密码失败"
     }
   ],
   "admin.password-error-google": [
     {
       "type": 0,
-      "value": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+      "value": "此用户通过 Google 进行身份验证。Google 账户无法更改密码。请让该用户通过其 Google 账户管理密码。"
     }
   ],
   "admin.password-error-length": [
     {
       "type": 0,
-      "value": "Password must be at least 6 characters"
+      "value": "密码至少需要 6 个字符"
     }
   ],
   "admin.password-error-mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match"
+      "value": "密码不匹配"
+    }
+  ],
+  "admin.prompt.new-user-password": [
+    {
+      "type": 0,
+      "value": "请输入新用户的密码："
     }
   ],
   "admin.public": [
@@ -453,16 +1071,72 @@
       "value": "活跃"
     }
   ],
+  "admin.status-active-tooltip": [
+    {
+      "type": 0,
+      "value": "账户已激活且状态良好"
+    }
+  ],
+  "admin.status-active-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "账户已激活且状态良好 | 点击以更改状态"
+    }
+  ],
   "admin.status-clean": [
     {
       "type": 0,
       "value": "清除"
     }
   ],
+  "admin.status-not-activated": [
+    {
+      "type": 0,
+      "value": "未激活"
+    }
+  ],
+  "admin.status-not-activated-tooltip": [
+    {
+      "type": 0,
+      "value": "用户尚未确认其电子邮件地址"
+    }
+  ],
+  "admin.status-not-activated-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "用户尚未确认其电子邮件地址 | 点击以更改状态"
+    }
+  ],
   "admin.status-suspended": [
     {
       "type": 0,
       "value": "已暂停"
+    }
+  ],
+  "admin.status.click-to-change": [
+    {
+      "type": 0,
+      "value": "点击以更改状态"
+    }
+  ],
+  "admin.status.reason": [
+    {
+      "type": 0,
+      "value": "原因："
+    },
+    {
+      "type": 1,
+      "value": "reason"
+    }
+  ],
+  "admin.status.suspended-on": [
+    {
+      "type": 0,
+      "value": "暂停时间："
+    },
+    {
+      "type": 1,
+      "value": "date"
     }
   ],
   "admin.suspend-user": [
@@ -519,10 +1193,70 @@
       "value": "违反条款"
     }
   ],
+  "admin.system.app.name": [
+    {
+      "type": 0,
+      "value": "名称"
+    }
+  ],
+  "admin.system.app.port": [
+    {
+      "type": 0,
+      "value": "端口"
+    }
+  ],
+  "admin.system.application": [
+    {
+      "type": 0,
+      "value": "应用程序"
+    }
+  ],
+  "admin.system.database": [
+    {
+      "type": 0,
+      "value": "数据库"
+    }
+  ],
+  "admin.system.database.info": [
+    {
+      "type": 0,
+      "value": "数据库"
+    }
+  ],
+  "admin.system.db.ddl": [
+    {
+      "type": 0,
+      "value": "Hibernate DDL"
+    }
+  ],
+  "admin.system.db.driver": [
+    {
+      "type": 0,
+      "value": "驱动程序"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,
       "value": "URL"
+    }
+  ],
+  "admin.system.db.username": [
+    {
+      "type": 0,
+      "value": "用户名"
+    }
+  ],
+  "admin.system.error": [
+    {
+      "type": 0,
+      "value": "加载系统信息失败"
+    }
+  ],
+  "admin.system.health": [
+    {
+      "type": 0,
+      "value": "系统健康状况"
     }
   ],
   "admin.system.jvm": [
@@ -531,16 +1265,172 @@
       "value": "JVM"
     }
   ],
+  "admin.system.jvm.load": [
+    {
+      "type": 0,
+      "value": "系统负载"
+    }
+  ],
+  "admin.system.jvm.processors": [
+    {
+      "type": 0,
+      "value": "处理器"
+    }
+  ],
+  "admin.system.jvm.start": [
+    {
+      "type": 0,
+      "value": "启动时间"
+    }
+  ],
+  "admin.system.jvm.uptime": [
+    {
+      "type": 0,
+      "value": "运行时长"
+    }
+  ],
+  "admin.system.jvm.vendor": [
+    {
+      "type": 0,
+      "value": "供应商"
+    }
+  ],
+  "admin.system.jvm.version": [
+    {
+      "type": 0,
+      "value": "Java 版本"
+    }
+  ],
+  "admin.system.loading": [
+    {
+      "type": 0,
+      "value": "正在加载系统信息..."
+    }
+  ],
   "admin.system.memory": [
     {
       "type": 0,
       "value": "内存"
     }
   ],
+  "admin.system.memory.info": [
+    {
+      "type": 0,
+      "value": "内存"
+    }
+  ],
+  "admin.system.memory.max": [
+    {
+      "type": 0,
+      "value": "最大内存"
+    }
+  ],
+  "admin.system.memory.total": [
+    {
+      "type": 0,
+      "value": "总内存"
+    }
+  ],
+  "admin.system.memory.usage": [
+    {
+      "type": 0,
+      "value": "内存使用情况"
+    }
+  ],
+  "admin.system.memory.used": [
+    {
+      "type": 0,
+      "value": "已用内存"
+    }
+  ],
+  "admin.system.mindmapMetrics.collaborations": [
+    {
+      "type": 0,
+      "value": "纳入统计的协作数"
+    }
+  ],
+  "admin.system.mindmapMetrics.disabled": [
+    {
+      "type": 0,
+      "value": "将 `app.monitoring.performance.log-mindmap-listing` 设置为 true 以采集指标。"
+    }
+  ],
+  "admin.system.mindmapMetrics.entityLoads": [
+    {
+      "type": 0,
+      "value": "实体加载次数"
+    }
+  ],
+  "admin.system.mindmapMetrics.executedStatements": [
+    {
+      "type": 0,
+      "value": "预编译语句"
+    }
+  ],
+  "admin.system.mindmapMetrics.lastUpdated": [
+    {
+      "type": 0,
+      "value": "最后更新"
+    }
+  ],
+  "admin.system.mindmapMetrics.mapCount": [
+    {
+      "type": 0,
+      "value": "返回的地图数"
+    }
+  ],
+  "admin.system.mindmapMetrics.pending": [
+    {
+      "type": 0,
+      "value": "正在等待下一次思维导图列表请求以采集指标。"
+    }
+  ],
+  "admin.system.mindmapMetrics.segments": [
+    {
+      "type": 0,
+      "value": "执行阶段"
+    }
+  ],
+  "admin.system.mindmapMetrics.title": [
+    {
+      "type": 0,
+      "value": "思维导图列表性能"
+    }
+  ],
+  "admin.system.mindmapMetrics.topQueries": [
+    {
+      "type": 0,
+      "value": "主要查询"
+    }
+  ],
+  "admin.system.mindmapMetrics.totalTime": [
+    {
+      "type": 0,
+      "value": "总耗时（毫秒）"
+    }
+  ],
   "admin.system.refresh": [
     {
       "type": 0,
       "value": "刷新"
+    }
+  ],
+  "admin.system.statistics": [
+    {
+      "type": 0,
+      "value": "统计"
+    }
+  ],
+  "admin.system.stats.mindmaps": [
+    {
+      "type": 0,
+      "value": "思维导图总数"
+    }
+  ],
+  "admin.system.stats.users": [
+    {
+      "type": 0,
+      "value": "用户总数"
     }
   ],
   "admin.system.title": [
@@ -553,6 +1443,102 @@
     {
       "type": 0,
       "value": "恢复用户"
+    }
+  ],
+  "admin.user-info.auth-type": [
+    {
+      "type": 0,
+      "value": "认证方式"
+    }
+  ],
+  "admin.user-info.created": [
+    {
+      "type": 0,
+      "value": "创建时间"
+    }
+  ],
+  "admin.user-info.status": [
+    {
+      "type": 0,
+      "value": "状态"
+    }
+  ],
+  "admin.user-info.suspension-reason": [
+    {
+      "type": 0,
+      "value": "暂停原因："
+    }
+  ],
+  "admin.user-info.title": [
+    {
+      "type": 0,
+      "value": "用户信息"
+    }
+  ],
+  "admin.user-info.total-maps": [
+    {
+      "type": 0,
+      "value": "地图总数"
+    }
+  ],
+  "admin.user-maps-dialog.loading": [
+    {
+      "type": 0,
+      "value": "正在加载用户..."
+    }
+  ],
+  "admin.user-maps-dialog.no-maps": [
+    {
+      "type": 0,
+      "value": "该用户没有地图。"
+    }
+  ],
+  "admin.user-maps-dialog.title": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " 拥有的地图（ID：#"
+    },
+    {
+      "type": 1,
+      "value": "id"
+    },
+    {
+      "type": 0,
+      "value": "）"
+    }
+  ],
+  "admin.validation.email-invalid": [
+    {
+      "type": 0,
+      "value": "电子邮件格式无效"
+    }
+  ],
+  "admin.validation.email-required": [
+    {
+      "type": 0,
+      "value": "电子邮件为必填项"
+    }
+  ],
+  "admin.validation.firstname-required": [
+    {
+      "type": 0,
+      "value": "名字为必填项"
+    }
+  ],
+  "admin.validation.lastname-required": [
+    {
+      "type": 0,
+      "value": "姓氏为必填项"
+    }
+  ],
+  "admin.view-user-maps": [
+    {
+      "type": 0,
+      "value": "查看用户地图"
     }
   ],
   "admin.view-xml": [
@@ -585,6 +1571,24 @@
       "value": "密码不匹配。请重试。"
     }
   ],
+  "changepwd.password-max-length": [
+    {
+      "type": 0,
+      "value": "密码长度不能超过 39 个字符。"
+    }
+  ],
+  "changepwd.password-min-length": [
+    {
+      "type": 0,
+      "value": "密码长度至少为 8 个字符。"
+    }
+  ],
+  "changepwd.password-required": [
+    {
+      "type": 0,
+      "value": "密码不能为空。"
+    }
+  ],
   "changepwd.title": [
     {
       "type": 0,
@@ -595,6 +1599,18 @@
     {
       "type": 0,
       "value": "允许邮件通知"
+    }
+  ],
+  "common.cancel": [
+    {
+      "type": 0,
+      "value": "取消"
+    }
+  ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "关闭"
     }
   ],
   "common.delete": [
@@ -609,6 +1625,12 @@
       "value": "删除标签"
     }
   ],
+  "common.disabled": [
+    {
+      "type": 0,
+      "value": "已禁用"
+    }
+  ],
   "common.email": [
     {
       "type": 0,
@@ -619,6 +1641,12 @@
     {
       "type": 0,
       "value": "电子邮件"
+    }
+  ],
+  "common.enabled": [
+    {
+      "type": 0,
+      "value": "已启用"
     }
   ],
   "common.first-name": [
@@ -657,6 +1685,12 @@
       "value": "地图列表"
     }
   ],
+  "common.na": [
+    {
+      "type": 0,
+      "value": "不适用"
+    }
+  ],
   "common.open-drawer": [
     {
       "type": 0,
@@ -687,6 +1721,12 @@
       "value": "重试"
     }
   ],
+  "common.save": [
+    {
+      "type": 0,
+      "value": "保存"
+    }
+  ],
   "common.settings": [
     {
       "type": 0,
@@ -696,7 +1736,7 @@
   "common.terms-notice": [
     {
       "type": 0,
-      "value": "By continuing, you agree to our "
+      "value": "继续即表示您同意我们的"
     },
     {
       "type": 8,
@@ -704,13 +1744,13 @@
       "children": [
         {
           "type": 0,
-          "value": "Terms of Service"
+          "value": "服务条款"
         }
       ]
     },
     {
       "type": 0,
-      "value": " and "
+      "value": "和"
     },
     {
       "type": 8,
@@ -718,13 +1758,13 @@
       "children": [
         {
           "type": 0,
-          "value": "Privacy Policy"
+          "value": "隐私政策"
         }
       ]
     },
     {
       "type": 0,
-      "value": "."
+      "value": "。"
     }
   ],
   "common.wait": [
@@ -798,19 +1838,25 @@
   "error.go-back": [
     {
       "type": 0,
-      "value": "Go Back"
+      "value": "返回"
     }
   ],
   "error.go-home": [
     {
       "type": 0,
-      "value": "Go to Home"
+      "value": "返回首页"
     }
   ],
   "error.go-to-login": [
     {
       "type": 0,
-      "value": "Sign In"
+      "value": "登录"
+    }
+  ],
+  "error.invalid-map-id": [
+    {
+      "type": 0,
+      "value": "无效的地图 ID"
     }
   ],
   "error.map-title-required": [
@@ -1312,7 +2358,7 @@
   "login.generic-error": [
     {
       "type": 0,
-      "value": "An error occurred during authentication. Please try again."
+      "value": "身份验证过程中发生错误。请重试。"
     }
   ],
   "login.google.button": [
@@ -1324,7 +2370,7 @@
   "login.oauth-error": [
     {
       "type": 0,
-      "value": "OAuth authentication failed. Please try again or use a different sign-in method."
+      "value": "OAuth 身份验证失败。请重试或使用其他登录方式。"
     }
   ],
   "login.page-title": [
@@ -1348,7 +2394,7 @@
   "login.server-error": [
     {
       "type": 0,
-      "value": "An unexpected error occurred. Please try again later."
+      "value": "发生意外错误。请稍后再试。"
     }
   ],
   "login.shared-map-notice": [
@@ -1426,25 +2472,25 @@
   "maps.auth-required-default-message": [
     {
       "type": 0,
-      "value": "You need to sign in to view your maps."
+      "value": "您需要登录才能查看您的地图。"
     }
   ],
   "maps.auth-required-heading": [
     {
       "type": 0,
-      "value": "Sign in to access your maps"
+      "value": "登录以访问您的地图"
     }
   ],
   "maps.auth-required-login": [
     {
       "type": 0,
-      "value": "Go to login"
+      "value": "前往登录"
     }
   ],
   "maps.auth-required-title": [
     {
       "type": 0,
-      "value": "Sign In Required | WiseMapping"
+      "value": "需要登录 | WiseMapping"
     }
   ],
   "maps.choose-file": [
@@ -1622,7 +2668,7 @@
   "menu.admin-console": [
     {
       "type": 0,
-      "value": "Admin Console"
+      "value": "管理控制台"
     }
   ],
   "menu.change-password": [
@@ -1646,7 +2692,7 @@
   "publish.copied": [
     {
       "type": 0,
-      "value": "Copied to clipboard!"
+      "value": "已复制到剪贴板！"
     }
   ],
   "publish.description": [
@@ -1774,7 +2820,7 @@
   "registration.form-legend": [
     {
       "type": 0,
-      "value": "Account Information"
+      "value": "账户信息"
     }
   ],
   "registration.google.button": [
@@ -1844,25 +2890,25 @@
   "registration.success.already-activated": [
     {
       "type": 0,
-      "value": "Already activated your account?"
+      "value": "已经激活了账户？"
     }
   ],
   "registration.success.check-spam": [
     {
       "type": 0,
-      "value": "If you don't see the email, please check your spam folder."
+      "value": "如果您没有看到这封邮件，请检查您的垃圾邮件文件夹。"
     }
   ],
   "registration.success.email-sent": [
     {
       "type": 0,
-      "value": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+      "value": "我们已向您的收件箱发送了一封激活邮件。请查收邮件并点击其中的激活链接以激活您的账户。"
     }
   ],
   "registration.success.title": [
     {
       "type": 0,
-      "value": "Registration Successful!"
+      "value": "注册成功！"
     }
   ],
   "registration.title": [
@@ -1886,67 +2932,67 @@
   "reset-password.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm new password"
+      "value": "确认新密码"
     }
   ],
   "reset-password.desc": [
     {
       "type": 0,
-      "value": "Enter your new password below."
+      "value": "请在下方输入您的新密码。"
     }
   ],
   "reset-password.invalid-link": [
     {
       "type": 0,
-      "value": "Invalid password reset link. Please request a new one."
+      "value": "密码重置链接无效。请重新申请。"
     }
   ],
   "reset-password.mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match."
+      "value": "密码不匹配。"
     }
   ],
   "reset-password.page-title": [
     {
       "type": 0,
-      "value": "Reset Password | WiseMapping"
+      "value": "重置密码 | WiseMapping"
     }
   ],
   "reset-password.password": [
     {
       "type": 0,
-      "value": "New password"
+      "value": "新密码"
     }
   ],
   "reset-password.request-new": [
     {
       "type": 0,
-      "value": "Request new link"
+      "value": "申请新链接"
     }
   ],
   "reset-password.submit": [
     {
       "type": 0,
-      "value": "Set new password"
+      "value": "设置新密码"
     }
   ],
   "reset-password.title": [
     {
       "type": 0,
-      "value": "Set a new password"
+      "value": "设置新密码"
     }
   ],
   "reset-password.too-long": [
     {
       "type": 0,
-      "value": "Password must be less than 40 characters."
+      "value": "密码长度必须少于 40 个字符。"
     }
   ],
   "reset-password.too-short": [
     {
       "type": 0,
-      "value": "Password must be at least 8 characters."
+      "value": "密码长度至少为 8 个字符。"
     }
   ],
   "role.editor": [
@@ -1982,7 +3028,7 @@
   "share.adding-button": [
     {
       "type": 0,
-      "value": "Sharing..."
+      "value": "分享中..."
     }
   ],
   "share.can-edit": [
@@ -2018,19 +3064,19 @@
   "share.table.actions": [
     {
       "type": 0,
-      "value": "Actions"
+      "value": "操作"
     }
   ],
   "share.table.collaborator": [
     {
       "type": 0,
-      "value": "Collaborator"
+      "value": "协作者"
     }
   ],
   "share.table.role": [
     {
       "type": 0,
-      "value": "Role"
+      "value": "角色"
     }
   ],
   "theme.dark": [

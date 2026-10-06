@@ -1,6 +1,6 @@
 {
   "common.terms-notice": {
-    "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
+    "defaultMessage": "继续即表示您同意我们的<termsLink>服务条款</termsLink>和<privacyLink>隐私政策</privacyLink>。"
   },
   "accountinfo.button": {
     "defaultMessage": "接受"
@@ -94,6 +94,15 @@
   },
   "changepwd.password-match": {
     "defaultMessage": "密码不一致，请再试一次"
+  },
+  "changepwd.password-max-length": {
+    "defaultMessage": "密码长度不能超过 39 个字符。"
+  },
+  "changepwd.password-min-length": {
+    "defaultMessage": "密码长度至少为 8 个字符。"
+  },
+  "changepwd.password-required": {
+    "defaultMessage": "密码不能为空。"
   },
   "changepwd.title": {
     "defaultMessage": "更改密码"
@@ -435,7 +444,7 @@
     "defaultMessage": "开启公共分享"
   },
   "publish.copied": {
-    "defaultMessage": "Copied to clipboard!"
+    "defaultMessage": "已复制到剪贴板！"
   },
   "publish.description": {
     "defaultMessage": "通过发布脑图，你让互联网上的每个人都能看到它。"
@@ -504,7 +513,7 @@
     "defaultMessage": "添加"
   },
   "share.adding-button": {
-    "defaultMessage": "Sharing..."
+    "defaultMessage": "分享中..."
   },
   "share.add-message": {
     "defaultMessage": "添加消息"
@@ -581,11 +590,29 @@
   "common.maps-list": {
     "defaultMessage": "地图列表"
   },
+  "common.na": {
+    "defaultMessage": "不适用"
+  },
   "admin.status-clean": {
     "defaultMessage": "清除"
   },
+  "admin.status-not-activated": {
+    "defaultMessage": "未激活"
+  },
+  "admin.status-not-activated-tooltip": {
+    "defaultMessage": "用户尚未确认其电子邮件地址"
+  },
+  "admin.status-not-activated-tooltip-interactive": {
+    "defaultMessage": "用户尚未确认其电子邮件地址 | 点击以更改状态"
+  },
   "common.allow-email-notifications": {
     "defaultMessage": "允许邮件通知"
+  },
+  "common.cancel": {
+    "defaultMessage": "取消"
+  },
+  "common.close": {
+    "defaultMessage": "关闭"
   },
   "admin.public": {
     "defaultMessage": "公开"
@@ -608,6 +635,27 @@
   "admin.auth-type": {
     "defaultMessage": "认证类型"
   },
+  "admin.auth.database": {
+    "defaultMessage": "数据库"
+  },
+  "admin.auth.facebook": {
+    "defaultMessage": "Facebook"
+  },
+  "admin.auth.google": {
+    "defaultMessage": "Google"
+  },
+  "admin.auth.ldap": {
+    "defaultMessage": "LDAP"
+  },
+  "admin.button.update-user": {
+    "defaultMessage": "更新用户"
+  },
+  "admin.button.updating": {
+    "defaultMessage": "更新中..."
+  },
+  "admin.cancel": {
+    "defaultMessage": "取消"
+  },
   "common.delete": {
     "defaultMessage": "删除"
   },
@@ -619,6 +667,51 @@
   },
   "admin.edit-user": {
     "defaultMessage": "编辑用户"
+  },
+  "admin.error.access-denied": {
+    "defaultMessage": "访问被拒绝。需要管理员权限。"
+  },
+  "admin.error.create-user-failed": {
+    "defaultMessage": "创建用户失败。请重试。"
+  },
+  "admin.error.load-users": {
+    "defaultMessage": "加载用户失败：{message}"
+  },
+  "admin.error.unknown": {
+    "defaultMessage": "未知错误"
+  },
+  "admin.error.update-map-failed": {
+    "defaultMessage": "更新脑图失败。请重试。"
+  },
+  "admin.error.update-user-failed": {
+    "defaultMessage": "更新用户失败。请重试。"
+  },
+  "admin.facebook.filter-tooltip": {
+    "defaultMessage": "Facebook 数据删除查询"
+  },
+  "admin.facebook.lookup-button": {
+    "defaultMessage": "查找账号"
+  },
+  "admin.facebook.lookup-not-found": {
+    "defaultMessage": "未找到与此 Facebook 用户 ID 关联的账号。"
+  },
+  "admin.facebook.remove": {
+    "defaultMessage": "移除"
+  },
+  "admin.facebook.remove-button": {
+    "defaultMessage": "移除 Facebook 账号"
+  },
+  "admin.facebook.remove-confirm": {
+    "defaultMessage": "移除“{email}”的 Facebook 关联？"
+  },
+  "admin.facebook.remove-dialog-title": {
+    "defaultMessage": "移除 Facebook 账号"
+  },
+  "admin.facebook.remove-warning": {
+    "defaultMessage": "这将断开此账号的 Facebook 身份验证。用户将收到一封密码重置邮件，以重新获得访问权限。"
+  },
+  "admin.facebook.removing": {
+    "defaultMessage": "移除中..."
   },
   "admin.refresh": {
     "defaultMessage": "刷新"
@@ -632,6 +725,9 @@
   "common.emails": {
     "defaultMessage": "电子邮件"
   },
+  "common.enabled": {
+    "defaultMessage": "已启用"
+  },
   "admin.suspension-reason": {
     "defaultMessage": "暂停原因"
   },
@@ -640,6 +736,27 @@
   },
   "admin.suspension.terms-violation": {
     "defaultMessage": "违反条款"
+  },
+  "admin.system.app.name": {
+    "defaultMessage": "名称"
+  },
+  "admin.system.app.port": {
+    "defaultMessage": "端口"
+  },
+  "admin.system.application": {
+    "defaultMessage": "应用程序"
+  },
+  "admin.system.database": {
+    "defaultMessage": "数据库"
+  },
+  "admin.system.database.info": {
+    "defaultMessage": "数据库"
+  },
+  "admin.system.db.ddl": {
+    "defaultMessage": "Hibernate DDL"
+  },
+  "admin.system.db.driver": {
+    "defaultMessage": "驱动程序"
   },
   "admin.suspension.security-concern": {
     "defaultMessage": "安全问题"
@@ -656,6 +773,15 @@
   "admin.status-suspended": {
     "defaultMessage": "已暂停"
   },
+  "admin.status.click-to-change": {
+    "defaultMessage": "点击以更改状态"
+  },
+  "admin.status.reason": {
+    "defaultMessage": "原因：{reason}"
+  },
+  "admin.status.suspended-on": {
+    "defaultMessage": "暂停时间：{date}"
+  },
   "label.maps-count": {
     "defaultMessage": "{count} 个地图"
   },
@@ -671,6 +797,12 @@
   "admin.status-active": {
     "defaultMessage": "活跃"
   },
+  "admin.status-active-tooltip": {
+    "defaultMessage": "账号已激活且状态良好"
+  },
+  "admin.status-active-tooltip-interactive": {
+    "defaultMessage": "账号已激活且状态良好 | 点击以更改状态"
+  },
   "common.locale": {
     "defaultMessage": "语言"
   },
@@ -683,8 +815,53 @@
   "admin.unsuspend-user": {
     "defaultMessage": "恢复用户"
   },
+  "admin.user-info.auth-type": {
+    "defaultMessage": "认证方式"
+  },
+  "admin.user-info.created": {
+    "defaultMessage": "创建时间"
+  },
+  "admin.user-info.status": {
+    "defaultMessage": "状态"
+  },
+  "admin.user-info.suspension-reason": {
+    "defaultMessage": "暂停原因："
+  },
+  "admin.user-info.title": {
+    "defaultMessage": "用户信息"
+  },
+  "admin.user-info.total-maps": {
+    "defaultMessage": "脑图总数"
+  },
+  "admin.user-maps-dialog.loading": {
+    "defaultMessage": "正在加载用户..."
+  },
+  "admin.user-maps-dialog.no-maps": {
+    "defaultMessage": "该用户没有脑图。"
+  },
+  "admin.user-maps-dialog.title": {
+    "defaultMessage": "{name} 拥有的脑图（ID：#{id}）"
+  },
+  "admin.validation.email-invalid": {
+    "defaultMessage": "电子邮件格式无效"
+  },
+  "admin.validation.email-required": {
+    "defaultMessage": "电子邮件为必填项"
+  },
+  "admin.validation.firstname-required": {
+    "defaultMessage": "名字为必填项"
+  },
+  "admin.validation.lastname-required": {
+    "defaultMessage": "姓氏为必填项"
+  },
+  "admin.view-user-maps": {
+    "defaultMessage": "查看用户脑图"
+  },
   "common.delete-tag": {
     "defaultMessage": "删除标签"
+  },
+  "common.disabled": {
+    "defaultMessage": "已禁用"
   },
   "admin.edit": {
     "defaultMessage": "编辑"
@@ -695,6 +872,144 @@
   "admin.locked": {
     "defaultMessage": "已锁定"
   },
+  "admin.maps.clean-tooltip": {
+    "defaultMessage": "未标记为垃圾内容"
+  },
+  "admin.maps.creator-suspended-tooltip": {
+    "defaultMessage": "脑图创建者的账号已被管理员暂停"
+  },
+  "admin.maps.delete": {
+    "defaultMessage": "删除脑图"
+  },
+  "admin.maps.description": {
+    "defaultMessage": "描述"
+  },
+  "admin.maps.edit": {
+    "defaultMessage": "编辑脑图"
+  },
+  "admin.maps.edit-title": {
+    "defaultMessage": "编辑脑图"
+  },
+  "admin.maps.filter.date": {
+    "defaultMessage": "日期范围"
+  },
+  "admin.maps.filter.spam": {
+    "defaultMessage": "垃圾内容"
+  },
+  "admin.maps.locked-tooltip": {
+    "defaultMessage": "当前正由 {user} 编辑"
+  },
+  "admin.maps.mark-as-not-spam": {
+    "defaultMessage": "标记为非垃圾内容"
+  },
+  "admin.maps.mark-as-spam": {
+    "defaultMessage": "标记为垃圾内容"
+  },
+  "admin.maps.no-maps": {
+    "defaultMessage": "未找到脑图"
+  },
+  "admin.maps.page-title": {
+    "defaultMessage": "脑图管理"
+  },
+  "admin.maps.private-tooltip": {
+    "defaultMessage": "只有协作人可以查看此脑图"
+  },
+  "admin.maps.public-tooltip": {
+    "defaultMessage": "任何人都可以查看此脑图"
+  },
+  "admin.maps.search": {
+    "defaultMessage": "搜索脑图...（输入 #123 按 ID 搜索，输入电子邮件按创建者搜索）"
+  },
+  "admin.maps.search-by-email": {
+    "defaultMessage": "🔍 按创建者电子邮件搜索"
+  },
+  "admin.maps.search-by-id": {
+    "defaultMessage": "🔍 按脑图 ID 搜索"
+  },
+  "admin.maps.search-by-text": {
+    "defaultMessage": "🔍 在标题和描述中搜索"
+  },
+  "admin.maps.spam-tooltip": {
+    "defaultMessage": "于 {date} 被检测为垃圾内容"
+  },
+  "admin.maps.spam-tooltip-no-date": {
+    "defaultMessage": "已标记为垃圾内容"
+  },
+  "admin.maps.suspend-user": {
+    "defaultMessage": "暂停用户账号"
+  },
+  "admin.maps.suspend-user.confirm": {
+    "defaultMessage": "您确定要暂停用户“{userName}”（ID：{userId}）的账号吗？此操作将被记录为人工审核暂停。"
+  },
+  "admin.maps.suspend-user.confirm-button": {
+    "defaultMessage": "暂停用户"
+  },
+  "admin.maps.suspend-user.title": {
+    "defaultMessage": "暂停用户账号"
+  },
+  "admin.maps.suspend-user.warning": {
+    "defaultMessage": "此操作将暂停该用户账号，使其无法访问系统。"
+  },
+  "admin.maps.table.actions": {
+    "defaultMessage": "操作"
+  },
+  "admin.maps.table.created": {
+    "defaultMessage": "创建时间"
+  },
+  "admin.maps.table.description": {
+    "defaultMessage": "描述"
+  },
+  "admin.maps.table.id": {
+    "defaultMessage": "脑图 ID"
+  },
+  "admin.maps.table.modified": {
+    "defaultMessage": "修改时间"
+  },
+  "admin.maps.table.spam": {
+    "defaultMessage": "垃圾内容"
+  },
+  "admin.maps.table.spam-status": {
+    "defaultMessage": "垃圾内容状态"
+  },
+  "admin.maps.table.status": {
+    "defaultMessage": "状态"
+  },
+  "admin.maps.table.title": {
+    "defaultMessage": "标题"
+  },
+  "admin.maps.title": {
+    "defaultMessage": "标题"
+  },
+  "admin.maps.unlocked-tooltip": {
+    "defaultMessage": "当前未在编辑"
+  },
+  "admin.maps.view-xml": {
+    "defaultMessage": "查看 XML"
+  },
+  "admin.maps.xml-viewer.copy": {
+    "defaultMessage": "复制格式化的 XML"
+  },
+  "admin.maps.xml-viewer.info": {
+    "defaultMessage": "这是该思维导图的原始 XML 内容。您可以复制此内容用于备份或分析。"
+  },
+  "admin.maps.xml-viewer.loading": {
+    "defaultMessage": "正在加载 XML 内容..."
+  },
+  "admin.maps.xml-viewer.no-content": {
+    "defaultMessage": "没有可用的 XML 内容"
+  },
+  "admin.maps.xml-viewer.title": {
+    "defaultMessage": "脑图 XML 内容"
+  },
+  "admin.menu.accounts": {
+    "defaultMessage": "账号"
+  },
+  "admin.menu.maps": {
+    "defaultMessage": "脑图"
+  },
+  "admin.menu.system": {
+    "defaultMessage": "系统"
+  },
   "common.settings": {
     "defaultMessage": "设置"
   },
@@ -704,11 +1019,23 @@
   "common.retry": {
     "defaultMessage": "重试"
   },
+  "common.save": {
+    "defaultMessage": "保存"
+  },
   "admin.system.title": {
     "defaultMessage": "系统信息"
   },
   "admin.system.refresh": {
     "defaultMessage": "刷新"
+  },
+  "admin.system.statistics": {
+    "defaultMessage": "统计"
+  },
+  "admin.system.stats.mindmaps": {
+    "defaultMessage": "思维导图总数"
+  },
+  "admin.system.stats.users": {
+    "defaultMessage": "用户总数"
   },
   "common.refresh": {
     "defaultMessage": "刷新"
@@ -716,11 +1043,89 @@
   "admin.system.memory": {
     "defaultMessage": "内存"
   },
+  "admin.system.memory.info": {
+    "defaultMessage": "内存"
+  },
+  "admin.system.memory.max": {
+    "defaultMessage": "最大内存"
+  },
+  "admin.system.memory.total": {
+    "defaultMessage": "总内存"
+  },
+  "admin.system.memory.usage": {
+    "defaultMessage": "内存使用情况"
+  },
+  "admin.system.memory.used": {
+    "defaultMessage": "已用内存"
+  },
+  "admin.system.mindmapMetrics.collaborations": {
+    "defaultMessage": "纳入统计的协作数"
+  },
+  "admin.system.mindmapMetrics.disabled": {
+    "defaultMessage": "将 `app.monitoring.performance.log-mindmap-listing` 设置为 true 以采集指标。"
+  },
+  "admin.system.mindmapMetrics.entityLoads": {
+    "defaultMessage": "实体加载次数"
+  },
+  "admin.system.mindmapMetrics.executedStatements": {
+    "defaultMessage": "预编译语句"
+  },
+  "admin.system.mindmapMetrics.lastUpdated": {
+    "defaultMessage": "最后更新"
+  },
+  "admin.system.mindmapMetrics.mapCount": {
+    "defaultMessage": "返回的脑图数"
+  },
+  "admin.system.mindmapMetrics.pending": {
+    "defaultMessage": "正在等待下一次思维导图列表请求以采集指标。"
+  },
+  "admin.system.mindmapMetrics.segments": {
+    "defaultMessage": "执行阶段"
+  },
+  "admin.system.mindmapMetrics.title": {
+    "defaultMessage": "思维导图列表性能"
+  },
+  "admin.system.mindmapMetrics.topQueries": {
+    "defaultMessage": "主要查询"
+  },
+  "admin.system.mindmapMetrics.totalTime": {
+    "defaultMessage": "总耗时（毫秒）"
+  },
   "admin.system.db.url": {
     "defaultMessage": "URL"
   },
+  "admin.system.db.username": {
+    "defaultMessage": "用户名"
+  },
+  "admin.system.error": {
+    "defaultMessage": "加载系统信息失败"
+  },
+  "admin.system.health": {
+    "defaultMessage": "系统健康状况"
+  },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "admin.system.jvm.load": {
+    "defaultMessage": "系统负载"
+  },
+  "admin.system.jvm.processors": {
+    "defaultMessage": "处理器"
+  },
+  "admin.system.jvm.start": {
+    "defaultMessage": "启动时间"
+  },
+  "admin.system.jvm.uptime": {
+    "defaultMessage": "运行时长"
+  },
+  "admin.system.jvm.vendor": {
+    "defaultMessage": "供应商"
+  },
+  "admin.system.jvm.version": {
+    "defaultMessage": "Java 版本"
+  },
+  "admin.system.loading": {
+    "defaultMessage": "正在加载系统信息..."
   },
   "error.page-title": {
     "defaultMessage": "意外错误 | WiseMapping"
@@ -756,10 +1161,16 @@
     "defaultMessage": "地图标题是必需的，不能为空"
   },
   "accountinfo.personal-details": {
-    "defaultMessage": "Personal Details"
+    "defaultMessage": "个人详细信息"
+  },
+  "accountinfo.personal-info": {
+    "defaultMessage": "个人信息"
   },
   "account.delete-warning-title": {
     "defaultMessage": "删除账号"
+  },
+  "accountinfo.account-settings": {
+    "defaultMessage": "账号设置"
   },
   "account.delete-warning-description": {
     "defaultMessage": "账号一旦删除便无法恢复，请务必确认。"
@@ -801,46 +1212,70 @@
     "defaultMessage": "删除账号"
   },
   "menu.admin-console": {
-    "defaultMessage": "Admin Console"
+    "defaultMessage": "管理控制台"
   },
   "registration.form-legend": {
-    "defaultMessage": "Account Information"
+    "defaultMessage": "账户信息"
   },
   "admin.change-password": {
-    "defaultMessage": "Change password"
+    "defaultMessage": "更改密码"
   },
   "admin.change-password-title": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "更改密码"
   },
   "admin.change-password-description": {
-    "defaultMessage": "Change password for user: {email}"
+    "defaultMessage": "更改用户密码：{email}"
   },
   "admin.new-password": {
-    "defaultMessage": "New Password"
+    "defaultMessage": "新密码"
   },
   "admin.confirm-password": {
-    "defaultMessage": "Confirm Password"
+    "defaultMessage": "确认密码"
+  },
+  "admin.confirm.delete-map": {
+    "defaultMessage": "您确定要删除脑图“{title}”吗？"
+  },
+  "admin.confirm.spam-action": {
+    "defaultMessage": "您确定要将此脑图{action}吗？"
+  },
+  "admin.console.description": {
+    "defaultMessage": "管理用户、系统设置和应用程序配置。"
+  },
+  "admin.console.page-title": {
+    "defaultMessage": "管理控制台 | WiseMapping"
+  },
+  "admin.console.subtitle": {
+    "defaultMessage": "系统管理"
+  },
+  "admin.console.title": {
+    "defaultMessage": "管理控制台"
+  },
+  "admin.current-suspension-reason": {
+    "defaultMessage": "当前暂停原因："
   },
   "admin.change-password-button": {
-    "defaultMessage": "Change Password"
+    "defaultMessage": "更改密码"
   },
   "admin.password-error-length": {
-    "defaultMessage": "Password must be at least 6 characters"
+    "defaultMessage": "密码至少需要 6 个字符"
   },
   "admin.password-error-mismatch": {
-    "defaultMessage": "Passwords do not match"
+    "defaultMessage": "密码不匹配"
+  },
+  "admin.prompt.new-user-password": {
+    "defaultMessage": "请输入新用户的密码："
   },
   "admin.password-error-failed": {
-    "defaultMessage": "Failed to change password"
+    "defaultMessage": "更改密码失败"
   },
   "admin.password-error-google": {
-    "defaultMessage": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+    "defaultMessage": "此用户通过 Google 进行身份验证。Google 账号无法更改密码。请让该用户通过其 Google 账号管理密码。"
   },
   "admin.password-error-facebook": {
-    "defaultMessage": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+    "defaultMessage": "此用户通过 Facebook 进行身份验证。Facebook 账号无法更改密码。请让该用户通过其 Facebook 账号管理密码。"
   },
   "admin.close": {
-    "defaultMessage": "Close"
+    "defaultMessage": "关闭"
   },
   "validation.title-required": {
     "defaultMessage": "标题是必需的"
@@ -849,106 +1284,154 @@
     "defaultMessage": "重定向中..."
   },
   "share.table.collaborator": {
-    "defaultMessage": "Collaborator"
+    "defaultMessage": "协作人"
   },
   "share.table.role": {
-    "defaultMessage": "Role"
+    "defaultMessage": "角色"
   },
   "share.table.actions": {
-    "defaultMessage": "Actions"
+    "defaultMessage": "操作"
   },
   "error.go-home": {
-    "defaultMessage": "Go to Home"
+    "defaultMessage": "返回首页"
   },
   "error.go-back": {
-    "defaultMessage": "Go Back"
+    "defaultMessage": "返回"
   },
   "error.go-to-login": {
-    "defaultMessage": "Sign In"
+    "defaultMessage": "登录"
+  },
+  "error.invalid-map-id": {
+    "defaultMessage": "无效的脑图 ID"
   },
   "login.oauth-error": {
-    "defaultMessage": "OAuth authentication failed. Please try again or use a different sign-in method."
+    "defaultMessage": "OAuth 身份验证失败。请重试或使用其他登录方式。"
   },
   "login.server-error": {
-    "defaultMessage": "An unexpected error occurred. Please try again later."
+    "defaultMessage": "发生意外错误。请稍后再试。"
   },
   "login.generic-error": {
-    "defaultMessage": "An error occurred during authentication. Please try again."
+    "defaultMessage": "身份验证过程中发生错误。请重试。"
   },
   "registration.success.title": {
-    "defaultMessage": "Registration Successful!"
+    "defaultMessage": "注册成功！"
   },
   "registration.success.email-sent": {
-    "defaultMessage": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+    "defaultMessage": "我们已向您的收件箱发送了一封激活邮件。请查收邮件并点击其中的激活链接以激活您的账号。"
   },
   "registration.success.check-spam": {
-    "defaultMessage": "If you don't see the email, please check your spam folder."
+    "defaultMessage": "如果您没有看到这封邮件，请检查您的垃圾邮件文件夹。"
   },
   "registration.success.already-activated": {
-    "defaultMessage": "Already activated your account?"
+    "defaultMessage": "已经激活了账号？"
   },
   "reset-password.title": {
-    "defaultMessage": "Set a new password"
+    "defaultMessage": "设置新密码"
   },
   "reset-password.desc": {
-    "defaultMessage": "Enter your new password below."
+    "defaultMessage": "请在下方输入您的新密码。"
   },
   "reset-password.invalid-link": {
-    "defaultMessage": "Invalid password reset link. Please request a new one."
+    "defaultMessage": "密码重置链接无效。请重新申请。"
   },
   "reset-password.request-new": {
-    "defaultMessage": "Request new link"
+    "defaultMessage": "申请新链接"
   },
   "reset-password.password": {
-    "defaultMessage": "New password"
+    "defaultMessage": "新密码"
   },
   "reset-password.confirm-password": {
-    "defaultMessage": "Confirm new password"
+    "defaultMessage": "确认新密码"
   },
   "reset-password.submit": {
-    "defaultMessage": "Set new password"
+    "defaultMessage": "设置新密码"
   },
   "reset-password.too-short": {
-    "defaultMessage": "Password must be at least 8 characters."
+    "defaultMessage": "密码长度至少为 8 个字符。"
   },
   "reset-password.too-long": {
-    "defaultMessage": "Password must be less than 40 characters."
+    "defaultMessage": "密码长度必须少于 40 个字符。"
   },
   "reset-password.mismatch": {
-    "defaultMessage": "Passwords do not match."
+    "defaultMessage": "密码不匹配。"
   },
   "reset-password.page-title": {
-    "defaultMessage": "Reset Password | WiseMapping"
+    "defaultMessage": "重置密码 | WiseMapping"
   },
   "maps.auth-required-title": {
-    "defaultMessage": "Sign In Required | WiseMapping"
+    "defaultMessage": "需要登录 | WiseMapping"
   },
   "maps.auth-required-heading": {
-    "defaultMessage": "Sign in to access your maps"
+    "defaultMessage": "登录以访问您的脑图"
   },
   "maps.auth-required-login": {
-    "defaultMessage": "Go to login"
+    "defaultMessage": "前往登录"
   },
   "maps.auth-required-default-message": {
-    "defaultMessage": "You need to sign in to view your maps."
+    "defaultMessage": "您需要登录才能查看您的脑图。"
   },
   "activation.error.message": {
-    "defaultMessage": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+    "defaultMessage": "我们无法激活您的账号。激活链接可能无效或已过期。请联系技术支持获取帮助。"
   },
   "activation.error.title": {
-    "defaultMessage": "Activation Failed"
+    "defaultMessage": "激活失败"
   },
   "activation.loading.desc": {
-    "defaultMessage": "Please wait while we activate your account..."
+    "defaultMessage": "正在激活您的账号，请稍候..."
   },
   "activation.loading.title": {
-    "defaultMessage": "Activating Your Account"
+    "defaultMessage": "正在激活您的账号"
+  },
+  "activation.page-title": {
+    "defaultMessage": "账号激活 | WiseMapping"
   },
   "activation.success.message": {
-    "defaultMessage": "Your account has been activated. You can now sign in and start creating mind maps."
+    "defaultMessage": "您的账号已激活。现在您可以登录并开始创建思维导图。"
   },
   "activation.success.title": {
-    "defaultMessage": "Account Activated Successfully"
+    "defaultMessage": "账号激活成功"
+  },
+  "admin.accounts.add-user": {
+    "defaultMessage": "添加新用户"
+  },
+  "admin.accounts.create": {
+    "defaultMessage": "创建用户"
+  },
+  "admin.accounts.create-user": {
+    "defaultMessage": "创建用户"
+  },
+  "admin.accounts.edit-user": {
+    "defaultMessage": "编辑用户"
+  },
+  "admin.accounts.filters": {
+    "defaultMessage": "搜索和筛选"
+  },
+  "admin.accounts.no-users": {
+    "defaultMessage": "未找到用户"
+  },
+  "admin.accounts.refresh": {
+    "defaultMessage": "刷新"
+  },
+  "admin.accounts.refresh-tooltip": {
+    "defaultMessage": "刷新数据"
+  },
+  "admin.accounts.search": {
+    "defaultMessage": "搜索用户..."
+  },
+  "admin.accounts.subtitle": {
+    "defaultMessage": "管理用户账号、权限和设置"
+  },
+  "admin.accounts.title": {
+    "defaultMessage": "用户管理"
+  },
+  "admin.action.mark-as-not-spam": {
+    "defaultMessage": "标记为非垃圾内容"
+  },
+  "admin.action.mark-as-spam": {
+    "defaultMessage": "标记为垃圾内容"
+  },
+  "admin.activate-user": {
+    "defaultMessage": "激活用户"
   },
   "map.actions": {
     "defaultMessage": "操作"
