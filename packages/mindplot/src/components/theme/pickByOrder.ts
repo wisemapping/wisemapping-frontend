@@ -22,7 +22,8 @@
  */
 const pickByOrder = (colors: string | string[], order: number | undefined): string => {
   const palette = Array.isArray(colors) ? colors : [colors];
-  return palette[(order || 0) % palette.length];
+  // In range: theme palettes are never empty and topic orders are never negative.
+  return palette[(order || 0) % palette.length]!;
 };
 
 export default pickByOrder;
