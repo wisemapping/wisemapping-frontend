@@ -33,9 +33,10 @@ import type { ElementType } from './types';
  * arc must be specified to create rounded rectangles.
  * arc = "<length>"
  *     For rounded rectangles, radius of the ellipse used to round off the corners of the rectangle.
+ *     Without an arc no rx/ry are written (an arc of 0 writes them as 0).
  */
 class Rect extends WorkspaceElement<RectPeer> {
-  constructor(arc: number, attributes?: ShapeAttributes) {
+  constructor(arc?: number, attributes?: ShapeAttributes) {
     if (arc && arc > 1) {
       throw new Error('Arc must be 0<=arc<=1');
     }

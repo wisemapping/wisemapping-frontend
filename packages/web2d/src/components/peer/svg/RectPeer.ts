@@ -22,11 +22,11 @@ import ElementPeer, { formatLength } from './ElementPeer';
  * http://www.w3.org/TR/SVG/shapes.html#RectElement
  */
 class RectPeer extends ElementPeer<SVGRectElement> {
-  private _arc: number;
+  private _arc: number | undefined;
 
   private _position: PositionType;
 
-  constructor(arc: number) {
+  constructor(arc?: number) {
     super(ElementPeer.createNode('rect'));
     this._arc = arc;
     this._position = { x: 0, y: 0 };

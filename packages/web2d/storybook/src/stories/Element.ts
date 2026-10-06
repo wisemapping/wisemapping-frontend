@@ -93,7 +93,7 @@ export const createElement = ({
   workspace.setCoordOrigin(-150, -150);
 
   // No arc: the rect is drawn without rx/ry (new Rect(0) would write rx="0" ry="0").
-  const rect = new Rect(undefined as unknown as number);
+  const rect = new Rect();
   rect.setSize(100, 100);
   rect.setPosition(-50, -50);
   rect.setVisibility(visibility, visibilityDelay);
