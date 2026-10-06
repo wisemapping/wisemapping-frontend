@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 
-import { unzipSync } from 'fflate';
 import Importer from './Importer';
 import ImportError from './ImportError';
+import readZipEntries from './support/ZipEntries';
 import SecureXmlParser from '../security/SecureXmlParser';
 import Mindmap from '../model/Mindmap';
 import type NodeModel from '../model/NodeModel';
@@ -66,6 +66,10 @@ const MINDJET_URN = 'urn:mindjet:';
 const PIXELS_PER_MILLIMETER = 96 / 25.4;
 
 type MindManagerRawInput = string | ArrayBuffer | Uint8Array;
+
+// Cap on the uncompressed size of the Document.xml of a .mmap archive, the same as the one of the
+// XMind importer: a map with thousands of topics is a few MB.
+const MAX_MINDMANAGER_DOCUMENT_BYTES = 50 * 1024 * 1024;
 
 // The style defaults of a topic: those of the central topic and its subtopics, of the floating
 // topics of the map or of the callouts of a topic (StyleGroup/RootTopicDefaultsGroup, ...).
@@ -409,7 +413,14 @@ class MindManagerImporter extends Importer {
     }
 
     const isDocument = (name: string): boolean => name.toLowerCase() === 'document.xml';
-    const files = unzipSync(bytes, { filter: (file) => isDocument(file.name) });
+    const files = readZipEntries(bytes, {
+      accept: isDocument,
+      maxBytes: MAX_MINDMANAGER_DOCUMENT_BYTES,
+      tooLarge: () =>
+        new ImportError(
+          `The MindManager file is too large: its content exceeds ${MAX_MINDMANAGER_DOCUMENT_BYTES / (1024 * 1024)} MB uncompressed.`,
+        ),
+    });
     const entry = Object.entries(files).find(([name]) => isDocument(name));
     if (!entry) {
       throw new Error('The MindManager archive does not contain Document.xml');

@@ -20,6 +20,7 @@ import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globa
 import { strFromU8, strToU8, zipSync } from 'fflate';
 import XMindImporter from '../../../src/components/import/XMindImporter';
 import ImportError from '../../../src/components/import/ImportError';
+import { deflateBomb, rawZip } from './ZipBomb';
 
 const sheet = JSON.stringify([
   { id: 'sheet1', class: 'sheet', rootTopic: { id: 'root', title: 'Zip Root' } },
@@ -153,5 +154,17 @@ describe('XMindImporter zip limits', () => {
     );
 
     await expect(new XMindImporter(zip).import('liar')).rejects.toThrow(ImportError);
+  });
+
+  test('stops inflating a content entry that lies about its size, in bounded time', async () => {
+    // A content.json declared as 20 bytes whose stream inflates to about 1 GB: fflate's unzipSync
+    // decoded the whole stream (seconds of CPU) even though it kept only 20 bytes.
+    const zip = rawZip([
+      { name: 'content.json', data: deflateBomb(4_000_000), compression: 8, originalSize: 20 },
+    ]);
+
+    const started = Date.now();
+    await expect(new XMindImporter(zip).import('liar')).rejects.toThrow(/past its declared size/);
+    expect(Date.now() - started).toBeLessThan(500);
   });
 });

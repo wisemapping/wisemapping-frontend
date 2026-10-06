@@ -17,7 +17,7 @@
  */
 
 import { describe, expect, jest, test } from '@jest/globals';
-import { strToU8, zipSync } from 'fflate';
+import { deflateSync, strToU8, zipSync } from 'fflate';
 import MindManagerImporter from '../../../src/components/import/MindManagerImporter';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
@@ -25,6 +25,8 @@ import type Mindmap from '../../../src/components/model/Mindmap';
 import type NodeModel from '../../../src/components/model/NodeModel';
 import { StrokeStyle } from '../../../src/components/model/RelationshipModel';
 import ContentType from '../../../src/components/ContentType';
+import ImportError from '../../../src/components/import/ImportError';
+import { deflateBomb, rawZip } from './ZipBomb';
 
 const loadMindmap = (xml: string): Mindmap => {
   const doc = new DOMParser().parseFromString(xml, 'text/xml');
@@ -106,6 +108,51 @@ describe('MindManagerImporter .mmap archives', () => {
     const mindmap = loadMindmap(await importer.import('test', ''));
 
     expect(mindmap.getCentralTopic()!.getChildren()).toHaveLength(2);
+  });
+
+  test('rejects, before inflating it, a Document.xml declaring more than 50 MB', async () => {
+    const archive = rawZip([
+      {
+        name: 'Document.xml',
+        data: deflateSync(strToU8(DOCUMENT_XML)),
+        compression: 8,
+        originalSize: 0xfffffff0,
+      },
+    ]);
+
+    const result = TextImporterFactory.create('mmap', archive).import('bomb', '');
+
+    await expect(result).rejects.toThrow(ImportError);
+    await expect(result).rejects.toThrow(/MindManager file is too large.*50 MB/);
+  });
+
+  test('stops inflating a Document.xml that lies about its size, in bounded time', async () => {
+    // Declared as 20 bytes, its stream inflates to about 1 GB.
+    const archive = rawZip([
+      { name: 'Document.xml', data: deflateBomb(4_000_000), compression: 8, originalSize: 20 },
+    ]);
+
+    const started = Date.now();
+    const result = TextImporterFactory.create('mmap', archive).import('bomb', '');
+
+    await expect(result).rejects.toThrow(/past its declared size/);
+    expect(Date.now() - started).toBeLessThan(500);
+  });
+
+  test('does not inflate the other entries of the archive', async () => {
+    const archive = rawZip([
+      {
+        name: 'Document.xml',
+        data: deflateSync(strToU8(DOCUMENT_XML)),
+        compression: 8,
+        originalSize: DOCUMENT_XML.length,
+      },
+      { name: 'bin/huge.bin', data: new Uint8Array(8), compression: 99, originalSize: 0xffffffff },
+    ]);
+
+    const mindmap = loadMindmap(await TextImporterFactory.create('mmap', archive).import('t', ''));
+
+    expect(mindmap.getCentralTopic()!.getText()).toBe('Central');
   });
 });
 

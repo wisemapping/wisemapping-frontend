@@ -65,7 +65,6 @@
  * const wisemappingXML = await importer.import('My Mind Map', 'Description');
  * ```
  */
-import { unzipSync } from 'fflate';
 import type { LayoutType } from '../layout/LayoutType';
 import Importer from './Importer';
 import ImportError from './ImportError';
@@ -77,6 +76,7 @@ import FeatureModelFactory from '../model/FeatureModelFactory';
 import { decodeUtf8, tryDecodeUtf8 } from './support/Utf8Decoder';
 import toWiseMappingXml from './support/MindmapXml';
 import TopicIdSequence from './support/TopicIdSequence';
+import readZipEntries from './support/ZipEntries';
 import {
   LETTER_EMOJIS,
   NAMED_ICON_EMOJIS,
@@ -505,23 +505,15 @@ class XMindImporter extends Importer {
     }
 
     let files: Record<string, Uint8Array>;
-    let inflatedBytes = 0;
     try {
-      // The filter sees each entry's declared size before it is inflated. fflate inflates into a
-      // buffer of exactly that size, so an entry that under-declares can not exceed it either.
-      files = unzipSync(data, {
-        filter: (file) => {
-          if (!isXMindContentEntry(file.name)) {
-            return false;
-          }
-          inflatedBytes += file.originalSize;
-          if (inflatedBytes > MAX_XMIND_CONTENT_BYTES) {
-            throw new ImportError(
-              `The XMind file is too large: its content exceeds ${MAX_XMIND_CONTENT_BYTES / (1024 * 1024)} MB uncompressed.`,
-            );
-          }
-          return true;
-        },
+      // Only the content entries are inflated, within the cap, and none past its declared size.
+      files = readZipEntries(data, {
+        accept: isXMindContentEntry,
+        maxBytes: MAX_XMIND_CONTENT_BYTES,
+        tooLarge: () =>
+          new ImportError(
+            `The XMind file is too large: its content exceeds ${MAX_XMIND_CONTENT_BYTES / (1024 * 1024)} MB uncompressed.`,
+          ),
       });
     } catch (error) {
       if (error instanceof ImportError) {
