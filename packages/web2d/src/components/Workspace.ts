@@ -147,11 +147,11 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
    */
   override setSize(width?: string | number | null, height?: string | number | null): void {
     // HTML container must have the size of the group element.
-    if (width) {
+    if (width != null) {
       this._htmlContainer.style.width = String(width);
     }
 
-    if (height) {
+    if (height != null) {
       this._htmlContainer.style.height = String(height);
     }
     // A missing width or height keeps the current one.

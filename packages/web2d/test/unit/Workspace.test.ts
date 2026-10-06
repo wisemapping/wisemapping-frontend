@@ -234,6 +234,29 @@ describe('Workspace', () => {
   });
 });
 
+// BL5-206: setSize checked the width and height by truthiness, so the html container kept its
+// size for a width or height of 0 while the svg was resized to it.
+describe('Workspace.setSize with a zero size (BL5-206)', () => {
+  it('sizes the html container to a zero width and height', () => {
+    const workspace = new Workspace();
+    workspace.setSize(0, 0);
+    const container = workspace._getHtmlContainer();
+    expect(container.style.width).toBe('0px');
+    expect(container.style.height).toBe('0px');
+    expect(workspace.getSVGElement().getAttribute('width')).toBe('0');
+    expect(workspace.getSVGElement().getAttribute('height')).toBe('0');
+  });
+
+  it('keeps the current size for a missing width or height', () => {
+    const workspace = new Workspace();
+    workspace.setSize('300px', null);
+    workspace.setSize(undefined, '200px');
+    const container = workspace._getHtmlContainer();
+    expect(container.style.width).toBe('300px');
+    expect(container.style.height).toBe('200px');
+  });
+});
+
 // BL5-64: setSize skipped a size equal to the kept one, so it could not restore an attribute
 // written around the peer, and getSize kept reporting the old size.
 describe('size attributes written around the peer (BL5-64)', () => {
