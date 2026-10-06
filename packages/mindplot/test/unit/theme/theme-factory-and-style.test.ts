@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { afterEach, describe, expect, it, jest } from '@jest/globals';
+import { LineType } from '../../../src/components/ConnectionLine';
 import AuroraTheme from '../../../src/components/theme/AuroraTheme';
 import ClassicTheme from '../../../src/components/theme/ClassicTheme';
 import ColorUtil from '../../../src/components/theme/ColorUtil';
@@ -138,6 +139,17 @@ describe('ThemeStyle', () => {
       'Default styles not found for topic type: CentralTopic',
     );
     expect(String(warn.mock.calls[0][0])).toContain('no-such-theme-default.json');
+  });
+
+  it('reads every connection style a theme can name', () => {
+    const style = new ThemeStyle('classic', 'light') as unknown as {
+      convertStringToLineType: (name: string) => LineType;
+    };
+    const names = Object.keys(LineType).filter((key) => Number.isNaN(Number(key)));
+    names.forEach((name) => {
+      expect(style.convertStringToLineType(name)).toBe(LineType[name as keyof typeof LineType]);
+    });
+    expect(() => style.convertStringToLineType('ZIGZAG')).toThrow('Unknown connection style');
   });
 
   it('fails on an unknown topic type', () => {

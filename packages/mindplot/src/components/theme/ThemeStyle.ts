@@ -416,6 +416,8 @@ export class ThemeStyle {
         return LineType.POLYLINE_MIDDLE;
       case 'POLYLINE_CURVED':
         return LineType.POLYLINE_CURVED;
+      case 'POLYLINE_STRAIGHT':
+        return LineType.POLYLINE_STRAIGHT;
       case 'THICK_CURVED':
         return LineType.THICK_CURVED;
       case 'THICK_CURVED_ORGANIC':
