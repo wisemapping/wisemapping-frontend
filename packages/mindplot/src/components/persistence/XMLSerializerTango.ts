@@ -17,7 +17,7 @@
  */
 import { Point } from '@wisemapping/web2d';
 import { $assert } from '../util/assert';
-import { createDocument } from '../util/DOMUtils';
+import { createDocument } from './XmlDocument';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import type NodeModel from '../model/NodeModel';

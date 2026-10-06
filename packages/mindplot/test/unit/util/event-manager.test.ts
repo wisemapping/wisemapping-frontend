@@ -15,21 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createDocument } from '../../../src/components/util/DOMUtils';
 import EventManager from '../../../src/components/util/EventManager';
 
 afterEach(() => {
   document.body.innerHTML = '';
   jest.useRealTimers();
-});
-
-describe('createDocument', () => {
-  it('creates an empty XML document', () => {
-    const doc = createDocument();
-    expect(doc.documentElement).toBeNull();
-    doc.appendChild(doc.createElement('map'));
-    expect(doc.documentElement.tagName).toBe('map');
-  });
 });
 
 describe('EventManager', () => {

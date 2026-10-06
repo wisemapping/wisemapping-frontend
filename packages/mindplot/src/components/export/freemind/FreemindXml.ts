@@ -17,7 +17,7 @@
  */
 
 import { $assert } from '../../util/assert';
-import { createDocument } from '../../util/DOMUtils';
+import { createDocument } from '../../persistence/XmlDocument';
 import type { Attributes, FreemindElement, FreemindMap, FreemindNode } from './FreemindModel';
 import {
   ARROWLINK_ATTRIBUTES,

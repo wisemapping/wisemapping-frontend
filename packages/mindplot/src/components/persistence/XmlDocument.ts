@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-/** A new, empty XML document. */
+/** A new, empty XML document, for the XML serializers and the Freemind export to fill. */
 export const createDocument = (): Document => {
   const doc: Document | null = window.document.implementation?.createDocument('', '', null) ?? null;
 
