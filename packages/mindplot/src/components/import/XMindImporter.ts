@@ -19,45 +19,35 @@
 /**
  * XMind Importer for WiseMapping
  *
- * This importer provides comprehensive support for importing XMind mind maps into WiseMapping format.
- * It handles both XMind XML format (legacy) and XMind JSON format (modern) files.
+ * Imports the first sheet with a root topic of an XMind map. It reads both formats XMind writes:
+ * the JSON one (`content.json`, XMind Zen and later) and the legacy XML one (`content.xml`, XMind 8
+ * and earlier), from the XMind ZIP archive or from the content itself. See README-XMind.md.
  *
- * ## Supported XMind Features:
+ * ## What is imported
  *
- * ### 📝 Content Mapping:
- * - **Topics**: All topic hierarchies are preserved with proper parent-child relationships
- * - **Notes**: XMind notes are converted to WiseMapping notes with rich HTML support
- * - **Labels**: XMind labels (categorization tags) are preserved as `🏷️ label-name`
- * - **Markers**: XMind markers (visual indicators) are preserved as `🔖 marker-name`
- * - **Icons**: XMind markers are mapped to WiseMapping emoji icons, or to SVG icons (task progress, flags)
+ * - **Topics**: attached topics keep their hierarchy; detached topics become floating topics at
+ *   their XMind position.
+ * - **Markers** (`markers[].markerId`, `<marker-refs><marker-ref marker-id>`): icons, through
+ *   XMIND_MARKER_SVG_ICONS (task progress, flags, pie chart) or else XMIND_MARKER_EMOJIS.
+ * - **Notes** (`notes.plain.content`, `<notes><plain>`): a plain text note.
+ * - **Labels** (`labels`, `<labels><label>`): added to the note as `🏷️ label`.
+ * - **Links** (`href`, `xlink:href`): links, but not to a topic (`xmind:`) or attachment (`xap:`).
+ * - **Relationships**: between two imported topics.
+ * - **Fill color** (`svg:fill`, JSON only): the background and the border color of the topic.
+ * - **Layout**: tree-like structure classes import as a `tree` map, the others as `mindmap`.
  *
- * ### 🎨 Styling Support:
- * - **Background Colors**: XMind `svg:fill` colors are mapped to WiseMapping `bgColor`
- * - **Border Colors**: XMind border colors are mapped to WiseMapping `brColor`
- * - **Topic Shapes**: All topics use `shape="line"` for consistent appearance
- * - **Positioning**: Intelligent circular positioning for child topics
+ * Attached topics are laid out again (alternating sides in a mind map, to the right in a tree),
+ * all topics use the line shape and the map the prism theme. Ids are incremental, so the same file
+ * always imports the same. Boundaries, summaries, images, numbering, relationship titles, the other
+ * styles and the other sheets are not imported.
  *
- * ### 📊 Data Integrity:
- * - **Deterministic IDs**: Incremental ID generation ensures consistent import results
- * - **No Data Loss**: All XMind metadata is preserved and converted appropriately
- * - **Single Note Constraint**: Multiple XMind elements (notes, labels, markers) are intelligently
- *   combined into a single WiseMapping note to respect architectural constraints
+ * ## Note content
  *
- * ### 🔄 Format Support:
- * - **XMind XML**: Legacy XMind format with `<notes><plain>` and `<markers>` elements
- * - **XMind JSON**: Modern XMind format with `labels` arrays and style properties
- * - **ZIP Archives**: Both formats are extracted from XMind ZIP file structure
- *
- * ## Note Content Strategy:
- *
- * When a topic has multiple XMind elements, they're combined into one WiseMapping note:
+ * WiseMapping has one note per topic, so the XMind note and the labels are combined:
  * ```
  * [XMind Note Content]
- * 🔖 marker1, 🔖 marker2
  * 🏷️ label1, 🏷️ label2
  * ```
- *
- * This ensures maximum data preservation while respecting WiseMapping's single-note-per-topic limitation.
  *
  * ## Example Usage:
  * ```typescript
