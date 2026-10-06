@@ -451,6 +451,11 @@ class Canvas {
               return;
             }
             isPrimaryPress = button === 0;
+            if (button === 1) {
+              // A middle press starts the browser's autoscroll (Chrome on Windows and Linux),
+              // which would take the moves of the pan. A left press is left to the browser.
+              event.preventDefault();
+            }
           }
 
           mWorkspace.enableWorkspaceEvents(false);

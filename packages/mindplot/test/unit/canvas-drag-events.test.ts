@@ -319,6 +319,23 @@ describe('Canvas drag (pan) events', () => {
       expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
     });
 
+    it('a middle press is kept from the browser, so that it starts no autoscroll', () => {
+      const press = mouseEvent('mousedown', 10, 10, { button: 1, buttons: 4 });
+      container.dispatchEvent(press);
+      document.body.dispatchEvent(mouseEvent('mouseup', 10, 10, { button: 1 }));
+
+      // Before: Chrome on Windows and Linux started its autoscroll, and took the moves.
+      expect(press.defaultPrevented).toBe(true);
+    });
+
+    it('a left press is left to the browser, as before', () => {
+      const press = mouseEvent('mousedown', 10, 10, { button: 0, buttons: 1 });
+      container.dispatchEvent(press);
+      document.body.dispatchEvent(mouseEvent('mouseup', 10, 10));
+
+      expect(press.defaultPrevented).toBe(false);
+    });
+
     it('the back and forward buttons do not pan', () => {
       expect(pressMoveRelease({ button: 3 }).panned).toBe(false);
       expect(pressMoveRelease({ button: 4 }).panned).toBe(false);
