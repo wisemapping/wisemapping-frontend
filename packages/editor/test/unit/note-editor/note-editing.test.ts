@@ -528,6 +528,50 @@ describe('Pasting Markdown', () => {
     caretAt(root, 0);
     expect(paste({ 'text/plain': 'just text' }).defaultPrevented).toBe(false);
     expect(paste({ 'text/plain': '- a', 'text/html': '<b>a</b>' }).defaultPrevented).toBe(false);
+    // A rich copy of a list, with its Markdown as text (as Notion copies it).
+    expect(
+      paste({ 'text/plain': '- a\n- b', 'text/html': '<ul><li>a</li><li>b</li></ul>' })
+        .defaultPrevented,
+    ).toBe(false);
+    // A code block whose markup is not the copied text.
+    expect(paste({ 'text/plain': '- a', 'text/html': '<pre>other</pre>' }).defaultPrevented).toBe(
+      false,
+    );
+    expect(root.innerHTML).toBe('');
+  });
+
+  test('converts Markdown copied from VS Code, which adds its highlighted source as HTML', () => {
+    caretAt(root, 0);
+
+    const event = paste({
+      'text/plain': '- one\n  - **two**\n\n## Plan',
+      'text/html':
+        "<meta charset='utf-8'><div style=\"color: #cccccc;background-color: #1f1f1f;" +
+        "font-family: Menlo, Monaco, 'Courier New', monospace;white-space: pre;\">" +
+        '<div><span style="color: #6796e6;">-</span><span> one</span></div>' +
+        '<div><span>  </span><span style="color: #6796e6;">-</span><span> </span>' +
+        '<span style="color: #569cd6;font-weight: bold;">**two**</span></div>' +
+        '<br><div><span style="color: #569cd6;font-weight: bold;">## Plan</span></div></div>',
+    });
+
+    expect(event.defaultPrevented).toBe(true);
+    expect(root.innerHTML).toBe(
+      '<ul><li>one<ul><li><strong>two</strong></li></ul></li></ul><h2>Plan</h2>',
+    );
+  });
+
+  test('converts Markdown copied as a <pre> block', () => {
+    caretAt(root, 0);
+
+    const event = paste({
+      'text/plain': '1. *first*\r\n2. second',
+      'text/html':
+        '<html><head><style>pre { color: red; }</style></head><body><!--StartFragment-->' +
+        '<pre><code>1. *first*\n2. second</code></pre><!--EndFragment--></body></html>',
+    });
+
+    expect(event.defaultPrevented).toBe(true);
+    expect(root.innerHTML).toBe('<ol><li><em>first</em></li><li>second</li></ol>');
   });
 });
 

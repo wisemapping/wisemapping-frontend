@@ -521,6 +521,36 @@ const insertHtml = (root: HTMLElement, html: string): boolean => {
   return true;
 };
 
+// The elements a code editor wraps copied text in (VS Code: a <div> per line with coloured
+// <span>; others: a <pre>), and those around a copied fragment.
+const PLAIN_RENDERING_TAGS = new Set([
+  'BR',
+  'CODE',
+  'DIV',
+  'FONT',
+  'LINK',
+  'META',
+  'P',
+  'PRE',
+  'SPAN',
+  'STYLE',
+  'TITLE',
+]);
+
+/**
+ * True when the copied markup only shows the copied text, as code editors add it next to the
+ * text: nothing but wrappers, holding the same text (spaces and line breaks aside).
+ */
+const isPlainTextRendering = (html: string, text: string): boolean => {
+  // DOMParser is inert: no scripts run and no images load.
+  const body = new DOMParser().parseFromString(html, 'text/html').body;
+  if (!Array.from(body.querySelectorAll('*')).every((el) => PLAIN_RENDERING_TAGS.has(el.tagName))) {
+    return false;
+  }
+  body.querySelectorAll('style, title').forEach((el) => el.remove());
+  return body.textContent!.replace(/\s/g, '') === text.replace(/\s/g, '');
+};
+
 const openInNewTab = (href: string): void => {
   window.open(href, '_blank', 'noopener,noreferrer');
 };
@@ -708,11 +738,17 @@ export const attachNoteEditing = (root: HTMLElement, options: NoteEditingOptions
 
   const onPaste = (event: ClipboardEvent): void => {
     const data = event.clipboardData;
-    if (!data || data.getData('text/html')) {
+    if (!data) {
       return;
     }
     const text = data.getData('text/plain');
     if (!text || !looksLikeMarkdown(text)) {
+      return;
+    }
+    // Rich content is pasted as it is (the note is sanitized when saved), but not the copy of
+    // Markdown source that code editors add as HTML: its text is converted.
+    const copiedHtml = data.getData('text/html');
+    if (copiedHtml && !isPlainTextRendering(copiedHtml, text)) {
       return;
     }
     event.preventDefault();
