@@ -43,7 +43,43 @@ import type { TopicShapeType } from '../model/INodeModel';
  */
 export const FREEPLANE_ICON_EMOJIS: Readonly<Record<string, string>> = {
   bee: '🐝',
+  // The rating icons (++, +, 0, -, --), as a scale of faces: plus and minus are the math icons.
+  very_positive: '😁',
+  positive: '🙂',
   neutral: '😐',
+  negative: '🙁',
+  very_negative: '😖',
+  addition: '➕',
+  subtraction: '➖',
+  multiplication: '✖️',
+  division: '➗',
+  checked: '☑️',
+  unchecked: '🔲',
+  // An R, in blue, green, pink or red.
+  revision: '🔄',
+  'revision-green': '🔄',
+  'revision-pink': '🔄',
+  'revision-red': '🔄',
+  audio: '🔊',
+  // Reminder.
+  clock2: '⏰',
+  executable: '⚙️',
+  females: '👭',
+  males: '👬',
+  image: '🖼️',
+  internet: '🌐',
+  internet_warning: '⚠️',
+  mindmap: '🧠',
+  narrative: '💬',
+};
+
+/** The Freeplane progress icons, imported as the WiseMapping task icons, as MindManager's are. */
+export const FREEPLANE_SVG_ICONS: Readonly<Record<string, string>> = {
+  '0%': 'task_0',
+  '25%': 'task_25',
+  '50%': 'task_50',
+  '75%': 'task_75',
+  '100%': 'task_100',
 };
 
 class FreeplaneImporter extends Importer {
@@ -272,6 +308,10 @@ class FreeplaneImporter extends Importer {
     const emoji = FreeplaneImporter.emojiOf(builtin);
     if (emoji) {
       return { type: 'eicon', id: emoji };
+    }
+    const svgId = ownEntry(FREEPLANE_SVG_ICONS, builtin);
+    if (svgId) {
+      return { type: 'icon', id: svgId };
     }
     return (
       FreemindIconConverter.toWiseIcon(builtin) || {

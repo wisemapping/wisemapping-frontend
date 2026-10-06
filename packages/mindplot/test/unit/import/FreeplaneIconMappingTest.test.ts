@@ -19,10 +19,15 @@
 import FreemindIconConverter from '../../../src/components/import/FreemindIconConverter';
 import FreeplaneImporter, {
   FREEPLANE_ICON_EMOJIS,
+  FREEPLANE_SVG_ICONS,
 } from '../../../src/components/import/FreeplaneImporter';
+import type { WiseIcon } from '../../../src/components/import/FreemindIconConverter';
 
-// The private icon mapper under test.
-type IconMapper = { mapFreeplaneIconToEmojiIcon(builtin: string): string };
+// The private icon mappers under test.
+type IconMapper = {
+  mapFreeplaneIconToEmojiIcon(builtin: string): string;
+  toWiseIcon(builtin: string): WiseIcon;
+};
 
 /**
  * The Freeplane builtin icons: the SVG files of freeplane/src/viewer/resources/images/icons in
@@ -138,28 +143,71 @@ const FREEPLANE_BUILTIN_ICONS = [
 ];
 
 describe('Freeplane icon mapping', () => {
-  const mapIcon = (builtin: string): string =>
-    (new FreeplaneImporter('') as unknown as IconMapper).mapFreeplaneIconToEmojiIcon(builtin);
+  const mapper = (): IconMapper => new FreeplaneImporter('') as unknown as IconMapper;
+  const mapIcon = (builtin: string): string => mapper().mapFreeplaneIconToEmojiIcon(builtin);
+  const toWiseIcon = (builtin: string): WiseIcon => mapper().toWiseIcon(builtin);
 
   test('lists the 106 Freeplane builtin icons', () => {
     expect(new Set(FREEPLANE_BUILTIN_ICONS).size).toBe(106);
   });
 
+  const mappedNames = [...Object.keys(FREEPLANE_ICON_EMOJIS), ...Object.keys(FREEPLANE_SVG_ICONS)];
+
   test('maps only real Freeplane builtin icons', () => {
-    expect(
-      Object.keys(FREEPLANE_ICON_EMOJIS).filter((name) => !FREEPLANE_BUILTIN_ICONS.includes(name)),
-    ).toEqual([]);
+    expect(mappedNames.filter((name) => !FREEPLANE_BUILTIN_ICONS.includes(name))).toEqual([]);
   });
 
   test('maps only icons that FreemindIconConverter does not map first', () => {
-    expect(
-      Object.keys(FREEPLANE_ICON_EMOJIS).filter((name) => FreemindIconConverter.toWiseIcon(name)),
-    ).toEqual([]);
+    expect(mappedNames.filter((name) => FreemindIconConverter.toWiseIcon(name))).toEqual([]);
   });
 
-  test('maps the Freeplane icons that FreeMind does not have', () => {
-    expect(mapIcon('bee')).toBe('🐝');
-    expect(mapIcon('neutral')).toBe('😐');
+  test.each([
+    ['bee', '🐝'],
+    ['very_positive', '😁'],
+    ['positive', '🙂'],
+    ['neutral', '😐'],
+    ['negative', '🙁'],
+    ['very_negative', '😖'],
+    ['addition', '➕'],
+    ['subtraction', '➖'],
+    ['multiplication', '✖️'],
+    ['division', '➗'],
+    ['checked', '☑️'],
+    ['unchecked', '🔲'],
+    ['revision', '🔄'],
+    ['revision-green', '🔄'],
+    ['revision-pink', '🔄'],
+    ['revision-red', '🔄'],
+    ['audio', '🔊'],
+    ['clock2', '⏰'],
+    ['executable', '⚙️'],
+    ['females', '👭'],
+    ['males', '👬'],
+    ['image', '🖼️'],
+    ['internet', '🌐'],
+    ['internet_warning', '⚠️'],
+    ['mindmap', '🧠'],
+    ['narrative', '💬'],
+  ])('imports the Freeplane icon %p as the emoji %p', (builtin, emoji) => {
+    expect(toWiseIcon(builtin)).toEqual({ type: 'eicon', id: emoji });
+  });
+
+  test.each([
+    ['0%', 'task_0'],
+    ['25%', 'task_25'],
+    ['50%', 'task_50'],
+    ['75%', 'task_75'],
+    ['100%', 'task_100'],
+  ])('imports the Freeplane progress icon %p as the task icon %p', (builtin, svgId) => {
+    expect(toWiseIcon(builtin)).toEqual({ type: 'icon', id: svgId });
+  });
+
+  test('maps every Freeplane builtin icon but the user icons folder', () => {
+    const unmapped = FREEPLANE_BUILTIN_ICONS.filter(
+      (name) => !FreemindIconConverter.toWiseIcon(name) && !mappedNames.includes(name),
+    );
+    expect(unmapped).toEqual(['user_icon']);
+    expect(toWiseIcon('user_icon')).toEqual({ type: 'eicon', id: '💡' });
   });
 
   test('no longer maps names that are not Freeplane icons', () => {
