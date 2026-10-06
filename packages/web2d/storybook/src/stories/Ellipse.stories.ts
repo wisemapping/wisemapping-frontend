@@ -33,10 +33,6 @@ export default {
       control: { type: 'select' },
       options: [0, 1, 2, 4, 5],
     },
-    arc: {
-      control: { type: 'select' },
-      options: [0, 0.2, 0.5, 0.8, 1],
-    },
     onClick: { action: 'onClick' },
     size: {
       control: { type: 'select' },

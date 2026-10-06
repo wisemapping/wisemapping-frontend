@@ -30,7 +30,6 @@ export type ShapeArgs = {
   strokeStyle: StrokeStyle;
   /** JSON '{ "width": <number>, "height": <number> }', one of the select options. */
   size: string;
-  arc?: number;
 };
 
 export const createEllipse = ({
@@ -48,8 +47,6 @@ export const createEllipse = ({
   workspace.setCoordSize(300, 300);
   workspace.setCoordOrigin(-150, -150);
 
-  // An ellipse has no arc: the JavaScript story passed `arc` as the attribute bag, which spread
-  // nothing, so the arc control has never had an effect.
   const rect = new Ellipse();
   rect.setFill(backgroundColor);
 
