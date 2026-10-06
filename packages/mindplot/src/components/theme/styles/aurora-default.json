@@ -16,30 +16,9 @@
   },
   "MainTopic": {
     "msgKey": "MAIN_TOPIC",
-    "borderColor": [
-      "#F86D70",
-      "#F8A133",
-      "#F7E733",
-      "#5AE88C",
-      "#42DBE7",
-      "#7A78FF"
-    ],
-    "connectionColor": [
-      "#F86D70",
-      "#F8A133",
-      "#F7E733",
-      "#5AE88C",
-      "#42DBE7",
-      "#7A78FF"
-    ],
-    "backgroundColor": [
-      "#2D2749",
-      "#2E2D57",
-      "#2A3268",
-      "#1F3A6D",
-      "#123C6E",
-      "#0F3E64"
-    ],
+    "borderColor": ["#F86D70", "#F8A133", "#F7E733", "#5AE88C", "#42DBE7", "#7A78FF"],
+    "connectionColor": ["#F86D70", "#F8A133", "#F7E733", "#5AE88C", "#42DBE7", "#7A78FF"],
+    "backgroundColor": ["#2D2749", "#2E2D57", "#2A3268", "#1F3A6D", "#123C6E", "#0F3E64"],
     "fontFamily": "'Inter', 'Segoe UI', Verdana, sans-serif",
     "fontSize": 10,
     "fontStyle": "normal",

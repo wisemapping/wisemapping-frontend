@@ -20,33 +20,13 @@
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "strictFunctionTypes": true,
-    "rootDirs": [
-      "src",
-      "../web2d/src"
-    ],
-    "types": [
-      "vite/client",
-      "jest",
-      "node",
-      "react",
-      "react-dom"
-    ],
+    "rootDirs": ["src", "../web2d/src"],
+    "types": ["vite/client", "jest", "node", "react", "react-dom"],
     "paths": {
-      "@wisemapping/web2d": [
-        "../web2d/src/index.ts"
-      ],
-      "@wisemapping/web2d/*": [
-        "../web2d/src/*"
-      ]
+      "@wisemapping/web2d": ["../web2d/src/index.ts"],
+      "@wisemapping/web2d/*": ["../web2d/src/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "test/**/*"
-  ],
-  "exclude": [
-    "./node_modules",
-    "./dist",
-    "storybook/**/*"
-  ]
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["./node_modules", "./dist", "storybook/**/*"]
 }

@@ -7,30 +7,9 @@
     "outerBorderColor": "#A17CFF"
   },
   "MainTopic": {
-    "backgroundColor": [
-      "#FCE4EC",
-      "#FFEAD7",
-      "#FFF8D5",
-      "#D0F7E5",
-      "#D4F6FF",
-      "#E6E4FF"
-    ],
-    "borderColor": [
-      "#F86D70",
-      "#F8A133",
-      "#F7E733",
-      "#5AE88C",
-      "#42DBE7",
-      "#7A78FF"
-    ],
-    "connectionColor": [
-      "#F86D70",
-      "#F8A133",
-      "#F7E733",
-      "#5AE88C",
-      "#42DBE7",
-      "#7A78FF"
-    ],
+    "backgroundColor": ["#FCE4EC", "#FFEAD7", "#FFF8D5", "#D0F7E5", "#D4F6FF", "#E6E4FF"],
+    "borderColor": ["#F86D70", "#F8A133", "#F7E733", "#5AE88C", "#42DBE7", "#7A78FF"],
+    "connectionColor": ["#F86D70", "#F8A133", "#F7E733", "#5AE88C", "#42DBE7", "#7A78FF"],
     "fontColor": "#080B22",
     "outerBackgroundColor": "#FFFFFF",
     "outerBorderColor": "#C8C1FF"

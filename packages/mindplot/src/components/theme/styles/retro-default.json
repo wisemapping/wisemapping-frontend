@@ -16,30 +16,9 @@
   },
   "MainTopic": {
     "msgKey": "MAIN_TOPIC",
-    "borderColor": [
-      "#FF4FD8",
-      "#FF8F5C",
-      "#00F0FF",
-      "#6A5BFF",
-      "#FFC95C",
-      "#4DEB8F"
-    ],
-    "connectionColor": [
-      "#FF4FD8",
-      "#FF8F5C",
-      "#00F0FF",
-      "#6A5BFF",
-      "#FFC95C",
-      "#4DEB8F"
-    ],
-    "backgroundColor": [
-      "#39005B",
-      "#3F006B",
-      "#002F5F",
-      "#072E63",
-      "#51144E",
-      "#004050"
-    ],
+    "borderColor": ["#FF4FD8", "#FF8F5C", "#00F0FF", "#6A5BFF", "#FFC95C", "#4DEB8F"],
+    "connectionColor": ["#FF4FD8", "#FF8F5C", "#00F0FF", "#6A5BFF", "#FFC95C", "#4DEB8F"],
+    "backgroundColor": ["#39005B", "#3F006B", "#002F5F", "#072E63", "#51144E", "#004050"],
     "fontFamily": "'Space Grotesk', 'Montserrat', 'Segoe UI', sans-serif",
     "fontSize": 10,
     "fontStyle": "normal",

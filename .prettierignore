@@ -4,6 +4,9 @@ dist
 lang
 coverage
 *.json
+# ... but these are formatted, and lint-staged checks them.
+!packages/mindplot/tsconfig.json
+!packages/mindplot/src/components/theme/styles/*.json
 # Test fixtures and goldens: tests compare against their exact bytes, so formatting them breaks the tests.
 packages/*/test/**/expected/
 packages/*/test/**/input/
