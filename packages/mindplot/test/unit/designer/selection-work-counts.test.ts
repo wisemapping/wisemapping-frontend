@@ -222,13 +222,13 @@ describe('Selection work', () => {
     expect(reads).toBeLessThan(10 * TOPICS);
   });
 
-  it('a Ctrl or Cmd click keeps the selection', async () => {
+  it('a click with the shortcut modifier keeps the selection', async () => {
     const { designer } = await buildDesigner(buildMediumMap({ topics: 50 }));
     designer.selectAll();
     const fired = countEvents(designer);
 
+    // Ctrl, as jsdom is not a Mac (Cmd there: see designer-selection-events) ...
     designer.onObjectFocusEvent(undefined, new MouseEvent('click', { ctrlKey: true }));
-    designer.onObjectFocusEvent(undefined, new MouseEvent('click', { metaKey: true }));
 
     expect(designer.getModel().countSelectedTopics()).toBe(50);
     expect(fired).toEqual({ onfocus: 0, onblur: 0, topicSelected: 0, topicUnselected: 0 });

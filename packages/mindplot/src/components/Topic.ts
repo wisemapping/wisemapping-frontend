@@ -23,7 +23,7 @@ import type {
   ElementPeer,
 } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
-import isMacPlatform from './util/platform';
+import { hasShortcutModifier } from './util/platform';
 
 import type { NodeOption } from './NodeGraph';
 import NodeGraph from './NodeGraph';
@@ -726,11 +726,10 @@ abstract class Topic extends NodeGraph {
     // Focus events ...
     elem.addEvent('mousedown', (event: Event) => {
       const mouseEvent = event as MouseEvent;
-      const isMac = isMacPlatform();
       if (!me.isReadOnly()) {
         // Disable topic selection of readOnly mode ...
         let value = true;
-        if ((mouseEvent.metaKey && isMac) || (mouseEvent.ctrlKey && !isMac)) {
+        if (hasShortcutModifier(mouseEvent)) {
           value = !me.isOnFocus();
           mouseEvent.stopPropagation();
           mouseEvent.preventDefault();

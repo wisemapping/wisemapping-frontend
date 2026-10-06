@@ -167,6 +167,59 @@ describe('Designer selection events on a click', () => {
   });
 });
 
+describe('Designer selection on a click with a modifier', () => {
+  /*
+   * The multi-selection modifier is the platform's shortcut key, as for every other shortcut:
+   * Cmd on a Mac, Ctrl elsewhere. A Mac shows a context menu on Ctrl-click (the right click of a
+   * one-button mouse), so there it is a plain click, as the Windows key is elsewhere. The topic
+   * and the designer decide it together: the topic whether to toggle, the designer whether to keep
+   * the rest of the selection.
+   */
+  const onPlatform = (platform: string) => {
+    Object.defineProperty(window.navigator, 'platform', { value: platform, configurable: true });
+  };
+
+  afterEach(() => {
+    // Back to the jsdom getter, on Navigator.prototype.
+    delete (window.navigator as { platform?: string }).platform;
+  });
+
+  it('a Cmd click on a Mac adds a topic and a second one removes it', async () => {
+    onPlatform('MacIntel');
+    const { designer, mouseDown, topic } = await open();
+    mouseDown(1);
+
+    mouseDown(3, { metaKey: true });
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(1), topic(3)]);
+
+    mouseDown(3, { metaKey: true });
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(1)]);
+  });
+
+  it('a Ctrl click on a Mac is a plain click: it selects that topic alone', async () => {
+    onPlatform('MacIntel');
+    const { designer, events, mouseDown, topic } = await open();
+    mouseDown(1);
+    events.splice(0);
+
+    mouseDown(3, { ctrlKey: true });
+
+    // Before: topic 1 stayed selected, and a second Ctrl click could not unselect topic 3.
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(3)]);
+    expect(events).toEqual(['onfocus:1']);
+  });
+
+  it('a click with the Windows key elsewhere is a plain click: it selects that topic alone', async () => {
+    onPlatform('Win32');
+    const { designer, mouseDown, topic } = await open();
+    mouseDown(1);
+
+    mouseDown(3, { metaKey: true });
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(3)]);
+  });
+});
+
 describe('Designer selection events on the keyboard', () => {
   const move = (designer: Harness['designer'], direction: 'LEFT' | 'RIGHT' | 'UP' | 'DOWN') => {
     const keyboard = Object.create(DesignerKeyboard.prototype);

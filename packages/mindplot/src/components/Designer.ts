@@ -73,6 +73,7 @@ import type Theme from './theme/Theme';
 import type ChangeEvent from './layout/ChangeEvent';
 import type { ModelUpdateEvent } from './DesignerUndoManager';
 import HTMLTopicSelected from './HTMLTopicSelected';
+import { hasShortcutModifier } from './util/platform';
 
 /**
  * The zoom range, in workspace units per screen pixel, shared by setZoom(), zoomIn() (down to
@@ -427,9 +428,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   /**
    * Changes the selection for a mousedown on a topic, as one change: the topic is selected, or
-   * toggled by a Ctrl or Cmd click (`focus`), and a plain click unselects every other entity. The
-   * editor gets one event, with the selection the click leaves. Called by the topic's mousedown
-   * handler.
+   * toggled by a Cmd click on a Mac or a Ctrl click elsewhere (`focus`), and a plain click
+   * unselects every other entity. The editor gets one event, with the selection the click leaves.
+   * Called by the topic's mousedown handler.
    */
   selectOnClick(topic: Topic, focus: boolean, event: MouseEvent): void {
     this._batchSelection(() => {
@@ -442,8 +443,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // Close node editors ..
     this.closeNodeEditors();
 
-    // Disable all nodes on focus but not the current if Ctrl key isn't being pressed
-    if (event == null || (!event.ctrlKey && !event.metaKey)) {
+    // Unselect every other entity, unless the shortcut modifier (Cmd on a Mac, Ctrl elsewhere)
+    // is held: the same key the topic toggles its selection on ...
+    if (event == null || !hasShortcutModifier(event)) {
       this._setFocusOfAll(false, currentObject);
     }
   }
