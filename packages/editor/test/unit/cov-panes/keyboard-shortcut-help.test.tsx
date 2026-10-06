@@ -127,6 +127,20 @@ describe('KeyboardShortcutsHelp', () => {
     expect(row?.lastElementChild?.textContent).toBe('Ctrl+drag topic');
   });
 
+  it('shows Cmd+drag for disconnecting a topic on a Mac, as the canvas reads it', () => {
+    isMacPlatform.mockReturnValue(true);
+    renderPane(<KeyboardShortcutsHelp />);
+    const editing = SHORTCUT_CATEGORIES.findIndex((category) =>
+      category.shortcuts.some((s) => s.message.id === 'shortcut-help-pane.drag-disconnect'),
+    );
+
+    fireEvent.click(screen.getAllByRole('tab')[editing]);
+
+    const row = bodyRows().find((r) => r.textContent?.startsWith('Disconnect topic'));
+    // The drag reads hasShortcutModifier(): Cmd on a Mac, where a Ctrl press is the right click.
+    expect(row?.lastElementChild?.textContent).toBe('⌘+drag topic');
+  });
+
   it('shows Cmd-click for selecting multiple topics on a Mac, as the canvas reads it', () => {
     isMacPlatform.mockReturnValue(true);
     renderPane(<KeyboardShortcutsHelp />);
