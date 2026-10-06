@@ -1,5 +1,9 @@
 import js from '@eslint/js';
 import globals from 'globals';
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
+
+// The Vercel functions at the root: the sitemap serverless function and the Edge middleware.
+const vercelFiles = ['api/**/*.ts', 'middleware.ts'];
 
 export default [
   js.configs.recommended,
@@ -16,6 +20,16 @@ export default [
     },
     rules: {
       'implicit-arrow-linebreak': 'off',
+    },
+  },
+  ...typescriptEslint.configs['flat/recommended'].map((config) => ({
+    ...config,
+    files: vercelFiles,
+  })),
+  {
+    files: vercelFiles,
+    languageOptions: {
+      ecmaVersion: 2022,
     },
   },
   {

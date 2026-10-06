@@ -18,8 +18,9 @@
   "scripts": {
     "build": "lerna run build",
     "clean": "lerna run clean --parallel && lerna clean --yes && rm -rf node_modules && yarn install",
-    "lint": "lerna run lint --stream",
-    "lint:fix": "lerna run lint:fix --stream",
+    "lint": "lerna run lint --stream && yarn lint:root",
+    "lint:fix": "lerna run lint:fix --stream && eslint api middleware.ts --fix",
+    "lint:root": "eslint api middleware.ts && tsc -p tsconfig.root.json",
     "playground": "lerna run playground --stream",
     "prepare": "husky",
     "test": "lerna run test --stream",
@@ -65,6 +66,7 @@
       "prettier --check"
     ],
     "{api/**/*,middleware}.ts": [
+      "eslint",
       "prettier --check"
     ],
     "**/*.{mjs,cjs,mts,cts,css,html}": [
