@@ -476,16 +476,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
   protected _deserializeNode(domElem: Element, mindmap: Mindmap): NodeModel {
     const type = domElem.getAttribute('central') != null ? 'CentralTopic' : 'MainTopic';
 
-    // Load attributes...
-    let id: number | undefined;
-    const idStr = domElem.getAttribute('id');
-    if (idStr) {
-      id = Number.parseInt(idStr, 10);
-    }
+    // Load attributes... A non-numeric id is missing.
+    let id = Number.parseInt(domElem.getAttribute('id') ?? '', 10);
 
     // A missing or duplicated id gets a new one, that no topic of the document has: the next
     // generated one may be the id of a topic further down, which relationships point to ...
-    if (id === undefined || this._idsMap[id] !== undefined) {
+    if (!Number.isFinite(id) || this._idsMap[id] !== undefined) {
       do {
         id = INodeModel._nextUUID();
       } while (this._documentIds.has(id) || this._idsMap[id] !== undefined);

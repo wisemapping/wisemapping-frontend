@@ -214,4 +214,21 @@ describe('XMLSerializerTango map attributes', () => {
     expect(element.getAttribute('name')).toBe('map');
     expect(roundTrip(mindmap).getDescription()).toBe('');
   });
+
+  it('gives a topic with a non-numeric id a new id, as if it had none (BL5-220)', () => {
+    const next = INodeModel._nextUUID() + 1;
+    const mindmap = load(
+      map(
+        '<topic id="abc" text="not a number"/><topic id="" text="empty"/>' +
+          `<topic id="${next}" text="a"/>`,
+      ),
+    );
+    const ids = mindmap
+      .getCentralTopic()!
+      .getChildren()
+      .map((child) => child.getId());
+    expect(ids.every((id) => Number.isInteger(id))).toBe(true);
+    expect(new Set(ids).size).toBe(3);
+    expect(mindmap.findNodeById(next)!.getText()).toBe('a');
+  });
 });
