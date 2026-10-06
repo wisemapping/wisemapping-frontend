@@ -123,6 +123,27 @@ describe('XMindImporter (JSON format) content', () => {
       'task_100',
     ]);
   });
+
+  // The topic of xmind-sdk-js (src/common/model.ts) has markers and labels, but no icons.
+  test('ignores icons, which is not an XMind topic field (BL5-243)', async () => {
+    const topic = {
+      id: 'root',
+      title: 'Root',
+      notes: { plain: { content: 'The note' } },
+      labels: ['Label'],
+      icons: ['priority-1'],
+      markers: [{ markerId: 'priority-2', groupId: 'priorityMarkers' }],
+    };
+    const mindmap = loadMindmap(
+      await new XMindImporter(
+        JSON.stringify([{ id: 'sheet1', class: 'sheet', rootTopic: topic }]),
+      ).import('test'),
+    );
+
+    const root = findByText(mindmap, 'Root');
+    expect(noteOf(root)).toBe('The note\n🏷️ Label');
+    expect(iconsOf(root)).toEqual(['🟡']);
+  });
 });
 
 describe('XMindImporter (XML format) content', () => {

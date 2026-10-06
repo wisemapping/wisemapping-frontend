@@ -103,7 +103,6 @@ interface XMindTopic {
     };
   };
   labels?: string[];
-  icons?: string[];
   href?: string;
 }
 
@@ -875,8 +874,7 @@ class XMindImporter extends Importer {
       topic.setBorderColor(borderColor);
     }
 
-    // Add icons if present (mapped to EmojiIcons). XMind Zen writes them as markers.
-    jsonTopic.icons?.forEach((icon) => this.addIcon(topic, icon));
+    // The markers are the icons of a topic.
     jsonTopic.markers?.forEach((marker) => {
       if (marker.markerId) {
         this.addIcon(topic, marker.markerId);
@@ -912,17 +910,6 @@ class XMindImporter extends Importer {
     const noteText = topic.notes?.plain?.content;
     if (noteText && noteText.trim()) {
       parts.push(noteText);
-    }
-
-    // Add icons if present (mapped to appropriate emojis)
-    if (topic.icons && topic.icons.length > 0) {
-      const formattedIcons = topic.icons
-        .map((icon) => {
-          const emoji = this.mapXMindIconToEmojiIcon(icon);
-          return `${emoji} ${icon}`;
-        })
-        .join(', ');
-      parts.push(formattedIcons);
     }
 
     // Add labels if present (at the bottom)
