@@ -107,7 +107,7 @@ class FreeplaneImporter extends Importer {
     // Process child nodes
     const childNodes = rootNode.querySelectorAll(':scope > node');
     childNodes.forEach((childNode, index) => {
-      centralTopic.append(this.convertNode(mindmap, childNode as Element, index));
+      centralTopic.append(this.convertNode(mindmap, childNode, index));
     });
 
     this.addRelationships(mindmap, rootNode);
@@ -137,7 +137,7 @@ class FreeplaneImporter extends Importer {
     // Process child nodes recursively
     const childNodes = freeplaneNode.querySelectorAll(':scope > node');
     childNodes.forEach((childNode, childIndex) => {
-      topic.append(this.convertNode(mindmap, childNode as Element, childIndex));
+      topic.append(this.convertNode(mindmap, childNode, childIndex));
     });
 
     return topic;
@@ -314,7 +314,7 @@ class FreeplaneImporter extends Importer {
     // Find all arrowlink elements in the document
     const arrowlinks = rootNode.ownerDocument?.querySelectorAll('arrowlink') || [];
     arrowlinks.forEach((arrowlink) => {
-      this.addRelationship(mindmap, arrowlink as Element);
+      this.addRelationship(mindmap, arrowlink);
     });
   }
 

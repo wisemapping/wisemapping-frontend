@@ -123,7 +123,7 @@ class OPMLImporter extends Importer {
     // Handle child outlines
     const childOutlines = outlineElement.querySelectorAll(':scope > outline');
     childOutlines.forEach((childOutline, index) => {
-      const childWiseNode = this.convertOutline(childOutline as Element, mindmap, node, index);
+      const childWiseNode = this.convertOutline(childOutline, mindmap, node, index);
       node.append(childWiseNode);
     });
 

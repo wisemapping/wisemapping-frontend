@@ -184,47 +184,47 @@ export class ThemeStyle {
   private loadStylesByFilename(filename: string): JsonThemeStyles {
     switch (filename) {
       case 'prism-default.json':
-        return prismDefault as JsonThemeStyles;
+        return prismDefault;
       case 'prism-light.json':
-        return prismLight as JsonThemeStyles;
+        return prismLight;
       case 'prism-dark.json':
-        return prismDark as JsonThemeStyles;
+        return prismDark;
       case 'classic-default.json':
-        return classicDefault as JsonThemeStyles;
+        return classicDefault;
       case 'classic-light.json':
-        return classicLight as JsonThemeStyles;
+        return classicLight;
       case 'classic-dark.json':
-        return classicDark as JsonThemeStyles;
+        return classicDark;
       case 'robot-default.json':
-        return robotDefault as JsonThemeStyles;
+        return robotDefault;
       case 'robot-light.json':
-        return robotLight as JsonThemeStyles;
+        return robotLight;
       case 'robot-dark.json':
-        return robotDark as JsonThemeStyles;
+        return robotDark;
       case 'sunrise-default.json':
-        return sunriseDefault as JsonThemeStyles;
+        return sunriseDefault;
       case 'sunrise-light.json':
-        return sunriseLight as JsonThemeStyles;
+        return sunriseLight;
       case 'sunrise-dark.json':
-        return sunriseDark as JsonThemeStyles;
+        return sunriseDark;
       case 'ocean-default.json':
-        return oceanDefault as JsonThemeStyles;
+        return oceanDefault;
       case 'ocean-light.json':
-        return oceanLight as JsonThemeStyles;
+        return oceanLight;
       case 'ocean-dark.json':
-        return oceanDark as JsonThemeStyles;
+        return oceanDark;
       case 'aurora-default.json':
-        return auroraDefault as JsonThemeStyles;
+        return auroraDefault;
       case 'aurora-light.json':
         return auroraLight as JsonThemeStyles;
       case 'aurora-dark.json':
-        return auroraDark as JsonThemeStyles;
+        return auroraDark;
       case 'retro-default.json':
         return retroDefault as JsonThemeStyles;
       case 'retro-light.json':
-        return retroLight as JsonThemeStyles;
+        return retroLight;
       case 'retro-dark.json':
-        return retroDark as JsonThemeStyles;
+        return retroDark;
       default:
         console.warn(`Unknown style file: ${filename}`);
         return {};
@@ -292,7 +292,7 @@ export class ThemeStyle {
       const mergedStyle: TopicStyleType = {
         ...baseStyle,
         ...variantConverted,
-      } as TopicStyleType;
+      };
 
       result.set(topicType, mergedStyle);
     });

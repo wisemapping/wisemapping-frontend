@@ -133,6 +133,19 @@ export default defineConfig([
         },
     },
     {
+        // Type-aware rules, for src only: they need the TypeScript program.
+        files: ["src/**/*.ts"],
+        languageOptions: {
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: __dirname,
+            },
+        },
+        rules: {
+            "@typescript-eslint/no-unnecessary-type-assertion": "error",
+        },
+    },
+    {
         files: ["test/**/*.ts"],
         rules: {
             // Test doubles (mock classes) live next to the test that uses them.

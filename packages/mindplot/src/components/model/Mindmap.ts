@@ -247,7 +247,7 @@ class Mindmap extends IMindmap {
 
       const children = node.getChildren();
       children.forEach((child) => {
-        calculateNodeDepth(child as NodeModel, currentDepth + 1);
+        calculateNodeDepth(child, currentDepth + 1);
       });
     };
 

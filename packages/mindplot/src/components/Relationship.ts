@@ -203,7 +203,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     const destCustom = line2d.isDestControlPointCustom();
     if (!destCustom && !srcCustom) {
       // Use default control points and basic connection points
-      ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos) as [PositionType, PositionType];
+      ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos);
       line2d.setFrom(sPos.x, sPos.y);
       line2d.setTo(tPos.x, tPos.y);
     } else {

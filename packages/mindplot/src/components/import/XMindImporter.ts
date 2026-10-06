@@ -446,7 +446,7 @@ class XMindImporter extends Importer {
       }
     }
 
-    const normalized = this.normalizeToUint8Array(this.xmindInput as ArrayBuffer | Uint8Array);
+    const normalized = this.normalizeToUint8Array(this.xmindInput);
     const decoded = this.tryDecodeToString(normalized);
 
     if (decoded) {
@@ -557,12 +557,12 @@ class XMindImporter extends Importer {
         return sheet;
       }
     } else if (parsed && typeof parsed === 'object') {
-      if ('rootTopic' in parsed && (parsed as XMindSheet).rootTopic) {
-        return parsed as XMindSheet;
+      if ('rootTopic' in parsed && parsed.rootTopic) {
+        return parsed;
       }
 
       if ('sheets' in parsed) {
-        const candidate = (parsed as { sheets?: XMindSheet[] }).sheets;
+        const candidate = parsed.sheets;
         if (candidate && Array.isArray(candidate)) {
           const sheet = this.pickSheet(candidate);
           if (sheet) {

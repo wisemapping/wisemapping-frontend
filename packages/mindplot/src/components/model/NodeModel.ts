@@ -123,7 +123,7 @@ class NodeModel extends INodeModel {
   clone(): NodeModel {
     const result = new NodeModel(this.getType(), this._mindmap);
     result._children = this._children.map((node) => {
-      const cnode = node.clone() as NodeModel;
+      const cnode = node.clone();
       cnode._parent = result;
       return cnode;
     });
@@ -140,7 +140,7 @@ class NodeModel extends INodeModel {
   deepCopy(mindmap: Mindmap = this._mindmap): NodeModel {
     const result = new NodeModel(this.getType(), mindmap);
     result._children = this._children.map((node) => {
-      const cnode = (node as NodeModel).deepCopy(mindmap);
+      const cnode = node.deepCopy(mindmap);
       cnode._parent = result;
       return cnode;
     });

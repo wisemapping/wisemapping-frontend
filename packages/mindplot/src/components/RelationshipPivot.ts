@@ -70,10 +70,7 @@ class RelationshipPivot {
     const tPos = targetPos;
 
     // Use the same control point calculation as Relationship
-    const ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos) as [
-      PositionType,
-      PositionType,
-    ];
+    const ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos);
 
     this._pivot.setFrom(sPos.x, sPos.y);
     this._pivot.setTo(tPos.x, tPos.y);
@@ -151,10 +148,7 @@ class RelationshipPivot {
     const tPos = pos;
 
     // Use the same control point calculation as Relationship
-    const ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos) as [
-      PositionType,
-      PositionType,
-    ];
+    const ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos);
 
     // Update pivot line with curved control points
     this._pivot!.setFrom(sPos.x, sPos.y);

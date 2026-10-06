@@ -345,7 +345,7 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
   }
 
   private getTextAreaText(): string {
-    return DOMUtils.val(this.getTextareaElem()) as string;
+    return DOMUtils.val(this.getTextareaElem());
   }
 
   private getTextareaElem(): HTMLTextAreaElement {

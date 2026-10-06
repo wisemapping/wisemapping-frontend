@@ -99,7 +99,7 @@ class Canvas {
     this._workspace = workspace;
 
     // Append to the workspace...
-    workspace.addItAsChildTo(divContainer as HTMLDivElement);
+    workspace.addItAsChildTo(divContainer);
     // Mouse positions map through the workspace screen matrix ...
     screenManager.setWorkspace(workspace);
 

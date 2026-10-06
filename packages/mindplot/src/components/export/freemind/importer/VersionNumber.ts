@@ -60,7 +60,7 @@ export default class VersionNumber {
     if (!(o instanceof VersionNumber)) {
       return false;
     }
-    const versionNumber: VersionNumber = o as VersionNumber;
+    const versionNumber: VersionNumber = o;
     return this.version === versionNumber.version;
   }
 
