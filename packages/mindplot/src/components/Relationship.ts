@@ -25,6 +25,7 @@ import { StrokeStyle } from './model/RelationshipModel';
 import type PositionType from './PositionType';
 import type Topic from './Topic';
 import Shape from './util/Shape';
+import RelationshipSnap from './RelationshipSnap';
 import type Canvas from './Canvas';
 
 /** The relationship's own events: it fires them, with itself as detail, on a focus change. */
@@ -327,74 +328,6 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
   }
 
   /**
-   * Calculate the best snap point on a topic's border for a relationship connection
-   * @param topic The topic to connect to
-   * @param targetPosition The position we're connecting toward (other topic or control point)
-   * @returns The optimal connection point on the topic's border
-   */
-  static calculateSnapPoint(topic: Topic, targetPosition: PositionType): PositionType {
-    const pos = topic.getPosition();
-    const size = topic.getSize();
-    const centerOffset = 7; // 7px offset from topic border for visual spacing
-
-    // Calculate direction to target to minimize connection distance
-    const deltaX = targetPosition.x - pos.x;
-    const deltaY = targetPosition.y - pos.y;
-
-    // Determine which edge is closest by comparing angles
-    const absX = Math.abs(deltaX);
-    const absY = Math.abs(deltaY);
-
-    // Define 10 connection points per side evenly distributed along each edge
-    const horizontalPoints = [0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95];
-    const verticalPoints = [0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95];
-
-    if (absY > absX) {
-      // Vertical connection is shorter (top or bottom)
-      const edgeY =
-        deltaY < 0
-          ? pos.y - size.height / 2 - centerOffset // Top border (move up/away)
-          : pos.y + size.height / 2 + centerOffset; // Bottom border (move down/away)
-
-      // Calculate all 10 connection points along the horizontal edge
-      const connectionPoints = horizontalPoints.map((ratio) => {
-        const x = pos.x - size.width / 2 + size.width * ratio;
-        return {
-          x,
-          y: edgeY,
-          distance: Math.hypot(x - targetPosition.x, edgeY - targetPosition.y),
-        };
-      });
-
-      // Find the closest point
-      const closest = connectionPoints.reduce((min, point) =>
-        point.distance < min.distance ? point : min,
-      );
-
-      return { x: closest.x, y: closest.y };
-    }
-
-    // Horizontal connection is shorter (left or right)
-    const edgeX =
-      deltaX < 0
-        ? pos.x - size.width / 2 - centerOffset // Left border (move left/away)
-        : pos.x + size.width / 2 + centerOffset; // Right border (move right/away)
-
-    // Calculate all 10 connection points along the vertical edge
-    const connectionPoints = verticalPoints.map((ratio) => {
-      const y = pos.y - size.height / 2 + size.height * ratio;
-      return { x: edgeX, y, distance: Math.hypot(edgeX - targetPosition.x, y - targetPosition.y) };
-    });
-
-    // Find the closest point
-    const closest = connectionPoints.reduce((min, point) =>
-      point.distance < min.distance ? point : min,
-    );
-
-    return { x: closest.x, y: closest.y };
-  }
-
-  /**
    * Applies the control points stored in the model, and marks them as custom. A stored point is
    * relative to the connection point it was placed from, the snap point facing it.
    */
@@ -441,7 +374,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     // The snap point depends on where the control point lands, which depends on the snap point.
     // Starting from the center of the topic, it settles in a step or two ...
     for (let i = 0; i < 3; i++) {
-      const next = Relationship.calculateSnapPoint(topic, {
+      const next = RelationshipSnap.calculateSnapPoint(topic, {
         x: result.x + ctrlPoint.x,
         y: result.y + ctrlPoint.y,
       });
@@ -482,7 +415,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     if (offset) {
       const pos = topic.getPosition();
       const released = { x: pos.x + offset.x, y: pos.y + offset.y };
-      const snap = Relationship.calculateSnapPoint(topic, {
+      const snap = RelationshipSnap.calculateSnapPoint(topic, {
         x: released.x + ctrlPoint.x,
         y: released.y + ctrlPoint.y,
       });
@@ -506,7 +439,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     const otherPos = otherTopic.getPosition();
 
     // Use the shared snap point calculation
-    return Relationship.calculateSnapPoint(topic, otherPos);
+    return RelationshipSnap.calculateSnapPoint(topic, otherPos);
   }
 
   /**

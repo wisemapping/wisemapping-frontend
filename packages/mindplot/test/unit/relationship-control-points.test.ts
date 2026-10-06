@@ -21,6 +21,7 @@ import type { CommandDispatcher } from '../../src/components/ActionDispatcher';
 import ActionDispatcher from '../../src/components/ActionDispatcher';
 import type Canvas from '../../src/components/Canvas';
 import Relationship from '../../src/components/Relationship';
+import RelationshipSnap from '../../src/components/RelationshipSnap';
 import RelationshipControlPoints, {
   PivotType,
 } from '../../src/components/RelationshipControlPoints';
@@ -101,7 +102,7 @@ describe('Relationship control points', () => {
       jest
         .spyOn(ActionDispatcher, 'getInstance')
         .mockReturnValue({ moveControlPoint } as unknown as CommandDispatcher);
-      jest.spyOn(Relationship, 'calculateSnapPoint').mockReturnValue({ x: 0, y: 0 });
+      jest.spyOn(RelationshipSnap, 'calculateSnapPoint').mockReturnValue({ x: 0, y: 0 });
 
       line = {
         getControlPoints: jest.fn().mockReturnValue([

@@ -17,6 +17,7 @@
  */
 import { CurvedLine, Arrow } from '@wisemapping/web2d';
 import Relationship from './Relationship';
+import RelationshipSnap from './RelationshipSnap';
 import Shape from './util/Shape';
 import type Canvas from './Canvas';
 import type Designer from './Designer';
@@ -176,9 +177,9 @@ class RelationshipPivot {
   }
 
   private _calculateFromPosition(toPosition: PositionType): PositionType {
-    // Use the shared snap point calculation from Relationship
+    // Use the snap point shared with Relationship
     const sourceTopic = this._sourceTopic!;
-    return Relationship.calculateSnapPoint(sourceTopic, toPosition);
+    return RelationshipSnap.calculateSnapPoint(sourceTopic, toPosition);
   }
 
   /** A topic took the focus: its 'ontfocus' event carries the topic as detail. */

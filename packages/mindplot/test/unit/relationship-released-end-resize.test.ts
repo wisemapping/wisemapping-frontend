@@ -23,17 +23,18 @@
  * end stays on its edge, at the same place along it (BL5-125).
  */
 import { buildDesigner } from './commands/designer-harness';
-import Relationship from '../../src/components/Relationship';
+import type Relationship from '../../src/components/Relationship';
 import type Topic from '../../src/components/Topic';
 import type PositionType from '../../src/components/PositionType';
 import { PivotType } from '../../src/components/RelationshipControlPoints';
+import RelationshipSnap from '../../src/components/RelationshipSnap';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
 
-// The gap between a topic border and its snap points (Relationship.calculateSnapPoint).
+// The gap between a topic border and its snap points (RelationshipSnap.calculateSnapPoint).
 const GAP = 7;
 
 beforeAll(() => {
@@ -106,7 +107,7 @@ describe('Relationship released end after its topic is resized (BL5-125)', () =>
     // The control point is kept, relative to an end it fits: the snap point facing it.
     const placedEnd = endOf(relationship, type);
     expect(relationship.getLine().getControlPoints()[type]).toEqual(ctrlPoint);
-    const facing = Relationship.calculateSnapPoint(end, {
+    const facing = RelationshipSnap.calculateSnapPoint(end, {
       x: placedEnd.x + ctrlPoint.x!,
       y: placedEnd.y + ctrlPoint.y!,
     });

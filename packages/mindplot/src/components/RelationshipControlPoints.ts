@@ -19,7 +19,8 @@
 import { Ellipse, StraightLine } from '@wisemapping/web2d';
 import type Canvas from './Canvas';
 import type PositionType from './PositionType';
-import Relationship from './Relationship';
+import type Relationship from './Relationship';
+import RelationshipSnap from './RelationshipSnap';
 
 /** Which end of a relationship a control point belongs to. */
 export const PivotType = {
@@ -203,8 +204,8 @@ class ControlPivotLine {
         ? this._relationship.getSourceTopic()
         : this._relationship.getTargetTopic();
 
-    // Use the shared snap point calculation from Relationship
-    const relPos = Relationship.calculateSnapPoint(topic, mousePosition);
+    // Use the snap point shared with Relationship
+    const relPos = RelationshipSnap.calculateSnapPoint(topic, mousePosition);
 
     // The control point is relative to that snap point: move the line end there, so that the
     // handle of the curve is under the cursor ...
