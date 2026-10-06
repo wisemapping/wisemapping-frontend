@@ -356,8 +356,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     });
 
     dragManager.addEvent('dragging', (event: MouseEvent, dragTopic: DragTopic) => {
-      // The node is being drag. Is the connection still valid ?
-      dragConnector.checkConnection(dragTopic, event.metaKey || event.ctrlKey);
+      // The node is being drag. Is the connection still valid ? Held, the shortcut modifier (Cmd
+      // on a Mac, Ctrl elsewhere, as the help shows) drags it disconnected ...
+      dragConnector.checkConnection(dragTopic, hasShortcutModifier(event));
 
       if (!dragTopic.isVisible() && dragTopic.isConnected()) {
         dragTopic.setVisibility(true);
