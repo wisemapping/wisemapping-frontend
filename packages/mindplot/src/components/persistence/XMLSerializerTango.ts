@@ -293,16 +293,13 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       const featureDom = document.createElement(featureType);
       const attributes = feature.getAttributes();
 
-      const attributesKeys = Object.keys(attributes);
-      for (let attrIndex = 0; attrIndex < attributesKeys.length; attrIndex++) {
-        const key = attributesKeys[attrIndex];
-        const value = attributes[key];
+      Object.entries(attributes).forEach(([key, value]) => {
         if (key === 'text') {
           XMLSerializerTango._appendCDATA(document, featureDom, this._rmXmlInv(value));
         } else {
           featureDom.setAttribute(key, value);
         }
-      }
+      });
       parentTopic.appendChild(featureDom);
     });
 
@@ -517,7 +514,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       }
 
       // A non numeric size is ignored, so the theme default applies.
-      const fontSize = Number.parseInt(fontParts[1], 10);
+      const fontSize = Number.parseInt(fontParts[1] ?? '', 10);
       if (Number.isFinite(fontSize)) {
         topic.setFontSize(fontSize);
       }
@@ -569,8 +566,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         topic.setImageUrl(url);
 
         const split = size.split(',');
-        const width = Number.parseInt(split[0], 10);
-        const height = Number.parseInt(split[1], 10);
+        const width = Number.parseInt(split[0] ?? '', 10);
+        const height = Number.parseInt(split[1] ?? '', 10);
         if (Number.isFinite(width) && Number.isFinite(height)) {
           topic.setImageSize(width, height);
         }
@@ -647,8 +644,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const position = domElem.getAttribute('position');
     if (position !== null) {
       const pos = position.split(',');
-      const x = Number.parseInt(pos[0], 10);
-      const y = Number.parseInt(pos[1], 10);
+      const x = Number.parseInt(pos[0] ?? '', 10);
+      const y = Number.parseInt(pos[1] ?? '', 10);
       // A corrupted position (e.g. "NaN,NaN") is treated as missing.
       if (Number.isFinite(x) && Number.isFinite(y)) {
         topic.setPosition(x, y);
@@ -691,8 +688,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
           let feature: FeatureModel = FeatureModelFactory.createModel(featureType, attributes);
 
           // Migrate icons to emoji ...
-          if (featureType === 'icon') {
-            const svgIcon: string = attributes.id;
+          const svgIcon = attributes.id;
+          if (featureType === 'icon' && svgIcon !== undefined) {
             const emoji = XMLSerializerTango.emojiEquivalent(svgIcon);
             if (emoji) {
               attributes.id = emoji;
@@ -754,16 +751,14 @@ class XMLSerializerTango implements XMLMindmapSerializer {
    * Whitespace-only text is skipped: it is the indentation of a pretty-printed document.
    */
   private static _readCDATA(domElem: ChildNode): string | null {
-    const children = domElem.childNodes;
     let value: string | null = null;
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+    domElem.childNodes.forEach((child) => {
       const content = child.nodeValue ?? '';
       const isText = child.nodeType === Node.TEXT_NODE && content.trim() !== '';
       if (child.nodeType === Node.CDATA_SECTION_NODE || isText) {
         value = (value ?? '') + content;
       }
-    }
+    });
     return value;
   }
 

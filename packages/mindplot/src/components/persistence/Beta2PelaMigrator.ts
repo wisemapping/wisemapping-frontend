@@ -52,7 +52,8 @@ class Beta2PelaMigrator implements XMLMindmapSerializer {
       // The central topic is always positioned (see Mindmap.addBranch). Any other top level
       // topic without position (hand-made maps) is stacked below it.
       if (!model.hasPosition()) {
-        const centralPos = branches[0].getPositionOrThrow();
+        // branches is not empty: model is one of them.
+        const centralPos = branches[0]!.getPositionOrThrow();
         model.setPosition(
           centralPos.x,
           centralPos.y + index * Beta2PelaMigrator.DETACHED_TOPIC_GAP,

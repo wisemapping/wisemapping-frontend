@@ -81,25 +81,21 @@ class XMLSerializerFactory {
    * serializer = new Pela2TangoMigrator(new Beta2PelaMigrator(new XMLSerializer_Beta()))
    */
   static getSerializer(version = ModelCodeName.TANGO): XMLMindmapSerializer {
-    let found = false;
-    let result: XMLMindmapSerializer | null = null;
-    for (let i = 0; i < codeToSerializer.length; i++) {
-      if (!found) {
-        found = codeToSerializer[i].codeName === version;
-        // eslint-disable-next-line new-cap
-        if (found) result = new codeToSerializer[i].serializer();
-      } else {
-        const { codeName, migrator } = codeToSerializer[i];
-        if (!migrator || !result) {
-          throw new Error(`Missing migrator to ${codeName}`);
-        }
-        // eslint-disable-next-line new-cap
-        result = new migrator(result);
-      }
-    }
-    if (!result) {
+    const start = codeToSerializer.findIndex((entry) => entry.codeName === version);
+    const entry = codeToSerializer[start];
+    if (!entry) {
       throw new Error(`Cound not find serialized for ${version}`);
     }
+    // eslint-disable-next-line new-cap
+    let result: XMLMindmapSerializer = new entry.serializer();
+    // Wrap it in the migrator of each later version, up to the current one.
+    codeToSerializer.slice(start + 1).forEach(({ codeName, migrator }) => {
+      if (!migrator) {
+        throw new Error(`Missing migrator to ${codeName}`);
+      }
+      // eslint-disable-next-line new-cap
+      result = new migrator(result);
+    });
     return result;
   }
 }

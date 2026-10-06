@@ -67,25 +67,18 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
       leftNodes.sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
     });
 
-    for (let i = 0; i < rightNodes.length; i++) {
-      rightNodes[i].setOrder(i * 2);
-    }
-
-    for (let i = 0; i < leftNodes.length; i++) {
-      leftNodes[i].setOrder(i * 2 + 1);
-    }
+    rightNodes.forEach((node, i) => node.setOrder(i * 2));
+    leftNodes.forEach((node, i) => node.setOrder(i * 2 + 1));
   }
 
   private _fixPosition(centralNode: NodeModel): void {
     // Position was not required in previous versions. Try to synthesize one .
-    const children = centralNode.getChildren();
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+    centralNode.getChildren().forEach((child) => {
       if (!child.hasPosition()) {
         child.setPosition(0, 0);
       }
       this._fixNodePosition(child, child.getPositionOrThrow());
-    }
+    });
   }
 
   private _fixNodePosition(node: NodeModel, parentPosition: { x: number; y: number }): void {
@@ -97,11 +90,7 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
       position = { x: parentPosition.x + offset, y: parentPosition.y };
       node.setPosition(position.x, position.y);
     }
-    const children = node.getChildren();
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      this._fixNodePosition(child, position);
-    }
+    node.getChildren().forEach((child) => this._fixNodePosition(child, position));
   }
 }
 

@@ -122,7 +122,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
         topic.setFontFamily(font[0]);
       }
 
-      const fontSize = Number.parseInt(font[1], 10);
+      const fontSize = Number.parseInt(font[1] ?? '', 10);
       if (Number.isFinite(fontSize)) {
         topic.setFontSize(fontSize);
       }
@@ -168,8 +168,8 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     const position = domElem.getAttribute('position');
     if (position != null) {
       const pos = position.split(',');
-      const x = Number.parseInt(pos[0], 10);
-      const y = Number.parseInt(pos[1], 10);
+      const x = Number.parseInt(pos[0] ?? '', 10);
+      const y = Number.parseInt(pos[1] ?? '', 10);
       if (Number.isFinite(x) && Number.isFinite(y)) {
         topic.setPosition(x, y);
       }
