@@ -108,7 +108,7 @@
     "defaultMessage": "Changer le mot de passe"
   },
   "common.wait": {
-    "defaultMessage": "S'il vous plaît, attendez ..."
+    "defaultMessage": "Veuillez patienter..."
   },
   "create.button": {
     "defaultMessage": "Créer"
@@ -117,7 +117,7 @@
     "defaultMessage": "Veuillez remplir le nouveau nom et la description de la carte."
   },
   "create.title": {
-    "defaultMessage": "Créer une nouvelle carte mentale."
+    "defaultMessage": "Créer une nouvelle carte mentale"
   },
   "deletem.title": {
     "defaultMessage": "Toutes les cartes sélectionnées seront supprimées"
@@ -138,7 +138,7 @@
     "defaultMessage": "Exportez cette carte dans le format que vous souhaitez et commencez à l'utiliser dans vos présentations ou à partager par e-mail"
   },
   "export.document": {
-    "defaultMessage": "Outils Mindmap : exportez votre carte mentale dans des formats d'outils de carte mentale tiers"
+    "defaultMessage": "Outils de cartes mentales : exportez votre carte mentale dans des formats d'outils de cartes mentales tiers"
   },
   "export.document-label": {
     "defaultMessage": "Document : exportez votre carte mentale dans un document autonome prêt à être partagé"
@@ -159,10 +159,10 @@
     "defaultMessage": "Nous contacter"
   },
   "footer.faq": {
-    "defaultMessage": "FAQ."
+    "defaultMessage": "FAQ"
   },
   "footer.feedback": {
-    "defaultMessage": "Retour"
+    "defaultMessage": "Commentaires"
   },
   "footer.opensource": {
     "defaultMessage": "Open source"
@@ -210,7 +210,7 @@
     "defaultMessage": "Votre mot de passe temporaire a été envoyé."
   },
   "forgot.title": {
-    "defaultMessage": "réinitialisez votre mot de passe"
+    "defaultMessage": "Réinitialisez votre mot de passe"
   },
   "forgotsuccess.page-title": {
     "defaultMessage": "Mot de passe récupéré | WiseMapping"
@@ -222,7 +222,7 @@
     "defaultMessage": "Vous avez déjà un compte ?"
   },
   "help.support": {
-    "defaultMessage": "Soutien"
+    "defaultMessage": "Assistance"
   },
   "history.no-changes": {
     "defaultMessage": "Il n'y a pas de modifications disponibles"
@@ -306,7 +306,7 @@
     "defaultMessage": "Mot de passe"
   },
   "login.signin": {
-    "defaultMessage": "S'identifier"
+    "defaultMessage": "Se connecter"
   },
   "login.signup": {
     "defaultMessage": "S'inscrire"
@@ -321,7 +321,7 @@
     "defaultMessage": "Créateur"
   },
   "map.delete-selected": {
-    "defaultMessage": "Supprimer sélectionnée"
+    "defaultMessage": "Supprimer la sélection"
   },
   "map.last-update": {
     "defaultMessage": "Dernière mise à jour"
@@ -345,10 +345,10 @@
     "defaultMessage": "Lancer une carte mentale avec le Copilote IA"
   },
   "maps.copilot-dialog.title": {
-    "defaultMessage": "Copilote Mindmap propulsé par ChatGPT"
+    "defaultMessage": "Copilote de cartes mentales propulsé par ChatGPT"
   },
   "maps.copilot-dialog.description": {
-    "defaultMessage": "Mind Map Copilot est un assistant de brainstorming propulsé par ChatGPT qui transforme vos requêtes en cartes mentales structurées. Nous l'ouvrirons dans un nouvel onglet pour que vous puissiez développer vos idées, générer des sujets et rapporter le meilleur dans WiseMapping."
+    "defaultMessage": "Le Copilote IA propulsé par ChatGPT est un assistant de brainstorming qui transforme vos requêtes en cartes mentales structurées. Nous l'ouvrirons dans un nouvel onglet pour que vous puissiez développer vos idées, générer des sujets et rapporter le meilleur dans WiseMapping."
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Ouvrir le Copilote"
@@ -369,13 +369,13 @@
     "defaultMessage": "Modifié par"
   },
   "maps.modified-by-desc": {
-    "defaultMessage": "Modifié par {by} sur {on}"
+    "defaultMessage": "Modifié par {by} le {on}"
   },
   "maps.nav-all": {
     "defaultMessage": "Tout"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "Possédé"
+    "defaultMessage": "Mes cartes"
   },
   "maps.nav-public": {
     "defaultMessage": "Publique"
@@ -423,7 +423,7 @@
     "defaultMessage": "Rendez votre carte publique. Toute personne ayant le lien peut la voir."
   },
   "publish.embedded": {
-    "defaultMessage": "Embarqué"
+    "defaultMessage": "Intégré"
   },
   "publish.embedded-msg": {
     "defaultMessage": "Cliquez sur le code pour le copier dans le presse-papiers :"
@@ -441,7 +441,7 @@
     "defaultMessage": "Inscription réussie | WiseMapping"
   },
   "registration.desc": {
-    "defaultMessage": "L'inscription est gratuite et ne prends qu'un instant"
+    "defaultMessage": "L'inscription est gratuite et ne prend qu'un instant"
   },
   "registration.email": {
     "defaultMessage": "E-mail"
@@ -495,10 +495,10 @@
     "defaultMessage": "Supprimer un collaborateur"
   },
   "share.delete-description": {
-    "defaultMessage": "Ajoutez des collaborateurs. Ils recevront un accès instantané par email pour éditer ensemble."
+    "defaultMessage": "Ajoutez des collaborateurs. Ils recevront un accès instantané par e-mail pour modifier ensemble."
   },
   "share.delete-title": {
-    "defaultMessage": "Partager avec les gens"
+    "defaultMessage": "Partager avec d'autres personnes"
   },
   "share.message": {
     "defaultMessage": "Message"
@@ -531,13 +531,13 @@
     "defaultMessage": "Ajouter une étiquette"
   },
   "footer.donations": {
-    "defaultMessage": "Des dons"
+    "defaultMessage": "Faire un don"
   },
   "registration.google.button": {
     "defaultMessage": "S'inscrire avec Google"
   },
   "login.google.button": {
-    "defaultMessage": "Connectez-vous avec Google"
+    "defaultMessage": "Se connecter avec Google"
   },
   "registration.division": {
     "defaultMessage": "ou"
@@ -552,7 +552,7 @@
     "defaultMessage": "Confirmer"
   },
   "registration.callback.waiting.title": {
-    "defaultMessage": "Finition ..."
+    "defaultMessage": "Finalisation..."
   },
   "registration.callback.confirm.description": {
     "defaultMessage": "Un compte avec le même e-mail a déjà été enregistré. Voulez-vous lier votre compte {provider} à ce compte WiseMapping ?"
@@ -561,16 +561,16 @@
     "defaultMessage": "Veuillez patienter pendant que nous validons votre identité"
   },
   "registration.callback.back": {
-    "defaultMessage": "Retour connexion"
+    "defaultMessage": "Retour à la connexion"
   },
   "registration.callback.sync": {
-    "defaultMessage": "Compte de synchronisation"
+    "defaultMessage": "Synchroniser le compte"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "Vous n'avez pas besoin de mot de passe, veuillez vous connecter en utilisant Facebook ou Google"
+    "defaultMessage": "Vous n'avez pas besoin de mot de passe, veuillez vous connecter avec Facebook ou Google."
   },
   "forgot.oauth.back": {
-    "defaultMessage": "Retour connexion"
+    "defaultMessage": "Retour à la connexion"
   },
   "theme.dark": {
     "defaultMessage": "Sombre"
@@ -579,7 +579,7 @@
     "defaultMessage": "Clair"
   },
   "theme.toggle": {
-    "defaultMessage": "Changer le Thème"
+    "defaultMessage": "Changer de thème"
   },
   "admin.delete-user": {
     "defaultMessage": "Supprimer l'utilisateur"
@@ -603,7 +603,7 @@
     "defaultMessage": "L'utilisateur n'a pas encore confirmé son adresse e-mail | Cliquez pour changer le statut"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "Autoriser les notifications par email"
+    "defaultMessage": "Autoriser les notifications par e-mail"
   },
   "common.cancel": {
     "defaultMessage": "Annuler"
@@ -1023,7 +1023,7 @@
     "defaultMessage": "Enregistrer"
   },
   "admin.system.title": {
-    "defaultMessage": "Informations Système"
+    "defaultMessage": "Informations système"
   },
   "admin.system.refresh": {
     "defaultMessage": "Actualiser"
@@ -1161,19 +1161,19 @@
     "defaultMessage": "Le titre de la carte est requis et ne peut pas être vide"
   },
   "accountinfo.personal-details": {
-    "defaultMessage": "Détails Personnels"
+    "defaultMessage": "Détails personnels"
   },
   "accountinfo.personal-info": {
     "defaultMessage": "Informations personnelles"
   },
   "account.delete-warning-title": {
-    "defaultMessage": "Supprimer le Compte"
+    "defaultMessage": "Supprimer le compte"
   },
   "accountinfo.account-settings": {
     "defaultMessage": "Paramètres du compte"
   },
   "account.delete-warning-description": {
-    "defaultMessage": "Une fois que vous supprimez votre compte, il n'y a pas de retour en arrière. Veuillez être certain."
+    "defaultMessage": "Une fois votre compte supprimé, il n'y a pas de retour en arrière possible. Soyez-en certain."
   },
   "account.delete-warning-consequences": {
     "defaultMessage": "Cela supprimera définitivement :"
@@ -1194,7 +1194,7 @@
     "defaultMessage": "Êtes-vous absolument sûr ?"
   },
   "account.delete-confirmation-warning": {
-    "defaultMessage": "Cette action ne peut pas être annulée. Cela supprimera définitivement votre compte et supprimera toutes les données de nos serveurs."
+    "defaultMessage": "Cette action est irréversible. Votre compte sera définitivement supprimé et toutes les données seront effacées de nos serveurs."
   },
   "account.delete-confirmation-instruction": {
     "defaultMessage": "Veuillez taper {challengePhrase} pour confirmer :"
@@ -1209,13 +1209,13 @@
     "defaultMessage": "Veuillez taper « {challengePhrase} » pour confirmer la suppression du compte."
   },
   "account.delete-confirm": {
-    "defaultMessage": "Supprimer le Compte"
+    "defaultMessage": "Supprimer le compte"
   },
   "menu.admin-console": {
-    "defaultMessage": "Console d'Administration"
+    "defaultMessage": "Console d'administration"
   },
   "registration.form-legend": {
-    "defaultMessage": "Informations du Compte"
+    "defaultMessage": "Informations du compte"
   },
   "admin.change-password": {
     "defaultMessage": "Changer le mot de passe"

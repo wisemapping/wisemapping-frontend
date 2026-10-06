@@ -22,7 +22,7 @@
   "account.delete-confirm": [
     {
       "type": 0,
-      "value": "Supprimer le Compte"
+      "value": "Supprimer le compte"
     }
   ],
   "account.delete-confirmation-instruction": [
@@ -62,7 +62,7 @@
   "account.delete-confirmation-warning": [
     {
       "type": 0,
-      "value": "Cette action ne peut pas être annulée. Cela supprimera définitivement votre compte et supprimera toutes les données de nos serveurs."
+      "value": "Cette action est irréversible. Votre compte sera définitivement supprimé et toutes les données seront effacées de nos serveurs."
     }
   ],
   "account.delete-warning-collaborations": [
@@ -86,7 +86,7 @@
   "account.delete-warning-description": [
     {
       "type": 0,
-      "value": "Une fois que vous supprimez votre compte, il n'y a pas de retour en arrière. Veuillez être certain."
+      "value": "Une fois votre compte supprimé, il n'y a pas de retour en arrière possible. Soyez-en certain."
     }
   ],
   "account.delete-warning-history": [
@@ -104,7 +104,7 @@
   "account.delete-warning-title": [
     {
       "type": 0,
-      "value": "Supprimer le Compte"
+      "value": "Supprimer le compte"
     }
   ],
   "accountinfo.account-settings": [
@@ -146,7 +146,7 @@
   "accountinfo.personal-details": [
     {
       "type": 0,
-      "value": "Détails Personnels"
+      "value": "Détails personnels"
     }
   ],
   "accountinfo.personal-info": [
@@ -1428,7 +1428,7 @@
   "admin.system.title": [
     {
       "type": 0,
-      "value": "Informations Système"
+      "value": "Informations système"
     }
   ],
   "admin.unsuspend-user": [
@@ -1594,7 +1594,7 @@
   "common.allow-email-notifications": [
     {
       "type": 0,
-      "value": "Autoriser les notifications par email"
+      "value": "Autoriser les notifications par e-mail"
     }
   ],
   "common.cancel": [
@@ -1766,7 +1766,7 @@
   "common.wait": [
     {
       "type": 0,
-      "value": "S'il vous plaît, attendez ..."
+      "value": "Veuillez patienter..."
     }
   ],
   "create.button": [
@@ -1784,7 +1784,7 @@
   "create.title": [
     {
       "type": 0,
-      "value": "Créer une nouvelle carte mentale."
+      "value": "Créer une nouvelle carte mentale"
     }
   ],
   "deletem.title": [
@@ -1924,7 +1924,7 @@
   "export.document": [
     {
       "type": 0,
-      "value": "Outils Mindmap : exportez votre carte mentale dans des formats d'outils de carte mentale tiers"
+      "value": "Outils de cartes mentales : exportez votre carte mentale dans des formats d'outils de cartes mentales tiers"
     }
   ],
   "export.document-label": [
@@ -2004,19 +2004,19 @@
   "footer.donations": [
     {
       "type": 0,
-      "value": "Des dons"
+      "value": "Faire un don"
     }
   ],
   "footer.faq": [
     {
       "type": 0,
-      "value": "FAQ."
+      "value": "FAQ"
     }
   ],
   "footer.feedback": [
     {
       "type": 0,
-      "value": "Retour"
+      "value": "Commentaires"
     }
   ],
   "footer.news": [
@@ -2064,13 +2064,13 @@
   "forgot.oauth.back": [
     {
       "type": 0,
-      "value": "Retour connexion"
+      "value": "Retour à la connexion"
     }
   ],
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "Vous n'avez pas besoin de mot de passe, veuillez vous connecter en utilisant Facebook ou Google"
+      "value": "Vous n'avez pas besoin de mot de passe, veuillez vous connecter avec Facebook ou Google."
     }
   ],
   "forgot.page-title": [
@@ -2100,7 +2100,7 @@
   "forgot.title": [
     {
       "type": 0,
-      "value": "réinitialisez votre mot de passe"
+      "value": "Réinitialisez votre mot de passe"
     }
   ],
   "forgotsuccess.page-title": [
@@ -2124,7 +2124,7 @@
   "help.support": [
     {
       "type": 0,
-      "value": "Soutien"
+      "value": "Assistance"
     }
   ],
   "history.no-changes": [
@@ -2360,7 +2360,7 @@
   "login.google.button": [
     {
       "type": 0,
-      "value": "Connectez-vous avec Google"
+      "value": "Se connecter avec Google"
     }
   ],
   "login.oauth-error": [
@@ -2402,7 +2402,7 @@
   "login.signin": [
     {
       "type": 0,
-      "value": "S'identifier"
+      "value": "Se connecter"
     }
   ],
   "login.signup": [
@@ -2432,7 +2432,7 @@
   "map.delete-selected": [
     {
       "type": 0,
-      "value": "Supprimer sélectionnée"
+      "value": "Supprimer la sélection"
     }
   ],
   "map.labels": [
@@ -2510,13 +2510,13 @@
   "maps.copilot-dialog.description": [
     {
       "type": 0,
-      "value": "Mind Map Copilot est un assistant de brainstorming propulsé par ChatGPT qui transforme vos requêtes en cartes mentales structurées. Nous l'ouvrirons dans un nouvel onglet pour que vous puissiez développer vos idées, générer des sujets et rapporter le meilleur dans WiseMapping."
+      "value": "Le Copilote IA propulsé par ChatGPT est un assistant de brainstorming qui transforme vos requêtes en cartes mentales structurées. Nous l'ouvrirons dans un nouvel onglet pour que vous puissiez développer vos idées, générer des sujets et rapporter le meilleur dans WiseMapping."
     }
   ],
   "maps.copilot-dialog.title": [
     {
       "type": 0,
-      "value": "Copilote Mindmap propulsé par ChatGPT"
+      "value": "Copilote de cartes mentales propulsé par ChatGPT"
     }
   ],
   "maps.copilot-tooltip": [
@@ -2566,7 +2566,7 @@
     },
     {
       "type": 0,
-      "value": " sur "
+      "value": " le "
     },
     {
       "type": 1,
@@ -2582,7 +2582,7 @@
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "Possédé"
+      "value": "Mes cartes"
     }
   ],
   "maps.nav-public": [
@@ -2664,7 +2664,7 @@
   "menu.admin-console": [
     {
       "type": 0,
-      "value": "Console d'Administration"
+      "value": "Console d'administration"
     }
   ],
   "menu.change-password": [
@@ -2700,7 +2700,7 @@
   "publish.embedded": [
     {
       "type": 0,
-      "value": "Embarqué"
+      "value": "Intégré"
     }
   ],
   "publish.embedded-msg": [
@@ -2736,7 +2736,7 @@
   "registration.callback.back": [
     {
       "type": 0,
-      "value": "Retour connexion"
+      "value": "Retour à la connexion"
     }
   ],
   "registration.callback.confirm.description": [
@@ -2762,7 +2762,7 @@
   "registration.callback.sync": [
     {
       "type": 0,
-      "value": "Compte de synchronisation"
+      "value": "Synchroniser le compte"
     }
   ],
   "registration.callback.waiting.description": [
@@ -2774,13 +2774,13 @@
   "registration.callback.waiting.title": [
     {
       "type": 0,
-      "value": "Finition ..."
+      "value": "Finalisation..."
     }
   ],
   "registration.desc": [
     {
       "type": 0,
-      "value": "L'inscription est gratuite et ne prends qu'un instant"
+      "value": "L'inscription est gratuite et ne prend qu'un instant"
     }
   ],
   "registration.division": [
@@ -2816,7 +2816,7 @@
   "registration.form-legend": [
     {
       "type": 0,
-      "value": "Informations du Compte"
+      "value": "Informations du compte"
     }
   ],
   "registration.google.button": [
@@ -3042,13 +3042,13 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Ajoutez des collaborateurs. Ils recevront un accès instantané par email pour éditer ensemble."
+      "value": "Ajoutez des collaborateurs. Ils recevront un accès instantané par e-mail pour modifier ensemble."
     }
   ],
   "share.delete-title": [
     {
       "type": 0,
-      "value": "Partager avec les gens"
+      "value": "Partager avec d'autres personnes"
     }
   ],
   "share.message": [
@@ -3090,7 +3090,7 @@
   "theme.toggle": [
     {
       "type": 0,
-      "value": "Changer le Thème"
+      "value": "Changer de thème"
     }
   ],
   "validation.title-required": [

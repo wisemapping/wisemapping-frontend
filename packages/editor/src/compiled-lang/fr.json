@@ -176,13 +176,13 @@
   "canvas-style.grid-size-xl": [
     {
       "type": 0,
-      "value": "Très Grand"
+      "value": "Très grand"
     }
   ],
   "canvas-style.grid-size-xs": [
     {
       "type": 0,
-      "value": "Très Petit"
+      "value": "Très petit"
     }
   ],
   "canvas-style.grid-style": [
@@ -260,7 +260,7 @@
   "editor-panel.deeplink-copied": [
     {
       "type": 0,
-      "value": "Lien vers le noeud copié dans le presse-papiers"
+      "value": "Lien vers le nœud copié dans le presse-papiers"
     }
   ],
   "editor-panel.deeplink-copy-failed": [
@@ -320,7 +320,7 @@
   "editor-panel.tooltip-add-topic-image": [
     {
       "type": 0,
-      "value": "Ajouter une image de sujet"
+      "value": "Ajouter une image au nœud"
     }
   ],
   "editor-panel.tooltip-canvas-style": [
@@ -332,7 +332,7 @@
   "editor-panel.tooltip-copy-node-link": [
     {
       "type": 0,
-      "value": "Copier le lien vers le noeud"
+      "value": "Copier le lien vers le nœud"
     }
   ],
   "editor-panel.tooltip-relationship-style": [
@@ -350,7 +350,7 @@
   "editor-panel.tooltip-unified-styling": [
     {
       "type": 0,
-      "value": "Style du thème et des connexions"
+      "value": "Style des nœuds et des connexions"
     }
   ],
   "editor.edit-description-mobile": [
@@ -398,7 +398,7 @@
   "find-in-map.empty-state": [
     {
       "type": 0,
-      "value": "Aucun noeud ne correspond à « "
+      "value": "Aucun nœud ne correspond à « "
     },
     {
       "type": 1,
@@ -438,7 +438,7 @@
   "find-in-map.placeholder": [
     {
       "type": 0,
-      "value": "Rechercher un noeud..."
+      "value": "Rechercher un nœud..."
     }
   ],
   "find-in-map.previous": [
@@ -534,7 +534,7 @@
   "icon-collection.connection.neuron-tooltip": [
     {
       "type": 0,
-      "value": "Ligne d'impulsion organique avec des pulses ramifiés - idéale pour la science, les réseaux neuronaux ou tout ce qui est futuriste"
+      "value": "Ligne d'impulsion organique avec des impulsions ramifiées - idéale pour la science, les réseaux neuronaux ou tout ce qui est futuriste"
     }
   ],
   "icon-collection.connection.simple-polyline": [
@@ -558,7 +558,7 @@
   "icon-collection.connection.thick-curved-tooltip": [
     {
       "type": 0,
-      "value": "Ligne courbe épaisse avec des courbes bezier lisses - Idéale pour mettre en valeur les branches principales"
+      "value": "Ligne courbe épaisse avec des courbes de Bézier lisses - Idéale pour mettre en valeur les branches principales"
     }
   ],
   "icon-collection.connection.thin-curved": [
@@ -570,7 +570,7 @@
   "icon-collection.connection.thin-curved-tooltip": [
     {
       "type": 0,
-      "value": "Ligne courbe fine avec des courbes bezier élégantes - Idéale pour les cartes mentales détaillées ou denses"
+      "value": "Ligne courbe fine avec d'élégantes courbes de Bézier - Idéale pour les cartes mentales détaillées ou denses"
     }
   ],
   "icon-collection.default-tooltip": [
@@ -730,7 +730,7 @@
   "note.character.limit.warning": [
     {
       "type": 0,
-      "value": "(Limite approchée)"
+      "value": "(Limite bientôt atteinte)"
     }
   ],
   "outline.collapse": [
@@ -862,7 +862,7 @@
   "rich-text-editor.bullet-list": [
     {
       "type": 0,
-      "value": "Liste à Puces"
+      "value": "Liste à puces"
     }
   ],
   "rich-text-editor.indent": [
@@ -874,13 +874,13 @@
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
-      "value": "Insérer une Icône"
+      "value": "Insérer une icône"
     }
   ],
   "rich-text-editor.insert-link": [
     {
       "type": 0,
-      "value": "Insérer un Lien"
+      "value": "Insérer un lien"
     }
   ],
   "rich-text-editor.italic": [
@@ -892,7 +892,7 @@
   "rich-text-editor.numbered-list": [
     {
       "type": 0,
-      "value": "Liste Numérotée"
+      "value": "Liste numérotée"
     }
   ],
   "rich-text-editor.outdent": [
@@ -922,7 +922,7 @@
   "shortcut-help-pane.add-child": [
     {
       "type": 0,
-      "value": "Ajouter un noeud enfant"
+      "value": "Ajouter un nœud enfant"
     }
   ],
   "shortcut-help-pane.add-link": [
@@ -940,7 +940,7 @@
   "shortcut-help-pane.add-sibling": [
     {
       "type": 0,
-      "value": "Ajouter un noeud frère"
+      "value": "Ajouter un nœud frère"
     }
   ],
   "shortcut-help-pane.cancel-text-changes": [
@@ -988,31 +988,31 @@
   "shortcut-help-pane.collapse-children": [
     {
       "type": 0,
-      "value": "Masquer les noeuds enfants"
+      "value": "Masquer les nœuds enfants"
     }
   ],
   "shortcut-help-pane.copy-and-text": [
     {
       "type": 0,
-      "value": "Copier et coller des noeuds"
+      "value": "Copier et coller des nœuds/Copier l'image de la carte mentale dans le presse-papiers"
     }
   ],
   "shortcut-help-pane.delete-topic": [
     {
       "type": 0,
-      "value": "Supprimer le noeud"
+      "value": "Supprimer le nœud"
     }
   ],
   "shortcut-help-pane.deselect-all-topics": [
     {
       "type": 0,
-      "value": "Désélectionner tous les noeuds"
+      "value": "Désélectionner tous les nœuds"
     }
   ],
   "shortcut-help-pane.diagram-aria": [
     {
       "type": 0,
-      "value": "La flèche gauche va au noeud parent, la flèche droite à un enfant, haut et bas entre les noeuds frères."
+      "value": "La flèche gauche va au nœud parent, la flèche droite à un enfant, haut et bas entre les nœuds frères."
     }
   ],
   "shortcut-help-pane.diagram-caption": [
@@ -1048,67 +1048,67 @@
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
-      "value": "Déconnecter le noeud"
+      "value": "Déconnecter le nœud"
     }
   ],
   "shortcut-help-pane.drag-disconnect-key": [
     {
       "type": 0,
-      "value": "faire glisser le noeud"
+      "value": "faire glisser le nœud"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
     {
       "type": 0,
-      "value": "Ajouter une ligne au noeud"
+      "value": "Ajouter une ligne au nœud"
     }
   ],
   "shortcut-help-pane.edit-topic": [
     {
       "type": 0,
-      "value": "Modifier le texte du noeud"
+      "value": "Modifier le texte du nœud"
     }
   ],
   "shortcut-help-pane.edit-topic-key": [
     {
       "type": 0,
-      "value": "Double-clic"
+      "value": "F2 ou double-clic"
     }
   ],
   "shortcut-help-pane.expand-by-level": [
     {
       "type": 0,
-      "value": "Développer les sujets par niveau"
+      "value": "Développer les nœuds par niveau"
     }
   ],
   "shortcut-help-pane.expand-collapse-all": [
     {
       "type": 0,
-      "value": "Développer/Réduire tous les sujets"
+      "value": "Développer/Réduire tous les nœuds"
     }
   ],
   "shortcut-help-pane.find-in-map": [
     {
       "type": 0,
-      "value": "Rechercher un noeud dans la carte"
+      "value": "Rechercher un nœud dans la carte"
     }
   ],
   "shortcut-help-pane.indent-topic": [
     {
       "type": 0,
-      "value": "Abaisser le noeud d'un niveau (rattacher au frère précédent)"
+      "value": "Abaisser le nœud d'un niveau (rattacher au frère précédent)"
     }
   ],
   "shortcut-help-pane.move-topic-down": [
     {
       "type": 0,
-      "value": "Déplacer le noeud vers le bas parmi ses frères"
+      "value": "Déplacer le nœud vers le bas parmi ses frères"
     }
   ],
   "shortcut-help-pane.move-topic-up": [
     {
       "type": 0,
-      "value": "Déplacer le noeud vers le haut parmi ses frères"
+      "value": "Déplacer le nœud vers le haut parmi ses frères"
     }
   ],
   "shortcut-help-pane.navigation": [
@@ -1126,7 +1126,7 @@
   "shortcut-help-pane.outdent-topic": [
     {
       "type": 0,
-      "value": "Remonter le noeud d'un niveau (rattacher au grand-parent)"
+      "value": "Remonter le nœud d'un niveau (rattacher au grand-parent)"
     }
   ],
   "shortcut-help-pane.outline-view": [
@@ -1138,13 +1138,13 @@
   "shortcut-help-pane.overwrite-edit-topic": [
     {
       "type": 0,
-      "value": "Remplacer le texte du noeud"
+      "value": "Remplacer le texte du nœud"
     }
   ],
   "shortcut-help-pane.overwrite-edit-topic-key": [
     {
       "type": 0,
-      "value": "Ecrire dans le noeud sélectionné"
+      "value": "Écrire dans le nœud sélectionné"
     }
   ],
   "shortcut-help-pane.pan-canvas": [
@@ -1162,13 +1162,13 @@
   "shortcut-help-pane.paste-as-child": [
     {
       "type": 0,
-      "value": "Coller comme enfant du noeud sélectionné"
+      "value": "Coller comme enfant du nœud sélectionné"
     }
   ],
   "shortcut-help-pane.redo": [
     {
       "type": 0,
-      "value": "Réduire l'édition"
+      "value": "Rétablir la modification"
     }
   ],
   "shortcut-help-pane.save-changes": [
@@ -1180,13 +1180,13 @@
   "shortcut-help-pane.select-all-topics": [
     {
       "type": 0,
-      "value": "Sélectionner tous les noeuds"
+      "value": "Sélectionner tous les nœuds"
     }
   ],
   "shortcut-help-pane.select-topics": [
     {
       "type": 0,
-      "value": "Sélectionner plusieurs noeuds"
+      "value": "Sélectionner plusieurs nœuds"
     }
   ],
   "shortcut-help-pane.select-topics-keys": [
@@ -1198,7 +1198,7 @@
   "shortcut-help-pane.undo": [
     {
       "type": 0,
-      "value": "Annuler l'édition"
+      "value": "Annuler la modification"
     }
   ],
   "shortcut-help-pane.zoom-in": [
