@@ -735,7 +735,13 @@ abstract class Topic extends NodeGraph {
           mouseEvent.stopPropagation();
           mouseEvent.preventDefault();
         }
-        topic.setOnFocus(value);
+        const designer = me.getDesigner();
+        if (designer) {
+          // The designer also unselects the other entities, and tells the editor once ...
+          designer.selectOnClick(topic, value, mouseEvent);
+        } else {
+          topic.setOnFocus(value);
+        }
       }
 
       const eventDispatcher = me._getTopicEventDispatcher();

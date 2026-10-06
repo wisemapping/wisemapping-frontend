@@ -144,14 +144,21 @@ const buildDesigner = (topics: FakeTopic[]) => {
     onObjectFocusEvent(currentObject?: Topic, event?: MouseEvent) {
       Designer.prototype.onObjectFocusEvent.call(this, currentObject, event);
     },
+    selectOnClick(topic: Topic, focus: boolean, event: MouseEvent) {
+      Designer.prototype.selectOnClick.call(this, topic, focus, event);
+    },
   };
-  // onObjectFocusEvent unselects the other topics through Designer's private batch.
+  // selectOnClick and onObjectFocusEvent change the selection through Designer's private batch.
   Object.assign(designer, {
     _selectionBatch: null,
     ensureNodeVisible: () => undefined,
     _setFocusOfAll(focus: boolean, except?: Topic) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (Designer.prototype as any)._setFocusOfAll.call(this, focus, except);
+    },
+    _batchSelection(change: () => void) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (Designer.prototype as any)._batchSelection.call(this, change);
     },
     _fireSelectionEvent() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -165,15 +172,13 @@ const buildDesigner = (topics: FakeTopic[]) => {
   return { designer: designer as unknown as Designer & typeof designer, container };
 };
 
-/** Registers the mousedown listeners in the same order a real topic gets them. */
-const wireTopic = (topic: FakeTopic, designer: Designer): void => {
-  // 1. Topic's own handler, registered when its shape is built.
+/**
+ * Registers the mousedown listener a real topic gets when its shape is built: it hands the click
+ * to its designer's selectOnClick.
+ */
+const wireTopic = (topic: FakeTopic): void => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (Topic.prototype as any).registerDefaultListenersToElement.call(topic, topic, topic);
-  // 2. Designer._buildNodeGraph.
-  topic.addEvent('mousedown', (event) =>
-    designer.onObjectFocusEvent(asTopic(topic), event as MouseEvent),
-  );
 };
 
 const mousedown = (topic: FakeTopic, init: MouseEventInit = {}): void => {
@@ -195,7 +200,7 @@ describe('HTMLTopicSelected', () => {
     beforeEach(() => {
       topics = ['a', 'b', 'c', 'd'].map((n) => new FakeTopic(n));
       ({ designer } = buildDesigner(topics));
-      topics.forEach((t) => wireTopic(t, designer));
+      topics.forEach((t) => wireTopic(t));
       // Every topic has been selected once, so each one owns a shadow (3rd listener).
       topics.forEach((t) => HTMLTopicSelected.ensureTopicShadow(designer, asTopic(t)));
     });

@@ -748,10 +748,8 @@ class DesignerKeyboard extends Keyboard {
   }
 
   private _goToNode(designer: Designer, node: Topic): void {
-    // First deselect all the nodes ...
-    designer.deselectAll();
-
-    // Give focus to the selected node....
+    // goToNode unselects every other entity in the same change: a deselectAll first would tell
+    // the editor of an empty selection before the node is selected.
     designer.goToNode(node);
   }
 

@@ -17,6 +17,7 @@
  */
 import type { Harness } from '../commands/designer-harness';
 import { buildDesigner } from '../commands/designer-harness';
+import DesignerKeyboard from '../../../src/components/DesignerKeyboard';
 import type Topic from '../../../src/components/Topic';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
@@ -83,8 +84,9 @@ describe('Designer selection events on a click', () => {
     mouseDown(4);
 
     expect(designer.getModel().filterSelectedTopics()).toEqual([topic(4)]);
-    // Before: only 'onfocus:3', fired when topic 4 was selected and the others not yet unselected.
-    expect(events[events.length - 1]).toBe('onfocus:1');
+    // Before: 'onfocus:3', fired when topic 4 was selected and the others not yet unselected,
+    // then 'onfocus:1'.
+    expect(events).toEqual(['onfocus:1']);
   });
 
   it('a click on the only selected topic fires nothing', async () => {
@@ -105,7 +107,30 @@ describe('Designer selection events on a click', () => {
     mouseDown(3);
 
     expect(designer.getModel().filterSelectedTopics()).toEqual([topic(3)]);
-    expect(events[events.length - 1]).toBe('onfocus:1');
+    // Before: 'onfocus:2', then 'onfocus:1'.
+    expect(events).toEqual(['onfocus:1']);
+  });
+
+  it('a Ctrl or Cmd click that adds a topic reports the larger selection once', async () => {
+    const { events, mouseDown } = await open();
+    mouseDown(1);
+    mouseDown(3, { ctrlKey: true });
+    events.splice(0);
+
+    mouseDown(4, { ctrlKey: true });
+
+    expect(events).toEqual(['onfocus:3']);
+  });
+
+  it('a click on the background reports the empty selection once', async () => {
+    const { designer, events, mouseDown } = await open();
+    mouseDown(1);
+    mouseDown(3, { ctrlKey: true });
+    events.splice(0);
+
+    designer.getWorkSpace().getScreenManager().fireEvent('click');
+
+    expect(events).toEqual(['onblur:0']);
   });
 
   it('a Ctrl or Cmd click that unselects one topic of a multi-selection reports the rest', async () => {
@@ -139,5 +164,59 @@ describe('Designer selection events on a click', () => {
     designer.deselectAll();
 
     expect(events).toEqual(['onfocus:6', 'onblur:0']);
+  });
+});
+
+describe('Designer selection events on the keyboard', () => {
+  const move = (designer: Harness['designer'], direction: 'LEFT' | 'RIGHT' | 'UP' | 'DOWN') => {
+    const keyboard = Object.create(DesignerKeyboard.prototype);
+    keyboard._moveSelection(designer, direction);
+  };
+
+  it('an arrow with nothing selected reports the central topic once', async () => {
+    const { designer, events, topic } = await open();
+
+    move(designer, 'RIGHT');
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(0)]);
+    // Before: 'onfocus:1' only because deselectAll had nothing to unselect.
+    expect(events).toEqual(['onfocus:1']);
+  });
+
+  it('an arrow to a child reports that child alone, once', async () => {
+    const { designer, events, mouseDown, topic } = await open();
+    mouseDown(0);
+    events.splice(0);
+
+    move(designer, 'RIGHT');
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(1)]);
+    // Before: 'onblur:0' from deselectAll, then 'onfocus:1'.
+    expect(events).toEqual(['onfocus:1']);
+  });
+
+  it('an arrow to the parent reports that parent alone, once', async () => {
+    const { designer, events, mouseDown, topic } = await open();
+    mouseDown(2);
+    events.splice(0);
+
+    move(designer, 'LEFT');
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(1)]);
+    // Before: 'onblur:0' from deselectAll, then 'onfocus:1'.
+    expect(events).toEqual(['onfocus:1']);
+  });
+
+  it('going to a node keeps it alone selected, with one event', async () => {
+    const { designer, events, mouseDown, topic } = await open();
+    mouseDown(1);
+    mouseDown(3, { ctrlKey: true });
+    events.splice(0);
+
+    designer.goToNode(topic(4));
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(4)]);
+    // Before: 'onfocus:3', then 'onfocus:1'.
+    expect(events).toEqual(['onfocus:1']);
   });
 });

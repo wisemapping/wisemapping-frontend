@@ -128,9 +128,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   private _topicEventDispatcher: TopicEventDispatcher;
 
-  // Set while selectAll or deselectAll changes the selection of every entity: the designer fires
-  // its 'onfocus' or 'onblur' event, and pans to the last topic selected, once at the end.
-  private _selectionBatch: { panTo?: Topic } | null = null;
+  // Set while one change of the selection runs (a click, select-all, a keyboard move): the designer
+  // fires its 'onfocus' or 'onblur' event, and pans to the last topic selected, once at the end.
+  private _selectionBatch: { changed: boolean; panTo?: Topic } | null = null;
 
   private _selectionShadows: Map<Topic, HTMLTopicSelected> = new Map();
 
@@ -386,10 +386,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     const me = this;
     // Add Topic events ...
     if (!readOnly) {
-      // If a node had gained focus, clean the rest of the nodes ...
-      topic.addEvent('mousedown', (event: MouseEvent) => {
-        me.onObjectFocusEvent(topic, event);
-      });
+      // A click on the topic selects it through selectOnClick, called by the topic's own mousedown
+      // handler: a listener here would run after that handler, as a second change.
 
       // Register node listeners (the drag manager skips the central topic) ...
       this._dragManager.add(topic);
@@ -427,6 +425,19 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     return topic;
   }
 
+  /**
+   * Changes the selection for a mousedown on a topic, as one change: the topic is selected, or
+   * toggled by a Ctrl or Cmd click (`focus`), and a plain click unselects every other entity. The
+   * editor gets one event, with the selection the click leaves. Called by the topic's mousedown
+   * handler.
+   */
+  selectOnClick(topic: Topic, focus: boolean, event: MouseEvent): void {
+    this._batchSelection(() => {
+      topic.setOnFocus(focus);
+      this.onObjectFocusEvent(topic, event);
+    });
+  }
+
   onObjectFocusEvent(currentObject?: Topic, event?: MouseEvent): void {
     // Close node editors ..
     this.closeNodeEditors();
@@ -453,23 +464,36 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   }
 
   /**
-   * Sets the focus of every entity but `except` in one pass. Each entity still fires its own
-   * events, and each topic its 'topicSelected' or 'topicUnselected' on the LayoutEventBus; the
-   * designer pans to the last topic selected once, at the end, and fires one event if anything
-   * changed: 'onblur' if the selection became empty, 'onfocus' otherwise.
+   * Sets the focus of every entity but `except` in one pass, as one change (see _batchSelection).
+   * Each entity still fires its own events, and each topic its 'topicSelected' or
+   * 'topicUnselected' on the LayoutEventBus.
    */
   private _setFocusOfAll(focus: boolean, except?: Topic): void {
-    const batch: { panTo?: Topic } = {};
-    let changed = false;
-    this._selectionBatch = batch;
-    try {
+    this._batchSelection(() => {
       this.getModel()
         .getEntities()
         .forEach((object) => {
-          if (object === except) return;
-          changed = changed || object.isOnFocus() !== focus;
-          object.setOnFocus(focus);
+          if (object !== except) {
+            object.setOnFocus(focus);
+          }
         });
+    });
+  }
+
+  /**
+   * Runs `change` as one change of the selection: the designer pans to the last topic selected
+   * once, at the end, and fires one event if anything was selected or unselected: 'onblur' if the
+   * selection became empty, 'onfocus' otherwise. A batch started while another runs joins it.
+   */
+  private _batchSelection(change: () => void): void {
+    if (this._selectionBatch) {
+      change();
+      return;
+    }
+    const batch: { changed: boolean; panTo?: Topic } = { changed: false };
+    this._selectionBatch = batch;
+    try {
+      change();
     } finally {
       this._selectionBatch = null;
     }
@@ -477,17 +501,20 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     if (batch.panTo) {
       this.ensureNodeVisible(batch.panTo);
     }
-    if (changed) {
+    if (batch.changed) {
       this._fireSelectionEvent();
     }
   }
 
   /**
-   * Tells the editor that an entity was selected or unselected, unless a batch is running: the
-   * batch tells it once, at its end.
+   * Tells the editor that an entity was selected or unselected, or, while a batch runs, records
+   * it: the batch tells the editor once, at its end.
    */
   private _onSelectionChange(): void {
-    if (this._selectionBatch) return;
+    if (this._selectionBatch) {
+      this._selectionBatch.changed = true;
+      return;
+    }
     this._fireSelectionEvent();
   }
 
@@ -1824,8 +1851,17 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * where there is no previous viewport worth preserving.
    */
   goToNode(node: Topic, center = false): void {
+    this._batchSelection(() => this._selectOnly(node));
+    this._panToNode(node, center);
+  }
+
+  /** Selects the node and unselects every other entity. */
+  private _selectOnly(node: Topic): void {
     node.setOnFocus(true);
     this.onObjectFocusEvent(node);
+  }
+
+  private _panToNode(node: Topic, center: boolean): void {
     if (center) {
       this.centerNode(node);
     } else {
@@ -1854,8 +1890,12 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     if (collapsedAncestorIds.length > 0) {
       this.getActionDispatcher().shrinkBranch(collapsedAncestorIds, false);
     }
-    this.deselectAll();
-    this.goToNode(node, center);
+    // One change of the selection, then the pan: as goToNode, once the selection is cleared.
+    this._batchSelection(() => {
+      this.deselectAll();
+      this._selectOnly(node);
+    });
+    this._panToNode(node, center);
   }
 
   /**
