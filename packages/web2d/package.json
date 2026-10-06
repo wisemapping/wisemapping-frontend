@@ -29,7 +29,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run --browser chrome",
     "dev": "vite build --watch",
-    "lint": "npx eslint src test --ext js,ts && yarn typecheck:storybook && yarn typecheck:cypress",
+    "lint": "npx eslint src test eslint.config.mjs vite.config.mts cypress.config.ts jest.config.js .storybook --ext js,ts && yarn typecheck:storybook && yarn typecheck:cypress",
     "storybook": "STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p ${PORT:-6006} --quiet",
     "test": "yarn test:unit && yarn test:integration",
     "test:integration": "PORT=6106 node ../../scripts/run-storybook-cypress.js",
