@@ -31,10 +31,84 @@ const locales = fs
   .map((file) => path.basename(file, '.json'))
   .filter((lang) => lang !== 'en');
 
+// Messages a locale rightly writes as English does: brand and technical names, the copyright
+// line, and words the language uses as is (French Description, German Name, Italian Password...).
+const SAME_AS_ENGLISH: Record<string, string[]> = {
+  'accountinfo.email': ['it'],
+  'action.info': ['it'],
+  'action.rename-description-placeholder': ['fr'],
+  'action.rename-name-placeholder': ['de'],
+  'admin.auth.database': ['it'],
+  'admin.auth.facebook': locales,
+  'admin.auth.google': locales,
+  'admin.auth.ldap': locales,
+  'admin.maps.description': ['fr'],
+  'admin.maps.filter.spam': ['de', 'es', 'fr', 'it', 'pt'],
+  'admin.maps.table.actions': ['fr'],
+  'admin.maps.table.description': ['fr'],
+  'admin.maps.table.spam': ['de', 'es', 'fr', 'it', 'pt'],
+  'admin.maps.table.status': ['de', 'pt'],
+  'admin.menu.system': ['de'],
+  'admin.public': ['fr'],
+  'admin.system.app.name': ['de'],
+  'admin.system.app.port': ['de', 'fr'],
+  'admin.system.application': ['fr'],
+  'admin.system.database': ['it'],
+  'admin.system.database.info': ['it'],
+  'admin.system.db.ddl': locales,
+  'admin.system.db.driver': ['it', 'pt'],
+  'admin.system.db.url': ['de', 'es', 'fr', 'hi', 'it', 'ja', 'pt', 'ru', 'uk', 'zh', 'zh-CN'],
+  'admin.system.jvm': locales,
+  'admin.user-info.status': ['de', 'pt'],
+  'changepwd.password': ['it'],
+  'common.email': ['it'],
+  'footer.col-community': ['de'],
+  'footer.col-support': ['de'],
+  'footer.copyright': locales,
+  'footer.faq': ['it'],
+  'footer.feedback': ['de', 'it', 'pt'],
+  'footer.news': ['de'],
+  'footer.opensource': ['de', 'it'],
+  'footer.twitter': locales,
+  'forgot.email': ['it'],
+  'info.description': ['fr'],
+  'info.name': ['de'],
+  'info.title': ['it'],
+  'login.email': ['it'],
+  'login.page-title': ['it'],
+  'login.password': ['it'],
+  'map.actions': ['fr'],
+  'map.labels': ['de'],
+  'map.name': ['de'],
+  'menu.account': ['it'],
+  'registration.email': ['it'],
+  'registration.password': ['it'],
+  'role.editor': ['es', 'it', 'pt'],
+  'share.message': ['fr'],
+  'share.table.actions': ['fr'],
+};
+
 describe.each(locales)('%s messages', (lang) => {
+  const messages = readLang(lang);
+
+  // BL5-201 / BL5-218: a third of the English keys were missing from every locale and fell back to
+  // English.
+  test('has every English message', () => {
+    expect(Object.keys(en).filter((id) => !messages[id])).toEqual([]);
+  });
+
   // BL5-195: messages removed from English stayed in every locale.
   test('has no message English does not have', () => {
-    expect(Object.keys(readLang(lang)).filter((id) => !en[id])).toEqual([]);
+    expect(Object.keys(messages).filter((id) => !en[id])).toEqual([]);
+  });
+
+  test('translates every English message', () => {
+    const untranslated = Object.keys(en).filter(
+      (id) =>
+        messages[id]?.defaultMessage === en[id].defaultMessage &&
+        !SAME_AS_ENGLISH[id]?.includes(lang),
+    );
+    expect(untranslated).toEqual([]);
   });
 });
 
