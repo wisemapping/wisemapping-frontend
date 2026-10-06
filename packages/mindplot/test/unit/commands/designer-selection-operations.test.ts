@@ -180,9 +180,6 @@ describe('Designer topic style operations on a styled topic', () => {
 describe('Designer topic style operations on a topic styled by the theme', () => {
   // Like the color commands, these must keep the model value (undefined) as the old value, or
   // undo pins the theme default into the map and the topic stops following theme changes.
-  // Bug: StandaloneActionDispatcher stores the theme-resolved value (topic.getXxx()):
-  // changeFontFamilyToTopic :152, changeFontSizeToTopic :219, changeFontStyleToTopic :124,
-  // changeFontWeightToTopic :344, changeShapeTypeToTopic :257, changeConnectionStyleToTopic :269.
   const cases: [string, (designer: Designer) => void][] = [
     ['font family', (d) => d.changeFontFamily('Courier')],
     ['font size', (d) => d.changeFontSize(20)],
@@ -192,13 +189,23 @@ describe('Designer topic style operations on a topic styled by the theme', () =>
     ['connection style', (d) => d.changeConnectionStyle(LineType.POLYLINE_STRAIGHT)],
   ];
 
-  it.failing.each(cases)('leaves the %s unset after undo', async (_name, apply) => {
+  it.each(cases)('leaves the %s unset after undo, and redoes it', async (_name, apply) => {
     const harness = await build();
     select(harness, 1);
-    const before = harness.save();
-    apply(harness.designer);
+    expectUndoRoundTrip(harness, () => apply(harness.designer));
+  });
+
+  it('toggles bold and italic again after an undo', async () => {
+    const harness = await build();
+    select(harness, 1);
+    harness.designer.changeFontWeight();
+    harness.designer.changeFontStyle();
+    const toggled = [harness.topic(1).getFontWeight(), harness.topic(1).getFontStyle()];
     harness.designer.undo();
-    expect(harness.save()).toEqual(before);
+    harness.designer.undo();
+    harness.designer.changeFontWeight();
+    harness.designer.changeFontStyle();
+    expect([harness.topic(1).getFontWeight(), harness.topic(1).getFontStyle()]).toEqual(toggled);
   });
 
   it('leaves the image emoji unset after undo', async () => {

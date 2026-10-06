@@ -481,21 +481,21 @@ abstract class Topic extends NodeGraph {
     this.redraw(this.getThemeVariant(), true);
   }
 
-  setFontSize(value: number): void {
+  setFontSize(value: number | undefined): void {
     const model = this.getModel();
     model.setFontSize(value);
 
     this.redraw(this.getThemeVariant(), true);
   }
 
-  setFontStyle(value: FontStyleType): void {
+  setFontStyle(value: FontStyleType | undefined): void {
     const model = this.getModel();
     model.setFontStyle(value);
 
     this.redraw(this.getThemeVariant(), true);
   }
 
-  setFontWeight(value: FontWeightType): void {
+  setFontWeight(value: FontWeightType | undefined): void {
     const model = this.getModel();
     model.setFontWeight(value);
 

@@ -283,7 +283,7 @@ abstract class INodeModel {
     return this.getProperty('fontStyle');
   }
 
-  setFontWeight(weight: FontWeightType): void {
+  setFontWeight(weight: FontWeightType | undefined): void {
     this.putProperty('fontWeight', weight);
   }
 
