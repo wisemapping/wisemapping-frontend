@@ -142,11 +142,7 @@ describe('Designer copy and paste through the internal clipboard', () => {
     expect(harness.designer.getModel().getTopics()).toHaveLength(count);
   });
 
-  // Bug: pasteClipboard (Designer.ts:806) deep-copies the models of the parsed clipboard map, so
-  // the pasted models still belong to that map. Undo deletes them through INodeModel.deleteNode
-  // (INodeModel.ts:422), which removes a floating topic from its own map, the clipboard one: the
-  // topic stays a branch of the designer's map, and is saved although it is gone from the canvas.
-  it.failing('removes the undone pasted topics from the saved map', async () => {
+  it('removes the undone pasted topics from the saved map', async () => {
     const harness = await open();
     select(harness, 3);
     await harness.designer.copyToClipboard();
@@ -157,9 +153,7 @@ describe('Designer copy and paste through the internal clipboard', () => {
     expect(harness.save()).toEqual(before);
   });
 
-  // Same cause: the pasted topic resolves its theme from the clipboard map, which has the default
-  // (classic) theme, so on a map with another theme it is styled unlike the other topics.
-  it.failing('styles a pasted floating topic with the theme of the map', async () => {
+  it('styles a pasted floating topic with the theme of the map', async () => {
     const harness = await buildDesigner(
       SAMPLE_MAP.replace('version="tango"', 'version="tango" theme="ocean"'),
     );
@@ -184,6 +178,9 @@ describe('Designer copy and paste through the internal clipboard', () => {
       .getChildren()
       .map((child) => child.getModel().getText());
     expect(children).toEqual(['A1', 'B1']);
+    // The pasted topic belongs to the map it was pasted in.
+    const pasted = harness.topic(1).getChildren()[1].getModel();
+    expect(pasted.getMindmap()).toBe(harness.designer.getMindmap());
   });
 
   it('says so when pasting as a child with an empty clipboard or no parent', async () => {

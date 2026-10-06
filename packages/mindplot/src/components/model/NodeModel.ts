@@ -129,10 +129,14 @@ class NodeModel extends INodeModel {
     return result;
   }
 
-  deepCopy(): NodeModel {
-    const result = new NodeModel(this.getType(), this._mindmap);
+  /**
+   * A copy of this branch with new ids, owned by `mindmap` (this node's map by default): a copy
+   * pasted into another map must belong to it, or it is themed and deleted against the wrong one.
+   */
+  deepCopy(mindmap: Mindmap = this._mindmap): NodeModel {
+    const result = new NodeModel(this.getType(), mindmap);
     result._children = this._children.map((node) => {
-      const cnode = (node as NodeModel).deepCopy();
+      const cnode = (node as NodeModel).deepCopy(mindmap);
       cnode._parent = result;
       return cnode;
     });

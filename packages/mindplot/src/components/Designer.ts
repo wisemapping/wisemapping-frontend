@@ -699,7 +699,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     mindmap.addBranch(central);
 
     topics.forEach((topic) => {
-      const nodeModel: NodeModel = topic.getModel().deepCopy();
+      const nodeModel: NodeModel = topic.getModel().deepCopy(mindmap);
       nodeModel.connectTo(central);
     });
 
@@ -828,7 +828,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       const central = mindmap.getBranches()[0];
       let children = central.getChildren();
       children.forEach((c) => c.disconnect());
-      children = children.map((m: NodeModel) => m.deepCopy());
+      // The copies belong to this designer's map, not to the clipboard one ...
+      children = children.map((m: NodeModel) => m.deepCopy(this.getMindmap()));
 
       // Change position to avoid overlap ...
       children.forEach((m) => {
@@ -899,7 +900,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     const orders = layoutManager.getOrdersForNewChildren(parentId, children.length);
     const clones = children.map((child, index) => {
       child.disconnect();
-      const clone = child.deepCopy();
+      const clone = child.deepCopy(this.getMindmap());
       clone.setPosition(predicted.position.x, predicted.position.y);
       clone.setOrder(orders[index]);
       return clone;
