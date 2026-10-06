@@ -16,27 +16,24 @@
  *   limitations under the License.
  */
 
-/**
- * @type {Cypress.PluginConfig}
- */
-module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+/// <reference types="cypress" />
 
+/** The `setupNodeEvents` of the Cypress config. It leaves the config unchanged. */
+const setupNodeEvents = (on: Cypress.PluginEvents): void => {
   on('task', {
     // cy.log() only writes to the in-browser command log, which `cypress run`
     // does not print. These tasks run in the Node process, so anything they
     // write lands in the terminal / CI log. Used by the accessibility spec to
     // report axe violations without failing the run.
-    log(message) {
-      // eslint-disable-next-line no-console
+    log(message: unknown) {
       console.log(message);
       return null;
     },
-    table(rows) {
-      // eslint-disable-next-line no-console
+    table(rows: unknown) {
       console.table(rows);
       return null;
     },
   });
 };
+
+export default setupNodeEvents;

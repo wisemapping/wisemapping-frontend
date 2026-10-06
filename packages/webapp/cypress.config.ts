@@ -17,6 +17,7 @@
  */
 
 import { defineConfig } from 'cypress';
+import setupNodeEvents from './cypress/plugins';
 
 export default defineConfig({
   video: process.env.CYPRESS_VIDEO === 'true',
@@ -24,11 +25,7 @@ export default defineConfig({
     imageSnaphots: !!process.env.CYPRESS_imageSnaphots,
   },
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.ts')(on, config);
-    },
+    setupNodeEvents,
     baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:3000',
     // Add macOS compatibility options
     chromeWebSecurity: false,
