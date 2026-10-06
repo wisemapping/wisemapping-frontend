@@ -107,6 +107,12 @@
       "value": "Eliminar Cuenta"
     }
   ],
+  "accountinfo.account-settings": [
+    {
+      "type": 0,
+      "value": "Configuración de la cuenta"
+    }
+  ],
   "accountinfo.button": [
     {
       "type": 0,
@@ -141,6 +147,12 @@
     {
       "type": 0,
       "value": "Detalles Personales"
+    }
+  ],
+  "accountinfo.personal-info": [
+    {
+      "type": 0,
+      "value": "Información personal"
     }
   ],
   "accountinfo.title": [
@@ -278,37 +290,127 @@
   "activation.error.message": [
     {
       "type": 0,
-      "value": "We couldn't activate your account. The activation link may be invalid or expired. Please contact support for assistance."
+      "value": "No pudimos activar tu cuenta. Es posible que el enlace de activación no sea válido o haya caducado. Ponte en contacto con el soporte para obtener ayuda."
     }
   ],
   "activation.error.title": [
     {
       "type": 0,
-      "value": "Activation Failed"
+      "value": "Error de activación"
     }
   ],
   "activation.loading.desc": [
     {
       "type": 0,
-      "value": "Please wait while we activate your account..."
+      "value": "Espera mientras activamos tu cuenta..."
     }
   ],
   "activation.loading.title": [
     {
       "type": 0,
-      "value": "Activating Your Account"
+      "value": "Activando tu cuenta"
+    }
+  ],
+  "activation.page-title": [
+    {
+      "type": 0,
+      "value": "Activación de cuenta | WiseMapping"
     }
   ],
   "activation.success.message": [
     {
       "type": 0,
-      "value": "Your account has been activated. You can now sign in and start creating mind maps."
+      "value": "Tu cuenta ha sido activada. Ya puedes iniciar sesión y empezar a crear mapas mentales."
     }
   ],
   "activation.success.title": [
     {
       "type": 0,
-      "value": "Account Activated Successfully"
+      "value": "Cuenta activada correctamente"
+    }
+  ],
+  "admin.accounts.add-user": [
+    {
+      "type": 0,
+      "value": "Añadir nuevo usuario"
+    }
+  ],
+  "admin.accounts.create": [
+    {
+      "type": 0,
+      "value": "Crear usuario"
+    }
+  ],
+  "admin.accounts.create-user": [
+    {
+      "type": 0,
+      "value": "Crear usuario"
+    }
+  ],
+  "admin.accounts.edit-user": [
+    {
+      "type": 0,
+      "value": "Editar usuario"
+    }
+  ],
+  "admin.accounts.filters": [
+    {
+      "type": 0,
+      "value": "Búsqueda y filtros"
+    }
+  ],
+  "admin.accounts.no-users": [
+    {
+      "type": 0,
+      "value": "No se encontraron usuarios"
+    }
+  ],
+  "admin.accounts.refresh": [
+    {
+      "type": 0,
+      "value": "Actualizar"
+    }
+  ],
+  "admin.accounts.refresh-tooltip": [
+    {
+      "type": 0,
+      "value": "Actualizar datos"
+    }
+  ],
+  "admin.accounts.search": [
+    {
+      "type": 0,
+      "value": "Buscar usuarios..."
+    }
+  ],
+  "admin.accounts.subtitle": [
+    {
+      "type": 0,
+      "value": "Administra las cuentas de usuario, los permisos y la configuración"
+    }
+  ],
+  "admin.accounts.title": [
+    {
+      "type": 0,
+      "value": "Gestión de usuarios"
+    }
+  ],
+  "admin.action.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "marcar como no spam"
+    }
+  ],
+  "admin.action.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "marcar como spam"
+    }
+  ],
+  "admin.activate-user": [
+    {
+      "type": 0,
+      "value": "Activar usuario"
     }
   ],
   "admin.auth-type": [
@@ -317,22 +419,64 @@
       "value": "Tipo de autenticación"
     }
   ],
+  "admin.auth.database": [
+    {
+      "type": 0,
+      "value": "Base de datos"
+    }
+  ],
+  "admin.auth.facebook": [
+    {
+      "type": 0,
+      "value": "Facebook"
+    }
+  ],
+  "admin.auth.google": [
+    {
+      "type": 0,
+      "value": "Google"
+    }
+  ],
+  "admin.auth.ldap": [
+    {
+      "type": 0,
+      "value": "LDAP"
+    }
+  ],
+  "admin.button.update-user": [
+    {
+      "type": 0,
+      "value": "Actualizar usuario"
+    }
+  ],
+  "admin.button.updating": [
+    {
+      "type": 0,
+      "value": "Actualizando..."
+    }
+  ],
+  "admin.cancel": [
+    {
+      "type": 0,
+      "value": "Cancelar"
+    }
+  ],
   "admin.change-password": [
     {
       "type": 0,
-      "value": "Change password"
+      "value": "Cambiar contraseña"
     }
   ],
   "admin.change-password-button": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "Cambiar contraseña"
     }
   ],
   "admin.change-password-description": [
     {
       "type": 0,
-      "value": "Change password for user: "
+      "value": "Cambiar la contraseña del usuario: "
     },
     {
       "type": 1,
@@ -342,19 +486,77 @@
   "admin.change-password-title": [
     {
       "type": 0,
-      "value": "Change Password"
+      "value": "Cambiar contraseña"
     }
   ],
   "admin.close": [
     {
       "type": 0,
-      "value": "Close"
+      "value": "Cerrar"
     }
   ],
   "admin.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm Password"
+      "value": "Confirmar contraseña"
+    }
+  ],
+  "admin.confirm.delete-map": [
+    {
+      "type": 0,
+      "value": "¿Seguro que quieres eliminar el mapa \""
+    },
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "admin.confirm.spam-action": [
+    {
+      "type": 0,
+      "value": "¿Seguro que quieres "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": " este mapa?"
+    }
+  ],
+  "admin.console.description": [
+    {
+      "type": 0,
+      "value": "Administra usuarios, ajustes del sistema y configuración de la aplicación."
+    }
+  ],
+  "admin.console.page-title": [
+    {
+      "type": 0,
+      "value": "Consola de Administración | WiseMapping"
+    }
+  ],
+  "admin.console.subtitle": [
+    {
+      "type": 0,
+      "value": "Administración del sistema"
+    }
+  ],
+  "admin.console.title": [
+    {
+      "type": 0,
+      "value": "Consola de Administración"
+    }
+  ],
+  "admin.current-suspension-reason": [
+    {
+      "type": 0,
+      "value": "Motivo actual de la suspensión:"
     }
   ],
   "admin.delete": [
@@ -381,6 +583,108 @@
       "value": "Editar usuario"
     }
   ],
+  "admin.error.access-denied": [
+    {
+      "type": 0,
+      "value": "Acceso denegado. Se requieren permisos de administrador."
+    }
+  ],
+  "admin.error.create-user-failed": [
+    {
+      "type": 0,
+      "value": "No se pudo crear el usuario. Inténtalo de nuevo."
+    }
+  ],
+  "admin.error.load-users": [
+    {
+      "type": 0,
+      "value": "No se pudieron cargar los usuarios: "
+    },
+    {
+      "type": 1,
+      "value": "message"
+    }
+  ],
+  "admin.error.unknown": [
+    {
+      "type": 0,
+      "value": "Error desconocido"
+    }
+  ],
+  "admin.error.update-map-failed": [
+    {
+      "type": 0,
+      "value": "No se pudo actualizar el mapa. Inténtalo de nuevo."
+    }
+  ],
+  "admin.error.update-user-failed": [
+    {
+      "type": 0,
+      "value": "No se pudo actualizar el usuario. Inténtalo de nuevo."
+    }
+  ],
+  "admin.facebook.filter-tooltip": [
+    {
+      "type": 0,
+      "value": "Búsqueda para eliminación de datos de Facebook"
+    }
+  ],
+  "admin.facebook.lookup-button": [
+    {
+      "type": 0,
+      "value": "Buscar cuenta"
+    }
+  ],
+  "admin.facebook.lookup-not-found": [
+    {
+      "type": 0,
+      "value": "No se encontró ninguna cuenta para este ID de usuario de Facebook."
+    }
+  ],
+  "admin.facebook.remove": [
+    {
+      "type": 0,
+      "value": "Quitar"
+    }
+  ],
+  "admin.facebook.remove-button": [
+    {
+      "type": 0,
+      "value": "Quitar cuenta de Facebook"
+    }
+  ],
+  "admin.facebook.remove-confirm": [
+    {
+      "type": 0,
+      "value": "¿Quitar la asociación con Facebook de \""
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "admin.facebook.remove-dialog-title": [
+    {
+      "type": 0,
+      "value": "Quitar cuenta de Facebook"
+    }
+  ],
+  "admin.facebook.remove-warning": [
+    {
+      "type": 0,
+      "value": "Esto desconectará la autenticación de Facebook de esta cuenta. El usuario recibirá un correo electrónico para restablecer su contraseña y recuperar el acceso."
+    }
+  ],
+  "admin.facebook.removing": [
+    {
+      "type": 0,
+      "value": "Quitando..."
+    }
+  ],
   "admin.lock-status": [
     {
       "type": 0,
@@ -393,40 +697,346 @@
       "value": "Bloqueado"
     }
   ],
+  "admin.maps.clean-tooltip": [
+    {
+      "type": 0,
+      "value": "No marcado como spam"
+    }
+  ],
+  "admin.maps.creator-suspended-tooltip": [
+    {
+      "type": 0,
+      "value": "Un administrador ha suspendido la cuenta del creador del mapa"
+    }
+  ],
+  "admin.maps.delete": [
+    {
+      "type": 0,
+      "value": "Eliminar mapa"
+    }
+  ],
+  "admin.maps.description": [
+    {
+      "type": 0,
+      "value": "Descripción"
+    }
+  ],
+  "admin.maps.edit": [
+    {
+      "type": 0,
+      "value": "Editar mapa"
+    }
+  ],
+  "admin.maps.edit-title": [
+    {
+      "type": 0,
+      "value": "Editar mapa"
+    }
+  ],
+  "admin.maps.filter.date": [
+    {
+      "type": 0,
+      "value": "Rango de fechas"
+    }
+  ],
+  "admin.maps.filter.spam": [
+    {
+      "type": 0,
+      "value": "Spam"
+    }
+  ],
+  "admin.maps.locked-tooltip": [
+    {
+      "type": 1,
+      "value": "user"
+    },
+    {
+      "type": 0,
+      "value": " lo está editando en este momento"
+    }
+  ],
+  "admin.maps.mark-as-not-spam": [
+    {
+      "type": 0,
+      "value": "Marcar como no spam"
+    }
+  ],
+  "admin.maps.mark-as-spam": [
+    {
+      "type": 0,
+      "value": "Marcar como spam"
+    }
+  ],
+  "admin.maps.no-maps": [
+    {
+      "type": 0,
+      "value": "No se encontraron mapas"
+    }
+  ],
+  "admin.maps.page-title": [
+    {
+      "type": 0,
+      "value": "Gestión de mapas"
+    }
+  ],
+  "admin.maps.private-tooltip": [
+    {
+      "type": 0,
+      "value": "Solo los colaboradores pueden ver este mapa"
+    }
+  ],
+  "admin.maps.public-tooltip": [
+    {
+      "type": 0,
+      "value": "Cualquiera puede ver este mapa"
+    }
+  ],
+  "admin.maps.search": [
+    {
+      "type": 0,
+      "value": "Buscar mapas... (#123 para buscar por ID, correo electrónico para buscar por creador)"
+    }
+  ],
+  "admin.maps.search-by-email": [
+    {
+      "type": 0,
+      "value": "🔍 Buscando por correo electrónico del creador"
+    }
+  ],
+  "admin.maps.search-by-id": [
+    {
+      "type": 0,
+      "value": "🔍 Buscando por ID de mapa"
+    }
+  ],
+  "admin.maps.search-by-text": [
+    {
+      "type": 0,
+      "value": "🔍 Buscando en títulos y descripciones"
+    }
+  ],
+  "admin.maps.spam-tooltip": [
+    {
+      "type": 0,
+      "value": "Detectado como spam el "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
+  "admin.maps.spam-tooltip-no-date": [
+    {
+      "type": 0,
+      "value": "Marcado como spam"
+    }
+  ],
+  "admin.maps.suspend-user": [
+    {
+      "type": 0,
+      "value": "Suspender cuenta de usuario"
+    }
+  ],
+  "admin.maps.suspend-user.confirm": [
+    {
+      "type": 0,
+      "value": "¿Seguro que quieres suspender la cuenta del usuario \""
+    },
+    {
+      "type": 1,
+      "value": "userName"
+    },
+    {
+      "type": 0,
+      "value": "\" (ID: "
+    },
+    {
+      "type": 1,
+      "value": "userId"
+    },
+    {
+      "type": 0,
+      "value": ")? Se registrará como una suspensión por revisión manual."
+    }
+  ],
+  "admin.maps.suspend-user.confirm-button": [
+    {
+      "type": 0,
+      "value": "Suspender usuario"
+    }
+  ],
+  "admin.maps.suspend-user.title": [
+    {
+      "type": 0,
+      "value": "Suspender cuenta de usuario"
+    }
+  ],
+  "admin.maps.suspend-user.warning": [
+    {
+      "type": 0,
+      "value": "Esta acción suspenderá la cuenta del usuario y le impedirá acceder al sistema."
+    }
+  ],
+  "admin.maps.table.actions": [
+    {
+      "type": 0,
+      "value": "Acciones"
+    }
+  ],
+  "admin.maps.table.created": [
+    {
+      "type": 0,
+      "value": "Creado"
+    }
+  ],
+  "admin.maps.table.description": [
+    {
+      "type": 0,
+      "value": "Descripción"
+    }
+  ],
+  "admin.maps.table.id": [
+    {
+      "type": 0,
+      "value": "ID del mapa"
+    }
+  ],
+  "admin.maps.table.modified": [
+    {
+      "type": 0,
+      "value": "Modificado"
+    }
+  ],
+  "admin.maps.table.spam": [
+    {
+      "type": 0,
+      "value": "Spam"
+    }
+  ],
+  "admin.maps.table.spam-status": [
+    {
+      "type": 0,
+      "value": "Estado de spam"
+    }
+  ],
+  "admin.maps.table.status": [
+    {
+      "type": 0,
+      "value": "Estado"
+    }
+  ],
+  "admin.maps.table.title": [
+    {
+      "type": 0,
+      "value": "Título"
+    }
+  ],
+  "admin.maps.title": [
+    {
+      "type": 0,
+      "value": "Título"
+    }
+  ],
+  "admin.maps.unlocked-tooltip": [
+    {
+      "type": 0,
+      "value": "Nadie lo está editando en este momento"
+    }
+  ],
+  "admin.maps.view-xml": [
+    {
+      "type": 0,
+      "value": "Ver XML"
+    }
+  ],
+  "admin.maps.xml-viewer.copy": [
+    {
+      "type": 0,
+      "value": "Copiar XML formateado"
+    }
+  ],
+  "admin.maps.xml-viewer.info": [
+    {
+      "type": 0,
+      "value": "Este es el contenido XML sin procesar del mapa mental. Puedes copiarlo como copia de seguridad o para analizarlo."
+    }
+  ],
+  "admin.maps.xml-viewer.loading": [
+    {
+      "type": 0,
+      "value": "Cargando contenido XML..."
+    }
+  ],
+  "admin.maps.xml-viewer.no-content": [
+    {
+      "type": 0,
+      "value": "No hay contenido XML disponible"
+    }
+  ],
+  "admin.maps.xml-viewer.title": [
+    {
+      "type": 0,
+      "value": "Contenido XML del mapa"
+    }
+  ],
+  "admin.menu.accounts": [
+    {
+      "type": 0,
+      "value": "Cuentas"
+    }
+  ],
+  "admin.menu.maps": [
+    {
+      "type": 0,
+      "value": "Mapas"
+    }
+  ],
+  "admin.menu.system": [
+    {
+      "type": 0,
+      "value": "Sistema"
+    }
+  ],
   "admin.new-password": [
     {
       "type": 0,
-      "value": "New Password"
+      "value": "Nueva contraseña"
     }
   ],
   "admin.password-error-facebook": [
     {
       "type": 0,
-      "value": "This user is authenticated via Facebook. Password changes are not available for Facebook accounts. Please ask the user to manage their password through their Facebook account."
+      "value": "Este usuario se autentica mediante Facebook. No es posible cambiar la contraseña de las cuentas de Facebook. Pide al usuario que gestione su contraseña desde su cuenta de Facebook."
     }
   ],
   "admin.password-error-failed": [
     {
       "type": 0,
-      "value": "Failed to change password"
+      "value": "No se pudo cambiar la contraseña"
     }
   ],
   "admin.password-error-google": [
     {
       "type": 0,
-      "value": "This user is authenticated via Google. Password changes are not available for Google accounts. Please ask the user to manage their password through their Google account."
+      "value": "Este usuario se autentica mediante Google. No es posible cambiar la contraseña de las cuentas de Google. Pide al usuario que gestione su contraseña desde su cuenta de Google."
     }
   ],
   "admin.password-error-length": [
     {
       "type": 0,
-      "value": "Password must be at least 6 characters"
+      "value": "La contraseña debe tener al menos 6 caracteres"
     }
   ],
   "admin.password-error-mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match"
+      "value": "Las contraseñas no coinciden"
+    }
+  ],
+  "admin.prompt.new-user-password": [
+    {
+      "type": 0,
+      "value": "Introduce la contraseña del nuevo usuario:"
     }
   ],
   "admin.public": [
@@ -453,16 +1063,72 @@
       "value": "Activo"
     }
   ],
+  "admin.status-active-tooltip": [
+    {
+      "type": 0,
+      "value": "La cuenta está activada y en regla"
+    }
+  ],
+  "admin.status-active-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "La cuenta está activada y en regla | Haz clic para cambiar el estado"
+    }
+  ],
   "admin.status-clean": [
     {
       "type": 0,
       "value": "Limpiar"
     }
   ],
+  "admin.status-not-activated": [
+    {
+      "type": 0,
+      "value": "No activada"
+    }
+  ],
+  "admin.status-not-activated-tooltip": [
+    {
+      "type": 0,
+      "value": "El usuario aún no ha confirmado su dirección de correo electrónico"
+    }
+  ],
+  "admin.status-not-activated-tooltip-interactive": [
+    {
+      "type": 0,
+      "value": "El usuario aún no ha confirmado su dirección de correo electrónico | Haz clic para cambiar el estado"
+    }
+  ],
   "admin.status-suspended": [
     {
       "type": 0,
       "value": "Suspendido"
+    }
+  ],
+  "admin.status.click-to-change": [
+    {
+      "type": 0,
+      "value": "Haz clic para cambiar el estado"
+    }
+  ],
+  "admin.status.reason": [
+    {
+      "type": 0,
+      "value": "Motivo: "
+    },
+    {
+      "type": 1,
+      "value": "reason"
+    }
+  ],
+  "admin.status.suspended-on": [
+    {
+      "type": 0,
+      "value": "Suspendido el: "
+    },
+    {
+      "type": 1,
+      "value": "date"
     }
   ],
   "admin.suspend-user": [
@@ -519,10 +1185,70 @@
       "value": "Violación de términos"
     }
   ],
+  "admin.system.app.name": [
+    {
+      "type": 0,
+      "value": "Nombre"
+    }
+  ],
+  "admin.system.app.port": [
+    {
+      "type": 0,
+      "value": "Puerto"
+    }
+  ],
+  "admin.system.application": [
+    {
+      "type": 0,
+      "value": "Aplicación"
+    }
+  ],
+  "admin.system.database": [
+    {
+      "type": 0,
+      "value": "Base de datos"
+    }
+  ],
+  "admin.system.database.info": [
+    {
+      "type": 0,
+      "value": "Base de datos"
+    }
+  ],
+  "admin.system.db.ddl": [
+    {
+      "type": 0,
+      "value": "Hibernate DDL"
+    }
+  ],
+  "admin.system.db.driver": [
+    {
+      "type": 0,
+      "value": "Controlador"
+    }
+  ],
   "admin.system.db.url": [
     {
       "type": 0,
       "value": "URL"
+    }
+  ],
+  "admin.system.db.username": [
+    {
+      "type": 0,
+      "value": "Nombre de usuario"
+    }
+  ],
+  "admin.system.error": [
+    {
+      "type": 0,
+      "value": "No se pudo cargar la información del sistema"
+    }
+  ],
+  "admin.system.health": [
+    {
+      "type": 0,
+      "value": "Estado del sistema"
     }
   ],
   "admin.system.jvm": [
@@ -531,16 +1257,172 @@
       "value": "JVM"
     }
   ],
+  "admin.system.jvm.load": [
+    {
+      "type": 0,
+      "value": "Carga del sistema"
+    }
+  ],
+  "admin.system.jvm.processors": [
+    {
+      "type": 0,
+      "value": "Procesadores"
+    }
+  ],
+  "admin.system.jvm.start": [
+    {
+      "type": 0,
+      "value": "Hora de inicio"
+    }
+  ],
+  "admin.system.jvm.uptime": [
+    {
+      "type": 0,
+      "value": "Tiempo de actividad"
+    }
+  ],
+  "admin.system.jvm.vendor": [
+    {
+      "type": 0,
+      "value": "Proveedor"
+    }
+  ],
+  "admin.system.jvm.version": [
+    {
+      "type": 0,
+      "value": "Versión de Java"
+    }
+  ],
+  "admin.system.loading": [
+    {
+      "type": 0,
+      "value": "Cargando información del sistema..."
+    }
+  ],
   "admin.system.memory": [
     {
       "type": 0,
       "value": "Memoria"
     }
   ],
+  "admin.system.memory.info": [
+    {
+      "type": 0,
+      "value": "Memoria"
+    }
+  ],
+  "admin.system.memory.max": [
+    {
+      "type": 0,
+      "value": "Memoria máxima"
+    }
+  ],
+  "admin.system.memory.total": [
+    {
+      "type": 0,
+      "value": "Memoria total"
+    }
+  ],
+  "admin.system.memory.usage": [
+    {
+      "type": 0,
+      "value": "Uso de memoria"
+    }
+  ],
+  "admin.system.memory.used": [
+    {
+      "type": 0,
+      "value": "Memoria usada"
+    }
+  ],
+  "admin.system.mindmapMetrics.collaborations": [
+    {
+      "type": 0,
+      "value": "Colaboraciones consideradas"
+    }
+  ],
+  "admin.system.mindmapMetrics.disabled": [
+    {
+      "type": 0,
+      "value": "Establece `app.monitoring.performance.log-mindmap-listing` en true para capturar métricas."
+    }
+  ],
+  "admin.system.mindmapMetrics.entityLoads": [
+    {
+      "type": 0,
+      "value": "Cargas de entidades"
+    }
+  ],
+  "admin.system.mindmapMetrics.executedStatements": [
+    {
+      "type": 0,
+      "value": "Sentencias preparadas"
+    }
+  ],
+  "admin.system.mindmapMetrics.lastUpdated": [
+    {
+      "type": 0,
+      "value": "Última actualización"
+    }
+  ],
+  "admin.system.mindmapMetrics.mapCount": [
+    {
+      "type": 0,
+      "value": "Mapas devueltos"
+    }
+  ],
+  "admin.system.mindmapMetrics.pending": [
+    {
+      "type": 0,
+      "value": "Esperando la próxima solicitud de listado de mapas mentales para capturar métricas."
+    }
+  ],
+  "admin.system.mindmapMetrics.segments": [
+    {
+      "type": 0,
+      "value": "Segmentos de ejecución"
+    }
+  ],
+  "admin.system.mindmapMetrics.title": [
+    {
+      "type": 0,
+      "value": "Rendimiento del listado de mapas mentales"
+    }
+  ],
+  "admin.system.mindmapMetrics.topQueries": [
+    {
+      "type": 0,
+      "value": "Consultas principales"
+    }
+  ],
+  "admin.system.mindmapMetrics.totalTime": [
+    {
+      "type": 0,
+      "value": "Tiempo total (ms)"
+    }
+  ],
   "admin.system.refresh": [
     {
       "type": 0,
       "value": "Actualizar"
+    }
+  ],
+  "admin.system.statistics": [
+    {
+      "type": 0,
+      "value": "Estadísticas"
+    }
+  ],
+  "admin.system.stats.mindmaps": [
+    {
+      "type": 0,
+      "value": "Total de mapas mentales"
+    }
+  ],
+  "admin.system.stats.users": [
+    {
+      "type": 0,
+      "value": "Total de usuarios"
     }
   ],
   "admin.system.title": [
@@ -553,6 +1435,106 @@
     {
       "type": 0,
       "value": "Reactivar usuario"
+    }
+  ],
+  "admin.user-info.auth-type": [
+    {
+      "type": 0,
+      "value": "Autenticación"
+    }
+  ],
+  "admin.user-info.created": [
+    {
+      "type": 0,
+      "value": "Creado"
+    }
+  ],
+  "admin.user-info.status": [
+    {
+      "type": 0,
+      "value": "Estado"
+    }
+  ],
+  "admin.user-info.suspension-reason": [
+    {
+      "type": 0,
+      "value": "Motivo de la suspensión:"
+    }
+  ],
+  "admin.user-info.title": [
+    {
+      "type": 0,
+      "value": "Información del usuario"
+    }
+  ],
+  "admin.user-info.total-maps": [
+    {
+      "type": 0,
+      "value": "Total de mapas"
+    }
+  ],
+  "admin.user-maps-dialog.loading": [
+    {
+      "type": 0,
+      "value": "Cargando usuario..."
+    }
+  ],
+  "admin.user-maps-dialog.no-maps": [
+    {
+      "type": 0,
+      "value": "Este usuario no tiene mapas."
+    }
+  ],
+  "admin.user-maps-dialog.title": [
+    {
+      "type": 0,
+      "value": "Mapas de "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " (ID: #"
+    },
+    {
+      "type": 1,
+      "value": "id"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
+  "admin.validation.email-invalid": [
+    {
+      "type": 0,
+      "value": "Formato de correo electrónico no válido"
+    }
+  ],
+  "admin.validation.email-required": [
+    {
+      "type": 0,
+      "value": "El correo electrónico es obligatorio"
+    }
+  ],
+  "admin.validation.firstname-required": [
+    {
+      "type": 0,
+      "value": "El nombre es obligatorio"
+    }
+  ],
+  "admin.validation.lastname-required": [
+    {
+      "type": 0,
+      "value": "El apellido es obligatorio"
+    }
+  ],
+  "admin.view-user-maps": [
+    {
+      "type": 0,
+      "value": "Ver mapas del usuario"
     }
   ],
   "admin.view-xml": [
@@ -585,6 +1567,24 @@
       "value": "La contraseña no coincide. Inténtalo de nuevo."
     }
   ],
+  "changepwd.password-max-length": [
+    {
+      "type": 0,
+      "value": "La contraseña no puede tener más de 39 caracteres."
+    }
+  ],
+  "changepwd.password-min-length": [
+    {
+      "type": 0,
+      "value": "La contraseña debe tener al menos 8 caracteres."
+    }
+  ],
+  "changepwd.password-required": [
+    {
+      "type": 0,
+      "value": "La contraseña no puede estar vacía."
+    }
+  ],
   "changepwd.title": [
     {
       "type": 0,
@@ -595,6 +1595,18 @@
     {
       "type": 0,
       "value": "Permitir notificaciones por correo"
+    }
+  ],
+  "common.cancel": [
+    {
+      "type": 0,
+      "value": "Cancelar"
+    }
+  ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Cerrar"
     }
   ],
   "common.delete": [
@@ -609,6 +1621,12 @@
       "value": "Eliminar etiqueta"
     }
   ],
+  "common.disabled": [
+    {
+      "type": 0,
+      "value": "Desactivado"
+    }
+  ],
   "common.email": [
     {
       "type": 0,
@@ -619,6 +1637,12 @@
     {
       "type": 0,
       "value": "Correos electrónicos"
+    }
+  ],
+  "common.enabled": [
+    {
+      "type": 0,
+      "value": "Activado"
     }
   ],
   "common.first-name": [
@@ -657,6 +1681,12 @@
       "value": "Lista de mapas"
     }
   ],
+  "common.na": [
+    {
+      "type": 0,
+      "value": "N/D"
+    }
+  ],
   "common.open-drawer": [
     {
       "type": 0,
@@ -685,6 +1715,12 @@
     {
       "type": 0,
       "value": "Reintentar"
+    }
+  ],
+  "common.save": [
+    {
+      "type": 0,
+      "value": "Guardar"
     }
   ],
   "common.settings": [
@@ -798,19 +1834,25 @@
   "error.go-back": [
     {
       "type": 0,
-      "value": "Go Back"
+      "value": "Volver"
     }
   ],
   "error.go-home": [
     {
       "type": 0,
-      "value": "Go to Home"
+      "value": "Ir al inicio"
     }
   ],
   "error.go-to-login": [
     {
       "type": 0,
-      "value": "Sign In"
+      "value": "Iniciar sesión"
+    }
+  ],
+  "error.invalid-map-id": [
+    {
+      "type": 0,
+      "value": "ID de mapa no válido"
     }
   ],
   "error.map-title-required": [
@@ -968,13 +2010,13 @@
   "footer.faq": [
     {
       "type": 0,
-      "value": "F.A.Q."
+      "value": "Preguntas frecuentes"
     }
   ],
   "footer.feedback": [
     {
       "type": 0,
-      "value": "Feedback"
+      "value": "Comentarios"
     }
   ],
   "footer.news": [
@@ -1312,7 +2354,7 @@
   "login.generic-error": [
     {
       "type": 0,
-      "value": "An error occurred during authentication. Please try again."
+      "value": "Se produjo un error durante la autenticación. Inténtalo de nuevo."
     }
   ],
   "login.google.button": [
@@ -1324,7 +2366,7 @@
   "login.oauth-error": [
     {
       "type": 0,
-      "value": "OAuth authentication failed. Please try again or use a different sign-in method."
+      "value": "Falló la autenticación OAuth. Inténtalo de nuevo o usa otro método de inicio de sesión."
     }
   ],
   "login.page-title": [
@@ -1348,7 +2390,7 @@
   "login.server-error": [
     {
       "type": 0,
-      "value": "An unexpected error occurred. Please try again later."
+      "value": "Se produjo un error inesperado. Inténtalo de nuevo más tarde."
     }
   ],
   "login.shared-map-notice": [
@@ -1426,25 +2468,25 @@
   "maps.auth-required-default-message": [
     {
       "type": 0,
-      "value": "You need to sign in to view your maps."
+      "value": "Debes iniciar sesión para ver tus mapas."
     }
   ],
   "maps.auth-required-heading": [
     {
       "type": 0,
-      "value": "Sign in to access your maps"
+      "value": "Inicia sesión para acceder a tus mapas"
     }
   ],
   "maps.auth-required-login": [
     {
       "type": 0,
-      "value": "Go to login"
+      "value": "Ir a iniciar sesión"
     }
   ],
   "maps.auth-required-title": [
     {
       "type": 0,
-      "value": "Sign In Required | WiseMapping"
+      "value": "Inicio de sesión requerido | WiseMapping"
     }
   ],
   "maps.choose-file": [
@@ -1844,25 +2886,25 @@
   "registration.success.already-activated": [
     {
       "type": 0,
-      "value": "Already activated your account?"
+      "value": "¿Ya activaste tu cuenta?"
     }
   ],
   "registration.success.check-spam": [
     {
       "type": 0,
-      "value": "If you don't see the email, please check your spam folder."
+      "value": "Si no ves el correo electrónico, revisa tu carpeta de spam."
     }
   ],
   "registration.success.email-sent": [
     {
       "type": 0,
-      "value": "We've sent an activation email to your inbox. Please check your email and click on the activation link to activate your account."
+      "value": "Te hemos enviado un correo electrónico de activación. Revisa tu bandeja de entrada y haz clic en el enlace de activación para activar tu cuenta."
     }
   ],
   "registration.success.title": [
     {
       "type": 0,
-      "value": "Registration Successful!"
+      "value": "¡Registro completado!"
     }
   ],
   "registration.title": [
@@ -1886,67 +2928,67 @@
   "reset-password.confirm-password": [
     {
       "type": 0,
-      "value": "Confirm new password"
+      "value": "Confirmar nueva contraseña"
     }
   ],
   "reset-password.desc": [
     {
       "type": 0,
-      "value": "Enter your new password below."
+      "value": "Introduce tu nueva contraseña a continuación."
     }
   ],
   "reset-password.invalid-link": [
     {
       "type": 0,
-      "value": "Invalid password reset link. Please request a new one."
+      "value": "El enlace para restablecer la contraseña no es válido. Solicita uno nuevo."
     }
   ],
   "reset-password.mismatch": [
     {
       "type": 0,
-      "value": "Passwords do not match."
+      "value": "Las contraseñas no coinciden."
     }
   ],
   "reset-password.page-title": [
     {
       "type": 0,
-      "value": "Reset Password | WiseMapping"
+      "value": "Restablecer contraseña | WiseMapping"
     }
   ],
   "reset-password.password": [
     {
       "type": 0,
-      "value": "New password"
+      "value": "Nueva contraseña"
     }
   ],
   "reset-password.request-new": [
     {
       "type": 0,
-      "value": "Request new link"
+      "value": "Solicitar un nuevo enlace"
     }
   ],
   "reset-password.submit": [
     {
       "type": 0,
-      "value": "Set new password"
+      "value": "Establecer nueva contraseña"
     }
   ],
   "reset-password.title": [
     {
       "type": 0,
-      "value": "Set a new password"
+      "value": "Establece una nueva contraseña"
     }
   ],
   "reset-password.too-long": [
     {
       "type": 0,
-      "value": "Password must be less than 40 characters."
+      "value": "La contraseña debe tener menos de 40 caracteres."
     }
   ],
   "reset-password.too-short": [
     {
       "type": 0,
-      "value": "Password must be at least 8 characters."
+      "value": "La contraseña debe tener al menos 8 caracteres."
     }
   ],
   "role.editor": [
@@ -2018,19 +3060,19 @@
   "share.table.actions": [
     {
       "type": 0,
-      "value": "Actions"
+      "value": "Acciones"
     }
   ],
   "share.table.collaborator": [
     {
       "type": 0,
-      "value": "Collaborator"
+      "value": "Colaborador"
     }
   ],
   "share.table.role": [
     {
       "type": 0,
-      "value": "Role"
+      "value": "Rol"
     }
   ],
   "theme.dark": [
