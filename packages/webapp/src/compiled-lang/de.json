@@ -2323,6 +2323,26 @@
       "value": "Hilfe beim Übersetzen"
     }
   ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "Wir brauchen deine Hilfe! Wenn du interessiert bist, schreib uns eine E-Mail an "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "Hilf uns, weitere Sprachen zu unterstützen!"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,

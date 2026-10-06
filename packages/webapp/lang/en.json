@@ -1079,6 +1079,12 @@
   "language.help": {
     "defaultMessage": "Help to Translate"
   },
+  "language.help-dialog.description": {
+    "defaultMessage": "We need your help! If you are interested, send us an email at {email}."
+  },
+  "language.help-dialog.title": {
+    "defaultMessage": "Help us support more languages!"
+  },
   "login.desc": {
     "defaultMessage": "Log into your account"
   },

@@ -2315,6 +2315,26 @@
       "value": "अनुवाद में सहायता करें"
     }
   ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "हमें आपकी मदद चाहिए! यदि आप रुचि रखते हैं, तो हमें "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": " पर ईमेल भेजें।"
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "अधिक भाषाओं का समर्थन करने में हमारी मदद करें!"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,

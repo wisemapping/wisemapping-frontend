@@ -2315,6 +2315,26 @@
       "value": "翻訳を支援"
     }
   ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "皆さんのご協力が必要です！ご興味のある方は "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": " までメールでご連絡ください。"
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "より多くの言語への対応にご協力ください！"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,

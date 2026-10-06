@@ -326,6 +326,12 @@
   "language.help": {
     "defaultMessage": "ساعد في الترجمة"
   },
+  "language.help-dialog.title": {
+    "defaultMessage": "ساعدنا في دعم المزيد من اللغات!"
+  },
+  "language.help-dialog.description": {
+    "defaultMessage": "نحن بحاجة إلى مساعدتك! إذا كنت مهتمًا، فراسلنا عبر البريد الإلكتروني على {email}."
+  },
   "login.desc": {
     "defaultMessage": "تسجيل الدخول إلى حسابك"
   },

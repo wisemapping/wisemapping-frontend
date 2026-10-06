@@ -326,6 +326,12 @@
   "language.help": {
     "defaultMessage": "帮助翻译"
   },
+  "language.help-dialog.title": {
+    "defaultMessage": "帮助我们支持更多语言！"
+  },
+  "language.help-dialog.description": {
+    "defaultMessage": "我们需要您的帮助！如果您感兴趣，请发送电子邮件至 {email}。"
+  },
   "login.desc": {
     "defaultMessage": "登录您的账户"
   },

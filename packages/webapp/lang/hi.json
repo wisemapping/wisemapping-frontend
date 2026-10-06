@@ -326,6 +326,12 @@
   "language.help": {
     "defaultMessage": "अनुवाद में सहायता करें"
   },
+  "language.help-dialog.title": {
+    "defaultMessage": "अधिक भाषाओं का समर्थन करने में हमारी मदद करें!"
+  },
+  "language.help-dialog.description": {
+    "defaultMessage": "हमें आपकी मदद चाहिए! यदि आप रुचि रखते हैं, तो हमें {email} पर ईमेल भेजें।"
+  },
   "login.desc": {
     "defaultMessage": "अपने खाते में लॉग इन करें"
   },

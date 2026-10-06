@@ -59,6 +59,14 @@ describe('English messages', () => {
     expect(JSON.parse(fs.readFileSync(out, 'utf8'))).toEqual(en);
   }, 60000);
 
+  test('the call for translators is translatable', () => {
+    // HelpUsToTranslateDialog (language-menu) was written in English only.
+    expect(en['language.help-dialog.title']?.defaultMessage).toBe(
+      'Help us support more languages!',
+    );
+    expect(en['language.help-dialog.description']?.defaultMessage).toContain('{email}');
+  });
+
   test('names the duplicated map with the title in the phrase', () => {
     // The duplicate dialog formats its title with { title }; see duplicate-copy-title.test.ts.
     expect(en['duplicate.copy-title'].defaultMessage).toBe('Copy of {title}');

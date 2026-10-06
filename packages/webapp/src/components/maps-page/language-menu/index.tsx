@@ -140,15 +140,24 @@ type HelpUsToTranslateDialogProp = {
 const HelpUsToTranslateDialog = ({ onClose }: HelpUsToTranslateDialogProp) => {
   return (
     <Dialog open={true} onClose={onClose}>
-      <DialogTitle>Help us to support more languages !</DialogTitle>
+      <DialogTitle>
+        <FormattedMessage
+          id="language.help-dialog.title"
+          defaultMessage="Help us support more languages!"
+        />
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          We need your help !. If you are interested, send us an email to team@wisemapping.com.
+          <FormattedMessage
+            id="language.help-dialog.description"
+            defaultMessage="We need your help! If you are interested, send us an email at {email}."
+            values={{ email: 'team@wisemapping.com' }}
+          />
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={onClose}>
-          Close
+          <FormattedMessage id="common.close" defaultMessage="Close" />
         </Button>
       </DialogActions>
     </Dialog>

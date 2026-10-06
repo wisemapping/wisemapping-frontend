@@ -2319,6 +2319,26 @@
       "value": "帮助翻译"
     }
   ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "我们需要您的帮助！如果您感兴趣，请发送电子邮件至 "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "。"
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "帮助我们支持更多语言！"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,

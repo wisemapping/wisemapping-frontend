@@ -2319,6 +2319,26 @@
       "value": "Ajudar a traduzir"
     }
   ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "Precisamos da sua ajuda! Se tiver interesse, envie-nos um e-mail para "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "Ajude-nos a oferecer suporte a mais idiomas!"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,

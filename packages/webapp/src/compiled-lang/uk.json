@@ -2315,6 +2315,26 @@
       "value": "Допомогти з перекладом"
     }
   ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "Нам потрібна ваша допомога! Якщо вам цікаво, напишіть нам на "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "Допоможіть нам підтримувати більше мов!"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,

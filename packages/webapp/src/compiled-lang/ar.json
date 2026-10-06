@@ -2319,6 +2319,26 @@
       "value": "ساعد في الترجمة"
     }
   ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "نحن بحاجة إلى مساعدتك! إذا كنت مهتمًا، فراسلنا عبر البريد الإلكتروني على "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "ساعدنا في دعم المزيد من اللغات!"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,

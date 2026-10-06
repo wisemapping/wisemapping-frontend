@@ -2315,6 +2315,26 @@
       "value": "Помочь переводить"
     }
   ],
+  "language.help-dialog.description": [
+    {
+      "type": 0,
+      "value": "Нам нужна ваша помощь! Если вам интересно, напишите нам на "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "language.help-dialog.title": [
+    {
+      "type": 0,
+      "value": "Помогите нам поддерживать больше языков!"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,

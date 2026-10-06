@@ -131,11 +131,10 @@ describe('LanguageMenu', () => {
     fireEvent.click(within(menu).getByRole('menuitem', { name: 'Help to Translate' }));
 
     const dialog = await screen.findByRole('dialog');
-    expect(within(dialog).getByText('Help us to support more languages !')).toBeTruthy();
+    expect(within(dialog).getByText('Help us support more languages!')).toBeTruthy();
+    expect(within(dialog).getByText(/team@wisemapping\.com/)).toBeTruthy();
     fireEvent.click(within(dialog).getByRole('button', { name: 'Close' }));
-    await waitFor(() =>
-      expect(screen.queryByText('Help us to support more languages !')).toBeNull(),
-    );
+    await waitFor(() => expect(screen.queryByText('Help us support more languages!')).toBeNull());
   });
 });
 
