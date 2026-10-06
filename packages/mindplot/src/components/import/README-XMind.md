@@ -10,7 +10,7 @@ The XMind Importer converts XMind mind maps into WiseMapping maps. It reads both
 
 - **Topic Hierarchy**: Attached topics keep their parent-child relationships; detached topics become floating topics at their XMind position
 - **Notes**: The plain text of XMind notes (`notes.plain.content`, `<notes><plain>`) becomes a plain text WiseMapping note
-- **Labels**: JSON labels are added to the note as `🏷️ label-name`
+- **Labels**: Labels (`labels`, `<labels><label>`) are added to the note as `🏷️ label-name`
 - **Markers**: XMind markers become WiseMapping icons (see [Icons](#-icons))
 - **Links**: Topic hyperlinks become links; links to a topic of the file (`xmind:#id`) or to an attachment (`xap:`) are skipped
 - **Relationships**: Relationships between two imported topics are kept
@@ -24,7 +24,7 @@ The XMind Importer converts XMind mind maps into WiseMapping maps. It reads both
 | Topics                            | Topics with hierarchy                       | JSON, XML |
 | Detached topics                   | Floating topics                             | JSON, XML |
 | Notes                             | Plain text note                             | JSON, XML |
-| Labels                            | `🏷️ label-name` in the note                 | JSON      |
+| Labels                            | `🏷️ label-name` in the note                 | JSON, XML |
 | Markers (`markers`/`marker-refs`) | `<eicon>` emoji icons or `<icon>` SVG icons | JSON, XML |
 | Hyperlinks (`href`)               | Links                                       | JSON, XML |
 | Relationships                     | Relationships                               | JSON, XML |
@@ -47,7 +47,7 @@ In the XML format, the markers of a topic are its `<marker-refs><marker-ref mark
 
 ## 📝 Note Content Strategy
 
-WiseMapping supports one note per topic, so the XMind note and the labels of a JSON topic are combined into a single note:
+WiseMapping supports one note per topic, so the XMind note and the labels of a topic are combined into a single note:
 
 ```
 [XMind Note Content]
@@ -113,7 +113,7 @@ try {
 - **Single Note Constraint**: The note and the labels are combined into one note; rich text notes import as their plain text
 - **Style Simplification**: Only the fill color of JSON topics is imported; the other topics use the line shape, and the map the prism theme
 - **Positions**: Attached topics are laid out again; only floating topics keep their XMind position
-- **Not imported**: Labels of the XML format, boundaries, summaries, images, numbering and relationship titles
+- **Not imported**: Boundaries, summaries, images, numbering and relationship titles
 
 ## 📚 Related Documentation
 

@@ -204,6 +204,33 @@ describe('XMindImporter (XML format) content', () => {
     expect(iconsOf(root)).toEqual(['🔴']);
     expect(root.findFeatureByType('icon').map((icon) => icon.getIconType())).toEqual(['task_100']);
   });
+
+  // XMind 8 writes the labels of a topic as <labels><label>text</label></labels>.
+  test('adds the labels to the note, as the JSON format does (BL5-252)', async () => {
+    const xmind = `<?xml version="1.0" encoding="UTF-8"?>
+<xmap-content xmlns="urn:xmind:xmap:xmlns:content:2.0" version="2.0">
+  <sheet id="sheet1">
+    <topic id="root">
+      <title>Root</title>
+      <notes><plain>The note</plain></notes>
+      <labels><label>Label A</label><label>Label B</label></labels>
+      <children>
+        <topics type="attached">
+          <topic id="a">
+            <title>Only labels</title>
+            <labels><label>Child label</label></labels>
+          </topic>
+        </topics>
+      </children>
+    </topic>
+  </sheet>
+</xmap-content>`;
+
+    const mindmap = loadMindmap(await new XMindImporter(xmind).import('test'));
+
+    expect(noteOf(findByText(mindmap, 'Root'))).toBe('The note\n🏷️ Label A, 🏷️ Label B');
+    expect(noteOf(findByText(mindmap, 'Only labels'))).toBe('🏷️ Child label');
+  });
 });
 
 describe('XMindImporter central topic and links (JSON format)', () => {

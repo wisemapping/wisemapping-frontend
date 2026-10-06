@@ -934,8 +934,15 @@ class XMindImporter extends Importer {
       }
     }
 
-    // Note: XMind XML format doesn't have labels, only JSON format does
-    // Labels would be added at the bottom if present
+    // Labels (<labels><label>text</label></labels>) at the bottom, as in the JSON format
+    const labelsElement = XMindImporter.childElement(xmlTopic, 'labels');
+    const labelElements = labelsElement ? XMindImporter.childElements(labelsElement, 'label') : [];
+    const labels = labelElements
+      .map((label) => label.textContent?.trim() ?? '')
+      .filter((label) => label.length > 0);
+    if (labels.length > 0) {
+      parts.push(labels.map((label) => `🏷️ ${label}`).join(', '));
+    }
 
     return parts.length > 0 ? parts.join('\n') : null;
   }
