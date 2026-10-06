@@ -79,12 +79,16 @@ class RESTPersistenceManager extends PersistenceManager {
   private _pendingSaves = new Map<string, PendingSave>();
 
   private _scheduleNextSave(): void {
-    if (this._saveInFlight || this._pendingSaves.size === 0) {
+    if (this._saveInFlight) {
       return;
     }
 
     const pendingSaves = Array.from(this._pendingSaves.values());
     const next = pendingSaves.find((p) => p.urgent) ?? pendingSaves[0];
+    // Nothing pending.
+    if (!next) {
+      return;
+    }
     const wait =
       next.urgent || this._lastSaveStartedAt === undefined
         ? 0

@@ -40,7 +40,8 @@ const lowerBound = (list: Candidate[], value: number): number => {
   let high = list.length;
   while (low < high) {
     const middle = Math.floor((low + high) / 2);
-    if (list[middle].border < value) {
+    // middle < high <= list.length
+    if (list[middle]!.border < value) {
       low = middle + 1;
     } else {
       high = middle;
@@ -75,13 +76,14 @@ class DragConnector {
 
     // Must be disconnected from their current connection ?.
     const currentConnection = dragTopic.getConnectedToTopic();
-    if (currentConnection && (candidates.length === 0 || candidates[0] !== currentConnection)) {
+    const [best] = candidates;
+    if (currentConnection && best !== currentConnection) {
       dragTopic.disconnect(this._workspace);
     }
 
     // Finally, connect nodes ...
-    if (!dragTopic.isConnected() && candidates.length > 0) {
-      dragTopic.connectTo(candidates[0]);
+    if (!dragTopic.isConnected() && best) {
+      dragTopic.connectTo(best);
     }
   }
 
@@ -138,10 +140,14 @@ class DragConnector {
     }
     // A pixel more on each side: inReach, on the topics as they are, has the last word.
     const inRange: Candidate[] = [];
-    for (let i = lowerBound(list, from - 1); i < list.length && list[i].border <= to + 1; i++) {
-      if (inReach(list[i].topic)) {
-        inRange.push(list[i]);
+    let i = lowerBound(list, from - 1);
+    let candidate = list[i];
+    while (candidate && candidate.border <= to + 1) {
+      if (inReach(candidate.topic)) {
+        inRange.push(candidate);
       }
+      i += 1;
+      candidate = list[i];
     }
     // Back in the order of the topic list, which the sort below keeps for equal weights.
     const topics = inRange.sort((a, b) => a.index - b.index).map(({ topic }) => topic);

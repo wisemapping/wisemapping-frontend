@@ -866,14 +866,8 @@ abstract class Topic extends NodeGraph {
 
   getNoteValue(): string | null {
     const model = this.getModel();
-    const notes = model.findFeatureByType('note');
-
-    let result: string | null = null;
-    if (notes.length > 0) {
-      result = notes[0].getText();
-    }
-
-    return result;
+    const [note] = model.findFeatureByType('note');
+    return note ? note.getText() : null;
   }
 
   setNoteValue(value: string | undefined): void {
@@ -881,16 +875,15 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     // Fetched only when there is something to dispatch: clearing a missing note needs none.
     const dispatcher = () => this.getActionDispatcher();
-    const notes = model.findFeatureByType('note');
+    const [note] = model.findFeatureByType('note');
 
     if (value == null) {
       // Nothing to clear when the topic has no note ...
-      if (notes.length > 0) {
-        const featureId = notes[0].getId();
-        dispatcher().removeFeatureFromTopic(topicId, featureId);
+      if (note) {
+        dispatcher().removeFeatureFromTopic(topicId, note.getId());
       }
-    } else if (notes.length > 0) {
-      dispatcher().changeFeatureToTopic(topicId, notes[0].getId(), {
+    } else if (note) {
+      dispatcher().changeFeatureToTopic(topicId, note.getId(), {
         text: value,
         contentType: 'html', // Rich text editor always saves HTML
       });
@@ -905,12 +898,8 @@ abstract class Topic extends NodeGraph {
   getLinkValue(): string | undefined {
     const model = this.getModel();
     // @param {mindplot.model.LinkModel[]} links
-    const links = model.findFeatureByType('link');
-    let result: string | undefined;
-    if (links.length > 0) {
-      result = links[0].getUrl();
-    }
-    return result;
+    const [link] = model.findFeatureByType('link');
+    return link?.getUrl();
   }
 
   setLinkValue(value: string | undefined) {
@@ -918,16 +907,15 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     // Fetched only when there is something to dispatch: clearing a missing link needs none.
     const dispatcher = () => this.getActionDispatcher();
-    const links = model.findFeatureByType('link');
+    const [link] = model.findFeatureByType('link');
 
     if (value == null) {
       // Nothing to clear when the topic has no link ...
-      if (links.length > 0) {
-        const featureId = links[0].getId();
-        dispatcher().removeFeatureFromTopic(topicId, featureId);
+      if (link) {
+        dispatcher().removeFeatureFromTopic(topicId, link.getId());
       }
-    } else if (links.length > 0) {
-      dispatcher().changeFeatureToTopic(topicId, links[0].getId(), {
+    } else if (link) {
+      dispatcher().changeFeatureToTopic(topicId, link.getId(), {
         url: value,
       });
     } else {
@@ -1611,18 +1599,10 @@ abstract class Topic extends NodeGraph {
   }
 
   isChildTopic(childTopic: Topic): boolean {
-    let result = this.getId() === childTopic.getId();
-    if (!result) {
-      const children = this.getChildren();
-      for (let i = 0; i < children.length; i++) {
-        const parent = children[i];
-        result = parent.isChildTopic(childTopic);
-        if (result) {
-          break;
-        }
-      }
-    }
-    return result;
+    return (
+      this.getId() === childTopic.getId() ||
+      this.getChildren().some((child) => child.isChildTopic(childTopic))
+    );
   }
 
   private getStrokeStyle(borderStyle: string | null): StrokeStyle | null {

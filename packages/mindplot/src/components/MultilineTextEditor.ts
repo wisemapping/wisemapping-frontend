@@ -329,9 +329,9 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
       'font-weight': fontStyle.weight,
       color: fontStyle.color!,
     };
-    Object.keys(cssStyle).forEach((prop) => {
-      DOMUtils.css(inputField, prop, cssStyle[prop]);
-      DOMUtils.css(this._containerElem, prop, cssStyle[prop]);
+    Object.entries(cssStyle).forEach(([prop, value]) => {
+      DOMUtils.css(inputField, prop, value);
+      DOMUtils.css(this._containerElem, prop, value);
     });
   }
 

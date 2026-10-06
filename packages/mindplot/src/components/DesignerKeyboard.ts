@@ -523,7 +523,8 @@ class DesignerKeyboard extends Keyboard {
 
   private _goToSideChild(designer: Designer, node: Topic, side: 'LEFT' | 'RIGHT'): boolean {
     const children = node.getChildren();
-    if (children.length === 0) {
+    const [firstChild] = children;
+    if (!firstChild) {
       return false;
     }
 
@@ -544,11 +545,7 @@ class DesignerKeyboard extends Keyboard {
       }
     });
 
-    if (!target) {
-      [target] = children;
-    }
-
-    this._goToNode(designer, target);
+    this._goToNode(designer, target ?? firstChild);
     return true;
   }
 
@@ -563,10 +560,6 @@ class DesignerKeyboard extends Keyboard {
 
   private _goToChild(designer: Designer, node: Topic, preferredSide?: 'LEFT' | 'RIGHT'): boolean {
     const children = node.getChildren();
-    if (children.length === 0) {
-      return false;
-    }
-
     let candidates = children;
     if (preferredSide) {
       // x === 0 is the right half, as in _handleHorizontalBranchMove; it used to count on both.
@@ -579,7 +572,11 @@ class DesignerKeyboard extends Keyboard {
 
     const orientation = node.getOrientation();
     const useHorizontalDistance = orientation === 'vertical';
-    let target = candidates[0];
+    // Empty only when the node has no children.
+    let [target] = candidates;
+    if (!target) {
+      return false;
+    }
     let minDistance = Math.abs(
       (useHorizontalDistance ? target.getPosition().x : target.getPosition().y) -
         (useHorizontalDistance ? node.getPosition().x : node.getPosition().y),

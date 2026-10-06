@@ -644,13 +644,13 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   shrinkSelectedBranch() {
     const nodes = this.getModel().filterSelectedTopics();
-    if (nodes.length <= 0 || nodes.length !== 1) {
+    const [topic] = nodes;
+    if (!topic || nodes.length !== 1) {
       // If there are more than one node selected,
       $notify($msg('ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE'));
       return;
     }
     // Execute event ...
-    const topic = nodes[0];
     if (topic.getType() !== 'CentralTopic') {
       this._actionDispatcher.shrinkBranch([topic.getId()], !topic.areChildrenShrunken());
     }
@@ -825,7 +825,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       const mindmap = this._parseClipboardMindmap(text);
 
       // Remove reference to the parent mindmap and clean up to support multiple copy of the nodes ...
-      const central = mindmap.getBranches()[0];
+      const [central] = mindmap.getBranches();
+      $assert(central, 'The clipboard map has no central topic');
       let children = central.getChildren();
       children.forEach((c) => c.disconnect());
       // The copies belong to this designer's map, not to the clipboard one ...
@@ -883,8 +884,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       return;
     }
 
-    const branches = this._parseClipboardMindmap(text).getBranches();
-    if (branches.length === 0) {
+    const [central] = this._parseClipboardMindmap(text).getBranches();
+    if (!central) {
       $notify($msg('CLIPBOARD_IS_EMPTY'));
       return;
     }
@@ -900,7 +901,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // in clipboard order ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
     const predicted = layoutManager.predict(parentId, null, null);
-    const children = branches[0].getChildren();
+    const children = central.getChildren();
     const orders = layoutManager.getOrdersForNewChildren(parentId, children.length);
     const clones = children.map((child, index) => {
       child.disconnect();
@@ -919,7 +920,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   createChildForSelectedNode(): void {
     const nodes = this.getModel().filterSelectedTopics();
-    if (nodes.length <= 0) {
+    const [parentTopic] = nodes;
+    if (!parentTopic) {
       // If there are more than one node selected,
       $notify($msg('ONE_TOPIC_MUST_BE_SELECTED'));
       return;
@@ -931,7 +933,6 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     }
 
     // Add new node ...
-    const parentTopic = nodes[0];
     const parentTopicId = parentTopic.getId();
     const childModel = this._createChildModel(parentTopic);
 
@@ -961,7 +962,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   createSiblingForSelectedNode(): void {
     const nodes = this.getModel().filterSelectedTopics();
-    if (nodes.length <= 0) {
+    const [topic] = nodes;
+    if (!topic) {
       // If there are no nodes selected,
       $notify($msg('ONE_TOPIC_MUST_BE_SELECTED'));
       return;
@@ -971,8 +973,6 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       $notify($msg('ONLY_ONE_TOPIC_MUST_BE_SELECTED'));
       return;
     }
-
-    const topic = nodes[0];
     if (!topic.getOutgoingConnectedTopic()) {
       // Central topic and isolated topics ....
       // Central topic doesn't have siblings ...
@@ -1036,8 +1036,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   }
 
   showRelPivot(event: MouseEvent): void {
-    const nodes = this.getModel().filterSelectedTopics();
-    if (nodes.length <= 0) {
+    const [topic] = this.getModel().filterSelectedTopics();
+    if (!topic) {
       // This could not happen ...
       $notify($msg('RELATIONSHIP_COULD_NOT_BE_CREATED'));
       return;
@@ -1048,7 +1048,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     const pos = screen.getWorkspaceMousePosition(event);
 
     // create a connection ...
-    this._relPivot.start(nodes[0], pos);
+    this._relPivot.start(topic, pos);
   }
 
   getMindmapProperties(): { zoom: number } {
@@ -1595,8 +1595,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     node.disconnect(this._canvas);
 
     // remove children
-    while (node.getChildren().length > 0) {
-      this._removeTopicTree(node.getChildren()[0]);
+    let [child] = node.getChildren();
+    while (child) {
+      this._removeTopicTree(child);
+      [child] = node.getChildren();
     }
 
     this._canvas.removeChild(node);
@@ -1625,7 +1627,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       $notify($msg('ENTITIES_COULD_NOT_BE_DELETED'));
       return;
     }
-    if (topics.length === 1 && topics[0].isCentralTopic()) {
+    if (topics.length === 1 && topics[0]?.isCentralTopic()) {
       $notify($msg('CENTRAL_TOPIC_CAN_NOT_BE_DELETED'));
       return;
     }

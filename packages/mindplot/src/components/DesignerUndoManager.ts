@@ -36,10 +36,10 @@ class DesignerUndoManager {
     $assert(command, 'Command can  not be null');
 
     const { length } = this._undoQueue;
-    if (command.getDiscardDuplicated() && length > 0) {
+    const lastItem = this._undoQueue[length - 1];
+    if (command.getDiscardDuplicated() && lastItem) {
       // Successive changes of the same kind (e.g. picking colors) collapse into one undo step,
       // but only when the new command can take over the previous one (same targets) ...
-      const lastItem = this._undoQueue[length - 1];
       if (
         lastItem.getDiscardDuplicated() === command.getDiscardDuplicated() &&
         command.mergeWith(lastItem)

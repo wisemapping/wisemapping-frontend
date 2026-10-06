@@ -25,7 +25,7 @@ class Messages {
     const userLocale = locale || 'en';
 
     // Try the full locale (zh-CN), then its base language (zh), then English.
-    const baseLanguage = userLocale.split(/[-_]/)[0].toLowerCase();
+    const baseLanguage = userLocale.split(/[-_]/)[0]!.toLowerCase(); // split always has a first item
     this.__bundle = Bundle[userLocale] || Bundle[baseLanguage] || Bundle.en;
   }
 }
