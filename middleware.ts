@@ -29,13 +29,13 @@ export default async function middleware(request: Request) {
   if (publicMapMatch) {
     const mapId = publicMapMatch[1];
     const apiUrl = process.env.API_URL || 'https://api.wisemapping.com';
-    
+
     try {
       // Check the API to see if the map is available
       const apiResponse = await fetch(`${apiUrl}/api/restful/maps/${mapId}/metadata?xml=true`, {
         method: 'GET',
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json',
         },
       });
 
@@ -206,7 +206,7 @@ export default async function middleware(request: Request) {
               'Content-Type': 'text/html; charset=utf-8',
               'Cache-Control': 'no-cache, no-store, must-revalidate',
             },
-          }
+          },
         );
       }
     } catch (error) {
@@ -215,7 +215,7 @@ export default async function middleware(request: Request) {
     }
   }
 
-  // For all other cases (non-public routes or API check passed), 
+  // For all other cases (non-public routes or API check passed),
   // forward the request to let Vercel serve the static file
   // We do this by fetching the original URL which will hit Vercel's static file serving
   try {
@@ -224,7 +224,7 @@ export default async function middleware(request: Request) {
       method: 'GET',
       headers: request.headers,
     });
-    
+
     if (response.ok) {
       return new Response(response.body, {
         status: response.status,
@@ -247,4 +247,3 @@ export default async function middleware(request: Request) {
     },
   });
 }
-

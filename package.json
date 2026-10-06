@@ -48,7 +48,16 @@
       "sh -c 'cd packages/web2d && eslint \"$@\"' eslint",
       "prettier --check"
     ],
-    "packages/web2d/{storybook/**/*,cypress/**/*,cypress.config}.ts": [
+    "packages/{web2d,webapp}/{cypress/**/*,cypress.config}.ts": [
+      "prettier --check"
+    ],
+    "packages/*/{.storybook,storybook}/**/*.{ts,tsx}": [
+      "prettier --check"
+    ],
+    "{api/**/*,middleware}.ts": [
+      "prettier --check"
+    ],
+    "**/*.{mjs,cjs,mts,cts,css,html}": [
       "prettier --check"
     ],
     "**/*.{js,jsx}": [

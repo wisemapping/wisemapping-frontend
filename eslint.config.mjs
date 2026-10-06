@@ -1,5 +1,5 @@
-import js from "@eslint/js";
-import globals from "globals";
+import js from '@eslint/js';
+import globals from 'globals';
 
 export default [
   js.configs.recommended,
@@ -12,21 +12,21 @@ export default [
         ...globals.jest,
       },
       ecmaVersion: 11,
-      sourceType: "module",
+      sourceType: 'module',
     },
     rules: {
-      "implicit-arrow-linebreak": "off",
+      'implicit-arrow-linebreak': 'off',
     },
   },
   {
     ignores: [
-      "node_modules/**",
-      "dist/**",
-      "build/**",
-      "coverage/**",
-      "*.min.js",
-      "packages/*/dist/**",
-      "packages/*/build/**",
+      'node_modules/**',
+      'dist/**',
+      'build/**',
+      'coverage/**',
+      '*.min.js',
+      'packages/*/dist/**',
+      'packages/*/build/**',
     ],
   },
 ];
