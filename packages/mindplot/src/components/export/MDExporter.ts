@@ -21,6 +21,7 @@ import type NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
 import ContentType from '../ContentType';
 import { $assert } from '../util/assert';
+import { BLOCK_TAGS, htmlToPlainText } from '../import/support/HtmlText';
 
 class MDExporter extends Exporter {
   private mindmap: Mindmap;
@@ -94,10 +95,11 @@ class MDExporter extends Exporter {
     );
   }
 
-  // The text of a note on a single line, empty if it has no visible text.
+  // The text of a note on a single line, empty if it has no visible text. The paragraphs and the
+  // lines of an html note are separated by a space.
   private noteText(note: NoteModel): string {
     return this.normalizeText(
-      note.getContentType() === ContentType.HTML ? note.getPlainText() : note.getText(),
+      note.getContentType() === ContentType.HTML ? htmlToPlainText(note.getText()) : note.getText(),
     );
   }
 
@@ -120,7 +122,8 @@ class MDExporter extends Exporter {
     const blocks: string[] = [];
     let paragraph = '';
     const flush = () => {
-      const text = this.normalizeText(paragraph);
+      // Html whitespace, which the blocks around the text add to, collapses.
+      const text = paragraph.replace(/[ \t\r\n\f]+/g, ' ').trim();
       if (text) {
         blocks.push(MDExporter.escape(text));
       }
@@ -155,7 +158,7 @@ class MDExporter extends Exporter {
     return node.nodeType === Node.ELEMENT_NODE && ['UL', 'OL'].includes((node as Element).tagName);
   }
 
-  // The text of a node, with its line breaks as spaces.
+  // The text of a node, with its line breaks and blocks separated by spaces.
   private static inlineText(node: Node): string {
     if (node.nodeType === Node.TEXT_NODE) {
       return node.textContent || '';
@@ -163,12 +166,14 @@ class MDExporter extends Exporter {
     if (node.nodeType !== Node.ELEMENT_NODE) {
       return '';
     }
-    if ((node as Element).tagName === 'BR') {
+    const { tagName } = node as Element;
+    if (tagName === 'BR') {
       return ' ';
     }
-    return Array.from(node.childNodes)
+    const text = Array.from(node.childNodes)
       .map((child) => MDExporter.inlineText(child))
       .join('');
+    return BLOCK_TAGS.has(tagName) ? ` ${text} ` : text;
   }
 
   // The lines of a list, its sub-lists indented one level more.
