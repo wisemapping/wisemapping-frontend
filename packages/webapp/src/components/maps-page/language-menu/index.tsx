@@ -67,8 +67,7 @@ const LanguageMenu = (): React.ReactElement => {
     setAnchorEl(null);
   };
 
-  const handleOnClick = (event: React.MouseEvent<HTMLElement>) => {
-    const localeCode = (event.target as HTMLElement).id as LocaleCode;
+  const handleOnClick = (localeCode: LocaleCode) => {
     mutation.mutate(localeCode);
   };
 
@@ -114,7 +113,7 @@ const LanguageMenu = (): React.ReactElement => {
       >
         {/* Every supported locale, so none can be left out of the menu. */}
         {Object.values(Locales).map((locale) => (
-          <MenuItem key={locale.code} onClick={handleOnClick} id={locale.code}>
+          <MenuItem key={locale.code} onClick={() => handleOnClick(locale.code)} id={locale.code}>
             {locale.label}
           </MenuItem>
         ))}
