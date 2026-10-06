@@ -95,6 +95,15 @@
   "changepwd.password-match": {
     "defaultMessage": "كلمتا المرور غير متطابقتين. يرجى المحاولة مرة أخرى."
   },
+  "changepwd.password-max-length": {
+    "defaultMessage": "لا يمكن أن تتجاوز كلمة المرور 39 حرفًا."
+  },
+  "changepwd.password-min-length": {
+    "defaultMessage": "يجب ألا تقل كلمة المرور عن 8 أحرف."
+  },
+  "changepwd.password-required": {
+    "defaultMessage": "لا يمكن أن تكون كلمة المرور فارغة."
+  },
   "changepwd.title": {
     "defaultMessage": "تغيير كلمة المرور"
   },
@@ -590,8 +599,95 @@
   "admin.edit-user": {
     "defaultMessage": "تعديل المستخدم"
   },
+  "admin.error.access-denied": {
+    "defaultMessage": "تم رفض الوصول. يلزم امتلاك صلاحيات المسؤول."
+  },
+  "admin.error.create-user-failed": {
+    "defaultMessage": "فشل إنشاء المستخدم. يرجى المحاولة مرة أخرى."
+  },
+  "admin.error.load-users": {
+    "defaultMessage": "فشل تحميل المستخدمين: {message}"
+  },
+  "admin.error.unknown": {
+    "defaultMessage": "خطأ غير معروف"
+  },
+  "admin.error.update-map-failed": {
+    "defaultMessage": "فشل تحديث الخريطة. يرجى المحاولة مرة أخرى."
+  },
+  "admin.error.update-user-failed": {
+    "defaultMessage": "فشل تحديث المستخدم. يرجى المحاولة مرة أخرى."
+  },
+  "admin.facebook.filter-tooltip": {
+    "defaultMessage": "البحث لحذف بيانات Facebook"
+  },
+  "admin.facebook.lookup-button": {
+    "defaultMessage": "البحث عن الحساب"
+  },
+  "admin.facebook.lookup-not-found": {
+    "defaultMessage": "لم يتم العثور على حساب لمعرّف مستخدم Facebook هذا."
+  },
+  "admin.facebook.remove": {
+    "defaultMessage": "إزالة"
+  },
+  "admin.facebook.remove-button": {
+    "defaultMessage": "إزالة حساب Facebook"
+  },
+  "admin.facebook.remove-confirm": {
+    "defaultMessage": "هل تريد إزالة ارتباط Facebook بالحساب \"{email}\"؟"
+  },
+  "admin.facebook.remove-dialog-title": {
+    "defaultMessage": "إزالة حساب Facebook"
+  },
+  "admin.facebook.remove-warning": {
+    "defaultMessage": "سيؤدي هذا إلى فصل مصادقة Facebook عن هذا الحساب. سيتلقى المستخدم بريدًا إلكترونيًا لإعادة تعيين كلمة المرور لاستعادة الوصول."
+  },
+  "admin.facebook.removing": {
+    "defaultMessage": "جارٍ الإزالة..."
+  },
   "admin.unsuspend-user": {
     "defaultMessage": "إلغاء تعليق المستخدم"
+  },
+  "admin.user-info.auth-type": {
+    "defaultMessage": "المصادقة"
+  },
+  "admin.user-info.created": {
+    "defaultMessage": "تاريخ الإنشاء"
+  },
+  "admin.user-info.status": {
+    "defaultMessage": "الحالة"
+  },
+  "admin.user-info.suspension-reason": {
+    "defaultMessage": "سبب التعليق:"
+  },
+  "admin.user-info.title": {
+    "defaultMessage": "معلومات المستخدم"
+  },
+  "admin.user-info.total-maps": {
+    "defaultMessage": "إجمالي الخرائط"
+  },
+  "admin.user-maps-dialog.loading": {
+    "defaultMessage": "جارٍ تحميل المستخدم..."
+  },
+  "admin.user-maps-dialog.no-maps": {
+    "defaultMessage": "لا يملك هذا المستخدم أي خرائط."
+  },
+  "admin.user-maps-dialog.title": {
+    "defaultMessage": "الخرائط التي يملكها {name} (المعرّف: #{id})"
+  },
+  "admin.validation.email-invalid": {
+    "defaultMessage": "تنسيق البريد الإلكتروني غير صالح"
+  },
+  "admin.validation.email-required": {
+    "defaultMessage": "البريد الإلكتروني مطلوب"
+  },
+  "admin.validation.firstname-required": {
+    "defaultMessage": "الاسم الأول مطلوب"
+  },
+  "admin.validation.lastname-required": {
+    "defaultMessage": "اسم العائلة مطلوب"
+  },
+  "admin.view-user-maps": {
+    "defaultMessage": "عرض خرائط المستخدم"
   },
   "admin.suspend-user": {
     "defaultMessage": "تعليق المستخدم"
@@ -602,17 +698,179 @@
   "admin.status-active": {
     "defaultMessage": "نشط"
   },
+  "admin.status-active-tooltip": {
+    "defaultMessage": "الحساب مفعّل وفي وضع سليم"
+  },
+  "admin.status-active-tooltip-interactive": {
+    "defaultMessage": "الحساب مفعّل وفي وضع سليم | انقر لتغيير الحالة"
+  },
   "admin.status-clean": {
     "defaultMessage": "نظيف"
   },
+  "admin.status-not-activated": {
+    "defaultMessage": "غير مفعّل"
+  },
+  "admin.status-not-activated-tooltip": {
+    "defaultMessage": "لم يؤكد المستخدم عنوان بريده الإلكتروني بعد"
+  },
+  "admin.status-not-activated-tooltip-interactive": {
+    "defaultMessage": "لم يؤكد المستخدم عنوان بريده الإلكتروني بعد | انقر لتغيير الحالة"
+  },
   "admin.status-suspended": {
     "defaultMessage": "معلّق"
+  },
+  "admin.status.click-to-change": {
+    "defaultMessage": "انقر لتغيير الحالة"
+  },
+  "admin.status.reason": {
+    "defaultMessage": "السبب: {reason}"
+  },
+  "admin.status.suspended-on": {
+    "defaultMessage": "تاريخ التعليق: {date}"
   },
   "admin.public": {
     "defaultMessage": "عام"
   },
   "admin.locked": {
     "defaultMessage": "مقفل"
+  },
+  "admin.maps.clean-tooltip": {
+    "defaultMessage": "غير مميزة كمحتوى غير مرغوب فيه"
+  },
+  "admin.maps.creator-suspended-tooltip": {
+    "defaultMessage": "علّق أحد المسؤولين حساب مُنشئ الخريطة"
+  },
+  "admin.maps.delete": {
+    "defaultMessage": "حذف الخريطة"
+  },
+  "admin.maps.description": {
+    "defaultMessage": "الوصف"
+  },
+  "admin.maps.edit": {
+    "defaultMessage": "تعديل الخريطة"
+  },
+  "admin.maps.edit-title": {
+    "defaultMessage": "تعديل الخريطة"
+  },
+  "admin.maps.filter.date": {
+    "defaultMessage": "النطاق الزمني"
+  },
+  "admin.maps.filter.spam": {
+    "defaultMessage": "غير مرغوب فيه"
+  },
+  "admin.maps.locked-tooltip": {
+    "defaultMessage": "يعدّلها {user} حاليًا"
+  },
+  "admin.maps.mark-as-not-spam": {
+    "defaultMessage": "إلغاء تمييزها كمحتوى غير مرغوب فيه"
+  },
+  "admin.maps.mark-as-spam": {
+    "defaultMessage": "تمييزها كمحتوى غير مرغوب فيه"
+  },
+  "admin.maps.no-maps": {
+    "defaultMessage": "لم يتم العثور على خرائط"
+  },
+  "admin.maps.page-title": {
+    "defaultMessage": "إدارة الخرائط"
+  },
+  "admin.maps.private-tooltip": {
+    "defaultMessage": "يمكن للمتعاونين فقط عرض هذه الخريطة"
+  },
+  "admin.maps.public-tooltip": {
+    "defaultMessage": "يمكن لأي شخص عرض هذه الخريطة"
+  },
+  "admin.maps.search": {
+    "defaultMessage": "البحث في الخرائط... (#123 للمعرّف، والبريد الإلكتروني للمُنشئ)"
+  },
+  "admin.maps.search-by-email": {
+    "defaultMessage": "🔍 البحث حسب البريد الإلكتروني للمُنشئ"
+  },
+  "admin.maps.search-by-id": {
+    "defaultMessage": "🔍 البحث حسب معرّف الخريطة"
+  },
+  "admin.maps.search-by-text": {
+    "defaultMessage": "🔍 البحث في العناوين والأوصاف"
+  },
+  "admin.maps.spam-tooltip": {
+    "defaultMessage": "اكتُشفت كمحتوى غير مرغوب فيه في {date}"
+  },
+  "admin.maps.spam-tooltip-no-date": {
+    "defaultMessage": "مميزة كمحتوى غير مرغوب فيه"
+  },
+  "admin.maps.suspend-user": {
+    "defaultMessage": "تعليق حساب المستخدم"
+  },
+  "admin.maps.suspend-user.confirm": {
+    "defaultMessage": "هل أنت متأكد أنك تريد تعليق حساب المستخدم \"{userName}\" (المعرّف: {userId})؟ سيُسجَّل هذا التعليق كتعليق ناتج عن مراجعة يدوية."
+  },
+  "admin.maps.suspend-user.confirm-button": {
+    "defaultMessage": "تعليق المستخدم"
+  },
+  "admin.maps.suspend-user.title": {
+    "defaultMessage": "تعليق حساب المستخدم"
+  },
+  "admin.maps.suspend-user.warning": {
+    "defaultMessage": "سيؤدي هذا الإجراء إلى تعليق حساب المستخدم ومنعه من الوصول إلى النظام."
+  },
+  "admin.maps.table.actions": {
+    "defaultMessage": "الإجراءات"
+  },
+  "admin.maps.table.created": {
+    "defaultMessage": "تاريخ الإنشاء"
+  },
+  "admin.maps.table.description": {
+    "defaultMessage": "الوصف"
+  },
+  "admin.maps.table.id": {
+    "defaultMessage": "معرّف الخريطة"
+  },
+  "admin.maps.table.modified": {
+    "defaultMessage": "تاريخ التعديل"
+  },
+  "admin.maps.table.spam": {
+    "defaultMessage": "غير مرغوب فيه"
+  },
+  "admin.maps.table.spam-status": {
+    "defaultMessage": "حالة المحتوى غير المرغوب فيه"
+  },
+  "admin.maps.table.status": {
+    "defaultMessage": "الحالة"
+  },
+  "admin.maps.table.title": {
+    "defaultMessage": "العنوان"
+  },
+  "admin.maps.title": {
+    "defaultMessage": "العنوان"
+  },
+  "admin.maps.unlocked-tooltip": {
+    "defaultMessage": "لا يعدّلها أحد حاليًا"
+  },
+  "admin.maps.view-xml": {
+    "defaultMessage": "عرض XML"
+  },
+  "admin.maps.xml-viewer.copy": {
+    "defaultMessage": "نسخ XML المنسّق"
+  },
+  "admin.maps.xml-viewer.info": {
+    "defaultMessage": "هذا هو محتوى XML الخام للخريطة الذهنية. يمكنك نسخ هذا المحتوى لأغراض النسخ الاحتياطي أو التحليل."
+  },
+  "admin.maps.xml-viewer.loading": {
+    "defaultMessage": "جارٍ تحميل محتوى XML..."
+  },
+  "admin.maps.xml-viewer.no-content": {
+    "defaultMessage": "لا يتوفر محتوى XML"
+  },
+  "admin.maps.xml-viewer.title": {
+    "defaultMessage": "محتوى XML للخريطة"
+  },
+  "admin.menu.accounts": {
+    "defaultMessage": "الحسابات"
+  },
+  "admin.menu.maps": {
+    "defaultMessage": "الخرائط"
+  },
+  "admin.menu.system": {
+    "defaultMessage": "النظام"
   },
   "admin.public-access": {
     "defaultMessage": "الوصول العام"
@@ -635,6 +893,27 @@
   "admin.auth-type": {
     "defaultMessage": "نوع المصادقة"
   },
+  "admin.auth.database": {
+    "defaultMessage": "قاعدة البيانات"
+  },
+  "admin.auth.facebook": {
+    "defaultMessage": "Facebook"
+  },
+  "admin.auth.google": {
+    "defaultMessage": "Google"
+  },
+  "admin.auth.ldap": {
+    "defaultMessage": "LDAP"
+  },
+  "admin.button.update-user": {
+    "defaultMessage": "تحديث المستخدم"
+  },
+  "admin.button.updating": {
+    "defaultMessage": "جارٍ التحديث..."
+  },
+  "admin.cancel": {
+    "defaultMessage": "إلغاء"
+  },
   "admin.suspension-status": {
     "defaultMessage": "حالة التعليق"
   },
@@ -646,6 +925,27 @@
   },
   "admin.suspension.terms-violation": {
     "defaultMessage": "انتهاك الشروط"
+  },
+  "admin.system.app.name": {
+    "defaultMessage": "الاسم"
+  },
+  "admin.system.app.port": {
+    "defaultMessage": "المنفذ"
+  },
+  "admin.system.application": {
+    "defaultMessage": "التطبيق"
+  },
+  "admin.system.database": {
+    "defaultMessage": "قاعدة البيانات"
+  },
+  "admin.system.database.info": {
+    "defaultMessage": "قاعدة البيانات"
+  },
+  "admin.system.db.ddl": {
+    "defaultMessage": "Hibernate DDL"
+  },
+  "admin.system.db.driver": {
+    "defaultMessage": "برنامج التشغيل"
   },
   "admin.suspension.security-concern": {
     "defaultMessage": "مخاوف أمنية"
@@ -674,6 +974,12 @@
   "common.allow-email-notifications": {
     "defaultMessage": "السماح بإشعارات البريد الإلكتروني"
   },
+  "common.cancel": {
+    "defaultMessage": "إلغاء"
+  },
+  "common.close": {
+    "defaultMessage": "إغلاق"
+  },
   "common.settings": {
     "defaultMessage": "الإعدادات"
   },
@@ -686,14 +992,23 @@
   "common.maps-list": {
     "defaultMessage": "قائمة الخرائط"
   },
+  "common.na": {
+    "defaultMessage": "غير متاح"
+  },
   "common.delete": {
     "defaultMessage": "حذف"
   },
   "common.delete-tag": {
     "defaultMessage": "حذف الوسم"
   },
+  "common.disabled": {
+    "defaultMessage": "معطّل"
+  },
   "common.emails": {
     "defaultMessage": "رسائل البريد الإلكتروني"
+  },
+  "common.enabled": {
+    "defaultMessage": "مفعّل"
   },
   "common.registration-form": {
     "defaultMessage": "نموذج التسجيل"
@@ -707,11 +1022,23 @@
   "common.retry": {
     "defaultMessage": "إعادة المحاولة"
   },
+  "common.save": {
+    "defaultMessage": "حفظ"
+  },
   "admin.system.title": {
     "defaultMessage": "معلومات النظام"
   },
   "admin.system.refresh": {
     "defaultMessage": "تحديث"
+  },
+  "admin.system.statistics": {
+    "defaultMessage": "الإحصاءات"
+  },
+  "admin.system.stats.mindmaps": {
+    "defaultMessage": "إجمالي الخرائط الذهنية"
+  },
+  "admin.system.stats.users": {
+    "defaultMessage": "إجمالي المستخدمين"
   },
   "common.refresh": {
     "defaultMessage": "تحديث"
@@ -719,11 +1046,89 @@
   "admin.system.memory": {
     "defaultMessage": "الذاكرة"
   },
+  "admin.system.memory.info": {
+    "defaultMessage": "الذاكرة"
+  },
+  "admin.system.memory.max": {
+    "defaultMessage": "الحد الأقصى للذاكرة"
+  },
+  "admin.system.memory.total": {
+    "defaultMessage": "إجمالي الذاكرة"
+  },
+  "admin.system.memory.usage": {
+    "defaultMessage": "استخدام الذاكرة"
+  },
+  "admin.system.memory.used": {
+    "defaultMessage": "الذاكرة المستخدمة"
+  },
+  "admin.system.mindmapMetrics.collaborations": {
+    "defaultMessage": "التعاونات المأخوذة في الاعتبار"
+  },
+  "admin.system.mindmapMetrics.disabled": {
+    "defaultMessage": "اضبط `app.monitoring.performance.log-mindmap-listing` على true لالتقاط المقاييس."
+  },
+  "admin.system.mindmapMetrics.entityLoads": {
+    "defaultMessage": "عمليات تحميل الكيانات"
+  },
+  "admin.system.mindmapMetrics.executedStatements": {
+    "defaultMessage": "العبارات المُعدّة"
+  },
+  "admin.system.mindmapMetrics.lastUpdated": {
+    "defaultMessage": "آخر تحديث"
+  },
+  "admin.system.mindmapMetrics.mapCount": {
+    "defaultMessage": "الخرائط المُعادة"
+  },
+  "admin.system.mindmapMetrics.pending": {
+    "defaultMessage": "في انتظار الطلب التالي لعرض قائمة الخرائط الذهنية لالتقاط المقاييس."
+  },
+  "admin.system.mindmapMetrics.segments": {
+    "defaultMessage": "مقاطع التنفيذ"
+  },
+  "admin.system.mindmapMetrics.title": {
+    "defaultMessage": "أداء عرض قائمة الخرائط الذهنية"
+  },
+  "admin.system.mindmapMetrics.topQueries": {
+    "defaultMessage": "أبرز الاستعلامات"
+  },
+  "admin.system.mindmapMetrics.totalTime": {
+    "defaultMessage": "الوقت الإجمالي (ملّي ثانية)"
+  },
   "admin.system.db.url": {
     "defaultMessage": "الرابط"
   },
+  "admin.system.db.username": {
+    "defaultMessage": "اسم المستخدم"
+  },
+  "admin.system.error": {
+    "defaultMessage": "فشل تحميل معلومات النظام"
+  },
+  "admin.system.health": {
+    "defaultMessage": "حالة النظام"
+  },
   "admin.system.jvm": {
     "defaultMessage": "JVM"
+  },
+  "admin.system.jvm.load": {
+    "defaultMessage": "حمل النظام"
+  },
+  "admin.system.jvm.processors": {
+    "defaultMessage": "المعالجات"
+  },
+  "admin.system.jvm.start": {
+    "defaultMessage": "وقت البدء"
+  },
+  "admin.system.jvm.uptime": {
+    "defaultMessage": "مدة التشغيل"
+  },
+  "admin.system.jvm.vendor": {
+    "defaultMessage": "المورّد"
+  },
+  "admin.system.jvm.version": {
+    "defaultMessage": "إصدار Java"
+  },
+  "admin.system.loading": {
+    "defaultMessage": "جارٍ تحميل معلومات النظام..."
   },
   "error.page-title": {
     "defaultMessage": "خطأ غير متوقع | WiseMapping"
@@ -761,8 +1166,14 @@
   "accountinfo.personal-details": {
     "defaultMessage": "البيانات الشخصية"
   },
+  "accountinfo.personal-info": {
+    "defaultMessage": "المعلومات الشخصية"
+  },
   "account.delete-warning-title": {
     "defaultMessage": "حذف الحساب"
+  },
+  "accountinfo.account-settings": {
+    "defaultMessage": "إعدادات الحساب"
   },
   "account.delete-warning-description": {
     "defaultMessage": "بمجرد حذف حسابك، لا يمكن التراجع. يرجى التأكد قبل المتابعة."
@@ -806,11 +1217,56 @@
   "activation.loading.title": {
     "defaultMessage": "جارٍ تفعيل حسابك"
   },
+  "activation.page-title": {
+    "defaultMessage": "تفعيل الحساب | WiseMapping"
+  },
   "activation.loading.desc": {
     "defaultMessage": "يرجى الانتظار بينما نقوم بتفعيل حسابك..."
   },
   "activation.success.title": {
     "defaultMessage": "تم تفعيل الحساب بنجاح"
+  },
+  "admin.accounts.add-user": {
+    "defaultMessage": "إضافة مستخدم جديد"
+  },
+  "admin.accounts.create": {
+    "defaultMessage": "إنشاء مستخدم"
+  },
+  "admin.accounts.create-user": {
+    "defaultMessage": "إنشاء مستخدم"
+  },
+  "admin.accounts.edit-user": {
+    "defaultMessage": "تعديل المستخدم"
+  },
+  "admin.accounts.filters": {
+    "defaultMessage": "البحث وعوامل التصفية"
+  },
+  "admin.accounts.no-users": {
+    "defaultMessage": "لم يتم العثور على مستخدمين"
+  },
+  "admin.accounts.refresh": {
+    "defaultMessage": "تحديث"
+  },
+  "admin.accounts.refresh-tooltip": {
+    "defaultMessage": "تحديث البيانات"
+  },
+  "admin.accounts.search": {
+    "defaultMessage": "البحث عن مستخدمين..."
+  },
+  "admin.accounts.subtitle": {
+    "defaultMessage": "إدارة حسابات المستخدمين والصلاحيات والإعدادات"
+  },
+  "admin.accounts.title": {
+    "defaultMessage": "إدارة المستخدمين"
+  },
+  "admin.action.mark-as-not-spam": {
+    "defaultMessage": "إزالة علامة المحتوى غير المرغوب فيه عن"
+  },
+  "admin.action.mark-as-spam": {
+    "defaultMessage": "وضع علامة المحتوى غير المرغوب فيه على"
+  },
+  "admin.activate-user": {
+    "defaultMessage": "تفعيل المستخدم"
   },
   "activation.success.message": {
     "defaultMessage": "تم تفعيل حسابك. يمكنك الآن تسجيل الدخول والبدء في إنشاء الخرائط الذهنية."
@@ -842,6 +1298,27 @@
   "admin.confirm-password": {
     "defaultMessage": "تأكيد كلمة المرور"
   },
+  "admin.confirm.delete-map": {
+    "defaultMessage": "هل أنت متأكد أنك تريد حذف الخريطة \"{title}\"؟"
+  },
+  "admin.confirm.spam-action": {
+    "defaultMessage": "هل أنت متأكد أنك تريد {action} هذه الخريطة؟"
+  },
+  "admin.console.description": {
+    "defaultMessage": "إدارة المستخدمين وإعدادات النظام وتكوين التطبيق."
+  },
+  "admin.console.page-title": {
+    "defaultMessage": "وحدة تحكم المسؤول | WiseMapping"
+  },
+  "admin.console.subtitle": {
+    "defaultMessage": "إدارة النظام"
+  },
+  "admin.console.title": {
+    "defaultMessage": "وحدة تحكم المسؤول"
+  },
+  "admin.current-suspension-reason": {
+    "defaultMessage": "سبب التعليق الحالي:"
+  },
   "admin.change-password-button": {
     "defaultMessage": "تغيير كلمة المرور"
   },
@@ -850,6 +1327,9 @@
   },
   "admin.password-error-mismatch": {
     "defaultMessage": "كلمتا المرور غير متطابقتين"
+  },
+  "admin.prompt.new-user-password": {
+    "defaultMessage": "أدخل كلمة المرور للمستخدم الجديد:"
   },
   "admin.password-error-failed": {
     "defaultMessage": "فشل تغيير كلمة المرور"
@@ -883,6 +1363,9 @@
   },
   "error.go-to-login": {
     "defaultMessage": "تسجيل الدخول"
+  },
+  "error.invalid-map-id": {
+    "defaultMessage": "معرّف الخريطة غير صالح"
   },
   "login.oauth-error": {
     "defaultMessage": "فشلت مصادقة OAuth. يرجى المحاولة مرة أخرى أو استخدام طريقة تسجيل دخول مختلفة."
