@@ -104,6 +104,45 @@ describe('RichTextNoteEditor', () => {
     expect(editor.innerHTML).toBe('<ul><li><br></li></ul>');
   });
 
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    // Real scheduling: React renders in a microtask after each key, not inside act().
+    const reactAct = globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT?: boolean };
+    const previousAct = reactAct.IS_REACT_ACT_ENVIRONMENT;
+    reactAct.IS_REACT_ACT_ENVIRONMENT = false;
+    const errors: unknown[] = [];
+    const consoleError = jest.spyOn(console, 'error').mockImplementation((e) => errors.push(e));
+    const onError = (event: ErrorEvent) => errors.push(event.error);
+    window.addEventListener('error', onError);
+    try {
+      const { editor, model } = renderEditor(undefined);
+      editor.focus();
+      const text = document.createTextNode('');
+      editor.appendChild(text);
+      const typed = 'abcdefghij'.repeat(20);
+      for (const ch of typed) {
+        editor.dispatchEvent(new KeyboardEvent('keydown', { key: ch, bubbles: true }));
+        text.appendData(ch);
+        caretIn(text, text.length);
+        editor.dispatchEvent(
+          new InputEvent('input', { inputType: 'insertText', data: ch, bubbles: true }),
+        );
+        editor.dispatchEvent(new KeyboardEvent('keyup', { key: ch, bubbles: true }));
+        // The next key comes in the next microtask, with no task in between.
+        await Promise.resolve();
+      }
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      expect(errors).toEqual([]);
+      expect(screen.getByText('9800 left')).toBeTruthy();
+      fireEvent.click(screen.getByText('Accept'));
+      expect(model.setValue).toHaveBeenCalledWith(typed);
+    } finally {
+      window.removeEventListener('error', onError);
+      consoleError.mockRestore();
+      reactAct.IS_REACT_ACT_ENVIRONMENT = previousAct;
+    }
+  });
+
   test('never creates a link to an unsafe url from the link button', () => {
     const execCommand = jest.fn(() => true);
     Object.defineProperty(document, 'execCommand', { value: execCommand, configurable: true });
