@@ -334,7 +334,7 @@ describe('FreemindExporter', () => {
       );
       const doc = new DOMParser().parseFromString(xml, 'text/xml');
       const imported = XMLSerializerFactory.createFromDocument(doc).loadFromDom(doc, 'test');
-      const importedCentral = imported.getCentralTopic();
+      const importedCentral = imported.getCentralTopic()!;
       expect(importedCentral.getFontColor()).toBe('#990000');
       expect(importedCentral.getFontFamily()).toBe('Georgia');
       // Its font is written with the FreeMind default size, which imports as the theme size.

@@ -20,6 +20,7 @@ import INodeModel from '../model/INodeModel';
 import NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
 import ContentType from '../ContentType';
+import { $assert } from '../util/assert';
 
 class MDExporter extends Exporter {
   private mindmap: Mindmap;
@@ -65,6 +66,7 @@ class MDExporter extends Exporter {
 
     // Add cental node as text. Without text, a placeholder keeps the branches as a list ...
     const centralTopic = this.mindmap.getCentralTopic();
+    $assert(centralTopic, 'The map to export has no central topic');
     const centralText = this.nodeText(centralTopic) || MDExporter.UNTITLED;
 
     // Traverse all the branches ...

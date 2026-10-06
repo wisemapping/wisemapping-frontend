@@ -85,7 +85,7 @@ describe('MindManagerImporter .mmap archives', () => {
 
     const mindmap = loadMindmap(await importer.import('test', ''));
 
-    const central = mindmap.getCentralTopic();
+    const central = mindmap.getCentralTopic()!;
     expect(central.getText()).toBe('Central');
     expect(central.getChildren().map((c) => c.getText())).toEqual(['Child A', 'Child B']);
 
@@ -105,7 +105,7 @@ describe('MindManagerImporter .mmap archives', () => {
 
     const mindmap = loadMindmap(await importer.import('test', ''));
 
-    expect(mindmap.getCentralTopic().getChildren()).toHaveLength(2);
+    expect(mindmap.getCentralTopic()!.getChildren()).toHaveLength(2);
   });
 });
 
@@ -636,7 +636,7 @@ describe('MindManagerImporter default topic texts', () => {
 
     const mindmap = loadMindmap(await new MindManagerImporter(xml).import('test', ''));
 
-    const central = mindmap.getCentralTopic();
+    const central = mindmap.getCentralTopic()!;
     expect(central.getText()).toBe('Central Topic');
     const [main, own] = central.getChildren();
     expect([main.getText(), own.getText()]).toEqual(['Main Topic', 'Own text']);
@@ -695,7 +695,7 @@ describe('MindManagerImporter topic shapes', () => {
     expect(shape('Label')).toBe('rounded rectangle');
     expect(shape('Callout')).toBe('rectangle');
     // The central topic keeps the shape of the theme.
-    expect(mindmap.getCentralTopic().getShapeType()).toBeUndefined();
+    expect(mindmap.getCentralTopic()!.getShapeType()).toBeUndefined();
   });
 
   test('without a StyleGroup, the topics are lines', async () => {
@@ -743,12 +743,12 @@ describe('MindManagerImporter growth direction of the main topics', () => {
     `<ap:StyleGroup><ap:RootTopicDefaultsGroup>${growth(direction)}</ap:RootTopicDefaultsGroup></ap:StyleGroup>`;
   const sides = (mindmap: Mindmap): number[] =>
     mindmap
-      .getCentralTopic()
+      .getCentralTopic()!
       .getChildren()
       .map((node) => Math.sign(node.getPosition()!.x));
   const orders = (mindmap: Mindmap): number[] =>
     mindmap
-      .getCentralTopic()
+      .getCentralTopic()!
       .getChildren()
       .map((node) => node.getOrder()!);
 

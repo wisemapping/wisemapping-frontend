@@ -158,17 +158,8 @@ class Mindmap extends IMindmap {
   }
 
   hasAlreadyAdded(node: NodeModel): boolean {
-    let result = false;
-
     // Check in not connected nodes.
-    const branches = this._branches;
-    for (let i = 0; i < branches.length; i++) {
-      result = branches[i].isChildNode(node);
-      if (result) {
-        break;
-      }
-    }
-    return result;
+    return this._branches.some((branch) => branch.isChildNode(node));
   }
 
   createNode(type: NodeModelType = 'MainTopic', id?: number): NodeModel {

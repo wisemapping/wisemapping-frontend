@@ -102,7 +102,7 @@ class FreemindExporter extends Exporter {
     const main: FreemindNode = createFreemindNode();
     const freemainMap: FreemindMap = { version: this.getVersionNumber(), node: main };
 
-    const centralTopic: INodeModel = this.mindmap.getCentralTopic();
+    const centralTopic = this.mindmap.getCentralTopic();
 
     if (centralTopic) {
       this.nodeMap.set(centralTopic.getId(), main);

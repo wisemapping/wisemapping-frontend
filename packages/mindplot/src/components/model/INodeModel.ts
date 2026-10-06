@@ -456,14 +456,7 @@ abstract class INodeModel {
     if (node === this) {
       result = true;
     } else {
-      const children = this.getChildren();
-      for (let i = 0; i < children.length; i++) {
-        const child = children[i];
-        result = child.isChildNode(node);
-        if (result) {
-          break;
-        }
-      }
+      result = this.getChildren().some((child) => child.isChildNode(node));
     }
     return result;
   }

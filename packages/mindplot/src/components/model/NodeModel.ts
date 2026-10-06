@@ -91,9 +91,10 @@ class NodeModel extends INodeModel {
    */
   findFeatureById(id: number): FeatureModel {
     $assert(id != null, 'id can not be null');
-    const result = this._features.filter((feature) => feature.getId() === id);
-    $assert(result.length === 1, `Feature could not be found:${id}`);
-    return result[0];
+    const matches = this._features.filter((feature) => feature.getId() === id);
+    const [result] = matches;
+    $assert(result && matches.length === 1, `Feature could not be found:${id}`);
+    return result;
   }
 
   getPropertiesKeys(): NodePropKey[] {
@@ -167,13 +168,11 @@ class NodeModel extends INodeModel {
     if (this.getId() === id) {
       return this;
     }
-    for (let i = 0; i < this._children.length; i++) {
-      const result = this._children[i].findNodeById(id);
-      if (result) {
-        return result;
-      }
-    }
-    return undefined;
+    // The first match, depth first; the children after it are not searched.
+    return this._children.reduce<NodeModel | undefined>(
+      (found, child) => found ?? child.findNodeById(id),
+      undefined,
+    );
   }
 
   getChildren(): NodeModel[] {

@@ -123,7 +123,7 @@ describe('XMLSerializerTango topic attributes', () => {
   it('gives a new id to a topic whose id is already used', () => {
     const mindmap = load(map('<topic id="2" text="first"/><topic id="2" text="second"/>'));
     const ids = mindmap
-      .getCentralTopic()
+      .getCentralTopic()!
       .getChildren()
       .map((child) => child.getId());
     expect(ids[0]).toBe(2);
@@ -140,7 +140,7 @@ describe('XMLSerializerTango topic attributes', () => {
     expect(mindmap.findNodeById(5001)!.getText()).toBe('target');
     expect(mindmap.getRelationships()[0].getToNode()).toBe(5001);
     const ids = mindmap
-      .getCentralTopic()
+      .getCentralTopic()!
       .getChildren()
       .map((child) => child.getId());
     expect(new Set(ids).size).toBe(3);
@@ -155,7 +155,7 @@ describe('XMLSerializerTango topic attributes', () => {
     expect(mindmap.findNodeById(next)!.getText()).toBe('a');
     expect(mindmap.findNodeById(next + 1)!.getText()).toBe('b');
     const ids = mindmap
-      .getCentralTopic()
+      .getCentralTopic()!
       .getChildren()
       .map((child) => child.getId());
     expect(new Set(ids).size).toBe(3);

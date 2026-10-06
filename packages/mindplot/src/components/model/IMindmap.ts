@@ -21,7 +21,8 @@ import NodeModel from './NodeModel';
 import RelationshipModel from './RelationshipModel';
 
 abstract class IMindmap {
-  getCentralTopic(): INodeModel {
+  /** The first branch, undefined while the map has none (an empty map, before it is loaded). */
+  getCentralTopic(): INodeModel | undefined {
     return this.getBranches()[0];
   }
 
@@ -88,13 +89,12 @@ abstract class IMindmap {
     result = `${result} , version:${this.getVersion()}`;
     result = `${result} , [`;
 
-    for (let i = 0; i < branches.length; i++) {
-      const node = branches[i];
+    branches.forEach((node, i) => {
       if (i !== 0) {
         result = `${result},\n `;
       }
       result = `${result}(${i}) =>${node.inspect()}`;
-    }
+    });
     result = `${result}]`;
 
     result = `${result} } `;

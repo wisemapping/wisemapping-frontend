@@ -43,7 +43,7 @@ describe('OPMLImporter', () => {
     const xml = await new OPMLImporter(opml).import('test');
 
     const mindmap = loadMindmap(xml);
-    const central = mindmap.getCentralTopic();
+    const central = mindmap.getCentralTopic()!;
     expect(central.getText()).toBe('Central');
     expect(central.getChildren().map((c) => c.getText())).toEqual(['Child 1', 'Child 2']);
   });
@@ -66,7 +66,7 @@ describe('OPMLImporter', () => {
 
     const xml = await new OPMLImporter(opml).import('test');
 
-    const central = loadMindmap(xml).getCentralTopic();
+    const central = loadMindmap(xml).getCentralTopic()!;
     expect(central.getText()).toBe('OPML Root');
     expect(central.getChildren().map((c) => c.getText())).toEqual(['Child 1', 'Child 2']);
     expect(
@@ -83,7 +83,7 @@ describe('OPMLImporter', () => {
 
     const xml = await new OPMLImporter(opml).import('My map');
 
-    const central = loadMindmap(xml).getCentralTopic();
+    const central = loadMindmap(xml).getCentralTopic()!;
     expect(central.getText()).toBe('My map');
     expect(central.getChildren().map((c) => c.getText())).toEqual(['A', 'B']);
   });

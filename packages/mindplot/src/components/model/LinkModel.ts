@@ -23,7 +23,8 @@ class LinkModel extends FeatureModel {
 
   constructor(attributes: FeatureAttributes) {
     super('link');
-    this.setUrl(attributes.url);
+    // A missing url is rejected by setUrl, as an empty one.
+    this.setUrl(attributes.url ?? '');
   }
 
   getUrl(): string {

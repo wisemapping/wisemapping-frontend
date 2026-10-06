@@ -1069,7 +1069,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // Init layout manager ...
     const size = { width: 25, height: 25 };
     const layoutType = mindmap.getLayout();
-    const layoutManager = new LayoutManager(mindmap.getCentralTopic().getId(), size, layoutType);
+    const centralModel = mindmap.getCentralTopic();
+    $assert(centralModel, 'The map to load has no central topic');
+    const layoutManager = new LayoutManager(centralModel.getId(), size, layoutType);
 
     layoutManager.addEvent('change', (event: ChangeEvent) => {
       const id = event.getId();

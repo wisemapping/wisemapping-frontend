@@ -39,7 +39,7 @@ afterEach(() => {
 });
 
 const centralText = async (manager: PersistenceManager, id = 'm1') =>
-  (await manager.load(id)).getCentralTopic().getText();
+  (await manager.load(id)).getCentralTopic()!.getText();
 
 describe('LocalStorageManager loading', () => {
   it('fetches the map from the document url, with the map id in it', async () => {
@@ -93,7 +93,7 @@ describe('LocalStorageManager loading', () => {
 
     const loaded = new LocalStorageManager('/{id}', false, undefined).load('m1');
     await jest.advanceTimersByTimeAsync(1000);
-    expect((await loaded).getCentralTopic().getText()).toBe('Central');
+    expect((await loaded).getCentralTopic()!.getText()).toBe('Central');
     expect(fetchMock).toHaveBeenCalledTimes(3);
   });
 

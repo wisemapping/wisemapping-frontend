@@ -21,7 +21,8 @@ import FeatureModel, { FeatureAttributes } from './FeatureModel';
 class EmojiIconModel extends FeatureModel {
   constructor(attributes: FeatureAttributes) {
     super('eicon');
-    this.setIconType(attributes.id);
+    // A missing id is rejected by setIconType, as an empty one.
+    this.setIconType(attributes.id ?? '');
   }
 
   getIconType(): string {

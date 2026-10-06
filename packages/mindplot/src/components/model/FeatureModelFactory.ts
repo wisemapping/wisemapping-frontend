@@ -56,7 +56,9 @@ class FeatureModelFactory {
     $assert(type, 'type can not be null');
     $assert(attributes, 'attributes can not be null');
 
-    const { model: Model } = FeatureModelFactory.modelById.filter((elem) => elem.id === type)[0];
+    const entry = FeatureModelFactory.modelById.find((elem) => elem.id === type);
+    $assert(entry, `Unsupported feature type: ${type}`);
+    const { model: Model } = entry;
     // modelById pairs each type with its model class.
     return new Model(attributes) as FeatureByType[T];
   }

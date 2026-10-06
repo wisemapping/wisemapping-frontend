@@ -488,7 +488,7 @@ describe('FreemindImporter', () => {
     </map>`;
 
     const mindmap = await importMindmap(mm);
-    const central = mindmap.getCentralTopic();
+    const central = mindmap.getCentralTopic()!;
     expect(central.getFontColor()).toBe('#990000');
     expect(central.getFontFamily()).toBe('Georgia');
     expect(central.getFontSize()).toBe(10);

@@ -30,10 +30,10 @@ const load = (xml: string): Mindmap => {
 const importMap = async (input: ConstructorParameters<typeof XMindImporter>[0]) =>
   load(await new XMindImporter(input).import('imported'));
 
-const centralText = (mindmap: Mindmap) => mindmap.getCentralTopic().getText();
+const centralText = (mindmap: Mindmap) => mindmap.getCentralTopic()!.getText();
 const childTexts = (mindmap: Mindmap) =>
   mindmap
-    .getCentralTopic()
+    .getCentralTopic()!
     .getChildren()
     .map((child) => child.getText());
 

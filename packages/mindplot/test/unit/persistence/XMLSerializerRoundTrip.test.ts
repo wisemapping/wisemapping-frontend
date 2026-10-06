@@ -203,7 +203,7 @@ describe('XMLSerializerTango round trip', () => {
         '</topic></map>';
       const dom = new DOMParser().parseFromString(xml, 'text/xml');
       const mindmap = new XMLSerializerBeta().loadFromDom(dom, 'm');
-      const topic = mindmap.getCentralTopic().getChildren()[0];
+      const topic = mindmap.getCentralTopic()!.getChildren()[0];
 
       expect(topic.areChildrenShrunken()).toBe(expected);
     });

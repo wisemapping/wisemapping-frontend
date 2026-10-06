@@ -89,7 +89,7 @@ class FeatureModel {
     this._attributes[key] = value;
   }
 
-  getAttribute(key: string): string {
+  getAttribute(key: string): string | undefined {
     $assert(key, 'key id can not be null');
 
     return this._attributes[key];
