@@ -53,6 +53,7 @@ const waitForStableStory = (previous = '', stableChecks = 0, attempts = 0) => {
     if (attempts > 60) {
       throw new Error('Story markup did not settle before the snapshot');
     }
+    // eslint-disable-next-line cypress/no-unnecessary-waiting -- the sampling interval of this stability poll
     cy.wait(150, { log: false });
     waitForStableStory(markup, settled, attempts + 1);
   });

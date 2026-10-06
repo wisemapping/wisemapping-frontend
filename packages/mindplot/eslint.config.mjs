@@ -24,7 +24,7 @@ export default defineConfig([
       'coverage/**',
       '*.min.js',
       '**/*.d.ts',
-      'cypress/**',
+      'cypress/snapshots/**',
       'storybook/**',
     ],
   },
@@ -191,6 +191,41 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+  {
+    // Cypress specs and support files run in the browser, with the Cypress and Mocha globals.
+    files: ['cypress/{e2e,support}/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...cypress.configs.globals.languageOptions.globals,
+        ...globals.mocha,
+      },
+    },
+    rules: {
+      // The image-snapshot command publishes only an `exports` map (see the tool-config override).
+      'import/no-unresolved': ['error', { ignore: ['^@simonsmith/cypress-image-snapshot/'] }],
+    },
+  },
+  {
+    // Chai property assertions (`expect(x).to.be.true`) are expressions that assert when read.
+    files: ['cypress/e2e/**/*.js'],
+    rules: {
+      '@typescript-eslint/no-unused-expressions': 'off',
+    },
+  },
+  {
+    // The Cypress plugins run in the Cypress Node process, loaded as CommonJS by cypress.config.js.
+    files: ['cypress/plugins/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+      sourceType: 'commonjs',
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+      'import/no-unresolved': ['error', { ignore: ['^@simonsmith/cypress-image-snapshot/'] }],
     },
   },
   {
