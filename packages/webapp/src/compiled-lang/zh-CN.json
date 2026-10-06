@@ -242,7 +242,7 @@
   "action.new": [
     {
       "type": 0,
-      "value": "新地图"
+      "value": "新思维导图"
     }
   ],
   "action.open": [
@@ -504,7 +504,7 @@
   "admin.confirm.delete-map": [
     {
       "type": 0,
-      "value": "您确定要删除地图“"
+      "value": "您确定要删除思维导图“"
     },
     {
       "type": 1,
@@ -518,7 +518,7 @@
   "admin.confirm.spam-action": [
     {
       "type": 0,
-      "value": "您确定要将此地图"
+      "value": "您确定要将此思维导图"
     },
     {
       "type": 1,
@@ -614,7 +614,7 @@
   "admin.error.update-map-failed": [
     {
       "type": 0,
-      "value": "更新地图失败。请重试。"
+      "value": "更新思维导图失败。请重试。"
     }
   ],
   "admin.error.update-user-failed": [
@@ -706,13 +706,13 @@
   "admin.maps.creator-suspended-tooltip": [
     {
       "type": 0,
-      "value": "地图创建者的账户已被管理员暂停"
+      "value": "思维导图创建者的账户已被管理员暂停"
     }
   ],
   "admin.maps.delete": [
     {
       "type": 0,
-      "value": "删除地图"
+      "value": "删除思维导图"
     }
   ],
   "admin.maps.description": [
@@ -724,13 +724,13 @@
   "admin.maps.edit": [
     {
       "type": 0,
-      "value": "编辑地图"
+      "value": "编辑思维导图"
     }
   ],
   "admin.maps.edit-title": [
     {
       "type": 0,
-      "value": "编辑地图"
+      "value": "编辑思维导图"
     }
   ],
   "admin.maps.filter.date": [
@@ -774,31 +774,31 @@
   "admin.maps.no-maps": [
     {
       "type": 0,
-      "value": "未找到地图"
+      "value": "未找到思维导图"
     }
   ],
   "admin.maps.page-title": [
     {
       "type": 0,
-      "value": "地图管理"
+      "value": "思维导图管理"
     }
   ],
   "admin.maps.private-tooltip": [
     {
       "type": 0,
-      "value": "只有协作者可以查看此地图"
+      "value": "只有协作者可以查看此思维导图"
     }
   ],
   "admin.maps.public-tooltip": [
     {
       "type": 0,
-      "value": "任何人都可以查看此地图"
+      "value": "任何人都可以查看此思维导图"
     }
   ],
   "admin.maps.search": [
     {
       "type": 0,
-      "value": "搜索地图...（输入 #123 按 ID 搜索，输入电子邮件按创建者搜索）"
+      "value": "搜索思维导图...（输入 #123 按 ID 搜索，输入电子邮件按创建者搜索）"
     }
   ],
   "admin.maps.search-by-email": [
@@ -810,7 +810,7 @@
   "admin.maps.search-by-id": [
     {
       "type": 0,
-      "value": "🔍 按地图 ID 搜索"
+      "value": "🔍 按思维导图 ID 搜索"
     }
   ],
   "admin.maps.search-by-text": [
@@ -906,7 +906,7 @@
   "admin.maps.table.id": [
     {
       "type": 0,
-      "value": "地图 ID"
+      "value": "思维导图 ID"
     }
   ],
   "admin.maps.table.modified": [
@@ -984,7 +984,7 @@
   "admin.maps.xml-viewer.title": [
     {
       "type": 0,
-      "value": "地图 XML 内容"
+      "value": "思维导图 XML 内容"
     }
   ],
   "admin.menu.accounts": [
@@ -996,7 +996,7 @@
   "admin.menu.maps": [
     {
       "type": 0,
-      "value": "地图"
+      "value": "思维导图"
     }
   ],
   "admin.menu.system": [
@@ -1376,7 +1376,7 @@
   "admin.system.mindmapMetrics.mapCount": [
     {
       "type": 0,
-      "value": "返回的地图数"
+      "value": "返回的思维导图数"
     }
   ],
   "admin.system.mindmapMetrics.pending": [
@@ -1478,7 +1478,7 @@
   "admin.user-info.total-maps": [
     {
       "type": 0,
-      "value": "地图总数"
+      "value": "思维导图总数"
     }
   ],
   "admin.user-maps-dialog.loading": [
@@ -1490,7 +1490,7 @@
   "admin.user-maps-dialog.no-maps": [
     {
       "type": 0,
-      "value": "该用户没有地图。"
+      "value": "该用户没有思维导图。"
     }
   ],
   "admin.user-maps-dialog.title": [
@@ -1500,7 +1500,7 @@
     },
     {
       "type": 0,
-      "value": " 拥有的地图（ID：#"
+      "value": " 拥有的思维导图（ID：#"
     },
     {
       "type": 1,
@@ -1538,7 +1538,7 @@
   "admin.view-user-maps": [
     {
       "type": 0,
-      "value": "查看用户地图"
+      "value": "查看用户思维导图"
     }
   ],
   "admin.view-xml": [
@@ -1682,7 +1682,7 @@
   "common.maps-list": [
     {
       "type": 0,
-      "value": "地图列表"
+      "value": "思维导图列表"
     }
   ],
   "common.na": [
@@ -1782,7 +1782,7 @@
   "create.description": [
     {
       "type": 0,
-      "value": "请填写新地图名称和描述。"
+      "value": "请填写新思维导图名称和描述。"
     }
   ],
   "create.title": [
@@ -1794,7 +1794,7 @@
   "deletem.title": [
     {
       "type": 0,
-      "value": "所有选定的地图将被删除"
+      "value": "所有选定的思维导图将被删除"
     }
   ],
   "duplicate.copy-title": [
@@ -1856,13 +1856,13 @@
   "error.invalid-map-id": [
     {
       "type": 0,
-      "value": "无效的地图 ID"
+      "value": "无效的思维导图 ID"
     }
   ],
   "error.map-title-required": [
     {
       "type": 0,
-      "value": "地图标题是必需的，不能为空"
+      "value": "思维导图标题是必需的，不能为空"
     }
   ],
   "error.map-unavailable-message": [
@@ -1922,7 +1922,7 @@
   "export.desc": [
     {
       "type": 0,
-      "value": "以您想要的格式导出此地图，并在演示文稿中开始使用或通过电子邮件分享"
+      "value": "以您想要的格式导出此思维导图，并在演示文稿中开始使用或通过电子邮件分享"
     }
   ],
   "export.document": [
@@ -1940,7 +1940,7 @@
   "export.image": [
     {
       "type": 0,
-      "value": "图像：获取包含所有颜色和形状的地图图形表示。"
+      "value": "图像：获取包含所有颜色和形状的思维导图图形表示。"
     }
   ],
   "export.img-center": [
@@ -2146,7 +2146,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "您可以将WiseMapping、FreeMind、Freeplane、XMind、MindManager和OPML地图导入到您的地图列表中。选择您要导入的文件。"
+      "value": "您可以将WiseMapping、FreeMind、Freeplane、XMind、MindManager和OPML思维导图导入到您的思维导图列表中。选择您要导入的文件。"
     }
   ],
   "import.error-file": [
@@ -2204,7 +2204,7 @@
   "info.description-msg": [
     {
       "type": 0,
-      "value": "通过发布地图，您使其对互联网上的每个人都可见。"
+      "value": "通过发布思维导图，您使其对互联网上的每个人都可见。"
     }
   ],
   "info.modified-time": [
@@ -2276,7 +2276,7 @@
   "label.delete-description": [
     {
       "type": 0,
-      "value": "将被删除，包括与所有现有地图的关联。您要继续吗？"
+      "value": "将被删除，包括与所有现有思维导图的关联。您要继续吗？"
     }
   ],
   "label.delete-title": [
@@ -2288,7 +2288,7 @@
   "label.description": [
     {
       "type": 0,
-      "value": "使用标签来组织您的地图。"
+      "value": "使用标签来组织您的思维导图。"
     }
   ],
   "label.maps-count": [
@@ -2298,7 +2298,7 @@
     },
     {
       "type": 0,
-      "value": " 个地图"
+      "value": " 个思维导图"
     }
   ],
   "label.title": [
@@ -2492,13 +2492,13 @@
   "maps.auth-required-default-message": [
     {
       "type": 0,
-      "value": "您需要登录才能查看您的地图。"
+      "value": "您需要登录才能查看您的思维导图。"
     }
   ],
   "maps.auth-required-heading": [
     {
       "type": 0,
-      "value": "登录以访问您的地图"
+      "value": "登录以访问您的思维导图"
     }
   ],
   "maps.auth-required-login": [
@@ -2534,7 +2534,7 @@
   "maps.copilot-dialog.description": [
     {
       "type": 0,
-      "value": "Mind Map Copilot 是由 ChatGPT 驱动的头脑风暴助手，可将你的提示转换成结构化的思维导图。我们会在新标签页中打开它，方便你扩展想法、生成主题，并把最好的成果带回 WiseMapping。"
+      "value": "Mind Map Copilot 是由 ChatGPT 驱动的头脑风暴助手，可将您的提示转换成结构化的思维导图。我们会在新标签页中打开它，方便您扩展想法、生成主题，并把最好的成果带回 WiseMapping。"
     }
   ],
   "maps.copilot-dialog.title": [
@@ -2630,7 +2630,7 @@
   "maps.page-title": [
     {
       "type": 0,
-      "value": "我的地图 | WiseMapping"
+      "value": "我的思维导图 | WiseMapping"
     }
   ],
   "maps.revert": [
@@ -2940,7 +2940,7 @@
   "rename.description": [
     {
       "type": 0,
-      "value": "请填写新地图名称和描述。"
+      "value": "请填写新思维导图名称和描述。"
     }
   ],
   "rename.title": [

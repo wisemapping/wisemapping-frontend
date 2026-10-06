@@ -18,7 +18,7 @@
     "defaultMessage": "姓氏"
   },
   "accountinfo.title": {
-    "defaultMessage": "账户信息"
+    "defaultMessage": "账号信息"
   },
   "action.cancel-button": {
     "defaultMessage": "取消"
@@ -60,7 +60,7 @@
     "defaultMessage": "添加标签"
   },
   "action.new": {
-    "defaultMessage": "新建脑图"
+    "defaultMessage": "新建思维导图"
   },
   "action.open": {
     "defaultMessage": "打开"
@@ -87,7 +87,7 @@
     "defaultMessage": "确认密码"
   },
   "changepwd.description": {
-    "defaultMessage": "请为您的账户提供新密码"
+    "defaultMessage": "请为您的账号提供新密码"
   },
   "changepwd.password": {
     "defaultMessage": "密码"
@@ -114,13 +114,13 @@
     "defaultMessage": "创建"
   },
   "create.description": {
-    "defaultMessage": "请填写新的脑图名称和描述"
+    "defaultMessage": "请填写新的思维导图名称和描述"
   },
   "create.title": {
     "defaultMessage": "创建一个新的思维导图"
   },
   "deletem.title": {
-    "defaultMessage": "所有选中的脑图将被删除"
+    "defaultMessage": "所有选中的思维导图将被删除"
   },
   "duplicate.copy-title": {
     "defaultMessage": "{title}的副本"
@@ -135,16 +135,16 @@
     "defaultMessage": "您的会话已过期"
   },
   "export.desc": {
-    "defaultMessage": "以您需要的格式导出此脑图，并在演示文稿中使用或通过电子邮件分享"
+    "defaultMessage": "以您需要的格式导出此思维导图，并在演示文稿中使用或通过电子邮件分享"
   },
   "export.document": {
     "defaultMessage": "思维导图工具：以第三方思维导图格式导出您的思维导图"
   },
   "export.document-label": {
-    "defaultMessage": "文档：将你的思维导图导出到一个独立的文档中来分享"
+    "defaultMessage": "文档：将您的思维导图导出到一个独立的文档中来分享"
   },
   "export.image": {
-    "defaultMessage": "图像：以图片形式获取包含所有颜色和形状的脑图"
+    "defaultMessage": "图像：以图片形式获取包含所有颜色和形状的思维导图"
   },
   "export.img-center": {
     "defaultMessage": "居中并缩放合适大小"
@@ -234,7 +234,7 @@
     "defaultMessage": "创建"
   },
   "import.description": {
-    "defaultMessage": "您可以将脑图从 WiseMapping、FreeMind、Freeplane、XMind、MindManager 和 OPML 导入到您的脑图列表中。选择要导入的文件。"
+    "defaultMessage": "您可以将思维导图从 WiseMapping、FreeMind、Freeplane、XMind、MindManager 和 OPML 导入到您的思维导图列表中。选择要导入的文件。"
   },
   "import.title": {
     "defaultMessage": "导入现有的思维导图"
@@ -261,7 +261,7 @@
     "defaultMessage": "描述"
   },
   "info.description-msg": {
-    "defaultMessage": "通过发布脑图，你让互联网上的每个人都能看到它。"
+    "defaultMessage": "通过发布思维导图，您让互联网上的每个人都能看到它。"
   },
   "info.modified-time": {
     "defaultMessage": "最后修改日期"
@@ -288,7 +288,7 @@
     "defaultMessage": "添加标签"
   },
   "label.add-for": {
-    "defaultMessage": "编辑脑图标签："
+    "defaultMessage": "编辑思维导图标签："
   },
   "label.add-placeholder": {
     "defaultMessage": "标签标题"
@@ -297,13 +297,13 @@
     "defaultMessage": "更改标签颜色"
   },
   "label.delete-description": {
-    "defaultMessage": "将被删除，包括它与所有现有脑图的关联。是否继续？"
+    "defaultMessage": "将被删除，包括它与所有现有思维导图的关联。是否继续？"
   },
   "label.delete-title": {
     "defaultMessage": "确认标签删除"
   },
   "label.description": {
-    "defaultMessage": "使用标签来组织你的脑图。"
+    "defaultMessage": "使用标签来组织您的思维导图。"
   },
   "label.title": {
     "defaultMessage": "添加标签"
@@ -348,7 +348,7 @@
     "defaultMessage": "欢迎"
   },
   "login.shared-map-notice": {
-    "defaultMessage": "有人与您分享了一张思维导图。请登录以访问。还没有账户？免费注册或使用您的Google/Facebook账户。"
+    "defaultMessage": "有人与您分享了一张思维导图。请登录以访问。还没有账号？免费注册或使用您的Google/Facebook账号。"
   },
   "map.creator": {
     "defaultMessage": "创建人"
@@ -381,7 +381,7 @@
     "defaultMessage": "ChatGPT 驱动的思维导图副驾驶"
   },
   "maps.copilot-dialog.description": {
-    "defaultMessage": "Mind Map Copilot 是由 ChatGPT 驱动的头脑风暴助手，可将你的提示转换成结构化的思维导图。我们会在新标签页中打开它，帮助你拓展想法、生成主题，并把最佳成果带回 WiseMapping。"
+    "defaultMessage": "Mind Map Copilot 是由 ChatGPT 驱动的头脑风暴助手，可将您的提示转换成结构化的思维导图。我们会在新标签页中打开它，帮助您拓展想法、生成主题，并把最佳成果带回 WiseMapping。"
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "打开副驾驶"
@@ -420,7 +420,7 @@
     "defaultMessage": "收藏"
   },
   "maps.page-title": {
-    "defaultMessage": "我的脑图|WiseMapping"
+    "defaultMessage": "我的思维导图|WiseMapping"
   },
   "maps.revert": {
     "defaultMessage": "恢复"
@@ -501,7 +501,7 @@
     "defaultMessage": "成为成员"
   },
   "rename.description": {
-    "defaultMessage": "请填写新的脑图名称和描述。"
+    "defaultMessage": "请填写新的思维导图名称和描述。"
   },
   "rename.title": {
     "defaultMessage": "重命名"
@@ -564,7 +564,7 @@
     "defaultMessage": "整理 ..."
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "之前注册了一个具有相同电子邮件地址的帐户。你想将你的{provider}账户链接到那个 WiseMapping 账户吗？"
+    "defaultMessage": "之前注册了一个具有相同电子邮件地址的账号。您想将您的{provider}账号链接到那个 WiseMapping 账号吗？"
   },
   "registration.callback.waiting.description": {
     "defaultMessage": "我们正在验证您的身份，请稍候"
@@ -573,7 +573,7 @@
     "defaultMessage": "回到登录"
   },
   "registration.callback.sync": {
-    "defaultMessage": "同步账户"
+    "defaultMessage": "同步账号"
   },
   "forgot.oauth.message": {
     "defaultMessage": "您不需要密码，请使用Facebook或Google登录"
@@ -594,7 +594,7 @@
     "defaultMessage": "删除用户"
   },
   "common.maps-list": {
-    "defaultMessage": "地图列表"
+    "defaultMessage": "思维导图列表"
   },
   "common.na": {
     "defaultMessage": "不适用"
@@ -687,7 +687,7 @@
     "defaultMessage": "未知错误"
   },
   "admin.error.update-map-failed": {
-    "defaultMessage": "更新脑图失败。请重试。"
+    "defaultMessage": "更新思维导图失败。请重试。"
   },
   "admin.error.update-user-failed": {
     "defaultMessage": "更新用户失败。请重试。"
@@ -789,7 +789,7 @@
     "defaultMessage": "暂停时间：{date}"
   },
   "label.maps-count": {
-    "defaultMessage": "{count} 个地图"
+    "defaultMessage": "{count} 个思维导图"
   },
   "admin.delete": {
     "defaultMessage": "删除"
@@ -837,16 +837,16 @@
     "defaultMessage": "用户信息"
   },
   "admin.user-info.total-maps": {
-    "defaultMessage": "脑图总数"
+    "defaultMessage": "思维导图总数"
   },
   "admin.user-maps-dialog.loading": {
     "defaultMessage": "正在加载用户..."
   },
   "admin.user-maps-dialog.no-maps": {
-    "defaultMessage": "该用户没有脑图。"
+    "defaultMessage": "该用户没有思维导图。"
   },
   "admin.user-maps-dialog.title": {
-    "defaultMessage": "{name} 拥有的脑图（ID：#{id}）"
+    "defaultMessage": "{name} 拥有的思维导图（ID：#{id}）"
   },
   "admin.validation.email-invalid": {
     "defaultMessage": "电子邮件格式无效"
@@ -861,7 +861,7 @@
     "defaultMessage": "姓氏为必填项"
   },
   "admin.view-user-maps": {
-    "defaultMessage": "查看用户脑图"
+    "defaultMessage": "查看用户思维导图"
   },
   "common.delete-tag": {
     "defaultMessage": "删除标签"
@@ -882,19 +882,19 @@
     "defaultMessage": "未标记为垃圾内容"
   },
   "admin.maps.creator-suspended-tooltip": {
-    "defaultMessage": "脑图创建者的账号已被管理员暂停"
+    "defaultMessage": "思维导图创建者的账号已被管理员暂停"
   },
   "admin.maps.delete": {
-    "defaultMessage": "删除脑图"
+    "defaultMessage": "删除思维导图"
   },
   "admin.maps.description": {
     "defaultMessage": "描述"
   },
   "admin.maps.edit": {
-    "defaultMessage": "编辑脑图"
+    "defaultMessage": "编辑思维导图"
   },
   "admin.maps.edit-title": {
-    "defaultMessage": "编辑脑图"
+    "defaultMessage": "编辑思维导图"
   },
   "admin.maps.filter.date": {
     "defaultMessage": "日期范围"
@@ -912,25 +912,25 @@
     "defaultMessage": "标记为垃圾内容"
   },
   "admin.maps.no-maps": {
-    "defaultMessage": "未找到脑图"
+    "defaultMessage": "未找到思维导图"
   },
   "admin.maps.page-title": {
-    "defaultMessage": "脑图管理"
+    "defaultMessage": "思维导图管理"
   },
   "admin.maps.private-tooltip": {
-    "defaultMessage": "只有协作人可以查看此脑图"
+    "defaultMessage": "只有协作人可以查看此思维导图"
   },
   "admin.maps.public-tooltip": {
-    "defaultMessage": "任何人都可以查看此脑图"
+    "defaultMessage": "任何人都可以查看此思维导图"
   },
   "admin.maps.search": {
-    "defaultMessage": "搜索脑图...（输入 #123 按 ID 搜索，输入电子邮件按创建者搜索）"
+    "defaultMessage": "搜索思维导图...（输入 #123 按 ID 搜索，输入电子邮件按创建者搜索）"
   },
   "admin.maps.search-by-email": {
     "defaultMessage": "🔍 按创建者电子邮件搜索"
   },
   "admin.maps.search-by-id": {
-    "defaultMessage": "🔍 按脑图 ID 搜索"
+    "defaultMessage": "🔍 按思维导图 ID 搜索"
   },
   "admin.maps.search-by-text": {
     "defaultMessage": "🔍 在标题和描述中搜索"
@@ -966,7 +966,7 @@
     "defaultMessage": "描述"
   },
   "admin.maps.table.id": {
-    "defaultMessage": "脑图 ID"
+    "defaultMessage": "思维导图 ID"
   },
   "admin.maps.table.modified": {
     "defaultMessage": "修改时间"
@@ -1005,13 +1005,13 @@
     "defaultMessage": "没有可用的 XML 内容"
   },
   "admin.maps.xml-viewer.title": {
-    "defaultMessage": "脑图 XML 内容"
+    "defaultMessage": "思维导图 XML 内容"
   },
   "admin.menu.accounts": {
     "defaultMessage": "账号"
   },
   "admin.menu.maps": {
-    "defaultMessage": "脑图"
+    "defaultMessage": "思维导图"
   },
   "admin.menu.system": {
     "defaultMessage": "系统"
@@ -1080,7 +1080,7 @@
     "defaultMessage": "最后更新"
   },
   "admin.system.mindmapMetrics.mapCount": {
-    "defaultMessage": "返回的脑图数"
+    "defaultMessage": "返回的思维导图数"
   },
   "admin.system.mindmapMetrics.pending": {
     "defaultMessage": "正在等待下一次思维导图列表请求以采集指标。"
@@ -1164,7 +1164,7 @@
     "defaultMessage": "此思维导图不提供公开显示，因为它违反了我们的网站政策。如果您需要进一步协助，请联系 support@wisemapping.com。"
   },
   "error.map-title-required": {
-    "defaultMessage": "地图标题是必需的，不能为空"
+    "defaultMessage": "思维导图标题是必需的，不能为空"
   },
   "accountinfo.personal-details": {
     "defaultMessage": "个人详细信息"
@@ -1221,7 +1221,7 @@
     "defaultMessage": "管理控制台"
   },
   "registration.form-legend": {
-    "defaultMessage": "账户信息"
+    "defaultMessage": "账号信息"
   },
   "admin.change-password": {
     "defaultMessage": "更改密码"
@@ -1239,10 +1239,10 @@
     "defaultMessage": "确认密码"
   },
   "admin.confirm.delete-map": {
-    "defaultMessage": "您确定要删除脑图“{title}”吗？"
+    "defaultMessage": "您确定要删除思维导图“{title}”吗？"
   },
   "admin.confirm.spam-action": {
-    "defaultMessage": "您确定要将此脑图{action}吗？"
+    "defaultMessage": "您确定要将此思维导图{action}吗？"
   },
   "admin.console.description": {
     "defaultMessage": "管理用户、系统设置和应用程序配置。"
@@ -1308,7 +1308,7 @@
     "defaultMessage": "登录"
   },
   "error.invalid-map-id": {
-    "defaultMessage": "无效的脑图 ID"
+    "defaultMessage": "无效的思维导图 ID"
   },
   "login.oauth-error": {
     "defaultMessage": "OAuth 身份验证失败。请重试或使用其他登录方式。"
@@ -1368,13 +1368,13 @@
     "defaultMessage": "需要登录 | WiseMapping"
   },
   "maps.auth-required-heading": {
-    "defaultMessage": "登录以访问您的脑图"
+    "defaultMessage": "登录以访问您的思维导图"
   },
   "maps.auth-required-login": {
     "defaultMessage": "前往登录"
   },
   "maps.auth-required-default-message": {
-    "defaultMessage": "您需要登录才能查看您的脑图。"
+    "defaultMessage": "您需要登录才能查看您的思维导图。"
   },
   "activation.error.message": {
     "defaultMessage": "我们无法激活您的账号。激活链接可能无效或已过期。请联系技术支持获取帮助。"

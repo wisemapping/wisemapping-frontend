@@ -158,7 +158,7 @@
   "accountinfo.title": [
     {
       "type": 0,
-      "value": "账户信息"
+      "value": "账号信息"
     }
   ],
   "action.cancel-button": [
@@ -242,7 +242,7 @@
   "action.new": [
     {
       "type": 0,
-      "value": "新建脑图"
+      "value": "新建思维导图"
     }
   ],
   "action.open": [
@@ -504,7 +504,7 @@
   "admin.confirm.delete-map": [
     {
       "type": 0,
-      "value": "您确定要删除脑图“"
+      "value": "您确定要删除思维导图“"
     },
     {
       "type": 1,
@@ -518,7 +518,7 @@
   "admin.confirm.spam-action": [
     {
       "type": 0,
-      "value": "您确定要将此脑图"
+      "value": "您确定要将此思维导图"
     },
     {
       "type": 1,
@@ -614,7 +614,7 @@
   "admin.error.update-map-failed": [
     {
       "type": 0,
-      "value": "更新脑图失败。请重试。"
+      "value": "更新思维导图失败。请重试。"
     }
   ],
   "admin.error.update-user-failed": [
@@ -706,13 +706,13 @@
   "admin.maps.creator-suspended-tooltip": [
     {
       "type": 0,
-      "value": "脑图创建者的账号已被管理员暂停"
+      "value": "思维导图创建者的账号已被管理员暂停"
     }
   ],
   "admin.maps.delete": [
     {
       "type": 0,
-      "value": "删除脑图"
+      "value": "删除思维导图"
     }
   ],
   "admin.maps.description": [
@@ -724,13 +724,13 @@
   "admin.maps.edit": [
     {
       "type": 0,
-      "value": "编辑脑图"
+      "value": "编辑思维导图"
     }
   ],
   "admin.maps.edit-title": [
     {
       "type": 0,
-      "value": "编辑脑图"
+      "value": "编辑思维导图"
     }
   ],
   "admin.maps.filter.date": [
@@ -774,31 +774,31 @@
   "admin.maps.no-maps": [
     {
       "type": 0,
-      "value": "未找到脑图"
+      "value": "未找到思维导图"
     }
   ],
   "admin.maps.page-title": [
     {
       "type": 0,
-      "value": "脑图管理"
+      "value": "思维导图管理"
     }
   ],
   "admin.maps.private-tooltip": [
     {
       "type": 0,
-      "value": "只有协作人可以查看此脑图"
+      "value": "只有协作人可以查看此思维导图"
     }
   ],
   "admin.maps.public-tooltip": [
     {
       "type": 0,
-      "value": "任何人都可以查看此脑图"
+      "value": "任何人都可以查看此思维导图"
     }
   ],
   "admin.maps.search": [
     {
       "type": 0,
-      "value": "搜索脑图...（输入 #123 按 ID 搜索，输入电子邮件按创建者搜索）"
+      "value": "搜索思维导图...（输入 #123 按 ID 搜索，输入电子邮件按创建者搜索）"
     }
   ],
   "admin.maps.search-by-email": [
@@ -810,7 +810,7 @@
   "admin.maps.search-by-id": [
     {
       "type": 0,
-      "value": "🔍 按脑图 ID 搜索"
+      "value": "🔍 按思维导图 ID 搜索"
     }
   ],
   "admin.maps.search-by-text": [
@@ -906,7 +906,7 @@
   "admin.maps.table.id": [
     {
       "type": 0,
-      "value": "脑图 ID"
+      "value": "思维导图 ID"
     }
   ],
   "admin.maps.table.modified": [
@@ -984,7 +984,7 @@
   "admin.maps.xml-viewer.title": [
     {
       "type": 0,
-      "value": "脑图 XML 内容"
+      "value": "思维导图 XML 内容"
     }
   ],
   "admin.menu.accounts": [
@@ -996,7 +996,7 @@
   "admin.menu.maps": [
     {
       "type": 0,
-      "value": "脑图"
+      "value": "思维导图"
     }
   ],
   "admin.menu.system": [
@@ -1376,7 +1376,7 @@
   "admin.system.mindmapMetrics.mapCount": [
     {
       "type": 0,
-      "value": "返回的脑图数"
+      "value": "返回的思维导图数"
     }
   ],
   "admin.system.mindmapMetrics.pending": [
@@ -1478,7 +1478,7 @@
   "admin.user-info.total-maps": [
     {
       "type": 0,
-      "value": "脑图总数"
+      "value": "思维导图总数"
     }
   ],
   "admin.user-maps-dialog.loading": [
@@ -1490,7 +1490,7 @@
   "admin.user-maps-dialog.no-maps": [
     {
       "type": 0,
-      "value": "该用户没有脑图。"
+      "value": "该用户没有思维导图。"
     }
   ],
   "admin.user-maps-dialog.title": [
@@ -1500,7 +1500,7 @@
     },
     {
       "type": 0,
-      "value": " 拥有的脑图（ID：#"
+      "value": " 拥有的思维导图（ID：#"
     },
     {
       "type": 1,
@@ -1538,7 +1538,7 @@
   "admin.view-user-maps": [
     {
       "type": 0,
-      "value": "查看用户脑图"
+      "value": "查看用户思维导图"
     }
   ],
   "admin.view-xml": [
@@ -1556,7 +1556,7 @@
   "changepwd.description": [
     {
       "type": 0,
-      "value": "请为您的账户提供新密码"
+      "value": "请为您的账号提供新密码"
     }
   ],
   "changepwd.password": [
@@ -1682,7 +1682,7 @@
   "common.maps-list": [
     {
       "type": 0,
-      "value": "地图列表"
+      "value": "思维导图列表"
     }
   ],
   "common.na": [
@@ -1782,7 +1782,7 @@
   "create.description": [
     {
       "type": 0,
-      "value": "请填写新的脑图名称和描述"
+      "value": "请填写新的思维导图名称和描述"
     }
   ],
   "create.title": [
@@ -1794,7 +1794,7 @@
   "deletem.title": [
     {
       "type": 0,
-      "value": "所有选中的脑图将被删除"
+      "value": "所有选中的思维导图将被删除"
     }
   ],
   "duplicate.copy-title": [
@@ -1856,13 +1856,13 @@
   "error.invalid-map-id": [
     {
       "type": 0,
-      "value": "无效的脑图 ID"
+      "value": "无效的思维导图 ID"
     }
   ],
   "error.map-title-required": [
     {
       "type": 0,
-      "value": "地图标题是必需的，不能为空"
+      "value": "思维导图标题是必需的，不能为空"
     }
   ],
   "error.map-unavailable-message": [
@@ -1922,7 +1922,7 @@
   "export.desc": [
     {
       "type": 0,
-      "value": "以您需要的格式导出此脑图，并在演示文稿中使用或通过电子邮件分享"
+      "value": "以您需要的格式导出此思维导图，并在演示文稿中使用或通过电子邮件分享"
     }
   ],
   "export.document": [
@@ -1934,13 +1934,13 @@
   "export.document-label": [
     {
       "type": 0,
-      "value": "文档：将你的思维导图导出到一个独立的文档中来分享"
+      "value": "文档：将您的思维导图导出到一个独立的文档中来分享"
     }
   ],
   "export.image": [
     {
       "type": 0,
-      "value": "图像：以图片形式获取包含所有颜色和形状的脑图"
+      "value": "图像：以图片形式获取包含所有颜色和形状的思维导图"
     }
   ],
   "export.img-center": [
@@ -2146,7 +2146,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "您可以将脑图从 WiseMapping、FreeMind、Freeplane、XMind、MindManager 和 OPML 导入到您的脑图列表中。选择要导入的文件。"
+      "value": "您可以将思维导图从 WiseMapping、FreeMind、Freeplane、XMind、MindManager 和 OPML 导入到您的思维导图列表中。选择要导入的文件。"
     }
   ],
   "import.error-file": [
@@ -2204,7 +2204,7 @@
   "info.description-msg": [
     {
       "type": 0,
-      "value": "通过发布脑图，你让互联网上的每个人都能看到它。"
+      "value": "通过发布思维导图，您让互联网上的每个人都能看到它。"
     }
   ],
   "info.modified-time": [
@@ -2258,7 +2258,7 @@
   "label.add-for": [
     {
       "type": 0,
-      "value": "编辑脑图标签："
+      "value": "编辑思维导图标签："
     }
   ],
   "label.add-placeholder": [
@@ -2276,7 +2276,7 @@
   "label.delete-description": [
     {
       "type": 0,
-      "value": "将被删除，包括它与所有现有脑图的关联。是否继续？"
+      "value": "将被删除，包括它与所有现有思维导图的关联。是否继续？"
     }
   ],
   "label.delete-title": [
@@ -2288,7 +2288,7 @@
   "label.description": [
     {
       "type": 0,
-      "value": "使用标签来组织你的脑图。"
+      "value": "使用标签来组织您的思维导图。"
     }
   ],
   "label.maps-count": [
@@ -2298,7 +2298,7 @@
     },
     {
       "type": 0,
-      "value": " 个地图"
+      "value": " 个思维导图"
     }
   ],
   "label.title": [
@@ -2420,7 +2420,7 @@
   "login.shared-map-notice": [
     {
       "type": 0,
-      "value": "有人与您分享了一张思维导图。请登录以访问。还没有账户？免费注册或使用您的Google/Facebook账户。"
+      "value": "有人与您分享了一张思维导图。请登录以访问。还没有账号？免费注册或使用您的Google/Facebook账号。"
     }
   ],
   "login.signin": [
@@ -2492,13 +2492,13 @@
   "maps.auth-required-default-message": [
     {
       "type": 0,
-      "value": "您需要登录才能查看您的脑图。"
+      "value": "您需要登录才能查看您的思维导图。"
     }
   ],
   "maps.auth-required-heading": [
     {
       "type": 0,
-      "value": "登录以访问您的脑图"
+      "value": "登录以访问您的思维导图"
     }
   ],
   "maps.auth-required-login": [
@@ -2534,7 +2534,7 @@
   "maps.copilot-dialog.description": [
     {
       "type": 0,
-      "value": "Mind Map Copilot 是由 ChatGPT 驱动的头脑风暴助手，可将你的提示转换成结构化的思维导图。我们会在新标签页中打开它，帮助你拓展想法、生成主题，并把最佳成果带回 WiseMapping。"
+      "value": "Mind Map Copilot 是由 ChatGPT 驱动的头脑风暴助手，可将您的提示转换成结构化的思维导图。我们会在新标签页中打开它，帮助您拓展想法、生成主题，并把最佳成果带回 WiseMapping。"
     }
   ],
   "maps.copilot-dialog.title": [
@@ -2630,7 +2630,7 @@
   "maps.page-title": [
     {
       "type": 0,
-      "value": "我的脑图|WiseMapping"
+      "value": "我的思维导图|WiseMapping"
     }
   ],
   "maps.revert": [
@@ -2766,7 +2766,7 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "之前注册了一个具有相同电子邮件地址的帐户。你想将你的"
+      "value": "之前注册了一个具有相同电子邮件地址的账号。您想将您的"
     },
     {
       "type": 1,
@@ -2774,7 +2774,7 @@
     },
     {
       "type": 0,
-      "value": "账户链接到那个 WiseMapping 账户吗？"
+      "value": "账号链接到那个 WiseMapping 账号吗？"
     }
   ],
   "registration.callback.confirm.title": [
@@ -2786,7 +2786,7 @@
   "registration.callback.sync": [
     {
       "type": 0,
-      "value": "同步账户"
+      "value": "同步账号"
     }
   ],
   "registration.callback.waiting.description": [
@@ -2840,7 +2840,7 @@
   "registration.form-legend": [
     {
       "type": 0,
-      "value": "账户信息"
+      "value": "账号信息"
     }
   ],
   "registration.google.button": [
@@ -2940,7 +2940,7 @@
   "rename.description": [
     {
       "type": 0,
-      "value": "请填写新的脑图名称和描述。"
+      "value": "请填写新的思维导图名称和描述。"
     }
   ],
   "rename.title": [
