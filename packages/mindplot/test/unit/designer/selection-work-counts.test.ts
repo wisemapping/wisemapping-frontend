@@ -183,6 +183,19 @@ describe('Selection work', () => {
     expect(reads).toBeLessThan(10 * TOPICS);
   });
 
+  it('selecting or unselecting one topic does not scan the topics', async () => {
+    const { designer, topic } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    const fired = countEvents(designer);
+    const focusReads = countCalls(NodeGraph.prototype, 'isOnFocus');
+
+    topic(3).setOnFocus(true);
+    topic(3).setOnFocus(false);
+
+    expect(fired.onfocus).toBe(1);
+    // Before: 1,005: the designer's handlers counted the selected topics by reading every topic.
+    expect(focusReads.count).toBeLessThan(TOPICS / 5);
+  });
+
   it('selecting all again fires nothing and does not pan', async () => {
     const { designer } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
     designer.selectAll();

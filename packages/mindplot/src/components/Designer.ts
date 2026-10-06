@@ -419,10 +419,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     topic.addEvent('ontblur', () => {
       if (me._selectionBatch) return;
-      const topics = me.getModel().filterSelectedTopics();
+      const topicCount = me.getModel().countSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
 
-      if (isSelectionEmpty(topics.length, rels.length)) {
+      if (isSelectionEmpty(topicCount, rels.length)) {
         me.fireEvent('onblur');
       }
 
@@ -432,10 +432,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     topic.addEvent('ontfocus', () => {
       if (me._selectionBatch) return;
-      const topics = me.getModel().filterSelectedTopics();
+      const topicCount = me.getModel().countSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
 
-      if (!isSelectionEmpty(topics.length, rels.length)) {
+      if (!isSelectionEmpty(topicCount, rels.length)) {
         me.fireEvent('onfocus');
       }
 
@@ -1560,20 +1560,20 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     const result = new Relationship(sourceTopic, targetTopic, model);
     result.addEvent('ontblur', () => {
       if (this._selectionBatch) return;
-      const topics = this.getModel().filterSelectedTopics();
+      const topicCount = this.getModel().countSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
 
-      if (isSelectionEmpty(topics.length, rels.length)) {
+      if (isSelectionEmpty(topicCount, rels.length)) {
         this.fireEvent('onblur');
       }
     });
 
     result.addEvent('ontfocus', () => {
       if (this._selectionBatch) return;
-      const topics = this.getModel().filterSelectedTopics();
+      const topicCount = this.getModel().countSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
 
-      if (!isSelectionEmpty(topics.length, rels.length)) {
+      if (!isSelectionEmpty(topicCount, rels.length)) {
         this.fireEvent('onfocus');
       }
     });
