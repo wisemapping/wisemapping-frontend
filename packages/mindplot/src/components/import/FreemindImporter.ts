@@ -32,7 +32,7 @@ import type {
 } from '../export/freemind/FreemindModel';
 import { unknownFreemindElement } from '../export/freemind/FreemindModel';
 import { loadFreemindMap } from '../export/freemind/FreemindXml';
-import VersionNumber from '../export/freemind/importer/VersionNumber';
+import VersionNumber from '../export/freemind/VersionNumber';
 import FreemindIconConverter from './FreemindIconConverter';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
@@ -260,13 +260,8 @@ export default class FreemindImporter extends Importer {
             this.nodesmap.set(id, wiseChild);
           }
 
-          let norder: number;
-          if (depth !== 1) {
-            norder = order++;
-          } else {
-            // Use simple alternating order for first-level topics (0, 1, 2, 3...)
-            norder = order++;
-          }
+          // Children, the main topics included, are ordered 0, 1, 2... as they appear.
+          const norder = order++;
 
           wiseChild.setOrder(norder);
 

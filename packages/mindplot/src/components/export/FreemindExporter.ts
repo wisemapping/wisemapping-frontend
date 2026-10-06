@@ -25,7 +25,7 @@ import ContentType from '../ContentType';
 import type PositionNodeType from '../PositionType';
 import Exporter from './Exporter';
 import FreemindConstant from './freemind/FreemindConstant';
-import type VersionNumber from './freemind/importer/VersionNumber';
+import type VersionNumber from './freemind/VersionNumber';
 import type {
   FreemindArrowlink,
   FreemindFont,

@@ -17,7 +17,7 @@
  */
 
 import { describe, expect, test } from '@jest/globals';
-import VersionNumber from '../../../src/components/export/freemind/importer/VersionNumber';
+import VersionNumber from '../../../src/components/export/freemind/VersionNumber';
 
 const v = (version: string) => new VersionNumber(version);
 
