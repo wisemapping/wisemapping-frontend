@@ -17,9 +17,10 @@
  */
 import { describe, expect, it } from '@jest/globals';
 import pickByOrder from '../../../src/components/theme/pickByOrder';
+import type { Palette } from '../../../src/components/theme/ThemeStyle';
 
 describe('pickByOrder', () => {
-  const palette = ['#000001', '#000002', '#000003'];
+  const palette: Palette = ['#000001', '#000002', '#000003'];
 
   it('returns a single colour as is, whatever the order', () => {
     expect(pickByOrder('#123456', 0)).toBe('#123456');
@@ -39,5 +40,10 @@ describe('pickByOrder', () => {
 
   it('treats a missing order as 0', () => {
     expect(pickByOrder(palette, undefined)).toBe('#000001');
+  });
+
+  // BL5-221: palettes are typed non-empty, so the first colour is always there.
+  it('gives a negative order the first colour', () => {
+    expect(pickByOrder(palette, -1)).toBe('#000001');
   });
 });

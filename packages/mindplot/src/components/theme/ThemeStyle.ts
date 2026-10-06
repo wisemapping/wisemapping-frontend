@@ -53,10 +53,13 @@ import retroDefault from './styles/retro-default.json';
 import retroLight from './styles/retro-light.json';
 import retroDark from './styles/retro-dark.json';
 
+/** The colours a theme picks from by topic order: never empty, which loading checks. */
+export type Palette = readonly [string, ...string[]];
+
 export type TopicStyleType = {
-  borderColor: string | string[];
-  backgroundColor: string | string[];
-  connectionColor: string | string[];
+  borderColor: string | Palette;
+  backgroundColor: string | Palette;
+  connectionColor: string | Palette;
   connectionStyle: LineType;
   fontFamily: string;
   fontSize: number;
@@ -300,9 +303,15 @@ export class ThemeStyle {
   private convertJsonToTopicStyle(jsonStyle: JsonTopicStyleType): Partial<TopicStyleType> {
     const result: Partial<TopicStyleType> = {};
 
-    if (jsonStyle.borderColor !== undefined) result.borderColor = jsonStyle.borderColor;
-    if (jsonStyle.backgroundColor !== undefined) result.backgroundColor = jsonStyle.backgroundColor;
-    if (jsonStyle.connectionColor !== undefined) result.connectionColor = jsonStyle.connectionColor;
+    if (jsonStyle.borderColor !== undefined) {
+      result.borderColor = ThemeStyle.colors(jsonStyle.borderColor, 'border colour');
+    }
+    if (jsonStyle.backgroundColor !== undefined) {
+      result.backgroundColor = ThemeStyle.colors(jsonStyle.backgroundColor, 'background colour');
+    }
+    if (jsonStyle.connectionColor !== undefined) {
+      result.connectionColor = ThemeStyle.colors(jsonStyle.connectionColor, 'connection colour');
+    }
     if (jsonStyle.connectionStyle !== undefined) {
       result.connectionStyle = this.convertStringToLineType(jsonStyle.connectionStyle);
     }
@@ -362,6 +371,18 @@ export class ThemeStyle {
       outerBackgroundColor: get('outerBackgroundColor'),
       outerBorderColor: get('outerBorderColor'),
     };
+  }
+
+  /** A colour of a theme's JSON, or its palette, which must not be empty. */
+  private static colors(value: string | string[], name: string): string | Palette {
+    if (typeof value === 'string') {
+      return value;
+    }
+    const [first, ...rest] = value;
+    if (first === undefined) {
+      throw new Error(`Empty ${name} palette`);
+    }
+    return [first, ...rest];
   }
 
   /** A value of a theme's JSON, checked against its type: like an unknown connection style, it throws. */

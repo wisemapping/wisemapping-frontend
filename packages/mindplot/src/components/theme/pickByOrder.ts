@@ -15,15 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import type { Palette } from './ThemeStyle';
 
 /**
  * The colour of a theme palette for a topic: a single colour as is, or the entry of a palette
  * picked by the topic order (a missing order counts as 0), wrapping around its length.
  */
-const pickByOrder = (colors: string | string[], order: number | undefined): string => {
-  const palette = Array.isArray(colors) ? colors : [colors];
-  // In range: theme palettes are never empty and topic orders are never negative.
-  return palette[(order || 0) % palette.length]!;
+const pickByOrder = (colors: string | Palette, order: number | undefined): string => {
+  if (typeof colors === 'string') {
+    return colors;
+  }
+  // Topic orders are never negative; if one were, it would get the first colour.
+  return colors[(order || 0) % colors.length] ?? colors[0];
 };
 
 export default pickByOrder;

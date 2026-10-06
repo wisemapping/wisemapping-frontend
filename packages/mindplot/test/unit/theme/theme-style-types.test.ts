@@ -53,6 +53,10 @@ describe('ThemeStyle checks the JSON values (BL5-186)', () => {
     [{ fontStyle: 'slanted' }, /Unknown font style: slanted/],
     [{ fontWeight: 'heavy' }, /Unknown font weight: heavy/],
     [{ shapeType: 'hexagon' }, /Unknown shape type: hexagon/],
+    // BL5-221: palettes are non-empty, so picking a colour by order always finds one.
+    [{ borderColor: [] }, /Empty border colour palette/],
+    [{ backgroundColor: [] }, /Empty background colour palette/],
+    [{ connectionColor: [] }, /Empty connection colour palette/],
   ])('rejects the unknown value in %p', (json, error) => {
     const style = new ThemeStyle('classic', 'light');
     const convert = (style as unknown as { convertJsonToTopicStyle: (j: object) => unknown })
