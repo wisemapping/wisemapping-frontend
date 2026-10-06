@@ -57,7 +57,7 @@ const node = (mindmap: Mindmap, id: number): NodeModel => {
 };
 
 const noteText = (topic: NodeModel): string => {
-  const note = topic.findFeatureByType('note')[0];
+  const note = topic.findFeatureByType('note')[0]!;
   return note.getText();
 };
 
@@ -146,18 +146,18 @@ describe('beta maps (B-BETA)', () => {
       '<map><topic central="true" text="c"><icon id="face_plain"/><icon id="unknown_icon"/>' +
         '<link url="http://example.com"/><note text="hello"/></topic></map>',
     );
-    const central = mindmap.getBranches()[0];
+    const central = mindmap.getBranches()[0]!;
     const types = central.getFeatures().map((f) => f.getType());
     expect(types).toEqual(['eicon', 'icon', 'link', 'note']);
-    expect(central.getFeatures()[0].getAttribute('id')).toBe('😐');
-    expect(central.getFeatures()[1].getAttribute('id')).toBe('unknown_icon');
+    expect(central.getFeatures()[0]!.getAttribute('id')).toBe('😐');
+    expect(central.getFeatures()[1]!.getAttribute('id')).toBe('unknown_icon');
   });
 
   test('loads the numeric positions of a beta map', () => {
     const mindmap = load(
       '<map><topic central="true" text="c"><topic position="-120,40" text="a"/></topic></map>',
     );
-    const child = mindmap.getBranches()[0].getChildren()[0];
+    const child = mindmap.getBranches()[0]!.getChildren()[0]!;
     expect(child.getPosition()).toEqual({ x: -120, y: 40 });
   });
 });

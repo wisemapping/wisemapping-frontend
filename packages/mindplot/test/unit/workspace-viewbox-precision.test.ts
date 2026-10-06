@@ -82,8 +82,8 @@ describe('Workspace viewBox precision', () => {
       const mouse = screenManager.getWorkspaceMousePosition(event);
 
       // The SVG (preserveAspectRatio none) renders the point minX + 500 * width / 1000 there.
-      expect(mouse.x).toBeCloseTo(minX + (500 * width) / 1000, 6);
-      expect(mouse.y).toBeCloseTo(minY + (400 * height) / 800, 6);
+      expect(mouse.x).toBeCloseTo(minX! + (500 * width!) / 1000, 6);
+      expect(mouse.y).toBeCloseTo(minY! + (400 * height!) / 800, 6);
     });
   });
 });

@@ -45,7 +45,7 @@ describe('mindplot language bundles', () => {
           walk(full);
         } else if (/\.tsx?$/.test(entry.name)) {
           const source = fs.readFileSync(full, 'utf8');
-          [...source.matchAll(/\$msg\(\s*'([^']+)'/g)].forEach((m) => used.add(m[1]));
+          [...source.matchAll(/\$msg\(\s*'([^']+)'/g)].forEach((m) => used.add(m[1]!));
         }
       });
     };
@@ -68,7 +68,7 @@ describe('mindplot language bundles', () => {
       .flatMap((name) => [
         ...fs.readFileSync(path.join(stylesDir, name), 'utf8').matchAll(/"msgKey":\s*"([^"]+)"/g),
       ])
-      .map((m) => m[1]);
+      .map((m) => m[1]!);
     expect(keys.length).toBeGreaterThan(0);
     expect(keys.filter((key) => !isMsgKey(key))).toEqual([]);
   });

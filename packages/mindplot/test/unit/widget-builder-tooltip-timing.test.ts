@@ -49,7 +49,7 @@ const fakeIcon = (iconRect: DOMRect) => {
   };
   const fire = (type: string) => {
     const event = { target, stopPropagation: jest.fn() } as unknown as Event;
-    listeners[type](event);
+    listeners[type]!(event);
     return event;
   };
   return { icon: icon as unknown as LinkIcon, fire };

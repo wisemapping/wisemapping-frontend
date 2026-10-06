@@ -87,8 +87,8 @@ describe('XMindImporter (XML format) reads only the topic own data', () => {
     const child = topicByText(doc, 'Child');
     expect(ownChildren(child, 'eicon')).toHaveLength(1);
     expect(ownChildren(child, 'note')).toHaveLength(1);
-    expect(ownChildren(child, 'note')[0].textContent).toContain('Child note');
-    expect(ownChildren(child, 'note')[0].textContent).toContain('child-marker');
+    expect(ownChildren(child, 'note')[0]!.textContent).toContain('Child note');
+    expect(ownChildren(child, 'note')[0]!.textContent).toContain('child-marker');
   });
 
   test('a topic without title does not take the title of a child', async () => {
@@ -195,9 +195,9 @@ describe('XMindImporter (XML format) relationships', () => {
     const b = topicByText(doc, 'B').getAttribute('id');
     const relationships = Array.from(doc.getElementsByTagName('relationship'));
     expect(relationships).toHaveLength(2);
-    expect(relationships[0].getAttribute('srcTopicId')).toBe(a);
-    expect(relationships[0].getAttribute('destTopicId')).toBe(b);
-    expect(relationships[1].getAttribute('srcTopicId')).toBe(b);
-    expect(relationships[1].getAttribute('destTopicId')).toBe(a);
+    expect(relationships[0]!.getAttribute('srcTopicId')).toBe(a);
+    expect(relationships[0]!.getAttribute('destTopicId')).toBe(b);
+    expect(relationships[1]!.getAttribute('srcTopicId')).toBe(b);
+    expect(relationships[1]!.getAttribute('destTopicId')).toBe(a);
   });
 });

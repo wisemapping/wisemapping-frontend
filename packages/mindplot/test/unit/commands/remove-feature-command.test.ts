@@ -37,7 +37,7 @@ describe('RemoveFeatureFromTopicCommand', () => {
   // Feature ids are numbers and 0 is a valid one (FeatureModel.setId accepts any finite id).
   it('removes, and restores on undo, a feature whose id is 0', async () => {
     const { designer, save, topic } = await buildDesigner(MAP);
-    const icon = topic(1).getModel().findFeatureByType('eicon')[0];
+    const icon = topic(1).getModel().findFeatureByType('eicon')[0]!;
     icon.setId(0);
     const before = save();
 

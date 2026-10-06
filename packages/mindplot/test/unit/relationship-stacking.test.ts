@@ -46,9 +46,9 @@ const partsOf = (relationship: Relationship, label: string): Map<Element, string
   const fields = relationship as unknown as Record<string, Part & { getElementClass?: () => Part }>;
   return new Map(
     PARTS.map((name) => {
-      const field = fields[`_${name}`];
+      const field = fields[`_${name}`]!;
       const element = field.getElementClass ? field.getElementClass() : field;
-      return [element.getNode(), `${label} ${name}`];
+      return [element!.getNode(), `${label} ${name}`];
     }),
   );
 };
@@ -62,7 +62,7 @@ const stacking = (harness: Harness): { parts: string[]; firstTopic: number } => 
     .getModel()
     .getRelationships()
     .forEach((relationship, i) =>
-      partsOf(relationship, LABELS[i]).forEach((name, el) => names.set(el, name)),
+      partsOf(relationship, LABELS[i]!).forEach((name, el) => names.set(el, name)),
     );
   const children = Array.from(harness.designer.getContainer().querySelector('svg')!.children);
   const topics = new Set(
@@ -99,7 +99,7 @@ describe('relationship stacking (BL5-145)', () => {
     const children = Array.from(harness.designer.getContainer().querySelector('svg')!.children);
     const lastPart = Math.max(
       ...relationships.flatMap((r, i) =>
-        Array.from(partsOf(r, LABELS[i]).keys()).map((el) => children.indexOf(el)),
+        Array.from(partsOf(r, LABELS[i]!).keys()).map((el) => children.indexOf(el)),
       ),
     );
     expect(lastPart).toBeLessThan(firstTopic);
@@ -108,13 +108,13 @@ describe('relationship stacking (BL5-145)', () => {
   it('keeps the stacking whatever the order relationships are redrawn and focused in', () => {
     const before = stacking(harness).parts;
 
-    relationships[1].redraw();
-    relationships[0].redraw();
+    relationships[1]!.redraw();
+    relationships[0]!.redraw();
     expect(stacking(harness).parts).toEqual(before);
 
-    relationships[1].setOnFocus(true);
-    relationships[1].setOnFocus(false);
-    relationships[0].setOnFocus(true);
+    relationships[1]!.setOnFocus(true);
+    relationships[1]!.setOnFocus(false);
+    relationships[0]!.setOnFocus(true);
     expect(stacking(harness).parts).toEqual(before);
 
     // A moved topic redraws the relationships attached to it.

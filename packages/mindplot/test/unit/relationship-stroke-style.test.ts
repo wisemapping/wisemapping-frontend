@@ -31,19 +31,19 @@ describe('Relationship stroke style (BL5-121)', () => {
   it('draws a solid relationship without a dash array, also after a dashed one', async () => {
     const { designer } = await buildDesigner();
     const [relationship] = designer.getModel().getRelationships();
-    const model = relationship.getModel();
+    const model = relationship!.getModel();
 
     model.setStrokeStyle(StrokeStyle.DASHED);
-    relationship.redraw();
-    expect(lineOf(relationship).getAttribute('stroke-dasharray')).toBe('8,4');
+    relationship!.redraw();
+    expect(lineOf(relationship!).getAttribute('stroke-dasharray')).toBe('8,4');
 
     // It wrote '0,0', a dash array of zero lengths, rather than removing it.
     model.setStrokeStyle(StrokeStyle.SOLID);
-    relationship.redraw();
-    expect(lineOf(relationship).hasAttribute('stroke-dasharray')).toBe(false);
+    relationship!.redraw();
+    expect(lineOf(relationship!).hasAttribute('stroke-dasharray')).toBe(false);
 
     model.setStrokeStyle(StrokeStyle.DOTTED);
-    relationship.redraw();
-    expect(lineOf(relationship).getAttribute('stroke-dasharray')).toBe('1,3');
+    relationship!.redraw();
+    expect(lineOf(relationship!).getAttribute('stroke-dasharray')).toBe('1,3');
   });
 });

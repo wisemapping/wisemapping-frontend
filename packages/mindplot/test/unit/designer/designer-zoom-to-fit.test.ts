@@ -59,7 +59,7 @@ const build = async (width: number, height: number): Promise<Designer> => {
 /** The viewport as the browser draws it: the SVG's size and viewBox. */
 const viewportOf = (designer: Designer): Viewport => {
   const svg = designer.getContainer().querySelector('svg')!;
-  const [x, y, width, height] = svg
+  const [x = NaN, y = NaN, width = NaN, height = NaN] = svg
     .getAttribute('viewBox')!
     .split(' ')
     .map((value) => Number.parseFloat(value));

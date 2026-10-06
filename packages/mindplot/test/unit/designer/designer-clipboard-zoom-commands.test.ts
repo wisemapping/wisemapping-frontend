@@ -162,7 +162,7 @@ describe('Designer copy and paste through the internal clipboard', () => {
     await harness.designer.copyToClipboard();
     await harness.designer.pasteClipboard();
 
-    const pasted = harness.designer.getModel().getTopics().slice(-1)[0];
+    const pasted = harness.designer.getModel().getTopics().slice(-1)[0]!;
     expect(pasted.getModel().getMindmap()).toBe(harness.designer.getMindmap());
     expect(pasted.getBackgroundColor('light')).toBe(harness.topic(5).getBackgroundColor('light'));
   });
@@ -179,7 +179,7 @@ describe('Designer copy and paste through the internal clipboard', () => {
       .map((child) => child.getModel().getText());
     expect(children).toEqual(['A1', 'B1']);
     // The pasted topic belongs to the map it was pasted in.
-    const pasted = harness.topic(1).getChildren()[1].getModel();
+    const pasted = harness.topic(1).getChildren()[1]!.getModel();
     expect(pasted.getMindmap()).toBe(harness.designer.getMindmap());
   });
 
@@ -209,7 +209,7 @@ describe('Designer copy and paste through the system clipboard', () => {
     select(harness, 4);
     await harness.designer.copyToClipboard();
     expect(items).toHaveLength(1);
-    const written = await readBlob(items[0].blobs['text/plain']);
+    const written = await readBlob(items[0]!.blobs['text/plain']!);
     expect(written).toContain('text="B1"');
     // Read back through a blob with text(), as a browser clipboard gives it.
     items[0] = new FakeClipboardItem({ 'text/plain': textBlob(written) });

@@ -56,7 +56,7 @@ afterAll(() => {
 type Pivot = { mouseDownHandler(event: Event): void };
 const pivotOf = (relationship: Relationship, type: PivotType): Pivot =>
   (relationship as unknown as { _controlPointsController: { _pivotLines: Pivot[] } })
-    ._controlPointsController._pivotLines[type];
+    ._controlPointsController._pivotLines[type]!;
 
 const endOf = (relationship: Relationship, type: PivotType): PositionType => {
   const line = relationship.getLine();
@@ -90,7 +90,7 @@ describe('Relationship released end after its topic is resized (BL5-125)', () =>
     [PivotType.Start, 100, -100, false],
   ])('keeps the end on its edge if it fits (pivot %s, %s,%s)', async (type, x, y, fits) => {
     const { designer, topic } = await buildDesigner();
-    const relationship = designer.getModel().getRelationships()[0];
+    const relationship = designer.getModel().getRelationships()[0]!;
     const end = topic(type === PivotType.End ? 5 : 3);
     relationship.setOnFocus(true);
     pivotOf(relationship, type).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
@@ -107,8 +107,8 @@ describe('Relationship released end after its topic is resized (BL5-125)', () =>
     const placedEnd = endOf(relationship, type);
     expect(relationship.getLine().getControlPoints()[type]).toEqual(ctrlPoint);
     const facing = Relationship.calculateSnapPoint(end, {
-      x: placedEnd.x + ctrlPoint.x,
-      y: placedEnd.y + ctrlPoint.y,
+      x: placedEnd.x + ctrlPoint.x!,
+      y: placedEnd.y + ctrlPoint.y!,
     });
     expect(facing.x).toBeCloseTo(placedEnd.x);
     expect(facing.y).toBeCloseTo(placedEnd.y);

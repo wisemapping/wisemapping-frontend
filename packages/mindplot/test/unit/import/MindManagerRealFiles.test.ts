@@ -85,9 +85,9 @@ describe('MindManager 8 file (blumind-mm8)', () => {
     const mindmap = await importReal('blumind-mm8');
     const [noted, plain, smiley] = centralOf(mindmap).getChildren();
 
-    expect([side(noted), side(plain), side(smiley)]).toEqual([1, 1, -1]);
+    expect([side(noted!), side(plain!), side(smiley!)]).toEqual([1, 1, -1]);
     // Right side orders are even and continuous, left side ones odd.
-    expect([noted.getOrder(), plain.getOrder(), smiley.getOrder()]).toEqual([0, 2, 1]);
+    expect([noted!.getOrder(), plain!.getOrder(), smiley!.getOrder()]).toEqual([0, 2, 1]);
   });
 
   test('imports the note, the icons and the relationship', async () => {
@@ -95,25 +95,25 @@ describe('MindManager 8 file (blumind-mm8)', () => {
     const central = centralOf(mindmap);
     const [noted, plain, smiley] = central.getChildren();
 
-    const note = noted.findFeatureByType('note')[0];
+    const note = noted!.findFeatureByType('note')[0]!;
     expect(note.getContentType()).toBe(ContentType.HTML);
     expect(note.getText()).toBe('<p>Hello, World</p>');
 
     expect(emojis(central)).toEqual(['🟢']);
-    expect(emojis(smiley)).toEqual(['😃']);
-    expect(emojis(noted)).toEqual([]);
+    expect(emojis(smiley!)).toEqual(['😃']);
+    expect(emojis(noted!)).toEqual([]);
     // The marker sets (MarkersSetGroup) only declare the available icons and priorities.
-    expect(emojis(plain)).toEqual([]);
+    expect(emojis(plain!)).toEqual([]);
 
     const relationships = mindmap.getRelationships();
     expect(relationships).toHaveLength(1);
-    expect(relationships[0].getFromNode()).toBe(central.getId());
-    expect(relationships[0].getToNode()).toBe(noted.getId());
+    expect(relationships[0]!.getFromNode()).toBe(central.getId());
+    expect(relationships[0]!.getToNode()).toBe(noted!.getId());
     // RelationshipDefaultsGroup/DefaultLineStyle LineDashStyle="urn:mindjet:Dash"
-    expect(relationships[0].getStrokeStyle()).toBe(StrokeStyle.DASHED);
+    expect(relationships[0]!.getStrokeStyle()).toBe(StrokeStyle.DASHED);
     // DefaultColor LineColor="ffe0666e"; DefaultConnectionStyle NoArrow (Index 0), Arrow (Index 1)
-    expect(relationships[0].getStrokeColor()).toBe('#e0666e');
-    expect([relationships[0].getStartArrow(), relationships[0].getEndArrow()]).toEqual([
+    expect(relationships[0]!.getStrokeColor()).toBe('#e0666e');
+    expect([relationships[0]!.getStartArrow(), relationships[0]!.getEndArrow()]).toEqual([
       false,
       true,
     ]);
@@ -129,29 +129,29 @@ describe('MindManager 2017 file (mmap2json-2017)', () => {
     expect(central.getText()).toBe('A');
     expect(texts(central)).toEqual(['B', 'C']);
     const [b, c] = central.getChildren();
-    expect(texts(b)).toEqual(['D', 'E', 'F']);
-    expect(texts(c)).toEqual([]);
-    expect(b.getChildren().map((child) => child.getOrder())).toEqual([0, 1, 2]);
-    expect(texts(b.getChildren()[1])).toEqual(['G']);
+    expect(texts(b!)).toEqual(['D', 'E', 'F']);
+    expect(texts(c!)).toEqual([]);
+    expect(b!.getChildren().map((child) => child.getOrder())).toEqual([0, 1, 2]);
+    expect(texts(b!.getChildren()[1]!)).toEqual(['G']);
   });
 
   test('B and C, both with Offset CX="30." CY="0.", are on the right, in order and apart', async () => {
     const mindmap = await importReal('mmap2json-2017');
     const [b, c] = centralOf(mindmap).getChildren();
 
-    expect([side(b), side(c)]).toEqual([1, 1]);
-    expect([b.getOrder(), c.getOrder()]).toEqual([0, 2]);
-    expect(b.getPosition()).not.toEqual(c.getPosition());
+    expect([side(b!), side(c!)]).toEqual([1, 1]);
+    expect([b!.getOrder(), c!.getOrder()]).toEqual([0, 2]);
+    expect(b!.getPosition()).not.toEqual(c!.getPosition());
     // The Offset is a layout hint, not a position: B is above C, as in SubTopics.
-    expect(b.getPosition()!.y).toBeLessThan(c.getPosition()!.y);
+    expect(b!.getPosition()!.y).toBeLessThan(c!.getPosition()!.y);
   });
 
   test('the sub-topics of a branch are on the side of the branch', async () => {
     const mindmap = await importReal('mmap2json-2017');
-    const b = centralOf(mindmap).getChildren()[0];
+    const b = centralOf(mindmap).getChildren()[0]!;
     const [d, e, f] = b.getChildren();
 
-    expect([side(d), side(e), side(f), side(e.getChildren()[0])]).toEqual([1, 1, 1, 1]);
+    expect([side(d!), side(e!), side(f!), side(e!.getChildren()[0]!)]).toEqual([1, 1, 1, 1]);
   });
 
   test('has no relationships, notes or icons', async () => {
@@ -178,9 +178,9 @@ describe('MindManager 23 file (mindm-test-dom-mm23)', () => {
     const mindmap = await importReal('mindm-test-dom-mm23');
 
     const [one] = byText(mindmap, '1');
-    expect(one.findFeatureByType('link')[0].getUrl()).toBe('https://www.microsoft.com');
+    expect(one!.findFeatureByType('link')[0]!.getUrl()).toBe('https://www.microsoft.com');
     // Url="#xpointer(/descendant-or-self::ap:Topic[@OId='...'])"
-    expect(byText(mindmap, '3')[0].findFeatureByType('link')).toEqual([]);
+    expect(byText(mindmap, '3')[0]!.findFeatureByType('link')).toEqual([]);
   });
 
   test('imports the colour, the stock icons and the notes, and skips the custom icon', async () => {
@@ -188,12 +188,12 @@ describe('MindManager 23 file (mindm-test-dom-mm23)', () => {
     try {
       const mindmap = await importReal('mindm-test-dom-mm23');
 
-      expect(byText(mindmap, '5')[0].getBackgroundColor()).toBe('#abe595');
-      expect(emojis(byText(mindmap, '6')[0])).toEqual(['❗']);
-      expect(emojis(byText(mindmap, 'Main Topic')[0])).toEqual(['⬆️']);
-      expect(emojis(byText(mindmap, '11')[0])).toEqual([]);
+      expect(byText(mindmap, '5')[0]!.getBackgroundColor()).toBe('#abe595');
+      expect(emojis(byText(mindmap, '6')[0]!)).toEqual(['❗']);
+      expect(emojis(byText(mindmap, 'Main Topic')[0]!)).toEqual(['⬆️']);
+      expect(emojis(byText(mindmap, '11')[0]!)).toEqual([]);
       expect(warn).toHaveBeenCalledWith(expect.stringContaining('custom icon'));
-      const note = byText(mindmap, '2')[0].findFeatureByType('note')[0];
+      const note = byText(mindmap, '2')[0]!.findFeatureByType('note')[0]!;
       expect(note.getText()).toBe('<p>Notes for 2</p>');
     } finally {
       warn.mockRestore();
@@ -214,8 +214,8 @@ describe('MindManager 23 file (mindm-test-dom-mm23)', () => {
 
     const relationships = mindmap.getRelationships();
     expect(relationships).toHaveLength(2);
-    expect(relationships[0].getFromNode()).toBe(byText(mindmap, '1')[0].getId());
-    expect(relationships[0].getToNode()).toBe(byText(mindmap, '4')[0].getId());
+    expect(relationships[0]!.getFromNode()).toBe(byText(mindmap, '1')[0]!.getId());
+    expect(relationships[0]!.getToNode()).toBe(byText(mindmap, '4')[0]!.getId());
     relationships.forEach((relationship) => {
       expect(relationship.getStrokeColor()).toBe('#cf4d0c');
       expect(relationship.getStrokeStyle()).toBe(StrokeStyle.SOLID);
@@ -231,12 +231,12 @@ describe('MindManager 2016 file (jvm-classloader-mm2016)', () => {
     const [classFile] = byText(mindmap, 'class文件');
     expect(mindmap.getBranches()).toContain(classFile);
     // Offset CX="10." CY="0." (millimeters); its own LabelFloatingTopicShape is a Circle.
-    expect(classFile.getPosition()).toEqual({ x: 38, y: 0 });
-    expect(classFile.getShapeType()).toBe('elipse');
+    expect(classFile!.getPosition()).toEqual({ x: 38, y: 0 });
+    expect(classFile!.getShapeType()).toBe('elipse');
     // The others take the RoundedRectangle of the LabelTopicDefaultsGroup.
     const [boot] = byText(mindmap, 'BootClassLoader');
-    expect(boot.getPosition()).toEqual({ x: -76, y: -302 });
-    expect(boot.getShapeType()).toBe('rounded rectangle');
+    expect(boot!.getPosition()).toEqual({ x: -76, y: -302 });
+    expect(boot!.getShapeType()).toBe('rounded rectangle');
     expect(byText(mindmap, '(new)类实例')).toHaveLength(3);
   });
 
@@ -254,7 +254,7 @@ describe('MindManager 2016 file (jvm-classloader-mm2016)', () => {
       expect(label.getShapeType()).toBe('none');
     });
     // Between BootClassLoader (-76, -302) and ExtClassLoader (38, -227), 10 mm above
-    expect(labels[0].getPosition()).toEqual({ x: -18, y: -302 });
+    expect(labels[0]!.getPosition()).toEqual({ x: -18, y: -302 });
   });
 });
 
@@ -264,9 +264,9 @@ describe('MindManager stock icons of the real files', () => {
     const files = unzipSync(new Uint8Array(readArchive(name)), {
       filter: (file) => file.name === 'Document.xml',
     });
-    const xml = strFromU8(files['Document.xml']);
+    const xml = strFromU8(files['Document.xml']!);
     return Array.from(xml.matchAll(/(?:IconType|TaskPriority)="urn:mindjet:([A-Za-z0-9]+)"/g)).map(
-      (match) => match[1],
+      (match) => match[1]!,
     );
   };
   const used = Array.from(new Set(REAL_FILES.flatMap(stockIcons))).sort();
@@ -299,13 +299,13 @@ describe('MindManager default colors of the real files (BL5-138)', () => {
     const central = centralOf(mindmap);
     const colors = (node: NodeModel) => [node.getBackgroundColor(), node.getBorderColor()];
     const [b] = central.getChildren();
-    const [, e] = b.getChildren();
+    const [, e] = b!.getChildren();
 
     expect(colors(central)).toEqual(['#f4f4f4', '#333333']);
-    expect(colors(b)).toEqual(['#eef4fa', '#3170af']);
-    expect(colors(e)).toEqual(['#edf6f0', '#6ebb89']);
+    expect(colors(b!)).toEqual(['#eef4fa', '#3170af']);
+    expect(colors(e!)).toEqual(['#edf6f0', '#6ebb89']);
     // Level 2 has a transparent fill.
-    expect(colors(e.getChildren()[0])).toEqual([undefined, '#999999']);
+    expect(colors(e!.getChildren()[0]!)).toEqual([undefined, '#999999']);
   });
 
   test('a topic with its own fill keeps the line color of its level (mindm-test-dom-mm23)', async () => {
@@ -345,7 +345,7 @@ describe('MindManager XHTML notes of the real files (BL5-140)', () => {
     const three = centralOf(mindmap)
       .getChildren()
       .find((node) => node.getText() === '3')!;
-    const note = three.findFeatureByType('note')[0];
+    const note = three.findFeatureByType('note')[0]!;
 
     expect(note.getText()).not.toMatch(/\n/);
     expect(note.getText()).toBe(

@@ -49,7 +49,7 @@ const fakeIcon = () => {
     }),
   };
   const hover = () => {
-    listeners.mouseenter({ target, stopPropagation: () => {} } as unknown as MouseEvent);
+    listeners.mouseenter!({ target, stopPropagation: () => {} } as unknown as MouseEvent);
     jest.runOnlyPendingTimers();
   };
   return { icon, hover };
@@ -164,9 +164,9 @@ describe('WidgetBuilder tooltips', () => {
     );
 
     const [site, bad] = Array.from(note.querySelectorAll('a'));
-    expect(site.getAttribute('href')).toBe('https://example.org');
-    expect(site.getAttribute('target')).toBe('_blank');
-    expect(site.getAttribute('rel')).toBe('noopener noreferrer');
-    expect(bad.hasAttribute('href')).toBe(false);
+    expect(site!.getAttribute('href')).toBe('https://example.org');
+    expect(site!.getAttribute('target')).toBe('_blank');
+    expect(site!.getAttribute('rel')).toBe('noopener noreferrer');
+    expect(bad!.hasAttribute('href')).toBe(false);
   });
 });

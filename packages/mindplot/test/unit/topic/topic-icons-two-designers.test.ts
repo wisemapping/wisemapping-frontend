@@ -85,7 +85,7 @@ describe('Topic icons with two designers on the page', () => {
     // Hovering the icon shows its delete widget in the topic ...
     icon.getElement().trigger('mouseover', {});
     expect(append).toHaveBeenCalledTimes(1);
-    const widget = append.mock.calls[0][0];
+    const widget = append.mock.calls[0]![0];
 
     // ... and adding icons on the other map (which re-adds its icons) must not close it.
     const other = second.topic(1);

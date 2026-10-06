@@ -104,7 +104,7 @@ describe('XMLSerializerTango topic attributes', () => {
     const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
     const mindmap = load(map('<topic id="2" text="B" brStyle="wavy"/>'));
     expect(mindmap.findNodeById(2)!.getBorderStyle()).toBeUndefined();
-    expect(String(warn.mock.calls[0][0])).toContain("Unknown border style 'wavy'");
+    expect(String(warn.mock.calls[0]![0])).toContain("Unknown border style 'wavy'");
   });
 
   it('saves and loads the metadata', () => {
@@ -117,7 +117,7 @@ describe('XMLSerializerTango topic attributes', () => {
     const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
     const mindmap = load(map('<topic id="2" text="O" order="first" position="10,10"/>'));
     expect(mindmap.findNodeById(2)!.getOrder()).toBeUndefined();
-    expect(String(warn.mock.calls[0][0])).toContain('Invalid order value in XML: "first"');
+    expect(String(warn.mock.calls[0]![0])).toContain('Invalid order value in XML: "first"');
   });
 
   it('gives a new id to a topic whose id is already used', () => {
@@ -138,7 +138,7 @@ describe('XMLSerializerTango topic attributes', () => {
       ).replace('</map>', '<relationship srcTopicId="5000" destTopicId="5001"/></map>'),
     );
     expect(mindmap.findNodeById(5001)!.getText()).toBe('target');
-    expect(mindmap.getRelationships()[0].getToNode()).toBe(5001);
+    expect(mindmap.getRelationships()[0]!.getToNode()).toBe(5001);
     const ids = mindmap
       .getCentralTopic()!
       .getChildren()
@@ -184,9 +184,9 @@ describe('XMLSerializerTango relationships', () => {
       ),
     );
     const [relationship] = mindmap.getRelationships();
-    expect(relationship.getFromNode()).toBe(2);
-    expect(relationship.getSrcCtrlPoint()).toBeNull();
-    expect(relationship.getDestCtrlPoint()).toBeNull();
+    expect(relationship!.getFromNode()).toBe(2);
+    expect(relationship!.getSrcCtrlPoint()).toBeNull();
+    expect(relationship!.getDestCtrlPoint()).toBeNull();
     expect(error).toHaveBeenCalledTimes(2);
   });
 
@@ -198,10 +198,10 @@ describe('XMLSerializerTango relationships', () => {
       ),
     );
     const [relationship] = roundTrip(mindmap).getRelationships();
-    expect(relationship.getSrcCtrlPoint()).toEqual({ x: 10, y: 20 });
-    expect(relationship.getDestCtrlPoint()).toEqual({ x: -5, y: 7 });
-    expect(relationship.getEndArrow()).toBe(false);
-    expect(relationship.getStartArrow()).toBe(true);
+    expect(relationship!.getSrcCtrlPoint()).toEqual({ x: 10, y: 20 });
+    expect(relationship!.getDestCtrlPoint()).toEqual({ x: -5, y: 7 });
+    expect(relationship!.getEndArrow()).toBe(false);
+    expect(relationship!.getStartArrow()).toBe(true);
   });
 });
 

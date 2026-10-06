@@ -45,7 +45,7 @@ const select = (harness: Harness, ...ids: number[]) => {
 };
 
 const selectRelationship = (designer: Designer) => {
-  const relationship = designer.getModel().getRelationships()[0];
+  const relationship = designer.getModel().getRelationships()[0]!;
   relationship.setOnFocus(true);
   return () => designer.getModel().getRelationships()[0];
 };
@@ -357,22 +357,22 @@ describe('Designer relationship style operations', () => {
     const harness = await build();
     const live = selectRelationship(harness.designer);
     expectUndoRoundTrip(harness, () => harness.designer.changeRelationshipColor('#ff0000'));
-    expect(live().getModel().getStrokeColor()).toBe('#ff0000');
+    expect(live()!.getModel().getStrokeColor()).toBe('#ff0000');
     harness.designer.undo();
-    expect(live().getModel().getStrokeColor()).toBeUndefined();
+    expect(live()!.getModel().getStrokeColor()).toBeUndefined();
   });
 
   it('changes the stroke style of the selected relationship', async () => {
     const harness = await build();
     const live = selectRelationship(harness.designer);
-    expect(live().getModel().getStrokeStyle()).toBe(StrokeStyle.DASHED);
+    expect(live()!.getModel().getStrokeStyle()).toBe(StrokeStyle.DASHED);
 
     expectUndoRoundTrip(harness, () =>
       harness.designer.changeRelationshipStrokeStyle(StrokeStyle.DOTTED),
     );
-    expect(live().getModel().getStrokeStyle()).toBe(StrokeStyle.DOTTED);
+    expect(live()!.getModel().getStrokeStyle()).toBe(StrokeStyle.DOTTED);
     harness.designer.undo();
-    expect(live().getModel().getStrokeStyle()).toBe(StrokeStyle.DASHED);
+    expect(live()!.getModel().getStrokeStyle()).toBe(StrokeStyle.DASHED);
   });
 
   it('toggles the start and end arrows of the selected relationship', async () => {
@@ -380,10 +380,10 @@ describe('Designer relationship style operations', () => {
     const live = selectRelationship(harness.designer);
 
     expectUndoRoundTrip(harness, () => harness.designer.changeRelationshipStartArrow(true));
-    expect(live().getModel().getStartArrow()).toBe(true);
+    expect(live()!.getModel().getStartArrow()).toBe(true);
 
     expectUndoRoundTrip(harness, () => harness.designer.changeRelationshipEndArrow(false));
-    expect(live().getModel().getEndArrow()).toBe(false);
+    expect(live()!.getModel().getEndArrow()).toBe(false);
   });
 
   it.each([
@@ -402,7 +402,7 @@ describe('Designer relationship style operations', () => {
   it('ignores a relationship command whose relationship was deleted', async () => {
     const harness = await build();
     const dispatcher = harness.designer.getActionDispatcher();
-    const relationship = harness.designer.getModel().getRelationships()[0];
+    const relationship = harness.designer.getModel().getRelationships()[0]!;
     dispatcher.deleteEntities([], [relationship.getId()]);
     const afterDelete = harness.save();
 

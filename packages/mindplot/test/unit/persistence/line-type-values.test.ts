@@ -59,7 +59,7 @@ describe('LineType persisted values (T5)', () => {
     expect(LineType[name]).toBe(value);
 
     const mindmap = load(value);
-    const central = mindmap.getBranches()[0];
+    const central = mindmap.getBranches()[0]!;
     expect(central.getConnectionStyle()).toBe(LineType[name]);
     const saved = new XMLSerializer().serializeToString(new XMLSerializerTango().toXML(mindmap));
     expect(saved).toContain(`connStyle="${value}"`);

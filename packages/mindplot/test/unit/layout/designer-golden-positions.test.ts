@@ -62,7 +62,7 @@ const scenario = async (file: string) => {
   dispatcher.shrinkBranch([branch.getId()], false);
   record('the branch is expanded');
 
-  const moved = branch.getChildren()[branch.getChildren().length - 1];
+  const moved = branch.getChildren()[branch.getChildren().length - 1]!;
   dispatcher.dragTopic(moved.getId(), { x: 0, y: 0 }, 0, branch);
   record('the last child of a branch is dragged first');
 
@@ -70,7 +70,7 @@ const scenario = async (file: string) => {
   dispatcher.dragTopic(moved.getId(), { x: 0, y: 0 }, 0, other);
   record('a topic is dragged to another branch');
 
-  dispatcher.deleteEntities([mains[mains.length - 1].getId()], []);
+  dispatcher.deleteEntities([mains[mains.length - 1]!.getId()], []);
   record('a main topic is deleted');
 
   designer.changeLayout('tree');

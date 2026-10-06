@@ -40,7 +40,7 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-const lastCall = (): FetchCall => fetchMock.mock.calls[fetchMock.mock.calls.length - 1];
+const lastCall = (): FetchCall => fetchMock.mock.calls[fetchMock.mock.calls.length - 1]!;
 const headersOf = (init: RequestInit) => init.headers as Record<string, string>;
 
 describe('AjaxUtils.ajax', () => {

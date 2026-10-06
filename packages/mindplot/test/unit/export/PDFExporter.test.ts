@@ -87,7 +87,7 @@ describe('PDFExporter', () => {
 
     await new PDFExporter(svg()).export();
 
-    const options = html2canvasMock.mock.calls[0][1];
+    const options = html2canvasMock.mock.calls[0]![1];
     expect(options.useCORS).toBe(true);
     expect(options.allowTaint).toBe(false);
   });
@@ -101,8 +101,8 @@ describe('PDFExporter', () => {
     const [, , x, y, width, height] = addImage.mock.calls[0] as number[];
     expect(width).toBeCloseTo(400 * PX_TO_MM, 3);
     expect(height).toBeCloseTo(200 * PX_TO_MM, 3);
-    expect(x).toBeCloseTo((297 - width) / 2, 3);
-    expect(y).toBeCloseTo((210 - height) / 2, 3);
+    expect(x).toBeCloseTo((297 - width!) / 2, 3);
+    expect(y).toBeCloseTo((210 - height!) / 2, 3);
   });
 
   it('shrinks an original size that does not fit on the page', async () => {

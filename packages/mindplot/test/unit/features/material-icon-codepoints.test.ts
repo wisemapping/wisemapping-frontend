@@ -98,10 +98,10 @@ describe('Material Icons gallery codepoints', () => {
 
   it('maps every name to the official codepoint of its icon', () => {
     const wrong = names
-      .filter((name) => official.get(officialName(name)) !== hex(MATERIAL_ICON_CODEPOINTS[name]))
+      .filter((name) => official.get(officialName(name)) !== hex(MATERIAL_ICON_CODEPOINTS[name]!))
       .map(
         (name) =>
-          `${name}: ${hex(MATERIAL_ICON_CODEPOINTS[name])}, ${officialName(name)} is ${official.get(officialName(name))}`,
+          `${name}: ${hex(MATERIAL_ICON_CODEPOINTS[name]!)}, ${officialName(name)} is ${official.get(officialName(name))}`,
       );
     expect(wrong).toEqual([]);
   });

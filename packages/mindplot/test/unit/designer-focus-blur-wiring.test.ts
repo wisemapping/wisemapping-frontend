@@ -140,37 +140,37 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
 
   it("fires 'onblur' when nothing is selected", () => {
     setSelection(0, 0);
-    handlers.ontblur();
+    handlers.ontblur!();
     expect(fired).toContain('onblur');
   });
 
   it("does not fire 'onblur' while a topic is still selected", () => {
     setSelection(1, 0);
-    handlers.ontblur();
+    handlers.ontblur!();
     expect(fired).not.toContain('onblur');
   });
 
   it("does not fire 'onblur' while a relationship is still selected", () => {
     setSelection(0, 1);
-    handlers.ontblur();
+    handlers.ontblur!();
     expect(fired).not.toContain('onblur');
   });
 
   it("fires 'onfocus' for a single topic selection", () => {
     setSelection(1, 0);
-    handlers.ontfocus();
+    handlers.ontfocus!();
     expect(fired).toContain('onfocus');
   });
 
   it("fires 'onfocus' for a multi-topic selection", () => {
     setSelection(3, 0);
-    handlers.ontfocus();
+    handlers.ontfocus!();
     expect(fired).toContain('onfocus');
   });
 
   it("does not fire 'onfocus' when the selection is empty", () => {
     setSelection(0, 0);
-    handlers.ontfocus();
+    handlers.ontfocus!();
     expect(fired).not.toContain('onfocus');
   });
 
@@ -179,8 +179,8 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
       for (let rels = 0; rels <= 3; rels++) {
         fired = [];
         setSelection(topics, rels);
-        handlers.ontblur();
-        handlers.ontfocus();
+        handlers.ontblur!();
+        handlers.ontfocus!();
         expect(fired).toHaveLength(1);
         expect(fired[0]).toBe(topics + rels === 0 ? 'onblur' : 'onfocus');
       }

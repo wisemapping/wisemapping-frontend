@@ -83,7 +83,7 @@ const connectionPoints = (topic: Topic): { x: number; y: number }[] => {
   const numbers = (raw.match(/-?\d+(\.\d+)?/g) ?? []).map(Number);
   const points: { x: number; y: number }[] = [];
   for (let i = 0; i + 1 < numbers.length; i += 2) {
-    points.push({ x: numbers[i], y: numbers[i + 1] });
+    points.push({ x: numbers[i]!, y: numbers[i + 1]! });
   }
   return points;
 };
@@ -102,7 +102,7 @@ const centerLineYs = (topic: Topic): number[] => {
   const half = points.length / 2;
   const there = points.slice(0, half);
   const back = points.slice(half).reverse();
-  return there.map((point, index) => (point.y + back[index].y) / 2);
+  return there.map((point, index) => (point.y + back[index]!.y) / 2);
 };
 
 describe('Layout of a map with centred siblings (MindManager mmap2json sample)', () => {
@@ -158,7 +158,7 @@ describe('Layout of a map with centred siblings (MindManager mmap2json sample)',
     const ys = centerLineYs(topic(4));
 
     expect(ys.length).toBeGreaterThanOrEqual(2);
-    ys.forEach((y) => expect(y).toBeCloseTo(ys[0], 5));
+    ys.forEach((y) => expect(y).toBeCloseTo(ys[0]!, 5));
   });
 
   // W-TAPER (WEB2D_REVIEW_PLAN.md): the tapered curve used to be offset along y only and not
@@ -173,7 +173,7 @@ describe('Layout of a map with centred siblings (MindManager mmap2json sample)',
     const ys = centerLineYs(topic(4));
 
     expect(ys.length).toBeGreaterThanOrEqual(2);
-    ys.forEach((y) => expect(y).toBeCloseTo(ys[0], 1));
+    ys.forEach((y) => expect(y).toBeCloseTo(ys[0]!, 1));
   });
 
   type Point = { x: number; y: number };
@@ -187,7 +187,7 @@ describe('Layout of a map with centred siblings (MindManager mmap2json sample)',
     const pts = connectionPoints(topic);
     expect(pts).toHaveLength(7);
     const mid = (a: Point, b: Point): Point => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
-    return [mid(pts[0], pts[6]), mid(pts[1], pts[5]), mid(pts[2], pts[4]), pts[3]];
+    return [mid(pts[0]!, pts[6]!), mid(pts[1]!, pts[5]!), mid(pts[2]!, pts[4]!), pts[3]!];
   };
 
   /** Distance from `p` to the line through `a` and `b`. */
@@ -219,18 +219,18 @@ describe('Layout of a map with centred siblings (MindManager mmap2json sample)',
       'draws the connection straight, on the chord, when dy = %d (within the tolerance)',
       async (dy) => {
         const [start, c1, c2, end] = await connectionWithDy(lineType, dy);
-        expect(end.y - start.y).toBeCloseTo(dy, 0);
+        expect(end!.y - start!.y).toBeCloseTo(dy, 0);
         // The path is rounded to 0.1 px.
-        expect(distanceToChord(c1, start, end)).toBeLessThanOrEqual(0.15);
-        expect(distanceToChord(c2, start, end)).toBeLessThanOrEqual(0.15);
+        expect(distanceToChord(c1!, start!, end!)).toBeLessThanOrEqual(0.15);
+        expect(distanceToChord(c2!, start!, end!)).toBeLessThanOrEqual(0.15);
       },
     );
 
     it.each([6, -6, 40])('draws an S-curve when dy = %d (beyond the tolerance)', async (dy) => {
       const [start, c1, c2, end] = await connectionWithDy(lineType, dy);
-      expect(end.y - start.y).toBeCloseTo(dy, 0);
+      expect(end!.y - start!.y).toBeCloseTo(dy, 0);
       expect(
-        Math.max(distanceToChord(c1, start, end), distanceToChord(c2, start, end)),
+        Math.max(distanceToChord(c1!, start!, end!), distanceToChord(c2!, start!, end!)),
       ).toBeGreaterThan(1);
     });
   });
@@ -245,11 +245,11 @@ describe('Layout of a map with centred siblings (MindManager mmap2json sample)',
         'keeps the S-curve within the band between the end heights when dy = %d',
         async (dy) => {
           const [start, c1, c2, end] = await connectionWithDy(lineType, dy);
-          const low = Math.min(start.y, end.y) - 0.15;
-          const high = Math.max(start.y, end.y) + 0.15;
+          const low = Math.min(start!.y, end!.y) - 0.15;
+          const high = Math.max(start!.y, end!.y) + 0.15;
           [c1, c2].forEach((p) => {
-            expect(p.y).toBeGreaterThanOrEqual(low);
-            expect(p.y).toBeLessThanOrEqual(high);
+            expect(p!.y).toBeGreaterThanOrEqual(low);
+            expect(p!.y).toBeLessThanOrEqual(high);
           });
         },
       );

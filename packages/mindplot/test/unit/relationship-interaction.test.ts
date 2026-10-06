@@ -65,8 +65,8 @@ describe('Relationship selection', () => {
     document.addEventListener('click', reached);
     try {
       const click = new MouseEvent('click', { bubbles: true, cancelable: true });
-      lineOf(relationship).dispatchEvent(click);
-      expect(relationship.isOnFocus()).toBe(true);
+      lineOf(relationship!).dispatchEvent(click);
+      expect(relationship!.isOnFocus()).toBe(true);
       expect(click.defaultPrevented).toBe(true);
       expect(reached).not.toHaveBeenCalled();
     } finally {
@@ -76,17 +76,17 @@ describe('Relationship selection', () => {
 
   it('is not selectable, and shows the default cursor, on a read-only map', async () => {
     const relationship = await readOnly();
-    expect(lineOf(relationship).style.cursor).toBe('default');
-    lineOf(relationship).dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    expect(relationship.isOnFocus()).toBe(false);
+    expect(lineOf(relationship!).style.cursor).toBe('default');
+    lineOf(relationship!).dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(relationship!.isOnFocus()).toBe(false);
   });
 
   it('leaves the focus when it is hidden', async () => {
     const relationship = await editable();
-    relationship.setOnFocus(true);
-    relationship.setVisibility(false);
-    expect(relationship.isOnFocus()).toBe(false);
-    expect(relationship.isInWorkspace()).toBe(true);
+    relationship!.setOnFocus(true);
+    relationship!.setVisibility(false);
+    expect(relationship!.isOnFocus()).toBe(false);
+    expect(relationship!.isInWorkspace()).toBe(true);
   });
 });
 
@@ -98,27 +98,27 @@ describe('Relationship stroke', () => {
     ['wavy' as StrokeStyle, '8,4'],
   ])('draws the %s style', async (style, dash) => {
     const relationship = await editable();
-    relationship.getModel().setStrokeStyle(style);
-    relationship.setStroke('#ff0000', 'solid', 1);
-    expect(lineOf(relationship).getAttribute('stroke-dasharray')).toBe(dash);
-    expect(lineOf(relationship).getAttribute('stroke')).toBe('#ff0000');
+    relationship!.getModel().setStrokeStyle(style);
+    relationship!.setStroke('#ff0000', 'solid', 1);
+    expect(lineOf(relationship!).getAttribute('stroke-dasharray')).toBe(dash);
+    expect(lineOf(relationship!).getAttribute('stroke')).toBe('#ff0000');
   });
 
   it('fades the line and both arrows together', async () => {
     const relationship = await editable();
-    relationship.setShowStartArrow(true);
-    relationship.setOpacity(0.4);
+    relationship!.setShowStartArrow(true);
+    relationship!.setOpacity(0.4);
     const arrows = relationship as unknown as { _startArrow: unknown; _endArrow: unknown };
-    expect(lineOf(relationship).style.opacity).toBe('0.4');
+    expect(lineOf(relationship!).style.opacity).toBe('0.4');
     expect(nativeOf(arrows._startArrow).style.opacity).toBe('0.4');
     expect(nativeOf(arrows._endArrow).style.opacity).toBe('0.4');
   });
 
   it('shows the arrow of a focused relationship when it is turned on', async () => {
     const relationship = await editable();
-    relationship.setOnFocus(true);
-    relationship.setShowStartArrow(true);
-    relationship.setShowEndArrow(false);
+    relationship!.setOnFocus(true);
+    relationship!.setShowStartArrow(true);
+    relationship!.setShowEndArrow(false);
     const focus = relationship as unknown as { _focusStartArrow: unknown; _focusEndArrow: unknown };
     expect(nativeOf(focus._focusStartArrow).getAttribute('visibility')).toBe('visible');
     expect(nativeOf(focus._focusEndArrow).getAttribute('visibility')).toBe('hidden');
@@ -128,15 +128,15 @@ describe('Relationship stroke', () => {
 describe('Relationship ends and control points', () => {
   it('moves its ends, its control points and its arrows', async () => {
     const relationship = await editable();
-    relationship.setFrom(10, 20);
-    relationship.setTo(300, 40);
-    relationship.setSrcControlPoint({ x: 50, y: -10 });
-    relationship.setDestControlPoint({ x: -30, y: 15 });
+    relationship!.setFrom(10, 20);
+    relationship!.setTo(300, 40);
+    relationship!.setSrcControlPoint({ x: 50, y: -10 });
+    relationship!.setDestControlPoint({ x: -30, y: 15 });
 
-    const line = relationship.getLine();
+    const line = relationship!.getLine();
     expect(line.getFrom()).toEqual({ x: 10, y: 20 });
     expect(line.getTo()).toEqual({ x: 300, y: 40 });
-    expect(relationship.getControlPoints()).toEqual([
+    expect(relationship!.getControlPoints()).toEqual([
       { x: 50, y: -10 },
       { x: -30, y: 15 },
     ]);
@@ -144,16 +144,16 @@ describe('Relationship ends and control points', () => {
 
   it('tracks which control points the user placed', async () => {
     const relationship = await editable();
-    relationship.setIsSrcControlPointCustom(true);
-    relationship.setIsDestControlPointCustom(false);
-    expect(relationship.isSrcControlPointCustom()).toBe(true);
-    expect(relationship.isDestControlPointCustom()).toBe(false);
+    relationship!.setIsSrcControlPointCustom(true);
+    relationship!.setIsDestControlPointCustom(false);
+    expect(relationship!.isSrcControlPointCustom()).toBe(true);
+    expect(relationship!.isDestControlPointCustom()).toBe(false);
   });
 
   it('describes itself', async () => {
     const relationship = await editable();
-    expect(relationship.getType()).toBe('Relationship');
-    expect(relationship.getId()).toBe(relationship.getModel().getId());
+    expect(relationship!.getType()).toBe('Relationship');
+    expect(relationship!.getId()).toBe(relationship!.getModel().getId());
     expect(Relationship.getStrokeColor()).toBe('#9b74e6');
   });
 });

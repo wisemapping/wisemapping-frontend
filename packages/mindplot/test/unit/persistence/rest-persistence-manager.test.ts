@@ -111,7 +111,7 @@ describe('RESTPersistenceManager', () => {
       manager.saveMapXml('1', buildDoc('second'), '{}', false, second);
       expect(fetchMock).toHaveBeenCalledTimes(1);
 
-      pending[0].resolve(buildResponse(200));
+      pending[0]!.resolve(buildResponse(200));
       await flushPromises();
       expect(first.onSuccess).toHaveBeenCalledTimes(1);
 
@@ -120,7 +120,7 @@ describe('RESTPersistenceManager', () => {
       expect(fetchMock).toHaveBeenCalledTimes(2);
       expect(JSON.parse(sentXml(fetchMock.mock.calls[1])).xml).toContain('second');
 
-      pending[1].resolve(buildResponse(200));
+      pending[1]!.resolve(buildResponse(200));
       await flushPromises();
       expect(second.onSuccess).toHaveBeenCalledTimes(1);
       expect(second.onError).not.toHaveBeenCalled();
@@ -135,7 +135,7 @@ describe('RESTPersistenceManager', () => {
       manager.saveMapXml('1', buildDoc('second'), '{}', true, second);
       manager.saveMapXml('1', buildDoc('third'), '{}', false, third);
 
-      pending[0].resolve(buildResponse(200));
+      pending[0]!.resolve(buildResponse(200));
       await flushPromises();
       jest.advanceTimersByTime(10000);
       await flushPromises();
@@ -146,7 +146,7 @@ describe('RESTPersistenceManager', () => {
       expect(url).toBe('/maps/1/document?minor=false');
       expect(JSON.parse(sentXml(fetchMock.mock.calls[1])).xml).toContain('third');
 
-      pending[1].resolve(buildResponse(200));
+      pending[1]!.resolve(buildResponse(200));
       await flushPromises();
       expect(second.onSuccess).toHaveBeenCalledTimes(1);
       expect(third.onSuccess).toHaveBeenCalledTimes(1);
@@ -158,7 +158,7 @@ describe('RESTPersistenceManager', () => {
 
     it('keeps at most one write every 10 seconds', async () => {
       manager.saveMapXml('1', buildDoc('first'), '{}', false, buildEvents());
-      pending[0].resolve(buildResponse(200));
+      pending[0]!.resolve(buildResponse(200));
       await flushPromises();
 
       manager.saveMapXml('1', buildDoc('second'), '{}', false, buildEvents());
@@ -181,12 +181,12 @@ describe('RESTPersistenceManager', () => {
       manager.saveMapXml('1', buildDoc('first'), '{}', false, first);
       manager.saveMapXml('1', buildDoc('second'), '{}', false, second);
       manager.saveMapXml('1', buildDoc('third'), '{}', false, third);
-      pending[0].resolve(buildResponse(200));
+      pending[0]!.resolve(buildResponse(200));
       await flushPromises();
       jest.advanceTimersByTime(10000);
       await flushPromises();
 
-      pending[1].reject(new Error('network down'));
+      pending[1]!.reject(new Error('network down'));
       await flushPromises();
       expect(second.onError).toHaveBeenCalledTimes(1);
       expect(third.onError).toHaveBeenCalledTimes(1);
@@ -204,14 +204,14 @@ describe('RESTPersistenceManager', () => {
       expect(fetchMock.mock.calls[0][0]).toBe('/maps/1/lock');
       expect(requestInit(0).keepalive).toBe(true);
 
-      pending[0].resolve(buildResponse(500));
+      pending[0]!.resolve(buildResponse(500));
       await expect(result).resolves.toBeUndefined();
       expect(console.error).toHaveBeenCalled();
     });
 
     it('handles a network failure of the unlock', async () => {
       const result = manager.unlockMap('1');
-      pending[0].reject(new Error('network down'));
+      pending[0]!.reject(new Error('network down'));
       await expect(result).resolves.toBeUndefined();
       expect(console.error).toHaveBeenCalled();
     });
@@ -219,18 +219,18 @@ describe('RESTPersistenceManager', () => {
     it('handles the result of discardChanges', async () => {
       const result = manager.discardChanges('1');
       expect(fetchMock.mock.calls[0][0]).toBe('/maps/1/revert');
-      pending[0].resolve(buildResponse(403));
+      pending[0]!.resolve(buildResponse(403));
       await expect(result).resolves.toBeUndefined();
       expect(console.error).toHaveBeenCalled();
 
       const failed = manager.discardChanges('1');
-      pending[1].reject(new Error('network down'));
+      pending[1]!.reject(new Error('network down'));
       await expect(failed).resolves.toBeUndefined();
     });
 
     it('sends an urgent save right after the previous one, without waiting the interval', async () => {
       manager.saveMapXml('1', buildDoc('autosave'), '{}', false, buildEvents());
-      pending[0].resolve(buildResponse(200));
+      pending[0]!.resolve(buildResponse(200));
       await flushPromises();
 
       const flush = buildEvents();
@@ -239,7 +239,7 @@ describe('RESTPersistenceManager', () => {
       expect(JSON.parse(sentXml(fetchMock.mock.calls[1])).xml).toContain('flush');
       expect(requestInit(1).keepalive).toBe(true);
 
-      pending[1].resolve(buildResponse(200));
+      pending[1]!.resolve(buildResponse(200));
       await flushPromises();
       expect(flush.onSuccess).toHaveBeenCalledTimes(1);
     });
@@ -249,7 +249,7 @@ describe('RESTPersistenceManager', () => {
       manager.saveMapXml('1', buildDoc('flush'), '{}', false, buildEvents(), { urgent: true });
       expect(fetchMock).toHaveBeenCalledTimes(1);
 
-      pending[0].resolve(buildResponse(200));
+      pending[0]!.resolve(buildResponse(200));
       await flushPromises();
       // No 10 second wait once the in flight request is done.
       expect(fetchMock).toHaveBeenCalledTimes(2);
@@ -258,7 +258,7 @@ describe('RESTPersistenceManager', () => {
 
     it('promotes a save already waiting for the interval when a flush arrives', async () => {
       manager.saveMapXml('1', buildDoc('first'), '{}', false, buildEvents());
-      pending[0].resolve(buildResponse(200));
+      pending[0]!.resolve(buildResponse(200));
       await flushPromises();
 
       const waiting = buildEvents();
@@ -268,7 +268,7 @@ describe('RESTPersistenceManager', () => {
       manager.saveMapXml('1', buildDoc('third'), '{}', false, buildEvents(), { urgent: true });
       expect(fetchMock).toHaveBeenCalledTimes(2);
       expect(JSON.parse(sentXml(fetchMock.mock.calls[1])).xml).toContain('third');
-      pending[1].resolve(buildResponse(200));
+      pending[1]!.resolve(buildResponse(200));
       await flushPromises();
       expect(waiting.onSuccess).toHaveBeenCalledTimes(1);
 
@@ -295,7 +295,7 @@ describe('RESTPersistenceManager', () => {
     const saveAndFail = async (response: FakeResponse): Promise<PersistenceError> => {
       const events = buildEvents();
       manager.saveMapXml('1', buildDoc('x'), '{}', false, events);
-      pending[0].resolve(response);
+      pending[0]!.resolve(response);
       await flushPromises();
       expect(events.onError).toHaveBeenCalledTimes(1);
       return events.onError.mock.calls[0][0];
@@ -337,13 +337,13 @@ describe('RESTPersistenceManager', () => {
   describe('loadMapDom (D8)', () => {
     it('rejects when the server returns a document that is not well-formed XML', async () => {
       const result = manager.loadMapDom('1');
-      pending[0].resolve(buildResponse(200, '<html><body>Bad <b>gateway</body></html>'));
+      pending[0]!.resolve(buildResponse(200, '<html><body>Bad <b>gateway</body></html>'));
       await expect(result).rejects.toThrow(/XML/);
     });
 
     it('loads a well-formed map', async () => {
       const result = manager.loadMapDom('1');
-      pending[0].resolve(buildResponse(200, '<map><topic central="true"/></map>'));
+      pending[0]!.resolve(buildResponse(200, '<map><topic central="true"/></map>'));
       const doc = await result;
       expect(doc.documentElement.nodeName).toBe('map');
     });

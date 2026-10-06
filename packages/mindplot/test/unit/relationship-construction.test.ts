@@ -57,6 +57,6 @@ describe('Relationship construction (BL4-28)', () => {
     const [relationship] = relationships;
     expect(
       (relationship as unknown as { _controlPointsController: unknown })._controlPointsController,
-    ).toBe(Controller.mock.results[0].value);
+    ).toBe(Controller.mock.results[0]!.value);
   });
 });

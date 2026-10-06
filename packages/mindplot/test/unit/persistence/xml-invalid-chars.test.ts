@@ -62,11 +62,11 @@ const randomUnits = (next: () => number): number[] => {
     case 0:
       return [pick(0x20)]; // control character
     case 1:
-      return [EDGE_UNITS[pick(EDGE_UNITS.length)]];
+      return [EDGE_UNITS[pick(EDGE_UNITS.length)]!];
     case 2: {
       // Valid surrogate pair, including U+10000 and U+10FFFF.
       const cp = pick(2) === 0 ? [0x10000, 0x10ffff, 0x1f600][pick(3)] : 0x10000 + pick(0x100000);
-      const offset = cp - 0x10000;
+      const offset = cp! - 0x10000;
       return [0xd800 + Math.floor(offset / 0x400), 0xdc00 + (offset % 0x400)];
     }
     case 3:

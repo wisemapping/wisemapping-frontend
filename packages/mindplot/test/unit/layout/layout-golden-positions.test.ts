@@ -160,7 +160,7 @@ const run = (file: string, layoutType: 'mindmap' | 'tree'): Step[] => {
   const withChildren = (id: number) => childrenOf(id).length > 0;
   const branch = childrenOf(tree.id).find(withChildren)!;
   const subBranch = childrenOf(branch).find(withChildren) ?? childrenOf(branch)[0];
-  const leaf = childrenOf(subBranch)[0] ?? subBranch;
+  const leaf = childrenOf(subBranch!)[0] ?? subBranch;
 
   record('initial layout');
   record('layout again, nothing changed');
@@ -168,18 +168,18 @@ const run = (file: string, layoutType: 'mindmap' | 'tree'): Step[] => {
   resize(branch, 40, 20);
   record('a branch grows');
 
-  resize(leaf, 0, 1);
+  resize(leaf!, 0, 1);
   record('a leaf grows by one pixel');
-  resize(leaf, 0, 1);
+  resize(leaf!, 0, 1);
   record('the leaf grows by one more pixel');
   record('layout again after sub-pixel moves');
 
-  resize(subBranch, 35, 0);
+  resize(subBranch!, 35, 0);
   record('a node with children gets wider only');
 
   manager.addNode(9001, { width: 77.5, height: 33.25 }, { x: 0, y: 0 });
-  manager.connectNode(leaf, 9001, 0);
-  parentOf.set(9001, leaf);
+  manager.connectNode(leaf!, 9001, 0);
+  parentOf.set(9001, leaf!);
   scenario.ids.push(9001);
   record('a child is added under the leaf');
 
@@ -190,14 +190,14 @@ const run = (file: string, layoutType: 'mindmap' | 'tree'): Step[] => {
   record('a tall grandchild is added');
 
   const siblings = childrenOf(branch);
-  reconnect(siblings[siblings.length - 1], branch, 0);
+  reconnect(siblings[siblings.length - 1]!, branch, 0);
   record('the last child of the branch moves first');
 
-  reconnect(subBranch, childrenOf(tree.id).filter((id) => id !== branch)[0], 0);
+  reconnect(subBranch!, childrenOf(tree.id).filter((id) => id !== branch)[0]!, 0);
   record('a sub-branch moves to another branch');
 
   const rootChildren = childrenOf(tree.id);
-  reconnect(rootChildren[0], tree.id, 1);
+  reconnect(rootChildren[0]!, tree.id, 1);
   record('a main topic changes side');
 
   manager.updateShrinkState(branch, true);
@@ -205,14 +205,14 @@ const run = (file: string, layoutType: 'mindmap' | 'tree'): Step[] => {
   manager.updateShrinkState(branch, false);
   record('the branch is expanded');
 
-  const lastOfBranch = childrenOf(branch)[childrenOf(branch).length - 1];
+  const lastOfBranch = childrenOf(branch)[childrenOf(branch).length - 1]!;
   remove(lastOfBranch);
   record('the last child of the branch is removed');
 
   remove(9002);
   record('the tall grandchild is removed');
 
-  const someChild = childrenOf(childrenOf(tree.id).find(withChildren)!)[0];
+  const someChild = childrenOf(childrenOf(tree.id).find(withChildren)!)[0]!;
   manager.moveNode(someChild, { x: 1234.5, y: -987.25 });
   record('a node is moved by hand');
 
@@ -221,9 +221,9 @@ const run = (file: string, layoutType: 'mindmap' | 'tree'): Step[] => {
 
   manager.setLayoutType(layoutType === 'mindmap' ? 'tree' : 'mindmap');
   record('layout switched');
-  resize(leaf, 25, 0);
+  resize(leaf!, 25, 0);
   record('a leaf gets wider after the switch');
-  resize(subBranch, 0, 12);
+  resize(subBranch!, 0, 12);
   record('a node gets taller after the switch');
   manager.setLayoutType(layoutType);
   record('layout switched back');

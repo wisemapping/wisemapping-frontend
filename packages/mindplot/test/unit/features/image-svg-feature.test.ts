@@ -118,7 +118,7 @@ describe('ImageSVGFeature delete widget with two designers on the page (BL4-23)'
     // Hovering the icon shows its delete widget in the topic ...
     first.feature.getOrBuildSVGElement()!.trigger('mouseover', {});
     expect(append).toHaveBeenCalledTimes(1);
-    const widget = append.mock.calls[0][0];
+    const widget = append.mock.calls[0]![0];
 
     // ... and hovering the icon on the other map must not close it.
     second.feature.getOrBuildSVGElement()!.trigger('mouseover', {});
@@ -135,7 +135,7 @@ describe('ImageSVGFeature delete widget target (BL5-188)', () => {
       topic.redraw();
 
       expect(decorate).toHaveBeenCalledTimes(1);
-      const removable = decorate.mock.calls[0][1];
+      const removable = decorate.mock.calls[0]![1];
       // The gallery icon is no feature of the topic: it used to answer getModel() with {}.
       expect('getModel' in removable).toBe(false);
       expect('setGroup' in removable).toBe(false);

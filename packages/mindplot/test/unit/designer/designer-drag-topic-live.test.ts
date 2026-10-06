@@ -56,7 +56,7 @@ const dragThrough = (harness: Harness, id: number, path: [number, number][]) => 
 
 const drag = (harness: Harness, id: number, path: [number, number][]) => {
   const container = dragThrough(harness, id, path);
-  const [x, y] = path[path.length - 1];
+  const [x, y] = path[path.length - 1]!;
   container.dispatchEvent(mouse('mouseup', toClient(harness, x, y)));
 };
 

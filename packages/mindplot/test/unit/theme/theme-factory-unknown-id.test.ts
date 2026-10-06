@@ -36,7 +36,7 @@ describe('ThemeFactory with an unknown theme id', () => {
     expect(theme).toBeInstanceOf(ClassicTheme);
     expect(ThemeFactory.createById(unknown, 'light')).toBe(theme);
     expect(warn).toHaveBeenCalledTimes(1);
-    expect(String(warn.mock.calls[0][0])).toContain('no-such-theme');
+    expect(String(warn.mock.calls[0]![0])).toContain('no-such-theme');
   });
 
   it('keeps the variant of the fallback theme', () => {

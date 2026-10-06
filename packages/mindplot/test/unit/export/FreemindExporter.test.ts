@@ -96,7 +96,7 @@ describe('FreemindExporter', () => {
       topic.setBorderColor('#00ff00');
       topic.setConnectionColor('#ff0000');
     });
-    mindmap.getBranches()[0].setConnectionColor('#0000ff');
+    mindmap.getBranches()[0]!.setConnectionColor('#0000ff');
     const mm = await new FreemindExporter(mindmap).export();
 
     const xml = await new FreemindImporter(mm).import('test', '');
@@ -110,7 +110,7 @@ describe('FreemindExporter', () => {
 
   test('exports the link and style of the central topic (BL5-12)', async () => {
     const mindmap = buildMindmap(() => undefined);
-    const central = mindmap.getBranches()[0];
+    const central = mindmap.getBranches()[0]!;
     central.setShapeType('rectangle');
     central.addFeature(new LinkModel({ url: 'https://www.wisemapping.com' }));
 
@@ -187,7 +187,7 @@ describe('FreemindExporter', () => {
 
     const richcontent = exportedTopic(doc).querySelector(':scope > richcontent[TYPE="NOTE"]')!;
     expect(richcontent.getElementsByTagName('parsererror')).toHaveLength(0);
-    expect(richcontent.getElementsByTagName('p')[0].textContent).toBe('Tom & Jerry <3');
+    expect(richcontent.getElementsByTagName('p')[0]!.textContent).toBe('Tom & Jerry <3');
   });
 
   test('keeps well formed rich text notes as markup', async () => {
@@ -200,7 +200,7 @@ describe('FreemindExporter', () => {
     );
 
     const richcontent = exportedTopic(doc).querySelector(':scope > richcontent[TYPE="NOTE"]')!;
-    expect(richcontent.getElementsByTagName('b')[0].textContent).toBe('world');
+    expect(richcontent.getElementsByTagName('b')[0]!.textContent).toBe('world');
   });
 
   test('exports emoji icons as FreeMind builtin icons', async () => {
@@ -323,7 +323,7 @@ describe('FreemindExporter', () => {
         topic.setFontWeight('bold');
         topic.setFontStyle('italic');
       });
-      const central = mindmap.getBranches()[0];
+      const central = mindmap.getBranches()[0]!;
       central.setFontColor('#990000');
       // A family alone, without size, weight or style (BL5-167).
       central.setFontFamily('Georgia');
@@ -341,12 +341,12 @@ describe('FreemindExporter', () => {
       expect(importedCentral.getFontSize()).toBeUndefined();
 
       const [topic] = importedCentral.getChildren();
-      expect(topic.getFontColor()).toBe('#00ff00');
-      expect(topic.getFontFamily()).toBe('Verdana');
+      expect(topic!.getFontColor()).toBe('#00ff00');
+      expect(topic!.getFontFamily()).toBe('Verdana');
       // Size 8 is exported as 12, the FreeMind default size: it imports as the theme size.
-      expect(topic.getFontSize()).toBe(size === 8 ? undefined : size);
-      expect(topic.getFontWeight()).toBe('bold');
-      expect(topic.getFontStyle()).toBe('italic');
+      expect(topic!.getFontSize()).toBe(size === 8 ? undefined : size);
+      expect(topic!.getFontWeight()).toBe('bold');
+      expect(topic!.getFontStyle()).toBe('italic');
     },
   );
 });

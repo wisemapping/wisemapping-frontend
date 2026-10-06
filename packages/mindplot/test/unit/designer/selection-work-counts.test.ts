@@ -99,17 +99,17 @@ const countEvents = (designer: Designer) => {
     topicUnselected: 0,
   };
   designer.addEvent('onfocus', () => {
-    fired.onfocus += 1;
+    fired.onfocus! += 1;
   });
   designer.addEvent('onblur', () => {
-    fired.onblur += 1;
+    fired.onblur! += 1;
   });
   const bus = designer.getLayoutEventBus();
   bus.addEvent('topicSelected', () => {
-    fired.topicSelected += 1;
+    fired.topicSelected! += 1;
   });
   bus.addEvent('topicUnselected', () => {
-    fired.topicUnselected += 1;
+    fired.topicUnselected! += 1;
   });
   return fired;
 };

@@ -189,31 +189,31 @@ describe('HTMLTopicSelected', () => {
 
     it('a plain click selects only the clicked topic', () => {
       select('a', 'b');
-      mousedown(topics[3]);
+      mousedown(topics[3]!);
       expect(selected(topics)).toEqual(['d']);
     });
 
     it('a plain click on a selected topic keeps only that topic', () => {
       select('a', 'b', 'c');
-      mousedown(topics[1]);
+      mousedown(topics[1]!);
       expect(selected(topics)).toEqual(['b']);
     });
 
     it('ctrl/meta-click on an unselected topic adds it to the selection', () => {
       select('a', 'b');
-      mousedown(topics[3], { ctrlKey: true, metaKey: true });
+      mousedown(topics[3]!, { ctrlKey: true, metaKey: true });
       expect(selected(topics)).toEqual(['a', 'b', 'd']);
     });
 
     it('ctrl/meta-click on a selected topic removes only that topic', () => {
       select('a', 'b', 'c');
-      mousedown(topics[0], { ctrlKey: true, metaKey: true });
+      mousedown(topics[0]!, { ctrlKey: true, metaKey: true });
       expect(selected(topics)).toEqual(['b', 'c']);
     });
 
     it('shift-click behaves like a plain click', () => {
       select('a', 'b');
-      mousedown(topics[2], { shiftKey: true });
+      mousedown(topics[2]!, { shiftKey: true });
       expect(selected(topics)).toEqual(['c']);
     });
   });

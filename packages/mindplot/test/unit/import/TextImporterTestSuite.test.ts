@@ -33,7 +33,7 @@ const notImportable = ['mindmanager'];
 const testNames = fs
   .readdirSync(path.resolve(__dirname, './input/'))
   .filter((filename: string) => filename.endsWith('.mm'))
-  .map((filename: string) => filename.split('.')[0]);
+  .map((filename: string) => filename.split('.')[0]!);
 
 describe('package/', () => {
   test.each(testNames)('Importing %p suite', async (testName: string) => {

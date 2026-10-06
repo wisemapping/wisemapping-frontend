@@ -91,13 +91,13 @@ describe('MindManagerImporter .mmap archives', () => {
 
     const childA = findByText(mindmap, 'Child A');
     expect(childA.getChildren().map((c) => c.getText())).toEqual(['Grandchild']);
-    expect(childA.findFeatureByType('note')[0].getText()).toBe('Note of A');
-    expect(childA.findFeatureByType('link')[0].getUrl()).toBe('https://example.com');
+    expect(childA.findFeatureByType('note')[0]!.getText()).toBe('Note of A');
+    expect(childA.findFeatureByType('link')[0]!.getUrl()).toBe('https://example.com');
 
     const relationships = mindmap.getRelationships();
     expect(relationships).toHaveLength(1);
-    expect(relationships[0].getFromNode()).toBe(childA.getId());
-    expect(relationships[0].getToNode()).toBe(findByText(mindmap, 'Child B').getId());
+    expect(relationships[0]!.getFromNode()).toBe(childA.getId());
+    expect(relationships[0]!.getToNode()).toBe(findByText(mindmap, 'Child B').getId());
   });
 
   test('still imports a plain XML file', async () => {
@@ -121,7 +121,7 @@ describe('MindManagerImporter icons', () => {
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
     const icons = findByText(mindmap, 'Letter').findFeatureByType('eicon');
-    expect(icons[0].getIconType()).toBe('🅰️');
+    expect(icons[0]!.getIconType()).toBe('🅰️');
   });
 });
 
@@ -234,8 +234,8 @@ describe('MindManagerImporter topic ids', () => {
 
     const relationships = mindmap.getRelationships();
     expect(relationships).toHaveLength(1);
-    expect(relationships[0].getFromNode()).toBe(central.getId());
-    expect(relationships[0].getToNode()).toBe(findByText(mindmap, 'Three').getId());
+    expect(relationships[0]!.getFromNode()).toBe(central.getId());
+    expect(relationships[0]!.getToNode()).toBe(findByText(mindmap, 'Three').getId());
   });
 });
 
@@ -318,7 +318,7 @@ describe('MindManagerImporter document schema', () => {
 
     const relationships = mindmap.getRelationships();
     expect(relationships).toHaveLength(1);
-    expect(relationships[0].getToNode()).toBe(floating.getId());
+    expect(relationships[0]!.getToNode()).toBe(floating.getId());
   });
 });
 
@@ -346,7 +346,7 @@ describe('MindManagerImporter hyperlinks', () => {
 
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
-    expect(findByText(mindmap, 'Web').findFeatureByType('link')[0].getUrl()).toBe(
+    expect(findByText(mindmap, 'Web').findFeatureByType('link')[0]!.getUrl()).toBe(
       'https://www.microsoft.com',
     );
     expect(findByText(mindmap, 'Internal').findFeatureByType('link')).toEqual([]);
@@ -367,7 +367,7 @@ describe('MindManagerImporter XHTML notes', () => {
 
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
-    const note = findByText(mindmap, 'Rich').findFeatureByType('note')[0];
+    const note = findByText(mindmap, 'Rich').findFeatureByType('note')[0]!;
     expect(note.getContentType()).toBe(ContentType.HTML);
     expect(note.getText()).toContain('<p>Hello <b>world</b></p>');
     expect(note.getText()).not.toContain('onerror');
@@ -384,7 +384,7 @@ describe('MindManagerImporter XHTML notes', () => {
 
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
-    const note = findByText(mindmap, 'Plain').findFeatureByType('note')[0];
+    const note = findByText(mindmap, 'Plain').findFeatureByType('note')[0]!;
     expect(note.getText()).toBe('Only a preview');
     expect(note.getContentType()).not.toBe(ContentType.HTML);
   });
@@ -543,9 +543,9 @@ describe('MindManagerImporter relationship color and arrows', () => {
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
     const [relationship] = mindmap.getRelationships();
-    expect(relationship.getStrokeColor()).toBe('#3170af');
-    expect(relationship.getStartArrow()).toBe(true);
-    expect(relationship.getEndArrow()).toBe(false);
+    expect(relationship!.getStrokeColor()).toBe('#3170af');
+    expect(relationship!.getStartArrow()).toBe(true);
+    expect(relationship!.getEndArrow()).toBe(false);
   });
 
   test('uses the RelationshipDefaultsGroup when the relationship has no color or arrows', async () => {
@@ -559,9 +559,9 @@ describe('MindManagerImporter relationship color and arrows', () => {
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
     const [relationship] = mindmap.getRelationships();
-    expect(relationship.getStrokeColor()).toBe('#e0666e');
-    expect(relationship.getStartArrow()).toBe(true);
-    expect(relationship.getEndArrow()).toBe(false);
+    expect(relationship!.getStrokeColor()).toBe('#e0666e');
+    expect(relationship!.getStartArrow()).toBe(true);
+    expect(relationship!.getEndArrow()).toBe(false);
   });
 
   test('without any style, an arrow at the end and the color of the theme', async () => {
@@ -575,9 +575,9 @@ describe('MindManagerImporter relationship color and arrows', () => {
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
     const [relationship] = mindmap.getRelationships();
-    expect(relationship.getStrokeColor()).toBeUndefined();
-    expect(relationship.getStartArrow()).toBe(false);
-    expect(relationship.getEndArrow()).toBe(true);
+    expect(relationship!.getStrokeColor()).toBeUndefined();
+    expect(relationship!.getStartArrow()).toBe(false);
+    expect(relationship!.getEndArrow()).toBe(true);
   });
 });
 
@@ -608,7 +608,7 @@ describe('MindManagerImporter relationship labels', () => {
     const label = findByText(mindmap, 'Label');
     expect(mindmap.getBranches()).toContain(label);
     expect(label.getParent()).toBeFalsy();
-    expect(label.findFeatureByType('link')[0].getUrl()).toBe('https://example.com/label');
+    expect(label.findFeatureByType('link')[0]!.getUrl()).toBe('https://example.com/label');
     // The middle of Start (378, 0) and End (378, 189), moved by the Offset of the label (38, 0)
     expect(label.getPosition()).toEqual({ x: 416, y: 95 });
     // MindManager draws relationship labels as plain text.
@@ -639,11 +639,11 @@ describe('MindManagerImporter default topic texts', () => {
     const central = mindmap.getCentralTopic()!;
     expect(central.getText()).toBe('Central Topic');
     const [main, own] = central.getChildren();
-    expect([main.getText(), own.getText()]).toEqual(['Main Topic', 'Own text']);
-    const sub = main.getChildren()[0];
+    expect([main!.getText(), own!.getText()]).toEqual(['Main Topic', 'Own text']);
+    const sub = main!.getChildren()[0]!;
     expect(sub.getText()).toBe('Subtopic');
     // Below the deepest level of the StyleGroup, the deepest one applies.
-    expect(sub.getChildren()[0].getText()).toBe('Subtopic');
+    expect(sub.getChildren()[0]!.getText()).toBe('Subtopic');
   });
 });
 
@@ -902,7 +902,7 @@ describe('MindManagerImporter XHTML note whitespace (BL5-140)', () => {
 
     const mindmap = loadMindmap(await new MindManagerImporter(mindManager).import('test'));
 
-    const note = findByText(mindmap, 'Spaced').findFeatureByType('note')[0];
+    const note = findByText(mindmap, 'Spaced').findFeatureByType('note')[0]!;
     expect(note.getText()).toBe(
       '<p><b>This&nbsp;</b> <span>is a</span></p><p>line<br>break</p><pre>keep\n  this</pre>',
     );

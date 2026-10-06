@@ -99,7 +99,7 @@ describe('brand gallery icons', () => {
 
     topic.getModel().setFontColor('#ff0000');
     topic.redraw(topic.getThemeVariant(), false);
-    expect(image.getHref()).toBe(brandIconHref(BRAND_ICON_PATHS.twitter, '#ff0000'));
+    expect(image.getHref()).toBe(brandIconHref(BRAND_ICON_PATHS.twitter!, '#ff0000'));
     expect(setHref).toHaveBeenCalledTimes(1);
   });
 });

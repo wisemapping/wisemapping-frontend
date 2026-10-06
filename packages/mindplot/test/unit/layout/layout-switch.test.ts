@@ -74,7 +74,7 @@ describe('layout switch migration (BL5-82)', () => {
     const floating = manager.find(5).getPosition();
     const children = [6, 7, 8].map((id) => manager.find(id).getPosition());
     children.forEach((child) => expect(child.x).toBeGreaterThan(floating.x));
-    expect(children[0].y).toBeLessThan(children[1].y);
-    expect(children[1].y).toBeLessThan(children[2].y);
+    expect(children[0]!.y).toBeLessThan(children[1]!.y);
+    expect(children[1]!.y).toBeLessThan(children[2]!.y);
   });
 });

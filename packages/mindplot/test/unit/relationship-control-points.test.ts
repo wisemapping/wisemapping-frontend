@@ -153,7 +153,7 @@ describe('Relationship control points', () => {
     it.each([PivotType.Start, PivotType.End])(
       'does not dispatch a move when the dot is clicked without dragging (pivot %s)',
       (type) => {
-        pivot(type).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+        pivot(type)!.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
         container.dispatchEvent(
           new MouseEvent('mouseup', { clientX: 5, clientY: 5, bubbles: true }),
         );
@@ -165,7 +165,7 @@ describe('Relationship control points', () => {
     it.each([PivotType.Start, PivotType.End])(
       'dispatches a move when the dot is dragged (pivot %s)',
       (type) => {
-        pivot(type).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+        pivot(type)!.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
         container.dispatchEvent(
           new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
         );
@@ -178,14 +178,14 @@ describe('Relationship control points', () => {
         // ... where the drag left the end, before the move places it again (BL5-99).
         expect(rememberReleasedControlPoint).toHaveBeenCalledWith(type);
         expect(rememberReleasedControlPoint.mock.invocationCallOrder[0]).toBeLessThan(
-          moveControlPoint.mock.invocationCallOrder[0],
+          moveControlPoint.mock.invocationCallOrder[0]!,
         );
       },
     );
 
     it('does not dispatch again on a later click after a drag', () => {
       const start = pivot(PivotType.Start);
-      start.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      start!.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
       container.dispatchEvent(
         new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
       );
@@ -194,7 +194,7 @@ describe('Relationship control points', () => {
       );
       moveControlPoint.mockClear();
 
-      start.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      start!.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
       container.dispatchEvent(
         new MouseEvent('mouseup', { clientX: 40, clientY: 30, bubbles: true }),
       );
@@ -203,7 +203,7 @@ describe('Relationship control points', () => {
     });
 
     it('ends the drag when the button is released outside the container', () => {
-      pivot(PivotType.Start).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      pivot(PivotType.Start)!.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
       container.dispatchEvent(
         new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
       );
@@ -220,7 +220,7 @@ describe('Relationship control points', () => {
     });
 
     it('keeps following the cursor while it is outside the container', () => {
-      pivot(PivotType.End).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      pivot(PivotType.End)!.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
       document.body.dispatchEvent(
         new MouseEvent('mousemove', { clientX: 900, clientY: 900, bubbles: true }),
       );
@@ -230,7 +230,7 @@ describe('Relationship control points', () => {
     });
 
     it('ends the drag when the window loses focus', () => {
-      pivot(PivotType.Start).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      pivot(PivotType.Start)!.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
       container.dispatchEvent(
         new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
       );
@@ -251,7 +251,7 @@ describe('Relationship control points', () => {
     });
 
     it('puts the start control point back when Escape abandons the drag', () => {
-      pivot(PivotType.Start).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      pivot(PivotType.Start)!.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
       container.dispatchEvent(
         new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
       );
@@ -279,7 +279,7 @@ describe('Relationship control points', () => {
     });
 
     it('puts a custom end control point back as custom when Escape abandons the drag', () => {
-      pivot(PivotType.End).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      pivot(PivotType.End)!.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
       container.dispatchEvent(
         new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
       );
@@ -304,8 +304,8 @@ describe('Relationship control points', () => {
       (controlPoints as unknown as { _pivotLines: Handle[] })._pivotLines[type];
     // Shown as when the relationship is focused (the stub canvas holds no SVG nodes) ...
     const show = (type: PivotType) => {
-      handle(type)._isVisible = true;
-      handle(type).redraw();
+      handle(type)!._isVisible = true;
+      handle(type)!.redraw();
     };
 
     it.each([
@@ -314,24 +314,24 @@ describe('Relationship control points', () => {
     ])('centres the handle on the control point (pivot %s)', (type, expected) => {
       show(type);
 
-      expect(handle(type)._dot.getPosition()).toEqual(expected);
-      expect(handle(type)._line.getTo()).toEqual(expected);
+      expect(handle(type)!._dot.getPosition()).toEqual(expected);
+      expect(handle(type)!._line.getTo()).toEqual(expected);
     });
 
     it('keeps the handle centred under the cursor while dragging', () => {
       show(PivotType.End);
-      pivot(PivotType.End).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      pivot(PivotType.End)!.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
       container.dispatchEvent(
         new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
       );
 
-      expect(handle(PivotType.End)._dot.getPosition()).toEqual({ x: 40, y: 30 });
-      expect(handle(PivotType.End)._line.getTo()).toEqual({ x: 40, y: 30 });
+      expect(handle(PivotType.End)!._dot.getPosition()).toEqual({ x: 40, y: 30 });
+      expect(handle(PivotType.End)!._line.getTo()).toEqual({ x: 40, y: 30 });
       document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
     });
 
     it('ignores other keys during the drag', () => {
-      pivot(PivotType.Start).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
+      pivot(PivotType.Start)!.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
       container.dispatchEvent(
         new MouseEvent('mousemove', { clientX: 40, clientY: 30, bubbles: true }),
       );

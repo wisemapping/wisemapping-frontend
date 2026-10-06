@@ -52,7 +52,7 @@ const fakeIcon = () => {
   };
   const fire = (type: 'mouseenter' | 'mouseleave') => {
     const target = document.createElement('span');
-    listeners[type]({ target, stopPropagation: () => {} } as unknown as Event);
+    listeners[type]!({ target, stopPropagation: () => {} } as unknown as Event);
     jest.runOnlyPendingTimers();
   };
   return { icon, fire };

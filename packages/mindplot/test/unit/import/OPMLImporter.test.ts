@@ -71,7 +71,7 @@ describe('OPMLImporter', () => {
     expect(central.getChildren().map((c) => c.getText())).toEqual(['Child 1', 'Child 2']);
     expect(
       central
-        .getChildren()[0]
+        .getChildren()[0]!
         .getChildren()
         .map((c) => c.getText()),
     ).toEqual(['Grandchild']);

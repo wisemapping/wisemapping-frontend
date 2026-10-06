@@ -27,7 +27,7 @@ import TextImporterFactory from '../../../src/components/import/TextImporterFact
 const testNames = fs
   .readdirSync(path.resolve(__dirname, './input/mindmanager/'), { withFileTypes: true })
   .filter((entry) => entry.isFile() && entry.name.endsWith('.mmap'))
-  .map((entry) => entry.name.split('.')[0]);
+  .map((entry) => entry.name.split('.')[0]!);
 
 describe('MindManager Importer Test Suite', () => {
   test.each(testNames)('Importing MindManager %p suite', async (testName: string) => {

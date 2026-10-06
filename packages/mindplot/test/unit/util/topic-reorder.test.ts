@@ -325,7 +325,7 @@ describe('resolveTopicMove', () => {
         manager.connectNode(1, id, (target as { order: number }).order);
         manager.layout();
 
-        const side = Math.sign(manager.find(expected[0]).getPosition().x);
+        const side = Math.sign(manager.find(expected[0]!).getPosition().x);
         expected.forEach((sameSide) => {
           expect(Math.sign(manager.find(sameSide).getPosition().x)).toBe(side);
         });

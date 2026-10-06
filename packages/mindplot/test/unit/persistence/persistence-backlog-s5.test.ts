@@ -39,7 +39,7 @@ const node = (mindmap: Mindmap, id: number): NodeModel => {
   return result;
 };
 
-const noteOf = (topic: NodeModel): NoteModel => topic.findFeatureByType('note')[0];
+const noteOf = (topic: NodeModel): NoteModel => topic.findFeatureByType('note')[0]!;
 
 beforeEach(() => {
   jest.spyOn(console, 'warn').mockImplementation(() => undefined);
@@ -78,19 +78,19 @@ describe('beta loader (BL-41, BL-53, BL-73)', () => {
       '<map><topic central="true" text="c">' +
         '<note text="door%20slimme%2C%20meest%20effici%EBnte%0Aweg"/></topic></map>',
     );
-    expect(noteOf(mindmap.getBranches()[0]).getText()).toBe('door slimme, meest efficiënte\nweg');
+    expect(noteOf(mindmap.getBranches()[0]!).getText()).toBe('door slimme, meest efficiënte\nweg');
   });
 
   test('loads the font size of a beta topic as a number', () => {
     const mindmap = load(
       '<map><topic central="true" text="c" fontStyle="Arial;12;#000;bold;"/></map>',
     );
-    expect(mindmap.getBranches()[0].getFontSize()).toBe(12);
+    expect(mindmap.getBranches()[0]!.getFontSize()).toBe(12);
   });
 
   test('ignores a non numeric font size', () => {
     const mindmap = load('<map><topic central="true" text="c" fontStyle="Arial;big;;;"/></map>');
-    const central = mindmap.getBranches()[0];
+    const central = mindmap.getBranches()[0]!;
     expect(central.getFontSize()).toBeUndefined();
     expect(central.getFontFamily()).toBe('Arial');
   });
@@ -100,7 +100,7 @@ describe('beta loader (BL-41, BL-53, BL-73)', () => {
       '<map><topic central="true" text="c"><link/><note text="n"/></topic></map>',
     );
     const types = mindmap
-      .getBranches()[0]
+      .getBranches()[0]!
       .getFeatures()
       .map((f) => f.getType());
     expect(types).toEqual(['note']);

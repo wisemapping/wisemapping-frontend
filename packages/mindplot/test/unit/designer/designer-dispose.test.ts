@@ -332,7 +332,7 @@ describe('Designer enddragging (BL-49)', () => {
 
     const applyChanges = jest.fn();
     const dragTopic = { isCancelled: () => true, applyChanges } as unknown as DragTopic;
-    const enable = jest.spyOn(designer.getModel().getTopics()[1], 'setMouseEventsEnabled');
+    const enable = jest.spyOn(designer.getModel().getTopics()[1]!, 'setMouseEventsEnabled');
 
     listeners.enddragging(new MouseEvent('mouseup'), dragTopic);
 

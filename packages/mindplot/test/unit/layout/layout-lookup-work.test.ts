@@ -112,7 +112,7 @@ describe('Layout lookups', () => {
     const first = changes.filter((event) => event.getId() === 1);
     expect(first.length).toBeGreaterThan(0);
     expect(new Set(first).size).toBe(1);
-    expect(first[0].getPosition()).toEqual(manager.find(1).getPosition());
+    expect(first[0]!.getPosition()).toEqual(manager.find(1).getPosition());
 
     // A flush starts afresh.
     changes.length = 0;

@@ -32,7 +32,7 @@ describe('GenericRelationshipFunctionCommand undo/redo', () => {
   it('undoes a style change on a relationship rebuilt by an undone delete', async () => {
     const { designer, save } = await buildDesigner();
     const dispatcher = designer.getActionDispatcher();
-    const liveRelationship = () => designer.getModel().getRelationships()[0];
+    const liveRelationship = () => designer.getModel().getRelationships()[0]!;
     const before = save();
 
     dispatcher.changeRelationshipColor([liveRelationship()], '#ff0000');
@@ -47,8 +47,8 @@ describe('GenericRelationshipFunctionCommand undo/redo', () => {
 
     designer.undo();
     designer.undo();
-    expect(liveRelationship().getModel().getStrokeColor()).toBeUndefined();
-    expect(liveRelationship().getModel().getEndArrow()).toBe(true);
+    expect(liveRelationship()!.getModel().getStrokeColor()).toBeUndefined();
+    expect(liveRelationship()!.getModel().getEndArrow()).toBe(true);
     expect(save()).toEqual(before);
 
     designer.redo();

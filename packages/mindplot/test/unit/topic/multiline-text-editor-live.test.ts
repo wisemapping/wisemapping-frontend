@@ -189,7 +189,7 @@ describe('MultilineTextEditor on a live designer', () => {
     type('ab');
     type('abc');
     expect(frames).toHaveLength(1);
-    frames[0](0);
+    frames[0]!(0);
     expect(layout).toHaveBeenCalledTimes(1);
 
     // The layout asks for frames of its own: the editor's next one is the one typing adds.
@@ -198,7 +198,7 @@ describe('MultilineTextEditor on a live designer', () => {
     expect(frames).toHaveLength(requested + 1);
     keydown({ code: 'Escape', key: 'Escape' });
     layout.mockClear();
-    frames[requested](0);
+    frames[requested]!(0);
     expect(layout).not.toHaveBeenCalled();
   });
 

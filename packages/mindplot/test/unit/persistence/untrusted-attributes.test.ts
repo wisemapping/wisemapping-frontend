@@ -47,7 +47,7 @@ const loadMap = (version: string, mapAttrs: string, topicAttrs = '', content = '
   );
 };
 
-const child = (mindmap: Mindmap): NodeModel => mindmap.getBranches()[0].getChildren()[0];
+const child = (mindmap: Mindmap): NodeModel => mindmap.getBranches()[0]!.getChildren()[0]!;
 
 let warn: jest.SpiedFunction<typeof console.warn>;
 
@@ -81,7 +81,7 @@ describe.each(['tango', 'pela'])('%s map attributes', (version) => {
 
   test('an unknown relationship stroke style falls back to dashed', () => {
     const [relationship] = loadMap(version, '').getRelationships();
-    expect(relationship.getStrokeStyle()).toBe(StrokeStyle.DASHED);
+    expect(relationship!.getStrokeStyle()).toBe(StrokeStyle.DASHED);
   });
 });
 
@@ -116,9 +116,9 @@ describe.each(['tango', 'pela', 'beta'])('%s topic attributes', (version) => {
           'note',
         )[0];
 
-      expect(note('markdown').getContentType()).toBe('plain');
-      expect(note('markdown').getAttributes()).not.toHaveProperty('contentType');
-      expect(note('html').getContentType()).toBe('html');
+      expect(note('markdown')!.getContentType()).toBe('plain');
+      expect(note('markdown')!.getAttributes()).not.toHaveProperty('contentType');
+      expect(note('html')!.getContentType()).toBe('html');
     });
   }
 });

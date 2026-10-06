@@ -99,11 +99,11 @@ describe('Gallery icon of a topic', () => {
     expect(feature.calculateSVGDimensions()).toEqual({ height: 24, width: 24 });
 
     const fontColor = topic.getFontColor(topic.getThemeVariant());
-    expect(image.getHref()).toBe(brandIconHref(BRAND_ICON_PATHS.twitter, fontColor));
+    expect(image.getHref()).toBe(brandIconHref(BRAND_ICON_PATHS.twitter!, fontColor));
 
     harness.designer.getActionDispatcher().changeFontColorToTopic([3], '#ff0000');
     feature.updateIconColor();
-    expect(image.getHref()).toBe(brandIconHref(BRAND_ICON_PATHS.twitter, '#ff0000'));
+    expect(image.getHref()).toBe(brandIconHref(BRAND_ICON_PATHS.twitter!, '#ff0000'));
   });
 
   it('keeps the default colour on a line topic', async () => {
@@ -111,7 +111,7 @@ describe('Gallery icon of a topic', () => {
       SAMPLE_MAP.replace('text="B" ', 'text="B" shape="line" imageGallery="twitter" '),
     );
     const image = svgFeature(harness.topic(3)).getOrBuildSVGElement() as Image;
-    expect(image.getHref()).toBe(brandIconHref(BRAND_ICON_PATHS.twitter, '#000000'));
+    expect(image.getHref()).toBe(brandIconHref(BRAND_ICON_PATHS.twitter!, '#000000'));
   });
 
   it('draws nothing for an unknown icon, and warns about it once', async () => {

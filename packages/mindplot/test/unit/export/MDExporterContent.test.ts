@@ -113,7 +113,7 @@ describe('MD export of links', () => {
     const topic = addTopic(central, 'Topic');
     topic.addFeature(new LinkModel({ url }));
     const lines = await exportLines(mindmap);
-    return lines[2];
+    return lines[2]!;
   };
 
   it('keeps a plain url as is', async () => {
@@ -178,7 +178,7 @@ describe('MD export escaping (BL5-02)', () => {
     const { mindmap, central } = buildMindmap();
     addTopic(central, text);
     const lines = await exportLines(mindmap);
-    return lines[2];
+    return lines[2]!;
   };
 
   it.each([

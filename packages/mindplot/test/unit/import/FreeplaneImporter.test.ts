@@ -49,8 +49,8 @@ describe('FreeplaneImporter big notes', () => {
     const mindmap = loadMindmap(await new FreeplaneImporter(freeplane).import('test'));
 
     const [bigNode, next] = centralOf(mindmap).getChildren();
-    expect(next.getText()).toBe('Next');
-    const note = noteOf(bigNode)!.getText();
+    expect(next!.getText()).toBe('Next');
+    const note = noteOf(bigNode!)!.getText();
     expect(note.startsWith('<p>xxx')).toBe(true);
     expect(note.length).toBeGreaterThan(90_000);
     expect(note.length).toBeLessThanOrEqual(100_010);
@@ -71,7 +71,7 @@ describe('FreeplaneImporter notes', () => {
   test('imports the note as sanitized HTML', async () => {
     const mindmap = loadMindmap(await new FreeplaneImporter(freeplane).import('test'));
 
-    const note = noteOf(centralOf(mindmap).getChildren()[0]);
+    const note = noteOf(centralOf(mindmap).getChildren()[0]!);
     expect(note).toBeDefined();
     expect(note!.getContentType()).toBe(ContentType.HTML);
     expect(note!.getText()).toContain('<p>Hello <b>world</b></p>');
@@ -118,7 +118,7 @@ describe('FreeplaneImporter legacy WiseMapping icons', () => {
   test('maps the legacy ids to the emoji that replaced them', async () => {
     const mindmap = loadMindmap(await new FreeplaneImporter(freeplane).import('test'));
 
-    expect(iconsOf(centralOf(mindmap).getChildren()[0])).toEqual(['😃', '👍', '💡', '💡']);
+    expect(iconsOf(centralOf(mindmap).getChildren()[0]!)).toEqual(['😃', '👍', '💡', '💡']);
   });
 });
 
@@ -143,8 +143,8 @@ describe('FreeplaneImporter node ids', () => {
         .find((node) => node.getText() === text)!;
     const relationships = mindmap.getRelationships();
     expect(relationships).toHaveLength(1);
-    expect(relationships[0].getFromNode()).toBe(byText('Source').getId());
-    expect(relationships[0].getToNode()).toBe(byText('Target').getId());
+    expect(relationships[0]!.getFromNode()).toBe(byText('Source').getId());
+    expect(relationships[0]!.getToNode()).toBe(byText('Target').getId());
   });
 
   test('a central node without an ID does not take the place of a node with ID_1', async () => {
@@ -187,7 +187,7 @@ describe('FreeplaneImporter builtin and emoji icons (BL5-112)', () => {
   test('imports the FreeMind builtins, the Freeplane emoji and the WiseMapping icons', async () => {
     const mindmap = loadMindmap(await new FreeplaneImporter(freeplane).import('test'));
 
-    const topic = centralOf(mindmap).getChildren()[0];
+    const topic = centralOf(mindmap).getChildren()[0]!;
     expect(iconsOf(topic)).toEqual(['✅', '3️⃣', '❓', '⚠️', '🦄', '👨‍💻', '❤️', '💡']);
     expect(topic.findFeatureByType('icon').map((icon) => icon.getAttribute('id'))).toEqual([
       'flag_green',
@@ -222,27 +222,27 @@ describe('FreeplaneImporter node style (BL5-112)', () => {
     expect(central.getShapeType()).toBe('elipse');
     const [a, b, c, d, rich] = central.getChildren();
 
-    expect(a.getShapeType()).toBe('rectangle');
-    expect(a.getBackgroundColor()).toBe('#ff0080');
-    expect(a.getFontColor()).toBe('#00ff00');
-    expect(a.getConnectionColor()).toBe('#0000ff');
-    expect(a.getFontFamily()).toBe('Verdana');
-    expect(a.getFontSize()).toBe(15);
-    expect(a.getFontWeight()).toBe('bold');
-    expect(a.getFontStyle()).toBe('italic');
-    expect(a.areChildrenShrunken()).toBe(true);
+    expect(a!.getShapeType()).toBe('rectangle');
+    expect(a!.getBackgroundColor()).toBe('#ff0080');
+    expect(a!.getFontColor()).toBe('#00ff00');
+    expect(a!.getConnectionColor()).toBe('#0000ff');
+    expect(a!.getFontFamily()).toBe('Verdana');
+    expect(a!.getFontSize()).toBe(15);
+    expect(a!.getFontWeight()).toBe('bold');
+    expect(a!.getFontStyle()).toBe('italic');
+    expect(a!.areChildrenShrunken()).toBe(true);
 
-    expect(b.getShapeType()).toBe('rounded rectangle');
+    expect(b!.getShapeType()).toBe('rounded rectangle');
     // 12 is the FreeMind default size, written with any font: the theme size is kept.
-    expect(b.getFontSize()).toBeUndefined();
-    expect(b.getFontStyle()).toBe('italic');
-    expect(b.areChildrenShrunken()).toBe(false);
+    expect(b!.getFontSize()).toBeUndefined();
+    expect(b!.getFontStyle()).toBe('italic');
+    expect(b!.areChildrenShrunken()).toBe(false);
 
     // A background is only drawn by a shape.
-    expect(c.getShapeType()).toBe('rectangle');
-    expect(c.getBackgroundColor()).toBe('#ffff00');
-    expect(d.getShapeType()).toBe('line');
+    expect(c!.getShapeType()).toBe('rectangle');
+    expect(c!.getBackgroundColor()).toBe('#ffff00');
+    expect(d!.getShapeType()).toBe('line');
 
-    expect(rich.getText()).toBe('Rich first\nsecond');
+    expect(rich!.getText()).toBe('Rich first\nsecond');
   });
 });

@@ -268,7 +268,7 @@ describe('Designer.pasteClipboard', () => {
     ];
     expect(parentIds).toBeNull();
     expect(children).toHaveLength(1);
-    expect(children[0].getText()).toBe('Pasted Node');
+    expect(children[0]!.getText()).toBe('Pasted Node');
   });
 
   it('replaces the text of the selected topics when the clipboard holds plain text', async () => {

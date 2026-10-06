@@ -24,7 +24,7 @@ import TextImporterFactory from '../../../src/components/import/TextImporterFact
 
 const testNames = fs
   .readdirSync(path.resolve(__dirname, './input/opml/'))
-  .map((filename: string) => filename.split('.')[0]);
+  .map((filename: string) => filename.split('.')[0]!);
 
 describe('OPML Importer Test Suite', () => {
   test.each(testNames)('Importing OPML %p suite', async (testName: string) => {

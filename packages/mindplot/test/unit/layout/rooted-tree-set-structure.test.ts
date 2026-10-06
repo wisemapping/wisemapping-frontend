@@ -151,8 +151,8 @@ describe('RootedTreeSet structure', () => {
     const set = build();
     const lines = set.dump().trimEnd().split('\n');
     expect(lines).toHaveLength(6);
-    expect(lines[0].startsWith('[')).toBe(true);
-    expect(lines[2].startsWith('      ')).toBe(true);
+    expect(lines[0]!.startsWith('[')).toBe(true);
+    expect(lines[2]!.startsWith('      ')).toBe(true);
   });
 
   it('shifts a whole branch', () => {
@@ -179,7 +179,7 @@ describe('RootedTreeSet consistency check', () => {
     const three = set.find(3);
     // Corrupt the tree behind its back.
     three._parent = set.find(2);
-    set.getTreeRoots()[1]._parent = one;
+    set.getTreeRoots()[1]!._parent = one;
     const stranger = node(42);
     stranger._children = [];
     stranger._parent = three;
@@ -267,7 +267,7 @@ describe('RootedTreeSet.plot', () => {
       '#000',
     ]);
 
-    clicks[0]();
-    expect(String(log.mock.calls[0][0])).toContain('[id:0, order:undefined, position:(0,0)');
+    clicks[0]!();
+    expect(String(log.mock.calls[0]![0])).toContain('[id:0, order:undefined, position:(0,0)');
   });
 });

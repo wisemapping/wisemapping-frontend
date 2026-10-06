@@ -64,7 +64,7 @@ const createSibling = (manager: LayoutManager, topicId: number, parentId: number
   expect(parents).toEqual([parentId]);
 
   // Connect it the way the real add does, then lay out.
-  const order = models[0].getOrder()!;
+  const order = models[0]!.getOrder()!;
   manager.addNode(NEW_ID, NODE_SIZE, ORIGIN).connectNode(parentId, NEW_ID, order);
   manager.layout();
   return order;

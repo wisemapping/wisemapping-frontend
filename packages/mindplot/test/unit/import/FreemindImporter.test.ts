@@ -43,7 +43,7 @@ const topicById = (doc: Document, id: string): Element => {
 };
 
 const positionOf = (topic: Element): { x: number; y: number } => {
-  const [x, y] = (topic.getAttribute('position') || '').split(',').map(Number);
+  const [x = NaN, y = NaN] = (topic.getAttribute('position') || '').split(',').map(Number);
   return { x, y };
 };
 
@@ -92,8 +92,8 @@ describe('FreemindImporter', () => {
     const doc = await importMap(mm);
     const relationships = Array.from(doc.querySelectorAll('relationship'));
     expect(relationships).toHaveLength(1);
-    expect(relationships[0].getAttribute('srcTopicId')).toBe('2');
-    expect(relationships[0].getAttribute('destTopicId')).toBe('3');
+    expect(relationships[0]!.getAttribute('srcTopicId')).toBe('2');
+    expect(relationships[0]!.getAttribute('destTopicId')).toBe('3');
   });
 
   test('does not duplicate relationships', async () => {
@@ -494,19 +494,19 @@ describe('FreemindImporter', () => {
     expect(central.getFontSize()).toBe(10);
 
     const [a, b, c] = central.getChildren();
-    expect(a.getFontColor()).toBe('#00ff00');
-    expect(a.getFontFamily()).toBe('Verdana');
-    expect(a.getFontSize()).toBe(15);
-    expect(a.getFontWeight()).toBe('bold');
-    expect(a.getFontStyle()).toBe('italic');
+    expect(a!.getFontColor()).toBe('#00ff00');
+    expect(a!.getFontFamily()).toBe('Verdana');
+    expect(a!.getFontSize()).toBe(15);
+    expect(a!.getFontWeight()).toBe('bold');
+    expect(a!.getFontStyle()).toBe('italic');
 
     // 12 is the FreeMind default size, written with any font: the theme size is kept.
-    expect(b.getFontSize()).toBeUndefined();
-    expect(b.getFontStyle()).toBe('italic');
-    expect(b.getFontWeight()).toBeUndefined();
+    expect(b!.getFontSize()).toBeUndefined();
+    expect(b!.getFontStyle()).toBe('italic');
+    expect(b!.getFontWeight()).toBeUndefined();
 
-    expect(c.getFontColor()).toBeUndefined();
-    expect(c.getFontFamily()).toBeUndefined();
-    expect(c.getFontSize()).toBeUndefined();
+    expect(c!.getFontColor()).toBeUndefined();
+    expect(c!.getFontFamily()).toBeUndefined();
+    expect(c!.getFontSize()).toBeUndefined();
   });
 });

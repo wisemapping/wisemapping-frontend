@@ -29,7 +29,7 @@ setupBlob();
 const testNames = fs
   .readdirSync(path.resolve(__dirname, './input/'))
   .filter((f) => f.endsWith('.wxml'))
-  .map((filename: string) => filename.split('.')[0]);
+  .map((filename: string) => filename.split('.')[0]!);
 
 describe('WXML export test execution', () => {
   test.each(testNames)('Exporting %p suite', async (testName: string) => {

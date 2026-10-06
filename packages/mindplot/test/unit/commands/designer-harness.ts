@@ -100,7 +100,7 @@ const sortTopicsById = (element: Element): void => {
   topics.forEach((child) => sortTopicsById(child));
 
   // Re-insert the topics, sorted, where they were: before anything that followed them.
-  const anchor = topics[topics.length - 1].nextSibling;
+  const anchor = topics[topics.length - 1]!.nextSibling;
   topics
     .sort((a, b) => Number(a.getAttribute('id')) - Number(b.getAttribute('id')))
     .forEach((child) => element.insertBefore(child, anchor));

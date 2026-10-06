@@ -107,7 +107,7 @@ describe('DesignerModel topic lookups', () => {
 
   it('finds a topic under its new id once reindexed', () => {
     const { model, topics } = fill();
-    const topic = topics[3];
+    const topic = topics[3]!;
     topic.id = TOPICS + 10;
     model.reindexTopic(topic, 3);
 

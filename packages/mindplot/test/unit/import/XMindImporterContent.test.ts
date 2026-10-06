@@ -88,9 +88,9 @@ describe('XMindImporter (JSON format) content', () => {
 
     const branches = mindmap.getBranches();
     expect(branches).toHaveLength(2);
-    expect(branches[0].getType()).toBe('CentralTopic');
+    expect(branches[0]!.getType()).toBe('CentralTopic');
 
-    const floating = branches[1];
+    const floating = branches[1]!;
     expect(floating.getType()).toBe('MainTopic');
     expect(floating.getText()).toBe('Floating');
     expect(floating.getPosition()).toEqual({ x: -438, y: -87 });
@@ -102,8 +102,8 @@ describe('XMindImporter (JSON format) content', () => {
 
     const relationships = mindmap.getRelationships();
     expect(relationships).toHaveLength(1);
-    expect(relationships[0].getFromNode()).toBe(findByText(mindmap, 'Attached').getId());
-    expect(relationships[0].getToNode()).toBe(findByText(mindmap, 'Floating').getId());
+    expect(relationships[0]!.getFromNode()).toBe(findByText(mindmap, 'Attached').getId());
+    expect(relationships[0]!.getToNode()).toBe(findByText(mindmap, 'Floating').getId());
   });
 
   test('imports notes.plain.content as the topic note', async () => {
@@ -149,8 +149,8 @@ describe('XMindImporter (XML format) content', () => {
 
     const branches = mindmap.getBranches();
     expect(branches).toHaveLength(2);
-    expect(branches[1].getText()).toBe('Floating');
-    expect(branches[1].getPosition()).toEqual({ x: 120, y: -80 });
+    expect(branches[1]!.getText()).toBe('Floating');
+    expect(branches[1]!.getPosition()).toEqual({ x: 120, y: -80 });
     expect(mindmap.getRelationships()).toHaveLength(1);
   });
 });

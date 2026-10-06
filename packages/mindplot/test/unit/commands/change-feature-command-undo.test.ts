@@ -42,7 +42,7 @@ const MAP = [
 const featureId = (
   topic: ReturnType<Awaited<ReturnType<typeof buildDesigner>>['topic']>,
   type: FeatureType,
-) => topic.getModel().findFeatureByType(type)[0].getId();
+) => topic.getModel().findFeatureByType(type)[0]!.getId();
 
 describe('ChangeFeatureToTopicCommand undo/redo', () => {
   it('restores an icon type', async () => {
@@ -65,7 +65,7 @@ describe('ChangeFeatureToTopicCommand undo/redo', () => {
   it('turns a plain note back into a plain note', async () => {
     const { designer, save, topic } = await buildDesigner(MAP);
     const before = save();
-    const note = topic(1).getModel().findFeatureByType('note')[0];
+    const note = topic(1).getModel().findFeatureByType('note')[0]!;
     expect(note.getAttributes()).not.toHaveProperty('contentType');
 
     // As the rich text editor does: it always saves HTML.

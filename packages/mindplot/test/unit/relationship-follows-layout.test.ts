@@ -130,7 +130,7 @@ describe('relationships follow the layout', () => {
     const position = topic.getPosition();
     topic.setPosition({ x: position.x - 40, y: position.y + 30 });
 
-    const redrawn = all.filter((_relationship, i) => redraws[i].mock.calls.length > 0);
+    const redrawn = all.filter((_relationship, i) => redraws[i]!.mock.calls.length > 0);
     expect(redrawn.map((r) => r.getId())).toEqual(
       all
         .filter((r) => r.getModel().getFromNode() === 4 || r.getModel().getToNode() === 4)

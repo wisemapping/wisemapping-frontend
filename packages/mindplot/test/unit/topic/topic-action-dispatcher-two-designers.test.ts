@@ -79,8 +79,8 @@ describe('Commands of a topic with two designers on the page (BL5-144)', () => {
       harness.topic(1).setLinkValue('https://example.com');
     });
     const topic = first.topic(1);
-    const note = topic.getModel().findFeatureByType('note')[0];
-    const link = topic.getModel().findFeatureByType('link')[0];
+    const note = topic.getModel().findFeatureByType('note')[0]!;
+    const link = topic.getModel().findFeatureByType('link')[0]!;
 
     new NoteIcon(topic, note, false).remove();
     new LinkIcon(topic, link, false).remove();

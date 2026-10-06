@@ -75,51 +75,51 @@ describe('Relationship hit shape', () => {
   it('is clickable once the map is loaded', async () => {
     const { relationship } = await load();
 
-    expectClickableHitShape(relationship);
+    expectClickableHitShape(relationship!);
   });
 
   it('is clickable again after the relationship loses the focus', async () => {
     const { relationship } = await load();
 
-    relationship.setOnFocus(true);
-    expect(focusShapeOf(relationship).getAttribute('stroke-width')).toBe('5');
-    relationship.setOnFocus(false);
+    relationship!.setOnFocus(true);
+    expect(focusShapeOf(relationship!).getAttribute('stroke-width')).toBe('5');
+    relationship!.setOnFocus(false);
 
-    expect(relationship.isOnFocus()).toBe(false);
-    expectClickableHitShape(relationship);
+    expect(relationship!.isOnFocus()).toBe(false);
+    expectClickableHitShape(relationship!);
   });
 
   it('follows the visibility of the relationship', async () => {
     const { relationship } = await load();
 
-    relationship.setVisibility(false);
-    expect(focusShapeOf(relationship).getAttribute('visibility')).toBe('hidden');
+    relationship!.setVisibility(false);
+    expect(focusShapeOf(relationship!).getAttribute('visibility')).toBe('hidden');
 
-    relationship.setVisibility(true);
-    expectClickableHitShape(relationship);
+    relationship!.setVisibility(true);
+    expectClickableHitShape(relationship!);
   });
 
   it('is clickable when a focused relationship is shown again', async () => {
     const { relationship } = await load();
 
-    relationship.setOnFocus(true);
-    relationship.setVisibility(true);
+    relationship!.setOnFocus(true);
+    relationship!.setVisibility(true);
 
-    expectClickableHitShape(relationship);
+    expectClickableHitShape(relationship!);
   });
 });
 
 describe('Relationship z-order', () => {
   it('is rendered below every topic once loaded', async () => {
     const { designer } = await buildDesigner();
-    const relationship = designer.getModel().getRelationships()[0];
+    const relationship = designer.getModel().getRelationships()[0]!;
 
     expectBelowTopics(relationship, designer.getModel().getTopics());
   });
 
   it('stays below every topic after a redraw', async () => {
     const { designer } = await buildDesigner();
-    const relationship = designer.getModel().getRelationships()[0];
+    const relationship = designer.getModel().getRelationships()[0]!;
 
     relationship.redraw();
 
@@ -128,7 +128,7 @@ describe('Relationship z-order', () => {
 
   it('stays below every topic after being focused and blurred', async () => {
     const { designer } = await buildDesigner();
-    const relationship = designer.getModel().getRelationships()[0];
+    const relationship = designer.getModel().getRelationships()[0]!;
 
     relationship.setOnFocus(true);
     relationship.redraw();

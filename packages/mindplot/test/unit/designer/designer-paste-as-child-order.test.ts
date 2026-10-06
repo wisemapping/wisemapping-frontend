@@ -190,8 +190,8 @@ describe('Designer.createChildForSelectedNode on a collapsed topic', () => {
     const [hidden, added] = parent
       .getChildren()
       .sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
-    expect(added.getPosition().x).toBe(hidden.getPosition().x);
-    expect(added.getPosition().y).toBeGreaterThan(hidden.getPosition().y);
+    expect(added!.getPosition().x).toBe(hidden!.getPosition().x);
+    expect(added!.getPosition().y).toBeGreaterThan(hidden!.getPosition().y);
   });
 });
 

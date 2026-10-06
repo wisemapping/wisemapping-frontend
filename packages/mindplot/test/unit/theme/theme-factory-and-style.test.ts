@@ -138,7 +138,7 @@ describe('ThemeStyle', () => {
     expect(() => new ThemeStyle('no-such-theme', 'light')).toThrow(
       'Default styles not found for topic type: CentralTopic',
     );
-    expect(String(warn.mock.calls[0][0])).toContain('no-such-theme-default.json');
+    expect(String(warn.mock.calls[0]![0])).toContain('no-such-theme-default.json');
   });
 
   it('reads every connection style a theme can name', () => {

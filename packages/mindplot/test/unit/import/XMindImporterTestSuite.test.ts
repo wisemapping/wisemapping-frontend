@@ -28,7 +28,7 @@ const malformed = ['event-planning', 'personal-goals', 'project-management'];
 
 const testNames = fs
   .readdirSync(path.resolve(__dirname, './input/xmind/'))
-  .map((filename: string) => filename.split('.')[0]);
+  .map((filename: string) => filename.split('.')[0]!);
 
 describe('XMind Importer Test Suite', () => {
   test.each(testNames)('Importing XMind %p suite', async (testName: string) => {
