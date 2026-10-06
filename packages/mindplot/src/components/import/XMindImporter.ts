@@ -29,7 +29,7 @@
  * - **Notes**: XMind notes are converted to WiseMapping notes with rich HTML support
  * - **Labels**: XMind labels (categorization tags) are preserved as `🏷️ label-name`
  * - **Markers**: XMind markers (visual indicators) are preserved as `🔖 marker-name`
- * - **Icons**: XMind icons are comprehensively mapped to WiseMapping EmojiIcons with 300+ mappings
+ * - **Icons**: XMind markers are mapped to WiseMapping emoji icons, or to SVG icons (task progress, flags)
  *
  * ### 🎨 Styling Support:
  * - **Background Colors**: XMind `svg:fill` colors are mapped to WiseMapping `bgColor`
@@ -77,13 +77,7 @@ import { decodeUtf8, tryDecodeUtf8 } from './support/Utf8Decoder';
 import toWiseMappingXml from './support/MindmapXml';
 import TopicIdSequence from './support/TopicIdSequence';
 import readZipEntries from './support/ZipEntries';
-import {
-  LETTER_EMOJIS,
-  NAMED_ICON_EMOJIS,
-  NUMBER_EMOJIS,
-  ownEntry,
-  PRIORITY_EMOJIS,
-} from './support/IconEmoji';
+import { ownEntry, PRIORITY_EMOJIS } from './support/IconEmoji';
 import { alternatingSidePosition } from './support/MainTopicPosition';
 import type PositionType from '../PositionType';
 
@@ -152,138 +146,183 @@ const MAX_XMIND_CONTENT_BYTES = 50 * 1024 * 1024;
 const isXMindContentEntry = (name: string): boolean =>
   name.endsWith('content.json') || name.endsWith('content.xml');
 
-// XMind marker ids and the WiseMapping emoji icons they map to.
-const XMIND_ICON_EMOJIS: Readonly<Record<string, string>> = {
-  ...NAMED_ICON_EMOJIS,
-  ...NUMBER_EMOJIS,
-  ...LETTER_EMOJIS,
+const sameEmoji = (ids: string[], emoji: string): Record<string, string> =>
+  Object.fromEntries(ids.map((id) => [id, emoji]));
+
+// The colors of the flag, star, half star and people markers.
+const MARKER_COLORS = [
+  'red',
+  'orange',
+  'yellow',
+  'green',
+  'dark-green',
+  'blue',
+  'dark-blue',
+  'purple',
+  'gray',
+  'dark-gray',
+];
+
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
+const WEEK_DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+
+/**
+ * The XMind marker ids (the markers of xmind-sdk-js, src/common/constants/marker.ts, which XMind 8
+ * and XMind Zen write) and their emoji icons. A marker is imported as the WiseMapping SVG icon of
+ * XMIND_MARKER_SVG_ICONS when it has one: the emoji is then only written in the note of the topic.
+ */
+export const XMIND_MARKER_EMOJIS: Readonly<Record<string, string>> = {
+  // Priorities: the five colors MindManager's are imported as, then the number.
   ...PRIORITY_EMOJIS,
+  'priority-6': '6️⃣',
+  'priority-7': '7️⃣',
+  'priority-8': '8️⃣',
+  'priority-9': '9️⃣',
 
-  // Star and rating icons
-  'star-1': '⭐',
-  'star-2': '⭐',
-  'star-3': '⭐',
+  'smiley-laugh': '😆',
+  'smiley-smile': '🙂',
+  'smiley-cry': '😢',
+  'smiley-surprise': '😮',
+  'smiley-boring': '😑',
+  'smiley-angry': '😠',
+  'smiley-embarrass': '😳',
 
-  // Flag icons
-  flag: '🚩',
-  'flag-red': '🚩',
+  // Task progress, from not started to done, and paused.
+  'task-start': '▶️',
+  ...sameEmoji(
+    ['task-oct', 'task-quarter', 'task-3oct', 'task-half', 'task-5oct', 'task-3quar', 'task-7oct'],
+    '⏳',
+  ),
+  'task-done': '✅',
+  'task-pause': '⏸️',
 
-  // Entertainment
-  tv: '📺',
-  radio: '📻',
-  camera: '📷',
-  video: '📹',
-  microphone: '🎤',
-  headphones: '🎧',
-  guitar: '🎸',
-  piano: '🎹',
-  drum: '🥁',
-  trumpet: '🎺',
-  violin: '🎻',
-  saxophone: '🎷',
+  // There are no colored flag, star or people emoji.
+  ...sameEmoji(
+    MARKER_COLORS.filter((color) => !color.endsWith('gray')).map((color) => `flag-${color}`),
+    '🚩',
+  ),
+  'flag-gray': '🏳️',
+  'flag-dark-gray': '🏴',
+  ...sameEmoji(
+    MARKER_COLORS.map((color) => `star-${color}`),
+    '⭐',
+  ),
+  ...sameEmoji(
+    ['green', 'red', 'yellow', 'purple', 'blue', 'gray'].map((color) => `half-star-${color}`),
+    '⭐',
+  ),
+  ...sameEmoji(
+    MARKER_COLORS.map((color) => `people-${color}`),
+    '👤',
+  ),
 
-  // Symbols and objects
-  fire: '🔥',
-  bomb: '💣',
-  diamond: '💎',
-  gem: '💎',
-  ring: '💍',
-  balloon: '🎈',
-  confetti: '🎊',
-  celebration: '🎆',
+  'arrow-left': '⬅️',
+  'arrow-right': '➡️',
+  'arrow-up': '⬆️',
+  'arrow-down': '⬇️',
+  'arrow-left-right': '↔️',
+  'arrow-up-down': '↕️',
+  'arrow-refresh': '🔄',
+  'arrow-up-right': '↗️',
+  'arrow-down-right': '↘️',
+  'arrow-down-left': '↙️',
+  'arrow-up-left': '↖️',
 
-  // Transport
-  helicopter: '🚁',
-  rocket: '🚀',
-  satellite: '🛰️',
-  ufo: '🛸',
-  ship: '🚢',
-  anchor: '⚓',
-  sailboat: '⛵',
-  'ferris-wheel': '🎡',
-  'roller-coaster': '🎢',
-  carousel: '🎠',
-  circus: '🎪',
-  tent: '⛺',
+  // Symbols: XMind Zen writes the c_symbol_ and c_simbol- ones.
+  c_symbol_heart: '❤️',
+  c_symbol_dislike: '👎',
+  c_symbol_like: '👍',
+  c_symbol_music: '🎵',
+  c_symbol_lock: '🔒',
+  c_symbol_hourglass: '⏳',
+  c_symbol_broken_heart: '💔',
+  c_symbol_quote: '💬',
+  c_symbol_contact: '📇',
+  c_symbol_telephone: '📞',
+  c_symbol_pen: '🖊️',
+  c_symbol_money: '💰',
+  c_symbol_bar_chart: '📊',
+  c_symbol_pie_chart: '📊',
+  c_symbol_line_graph: '📈',
+  c_symbol_shopping_cart: '🛒',
+  c_symbol_medals: '🏅',
+  c_symbol_trophy: '🏆',
+  c_symbol_exercise: '🏋️',
+  c_symbol_flight: '✈️',
+  c_symbol_thermometer: '🌡️',
+  ...sameEmoji(['symbol-question', 'c_simbol-question'], '❓'),
+  ...sameEmoji(['symbol-exclam', 'c_simbol-exclam'], '❗'),
+  ...sameEmoji(['symbol-info', 'c_simbol-info'], 'ℹ️'),
+  ...sameEmoji(['symbol-wrong', 'c_simbol-wrong'], '❌'),
+  ...sameEmoji(['symbol-right', 'c_simbol-right'], '✅'),
+  ...sameEmoji(['symbol-pause', 'c_simbol-pause'], '⏸️'),
+  ...sameEmoji(['symbol-plus', 'c_simbol-plus'], '➕'),
+  ...sameEmoji(['symbol-minus', 'c_simbol-minus'], '➖'),
+  'symbol-attention': '⚠️',
+  'symbol-no-entry': '⛔',
+  'symbol-divide': '➗',
+  'symbol-equality': '🟰',
+  'symbol-code': '💻',
+  'symbol-image': '🖼️',
+  'symbol-pin': '📌',
 
-  // Nature and environment
-  desert: '🏜️',
-  volcano: '🌋',
-  island: '🏝️',
-  beach: '🏖️',
-  'national-park': '🏞️',
-  stadium: '🏟️',
-  bridge: '🌉',
-  cityscape: '🏙️',
-  'night-sky': '🌃',
-  sunrise: '🌅',
-  sunset: '🌇',
+  // There are no emoji of a month or a day of the week.
+  ...sameEmoji(
+    MONTHS.map((month) => `month-${month}`),
+    '📅',
+  ),
+  ...sameEmoji(
+    WEEK_DAYS.map((day) => `week-${day}`),
+    '📅',
+  ),
 
-  // Technology and gadgets
-  keyboard: '⌨️',
-  'mouse-computer': '🖱️',
-  printer: '🖨️',
-  scanner: '📸',
-  cd: '💿',
-  dvd: '📀',
-  'floppy-disk': '💾',
-  'hard-disk': '💾',
-  battery: '🔋',
-  'electric-plug': '🔌',
-  'satellite-antenna': '📡',
-  'radio-signal': '📡',
+  'other-calendar': '📅',
+  'other-email': '📧',
+  'other-phone': '📞',
+  'other-phone2': '📱',
+  'other-fax': '📠',
+  'other-people': '👤',
+  'other-people2': '👥',
+  'other-clock': '🕐',
+  'other-coffee-cup': '☕',
+  'other-question': '❓',
+  'other-exclam': '❗',
+  'other-lightbulb': '💡',
+  'other-businesscard': '📇',
+  'other-social': '🌐',
+  'other-chat': '💬',
+  'other-note': '📝',
+  'other-lock': '🔒',
+  'other-unlock': '🔓',
+  'other-yes': '✔️',
+  'other-no': '✖️',
+  'other-bomb': '💣',
+};
 
-  // Business and office
-  briefcase: '💼',
-  'office-building': '🏢',
-  factory: '🏭',
-  warehouse: '🏭',
-  bank: '🏦',
-  hospital: '🏥',
-  university: '🏫',
-  library: '🏛️',
-  museum: '🏟️',
-  theater: '🎭',
-  cinema: '🎬',
-
-  // Household items
-  bed: '🛏️',
-  couch: '🛋️',
-  chair: '🪑',
-  table: '🍽️', // no table emoji: a place setting
-  lamp: '💡',
-  candle: '🕯️',
-  mirror: '🪞',
-  window: '🪟',
-  door: '🚪',
-  unlock: '🔓',
-
-  // Clothing and accessories
-  shirt: '👕',
-  jeans: '👖',
-  dress: '👗',
-  bikini: '👙',
-  kimono: '👘',
-  sari: '🥻',
-  'lab-coat': '🥼',
-  goggles: '🥽',
-  gloves: '🧤',
-  coat: '🧥',
-  socks: '🧦',
-  hat: '🧢',
-  'top-hat': '🎩',
-  'military-helmet': '🪖',
-
-  // Miscellaneous
-  hourglass: '⏳',
-  stopwatch: '⏱️',
-  'alarm-clock': '⏰',
-  timer: '⏲️',
-  'magnifying-glass': '🔍',
-  compass: '🧭',
-  globe: '🌍',
-  'world-map': '🗺️',
-  pennant: '🚩',
+/**
+ * The XMind markers imported as a WiseMapping SVG icon: the task progress, as the task icons
+ * MindManager's TaskPercentage is imported as, at the quarter at or below it, so that only a done
+ * task looks done; the colored flags, as FreeMind's are; and the pie chart, which has no emoji.
+ */
+export const XMIND_MARKER_SVG_ICONS: Readonly<Record<string, string>> = {
+  'task-start': 'task_0',
+  'task-oct': 'task_0',
+  'task-quarter': 'task_25',
+  'task-3oct': 'task_25',
+  'task-half': 'task_50',
+  'task-5oct': 'task_50',
+  'task-3quar': 'task_75',
+  'task-7oct': 'task_75',
+  'task-done': 'task_100',
+  'flag-orange': 'flag_orange',
+  'flag-yellow': 'flag_yellow',
+  'flag-green': 'flag_green',
+  'flag-dark-green': 'flag_green',
+  'flag-blue': 'flag_blue',
+  'flag-dark-blue': 'flag_blue',
+  'flag-purple': 'flag_purple',
+  c_symbol_pie_chart: 'chart_pie',
 };
 
 class XMindImporter extends Importer {
@@ -621,6 +660,11 @@ class XMindImporter extends Importer {
   }
 
   private addIcon(topic: NodeModel, xmindIconId: string): void {
+    const svgIcon = ownEntry(XMIND_MARKER_SVG_ICONS, xmindIconId.toLowerCase());
+    if (svgIcon) {
+      topic.addFeature(FeatureModelFactory.createModel('icon', { id: svgIcon }));
+      return;
+    }
     const emojiIcon = this.mapXMindIconToEmojiIcon(xmindIconId);
     topic.addFeature(FeatureModelFactory.createModel('eicon', { id: emojiIcon }));
   }
@@ -919,7 +963,7 @@ class XMindImporter extends Importer {
   }
 
   private mapXMindIconToEmojiIcon(iconId: string): string {
-    return ownEntry(XMIND_ICON_EMOJIS, iconId.toLowerCase()) || '💡'; // Default to lightbulb
+    return ownEntry(XMIND_MARKER_EMOJIS, iconId.toLowerCase()) || '💡'; // Default to lightbulb
   }
 
   // Only direct children: descendant queries would pick up the data of nested topics.

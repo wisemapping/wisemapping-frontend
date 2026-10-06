@@ -116,7 +116,12 @@ describe('XMindImporter (JSON format) content', () => {
   test('imports Zen markers as icons', async () => {
     const mindmap = await importSheet();
 
-    expect(iconsOf(findByText(mindmap, 'Attached'))).toEqual(['🔴', '✅']);
+    const attached = findByText(mindmap, 'Attached');
+    expect(iconsOf(attached)).toEqual(['🔴']);
+    // The task progress is a WiseMapping task icon.
+    expect(attached.findFeatureByType('icon').map((icon) => icon.getIconType())).toEqual([
+      'task_100',
+    ]);
   });
 });
 
