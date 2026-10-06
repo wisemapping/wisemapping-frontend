@@ -114,13 +114,14 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
     showFileError(e instanceof Error ? e.message : String(e));
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  // Stable, so that a key re-renders only the field typed in (see Input).
+  const handleOnChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
 
     const name = event.target.name;
     const value = event.target.value;
-    setModel({ ...model, [name as keyof ImportModel]: value });
-  };
+    setModel((current) => ({ ...current, [name as keyof ImportModel]: value }));
+  }, []);
 
   const handleOnFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // A cancelled picker can fire a change with no file in it.

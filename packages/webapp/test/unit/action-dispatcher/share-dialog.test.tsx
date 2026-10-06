@@ -21,6 +21,7 @@ import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import ShareDialog from '../../../src/components/maps-page/action-dispatcher/share-dialog';
 import Client, { Permission } from '../../../src/classes/client';
 import { renderWithProviders } from '../helpers/render';
+import { BURST_TEXT, typeInBurst } from '../burst-typing';
 
 const permissions: Permission[] = [
   { email: 'ana@wisemapping.com', name: 'Ana Ruiz', role: 'owner' },
@@ -137,6 +138,26 @@ describe('ShareDialog', () => {
     await waitFor(() =>
       expect(mockAddMapPermissions).toHaveBeenCalledWith(101, 'Have a look at this.', [
         { email: 'sam@wisemapping.com', role: 'editor' },
+      ]),
+    );
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    renderDialog();
+    await screen.findByText('Ana Ruiz<ana@wisemapping.com>');
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Customize share message' }));
+    const message = screen.getByRole('textbox', { name: 'Message' }) as HTMLTextAreaElement;
+
+    expect(
+      await typeInBurst(emailsInput(), `sam@wisemapping.com, ${BURST_TEXT}@example.org`),
+    ).toEqual([]);
+    expect(await typeInBurst(message)).toEqual([]);
+    fireEvent.click(shareButton());
+
+    await waitFor(() =>
+      expect(mockAddMapPermissions).toHaveBeenCalledWith(101, BURST_TEXT, [
+        { email: 'sam@wisemapping.com', role: 'editor' },
+        { email: `${BURST_TEXT}@example.org`, role: 'editor' },
       ]),
     );
   });

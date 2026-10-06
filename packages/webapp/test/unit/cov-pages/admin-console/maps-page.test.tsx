@@ -23,6 +23,7 @@ import MapsManagement from '../../../../src/components/admin-console/maps-page';
 import AppConfig from '../../../../src/classes/app-config';
 import type { AdminClientInterface } from '../../../../src/classes/client/admin-client';
 import { renderWithWrapper } from '../providers';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 import { buildAdminClient, makeAdminMap, makeUser, MockAdminClient, page } from './fixtures';
 
 const plainMap = makeAdminMap({
@@ -175,6 +176,16 @@ describe('MapsManagement', () => {
       await jest.advanceTimersByTimeAsync(500);
     });
     expect(lastParams()?.search).toBe('#11');
+  });
+
+  test('the search box takes 200 characters typed in one burst, as Cypress types them', async () => {
+    setup();
+    await waitForRows();
+    const search = screen.getByPlaceholderText(/Search maps/) as HTMLInputElement;
+
+    expect(await typeInBurst(search)).toEqual([]);
+
+    await waitFor(() => expect(lastParams()?.search).toBe(BURST_TEXT), { timeout: 2000 });
   });
 
   test('the filters are sent to the server', async () => {

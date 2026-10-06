@@ -35,6 +35,7 @@ import InfoDialog from '../../../../src/components/maps-page/action-dispatcher/i
 import HistoryDialog from '../../../../src/components/maps-page/action-dispatcher/history-dialog';
 import Client, { ChangeHistory, MapInfo } from '../../../../src/classes/client';
 import { renderWithProviders } from '../../helpers/render';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 
 const map: MapInfo = {
   id: 7,
@@ -89,6 +90,23 @@ describe('RenameDialog', () => {
       expect(renameMap).toHaveBeenCalledWith(7, { title: 'Winter plans', description: 'Ski trip' }),
     );
     await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const { renameMap } = setup();
+    await screen.findByDisplayValue('Travel plans');
+    fireEvent.change(textbox(/Name/), { target: { value: '' } });
+
+    expect(await typeInBurst(textbox(/Name/))).toEqual([]);
+    expect(await typeInBurst(textbox(/Description/))).toEqual([]);
+    fireEvent.click(button('Rename'));
+
+    await waitFor(() =>
+      expect(renameMap).toHaveBeenCalledWith(7, {
+        title: BURST_TEXT,
+        description: `Summer trip${BURST_TEXT}`,
+      }),
+    );
   });
 
   test('shows a server error next to the name and keeps the dialog open', async () => {
@@ -242,6 +260,22 @@ describe('CreateDialog', () => {
     );
     // On success the browser goes to the new map's editor, it is not just closed.
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const { createMap } = setup();
+
+    expect(await typeInBurst(textbox(/Name/))).toEqual([]);
+    expect(await typeInBurst(textbox(/Description/))).toEqual([]);
+    fireEvent.click(button('Create'));
+
+    await waitFor(() =>
+      // The name takes at most 60 characters.
+      expect(createMap).toHaveBeenCalledWith({
+        title: BURST_TEXT.slice(0, 60),
+        description: BURST_TEXT,
+      }),
+    );
   });
 
   test('shows the server validation errors', async () => {

@@ -22,6 +22,7 @@ import AccountInfoDialog from '../../../../src/components/maps-page/account-menu
 import Client, { AccountInfo, AuthenticationType } from '../../../../src/classes/client';
 import { Locales } from '../../../../src/classes/app-i18n';
 import { renderWithProviders } from '../../helpers/render';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 
 const CHALLENGE = 'DELETE MY ACCOUNT';
 
@@ -98,6 +99,24 @@ describe('AccountInfoDialog personal info', () => {
     await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
   });
 
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const { client } = setup();
+    await waitFor(() => expect(field('firstname').value).toBe('Jane'));
+    type('firstname', '');
+    type('lastname', '');
+
+    expect(await typeInBurst(field('firstname'))).toEqual([]);
+    expect(await typeInBurst(field('lastname'))).toEqual([]);
+    fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+
+    await waitFor(() =>
+      expect(client.updateAccountInfo).toHaveBeenCalledWith(
+        field('firstname').value,
+        field('lastname').value,
+      ),
+    );
+  });
+
   test('shows why the name could not be saved', async () => {
     const { client, onClose } = setup();
     client.updateAccountInfo.mockRejectedValue({ msg: 'Name too long' });
@@ -157,6 +176,19 @@ describe('AccountInfoDialog password', () => {
 
     await waitFor(() => expect(client.updateAccountPassword).toHaveBeenCalledWith('new-password'));
     await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
+  });
+
+  test('takes a password typed in one burst, as Cypress types it', async () => {
+    const { client } = await openPasswordTab();
+
+    // The fields take at most 39 characters.
+    expect(await typeInBurst(field('password'))).toEqual([]);
+    expect(await typeInBurst(field('retryPassword'))).toEqual([]);
+    fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+
+    await waitFor(() =>
+      expect(client.updateAccountPassword).toHaveBeenCalledWith(BURST_TEXT.slice(0, 39)),
+    );
   });
 
   test('shows why the password could not be changed', async () => {
@@ -237,6 +269,22 @@ describe('AccountInfoDialog account settings', () => {
 
     expect(await screen.findByText('All your mindmaps and their content')).toBeTruthy();
     expect(screen.queryByText('Are you absolutely sure?')).toBeNull();
+  });
+
+  test('takes 200 characters typed in one burst into the confirmation, as Cypress types them', async () => {
+    const { client } = await openSettingsTab();
+    fireEvent.click(screen.getByRole('button', { name: 'Delete Account' }));
+    await screen.findByText('Are you absolutely sure?');
+
+    expect(await typeInBurst(field('deleteConfirmation'))).toEqual([]);
+    submit();
+
+    // The typed text is kept (a controlled field would fall back to its state) and refused.
+    expect(
+      await screen.findByText(`Please type "${CHALLENGE}" to confirm account deletion.`),
+    ).toBeTruthy();
+    expect(field('deleteConfirmation').value).toBe(BURST_TEXT);
+    expect(client.deleteAccount).not.toHaveBeenCalled();
   });
 
   test('typing the phrase clears the "type the phrase" error', async () => {

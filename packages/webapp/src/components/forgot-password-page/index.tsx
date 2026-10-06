@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { ErrorInfo, ForgotPasswordResult } from '../../classes/client';
 
@@ -40,6 +40,11 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');
   const [error, setError] = useState<ErrorInfo>();
   const [showOauthMessage, setShowOauthMessage] = useState<boolean>(false);
+  // Stable, so that a key re-renders only the field typed in (see Input).
+  const handleEmailChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value),
+    [],
+  );
   const navigate = useNavigate();
   const intl = useIntl();
 
@@ -104,7 +109,7 @@ const ForgotPassword = () => {
           name="email"
           label={intl.formatMessage({ id: 'forgot.email', defaultMessage: 'Email' })}
           autoComplete="email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleEmailChange}
           error={error}
         />
 

@@ -27,6 +27,7 @@ import LoginPage from '../../../../src/components/login-page';
 import Client from '../../../../src/classes/client';
 import { trackPageView } from '../../../../src/utils/analytics';
 import { appLogger } from '../../../../src/utils/logger';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 import { initAppConfig, installMatchMedia, renderPage, useConfig } from '../helpers';
 import { resetRouter, setLocation } from '../router-mock';
 
@@ -96,6 +97,20 @@ describe('LoginPage', () => {
       }),
     );
     await waitFor(() => expect(localStorage.getItem('themeMode')).toBe('dark'));
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const client = setup();
+    const email = (await screen.findByLabelText(/^Email/)) as HTMLInputElement;
+    const password = screen.getByLabelText(/^Password/) as HTMLInputElement;
+
+    expect(await typeInBurst(email, `${BURST_TEXT}@wisemapping.com`)).toEqual([]);
+    expect(await typeInBurst(password)).toEqual([]);
+    fireEvent.click(screen.getByRole('button', { name: 'Sign In' }));
+
+    await waitFor(() =>
+      expect(client.login).toHaveBeenCalledWith({ email: email.value, password: password.value }),
+    );
   });
 
   test('shows the server message when the login fails', async () => {

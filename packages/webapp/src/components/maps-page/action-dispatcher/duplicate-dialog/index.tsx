@@ -104,23 +104,22 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
     mutation.mutate(validatedModel);
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  // Stable, so that a key re-renders only the field typed in (see Input).
+  const handleOnChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     const name = event.target.name;
     const value = event.target.value;
 
     // Clear any previous errors when user starts typing
-    if (error) {
-      setError(undefined);
-    }
+    setError(undefined);
 
     // Update the model with the correct field name
     // Only update title and description, preserve id from mapId prop
     if (name === 'title') {
-      setModel({ ...model, title: value });
+      setModel((current) => ({ ...current, title: value }));
     } else if (name === 'description') {
-      setModel({ ...model, description: value });
+      setModel((current) => ({ ...current, description: value }));
     }
-  };
+  }, []);
 
   const { data: map } = useFetchMapById(mapId);
 

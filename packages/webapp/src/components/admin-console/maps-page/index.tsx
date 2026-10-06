@@ -150,12 +150,110 @@ type SortField =
   'title' | 'id' | 'createdBy' | 'createdById' | 'creationTime' | 'lastModificationTime' | 'public';
 type SortDirection = 'asc' | 'desc';
 
+// Detect search type
+const getSearchType = (term: string): 'id' | 'email' | 'text' | null => {
+  if (!term || term.trim() === '') return null;
+  const trimmed = term.trim();
+
+  // Check for ID search (starts with #)
+  if (trimmed.startsWith('#')) {
+    const idStr = trimmed.substring(1);
+    if (/^\d+$/.test(idStr)) {
+      return 'id';
+    }
+  }
+
+  // Check for email search (contains @ and .)
+  if (trimmed.includes('@') && trimmed.includes('.')) {
+    return 'email';
+  }
+
+  return 'text';
+};
+
+/**
+ * The search box. It keeps what is typed and reports it, debounced, through `onSearch`: a key
+ * re-renders only this field, not the page and its filter selects (in development a re-rendered
+ * MUI FormControl updates itself from an effect, and characters typed in one burst, as Cypress
+ * types them, add up to React's nested-update limit).
+ */
+const MapSearchField = React.memo(function MapSearchField({
+  onSearch,
+  isFetching,
+}: {
+  onSearch: (term: string) => void;
+  isFetching: boolean;
+}): ReactElement {
+  const intl = useIntl();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onSearch(searchTerm);
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timer);
+  }, [searchTerm, onSearch]);
+
+  const searchType = getSearchType(searchTerm);
+
+  return (
+    <TextField
+      placeholder={intl.formatMessage({
+        id: 'admin.maps.search',
+        defaultMessage: 'Search maps... (#123 for ID, email for creator)',
+      })}
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      disabled={isFetching}
+      helperText={
+        searchType === 'id'
+          ? intl.formatMessage({
+              id: 'admin.maps.search-by-id',
+              defaultMessage: '🔍 Searching by Map ID',
+            })
+          : searchType === 'email'
+            ? intl.formatMessage({
+                id: 'admin.maps.search-by-email',
+                defaultMessage: '🔍 Searching by Creator Email',
+              })
+            : searchType === 'text'
+              ? intl.formatMessage({
+                  id: 'admin.maps.search-by-text',
+                  defaultMessage: '🔍 Searching in titles and descriptions',
+                })
+              : ' '
+      }
+      sx={{ minWidth: 300 }}
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment position="start">
+              {searchType === 'id' ? (
+                <TagIcon color="primary" />
+              ) : searchType === 'email' ? (
+                <EmailIcon color="primary" />
+              ) : (
+                <SearchIcon />
+              )}
+            </InputAdornment>
+          ),
+          endAdornment: isFetching ? (
+            <InputAdornment position="end">
+              <CircularProgress size={20} />
+            </InputAdornment>
+          ) : null,
+        },
+      }}
+    />
+  );
+});
+
 const MapsManagement = (): ReactElement => {
   const intl = useIntl();
   const client = AppConfig.getAdminClient();
   const queryClient = useQueryClient();
 
-  const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [sortField, setSortField] = useState<SortField>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
@@ -167,14 +265,6 @@ const MapsManagement = (): ReactElement => {
   const [dateFilter, setDateFilter] = useState<string>('1');
   const [editingMap, setEditingMap] = useState<AdminMap | null>(null);
 
-  // Debounce search term
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 500); // 500ms debounce
-
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [formData, setFormData] = useState<MapFormData>({
     title: '',
@@ -204,29 +294,6 @@ const MapsManagement = (): ReactElement => {
   const [ownerMaps, setOwnerMaps] = useState<AdminMap[]>([]);
   const [isPendingOwnerMaps, setIsLoadingOwnerMaps] = useState(false);
   const [isPendingOwnerInfo, setIsLoadingOwnerInfo] = useState(false);
-
-  // Detect search type
-  const getSearchType = (term: string): 'id' | 'email' | 'text' | null => {
-    if (!term || term.trim() === '') return null;
-    const trimmed = term.trim();
-
-    // Check for ID search (starts with #)
-    if (trimmed.startsWith('#')) {
-      const idStr = trimmed.substring(1);
-      if (/^\d+$/.test(idStr)) {
-        return 'id';
-      }
-    }
-
-    // Check for email search (contains @ and .)
-    if (trimmed.includes('@') && trimmed.includes('.')) {
-      return 'email';
-    }
-
-    return 'text';
-  };
-
-  const searchType = getSearchType(searchTerm);
 
   // Fetch maps with pagination and filters
   const {
@@ -647,54 +714,7 @@ const MapsManagement = (): ReactElement => {
           flexWrap: 'wrap',
         }}
       >
-        <TextField
-          placeholder={intl.formatMessage({
-            id: 'admin.maps.search',
-            defaultMessage: 'Search maps... (#123 for ID, email for creator)',
-          })}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          disabled={isFetching}
-          helperText={
-            searchType === 'id'
-              ? intl.formatMessage({
-                  id: 'admin.maps.search-by-id',
-                  defaultMessage: '🔍 Searching by Map ID',
-                })
-              : searchType === 'email'
-                ? intl.formatMessage({
-                    id: 'admin.maps.search-by-email',
-                    defaultMessage: '🔍 Searching by Creator Email',
-                  })
-                : searchType === 'text'
-                  ? intl.formatMessage({
-                      id: 'admin.maps.search-by-text',
-                      defaultMessage: '🔍 Searching in titles and descriptions',
-                    })
-                  : ' '
-          }
-          sx={{ minWidth: 300 }}
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  {searchType === 'id' ? (
-                    <TagIcon color="primary" />
-                  ) : searchType === 'email' ? (
-                    <EmailIcon color="primary" />
-                  ) : (
-                    <SearchIcon />
-                  )}
-                </InputAdornment>
-              ),
-              endAdornment: isFetching ? (
-                <InputAdornment position="end">
-                  <CircularProgress size={20} />
-                </InputAdornment>
-              ) : null,
-            },
-          }}
-        />
+        <MapSearchField onSearch={setDebouncedSearchTerm} isFetching={isFetching} />
 
         <FormControl sx={{ minWidth: 120 }}>
           <InputLabel>Public</InputLabel>

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link as RouterLink, useLocation } from 'react-router';
 import AccountAccessLayout from '../layout/AccountAccessLayout';
@@ -150,13 +150,14 @@ const LoginPage = (): React.ReactElement => {
     event.preventDefault();
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  // Stable, so that a key re-renders only the field typed in (see Input).
+  const handleOnChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
 
     const name = event.target.name;
     const value = event.target.value;
-    setModel({ ...model, [name as keyof Model]: value });
-  };
+    setModel((current) => ({ ...current, [name as keyof Model]: value }));
+  }, []);
 
   const canonicalUrl = getCanonicalUrl('/c/login');
   const alternateLanguages = getAlternateLanguageUrls('/c/login');

@@ -103,13 +103,64 @@ interface UserFormData {
 type SortField = 'email' | 'firstname' | 'lastname' | 'creationDate' | 'isActive';
 type SortDirection = 'asc' | 'desc';
 
+/**
+ * The search box. It keeps what is typed and reports it, debounced, through `onSearch`: a key
+ * re-renders only this field, not the page and its filter selects (in development a re-rendered
+ * MUI FormControl updates itself from an effect, and characters typed in one burst, as Cypress
+ * types them, add up to React's nested-update limit).
+ */
+const UserSearchField = React.memo(function UserSearchField({
+  onSearch,
+  isFetching,
+}: {
+  onSearch: (term: string) => void;
+  isFetching: boolean;
+}): ReactElement {
+  const intl = useIntl();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onSearch(searchTerm);
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timer);
+  }, [searchTerm, onSearch]);
+
+  return (
+    <TextField
+      placeholder={intl.formatMessage({
+        id: 'admin.accounts.search',
+        defaultMessage: 'Search users...',
+      })}
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      disabled={isFetching}
+      sx={{ minWidth: 250 }}
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+          endAdornment: isFetching ? (
+            <InputAdornment position="end">
+              <CircularProgress size={20} />
+            </InputAdornment>
+          ) : null,
+        },
+      }}
+    />
+  );
+});
+
 const AccountManagement = (): ReactElement => {
   const intl = useIntl();
   const client = AppConfig.getAdminClient();
   const queryClient = useQueryClient();
   const facebookEnabled = AppConfig.isFacebookOauth2Enabled();
 
-  const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [sortField, setSortField] = useState<SortField>('email');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
@@ -119,14 +170,6 @@ const AccountManagement = (): ReactElement => {
   const [filterSuspended, setFilterSuspended] = useState<string>('all');
   const [filterAuthType, setFilterAuthType] = useState<string>('all');
 
-  // Debounce search term
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 500); // 500ms debounce
-
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -832,30 +875,7 @@ const AccountManagement = (): ReactElement => {
               flexWrap: 'wrap',
             }}
           >
-            <TextField
-              placeholder={intl.formatMessage({
-                id: 'admin.accounts.search',
-                defaultMessage: 'Search users...',
-              })}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              disabled={isFetching}
-              sx={{ minWidth: 250 }}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                  endAdornment: isFetching ? (
-                    <InputAdornment position="end">
-                      <CircularProgress size={20} />
-                    </InputAdornment>
-                  ) : null,
-                },
-              }}
-            />
+            <UserSearchField onSearch={setDebouncedSearchTerm} isFetching={isFetching} />
 
             <FormControl sx={{ minWidth: 150 }}>
               <InputLabel id="admin-filter-auth-type-label">Auth Type</InputLabel>

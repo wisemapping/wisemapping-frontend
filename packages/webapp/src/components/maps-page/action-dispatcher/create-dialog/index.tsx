@@ -66,13 +66,14 @@ const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
     mutation.mutate(model);
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  // Stable, so that a key re-renders only the field typed in (see Input).
+  const handleOnChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
 
     const name = event.target.name;
     const value = event.target.value;
-    setModel({ ...model, [name as keyof BasicMapInfo]: value });
-  };
+    setModel((current) => ({ ...current, [name as keyof BasicMapInfo]: value }));
+  }, []);
 
   return (
     <div>

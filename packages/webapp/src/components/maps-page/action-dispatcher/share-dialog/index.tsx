@@ -49,6 +49,66 @@ type ShareModel = {
 };
 
 const defaultModel: ShareModel = { emails: '', canEdit: true, message: '' };
+
+type ShareFieldProps = {
+  value: string;
+  label: string;
+  disabled: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+/*
+ * The text fields are memoised: a key re-renders only the field typed in. In development MUI's
+ * FormControl (inside each TextField) updates itself from an effect after each of its renders;
+ * with every field re-rendered on each key, characters typed in one burst (as Cypress types
+ * them) add up to React's nested-update limit.
+ */
+const EmailsField = React.memo(function EmailsField({
+  value,
+  label,
+  disabled,
+  onChange,
+}: ShareFieldProps): React.ReactElement {
+  const classes = useStyles();
+  return (
+    <TextField
+      id="emails"
+      name="emails"
+      required={true}
+      size="small"
+      type="email"
+      variant="outlined"
+      placeholder="Add collaborator email"
+      label={label}
+      onChange={onChange}
+      value={value}
+      disabled={disabled}
+      css={[classes.fullWidthInMobile, classes.email]}
+    />
+  );
+});
+
+const MessageField = React.memo(function MessageField({
+  value,
+  label,
+  disabled,
+  onChange,
+}: ShareFieldProps): React.ReactElement {
+  const classes = useStyles();
+  return (
+    <TextField
+      multiline
+      rows={3}
+      css={classes.textArea}
+      variant="filled"
+      name="message"
+      onChange={onChange}
+      value={value}
+      disabled={disabled}
+      label={label}
+    />
+  );
+});
 const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const intl = useIntl();
   const client = useContext(ClientContext);
@@ -101,7 +161,8 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     onClose();
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  // Stable, so that a key re-renders only the field typed in (see EmailsField).
+  const handleOnChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
 
     const name = event.target.name;
@@ -109,9 +170,9 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
       event.target.type === 'checkbox'
         ? (event.target as HTMLInputElement).checked
         : event.target.value;
-    setModel({ ...model, [name as keyof ShareModel]: value });
+    setModel((current) => ({ ...current, [name as keyof ShareModel]: value }));
     event.stopPropagation();
-  };
+  }, []);
 
   const handleOnAddClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     event.stopPropagation();
@@ -163,19 +224,11 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
         error={error}
       >
         <div css={classes.actionContainer as Interpolation<Theme>}>
-          <TextField
-            id="emails"
-            name="emails"
-            required={true}
-            size="small"
-            type="email"
-            variant="outlined"
-            placeholder="Add collaborator email"
+          <EmailsField
             label={intl.formatMessage({ id: 'common.emails', defaultMessage: 'Emails' })}
             onChange={handleOnChange}
             value={model.emails}
             disabled={addMutation.isPending}
-            css={[classes.fullWidthInMobile, classes.email]}
           />
 
           <FormControlLabel
@@ -230,12 +283,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
           </AsyncButton>
 
           {showMessage && (
-            <TextField
-              multiline
-              rows={3}
-              css={classes.textArea}
-              variant="filled"
-              name="message"
+            <MessageField
               onChange={handleOnChange}
               value={model.message}
               disabled={addMutation.isPending}

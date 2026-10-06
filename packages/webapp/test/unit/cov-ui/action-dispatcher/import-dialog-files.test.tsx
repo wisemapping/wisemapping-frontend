@@ -32,6 +32,7 @@ import { ImportError } from '@wisemapping/editor';
 import ImportDialog from '../../../../src/components/maps-page/action-dispatcher/import-dialog';
 import Client from '../../../../src/classes/client';
 import { renderWithProviders } from '../../helpers/render';
+import { typeInBurst } from '../../burst-typing';
 
 const selectFile = (...files: File[]): void => {
   const input = document.getElementById('contained-button-file') as HTMLInputElement;
@@ -82,6 +83,25 @@ describe('ImportDialog files', () => {
         content: '<map name="Plan"/>',
       }),
     );
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    const { importMap } = setup();
+    selectFile(new File(['<map/>'], 'Plan.wxml', { type: 'text/xml' }));
+    await waitFor(() => expect(nameInput().value).toBe('Plan'));
+    await act(() => new Promise((resolve) => setTimeout(resolve, 10)));
+    const description = screen.getByRole('textbox', { name: /Description/ }) as HTMLInputElement;
+    fireEvent.change(nameInput(), { target: { value: '' } });
+
+    expect(await typeInBurst(nameInput())).toEqual([]);
+    expect(await typeInBurst(description)).toEqual([]);
+    submit();
+
+    await waitFor(() => expect(importMap).toHaveBeenCalled());
+    expect(importMap.mock.calls[0][0]).toMatchObject({
+      title: nameInput().value,
+      description: description.value,
+    });
   });
 
   test('an XMind file is read as binary and sent as an XMind workbook', async () => {

@@ -22,6 +22,7 @@ import LabelDialog from '../../../../src/components/maps-page/action-dispatcher/
 import AddLabelDialog from '../../../../src/components/maps-page/action-dispatcher/add-label-dialog';
 import Client, { Label, MapInfo } from '../../../../src/classes/client';
 import { renderWithProviders } from '../../helpers/render';
+import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 
 const work: Label = { id: 1, title: 'Work', color: '#0565ff' };
 const home: Label = { id: 2, title: 'Home', color: '#ff6600' };
@@ -118,6 +119,18 @@ describe('LabelDialog', () => {
 
     await waitFor(() => expect(client.createLabel).toHaveBeenCalledWith('Urgent', '#00b327'));
     await waitFor(() => expect(client.addLabelToMap).toHaveBeenCalledWith(50, 3));
+  });
+
+  test('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    jest.spyOn(Math, 'random').mockReturnValue(0);
+    const { client } = setup([3]);
+    await screen.findByText(/Gamma/);
+    const title = screen.getByRole('textbox', { name: 'Label title' }) as HTMLInputElement;
+
+    expect(await typeInBurst(title)).toEqual([]);
+    fireEvent.click(screen.getByRole('button', { name: 'Add label' }));
+
+    await waitFor(() => expect(client.createLabel).toHaveBeenCalledWith(BURST_TEXT, '#00b327'));
   });
 
   test('shows the error when a label can not be changed', async () => {
