@@ -27,7 +27,7 @@ import type { TopicMove } from './util/topicReorder';
 import { $msg } from './Messages';
 import { $notify } from './model/ToolbarNotifier';
 
-export type EventCallback = (event?: Event) => void;
+type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
   // The keyboards of the live designers: one per designer, several maps can share a page ...
   private static _live: Set<DesignerKeyboard> = new Set();

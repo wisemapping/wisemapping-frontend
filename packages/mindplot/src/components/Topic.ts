@@ -72,7 +72,7 @@ type AppliedTextValues = {
   text?: string;
 };
 
-export type TopicCornerCoordinates = {
+type TopicCornerCoordinates = {
   topLeft: PositionType;
   topRight: PositionType;
   bottomLeft: PositionType;

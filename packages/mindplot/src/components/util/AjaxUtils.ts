@@ -19,7 +19,7 @@
 /**
  * AJAX utility class to replace jQuery AJAX methods with native fetch API
  */
-export interface AjaxOptions {
+interface AjaxOptions {
   url: string;
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   data?: unknown;
@@ -128,3 +128,5 @@ export class AjaxUtils {
     return xmlDoc;
   }
 }
+
+export default AjaxUtils;

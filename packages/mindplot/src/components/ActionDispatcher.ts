@@ -35,7 +35,7 @@ import type ThemeType from './model/ThemeType';
 import type { LayoutType } from './layout/LayoutType';
 
 /** The events of the ActionDispatcher: 'modelUpdate' after every command, undo or redo. */
-export type ActionDispatcherEvents = { modelUpdate: ModelUpdateEvent };
+type ActionDispatcherEvents = { modelUpdate: ModelUpdateEvent };
 
 /**
  * The commands an ActionDispatcher runs, each one undoable. They are property signatures, not

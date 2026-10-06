@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import DOMUtils from './util/DOMUtils';
 import getCollapsedAncestorIds from './util/topicVisibility';
 import type { TopicMove } from './util/topicReorder';
 import resolveTopicMove from './util/topicReorder';
@@ -169,8 +168,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     // Set full div elem render area.The component must fill container size
     // container is responsible for location and size
-    DOMUtils.css(divElem, 'width', '100%');
-    DOMUtils.css(divElem, 'height', '100%');
+    divElem.style.width = '100%';
+    divElem.style.height = '100%';
 
     // Dispatcher manager ...
     const commandContext = new CommandContext(this);
