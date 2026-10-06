@@ -473,9 +473,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   /**
    * Sets the focus of every entity but `except` in one pass. Each entity still fires its own
    * events, and each topic its 'topicSelected' or 'topicUnselected' on the LayoutEventBus; the
-   * designer pans to the last topic selected once, at the end, and fires at most one event, as the
-   * handlers of each entity would: 'onfocus' if one was selected, 'onblur' if the selection became
-   * empty.
+   * designer pans to the last topic selected once, at the end, and fires one event if anything
+   * changed: 'onblur' if the selection became empty, 'onfocus' otherwise.
    */
   private _setFocusOfAll(focus: boolean, except?: Topic): void {
     const batch: { panTo?: Topic } = {};
@@ -502,9 +501,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
         model.countSelectedTopics(),
         model.filterSelectedRelationships().length,
       );
-      if (focus || empty) {
-        this.fireEvent(empty ? 'onblur' : 'onfocus');
-      }
+      // A click on a topic deselects the others but keeps it: the selection changed without
+      // becoming empty, which the editor only learns from an 'onfocus'.
+      this.fireEvent(empty ? 'onblur' : 'onfocus');
     }
   }
 

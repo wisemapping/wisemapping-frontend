@@ -202,7 +202,7 @@ describe('Selection work', () => {
     expect(reads).toBeLessThan(10 * TOPICS);
   });
 
-  it('a click on a topic after select-all keeps only that topic, firing no designer event', async () => {
+  it('a click on a topic after select-all keeps only that topic, with one designer event', async () => {
     const { designer, topic } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
     designer.selectAll();
     const fired = countEvents(designer);
@@ -214,8 +214,9 @@ describe('Selection work', () => {
     expect(designer.getModel().filterSelectedTopics()).toEqual([topic(3)]);
     expect(designer.getModel().filterSelectedRelationships()).toHaveLength(0);
     expect(fired.topicUnselected).toBe(TOPICS - 1);
-    // The selection never became empty: no 'onblur', as before.
-    expect(fired).toMatchObject({ onblur: 0, onfocus: 0, topicSelected: 0 });
+    // The selection changed without becoming empty: one 'onfocus' (before: none, so the editor
+    // kept showing every topic selected), no 'onblur'.
+    expect(fired).toMatchObject({ onblur: 0, onfocus: 1, topicSelected: 0 });
     // Before: 256,998. Now a few per topic.
     expect(reads).toBeLessThan(10 * TOPICS);
   });
