@@ -103,17 +103,14 @@ class FreemindExporter extends Exporter {
     const main: FreemindNode = createFreemindNode();
     const freemainMap: FreemindMap = { version: this.getVersionNumber(), node: main };
 
-    const centralTopic = this.mindmap.getCentralTopic();
-
-    if (centralTopic) {
-      this.nodeMap.set(centralTopic.getId(), main);
-      this.setTopicPropertiesToNode({
-        freemindNode: main,
-        mindmapTopic: centralTopic,
-        isRoot: true,
-      });
-      this.addNodeFromTopic(centralTopic, main);
-    }
+    const centralTopic = Exporter.centralTopicOf(this.mindmap);
+    this.nodeMap.set(centralTopic.getId(), main);
+    this.setTopicPropertiesToNode({
+      freemindNode: main,
+      mindmapTopic: centralTopic,
+      isRoot: true,
+    });
+    this.addNodeFromTopic(centralTopic, main);
 
     const relationships: Array<RelationshipModel> = this.mindmap.getRelationships();
     relationships.forEach((relationship: RelationshipModel) => {

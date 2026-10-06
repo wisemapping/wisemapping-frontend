@@ -31,6 +31,8 @@ class TxtExporter extends Exporter {
   export(): Promise<string> {
     const { mindmap } = this;
 
+    // The central topic first, then the isolated topics.
+    Exporter.centralTopicOf(mindmap);
     const branches = mindmap.getBranches();
     const txtStr = this.traverseBranch('', '', branches);
     return Promise.resolve(txtStr);
