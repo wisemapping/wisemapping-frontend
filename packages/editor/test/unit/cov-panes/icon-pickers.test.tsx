@@ -25,6 +25,7 @@ import IconPicker from '../../../src/components/action-widget/pane/icon-picker';
 import IconImageTab from '../../../src/components/action-widget/pane/icon-picker/image-icon-tab';
 import TopicIconEditor from '../../../src/components/action-widget/pane/topic-icon-editor';
 import { property, readOnlyProperty, renderPane } from './helpers';
+import { BURST_TEXT, typeInBurst } from '../burst-typing';
 
 const pause = jest.fn();
 const resume = jest.fn();
@@ -261,5 +262,19 @@ describe('TopicIconEditor', () => {
 
     unmount();
     expect(resume).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('icon search typing', () => {
+  it('takes 200 characters typed in one burst, as Cypress types them', async () => {
+    renderPane(<IconImageTab iconModel={property<string | undefined>(undefined)} />);
+    const field = screen.getByPlaceholderText('Search icons...') as HTMLInputElement;
+
+    const errors = await typeInBurst(field);
+
+    expect(errors).toEqual([]);
+    expect(field.value).toBe(BURST_TEXT);
+    // The search ran on the typed text: nothing matches it.
+    expect(screen.getByText('No icons found')).toBeTruthy();
   });
 });

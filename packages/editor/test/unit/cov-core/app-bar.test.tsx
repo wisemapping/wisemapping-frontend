@@ -30,6 +30,7 @@ import type Editor from '../../../src/classes/model/editor';
 import type MapInfo from '../../../src/classes/model/map-info';
 import { trackAppBarAction } from '../../../src/utils/analytics';
 import { createThemeStorage, Providers } from './helpers';
+import { BURST_TEXT, typeInBurst } from '../burst-typing';
 
 jest.mock('@wisemapping/mindplot', () => ({
   $notify: jest.fn(),
@@ -373,6 +374,19 @@ describe('AppBar title', () => {
     expect(document.title).toBe('Renamed | WiseMapping');
     expect($notify).toHaveBeenCalledWith('Mindmap renamed');
     expect(trackAppBarAction).toHaveBeenCalledWith('rename_map');
+  });
+
+  it('takes 200 characters typed in one burst into the title, as Cypress types them', async () => {
+    const mapInfo = createMapInfo();
+    renderAppBar({ mapInfo });
+
+    fireEvent.click(screen.getByTestId('app-bar-title'));
+    fireEvent.change(titleField(), { target: { value: '' } });
+    const errors = await typeInBurst(titleField() as HTMLInputElement);
+
+    expect(errors).toEqual([]);
+    fireEvent.keyDown(titleField(), { key: 'Enter' });
+    await waitFor(() => expect(mapInfo.updateTitle).toHaveBeenCalledWith(BURST_TEXT));
   });
 
   it('renames the map when the field loses focus', async () => {
