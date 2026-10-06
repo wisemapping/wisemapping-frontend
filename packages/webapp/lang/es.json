@@ -231,7 +231,7 @@
     "defaultMessage": "No hay cambios disponibles"
   },
   "import.button": {
-    "defaultMessage": "Importar"
+    "defaultMessage": "Crear"
   },
   "import.description": {
     "defaultMessage": "Puedes importar mapas de WiseMapping, FreeMind, Freeplane, XMind, MindManager y OPML a tu lista de mapas. Selecciona el archivo que quieres importar."
