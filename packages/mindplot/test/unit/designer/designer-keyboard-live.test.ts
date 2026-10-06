@@ -145,10 +145,7 @@ describe('DesignerKeyboard arrow navigation on a mind map', () => {
     expect(arrow(harness, 21, 'left')).toBe(21);
   });
 
-  // Bug: the fallback search (DesignerKeyboard.ts:350 -> _findClosestTopicByDirection, :662) looks
-  // at every topic of the model, including those hidden in a collapsed branch. From R2, right
-  // lands on R1b inside the collapsed R1, and revealNode expands R1 to show it.
-  it.failing('does not land on a topic hidden in a collapsed branch', async () => {
+  it('does not land on a topic hidden in a collapsed branch', async () => {
     const harness = await open();
     expect(arrow(harness, 3, 'right')).toBe(3);
     expect(harness.topic(1).areChildrenShrunken()).toBe(true);

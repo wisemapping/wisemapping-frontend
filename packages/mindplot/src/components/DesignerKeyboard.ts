@@ -19,6 +19,7 @@ import { $assert } from './util/assert';
 import EventManager from './util/EventManager';
 import KeyboardManager from './util/KeyboardManager';
 import { sideOf } from './util/side';
+import getCollapsedAncestorIds from './util/topicVisibility';
 import Keyboard from './Keyboard';
 import { Designer } from '..';
 import Topic from './Topic';
@@ -623,7 +624,8 @@ class DesignerKeyboard extends Keyboard {
     let minAlignmentDistance: number | null = null;
 
     topics.forEach((candidate) => {
-      if (candidate === node) {
+      // A topic inside a collapsed branch is not on screen: the arrows do not go there.
+      if (candidate === node || getCollapsedAncestorIds(candidate).length > 0) {
         return;
       }
       const targetPos = candidate.getPosition();
@@ -674,7 +676,8 @@ class DesignerKeyboard extends Keyboard {
     let minDistance = Number.POSITIVE_INFINITY;
 
     topics.forEach((candidate) => {
-      if (candidate === node) {
+      // A topic inside a collapsed branch is not on screen: the arrows do not go there.
+      if (candidate === node || getCollapsedAncestorIds(candidate).length > 0) {
         return;
       }
 
