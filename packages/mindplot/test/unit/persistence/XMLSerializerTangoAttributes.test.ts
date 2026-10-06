@@ -86,6 +86,26 @@ describe('XMLSerializerTango topic attributes', () => {
     expect(saved.getAttribute('image')).toBe('80,40:https://x/y.png');
   });
 
+  it('saves and loads the border style', () => {
+    const mindmap = load(map('<topic id="2" text="B" brStyle="dotted"/>'));
+    expect(mindmap.findNodeById(2)!.getBorderStyle()).toBe('dotted');
+    expect(save(mindmap).querySelector('topic[id="2"]')!.getAttribute('brStyle')).toBe('dotted');
+    expect(roundTrip(mindmap).findNodeById(2)!.getBorderStyle()).toBe('dotted');
+  });
+
+  it('loads a topic without border style, as old maps have, with the default border', () => {
+    const mindmap = load(map('<topic id="2" text="B"/>'));
+    expect(mindmap.findNodeById(2)!.getBorderStyle()).toBeUndefined();
+    expect(save(mindmap).querySelector('topic[id="2"]')!.hasAttribute('brStyle')).toBe(false);
+  });
+
+  it('ignores an unknown border style', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const mindmap = load(map('<topic id="2" text="B" brStyle="wavy"/>'));
+    expect(mindmap.findNodeById(2)!.getBorderStyle()).toBeUndefined();
+    expect(String(warn.mock.calls[0][0])).toContain("Unknown border style 'wavy'");
+  });
+
   it('saves and loads the metadata', () => {
     const mindmap = load(map('<topic id="2" text="M" metadata="{&quot;k&quot;:1}"/>'));
     expect(mindmap.findNodeById(2)!.getMetadata()).toBe('{"k":1}');

@@ -230,9 +230,7 @@ describe('Designer topic style operations on a topic styled by the theme', () =>
     expect(model.getBorderStyle()).toBe('dashed');
   });
 
-  // Bug: the border style can be set from the editor toolbar and is rendered (Topic.ts:1550),
-  // but XMLSerializerTango neither writes nor reads it, so it is lost when the map is saved.
-  it.failing('saves the border style with the map', async () => {
+  it('saves the border style with the map', async () => {
     const harness = await build(boxed);
     select(harness, 1);
     harness.designer.changeBorderStyle('dashed');

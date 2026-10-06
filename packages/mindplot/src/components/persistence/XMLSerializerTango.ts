@@ -260,6 +260,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       parentTopic.setAttribute('brColor', brColor);
     }
 
+    const borderStyle = topic.getBorderStyle();
+    if (borderStyle) {
+      parentTopic.setAttribute('brStyle', borderStyle);
+    }
+
     // Save the model's explicit connection style (undefined means use theme default)
     const connectionStyle = topic.getConnectionStyle();
     if (connectionStyle !== undefined) {
@@ -593,6 +598,18 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const borderColor = domElem.getAttribute('brColor');
     if (borderColor) {
       topic.setBorderColor(borderColor);
+    }
+
+    // Unknown values are ignored, so the default (solid) border applies.
+    const borderStyle = domElem.getAttribute('brStyle');
+    if (borderStyle) {
+      if (isStrokeStyle(borderStyle)) {
+        topic.setBorderStyle(borderStyle);
+      } else {
+        console.warn(
+          `Unknown border style '${borderStyle}' for topic ${topic.getId()}, ignoring it.`,
+        );
+      }
     }
 
     const order = domElem.getAttribute('order');
