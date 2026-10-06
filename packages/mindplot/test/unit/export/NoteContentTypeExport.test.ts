@@ -60,6 +60,41 @@ describe('Note export honours the note content type', () => {
     expect(result).not.toContain('<strong>');
   });
 
+  it('txt and md separate the paragraphs and lines of html notes and topics', async () => {
+    const mindmap = new Mindmap('html-blocks');
+    const central = mindmap.createNode('CentralTopic', 0);
+    central.setText('<p>one</p><p>two</p>');
+    central.setContentType(ContentType.HTML);
+    mindmap.addBranch(central);
+    const topic = mindmap.createNode('MainTopic', 1);
+    topic.setText('<div>alpha</div><div>beta<br>gamma</div>');
+    topic.setContentType(ContentType.HTML);
+    topic.addFeature(
+      new NoteModel({ text: '<p>first</p><p>second<br>third</p>', contentType: ContentType.HTML }),
+    );
+    central.append(topic);
+
+    const txt = await TextExporterFactory.create('txt', mindmap).export();
+    expect(txt).toBe(
+      [
+        '1 one',
+        'two',
+        '\t1.1 alpha',
+        'beta',
+        'gamma',
+        '\t  [Note: first',
+        'second',
+        'third]',
+        '',
+      ].join('\n'),
+    );
+
+    const md = await TextExporterFactory.create('md', mindmap).export();
+    expect(md).toContain('# one two\n');
+    expect(md).toContain('- alpha beta gamma[^1]');
+    expect(md).toContain('[^1]: first second third');
+  });
+
   it('txt is exported as text/plain', () => {
     expect(TextExporterFactory.create('txt', buildMindmap()).getContentType()).toBe('text/plain');
   });

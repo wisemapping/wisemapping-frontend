@@ -87,9 +87,12 @@ class MDExporter extends Exporter {
     return Promise.resolve(result);
   }
 
+  // The text of a topic on a single line. The paragraphs and the lines of an html text are
+  // separated by a space.
   private nodeText(node: INodeModel): string {
+    const text = node.getText() || '';
     return this.normalizeText(
-      (node.getContentType() === ContentType.HTML ? node.getPlainText() : node.getText()) || '',
+      node.getContentType() === ContentType.HTML ? htmlToPlainText(text) : text,
     );
   }
 
