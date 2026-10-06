@@ -273,15 +273,15 @@ describe('Designer copy and paste through the system clipboard', () => {
     expect(harness.topic(3).getModel().getText()).toBe('Pasted');
   });
 
-  // Bug: pasting plain text with no topic selected runs changeTextToTopic on an empty list
-  // (Designer.ts:817): it changes nothing, but leaves an empty undo step and fires modelUpdate,
-  // which marks the map as changed.
-  it.failing('does not add an undo step when pasting text with nothing selected', async () => {
+  it('does not add an undo step when pasting text with nothing selected', async () => {
     const harness = await open();
     const text = new FakeClipboardItem({ 'text/plain': textBlob('Pasted') });
     setClipboard({ read: jest.fn(async () => [text]) });
+    const changed = jest.fn();
+    harness.designer.addEvent('modelUpdate', changed);
 
     await harness.designer.pasteClipboard();
+    expect(changed).not.toHaveBeenCalled();
     expect(undoSteps(harness.designer)).toBe(0);
   });
 });

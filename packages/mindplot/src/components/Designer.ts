@@ -840,7 +840,11 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       // Finally, add the node ...
       this._actionDispatcher.addTopics(children, null);
     } else {
+      // Text goes into the selected topics: with none, there is nothing to change or undo ...
       const topics = this.getModel().filterSelectedTopics();
+      if (topics.length === 0) {
+        return;
+      }
       this._actionDispatcher.changeTextToTopic(
         topics.map((t) => t.getId()),
         text.trim(),
