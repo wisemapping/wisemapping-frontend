@@ -44,7 +44,7 @@ class DragTopicCommand extends Command {
   }
 
   execute(commandContext: CommandContext): void {
-    const topic = commandContext.findTopics([this._topicsId])[0];
+    const topic = commandContext.findTopic(this._topicsId);
     topic.setVisibility(false);
 
     // Save old position ...
@@ -70,7 +70,7 @@ class DragTopicCommand extends Command {
 
     // Finally, connect topic ...
     if (this._parentId != null) {
-      const parentTopic = commandContext.findTopics([this._parentId])[0];
+      const parentTopic = commandContext.findTopic(this._parentId);
       commandContext.connect(topic, parentTopic);
     }
 

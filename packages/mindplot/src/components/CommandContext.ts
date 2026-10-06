@@ -53,6 +53,13 @@ class CommandContext {
     return result;
   }
 
+  /** The topic with the given id. Throws, as findTopics, when there is none. */
+  findTopic(topicId: number): Topic {
+    const [topic] = this.findTopics([topicId]);
+    $assert(topic, `Could not find topic ${topicId}`);
+    return topic;
+  }
+
   /** */
   deleteTopic(topic: Topic): void {
     this._designer.removeTopic(topic);
@@ -98,6 +105,13 @@ class CommandContext {
 
     const designerRel = this._designer.getModel().getRelationships();
     return designerRel.filter((rel) => relIds.includes(rel.getId()));
+  }
+
+  /** The relationship with the given id. Throws when there is none. */
+  findRelationship(relationshipId: number): Relationship {
+    const [relationship] = this.findRelationships([relationshipId]);
+    $assert(relationship, `Could not find relationship ${relationshipId}`);
+    return relationship;
   }
 
   /** */

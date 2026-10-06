@@ -39,8 +39,8 @@ class AddRelationshipCommand extends Command {
   }
 
   undoExecute(commandContext: CommandContext) {
-    const rel = commandContext.findRelationships([this._model.getId()]);
-    commandContext.deleteRelationship(rel[0]);
+    const rel = commandContext.findRelationship(this._model.getId());
+    commandContext.deleteRelationship(rel);
   }
 }
 

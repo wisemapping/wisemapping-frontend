@@ -105,7 +105,7 @@ class AddTopicCommand extends Command {
     // Finally, remove the nodes ...
     this._models.forEach((model: NodeModel) => {
       const topicId = model.getId();
-      const topic = commandContext.findTopics([topicId])[0];
+      const topic = commandContext.findTopic(topicId);
       commandContext.deleteTopic(topic);
     });
 

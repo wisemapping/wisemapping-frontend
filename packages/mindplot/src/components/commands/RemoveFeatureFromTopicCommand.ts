@@ -45,7 +45,7 @@ class RemoveFeatureFromTopicCommand extends Command {
    * Overrides abstract parent method
    */
   execute(commandContext: CommandContext): void {
-    const topic = commandContext.findTopics([this._topicId])[0];
+    const topic = commandContext.findTopic(this._topicId);
     const feature = topic.findFeatureById(this._featureId);
     this._oldFeature = feature;
     topic.removeFeature(feature);
@@ -56,7 +56,7 @@ class RemoveFeatureFromTopicCommand extends Command {
    * @see {@link mindplot.Command.undoExecute}
    */
   undoExecute(commandContext: CommandContext) {
-    const topic = commandContext.findTopics([this._topicId])[0];
+    const topic = commandContext.findTopic(this._topicId);
     topic.addFeature(this._oldFeature!);
   }
 }

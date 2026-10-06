@@ -37,7 +37,7 @@ class MoveControlPointCommand extends Command {
   }
 
   execute(commandContext: CommandContext): void {
-    const relationship = commandContext.findRelationships([this._modelId])[0];
+    const relationship = commandContext.findRelationship(this._modelId);
     const model = relationship.getModel();
 
     let oldCtlPoint;

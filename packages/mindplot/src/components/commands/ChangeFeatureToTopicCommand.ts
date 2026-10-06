@@ -40,7 +40,7 @@ class ChangeFeatureToTopicCommand extends Command {
   }
 
   execute(commandContext: CommandContext) {
-    const topic = commandContext.findTopics([this._topicId])[0];
+    const topic = commandContext.findTopic(this._topicId);
     const feature = topic.findFeatureById(this._featureId);
 
     // Snapshot every attribute the change can touch, including the ones the feature lacks
