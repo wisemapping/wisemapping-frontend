@@ -120,7 +120,8 @@ export const SHORTCUT_CATEGORIES: ShortcutCategory[] = [
           defaultMessage: 'Select multiple topics',
         }),
         win: [{ keys: ['Ctrl'], ...MOUSE_CLICK_NOTE }],
-        mac: [{ keys: ['Ctrl'], ...MOUSE_CLICK_NOTE }],
+        // Cmd, as the canvas reads it: a Ctrl click on a Mac is the right click.
+        mac: [{ keys: ['⌘'], ...MOUSE_CLICK_NOTE }],
       },
       {
         message: defineMessage({

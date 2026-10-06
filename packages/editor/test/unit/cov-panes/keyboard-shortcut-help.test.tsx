@@ -127,6 +127,15 @@ describe('KeyboardShortcutsHelp', () => {
     expect(row?.lastElementChild?.textContent).toBe('Ctrl+drag topic');
   });
 
+  it('shows Cmd-click for selecting multiple topics on a Mac, as the canvas reads it', () => {
+    isMacPlatform.mockReturnValue(true);
+    renderPane(<KeyboardShortcutsHelp />);
+
+    const row = bodyRows().find((r) => r.textContent?.startsWith('Select multiple topics'));
+    // Before: 'Ctrl+Mouse click', which on a Mac is the right click, and selects one topic.
+    expect(row?.lastElementChild?.textContent).toBe('⌘+Mouse click');
+  });
+
   it('offers a close button only when it can be closed', () => {
     const closeModal = jest.fn();
     const { unmount } = renderPane(<KeyboardShortcutsHelp closeModal={closeModal} />);
