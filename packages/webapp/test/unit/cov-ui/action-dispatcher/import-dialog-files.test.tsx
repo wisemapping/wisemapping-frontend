@@ -30,7 +30,7 @@ jest.mock('@wisemapping/editor', () => ({
 
 import { ImportError } from '@wisemapping/editor';
 import ImportDialog from '../../../../src/components/maps-page/action-dispatcher/import-dialog';
-import Client from '../../../../src/classes/client';
+import Client, { MAP_TITLE_MAX_LENGTH } from '../../../../src/classes/client';
 import { renderWithProviders } from '../../helpers/render';
 import { typeInBurst } from '../../burst-typing';
 
@@ -83,6 +83,14 @@ describe('ImportDialog files', () => {
         content: '<map name="Plan"/>',
       }),
     );
+  });
+
+  test('the name takes as many characters as the backend stores', async () => {
+    setup();
+    selectFile(new File(['<map/>'], 'Plan.wxml', { type: 'text/xml' }));
+    await waitFor(() => expect(nameInput().value).toBe('Plan'));
+
+    expect(nameInput().maxLength).toBe(MAP_TITLE_MAX_LENGTH);
   });
 
   test('takes 200 characters typed in one burst, as Cypress types them', async () => {

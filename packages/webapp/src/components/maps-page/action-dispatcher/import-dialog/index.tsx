@@ -24,7 +24,7 @@ import React, { useContext, useEffect } from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation } from '@tanstack/react-query';
-import { ErrorInfo } from '../../../../classes/client';
+import { ErrorInfo, MAP_TITLE_MAX_LENGTH } from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
 import { ClientContext } from '../../../../classes/provider/client-context';
@@ -255,6 +255,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
             onChange={handleOnChange}
             error={error}
             fullWidth={true}
+            maxLength={MAP_TITLE_MAX_LENGTH}
           />
 
           <Input

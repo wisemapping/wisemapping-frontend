@@ -28,7 +28,7 @@ jest.mock('../../../src/classes/middleware', () => ({
 }));
 
 import DuplicateDialog from '../../../src/components/maps-page/action-dispatcher/duplicate-dialog';
-import Client, { MapInfo } from '../../../src/classes/client';
+import Client, { MAP_TITLE_MAX_LENGTH, MapInfo } from '../../../src/classes/client';
 import { renderWithProviders } from '../helpers/render';
 import { typeInBurst } from '../burst-typing';
 
@@ -67,6 +67,13 @@ describe('DuplicateDialog', () => {
 
     expect(await screen.findByDisplayValue('Copy of Original Mindmap')).toBeDefined();
     expect(screen.getByDisplayValue('Original Description')).toBeDefined();
+  });
+
+  test('the title takes as many characters as the backend stores', async () => {
+    renderDialog();
+
+    const title = (await screen.findByDisplayValue('Copy of Original Mindmap')) as HTMLInputElement;
+    expect(title.maxLength).toBe(MAP_TITLE_MAX_LENGTH);
   });
 
   test('submits the edited title and description to duplicateMap', async () => {

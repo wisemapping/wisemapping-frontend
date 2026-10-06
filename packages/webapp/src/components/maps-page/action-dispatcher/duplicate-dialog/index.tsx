@@ -21,7 +21,7 @@ import { useIntl } from 'react-intl';
 import { useMutation } from '@tanstack/react-query';
 import FormControl from '@mui/material/FormControl';
 
-import { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
+import { BasicMapInfo, ErrorInfo, MAP_TITLE_MAX_LENGTH } from '../../../../classes/client';
 import Input from '../../../form/input';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
@@ -200,6 +200,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
             fullWidth={true}
             required={true}
             minLength={1}
+            maxLength={MAP_TITLE_MAX_LENGTH}
           />
 
           <Input

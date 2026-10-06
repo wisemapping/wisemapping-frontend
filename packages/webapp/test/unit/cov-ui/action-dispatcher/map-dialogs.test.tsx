@@ -33,7 +33,11 @@ import DeleteMultiselectDialog from '../../../../src/components/maps-page/action
 import CreateDialog from '../../../../src/components/maps-page/action-dispatcher/create-dialog';
 import InfoDialog from '../../../../src/components/maps-page/action-dispatcher/info-dialog';
 import HistoryDialog from '../../../../src/components/maps-page/action-dispatcher/history-dialog';
-import Client, { ChangeHistory, MapInfo } from '../../../../src/classes/client';
+import Client, {
+  ChangeHistory,
+  MAP_TITLE_MAX_LENGTH,
+  MapInfo,
+} from '../../../../src/classes/client';
 import { renderWithProviders } from '../../helpers/render';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
 
@@ -76,6 +80,12 @@ describe('RenameDialog', () => {
     expect(await screen.findByDisplayValue('Travel plans')).toBeTruthy();
     expect(screen.getByDisplayValue('Summer trip')).toBeTruthy();
     expect(screen.getByText('Please, fill the new map name and description.')).toBeTruthy();
+  });
+
+  test('the name takes as many characters as the backend stores', async () => {
+    setup();
+    await screen.findByDisplayValue('Travel plans');
+    expect(textbox(/Name/).maxLength).toBe(MAP_TITLE_MAX_LENGTH);
   });
 
   test('renames the map with what the user typed and closes', async () => {
@@ -270,10 +280,26 @@ describe('CreateDialog', () => {
     fireEvent.click(button('Create'));
 
     await waitFor(() =>
-      // The name takes at most 60 characters.
       expect(createMap).toHaveBeenCalledWith({
-        title: BURST_TEXT.slice(0, 60),
+        title: BURST_TEXT,
         description: BURST_TEXT,
+      }),
+    );
+  });
+
+  test('the name takes as many characters as the backend stores, as rename and duplicate do', async () => {
+    const { createMap } = setup();
+    // The mindmap.title column is a VARCHAR(255).
+    expect(MAP_TITLE_MAX_LENGTH).toBe(255);
+    expect(textbox(/Name/).maxLength).toBe(MAP_TITLE_MAX_LENGTH);
+
+    expect(await typeInBurst(textbox(/Name/), 'x'.repeat(MAP_TITLE_MAX_LENGTH + 5))).toEqual([]);
+    fireEvent.click(button('Create'));
+
+    await waitFor(() =>
+      expect(createMap).toHaveBeenCalledWith({
+        title: 'x'.repeat(MAP_TITLE_MAX_LENGTH),
+        description: '',
       }),
     );
   });
