@@ -276,6 +276,31 @@ describe('MapsManagement', () => {
       await dialogClosed();
     });
 
+    test('its fields take 200 characters typed in one burst, as Cypress types them', async () => {
+      setup();
+      await waitForRows();
+
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Edit' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Edit Map' });
+      const field = (label: string) => within(dialog).getByLabelText(label) as HTMLInputElement;
+
+      expect(await typeInBurst(field('Title'))).toEqual([]);
+      expect(await typeInBurst(field('Description'))).toEqual([]);
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Save' }));
+
+      await waitFor(() =>
+        expect(client.updateAdminMap).toHaveBeenCalledWith(11, {
+          id: 11,
+          title: `Plain map${BURST_TEXT}`,
+          description: BURST_TEXT,
+          public: false,
+          isLocked: false,
+        }),
+      );
+      await dialogClosed();
+      // jsdom lays out the multiline description slowly: 200 keys there take a few seconds.
+    }, 20000);
+
     test('refuses an empty title and can be cancelled', async () => {
       setup();
       await waitForRows();
