@@ -55,7 +55,9 @@ const sitemapMiddleware = () => ({
       try {
         const forwardedProto = req.headers['x-forwarded-proto'];
         const forwardedValue = Array.isArray(forwardedProto) ? forwardedProto[0] : forwardedProto;
-        const protocol = forwardedValue || ((req.socket as any)?.encrypted ? 'https' : 'http');
+        const protocol =
+          forwardedValue ||
+          ((req.socket as { encrypted?: boolean } | undefined)?.encrypted ? 'https' : 'http');
         const host = req.headers.host;
 
         if (!host) {
@@ -78,8 +80,9 @@ const sitemapMiddleware = () => ({
 });
 
 export default defineConfig(({ mode }) => {
-  // env loading is not typically needed if we are just using process.env, but loadEnv makes .env files available
-  const env = loadEnv(mode, process.cwd(), '');
+  // The config reads process.env directly, so the returned values are unused. The call stays for its
+  // side effect: it copies NODE_ENV, BROWSER and BROWSER_ARGS from the .env files into process.env.
+  loadEnv(mode, process.cwd(), '');
 
   let bootstrapConfig;
   const configType = process.env.APP_CONFIG_TYPE || 'file:mock';

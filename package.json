@@ -48,6 +48,12 @@
       "sh -c 'cd packages/web2d && eslint \"$@\"' eslint",
       "prettier --check"
     ],
+    "packages/mindplot/{eslint.config.mjs,vite.config.mts,.storybook/*.{js,mjs}}": [
+      "sh -c 'cd packages/mindplot && eslint \"$@\"' eslint"
+    ],
+    "packages/webapp/{eslint.config.mjs,vite.config.mts,.storybook/*.mjs}": [
+      "sh -c 'cd packages/webapp && eslint \"$@\"' eslint"
+    ],
     "packages/{web2d,webapp}/{cypress/**/*,cypress.config}.ts": [
       "prettier --check"
     ],

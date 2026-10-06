@@ -20,8 +20,8 @@ const config = {
   docs: {
     autodocs: 'tag',
   },
-  async viteFinal(config) {
-    return mergeConfig(config, {
+  async viteFinal(viteConfig) {
+    return mergeConfig(viteConfig, {
       resolve: {
         alias: [
           {

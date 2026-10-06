@@ -1,6 +1,3 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from 'eslint-plugin-storybook';
-
 import { defineConfig } from 'eslint/config';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import globals from 'globals';
@@ -159,6 +156,30 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+    },
+  },
+  {
+    // Build and tool configs, loaded by Node (eslint, vite, storybook) rather than bundled.
+    files: ['eslint.config.mjs', 'vite.config.mts', '.storybook/**/*.{js,mjs}'],
+    rules: {
+      // These packages publish only an `exports` map, which the import plugin's node resolver
+      // does not read. Node resolves them, or the tool would fail to start.
+      'import/no-unresolved': [
+        'error',
+        { ignore: ['^vite$', '^eslint/config$', '^@typescript-eslint/(parser|eslint-plugin)$'] },
+      ],
+      // Tooling is a development dependency, declared here or in the root package.json.
+      'import/no-extraneous-dependencies': [
+        'error',
+        { devDependencies: true, packageDir: [__dirname, path.join(__dirname, '../..')] },
+      ],
+    },
+  },
+  {
+    // Storybook reads named exports (`parameters`, `decorators`) from the preview file.
+    files: ['.storybook/preview.js'],
+    rules: {
+      'import/prefer-default-export': 'off',
     },
   },
   {
