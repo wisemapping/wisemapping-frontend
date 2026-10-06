@@ -296,7 +296,7 @@ class RESTPersistenceManager extends PersistenceManager {
 
     if (this.jwt) {
       // eslint-disable-next-line dot-notation
-      headers['Authorization'] = `Bearer ${this.jwt} `;
+      headers['Authorization'] = `Bearer ${this.jwt}`;
     }
     return headers;
   }

@@ -55,8 +55,7 @@ describe('LocalStorageManager loading', () => {
     const manager = new LocalStorageManager('/maps/{id}.xml', false, 'tok');
     await manager.load('m1');
     const headers = (fetchMock.mock.calls[0][1] as RequestInit).headers as Record<string, string>;
-    // Browsers trim the trailing space the manager leaves after the token.
-    expect(headers.Authorization.trim()).toBe('Bearer tok');
+    expect(headers.Authorization).toBe('Bearer tok');
   });
 
   it('prefers the map stored by a writable manager, unless forced to load', async () => {
