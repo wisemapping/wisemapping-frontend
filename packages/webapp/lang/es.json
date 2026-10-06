@@ -18,7 +18,7 @@
     "defaultMessage": "Apellido"
   },
   "accountinfo.title": {
-    "defaultMessage": "Informacion de cuenta"
+    "defaultMessage": "Información de la cuenta"
   },
   "action.cancel-button": {
     "defaultMessage": "Cancelar"
@@ -42,7 +42,7 @@
     "defaultMessage": "Exportar"
   },
   "action.history": {
-    "defaultMessage": "Historia"
+    "defaultMessage": "Historial"
   },
   "action.history-description": {
     "defaultMessage": "Lista de cambios introducidos en los últimos 90 días."
@@ -72,7 +72,7 @@
     "defaultMessage": "Publicar"
   },
   "action.rename": {
-    "defaultMessage": "Renombar"
+    "defaultMessage": "Renombrar"
   },
   "action.rename-description-placeholder": {
     "defaultMessage": "Descripción"
@@ -87,7 +87,7 @@
     "defaultMessage": "Confirmar contraseña"
   },
   "changepwd.description": {
-    "defaultMessage": "Por favor, proporcione la nueva contraseña para su cuenta."
+    "defaultMessage": "Introduce la nueva contraseña para tu cuenta."
   },
   "changepwd.password": {
     "defaultMessage": "Contraseña"
@@ -105,16 +105,16 @@
     "defaultMessage": "La contraseña no puede estar vacía."
   },
   "changepwd.title": {
-    "defaultMessage": "Cambia la contraseña"
+    "defaultMessage": "Cambiar contraseña"
   },
   "common.wait": {
-    "defaultMessage": "Espere por favor ..."
+    "defaultMessage": "Espera, por favor..."
   },
   "create.button": {
     "defaultMessage": "Crear"
   },
   "create.description": {
-    "defaultMessage": "Por favor, complete el nuevo nombre y descripción del mapa."
+    "defaultMessage": "Introduce el nombre y la descripción del nuevo mapa."
   },
   "create.title": {
     "defaultMessage": "Crea un nuevo mapa mental."
@@ -129,28 +129,28 @@
     "defaultMessage": "Duplicar"
   },
   "expired.description": {
-    "defaultMessage": "Su sesión actual ha expirado. Por favor, inicia sesión e inténtalo de nuevo."
+    "defaultMessage": "Tu sesión actual ha caducado. Inicia sesión e inténtalo de nuevo."
   },
   "expired.title": {
-    "defaultMessage": "Su sesión ha caducado"
+    "defaultMessage": "Tu sesión ha caducado"
   },
   "export.desc": {
     "defaultMessage": "Exporta este mapa en el formato que desees y comienza a usarlo en tus presentaciones o compartirlo por correo electrónico"
   },
   "export.document": {
-    "defaultMessage": "Herramientas de mapas mentales: exporte su mapa mental en formatos de herramientas de mapas mentales de terceros"
+    "defaultMessage": "Herramientas de mapas mentales: exporta tu mapa mental a formatos de herramientas de mapas mentales de terceros"
   },
   "export.document-label": {
-    "defaultMessage": "Documento: exporte su mapa mental en un documento independiente listo para compartir"
+    "defaultMessage": "Documento: exporta tu mapa mental a un documento independiente listo para compartir"
   },
   "export.image": {
-    "defaultMessage": "Imagen: obtenga una representación gráfica de su mapa, incluidos todos los colores y formas."
+    "defaultMessage": "Imagen: obtén una representación gráfica de tu mapa, con todos los colores y formas."
   },
   "export.title": {
     "defaultMessage": "Exportar"
   },
   "export.warning": {
-    "defaultMessage": "El export a formatos de imagen (SVG, PNG, JPEG, PDF) solo está disponible en la barra de herramientas del editor."
+    "defaultMessage": "La exportación a formatos de imagen (SVG, PNG, JPEG, PDF) solo está disponible en la barra de herramientas del editor."
   },
   "footer.aboutus": {
     "defaultMessage": "Sobre Nosotros"
@@ -159,7 +159,7 @@
     "defaultMessage": "Donaciones"
   },
   "footer.contactus": {
-    "defaultMessage": "Contáctenos"
+    "defaultMessage": "Contáctanos"
   },
   "footer.faq": {
     "defaultMessage": "Preguntas frecuentes"
@@ -195,7 +195,7 @@
     "defaultMessage": "Política de Privacidad"
   },
   "forgot.desc": {
-    "defaultMessage": "Le enviaremos un correo electrónico para restablecer su contraseña."
+    "defaultMessage": "Te enviaremos un correo electrónico para restablecer tu contraseña."
   },
   "forgot.email": {
     "defaultMessage": "Correo electrónico"
@@ -207,13 +207,13 @@
     "defaultMessage": "Enviar enlace de recuperación"
   },
   "forgot.success.desc": {
-    "defaultMessage": "Le hemos enviado un correo electrónico que le permitirá restablecer su contraseña. Deberías recibirlo en los próximos minutos."
+    "defaultMessage": "Te hemos enviado un correo electrónico que te permitirá restablecer tu contraseña. Deberías recibirlo en los próximos minutos."
   },
   "forgot.success.title": {
-    "defaultMessage": "Su contraseña temporal ha sido enviada."
+    "defaultMessage": "Tu contraseña temporal ha sido enviada."
   },
   "forgot.title": {
-    "defaultMessage": "Restablecer su contraseña"
+    "defaultMessage": "Restablece tu contraseña"
   },
   "forgotsuccess.page-title": {
     "defaultMessage": "Contraseña recuperada | WiseMapping"
@@ -231,10 +231,10 @@
     "defaultMessage": "No hay cambios disponibles"
   },
   "import.button": {
-    "defaultMessage": "Crear"
+    "defaultMessage": "Importar"
   },
   "import.description": {
-    "defaultMessage": "Puede importar mapas de WiseMapping, FreeMind, Freeplane, XMind, MindManager y OPML a su lista de mapas. Seleccione el archivo que desea importar."
+    "defaultMessage": "Puedes importar mapas de WiseMapping, FreeMind, Freeplane, XMind, MindManager y OPML a tu lista de mapas. Selecciona el archivo que quieres importar."
   },
   "import.title": {
     "defaultMessage": "Importar mapa mental existente"
@@ -243,7 +243,7 @@
     "defaultMessage": "Error al importar: {error}"
   },
   "import.error-unsupported-file": {
-    "defaultMessage": "El tipo de archivo no es compatible. Puede importar mapas de WiseMapping, FreeMind, Freeplane, XMind, MindManager y OPML."
+    "defaultMessage": "El tipo de archivo no es compatible. Puedes importar mapas de WiseMapping, FreeMind, Freeplane, XMind, MindManager y OPML."
   },
   "info.basic-info": {
     "defaultMessage": "Información básica"
@@ -267,7 +267,7 @@
     "defaultMessage": "Última fecha de modificación"
   },
   "info.modified-tny": {
-    "defaultMessage": "Ultima modificacion por"
+    "defaultMessage": "Última modificación por"
   },
   "info.name": {
     "defaultMessage": "Nombre"
@@ -297,7 +297,7 @@
     "defaultMessage": "Cambiar el color"
   },
   "label.delete-description": {
-    "defaultMessage": "será borrado de todos los mapas a los que se encuentra asociado. Desea continuar?"
+    "defaultMessage": "se eliminará, junto con su asociación a todos los mapas existentes. ¿Quieres continuar?"
   },
   "label.delete-title": {
     "defaultMessage": "Confirmación"
@@ -318,16 +318,16 @@
     "defaultMessage": "Ayuda para traducir"
   },
   "login.desc": {
-    "defaultMessage": "Ingrese a su cuenta"
+    "defaultMessage": "Inicia sesión en tu cuenta"
   },
   "login.email": {
     "defaultMessage": "Correo electrónico"
   },
   "login.error": {
-    "defaultMessage": "La dirección de correo electrónico o la contraseña que ingresó no es válida."
+    "defaultMessage": "La dirección de correo electrónico o la contraseña que has introducido no son válidas."
   },
   "login.forgotpwd": {
-    "defaultMessage": "Has olvidado tu contraseña ?"
+    "defaultMessage": "¿Has olvidado tu contraseña?"
   },
   "login.page-title": {
     "defaultMessage": "Iniciar sesión | WiseMapping"
@@ -357,7 +357,7 @@
     "defaultMessage": "Última actualización"
   },
   "map.more-actions": {
-    "defaultMessage": "Mas acciones"
+    "defaultMessage": "Más acciones"
   },
   "map.name": {
     "defaultMessage": "Nombre"
@@ -438,7 +438,7 @@
     "defaultMessage": "Información de cuenta"
   },
   "menu.change-password": {
-    "defaultMessage": "Cambia la contraseña"
+    "defaultMessage": "Cambiar contraseña"
   },
   "menu.signout": {
     "defaultMessage": "Cerrar sesión"
@@ -471,7 +471,7 @@
     "defaultMessage": "Éxito de registro | WiseMapping"
   },
   "registration.desc": {
-    "defaultMessage": "Registrarse es gratis y solo tómese un momento"
+    "defaultMessage": "Registrarse es gratis y solo lleva un momento"
   },
   "registration.email": {
     "defaultMessage": "Correo electrónico"
@@ -495,7 +495,7 @@
     "defaultMessage": "Hazte miembro"
   },
   "rename.description": {
-    "defaultMessage": "Por favor, complete el nuevo nombre y descripción del mapa."
+    "defaultMessage": "Introduce el nuevo nombre y la descripción del mapa."
   },
   "rename.title": {
     "defaultMessage": "Renombrar"
@@ -525,28 +525,28 @@
     "defaultMessage": "Eliminar colaborador"
   },
   "share.delete-description": {
-    "defaultMessage": "Añade colaboradores. Recibirán acceso instantáneo por email para editar juntos."
+    "defaultMessage": "Añade colaboradores. Recibirán acceso instantáneo por correo electrónico para editar juntos."
   },
   "share.delete-title": {
-    "defaultMessage": "Compartir con la otros"
+    "defaultMessage": "Compartir con otros"
   },
   "share.message": {
     "defaultMessage": "Mensaje"
   },
   "registration.google.button": {
-    "defaultMessage": "Regístrate con Google"
+    "defaultMessage": "Registrarse con Google"
   },
   "login.google.button": {
-    "defaultMessage": "Ingresar con Google"
+    "defaultMessage": "Iniciar sesión con Google"
   },
   "registration.division": {
-    "defaultMessage": "ó"
+    "defaultMessage": "o"
   },
   "registration.error.title": {
     "defaultMessage": "Registro Fallido"
   },
   "login.division": {
-    "defaultMessage": "ó"
+    "defaultMessage": "o"
   },
   "registration.callback.confirm.title": {
     "defaultMessage": "Confirmación"
@@ -555,7 +555,7 @@
     "defaultMessage": "Finalizando ..."
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "Una cuenta con el mismo email fue registrada previamente. ¿Quieres asociar tu cuenta de {provider} con esa cuenta de WiseMapping?"
+    "defaultMessage": "Ya se registró una cuenta con el mismo correo electrónico. ¿Quieres asociar tu cuenta de {provider} con esa cuenta de WiseMapping?"
   },
   "registration.callback.waiting.description": {
     "defaultMessage": "Por favor espera mientras validamos tu identidad"
@@ -567,7 +567,7 @@
     "defaultMessage": "Sincronizar cuenta"
   },
   "forgot.oauth.message": {
-    "defaultMessage": "No necesitas contraseña, por favor ingresa usando Facebook o Google"
+    "defaultMessage": "No necesitas contraseña, inicia sesión con Facebook o Google"
   },
   "forgot.oauth.back": {
     "defaultMessage": "Volver"
@@ -1155,7 +1155,7 @@
     "defaultMessage": "Este mapa mental no está disponible para visualización pública."
   },
   "error.map-unavailable-message": {
-    "defaultMessage": "Este mapa mental no está disponible para visualización pública porque viola nuestras políticas del sitio. Si necesita más ayuda, contacte a support@wisemapping.com."
+    "defaultMessage": "Este mapa mental no está disponible para visualización pública porque viola nuestras políticas del sitio. Si necesitas más ayuda, contacta con support@wisemapping.com."
   },
   "error.map-title-required": {
     "defaultMessage": "El título del mapa es obligatorio y no puede estar vacío"

@@ -158,7 +158,7 @@
   "accountinfo.title": [
     {
       "type": 0,
-      "value": "Informacion de cuenta"
+      "value": "Información de la cuenta"
     }
   ],
   "action.cancel-button": [
@@ -206,7 +206,7 @@
   "action.history": [
     {
       "type": 0,
-      "value": "Historia"
+      "value": "Historial"
     }
   ],
   "action.history-description": [
@@ -266,7 +266,7 @@
   "action.rename": [
     {
       "type": 0,
-      "value": "Renombar"
+      "value": "Renombrar"
     }
   ],
   "action.rename-description-placeholder": [
@@ -1552,7 +1552,7 @@
   "changepwd.description": [
     {
       "type": 0,
-      "value": "Por favor, proporcione la nueva contraseña para su cuenta."
+      "value": "Introduce la nueva contraseña para tu cuenta."
     }
   ],
   "changepwd.password": [
@@ -1588,7 +1588,7 @@
   "changepwd.title": [
     {
       "type": 0,
-      "value": "Cambia la contraseña"
+      "value": "Cambiar contraseña"
     }
   ],
   "common.allow-email-notifications": [
@@ -1766,7 +1766,7 @@
   "common.wait": [
     {
       "type": 0,
-      "value": "Espere por favor ..."
+      "value": "Espera, por favor..."
     }
   ],
   "create.button": [
@@ -1778,7 +1778,7 @@
   "create.description": [
     {
       "type": 0,
-      "value": "Por favor, complete el nuevo nombre y descripción del mapa."
+      "value": "Introduce el nombre y la descripción del nuevo mapa."
     }
   ],
   "create.title": [
@@ -1864,7 +1864,7 @@
   "error.map-unavailable-message": [
     {
       "type": 0,
-      "value": "Este mapa mental no está disponible para visualización pública porque viola nuestras políticas del sitio. Si necesita más ayuda, contacte a support@wisemapping.com."
+      "value": "Este mapa mental no está disponible para visualización pública porque viola nuestras políticas del sitio. Si necesitas más ayuda, contacta con support@wisemapping.com."
     }
   ],
   "error.map-unavailable-title": [
@@ -1906,13 +1906,13 @@
   "expired.description": [
     {
       "type": 0,
-      "value": "Su sesión actual ha expirado. Por favor, inicia sesión e inténtalo de nuevo."
+      "value": "Tu sesión actual ha caducado. Inicia sesión e inténtalo de nuevo."
     }
   ],
   "expired.title": [
     {
       "type": 0,
-      "value": "Su sesión ha caducado"
+      "value": "Tu sesión ha caducado"
     }
   ],
   "export.desc": [
@@ -1924,19 +1924,19 @@
   "export.document": [
     {
       "type": 0,
-      "value": "Herramientas de mapas mentales: exporte su mapa mental en formatos de herramientas de mapas mentales de terceros"
+      "value": "Herramientas de mapas mentales: exporta tu mapa mental a formatos de herramientas de mapas mentales de terceros"
     }
   ],
   "export.document-label": [
     {
       "type": 0,
-      "value": "Documento: exporte su mapa mental en un documento independiente listo para compartir"
+      "value": "Documento: exporta tu mapa mental a un documento independiente listo para compartir"
     }
   ],
   "export.image": [
     {
       "type": 0,
-      "value": "Imagen: obtenga una representación gráfica de su mapa, incluidos todos los colores y formas."
+      "value": "Imagen: obtén una representación gráfica de tu mapa, con todos los colores y formas."
     }
   ],
   "export.img-center": [
@@ -1954,7 +1954,7 @@
   "export.warning": [
     {
       "type": 0,
-      "value": "El export a formatos de imagen (SVG, PNG, JPEG, PDF) solo está disponible en la barra de herramientas del editor."
+      "value": "La exportación a formatos de imagen (SVG, PNG, JPEG, PDF) solo está disponible en la barra de herramientas del editor."
     }
   ],
   "footer.aboutus": [
@@ -1984,7 +1984,7 @@
   "footer.contactus": [
     {
       "type": 0,
-      "value": "Contáctenos"
+      "value": "Contáctanos"
     }
   ],
   "footer.copyright": [
@@ -2052,7 +2052,7 @@
   "forgot.desc": [
     {
       "type": 0,
-      "value": "Le enviaremos un correo electrónico para restablecer su contraseña."
+      "value": "Te enviaremos un correo electrónico para restablecer tu contraseña."
     }
   ],
   "forgot.email": [
@@ -2070,7 +2070,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "No necesitas contraseña, por favor ingresa usando Facebook o Google"
+      "value": "No necesitas contraseña, inicia sesión con Facebook o Google"
     }
   ],
   "forgot.page-title": [
@@ -2088,19 +2088,19 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Le hemos enviado un correo electrónico que le permitirá restablecer su contraseña. Deberías recibirlo en los próximos minutos."
+      "value": "Te hemos enviado un correo electrónico que te permitirá restablecer tu contraseña. Deberías recibirlo en los próximos minutos."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Su contraseña temporal ha sido enviada."
+      "value": "Tu contraseña temporal ha sido enviada."
     }
   ],
   "forgot.title": [
     {
       "type": 0,
-      "value": "Restablecer su contraseña"
+      "value": "Restablece tu contraseña"
     }
   ],
   "forgotsuccess.page-title": [
@@ -2136,13 +2136,13 @@
   "import.button": [
     {
       "type": 0,
-      "value": "Crear"
+      "value": "Importar"
     }
   ],
   "import.description": [
     {
       "type": 0,
-      "value": "Puede importar mapas de WiseMapping, FreeMind, Freeplane, XMind, MindManager y OPML a su lista de mapas. Seleccione el archivo que desea importar."
+      "value": "Puedes importar mapas de WiseMapping, FreeMind, Freeplane, XMind, MindManager y OPML a tu lista de mapas. Selecciona el archivo que quieres importar."
     }
   ],
   "import.error-file": [
@@ -2158,7 +2158,7 @@
   "import.error-unsupported-file": [
     {
       "type": 0,
-      "value": "El tipo de archivo no es compatible. Puede importar mapas de WiseMapping, FreeMind, Freeplane, XMind, MindManager y OPML."
+      "value": "El tipo de archivo no es compatible. Puedes importar mapas de WiseMapping, FreeMind, Freeplane, XMind, MindManager y OPML."
     }
   ],
   "import.title": [
@@ -2212,7 +2212,7 @@
   "info.modified-tny": [
     {
       "type": 0,
-      "value": "Ultima modificacion por"
+      "value": "Última modificación por"
     }
   ],
   "info.name": [
@@ -2272,7 +2272,7 @@
   "label.delete-description": [
     {
       "type": 0,
-      "value": "será borrado de todos los mapas a los que se encuentra asociado. Desea continuar?"
+      "value": "se eliminará, junto con su asociación a todos los mapas existentes. ¿Quieres continuar?"
     }
   ],
   "label.delete-title": [
@@ -2318,13 +2318,13 @@
   "login.desc": [
     {
       "type": 0,
-      "value": "Ingrese a su cuenta"
+      "value": "Inicia sesión en tu cuenta"
     }
   ],
   "login.division": [
     {
       "type": 0,
-      "value": "ó"
+      "value": "o"
     }
   ],
   "login.email": [
@@ -2336,7 +2336,7 @@
   "login.error": [
     {
       "type": 0,
-      "value": "La dirección de correo electrónico o la contraseña que ingresó no es válida."
+      "value": "La dirección de correo electrónico o la contraseña que has introducido no son válidas."
     }
   ],
   "login.facebook.button": [
@@ -2348,7 +2348,7 @@
   "login.forgotpwd": [
     {
       "type": 0,
-      "value": "Has olvidado tu contraseña ?"
+      "value": "¿Has olvidado tu contraseña?"
     }
   ],
   "login.generic-error": [
@@ -2360,7 +2360,7 @@
   "login.google.button": [
     {
       "type": 0,
-      "value": "Ingresar con Google"
+      "value": "Iniciar sesión con Google"
     }
   ],
   "login.oauth-error": [
@@ -2450,7 +2450,7 @@
   "map.more-actions": [
     {
       "type": 0,
-      "value": "Mas acciones"
+      "value": "Más acciones"
     }
   ],
   "map.name": [
@@ -2670,7 +2670,7 @@
   "menu.change-password": [
     {
       "type": 0,
-      "value": "Cambia la contraseña"
+      "value": "Cambiar contraseña"
     }
   ],
   "menu.signout": [
@@ -2742,7 +2742,7 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "Una cuenta con el mismo email fue registrada previamente. ¿Quieres asociar tu cuenta de "
+      "value": "Ya se registró una cuenta con el mismo correo electrónico. ¿Quieres asociar tu cuenta de "
     },
     {
       "type": 1,
@@ -2780,13 +2780,13 @@
   "registration.desc": [
     {
       "type": 0,
-      "value": "Registrarse es gratis y solo tómese un momento"
+      "value": "Registrarse es gratis y solo lleva un momento"
     }
   ],
   "registration.division": [
     {
       "type": 0,
-      "value": "ó"
+      "value": "o"
     }
   ],
   "registration.email": [
@@ -2822,7 +2822,7 @@
   "registration.google.button": [
     {
       "type": 0,
-      "value": "Regístrate con Google"
+      "value": "Registrarse con Google"
     }
   ],
   "registration.lastname": [
@@ -2916,7 +2916,7 @@
   "rename.description": [
     {
       "type": 0,
-      "value": "Por favor, complete el nuevo nombre y descripción del mapa."
+      "value": "Introduce el nuevo nombre y la descripción del mapa."
     }
   ],
   "rename.title": [
@@ -3042,13 +3042,13 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Añade colaboradores. Recibirán acceso instantáneo por email para editar juntos."
+      "value": "Añade colaboradores. Recibirán acceso instantáneo por correo electrónico para editar juntos."
     }
   ],
   "share.delete-title": [
     {
       "type": 0,
-      "value": "Compartir con la otros"
+      "value": "Compartir con otros"
     }
   ],
   "share.message": [
