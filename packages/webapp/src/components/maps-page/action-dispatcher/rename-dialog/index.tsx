@@ -19,7 +19,11 @@
 import React, { useContext, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ErrorInfo, MAP_TITLE_MAX_LENGTH } from '../../../../classes/client';
+import {
+  ErrorInfo,
+  MAP_DESCRIPTION_MAX_LENGTH,
+  MAP_TITLE_MAX_LENGTH,
+} from '../../../../classes/client';
 import { SimpleDialogProps, handleOnMutationSuccess } from '..';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
@@ -168,6 +172,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
             onChange={handleOnChange}
             required={false}
             fullWidth={true}
+            maxLength={MAP_DESCRIPTION_MAX_LENGTH}
           />
         </FormControl>
       </BaseDialog>

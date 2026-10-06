@@ -21,6 +21,7 @@ import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 
 import MapsManagement from '../../../../src/components/admin-console/maps-page';
 import AppConfig from '../../../../src/classes/app-config';
+import { MAP_DESCRIPTION_MAX_LENGTH } from '../../../../src/classes/client';
 import type { AdminClientInterface } from '../../../../src/classes/client/admin-client';
 import { renderWithWrapper } from '../providers';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
@@ -351,6 +352,16 @@ describe('MapsManagement', () => {
         }),
       );
       await dialogClosed();
+    });
+
+    test('the description takes as many characters as the backend accepts', async () => {
+      setup();
+      await waitForRows();
+
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Edit' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Edit Map' });
+      const description = within(dialog).getByLabelText('Description') as HTMLTextAreaElement;
+      expect(description.maxLength).toBe(MAP_DESCRIPTION_MAX_LENGTH);
     });
 
     test('its fields take 200 characters typed in one burst, as Cypress types them', async () => {

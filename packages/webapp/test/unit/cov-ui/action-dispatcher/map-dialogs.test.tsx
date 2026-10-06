@@ -35,6 +35,7 @@ import InfoDialog from '../../../../src/components/maps-page/action-dispatcher/i
 import HistoryDialog from '../../../../src/components/maps-page/action-dispatcher/history-dialog';
 import Client, {
   ChangeHistory,
+  MAP_DESCRIPTION_MAX_LENGTH,
   MAP_TITLE_MAX_LENGTH,
   MapInfo,
 } from '../../../../src/classes/client';
@@ -86,6 +87,12 @@ describe('RenameDialog', () => {
     setup();
     await screen.findByDisplayValue('Travel plans');
     expect(textbox(/Name/).maxLength).toBe(MAP_TITLE_MAX_LENGTH);
+  });
+
+  test('the description takes as many characters as the backend accepts', async () => {
+    setup();
+    await screen.findByDisplayValue('Summer trip');
+    expect(textbox(/Description/).maxLength).toBe(MAP_DESCRIPTION_MAX_LENGTH);
   });
 
   test('renames the map with what the user typed and closes', async () => {
@@ -300,6 +307,27 @@ describe('CreateDialog', () => {
       expect(createMap).toHaveBeenCalledWith({
         title: 'x'.repeat(MAP_TITLE_MAX_LENGTH),
         description: '',
+      }),
+    );
+  });
+
+  test('the description takes as many characters as the backend accepts', async () => {
+    const { createMap } = setup();
+    // The backend's MapInfoValidator rejects a description longer than 512 characters.
+    expect(MAP_DESCRIPTION_MAX_LENGTH).toBe(512);
+    expect(textbox(/Description/).maxLength).toBe(MAP_DESCRIPTION_MAX_LENGTH);
+
+    fireEvent.change(textbox(/Name/), { target: { value: 'Roadmap' } });
+    const description = textbox(/Description/);
+    fireEvent.change(description, {
+      target: { value: 'x'.repeat(MAP_DESCRIPTION_MAX_LENGTH) },
+    });
+    fireEvent.click(button('Create'));
+
+    await waitFor(() =>
+      expect(createMap).toHaveBeenCalledWith({
+        title: 'Roadmap',
+        description: 'x'.repeat(MAP_DESCRIPTION_MAX_LENGTH),
       }),
     );
   });

@@ -21,7 +21,12 @@ import { useIntl } from 'react-intl';
 import { useMutation } from '@tanstack/react-query';
 import FormControl from '@mui/material/FormControl';
 
-import { BasicMapInfo, ErrorInfo, MAP_TITLE_MAX_LENGTH } from '../../../../classes/client';
+import {
+  BasicMapInfo,
+  ErrorInfo,
+  MAP_DESCRIPTION_MAX_LENGTH,
+  MAP_TITLE_MAX_LENGTH,
+} from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
 import { ClientContext } from '../../../../classes/provider/client-context';
@@ -119,6 +124,7 @@ const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
             required={false}
             fullWidth={true}
             rows={3}
+            maxLength={MAP_DESCRIPTION_MAX_LENGTH}
           />
         </FormControl>
       </BaseDialog>
