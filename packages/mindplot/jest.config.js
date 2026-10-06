@@ -43,7 +43,7 @@ const config = {
   coverageReporters: ['text-summary', 'lcov', 'json-summary'],
   // Ratchet these up as coverage improves; never lower them.
   coverageThreshold: {
-    global: { statements: 86, branches: 77, functions: 84, lines: 86 },
+    global: { statements: 95, branches: 87, functions: 94.5, lines: 95 },
   },
 };
 
