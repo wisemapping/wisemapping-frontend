@@ -16,7 +16,9 @@
  *   limitations under the License.
  */
 const { defineConfig } = require('cypress');
-const { visualSnapshotExpose } = require('./cypress/plugins/index.js');
+const setupNodeEvents = require('./cypress/plugins');
+
+const { visualSnapshotExpose } = setupNodeEvents;
 
 module.exports = defineConfig({
   video: process.env.CYPRESS_VIDEO === 'true',
@@ -26,11 +28,7 @@ module.exports = defineConfig({
   viewportWidth: 1000,
   viewportHeight: 660,
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config);
-    },
+    setupNodeEvents,
     baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:6006',
     specPattern: 'cypress/e2e/**/*.{js,ts}',
     // Add macOS compatibility options

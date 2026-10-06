@@ -160,7 +160,12 @@ export default defineConfig([
   },
   {
     // Build and tool configs, loaded by Node (eslint, vite, storybook) rather than bundled.
-    files: ['eslint.config.mjs', 'vite.config.mts', '.storybook/**/*.{js,mjs}'],
+    files: [
+      'eslint.config.mjs',
+      'vite.config.mts',
+      'cypress.config.js',
+      '.storybook/**/*.{js,mjs}',
+    ],
     rules: {
       // These packages publish only an `exports` map, which the import plugin's node resolver
       // does not read. Node resolves them, or the tool would fail to start.
@@ -173,6 +178,19 @@ export default defineConfig([
         'error',
         { devDependencies: true, packageDir: [__dirname, path.join(__dirname, '../..')] },
       ],
+    },
+  },
+  {
+    // The Cypress config is CommonJS: Cypress loads it with Node's require.
+    files: ['cypress.config.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+      sourceType: 'commonjs',
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
   {

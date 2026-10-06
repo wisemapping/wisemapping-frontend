@@ -52,7 +52,7 @@
     "packages/web2d/{eslint.config.mjs,vite.config.mts,cypress.config.ts,jest.config.js,.storybook/*.{mjs,ts}}": [
       "sh -c 'cd packages/web2d && eslint \"$@\"' eslint"
     ],
-    "packages/mindplot/{eslint.config.mjs,vite.config.mts,.storybook/*.{js,mjs}}": [
+    "packages/mindplot/{eslint.config.mjs,vite.config.mts,cypress.config.js,.storybook/*.{js,mjs}}": [
       "sh -c 'cd packages/mindplot && eslint \"$@\"' eslint"
     ],
     "packages/webapp/{eslint.config.mjs,vite.config.mts,.storybook/*.mjs}": [
