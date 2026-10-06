@@ -507,4 +507,3 @@ class BalancedTestSuite extends TestSuite {
 }
 
 export default BalancedTestSuite;
-

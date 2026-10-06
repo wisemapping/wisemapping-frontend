@@ -571,4 +571,3 @@ class TestSuite {
 }
 
 export default TestSuite;
-

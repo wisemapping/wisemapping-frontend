@@ -1,33 +1,37 @@
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
-import { mergeConfig } from "vite";
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const getAbsolutePath = (value) => dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
+const getAbsolutePath = (value) =>
+  dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
 
 /** @type { import('@storybook/html-vite').StorybookConfig } */
 const config = {
   stories: [
-    "../storybook/src/**/*.stories.@(js|jsx|ts|tsx|mdx)",
-    "../size-test/**/*.stories.@(js|jsx|ts|tsx|mdx)"
+    '../storybook/src/**/*.stories.@(js|jsx|ts|tsx|mdx)',
+    '../size-test/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
-  addons: [
-    getAbsolutePath("@storybook/addon-links"),
-    getAbsolutePath("@storybook/addon-docs"),
-  ],
+  addons: [getAbsolutePath('@storybook/addon-links'), getAbsolutePath('@storybook/addon-docs')],
   framework: {
-    name: getAbsolutePath("@storybook/html-vite"),
+    name: getAbsolutePath('@storybook/html-vite'),
     options: {},
   },
   docs: {
-    autodocs: "tag",
+    autodocs: 'tag',
   },
   async viteFinal(config) {
     return mergeConfig(config, {
       resolve: {
         alias: [
-          { find: /^@wisemapping\/web2d\/src\/(.*)/, replacement: join(__dirname, '../../web2d/src/$1') },
-          { find: /^@wisemapping\/web2d$/, replacement: join(__dirname, '../../web2d/src/index.ts') },
+          {
+            find: /^@wisemapping\/web2d\/src\/(.*)/,
+            replacement: join(__dirname, '../../web2d/src/$1'),
+          },
+          {
+            find: /^@wisemapping\/web2d$/,
+            replacement: join(__dirname, '../../web2d/src/index.ts'),
+          },
         ],
       },
     });
