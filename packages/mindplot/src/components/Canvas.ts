@@ -510,7 +510,8 @@ class Canvas {
             mWorkspace.enableWorkspaceEvents(true);
 
             if (isRelease && !wasDragged && !isObjectTap) {
-              screenManager.fireEvent('click');
+              // With the modifiers of the press: a Ctrl or Cmd click keeps the selection.
+              screenManager.fireEvent('click', originalEvent as UIEvent);
             }
           };
           // The button can be released where no mouseup reaches the page (another window) ...

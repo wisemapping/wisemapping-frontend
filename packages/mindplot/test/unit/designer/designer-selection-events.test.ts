@@ -466,3 +466,71 @@ describe('Designer selection on a tap', () => {
     expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
   });
 });
+
+describe('Designer selection on a click on the background with a modifier', () => {
+  const onPlatform = (platform: string) => {
+    Object.defineProperty(window.navigator, 'platform', { value: platform, configurable: true });
+  };
+
+  afterEach(() => {
+    delete (window.navigator as { platform?: string }).platform;
+  });
+
+  /** A click on the empty canvas: the press and the release, with no move between them. */
+  const clickOnBackground = (designer: Harness['designer'], init: MouseEventInit = {}) => {
+    const container = designer.getContainer();
+    container.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, ...init }));
+    document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, ...init }));
+  };
+
+  const selectTwo = async () => {
+    const harness = await open();
+    harness.mouseDown(1);
+    document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    harness.mouseDown(3, { ctrlKey: true, metaKey: true });
+    document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    harness.events.splice(0);
+    return harness;
+  };
+
+  it('a Ctrl click on the background keeps the selection', async () => {
+    onPlatform('Win32');
+    const { designer, events, topic } = await selectTwo();
+
+    clickOnBackground(designer, { ctrlKey: true });
+
+    // Before: everything was unselected, as on a plain click.
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(1), topic(3)]);
+    expect(events).toEqual([]);
+  });
+
+  it('a Cmd click on the background keeps the selection on a Mac', async () => {
+    onPlatform('MacIntel');
+    const { designer, events, topic } = await selectTwo();
+
+    clickOnBackground(designer, { metaKey: true });
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(1), topic(3)]);
+    expect(events).toEqual([]);
+  });
+
+  it('a Ctrl click on the background on a Mac is a plain click: it unselects everything', async () => {
+    onPlatform('MacIntel');
+    const { designer, events } = await selectTwo();
+
+    clickOnBackground(designer, { ctrlKey: true });
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([]);
+    expect(events).toEqual(['onblur:0']);
+  });
+
+  it('a plain click on the background unselects everything', async () => {
+    onPlatform('Win32');
+    const { designer, events } = await selectTwo();
+
+    clickOnBackground(designer);
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([]);
+    expect(events).toEqual(['onblur:0']);
+  });
+});

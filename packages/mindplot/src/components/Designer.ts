@@ -321,9 +321,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       if (me._cleanScreen) me._cleanScreen();
     });
 
-    // Deselect on click ...
+    // Deselect on a click on the background, unless the shortcut modifier is held, as on a topic:
+    // a Ctrl or Cmd click that misses a topic must not lose the selection being built ...
     screenManager.addEvent('click', (event: Event) => {
-      // ScreenManager always dispatches 'click' as a synthetic MouseEvent.
+      // ScreenManager always dispatches 'click' as a synthetic MouseEvent, with the press' modifiers.
       me.onObjectFocusEvent(undefined, event as MouseEvent);
     });
 

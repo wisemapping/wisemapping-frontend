@@ -94,12 +94,22 @@ class ScreenManager {
     }
   }
 
+  /**
+   * Fires `type` on the container. A 'click' goes to the listeners added for it: the click on the
+   * background the canvas sends when a press ends with no move. It carries the modifiers of
+   * `event`, the press, so that a Ctrl or Cmd click on the background can keep the selection.
+   */
   fireEvent(type: string, event?: UIEvent): void {
     if (type === 'click') {
+      const modifiers = event as Partial<MouseEvent> | undefined;
       this._clickEvents.forEach((listener) => {
         const syntheticEvent = new MouseEvent('click', {
           bubbles: true,
           cancelable: true,
+          ctrlKey: modifiers?.ctrlKey ?? false,
+          metaKey: modifiers?.metaKey ?? false,
+          shiftKey: modifiers?.shiftKey ?? false,
+          altKey: modifiers?.altKey ?? false,
         });
         listener.call(this._divContainer, syntheticEvent);
       });
