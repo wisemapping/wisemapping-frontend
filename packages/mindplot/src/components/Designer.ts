@@ -419,9 +419,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     topic.addEvent('ontblur', () => {
       if (me._selectionBatch) return;
       const topicCount = me.getModel().countSelectedTopics();
-      const rels = me.getModel().filterSelectedRelationships();
+      const relationshipCount = me.getModel().countSelectedRelationships();
 
-      if (isSelectionEmpty(topicCount, rels.length)) {
+      if (isSelectionEmpty(topicCount, relationshipCount)) {
         me.fireEvent('onblur');
       }
 
@@ -432,9 +432,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     topic.addEvent('ontfocus', () => {
       if (me._selectionBatch) return;
       const topicCount = me.getModel().countSelectedTopics();
-      const rels = me.getModel().filterSelectedRelationships();
+      const relationshipCount = me.getModel().countSelectedRelationships();
 
-      if (!isSelectionEmpty(topicCount, rels.length)) {
+      if (!isSelectionEmpty(topicCount, relationshipCount)) {
         me.fireEvent('onfocus');
       }
 
@@ -499,7 +499,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       const model = this.getModel();
       const empty = isSelectionEmpty(
         model.countSelectedTopics(),
-        model.filterSelectedRelationships().length,
+        model.countSelectedRelationships(),
       );
       // A click on a topic deselects the others but keeps it: the selection changed without
       // becoming empty, which the editor only learns from an 'onfocus'.
@@ -1558,9 +1558,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     result.addEvent('ontblur', () => {
       if (this._selectionBatch) return;
       const topicCount = this.getModel().countSelectedTopics();
-      const rels = this.getModel().filterSelectedRelationships();
+      const relationshipCount = this.getModel().countSelectedRelationships();
 
-      if (isSelectionEmpty(topicCount, rels.length)) {
+      if (isSelectionEmpty(topicCount, relationshipCount)) {
         this.fireEvent('onblur');
       }
     });
@@ -1568,9 +1568,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     result.addEvent('ontfocus', () => {
       if (this._selectionBatch) return;
       const topicCount = this.getModel().countSelectedTopics();
-      const rels = this.getModel().filterSelectedRelationships();
+      const relationshipCount = this.getModel().countSelectedRelationships();
 
-      if (!isSelectionEmpty(topicCount, rels.length)) {
+      if (!isSelectionEmpty(topicCount, relationshipCount)) {
         this.fireEvent('onfocus');
       }
     });

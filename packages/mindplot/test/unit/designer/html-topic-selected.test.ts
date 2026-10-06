@@ -135,6 +135,7 @@ const buildDesigner = (topics: FakeTopic[]) => {
       filterSelectedTopics: () => topics.filter((t) => t.isOnFocus()),
       countSelectedTopics: () => topics.filter((t) => t.isOnFocus()).length,
       filterSelectedRelationships: () => [],
+      countSelectedRelationships: () => 0,
     }),
     getSelectionShadows: () => shadows,
     getScreenManager: () => ({}) as ScreenManager,

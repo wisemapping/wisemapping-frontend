@@ -85,6 +85,9 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
 
   const setSelection = (topicCount: number, relationshipCount: number): void => {
     jest.spyOn(designer.getModel(), 'countSelectedTopics').mockReturnValue(topicCount);
+    jest
+      .spyOn(designer.getModel(), 'countSelectedRelationships')
+      .mockReturnValue(relationshipCount);
     jest.spyOn(designer.getModel(), 'filterSelectedTopics').mockReturnValue(
       // The handlers count the topics; the list matches the count, should one read it.
       new Array(topicCount).fill(null),

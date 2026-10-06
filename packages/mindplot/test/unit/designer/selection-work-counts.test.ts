@@ -22,6 +22,7 @@ import Canvas from '../../../src/components/Canvas';
 import type Designer from '../../../src/components/Designer';
 import HTMLTopicSelected from '../../../src/components/HTMLTopicSelected';
 import NodeGraph from '../../../src/components/NodeGraph';
+import Relationship from '../../../src/components/Relationship';
 import Topic from '../../../src/components/Topic';
 import TopicEventDispatcher from '../../../src/components/TopicEventDispatcher';
 
@@ -244,6 +245,45 @@ describe('Selection work', () => {
     expect(fired.onfocus).toBe(1);
     // Before: 1,005: the designer's handlers counted the selected topics by reading every topic.
     expect(focusReads.count).toBeLessThan(TOPICS / 5);
+  });
+
+  it('selecting or unselecting a topic or a relationship does not scan the relationships', async () => {
+    const RELATIONSHIPS = 200;
+    const { designer, topic } = await buildDesigner(
+      buildMediumMap({ topics: 50, relationships: RELATIONSHIPS }),
+    );
+    const relationships = designer.getModel().getRelationships();
+    expect(relationships).toHaveLength(RELATIONSHIPS);
+    const relationship = relationships[0]!;
+    const fired = countEvents(designer);
+    const focusReads = countCalls(Relationship.prototype, 'isOnFocus');
+
+    topic(3).setOnFocus(true);
+    topic(3).setOnFocus(false);
+    relationship.setOnFocus(true);
+    relationship.setOnFocus(false);
+
+    expect(fired.onfocus).toBe(2);
+    expect(designer.getModel().countSelectedRelationships()).toBe(0);
+    // Before: 1,002: the designer's handlers listed the selected relationships by reading each one.
+    expect(focusReads.count).toBeLessThan(RELATIONSHIPS / 5);
+  });
+
+  it('selecting and deselecting every relationship reads each one a few times', async () => {
+    const RELATIONSHIPS = 200;
+    const { designer } = await buildDesigner(
+      buildMediumMap({ topics: 50, relationships: RELATIONSHIPS }),
+    );
+    const focusReads = countCalls(Relationship.prototype, 'isOnFocus');
+
+    designer.selectAll();
+    expect(designer.getModel().countSelectedRelationships()).toBe(RELATIONSHIPS);
+    designer.deselectAll();
+    expect(designer.getModel().countSelectedRelationships()).toBe(0);
+
+    // Two reads per relationship and pass. Before: 1,200: _setFocusOfAll also listed the selected
+    // relationships after each pass.
+    expect(focusReads.count).toBeLessThanOrEqual(4 * RELATIONSHIPS);
   });
 
   it('selecting all again fires nothing and does not pan', async () => {

@@ -39,6 +39,9 @@ class DesignerModel {
   // added unselected: the designer adds each topic it builds before anything can select it.
   private _selectedTopics = new Set<Topic>();
 
+  // The selected relationships, kept by Relationship.setOnFocus, like _selectedTopics.
+  private _selectedRelationships = new Set<Relationship>();
+
   constructor(options: DesignerOptions) {
     this._zoom = options.zoom;
     this._topics = [];
@@ -124,6 +127,26 @@ class DesignerModel {
     return this._relationships.filter((r) => r.isOnFocus());
   }
 
+  /**
+   * The number of selected relationships: the length of filterSelectedRelationships(), without
+   * the scan.
+   */
+  countSelectedRelationships(): number {
+    return this._selectedRelationships.size;
+  }
+
+  /**
+   * Records that a relationship of this model was selected or unselected.
+   * @internal Called by Relationship.setOnFocus.
+   */
+  setRelationshipSelected(relationship: Relationship, selected: boolean): void {
+    if (selected) {
+      this._selectedRelationships.add(relationship);
+    } else {
+      this._selectedRelationships.delete(relationship);
+    }
+  }
+
   getEntities(): (Relationship | Topic)[] {
     let result: (Relationship | Topic)[] = [];
     result = result.concat(this._topics);
@@ -141,6 +164,7 @@ class DesignerModel {
   removeRelationship(rel: Relationship): void {
     $assert(rel, 'rel can not be null');
     this._relationships = this._relationships.filter((r) => r !== rel);
+    this._selectedRelationships.delete(rel);
   }
 
   addTopic(topic: Topic): void {

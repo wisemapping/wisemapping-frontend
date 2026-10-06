@@ -498,6 +498,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
 
       this._controlPointsController.setVisibility(focus);
       this._onFocus = focus;
+      this._sourceTopic.getDesigner()?.getModel().setRelationshipSelected(this, focus);
       this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
     }
   }
