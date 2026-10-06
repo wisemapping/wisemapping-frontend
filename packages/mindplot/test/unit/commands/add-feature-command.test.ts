@@ -42,12 +42,12 @@ describe('AddFeatureToTopicCommand', () => {
     expect(featureA).toBeDefined();
     expect(featureB).toBeDefined();
     expect(featureA).not.toBe(featureB);
-    expect(featureA.getId()).not.toBe(featureB.getId());
+    expect(featureA!.getId()).not.toBe(featureB!.getId());
 
     // Changing the icon on A (as clicking it in the canvas does) leaves B alone ...
-    featureA.setIconType('😎');
-    expect(topic(3).getModel().getFeatures()[0].getAttributes()).toEqual({ id: '😀' });
-    featureA.setIconType('😀');
+    featureA!.setIconType('😎');
+    expect(topic(3).getModel().getFeatures()[0]!.getAttributes()).toEqual({ id: '😀' });
+    featureA!.setIconType('😀');
 
     designer.undo();
     expect(topic(1).getModel().getFeatures()).toHaveLength(0);

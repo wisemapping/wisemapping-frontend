@@ -25,7 +25,7 @@ import { Image, Text } from '@wisemapping/web2d';
 import { buildDesigner } from '../commands/designer-harness';
 import { brandIconHref } from '../../../src/components/ImageSVGFeature';
 import { BRAND_ICON_PATHS } from '../../../src/components/GalleryIconData';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
@@ -99,7 +99,7 @@ describe('brand gallery icons', () => {
 
     topic.getModel().setFontColor('#ff0000');
     topic.redraw(topic.getThemeVariant(), false);
-    expect(image.getHref()).toBe(brandIconHref(BRAND_ICON_PATHS.twitter, '#ff0000'));
+    expect(image.getHref()).toBe(brandIconHref(BRAND_ICON_PATHS.twitter!, '#ff0000'));
     expect(setHref).toHaveBeenCalledTimes(1);
   });
 });

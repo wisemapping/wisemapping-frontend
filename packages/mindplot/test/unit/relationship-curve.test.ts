@@ -18,8 +18,8 @@
 
 import { CurvedLine } from '@wisemapping/web2d';
 import { buildDesigner, SAMPLE_MAP } from './commands/designer-harness';
-import Relationship from '../../src/components/Relationship';
-import PositionType from '../../src/components/PositionType';
+import type Relationship from '../../src/components/Relationship';
+import type PositionType from '../../src/components/PositionType';
 import Shape from '../../src/components/util/Shape';
 import ActionDispatcher from '../../src/components/ActionDispatcher';
 import { PivotType } from '../../src/components/RelationshipControlPoints';
@@ -97,8 +97,8 @@ describe('Relationship curve after load (BL-69, BL-70)', () => {
     const { designer } = await buildDesigner();
     const relationship = relationshipOf(designer);
 
-    expect(relationship.isSrcControlPointCustom()).toBe(false);
-    expect(relationship.isDestControlPointCustom()).toBe(false);
+    expect(relationship!.isSrcControlPointCustom()).toBe(false);
+    expect(relationship!.isDestControlPointCustom()).toBe(false);
   });
 
   it('follows a moved topic when the model has no control points', async () => {
@@ -110,8 +110,8 @@ describe('Relationship curve after load (BL-69, BL-70)', () => {
     designer.getActionDispatcher().moveTopic(5, { x: pos.x + 300, y: pos.y + 200 });
 
     // The curve is the default one for the new ends: it does not keep its old shape ...
-    expect(relationship.isDestControlPointCustom()).toBe(false);
-    const line = relationship.getLine();
+    expect(relationship!.isDestControlPointCustom()).toBe(false);
+    const line = relationship!.getLine();
     const expected = Shape.calculateDefaultControlPoints(line.getFrom(), line.getTo());
     expect(line.getControlPoints()).toEqual(expected);
   });
@@ -120,9 +120,9 @@ describe('Relationship curve after load (BL-69, BL-70)', () => {
     const { designer } = await buildDesigner(withControlPoints('-80,-56', '110,-116'));
     const relationship = relationshipOf(designer);
 
-    expect(relationship.isSrcControlPointCustom()).toBe(true);
-    expect(relationship.isDestControlPointCustom()).toBe(true);
-    const [src, dest] = relationship.getLine().getControlPoints();
+    expect(relationship!.isSrcControlPointCustom()).toBe(true);
+    expect(relationship!.isDestControlPointCustom()).toBe(true);
+    const [src, dest] = relationship!.getLine().getControlPoints();
     expectPoint(src, { x: -80, y: -56 });
     expectPoint(dest, { x: 110, y: -116 });
   });
@@ -137,19 +137,19 @@ describe('Relationship curve after load (BL-69, BL-70)', () => {
   it('keeps a stored control point while the other end follows its topic', async () => {
     const { designer, topic } = await buildDesigner(withControlPoints('-80,-56', ''));
     const relationship = relationshipOf(designer);
-    expect(relationship.isSrcControlPointCustom()).toBe(true);
-    expect(relationship.isDestControlPointCustom()).toBe(false);
-    const [srcHandleBefore] = handles(relationship);
+    expect(relationship!.isSrcControlPointCustom()).toBe(true);
+    expect(relationship!.isDestControlPointCustom()).toBe(false);
+    const [srcHandleBefore] = handles(relationship!);
 
     const target = topic(5);
     const pos = target.getPosition();
     designer.getActionDispatcher().moveTopic(5, { x: pos.x + 300, y: pos.y + 200 });
 
-    const [srcHandle, destHandle] = handles(relationship);
+    const [srcHandle, destHandle] = handles(relationship!);
     // The custom handle keeps its place ...
     expectPoint(srcHandle, srcHandleBefore);
     // ... and the default one follows the topic.
-    const line = relationship.getLine();
+    const line = relationship!.getLine();
     const expected = Shape.calculateDefaultControlPoints(line.getFrom(), line.getTo());
     expect(line.getControlPoints()[1]).toEqual(expected[1]);
     expectPoint(destHandle, {
@@ -163,7 +163,7 @@ describe('Relationship control point drag (BL-52)', () => {
   type Pivot = { mouseDownHandler(event: Event): void };
   const pivotOf = (relationship: Relationship, type: PivotType): Pivot =>
     (relationship as unknown as { _controlPointsController: { _pivotLines: Pivot[] } })
-      ._controlPointsController._pivotLines[type];
+      ._controlPointsController._pivotLines[type]!;
 
   const drag = (relationship: Relationship, type: PivotType) => {
     relationship.setOnFocus(true);
@@ -175,16 +175,16 @@ describe('Relationship control point drag (BL-52)', () => {
     const { designer } = await buildDesigner();
     const relationship = relationshipOf(designer);
 
-    drag(relationship, PivotType.Start);
+    drag(relationship!, PivotType.Start);
     document.dispatchEvent(new MouseEvent('mouseup', { clientX: 520, clientY: 480 }));
 
-    expect(relationship.isSrcControlPointCustom()).toBe(true);
-    expect(relationship.isDestControlPointCustom()).toBe(false);
-    expect(relationship.getModel().getSrcCtrlPoint()).not.toBeNull();
+    expect(relationship!.isSrcControlPointCustom()).toBe(true);
+    expect(relationship!.isDestControlPointCustom()).toBe(false);
+    expect(relationship!.getModel().getSrcCtrlPoint()).not.toBeNull();
 
     designer.undo();
-    expect(relationship.isSrcControlPointCustom()).toBe(false);
-    const line = relationship.getLine();
+    expect(relationship!.isSrcControlPointCustom()).toBe(false);
+    const line = relationship!.getLine();
     expect(line.getControlPoints()).toEqual(
       Shape.calculateDefaultControlPoints(line.getFrom(), line.getTo()),
     );
@@ -195,22 +195,22 @@ describe('Relationship control point drag (BL-52)', () => {
     async (type) => {
       const { designer } = await buildDesigner();
       const relationship = relationshipOf(designer);
-      const line = relationship.getLine();
+      const line = relationship!.getLine();
 
-      drag(relationship, type);
+      drag(relationship!, type);
       document.dispatchEvent(new MouseEvent('mouseup', { clientX: 520, clientY: 480 }));
-      const dragged = handles(relationship);
+      const dragged = handles(relationship!);
 
       designer.undo();
       designer.redo();
 
-      const [src, dest] = handles(relationship);
+      const [src, dest] = handles(relationship!);
       expectPoint(src, dragged[0]);
       expectPoint(dest, dragged[1]);
       expect(line.getControlPoints()[type]).toEqual(
         type === PivotType.Start
-          ? relationship.getModel().getSrcCtrlPoint()
-          : relationship.getModel().getDestCtrlPoint(),
+          ? relationship!.getModel().getSrcCtrlPoint()
+          : relationship!.getModel().getDestCtrlPoint(),
       );
     },
   );
@@ -220,7 +220,7 @@ describe('Relationship control point drag (BL-52)', () => {
     async (type) => {
       const { designer, save } = await buildDesigner(withControlPoints('-80,-56', ''));
       const relationship = relationshipOf(designer);
-      const line = relationship.getLine();
+      const line = relationship!.getLine();
       const before = {
         from: line.getFrom(),
         to: line.getTo(),
@@ -229,14 +229,14 @@ describe('Relationship control point drag (BL-52)', () => {
       const saved = save();
       const moveControlPoint = jest.spyOn(ActionDispatcher.getInstance(), 'moveControlPoint');
 
-      drag(relationship, type);
+      drag(relationship!, type);
       expect(line.getControlPoints()).not.toEqual(before.controlPoints);
 
       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
       document.dispatchEvent(new MouseEvent('mouseup', { clientX: 520, clientY: 480 }));
 
-      expect(relationship.isSrcControlPointCustom()).toBe(true);
-      expect(relationship.isDestControlPointCustom()).toBe(false);
+      expect(relationship!.isSrcControlPointCustom()).toBe(true);
+      expect(relationship!.isDestControlPointCustom()).toBe(false);
       expectPoint(line.getFrom(), before.from);
       expectPoint(line.getTo(), before.to);
       expectPoint(line.getControlPoints()[0], before.controlPoints[0]);
@@ -263,21 +263,21 @@ describe('Relationship custom curve when a topic moves (BL4-29)', () => {
       const relationship = relationshipOf(designer);
       expect(
         pivot === PivotType.Start
-          ? relationship.isSrcControlPointCustom()
-          : relationship.isDestControlPointCustom(),
+          ? relationship!.isSrcControlPointCustom()
+          : relationship!.isDestControlPointCustom(),
       ).toBe(true);
-      const handleBefore = handles(relationship)[pivot];
+      const handleBefore = handles(relationship!)[pivot]!;
 
       const before = topic(5).getPosition();
       const delta = { x: 300, y: 200 };
       designer.getActionDispatcher().moveTopic(5, { x: before.x + delta.x, y: before.y + delta.y });
       // Topic.setPosition does not redraw the relationships of a topic the layout moves ...
-      relationship.redraw();
+      relationship!.redraw();
 
       // The custom handle moves with its topic: the curve keeps its shape ...
-      const handle = handles(relationship)[pivot];
+      const handle = handles(relationship!)[pivot]!;
       expectPoint(handle, { x: handleBefore.x + delta.x, y: handleBefore.y + delta.y });
-      expectPoint(relationship.getLine().getControlPoints()[pivot], { x: 110, y: -116 });
+      expectPoint(relationship!.getLine().getControlPoints()[pivot]!, { x: 110, y: -116 });
 
       // ... and it is where the saved map puts it.
       const saved = save();
@@ -285,8 +285,8 @@ describe('Relationship custom curve when a topic moves (BL4-29)', () => {
         pivot === PivotType.Start ? 'srcCtrlPoint="110,-116"' : 'destCtrlPoint="110,-116"',
       );
       const reloaded = relationshipOf((await buildDesigner(saved)).designer);
-      expectPoint(handles(reloaded)[pivot], handle);
-      expectPoint(reloaded.getLine().getControlPoints()[pivot], { x: 110, y: -116 });
+      expectPoint(handles(reloaded!)[pivot]!, handle);
+      expectPoint(reloaded!.getLine().getControlPoints()[pivot]!, { x: 110, y: -116 });
     },
   );
 });
@@ -295,7 +295,7 @@ describe('Relationship control point handle follows the cursor (BL4-30)', () => 
   type Pivot = { mouseDownHandler(event: Event): void; _dot: { getPosition(): PositionType } };
   const pivotOf = (relationship: Relationship, type: PivotType): Pivot =>
     (relationship as unknown as { _controlPointsController: { _pivotLines: Pivot[] } })
-      ._controlPointsController._pivotLines[type];
+      ._controlPointsController._pivotLines[type]!;
 
   it.each([
     [PivotType.Start, 520, 480],
@@ -305,8 +305,8 @@ describe('Relationship control point handle follows the cursor (BL4-30)', () => 
   ])('puts the handle under the cursor while dragging (pivot %s, %s,%s)', async (type, x, y) => {
     const { designer } = await buildDesigner();
     const relationship = relationshipOf(designer);
-    relationship.setOnFocus(true);
-    const pivot = pivotOf(relationship, type);
+    relationship!.setOnFocus(true);
+    const pivot = pivotOf(relationship!, type);
 
     pivot.mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
     const move = new MouseEvent('mousemove', { clientX: x, clientY: y });
@@ -314,7 +314,7 @@ describe('Relationship control point handle follows the cursor (BL4-30)', () => 
     const cursor = designer.getScreenManager().getWorkspaceMousePosition(move);
 
     // The curve is drawn with its handle under the cursor, where the dot is centred (BL5-100) ...
-    expectPoint(handles(relationship)[type], cursor);
+    expectPoint(handles(relationship!)[type]!, cursor);
     expectPoint(pivot._dot.getPosition(), cursor);
 
     document.dispatchEvent(new MouseEvent('mouseup', { clientX: x, clientY: y }));
@@ -325,23 +325,23 @@ describe('Relationship custom end after an interrupted drag (BL4-30)', () => {
   type Pivot = { mouseDownHandler(event: Event): void };
   const pivotOf = (relationship: Relationship, type: PivotType): Pivot =>
     (relationship as unknown as { _controlPointsController: { _pivotLines: Pivot[] } })
-      ._controlPointsController._pivotLines[type];
+      ._controlPointsController._pivotLines[type]!;
 
   it('follows its topic again once the control points are hidden during a drag', async () => {
     const { designer, topic } = await buildDesigner(withControlPoints('', '110,-116'));
     const relationship = relationshipOf(designer);
-    relationship.setOnFocus(true);
-    pivotOf(relationship, PivotType.End).mouseDownHandler(
+    relationship!.setOnFocus(true);
+    pivotOf(relationship!, PivotType.End).mouseDownHandler(
       new MouseEvent('mousedown', { cancelable: true }),
     );
-    relationship.setOnFocus(false);
-    const handleBefore = handles(relationship)[PivotType.End];
+    relationship!.setOnFocus(false);
+    const handleBefore = handles(relationship!)[PivotType.End];
 
     const before = topic(5).getPosition();
     designer.getActionDispatcher().moveTopic(5, { x: before.x + 300, y: before.y + 200 });
-    relationship.redraw();
+    relationship!.redraw();
 
-    expectPoint(handles(relationship)[PivotType.End], {
+    expectPoint(handles(relationship!)[PivotType.End], {
       x: handleBefore.x + 300,
       y: handleBefore.y + 200,
     });
@@ -352,7 +352,7 @@ describe('Relationship control point release (BL5-99, BL5-41)', () => {
   type Pivot = { mouseDownHandler(event: Event): void };
   const pivotOf = (relationship: Relationship, type: PivotType): Pivot =>
     (relationship as unknown as { _controlPointsController: { _pivotLines: Pivot[] } })
-      ._controlPointsController._pivotLines[type];
+      ._controlPointsController._pivotLines[type]!;
 
   const endOf = (relationship: Relationship, type: PivotType): PositionType => {
     const line = relationship.getLine();
@@ -383,12 +383,12 @@ describe('Relationship control point release (BL5-99, BL5-41)', () => {
     async (type, x, y) => {
       const { designer } = await buildDesigner();
       const relationship = relationshipOf(designer);
-      relationship.setOnFocus(true);
+      relationship!.setOnFocus(true);
 
-      const dragged = dragAndRelease(relationship, type, x, y);
+      const dragged = dragAndRelease(relationship!, type, x, y);
 
-      expectPoint(endOf(relationship, type), dragged.end);
-      expectPoint(handles(relationship)[type], dragged.handle);
+      expectPoint(endOf(relationship!, type), dragged.end);
+      expectPoint(handles(relationship!)[type]!, dragged.handle);
     },
   );
 
@@ -397,35 +397,35 @@ describe('Relationship control point release (BL5-99, BL5-41)', () => {
     async (type) => {
       const { designer } = await buildDesigner();
       const relationship = relationshipOf(designer);
-      relationship.setOnFocus(true);
+      relationship!.setOnFocus(true);
 
-      const first = dragAndRelease(relationship, type, 400, 400);
-      const second = dragAndRelease(relationship, type, 700, 200);
+      const first = dragAndRelease(relationship!, type, 400, 400);
+      const second = dragAndRelease(relationship!, type, 700, 200);
 
       designer.undo();
-      expectPoint(endOf(relationship, type), first.end);
-      expectPoint(handles(relationship)[type], first.handle);
+      expectPoint(endOf(relationship!, type), first.end);
+      expectPoint(handles(relationship!)[type]!, first.handle);
 
       designer.redo();
-      expectPoint(endOf(relationship, type), second.end);
-      expectPoint(handles(relationship)[type], second.handle);
+      expectPoint(endOf(relationship!, type), second.end);
+      expectPoint(handles(relationship!)[type]!, second.handle);
     },
   );
 
   it('keeps the released end on its topic when the topic moves', async () => {
     const { designer, topic } = await buildDesigner();
     const relationship = relationshipOf(designer);
-    relationship.setOnFocus(true);
-    const dragged = dragAndRelease(relationship, PivotType.End, 400, 400);
+    relationship!.setOnFocus(true);
+    const dragged = dragAndRelease(relationship!, PivotType.End, 400, 400);
 
     const before = topic(5).getPosition();
     designer.getActionDispatcher().moveTopic(5, { x: before.x + 300, y: before.y + 200 });
 
-    expectPoint(endOf(relationship, PivotType.End), {
+    expectPoint(endOf(relationship!, PivotType.End), {
       x: dragged.end.x + 300,
       y: dragged.end.y + 200,
     });
-    expectPoint(handles(relationship)[PivotType.End], {
+    expectPoint(handles(relationship!)[PivotType.End], {
       x: dragged.handle.x + 300,
       y: dragged.handle.y + 200,
     });

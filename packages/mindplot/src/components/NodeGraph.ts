@@ -15,16 +15,15 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Group, Rect } from '@wisemapping/web2d';
-import type { ElementEventListener } from '@wisemapping/web2d';
+import type { Group, Rect, ElementEventListener } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
-import NodeModel from './model/NodeModel';
-import Canvas from './Canvas';
+import type NodeModel from './model/NodeModel';
+import type Canvas from './Canvas';
 import DragTopic from './DragTopic';
-import LayoutManager from './layout/LayoutManager';
-import SizeType from './SizeType';
-import PositionType from './PositionType';
-import CanvasElement from './CanvasElement';
+import type LayoutManager from './layout/LayoutManager';
+import type SizeType from './SizeType';
+import type PositionType from './PositionType';
+import type CanvasElement from './CanvasElement';
 import type TopicEventDispatcher from './TopicEventDispatcher';
 import type Designer from './Designer';
 import type Topic from './Topic';
@@ -170,9 +169,9 @@ abstract class NodeGraph implements CanvasElement {
     return this._size;
   }
 
+  /** Replaces the size: a size getSize() handed out before keeps its value. */
   setSize(size: SizeType) {
-    this._size.width = size.width;
-    this._size.height = size.height;
+    this._size = { width: size.width, height: size.height };
   }
 
   getModel(): NodeModel {

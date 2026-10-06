@@ -15,14 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
-import { LineType } from '../ConnectionLine';
-import PositionType from '../PositionType';
-import { FontWeightType } from '../FontWeightType';
-import { FontStyleType } from '../FontStyleType';
-import FeatureModel from './FeatureModel';
-import Mindmap from './Mindmap';
-import SizeType from '../SizeType';
+import { $assert } from '../util/assert';
+import type { LineType } from '../ConnectionLine';
+import type PositionType from '../PositionType';
+import type { FontWeightType } from '../FontWeightType';
+import type { FontStyleType } from '../FontStyleType';
+import type FeatureModel from './FeatureModel';
+import type Mindmap from './Mindmap';
+import type SizeType from '../SizeType';
 import ContentType from '../ContentType';
 
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
@@ -75,6 +75,20 @@ abstract class INodeModel {
   static MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE = 220;
 
   private static _nextUuid = 0;
+
+  private static _treeVersion = 0;
+
+  /**
+   * Notes that a node's id or the shape of a tree changed (a child appended or removed, a branch
+   * added or removed). Mindmap.findNodeById rebuilds its id index when this has moved on.
+   */
+  static treeChanged(): void {
+    INodeModel._treeVersion += 1;
+  }
+
+  static getTreeVersion(): number {
+    return INodeModel._treeVersion;
+  }
 
   protected _mindmap: Mindmap;
 
@@ -269,7 +283,7 @@ abstract class INodeModel {
     return this.getProperty('fontStyle');
   }
 
-  setFontWeight(weight: FontWeightType): void {
+  setFontWeight(weight: FontWeightType | undefined): void {
     this.putProperty('fontWeight', weight);
   }
 
@@ -319,7 +333,7 @@ abstract class INodeModel {
 
   areChildrenShrunken(): boolean {
     const result = this.getProperty('shrunken');
-    return $defined(result) ? result : false;
+    return result ?? false;
   }
 
   /**
@@ -442,14 +456,7 @@ abstract class INodeModel {
     if (node === this) {
       result = true;
     } else {
-      const children = this.getChildren();
-      for (let i = 0; i < children.length; i++) {
-        const child = children[i];
-        result = child.isChildNode(node);
-        if (result) {
-          break;
-        }
-      }
+      result = this.getChildren().some((child) => child.isChildNode(node));
     }
     return result;
   }

@@ -147,11 +147,22 @@ export const buildMiddleStraightPath = (
   return `${end1} ${middlex}, ${y1} ${middlex}, ${y2} ${end2}`;
 };
 
-export const buildCurvedPath = (_dist: number, x1: number, y1: number, x2: number, y2: number) =>
-  buildChamferedElbowPath(x1, y1, x2, y2, CURVED_CHAMFER, 'horizontal');
+export const buildCurvedPath = (
+  _dist: number,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+): string => buildChamferedElbowPath(x1, y1, x2, y2, CURVED_CHAMFER, 'horizontal');
 
 /** The horizontal elbow (see elbowPoints) as a `points` list, at full precision. */
-export const buildStraightPath = (_dist: number, x1: number, y1: number, x2: number, y2: number) =>
+export const buildStraightPath = (
+  _dist: number,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+): string =>
   pointsData(elbowPoints({ x: x1, y: y1 }, { x: x2, y: y2 }, 'horizontal'), fullPrecision);
 
 /** The vertical elbow (see elbowPoints) as a `points` list, at full precision. */
@@ -161,7 +172,7 @@ export const buildVerticalStraightPath = (
   y1: number,
   x2: number,
   y2: number,
-) => pointsData(elbowPoints({ x: x1, y: y1 }, { x: x2, y: y2 }, 'vertical'), fullPrecision);
+): string => pointsData(elbowPoints({ x: x1, y: y1 }, { x: x2, y: y2 }, 'vertical'), fullPrecision);
 
 export const buildVerticalCurvedPath = (
   _dist: number,
@@ -169,4 +180,4 @@ export const buildVerticalCurvedPath = (
   y1: number,
   x2: number,
   y2: number,
-) => buildChamferedElbowPath(x1, y1, x2, y2, CURVED_CHAMFER, 'vertical');
+): string => buildChamferedElbowPath(x1, y1, x2, y2, CURVED_CHAMFER, 'vertical');

@@ -15,9 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import RootedTreeSet from './RootedTreeSet';
-import Node from './Node';
-import PositionType from '../PositionType';
+import type RootedTreeSet from './RootedTreeSet';
+import type Node from './Node';
+import type PositionType from '../PositionType';
+
+/** Where a new or dragged child of a parent goes: its order among the siblings and its position. */
+export type SorterPrediction = { order: number; position: Readonly<PositionType> };
 
 abstract class ChildrenSorterStrategy {
   /** Height of the branch of every node under `node` (and of its own), by node id. */
@@ -56,7 +59,7 @@ abstract class ChildrenSorterStrategy {
     parent: Node,
     node: Node | null,
     position: PositionType | null,
-  ): [number, PositionType];
+  ): SorterPrediction;
 
   abstract verify(treeSet: RootedTreeSet, node: Node): void;
 
@@ -76,7 +79,7 @@ abstract class ChildrenSorterStrategy {
    */
   getOrdersForNewChildren(treeSet: RootedTreeSet, parent: Node, count: number): number[] {
     const orders: number[] = [];
-    let [order] = this.predict(treeSet, parent, null, null);
+    let { order } = this.predict(treeSet, parent, null, null);
     for (let i = 0; i < count; i++) {
       if (i > 0) {
         order = this.getOrderAfter(order);

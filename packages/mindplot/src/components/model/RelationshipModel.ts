@@ -15,14 +15,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
-import PositionType from '../PositionType';
+import { $assert } from '../util/assert';
+import type PositionType from '../PositionType';
 
-export enum StrokeStyle {
-  SOLID = 'solid',
-  DASHED = 'dashed',
-  DOTTED = 'dotted',
-}
+/** A relationship's stroke: persisted as its strokeStyle attribute, so the values are fixed. */
+export const StrokeStyle = {
+  SOLID: 'solid',
+  DASHED: 'dashed',
+  DOTTED: 'dotted',
+} as const;
+
+export type StrokeStyle = (typeof StrokeStyle)[keyof typeof StrokeStyle];
 
 class RelationshipModel {
   static _nextUuid = 0;
@@ -46,8 +49,8 @@ class RelationshipModel {
   private _strokeStyle: StrokeStyle;
 
   constructor(sourceTopicId: number, targetTopicId: number) {
-    $assert($defined(sourceTopicId), 'from node type can not be null');
-    $assert($defined(targetTopicId), 'to node type can not be null');
+    $assert(sourceTopicId != null, 'from node type can not be null');
+    $assert(targetTopicId != null, 'to node type can not be null');
     $assert(Number.isFinite(sourceTopicId), 'sourceTopicId is not a number');
     $assert(Number.isFinite(targetTopicId), 'targetTopicId is not a number');
 
@@ -71,7 +74,7 @@ class RelationshipModel {
   }
 
   getId(): number {
-    $assert(this._id, 'id is null');
+    $assert(this._id != null, 'id is null');
     return this._id;
   }
 

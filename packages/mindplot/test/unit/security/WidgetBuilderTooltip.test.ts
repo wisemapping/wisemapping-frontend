@@ -19,9 +19,9 @@ import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
 import LinkModel from '../../../src/components/model/LinkModel';
 import NoteModel from '../../../src/components/model/NoteModel';
-import LinkIcon from '../../../src/components/LinkIcon';
-import NoteIcon from '../../../src/components/NoteIcon';
-import Topic from '../../../src/components/Topic';
+import type LinkIcon from '../../../src/components/LinkIcon';
+import type NoteIcon from '../../../src/components/NoteIcon';
+import type Topic from '../../../src/components/Topic';
 import ContentType from '../../../src/components/ContentType';
 import { IMG_ONERROR_PAYLOAD, installLiveParseProbe, installXssHook } from './LiveParseProbe';
 
@@ -49,16 +49,15 @@ const fakeIcon = () => {
     }),
   };
   const hover = () => {
-    listeners.mouseenter({ target, stopPropagation: () => {} } as unknown as MouseEvent);
+    listeners.mouseenter!({ target, stopPropagation: () => {} } as unknown as MouseEvent);
     jest.runOnlyPendingTimers();
   };
   return { icon, hover };
 };
 
-const topic = {} as Topic;
-
 describe('WidgetBuilder tooltips', () => {
   let shadowRoot: ShadowRoot;
+  let topic: Topic;
   let restoreProbe: () => void;
 
   beforeEach(() => {
@@ -67,6 +66,9 @@ describe('WidgetBuilder tooltips', () => {
     host.id = 'mindmap-comp';
     shadowRoot = host.attachShadow({ mode: 'open' });
     document.body.appendChild(host);
+    // A topic of a map whose canvas is in the web component.
+    const container = shadowRoot.appendChild(document.createElement('div'));
+    topic = { getDesigner: () => ({ getContainer: () => container }) } as unknown as Topic;
     restoreProbe = installLiveParseProbe();
   });
 
@@ -144,5 +146,27 @@ describe('WidgetBuilder tooltips', () => {
     expect(note.querySelector('strong')?.textContent).toBe('bold');
     expect(note.innerHTML).not.toMatch(/onerror/i);
     expect(hook).not.toHaveBeenCalled();
+  });
+
+  it('renders the nested lists of an html note', () => {
+    const note = showNote(
+      '<ul><li>a<ul><li>b<ol><li>c</li></ol></li></ul></li></ul>',
+      ContentType.HTML,
+    );
+
+    expect(note.querySelector('ul > li > ul > li > ol > li')?.textContent).toBe('c');
+  });
+
+  it('opens the links of an html note in a new tab without the opener', () => {
+    const note = showNote(
+      '<p>see <a href="https://example.org">site</a> and <a href="javascript:alert(1)">bad</a></p>',
+      ContentType.HTML,
+    );
+
+    const [site, bad] = Array.from(note.querySelectorAll('a'));
+    expect(site!.getAttribute('href')).toBe('https://example.org');
+    expect(site!.getAttribute('target')).toBe('_blank');
+    expect(site!.getAttribute('rel')).toBe('noopener noreferrer');
+    expect(bad!.hasAttribute('href')).toBe(false);
   });
 });

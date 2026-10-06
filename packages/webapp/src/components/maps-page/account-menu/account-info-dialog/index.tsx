@@ -150,8 +150,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
         firstname: account?.firstname,
       });
       // Set the current language from account or default
-      const currentLocale = account?.locale || AppI18n.getDefaultLocale().code;
-      setSelectedLanguage(currentLocale as LocaleCode);
+      setSelectedLanguage((account.locale ?? AppI18n.getDefaultLocale()).code);
     }
   }, [account]);
 

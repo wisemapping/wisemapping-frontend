@@ -17,9 +17,9 @@
  */
 import { $assert } from './util/assert';
 import { AjaxUtils } from './util/AjaxUtils';
-import EditorRenderMode from './EditorRenderMode';
-import WidgetBuilder from './WidgetBuilder';
-import PersistenceManager from './PersistenceManager';
+import type EditorRenderMode from './EditorRenderMode';
+import type WidgetBuilder from './WidgetBuilder';
+import type PersistenceManager from './PersistenceManager';
 
 export type DesignerOptions = {
   zoom: number;

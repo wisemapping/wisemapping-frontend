@@ -16,9 +16,10 @@
  *   limitations under the License.
  */
 
+import type { CommandDispatcher } from '../../../src/components/ActionDispatcher';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import MultitTextEditor from '../../../src/components/MultilineTextEditor';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 import type Designer from '../../../src/components/Designer';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import { buildTopics, stubSvgMeasurement } from './Helper';
@@ -70,7 +71,7 @@ beforeEach(() => {
     getCommandContext: () => ({
       designer: { getModel: () => ({ getTopics: () => topics }) },
     }),
-  } as unknown as ActionDispatcher);
+  } as unknown as CommandDispatcher);
 });
 
 afterEach(() => {

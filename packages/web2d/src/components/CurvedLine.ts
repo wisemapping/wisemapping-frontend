@@ -55,11 +55,11 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements ControlPoin
     this.peer.setTo(x, y);
   }
 
-  getFrom() {
+  getFrom(): PositionType {
     return this.peer.getFrom();
   }
 
-  getTo() {
+  getTo(): PositionType {
     return this.peer.getTo();
   }
 
@@ -71,7 +71,7 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements ControlPoin
    * Sets the control point, relative to the start of the line. Whether it is a custom (user
    * placed) or a default point is set apart, with setIsSrcControlPointCustom.
    */
-  setSrcControlPoint(control: PositionType) {
+  setSrcControlPoint(control: PositionType): void {
     this.peer.setSrcControlPoint(control);
   }
 
@@ -79,7 +79,7 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements ControlPoin
    * Sets the control point, relative to the end of the line. Whether it is a custom (user placed)
    * or a default point is set apart, with setIsDestControlPointCustom.
    */
-  setDestControlPoint(control: PositionType) {
+  setDestControlPoint(control: PositionType): void {
     this.peer.setDestControlPoint(control);
   }
 
@@ -87,7 +87,7 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements ControlPoin
     return this.peer.getControlPoints();
   }
 
-  isSrcControlPointCustom() {
+  isSrcControlPointCustom(): boolean {
     return this.peer.isSrcControlPointCustom();
   }
 
@@ -95,20 +95,20 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements ControlPoin
     return this.peer.isDestControlPointCustom();
   }
 
-  setIsSrcControlPointCustom(isCustom: boolean) {
+  setIsSrcControlPointCustom(isCustom: boolean): void {
     this.peer.setIsSrcControlPointCustom(isCustom);
   }
 
-  setIsDestControlPointCustom(isCustom: boolean) {
+  setIsDestControlPointCustom(isCustom: boolean): void {
     this.peer.setIsDestControlPointCustom(isCustom);
   }
 
-  updateLine(avoidControlPointFix?: boolean) {
+  updateLine(avoidControlPointFix?: boolean): void {
     return this.peer.updateLine(Boolean(avoidControlPointFix));
   }
 
   /** Dashes the line; called without a length and a spacing, it draws it solid again. */
-  setDashed(length?: number, spacing?: number) {
+  setDashed(length?: number, spacing?: number): void {
     this.peer.setDashed(length, spacing);
   }
 

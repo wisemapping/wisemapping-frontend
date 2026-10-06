@@ -22,7 +22,8 @@
  * setters, cached theme resolution, coalesced editor layout) must leave every
  * position, size, colour and SVG element exactly as it was.
  */
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import { buildMediumMap, renderSnapshot, stubTextMeasurement } from './RenderFixture';
 
@@ -83,7 +84,7 @@ describe('redraw render snapshot of a medium map', () => {
     // frame, so several keystrokes in one frame are laid out together.
     const values = ['T', 'Ty', 'Typ', 'Typed text', 'Typed text\nwith a second line'];
     for (let i = 0; i < values.length; i++) {
-      textarea.value = values[i];
+      textarea.value = values[i]!;
       textarea.dispatchEvent(new Event('input', { bubbles: true }));
       // eslint-disable-next-line no-await-in-loop
       await nextFrame();

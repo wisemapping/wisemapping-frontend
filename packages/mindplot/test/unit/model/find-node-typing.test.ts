@@ -17,10 +17,10 @@
  */
 import { describe, expect, test } from '@jest/globals';
 import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type NodeModel from '../../../src/components/model/NodeModel';
 import RootedTreeSet from '../../../src/components/layout/RootedTreeSet';
 import Node from '../../../src/components/layout/Node';
-import ChildrenSorterStrategy from '../../../src/components/layout/ChildrenSorterStrategy';
+import type ChildrenSorterStrategy from '../../../src/components/layout/ChildrenSorterStrategy';
 
 // ts-jest type-checks the tests: the typed assignments below fail to compile when the lookups
 // return the base INodeModel, or hide a missing node behind a non-null assertion.

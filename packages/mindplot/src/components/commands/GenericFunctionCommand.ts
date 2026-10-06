@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import Topic from '../Topic';
+import type CommandContext from '../CommandContext';
+import type Topic from '../Topic';
 
 class GenericFunctionCommand<T> extends Command {
   private _value: T;
@@ -74,7 +74,7 @@ class GenericFunctionCommand<T> extends Command {
     }
   }
 
-  mergeWith(previous: Command): boolean {
+  override mergeWith(previous: Command): boolean {
     if (!(previous instanceof GenericFunctionCommand) || !this._applied || !previous._applied) {
       return false;
     }

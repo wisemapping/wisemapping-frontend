@@ -15,11 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { ElementClass, ElementPeer, Group } from '@wisemapping/web2d';
-import type { StrokeStyle } from '@wisemapping/web2d';
-import { TopicShapeType } from '../model/INodeModel';
-import SizeType from '../SizeType';
-import TopicShape from './TopicShape';
+import type { ElementClass, ElementPeer, Group, StrokeStyle } from '@wisemapping/web2d';
+import type { TopicShapeType } from '../model/INodeModel';
+import type SizeType from '../SizeType';
+import type TopicShape from './TopicShape';
 
 abstract class DefaultTopicShape<T extends ElementClass<ElementPeer>> implements TopicShape {
   private _shape: T;

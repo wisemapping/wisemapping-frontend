@@ -222,7 +222,7 @@ class MockClient implements Client {
   fetchMapInfo(id: number): Promise<MapInfo> {
     const map = this.maps.find((m) => m.id === id);
     if (!map) {
-      throw new Error(`Map could not be found ${id}`);
+      return Promise.reject(new Error(`Map could not be found ${id}`));
     }
     return Promise.resolve(map);
   }
@@ -468,7 +468,7 @@ class MockClient implements Client {
     if (!exists) {
       const newMap: MapInfo = {
         id: Math.random() * 1000,
-        description: String(basicInfo.description),
+        description: basicInfo.description || '',
         title: basicInfo.title,
         starred: false,
         createdBy: 'current user',
@@ -503,7 +503,7 @@ class MockClient implements Client {
       title,
       color,
     });
-    return newId;
+    return Promise.resolve(newId);
   }
 
   deleteLabel(id: number): Promise<void> {

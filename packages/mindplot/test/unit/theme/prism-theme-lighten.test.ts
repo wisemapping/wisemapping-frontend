@@ -48,12 +48,12 @@ describe('PrismTheme connection and border colours', () => {
 
     it('lightens the palette connection colour', () => {
       const main = fakeTopic({}, central, { order: 1 });
-      expect(theme.getConnectionColor(main)).toBe(ColorUtil.lightenColor(palette[1], 20));
+      expect(theme.getConnectionColor(main)).toBe(ColorUtil.lightenColor(palette[1]!, 20));
     });
 
     it('lightens the palette border colour', () => {
       const main = fakeTopic({}, central, { order: 1 });
-      expect(theme.getBorderColor(main)).toBe(ColorUtil.lightenColor(borderPalette[1], 15));
+      expect(theme.getBorderColor(main)).toBe(ColorUtil.lightenColor(borderPalette[1]!, 15));
     });
 
     it('keeps a connection colour set on the topic', () => {

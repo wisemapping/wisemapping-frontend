@@ -18,6 +18,8 @@
 
 /// <reference types="cypress" />
 
+import { designerIn } from '../support/designer';
+
 /**
  * Structural keyboard moves, end to end through the real KeyboardManager,
  * Designer, DragTopicCommand and layout manager.
@@ -45,14 +47,8 @@ type DesignerHandle = {
   };
 };
 
-/**
- * Designer publishes itself on `globalThis` in its constructor, which is the
- * only handle the page exposes -- `mindplot-component` keeps its designer in a
- * private field behind `getDesigner()`, and the element reference Cypress gets
- * is the custom element, not the class instance.
- */
-const designer = (win: Cypress.AUTWindow): DesignerHandle =>
-  (win as unknown as { designer: DesignerHandle }).designer;
+/** The designer of the page's `mindplot-component`, through its `getDesigner()`. */
+const designer = (win: Cypress.AUTWindow): DesignerHandle => designerIn<DesignerHandle>(win);
 
 describe('Topic Keyboard Move Suite', () => {
   /** Reads a topic's parent id and order straight off the designer model. */

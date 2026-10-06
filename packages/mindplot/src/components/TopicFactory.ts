@@ -20,10 +20,10 @@ import { $assert } from './util/assert';
 
 import CentralTopic from './CentralTopic';
 import MainTopic from './MainTopic';
-import NodeModel from './model/NodeModel';
-import { NodeOption } from './NodeGraph';
-import Topic from './Topic';
-import { ThemeVariant } from './theme/Theme';
+import type NodeModel from './model/NodeModel';
+import type { NodeOption } from './NodeGraph';
+import type Topic from './Topic';
+import type { ThemeVariant } from './theme/Theme';
 import type { OrientationType } from './layout/LayoutType';
 
 class TopicFactory {

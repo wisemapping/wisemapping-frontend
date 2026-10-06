@@ -22,7 +22,8 @@
  * do not depend on the machine. Each bound fails on the code before the change.
  */
 import { Group, Text } from '@wisemapping/web2d';
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 import Topic from '../../../src/components/Topic';
 import ThemeFactory from '../../../src/components/theme/ThemeFactory';
 import DefaultTheme from '../../../src/components/theme/DefaultTheme';

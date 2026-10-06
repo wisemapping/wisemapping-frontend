@@ -17,9 +17,9 @@
  */
 import { $assert } from './util/assert';
 import NotesImage from '../../assets/icons/notes.svg';
-import Topic from './Topic';
-import NoteModel from './model/NoteModel';
-import FeatureModel from './model/FeatureModel';
+import type Topic from './Topic';
+import type NoteModel from './model/NoteModel';
+import type FeatureModel from './model/FeatureModel';
 import ImageIcon from './ImageIcon';
 
 class NoteIcon extends ImageIcon {
@@ -69,7 +69,7 @@ class NoteIcon extends ImageIcon {
     return this._noteModel;
   }
 
-  remove() {
+  override remove() {
     const actionDispatcher = this._topic.getActionDispatcher();
     const featureId = this._noteModel.getId();
     actionDispatcher.removeFeatureFromTopic(this._topic.getId(), featureId);

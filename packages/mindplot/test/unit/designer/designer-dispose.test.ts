@@ -18,14 +18,14 @@
 
 import { SAMPLE_MAP, buildDesigner as buildHarness } from '../commands/designer-harness';
 import buildDesigner from '../../../src/components/DesignerBuilder';
-import Designer from '../../../src/components/Designer';
+import type Designer from '../../../src/components/Designer';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
-import DragManager from '../../../src/components/DragManager';
-import DragTopic from '../../../src/components/DragTopic';
-import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
-import LayoutManager from '../../../src/components/layout/LayoutManager';
-import PersistenceManager from '../../../src/components/PersistenceManager';
-import WidgetBuilder from '../../../src/components/WidgetBuilder';
+import type DragManager from '../../../src/components/DragManager';
+import type DragTopic from '../../../src/components/DragTopic';
+import type EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
+import type LayoutManager from '../../../src/components/layout/LayoutManager';
+import type PersistenceManager from '../../../src/components/PersistenceManager';
+import type WidgetBuilder from '../../../src/components/WidgetBuilder';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
@@ -89,7 +89,7 @@ describe('Designer dispose (BL-48)', () => {
     const second = await build();
 
     expect(second).not.toBe(first);
-    expect(globalDesigner()).toBe(second);
+    expect(second.isDisposed()).toBe(false);
   });
 
   // W5: a disposed designer left every listener on the shapes of its map, each holding its topic
@@ -196,21 +196,18 @@ describe('Designer dispose (BL-48)', () => {
 
     const second = await build();
     expect(second.getKeyboard()!.isActive()).toBe(true);
-    expect(globalDesigner()).toBe(second);
   });
 
-  it('only clears globalThis.designer when it still points at itself', async () => {
+  // C4: the designer used to publish itself as `globalThis.designer`, a global that the last
+  // designer built overwrote. Each topic reads its own designer; tests use the web component's
+  // getDesigner().
+  it('does not publish itself on globalThis', async () => {
     const first = await build();
-    expect(globalDesigner()).toBe(first);
-
-    // A newer designer took over before the old one was disposed ...
     const second = await buildHarness();
     built.push(second.designer);
-    expect(globalDesigner()).toBe(second.designer);
+    expect(globalDesigner()).toBeUndefined();
 
     first.dispose();
-    expect(globalDesigner()).toBe(second.designer);
-
     second.designer.dispose();
     expect(globalDesigner()).toBeUndefined();
   });
@@ -335,7 +332,7 @@ describe('Designer enddragging (BL-49)', () => {
 
     const applyChanges = jest.fn();
     const dragTopic = { isCancelled: () => true, applyChanges } as unknown as DragTopic;
-    const enable = jest.spyOn(designer.getModel().getTopics()[1], 'setMouseEventsEnabled');
+    const enable = jest.spyOn(designer.getModel().getTopics()[1]!, 'setMouseEventsEnabled');
 
     listeners.enddragging(new MouseEvent('mouseup'), dragTopic);
 

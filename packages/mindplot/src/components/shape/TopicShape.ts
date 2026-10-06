@@ -16,10 +16,9 @@
  *   limitations under the License.
  */
 
-import { Group } from '@wisemapping/web2d';
-import type { StrokeStyle } from '@wisemapping/web2d';
-import { TopicShapeType } from '../model/INodeModel';
-import SizeType from '../SizeType';
+import type { Group, StrokeStyle } from '@wisemapping/web2d';
+import type { TopicShapeType } from '../model/INodeModel';
+import type SizeType from '../SizeType';
 
 interface TopicShape {
   setSize(width: number, height: number): void;

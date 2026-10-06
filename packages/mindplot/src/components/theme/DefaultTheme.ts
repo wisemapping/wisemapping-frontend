@@ -1,4 +1,3 @@
-/* eslint-disable func-call-spacing */
 /*
  *    Copyright [2007-2025] [wisemapping]
  *
@@ -17,47 +16,63 @@
  *   limitations under the License.
  */
 
-import { LineType } from '../ConnectionLine';
-import { FontStyleType } from '../FontStyleType';
-import { FontWeightType } from '../FontWeightType';
-import { TopicShapeType } from '../model/INodeModel';
-import NodeModel from '../model/NodeModel';
+import type { LineType } from '../ConnectionLine';
+import type { FontStyleType } from '../FontStyleType';
+import type { FontWeightType } from '../FontWeightType';
+import type { TopicShapeType } from '../model/INodeModel';
+import type NodeModel from '../model/NodeModel';
 import ColorUtil from './ColorUtil';
-import Topic from '../Topic';
-import Theme, { TopicType, ThemeVariant } from './Theme';
+import type Topic from '../Topic';
+import type { TopicType, ThemeVariant } from './Theme';
+import type Theme from './Theme';
 import { $msg } from '../Messages';
-import { ThemeStyle } from './ThemeStyle';
-import type { TopicStyleType } from './ThemeStyle';
+import type { ThemeStyle, TopicStyleType } from './ThemeStyle';
 import type { BackgroundPatternType } from '../model/CanvasStyleType';
 import ThemeResolutionCache from './ThemeResolutionCache';
+import pickByOrder from './pickByOrder';
 
 // Re-export TopicStyleType for backward compatibility
 export type { TopicStyleType } from './ThemeStyle';
 
-type StyleType = string | string[] | number | undefined | LineType;
+/** The styles a topic's model can set, each read by its getter (the type the theme uses). */
+type ModelStyleKey =
+  | 'borderColor'
+  | 'backgroundColor'
+  | 'shapeType'
+  | 'connectionStyle'
+  | 'connectionColor'
+  | 'fontFamily'
+  | 'fontColor'
+  | 'fontWeight'
+  | 'fontSize'
+  | 'fontStyle';
 
-// eslint-disable-next-line no-spaced-func
-const keyToModel = new Map<keyof TopicStyleType, (model: NodeModel) => StyleType>([
-  ['borderColor', (m: NodeModel) => m.getBorderColor()],
-  ['backgroundColor', (m: NodeModel) => m.getBackgroundColor()],
-  ['shapeType', (m: NodeModel) => m.getShapeType()],
-  ['connectionStyle', (m: NodeModel) => m.getConnectionStyle()],
-  ['connectionColor', (m: NodeModel) => m.getConnectionColor()],
-  ['fontFamily', (m: NodeModel) => m.getFontFamily()],
-  ['fontColor', (m: NodeModel) => m.getFontColor()],
-  ['fontWeight', (m: NodeModel) => m.getFontWeight()],
-  ['fontSize', (m: NodeModel) => m.getFontSize()],
-  ['fontStyle', (m: NodeModel) => m.getFontStyle()],
-]);
+const keyToModel: {
+  [K in ModelStyleKey]: (model: NodeModel) => TopicStyleType[K] | undefined;
+} = {
+  borderColor: (m) => m.getBorderColor(),
+  backgroundColor: (m) => m.getBackgroundColor(),
+  shapeType: (m) => m.getShapeType(),
+  connectionStyle: (m) => m.getConnectionStyle(),
+  connectionColor: (m) => m.getConnectionColor(),
+  fontFamily: (m) => m.getFontFamily(),
+  fontColor: (m) => m.getFontColor(),
+  fontWeight: (m) => m.getFontWeight(),
+  fontSize: (m) => m.getFontSize(),
+  fontStyle: (m) => m.getFontStyle(),
+};
 
 // Some style values are numeric enums whose first member is 0 (LineType.THIN_CURVED),
 // so "not set" must be checked explicitly rather than by truthiness.
-const isUnset = (value: StyleType): boolean =>
-  value === undefined || value === null || value === '';
+const isUnset = (value: unknown): boolean => value === undefined || value === null || value === '';
 
 // The least WCAG contrast a theme text colour keeps with what is behind it: 3:1, the AA level for
 // large text and user interface components. Below it, the text is drawn black or white instead.
 const MIN_TEXT_CONTRAST = 3;
+
+// The opacities, strongest first, of the topic colour a halo is painted with over the canvas when
+// the usual halo would hide the topic text. A hovered topic skips the first, so it stays fainter.
+const HALO_TINT_ALPHAS = [0.25, 0.15, 0.08];
 
 class DefaultTheme implements Theme {
   private _themeStyle: ThemeStyle;
@@ -95,23 +110,39 @@ class DefaultTheme implements Theme {
     return canvasStyle.gridPattern || 'grid';
   }
 
-  protected resolve(key: keyof TopicStyleType, topic: Topic, resolveDefault = true): StyleType {
+  /**
+   * The style of the topic: set on its model or the closest ancestor's, else the theme default
+   * for its kind of topic (unless resolveDefault is false, when it may be undefined).
+   */
+  protected resolve<K extends ModelStyleKey>(key: K, topic: Topic): TopicStyleType[K];
+
+  protected resolve<K extends ModelStyleKey>(
+    key: K,
+    topic: Topic,
+    resolveDefault: boolean,
+  ): TopicStyleType[K] | undefined;
+
+  protected resolve<K extends ModelStyleKey>(
+    key: K,
+    topic: Topic,
+    resolveDefault = true,
+  ): TopicStyleType[K] | undefined {
     // Search parent value. It only reads the models, so during a redraw pass it is
     // found once per topic and key, and a descendant stops at its parent's value ...
-    const recurviveModelStrategy = (value: keyof TopicStyleType, t: Topic): StyleType =>
+    const recurviveModelStrategy = (t: Topic): TopicStyleType[K] | undefined =>
       ThemeResolutionCache.memo(t, `model:${key}`, () => {
         const model = t.getModel();
-        let result: StyleType = keyToModel.get(key)!(model);
+        let result = keyToModel[key](model);
 
         const parent = t.getParent();
         if (isUnset(result) && parent) {
-          result = recurviveModelStrategy(value, parent);
+          result = recurviveModelStrategy(parent);
         }
         return result;
       });
 
     // Can be found in the model or parent  ?
-    let result = recurviveModelStrategy(key, topic);
+    let result = recurviveModelStrategy(topic);
     if (isUnset(result) && resolveDefault) {
       result = this.getStyles(topic)[key];
     }
@@ -140,28 +171,27 @@ class DefaultTheme implements Theme {
   }
 
   getShapeType(topic: Topic): TopicShapeType {
-    const result = this.resolve('shapeType', topic) as TopicShapeType;
-    return result;
+    return this.resolve('shapeType', topic);
   }
 
   getConnectionType(topic: Topic): LineType {
-    return this.resolve('connectionStyle', topic) as LineType;
+    return this.resolve('connectionStyle', topic);
   }
 
   getFontFamily(topic: Topic): string {
-    return this.resolve('fontFamily', topic) as string;
+    return this.resolve('fontFamily', topic);
   }
 
   getFontSize(topic: Topic): number {
-    return this.resolve('fontSize', topic) as number;
+    return this.resolve('fontSize', topic);
   }
 
   getFontStyle(topic: Topic): FontStyleType {
-    return this.resolve('fontStyle', topic) as FontStyleType;
+    return this.resolve('fontStyle', topic);
   }
 
   getFontWeight(topic: Topic): FontWeightType {
-    return this.resolve('fontWeight', topic) as FontWeightType;
+    return this.resolve('fontWeight', topic);
   }
 
   getInnerPadding(topic: Topic): number {
@@ -179,10 +209,15 @@ class DefaultTheme implements Theme {
     return topic.isCentralTopic() ? fontHeight * 1.0 : fontHeight * 0.7;
   }
 
-  // Variant-aware methods - default implementation falls back to non-variant methods
   getFontColor(topic: Topic): string {
-    // Default implementation ignores variant, subclasses can override
-    return this.resolve('fontColor', topic) as string;
+    // A color picked by the user (on the topic or an ancestor) is used as is ...
+    const picked = this.resolve('fontColor', topic, false);
+    if (picked) {
+      return picked;
+    }
+
+    // The theme color, as long as it can be read on the fill or, without one, on the canvas.
+    return this.readableTextColor(topic, this.getStyles(topic).fontColor);
   }
 
   getBackgroundColor(topic: Topic): string {
@@ -198,15 +233,8 @@ class DefaultTheme implements Theme {
     }
 
     if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.resolve('backgroundColor', topic) as string[] | string);
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
+      const colors = this.resolve('backgroundColor', topic);
+      result = pickByOrder(colors, topic.getOrder());
     }
     return result;
   }
@@ -240,8 +268,7 @@ class DefaultTheme implements Theme {
    * otherwise the fill as seen over the canvas (a transparent fill shows the canvas).
    */
   protected getTextBackdropColor(topic: Topic): string {
-    const canvasStyle = topic.getModel().getMindmap().getCanvasStyle();
-    const canvasColor = canvasStyle?.backgroundColor || this.getCanvasBackgroundColor();
+    const canvasColor = this.getMapCanvasColor(topic);
     const shapeType = this.getShapeType(topic);
     if (shapeType === 'line' || shapeType === 'none') {
       return canvasColor;
@@ -265,17 +292,70 @@ class DefaultTheme implements Theme {
     return black >= white ? '#000000' : '#FFFFFF';
   }
 
+  /** The canvas colour of the map: the one the map sets, or else the theme one. */
+  private getMapCanvasColor(topic: Topic): string {
+    const canvasStyle = topic.getModel().getMindmap().getCanvasStyle();
+    return canvasStyle?.backgroundColor || this.getCanvasBackgroundColor();
+  }
+
   getOuterBackgroundColor(topic: Topic, onFocus: boolean): string {
     // Default implementation ignores variant, subclasses can override
     let result: string;
+    let tint: string;
     if (topic.getShapeType() === 'line') {
       const color = this.getStyles(topic).outerBackgroundColor;
       result = onFocus ? color : ColorUtil.lightenColor(color, 30);
+      tint = color;
     } else {
       const innerBgColor = this.getBackgroundColor(topic);
       result = ColorUtil.lightenColor(innerBgColor, 70);
+      tint = innerBgColor;
     }
-    return result;
+    return this.readableHaloColor(topic, result, tint, onFocus);
+  }
+
+  /**
+   * A halo (the outer shape of a selected or hovered topic) the topic text can be read on. The
+   * halo is behind the text when the shape draws no fill (line, none) or a see-through one. When
+   * the text does not contrast MIN_TEXT_CONTRAST with it there, the halo is instead the tint colour
+   * (or, when it is transparent, the connection colour) painted over the canvas, fainter and
+   * fainter until the text contrasts: the theme text colour is readable on the canvas, so at worst
+   * the halo is the canvas and only its border shows.
+   */
+  private readableHaloColor(topic: Topic, halo: string, tint: string, onFocus: boolean): string {
+    const shapeType = this.getShapeType(topic);
+    const fill =
+      shapeType === 'line' || shapeType === 'none' ? undefined : this.getBackgroundColor(topic);
+    if (fill !== undefined && (ColorUtil.parse(fill)?.a ?? 1) >= 1) {
+      // An opaque fill hides the halo behind the text.
+      return halo;
+    }
+
+    const textColor = this.getFontColor(topic);
+    const readableOn = (candidate: string): boolean => {
+      const backdrop = fill !== undefined ? (ColorUtil.over(fill, candidate) ?? fill) : candidate;
+      const contrast = ColorUtil.contrastRatio(textColor, backdrop);
+      return contrast === undefined || contrast >= MIN_TEXT_CONTRAST;
+    };
+    if (readableOn(halo)) {
+      return halo;
+    }
+
+    const canvas = this.getMapCanvasColor(topic);
+    const rgb = [tint, this.getConnectionColor(topic)]
+      .map((color) => ColorUtil.parse(color))
+      .find((color) => color !== undefined && color.a > 0);
+    if (rgb) {
+      const alphas = onFocus ? HALO_TINT_ALPHAS : HALO_TINT_ALPHAS.slice(1);
+      const tinted = alphas
+        .map((alpha) => ColorUtil.over(`rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`, canvas))
+        .find((candidate) => candidate !== undefined && readableOn(candidate));
+      if (tinted) {
+        return tinted;
+      }
+    }
+    // A text colour picked by the user may not be readable on the canvas either: keep the halo.
+    return readableOn(canvas) ? canvas : halo;
   }
 
   getOuterBorderColor(topic: Topic): string {
@@ -307,15 +387,8 @@ class DefaultTheme implements Theme {
     }
 
     if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.resolve('connectionColor', topic) as string[] | string);
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
+      const colors = this.resolve('connectionColor', topic);
+      result = pickByOrder(colors, topic.getOrder());
     }
     return result;
   }

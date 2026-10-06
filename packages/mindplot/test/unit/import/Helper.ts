@@ -18,7 +18,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import Importer from '../../../src/components/import/Importer';
+import type Importer from '../../../src/components/import/Importer';
 import assertExpectedFile from '../helpers/expectedFile';
 
 export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType) => {

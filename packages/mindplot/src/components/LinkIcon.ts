@@ -18,9 +18,9 @@
 import { $assert } from './util/assert';
 import ImageIcon from './ImageIcon';
 import LinksImage from '../../assets/icons/links.svg';
-import LinkModel from './model/LinkModel';
-import Topic from './Topic';
-import FeatureModel from './model/FeatureModel';
+import type LinkModel from './model/LinkModel';
+import type Topic from './Topic';
+import type FeatureModel from './model/FeatureModel';
 
 class LinkIcon extends ImageIcon {
   private _linksModel: LinkModel;
@@ -69,7 +69,7 @@ class LinkIcon extends ImageIcon {
     return this._linksModel;
   }
 
-  remove() {
+  override remove() {
     const actionDispatcher = this._topic.getActionDispatcher();
     const featureId = this._linksModel.getId();
     actionDispatcher.removeFeatureFromTopic(this._topic.getId(), featureId);

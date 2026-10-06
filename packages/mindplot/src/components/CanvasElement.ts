@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import Canvas from './Canvas';
+import type Canvas from './Canvas';
 
 interface CanvasElement {
   addToWorkspace(workspace: Canvas): void;

@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '../utils/assert';
 import * as PolyLineUtils from '../../geometry/polyline';
 import ElementPeer from './ElementPeer';
 import type { Orientation, PolyLineStyle } from '../../types';
@@ -53,14 +52,14 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
     this._pathDirty = true;
   }
 
-  setFrom(x1: number, y1: number) {
+  setFrom(x1: number, y1: number): void {
     const changed = this._x1 !== x1 || this._y1 !== y1;
     this._x1 = x1;
     this._y1 = y1;
     this._refreshPath(changed);
   }
 
-  setTo(x2: number, y2: number) {
+  setTo(x2: number, y2: number): void {
     const changed = this._x2 !== x2 || this._y2 !== y2;
     this._x2 = x2;
     this._y2 = y2;
@@ -75,16 +74,16 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
     return { x: this._x2, y: this._y2 };
   }
 
-  setStrokeWidth(width: number) {
+  setStrokeWidth(width: number): void {
     // Through setStroke, so a dash from the style table is rescaled (BL5-77).
     this.setStroke(width);
   }
 
-  setColor(color: string) {
+  setColor(color: string): void {
     this.attr('stroke', color);
   }
 
-  setStyle(style: PolyLineStyle) {
+  setStyle(style: PolyLineStyle): void {
     const changed = this._style !== style;
     this._style = style;
     this._refreshPath(changed);
@@ -94,7 +93,7 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
     return this._style;
   }
 
-  setOrientation(orientation: Orientation) {
+  setOrientation(orientation: Orientation): void {
     const changed = this._orientation !== orientation;
     this._orientation = orientation;
     this._refreshPath(changed);
@@ -135,7 +134,7 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
   }
 
   private _updateStraightPath() {
-    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
+    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
       const path =
         this._orientation === 'vertical'
           ? PolyLineUtils.buildVerticalStraightPath(
@@ -158,7 +157,7 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
 
   /** An elbow with both corners chamfered by MIDDLE_CURVED_CHAMFER (W-MIDCURVE). */
   private _updateMiddleCurvePath() {
-    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
+    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
       const path = PolyLineUtils.buildChamferedElbowPath(
         this._x1,
         this._y1,
@@ -173,7 +172,7 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
 
   /** An elbow that breaks at the middle, which is rounded to whole units. */
   private _updateMiddleStraightPath() {
-    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
+    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
       const path = PolyLineUtils.buildMiddleStraightPath(
         this._x1,
         this._y1,
@@ -186,7 +185,7 @@ class PolyLinePeer extends ElementPeer<SVGPolylineElement> {
   }
 
   private _updateCurvePath() {
-    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
+    if (this._x1 != null && this._x2 != null && this._y1 != null && this._y2 != null) {
       const path =
         this._orientation === 'vertical'
           ? PolyLineUtils.buildVerticalCurvedPath(

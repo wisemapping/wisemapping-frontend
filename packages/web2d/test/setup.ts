@@ -132,7 +132,7 @@ export class FakeResizeObserver {
 
   readonly callback: ResizeCallback;
 
-  readonly targets = new Set<Element>();
+  readonly targets: Set<Element> = new Set<Element>();
 
   constructor(callback: ResizeCallback) {
     this.callback = callback;

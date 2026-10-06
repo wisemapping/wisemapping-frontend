@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import NodeModel from '../../model/NodeModel';
+import type NodeModel from '../../model/NodeModel';
 
 /** The attributes of a FreeMind or Freeplane <font> element. */
 export type FreemindFontAttributes = {
@@ -44,13 +44,11 @@ export const freemindFontSize = (size: string | null | undefined): number | unde
   if (!size || !Number.isFinite(freeSize) || freeSize <= 0 || freeSize === 12) {
     return undefined;
   }
-  let result = FONT_SIZES[0];
-  FONT_SIZES.forEach((entry) => {
-    if (Math.abs(entry[1] - freeSize) < Math.abs(result[1] - freeSize)) {
-      result = entry;
-    }
-  });
-  return result[0];
+  // The first of the closest sizes.
+  const closest = FONT_SIZES.reduce((result, entry) =>
+    Math.abs(entry[1] - freeSize) < Math.abs(result[1] - freeSize) ? entry : result,
+  );
+  return closest[0];
 };
 
 /** Sets the font of a FreeMind or Freeplane node on its topic. */

@@ -31,7 +31,7 @@ export type FontStyle = {
  * same size. It is 43/32 (about 1.344), not the CSS 4/3: every stored map is laid out with it, so
  * changing it would resize every topic.
  */
-export const FONT_PT_TO_PX = 43 / 32;
+export const FONT_PT_TO_PX: number = 43 / 32;
 
 class FontPeer {
   private _size: number;
@@ -101,7 +101,7 @@ class FontPeer {
     return this._weight;
   }
 
-  setSize(value: number) {
+  setSize(value: number): void {
     this._size = value;
   }
 

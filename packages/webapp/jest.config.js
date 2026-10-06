@@ -21,7 +21,7 @@ const config = {
   verbose: true,
   preset: 'ts-jest',
   // Discovery lives in the config rather than in a shell-expanded CLI glob, so
-  // that `yarn test:unit` is just `jest` and behaves the same in every shell.
+  // that `yarn test:unit` needs no glob and behaves the same in every shell.
   testMatch: ['<rootDir>/test/unit/**/*.test.ts', '<rootDir>/test/unit/**/*.test.tsx'],
   setupFilesAfterEnv: ['<rootDir>/test/unit/setup.ts'],
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json'],
@@ -50,6 +50,13 @@ const config = {
     // react-intl (and @formatjs below it) is ESM-only and cannot be required
     // without --experimental-vm-modules; render defaultMessage instead.
     '^react-intl$': '<rootDir>/test/unit/mocks/react-intl.tsx',
+  },
+  // Every source file counts, loaded by a test or not; index.tsx only mounts the app.
+  collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts', '!src/index.tsx'],
+  coverageReporters: ['text-summary', 'lcov', 'json-summary'],
+  // Ratchet these up as coverage improves; never lower them.
+  coverageThreshold: {
+    global: { statements: 97, branches: 89, functions: 95, lines: 97 },
   },
 };
 

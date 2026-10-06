@@ -65,12 +65,6 @@
       "value": "此操作无法撤销。这将永久删除您的账号，并从我们的服务器中移除所有数据。"
     }
   ],
-  "account.delete-warning": [
-    {
-      "type": 0,
-      "value": "请记住，您将无法访问您添加的任何思维导图。您的所有信息都将被删除，并且无法恢复。"
-    }
-  ],
   "account.delete-warning-collaborations": [
     {
       "type": 0,
@@ -320,7 +314,7 @@
   "admin.auth-type": [
     {
       "type": 0,
-      "value": "認證類型"
+      "value": "认证类型"
     }
   ],
   "admin.change-password": [
@@ -366,37 +360,37 @@
   "admin.delete": [
     {
       "type": 0,
-      "value": "刪除"
+      "value": "删除"
     }
   ],
   "admin.delete-user": [
     {
       "type": 0,
-      "value": "刪除用戶"
+      "value": "删除用户"
     }
   ],
   "admin.edit": [
     {
       "type": 0,
-      "value": "編輯"
+      "value": "编辑"
     }
   ],
   "admin.edit-user": [
     {
       "type": 0,
-      "value": "編輯用戶"
+      "value": "编辑用户"
     }
   ],
   "admin.lock-status": [
     {
       "type": 0,
-      "value": "鎖定狀態"
+      "value": "锁定状态"
     }
   ],
   "admin.locked": [
     {
       "type": 0,
-      "value": "已鎖定"
+      "value": "已锁定"
     }
   ],
   "admin.new-password": [
@@ -438,13 +432,13 @@
   "admin.public": [
     {
       "type": 0,
-      "value": "公開"
+      "value": "公开"
     }
   ],
   "admin.public-access": [
     {
       "type": 0,
-      "value": "公開訪問"
+      "value": "公开访问"
     }
   ],
   "admin.refresh": [
@@ -453,16 +447,10 @@
       "value": "刷新"
     }
   ],
-  "admin.status": [
-    {
-      "type": 0,
-      "value": "狀態"
-    }
-  ],
   "admin.status-active": [
     {
       "type": 0,
-      "value": "活躍"
+      "value": "活跃"
     }
   ],
   "admin.status-clean": [
@@ -474,43 +462,43 @@
   "admin.status-suspended": [
     {
       "type": 0,
-      "value": "已暫停"
+      "value": "已暂停"
     }
   ],
   "admin.suspend-user": [
     {
       "type": 0,
-      "value": "暫停用戶"
+      "value": "暂停用户"
     }
   ],
   "admin.suspension-reason": [
     {
       "type": 0,
-      "value": "暫停原因"
+      "value": "暂停原因"
     }
   ],
   "admin.suspension-status": [
     {
       "type": 0,
-      "value": "暫停狀態"
+      "value": "暂停状态"
     }
   ],
   "admin.suspension.abuse": [
     {
       "type": 0,
-      "value": "濫用"
+      "value": "滥用"
     }
   ],
   "admin.suspension.inactivity": [
     {
       "type": 0,
-      "value": "不活躍"
+      "value": "不活跃"
     }
   ],
   "admin.suspension.manual-review": [
     {
       "type": 0,
-      "value": "人工審核"
+      "value": "人工审核"
     }
   ],
   "admin.suspension.other": [
@@ -522,13 +510,13 @@
   "admin.suspension.security-concern": [
     {
       "type": 0,
-      "value": "安全問題"
+      "value": "安全问题"
     }
   ],
   "admin.suspension.terms-violation": [
     {
       "type": 0,
-      "value": "違反條款"
+      "value": "违反条款"
     }
   ],
   "admin.system.db.url": [
@@ -546,7 +534,7 @@
   "admin.system.memory": [
     {
       "type": 0,
-      "value": "內存"
+      "value": "内存"
     }
   ],
   "admin.system.refresh": [
@@ -558,13 +546,13 @@
   "admin.system.title": [
     {
       "type": 0,
-      "value": "系統信息"
+      "value": "系统信息"
     }
   ],
   "admin.unsuspend-user": [
     {
       "type": 0,
-      "value": "恢復用戶"
+      "value": "恢复用户"
     }
   ],
   "admin.view-xml": [
@@ -606,31 +594,31 @@
   "common.allow-email-notifications": [
     {
       "type": 0,
-      "value": "允許郵件通知"
+      "value": "允许邮件通知"
     }
   ],
   "common.delete": [
     {
       "type": 0,
-      "value": "刪除"
+      "value": "删除"
     }
   ],
   "common.delete-tag": [
     {
       "type": 0,
-      "value": "刪除標籤"
+      "value": "删除标签"
     }
   ],
   "common.email": [
     {
       "type": 0,
-      "value": "電子郵件"
+      "value": "电子邮件"
     }
   ],
   "common.emails": [
     {
       "type": 0,
-      "value": "電子郵件"
+      "value": "电子邮件"
     }
   ],
   "common.first-name": [
@@ -648,31 +636,31 @@
   "common.loading": [
     {
       "type": 0,
-      "value": "加載中..."
+      "value": "加载中..."
     }
   ],
   "common.locale": [
     {
       "type": 0,
-      "value": "語言"
+      "value": "语言"
     }
   ],
   "common.login-form": [
     {
       "type": 0,
-      "value": "登錄表單"
+      "value": "登录表单"
     }
   ],
   "common.maps-list": [
     {
       "type": 0,
-      "value": "地圖列表"
+      "value": "地图列表"
     }
   ],
   "common.open-drawer": [
     {
       "type": 0,
-      "value": "打開菜單"
+      "value": "打开菜单"
     }
   ],
   "common.others": [
@@ -690,19 +678,19 @@
   "common.registration-form": [
     {
       "type": 0,
-      "value": "註冊表單"
+      "value": "注册表单"
     }
   ],
   "common.retry": [
     {
       "type": 0,
-      "value": "重試"
+      "value": "重试"
     }
   ],
   "common.settings": [
     {
       "type": 0,
-      "value": "設置"
+      "value": "设置"
     }
   ],
   "common.terms-notice": [
@@ -769,12 +757,6 @@
       "value": "所有选中的脑图将被删除"
     }
   ],
-  "dialog.loading": [
-    {
-      "type": 0,
-      "value": "加載中..."
-    }
-  ],
   "duplicate.copy-title": [
     {
       "type": 1,
@@ -794,7 +776,7 @@
   "error.contact-support": [
     {
       "type": 0,
-      "value": "需要幫助？請聯絡我們："
+      "value": "需要帮助？请联系我们："
     },
     {
       "type": 1,
@@ -804,13 +786,13 @@
   "error.generic-message": [
     {
       "type": 0,
-      "value": "請稍後再試，若問題持續發生，請聯絡技術支援。"
+      "value": "请稍后再试，若问题持续发生，请联系技术支持。"
     }
   ],
   "error.generic-title": [
     {
       "type": 0,
-      "value": "我們遇到了一個問題。"
+      "value": "我们遇到了一个问题。"
     }
   ],
   "error.go-back": [
@@ -834,31 +816,31 @@
   "error.map-title-required": [
     {
       "type": 0,
-      "value": "地圖標題是必需的，不能為空"
+      "value": "地图标题是必需的，不能为空"
     }
   ],
   "error.map-unavailable-message": [
     {
       "type": 0,
-      "value": "此思維導圖不提供公開顯示，因為它違反了我們的網站政策。如果您需要進一步協助，請聯繫 support@wisemapping.com。"
+      "value": "此思维导图不提供公开显示，因为它违反了我们的网站政策。如果您需要进一步协助，请联系 support@wisemapping.com。"
     }
   ],
   "error.map-unavailable-title": [
     {
       "type": 0,
-      "value": "此思維導圖不提供公開顯示。"
+      "value": "此思维导图不提供公开显示。"
     }
   ],
   "error.not-found-message": [
     {
       "type": 0,
-      "value": "您要尋找的頁面可能已被刪除、重新命名，或暫時無法使用。"
+      "value": "您要寻找的页面可能已被删除、重新命名，或暂时无法使用。"
     }
   ],
   "error.not-found-title": [
     {
       "type": 0,
-      "value": "我們找不到該頁面。"
+      "value": "我们找不到该页面。"
     }
   ],
   "error.page-title": [
@@ -870,13 +852,13 @@
   "error.permission-denied-message": [
     {
       "type": 0,
-      "value": "如果您認為應該擁有存取權限，請聯絡您的管理員。"
+      "value": "如果您认为应该拥有访问权限，请联系您的管理员。"
     }
   ],
   "error.permission-denied-title": [
     {
       "type": 0,
-      "value": "您沒有存取此頁面的權限。"
+      "value": "您没有访问此页面的权限。"
     }
   ],
   "expired.description": [
@@ -1010,7 +992,7 @@
   "footer.privacypolicy": [
     {
       "type": 0,
-      "value": "隱私政策"
+      "value": "隐私政策"
     }
   ],
   "footer.termsandconditions": [
@@ -1270,7 +1252,7 @@
     },
     {
       "type": 0,
-      "value": " 個地圖"
+      "value": " 个地图"
     }
   ],
   "label.title": [
@@ -1318,7 +1300,7 @@
   "login.facebook.button": [
     {
       "type": 0,
-      "value": "使用 Facebook 登錄"
+      "value": "使用 Facebook 登录"
     }
   ],
   "login.forgotpwd": [
@@ -1603,6 +1585,16 @@
       "value": "全选"
     }
   ],
+  "maps.select-map": [
+    {
+      "type": 0,
+      "value": "选择 "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    }
+  ],
   "maps.tooltip-open": [
     {
       "type": 0,
@@ -1770,7 +1762,7 @@
   "registration.facebook.button": [
     {
       "type": 0,
-      "value": "使用 Facebook 註冊"
+      "value": "使用 Facebook 注册"
     }
   ],
   "registration.firstname": [
@@ -2062,7 +2054,7 @@
   "validation.title-required": [
     {
       "type": 0,
-      "value": "標題是必需的"
+      "value": "标题是必需的"
     }
   ]
 }

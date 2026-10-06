@@ -16,26 +16,41 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import PositionType from '../PositionType';
-import SizeType from '../SizeType';
-import ChildrenSorterStrategy from './ChildrenSorterStrategy';
+import type PositionType from '../PositionType';
+import type SizeType from '../SizeType';
+import type ChildrenSorterStrategy from './ChildrenSorterStrategy';
 
-type NodeValue = number | SizeType | PositionType | boolean | undefined;
-type MapValue = {
-  hasChanged: boolean;
-  value: NodeValue | undefined;
-  oldValue: NodeValue | undefined;
+/** The properties of a layout node, by key. Position and size are always set (constructor). */
+type NodeProps = {
+  order: number | undefined;
+  position: PositionType;
+  size: SizeType;
+  freeDisplacement: PositionType;
+  shrink: boolean;
 };
-type NodeKey = 'order' | 'position' | 'size' | 'freeDisplacement' | 'shrink';
+type NodeKey = keyof NodeProps;
+type PropertyState<V> = {
+  hasChanged: boolean;
+  value: V | undefined;
+  oldValue: V | undefined;
+};
+type NodeState = { [K in NodeKey]: PropertyState<NodeProps[K]> };
+
+const unset = <V>(): PropertyState<V> => ({
+  hasChanged: false,
+  value: undefined,
+  oldValue: undefined,
+});
 
 class Node {
   private _id: number;
 
-  _parent!: Node | null;
+  // Set by RootedTreeSet when the node is connected; a node starts as a root.
+  _parent: Node | null = null;
 
   private _sorter: ChildrenSorterStrategy;
 
-  private _properties: Map<NodeKey, MapValue>;
+  private _properties: NodeState;
 
   _children!: Node[];
 
@@ -43,7 +58,13 @@ class Node {
     $assert(typeof id === 'number' && Number.isFinite(id), 'id can not be null');
     this._id = id;
     this._sorter = sorter;
-    this._properties = new Map();
+    this._properties = {
+      order: unset(),
+      position: unset(),
+      size: unset(),
+      freeDisplacement: unset(),
+      shrink: unset(),
+    };
 
     this.setSize(size);
     this.setPosition(position);
@@ -83,24 +104,15 @@ class Node {
   }
 
   resetPositionState(): void {
-    const prop = this._properties.get('position');
-    if (prop) {
-      prop.hasChanged = false;
-    }
+    this._properties.position.hasChanged = false;
   }
 
   resetOrderState(): void {
-    const prop = this._properties.get('order');
-    if (prop) {
-      prop.hasChanged = false;
-    }
+    this._properties.order.hasChanged = false;
   }
 
   resetFreeState(): void {
-    const prop = this._properties.get('freeDisplacement');
-    if (prop) {
-      prop.hasChanged = false;
-    }
+    this._properties.freeDisplacement.hasChanged = false;
   }
 
   /**
@@ -109,7 +121,7 @@ class Node {
    * @returns The order value, or undefined if not applicable
    */
   getOrder(): number | undefined {
-    return this.getProperty('order') as number | undefined;
+    return this.getProperty('order');
   }
 
   hasOrderChanged(): boolean {
@@ -126,7 +138,7 @@ class Node {
    * @returns The node position
    */
   getPosition(): PositionType {
-    const position = this.getProperty('position') as PositionType | undefined;
+    const position = this.getProperty('position');
     // Position is always set in constructor, but TypeScript can't verify this
     // Use assertion since we know it's always defined
     $assert(position !== undefined, 'Position should always be defined');
@@ -134,7 +146,7 @@ class Node {
   }
 
   setSize(size: SizeType): void {
-    const currentSize = this.getProperty('size') as SizeType | undefined;
+    const currentSize = this.getProperty('size');
     // Only update if size changed significantly (performance optimization)
     if (
       !currentSize ||
@@ -151,7 +163,7 @@ class Node {
    * @returns The node size
    */
   getSize(): SizeType {
-    const size = this.getProperty('size') as SizeType | undefined;
+    const size = this.getProperty('size');
     // Size is always set in constructor, but TypeScript can't verify this
     // Use assertion since we know it's always defined
     $assert(size !== undefined, 'Size should always be defined');
@@ -174,7 +186,7 @@ class Node {
    * @returns The free displacement
    */
   getFreeDisplacement(): PositionType {
-    const freeDisplacement = this.getProperty('freeDisplacement') as PositionType | undefined;
+    const freeDisplacement = this.getProperty('freeDisplacement');
     return freeDisplacement || { x: 0, y: 0 };
   }
 
@@ -189,7 +201,7 @@ class Node {
     );
 
     // This is a performance improvement to avoid movements that really could be avoided.
-    const currentPos = this.getProperty('position') as PositionType | undefined;
+    const currentPos = this.getProperty('position');
     if (
       !currentPos ||
       Math.abs(currentPos.x - position.x) > 0.5 ||
@@ -199,15 +211,8 @@ class Node {
     }
   }
 
-  private setProperty(key: NodeKey, value: NodeValue): void {
-    let prop = this._properties.get(key);
-    if (!prop) {
-      prop = {
-        hasChanged: false,
-        value: undefined,
-        oldValue: undefined,
-      };
-    }
+  private setProperty<K extends NodeKey>(key: K, value: NodeProps[K]): void {
+    const prop: PropertyState<NodeProps[K]> = this._properties[key];
 
     // Only update if the property has changed ...
     if (JSON.stringify(prop.value) !== JSON.stringify(value)) {
@@ -215,16 +220,14 @@ class Node {
       prop.value = value;
       prop.hasChanged = true;
     }
-    this._properties.set(key, prop);
   }
 
-  private getProperty(key: NodeKey): NodeValue | undefined {
-    return this._properties.get(key)?.value;
+  private getProperty<K extends NodeKey>(key: K): NodeProps[K] | undefined {
+    return this._properties[key].value;
   }
 
   isPropertyChanged(key: NodeKey): boolean {
-    const prop = this._properties.get(key);
-    return prop ? prop.hasChanged : false;
+    return this._properties[key].hasChanged;
   }
 
   getSorter(): ChildrenSorterStrategy {

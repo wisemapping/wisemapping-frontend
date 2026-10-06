@@ -15,11 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import NodeModel from '../model/NodeModel';
-import Topic from '../Topic';
+import type CommandContext from '../CommandContext';
+import type NodeModel from '../model/NodeModel';
+import type Topic from '../Topic';
 
 class AddTopicCommand extends Command {
   private _models: NodeModel[];
@@ -50,7 +50,7 @@ class AddTopicCommand extends Command {
     // its topics are added as floating topics ...
     const parents = new Map<number, Topic>();
     if (this._parentsIds) {
-      const parentIds = this._parentsIds.filter((id): id is number => $defined(id));
+      const parentIds = this._parentsIds.filter((id): id is number => id != null);
       Array.from(new Set(parentIds)).forEach((parentId) => {
         const parentTopic = commandContext.designer.getModel().findTopicById(parentId);
         if (parentTopic) {
@@ -78,7 +78,7 @@ class AddTopicCommand extends Command {
 
       // Connect to its parent, or add it as a floating topic when it has none ...
       const parentId = this._parentsIds?.[index];
-      const parentTopic = $defined(parentId) ? parents.get(parentId) : undefined;
+      const parentTopic = parentId != null ? parents.get(parentId) : undefined;
       if (parentTopic) {
         commandContext.connect(topic, parentTopic);
       } else {
@@ -105,7 +105,7 @@ class AddTopicCommand extends Command {
     // Finally, remove the nodes ...
     this._models.forEach((model: NodeModel) => {
       const topicId = model.getId();
-      const topic = commandContext.findTopics([topicId])[0];
+      const topic = commandContext.findTopic(topicId);
       commandContext.deleteTopic(topic);
     });
 

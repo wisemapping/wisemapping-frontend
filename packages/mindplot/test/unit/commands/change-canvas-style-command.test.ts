@@ -21,7 +21,8 @@
  * topic drawn without a fill (BL5-58). A canvas colour change must redraw those topics, on
  * execute, undo and redo (BL5-122).
  */
-import { buildDesigner, Harness } from './designer-harness';
+import type { Harness } from './designer-harness';
+import { buildDesigner } from './designer-harness';
 import Topic from '../../../src/components/Topic';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 

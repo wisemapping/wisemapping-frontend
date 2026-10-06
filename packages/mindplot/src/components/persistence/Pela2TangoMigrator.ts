@@ -15,12 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import XMLSerializer from './XMLSerializerTango';
 import ModelCodeName from './ModelCodeName';
-import XMLMindmapSerializer from './XMLMindmapSerializer';
-import Mindmap from '../model/Mindmap';
-import NodeModel from '../model/NodeModel';
+import type XMLMindmapSerializer from './XMLMindmapSerializer';
+import type Mindmap from '../model/Mindmap';
+import type NodeModel from '../model/NodeModel';
 
 class Pela2TangoMigrator implements XMLMindmapSerializer {
   private _pelaSerializer: XMLMindmapSerializer;
@@ -37,7 +37,7 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
   }
 
   loadFromDom(dom: Document, mapId: string): Mindmap {
-    $assert($defined(mapId), 'mapId can not be null');
+    $assert(mapId != null, 'mapId can not be null');
     const mindmap = this._pelaSerializer.loadFromDom(dom, mapId);
     mindmap.setVersion(ModelCodeName.TANGO);
     // An empty map has no central topic: there is nothing to fix.
@@ -67,25 +67,18 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
       leftNodes.sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
     });
 
-    for (let i = 0; i < rightNodes.length; i++) {
-      rightNodes[i].setOrder(i * 2);
-    }
-
-    for (let i = 0; i < leftNodes.length; i++) {
-      leftNodes[i].setOrder(i * 2 + 1);
-    }
+    rightNodes.forEach((node, i) => node.setOrder(i * 2));
+    leftNodes.forEach((node, i) => node.setOrder(i * 2 + 1));
   }
 
   private _fixPosition(centralNode: NodeModel): void {
     // Position was not required in previous versions. Try to synthesize one .
-    const children = centralNode.getChildren();
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+    centralNode.getChildren().forEach((child) => {
       if (!child.hasPosition()) {
         child.setPosition(0, 0);
       }
       this._fixNodePosition(child, child.getPositionOrThrow());
-    }
+    });
   }
 
   private _fixNodePosition(node: NodeModel, parentPosition: { x: number; y: number }): void {
@@ -97,11 +90,7 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
       position = { x: parentPosition.x + offset, y: parentPosition.y };
       node.setPosition(position.x, position.y);
     }
-    const children = node.getChildren();
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      this._fixNodePosition(child, position);
-    }
+    node.getChildren().forEach((child) => this._fixNodePosition(child, position));
   }
 }
 

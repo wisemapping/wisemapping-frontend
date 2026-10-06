@@ -17,7 +17,7 @@
  */
 
 import { ArcLine as ArcLine2d } from '@wisemapping/web2d';
-import Topic from '../Topic';
+import type Topic from '../Topic';
 
 class ArcLine extends ArcLine2d {
   private _targetTopic: Topic;
@@ -31,7 +31,7 @@ class ArcLine extends ArcLine2d {
   }
 
   // Adjust the x/y position so there is not overlap with the connector.
-  setFrom(x: number, y: number): void {
+  override setFrom(x: number, y: number): void {
     const orientation = this._targetTopic.getOrientation();
     let xOffset = x;
     let yOffset = y;

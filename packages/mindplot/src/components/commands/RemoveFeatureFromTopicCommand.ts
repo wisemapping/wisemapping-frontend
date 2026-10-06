@@ -15,10 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import FeatureModel from '../model/FeatureModel';
+import type CommandContext from '../CommandContext';
+import type FeatureModel from '../model/FeatureModel';
 
 class RemoveFeatureFromTopicCommand extends Command {
   private _topicId: number;
@@ -32,8 +32,8 @@ class RemoveFeatureFromTopicCommand extends Command {
    * a note. For a reference of existing features, refer to {@link mindplot.TopicFeature}.
    */
   constructor(topicId: number, featureId: number) {
-    $assert($defined(topicId), 'topicId can not be null');
-    $assert(featureId, 'iconModel can not be null');
+    $assert(topicId != null, 'topicId can not be null');
+    $assert(featureId != null, 'featureId can not be null');
 
     super();
     this._topicId = topicId;
@@ -45,7 +45,7 @@ class RemoveFeatureFromTopicCommand extends Command {
    * Overrides abstract parent method
    */
   execute(commandContext: CommandContext): void {
-    const topic = commandContext.findTopics([this._topicId])[0];
+    const topic = commandContext.findTopic(this._topicId);
     const feature = topic.findFeatureById(this._featureId);
     this._oldFeature = feature;
     topic.removeFeature(feature);
@@ -56,7 +56,7 @@ class RemoveFeatureFromTopicCommand extends Command {
    * @see {@link mindplot.Command.undoExecute}
    */
   undoExecute(commandContext: CommandContext) {
-    const topic = commandContext.findTopics([this._topicId])[0];
+    const topic = commandContext.findTopic(this._topicId);
     topic.addFeature(this._oldFeature!);
   }
 }

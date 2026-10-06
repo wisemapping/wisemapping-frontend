@@ -16,9 +16,10 @@
  *   limitations under the License.
  */
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import FeatureModel, { FeatureAttributes } from '../model/FeatureModel';
-import FeatureType from '../model/FeatureType';
+import type CommandContext from '../CommandContext';
+import type { FeatureAttributes } from '../model/FeatureModel';
+import type FeatureModel from '../model/FeatureModel';
+import type FeatureType from '../model/FeatureType';
 
 class AddFeatureToTopicCommand extends Command {
   private _topicIds: number[];

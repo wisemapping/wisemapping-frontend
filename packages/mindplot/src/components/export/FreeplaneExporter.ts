@@ -15,14 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import INodeModel, { TopicShapeType } from '../model/INodeModel';
-import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
-import FeatureModel from '../model/FeatureModel';
+import type { TopicShapeType } from '../model/INodeModel';
+import type INodeModel from '../model/INodeModel';
+import type RelationshipModel from '../model/RelationshipModel';
+import { StrokeStyle } from '../model/RelationshipModel';
+import type FeatureModel from '../model/FeatureModel';
 import ContentType from '../ContentType';
 import FreemindExporter from './FreemindExporter';
-import FreeminNode from './freemind/Node';
-import Arrowlink from './freemind/Arrowlink';
-import FreeplaneArrowlink from './freeplane/FreeplaneArrowlink';
+import type { FreemindArrowlink, FreemindNode } from './freemind/FreemindModel';
 
 /**
  * Freeplane maps (.mm). Freeplane reads the FreeMind format, so the FreeMind exporter writes the
@@ -39,28 +39,28 @@ class FreeplaneExporter extends FreemindExporter {
   };
 
   // mmx is only the id of the format: Freeplane maps are .mm files, as FreeMind ones.
-  extension(): string {
+  override extension(): string {
     return 'mm';
   }
 
-  protected getVersionNumber(): string {
+  protected override getVersionNumber(): string {
     return FreeplaneExporter.VERSION;
   }
 
-  protected setTopicPropertiesToNode(args: {
-    freemindNode: FreeminNode;
+  protected override setTopicPropertiesToNode(args: {
+    freemindNode: FreemindNode;
     mindmapTopic: INodeModel;
     isRoot: boolean;
   }): void {
     super.setTopicPropertiesToNode(args);
     const { freemindNode, mindmapTopic } = args;
     if (mindmapTopic.areChildrenShrunken() && mindmapTopic.getChildren().length > 0) {
-      freemindNode.setFolded('true');
+      freemindNode.FOLDED = 'true';
     }
   }
 
   // Rich text is kept as html, with its plain text as TEXT. Freeplane keeps line breaks in TEXT.
-  protected addTextNode(freemindNode: FreeminNode, mindmapTopic: INodeModel): void {
+  protected override addTextNode(freemindNode: FreemindNode, mindmapTopic: INodeModel): void {
     const text = mindmapTopic.getText();
     if (!text) {
       return;
@@ -68,15 +68,18 @@ class FreeplaneExporter extends FreemindExporter {
     if (mindmapTopic.getContentType() === ContentType.HTML) {
       const plainText = mindmapTopic.getPlainText().trim();
       if (plainText) {
-        freemindNode.setText(plainText);
+        freemindNode.TEXT = plainText;
       }
-      freemindNode.setArrowlinkOrCloudOrEdge(this.buildRichcontent(text, 'NODE', true));
+      freemindNode.children.push(this.buildRichcontent(text, 'NODE', true));
     } else {
-      freemindNode.setText(text);
+      freemindNode.TEXT = text;
     }
   }
 
-  protected shapeToStyle(shape: TopicShapeType | undefined, isRoot: boolean): string | undefined {
+  protected override shapeToStyle(
+    shape: TopicShapeType | undefined,
+    isRoot: boolean,
+  ): string | undefined {
     switch (shape) {
       case undefined:
         return isRoot ? undefined : 'fork';
@@ -98,7 +101,7 @@ class FreeplaneExporter extends FreemindExporter {
    * Emoji without a builtin icon are written as Freeplane emoji icons (emoji-<code points>), which
    * Freeplane names without the emoji variation selector.
    */
-  protected iconBuiltin(feature: FeatureModel): string | null {
+  protected override iconBuiltin(feature: FeatureModel): string | null {
     const builtin = super.iconBuiltin(feature);
     if (builtin || !feature.isOfType('eicon')) {
       return builtin;
@@ -110,25 +113,21 @@ class FreeplaneExporter extends FreemindExporter {
     return codePoints.length > 0 ? `emoji-${codePoints.join('-')}` : null;
   }
 
-  protected buildArrowlink(relationship: RelationshipModel, destNode: FreeminNode): Arrowlink {
-    const arrowlink = new FreeplaneArrowlink();
-    const destination = destNode.getId();
-    if (destination) {
-      arrowlink.setDestination(destination);
-    }
-    // Freeplane draws an end arrow when ENDARROW is missing, so both are always written.
-    arrowlink.setStartarrow(relationship.getStartArrow() ? 'Default' : 'None');
-    arrowlink.setEndarrow(relationship.getEndArrow() ? 'Default' : 'None');
-
+  protected override buildArrowlink(
+    relationship: RelationshipModel,
+    destNode: FreemindNode,
+  ): FreemindArrowlink {
     const color = relationship.getStrokeColor();
-    if (color) {
-      arrowlink.setColor(this.rgbToHex(color));
-    }
-    const dash = FreeplaneExporter.DASHES[relationship.getStrokeStyle()];
-    if (dash) {
-      arrowlink.setDash(dash);
-    }
-    return arrowlink;
+    return {
+      kind: 'arrowlink',
+      DESTINATION: destNode.ID,
+      // Freeplane draws an end arrow when ENDARROW is missing, so both are always written.
+      STARTARROW: relationship.getStartArrow() ? 'Default' : 'None',
+      ENDARROW: relationship.getEndArrow() ? 'Default' : 'None',
+      COLOR: color ? this.rgbToHex(color) : undefined,
+      // Freeplane arrowlinks also have a dash pattern, its lengths separated by spaces.
+      DASH: FreeplaneExporter.DASHES[relationship.getStrokeStyle()],
+    };
   }
 }
 

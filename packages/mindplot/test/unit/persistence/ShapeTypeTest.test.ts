@@ -36,19 +36,19 @@ describe('Shape Type Persistence Test', () => {
     const topics = centralTopic!.getChildren();
 
     // Topic 0: undefined shape (no shape attribute in XML)
-    const topicUndefined = topics[0];
+    const topicUndefined = topics[0]!;
     expect(topicUndefined.getShapeType()).toBeUndefined();
 
     // Topic 1: explicit "none" shape
-    const topicNone = topics[1];
+    const topicNone = topics[1]!;
     expect(topicNone.getShapeType()).toBe('none');
 
     // Topic 2: "line" shape
-    const topicLine = topics[2];
+    const topicLine = topics[2]!;
     expect(topicLine.getShapeType()).toBe('line');
 
     // Topic 3: "rectangle" shape
-    const topicRectangle = topics[3];
+    const topicRectangle = topics[3]!;
     expect(topicRectangle.getShapeType()).toBe('rectangle');
 
     // Serialize back to XML

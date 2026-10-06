@@ -17,9 +17,9 @@
  */
 
 import { buildDesigner } from '../commands/designer-harness';
-import Designer from '../../../src/components/Designer';
-import PositionType from '../../../src/components/PositionType';
-import ScreenManager from '../../../src/components/ScreenManager';
+import type Designer from '../../../src/components/Designer';
+import type PositionType from '../../../src/components/PositionType';
+import type ScreenManager from '../../../src/components/ScreenManager';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
@@ -59,7 +59,7 @@ const build = async (width: number, height: number): Promise<Designer> => {
 /** The viewport as the browser draws it: the SVG's size and viewBox. */
 const viewportOf = (designer: Designer): Viewport => {
   const svg = designer.getContainer().querySelector('svg')!;
-  const [x, y, width, height] = svg
+  const [x = NaN, y = NaN, width = NaN, height = NaN] = svg
     .getAttribute('viewBox')!
     .split(' ')
     .map((value) => Number.parseFloat(value));
@@ -83,8 +83,14 @@ const toScreen = (designer: Designer, position: PositionType): PositionType => {
 const screenManagerOf = (designer: Designer): ScreenManager =>
   designer.getWorkSpace().getScreenManager();
 
-const scaleOf = (designer: Designer): number =>
-  (screenManagerOf(designer) as unknown as { _scale: number })._scale;
+/** The workspace units a pixel of mouse movement is mapped to: the zoom of the mouse positions. */
+const scaleOf = (designer: Designer): number => {
+  const at = (clientX: number) =>
+    screenManagerOf(designer).getWorkspaceMousePosition(
+      new MouseEvent('mousemove', { clientX, clientY: 0 }),
+    ).x;
+  return (at(100) - at(0)) / 100;
+};
 
 /** The bounding box of every topic. */
 const boundsOf = (designer: Designer) => {

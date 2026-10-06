@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import Mindmap from '../../../src/components/model/Mindmap';
-import PositionType from '../../../src/components/PositionType';
+import type PositionType from '../../../src/components/PositionType';
 
 describe('INodeModel.getPosition typing (BL4-16)', () => {
   test('is typed as possibly undefined, as it is undefined for a topic without a position', () => {

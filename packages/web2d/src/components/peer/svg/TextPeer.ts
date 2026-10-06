@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '../utils/assert';
 import { getPosition } from '../utils/DomUtils';
 import { type FontStyle } from './FontPeer';
 import type FontPeer from './FontPeer';
@@ -81,7 +80,7 @@ class TextPeer extends ElementPeer<SVGTextElement> {
    * Writes one tspan per line. The tspans are reused: a line that did not change costs no DOM
    * write, and only added or removed lines create or remove nodes.
    */
-  setText(text: string) {
+  setText(text: string): void {
     this._text = text;
     if (!this.ownsAllChildren()) {
       // Something else was added to the node: setText owns its content, so start again.
@@ -137,7 +136,7 @@ class TextPeer extends ElementPeer<SVGTextElement> {
     return this._text;
   }
 
-  setPosition(x: number, y: number) {
+  setPosition(x: number, y: number): void {
     this._position = { x, y };
     const formattedX = TextPeer.formatCoordinate(x);
     this.attr('y', TextPeer.formatCoordinate(y));
@@ -176,7 +175,7 @@ class TextPeer extends ElementPeer<SVGTextElement> {
     if (weight) {
       this._font.setWeight(weight);
     }
-    if ($defined(size)) {
+    if (size != null) {
       this._font.setSize(size);
     }
     this.updateFontStyle();
@@ -197,7 +196,7 @@ class TextPeer extends ElementPeer<SVGTextElement> {
     this.attr('font-weight', this._font.getWeight());
   }
 
-  setColor(color: string) {
+  setColor(color: string): void {
     this.attr('fill', color);
   }
 

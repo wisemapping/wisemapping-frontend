@@ -15,14 +15,19 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Workspace as Workspace2D, ElementClass, ElementPeer } from '@wisemapping/web2d';
-import type { CustomEventMap, ElementEventListener } from '@wisemapping/web2d';
+import { Workspace as Workspace2D } from '@wisemapping/web2d';
+import type {
+  CustomEventMap,
+  ElementEventListener,
+  ElementClass,
+  ElementPeer,
+} from '@wisemapping/web2d';
 import { $assert } from './util/assert';
-import ScreenManager from './ScreenManager';
-import SizeType from './SizeType';
-import CanvasElement from './CanvasElement';
+import type ScreenManager from './ScreenManager';
+import type SizeType from './SizeType';
+import type CanvasElement from './CanvasElement';
 import LayoutEventBus from './layout/LayoutEventBus';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 
 const DEFAULT_VISIBILITY_PADDING = 80;
 
@@ -94,7 +99,7 @@ class Canvas {
     this._workspace = workspace;
 
     // Append to the workspace...
-    workspace.addItAsChildTo(divContainer as HTMLDivElement);
+    workspace.addItAsChildTo(divContainer);
     // Mouse positions map through the workspace screen matrix ...
     screenManager.setWorkspace(workspace);
 
@@ -349,10 +354,6 @@ class Canvas {
     workspace.setCoordOrigin(coordOriginX, coordOriginY);
     workspace.setCoordSize(containerWidth * zoom, containerHeight * zoom);
 
-    // Update screen.
-    this._screenManager.setOffset(coordOriginX, coordOriginY);
-    this._screenManager.setScale(zoom);
-
     // Some changes in the screen. Let's fire an update event...
     this._screenManager.fireEvent('update');
     // Also fire LayoutEventBus event for canvas zooming
@@ -378,7 +379,6 @@ class Canvas {
     const newOriginY = origin.y + deltaY * this._zoom;
 
     this._workspace.setCoordOrigin(newOriginX, newOriginY);
-    this._screenManager.setOffset(newOriginX, newOriginY);
     this._screenManager.fireEvent('update');
     this._layoutEventBus.fireEvent('canvasPanned');
   }
@@ -501,9 +501,6 @@ class Canvas {
             this._cancelPan = null;
             window.document.body.style.cursor = 'default';
 
-            // Update screen manager offset.
-            const coordOrigin = workspace.getCoordOrigin();
-            screenManager.setOffset(coordOrigin.x, coordOrigin.y);
             mWorkspace.enableWorkspaceEvents(true);
 
             if (isRelease && !wasDragged) {
@@ -581,7 +578,6 @@ class Canvas {
 
     if (newOriginX !== origin.x || newOriginY !== origin.y) {
       workspace.setCoordOrigin(newOriginX, newOriginY);
-      this._screenManager.setOffset(newOriginX, newOriginY);
       this._screenManager.fireEvent('update');
       this._layoutEventBus.fireEvent('canvasPanned');
       return true;
@@ -613,7 +609,6 @@ class Canvas {
     }
 
     workspace.setCoordOrigin(newOriginX, newOriginY);
-    this._screenManager.setOffset(newOriginX, newOriginY);
     this._screenManager.fireEvent('update');
     this._layoutEventBus.fireEvent('canvasPanned');
     return true;

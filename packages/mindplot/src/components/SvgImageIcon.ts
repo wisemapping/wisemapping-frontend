@@ -15,13 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Image } from '@wisemapping/web2d';
+import type { Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 
 import ImageIcon from './ImageIcon';
 import iconFamily from './model/SvgIconFamily.json';
-import Topic from './Topic';
-import SvgIconModel from './model/SvgIconModel';
+import type Topic from './Topic';
+import type SvgIconModel from './model/SvgIconModel';
 import { mapIconNameToAsset } from './IconMapping';
 import images from './SvgIconAssets';
 
@@ -99,18 +99,9 @@ class SvgImageIcon extends ImageIcon {
     const familyIcons = SvgImageIcon._getFamilyIcons(iconId);
     $assert(familyIcons !== null, `Family Icon not found: ${iconId}`);
 
-    let result: string | null = null;
-    for (let i = 0; i < familyIcons.length && result == null; i++) {
-      if (familyIcons[i] === iconId) {
-        // Is last one?
-        if (i === familyIcons.length - 1) {
-          [result] = familyIcons;
-        } else {
-          result = familyIcons[i + 1];
-        }
-        break;
-      }
-    }
+    // The icon after it in its family, the first one after the last.
+    const index = familyIcons.indexOf(iconId);
+    const result = index === -1 ? undefined : familyIcons[(index + 1) % familyIcons.length];
 
     if (!result) {
       throw new Error(`Could not find iconId ${iconId}`);
@@ -123,16 +114,8 @@ class SvgImageIcon extends ImageIcon {
     $assert(iconId != null, 'id must not be null');
     $assert(iconId.indexOf('_') !== -1, `Invalid icon id (it must contain '_'). Id: ${iconId}`);
 
-    let result: string[] | null = null;
-    for (let i = 0; i < iconFamily.length; i++) {
-      const family = iconFamily[i];
-      const iconFamilyId = iconId.substr(0, iconId.indexOf('_'));
-
-      if (family.id === iconFamilyId) {
-        result = family.icons;
-        break;
-      }
-    }
+    const iconFamilyId = iconId.substr(0, iconId.indexOf('_'));
+    const result = iconFamily.find((family) => family.id === iconFamilyId)?.icons;
 
     if (!result) {
       throw new Error(`Could not find icon id ${iconId}`);
@@ -141,7 +124,7 @@ class SvgImageIcon extends ImageIcon {
     return result;
   }
 
-  remove() {
+  override remove() {
     const actionDispatcher = this._topic.getActionDispatcher();
     const featureId = this._featureModel.getId();
     const topicId = this._topicId;

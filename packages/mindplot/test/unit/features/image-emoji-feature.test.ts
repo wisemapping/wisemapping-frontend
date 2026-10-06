@@ -17,7 +17,8 @@
  */
 import { Group, Text } from '@wisemapping/web2d';
 import ImageEmojiFeature from '../../../src/components/ImageEmojiFeature';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
+import ElementDeleteWidget from '../../../src/components/ElementDeleteWidget';
 
 /**
  * Minimal topic: a real web2d group plus a redraw that runs the emoji steps of
@@ -142,7 +143,7 @@ describe('ImageEmojiFeature delete widget with two designers on the page (BL4-23
     // Hovering the emoji shows its delete widget in the topic ...
     first.feature.getEmojiTextShape()!.trigger('mouseover', {});
     expect(append).toHaveBeenCalledTimes(1);
-    const widget = append.mock.calls[0][0];
+    const widget = append.mock.calls[0]![0];
 
     // ... and hovering the emoji on the other map must not close it.
     second.feature.getEmojiTextShape()!.trigger('mouseover', {});
@@ -191,5 +192,24 @@ describe('ImageEmojiFeature size', () => {
     expect(measure).toHaveBeenCalledTimes(1);
     expect(width).not.toHaveBeenCalled();
     expect(height).not.toHaveBeenCalled();
+  });
+});
+
+describe('ImageEmojiFeature delete widget target (BL5-188)', () => {
+  it('hands the widget a Removable, not an icon with a fake feature model', () => {
+    const decorate = jest.spyOn(ElementDeleteWidget.prototype, 'decorate');
+    try {
+      const { topic } = buildTopic('😀');
+      topic.redraw();
+
+      expect(decorate).toHaveBeenCalledTimes(1);
+      const removable = decorate.mock.calls[0]![1];
+      // The emoji is no feature of the topic: it used to answer getModel() with {}.
+      expect('getModel' in removable).toBe(false);
+      expect('setGroup' in removable).toBe(false);
+      expect(removable.getGroup()).toBeNull();
+    } finally {
+      decorate.mockRestore();
+    }
   });
 });

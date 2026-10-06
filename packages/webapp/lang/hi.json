@@ -2,9 +2,6 @@
   "common.terms-notice": {
     "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
   },
-  "account.delete-warning": {
-    "defaultMessage": "ध्यान रखें कि आप जो भी माइंडमैप जोड़े हैं, उन्हें पुनर्प्राप्त नहीं कर सकेंगे। आपकी सभी जानकारी हटा दी जाएगी और इसे पुनर्स्थापित नहीं किया जा सकता।"
-  },
   "accountinfo.button": {
     "defaultMessage": "स्वीकार करें"
   },
@@ -115,9 +112,6 @@
   },
   "deletem.title": {
     "defaultMessage": "सभी चयनित मानचित्र हटा दिए जाएंगे"
-  },
-  "dialog.loading": {
-    "defaultMessage": "लोड हो रहा है..."
   },
   "duplicate.copy-title": {
     "defaultMessage": "{title} की प्रतिलिपि"
@@ -620,9 +614,6 @@
   "common.delete": {
     "defaultMessage": "हटाएं"
   },
-  "admin.status": {
-    "defaultMessage": "स्थिति"
-  },
   "admin.suspend-user": {
     "defaultMessage": "उपयोगकर्ता निलंबित करें"
   },
@@ -967,5 +958,8 @@
   },
   "maps.select-all": {
     "defaultMessage": "सभी चुनें"
+  },
+  "maps.select-map": {
+    "defaultMessage": "{title} चुनें"
   }
 }

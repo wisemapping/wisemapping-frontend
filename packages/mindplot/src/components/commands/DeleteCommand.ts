@@ -16,13 +16,13 @@
  *   limitations under the License.
  */
 import flatten from 'lodash/flatten';
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import NodeModel from '../model/NodeModel';
-import RelationshipModel from '../model/RelationshipModel';
-import Relationship from '../Relationship';
-import Topic from '../Topic';
+import type CommandContext from '../CommandContext';
+import type NodeModel from '../model/NodeModel';
+import type RelationshipModel from '../model/RelationshipModel';
+import type Relationship from '../Relationship';
+import type Topic from '../Topic';
 
 class DeleteCommand extends Command {
   private _relIds: number[];
@@ -37,7 +37,7 @@ class DeleteCommand extends Command {
   private _parentTopicIds: (number | null)[];
 
   constructor(topicIds: number[], relIds: number[]) {
-    $assert($defined(relIds), 'topicIds can not be null');
+    $assert(relIds != null, 'topicIds can not be null');
 
     super();
     this._relIds = relIds;
@@ -103,15 +103,15 @@ class DeleteCommand extends Command {
 
     // Do they need to be connected ?
     this._deletedTopicModels.forEach((topicModel, index) => {
-      const topics = commandContext.findTopics([topicModel.getId()]);
+      const topic = commandContext.findTopic(topicModel.getId());
 
+      // _parentTopicIds runs parallel to _deletedTopicModels: null is a floating topic.
       const parentId = this._parentTopicIds[index];
-      if (parentId !== null) {
-        const parentTopics = commandContext.findTopics([parentId]);
-        commandContext.connect(topics[0], parentTopics[0]);
+      if (parentId != null) {
+        commandContext.connect(topic, commandContext.findTopic(parentId));
       } else {
         // A floating topic is a branch of the mindmap, put it back there ...
-        commandContext.addTopic(topics[0]);
+        commandContext.addTopic(topic);
       }
     });
 
@@ -122,15 +122,13 @@ class DeleteCommand extends Command {
 
     // Finally display the topics ...
     this._deletedTopicModels.forEach((topicModel) => {
-      const topics = commandContext.findTopics([topicModel.getId()]);
-      topics[0].setBranchVisibility(true);
+      commandContext.findTopic(topicModel.getId()).setBranchVisibility(true);
     });
 
     // Focus on last recovered topic ..
-    if (this._deletedTopicModels.length > 0) {
-      const firstTopic = this._deletedTopicModels[0];
-      const topic = commandContext.findTopics([firstTopic.getId()])[0];
-      topic.setOnFocus(true);
+    const firstTopic = this._deletedTopicModels[0];
+    if (firstTopic) {
+      commandContext.findTopic(firstTopic.getId()).setOnFocus(true);
     }
 
     this._deletedTopicModels = [];
@@ -162,7 +160,7 @@ class DeleteCommand extends Command {
   }
 
   private _collectInDepthRelationships(topic: Topic): Relationship[] {
-    let result: Relationship[] = [];
+    const result: Relationship[] = [];
     result.push(...topic.getRelationships());
 
     const children = topic.getChildren();
@@ -171,19 +169,9 @@ class DeleteCommand extends Command {
     // flatten and concact
     result.push(...flatten(rels));
 
-    if (result.length > 0) {
-      // Filter for unique ...
-      result = result.sort((a, b) => a.getModel().getId() - b.getModel().getId());
-      const ret = [result[0]];
-      // start loop at 1 as element 0 can never be a duplicate
-      for (let i = 1; i < result.length; i++) {
-        if (result[i - 1] !== result[i]) {
-          ret.push(result[i]);
-        }
-      }
-      result = ret;
-    }
-    return result;
+    // Filter for unique: once sorted, a duplicate follows the relationship it repeats.
+    const sorted = result.sort((a, b) => a.getModel().getId() - b.getModel().getId());
+    return sorted.filter((rel, i) => sorted[i - 1] !== rel);
   }
 }
 

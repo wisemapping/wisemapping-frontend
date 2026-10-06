@@ -24,7 +24,7 @@
  */
 import { describe, expect, it } from '@jest/globals';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
-import PositionType from '../../../src/components/PositionType';
+import type PositionType from '../../../src/components/PositionType';
 
 type Prediction = { order: number; position: PositionType };
 
@@ -101,8 +101,8 @@ describe('SymmetricSorter.predict: no jump at the centre of a child', () => {
     // Down the sweep the order never goes back, and the pivot never goes up.
     const predictions = Array.from(sweep.values());
     predictions.slice(1).forEach((prediction, index) => {
-      expect(prediction.order).toBeGreaterThanOrEqual(predictions[index].order);
-      expect(prediction.position.y).toBeGreaterThanOrEqual(predictions[index].position.y);
+      expect(prediction.order).toBeGreaterThanOrEqual(predictions[index]!.order);
+      expect(prediction.position.y).toBeGreaterThanOrEqual(predictions[index]!.position.y);
     });
   });
 
@@ -133,7 +133,7 @@ describe('BalancedSorter.predict: no jump at the centre of a main topic', () => 
     const { x } = pos(manager, 1);
     const centres = [pos(manager, 1).y, pos(manager, 3).y];
     expect(centres.every(Number.isInteger)).toBe(true);
-    const sweep = sweepY(manager, 0, 2, x, centres[0] - 60, centres[1] + 60);
+    const sweep = sweepY(manager, 0, 2, x, centres[0]! - 60, centres[1]! + 60);
 
     centres.forEach((centre) => {
       expect(sweep.get(centre)).toEqual(sweep.get(centre - 1));
@@ -217,14 +217,14 @@ describe('drag pivot before the first child and after the last one (option b)', 
     );
     manager.layout(true);
     const [first, , last] = [11, 12, 13].map((id) => pos(manager, id).x);
-    const gap = pos(manager, 12).x - first;
+    const gap = pos(manager, 12).x - first!;
     expect(gap / 2).not.toBe(SIZE.width / 2 + 5);
     const { y } = pos(manager, 11);
 
-    const before = manager.predict(1, 2, { x: first - 100, y });
-    const after = manager.predict(1, 2, { x: last + 100, y });
-    expect(before).toEqual({ order: 0, position: { x: first - gap / 2, y } });
-    expect(after).toEqual({ order: 3, position: { x: last + gap / 2, y } });
+    const before = manager.predict(1, 2, { x: first! - 100, y });
+    const after = manager.predict(1, 2, { x: last! + 100, y });
+    expect(before).toEqual({ order: 0, position: { x: first! - gap / 2, y } });
+    expect(after).toEqual({ order: 3, position: { x: last! + gap / 2, y } });
   });
 
   it('keeps the order monotonic and the pivot moving one way across a whole sweep', () => {
@@ -232,15 +232,15 @@ describe('drag pivot before the first child and after the last one (option b)', 
     const { x } = pos(manager, 11);
     const predictions = Array.from(sweepY(manager, 1, 2, x, -150, 150).values());
     predictions.slice(1).forEach((prediction, index) => {
-      expect(prediction.order).toBeGreaterThanOrEqual(predictions[index].order);
-      expect(prediction.position.y).toBeGreaterThanOrEqual(predictions[index].position.y);
+      expect(prediction.order).toBeGreaterThanOrEqual(predictions[index]!.order);
+      expect(prediction.position.y).toBeGreaterThanOrEqual(predictions[index]!.position.y);
     });
 
     const tree = build('tree');
     const { y } = pos(tree, 11);
     const xs = [11, 13].map((id) => pos(tree, id).x);
-    let previous = tree.predict(1, 2, { x: xs[0] - 100, y });
-    for (let mouseX = xs[0] - 99; mouseX <= xs[1] + 100; mouseX++) {
+    let previous = tree.predict(1, 2, { x: xs[0]! - 100, y });
+    for (let mouseX = xs[0]! - 99; mouseX <= xs[1]! + 100; mouseX++) {
       const prediction = tree.predict(1, 2, { x: mouseX, y });
       expect(prediction.order).toBeGreaterThanOrEqual(previous.order);
       expect(prediction.position.x).toBeGreaterThanOrEqual(previous.position.x);

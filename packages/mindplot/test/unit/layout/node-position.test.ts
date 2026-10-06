@@ -19,7 +19,7 @@
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import Node from '../../../src/components/layout/Node';
 import SymmetricSorter from '../../../src/components/layout/SymmetricSorter';
-import PositionType from '../../../src/components/PositionType';
+import type PositionType from '../../../src/components/PositionType';
 
 const SIZE = { width: 80, height: 60 };
 

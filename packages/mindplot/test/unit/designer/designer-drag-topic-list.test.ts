@@ -17,8 +17,8 @@
  */
 
 import { buildDesigner } from '../commands/designer-harness';
-import Designer from '../../../src/components/Designer';
-import Topic from '../../../src/components/Topic';
+import type Designer from '../../../src/components/Designer';
+import type Topic from '../../../src/components/Topic';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

@@ -141,7 +141,7 @@ describe('EventBusDispatcher layout coalescing', () => {
     manager.addEvent('change', (event: { getId: () => number }) => changes.push(event.getId()));
 
     // What Topic.connectTo does: topicConnected, then forceLayout ...
-    connect(models[0]);
+    connect(models[0]!);
     bus.fireEvent('forceLayout');
     expect(layout).toHaveBeenCalledTimes(1);
     expect(changes).toContain(1);
@@ -153,11 +153,11 @@ describe('EventBusDispatcher layout coalescing', () => {
   it('holds connections back for a batch, and lays out once at its end', async () => {
     const { models, layout, connect } = setUp(4);
     dispatcher.beginBatch();
-    connect(models[0]);
+    connect(models[0]!);
     dispatcher.beginBatch();
-    connect(models[1]);
+    connect(models[1]!);
     dispatcher.endBatch();
-    connect(models[2]);
+    connect(models[2]!);
     await microtasks();
     expect(layout).not.toHaveBeenCalled();
 
@@ -170,14 +170,14 @@ describe('EventBusDispatcher layout coalescing', () => {
     dispatcher.endBatch();
     expect(layout).toHaveBeenCalledTimes(1);
 
-    connect(models[3]);
+    connect(models[3]!);
     await microtasks();
     expect(layout).toHaveBeenCalledTimes(2);
   });
 
   it('drops a pending layout when given another layout manager', async () => {
     const { models, layout, connect } = setUp(1);
-    connect(models[0]);
+    connect(models[0]!);
     const other = new LayoutManager(0, { width: 100, height: 40 });
     const otherLayout = jest.spyOn(other, 'layout');
     dispatcher.setLayoutManager(other);
@@ -190,7 +190,7 @@ describe('EventBusDispatcher layout coalescing', () => {
   it('drops a pending layout, and any batch, when disposed', async () => {
     const { models, layout, connect } = setUp(1);
     dispatcher.beginBatch();
-    connect(models[0]);
+    connect(models[0]!);
     dispatcher.dispose();
     dispatcher.endBatch();
 

@@ -16,12 +16,15 @@
  *   limitations under the License.
  */
 import cloneDeep from 'lodash/cloneDeep';
-import { $assert, $defined } from '../util/assert';
-import INodeModel, { NodeModelType, NodePropKey, NodeProps } from './INodeModel';
+import { $assert } from '../util/assert';
+import type { NodeModelType, NodePropKey, NodeProps } from './INodeModel';
+import INodeModel from './INodeModel';
 import FeatureModelFactory from './FeatureModelFactory';
-import FeatureModel, { FeatureAttributes } from './FeatureModel';
-import Mindmap from './Mindmap';
-import FeatureType, { type FeatureByType } from './FeatureType';
+import type { FeatureAttributes } from './FeatureModel';
+import type FeatureModel from './FeatureModel';
+import type Mindmap from './Mindmap';
+import type FeatureType from './FeatureType';
+import { type FeatureByType } from './FeatureType';
 
 class NodeModel extends INodeModel {
   private _properties: Partial<NodeProps>;
@@ -90,10 +93,11 @@ class NodeModel extends INodeModel {
    * @return the feature with the given id
    */
   findFeatureById(id: number): FeatureModel {
-    $assert($defined(id), 'id can not be null');
-    const result = this._features.filter((feature) => feature.getId() === id);
-    $assert(result.length === 1, `Feature could not be found:${id}`);
-    return result[0];
+    $assert(id != null, 'id can not be null');
+    const matches = this._features.filter((feature) => feature.getId() === id);
+    const [result] = matches;
+    $assert(result && matches.length === 1, `Feature could not be found:${id}`);
+    return result;
   }
 
   getPropertiesKeys(): NodePropKey[] {
@@ -102,6 +106,9 @@ class NodeModel extends INodeModel {
 
   putProperty<K extends NodePropKey>(key: K, value: NodeProps[K]): void {
     this._properties[key] = value;
+    if (key === 'id') {
+      INodeModel.treeChanged();
+    }
   }
 
   getProperties(): Readonly<Partial<NodeProps>> {
@@ -116,7 +123,7 @@ class NodeModel extends INodeModel {
   clone(): NodeModel {
     const result = new NodeModel(this.getType(), this._mindmap);
     result._children = this._children.map((node) => {
-      const cnode = node.clone() as NodeModel;
+      const cnode = node.clone();
       cnode._parent = result;
       return cnode;
     });
@@ -126,10 +133,14 @@ class NodeModel extends INodeModel {
     return result;
   }
 
-  deepCopy(): NodeModel {
-    const result = new NodeModel(this.getType(), this._mindmap);
+  /**
+   * A copy of this branch with new ids, owned by `mindmap` (this node's map by default): a copy
+   * pasted into another map must belong to it, or it is themed and deleted against the wrong one.
+   */
+  deepCopy(mindmap: Mindmap = this._mindmap): NodeModel {
+    const result = new NodeModel(this.getType(), mindmap);
     result._children = this._children.map((node) => {
-      const cnode = (node as NodeModel).deepCopy();
+      const cnode = node.deepCopy(mindmap);
       cnode._parent = result;
       return cnode;
     });
@@ -146,25 +157,25 @@ class NodeModel extends INodeModel {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object');
     this._children.push(child);
     child._parent = this;
+    INodeModel.treeChanged();
   }
 
   removeChild(child: NodeModel): void {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object.');
     this._children = this._children.filter((c) => c !== child);
     child._parent = null;
+    INodeModel.treeChanged();
   }
 
   findNodeById(id: number): NodeModel | undefined {
     if (this.getId() === id) {
       return this;
     }
-    for (let i = 0; i < this._children.length; i++) {
-      const result = this._children[i].findNodeById(id);
-      if (result) {
-        return result;
-      }
-    }
-    return undefined;
+    // The first match, depth first; the children after it are not searched.
+    return this._children.reduce<NodeModel | undefined>(
+      (found, child) => found ?? child.findNodeById(id),
+      undefined,
+    );
   }
 
   getChildren(): NodeModel[] {

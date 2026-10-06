@@ -1,1 +1,6 @@
-yarn lint-staged
+# The lint-staged tasks only check (eslint, prettier --check) and never edit files,
+# so lint-staged needs no backup. --no-stash keeps it off `git stash`, which every
+# worktree of the repository shares: concurrent commits in other worktrees would
+# store and drop each other's backup entries (BL-38). --fail-on-changes refuses the
+# commit if a task ever modifies a file, instead of silently staging the change.
+yarn lint-staged --no-stash --fail-on-changes

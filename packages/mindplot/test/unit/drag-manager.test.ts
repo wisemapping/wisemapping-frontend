@@ -17,16 +17,17 @@
  */
 
 import { Group } from '@wisemapping/web2d';
+import type { CommandDispatcher } from '../../src/components/ActionDispatcher';
 import ActionDispatcher from '../../src/components/ActionDispatcher';
-import Canvas from '../../src/components/Canvas';
+import type Canvas from '../../src/components/Canvas';
 import DragManager from '../../src/components/DragManager';
 import DragPivot from '../../src/components/DragPivot';
 import DragTopic from '../../src/components/DragTopic';
-import EventBusDispatcher from '../../src/components/layout/EventBusDispatcher';
-import LayoutManager from '../../src/components/layout/LayoutManager';
-import NodeGraph from '../../src/components/NodeGraph';
+import type EventBusDispatcher from '../../src/components/layout/EventBusDispatcher';
+import type LayoutManager from '../../src/components/layout/LayoutManager';
+import type NodeGraph from '../../src/components/NodeGraph';
 import ScreenManager from '../../src/components/ScreenManager';
-import Topic from '../../src/components/Topic';
+import type Topic from '../../src/components/Topic';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
@@ -119,7 +120,7 @@ describe('DragManager', () => {
     jest.spyOn(ActionDispatcher, 'getInstance').mockReturnValue({
       dragTopic: dragTopicAction,
       moveTopic: jest.fn(),
-    } as unknown as ActionDispatcher);
+    } as unknown as CommandDispatcher);
 
     const eventDispatcher = {
       getLayoutManager: () => layoutManager,
@@ -334,7 +335,7 @@ describe('DragManager with the canvas in a shadow root', () => {
     jest.spyOn(ActionDispatcher, 'getInstance').mockReturnValue({
       dragTopic: dragTopicAction,
       moveTopic: jest.fn(),
-    } as unknown as ActionDispatcher);
+    } as unknown as CommandDispatcher);
 
     const dragManager = new DragManager(canvas, {
       getLayoutManager: () => layoutManager,

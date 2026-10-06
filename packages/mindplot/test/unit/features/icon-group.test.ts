@@ -17,9 +17,9 @@
  */
 import { Group } from '@wisemapping/web2d';
 import IconGroup from '../../../src/components/IconGroup';
-import Icon from '../../../src/components/Icon';
-import FeatureModel from '../../../src/components/model/FeatureModel';
-import FeatureType from '../../../src/components/model/FeatureType';
+import type Icon from '../../../src/components/Icon';
+import type FeatureModel from '../../../src/components/model/FeatureModel';
+import type FeatureType from '../../../src/components/model/FeatureType';
 
 const buildIcon = (type: FeatureType, id: number): Icon & { label: string } => {
   const element = new Group();

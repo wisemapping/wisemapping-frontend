@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import Relationship from '../Relationship';
+import type CommandContext from '../CommandContext';
+import type Relationship from '../Relationship';
 
 class GenericRelationshipFunctionCommand<T> extends Command {
   private _value: T;

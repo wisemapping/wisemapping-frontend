@@ -102,14 +102,15 @@ export const resolveTopicMove = (topic: Topic, move: TopicMove): ReorderTarget |
       const siblings = moveSiblings(topic, parent);
       const index = siblings.indexOf(topic);
       const targetIndex = move === 'up' ? index - 1 : index + 1;
+      const neighbour = siblings[targetIndex];
       // Already at the end it is being asked to move towards.
-      if (index < 0 || targetIndex < 0 || targetIndex >= siblings.length) {
+      if (index < 0 || !neighbour) {
         return null;
       }
       // Take the neighbour's order: the topic is detached and re-inserted with it,
       // which lands it just past the neighbour. Orders are not always the index
       // (the balanced sorter steps by two per side).
-      const order = siblings[targetIndex].getOrder() ?? targetIndex;
+      const order = neighbour.getOrder() ?? targetIndex;
       return { kind: 'reorder', parent, order };
     }
 
@@ -128,11 +129,12 @@ export const resolveTopicMove = (topic: Topic, move: TopicMove): ReorderTarget |
       // Become a child of the sibling immediately above, the outliner meaning
       // of indent. The first child has no preceding sibling to attach to.
       const siblings = moveSiblings(topic, parent);
-      const index = siblings.indexOf(topic);
-      if (index <= 0) {
+      // Undefined for the first child, and for a topic not among the siblings (index -1).
+      const above = siblings[siblings.indexOf(topic) - 1];
+      if (!above) {
         return null;
       }
-      return { kind: 'reparent', parent: siblings[index - 1] };
+      return { kind: 'reparent', parent: above };
     }
 
     default:

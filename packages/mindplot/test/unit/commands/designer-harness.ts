@@ -24,12 +24,12 @@
  * per file), as the other designer tests do.
  */
 import Designer from '../../../src/components/Designer';
-import LinkIcon from '../../../src/components/LinkIcon';
-import NoteIcon from '../../../src/components/NoteIcon';
-import Topic from '../../../src/components/Topic';
+import type LinkIcon from '../../../src/components/LinkIcon';
+import type NoteIcon from '../../../src/components/NoteIcon';
+import type Topic from '../../../src/components/Topic';
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
-import LinkModel from '../../../src/components/model/LinkModel';
-import NoteModel from '../../../src/components/model/NoteModel';
+import type LinkModel from '../../../src/components/model/LinkModel';
+import type NoteModel from '../../../src/components/model/NoteModel';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
 // jsdom does not lay out SVG text, so give every element a fixed box.
@@ -47,11 +47,15 @@ svgPrototype.getComputedTextLength = () => 60;
  * it when a topic is rendered, and there is no web component to show them in.
  */
 export class StubWidgetManager extends WidgetBuilder {
-  createTooltipForLink(_topic: Topic, _linkModel: LinkModel, _linkIcon: LinkIcon): void {
+  override createTooltipForLink(_topic: Topic, _linkModel: LinkModel, _linkIcon: LinkIcon): void {
     // No tooltips in tests.
   }
 
-  configureTooltipForNode(_topic: Topic, _noteModel: NoteModel, _noteIcon: NoteIcon): void {
+  override configureTooltipForNode(
+    _topic: Topic,
+    _noteModel: NoteModel,
+    _noteIcon: NoteIcon,
+  ): void {
     // No tooltips in tests.
   }
 
@@ -96,7 +100,7 @@ const sortTopicsById = (element: Element): void => {
   topics.forEach((child) => sortTopicsById(child));
 
   // Re-insert the topics, sorted, where they were: before anything that followed them.
-  const anchor = topics[topics.length - 1].nextSibling;
+  const anchor = topics[topics.length - 1]!.nextSibling;
   topics
     .sort((a, b) => Number(a.getAttribute('id')) - Number(b.getAttribute('id')))
     .forEach((child) => element.insertBefore(child, anchor));

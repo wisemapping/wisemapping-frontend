@@ -25,9 +25,10 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
 import fs from 'fs';
 import path from 'path';
 import { describe, expect, it } from '@jest/globals';
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 import { LineType } from '../../../src/components/TopicConnection';
 
 /*
@@ -120,7 +121,7 @@ describe('mmap2json-2017 laid out', () => {
     const d = line.getElementClass().getNode().getAttribute('d');
     const ys = pathYs(d!);
     expect(ys.length).toBeGreaterThanOrEqual(4);
-    ys.forEach((y) => expect(y).toBeCloseTo(ys[0]));
+    ys.forEach((y) => expect(y).toBeCloseTo(ys[0]!));
   });
 });
 
@@ -133,7 +134,7 @@ describe('mindm-test-dom-mm23 laid out', () => {
   const ys = (harness: Harness, texts: string[]): number[] =>
     texts.map((text) => byText(harness, text).getPosition().y);
   const increasing = (values: number[]): boolean =>
-    values.every((value, index) => index === 0 || value > values[index - 1]);
+    values.every((value, index) => index === 0 || value > values[index - 1]!);
 
   it('places 1, 3 and 5 on the right, top to bottom', async () => {
     const harness = await importedDesigner('mindm-test-dom-mm23');

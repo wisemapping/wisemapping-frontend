@@ -17,11 +17,12 @@
  */
 import { CurvedLine, Arrow } from '@wisemapping/web2d';
 import Relationship from './Relationship';
+import RelationshipSnap from './RelationshipSnap';
 import Shape from './util/Shape';
-import Canvas from './Canvas';
-import { Designer } from '..';
-import Topic from './Topic';
-import PositionType from './PositionType';
+import type Canvas from './Canvas';
+import type Designer from './Designer';
+import type Topic from './Topic';
+import type PositionType from './PositionType';
 
 class RelationshipPivot {
   private _canvas: Canvas;
@@ -69,10 +70,7 @@ class RelationshipPivot {
     const tPos = targetPos;
 
     // Use the same control point calculation as Relationship
-    const ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos) as [
-      PositionType,
-      PositionType,
-    ];
+    const ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos);
 
     this._pivot.setFrom(sPos.x, sPos.y);
     this._pivot.setTo(tPos.x, tPos.y);
@@ -150,10 +148,7 @@ class RelationshipPivot {
     const tPos = pos;
 
     // Use the same control point calculation as Relationship
-    const ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos) as [
-      PositionType,
-      PositionType,
-    ];
+    const ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos);
 
     // Update pivot line with curved control points
     this._pivot!.setFrom(sPos.x, sPos.y);
@@ -176,9 +171,9 @@ class RelationshipPivot {
   }
 
   private _calculateFromPosition(toPosition: PositionType): PositionType {
-    // Use the shared snap point calculation from Relationship
+    // Use the snap point shared with Relationship
     const sourceTopic = this._sourceTopic!;
-    return Relationship.calculateSnapPoint(sourceTopic, toPosition);
+    return RelationshipSnap.calculateSnapPoint(sourceTopic, toPosition);
   }
 
   /** A topic took the focus: its 'ontfocus' event carries the topic as detail. */

@@ -22,14 +22,14 @@ import {
   defaultControlPoints,
   isWithinStraightTolerance,
 } from '@wisemapping/web2d';
-import { $assert, $defined } from './util/assert';
-import PositionType from './PositionType';
+import { $assert } from './util/assert';
+import type PositionType from './PositionType';
 
-import SizeType from './SizeType';
-import Topic from './Topic';
+import type SizeType from './SizeType';
+import type Topic from './Topic';
 import Shape from './util/Shape';
-import Canvas from './Canvas';
-import CanvasElement from './CanvasElement';
+import type Canvas from './Canvas';
+import type CanvasElement from './CanvasElement';
 
 class DragPivot implements CanvasElement {
   private _position: PositionType;
@@ -254,11 +254,11 @@ class DragPivot implements CanvasElement {
     const connectToRect = this._connectRect;
     workspace.removeChild(connectToRect);
 
-    if ($defined(this._straightLine)) {
+    if (this._straightLine != null) {
       workspace.removeChild(this._straightLine);
     }
 
-    if ($defined(this._curvedLine)) {
+    if (this._curvedLine != null) {
       workspace.removeChild(this._curvedLine);
     }
 

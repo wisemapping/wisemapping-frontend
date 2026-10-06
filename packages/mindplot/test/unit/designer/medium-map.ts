@@ -20,7 +20,7 @@
  * Builds medium-sized Tango maps, the same on every run, for the map-load tests: they compare
  * the layout of a whole map and count the work a load does.
  */
-import Designer from '../../../src/components/Designer';
+import type Designer from '../../../src/components/Designer';
 
 /* eslint-disable no-bitwise -- mulberry32 is integer bit mixing */
 /** A small seeded generator (mulberry32), so the generated map never changes. */
@@ -71,7 +71,7 @@ export const buildMediumMap = ({
     const words = 1 + Math.floor(next() * 4);
     const parts = [`T${id}`];
     for (let i = 0; i < words; i++) {
-      parts.push(WORDS[Math.floor(next() * WORDS.length)]);
+      parts.push(WORDS[Math.floor(next() * WORDS.length)]!);
     }
     return parts.join(' ');
   };
@@ -103,7 +103,7 @@ export const buildMediumMap = ({
       next() < 0.3
         ? Math.floor(next() * Math.min(candidates, 12))
         : candidates - 1 - Math.floor(next() * Math.min(candidates, 25));
-    const parent = all[Math.max(0, pick)];
+    const parent = all[Math.max(0, pick)]!;
     // Floating topics get a few children only.
     if (parent !== central && roots.includes(parent) && parent.children.length >= 3) {
       central.children.push(topic);

@@ -16,16 +16,15 @@
  *   limitations under the License.
  */
 
-import { Text, Group } from '@wisemapping/web2d';
-import type { Image } from '@wisemapping/web2d';
+import { Text } from '@wisemapping/web2d';
+import type { Image, Group } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
-import Icon from './Icon';
-import IconGroup from './IconGroup';
-import SizeType from './SizeType';
-import PositionType from './PositionType';
-import FeatureModel from './model/FeatureModel';
-import Topic from './Topic';
+import type { Removable } from './Icon';
+import type IconGroup from './IconGroup';
+import type SizeType from './SizeType';
+import type PositionType from './PositionType';
+import type Topic from './Topic';
 import ThemeFactory from './theme/ThemeFactory';
 
 class ImageEmojiFeature {
@@ -37,7 +36,7 @@ class ImageEmojiFeature {
 
   // Delete-widget icon of the current _emojiText. Reused across redraws, as
   // ElementDeleteWidget.decorate only skips icons it has already decorated.
-  private _emojiIcon: Icon | undefined;
+  private _emojiIcon: Removable | undefined;
 
   private _emojiIconText: Text | undefined;
 
@@ -183,16 +182,13 @@ class ImageEmojiFeature {
   }
 
   // Create emoji icon for delete functionality
-  private _createEmojiIcon(): Icon {
+  private _createEmojiIcon(): Removable {
     const emojiTextShape = this._emojiText!;
     const topic = this._topic;
 
     return {
       getElement(): Group {
         return topic.get2DElement(); // Return the topic's main group
-      },
-      setGroup(): void {
-        // Not needed for emoji
       },
       getGroup(): IconGroup | null {
         return null;
@@ -209,10 +205,6 @@ class ImageEmojiFeature {
       remove(): void {
         const actionDispatcher = topic.getActionDispatcher();
         actionDispatcher.changeImageEmojiCharToTopic([topic.getId()], undefined);
-      },
-      getModel(): FeatureModel {
-        // Return a dummy model for compatibility
-        return {} as FeatureModel;
       },
     };
   }

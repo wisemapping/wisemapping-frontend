@@ -17,7 +17,7 @@
  */
 
 import NodeModel from '../../../src/components/model/NodeModel';
-import Mindmap from '../../../src/components/model/Mindmap';
+import type Mindmap from '../../../src/components/model/Mindmap';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import { buildMediumMap } from '../designer/medium-map';
 

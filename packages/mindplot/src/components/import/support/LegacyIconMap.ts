@@ -17,6 +17,7 @@
  */
 
 import iconToEmoji from '../../persistence/iconToEmoji.json';
+import { ownEntry } from './IconEmoji';
 
 /**
  * The SVG icons that WiseMapping no longer ships (face_surprise, bulb_light_on, thumb_thumb_up...)
@@ -27,8 +28,6 @@ const legacyIconToEmoji = iconToEmoji as Record<string, string>;
 
 /** The emoji that replaced a legacy WiseMapping icon id, undefined if it is not a legacy id. */
 export const legacyIconEmoji = (iconId: string): string | undefined =>
-  Object.prototype.hasOwnProperty.call(legacyIconToEmoji, iconId)
-    ? legacyIconToEmoji[iconId]
-    : undefined;
+  ownEntry(legacyIconToEmoji, iconId);
 
 export default legacyIconEmoji;

@@ -40,7 +40,9 @@ export const pathCommands = (d: string | null): string[] => (d ?? '').match(/[A-
 
 export const hasNaN = (value: string | null): boolean => /NaN|Infinity/.test(value ?? '');
 
-export const extent = (pts: [number, number][]) => {
+export const extent = (
+  pts: [number, number][],
+): { minX: number; maxX: number; minY: number; maxY: number } => {
   const xs = pts.map((p) => p[0]);
   const ys = pts.map((p) => p[1]);
   return {

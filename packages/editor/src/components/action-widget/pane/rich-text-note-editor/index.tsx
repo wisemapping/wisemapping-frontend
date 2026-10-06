@@ -24,12 +24,17 @@ import FormControl from '@mui/material/FormControl';
 import Popover from '@mui/material/Popover';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import FormatIndentIncreaseIcon from '@mui/icons-material/FormatIndentIncrease';
+import FormatIndentDecreaseIcon from '@mui/icons-material/FormatIndentDecrease';
 import { useTheme } from '@mui/material/styles';
 import React, { ReactElement, useState, useCallback, useRef, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import NodeProperty from '../../../../classes/model/node-property';
 import SaveAndDelete from '../save-and-delete';
 import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
+import { HtmlSanitizer } from '@wisemapping/mindplot';
+import { attachNoteEditing, NoteEditing } from './note-editing';
+import { safeLinkUrl } from './markdown-rules';
 
 type RichTextNoteEditorProps = {
   closeModal: () => void;
@@ -45,7 +50,11 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   const editorRef = useRef<HTMLDivElement>(null);
   const [iconPickerAnchor, setIconPickerAnchor] = useState<HTMLButtonElement | null>(null);
   const savedRangeRef = useRef<Range | null>(null);
-  const [characterCount, setCharacterCount] = useState(initialValue.length);
+  const editingRef = useRef<NoteEditing | null>(null);
+  // Count visible text, as edits do; DOMParser is inert (no scripts or image loads).
+  const [characterCount, setCharacterCount] = useState(
+    () => new DOMParser().parseFromString(initialValue, 'text/html').body.textContent?.length ?? 0,
+  );
   const MAX_CHARACTERS = 10000;
   const theme = useTheme();
   const intl = useIntl();
@@ -53,7 +62,8 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   const submitHandler = useCallback(() => {
     closeModal();
     if (noteModel.setValue) {
-      noteModel.setValue(content);
+      // Only the markup the note sanitizer keeps is saved.
+      noteModel.setValue(HtmlSanitizer.sanitize(content));
     }
   }, [closeModal, noteModel, content]);
 
@@ -105,9 +115,13 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   }, []);
 
   const insertLink = useCallback(() => {
-    const url = prompt('Enter URL:');
+    const url = prompt('Enter URL:')?.trim();
     if (url) {
-      execCommand('createLink', url);
+      // An address without a scheme is taken as https; javascript: and the like are refused.
+      const href = safeLinkUrl(/^[a-z][a-z0-9+.-]*:/i.test(url) ? url : `https://${url}`);
+      if (href) {
+        execCommand('createLink', href);
+      }
     }
   }, [execCommand]);
 
@@ -194,7 +208,8 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
 
   useEffect(() => {
     if (editorRef.current) {
-      editorRef.current.innerHTML = initialValue || '';
+      // The note comes from the map: it is sanitized before it is edited.
+      editorRef.current.innerHTML = HtmlSanitizer.sanitize(initialValue || '');
       // Auto-focus the editor when it opens
       setTimeout(() => {
         if (editorRef.current) {
@@ -203,6 +218,21 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
       }, 100);
     }
   }, [initialValue]);
+
+  // Markdown, nested lists, line breaks and links (see note-editing).
+  useEffect(() => {
+    // The editor element is rendered with the component.
+    const editing = attachNoteEditing(editorRef.current!, { onChange: handleContentChange });
+    editingRef.current = editing;
+    return () => {
+      editing.detach();
+      editingRef.current = null;
+    };
+  }, [handleContentChange]);
+
+  const indent = useCallback((outdent: boolean) => {
+    editingRef.current?.indent(outdent);
+  }, []);
 
   // Handle keyboard shortcuts and prevent editor interference
   useEffect(() => {
@@ -515,6 +545,43 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
             >
               1.
             </Button>
+            <Button
+              // Keeps the selection in the note.
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => indent(true)}
+              title={intl.formatMessage({
+                id: 'rich-text-editor.outdent',
+                defaultMessage: 'Decrease Indent (Shift+Tab)',
+              })}
+              sx={{
+                minWidth: '36px',
+                borderColor: theme.palette.divider,
+                '&:hover': {
+                  borderColor: theme.palette.text.secondary,
+                  backgroundColor: theme.palette.action.hover,
+                },
+              }}
+            >
+              <FormatIndentDecreaseIcon fontSize="small" />
+            </Button>
+            <Button
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => indent(false)}
+              title={intl.formatMessage({
+                id: 'rich-text-editor.indent',
+                defaultMessage: 'Increase Indent (Tab)',
+              })}
+              sx={{
+                minWidth: '36px',
+                borderColor: theme.palette.divider,
+                '&:hover': {
+                  borderColor: theme.palette.text.secondary,
+                  backgroundColor: theme.palette.action.hover,
+                },
+              }}
+            >
+              <FormatIndentIncreaseIcon fontSize="small" />
+            </Button>
           </ButtonGroup>
         </Box>
       </Box>
@@ -549,6 +616,13 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
             overflow: 'auto',
             fontFamily: 'Arial, sans-serif',
             fontSize: '14px',
+            '& ul, & ol': { pl: 3, my: 0.5 },
+            '& li > ul, & li > ol, & ul > ul, & ol > ol': { my: 0 },
+            '& ul ul': { listStyleType: 'circle' },
+            '& ul ul ul': { listStyleType: 'square' },
+            '& ol ol': { listStyleType: 'lower-alpha' },
+            '& ol ol ol': { listStyleType: 'lower-roman' },
+            '& a': { color: theme.palette.primary.main, textDecoration: 'underline' },
             '&::-webkit-scrollbar': {
               width: '8px',
             },

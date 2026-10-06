@@ -15,37 +15,48 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Text, Group, ElementClass, ElementPeer, Rect } from '@wisemapping/web2d';
-import type { StrokeStyle, FontWeightType as TextWeight } from '@wisemapping/web2d';
-import { $assert, $defined } from './util/assert';
+import { Text, Group, Rect } from '@wisemapping/web2d';
+import type {
+  StrokeStyle,
+  FontWeightType as TextWeight,
+  ElementClass,
+  ElementPeer,
+} from '@wisemapping/web2d';
+import { $assert } from './util/assert';
 import isMacPlatform from './util/platform';
 
-import NodeGraph, { NodeOption } from './NodeGraph';
+import type { NodeOption } from './NodeGraph';
+import NodeGraph from './NodeGraph';
 import TopicFeatureFactory from './TopicFeature';
-import TopicConnection, { LineType } from './TopicConnection';
+import type { LineType } from './TopicConnection';
+import TopicConnection from './TopicConnection';
 import IconGroup from './IconGroup';
 import ImageEmojiFeature from './ImageEmojiFeature';
-import ImageSVGFeature, { GalleryIconShape } from './ImageSVGFeature';
+import type { GalleryIconShape } from './ImageSVGFeature';
+import ImageSVGFeature from './ImageSVGFeature';
 import ShirinkConnector from './ShrinkConnector';
+import type { CommandDispatcher } from './ActionDispatcher';
 import ActionDispatcher from './ActionDispatcher';
 
 import type TopicEventDispatcher from './TopicEventDispatcher';
-import { TopicShapeType } from './model/INodeModel';
-import NodeModel from './model/NodeModel';
-import Relationship from './Relationship';
-import Canvas from './Canvas';
-import LayoutManager from './layout/LayoutManager';
-import SizeType from './SizeType';
-import FeatureModel from './model/FeatureModel';
-import PositionType from './PositionType';
-import Icon from './Icon';
-import { FontStyleType } from './FontStyleType';
-import { FontWeightType, toTextWeight } from './FontWeightType';
-import DragTopic from './DragTopic';
+import type { TopicShapeType } from './model/INodeModel';
+import type NodeModel from './model/NodeModel';
+import type Relationship from './Relationship';
+import type Canvas from './Canvas';
+import type LayoutManager from './layout/LayoutManager';
+import type SizeType from './SizeType';
+import type FeatureModel from './model/FeatureModel';
+import type PositionType from './PositionType';
+import type Icon from './Icon';
+import type { FontStyleType } from './FontStyleType';
+import type { FontWeightType } from './FontWeightType';
+import { toTextWeight } from './FontWeightType';
+import type DragTopic from './DragTopic';
 import ThemeFactory from './theme/ThemeFactory';
 import ThemeResolutionCache from './theme/ThemeResolutionCache';
-import Theme, { ThemeVariant } from './theme/Theme';
-import TopicShape from './shape/TopicShape';
+import type { ThemeVariant } from './theme/Theme';
+import type Theme from './theme/Theme';
+import type TopicShape from './shape/TopicShape';
 import TopicShapeFactory from './shape/TopicShapeFactory';
 import type { OrientationType } from './layout/LayoutType';
 
@@ -481,21 +492,21 @@ abstract class Topic extends NodeGraph {
     this.redraw(this.getThemeVariant(), true);
   }
 
-  setFontSize(value: number): void {
+  setFontSize(value: number | undefined): void {
     const model = this.getModel();
     model.setFontSize(value);
 
     this.redraw(this.getThemeVariant(), true);
   }
 
-  setFontStyle(value: FontStyleType): void {
+  setFontStyle(value: FontStyleType | undefined): void {
     const model = this.getModel();
     model.setFontStyle(value);
 
     this.redraw(this.getThemeVariant(), true);
   }
 
-  setFontWeight(value: FontWeightType): void {
+  setFontWeight(value: FontWeightType | undefined): void {
     const model = this.getModel();
     model.setFontWeight(value);
 
@@ -737,6 +748,7 @@ abstract class Topic extends NodeGraph {
     if (this.isOnFocus() !== focus) {
       const theme = ThemeFactory.create(this.getModel(), this.getThemeVariant());
       this._onFocus = focus;
+      this.getDesigner()?.getModel().setTopicSelected(this, focus);
       const outerShape = this.getOuterShape();
 
       const fillColor = theme.getOuterBackgroundColor(this, focus);
@@ -859,20 +871,14 @@ abstract class Topic extends NodeGraph {
    * stack. ActionDispatcher.getInstance() is the last designer built's: with two designers on a
    * page, the other map. A topic built without a designer falls back to it.
    */
-  getActionDispatcher(): ActionDispatcher {
+  getActionDispatcher(): CommandDispatcher {
     return this.getDesigner()?.getActionDispatcher() ?? ActionDispatcher.getInstance();
   }
 
   getNoteValue(): string | null {
     const model = this.getModel();
-    const notes = model.findFeatureByType('note');
-
-    let result: string | null = null;
-    if (notes.length > 0) {
-      result = notes[0].getText();
-    }
-
-    return result;
+    const [note] = model.findFeatureByType('note');
+    return note ? note.getText() : null;
   }
 
   setNoteValue(value: string | undefined): void {
@@ -880,16 +886,15 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     // Fetched only when there is something to dispatch: clearing a missing note needs none.
     const dispatcher = () => this.getActionDispatcher();
-    const notes = model.findFeatureByType('note');
+    const [note] = model.findFeatureByType('note');
 
-    if (!$defined(value)) {
+    if (value == null) {
       // Nothing to clear when the topic has no note ...
-      if (notes.length > 0) {
-        const featureId = notes[0].getId();
-        dispatcher().removeFeatureFromTopic(topicId, featureId);
+      if (note) {
+        dispatcher().removeFeatureFromTopic(topicId, note.getId());
       }
-    } else if (notes.length > 0) {
-      dispatcher().changeFeatureToTopic(topicId, notes[0].getId(), {
+    } else if (note) {
+      dispatcher().changeFeatureToTopic(topicId, note.getId(), {
         text: value,
         contentType: 'html', // Rich text editor always saves HTML
       });
@@ -904,12 +909,8 @@ abstract class Topic extends NodeGraph {
   getLinkValue(): string | undefined {
     const model = this.getModel();
     // @param {mindplot.model.LinkModel[]} links
-    const links = model.findFeatureByType('link');
-    let result: string | undefined;
-    if (links.length > 0) {
-      result = links[0].getUrl();
-    }
-    return result;
+    const [link] = model.findFeatureByType('link');
+    return link?.getUrl();
   }
 
   setLinkValue(value: string | undefined) {
@@ -917,16 +918,15 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     // Fetched only when there is something to dispatch: clearing a missing link needs none.
     const dispatcher = () => this.getActionDispatcher();
-    const links = model.findFeatureByType('link');
+    const [link] = model.findFeatureByType('link');
 
-    if (!$defined(value)) {
+    if (value == null) {
       // Nothing to clear when the topic has no link ...
-      if (links.length > 0) {
-        const featureId = links[0].getId();
-        dispatcher().removeFeatureFromTopic(topicId, featureId);
+      if (link) {
+        dispatcher().removeFeatureFromTopic(topicId, link.getId());
       }
-    } else if (links.length > 0) {
-      dispatcher().changeFeatureToTopic(topicId, links[0].getId(), {
+    } else if (link) {
+      dispatcher().changeFeatureToTopic(topicId, link.getId(), {
         url: value,
       });
     } else {
@@ -983,7 +983,7 @@ abstract class Topic extends NodeGraph {
   getIncomingLines(): TopicConnection[] {
     const children = this.getChildren();
     return children
-      .filter((node) => $defined(node.getOutgoingLine()))
+      .filter((node) => node.getOutgoingLine() != null)
       .map((node) => node.getOutgoingLine()!);
   }
 
@@ -1115,7 +1115,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  setSize(size: SizeType, force?: boolean): void {
+  override setSize(size: SizeType, force?: boolean): void {
     // A failed measurement (NaN or infinite) would be seen as a change on every redraw
     // (NaN !== NaN): keep the previous size instead.
     const isMeasured = Number.isFinite(size.width) && Number.isFinite(size.height);
@@ -1129,9 +1129,8 @@ abstract class Topic extends NodeGraph {
       height: Math.ceil(newSize.height),
     };
 
-    // Note: oldSize is the live size object, so it already holds the new size once
-    // super.setSize() runs. Read it only before that. Topics are re-centred on their
-    // model position and the layout manager, which owns positions, moves them if needed.
+    // Topics are re-centred on their model position and the layout manager, which owns
+    // positions, moves them if needed.
     const oldSize = this.getSize();
     const hasSizeChanged =
       oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;
@@ -1264,7 +1263,7 @@ abstract class Topic extends NodeGraph {
 
   getChildren(): Topic[] {
     let result = this._children;
-    if (!$defined(result)) {
+    if (result == null) {
       this._children = [];
       result = this._children;
     }
@@ -1310,7 +1309,7 @@ abstract class Topic extends NodeGraph {
     this.redraw(this.getThemeVariant(), false);
   }
 
-  createDragNode(layoutManager: LayoutManager): DragTopic {
+  override createDragNode(layoutManager: LayoutManager): DragTopic {
     const result = super.createDragNode(layoutManager);
 
     // Is the node already connected ?
@@ -1611,18 +1610,10 @@ abstract class Topic extends NodeGraph {
   }
 
   isChildTopic(childTopic: Topic): boolean {
-    let result = this.getId() === childTopic.getId();
-    if (!result) {
-      const children = this.getChildren();
-      for (let i = 0; i < children.length; i++) {
-        const parent = children[i];
-        result = parent.isChildTopic(childTopic);
-        if (result) {
-          break;
-        }
-      }
-    }
-    return result;
+    return (
+      this.getId() === childTopic.getId() ||
+      this.getChildren().some((child) => child.isChildTopic(childTopic))
+    );
   }
 
   private getStrokeStyle(borderStyle: string | null): StrokeStyle | null {

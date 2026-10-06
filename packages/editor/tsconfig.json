@@ -18,6 +18,7 @@
     "rootDir": "..",
     "sourceMap": true,
     "noImplicitAny": true,
+    "noImplicitOverride": true,
     "module": "es2020",
     "moduleResolution": "bundler",
     "strict": true,

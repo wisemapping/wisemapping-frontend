@@ -19,7 +19,7 @@ import Importer from './Importer';
 import ImportError from './ImportError';
 import SecureXmlParser from '../security/SecureXmlParser';
 import Mindmap from '../model/Mindmap';
-import NodeModel from '../model/NodeModel';
+import type NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import { StrokeStyle } from '../model/RelationshipModel';
@@ -29,13 +29,30 @@ import toWiseMappingXml from './support/MindmapXml';
 import { legacyIconEmoji } from './support/LegacyIconMap';
 import { htmlToPlainText } from './support/HtmlText';
 import { applyFreemindFont } from './support/FreemindFont';
-import FreemindIconConverter, { WiseIcon } from './FreemindIconConverter';
-import { TopicShapeType } from '../model/INodeModel';
+import TopicIdSequence from './support/TopicIdSequence';
+import { NAMED_ICON_EMOJIS, ownEntry } from './support/IconEmoji';
+import { alternatingSidePosition } from './support/MainTopicPosition';
+import type { WiseIcon } from './FreemindIconConverter';
+import FreemindIconConverter from './FreemindIconConverter';
+import type { TopicShapeType } from '../model/INodeModel';
+
+// Freeplane icon names and the WiseMapping emoji icons they map to.
+const FREEPLANE_ICON_EMOJIS: Readonly<Record<string, string>> = {
+  ...NAMED_ICON_EMOJIS,
+  'flag-red': '🔴',
+  'flag-orange': '🟠',
+  'flag-pink': '🩷',
+  'flag-purple': '🟣',
+  'star-yellow': '⭐',
+  'star-red': '⭐',
+  'star-green': '⭐',
+  'star-blue': '⭐',
+};
 
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
 
-  private idCounter: number = 1;
+  private readonly ids = new TopicIdSequence();
 
   private topicIdMap: Map<string, number>;
 
@@ -60,7 +77,7 @@ class FreeplaneImporter extends Importer {
       }
 
       // Reset counters and ID map
-      this.idCounter = 1;
+      this.ids.reset();
       this.topicIdMap.clear();
 
       const mindmap = this.buildMindmap(rootNode, nameMap);
@@ -76,7 +93,7 @@ class FreeplaneImporter extends Importer {
     mindmap.setTheme('prism');
     mindmap.setLayout('mindmap');
 
-    const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
+    const centralTopic = mindmap.createNode('CentralTopic', this.ids.next());
     this.mapNodeId(rootNode, centralTopic);
     centralTopic.setText(FreeplaneImporter.nodeText(rootNode) || 'Central Topic');
     const centralShape = FreeplaneImporter.styleToShape(rootNode.getAttribute('STYLE'));
@@ -90,7 +107,7 @@ class FreeplaneImporter extends Importer {
     // Process child nodes
     const childNodes = rootNode.querySelectorAll(':scope > node');
     childNodes.forEach((childNode, index) => {
-      centralTopic.append(this.convertNode(mindmap, childNode as Element, index));
+      centralTopic.append(this.convertNode(mindmap, childNode, index));
     });
 
     this.addRelationships(mindmap, rootNode);
@@ -99,10 +116,10 @@ class FreeplaneImporter extends Importer {
   }
 
   private convertNode(mindmap: Mindmap, freeplaneNode: Element, order: number): NodeModel {
-    const topic = mindmap.createNode('MainTopic', this.generateId());
+    const topic = mindmap.createNode('MainTopic', this.ids.next());
     this.mapNodeId(freeplaneNode, topic);
 
-    const position = this.calculatePosition(order);
+    const position = alternatingSidePosition(order);
     topic.setText(FreeplaneImporter.nodeText(freeplaneNode) || 'Untitled');
     topic.setPosition(position.x, position.y);
     topic.setOrder(order);
@@ -120,7 +137,7 @@ class FreeplaneImporter extends Importer {
     // Process child nodes recursively
     const childNodes = freeplaneNode.querySelectorAll(':scope > node');
     childNodes.forEach((childNode, childIndex) => {
-      topic.append(this.convertNode(mindmap, childNode as Element, childIndex));
+      topic.append(this.convertNode(mindmap, childNode, childIndex));
     });
 
     return topic;
@@ -272,11 +289,11 @@ class FreeplaneImporter extends Importer {
    * selector, which is added back to a single character that is text by default (❤ is ❤️).
    */
   private static emojiOf(builtin: string): string | undefined {
-    const match = /^emoji-([0-9A-F]+(?:-[0-9A-F]+)*)$/i.exec(builtin);
-    if (!match) {
+    const sequence = /^emoji-([0-9A-F]+(?:-[0-9A-F]+)*)$/i.exec(builtin)?.[1];
+    if (!sequence) {
       return undefined;
     }
-    const codePoints = match[1].split('-').map((hex) => parseInt(hex, 16));
+    const codePoints = sequence.split('-').map((hex) => parseInt(hex, 16));
     if (codePoints.some((codePoint) => codePoint > 0x10ffff)) {
       return undefined;
     }
@@ -287,367 +304,17 @@ class FreeplaneImporter extends Importer {
   }
 
   private mapFreeplaneIconToEmojiIcon(builtin: string): string {
-    const iconMap: Record<string, string> = {
-      // Priority and status icons
-      flag_red: '🔴',
-      flag_yellow: '🟡',
-      flag_green: '🟢',
-      flag_blue: '🔵',
-      flag_orange: '🟠',
-      flag_pink: '🩷',
-      flag_purple: '🟣',
-
-      // Star and rating icons
-      star: '⭐',
-      star_yellow: '⭐',
-      star_red: '⭐',
-      star_green: '⭐',
-      star_blue: '⭐',
-
-      // Task and completion icons
-      task: '📋',
-      task_done: '✅',
-      task_start: '🟡',
-      task_pause: '⏸️',
-      task_stop: '⏹️',
-
-      // Arrow and direction icons
-      arrow_up: '⬆️',
-      arrow_down: '⬇️',
-      arrow_left: '⬅️',
-      arrow_right: '➡️',
-      arrow_up_right: '↗️',
-      arrow_down_right: '↘️',
-      arrow_down_left: '↙️',
-      arrow_up_left: '↖️',
-
-      // Symbol icons
-      smile: '😊',
-      sad: '😢',
-      angry: '😠',
-      surprised: '😲',
-      confused: '😕',
-      thinking: '🤔',
-      happy: '😃',
-      laughing: '😂',
-      wink: '😉',
-      kiss: '😘',
-      love: '😍',
-      cool: '😎',
-      sleepy: '😪',
-      tired: '😴',
-      worried: '😟',
-      crying: '😭',
-      screaming: '😱',
-      neutral: '😐',
-      expressionless: '😑',
-
-      // Numbers (1-10)
-      number_1: '1️⃣',
-      number_2: '2️⃣',
-      number_3: '3️⃣',
-      number_4: '4️⃣',
-      number_5: '5️⃣',
-      number_6: '6️⃣',
-      number_7: '7️⃣',
-      number_8: '8️⃣',
-      number_9: '9️⃣',
-      number_10: '🔟',
-
-      // Letters (A-Z)
-      letter_a: '🅰️',
-      letter_b: '🅱️',
-      letter_c: '🅲',
-      letter_d: '🅳',
-      letter_e: '🅴',
-      letter_f: '🅵',
-      letter_g: '🅶',
-      letter_h: '🅷',
-      letter_i: '🅸',
-      letter_j: '🅹',
-      letter_k: '🅺',
-      letter_l: '🅻',
-      letter_m: '🅼',
-      letter_n: '🅽',
-      letter_o: '🅾️',
-      letter_p: '🅿️',
-      letter_q: '🆀',
-      letter_r: '🆁',
-      letter_s: '🆂',
-      letter_t: '🆃',
-      letter_u: '🆄',
-      letter_v: '🆅',
-      letter_w: '🆆',
-      letter_x: '🆇',
-      letter_y: '🆈',
-      letter_z: '🆉',
-
-      // People icons
-      people: '👥',
-      person: '👤',
-      person_1: '👤',
-      person_2: '👥',
-      person_3: '👥',
-
-      // Time and calendar icons
-      clock: '🕐',
-      calendar: '📅',
-      time: '⏰',
-      phone: '📞',
-      email: '📧',
-      message: '💬',
-      chat: '💬',
-
-      // File and document icons
-      file: '📄',
-      folder: '📁',
-      attachment: '📎',
-      link: '🔗',
-
-      // Warning and info icons
-      warning: '⚠️',
-      info: 'ℹ️',
-      question: '❓',
-      exclamation: '❗',
-
-      // Heart and like icons
-      heart: '❤️',
-      like: '👍',
-      dislike: '👎',
-
-      // Idea and lightbulb icons
-      lightbulb: '💡',
-      idea: '💡',
-      bulb: '💡',
-
-      // Money and currency icons
-      money: '💰',
-      dollar: '💲',
-      euro: '💶',
-      pound: '💷',
-
-      // Location and building icons
-      location: '📍',
-      home: '🏠',
-      building: '🏢',
-      school: '🏫',
-
-      // Technology icons
-      computer: '💻',
-      laptop: '💻',
-      phone_mobile: '📱',
-      tablet: '📱',
-
-      // Weather icons
-      sun: '☀️',
-      cloud: '☁️',
-      rain: '🌧️',
-      snow: '❄️',
-      storm: '⛈️',
-      rainbow: '🌈',
-      sunny: '🌞',
-      partly_cloudy: '⛅',
-      cloudy: '🌥️',
-      lightning: '⚡',
-      tornado: '🌪️',
-      fog: '🌫️',
-      wind: '🌬️',
-      thermometer: '🌡️',
-
-      // Animals
-      dog: '🐶',
-      cat: '🐱',
-      mouse: '🐭',
-      hamster: '🐹',
-      rabbit: '🐰',
-      fox: '🦊',
-      bear: '🐻',
-      panda: '🐼',
-      koala: '🐨',
-      lion: '🦁',
-      tiger: '🐯',
-      cow: '🐮',
-      pig: '🐷',
-      frog: '🐸',
-      monkey: '🐵',
-      chicken: '🐔',
-      penguin: '🐧',
-      bird: '🐦',
-      fish: '🐟',
-      whale: '🐳',
-      dolphin: '🐬',
-      octopus: '🐙',
-      spider: '🕷️',
-      bug: '🐛',
-      bee: '🐝',
-      butterfly: '🦋',
-      snail: '🐌',
-      turtle: '🐢',
-      snake: '🐍',
-      dragon: '🐉',
-      unicorn: '🦄',
-
-      // Food and drink icons
-      coffee: '☕',
-      food: '🍽️',
-      pizza: '🍕',
-      burger: '🍔',
-      apple: '🍎',
-      orange: '🍊',
-      banana: '🍌',
-      grapes: '🍇',
-      strawberry: '🍓',
-      kiwi: '🥝',
-      peach: '🍑',
-      coconut: '🥥',
-      cherry: '🍒',
-      lemon: '🍋',
-      watermelon: '🍉',
-      pineapple: '🍍',
-      bread: '🍞',
-      cookie: '🍪',
-      candy: '🍬',
-      chocolate: '🍫',
-      ice_cream: '🍦',
-      popcorn: '🍿',
-      beer: '🍺',
-      wine: '🍷',
-      cocktail: '🍸',
-      tea: '🍵',
-      milk: '🥛',
-      water: '💧',
-
-      // Sports and activity icons
-      sports: '⚽',
-      football: '⚽',
-      basketball: '🏀',
-      tennis: '🎾',
-      swimming: '🏊',
-      soccer: '⚽',
-      baseball: '⚾',
-      volleyball: '🏐',
-      rugby: '🏈',
-      golf: '⛳',
-      bowling: '🎳',
-      running: '🏃',
-      cycling: '🚴',
-      skiing: '⛷️',
-      snowboarding: '🏂',
-      surfing: '🏄',
-      climbing: '🧗',
-      yoga: '🧘',
-      dancing: '💃',
-      gym: '🏋️',
-      weightlifting: '🏋️',
-      boxing: '🥊',
-      martial_arts: '🥋',
-      archery: '🏹',
-      fishing: '🎣',
-      hiking: '🧖',
-      camping: '🏕️',
-      picnic: '🍽️',
-      barbecue: '🍳',
-      target: '🎯',
-      trophy: '🏆',
-      medal: '🏅',
-      first_place: '🥇',
-      second_place: '🥈',
-      third_place: '🥉',
-
-      // Music and entertainment icons
-      music: '🎵',
-      movie: '🎬',
-      game: '🎮',
-      book: '📚',
-
-      // Travel and transport icons
-      car: '🚗',
-      plane: '✈️',
-      train: '🚂',
-      bus: '🚌',
-      bike: '🚲',
-
-      // Nature icons
-      tree: '🌳',
-      flower: '🌸',
-      leaf: '🍃',
-      mountain: '⛰️',
-      ocean: '🌊',
-
-      // Holiday and celebration icons
-      gift: '🎁',
-      cake: '🎂',
-      party: '🎉',
-      fireworks: '🎆',
-      christmas: '🎄',
-      halloween: '🎃',
-
-      // Tools and work icons
-      tool: '🔧',
-      wrench: '🔧',
-      hammer: '🔨',
-      screwdriver: '🔩',
-      key: '🔑',
-      lock: '🔒',
-
-      // Medical and health icons
-      medical: '🏥',
-      health: '💊',
-      pill: '💊',
-      heartbeat: '💓',
-      cross: '➕',
-
-      // Shopping and commerce icons
-      shopping: '🛒',
-      cart: '🛒',
-      bag: '👜',
-      credit_card: '💳',
-
-      // Security and safety icons
-      security: '🔒',
-      shield: '🛡️',
-      lock_closed: '🔒',
-      lock_open: '🔓',
-
-      // Science and education icons
-      science: '🔬',
-      microscope: '🔬',
-      telescope: '🔭',
-      atom: '⚛️',
-      book_open: '📖',
-      graduation: '🎓',
-    };
-
-    // Return mapped emoji, the emoji of a legacy WiseMapping icon id, or default if not found.
-    // Only own entries: iconMap.constructor is the Object function. Freeplane names use hyphens
-    // (flag-red), the map underscores.
-    const key = builtin.toLowerCase().replace(/-/g, '_');
-    const mapped = Object.prototype.hasOwnProperty.call(iconMap, key) ? iconMap[key] : undefined;
-    return mapped || legacyIconEmoji(builtin) || '💡'; // Default to lightbulb
-  }
-
-  private generateId(): number {
-    return this.idCounter++;
-  }
-
-  private calculatePosition(order: number): { x: number; y: number } {
-    // Distribute first-level topics evenly between left and right sides
-    // Even orders (0, 2, 4...) = Right side, Odd orders (1, 3, 5...) = Left side
-    const isEven = order % 2 === 0;
-    const sideIndex = Math.floor(order / 2);
-
-    // Alternate between right (positive x) and left (negative x) sides
-    const x = isEven ? 200 + sideIndex * 100 : -200 - sideIndex * 100;
-    const y = sideIndex * 150 - sideIndex * 75; // Spread vertically
-
-    return { x, y };
+    // The mapped emoji, the emoji of a legacy WiseMapping icon id, or a light bulb. Hyphens and
+    // underscores are the same (flag-red, flag_red).
+    const key = builtin.toLowerCase().replace(/_/g, '-');
+    return ownEntry(FREEPLANE_ICON_EMOJIS, key) || legacyIconEmoji(builtin) || '💡';
   }
 
   private addRelationships(mindmap: Mindmap, rootNode: Element): void {
     // Find all arrowlink elements in the document
     const arrowlinks = rootNode.ownerDocument?.querySelectorAll('arrowlink') || [];
     arrowlinks.forEach((arrowlink) => {
-      this.addRelationship(mindmap, arrowlink as Element);
+      this.addRelationship(mindmap, arrowlink);
     });
   }
 

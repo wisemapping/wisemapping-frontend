@@ -65,12 +65,6 @@
       "value": "Esta acción no se puede deshacer. Esto eliminará permanentemente tu cuenta y removerá todos los datos de nuestros servidores."
     }
   ],
-  "account.delete-warning": [
-    {
-      "type": 0,
-      "value": "Tenga en cuenta que no podrá recuperar ningún mapa mental que haya creado. Toda su información será eliminada y no podrá ser restaurada."
-    }
-  ],
   "account.delete-warning-collaborations": [
     {
       "type": 0,
@@ -453,12 +447,6 @@
       "value": "Actualizar"
     }
   ],
-  "admin.status": [
-    {
-      "type": 0,
-      "value": "Estado"
-    }
-  ],
   "admin.status-active": [
     {
       "type": 0,
@@ -767,12 +755,6 @@
     {
       "type": 0,
       "value": "Todos los mapas seleccionados serán eliminados"
-    }
-  ],
-  "dialog.loading": [
-    {
-      "type": 0,
-      "value": "Cargando ..."
     }
   ],
   "duplicate.copy-title": [
@@ -1601,6 +1583,16 @@
     {
       "type": 0,
       "value": "Seleccionar todo"
+    }
+  ],
+  "maps.select-map": [
+    {
+      "type": 0,
+      "value": "Seleccionar "
+    },
+    {
+      "type": 1,
+      "value": "title"
     }
   ],
   "maps.tooltip-open": [

@@ -25,7 +25,7 @@ const loadTango = (icons: string[]) => {
     `${icons.map((id) => `<icon id="${id}"/>`).join('')}</topic></map>`;
   const dom = new DOMParser().parseFromString(xml, 'text/xml');
   const mindmap = new XMLSerializerTango().loadFromDom(dom, 'map');
-  return mindmap.getBranches()[0].getFeatures();
+  return mindmap.getBranches()[0]!.getFeatures();
 };
 
 describe('XMLSerializerTango legacy icons', () => {

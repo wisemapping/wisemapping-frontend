@@ -29,12 +29,12 @@ const isOneOf =
 /** Stroke dash styles (see ElementPeer.DASH_ARRAYS). */
 export const STROKE_STYLES = ['solid', 'dot', 'dash', 'dashdot', 'longdash'] as const;
 export type StrokeStyle = (typeof STROKE_STYLES)[number];
-export const isStrokeStyle = isOneOf(STROKE_STYLES);
+export const isStrokeStyle: (value: unknown) => value is StrokeStyle = isOneOf(STROKE_STYLES);
 
 /** PolyLine path styles. */
 export const POLYLINE_STYLES = ['Straight', 'MiddleStraight', 'MiddleCurved', 'Curved'] as const;
 export type PolyLineStyle = (typeof POLYLINE_STYLES)[number];
-export const isPolyLineStyle = isOneOf(POLYLINE_STYLES);
+export const isPolyLineStyle: (value: unknown) => value is PolyLineStyle = isOneOf(POLYLINE_STYLES);
 
 /** The axis a connection line leaves its source along. */
 export const ORIENTATIONS = ['horizontal', 'vertical'] as const;
@@ -65,4 +65,4 @@ export const ELEMENT_TYPES = [
   'NeuronLine',
 ] as const;
 export type ElementType = (typeof ELEMENT_TYPES)[number];
-export const isElementType = isOneOf(ELEMENT_TYPES);
+export const isElementType: (value: unknown) => value is ElementType = isOneOf(ELEMENT_TYPES);

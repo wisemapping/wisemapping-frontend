@@ -32,7 +32,7 @@ import Client, {
   MapMetadata,
   LoginErrorInfo,
 } from '..';
-import AppI18n, { Locale, LocaleCode, localeFromStr } from '../../app-i18n';
+import AppI18n, { Locale, LocaleCode, Locales, localeFromStr } from '../../app-i18n';
 import JwtTokenConfig from '../../jwt-token-config';
 import { setAnalyticsUserEmail, clearAnalyticsUserId } from '../../../utils/analytics';
 import { appLogger as log } from '../../../utils/logger';
@@ -108,19 +108,18 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
-  logout(): Promise<void> {
+  async logout(): Promise<void> {
     JwtTokenConfig.removeToken();
     clearAnalyticsUserId();
 
     // Kill backend session ...
     try {
-      this.axios.post(`${this.baseUrl}/api/restful/logout`, null, {
+      await this.axios.post(`${this.baseUrl}/api/restful/logout`, null, {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (e) {
       log.error('Error logging out from backend', e);
     }
-    return Promise.resolve();
   }
 
   login(model: JwtAuth): Promise<void> {
@@ -361,11 +360,21 @@ export default class RestClient implements Client {
         .then((response) => {
           const account = response.data;
           const locale: LocaleCode | null = account.locale;
+          let accountLocale: Locale | undefined;
+          if (locale) {
+            try {
+              accountLocale = localeFromStr(locale);
+            } catch {
+              // A language the backend knows but this frontend doesn't: fall back to English.
+              log.warn(`Unsupported account locale '${locale}', using English`);
+              accountLocale = Locales.EN;
+            }
+          }
           success({
             lastname: account.lastname ? account.lastname : '',
             firstname: account.firstname ? account.firstname : '',
             email: account.email,
-            locale: locale ? localeFromStr(locale) : undefined,
+            locale: accountLocale,
             authenticationType: account.authenticationType,
             isAdmin: account.isAdmin === true,
           });
@@ -797,7 +806,7 @@ export default class RestClient implements Client {
       reject: (error: ErrorInfo) => void,
     ) => {
       this.axios
-        .post(`${this.baseUrl}/api/restful/oauth2/googlecallback?code=${code}`, {
+        .post(`${this.baseUrl}/api/restful/oauth2/googlecallback?code=${code}`, null, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
@@ -836,7 +845,7 @@ export default class RestClient implements Client {
       reject: (error: ErrorInfo) => void,
     ) => {
       this.axios
-        .post(`${this.baseUrl}/api/restful/oauth2/facebookcallback?code=${code}`, {
+        .post(`${this.baseUrl}/api/restful/oauth2/facebookcallback?code=${code}`, null, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {

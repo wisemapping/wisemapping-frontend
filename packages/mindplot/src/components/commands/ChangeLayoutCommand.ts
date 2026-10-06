@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import Command from '../Command';
-import CommandContext from '../CommandContext';
+import type CommandContext from '../CommandContext';
 import type { LayoutType } from '../layout/LayoutType';
 
 class ChangeLayoutCommand extends Command {

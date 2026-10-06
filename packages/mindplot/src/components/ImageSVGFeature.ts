@@ -21,14 +21,14 @@
  * It provides functionality to set, get, and render Material UI icons on topics.
  */
 
-import { Text, Group, Image } from '@wisemapping/web2d';
+import type { Group } from '@wisemapping/web2d';
+import { Text, Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
-import Icon from './Icon';
-import SizeType from './SizeType';
-import PositionType from './PositionType';
-import FeatureModel from './model/FeatureModel';
-import Topic from './Topic';
+import type { Removable } from './Icon';
+import type SizeType from './SizeType';
+import type PositionType from './PositionType';
+import type Topic from './Topic';
 import ThemeFactory from './theme/ThemeFactory';
 import ImageEmojiFeature from './ImageEmojiFeature';
 import { BRAND_ICON_PATHS, MATERIAL_ICON_CODEPOINTS } from './GalleryIconData';
@@ -57,7 +57,7 @@ class ImageSVGFeature {
 
   // Delete-widget icon of the current _svgText. Reused across redraws, as
   // ElementDeleteWidget.decorate only skips icons it has already decorated.
-  private _svgIcon: Icon | undefined;
+  private _svgIcon: Removable | undefined;
 
   private _svgIconText: GalleryIconShape | undefined;
 
@@ -353,7 +353,7 @@ class ImageSVGFeature {
     }
   }
 
-  private _createSVGIcon(): Icon | null {
+  private _createSVGIcon(): Removable | null {
     const svgIconName = this.getGalleryIconName();
     if (!svgIconName) {
       return null;
@@ -370,9 +370,6 @@ class ImageSVGFeature {
       getElement(): Group {
         return topic.get2DElement(); // Return the topic's main group
       },
-      setGroup(): void {
-        // Not needed for SVG
-      },
       getGroup(): null {
         return null;
       },
@@ -388,10 +385,6 @@ class ImageSVGFeature {
       remove(): void {
         const actionDispatcher = topic.getActionDispatcher();
         actionDispatcher.changeImageGalleryIconNameToTopic([topic.getId()], undefined);
-      },
-      getModel(): FeatureModel {
-        // Return a dummy model for compatibility
-        return {} as FeatureModel;
       },
     };
   }

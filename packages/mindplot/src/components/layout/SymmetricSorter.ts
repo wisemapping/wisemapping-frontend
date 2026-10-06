@@ -17,9 +17,10 @@
  */
 import { $assert } from '../util/assert';
 import AbstractBasicSorter from './AbstractBasicSorter';
-import RootedTreeSet from './RootedTreeSet';
-import Node from './Node';
-import PositionType from '../PositionType';
+import type { SorterPrediction } from './ChildrenSorterStrategy';
+import type RootedTreeSet from './RootedTreeSet';
+import type Node from './Node';
+import type PositionType from '../PositionType';
 import { sideOf } from '../util/side';
 
 class SymmetricSorter extends AbstractBasicSorter {
@@ -31,7 +32,7 @@ class SymmetricSorter extends AbstractBasicSorter {
     parent: Node,
     node: Node | null,
     position: PositionType | null,
-  ): [number, PositionType] {
+  ): SorterPrediction {
     const self = this;
     const rootNode = graph.getRootNode(parent);
 
@@ -45,7 +46,7 @@ class SymmetricSorter extends AbstractBasicSorter {
           parentDirection * (parent.getSize().width + SymmetricSorter.INTERNODE_HORIZONTAL_PADDING),
         y: parent.getPosition().y,
       };
-      return [graph.getChildren(parent).length, result];
+      return { order: graph.getChildren(parent).length, position: result };
     }
 
     // If it is a dragged node...
@@ -57,14 +58,16 @@ class SymmetricSorter extends AbstractBasicSorter {
     // node has no siblings and its trying to reconnect to its own parent
     const sameParent = parent === graph.getParent(node);
     if (siblings.length === 0 && nodeDirection === positionDirection && sameParent) {
-      return [node.getOrder() ?? 0, node.getPosition()];
+      return { order: node.getOrder() ?? 0, position: node.getPosition() };
     }
 
     // By order, top to bottom. A copy: the children array is in whatever order a layout last left.
     const parentChildren = [...graph.getChildren(parent)].sort(
       (a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0),
     );
-    if (parentChildren.length === 0) {
+    const first = parentChildren[0];
+    const last = parentChildren[parentChildren.length - 1];
+    if (!first || !last) {
       // Fit as a child of the parent node, on the side the layout puts its children, whatever
       // side the mouse is on ...
       const result = {
@@ -75,13 +78,12 @@ class SymmetricSorter extends AbstractBasicSorter {
         y: parent.getPosition().y,
       };
 
-      return [0, result];
+      return { order: 0, position: result };
     }
 
     // Try to fit within ...
-    const last = parentChildren[parentChildren.length - 1];
     for (let i = 0; i < parentChildren.length; i++) {
-      const parentChild = parentChildren[i];
+      const parentChild = parentChildren[i]!; // i < parentChildren.length
       const nodeAfter = parentChildren[i + 1];
 
       // Fit at the bottom
@@ -97,7 +99,7 @@ class SymmetricSorter extends AbstractBasicSorter {
           x: parentChild.getPosition().x,
           y: parentChild.getPosition().y + this._halfSiblingGap(parentChildren, i),
         };
-        return [order, result];
+        return { order, position: result };
       }
 
       // Fit after this node. Exactly at the centre of the node after counts as the pixel above
@@ -108,7 +110,7 @@ class SymmetricSorter extends AbstractBasicSorter {
         position.y <= nodeAfter.getPosition().y
       ) {
         if (nodeAfter.getId() === node.getId() || parentChild.getId() === node.getId()) {
-          return [node.getOrder() ?? 0, node.getPosition()];
+          return { order: node.getOrder() ?? 0, position: node.getPosition() };
         }
         // Moving down within the same parent: detaching the node first shifts the
         // siblings below it up by one, so the slot is one less than nodeAfter's order.
@@ -125,18 +127,17 @@ class SymmetricSorter extends AbstractBasicSorter {
             (nodeAfter.getPosition().y - parentChild.getPosition().y) / 2,
         };
 
-        return [orderResult, positionResult];
+        return { order: orderResult, position: positionResult };
       }
     }
 
     // Position wasn't below any node, so it must be fitted above the first
-    const first = parentChildren[0];
     // ... half a gap above it, as between two children.
     const resultPosition = {
       x: first.getPosition().x,
       y: first.getPosition().y - this._halfSiblingGap(parentChildren, 0),
     };
-    return [0, resultPosition];
+    return { order: 0, position: resultPosition };
   }
 
   /**
@@ -200,10 +201,11 @@ class SymmetricSorter extends AbstractBasicSorter {
     }
 
     // Shift all the elements in one .
-    for (let i = order; i < children.length; i++) {
-      const node = children[i];
-      node.setOrder(i + 1);
-    }
+    children.forEach((node, i) => {
+      if (i >= order) {
+        node.setOrder(i + 1);
+      }
+    });
     child.setOrder(order);
   }
 
@@ -223,13 +225,12 @@ class SymmetricSorter extends AbstractBasicSorter {
     // Shift all the nodes ...
     const nodeOrder = node.getOrder();
     if (nodeOrder !== undefined) {
-      for (let i = nodeOrder + 1; i < children.length; i++) {
-        const child = children[i];
+      children.slice(nodeOrder + 1).forEach((child) => {
         const childOrder = child.getOrder();
         if (childOrder !== undefined) {
           child.setOrder(childOrder - 1);
         }
-      }
+      });
     }
     node.setOrder(0);
   }
@@ -261,20 +262,18 @@ class SymmetricSorter extends AbstractBasicSorter {
 
     // Calculate the offsets ...
     const result = new Map<number, PositionType>();
-    for (let i = 0; i < sizeById.length; i++) {
-      ysum -= sizeById[i].height;
-      const childNode = sizeById[i].node;
+    sizeById.forEach((size) => {
+      ysum -= size.height;
+      const childNode = size.node;
       const direction = this.getChildDirection(treeSet, childNode);
 
-      const yOffset = ysum + sizeById[i].height / 2;
+      const yOffset = ysum + size.height / 2;
       const xOffset =
         direction *
-        (sizeById[i].width / 2 +
-          node.getSize().width / 2 +
-          SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
+        (size.width / 2 + node.getSize().width / 2 + SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
 
-      result.set(sizeById[i].id, { x: xOffset, y: yOffset });
-    }
+      result.set(size.id, { x: xOffset, y: yOffset });
+    });
     return result;
   }
 
@@ -287,9 +286,9 @@ class SymmetricSorter extends AbstractBasicSorter {
     // Check that all is consistent ...
     const children = this._getSortedChildren(treeSet, node);
 
-    for (let i = 0; i < children.length; i++) {
-      $assert(children[i].getOrder() === i, 'missing order elements');
-    }
+    children.forEach((child, i) => {
+      $assert(child.getOrder() === i, 'missing order elements');
+    });
   }
 
   /**
@@ -336,7 +335,7 @@ class SymmetricSorter extends AbstractBasicSorter {
     return 'Symmetric Sorter';
   }
 
-  getVerticalPadding() {
+  override getVerticalPadding() {
     return SymmetricSorter.INTERNODE_VERTICAL_PADDING;
   }
 

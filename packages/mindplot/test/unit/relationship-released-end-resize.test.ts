@@ -23,17 +23,18 @@
  * end stays on its edge, at the same place along it (BL5-125).
  */
 import { buildDesigner } from './commands/designer-harness';
-import Relationship from '../../src/components/Relationship';
-import Topic from '../../src/components/Topic';
-import PositionType from '../../src/components/PositionType';
+import type Relationship from '../../src/components/Relationship';
+import type Topic from '../../src/components/Topic';
+import type PositionType from '../../src/components/PositionType';
 import { PivotType } from '../../src/components/RelationshipControlPoints';
+import RelationshipSnap from '../../src/components/RelationshipSnap';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
   default: class MockPDFExporter {},
 }));
 
-// The gap between a topic border and its snap points (Relationship.calculateSnapPoint).
+// The gap between a topic border and its snap points (RelationshipSnap.calculateSnapPoint).
 const GAP = 7;
 
 beforeAll(() => {
@@ -56,7 +57,7 @@ afterAll(() => {
 type Pivot = { mouseDownHandler(event: Event): void };
 const pivotOf = (relationship: Relationship, type: PivotType): Pivot =>
   (relationship as unknown as { _controlPointsController: { _pivotLines: Pivot[] } })
-    ._controlPointsController._pivotLines[type];
+    ._controlPointsController._pivotLines[type]!;
 
 const endOf = (relationship: Relationship, type: PivotType): PositionType => {
   const line = relationship.getLine();
@@ -90,7 +91,7 @@ describe('Relationship released end after its topic is resized (BL5-125)', () =>
     [PivotType.Start, 100, -100, false],
   ])('keeps the end on its edge if it fits (pivot %s, %s,%s)', async (type, x, y, fits) => {
     const { designer, topic } = await buildDesigner();
-    const relationship = designer.getModel().getRelationships()[0];
+    const relationship = designer.getModel().getRelationships()[0]!;
     const end = topic(type === PivotType.End ? 5 : 3);
     relationship.setOnFocus(true);
     pivotOf(relationship, type).mouseDownHandler(new MouseEvent('mousedown', { cancelable: true }));
@@ -106,9 +107,9 @@ describe('Relationship released end after its topic is resized (BL5-125)', () =>
     // The control point is kept, relative to an end it fits: the snap point facing it.
     const placedEnd = endOf(relationship, type);
     expect(relationship.getLine().getControlPoints()[type]).toEqual(ctrlPoint);
-    const facing = Relationship.calculateSnapPoint(end, {
-      x: placedEnd.x + ctrlPoint.x,
-      y: placedEnd.y + ctrlPoint.y,
+    const facing = RelationshipSnap.calculateSnapPoint(end, {
+      x: placedEnd.x + ctrlPoint.x!,
+      y: placedEnd.y + ctrlPoint.y!,
     });
     expect(facing.x).toBeCloseTo(placedEnd.x);
     expect(facing.y).toBeCloseTo(placedEnd.y);

@@ -24,13 +24,14 @@
 import fs from 'fs';
 import path from 'path';
 import { afterEach, describe, expect, it, jest } from '@jest/globals';
-import { buildDesigner, Harness } from './commands/designer-harness';
+import type { Harness } from './commands/designer-harness';
+import { buildDesigner } from './commands/designer-harness';
 import DragConnector from '../../src/components/DragConnector';
-import DragTopic from '../../src/components/DragTopic';
+import type DragTopic from '../../src/components/DragTopic';
 import Topic from '../../src/components/Topic';
-import Canvas from '../../src/components/Canvas';
-import PositionType from '../../src/components/PositionType';
-import SizeType from '../../src/components/SizeType';
+import type Canvas from '../../src/components/Canvas';
+import type PositionType from '../../src/components/PositionType';
+import type SizeType from '../../src/components/SizeType';
 import { sideOf } from '../../src/components/util/side';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({
@@ -250,9 +251,9 @@ describe('DragConnector candidates (bug3.wxml)', () => {
     const getChildren = jest.spyOn(Topic.prototype, 'getChildren');
 
     const at = () => ({ x: 0, y: 0 });
-    connector._searchConnectionCandidates(dragTopicFor(first, at, () => null));
-    connector._searchConnectionCandidates(dragTopicFor(second, at, () => null));
+    connector._searchConnectionCandidates(dragTopicFor(first!, at, () => null));
+    connector._searchConnectionCandidates(dragTopicFor(second!, at, () => null));
 
-    expect(getChildren.mock.calls.length).toBe(branchSize(first) + branchSize(second));
+    expect(getChildren.mock.calls.length).toBe(branchSize(first!) + branchSize(second!));
   });
 });

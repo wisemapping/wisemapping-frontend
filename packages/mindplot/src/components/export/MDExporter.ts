@@ -15,16 +15,21 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Mindmap } from '../..';
-import INodeModel from '../model/INodeModel';
-import NoteModel from '../model/NoteModel';
+import type Mindmap from '../model/Mindmap';
+import type INodeModel from '../model/INodeModel';
+import type NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
 import ContentType from '../ContentType';
+import { $assert } from '../util/assert';
 
 class MDExporter extends Exporter {
   private mindmap: Mindmap;
 
+  // The footnotes, as Markdown: one line, or several when the note has lists.
   private footNotes: string[] = [];
+
+  // The footnotes with lists, which a blank line must end.
+  private listFootNotes = new Set<number>();
 
   constructor(mindmap: Mindmap) {
     super('md', 'text/markdown');
@@ -57,9 +62,11 @@ class MDExporter extends Exporter {
 
   export(): Promise<string> {
     this.footNotes = [];
+    this.listFootNotes = new Set();
 
     // Add cental node as text. Without text, a placeholder keeps the branches as a list ...
     const centralTopic = this.mindmap.getCentralTopic();
+    $assert(centralTopic, 'The map to export has no central topic');
     const centralText = this.nodeText(centralTopic) || MDExporter.UNTITLED;
 
     // Traverse all the branches ...
@@ -70,8 +77,12 @@ class MDExporter extends Exporter {
     if (this.footNotes.length > 0) {
       result += '\n\n\n';
       result += this.footNotes
-        .map((note, index) => `[^${index + 1}]: ${MDExporter.escape(note)}`)
-        .join('\n');
+        .map((note, index) => {
+          // A blank line ends a footnote with lists, so the next one does not continue them.
+          const separator = this.listFootNotes.has(index - 1) ? '\n\n' : '\n';
+          return `${index > 0 ? separator : ''}[^${index + 1}]: ${note}`;
+        })
+        .join('');
     }
     result += '\n';
     return Promise.resolve(result);
@@ -88,6 +99,110 @@ class MDExporter extends Exporter {
     return this.normalizeText(
       note.getContentType() === ContentType.HTML ? note.getPlainText() : note.getText(),
     );
+  }
+
+  // Continuation lines of a footnote, and each nesting level of a list in it, are indented.
+  private static readonly INDENT = '    ';
+
+  /**
+   * The Markdown of an html note with lists: its lists, nested by indentation, and the text
+   * around them as paragraphs. Null for other notes, which are written on a single line.
+   */
+  private noteMarkdown(note: NoteModel): string | null {
+    if (note.getContentType() !== ContentType.HTML) {
+      return null;
+    }
+    const { body } = new DOMParser().parseFromString(note.getText(), 'text/html');
+    if (!body.querySelector('li')) {
+      return null;
+    }
+
+    const blocks: string[] = [];
+    let paragraph = '';
+    const flush = () => {
+      const text = this.normalizeText(paragraph);
+      if (text) {
+        blocks.push(MDExporter.escape(text));
+      }
+      paragraph = '';
+    };
+    const walk = (node: Node) => {
+      if (MDExporter.isList(node)) {
+        flush();
+        const lines = MDExporter.listLines(node as Element, '');
+        if (lines.length > 0) {
+          blocks.push(lines.join('\n'));
+        }
+      } else if (node.nodeType === Node.ELEMENT_NODE && (node as Element).querySelector('li')) {
+        node.childNodes.forEach(walk);
+      } else {
+        // Blocks and line breaks separate words.
+        paragraph += ` ${MDExporter.inlineText(node)} `;
+      }
+    };
+    body.childNodes.forEach(walk);
+    flush();
+
+    // The first block follows the footnote label, the others are indented to stay in the note.
+    return blocks
+      .join('\n\n')
+      .split('\n')
+      .map((line, index) => (index === 0 || line === '' ? line : `${MDExporter.INDENT}${line}`))
+      .join('\n');
+  }
+
+  private static isList(node: Node): boolean {
+    return node.nodeType === Node.ELEMENT_NODE && ['UL', 'OL'].includes((node as Element).tagName);
+  }
+
+  // The text of a node, with its line breaks as spaces.
+  private static inlineText(node: Node): string {
+    if (node.nodeType === Node.TEXT_NODE) {
+      return node.textContent || '';
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return '';
+    }
+    if ((node as Element).tagName === 'BR') {
+      return ' ';
+    }
+    return Array.from(node.childNodes)
+      .map((child) => MDExporter.inlineText(child))
+      .join('');
+  }
+
+  // The lines of a list, its sub-lists indented one level more.
+  private static listLines(list: Element, indent: string): string[] {
+    const ordered = list.tagName === 'OL';
+    const lines: string[] = [];
+    let number = 0;
+    Array.from(list.children).forEach((child) => {
+      // A sub-list written next to the items belongs to the item above it.
+      if (MDExporter.isList(child)) {
+        lines.push(...MDExporter.listLines(child, `${indent}${MDExporter.INDENT}`));
+        return;
+      }
+      if (child.tagName !== 'LI') {
+        return;
+      }
+      const text = Array.from(child.childNodes)
+        .filter((n) => !MDExporter.isList(n))
+        .map((n) => MDExporter.inlineText(n))
+        .join('')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const sublists = Array.from(child.children).filter((n) => MDExporter.isList(n));
+      if (!text && sublists.length === 0) {
+        return;
+      }
+      number += 1;
+      const marker = ordered ? `${number}.` : '-';
+      lines.push(`${indent}${marker}${text ? ` ${MDExporter.escape(text)}` : ''}`);
+      sublists.forEach((sublist) => {
+        lines.push(...MDExporter.listLines(sublist, `${indent}${MDExporter.INDENT}`));
+      });
+    });
+    return lines;
   }
 
   // Markdown link destinations end at a space or an unbalanced ')' ...
@@ -138,7 +253,11 @@ class MDExporter extends Exporter {
             // Empty notes would leave an empty footnote definition ...
             const noteText = this.noteText(f);
             if (noteText) {
-              this.footNotes.push(noteText);
+              const markdown = this.noteMarkdown(f);
+              if (markdown) {
+                this.listFootNotes.add(this.footNotes.length);
+              }
+              this.footNotes.push(markdown ?? MDExporter.escape(noteText));
               result = `${result}[^${this.footNotes.length}] `;
             }
           }

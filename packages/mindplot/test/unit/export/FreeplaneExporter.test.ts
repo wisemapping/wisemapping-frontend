@@ -18,7 +18,7 @@
 
 import { describe, expect, test } from '@jest/globals';
 import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type NodeModel from '../../../src/components/model/NodeModel';
 import NoteModel from '../../../src/components/model/NoteModel';
 import LinkModel from '../../../src/components/model/LinkModel';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
@@ -107,10 +107,12 @@ describe('FreeplaneExporter', () => {
   test('topics, text, notes and links survive a Freeplane round trip', async () => {
     const { mindmap, topics } = buildMindmap();
     const [central, a, b] = topics;
-    central.addFeature(new LinkModel({ url: 'https://www.wisemapping.com' }));
-    a.addFeature(new NoteModel({ text: 'Plain & <simple> note' }));
-    b.addFeature(new NoteModel({ text: '<p>Rich <b>note</b></p>', contentType: ContentType.HTML }));
-    a.addFeature(new LinkModel({ url: 'https://www.freeplane.org' }));
+    central!.addFeature(new LinkModel({ url: 'https://www.wisemapping.com' }));
+    a!.addFeature(new NoteModel({ text: 'Plain & <simple> note' }));
+    b!.addFeature(
+      new NoteModel({ text: '<p>Rich <b>note</b></p>', contentType: ContentType.HTML }),
+    );
+    a!.addFeature(new LinkModel({ url: 'https://www.freeplane.org' }));
 
     const doc = await roundTrip(mindmap);
 
@@ -137,9 +139,9 @@ describe('FreeplaneExporter', () => {
 
   test('multi-line and rich text topics keep their text on a round trip', async () => {
     const { mindmap, topics } = buildMindmap();
-    topics[1].setText('first line\nsecond line');
-    topics[2].setText('<p>Rich <b>topic</b></p>');
-    topics[2].setContentType(ContentType.HTML);
+    topics[1]!.setText('first line\nsecond line');
+    topics[2]!.setText('<p>Rich <b>topic</b></p>');
+    topics[2]!.setContentType(ContentType.HTML);
 
     const exported = await exportDoc(mindmap);
     expect(nodeOf(exported, 2).getAttribute('TEXT')).toBe('first line\nsecond line');
@@ -156,7 +158,7 @@ describe('FreeplaneExporter', () => {
   test('icons with a Freeplane equivalent survive a round trip', async () => {
     const { mindmap, topics } = buildMindmap();
     ['💡', '📅', '🕐', '📁', '🐧', 'ℹ️'].forEach((emoji) =>
-      topics[1].addFeature(new EmojiIconModel({ id: emoji })),
+      topics[1]!.addFeature(new EmojiIconModel({ id: emoji })),
     );
 
     const exported = await exportDoc(mindmap);
@@ -177,9 +179,9 @@ describe('FreeplaneExporter', () => {
   test('emoji and WiseMapping icons survive a round trip (BL5-112)', async () => {
     const { mindmap, topics } = buildMindmap();
     ['🦄', '👨‍💻', '✅', '❤️', '1️⃣'].forEach((emoji) =>
-      topics[1].addFeature(new EmojiIconModel({ id: emoji })),
+      topics[1]!.addFeature(new EmojiIconModel({ id: emoji })),
     );
-    ['flag_green', 'tag_blue'].forEach((id) => topics[1].addFeature(new SvgIconModel({ id })));
+    ['flag_green', 'tag_blue'].forEach((id) => topics[1]!.addFeature(new SvgIconModel({ id })));
 
     const doc = await roundTrip(mindmap);
     const topic = topicByText(doc, 'A');
@@ -193,9 +195,9 @@ describe('FreeplaneExporter', () => {
 
   test('exports emoji without a builtin icon as Freeplane emoji icons', async () => {
     const { mindmap, topics } = buildMindmap();
-    topics[1].addFeature(new EmojiIconModel({ id: '🦄' }));
-    topics[1].addFeature(new EmojiIconModel({ id: '👨‍💻' }));
-    topics[1].addFeature(new EmojiIconModel({ id: '✅' }));
+    topics[1]!.addFeature(new EmojiIconModel({ id: '🦄' }));
+    topics[1]!.addFeature(new EmojiIconModel({ id: '👨‍💻' }));
+    topics[1]!.addFeature(new EmojiIconModel({ id: '✅' }));
 
     const doc = await exportDoc(mindmap);
     expect(
@@ -208,19 +210,19 @@ describe('FreeplaneExporter', () => {
   test('exports colors, fonts, shapes and the collapsed state', async () => {
     const { mindmap, topics } = buildMindmap();
     const [central, a, b, b1] = topics;
-    central.setShapeType('elipse');
-    a.setShapeType('rectangle');
-    a.setBackgroundColor('rgb(255, 0, 128)');
-    a.setFontColor('#00ff00');
-    a.setConnectionColor('#0000ff');
-    a.setFontFamily('Verdana');
-    a.setFontSize(15);
-    a.setFontWeight('bold');
-    a.setFontStyle('italic');
-    b.setShapeType('rounded rectangle');
-    b.setChildrenShrunken(true);
-    b1.setShapeType('line');
-    b1.setFontStyle('italic');
+    central!.setShapeType('elipse');
+    a!.setShapeType('rectangle');
+    a!.setBackgroundColor('rgb(255, 0, 128)');
+    a!.setFontColor('#00ff00');
+    a!.setConnectionColor('#0000ff');
+    a!.setFontFamily('Verdana');
+    a!.setFontSize(15);
+    a!.setFontWeight('bold');
+    a!.setFontStyle('italic');
+    b!.setShapeType('rounded rectangle');
+    b!.setChildrenShrunken(true);
+    b1!.setShapeType('line');
+    b1!.setFontStyle('italic');
 
     const doc = await exportDoc(mindmap);
 
@@ -250,19 +252,19 @@ describe('FreeplaneExporter', () => {
   test('colors, fonts, shapes and the collapsed state survive a round trip (BL5-112)', async () => {
     const { mindmap, topics } = buildMindmap();
     const [central, a, b, b1] = topics;
-    central.setShapeType('elipse');
-    a.setShapeType('rectangle');
-    a.setBackgroundColor('rgb(255, 0, 128)');
-    a.setFontColor('#00ff00');
-    a.setConnectionColor('#0000ff');
-    a.setFontFamily('Verdana');
-    a.setFontSize(15);
-    a.setFontWeight('bold');
-    a.setFontStyle('italic');
-    b.setShapeType('rounded rectangle');
-    b.setChildrenShrunken(true);
-    b1.setShapeType('line');
-    b1.setFontStyle('italic');
+    central!.setShapeType('elipse');
+    a!.setShapeType('rectangle');
+    a!.setBackgroundColor('rgb(255, 0, 128)');
+    a!.setFontColor('#00ff00');
+    a!.setConnectionColor('#0000ff');
+    a!.setFontFamily('Verdana');
+    a!.setFontSize(15);
+    a!.setFontWeight('bold');
+    a!.setFontStyle('italic');
+    b!.setShapeType('rounded rectangle');
+    b!.setChildrenShrunken(true);
+    b1!.setShapeType('line');
+    b1!.setFontStyle('italic');
 
     const doc = await roundTrip(mindmap);
 

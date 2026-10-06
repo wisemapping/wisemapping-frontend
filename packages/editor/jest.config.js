@@ -55,6 +55,18 @@ const config = {
   transformIgnorePatterns: [
     '/node_modules/(?!(react-intl|intl-messageformat|intl-messageformat-parser|@formatjs)/)',
   ],
+  // Every source file counts, loaded by a test or not; stories and the barrel carry no logic.
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/*.stories.tsx',
+    '!src/index.ts',
+  ],
+  coverageReporters: ['text-summary', 'lcov', 'json-summary'],
+  // Ratchet these up as coverage improves; never lower them.
+  coverageThreshold: {
+    global: { statements: 97, branches: 94, functions: 97, lines: 97 },
+  },
 };
 
 module.exports = config;

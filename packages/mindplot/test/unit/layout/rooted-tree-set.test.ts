@@ -20,7 +20,7 @@ import { describe, expect, it } from '@jest/globals';
 import Node from '../../../src/components/layout/Node';
 import RootedTreeSet from '../../../src/components/layout/RootedTreeSet';
 import SymmetricSorter from '../../../src/components/layout/SymmetricSorter';
-import PositionType from '../../../src/components/PositionType';
+import type PositionType from '../../../src/components/PositionType';
 
 const SIZE = { width: 80, height: 20 };
 const sorter = new SymmetricSorter();
@@ -28,8 +28,8 @@ const sorter = new SymmetricSorter();
 const tree = (positions: Record<number, PositionType>, edges: [number, number][]) => {
   const treeSet = new RootedTreeSet();
   const ids = Object.keys(positions).map(Number);
-  treeSet.setRoot(new Node(ids[0], SIZE, positions[ids[0]], sorter));
-  ids.slice(1).forEach((id) => treeSet.add(new Node(id, SIZE, positions[id], sorter)));
+  treeSet.setRoot(new Node(ids[0]!, SIZE, positions[ids[0]!]!, sorter));
+  ids.slice(1).forEach((id) => treeSet.add(new Node(id, SIZE, positions[id]!, sorter)));
   edges.forEach(([parent, child]) => treeSet.connect(parent, child));
   return treeSet;
 };

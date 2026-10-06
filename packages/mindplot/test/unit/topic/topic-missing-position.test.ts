@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import Canvas from '../../../src/components/Canvas';
+import type Canvas from '../../../src/components/Canvas';
 import CentralTopic from '../../../src/components/CentralTopic';
 import MainTopic from '../../../src/components/MainTopic';
 import Mindmap from '../../../src/components/model/Mindmap';

@@ -99,7 +99,7 @@ class PDFExporter extends Exporter {
     }
   }
 
-  async exportAndEncode(): Promise<string> {
+  override async exportAndEncode(): Promise<string> {
     return this.export();
   }
 }

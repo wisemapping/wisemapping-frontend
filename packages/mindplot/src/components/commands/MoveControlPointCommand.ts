@@ -17,9 +17,9 @@
  */
 import Command from '../Command';
 import { PivotType } from '../RelationshipControlPoints';
-import PositionType from '../PositionType';
-import RelationshipModel from '../model/RelationshipModel';
-import CommandContext from '../CommandContext';
+import type PositionType from '../PositionType';
+import type RelationshipModel from '../model/RelationshipModel';
+import type CommandContext from '../CommandContext';
 
 class MoveControlPointCommand extends Command {
   private _ctrIndex: PivotType;
@@ -37,7 +37,7 @@ class MoveControlPointCommand extends Command {
   }
 
   execute(commandContext: CommandContext): void {
-    const relationship = commandContext.findRelationships([this._modelId])[0];
+    const relationship = commandContext.findRelationship(this._modelId);
     const model = relationship.getModel();
 
     let oldCtlPoint;

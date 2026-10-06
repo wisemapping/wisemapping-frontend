@@ -15,16 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import EventDispispatcher from '../EventDispatcher';
-import RootedTreeSet, { RaphaelPaper } from './RootedTreeSet';
+import type { RaphaelPaper } from './RootedTreeSet';
+import RootedTreeSet from './RootedTreeSet';
 import OriginalLayout from './OriginalLayout';
 import TreeLayout from './TreeLayout';
 import ChangeEvent from './ChangeEvent';
-import SizeType from '../SizeType';
-import Node from './Node';
-import PositionType from '../PositionType';
-import LayoutEventType from './LayoutEventType';
+import type SizeType from '../SizeType';
+import type Node from './Node';
+import type PositionType from '../PositionType';
+import type LayoutEventType from './LayoutEventType';
+import type { SorterPrediction } from './ChildrenSorterStrategy';
 
 import type { LayoutType, OrientationType } from './LayoutType';
 
@@ -76,7 +78,7 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
 
   constructor(rootNodeId: number, rootSize: SizeType, layoutType: LayoutType = 'mindmap') {
     super();
-    $assert($defined(rootNodeId), 'rootNodeId can not be null');
+    $assert(rootNodeId != null, 'rootNodeId can not be null');
     $assert(rootSize, 'rootSize can not be null');
 
     this._treeSet = new RootedTreeSet();
@@ -101,7 +103,7 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
   }
 
   updateNodeSize(id: number, size: SizeType): void {
-    $assert($defined(id), 'id can not be null');
+    $assert(id != null, 'id can not be null');
 
     const node = this._treeSet.find(id);
     const before = node.getSize();
@@ -113,8 +115,8 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
   }
 
   updateShrinkState(id: number, value: boolean): void {
-    $assert($defined(id), 'id can not be null');
-    $assert($defined(value), 'value can not be null');
+    $assert(id != null, 'id can not be null');
+    $assert(value != null, 'value can not be null');
 
     const node = this._treeSet.find(id);
     if (node.areChildrenShrunken() !== value) {
@@ -137,10 +139,10 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
    * @throws will throw an error if the position's y property is null or undefined
    */
   moveNode(id: number, position: PositionType) {
-    $assert($defined(id), 'id cannot be null');
-    $assert($defined(position), 'position cannot be null');
-    $assert($defined(position.x), 'x can not be null');
-    $assert($defined(position.y), 'y can not be null');
+    $assert(id != null, 'id cannot be null');
+    $assert(position != null, 'position cannot be null');
+    $assert(position.x != null, 'x can not be null');
+    $assert(position.y != null, 'y can not be null');
 
     const node = this._treeSet.find(id);
     const before = node.getPosition();
@@ -158,7 +160,7 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
   }
 
   disconnectNode(id: number): void {
-    $assert($defined(id), 'id can not be null');
+    $assert(id != null, 'id can not be null');
     this._getCurrentLayout().disconnectNode(id);
     this._changedSinceLayout = true;
   }
@@ -172,9 +174,9 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
    * @return this
    */
   addNode(id: number, size: SizeType, position: PositionType) {
-    $assert($defined(id), 'id can not be null');
+    $assert(id != null, 'id can not be null');
     $assert(
-      $defined(position) && Number.isFinite(position.x) && Number.isFinite(position.y),
+      position != null && Number.isFinite(position.x) && Number.isFinite(position.y),
       'position must have finite x and y',
     );
     const result = this._getCurrentLayout().createNode(id, size, position, 'topic');
@@ -203,13 +205,12 @@ class LayoutManager extends EventDispispatcher<LayoutManagerEvents> {
     parentId: number,
     nodeId: number | null,
     position: PositionType | null,
-  ): { order: number; position: PositionType } {
+  ): SorterPrediction {
     const parent = this._treeSet.find(parentId);
-    const node = nodeId ? this._treeSet.find(nodeId) : null;
+    const node = nodeId != null ? this._treeSet.find(nodeId) : null;
     const sorter = parent.getSorter();
 
-    const result = sorter.predict(this._treeSet, parent, node, position);
-    return { order: result[0], position: result[1] };
+    return sorter.predict(this._treeSet, parent, node, position);
   }
 
   /**

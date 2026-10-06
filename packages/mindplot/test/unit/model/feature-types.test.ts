@@ -17,7 +17,7 @@
  */
 import { describe, expect, test } from '@jest/globals';
 import Mindmap from '../../../src/components/model/Mindmap';
-import FeatureModel from '../../../src/components/model/FeatureModel';
+import type FeatureModel from '../../../src/components/model/FeatureModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
 import LinkModel from '../../../src/components/model/LinkModel';
 import NoteModel from '../../../src/components/model/NoteModel';

@@ -18,12 +18,8 @@
 import { $assert } from './util/assert';
 import { $msg } from './Messages';
 import { AjaxUtils } from './util/AjaxUtils';
-import PersistenceManager, {
-  PersistenceError,
-  SaveEvents,
-  SaveOptions,
-  ServerError,
-} from './PersistenceManager';
+import type { PersistenceError, SaveEvents, SaveOptions, ServerError } from './PersistenceManager';
+import PersistenceManager from './PersistenceManager';
 
 type PendingSave = {
   mapId: string;
@@ -79,12 +75,16 @@ class RESTPersistenceManager extends PersistenceManager {
   private _pendingSaves = new Map<string, PendingSave>();
 
   private _scheduleNextSave(): void {
-    if (this._saveInFlight || this._pendingSaves.size === 0) {
+    if (this._saveInFlight) {
       return;
     }
 
     const pendingSaves = Array.from(this._pendingSaves.values());
     const next = pendingSaves.find((p) => p.urgent) ?? pendingSaves[0];
+    // Nothing pending.
+    if (!next) {
+      return;
+    }
     const wait =
       next.urgent || this._lastSaveStartedAt === undefined
         ? 0
@@ -296,7 +296,7 @@ class RESTPersistenceManager extends PersistenceManager {
 
     if (this.jwt) {
       // eslint-disable-next-line dot-notation
-      headers['Authorization'] = `Bearer ${this.jwt} `;
+      headers['Authorization'] = `Bearer ${this.jwt}`;
     }
     return headers;
   }

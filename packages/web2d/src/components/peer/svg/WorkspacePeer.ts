@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '../utils/assert';
 import ElementPeer, { formatLength } from './ElementPeer';
 import type SizeType from '../../SizeType';
 import type PositionType from '../../PositionType';
@@ -84,7 +83,7 @@ class WorkspacePeer extends ElementPeer<SVGSVGElement> {
   setCoordOrigin(x: number, y: number): void {
     // ViewBox min-x ,min-y by default initializated with 0 and 0.
     const [currentX, currentY, width, height] = this.viewBox() ?? [0, 0, 0, 0];
-    this.writeViewBox([$defined(x) ? x : currentX, $defined(y) ? y : currentY, width, height]);
+    this.writeViewBox([x ?? currentX, y ?? currentY, width, height]);
   }
 
   getCoordOrigin(): PositionType {

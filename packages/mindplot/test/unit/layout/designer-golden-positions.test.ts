@@ -30,7 +30,8 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
 import fs from 'fs';
 import path from 'path';
 import { describe, expect, it } from '@jest/globals';
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 
 const load = (file: string): Promise<Harness> =>
   buildDesigner(fs.readFileSync(path.resolve(__dirname, '../export/input', file), 'utf8'));
@@ -62,7 +63,7 @@ const scenario = async (file: string) => {
   dispatcher.shrinkBranch([branch.getId()], false);
   record('the branch is expanded');
 
-  const moved = branch.getChildren()[branch.getChildren().length - 1];
+  const moved = branch.getChildren()[branch.getChildren().length - 1]!;
   dispatcher.dragTopic(moved.getId(), { x: 0, y: 0 }, 0, branch);
   record('the last child of a branch is dragged first');
 
@@ -70,7 +71,7 @@ const scenario = async (file: string) => {
   dispatcher.dragTopic(moved.getId(), { x: 0, y: 0 }, 0, other);
   record('a topic is dragged to another branch');
 
-  dispatcher.deleteEntities([mains[mains.length - 1].getId()], []);
+  dispatcher.deleteEntities([mains[mains.length - 1]!.getId()], []);
   record('a main topic is deleted');
 
   designer.changeLayout('tree');

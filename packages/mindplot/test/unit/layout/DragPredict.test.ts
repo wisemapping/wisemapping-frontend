@@ -17,7 +17,7 @@
  */
 
 import LayoutManager from '../../../src/components/layout/LayoutManager';
-import PositionType from '../../../src/components/PositionType';
+import type PositionType from '../../../src/components/PositionType';
 
 const ROOT_NODE_SIZE = { width: 140, height: 90 };
 const NODE_SIZE = { width: 80, height: 60 };

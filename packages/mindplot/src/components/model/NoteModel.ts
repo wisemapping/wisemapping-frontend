@@ -16,7 +16,8 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureModel, { FeatureAttributes } from './FeatureModel';
+import type { FeatureAttributes } from './FeatureModel';
+import FeatureModel from './FeatureModel';
 import ContentType from '../ContentType';
 
 const CONTENT_TYPES: readonly string[] = Object.values(ContentType);
@@ -76,7 +77,7 @@ class NoteModel extends FeatureModel {
     }
   }
 
-  applyAttribute(key: string, value: unknown): void {
+  override applyAttribute(key: string, value: unknown): void {
     if (key === 'text') {
       this.setText(value as string);
     } else if (key === 'contentType') {

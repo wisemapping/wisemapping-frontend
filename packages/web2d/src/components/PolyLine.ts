@@ -77,11 +77,11 @@ class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
     return this.peer.getOrientation();
   }
 
-  buildCurvedPath(dist: number, x1: number, y1: number, x2: number, y2: number) {
+  buildCurvedPath(dist: number, x1: number, y1: number, x2: number, y2: number): string {
     return PolyLineUtils.buildCurvedPath(dist, x1, y1, x2, y2);
   }
 
-  buildStraightPath(dist: number, x1: number, y1: number, x2: number, y2: number) {
+  buildStraightPath(dist: number, x1: number, y1: number, x2: number, y2: number): string {
     return PolyLineUtils.buildStraightPath(dist, x1, y1, x2, y2);
   }
 }

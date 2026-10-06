@@ -15,7 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from './util/assert';
+import { $assert } from './util/assert';
+import type { ActionDispatcherCommands } from './ActionDispatcher';
 import ActionDispatcher from './ActionDispatcher';
 import DesignerActionRunner from './DesignerActionRunner';
 import AddTopicCommand from './commands/AddTopicCommand';
@@ -32,22 +33,29 @@ import ChangeCanvasStyleCommand from './commands/ChangeCanvasStyleCommand';
 import ChangeThemeCommand from './commands/ChangeThemeCommand';
 import ChangeLayoutCommand from './commands/ChangeLayoutCommand';
 import type { CanvasStyleType } from './model/CanvasStyleType';
-import CommandContext from './CommandContext';
+import type CommandContext from './CommandContext';
 import type { FeatureAttributes } from './model/FeatureModel';
-import NodeModel from './model/NodeModel';
-import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
-import Topic from './Topic';
+import type NodeModel from './model/NodeModel';
+import type { StrokeStyle } from './model/RelationshipModel';
+import type RelationshipModel from './model/RelationshipModel';
+import type Topic from './Topic';
 import Relationship from './Relationship';
-import Command from './Command';
-import FeatureType from './model/FeatureType';
-import PositionType from './PositionType';
-import { PivotType } from './RelationshipControlPoints';
-import { TopicShapeType } from './model/INodeModel';
-import { LineType } from './ConnectionLine';
-import ThemeType from './model/ThemeType';
+import type Command from './Command';
+import type FeatureType from './model/FeatureType';
+import type PositionType from './PositionType';
+import type { PivotType } from './RelationshipControlPoints';
+import type { TopicShapeType } from './model/INodeModel';
+import type { LineType } from './ConnectionLine';
+import type ThemeType from './model/ThemeType';
 import type { LayoutType } from './layout/LayoutType';
+import type { FontStyleType } from './FontStyleType';
+import type { FontWeightType } from './FontWeightType';
 
-class StandaloneActionDispatcher extends ActionDispatcher {
+// The value of a toggle command when it runs: toggle what the topic shows. Undo passes the
+// model value to set back instead.
+const TOGGLE = Symbol('toggle');
+
+class StandaloneActionDispatcher extends ActionDispatcher implements ActionDispatcherCommands {
   private _actionRunner: DesignerActionRunner;
 
   public get actionRunner(): DesignerActionRunner {
@@ -84,7 +92,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     topicId: number,
     position: PositionType,
     order: number | undefined,
-    parentTopic: Topic,
+    parentTopic: Topic | null,
   ): void {
     const command = new DragTopicCommand(topicId, position, order, parentTopic);
     this.execute(command);
@@ -92,8 +100,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
   /** */
   moveTopic(topicId: number, position: PositionType): void {
-    $assert($defined(topicId), 'topicsId can not be null');
-    $assert($defined(position), 'position can not be null');
+    $assert(topicId != null, 'topicsId can not be null');
+    $assert(position != null, 'position can not be null');
 
     const commandFunc = (topic: Topic, pos: PositionType) => {
       const result = topic.getPosition();
@@ -120,18 +128,24 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
   /** */
   changeFontStyleToTopic(topicsIds: number[]) {
-    const commandFunc = (topic: Topic) => {
-      const result = topic.getFontStyle();
-      const style = result === 'italic' ? 'normal' : 'italic';
-      topic.setFontStyle(style);
+    // Toggles from what the topic shows; undo sets back the model value, so a style the theme
+    // decided is not pinned on the topic.
+    const commandFunc = (topic: Topic, value: FontStyleType | undefined | typeof TOGGLE) => {
+      const result = topic.getModel().getFontStyle();
+      const style = topic.getFontStyle() === 'italic' ? 'normal' : 'italic';
+      topic.setFontStyle(value === TOGGLE ? style : value);
       return result;
     };
-    const command = new GenericFunctionCommand(commandFunc, topicsIds, undefined);
+    const command = new GenericFunctionCommand<FontStyleType | undefined | typeof TOGGLE>(
+      commandFunc,
+      topicsIds,
+      TOGGLE,
+    );
     this.execute(command);
   }
 
   changeTextToTopic(topicsIds: number[], text: string): void {
-    $assert($defined(topicsIds), 'topicsIds can not be null');
+    $assert(topicsIds != null, 'topicsIds can not be null');
 
     const commandFunc = (topic: Topic, value: string | undefined) => {
       // Keep the model value (undefined when empty): getText() returns the theme placeholder.
@@ -149,7 +163,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicIds, 'topicIds can not be null');
 
     const commandFunc = (topic: Topic, commandFontFamily: string | undefined) => {
-      const result = topic.getFontFamily();
+      // Keep the model value (undefined when the theme decides) so undo does not pin the theme one.
+      const result = topic.getModel().getFontFamily();
       topic.setFontFamily(commandFontFamily);
 
       topic.redraw(topic.getThemeVariant(), false);
@@ -216,15 +231,15 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(size, 'size can not be null');
 
-    const commandFunc = (topic: Topic, commandSize: number) => {
-      const result = topic.getFontSize();
+    const commandFunc = (topic: Topic, commandSize: number | undefined) => {
+      const result = topic.getModel().getFontSize();
       topic.setFontSize(commandSize);
 
       topic.redraw(topic.getThemeVariant(), false);
       return result;
     };
 
-    const command = new GenericFunctionCommand(commandFunc, topicsIds, size);
+    const command = new GenericFunctionCommand<number | undefined>(commandFunc, topicsIds, size);
     this.execute(command);
   }
 
@@ -254,7 +269,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
   changeShapeTypeToTopic(topicsIds: number[], shapeType: TopicShapeType | undefined) {
     const commandFunc = (topic: Topic, commandShapeType: TopicShapeType | undefined) => {
-      const result = topic.getShapeType();
+      const result = topic.getModel().getShapeType();
       topic.setShapeType(commandShapeType);
 
       return result;
@@ -266,7 +281,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
   changeConnectionStyleToTopic(topicsIds: number[], lineType: LineType | undefined) {
     const commandFunc = (topic: Topic, type: LineType | undefined) => {
-      const result = topic.getConnectionStyle();
+      const result = topic.getModel().getConnectionStyle();
       topic.setConnectionStyle(type);
       return result;
     };
@@ -340,16 +355,20 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   changeFontWeightToTopic(topicsIds: number[]) {
     $assert(topicsIds, 'topicsIds can not be null');
 
-    const commandFunc = (topic: Topic) => {
-      const result = topic.getFontWeight();
-      // Toggle between normal and bold; rendering layer maps to numeric as needed
-      const weight = result === 'bold' ? 'normal' : 'bold';
-      topic.setFontWeight(weight);
+    // Toggles from what the topic shows, between normal and bold; undo sets back the model value.
+    const commandFunc = (topic: Topic, value: FontWeightType | undefined | typeof TOGGLE) => {
+      const result = topic.getModel().getFontWeight();
+      const weight = topic.getFontWeight() === 'bold' ? 'normal' : 'bold';
+      topic.setFontWeight(value === TOGGLE ? weight : value);
       topic.redraw(topic.getThemeVariant(), false);
       return result;
     };
 
-    const command = new GenericFunctionCommand(commandFunc, topicsIds, undefined);
+    const command = new GenericFunctionCommand<FontWeightType | undefined | typeof TOGGLE>(
+      commandFunc,
+      topicsIds,
+      TOGGLE,
+    );
     this.execute(command);
   }
 

@@ -17,7 +17,7 @@
  */
 import { Group } from '@wisemapping/web2d';
 import ElementDeleteWidget from '../../src/components/ElementDeleteWidget';
-import Icon from '../../src/components/Icon';
+import type Icon from '../../src/components/Icon';
 
 const buildIcon = () => {
   const addEvent = jest.fn();

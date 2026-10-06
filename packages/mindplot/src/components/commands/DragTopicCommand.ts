@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import PositionType from '../PositionType';
-import Topic from '../Topic';
+import type CommandContext from '../CommandContext';
+import type PositionType from '../PositionType';
+import type Topic from '../Topic';
 
 class DragTopicCommand extends Command {
   private _topicsId: number;
@@ -33,7 +33,7 @@ class DragTopicCommand extends Command {
     topicId: number,
     position: PositionType,
     order: number | undefined,
-    parentTopic: Topic,
+    parentTopic: Topic | null,
   ) {
     super();
     this._topicsId = topicId;
@@ -44,7 +44,7 @@ class DragTopicCommand extends Command {
   }
 
   execute(commandContext: CommandContext): void {
-    const topic = commandContext.findTopics([this._topicsId])[0];
+    const topic = commandContext.findTopic(this._topicsId);
     topic.setVisibility(false);
 
     // Save old position ...
@@ -70,7 +70,7 @@ class DragTopicCommand extends Command {
 
     // Finally, connect topic ...
     if (this._parentId != null) {
-      const parentTopic = commandContext.findTopics([this._parentId])[0];
+      const parentTopic = commandContext.findTopic(this._parentId);
       commandContext.connect(topic, parentTopic);
     }
 

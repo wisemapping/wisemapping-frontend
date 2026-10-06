@@ -34,7 +34,7 @@ class ElipsePeer extends ElementPeer<SVGEllipseElement> {
     this.attr('ry', formatLength(this._size.height / 2));
   }
 
-  setPosition(pcx: number, pcy: number) {
+  setPosition(pcx: number, pcy: number): void {
     this._position = { x: pcx, y: pcy };
 
     this.attr('cx', formatLength(pcx));

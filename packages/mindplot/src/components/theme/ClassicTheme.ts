@@ -32,10 +32,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Topic from '../Topic';
+import type Topic from '../Topic';
 import DefaultTheme from './DefaultTheme';
-import { ThemeVariant } from './Theme';
+import type { ThemeVariant } from './Theme';
 import { ThemeStyle } from './ThemeStyle';
+import pickByOrder from './pickByOrder';
 
 class ClassicTheme extends DefaultTheme {
   constructor(variant: ThemeVariant) {
@@ -43,7 +44,7 @@ class ClassicTheme extends DefaultTheme {
     super(themeStyle, variant);
   }
 
-  getBackgroundColor(topic: Topic): string {
+  override getBackgroundColor(topic: Topic): string {
     const model = topic.getModel();
     let result = model.getBackgroundColor();
 
@@ -53,26 +54,9 @@ class ClassicTheme extends DefaultTheme {
     }
 
     // Use theme colors from style system. Palettes are arrays, so use topic order to decide color ..
-    let colors: string[] = [];
-    colors = colors.concat(this.resolve('backgroundColor', topic) as string[] | string);
-
-    let order = topic.getOrder();
-    order = order || 0;
-
-    const index = order % colors.length;
-    result = colors[index];
+    const colors = this.resolve('backgroundColor', topic);
+    result = pickByOrder(colors, topic.getOrder());
     return result;
-  }
-
-  getFontColor(topic: Topic): string {
-    // A color picked by the user (on the topic or an ancestor) is used as is ...
-    const picked = this.resolve('fontColor', topic, false) as string | undefined;
-    if (picked) {
-      return picked;
-    }
-
-    // The theme color, as long as it can be read on the fill or, without one, on the canvas.
-    return this.readableTextColor(topic, this.getStyles(topic).fontColor);
   }
 }
 

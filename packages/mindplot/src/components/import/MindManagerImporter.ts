@@ -21,16 +21,20 @@ import Importer from './Importer';
 import ImportError from './ImportError';
 import SecureXmlParser from '../security/SecureXmlParser';
 import Mindmap from '../model/Mindmap';
-import NodeModel from '../model/NodeModel';
+import type NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import { StrokeStyle } from '../model/RelationshipModel';
-import INodeModel, { TopicShapeType } from '../model/INodeModel';
+import type { TopicShapeType } from '../model/INodeModel';
+import type INodeModel from '../model/INodeModel';
 import ContentType from '../ContentType';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import { decodeUtf8 } from './support/Utf8Decoder';
 import { normalizeHtmlWhitespace } from './support/HtmlText';
 import toWiseMappingXml from './support/MindmapXml';
+import TopicIdSequence from './support/TopicIdSequence';
+import { LETTER_EMOJIS, NUMBER_EMOJIS, ownEntry, PRIORITY_EMOJIS } from './support/IconEmoji';
+import { sidePosition } from './support/MainTopicPosition';
 
 interface MindManagerTopic {
   // Topics without an ID or OId can not be referenced, so they are not mapped.
@@ -69,12 +73,7 @@ type TopicKind = 'Root' | 'Label' | 'Callout';
 
 // MindManager icon ids and the WiseMapping EmojiIcons they map to.
 const MINDMANAGER_ICONS: Readonly<Record<string, string>> = {
-  // Priority icons
-  'priority-1': '🔴',
-  'priority-2': '🟡',
-  'priority-3': '🟢',
-  'priority-4': '🔵',
-  'priority-5': '🟣',
+  ...PRIORITY_EMOJIS,
 
   // Task icons
   'task-start': '🟡',
@@ -93,45 +92,9 @@ const MINDMANAGER_ICONS: Readonly<Record<string, string>> = {
   'arrow-left': '⬅️',
   'arrow-right': '➡️',
 
-  // Number icons
-  1: '1️⃣',
-  2: '2️⃣',
-  3: '3️⃣',
-  4: '4️⃣',
-  5: '5️⃣',
-  6: '6️⃣',
-  7: '7️⃣',
-  8: '8️⃣',
-  9: '9️⃣',
-  10: '🔟',
-
-  // Letter icons
-  A: '🅰️',
-  B: '🅱️',
-  C: '🅲',
-  D: '🅳',
-  E: '🅴',
-  F: '🅵',
-  G: '🅶',
-  H: '🅷',
-  I: '🅸',
-  J: '🅹',
-  K: '🅺',
-  L: '🅻',
-  M: '🅼',
-  N: '🅽',
-  O: '🅾️',
-  P: '🅿️',
-  Q: '🆀',
-  R: '🆁',
-  S: '🆂',
-  T: '🆃',
-  U: '🆄',
-  V: '🆅',
-  W: '🆆',
-  X: '🆇',
-  Y: '🆈',
-  Z: '🆉',
+  // Number and letter icons, the letters matched in any case (A or a)
+  ...NUMBER_EMOJIS,
+  ...LETTER_EMOJIS,
 
   // Emotion icons
   smile: '😊',
@@ -230,7 +193,7 @@ const MINDMANAGER_ICONS_BY_LOWER_CASE: ReadonlyMap<string, string> = new Map(
 class MindManagerImporter extends Importer {
   private mindManagerInput: MindManagerRawInput;
 
-  private idCounter: number = 1;
+  private readonly ids = new TopicIdSequence();
 
   private topicIdMap: Map<string, number>;
 
@@ -245,19 +208,6 @@ class MindManagerImporter extends Importer {
     this.topicIdMap = new Map();
   }
 
-  private generateId(): number {
-    return this.idCounter++;
-  }
-
-  // The initial position of the topic at the given index among the siblings on its side. The
-  // layout places the topics by their order.
-  private calculatePosition(sideIndex: number, side: number): { x: number; y: number } {
-    const x = side * (200 + sideIndex * 100);
-    const y = sideIndex * 75;
-
-    return { x, y };
-  }
-
   private buildNoteContent(notes?: string): string {
     if (!notes) return '';
     return notes.trim();
@@ -266,9 +216,10 @@ class MindManagerImporter extends Importer {
   // The emoji of a MindManager icon id, its own or the one of its id in another case. Undefined
   // for an unknown icon.
   private static mapMindManagerIconToEmojiIcon(iconId: string): string | undefined {
-    return Object.prototype.hasOwnProperty.call(MINDMANAGER_ICONS, iconId)
-      ? MINDMANAGER_ICONS[iconId]
-      : MINDMANAGER_ICONS_BY_LOWER_CASE.get(iconId.toLowerCase());
+    return (
+      ownEntry(MINDMANAGER_ICONS, iconId) ??
+      MINDMANAGER_ICONS_BY_LOWER_CASE.get(iconId.toLowerCase())
+    );
   }
 
   private buildMindmap(rootTopic: MindManagerTopic, nameMap: string, doc: Document): Mindmap {
@@ -276,7 +227,7 @@ class MindManagerImporter extends Importer {
     mindmap.setTheme('prism');
     mindmap.setLayout('mindmap');
 
-    const centralTopic = mindmap.createNode('CentralTopic', this.generateId());
+    const centralTopic = mindmap.createNode('CentralTopic', this.ids.next());
     this.mapTopicId(rootTopic, centralTopic);
     centralTopic.setText(rootTopic.text);
     this.addFeatures(centralTopic, rootTopic);
@@ -344,9 +295,9 @@ class MindManagerImporter extends Importer {
     sideIndex: number,
     side: number,
   ): NodeModel {
-    const node = mindmap.createNode('MainTopic', this.generateId());
+    const node = mindmap.createNode('MainTopic', this.ids.next());
     this.mapTopicId(topic, node);
-    const position = this.calculatePosition(sideIndex, side);
+    const position = sidePosition(sideIndex, side);
     node.setText(topic.text);
     node.setPosition(position.x, position.y);
     node.setOrder(order);
@@ -430,9 +381,9 @@ class MindManagerImporter extends Importer {
     if (!value) {
       return undefined;
     }
-    const argb = /^([0-9a-f]{2})([0-9a-f]{6})$/i.exec(value);
-    if (argb) {
-      return argb[1] === '00' ? undefined : `#${argb[2].toLowerCase()}`;
+    const [, alpha, rgb] = /^([0-9a-f]{2})([0-9a-f]{6})$/i.exec(value) ?? [];
+    if (rgb !== undefined) {
+      return alpha === '00' ? undefined : `#${rgb.toLowerCase()}`;
     }
     return value;
   }
@@ -459,11 +410,11 @@ class MindManagerImporter extends Importer {
 
     const isDocument = (name: string): boolean => name.toLowerCase() === 'document.xml';
     const files = unzipSync(bytes, { filter: (file) => isDocument(file.name) });
-    const entry = Object.keys(files).find(isDocument);
+    const entry = Object.entries(files).find(([name]) => isDocument(name));
     if (!entry) {
       throw new Error('The MindManager archive does not contain Document.xml');
     }
-    return decodeUtf8(files[entry]);
+    return decodeUtf8(entry[1]);
   }
 
   private parseMindManagerXML(doc: Document): MindManagerTopic {
@@ -504,7 +455,7 @@ class MindManagerImporter extends Importer {
       .map((group) => ({ group, level: Number(group.getAttribute('Level')) }))
       .filter(({ level }) => Number.isInteger(level) && level <= depth - 1)
       .sort((a, b) => b.level - a.level);
-    return levels.length > 0 ? levels[0].group : null;
+    return levels[0]?.group ?? null;
   }
 
   /**
@@ -605,14 +556,8 @@ class MindManagerImporter extends Importer {
     if (element) return element;
 
     // If not found, search all elements by tag name
-    const allElements = parent.getElementsByTagName('*');
-    for (let i = 0; i < allElements.length; i++) {
-      const el = allElements[i];
-      if (el.localName === tagName || el.tagName === tagName) {
-        return el;
-      }
-    }
-    return null;
+    const allElements = Array.from(parent.getElementsByTagName('*'));
+    return allElements.find((el) => el.localName === tagName || el.tagName === tagName) ?? null;
   }
 
   // Only direct children: a descendant search would pick up the data of nested topics.
@@ -986,7 +931,7 @@ class MindManagerImporter extends Importer {
       console.log(`Importing MindManager map: ${nameMap}, description: ${_description}`);
 
       // Reset counters and ID map
-      this.idCounter = 1;
+      this.ids.reset();
       this.topicIdMap.clear();
 
       const xmlContent = MindManagerImporter.readDocument(this.mindManagerInput);

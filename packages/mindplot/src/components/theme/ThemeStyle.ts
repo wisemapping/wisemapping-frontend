@@ -17,12 +17,17 @@
  */
 
 import { LineType } from '../ConnectionLine';
-import { FontStyleType } from '../FontStyleType';
-import { FontWeightType } from '../FontWeightType';
-import { TopicShapeType } from '../model/INodeModel';
-import { TopicType, ThemeVariant } from './Theme';
+import type { FontStyleType } from '../FontStyleType';
+import type { FontWeightType } from '../FontWeightType';
+import type { TopicShapeType } from '../model/INodeModel';
+import type { TopicType, ThemeVariant } from './Theme';
 import type { BackgroundPatternType } from '../model/CanvasStyleType';
 import { isMsgKey, type MsgKey } from '../lang/en';
+import {
+  isFontStyleType,
+  isFontWeightType,
+  isTopicShapeType,
+} from '../persistence/TopicAttributeTypes';
 
 // Import JSON files
 import prismDefault from './styles/prism-default.json';
@@ -129,13 +134,6 @@ export class ThemeStyle {
   }
 
   /**
-   * Get all merged styles
-   */
-  getAllStyles(): Map<TopicType, TopicStyleType> {
-    return this._mergedStyles;
-  }
-
-  /**
    * Get canvas styles
    */
   getCanvasStyle(): CanvasStyleType {
@@ -186,47 +184,47 @@ export class ThemeStyle {
   private loadStylesByFilename(filename: string): JsonThemeStyles {
     switch (filename) {
       case 'prism-default.json':
-        return prismDefault as JsonThemeStyles;
+        return prismDefault;
       case 'prism-light.json':
-        return prismLight as JsonThemeStyles;
+        return prismLight;
       case 'prism-dark.json':
-        return prismDark as JsonThemeStyles;
+        return prismDark;
       case 'classic-default.json':
-        return classicDefault as JsonThemeStyles;
+        return classicDefault;
       case 'classic-light.json':
-        return classicLight as JsonThemeStyles;
+        return classicLight;
       case 'classic-dark.json':
-        return classicDark as JsonThemeStyles;
+        return classicDark;
       case 'robot-default.json':
-        return robotDefault as JsonThemeStyles;
+        return robotDefault;
       case 'robot-light.json':
-        return robotLight as JsonThemeStyles;
+        return robotLight;
       case 'robot-dark.json':
-        return robotDark as JsonThemeStyles;
+        return robotDark;
       case 'sunrise-default.json':
-        return sunriseDefault as JsonThemeStyles;
+        return sunriseDefault;
       case 'sunrise-light.json':
-        return sunriseLight as JsonThemeStyles;
+        return sunriseLight;
       case 'sunrise-dark.json':
-        return sunriseDark as JsonThemeStyles;
+        return sunriseDark;
       case 'ocean-default.json':
-        return oceanDefault as JsonThemeStyles;
+        return oceanDefault;
       case 'ocean-light.json':
-        return oceanLight as JsonThemeStyles;
+        return oceanLight;
       case 'ocean-dark.json':
-        return oceanDark as JsonThemeStyles;
+        return oceanDark;
       case 'aurora-default.json':
-        return auroraDefault as JsonThemeStyles;
+        return auroraDefault;
       case 'aurora-light.json':
         return auroraLight as JsonThemeStyles;
       case 'aurora-dark.json':
-        return auroraDark as JsonThemeStyles;
+        return auroraDark;
       case 'retro-default.json':
         return retroDefault as JsonThemeStyles;
       case 'retro-light.json':
-        return retroLight as JsonThemeStyles;
+        return retroLight;
       case 'retro-dark.json':
-        return retroDark as JsonThemeStyles;
+        return retroDark;
       default:
         console.warn(`Unknown style file: ${filename}`);
         return {};
@@ -294,7 +292,7 @@ export class ThemeStyle {
       const mergedStyle: TopicStyleType = {
         ...baseStyle,
         ...variantConverted,
-      } as TopicStyleType;
+      };
 
       result.set(topicType, mergedStyle);
     });
@@ -372,15 +370,19 @@ export class ThemeStyle {
     }
     if (jsonStyle.fontFamily !== undefined) result.fontFamily = jsonStyle.fontFamily;
     if (jsonStyle.fontSize !== undefined) result.fontSize = jsonStyle.fontSize;
-    if (jsonStyle.fontStyle !== undefined) result.fontStyle = jsonStyle.fontStyle as FontStyleType;
+    if (jsonStyle.fontStyle !== undefined) {
+      result.fontStyle = ThemeStyle.checked(jsonStyle.fontStyle, isFontStyleType, 'font style');
+    }
     if (jsonStyle.fontWeight !== undefined) {
-      result.fontWeight = jsonStyle.fontWeight as FontWeightType;
+      result.fontWeight = ThemeStyle.checked(jsonStyle.fontWeight, isFontWeightType, 'font weight');
     }
     if (jsonStyle.fontColor !== undefined) result.fontColor = jsonStyle.fontColor;
     if (jsonStyle.msgKey !== undefined && isMsgKey(jsonStyle.msgKey)) {
       result.msgKey = jsonStyle.msgKey;
     }
-    if (jsonStyle.shapeType !== undefined) result.shapeType = jsonStyle.shapeType as TopicShapeType;
+    if (jsonStyle.shapeType !== undefined) {
+      result.shapeType = ThemeStyle.checked(jsonStyle.shapeType, isTopicShapeType, 'shape type');
+    }
     if (jsonStyle.outerBackgroundColor !== undefined) {
       result.outerBackgroundColor = jsonStyle.outerBackgroundColor;
     }
@@ -389,6 +391,18 @@ export class ThemeStyle {
     }
 
     return result;
+  }
+
+  /** A value of a theme's JSON, checked against its type: like an unknown connection style, it throws. */
+  private static checked<T extends string>(
+    value: string,
+    isValid: (v: string) => v is T,
+    name: string,
+  ): T {
+    if (!isValid(value)) {
+      throw new Error(`Unknown ${name}: ${value}`);
+    }
+    return value;
   }
 
   /**
@@ -402,6 +416,8 @@ export class ThemeStyle {
         return LineType.POLYLINE_MIDDLE;
       case 'POLYLINE_CURVED':
         return LineType.POLYLINE_CURVED;
+      case 'POLYLINE_STRAIGHT':
+        return LineType.POLYLINE_STRAIGHT;
       case 'THICK_CURVED':
         return LineType.THICK_CURVED;
       case 'THICK_CURVED_ORGANIC':

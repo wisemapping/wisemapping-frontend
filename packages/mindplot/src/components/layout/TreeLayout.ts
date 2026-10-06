@@ -15,13 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import Node from './Node';
 import TreeSorter from './TreeSorter';
 import LayoutPass from './LayoutPass';
-import RootedTreeSet from './RootedTreeSet';
-import SizeType from '../SizeType';
-import PositionType from '../PositionType';
+import type RootedTreeSet from './RootedTreeSet';
+import type SizeType from '../SizeType';
+import type PositionType from '../PositionType';
 import type { OrientationType } from './LayoutType';
 
 class TreeLayout {
@@ -36,7 +36,7 @@ class TreeLayout {
   }
 
   createNode(id: number, size: SizeType, position: PositionType, _type: string): Node {
-    $assert($defined(id), 'id can not be null');
+    $assert(id != null, 'id can not be null');
     // Tree layout uses TreeSorter for all nodes
     return new Node(id, size, position, TreeLayout.TREE_SORTER);
   }

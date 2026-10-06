@@ -18,6 +18,7 @@
 import { $assert } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
 import type Line from './Line';
+import type PositionType from './PositionType';
 import type { ElementAttributes } from './StyleAttributes';
 import ArcLinePeer from './peer/svg/ArcLinePeer';
 import type { ElementType, Orientation } from './types';
@@ -55,11 +56,11 @@ class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
     this.peer.setTo(x, y);
   }
 
-  getFrom() {
+  getFrom(): PositionType {
     return this.peer.getFrom();
   }
 
-  getTo() {
+  getTo(): PositionType {
     return this.peer.getTo();
   }
 

@@ -15,10 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from './util/assert';
+import { $assert } from './util/assert';
 import DOMUtils from './util/DOMUtils';
 import getCollapsedAncestorIds from './util/topicVisibility';
-import resolveTopicMove, { TopicMove } from './util/topicReorder';
+import type { TopicMove } from './util/topicReorder';
+import resolveTopicMove from './util/topicReorder';
 import isSelectionEmpty from './util/selectionState';
 import Messages, { $msg } from './Messages';
 
@@ -50,25 +51,27 @@ import LayoutManager from './layout/LayoutManager';
 import type { LayoutType } from './layout/LayoutType';
 
 import { $notify } from './model/ToolbarNotifier';
-import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
+import type { StrokeStyle } from './model/RelationshipModel';
+import type RelationshipModel from './model/RelationshipModel';
 import Mindmap from './model/Mindmap';
 import NodeModel from './model/NodeModel';
-import Topic from './Topic';
+import type Topic from './Topic';
 import type { CanvasStyleType } from './model/CanvasStyleType';
-import { DesignerOptions } from './DesignerOptionsBuilder';
-import DragTopic from './DragTopic';
-import CentralTopic from './CentralTopic';
-import FeatureType from './model/FeatureType';
-import WidgetBuilder from './WidgetBuilder';
-import { TopicShapeType } from './model/INodeModel';
-import { LineType } from './ConnectionLine';
+import type { DesignerOptions } from './DesignerOptionsBuilder';
+import type DragTopic from './DragTopic';
+import type CentralTopic from './CentralTopic';
+import type FeatureType from './model/FeatureType';
+import type WidgetBuilder from './WidgetBuilder';
+import type { TopicShapeType } from './model/INodeModel';
+import type { LineType } from './ConnectionLine';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 import ImageExpoterFactory from './export/ImageExporterFactory';
-import PositionType from './PositionType';
-import ThemeType from './model/ThemeType';
+import type PositionType from './PositionType';
+import type ThemeType from './model/ThemeType';
 import ThemeFactory from './theme/ThemeFactory';
-import Theme, { ThemeVariant } from './theme/Theme';
-import ChangeEvent from './layout/ChangeEvent';
+import type { ThemeVariant } from './theme/Theme';
+import type Theme from './theme/Theme';
+import type ChangeEvent from './layout/ChangeEvent';
 import type { ModelUpdateEvent } from './DesignerUndoManager';
 import HTMLTopicSelected from './HTMLTopicSelected';
 
@@ -94,8 +97,6 @@ export type DesignerEvents = {
   onblur: void;
   loadSuccess: void;
 };
-
-export type DesignerEventType = keyof DesignerEvents;
 
 class Designer extends EventDispispatcher<DesignerEvents> {
   private _mindmap: Mindmap | null;
@@ -127,6 +128,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   private _internalClipboard: string | null = null;
 
   private _topicEventDispatcher: TopicEventDispatcher;
+
+  // Set while selectAll or deselectAll changes the selection of every entity: the designer fires
+  // its 'onfocus' or 'onblur' event, and pans to the last topic selected, once at the end.
+  private _selectionBatch: { panTo?: Topic } | null = null;
 
   private _selectionShadows: Map<Topic, HTMLTopicSelected> = new Map();
 
@@ -212,8 +217,6 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     this._topicEventDispatcher = new TopicEventDispatcher(this.isReadOnly());
 
-    // Hack: There are static reference to designer variable. Needs to be reviewed.
-    globalThis.designer = this;
     this._mindmap = null;
 
     // If not manager was specifed, use the readonly one.
@@ -312,10 +315,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // Initialize workspace event listeners.
     screenManager.addEvent('update', () => {
       // Topic must be set to his original state. All editors must be closed.
-      const topics = me.getModel().getTopics();
-      topics.forEach((object) => {
-        object.closeEditors();
-      });
+      me.closeNodeEditors();
 
       // Clean some selected nodes on event ..
       if (me._cleanScreen) me._cleanScreen();
@@ -418,6 +418,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     }
 
     topic.addEvent('ontblur', () => {
+      if (me._selectionBatch) return;
       const topics = me.getModel().filterSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
 
@@ -430,6 +431,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     });
 
     topic.addEvent('ontfocus', () => {
+      if (me._selectionBatch) return;
       const topics = me.getModel().filterSelectedTopics();
       const rels = me.getModel().filterSelectedRelationships();
 
@@ -452,7 +454,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     const objects = model.getEntities();
     objects.forEach((object) => {
       // Disable all nodes on focus but not the current if Ctrl key isn't being pressed
-      if (!$defined(event) || (!event.ctrlKey && !event.metaKey)) {
+      if (event == null || (!event.ctrlKey && !event.metaKey)) {
         if (object.isOnFocus() && object !== currentObject) {
           object.setOnFocus(false);
         }
@@ -460,26 +462,52 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     });
   }
 
+  /** Closes the text editor, saving it: there is one per designer, whatever its topic. */
   closeNodeEditors() {
-    const topics = this.getModel().getTopics();
-    topics.forEach((topic) => topic.closeEditors());
+    this._topicEventDispatcher.close(true);
   }
 
   /** sets focus to all model entities, i.e. relationships and topics */
   selectAll(): void {
-    const model = this.getModel();
-    const objects = model.getEntities();
-    objects.forEach((object) => {
-      object.setOnFocus(true);
-    });
+    this._setFocusOfAll(true);
   }
 
   /** removes focus from all model entities, i.e. relationships and topics */
   deselectAll(): void {
-    const objects = this.getModel().getEntities();
-    objects.forEach((object) => {
-      object.setOnFocus(false);
-    });
+    this._setFocusOfAll(false);
+  }
+
+  /**
+   * Sets the focus of every entity in one pass. Each entity still fires its own events, and
+   * each topic its 'topicSelected' or 'topicUnselected' on the LayoutEventBus; the designer fires
+   * 'onfocus' or 'onblur' once, and pans to the last topic selected once, at the end.
+   */
+  private _setFocusOfAll(focus: boolean): void {
+    const batch: { panTo?: Topic } = {};
+    let changed = false;
+    this._selectionBatch = batch;
+    try {
+      this.getModel()
+        .getEntities()
+        .forEach((object) => {
+          changed = changed || object.isOnFocus() !== focus;
+          object.setOnFocus(focus);
+        });
+    } finally {
+      this._selectionBatch = null;
+    }
+
+    if (batch.panTo) {
+      this.ensureNodeVisible(batch.panTo);
+    }
+    if (changed) {
+      const model = this.getModel();
+      const empty = isSelectionEmpty(
+        model.filterSelectedTopics().length,
+        model.filterSelectedRelationships().length,
+      );
+      this.fireEvent(empty ? 'onblur' : 'onfocus');
+    }
   }
 
   setZoom(zoom: number): void {
@@ -619,13 +647,13 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   shrinkSelectedBranch() {
     const nodes = this.getModel().filterSelectedTopics();
-    if (nodes.length <= 0 || nodes.length !== 1) {
+    const [topic] = nodes;
+    if (!topic || nodes.length !== 1) {
       // If there are more than one node selected,
       $notify($msg('ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE'));
       return;
     }
     // Execute event ...
-    const topic = nodes[0];
     if (topic.getType() !== 'CentralTopic') {
       this._actionDispatcher.shrinkBranch([topic.getId()], !topic.areChildrenShrunken());
     }
@@ -674,7 +702,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     mindmap.addBranch(central);
 
     topics.forEach((topic) => {
-      const nodeModel: NodeModel = topic.getModel().deepCopy();
+      const nodeModel: NodeModel = topic.getModel().deepCopy(mindmap);
       nodeModel.connectTo(central);
     });
 
@@ -800,10 +828,12 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       const mindmap = this._parseClipboardMindmap(text);
 
       // Remove reference to the parent mindmap and clean up to support multiple copy of the nodes ...
-      const central = mindmap.getBranches()[0];
+      const [central] = mindmap.getBranches();
+      $assert(central, 'The clipboard map has no central topic');
       let children = central.getChildren();
       children.forEach((c) => c.disconnect());
-      children = children.map((m: NodeModel) => m.deepCopy());
+      // The copies belong to this designer's map, not to the clipboard one ...
+      children = children.map((m: NodeModel) => m.deepCopy(this.getMindmap()));
 
       // Change position to avoid overlap ...
       children.forEach((m) => {
@@ -814,7 +844,11 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       // Finally, add the node ...
       this._actionDispatcher.addTopics(children, null);
     } else {
+      // Text goes into the selected topics: with none, there is nothing to change or undo ...
       const topics = this.getModel().filterSelectedTopics();
+      if (topics.length === 0) {
+        return;
+      }
       this._actionDispatcher.changeTextToTopic(
         topics.map((t) => t.getId()),
         text.trim(),
@@ -853,8 +887,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       return;
     }
 
-    const branches = this._parseClipboardMindmap(text).getBranches();
-    if (branches.length === 0) {
+    const [central] = this._parseClipboardMindmap(text).getBranches();
+    if (!central) {
       $notify($msg('CLIPBOARD_IS_EMPTY'));
       return;
     }
@@ -870,11 +904,11 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // in clipboard order ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
     const predicted = layoutManager.predict(parentId, null, null);
-    const children = branches[0].getChildren();
+    const children = central.getChildren();
     const orders = layoutManager.getOrdersForNewChildren(parentId, children.length);
     const clones = children.map((child, index) => {
       child.disconnect();
-      const clone = child.deepCopy();
+      const clone = child.deepCopy(this.getMindmap());
       clone.setPosition(predicted.position.x, predicted.position.y);
       clone.setOrder(orders[index]);
       return clone;
@@ -889,7 +923,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   createChildForSelectedNode(): void {
     const nodes = this.getModel().filterSelectedTopics();
-    if (nodes.length <= 0) {
+    const [parentTopic] = nodes;
+    if (!parentTopic) {
       // If there are more than one node selected,
       $notify($msg('ONE_TOPIC_MUST_BE_SELECTED'));
       return;
@@ -901,7 +936,6 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     }
 
     // Add new node ...
-    const parentTopic = nodes[0];
     const parentTopicId = parentTopic.getId();
     const childModel = this._createChildModel(parentTopic);
 
@@ -931,7 +965,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
   createSiblingForSelectedNode(): void {
     const nodes = this.getModel().filterSelectedTopics();
-    if (nodes.length <= 0) {
+    const [topic] = nodes;
+    if (!topic) {
       // If there are no nodes selected,
       $notify($msg('ONE_TOPIC_MUST_BE_SELECTED'));
       return;
@@ -941,8 +976,6 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       $notify($msg('ONLY_ONE_TOPIC_MUST_BE_SELECTED'));
       return;
     }
-
-    const topic = nodes[0];
     if (!topic.getOutgoingConnectedTopic()) {
       // Central topic and isolated topics ....
       // Central topic doesn't have siblings ...
@@ -1006,8 +1039,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   }
 
   showRelPivot(event: MouseEvent): void {
-    const nodes = this.getModel().filterSelectedTopics();
-    if (nodes.length <= 0) {
+    const [topic] = this.getModel().filterSelectedTopics();
+    if (!topic) {
       // This could not happen ...
       $notify($msg('RELATIONSHIP_COULD_NOT_BE_CREATED'));
       return;
@@ -1018,7 +1051,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     const pos = screen.getWorkspaceMousePosition(event);
 
     // create a connection ...
-    this._relPivot.start(nodes[0], pos);
+    this._relPivot.start(topic, pos);
   }
 
   getMindmapProperties(): { zoom: number } {
@@ -1039,7 +1072,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // Init layout manager ...
     const size = { width: 25, height: 25 };
     const layoutType = mindmap.getLayout();
-    const layoutManager = new LayoutManager(mindmap.getCentralTopic().getId(), size, layoutType);
+    const centralModel = mindmap.getCentralTopic();
+    $assert(centralModel, 'The map to load has no central topic');
+    const layoutManager = new LayoutManager(centralModel.getId(), size, layoutType);
 
     layoutManager.addEvent('change', (event: ChangeEvent) => {
       const id = event.getId();
@@ -1511,6 +1546,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // Build relationship line (sourceTopic and targetTopic are guaranteed non-null by asserts above)
     const result = new Relationship(sourceTopic, targetTopic, model);
     result.addEvent('ontblur', () => {
+      if (this._selectionBatch) return;
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
 
@@ -1520,6 +1556,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     });
 
     result.addEvent('ontfocus', () => {
+      if (this._selectionBatch) return;
       const topics = this.getModel().filterSelectedTopics();
       const rels = this.getModel().filterSelectedRelationships();
 
@@ -1561,8 +1598,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     node.disconnect(this._canvas);
 
     // remove children
-    while (node.getChildren().length > 0) {
-      this._removeTopicTree(node.getChildren()[0]);
+    let [child] = node.getChildren();
+    while (child) {
+      this._removeTopicTree(child);
+      [child] = node.getChildren();
     }
 
     this._canvas.removeChild(node);
@@ -1591,7 +1630,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       $notify($msg('ENTITIES_COULD_NOT_BE_DELETED'));
       return;
     }
-    if (topics.length === 1 && topics[0].isCentralTopic()) {
+    if (topics.length === 1 && topics[0]?.isCentralTopic()) {
       $notify($msg('CENTRAL_TOPIC_CAN_NOT_BE_DELETED'));
       return;
     }
@@ -1893,7 +1932,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   private _registerAutoPanOnFocus(): void {
     this._autoPanOnFocusListener = (nodeModel: NodeModel) => {
       const topic = this.getModel().findTopicByModel(nodeModel);
-      if (topic) {
+      if (topic && this._selectionBatch) {
+        // Pan once, when the batch ends ...
+        this._selectionBatch.panTo = topic;
+      } else if (topic) {
         this.ensureNodeVisible(topic);
       }
     };
@@ -1904,7 +1946,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * Releases what the designer registered outside its own objects: the handlers on its
    * LayoutEventBus (a topic or the host may still hold the bus), the keyboard, a topic drag in
    * progress, the canvas listeners on the window and the container, the canvas SVG, and the
-   * ActionDispatcher instance and `globalThis.designer` if they still point at this designer.
+   * ActionDispatcher instance if it still points at this designer.
    *
    * The PersistenceManager instance is kept: MindplotWebComponent saves and unlocks the map
    * through it after the designer is disposed.
@@ -1958,9 +2000,6 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     this._canvas.dispose();
 
     ActionDispatcher.clearInstance(this._actionDispatcher);
-    if (globalThis.designer === this) {
-      Reflect.deleteProperty(globalThis, 'designer');
-    }
   }
 
   isDisposed(): boolean {

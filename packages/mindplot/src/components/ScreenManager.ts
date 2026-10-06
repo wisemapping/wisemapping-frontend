@@ -18,16 +18,12 @@
 import type { Workspace as Workspace2D } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import EventManager from './util/EventManager';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 
 class ScreenManager {
   private _divContainer: HTMLDivElement;
 
-  private _padding: { x: number; y: number };
-
   private _clickEvents: EventListener[];
-
-  private _scale: number;
 
   // The workspace drawn in the container, which maps mouse positions (see setWorkspace).
   private _workspace: Workspace2D | null = null;
@@ -35,7 +31,6 @@ class ScreenManager {
   constructor(divElement: HTMLElement) {
     $assert(divElement, 'can not be null');
     this._divContainer = divElement as HTMLDivElement;
-    this._padding = { x: 0, y: 0 };
 
     // Prevent pull-to-refresh while allowing all zoom gestures
     // We rely on preventDefault() in touch event handlers to block pull-to-refresh
@@ -53,7 +48,6 @@ class ScreenManager {
       event.stopPropagation();
       event.preventDefault();
     });
-    this._scale = 1;
   }
 
   /**
@@ -64,10 +58,6 @@ class ScreenManager {
       width: window.innerWidth,
       height: window.innerHeight,
     };
-  }
-
-  setScale(scale: number) {
-    this._scale = scale;
   }
 
   /**
@@ -169,29 +159,15 @@ class ScreenManager {
       throw new Error(`Coordinated can not be null, eventType= ${event.type}`);
     }
 
-    // Through the SVG screen matrix, where the browser has one ...
-    const svg = this._workspace?.getSVGElement();
-    if (this._workspace && svg && typeof svg.getScreenCTM === 'function') {
+    // Through the SVG screen matrix, which applies the zoom, the pan and where the SVG is ...
+    if (this._workspace) {
       return this._workspace.clientToWorld(x, y);
     }
 
-    // Without one (jsdom has no layout): from the container rect, the zoom and the pan.
-    // Adjust the deviation of the container positioning. clientX/clientY and the bounding rect
-    // are both viewport relative, so the page scroll must not be applied here ...
+    // Without a workspace: from the container. clientX/clientY and the bounding rect are both
+    // viewport relative, so the page scroll must not be applied here ...
     const containerRect = this._divContainer.getBoundingClientRect();
-    x -= containerRect.left;
-    y -= containerRect.top;
-
-    // Scale coordinate in order to be relative to the workspace. That's coordSize/size;
-    x *= this._scale;
-    y *= this._scale;
-
-    // Add workspace offset.
-    x += this._padding.x;
-    y += this._padding.y;
-
-    // Remove decimal part..
-    return { x, y };
+    return { x: x - containerRect.left, y: y - containerRect.top };
   }
 
   getContainer(): HTMLDivElement {
@@ -250,11 +226,6 @@ class ScreenManager {
 
   findInContainer(selector: string): HTMLElement | null {
     return this._divContainer.querySelector(selector);
-  }
-
-  setOffset(x: number, y: number): void {
-    this._padding.x = x;
-    this._padding.y = y;
   }
 }
 

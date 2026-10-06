@@ -16,12 +16,14 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureModel, { FeatureAttributes } from './FeatureModel';
+import type { FeatureAttributes } from './FeatureModel';
+import FeatureModel from './FeatureModel';
 
 class SvgIconModel extends FeatureModel {
   constructor(attributes: FeatureAttributes) {
     super('icon');
-    this.setIconType(attributes.id);
+    // A missing id is rejected by setIconType, as an empty one.
+    this.setIconType(attributes.id ?? '');
   }
 
   getIconType(): string {
@@ -33,7 +35,7 @@ class SvgIconModel extends FeatureModel {
     this.setAttribute('id', iconType);
   }
 
-  applyAttribute(key: string, value: unknown): void {
+  override applyAttribute(key: string, value: unknown): void {
     if (key === 'id') {
       this.setIconType(value as string);
     } else {

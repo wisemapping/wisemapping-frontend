@@ -17,7 +17,7 @@
  */
 import Designer from '../../../src/components/Designer';
 import HTMLTopicSelected from '../../../src/components/HTMLTopicSelected';
-import ScreenManager from '../../../src/components/ScreenManager';
+import type ScreenManager from '../../../src/components/ScreenManager';
 import Topic from '../../../src/components/Topic';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import type NodeModel from '../../../src/components/model/NodeModel';
@@ -133,6 +133,7 @@ const buildDesigner = (topics: FakeTopic[]) => {
       getTopics: () => topics,
       findTopicByModel: (model: object) => topics.find((t) => t.getModel() === model),
       filterSelectedTopics: () => topics.filter((t) => t.isOnFocus()),
+      countSelectedTopics: () => topics.filter((t) => t.isOnFocus()).length,
     }),
     getSelectionShadows: () => shadows,
     getScreenManager: () => ({}) as ScreenManager,
@@ -188,31 +189,31 @@ describe('HTMLTopicSelected', () => {
 
     it('a plain click selects only the clicked topic', () => {
       select('a', 'b');
-      mousedown(topics[3]);
+      mousedown(topics[3]!);
       expect(selected(topics)).toEqual(['d']);
     });
 
     it('a plain click on a selected topic keeps only that topic', () => {
       select('a', 'b', 'c');
-      mousedown(topics[1]);
+      mousedown(topics[1]!);
       expect(selected(topics)).toEqual(['b']);
     });
 
     it('ctrl/meta-click on an unselected topic adds it to the selection', () => {
       select('a', 'b');
-      mousedown(topics[3], { ctrlKey: true, metaKey: true });
+      mousedown(topics[3]!, { ctrlKey: true, metaKey: true });
       expect(selected(topics)).toEqual(['a', 'b', 'd']);
     });
 
     it('ctrl/meta-click on a selected topic removes only that topic', () => {
       select('a', 'b', 'c');
-      mousedown(topics[0], { ctrlKey: true, metaKey: true });
+      mousedown(topics[0]!, { ctrlKey: true, metaKey: true });
       expect(selected(topics)).toEqual(['b', 'c']);
     });
 
     it('shift-click behaves like a plain click', () => {
       select('a', 'b');
-      mousedown(topics[2], { shiftKey: true });
+      mousedown(topics[2]!, { shiftKey: true });
       expect(selected(topics)).toEqual(['c']);
     });
   });

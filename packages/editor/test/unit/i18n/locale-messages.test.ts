@@ -64,6 +64,11 @@ describe.each(locales)('%s messages', (lang) => {
     expect(Object.keys(en).filter((id) => !messages[id])).toEqual([]);
   });
 
+  // BL5-195: messages removed from English stayed in every locale.
+  test('has no message English does not have', () => {
+    expect(Object.keys(messages).filter((id) => !en[id])).toEqual([]);
+  });
+
   test('translates every English message', () => {
     const untranslated = Object.keys(en).filter(
       (id) =>
@@ -99,5 +104,20 @@ describe.each(locales)('%s messages', (lang) => {
     };
     expect(en['canvas-style.grid-style'].defaultMessage).toBe('Grid Size');
     expect(messages['canvas-style.grid-style'].defaultMessage).not.toBe(before[lang]);
+  });
+});
+
+// Common characters only Traditional Chinese uses: their Simplified forms differ.
+const TRADITIONAL_ONLY =
+  /[預設體開關點擊選擇編輯檔圖畫線顏網頁樣題節級層連適佈視縮鍵刪註認們為個這與對時後從進]/;
+
+// BL5-194: zh, Simplified Chinese, mixed in Traditional characters.
+describe.each(['zh', 'zh-CN'])('%s messages', (lang) => {
+  test('are written in Simplified characters', () => {
+    const messages = readLang(lang);
+    const traditional = Object.keys(messages)
+      .filter((id) => TRADITIONAL_ONLY.test(messages[id].defaultMessage))
+      .map((id) => `${id}: ${messages[id].defaultMessage}`);
+    expect(traditional).toEqual([]);
   });
 });

@@ -15,8 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import WidgetBuilder from '../../../src/components/WidgetBuilder';
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type WidgetBuilder from '../../../src/components/WidgetBuilder';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
@@ -85,7 +86,7 @@ describe('Topic icons with two designers on the page', () => {
     // Hovering the icon shows its delete widget in the topic ...
     icon.getElement().trigger('mouseover', {});
     expect(append).toHaveBeenCalledTimes(1);
-    const widget = append.mock.calls[0][0];
+    const widget = append.mock.calls[0]![0];
 
     // ... and adding icons on the other map (which re-adds its icons) must not close it.
     const other = second.topic(1);

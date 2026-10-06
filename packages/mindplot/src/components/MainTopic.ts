@@ -20,8 +20,8 @@ import { $assert } from './util/assert';
 
 import Topic from './Topic';
 import Shape from './util/Shape';
-import Canvas from './Canvas';
-import PositionType from './PositionType';
+import type Canvas from './Canvas';
+import type PositionType from './PositionType';
 import TopicShapeFactory from './shape/TopicShapeFactory';
 
 class MainTopic extends Topic {
@@ -64,7 +64,7 @@ class MainTopic extends Topic {
     return group;
   }
 
-  disconnect(canvas: Canvas) {
+  override disconnect(canvas: Canvas) {
     super.disconnect(canvas);
 
     const innerShape = this.getInnerShape();
@@ -119,7 +119,8 @@ class MainTopic extends Topic {
     const isAtRight = Shape.isAtRight(targetPosition, pos);
     const size = this.getSize();
 
-    let result: PositionType = { x: 0, y: 0 };
+    // Built here, so it can be filled in field by field.
+    let result: { x: number; y: number } = { x: 0, y: 0 };
     if (this.getShapeType() === 'line') {
       const groupPosition = this.get2DElement().getPosition();
       const innerShareSize = this.getInnerShape().getSize();

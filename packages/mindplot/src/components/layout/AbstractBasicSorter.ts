@@ -15,10 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import PositionType from '../PositionType';
+import type PositionType from '../PositionType';
 import ChildrenSorterStrategy from './ChildrenSorterStrategy';
-import Node from './Node';
-import RootedTreeSet from './RootedTreeSet';
+import type Node from './Node';
+import type RootedTreeSet from './RootedTreeSet';
 import { sideOf } from '../util/side';
 
 abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
@@ -96,7 +96,8 @@ abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
    * child counts the gap the layout leaves between two leaves of its height.
    */
   protected _halfSiblingGap(children: Node[], index: number): number {
-    const child = children[index];
+    // In range: every caller passes the index of a child it already holds.
+    const child = children[index]!;
     const neighbour = children[index === 0 ? 1 : index - 1];
     const gap = neighbour
       ? Math.abs(neighbour.getPosition().y - child.getPosition().y)

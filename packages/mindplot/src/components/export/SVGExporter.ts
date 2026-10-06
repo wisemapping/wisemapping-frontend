@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import SizeType from '../SizeType';
+import type SizeType from '../SizeType';
 import Exporter from './Exporter';
 
 class SVGExporter extends Exporter {
@@ -52,7 +52,10 @@ class SVGExporter extends Exporter {
 
     // Add background. This is mainly for PNG export ...
     let svgDoc = SVGExporter.parseXMLString(svgTxt, 'application/xml');
-    const svgElement = svgDoc.getElementsByTagName('svg')[0];
+    const svgElement = svgDoc.getElementsByTagName('svg').item(0);
+    if (!svgElement) {
+      throw new Error('The exported document has no svg element');
+    }
     svgElement.setAttribute('style', `background-color:${this.backgroundColor}`);
     svgElement.setAttribute('focusable', 'false');
 
@@ -72,12 +75,14 @@ class SVGExporter extends Exporter {
     const translates: SizeType[] = rectElems.map((rect: Element) => {
       const g = rect.parentElement;
       const transformStr = g?.getAttribute('transform');
-      let result: SizeType = { width: 0, height: 0 };
+      // Built here, so it can be filled in field by field.
+      let result: { width: number; height: number } = { width: 0, height: 0 };
       if (transformStr) {
         // Looking to parse translate(220.00000,279.00000) scale(1.00000,1.00000)
         const match = transformStr.match(SVGExporter.regexpTranslate);
         if (match !== null) {
-          result = { width: Number.parseFloat(match[1]), height: Number.parseFloat(match[2]) };
+          const [, x = '', y = ''] = match;
+          result = { width: Number.parseFloat(x), height: Number.parseFloat(y) };
 
           // Add rect size ...
           const widthAttr = rect.getAttribute('width');
@@ -100,11 +105,12 @@ class SVGExporter extends Exporter {
     const widths = translates.map((t) => t.width).sort((a, b) => a - b);
     const heights = translates.map((t) => t.height).sort((a, b) => a - b);
 
-    const minX = widths[0] - SVGExporter.padding;
-    const minY = heights[0] - SVGExporter.padding;
+    // A map without topics (no rect) has no extent: its bounds are NaN.
+    const minX = (widths[0] ?? Number.NaN) - SVGExporter.padding;
+    const minY = (heights[0] ?? Number.NaN) - SVGExporter.padding;
 
-    const maxX = widths[widths.length - 1] + SVGExporter.padding;
-    const maxY = heights[heights.length - 1] + SVGExporter.padding;
+    const maxX = (widths[widths.length - 1] ?? Number.NaN) + SVGExporter.padding;
+    const maxY = (heights[heights.length - 1] ?? Number.NaN) + SVGExporter.padding;
 
     return {
       minX,

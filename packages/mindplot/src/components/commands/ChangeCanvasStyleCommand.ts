@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import { CanvasStyleType } from '../model/CanvasStyleType';
+import type CommandContext from '../CommandContext';
+import type { CanvasStyleType } from '../model/CanvasStyleType';
 
 class ChangeCanvasStyleCommand extends Command {
   private _newStyle: CanvasStyleType | undefined;

@@ -19,7 +19,7 @@
 import path from 'path';
 import fs from 'fs';
 import { test } from '@jest/globals'; // Workaround for cypress conflict
-import Mindmap from '../../../src/components/model/Mindmap';
+import type Mindmap from '../../../src/components/model/Mindmap';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import TextExporterFactory from '../../../src/components/export/TextExporterFactory';
 import { parseXMLFile, setupBlob, exporterAssert } from './Helper';
@@ -29,7 +29,7 @@ setupBlob();
 const testNames = fs
   .readdirSync(path.resolve(__dirname, './input/'))
   .filter((f) => f.endsWith('.wxml'))
-  .map((filename: string) => filename.split('.')[0]);
+  .map((filename: string) => filename.split('.')[0]!);
 
 describe('WXML export test execution', () => {
   test.each(testNames)('Exporting %p suite', async (testName: string) => {

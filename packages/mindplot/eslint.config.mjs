@@ -27,7 +27,6 @@ export default defineConfig([
             "coverage/**",
             "*.min.js",
             "**/*.d.ts",
-            "src/@types/**",
             "cypress/**",
             "storybook/**"
         ]
@@ -114,7 +113,13 @@ export default defineConfig([
             "@typescript-eslint/no-explicit-any": "error",
             "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
             "@typescript-eslint/no-this-alias": "off",
-            "@typescript-eslint/no-non-null-assertion": "off",
+            // Warn, to stop new `!`: prefer a check, a default or a typed lookup.
+            "@typescript-eslint/no-non-null-assertion": "warn",
+            // Type-only imports are erased, so they cannot create runtime import cycles.
+            "@typescript-eslint/consistent-type-imports": ["error", {
+                prefer: "type-imports",
+                fixStyle: "separate-type-imports",
+            }],
 
             "import/extensions": ["error", "ignorePackages", {
                 js: "never",
@@ -129,12 +134,27 @@ export default defineConfig([
         },
     },
     {
+        // Type-aware rules, for src only: they need the TypeScript program.
+        files: ["src/**/*.ts"],
+        languageOptions: {
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: __dirname,
+            },
+        },
+        rules: {
+            "@typescript-eslint/no-unnecessary-type-assertion": "error",
+        },
+    },
+    {
         files: ["test/**/*.ts"],
         rules: {
             // Test doubles (mock classes) live next to the test that uses them.
             "max-classes-per-file": "off",
             // The security tests feed javascript: URLs to the sanitizers on purpose.
             "no-script-url": "off",
+            // Tests index fixtures they build themselves: a wrong index fails the test anyway.
+            "@typescript-eslint/no-non-null-assertion": "off",
         },
     }
 ]);

@@ -17,10 +17,11 @@
  */
 // SvgIconAssets is mapped to test/unit/__mocks__/SvgIconAssets.ts (jest.config.js), which
 // lists the icon files on disk.
-import { Image } from '@wisemapping/web2d';
+import type { Image } from '@wisemapping/web2d';
+import type { CommandDispatcher } from '../../src/components/ActionDispatcher';
 import ActionDispatcher from '../../src/components/ActionDispatcher';
 import SvgImageIcon from '../../src/components/SvgImageIcon';
-import Topic from '../../src/components/Topic';
+import type Topic from '../../src/components/Topic';
 import SvgIconModel from '../../src/components/model/SvgIconModel';
 
 // A topic without a designer: it runs its commands through ActionDispatcher.getInstance().
@@ -37,7 +38,7 @@ describe('SvgImageIcon', () => {
 
   beforeEach(() => {
     changeFeatureToTopic = jest.fn();
-    ActionDispatcher.setInstance({ changeFeatureToTopic } as unknown as ActionDispatcher);
+    ActionDispatcher.setInstance({ changeFeatureToTopic } as unknown as CommandDispatcher);
   });
 
   it('changes the icon type through the action dispatcher, so it can be undone', () => {

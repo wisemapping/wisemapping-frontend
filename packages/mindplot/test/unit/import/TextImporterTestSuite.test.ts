@@ -20,7 +20,10 @@ import path from 'path';
 import fs from 'fs';
 import { expect, test } from '@jest/globals';
 import { exporterAssert, parseXMLFile } from './Helper';
-import FreemindMap from '../../../src/components/export/freemind/Map';
+import {
+  freemindMapToXml,
+  loadFreemindMap,
+} from '../../../src/components/export/freemind/FreemindXml';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
 import ImportError from '../../../src/components/import/ImportError';
 
@@ -30,7 +33,7 @@ const notImportable = ['mindmanager'];
 const testNames = fs
   .readdirSync(path.resolve(__dirname, './input/'))
   .filter((filename: string) => filename.endsWith('.mm'))
-  .map((filename: string) => filename.split('.')[0]);
+  .map((filename: string) => filename.split('.')[0]!);
 
 describe('package/', () => {
   test.each(testNames)('Importing %p suite', async (testName: string) => {
@@ -50,8 +53,7 @@ describe('package/', () => {
     // For FreeMind/Freeplane files, use the existing logic
     if (fileType === 'mm') {
       const mapDocument = parseXMLFile(freemapPath, 'text/xml');
-      const freemap: FreemindMap = new FreemindMap().loadFromDom(mapDocument);
-      const freemapXml = freemap.toXml();
+      const freemapXml = freemindMapToXml(loadFreemindMap(mapDocument));
       const freemapStr = new XMLSerializer().serializeToString(freemapXml);
       const importer = TextImporterFactory.create('mm', freemapStr);
       await exporterAssert(testName, importer);

@@ -52,17 +52,9 @@ import { $notify } from './components/model/ToolbarNotifier';
 import XMLSerializerFactory from './components/persistence/XMLSerializerFactory';
 import type { CanvasStyleType, BackgroundPatternType } from './components/model/CanvasStyleType';
 
-declare global {
-  // Todo: There are some global references that needs to be removed inside mindplot.
-  // Undefined until a designer is built, and again once it is disposed.
-  // eslint-disable-next-line vars-on-top
-  var designer: Designer | undefined;
-}
-
-// jQuery has been removed - no longer needed
-// WebComponent registration
-// The if statement is the fix for doble registration problem. Can be deleted wen webapp-mindplot dependency be dead.
-if (!customElements.get('mindplot-component')) {
+// Registers <mindplot-component>. Skipped without a DOM (a server render or a worker), and when
+// another copy of mindplot on the page already registered it.
+if (typeof window !== 'undefined' && !customElements.get('mindplot-component')) {
   customElements.define('mindplot-component', MindplotWebComponent);
 }
 
@@ -118,6 +110,7 @@ export type { TopicShapeType } from './components/model/INodeModel';
 export { StrokeStyle } from './components/model/RelationshipModel';
 export { LineType } from './components/ConnectionLine';
 export { ContentType } from './components/ContentType';
+export { default as HtmlSanitizer } from './components/security/HtmlSanitizer';
 export { default as INodeModel } from './components/model/INodeModel';
 export { default as SvgIconModel } from './components/model/SvgIconModel';
 export { GALLERY_ICON_NAMES } from './components/GalleryIconData';

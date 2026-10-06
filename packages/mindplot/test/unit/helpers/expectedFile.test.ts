@@ -23,8 +23,8 @@ import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globa
 import assertExpectedFile from './expectedFile';
 import { exporterAssert as importerAssert } from '../import/Helper';
 import { exporterAssert } from '../export/Helper';
-import Importer from '../../../src/components/import/Importer';
-import Exporter from '../../../src/components/export/Exporter';
+import type Importer from '../../../src/components/import/Importer';
+import type Exporter from '../../../src/components/export/Exporter';
 
 const ENV_KEYS = ['CI', 'UPDATE_SNAPSHOTS', 'XMIND_IMPORTER_UPDATE_EXPECTED'] as const;
 let savedEnv: Record<string, string | undefined>;

@@ -65,12 +65,6 @@
       "value": "Cette action ne peut pas être annulée. Cela supprimera définitivement votre compte et supprimera toutes les données de nos serveurs."
     }
   ],
-  "account.delete-warning": [
-    {
-      "type": 0,
-      "value": "Gardez à l'esprit que vous ne pourrez pas récupérer les cartes mentales que vous avez créées. Toutes vos informations seront supprimées et ne pourront pas être restaurées."
-    }
-  ],
   "account.delete-warning-collaborations": [
     {
       "type": 0,
@@ -453,12 +447,6 @@
       "value": "Actualiser"
     }
   ],
-  "admin.status": [
-    {
-      "type": 0,
-      "value": "Statut"
-    }
-  ],
   "admin.status-active": [
     {
       "type": 0,
@@ -767,12 +755,6 @@
     {
       "type": 0,
       "value": "Toutes les cartes sélectionnées seront supprimées"
-    }
-  ],
-  "dialog.loading": [
-    {
-      "type": 0,
-      "value": "Chargement ..."
     }
   ],
   "duplicate.copy-title": [
@@ -1601,6 +1583,16 @@
     {
       "type": 0,
       "value": "Tout sélectionner"
+    }
+  ],
+  "maps.select-map": [
+    {
+      "type": 0,
+      "value": "Sélectionner "
+    },
+    {
+      "type": 1,
+      "value": "title"
     }
   ],
   "maps.tooltip-open": [

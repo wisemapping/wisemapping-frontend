@@ -763,7 +763,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
               ) : (
                 pagedMaps.map((row: MapInfo) => {
                   const isItemSelected = isSelected(row.id);
-                  const labelId = row.id;
 
                   return (
                     <TableRow
@@ -791,9 +790,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           })}
                           slotProps={{
                             input: {
-                              // Points at the title link below; the bare row id
-                              // this used to carry matched no element at all.
-                              'aria-labelledby': `map-title-${labelId}`,
+                              // Named after the map explicitly: the "Open for edition"
+                              // tooltip names the title link, so pointing at it read
+                              // the tooltip instead of the title.
+                              'aria-label': intl.formatMessage(
+                                { id: 'maps.select-map', defaultMessage: 'Select {title}' },
+                                { title: row.title },
+                              ),
                             },
                           }}
                         />

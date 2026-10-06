@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import Command from './Command';
-import CommandContext from './CommandContext';
+import type Command from './Command';
+import type CommandContext from './CommandContext';
 
 /** The 'modelUpdate' payload: how many steps can be undone and redone. */
 export type ModelUpdateEvent = { undoSteps: number; redoSteps: number };
@@ -27,22 +27,19 @@ class DesignerUndoManager {
 
   private _redoQueue: Command[];
 
-  private _baseId: number;
-
   constructor() {
     this._undoQueue = [];
     this._redoQueue = [];
-    this._baseId = 0;
   }
 
   enqueue(command: Command): void {
     $assert(command, 'Command can  not be null');
 
     const { length } = this._undoQueue;
-    if (command.getDiscardDuplicated() && length > 0) {
+    const lastItem = this._undoQueue[length - 1];
+    if (command.getDiscardDuplicated() && lastItem) {
       // Successive changes of the same kind (e.g. picking colors) collapse into one undo step,
       // but only when the new command can take over the previous one (same targets) ...
-      const lastItem = this._undoQueue[length - 1];
       if (
         lastItem.getDiscardDuplicated() === command.getDiscardDuplicated() &&
         command.mergeWith(lastItem)
@@ -87,28 +84,6 @@ class DesignerUndoManager {
 
   buildEvent(): ModelUpdateEvent {
     return { undoSteps: this._undoQueue.length, redoSteps: this._redoQueue.length };
-  }
-
-  markAsChangeBase(): void {
-    const undoLength = this._undoQueue.length;
-    if (undoLength > 0) {
-      const command = this._undoQueue[undoLength - 1];
-      this._baseId = command.getId();
-    } else {
-      this._baseId = 0;
-    }
-  }
-
-  hasBeenChanged(): boolean {
-    let result = true;
-    const undoLength = this._undoQueue.length;
-    if (undoLength === 0 && this._baseId === 0) {
-      result = false;
-    } else if (undoLength > 0) {
-      const command = this._undoQueue[undoLength - 1];
-      result = this._baseId !== command.getId();
-    }
-    return result;
   }
 }
 

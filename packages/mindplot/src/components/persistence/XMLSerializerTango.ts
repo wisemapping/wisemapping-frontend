@@ -16,15 +16,17 @@
  *   limitations under the License.
  */
 import { Point } from '@wisemapping/web2d';
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import { createDocument } from '../util/DOMUtils';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
-import NodeModel from '../model/NodeModel';
-import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
-import XMLMindmapSerializer from './XMLMindmapSerializer';
+import type NodeModel from '../model/NodeModel';
+import INodeModel from '../model/INodeModel';
+import type RelationshipModel from '../model/RelationshipModel';
+import { StrokeStyle } from '../model/RelationshipModel';
+import type XMLMindmapSerializer from './XMLMindmapSerializer';
 import ModelCodeName from './ModelCodeName';
-import FeatureModel from '../model/FeatureModel';
+import type FeatureModel from '../model/FeatureModel';
 import { legacyIconEmoji } from '../import/support/LegacyIconMap';
 import {
   isBackgroundPatternType,
@@ -36,15 +38,19 @@ import {
   isThemeType,
   isTopicShapeType,
 } from './TopicAttributeTypes';
-import { CanvasStyleType } from '../model/CanvasStyleType';
+import type { CanvasStyleType } from '../model/CanvasStyleType';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
 
   private _idsMap: Record<number, Element>;
 
+  // The ids written in the document being loaded: a duplicated topic gets an id none of them has.
+  private _documentIds: Set<number>;
+
   constructor() {
     this._idsMap = {};
+    this._documentIds = new Set();
   }
 
   toXML(mindmap: Mindmap): Document {
@@ -73,7 +79,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     this._persistCanvasStyle(mapElem, mindmap);
 
     const version = mindmap.getVersion();
-    if ($defined(version)) {
+    if (version != null) {
       mapElem.setAttribute('version', version);
     }
 
@@ -241,11 +247,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     font += `${fontStyle || ''};`;
 
     if (
-      $defined(fontFamily) ||
-      $defined(fontSize) ||
-      $defined(fontColor) ||
-      $defined(fontWeight) ||
-      $defined(fontStyle)
+      fontFamily != null ||
+      fontSize != null ||
+      fontColor != null ||
+      fontWeight != null ||
+      fontStyle != null
     ) {
       parentTopic.setAttribute('fontStyle', font);
     }
@@ -260,6 +266,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       parentTopic.setAttribute('brColor', brColor);
     }
 
+    const borderStyle = topic.getBorderStyle();
+    if (borderStyle) {
+      parentTopic.setAttribute('brStyle', borderStyle);
+    }
+
     // Save the model's explicit connection style (undefined means use theme default)
     const connectionStyle = topic.getConnectionStyle();
     if (connectionStyle !== undefined) {
@@ -272,7 +283,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const metadata = topic.getMetadata();
-    if ($defined(metadata)) {
+    if (metadata != null) {
       parentTopic.setAttribute('metadata', metadata);
     }
 
@@ -283,16 +294,13 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       const featureDom = document.createElement(featureType);
       const attributes = feature.getAttributes();
 
-      const attributesKeys = Object.keys(attributes);
-      for (let attrIndex = 0; attrIndex < attributesKeys.length; attrIndex++) {
-        const key = attributesKeys[attrIndex];
-        const value = attributes[key];
+      Object.entries(attributes).forEach(([key, value]) => {
         if (key === 'text') {
           XMLSerializerTango._appendCDATA(document, featureDom, this._rmXmlInv(value));
         } else {
           featureDom.setAttribute(key, value);
         }
-      }
+      });
       parentTopic.appendChild(featureDom);
     });
 
@@ -411,6 +419,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     // Load canvas style attributes
     this._loadCanvasStyle(rootElem, mindmap);
 
+    this._documentIds = new Set(
+      Array.from(rootElem.getElementsByTagName('topic'))
+        .map((topic) => Number.parseInt(topic.getAttribute('id') ?? '', 10))
+        .filter((id) => Number.isFinite(id)),
+    );
+
     // Add all the topics nodes ...
     const childNodes = Array.from(rootElem.childNodes);
     const topicsNodes = childNodes
@@ -445,6 +459,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     // Clean up from the recursion ...
     this._idsMap = {};
+    this._documentIds = new Set();
     mindmap.setId(mapId);
     return mindmap;
   }
@@ -468,9 +483,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       id = Number.parseInt(idStr, 10);
     }
 
-    // Is a duplicated node ?. Force the generation of a new id ...
+    // A missing or duplicated id gets a new one, that no topic of the document has: the next
+    // generated one may be the id of a topic further down, which relationships point to ...
     if (id === undefined || this._idsMap[id] !== undefined) {
-      id = undefined;
+      do {
+        id = INodeModel._nextUUID();
+      } while (this._documentIds.has(id) || this._idsMap[id] !== undefined);
     }
 
     // Create element ...
@@ -479,14 +497,14 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     // Set text property is it;s defined...
     const text = domElem.getAttribute('text');
-    if ($defined(text) && text) {
+    if (text) {
       topic.setText(text);
     }
 
     // Topic text is always plain, no contentType needed
 
     const fontStyle = domElem.getAttribute('fontStyle');
-    if ($defined(fontStyle) && fontStyle) {
+    if (fontStyle) {
       // Optimized font parsing: split once and assign directly
       const fontParts = fontStyle.split(';');
 
@@ -497,7 +515,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       }
 
       // A non numeric size is ignored, so the theme default applies.
-      const fontSize = Number.parseInt(fontParts[1], 10);
+      const fontSize = Number.parseInt(fontParts[1] ?? '', 10);
       if (Number.isFinite(fontSize)) {
         topic.setFontSize(fontSize);
       }
@@ -549,8 +567,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         topic.setImageUrl(url);
 
         const split = size.split(',');
-        const width = Number.parseInt(split[0], 10);
-        const height = Number.parseInt(split[1], 10);
+        const width = Number.parseInt(split[0] ?? '', 10);
+        const height = Number.parseInt(split[1] ?? '', 10);
         if (Number.isFinite(width) && Number.isFinite(height)) {
           topic.setImageSize(width, height);
         }
@@ -574,7 +592,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const connStyle = domElem.getAttribute('connStyle');
-    if ($defined(connStyle) && connStyle) {
+    if (connStyle) {
       const lineType = Number.parseInt(connStyle, 10);
       if (isLineType(lineType)) {
         topic.setConnectionStyle(lineType);
@@ -586,13 +604,25 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const connColor = domElem.getAttribute('connColor');
-    if ($defined(connColor) && connColor) {
+    if (connColor) {
       topic.setConnectionColor(connColor);
     }
 
     const borderColor = domElem.getAttribute('brColor');
     if (borderColor) {
       topic.setBorderColor(borderColor);
+    }
+
+    // Unknown values are ignored, so the default (solid) border applies.
+    const borderStyle = domElem.getAttribute('brStyle');
+    if (borderStyle) {
+      if (isStrokeStyle(borderStyle)) {
+        topic.setBorderStyle(borderStyle);
+      } else {
+        console.warn(
+          `Unknown border style '${borderStyle}' for topic ${topic.getId()}, ignoring it.`,
+        );
+      }
     }
 
     const order = domElem.getAttribute('order');
@@ -608,15 +638,15 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const isShrink = domElem.getAttribute('shrink');
     // Hack: Some production maps has been stored with the central topic collapsed. This is a bug.
-    if ($defined(isShrink) && type !== 'CentralTopic') {
+    if (isShrink != null && type !== 'CentralTopic') {
       topic.setChildrenShrunken(isShrink === 'true');
     }
 
     const position = domElem.getAttribute('position');
     if (position !== null) {
       const pos = position.split(',');
-      const x = Number.parseInt(pos[0], 10);
-      const y = Number.parseInt(pos[1], 10);
+      const x = Number.parseInt(pos[0] ?? '', 10);
+      const y = Number.parseInt(pos[1] ?? '', 10);
       // A corrupted position (e.g. "NaN,NaN") is treated as missing.
       if (Number.isFinite(x) && Number.isFinite(y)) {
         topic.setPosition(x, y);
@@ -659,8 +689,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
           let feature: FeatureModel = FeatureModelFactory.createModel(featureType, attributes);
 
           // Migrate icons to emoji ...
-          if (featureType === 'icon') {
-            const svgIcon: string = attributes.id;
+          const svgIcon = attributes.id;
+          if (featureType === 'icon' && svgIcon !== undefined) {
             const emoji = XMLSerializerTango.emojiEquivalent(svgIcon);
             if (emoji) {
               attributes.id = emoji;
@@ -722,16 +752,14 @@ class XMLSerializerTango implements XMLMindmapSerializer {
    * Whitespace-only text is skipped: it is the indentation of a pretty-printed document.
    */
   private static _readCDATA(domElem: ChildNode): string | null {
-    const children = domElem.childNodes;
     let value: string | null = null;
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+    domElem.childNodes.forEach((child) => {
       const content = child.nodeValue ?? '';
       const isText = child.nodeType === Node.TEXT_NODE && content.trim() !== '';
       if (child.nodeType === Node.CDATA_SECTION_NODE || isText) {
         value = (value ?? '') + content;
       }
-    }
+    });
     return value;
   }
 

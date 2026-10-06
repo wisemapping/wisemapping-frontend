@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { TopicShapeType } from '../model/INodeModel';
-import SizeType from '../SizeType';
-import TopicShape from './TopicShape';
+import type { TopicShapeType } from '../model/INodeModel';
+import type SizeType from '../SizeType';
+import type TopicShape from './TopicShape';
 
 class NoneTopicShape implements TopicShape {
   private _size: SizeType | undefined;

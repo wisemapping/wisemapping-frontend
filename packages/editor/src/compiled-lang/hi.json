@@ -11,12 +11,6 @@
       "value": "हटाएं"
     }
   ],
-  "app-bar-title": [
-    {
-      "type": 0,
-      "value": "माइंडमैप संपादक"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -47,12 +41,6 @@
       "value": "साझा करें"
     }
   ],
-  "appbar.theme-title": [
-    {
-      "type": 0,
-      "value": "थीम"
-    }
-  ],
   "appbar.title-renamed": [
     {
       "type": 0,
@@ -81,12 +69,6 @@
     {
       "type": 0,
       "value": "जानकारी"
-    }
-  ],
-  "appbar.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "आउटलाइन दृश्य"
     }
   ],
   "appbar.tooltip-print": [
@@ -155,40 +137,16 @@
       "value": "पूर्ववत"
     }
   ],
-  "aurora": [
-    {
-      "type": 0,
-      "value": "Aurora"
-    }
-  ],
-  "canvas-style.apply": [
-    {
-      "type": 0,
-      "value": "लागू करें"
-    }
-  ],
   "canvas-style.background-color": [
     {
       "type": 0,
       "value": "पृष्ठभूमि रंग"
     }
   ],
-  "canvas-style.background-pattern": [
-    {
-      "type": 0,
-      "value": "पृष्ठभूमि पैटर्न"
-    }
-  ],
   "canvas-style.background-style": [
     {
       "type": 0,
       "value": "पृष्ठभूमि शैली"
-    }
-  ],
-  "canvas-style.colors": [
-    {
-      "type": 0,
-      "value": "रंग"
     }
   ],
   "canvas-style.grid-color": [
@@ -251,28 +209,10 @@
       "value": "ग्रिड लाइनें"
     }
   ],
-  "canvas-style.pattern-none": [
-    {
-      "type": 0,
-      "value": "कोई नहीं"
-    }
-  ],
   "canvas-style.pattern-solid": [
     {
       "type": 0,
       "value": "ठोस रंग"
-    }
-  ],
-  "canvas-style.preview": [
-    {
-      "type": 0,
-      "value": "पूर्वावलोकन"
-    }
-  ],
-  "canvas-style.reset": [
-    {
-      "type": 0,
-      "value": "रीसेट करें"
     }
   ],
   "canvas-style.tab-color": [
@@ -285,18 +225,6 @@
     {
       "type": 0,
       "value": "ग्रिड रंग"
-    }
-  ],
-  "canvas-style.title": [
-    {
-      "type": 0,
-      "value": "पृष्ठभूमि"
-    }
-  ],
-  "classic": [
-    {
-      "type": 0,
-      "value": "क्लासिक"
     }
   ],
   "color-picker.color": [
@@ -329,24 +257,6 @@
       "value": "विवरण"
     }
   ],
-  "demo-simple-select": [
-    {
-      "type": 0,
-      "value": "चुनें"
-    }
-  ],
-  "divider": [
-    {
-      "type": 0,
-      "value": "विभाजक"
-    }
-  ],
-  "editor-panel.canvas-style-title": [
-    {
-      "type": 0,
-      "value": "पृष्ठभूमि"
-    }
-  ],
   "editor-panel.deeplink-copied": [
     {
       "type": 0,
@@ -371,12 +281,6 @@
       "value": "मिश्रित"
     }
   ],
-  "editor-panel.icon-title": [
-    {
-      "type": 0,
-      "value": "आइकन"
-    }
-  ],
   "editor-panel.link-panel-title": [
     {
       "type": 0,
@@ -387,12 +291,6 @@
     {
       "type": 0,
       "value": "नोट"
-    }
-  ],
-  "editor-panel.theme-title": [
-    {
-      "type": 0,
-      "value": "थीम"
     }
   ],
   "editor-panel.tooltip-add-icon": [
@@ -419,12 +317,6 @@
       "value": "संबंध जोड़ें"
     }
   ],
-  "editor-panel.tooltip-add-topic": [
-    {
-      "type": 0,
-      "value": "विषय जोड़ें"
-    }
-  ],
   "editor-panel.tooltip-add-topic-image": [
     {
       "type": 0,
@@ -437,118 +329,10 @@
       "value": "पृष्ठभूमि"
     }
   ],
-  "editor-panel.tooltip-change-layout": [
-    {
-      "type": 0,
-      "value": "लेआउट बदलें"
-    }
-  ],
-  "editor-panel.tooltip-connection-color": [
-    {
-      "type": 0,
-      "value": "रंग"
-    }
-  ],
-  "editor-panel.tooltip-connection-color-default": [
-    {
-      "type": 0,
-      "value": "डिफ़ॉल्ट रंग"
-    }
-  ],
-  "editor-panel.tooltip-connection-style": [
-    {
-      "type": 0,
-      "value": "कनेक्शन शैली"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-arc": [
-    {
-      "type": 0,
-      "value": "चाप"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-curved-thick": [
-    {
-      "type": 0,
-      "value": "मोटी वक्र"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-curved-thin": [
-    {
-      "type": 0,
-      "value": "पतली वक्र"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-polyline": [
-    {
-      "type": 0,
-      "value": "सरल पॉलीलाइन"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-polyline-curved": [
-    {
-      "type": 0,
-      "value": "घुमावदार पॉलीलाइन"
-    }
-  ],
   "editor-panel.tooltip-copy-node-link": [
     {
       "type": 0,
       "value": "विषय का लिंक कॉपी करें"
-    }
-  ],
-  "editor-panel.tooltip-delete-topic": [
-    {
-      "type": 0,
-      "value": "विषय हटाएं"
-    }
-  ],
-  "editor-panel.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "आउटलाइन दृश्य"
-    }
-  ],
-  "editor-panel.tooltip-relationship-arrow-end": [
-    {
-      "type": 0,
-      "value": "अंत तीर"
-    }
-  ],
-  "editor-panel.tooltip-relationship-arrow-start": [
-    {
-      "type": 0,
-      "value": "प्रारंभ तीर"
-    }
-  ],
-  "editor-panel.tooltip-relationship-color": [
-    {
-      "type": 0,
-      "value": "रंग"
-    }
-  ],
-  "editor-panel.tooltip-relationship-color-default": [
-    {
-      "type": 0,
-      "value": "डिफ़ॉल्ट रंग"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-dashed": [
-    {
-      "type": 0,
-      "value": "धराशायी रेखा"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-dotted": [
-    {
-      "type": 0,
-      "value": "बिंदीदार रेखा"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-solid": [
-    {
-      "type": 0,
-      "value": "ठोस रेखा"
     }
   ],
   "editor-panel.tooltip-relationship-style": [
@@ -557,124 +341,16 @@
       "value": "संबंध शैली"
     }
   ],
-  "editor-panel.tooltip-theme": [
-    {
-      "type": 0,
-      "value": "थीम"
-    }
-  ],
-  "editor-panel.tooltip-topic-border-color": [
-    {
-      "type": 0,
-      "value": "बॉर्डर रंग"
-    }
-  ],
-  "editor-panel.tooltip-topic-border-color-default": [
-    {
-      "type": 0,
-      "value": "डिफ़ॉल्ट बॉर्डर रंग"
-    }
-  ],
-  "editor-panel.tooltip-topic-fill-color": [
-    {
-      "type": 0,
-      "value": "भराव रंग"
-    }
-  ],
-  "editor-panel.tooltip-topic-fill-color-default": [
-    {
-      "type": 0,
-      "value": "डिफ़ॉल्ट भराव रंग"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-bigger": [
-    {
-      "type": 0,
-      "value": "बड़ा"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-bold": [
-    {
-      "type": 0,
-      "value": "बोल्ड"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-color": [
-    {
-      "type": 0,
-      "value": "रंग"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-color-default": [
-    {
-      "type": 0,
-      "value": "डिफ़ॉल्ट रंग"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-italic": [
-    {
-      "type": 0,
-      "value": "इटालिक"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-smaller": [
-    {
-      "type": 0,
-      "value": "छोटा"
-    }
-  ],
   "editor-panel.tooltip-topic-font-style": [
     {
       "type": 0,
       "value": "फ़ॉन्ट शैली"
     }
   ],
-  "editor-panel.tooltip-topic-share-ellipse": [
-    {
-      "type": 0,
-      "value": "वृत्ताकार आकार"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-line": [
-    {
-      "type": 0,
-      "value": "रेखा आकार"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-none": [
-    {
-      "type": 0,
-      "value": "कोई आकार नहीं"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-rectangle": [
-    {
-      "type": 0,
-      "value": "आयताकार आकार"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-rounded": [
-    {
-      "type": 0,
-      "value": "गोलाकार आकार"
-    }
-  ],
-  "editor-panel.tooltip-topic-style": [
-    {
-      "type": 0,
-      "value": "विषय शैली"
-    }
-  ],
   "editor-panel.tooltip-unified-styling": [
     {
       "type": 0,
       "value": "विषय और कनेक्शन शैली"
-    }
-  ],
-  "editor-panel.topic-image-title": [
-    {
-      "type": 0,
-      "value": "विषय छवि"
     }
   ],
   "editor.edit-description-mobile": [
@@ -771,12 +447,6 @@
       "value": "पिछला मेल"
     }
   ],
-  "headerNotifier": [
-    {
-      "type": 0,
-      "value": "हेडर सूचक"
-    }
-  ],
   "icon-collection.border.dashed": [
     {
       "type": 0,
@@ -865,18 +535,6 @@
     {
       "type": 0,
       "value": "शाखाओं वाली धड़कनों के साथ जैविक आवेग रेखा - विज्ञान, तंत्रिका नेटवर्क या भविष्यवादी विषयों के लिए आदर्श"
-    }
-  ],
-  "icon-collection.connection.organic-curved": [
-    {
-      "type": 0,
-      "value": "ऑर्गेनिक कर्व"
-    }
-  ],
-  "icon-collection.connection.organic-curved-tooltip": [
-    {
-      "type": 0,
-      "value": "हाथ से खींची गई शैली जिसमें नाटकीय कर्व हैं - रचनात्मक और अभिव्यंजक माइंडमैप के लिए परफेक्ट"
     }
   ],
   "icon-collection.connection.simple-polyline": [
@@ -999,24 +657,6 @@
       "value": "छवियां दिखाएं"
     }
   ],
-  "image-icon-tab.icon-found": [
-    {
-      "type": 0,
-      "value": "आइकन मिला"
-    }
-  ],
-  "image-icon-tab.icons": [
-    {
-      "type": 0,
-      "value": "आइकन"
-    }
-  ],
-  "image-icon-tab.icons-found": [
-    {
-      "type": 0,
-      "value": "आइकन मिले"
-    }
-  ],
   "layout-selector.accept": [
     {
       "type": 0,
@@ -1035,34 +675,10 @@
       "value": "लेआउट शैली चुनें"
     }
   ],
-  "layout-selector.mindmap": [
-    {
-      "type": 0,
-      "value": "माइंड मैप"
-    }
-  ],
-  "layout-selector.mindmap-description": [
-    {
-      "type": 0,
-      "value": "संतुलित शाखाओं के साथ क्षैतिज लेआउट"
-    }
-  ],
   "layout-selector.title": [
     {
       "type": 0,
       "value": "लेआउट चुनें"
-    }
-  ],
-  "layout-selector.tree": [
-    {
-      "type": 0,
-      "value": "पेड़"
-    }
-  ],
-  "layout-selector.tree-description": [
-    {
-      "type": 0,
-      "value": "ऊपर से नीचे की ओर ऊर्ध्वाधर पदानुक्रम"
     }
   ],
   "layout.mindmap.description": [
@@ -1101,12 +717,6 @@
       "value": "https://www.example.com"
     }
   ],
-  "mindmap-comp": [
-    {
-      "type": 0,
-      "value": "माइंडमैप घटक"
-    }
-  ],
   "note.character.count": [
     {
       "type": 1,
@@ -1121,12 +731,6 @@
     {
       "type": 0,
       "value": "(सीमा के करीब)"
-    }
-  ],
-  "ocean": [
-    {
-      "type": 0,
-      "value": "महासागर"
     }
   ],
   "outline.collapse": [
@@ -1175,18 +779,6 @@
     {
       "type": 0,
       "value": "नोट"
-    }
-  ],
-  "popover": [
-    {
-      "type": 0,
-      "value": "पॉपओवर"
-    }
-  ],
-  "prism": [
-    {
-      "type": 0,
-      "value": "प्रिज्म"
     }
   ],
   "relationship-style-editor.color": [
@@ -1261,12 +853,6 @@
       "value": "प्रारंभिक तीर टॉगल करें"
     }
   ],
-  "retro": [
-    {
-      "type": 0,
-      "value": "Retro Night"
-    }
-  ],
   "rich-text-editor.bold": [
     {
       "type": 0,
@@ -1277,6 +863,12 @@
     {
       "type": 0,
       "value": "बुलेट सूची"
+    }
+  ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "इंडेंट बढ़ाएँ (Tab)"
     }
   ],
   "rich-text-editor.insert-icon": [
@@ -1303,6 +895,12 @@
       "value": "क्रमांकित सूची"
     }
   ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "इंडेंट घटाएँ (Shift+Tab)"
+    }
+  ],
   "rich-text-editor.strikethrough": [
     {
       "type": 0,
@@ -1313,12 +911,6 @@
     {
       "type": 0,
       "value": "रेखांकित"
-    }
-  ],
-  "robot": [
-    {
-      "type": 0,
-      "value": "रोबोट"
     }
   ],
   "shortcut-help-pane.action": [
@@ -1633,12 +1225,6 @@
       "value": "व्हील से ज़ूम इन/आउट करें"
     }
   ],
-  "sunrise": [
-    {
-      "type": 0,
-      "value": "सूर्योदय"
-    }
-  ],
   "theme-editor.accept": [
     {
       "type": 0,
@@ -1769,18 +1355,6 @@
     {
       "type": 0,
       "value": "लाइट मोड पर स्विच करें"
-    }
-  ],
-  "theme.toggle": [
-    {
-      "type": 0,
-      "value": "थीम बदलें"
-    }
-  ],
-  "title-input": [
-    {
-      "type": 0,
-      "value": "शीर्षक इनपुट"
     }
   ],
   "topic-font-editor.active": [
@@ -1959,12 +1533,6 @@
       "value": "कीबोर्ड शॉर्टकट"
     }
   ],
-  "visualization-toolbar.tooltip-layout": [
-    {
-      "type": 0,
-      "value": "लेआउट बदलें"
-    }
-  ],
   "visualization-toolbar.tooltip-outline-view": [
     {
       "type": 0,
@@ -2005,48 +1573,6 @@
     {
       "type": 0,
       "value": "फिट करने के लिए ज़ूम"
-    }
-  ],
-  "zoom-panel.tooltip-collapse-all": [
-    {
-      "type": 0,
-      "value": "सभी नोड्स को संकुचित करें"
-    }
-  ],
-  "zoom-panel.tooltip-expand-all": [
-    {
-      "type": 0,
-      "value": "सभी नोड्स को विस्तृत करें"
-    }
-  ],
-  "zoom-panel.tooltip-keyboard": [
-    {
-      "type": 0,
-      "value": "कीबोर्ड शॉर्टकट"
-    }
-  ],
-  "zoom-panel.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "रूपरेखा दृश्य"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-in": [
-    {
-      "type": 0,
-      "value": "ज़ूम इन"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-out": [
-    {
-      "type": 0,
-      "value": "ज़ूम आउट"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-to-fit": [
-    {
-      "type": 0,
-      "value": "स्क्रीन में फिट करें"
     }
   ]
 }

@@ -17,8 +17,8 @@
  */
 import { $assert } from '../util/assert';
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import RelationshipModel from '../model/RelationshipModel';
+import type CommandContext from '../CommandContext';
+import type RelationshipModel from '../model/RelationshipModel';
 
 class AddRelationshipCommand extends Command {
   private _model: RelationshipModel;
@@ -39,8 +39,8 @@ class AddRelationshipCommand extends Command {
   }
 
   undoExecute(commandContext: CommandContext) {
-    const rel = commandContext.findRelationships([this._model.getId()]);
-    commandContext.deleteRelationship(rel[0]);
+    const rel = commandContext.findRelationship(this._model.getId());
+    commandContext.deleteRelationship(rel);
   }
 }
 

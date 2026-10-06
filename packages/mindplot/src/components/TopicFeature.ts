@@ -20,25 +20,48 @@ import EmojiCharIcon from './EmojiCharIcon';
 import SvgImageIcon from './SvgImageIcon';
 import LinkIcon from './LinkIcon';
 import NoteIcon from './NoteIcon';
-import FeatureModel from './model/FeatureModel';
-import Topic from './Topic';
-import Icon from './Icon';
+import type FeatureModel from './model/FeatureModel';
+import type FeatureType from './model/FeatureType';
+import type { FeatureByType } from './model/FeatureType';
+import type Topic from './Topic';
+import type Icon from './Icon';
+
+type IconBuilder<T extends FeatureType> = (
+  topic: Topic,
+  model: FeatureByType[T],
+  readOnly: boolean,
+) => Icon;
+
+/**
+ * The icon of each feature type. Keyed by every FeatureType, so a type added without its icon
+ * does not compile, as the `never` default of the former switch did not.
+ */
+export type IconBuilders = { [T in FeatureType]: IconBuilder<T> };
+
+const ICON_BUILDERS: IconBuilders = {
+  icon: (topic, model, readOnly) => new SvgImageIcon(topic, model, readOnly),
+  eicon: (topic, model, readOnly) => new EmojiCharIcon(topic, model, readOnly),
+  link: (topic, model, readOnly) => new LinkIcon(topic, model, readOnly),
+  note: (topic, model, readOnly) => new NoteIcon(topic, model, readOnly),
+};
+
+const createIconOfType = <T extends FeatureType>(
+  type: T,
+  topic: Topic,
+  model: FeatureModel,
+  readOnly: boolean,
+): Icon => {
+  // A type read from somewhere untyped may have no icon: say so rather than call undefined.
+  if (!model.isOfType(type) || !Object.hasOwn(ICON_BUILDERS, type)) {
+    throw new Error(`Unhandled feature type case: ${model.getType()}`);
+  }
+  const build: IconBuilder<T> = ICON_BUILDERS[type];
+  return build(topic, model, readOnly);
+};
 
 class TopicFeatureFactory {
   static createIcon(topic: Topic, model: FeatureModel, readOnly: boolean): Icon {
-    if (model.isOfType('icon')) {
-      return new SvgImageIcon(topic, model, readOnly);
-    }
-    if (model.isOfType('eicon')) {
-      return new EmojiCharIcon(topic, model, readOnly);
-    }
-    if (model.isOfType('link')) {
-      return new LinkIcon(topic, model, readOnly);
-    }
-    if (model.isOfType('note')) {
-      return new NoteIcon(topic, model, readOnly);
-    }
-    throw new Error(`Unhandled feature type case: ${model.getType()}`);
+    return createIconOfType(model.getType(), topic, model, readOnly);
   }
 }
 

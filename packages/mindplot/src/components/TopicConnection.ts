@@ -25,12 +25,12 @@ import {
 } from '@wisemapping/web2d';
 import type { Line, StrokeStyle } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
-import PositionType from './PositionType';
-import Topic from './Topic';
+import type PositionType from './PositionType';
+import type Topic from './Topic';
 import TopicConfig from './TopicConfig';
 import ArcLine from './model/ArcLine';
 import BaseConnectionLine, { LineType } from './BaseConnectionLine';
-import Canvas from './Canvas';
+import type Canvas from './Canvas';
 import { sideOf } from './util/side';
 
 export { LineType };
@@ -294,7 +294,7 @@ class TopicConnection extends BaseConnectionLine {
     }
   }
 
-  setStroke(color: string, style: StrokeStyle, opacity: number): void {
+  override setStroke(color: string, style: StrokeStyle, opacity: number): void {
     this._line.setStroke(1, style, color, opacity);
     this._color = color;
   }
@@ -303,7 +303,7 @@ class TopicConnection extends BaseConnectionLine {
     return this._color;
   }
 
-  addToWorkspace(workspace: Canvas): void {
+  override addToWorkspace(workspace: Canvas): void {
     super.addToWorkspace(workspace);
     // Ensure connection lines are rendered below topics
     this._line.moveToBack();

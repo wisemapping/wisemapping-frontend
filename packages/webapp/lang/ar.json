@@ -2,9 +2,6 @@
   "common.terms-notice": {
     "defaultMessage": "بمتابعتك، فإنك توافق على <termsLink>شروط الخدمة</termsLink> و<privacyLink>سياسة الخصوصية</privacyLink>."
   },
-  "account.delete-warning": {
-    "defaultMessage": "ضع في اعتبارك أنك لن تتمكن من استرجاع أي خريطة ذهنية أضفتها. سيتم حذف جميع معلوماتك ولا يمكن استعادتها."
-  },
   "accountinfo.button": {
     "defaultMessage": "موافق"
   },
@@ -115,9 +112,6 @@
   },
   "deletem.title": {
     "defaultMessage": "سيتم حذف جميع الخرائط المحددة"
-  },
-  "dialog.loading": {
-    "defaultMessage": "جارٍ التحميل..."
   },
   "duplicate.copy-title": {
     "defaultMessage": "نسخة من {title}"
@@ -638,9 +632,6 @@
   "admin.refresh": {
     "defaultMessage": "تحديث"
   },
-  "admin.status": {
-    "defaultMessage": "الحالة"
-  },
   "admin.auth-type": {
     "defaultMessage": "نوع المصادقة"
   },
@@ -967,5 +958,8 @@
   },
   "maps.select-all": {
     "defaultMessage": "تحديد الكل"
+  },
+  "maps.select-map": {
+    "defaultMessage": "تحديد {title}"
   }
 }

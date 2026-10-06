@@ -1,0 +1,112 @@
+/*
+ *    Copyright [2007-2025] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+import type { Meta, StoryFn } from '@storybook/html-vite';
+import {
+  createCurvedLine,
+  createDefaultControlPointsCurvedLine,
+  createVerticalCurvedLine,
+  type CurvedLineArgs,
+  type DefaultControlPointsCurvedLineArgs,
+  type VerticalCurvedLineArgs,
+} from './CurvedLine';
+
+// More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
+export default {
+  title: 'Shapes/CurvedLine',
+  // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
+  argTypes: {
+    fillColor: { control: 'color' },
+    width: { control: { type: 'number', min: 0, max: 100, step: 5 } },
+    strokeColor: { control: 'color' },
+    strokeStyle: {
+      control: { type: 'select' },
+      options: ['dash', 'dot', 'solid', 'longdash', 'dashdot'],
+    },
+    strokeWidth: { control: { type: 'number', min: 0, max: 30, step: 1 } },
+    dx: { control: { type: 'number', min: 0, max: 200, step: 1 } },
+  },
+} satisfies Meta<VerticalCurvedLineArgs>;
+
+// More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
+const Template: StoryFn<CurvedLineArgs> = (args) => createCurvedLine(args);
+
+export const Width = Template.bind({});
+Width.args = {
+  width: 10,
+  strokeWidth: 1,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+  fillColor: 'red',
+};
+
+export const Stroke = Template.bind({});
+Stroke.args = {
+  width: 10,
+  strokeWidth: 1,
+  strokeStyle: 'longdash',
+  strokeColor: 'red',
+  fillColor: '#1212eb',
+};
+
+export const Fill = Template.bind({});
+Fill.args = {
+  width: 10,
+  strokeWidth: 0,
+  fillColor: 'red',
+};
+
+const VerticalTemplate: StoryFn<VerticalCurvedLineArgs> = (args) => createVerticalCurvedLine(args);
+
+export const Vertical = VerticalTemplate.bind({});
+Vertical.args = {
+  width: 10,
+  dx: 60,
+  strokeWidth: 1,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+  fillColor: 'red',
+};
+
+export const NearVertical = VerticalTemplate.bind({});
+NearVertical.args = {
+  width: 10,
+  dx: 2,
+  strokeWidth: 1,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+  fillColor: 'red',
+};
+
+export const VerticalThin = VerticalTemplate.bind({});
+VerticalThin.args = {
+  width: 0,
+  dx: 60,
+  strokeWidth: 2,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+  fillColor: 'none',
+};
+
+export const DefaultControlPoints: StoryFn<DefaultControlPointsCurvedLineArgs> = ((
+  args: DefaultControlPointsCurvedLineArgs,
+) => createDefaultControlPointsCurvedLine(args)).bind({});
+DefaultControlPoints.args = {
+  strokeWidth: 2,
+  strokeStyle: 'solid',
+  strokeColor: 'blue',
+};

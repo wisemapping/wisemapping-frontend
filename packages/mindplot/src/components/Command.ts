@@ -15,8 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from './util/assert';
-import CommandContext from './CommandContext';
+import type CommandContext from './CommandContext';
 
 abstract class Command {
   private _id: number;
@@ -39,7 +38,7 @@ abstract class Command {
   }
 
   static _nextUUID() {
-    if (!$defined(this._uuid)) {
+    if (this._uuid == null) {
       this._uuid = 1;
     }
     this._uuid += 1;

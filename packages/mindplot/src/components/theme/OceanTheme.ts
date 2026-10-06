@@ -15,97 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Topic from '../Topic';
-import DefaultTheme from './DefaultTheme';
-import { ThemeVariant } from './Theme';
-import { ThemeStyle } from './ThemeStyle';
+import PaletteTheme from './PaletteTheme';
+import type { ThemeVariant } from './Theme';
 
-class OceanTheme extends DefaultTheme {
+class OceanTheme extends PaletteTheme {
   constructor(variant: ThemeVariant) {
-    const themeStyle = new ThemeStyle('ocean', variant);
-    super(themeStyle, variant);
-  }
-
-  getConnectionColor(topic: Topic): string {
-    let result: string | null = null;
-
-    // Color of the node is the connection is the color of the parent ...
-    const parent = topic.getParent();
-    if (parent && !parent.isCentralTopic()) {
-      result = this.resolve('connectionColor', parent, false) as string;
-    }
-
-    if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.resolve('connectionColor', topic) as string[] | string);
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
-    }
-    return result;
-  }
-
-  getBorderColor(topic: Topic): string {
-    const model = topic.getModel();
-    let result = model.getBorderColor();
-
-    // If border color has not been defined, use the one picked on an ancestor, or else the theme
-    // border color. The dark variant has its own palette, so it is not lightened as in Prism ...
-    if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.resolve('borderColor', topic) as string[] | string);
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
-    }
-    return result;
-  }
-
-  getBackgroundColor(topic: Topic): string {
-    const model = topic.getModel();
-    let result = model.getBackgroundColor();
-
-    // If topic has a custom background color, always use it
-    if (result && result.trim() !== '') {
-      return result;
-    }
-
-    // Get theme colors directly from ThemeStyle, bypassing DefaultTheme logic
-    const styles = this.getStyles(topic);
-    const { backgroundColor } = styles;
-
-    if (Array.isArray(backgroundColor)) {
-      // If it's an array, use topic order to decide color
-      const order = topic.getOrder() || 0;
-      const index = order % backgroundColor.length;
-      result = backgroundColor[index];
-    } else {
-      result = backgroundColor;
-    }
-
-    return result;
-  }
-
-  getFontColor(topic: Topic): string {
-    const model = topic.getModel();
-    let result = model.getFontColor();
-
-    // If topic has a custom font color, always use it
-    if (result) {
-      return result;
-    }
-
-    // Use theme colors from style system
-    result = this.resolve('fontColor', topic) as string;
-    return result;
+    super('ocean', variant);
   }
 }
 

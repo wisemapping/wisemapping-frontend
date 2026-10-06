@@ -15,16 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Arrow, CurvedLine } from '@wisemapping/web2d';
-import type { Line, StrokeStyle as LineStrokeStyle } from '@wisemapping/web2d';
+import { Arrow } from '@wisemapping/web2d';
+import type { Line, StrokeStyle as LineStrokeStyle, CurvedLine } from '@wisemapping/web2d';
 import BaseConnectionLine, { LineType } from './BaseConnectionLine';
 import ArcLine from './model/ArcLine';
 import RelationshipControlPoints, { PivotType } from './RelationshipControlPoints';
-import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
-import PositionType from './PositionType';
-import Topic from './Topic';
+import type RelationshipModel from './model/RelationshipModel';
+import { StrokeStyle } from './model/RelationshipModel';
+import type PositionType from './PositionType';
+import type Topic from './Topic';
 import Shape from './util/Shape';
-import Canvas from './Canvas';
+import RelationshipSnap from './RelationshipSnap';
+import type Canvas from './Canvas';
 
 /** The relationship's own events: it fires them, with itself as detail, on a focus change. */
 export type RelationshipEventMap = { ontfocus: Relationship; ontblur: Relationship };
@@ -145,7 +147,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     };
   }
 
-  setStroke(color: string, style: LineStrokeStyle, _opacity: number): void {
+  override setStroke(color: string, style: LineStrokeStyle, _opacity: number): void {
     this._line.setStroke(2, style, color);
     this._startArrow?.setStrokeColor(color);
     this._endArrow?.setStrokeColor(color);
@@ -201,7 +203,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     const destCustom = line2d.isDestControlPointCustom();
     if (!destCustom && !srcCustom) {
       // Use default control points and basic connection points
-      ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos) as [PositionType, PositionType];
+      ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos);
       line2d.setFrom(sPos.x, sPos.y);
       line2d.setTo(tPos.x, tPos.y);
     } else {
@@ -266,7 +268,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     this._endArrow.setControlPoint(controlPoints[1]);
   }
 
-  addToWorkspace(workspace: Canvas): void {
+  override addToWorkspace(workspace: Canvas): void {
     this.updatePositions();
 
     // Add focus shape for event handling (invisible but present)
@@ -304,7 +306,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     this.redraw();
   }
 
-  removeFromWorkspace(workspace: Canvas): void {
+  override removeFromWorkspace(workspace: Canvas): void {
     workspace.removeChild(this._controlPointsController);
 
     this._line.removeEvent('click', this._onFocusHandler);
@@ -323,74 +325,6 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
 
   getType() {
     return 'Relationship';
-  }
-
-  /**
-   * Calculate the best snap point on a topic's border for a relationship connection
-   * @param topic The topic to connect to
-   * @param targetPosition The position we're connecting toward (other topic or control point)
-   * @returns The optimal connection point on the topic's border
-   */
-  static calculateSnapPoint(topic: Topic, targetPosition: PositionType): PositionType {
-    const pos = topic.getPosition();
-    const size = topic.getSize();
-    const centerOffset = 7; // 7px offset from topic border for visual spacing
-
-    // Calculate direction to target to minimize connection distance
-    const deltaX = targetPosition.x - pos.x;
-    const deltaY = targetPosition.y - pos.y;
-
-    // Determine which edge is closest by comparing angles
-    const absX = Math.abs(deltaX);
-    const absY = Math.abs(deltaY);
-
-    // Define 10 connection points per side evenly distributed along each edge
-    const horizontalPoints = [0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95];
-    const verticalPoints = [0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95];
-
-    if (absY > absX) {
-      // Vertical connection is shorter (top or bottom)
-      const edgeY =
-        deltaY < 0
-          ? pos.y - size.height / 2 - centerOffset // Top border (move up/away)
-          : pos.y + size.height / 2 + centerOffset; // Bottom border (move down/away)
-
-      // Calculate all 10 connection points along the horizontal edge
-      const connectionPoints = horizontalPoints.map((ratio) => {
-        const x = pos.x - size.width / 2 + size.width * ratio;
-        return {
-          x,
-          y: edgeY,
-          distance: Math.hypot(x - targetPosition.x, edgeY - targetPosition.y),
-        };
-      });
-
-      // Find the closest point
-      const closest = connectionPoints.reduce((min, point) =>
-        point.distance < min.distance ? point : min,
-      );
-
-      return { x: closest.x, y: closest.y };
-    }
-
-    // Horizontal connection is shorter (left or right)
-    const edgeX =
-      deltaX < 0
-        ? pos.x - size.width / 2 - centerOffset // Left border (move left/away)
-        : pos.x + size.width / 2 + centerOffset; // Right border (move right/away)
-
-    // Calculate all 10 connection points along the vertical edge
-    const connectionPoints = verticalPoints.map((ratio) => {
-      const y = pos.y - size.height / 2 + size.height * ratio;
-      return { x: edgeX, y, distance: Math.hypot(edgeX - targetPosition.x, y - targetPosition.y) };
-    });
-
-    // Find the closest point
-    const closest = connectionPoints.reduce((min, point) =>
-      point.distance < min.distance ? point : min,
-    );
-
-    return { x: closest.x, y: closest.y };
   }
 
   /**
@@ -440,7 +374,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     // The snap point depends on where the control point lands, which depends on the snap point.
     // Starting from the center of the topic, it settles in a step or two ...
     for (let i = 0; i < 3; i++) {
-      const next = Relationship.calculateSnapPoint(topic, {
+      const next = RelationshipSnap.calculateSnapPoint(topic, {
         x: result.x + ctrlPoint.x,
         y: result.y + ctrlPoint.y,
       });
@@ -481,7 +415,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     if (offset) {
       const pos = topic.getPosition();
       const released = { x: pos.x + offset.x, y: pos.y + offset.y };
-      const snap = Relationship.calculateSnapPoint(topic, {
+      const snap = RelationshipSnap.calculateSnapPoint(topic, {
         x: released.x + ctrlPoint.x,
         y: released.y + ctrlPoint.y,
       });
@@ -505,7 +439,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     const otherPos = otherTopic.getPosition();
 
     // Use the shared snap point calculation
-    return Relationship.calculateSnapPoint(topic, otherPos);
+    return RelationshipSnap.calculateSnapPoint(topic, otherPos);
   }
 
   /**
@@ -624,7 +558,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     return this._isInWorkspace;
   }
 
-  setVisibility(value: boolean, fade = 0) {
+  override setVisibility(value: boolean, fade = 0) {
     super.setVisibility(value, fade);
 
     // If visibility change, remove the on focus.
@@ -638,7 +572,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     this._focusShape.setVisibility(value);
   }
 
-  setOpacity(opacity: number): void {
+  override setOpacity(opacity: number): void {
     super.setOpacity(opacity);
     this._endArrow.setOpacity(opacity);
     this._startArrow.setOpacity(opacity);

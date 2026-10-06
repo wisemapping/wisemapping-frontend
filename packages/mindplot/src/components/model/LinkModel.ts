@@ -16,14 +16,16 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureModel, { FeatureAttributes } from './FeatureModel';
+import type { FeatureAttributes } from './FeatureModel';
+import FeatureModel from './FeatureModel';
 
 class LinkModel extends FeatureModel {
   private static readonly ALLOWED_PROTOCOLS = new Set(['http:', 'https:', 'mailto:']);
 
   constructor(attributes: FeatureAttributes) {
     super('link');
-    this.setUrl(attributes.url);
+    // A missing url is rejected by setUrl, as an empty one.
+    this.setUrl(attributes.url ?? '');
   }
 
   getUrl(): string {
@@ -64,7 +66,7 @@ class LinkModel extends FeatureModel {
     this.setAttribute('urlType', urlType);
   }
 
-  applyAttribute(key: string, value: unknown): void {
+  override applyAttribute(key: string, value: unknown): void {
     if (key === 'url') {
       this.setUrl(value as string);
     } else if (key === 'urlType') {

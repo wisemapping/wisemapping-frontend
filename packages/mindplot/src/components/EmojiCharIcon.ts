@@ -17,12 +17,12 @@
  */
 import { Text, Group } from '@wisemapping/web2d';
 
-import Icon from './Icon';
-import IconGroup from './IconGroup';
-import EmojiIconModel from './model/EmojiIconModel';
-import SizeType from './SizeType';
-import Topic from './Topic';
-import PositionType from './PositionType';
+import type Icon from './Icon';
+import type IconGroup from './IconGroup';
+import type EmojiIconModel from './model/EmojiIconModel';
+import type SizeType from './SizeType';
+import type Topic from './Topic';
+import type PositionType from './PositionType';
 
 class EmojiCharIcon implements Icon {
   private _group: Group;

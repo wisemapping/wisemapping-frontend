@@ -17,7 +17,7 @@
  */
 import EmojiCharIcon from '../../../src/components/EmojiCharIcon';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 
 const topic = { getId: () => 7 } as unknown as Topic;
 

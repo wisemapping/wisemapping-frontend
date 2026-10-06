@@ -2,9 +2,6 @@
   "common.terms-notice": {
     "defaultMessage": "Al continuar, aceptas nuestros <termsLink>Términos de Uso</termsLink> y <privacyLink>Política de Privacidad</privacyLink>."
   },
-  "account.delete-warning": {
-    "defaultMessage": "Tenga en cuenta que no podrá recuperar ningún mapa mental que haya creado. Toda su información será eliminada y no podrá ser restaurada."
-  },
   "accountinfo.button": {
     "defaultMessage": "Aceptar"
   },
@@ -527,9 +524,6 @@
   "share.message": {
     "defaultMessage": "Mensaje"
   },
-  "dialog.loading": {
-    "defaultMessage": "Cargando ..."
-  },
   "registration.google.button": {
     "defaultMessage": "Regístrate con Google"
   },
@@ -616,9 +610,6 @@
   },
   "common.delete": {
     "defaultMessage": "Eliminar"
-  },
-  "admin.status": {
-    "defaultMessage": "Estado"
   },
   "admin.suspend-user": {
     "defaultMessage": "Suspender usuario"
@@ -967,5 +958,8 @@
   },
   "maps.select-all": {
     "defaultMessage": "Seleccionar todo"
+  },
+  "maps.select-map": {
+    "defaultMessage": "Seleccionar {title}"
   }
 }

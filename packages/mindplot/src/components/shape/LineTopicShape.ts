@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { StraightLine } from '@wisemapping/web2d';
-import SizeType from '../SizeType';
+import type SizeType from '../SizeType';
 import DefaultTopicShape from './DefaultShape';
 
 class LineTopicShape extends DefaultTopicShape<StraightLine> {
@@ -42,7 +42,7 @@ class LineTopicShape extends DefaultTopicShape<StraightLine> {
     // Overwrite behaviour ...
   }
 
-  setFill() {
+  override setFill() {
     // Overwrite behaviour ...
   }
 }

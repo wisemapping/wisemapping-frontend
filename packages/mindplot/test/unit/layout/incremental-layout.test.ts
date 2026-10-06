@@ -115,9 +115,9 @@ describe('layout pass work (bug3.wxml, 278 topics)', () => {
 
       // A leaf deep in the first branch. Across the axis its siblings are laid out on (wider in
       // the mind map, taller in the tree) it moves, and nothing else does.
-      let leaf = tree.children[0];
+      let leaf = tree.children[0]!;
       while (leaf.children.length > 0) {
-        [leaf] = leaf.children;
+        leaf = leaf.children[0]!;
       }
       const size = manager.find(leaf.id).getSize();
       manager.updateNodeSize(
@@ -179,7 +179,7 @@ describe('tree layout, incremental', () => {
     expect((x(11) + x(13)) / 2).toBeCloseTo(x(1), 6);
     // ... and moves the next branches out of the way.
     expect(x(2) - halfWidth(2)).toBeGreaterThanOrEqual(x(13) + halfWidth(13));
-    expect(x(2)).toBeGreaterThan(before[ids.indexOf(2)].x);
+    expect(x(2)).toBeGreaterThan(before[ids.indexOf(2)]!.x);
     expect(x(31)).toBe(x(3));
   });
 

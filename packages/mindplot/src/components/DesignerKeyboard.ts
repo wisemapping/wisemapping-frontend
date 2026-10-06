@@ -19,10 +19,11 @@ import { $assert } from './util/assert';
 import EventManager from './util/EventManager';
 import KeyboardManager from './util/KeyboardManager';
 import { sideOf } from './util/side';
+import getCollapsedAncestorIds from './util/topicVisibility';
 import Keyboard from './Keyboard';
-import { Designer } from '..';
-import Topic from './Topic';
-import { TopicMove } from './util/topicReorder';
+import type Designer from './Designer';
+import type Topic from './Topic';
+import type { TopicMove } from './util/topicReorder';
 import { $msg } from './Messages';
 import { $notify } from './model/ToolbarNotifier';
 
@@ -83,7 +84,7 @@ class DesignerKeyboard extends Keyboard {
     this._registerEvents(designer);
   }
 
-  addShortcut(shortcuts: string[] | string, callback: EventCallback): void {
+  override addShortcut(shortcuts: string[] | string, callback: EventCallback): void {
     super.addShortcut(shortcuts, () => {
       // The shortcuts live in a page-wide registry: a disposed keyboard must not drive its designer.
       if (this._disposed || DesignerKeyboard.isDisabled()) {
@@ -522,7 +523,8 @@ class DesignerKeyboard extends Keyboard {
 
   private _goToSideChild(designer: Designer, node: Topic, side: 'LEFT' | 'RIGHT'): boolean {
     const children = node.getChildren();
-    if (children.length === 0) {
+    const [firstChild] = children;
+    if (!firstChild) {
       return false;
     }
 
@@ -543,11 +545,7 @@ class DesignerKeyboard extends Keyboard {
       }
     });
 
-    if (!target) {
-      [target] = children;
-    }
-
-    this._goToNode(designer, target);
+    this._goToNode(designer, target ?? firstChild);
     return true;
   }
 
@@ -562,10 +560,6 @@ class DesignerKeyboard extends Keyboard {
 
   private _goToChild(designer: Designer, node: Topic, preferredSide?: 'LEFT' | 'RIGHT'): boolean {
     const children = node.getChildren();
-    if (children.length === 0) {
-      return false;
-    }
-
     let candidates = children;
     if (preferredSide) {
       // x === 0 is the right half, as in _handleHorizontalBranchMove; it used to count on both.
@@ -578,7 +572,11 @@ class DesignerKeyboard extends Keyboard {
 
     const orientation = node.getOrientation();
     const useHorizontalDistance = orientation === 'vertical';
-    let target = candidates[0];
+    // Empty only when the node has no children.
+    let [target] = candidates;
+    if (!target) {
+      return false;
+    }
     let minDistance = Math.abs(
       (useHorizontalDistance ? target.getPosition().x : target.getPosition().y) -
         (useHorizontalDistance ? node.getPosition().x : node.getPosition().y),
@@ -623,7 +621,8 @@ class DesignerKeyboard extends Keyboard {
     let minAlignmentDistance: number | null = null;
 
     topics.forEach((candidate) => {
-      if (candidate === node) {
+      // A topic inside a collapsed branch is not on screen: the arrows do not go there.
+      if (candidate === node || getCollapsedAncestorIds(candidate).length > 0) {
         return;
       }
       const targetPos = candidate.getPosition();
@@ -674,7 +673,8 @@ class DesignerKeyboard extends Keyboard {
     let minDistance = Number.POSITIVE_INFINITY;
 
     topics.forEach((candidate) => {
-      if (candidate === node) {
+      // A topic inside a collapsed branch is not on screen: the arrows do not go there.
+      if (candidate === node || getCollapsedAncestorIds(candidate).length > 0) {
         return;
       }
 

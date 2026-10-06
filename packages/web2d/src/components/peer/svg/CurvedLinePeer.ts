@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '../utils/assert';
 import type PositionType from '../../PositionType';
 import { curvePathData, defaultControlPoints } from '../../geometry/curve';
 import ElementPeer from './ElementPeer';
@@ -118,7 +117,7 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
     }
   }
 
-  setTo(x2: number, y2: number) {
+  setTo(x2: number, y2: number): void {
     const change = this._x2 !== x2 || this._y2 !== y2;
     this._x2 = x2;
     this._y2 = y2;
@@ -138,8 +137,8 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
     this.setStroke(width);
   }
 
-  updateLine(avoidControlPointFix: boolean) {
-    if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
+  updateLine(avoidControlPointFix: boolean): void {
+    if (this._x1 != null && this._y1 != null && this._x2 != null && this._y2 != null) {
       this._calculateAutoControlPoints(avoidControlPointFix);
       this._renderPath();
     }
@@ -158,7 +157,7 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
   }
 
   private _updatePath() {
-    if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
+    if (this._x1 != null && this._y1 != null && this._x2 != null && this._y2 != null) {
       this._calculateAutoControlPoints(false);
       this._renderPath();
     }
@@ -192,8 +191,8 @@ class CurvedLinePeer extends ElementPeer<SVGPathElement> {
     }
   }
 
-  setDashed(length?: number, spacing?: number) {
-    if ($defined(length) && $defined(spacing)) {
+  setDashed(length?: number, spacing?: number): void {
+    if (length != null && spacing != null) {
       this.attr('stroke-dasharray', `${length},${spacing}`);
     } else {
       // No dash removes the attribute: an empty value is invalid SVG.

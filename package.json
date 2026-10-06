@@ -24,34 +24,38 @@
     "prepare": "husky",
     "test": "lerna run test --stream",
     "test:integration": "lerna run test:integration --stream",
+    "test:precommit": "bash scripts/test-precommit-concurrency.sh",
     "test:unit": "lerna run test:unit --stream"
   },
   "lint-staged": {
     "packages/mindplot/{src,test}/**/*.{ts,tsx}": [
-      "cd packages/mindplot && eslint --fix",
-      "prettier --write"
+      "sh -c 'cd packages/mindplot && eslint \"$@\"' eslint",
+      "prettier --check"
     ],
     "packages/editor/{src,test}/**/*.{ts,tsx}": [
-      "cd packages/editor && eslint --fix",
-      "prettier --write"
+      "sh -c 'cd packages/editor && eslint \"$@\"' eslint",
+      "prettier --check"
     ],
     "packages/editor/{cypress/**/*,cypress*.config}.ts": [
-      "cd packages/editor && eslint --fix",
-      "prettier --write"
+      "sh -c 'cd packages/editor && eslint \"$@\"' eslint",
+      "prettier --check"
     ],
     "packages/webapp/{src,test}/**/*.{ts,tsx}": [
-      "cd packages/webapp && eslint --fix",
-      "prettier --write"
+      "sh -c 'cd packages/webapp && eslint \"$@\"' eslint",
+      "prettier --check"
     ],
     "packages/web2d/{src,test}/**/*.{ts,tsx}": [
-      "cd packages/web2d && eslint --fix",
-      "prettier --write"
+      "sh -c 'cd packages/web2d && eslint \"$@\"' eslint",
+      "prettier --check"
+    ],
+    "packages/web2d/{storybook/**/*,cypress/**/*,cypress.config}.ts": [
+      "prettier --check"
     ],
     "**/*.{js,jsx}": [
-      "prettier --write"
+      "prettier --check"
     ],
     "**/*.{json,md,yml,yaml}": [
-      "prettier --write"
+      "prettier --check"
     ]
   },
   "browserslist": {

@@ -25,6 +25,7 @@ import {
   type ShapeAttributes,
 } from './StyleAttributes';
 import type PositionType from './PositionType';
+import type SizeType from './SizeType';
 import type { ElementType } from './types';
 
 /**
@@ -65,7 +66,7 @@ class Rect extends WorkspaceElement<RectPeer> {
     return 'Rect';
   }
 
-  getSize() {
+  getSize(): SizeType {
     return this.peer.getSize();
   }
 
@@ -73,7 +74,7 @@ class Rect extends WorkspaceElement<RectPeer> {
     return this.peer.getPosition();
   }
 
-  setPosition(x: number, y: number) {
+  setPosition(x: number, y: number): void {
     this.peer.setPosition(x, y);
   }
 }

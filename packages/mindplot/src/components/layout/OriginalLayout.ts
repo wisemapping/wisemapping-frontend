@@ -15,14 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
+import { $assert } from '../util/assert';
 import Node from './Node';
 import SymmetricSorter from './SymmetricSorter';
 import BalancedSorter from './BalancedSorter';
-import RootedTreeSet from './RootedTreeSet';
-import SizeType from '../SizeType';
-import PositionType from '../PositionType';
-import ChildrenSorterStrategy from './ChildrenSorterStrategy';
+import type RootedTreeSet from './RootedTreeSet';
+import type SizeType from '../SizeType';
+import type PositionType from '../PositionType';
+import type ChildrenSorterStrategy from './ChildrenSorterStrategy';
 import AbstractBasicSorter from './AbstractBasicSorter';
 import LayoutPass from './LayoutPass';
 import type { OrientationType } from './LayoutType';
@@ -39,7 +39,7 @@ class OriginalLayout {
   }
 
   createNode(id: number, size: SizeType, position: PositionType, type: string): Node {
-    $assert($defined(id), 'id can not be null');
+    $assert(id != null, 'id can not be null');
     const strategy: ChildrenSorterStrategy =
       type === 'root' ? OriginalLayout.BALANCED_SORTER : OriginalLayout.SYMMETRIC_SORTER;
     return new Node(id, size, position, strategy);

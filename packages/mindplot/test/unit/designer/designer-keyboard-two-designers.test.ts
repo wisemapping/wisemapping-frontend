@@ -15,7 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
@@ -129,9 +130,9 @@ describe('DesignerKeyboard document listener', () => {
 
     const harnesses = [await buildDesigner(), await buildDesigner()];
     expect(added.length).toBeGreaterThan(0);
-    harnesses[0].designer.dispose();
+    harnesses[0]!.designer.dispose();
     expect(added.filter((listener) => !removed.includes(listener)).length).toBeGreaterThan(0);
-    harnesses[1].designer.dispose();
+    harnesses[1]!.designer.dispose();
 
     expect(added.filter((listener) => !removed.includes(listener))).toEqual([]);
     add.mockRestore();

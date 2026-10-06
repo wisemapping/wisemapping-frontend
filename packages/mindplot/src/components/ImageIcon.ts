@@ -15,13 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Group, Image } from '@wisemapping/web2d';
+import type { Group } from '@wisemapping/web2d';
+import { Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
-import IconGroup from './IconGroup';
-import SizeType from './SizeType';
-import FeatureModel from './model/FeatureModel';
-import Icon from './Icon';
-import PositionType from './PositionType';
+import type IconGroup from './IconGroup';
+import type SizeType from './SizeType';
+import type FeatureModel from './model/FeatureModel';
+import type Icon from './Icon';
+import type PositionType from './PositionType';
 
 abstract class ImageIcon implements Icon {
   private _image: Image;

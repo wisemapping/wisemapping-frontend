@@ -139,9 +139,9 @@ class SecureXmlParser {
    * @param doc - The XML document to validate
    */
   private static validateXmlDocument(doc: Document): void {
-    // Count total nodes to prevent DoS
-    const allNodes = doc.querySelectorAll('*');
-    if (allNodes.length > this.MAX_XML_NODES) {
+    // Count total nodes to prevent DoS. The same list is reused for the attribute check below.
+    const allElements = doc.querySelectorAll('*');
+    if (allElements.length > this.MAX_XML_NODES) {
       throw new Error('Too many XML nodes');
     }
 
@@ -152,7 +152,6 @@ class SecureXmlParser {
     }
 
     // Check for extremely long attribute values
-    const allElements = doc.querySelectorAll('*');
     allElements.forEach((element) => {
       const { attributes } = element;
       Array.from(attributes).forEach((attr) => {

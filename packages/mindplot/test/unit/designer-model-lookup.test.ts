@@ -18,12 +18,12 @@
 
 import { buildDesigner } from './commands/designer-harness';
 import CommandContext from '../../src/components/CommandContext';
-import Designer from '../../src/components/Designer';
+import type Designer from '../../src/components/Designer';
 import DesignerModel from '../../src/components/DesignerModel';
-import { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
-import Topic from '../../src/components/Topic';
+import type { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
+import type Topic from '../../src/components/Topic';
 import Mindmap from '../../src/components/model/Mindmap';
-import NodeModel from '../../src/components/model/NodeModel';
+import type NodeModel from '../../src/components/model/NodeModel';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,
@@ -107,7 +107,7 @@ describe('DesignerModel topic lookups', () => {
 
   it('finds a topic under its new id once reindexed', () => {
     const { model, topics } = fill();
-    const topic = topics[3];
+    const topic = topics[3]!;
     topic.id = TOPICS + 10;
     model.reindexTopic(topic, 3);
 

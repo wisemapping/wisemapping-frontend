@@ -2,9 +2,6 @@
   "common.terms-notice": {
     "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
   },
-  "account.delete-warning": {
-    "defaultMessage": "Denke daran, dass du keine von dir erstellte Mindmap mehr aufrufen kannst. Alle deine Informationen werden gelöscht und können nicht wiederhergestellt werden."
-  },
   "accountinfo.button": {
     "defaultMessage": "Akzeptieren"
   },
@@ -524,9 +521,6 @@
   "footer.donations": {
     "defaultMessage": "Spenden"
   },
-  "dialog.loading": {
-    "defaultMessage": "Wird geladen ..."
-  },
   "registration.google.button": {
     "defaultMessage": "Melde dich bei Google an"
   },
@@ -616,9 +610,6 @@
   },
   "common.delete": {
     "defaultMessage": "Löschen"
-  },
-  "admin.status": {
-    "defaultMessage": "Status"
   },
   "admin.suspend-user": {
     "defaultMessage": "Benutzer sperren"
@@ -967,5 +958,8 @@
   },
   "maps.select-all": {
     "defaultMessage": "Alle auswählen"
+  },
+  "maps.select-map": {
+    "defaultMessage": "{title} auswählen"
   }
 }

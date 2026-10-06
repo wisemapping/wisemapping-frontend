@@ -17,9 +17,9 @@
  */
 import { $assert } from './assert';
 import TopicConfig from '../TopicConfig';
-import PositionType from '../PositionType';
-import SizeType from '../SizeType';
-import Topic from '../Topic';
+import type PositionType from '../PositionType';
+import type SizeType from '../SizeType';
+import type Topic from '../Topic';
 
 class Shape {
   static isAtRight(sourcePoint: PositionType, targetPoint: PositionType): boolean {
@@ -178,20 +178,15 @@ class Shape {
     const size = targetNode.getSize();
 
     const isAtRight = Shape.isAtRight(sourcePosition, pos);
-    const result = Shape.calculateRectConnectionPoint(pos, size, isAtRight);
-    if (targetNode.getShapeType() === 'line') {
-      result.y += targetNode.getSize().height / 2;
-    }
+    const point = Shape.calculateRectConnectionPoint(pos, size, isAtRight);
+    const lineOffset = targetNode.getShapeType() === 'line' ? targetNode.getSize().height / 2 : 0;
 
     // Move a little the position...
     const offset = TopicConfig.CONNECTOR_WIDTH / 2;
-    if (!isAtRight) {
-      result.x += offset;
-    } else {
-      result.x -= offset;
-    }
-
-    return result;
+    return {
+      x: point.x + (isAtRight ? -offset : offset),
+      y: point.y + lineOffset,
+    };
   }
 }
 

@@ -18,7 +18,7 @@
 
 import { buildDesigner } from '../commands/designer-harness';
 import Designer from '../../../src/components/Designer';
-import WidgetBuilder from '../../../src/components/WidgetBuilder';
+import type WidgetBuilder from '../../../src/components/WidgetBuilder';
 import Mindmap from '../../../src/components/model/Mindmap';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({

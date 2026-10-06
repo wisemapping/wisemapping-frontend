@@ -16,16 +16,16 @@
  *   limitations under the License.
  */
 
-import ScreenManager from './ScreenManager';
-import Topic from './Topic';
-import Designer from './Designer';
+import type ScreenManager from './ScreenManager';
+import type Topic from './Topic';
+import type Designer from './Designer';
 import ColorUtil from './theme/ColorUtil';
 import type { ThemeVariant } from './theme/Theme';
 import type { OrientationType } from './layout/LayoutType';
 import { $msg } from './Messages';
-import { LayoutEventPayloads } from './layout/LayoutEventBus';
-import { LayoutEventBusType } from './LayoutEventBusType';
-import NodeModel from './model/NodeModel';
+import type { LayoutEventPayloads } from './layout/LayoutEventBus';
+import type { LayoutEventBusType } from './LayoutEventBusType';
+import type NodeModel from './model/NodeModel';
 
 /**
  * Stacking layer for the canvas affordances appended straight to the container
@@ -159,8 +159,7 @@ class HTMLTopicSelected {
       const designer = this._topic.getDesigner();
       if (designer) {
         try {
-          const selectedTopics = designer.getModel().filterSelectedTopics();
-          if (selectedTopics.length > 1) {
+          if (designer.getModel().countSelectedTopics() > 1) {
             // Multiple topics selected - hide shadow
             this.hide();
             return;
@@ -996,8 +995,7 @@ class HTMLTopicSelected {
     // Check if multiple topics are selected
     const designer = this._topic.getDesigner();
     if (designer) {
-      const selectedTopics = designer.getModel().filterSelectedTopics();
-      if (selectedTopics.length > 1) {
+      if (designer.getModel().countSelectedTopics() > 1) {
         // Multiple topics selected - hide shadow
         if (this._isVisible) {
           this.hide();
@@ -1196,10 +1194,18 @@ class HTMLTopicSelected {
     const selectionShadows = designer.getSelectionShadows();
 
     // Update shadows when layout changes (position, size, etc.)
+    // Use double requestAnimationFrame to ensure DOM updates are complete
+    // This is especially important for zoom changes where coordinates need to be recalculated
+    // The events until the first frame share one update: selecting every topic, or a layout,
+    // fires one per topic. An event after it gets its own, two frames later as before.
+    let updatePending = false;
     const updateShadows = () => {
-      // Use double requestAnimationFrame to ensure DOM updates are complete
-      // This is especially important for zoom changes where coordinates need to be recalculated
+      if (updatePending) {
+        return;
+      }
+      updatePending = true;
       requestAnimationFrame(() => {
+        updatePending = false;
         requestAnimationFrame(() => {
           selectionShadows.forEach((shadow) => shadow.update());
         });

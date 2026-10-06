@@ -20,8 +20,10 @@ import { $assert } from '../util/assert';
 import SvgIconModel from './SvgIconModel';
 import LinkModel from './LinkModel';
 import NoteModel from './NoteModel';
-import FeatureModel, { FeatureAttributes } from './FeatureModel';
-import FeatureType, { type FeatureByType } from './FeatureType';
+import type { FeatureAttributes } from './FeatureModel';
+import type FeatureModel from './FeatureModel';
+import type FeatureType from './FeatureType';
+import { type FeatureByType } from './FeatureType';
 import EmojiIconModel from './EmojiIconModel';
 
 interface NodeById {
@@ -56,7 +58,9 @@ class FeatureModelFactory {
     $assert(type, 'type can not be null');
     $assert(attributes, 'attributes can not be null');
 
-    const { model: Model } = FeatureModelFactory.modelById.filter((elem) => elem.id === type)[0];
+    const entry = FeatureModelFactory.modelById.find((elem) => elem.id === type);
+    $assert(entry, `Unsupported feature type: ${type}`);
+    const { model: Model } = entry;
     // modelById pairs each type with its model class.
     return new Model(attributes) as FeatureByType[T];
   }

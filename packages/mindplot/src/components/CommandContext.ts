@@ -15,13 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from './util/assert';
-import { Designer } from '..';
-import NodeModel from './model/NodeModel';
-import RelationshipModel from './model/RelationshipModel';
-import PositionType from './PositionType';
-import Relationship from './Relationship';
-import Topic from './Topic';
+import { $assert } from './util/assert';
+import type Designer from './Designer';
+import type NodeModel from './model/NodeModel';
+import type RelationshipModel from './model/RelationshipModel';
+import type PositionType from './PositionType';
+import type Relationship from './Relationship';
+import type Topic from './Topic';
 
 class CommandContext {
   private _designer: Designer;
@@ -51,6 +51,13 @@ class CommandContext {
       );
     }
     return result;
+  }
+
+  /** The topic with the given id. Throws, as findTopics, when there is none. */
+  findTopic(topicId: number): Topic {
+    const [topic] = this.findTopics([topicId]);
+    $assert(topic, `Could not find topic ${topicId}`);
+    return topic;
   }
 
   /** */
@@ -93,11 +100,18 @@ class CommandContext {
 
   /** */
   findRelationships(relationshipIds: number[]): Relationship[] {
-    $assert($defined(relationshipIds), 'relId can not be null');
+    $assert(relationshipIds != null, 'relId can not be null');
     const relIds = Array.isArray(relationshipIds) ? relationshipIds : [relationshipIds];
 
     const designerRel = this._designer.getModel().getRelationships();
     return designerRel.filter((rel) => relIds.includes(rel.getId()));
+  }
+
+  /** The relationship with the given id. Throws when there is none. */
+  findRelationship(relationshipId: number): Relationship {
+    const [relationship] = this.findRelationships([relationshipId]);
+    $assert(relationship, `Could not find relationship ${relationshipId}`);
+    return relationship;
   }
 
   /** */

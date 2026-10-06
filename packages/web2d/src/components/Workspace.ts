@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from './peer/utils/assert';
 import WorkspaceElement from './WorkspaceElement';
 import type ElementPeer from './peer/svg/ElementPeer';
 import WorkspacePeer from './peer/svg/WorkspacePeer';
@@ -103,7 +102,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
   /**
    * Appends an element as a child to the object.
    */
-  append(element: WorkspaceElement<ElementPeer>) {
+  append(element: WorkspaceElement<ElementPeer>): void {
     if (!element) {
       throw new Error('Child element can not be null');
     }
@@ -119,8 +118,8 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     this.peer.append(element.peer);
   }
 
-  addItAsChildTo(element: HTMLDivElement) {
-    if (!$defined(element)) {
+  addItAsChildTo(element: HTMLDivElement): void {
+    if (element == null) {
       throw new Error('Workspace div container can not be null');
     }
     element.append(this._htmlContainer);
@@ -187,7 +186,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
   /**
    * All the SVG elements will be children of this HTML element.
    */
-  _getHtmlContainer() {
+  _getHtmlContainer(): HTMLElement {
     return this._htmlContainer;
   }
 
@@ -199,7 +198,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     }
   }
 
-  getSize() {
+  getSize(): { width: string; height: string } {
     const { width, height } = this._htmlContainer.style;
     return { width, height };
   }

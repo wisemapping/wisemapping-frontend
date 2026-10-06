@@ -17,7 +17,8 @@
  */
 import { Group, Text } from '@wisemapping/web2d';
 import ImageSVGFeature from '../../../src/components/ImageSVGFeature';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
+import ElementDeleteWidget from '../../../src/components/ElementDeleteWidget';
 
 /**
  * Minimal topic: a real web2d group plus a redraw that runs the gallery icon
@@ -117,11 +118,30 @@ describe('ImageSVGFeature delete widget with two designers on the page (BL4-23)'
     // Hovering the icon shows its delete widget in the topic ...
     first.feature.getOrBuildSVGElement()!.trigger('mouseover', {});
     expect(append).toHaveBeenCalledTimes(1);
-    const widget = append.mock.calls[0][0];
+    const widget = append.mock.calls[0]![0];
 
     // ... and hovering the icon on the other map must not close it.
     second.feature.getOrBuildSVGElement()!.trigger('mouseover', {});
 
     expect(removeChild).not.toHaveBeenCalledWith(widget);
+  });
+});
+
+describe('ImageSVGFeature delete widget target (BL5-188)', () => {
+  it('hands the widget a Removable, not an icon with a fake feature model', () => {
+    const decorate = jest.spyOn(ElementDeleteWidget.prototype, 'decorate');
+    try {
+      const { topic } = buildTopic('star');
+      topic.redraw();
+
+      expect(decorate).toHaveBeenCalledTimes(1);
+      const removable = decorate.mock.calls[0]![1];
+      // The gallery icon is no feature of the topic: it used to answer getModel() with {}.
+      expect('getModel' in removable).toBe(false);
+      expect('setGroup' in removable).toBe(false);
+      expect(removable.getGroup()).toBeNull();
+    } finally {
+      decorate.mockRestore();
+    }
   });
 });

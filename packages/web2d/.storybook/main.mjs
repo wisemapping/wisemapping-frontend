@@ -5,7 +5,7 @@ const getAbsolutePath = (value) => dirname(fileURLToPath(import.meta.resolve(`${
 
 export default {
   stories: [
-    "../storybook/src/**/*.stories.@(js|jsx|ts|tsx|mdx)"
+    "../storybook/src/**/*.stories.ts"
   ],
   addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-docs")],
   framework: {

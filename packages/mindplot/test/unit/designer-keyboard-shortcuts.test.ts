@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import DesignerKeyboard from '../../src/components/DesignerKeyboard';
-import Designer from '../../src/components/Designer';
+import type Designer from '../../src/components/Designer';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,

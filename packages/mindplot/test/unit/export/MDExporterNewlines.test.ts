@@ -63,7 +63,7 @@ describe('MD export newlines', () => {
 
   it('flattens every newline of a multi-line topic into its list item', async () => {
     const mindmap = buildMindmap('Central', []);
-    const central = mindmap.getCentralTopic();
+    const central = mindmap.getCentralTopic()!;
     const topic = mindmap.createNode('MainTopic', 1);
     topic.setText('first line\nsecond line\r\nthird line');
     central.append(topic);

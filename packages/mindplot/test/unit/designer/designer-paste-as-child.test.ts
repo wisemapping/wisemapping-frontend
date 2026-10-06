@@ -19,15 +19,15 @@
 // jspdf pulls in a TextEncoder that jsdom does not provide, and nothing here exports.
 import Designer from '../../../src/components/Designer';
 import DesignerModel from '../../../src/components/DesignerModel';
-import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
-import LayoutManager from '../../../src/components/layout/LayoutManager';
-import StandaloneActionDispatcher from '../../../src/components/StandaloneActionDispatcher';
-import Topic from '../../../src/components/Topic';
-import PositionType from '../../../src/components/PositionType';
+import type EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
+import type LayoutManager from '../../../src/components/layout/LayoutManager';
+import type StandaloneActionDispatcher from '../../../src/components/StandaloneActionDispatcher';
+import type Topic from '../../../src/components/Topic';
+import type PositionType from '../../../src/components/PositionType';
 import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type NodeModel from '../../../src/components/model/NodeModel';
 import ToolbarNotifier from '../../../src/components/model/ToolbarNotifier';
-import { DesignerOptions } from '../../../src/components/DesignerOptionsBuilder';
+import type { DesignerOptions } from '../../../src/components/DesignerOptionsBuilder';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,
@@ -268,7 +268,7 @@ describe('Designer.pasteClipboard', () => {
     ];
     expect(parentIds).toBeNull();
     expect(children).toHaveLength(1);
-    expect(children[0].getText()).toBe('Pasted Node');
+    expect(children[0]!.getText()).toBe('Pasted Node');
   });
 
   it('replaces the text of the selected topics when the clipboard holds plain text', async () => {

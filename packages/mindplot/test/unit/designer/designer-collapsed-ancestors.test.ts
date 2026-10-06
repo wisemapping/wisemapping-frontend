@@ -17,7 +17,7 @@
  */
 
 import getCollapsedAncestorIds from '../../../src/components/util/topicVisibility';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 
 type TopicStub = Pick<Topic, 'getId' | 'getParent' | 'areChildrenShrunken'>;
 

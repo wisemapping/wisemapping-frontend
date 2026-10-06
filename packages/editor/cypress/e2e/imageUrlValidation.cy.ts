@@ -18,10 +18,9 @@
 
 /// <reference types="cypress" />
 
-// A module, so that the types and helpers below stay local to this spec.
-export {};
+import { designerIn, designerOf as designerOfPage } from '../support/designer';
 
-// What the spec uses of the designer the playground pages expose as `window.designer`.
+// What the spec uses of the designer of the page's <mindplot-component>.
 type DesignerHandle = {
   addIconType(type: 'image' | 'emoji', iconType: string): void;
   getMindmap(): { getId(): string | undefined };
@@ -29,7 +28,7 @@ type DesignerHandle = {
 };
 
 const designerOf = (win: Cypress.AUTWindow): DesignerHandle | undefined =>
-  (win as unknown as { designer?: DesignerHandle }).designer;
+  designerOfPage<DesignerHandle>(win);
 
 type IconGroup = { id: string; icons: string[] };
 
@@ -147,7 +146,7 @@ describe('Image URL Validation Suite', () => {
           }
         })
         .as('warn');
-      (win as unknown as { designer: DesignerHandle }).designer.addIconType('image', iconName);
+      designerIn<DesignerHandle>(win).addIconType('image', iconName);
     });
 
     cy.get('@warn').should('have.been.calledWith', `Icon not found: ${iconName}`);

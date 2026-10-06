@@ -15,10 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type Mindmap from '../../../src/components/model/Mindmap';
+import type NodeModel from '../../../src/components/model/NodeModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
-import FeatureType from '../../../src/components/model/FeatureType';
+import type FeatureType from '../../../src/components/model/FeatureType';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import { LineType } from '../../../src/components/ConnectionLine';
 
@@ -52,8 +52,8 @@ const betaTopic = (attributes: string): NodeModel =>
     `<map><topic central="true" text="c"><topic position="200,0" text="t" ${attributes}/>` +
       '</topic></map>',
   )
-    .getBranches()[0]
-    .getChildren()[0];
+    .getBranches()[0]!
+    .getChildren()[0]!;
 
 let warn: jest.SpyInstance;
 
@@ -140,19 +140,19 @@ describe('beta topics without position (BL4-19, BL4-21)', () => {
         '<topic text="other"/></map>',
     );
     const [central, floating, other] = mindmap.getBranches();
-    expect(floating.hasPosition()).toBe(true);
-    expect(other.hasPosition()).toBe(true);
+    expect(floating!.hasPosition()).toBe(true);
+    expect(other!.hasPosition()).toBe(true);
     // Not on top of the central topic, nor of each other.
-    expect(floating.getPosition()).not.toEqual(central.getPosition());
-    expect(other.getPosition()).not.toEqual(floating.getPosition());
-    expect(floating.getChildren()[0].hasPosition()).toBe(true);
+    expect(floating!.getPosition()).not.toEqual(central!.getPosition());
+    expect(other!.getPosition()).not.toEqual(floating!.getPosition());
+    expect(floating!.getChildren()[0]!.hasPosition()).toBe(true);
   });
 
   test('keeps the position of a top level topic that has one', () => {
     const mindmap = load(
       '<map><topic central="true" text="c"/><topic position="300,-80" text="floating"/></map>',
     );
-    expect(mindmap.getBranches()[1].getPosition()).toEqual({ x: 300, y: -80 });
+    expect(mindmap.getBranches()[1]!.getPosition()).toEqual({ x: 300, y: -80 });
   });
 
   test('places the children of a topic at x 0 on the right, as the tango migrator does', () => {
@@ -160,13 +160,13 @@ describe('beta topics without position (BL4-19, BL4-21)', () => {
       '<map><topic central="true" text="c"><topic text="a"><topic text="a1"/></topic>' +
         '<topic position="0,50" text="b"><topic text="b1"/></topic></topic></map>',
     );
-    const [first, second] = mindmap.getBranches()[0].getChildren();
+    const [first, second] = mindmap.getBranches()[0]!.getChildren();
     // The central topic is at x 0: its children without position go to the right.
-    expect(first.getPositionOrThrow().x).toBeGreaterThan(0);
-    expect(first.getChildren()[0].getPositionOrThrow().x).toBeGreaterThan(0);
-    expect(second.getChildren()[0].getPositionOrThrow().x).toBeGreaterThan(0);
+    expect(first!.getPositionOrThrow().x).toBeGreaterThan(0);
+    expect(first!.getChildren()[0]!.getPositionOrThrow().x).toBeGreaterThan(0);
+    expect(second!.getChildren()[0]!.getPositionOrThrow().x).toBeGreaterThan(0);
     // Right side topics get even orders.
-    expect(first.getOrder()! % 2).toBe(0);
+    expect(first!.getOrder()! % 2).toBe(0);
   });
 
   test('still places the children of a left topic on the left', () => {
@@ -174,7 +174,7 @@ describe('beta topics without position (BL4-19, BL4-21)', () => {
       '<map><topic central="true" text="c"><topic position="-200,0" text="a">' +
         '<topic text="a1"/></topic></topic></map>',
     );
-    const child = mindmap.getBranches()[0].getChildren()[0].getChildren()[0];
+    const child = mindmap.getBranches()[0]!.getChildren()[0]!.getChildren()[0]!;
     expect(child.getPositionOrThrow().x).toBeLessThan(-200);
   });
 });

@@ -11,12 +11,6 @@
       "value": "Elimina"
     }
   ],
-  "app-bar-title": [
-    {
-      "type": 0,
-      "value": "Editor Mappe Mentali"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -47,12 +41,6 @@
       "value": "Condividi"
     }
   ],
-  "appbar.theme-title": [
-    {
-      "type": 0,
-      "value": "Tema"
-    }
-  ],
   "appbar.title-renamed": [
     {
       "type": 0,
@@ -81,12 +69,6 @@
     {
       "type": 0,
       "value": "Informazioni"
-    }
-  ],
-  "appbar.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "Vista struttura"
     }
   ],
   "appbar.tooltip-print": [
@@ -155,40 +137,16 @@
       "value": "Annulla"
     }
   ],
-  "aurora": [
-    {
-      "type": 0,
-      "value": "Aurora"
-    }
-  ],
-  "canvas-style.apply": [
-    {
-      "type": 0,
-      "value": "Applica"
-    }
-  ],
   "canvas-style.background-color": [
     {
       "type": 0,
       "value": "Colore di sfondo"
     }
   ],
-  "canvas-style.background-pattern": [
-    {
-      "type": 0,
-      "value": "Motivo di sfondo"
-    }
-  ],
   "canvas-style.background-style": [
     {
       "type": 0,
       "value": "Stile sfondo"
-    }
-  ],
-  "canvas-style.colors": [
-    {
-      "type": 0,
-      "value": "Colori"
     }
   ],
   "canvas-style.grid-color": [
@@ -251,28 +209,10 @@
       "value": "Linee griglia"
     }
   ],
-  "canvas-style.pattern-none": [
-    {
-      "type": 0,
-      "value": "Nessuno"
-    }
-  ],
   "canvas-style.pattern-solid": [
     {
       "type": 0,
       "value": "Colore solido"
-    }
-  ],
-  "canvas-style.preview": [
-    {
-      "type": 0,
-      "value": "Anteprima"
-    }
-  ],
-  "canvas-style.reset": [
-    {
-      "type": 0,
-      "value": "Reimposta"
     }
   ],
   "canvas-style.tab-color": [
@@ -285,18 +225,6 @@
     {
       "type": 0,
       "value": "Colore griglia"
-    }
-  ],
-  "canvas-style.title": [
-    {
-      "type": 0,
-      "value": "Sfondo"
-    }
-  ],
-  "classic": [
-    {
-      "type": 0,
-      "value": "Classico"
     }
   ],
   "color-picker.color": [
@@ -329,24 +257,6 @@
       "value": "Descrizione"
     }
   ],
-  "demo-simple-select": [
-    {
-      "type": 0,
-      "value": "Seleziona"
-    }
-  ],
-  "divider": [
-    {
-      "type": 0,
-      "value": "Divisore"
-    }
-  ],
-  "editor-panel.canvas-style-title": [
-    {
-      "type": 0,
-      "value": "Sfondo"
-    }
-  ],
   "editor-panel.deeplink-copied": [
     {
       "type": 0,
@@ -371,12 +281,6 @@
       "value": "Misto"
     }
   ],
-  "editor-panel.icon-title": [
-    {
-      "type": 0,
-      "value": "Icona"
-    }
-  ],
   "editor-panel.link-panel-title": [
     {
       "type": 0,
@@ -387,12 +291,6 @@
     {
       "type": 0,
       "value": "Nota"
-    }
-  ],
-  "editor-panel.theme-title": [
-    {
-      "type": 0,
-      "value": "Tema"
     }
   ],
   "editor-panel.tooltip-add-icon": [
@@ -419,12 +317,6 @@
       "value": "Aggiungi relazione"
     }
   ],
-  "editor-panel.tooltip-add-topic": [
-    {
-      "type": 0,
-      "value": "Aggiungi argomento"
-    }
-  ],
   "editor-panel.tooltip-add-topic-image": [
     {
       "type": 0,
@@ -437,118 +329,10 @@
       "value": "Sfondo"
     }
   ],
-  "editor-panel.tooltip-change-layout": [
-    {
-      "type": 0,
-      "value": "Cambia layout"
-    }
-  ],
-  "editor-panel.tooltip-connection-color": [
-    {
-      "type": 0,
-      "value": "Colore"
-    }
-  ],
-  "editor-panel.tooltip-connection-color-default": [
-    {
-      "type": 0,
-      "value": "Colore predefinito"
-    }
-  ],
-  "editor-panel.tooltip-connection-style": [
-    {
-      "type": 0,
-      "value": "Stile di connessione"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-arc": [
-    {
-      "type": 0,
-      "value": "Arco"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-curved-thick": [
-    {
-      "type": 0,
-      "value": "Curva spessa"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-curved-thin": [
-    {
-      "type": 0,
-      "value": "Curva sottile"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-polyline": [
-    {
-      "type": 0,
-      "value": "Polilinea semplice"
-    }
-  ],
-  "editor-panel.tooltip-connection-style-polyline-curved": [
-    {
-      "type": 0,
-      "value": "Polilinea curva"
-    }
-  ],
   "editor-panel.tooltip-copy-node-link": [
     {
       "type": 0,
       "value": "Copia link all’argomento"
-    }
-  ],
-  "editor-panel.tooltip-delete-topic": [
-    {
-      "type": 0,
-      "value": "Elimina argomento"
-    }
-  ],
-  "editor-panel.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "Vista struttura"
-    }
-  ],
-  "editor-panel.tooltip-relationship-arrow-end": [
-    {
-      "type": 0,
-      "value": "Freccia finale"
-    }
-  ],
-  "editor-panel.tooltip-relationship-arrow-start": [
-    {
-      "type": 0,
-      "value": "Freccia iniziale"
-    }
-  ],
-  "editor-panel.tooltip-relationship-color": [
-    {
-      "type": 0,
-      "value": "Colore"
-    }
-  ],
-  "editor-panel.tooltip-relationship-color-default": [
-    {
-      "type": 0,
-      "value": "Colore predefinito"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-dashed": [
-    {
-      "type": 0,
-      "value": "Linea tratteggiata"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-dotted": [
-    {
-      "type": 0,
-      "value": "Linea punteggiata"
-    }
-  ],
-  "editor-panel.tooltip-relationship-stroke-solid": [
-    {
-      "type": 0,
-      "value": "Linea solida"
     }
   ],
   "editor-panel.tooltip-relationship-style": [
@@ -557,124 +341,16 @@
       "value": "Stile relazione"
     }
   ],
-  "editor-panel.tooltip-theme": [
-    {
-      "type": 0,
-      "value": "Tema"
-    }
-  ],
-  "editor-panel.tooltip-topic-border-color": [
-    {
-      "type": 0,
-      "value": "Colore del bordo"
-    }
-  ],
-  "editor-panel.tooltip-topic-border-color-default": [
-    {
-      "type": 0,
-      "value": "Colore del bordo predefinito"
-    }
-  ],
-  "editor-panel.tooltip-topic-fill-color": [
-    {
-      "type": 0,
-      "value": "Colore di riempimento"
-    }
-  ],
-  "editor-panel.tooltip-topic-fill-color-default": [
-    {
-      "type": 0,
-      "value": "Colore di riempimento predefinito"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-bigger": [
-    {
-      "type": 0,
-      "value": "Più grande"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-bold": [
-    {
-      "type": 0,
-      "value": "Grassetto"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-color": [
-    {
-      "type": 0,
-      "value": "Colore"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-color-default": [
-    {
-      "type": 0,
-      "value": "Colore predefinito"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-italic": [
-    {
-      "type": 0,
-      "value": "Corsivo"
-    }
-  ],
-  "editor-panel.tooltip-topic-font-smaller": [
-    {
-      "type": 0,
-      "value": "Più piccolo"
-    }
-  ],
   "editor-panel.tooltip-topic-font-style": [
     {
       "type": 0,
       "value": "Stile del carattere"
     }
   ],
-  "editor-panel.tooltip-topic-share-ellipse": [
-    {
-      "type": 0,
-      "value": "Forma ellittica"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-line": [
-    {
-      "type": 0,
-      "value": "Forma linea"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-none": [
-    {
-      "type": 0,
-      "value": "Nessuna forma"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-rectangle": [
-    {
-      "type": 0,
-      "value": "Forma rettangolare"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-rounded": [
-    {
-      "type": 0,
-      "value": "Forma arrotondata"
-    }
-  ],
-  "editor-panel.tooltip-topic-style": [
-    {
-      "type": 0,
-      "value": "Stile dell'argomento"
-    }
-  ],
   "editor-panel.tooltip-unified-styling": [
     {
       "type": 0,
       "value": "Stile tema e connessioni"
-    }
-  ],
-  "editor-panel.topic-image-title": [
-    {
-      "type": 0,
-      "value": "Immagine argomento"
     }
   ],
   "editor.edit-description-mobile": [
@@ -771,12 +447,6 @@
       "value": "Corrispondenza precedente"
     }
   ],
-  "headerNotifier": [
-    {
-      "type": 0,
-      "value": "Notificatore intestazione"
-    }
-  ],
   "icon-collection.border.dashed": [
     {
       "type": 0,
@@ -865,18 +535,6 @@
     {
       "type": 0,
       "value": "Linea di impulso organico con pulse ramificate - ideale per la scienza, le reti neurali o temi futuristici"
-    }
-  ],
-  "icon-collection.connection.organic-curved": [
-    {
-      "type": 0,
-      "value": "Curva Organica"
-    }
-  ],
-  "icon-collection.connection.organic-curved-tooltip": [
-    {
-      "type": 0,
-      "value": "Stile disegnato a mano con curve drammatiche - Perfetto per mappe mentali creative ed espressive"
     }
   ],
   "icon-collection.connection.simple-polyline": [
@@ -999,24 +657,6 @@
       "value": "Mostra immagini"
     }
   ],
-  "image-icon-tab.icon-found": [
-    {
-      "type": 0,
-      "value": "icona trovata"
-    }
-  ],
-  "image-icon-tab.icons": [
-    {
-      "type": 0,
-      "value": "icone"
-    }
-  ],
-  "image-icon-tab.icons-found": [
-    {
-      "type": 0,
-      "value": "icone trovate"
-    }
-  ],
   "layout-selector.accept": [
     {
       "type": 0,
@@ -1035,34 +675,10 @@
       "value": "Scegli lo stile di layout"
     }
   ],
-  "layout-selector.mindmap": [
-    {
-      "type": 0,
-      "value": "Mappa mentale"
-    }
-  ],
-  "layout-selector.mindmap-description": [
-    {
-      "type": 0,
-      "value": "Layout orizzontale con rami equilibrati"
-    }
-  ],
   "layout-selector.title": [
     {
       "type": 0,
       "value": "Scegli layout"
-    }
-  ],
-  "layout-selector.tree": [
-    {
-      "type": 0,
-      "value": "Albero"
-    }
-  ],
-  "layout-selector.tree-description": [
-    {
-      "type": 0,
-      "value": "Gerarchia verticale dall'alto verso il basso"
     }
   ],
   "layout.mindmap.description": [
@@ -1101,12 +717,6 @@
       "value": "https://www.example.com"
     }
   ],
-  "mindmap-comp": [
-    {
-      "type": 0,
-      "value": "Componente mappa mentale"
-    }
-  ],
   "note.character.count": [
     {
       "type": 1,
@@ -1121,12 +731,6 @@
     {
       "type": 0,
       "value": "(Limite vicino)"
-    }
-  ],
-  "ocean": [
-    {
-      "type": 0,
-      "value": "Oceano"
     }
   ],
   "outline.collapse": [
@@ -1175,18 +779,6 @@
     {
       "type": 0,
       "value": "Nota"
-    }
-  ],
-  "popover": [
-    {
-      "type": 0,
-      "value": "Popover"
-    }
-  ],
-  "prism": [
-    {
-      "type": 0,
-      "value": "Prisma"
     }
   ],
   "relationship-style-editor.color": [
@@ -1261,12 +853,6 @@
       "value": "Attiva/disattiva freccia iniziale"
     }
   ],
-  "retro": [
-    {
-      "type": 0,
-      "value": "Retro Night"
-    }
-  ],
   "rich-text-editor.bold": [
     {
       "type": 0,
@@ -1277,6 +863,12 @@
     {
       "type": 0,
       "value": "Elenco Puntato"
+    }
+  ],
+  "rich-text-editor.indent": [
+    {
+      "type": 0,
+      "value": "Aumenta rientro (Tab)"
     }
   ],
   "rich-text-editor.insert-icon": [
@@ -1303,6 +895,12 @@
       "value": "Elenco Numerato"
     }
   ],
+  "rich-text-editor.outdent": [
+    {
+      "type": 0,
+      "value": "Riduci rientro (Maiusc+Tab)"
+    }
+  ],
   "rich-text-editor.strikethrough": [
     {
       "type": 0,
@@ -1313,12 +911,6 @@
     {
       "type": 0,
       "value": "Sottolineato"
-    }
-  ],
-  "robot": [
-    {
-      "type": 0,
-      "value": "Robot"
     }
   ],
   "shortcut-help-pane.action": [
@@ -1633,12 +1225,6 @@
       "value": "Zoom avanti/indietro con la rotellina"
     }
   ],
-  "sunrise": [
-    {
-      "type": 0,
-      "value": "Alba"
-    }
-  ],
   "theme-editor.accept": [
     {
       "type": 0,
@@ -1769,18 +1355,6 @@
     {
       "type": 0,
       "value": "Passa alla modalità chiara"
-    }
-  ],
-  "theme.toggle": [
-    {
-      "type": 0,
-      "value": "Cambia Tema"
-    }
-  ],
-  "title-input": [
-    {
-      "type": 0,
-      "value": "Input titolo"
     }
   ],
   "topic-font-editor.active": [
@@ -1959,12 +1533,6 @@
       "value": "Scorciatoie da tastiera"
     }
   ],
-  "visualization-toolbar.tooltip-layout": [
-    {
-      "type": 0,
-      "value": "Cambia layout"
-    }
-  ],
   "visualization-toolbar.tooltip-outline-view": [
     {
       "type": 0,
@@ -2005,48 +1573,6 @@
     {
       "type": 0,
       "value": "Adatta zoom"
-    }
-  ],
-  "zoom-panel.tooltip-collapse-all": [
-    {
-      "type": 0,
-      "value": "Comprimi tutti i nodi"
-    }
-  ],
-  "zoom-panel.tooltip-expand-all": [
-    {
-      "type": 0,
-      "value": "Espandi tutti i nodi"
-    }
-  ],
-  "zoom-panel.tooltip-keyboard": [
-    {
-      "type": 0,
-      "value": "Scorciatoie da tastiera"
-    }
-  ],
-  "zoom-panel.tooltip-outline-view": [
-    {
-      "type": 0,
-      "value": "Vista Struttura"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-in": [
-    {
-      "type": 0,
-      "value": "Ingrandisci"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-out": [
-    {
-      "type": 0,
-      "value": "Riduci"
-    }
-  ],
-  "zoom-panel.tooltip-zoom-to-fit": [
-    {
-      "type": 0,
-      "value": "Adatta alla finestra"
     }
   ]
 }

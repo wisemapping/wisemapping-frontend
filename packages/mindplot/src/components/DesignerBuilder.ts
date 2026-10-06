@@ -17,7 +17,7 @@
  */
 import { $assert } from './util/assert';
 import Designer from './Designer';
-import { DesignerOptions } from './DesignerOptionsBuilder';
+import type { DesignerOptions } from './DesignerOptionsBuilder';
 
 /**
  * Builds a designer on `options.divContainer`. Each web component builds its own, so several maps

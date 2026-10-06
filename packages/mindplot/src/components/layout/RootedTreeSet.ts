@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import PositionType from '../PositionType';
-import Node from './Node';
+import type PositionType from '../PositionType';
+import type Node from './Node';
 
 /** The subset of a Raphael.js element used by plot(). */
 type RaphaelElement = {
@@ -265,9 +265,10 @@ class RootedTreeSet {
 
   private _hasSinglePathToSingleLeaf(node: Node): boolean {
     const children = this.getChildren(node);
+    const [onlyChild] = children;
 
-    if (children.length === 1) {
-      return this._hasSinglePathToSingleLeaf(children[0]);
+    if (children.length === 1 && onlyChild) {
+      return this._hasSinglePathToSingleLeaf(onlyChild);
     }
 
     return children.length === 0;
@@ -306,20 +307,18 @@ class RootedTreeSet {
   dump() {
     const branches = this._rootNodes;
     let result = '';
-    for (let i = 0; i < branches.length; i++) {
-      const branch = branches[i];
+    branches.forEach((branch) => {
       result += this._dump(branch, '');
-    }
+    });
     return result;
   }
 
   _dump(node: Node, indent: string) {
     let result = `${indent + node}\n`;
     const children = this.getChildren(node);
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+    children.forEach((child) => {
       result += this._dump(child, `${indent}   `);
-    }
+    });
 
     return result;
   }

@@ -17,7 +17,7 @@
  */
 
 import xmlFormatter from 'xml-formatter';
-import Mindmap from '../../model/Mindmap';
+import type Mindmap from '../../model/Mindmap';
 import XMLSerializerFactory from '../../persistence/XMLSerializerFactory';
 
 /**

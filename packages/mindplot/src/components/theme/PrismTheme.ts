@@ -15,10 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Topic from '../Topic';
+import type Topic from '../Topic';
 import DefaultTheme from './DefaultTheme';
-import { ThemeVariant } from './Theme';
+import type { ThemeVariant } from './Theme';
 import { ThemeStyle } from './ThemeStyle';
+import pickByOrder from './pickByOrder';
 import ColorUtil from './ColorUtil';
 
 class PrismTheme extends DefaultTheme {
@@ -27,7 +28,7 @@ class PrismTheme extends DefaultTheme {
     super(themeStyle, variant);
   }
 
-  getConnectionColor(topic: Topic): string {
+  override getConnectionColor(topic: Topic): string {
     let result: string | null = null;
 
     // Color of the node is the connection is the color of the parent ...
@@ -42,15 +43,8 @@ class PrismTheme extends DefaultTheme {
     }
 
     if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.getStyles(topic).connectionColor as string[] | string);
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
+      const colors = this.getStyles(topic).connectionColor;
+      result = pickByOrder(colors, topic.getOrder());
 
       if (result && this._variant === 'dark') {
         // Lighten the theme connection color for better visibility on dark background
@@ -61,22 +55,15 @@ class PrismTheme extends DefaultTheme {
     return result;
   }
 
-  getBorderColor(topic: Topic): string {
+  override getBorderColor(topic: Topic): string {
     const model = topic.getModel();
     // A color picked by the user (on the topic or an ancestor) is used as is ...
     let result = model.getBorderColor() || (this.resolve('borderColor', topic, false) as string);
 
     // If border color has not been defined, use the theme border color ...
     if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.getStyles(topic).borderColor as string[] | string);
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
+      const colors = this.getStyles(topic).borderColor;
+      result = pickByOrder(colors, topic.getOrder());
 
       if (result && this._variant === 'dark') {
         // Lighten the theme border color for better visibility on dark background
@@ -85,50 +72,6 @@ class PrismTheme extends DefaultTheme {
     }
 
     return result;
-  }
-
-  getBackgroundColor(topic: Topic): string {
-    const model = topic.getModel();
-    let result = model.getBackgroundColor();
-
-    // If topic has a custom background color, always use it
-    if (result) {
-      return result;
-    }
-
-    if (!topic.isCentralTopic()) {
-      // Be sure that not override default background color ...
-      const borderColor = model.getBorderColor();
-      if (borderColor) {
-        result = ColorUtil.lightenColor(borderColor, 40);
-      }
-    }
-
-    if (!result) {
-      let colors: string[] = [];
-      const resolvedColors = this.resolve('backgroundColor', topic) as string[] | string;
-      colors = colors.concat(resolvedColors);
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
-    }
-
-    return result;
-  }
-
-  getFontColor(topic: Topic): string {
-    // A color picked by the user (on the topic or an ancestor) is used as is ...
-    const picked = this.resolve('fontColor', topic, false) as string | undefined;
-    if (picked) {
-      return picked;
-    }
-
-    // The theme color, as long as it can be read on the fill or, without one, on the canvas.
-    return this.readableTextColor(topic, this.getStyles(topic).fontColor);
   }
 }
 

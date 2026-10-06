@@ -18,7 +18,7 @@
 import { afterEach, describe, expect, it, jest } from '@jest/globals';
 import ThemeFactory from '../../../src/components/theme/ThemeFactory';
 import ClassicTheme from '../../../src/components/theme/ClassicTheme';
-import ThemeType from '../../../src/components/model/ThemeType';
+import type ThemeType from '../../../src/components/model/ThemeType';
 
 // A map's XML can carry any theme id (XMLSerializerTango only casts it), so an
 // unknown one must not prevent the map from rendering.
@@ -36,7 +36,7 @@ describe('ThemeFactory with an unknown theme id', () => {
     expect(theme).toBeInstanceOf(ClassicTheme);
     expect(ThemeFactory.createById(unknown, 'light')).toBe(theme);
     expect(warn).toHaveBeenCalledTimes(1);
-    expect(String(warn.mock.calls[0][0])).toContain('no-such-theme');
+    expect(String(warn.mock.calls[0]![0])).toContain('no-such-theme');
   });
 
   it('keeps the variant of the fallback theme', () => {

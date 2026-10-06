@@ -77,7 +77,8 @@ class ColorUtil {
         value,
       );
     if (fn) {
-      const [r, g, b] = [fn[1], fn[2], fn[3]].map((c) => clampChannel(Math.round(Number(c))));
+      const channel = (c: string | undefined) => clampChannel(Math.round(Number(c)));
+      const [r, g, b] = [channel(fn[1]), channel(fn[2]), channel(fn[3])];
       let a = fn[4] === undefined ? 1 : Number(fn[4]);
       if (fn[5] === '%') {
         a /= 100;

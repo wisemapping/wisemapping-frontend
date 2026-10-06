@@ -16,11 +16,11 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import CentralTopic from './CentralTopic';
-import { DesignerOptions } from './DesignerOptionsBuilder';
-import Relationship from './Relationship';
-import Topic from './Topic';
-import NodeModel from './model/NodeModel';
+import type CentralTopic from './CentralTopic';
+import type { DesignerOptions } from './DesignerOptionsBuilder';
+import type Relationship from './Relationship';
+import type Topic from './Topic';
+import type NodeModel from './model/NodeModel';
 import { $notify } from './model/ToolbarNotifier';
 
 class DesignerModel {
@@ -34,6 +34,10 @@ class DesignerModel {
   // scan. A topic's id changes through NodeGraph.setId, which calls reindexTopic; an entry whose
   // topic has another id all the same is repaired when a lookup meets it.
   private _topicsById: Map<number, Topic>;
+
+  // The selected topics, kept by Topic.setOnFocus, so that counting them needs no scan. A topic is
+  // added unselected: the designer adds each topic it builds before anything can select it.
+  private _selectedTopics = new Set<Topic>();
 
   constructor(options: DesignerOptions) {
     this._zoom = options.zoom;
@@ -72,6 +76,23 @@ class DesignerModel {
 
   filterSelectedTopics(): Topic[] {
     return this._topics.filter((t) => t.isOnFocus());
+  }
+
+  /** The number of selected topics: the length of filterSelectedTopics(), without the scan. */
+  countSelectedTopics(): number {
+    return this._selectedTopics.size;
+  }
+
+  /**
+   * Records that a topic of this model was selected or unselected.
+   * @internal Called by Topic.setOnFocus.
+   */
+  setTopicSelected(topic: Topic, selected: boolean): void {
+    if (!selected) {
+      this._selectedTopics.delete(topic);
+    } else if (this._topicsById.get(topic.getId()) === topic || this._topics.includes(topic)) {
+      this._selectedTopics.add(topic);
+    }
   }
 
   /**
@@ -113,6 +134,7 @@ class DesignerModel {
   removeTopic(topic: Topic): void {
     $assert(topic, 'topic can not be null');
     this._topics = this._topics.filter((t) => t !== topic);
+    this._selectedTopics.delete(topic);
     this._unindex(topic);
   }
 

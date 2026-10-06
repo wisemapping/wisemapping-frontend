@@ -15,12 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '../util/assert';
-import { Mindmap } from '../..';
-import NodeModel from '../model/NodeModel';
+import { $assert } from '../util/assert';
+import type Mindmap from '../model/Mindmap';
+import type NodeModel from '../model/NodeModel';
 import { sideOf } from '../util/side';
 import ModelCodeName from './ModelCodeName';
-import XMLMindmapSerializer from './XMLMindmapSerializer';
+import type XMLMindmapSerializer from './XMLMindmapSerializer';
 import XMLSerializerPela from './XMLSerializerTango';
 
 class Beta2PelaMigrator implements XMLMindmapSerializer {
@@ -41,7 +41,7 @@ class Beta2PelaMigrator implements XMLMindmapSerializer {
   }
 
   loadFromDom(dom: Document, mapId: string): Mindmap {
-    $assert($defined(mapId), 'mapId can not be null');
+    $assert(mapId != null, 'mapId can not be null');
     const mindmap = this._betaSerializer.loadFromDom(dom, mapId);
     mindmap.setVersion(ModelCodeName.PELA);
 
@@ -52,7 +52,8 @@ class Beta2PelaMigrator implements XMLMindmapSerializer {
       // The central topic is always positioned (see Mindmap.addBranch). Any other top level
       // topic without position (hand-made maps) is stacked below it.
       if (!model.hasPosition()) {
-        const centralPos = branches[0].getPositionOrThrow();
+        // branches is not empty: model is one of them.
+        const centralPos = branches[0]!.getPositionOrThrow();
         model.setPosition(
           centralPos.x,
           centralPos.y + index * Beta2PelaMigrator.DETACHED_TOPIC_GAP,

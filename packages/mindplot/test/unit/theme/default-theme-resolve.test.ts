@@ -18,7 +18,7 @@
 import { LineType } from '../../../src/components/ConnectionLine';
 import ClassicTheme from '../../../src/components/theme/ClassicTheme';
 import DefaultTheme from '../../../src/components/theme/DefaultTheme';
-import { ThemeStyle } from '../../../src/components/theme/ThemeStyle';
+import type { ThemeStyle } from '../../../src/components/theme/ThemeStyle';
 import fakeTopic from './FakeTopic';
 
 // LineType is a numeric enum and THIN_CURVED is its first member, so a topic

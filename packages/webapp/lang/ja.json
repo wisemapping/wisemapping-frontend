@@ -2,9 +2,6 @@
   "common.terms-notice": {
     "defaultMessage": "By continuing, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>."
   },
-  "account.delete-warning": {
-    "defaultMessage": "作成したマインドマップは復元できません。すべての情報が削除され、復元することはできません。"
-  },
   "accountinfo.button": {
     "defaultMessage": "受け入れる"
   },
@@ -572,9 +569,6 @@
   "share.message": {
     "defaultMessage": "メッセージ"
   },
-  "dialog.loading": {
-    "defaultMessage": "読み込み中..."
-  },
   "theme.dark": {
     "defaultMessage": "ダーク"
   },
@@ -619,9 +613,6 @@
   },
   "common.delete": {
     "defaultMessage": "削除"
-  },
-  "admin.status": {
-    "defaultMessage": "ステータス"
   },
   "admin.suspend-user": {
     "defaultMessage": "ユーザーを停止"
@@ -967,5 +958,8 @@
   },
   "maps.select-all": {
     "defaultMessage": "すべて選択"
+  },
+  "maps.select-map": {
+    "defaultMessage": "{title} を選択"
   }
 }

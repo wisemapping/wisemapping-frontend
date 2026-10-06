@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Mindmap from '../../../src/components/model/Mindmap';
+import type Mindmap from '../../../src/components/model/Mindmap';
 import XMLSerializerTango from '../../../src/components/persistence/XMLSerializerTango';
 
 /**

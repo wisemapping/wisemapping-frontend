@@ -29,7 +29,7 @@ describe('SVG export test execution', () => {
     fs
       .readdirSync(path.resolve(__dirname, './input/'))
       .filter((f) => f.endsWith('.wxml'))
-      .map((filename: string) => filename.split('.')[0]),
+      .map((filename: string) => filename.split('.')[0]!),
   )('Exporting %p suite', async (testName: string) => {
     // Load SVG ...
     const svgPath = path.resolve(__dirname, `./input/${testName}.svg`);

@@ -39,25 +39,25 @@ class StraightLinePeer extends ElementPeer<SVGLineElement> {
     this._y2 = 10;
   }
 
-  setFrom(x1: number, y1: number) {
+  setFrom(x1: number, y1: number): void {
     this._x1 = x1;
     this._y1 = y1;
     this.attr('x1', format(x1));
     this.attr('y1', format(y1));
   }
 
-  setTo(x2: number, y2: number) {
+  setTo(x2: number, y2: number): void {
     this._x2 = x2;
     this._y2 = y2;
     this.attr('x2', format(x2));
     this.attr('y2', format(y2));
   }
 
-  getFrom() {
+  getFrom(): { x: number; y: number } {
     return { x: this._x1, y: this._y1 };
   }
 
-  getTo() {
+  getTo(): { x: number; y: number } {
     return { x: this._x2, y: this._y2 };
   }
 }
