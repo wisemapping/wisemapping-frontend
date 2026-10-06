@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import INodeModel from '../../../src/components/model/INodeModel';
 import Mindmap from '../../../src/components/model/Mindmap';
 import XMLSerializerTango from '../../../src/components/persistence/XMLSerializerTango';
 
@@ -129,11 +130,7 @@ describe('XMLSerializerTango topic attributes', () => {
     expect(ids[1]).not.toBe(2);
   });
 
-  // Bug: a duplicated id is replaced with INodeModel._nextUUID() (XMLSerializerTango.ts:472),
-  // the highest id seen so far plus one. That id can belong to a topic further down the file,
-  // which is then seen as a duplicate too and renumbered: relationships to it now point to the
-  // renumbered duplicate instead.
-  it.failing('keeps the ids of the topics after a duplicated one', () => {
+  it('keeps the ids of the topics after a duplicated one', () => {
     const mindmap = load(
       map(
         '<topic id="5000" text="first"/><topic id="5000" text="duplicate"/>' +
@@ -141,6 +138,27 @@ describe('XMLSerializerTango topic attributes', () => {
       ).replace('</map>', '<relationship srcTopicId="5000" destTopicId="5001"/></map>'),
     );
     expect(mindmap.findNodeById(5001)!.getText()).toBe('target');
+    expect(mindmap.getRelationships()[0].getToNode()).toBe(5001);
+    const ids = mindmap
+      .getCentralTopic()
+      .getChildren()
+      .map((child) => child.getId());
+    expect(new Set(ids).size).toBe(3);
+  });
+
+  it('gives a topic without id an id no other topic of the document has', () => {
+    // The ids the generator gives next, written on the topics after the one without id.
+    const next = INodeModel._nextUUID() + 1;
+    const mindmap = load(
+      map(`<topic text="no id"/><topic id="${next}" text="a"/><topic id="${next + 1}" text="b"/>`),
+    );
+    expect(mindmap.findNodeById(next)!.getText()).toBe('a');
+    expect(mindmap.findNodeById(next + 1)!.getText()).toBe('b');
+    const ids = mindmap
+      .getCentralTopic()
+      .getChildren()
+      .map((child) => child.getId());
+    expect(new Set(ids).size).toBe(3);
   });
 });
 

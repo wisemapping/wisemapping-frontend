@@ -21,6 +21,7 @@ import { createDocument } from '../util/DOMUtils';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
+import INodeModel from '../model/INodeModel';
 import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import ModelCodeName from './ModelCodeName';
@@ -43,8 +44,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
   private _idsMap: Record<number, Element>;
 
+  // The ids written in the document being loaded: a duplicated topic gets an id none of them has.
+  private _documentIds: Set<number>;
+
   constructor() {
     this._idsMap = {};
+    this._documentIds = new Set();
   }
 
   toXML(mindmap: Mindmap): Document {
@@ -416,6 +421,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     // Load canvas style attributes
     this._loadCanvasStyle(rootElem, mindmap);
 
+    this._documentIds = new Set(
+      Array.from(rootElem.getElementsByTagName('topic'))
+        .map((topic) => Number.parseInt(topic.getAttribute('id') ?? '', 10))
+        .filter((id) => Number.isFinite(id)),
+    );
+
     // Add all the topics nodes ...
     const childNodes = Array.from(rootElem.childNodes);
     const topicsNodes = childNodes
@@ -450,6 +461,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     // Clean up from the recursion ...
     this._idsMap = {};
+    this._documentIds = new Set();
     mindmap.setId(mapId);
     return mindmap;
   }
@@ -473,9 +485,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       id = Number.parseInt(idStr, 10);
     }
 
-    // Is a duplicated node ?. Force the generation of a new id ...
+    // A missing or duplicated id gets a new one, that no topic of the document has: the next
+    // generated one may be the id of a topic further down, which relationships point to ...
     if (id === undefined || this._idsMap[id] !== undefined) {
-      id = undefined;
+      do {
+        id = INodeModel._nextUUID();
+      } while (this._documentIds.has(id) || this._idsMap[id] !== undefined);
     }
 
     // Create element ...
