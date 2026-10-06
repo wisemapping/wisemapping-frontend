@@ -93,7 +93,7 @@
     "defaultMessage": "Пароль"
   },
   "changepwd.password-match": {
-    "defaultMessage": "Паролі не співпадають. Будь ласка, спробуйте ще раз."
+    "defaultMessage": "Паролі не збігаються. Будь ласка, спробуйте ще раз."
   },
   "changepwd.password-max-length": {
     "defaultMessage": "Пароль не може бути довшим за 39 символів."
@@ -363,7 +363,7 @@
     "defaultMessage": "Ласкаво просимо"
   },
   "login.shared-map-notice": {
-    "defaultMessage": "З вами поділилися ментальною картою. Будь ласка, увійдіть, щоб отримати доступ. Немає облікового запису? Зареєструйтеся безкоштовно або використовуйте свій обліковий запис Google/Facebook."
+    "defaultMessage": "З вами поділилися картою розуму. Будь ласка, увійдіть, щоб отримати доступ. Немає акаунта? Зареєструйтеся безкоштовно або використовуйте свій акаунт Google чи Facebook."
   },
   "map.creator": {
     "defaultMessage": "Створювач"
@@ -390,13 +390,13 @@
     "defaultMessage": "ШІ Копілот"
   },
   "maps.copilot-tooltip": {
-    "defaultMessage": "Запустіть ментальну карту з ШІ Копілотом"
+    "defaultMessage": "Почніть карту розуму з ШІ Копілотом"
   },
   "maps.copilot-dialog.title": {
-    "defaultMessage": "Копілот майндмапів на базі ChatGPT"
+    "defaultMessage": "Копілот карт розуму на базі ChatGPT"
   },
   "maps.copilot-dialog.description": {
-    "defaultMessage": "Mind Map Copilot — це помічник для брейнштормінгу на базі ChatGPT, який перетворює ваші підказки на структуровані ментальні карти. Ми відкриємо його в новій вкладці, щоб ви могли розширювати ідеї, генерувати теми та повернути найкраще до WiseMapping."
+    "defaultMessage": "ШІ Копілот на базі ChatGPT — це помічник для брейнштормінгу, який перетворює ваші підказки на структуровані карти розуму. Ми відкриємо його в новій вкладці, щоб ви могли розширювати ідеї, генерувати теми та повернути найкраще до WiseMapping."
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Відкрити Копілот"
@@ -573,10 +573,10 @@
     "defaultMessage": "Може редагувати"
   },
   "share.delete": {
-    "defaultMessage": "Видалити співробітника"
+    "defaultMessage": "Видалити співавтора"
   },
   "share.delete-description": {
-    "defaultMessage": "Додайте співавторів. Вони отримають миттєвий доступ по email для спільного редагування."
+    "defaultMessage": "Додайте співавторів. Вони миттєво отримають доступ електронною поштою для спільного редагування."
   },
   "share.delete-title": {
     "defaultMessage": "Поділитися з людьми"
@@ -615,7 +615,7 @@
     "defaultMessage": "Користувач ще не підтвердив свою адресу електронної пошти | Натисніть, щоб змінити статус"
   },
   "common.allow-email-notifications": {
-    "defaultMessage": "Дозволити сповіщення email"
+    "defaultMessage": "Дозволити сповіщення електронною поштою"
   },
   "common.cancel": {
     "defaultMessage": "Скасувати"
@@ -1128,7 +1128,7 @@
     "defaultMessage": "Завантаження системної інформації..."
   },
   "error.page-title": {
-    "defaultMessage": "Неочікувана Помилка | WiseMapping"
+    "defaultMessage": "Неочікувана помилка | WiseMapping"
   },
   "error.generic-title": {
     "defaultMessage": "Ми зіткнулися з проблемою."
@@ -1152,10 +1152,10 @@
     "defaultMessage": "Можливо, сторінку було видалено, перейменовано або вона тимчасово недоступна."
   },
   "error.map-unavailable-title": {
-    "defaultMessage": "Ця майнд-карта недоступна для публічного перегляду."
+    "defaultMessage": "Ця карта розуму недоступна для публічного перегляду."
   },
   "error.map-unavailable-message": {
-    "defaultMessage": "Ця майнд-карта недоступна для публічного перегляду, оскільки порушує політику нашого сайту. Якщо вам потрібна додаткова допомога, зверніться до support@wisemapping.com."
+    "defaultMessage": "Ця карта розуму недоступна для публічного перегляду, оскільки порушує політику нашого сайту. Якщо вам потрібна додаткова допомога, зверніться до support@wisemapping.com."
   },
   "error.map-title-required": {
     "defaultMessage": "Назва карти обов'язкова і не може бути порожньою"
