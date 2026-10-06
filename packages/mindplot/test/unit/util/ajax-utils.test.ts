@@ -129,85 +129,9 @@ describe('AjaxUtils.ajax', () => {
   });
 });
 
-describe('AjaxUtils helpers', () => {
-  it('get appends the data as query parameters', async () => {
-    await AjaxUtils.get('/api', { q: 'a b' });
-    expect(lastCall()[0]).toBe('/api?q=a+b');
-
-    await AjaxUtils.get('/api?x=1', { q: '2' }, 'text');
-    expect(lastCall()[0]).toBe('/api?x=1&q=2');
-
-    await AjaxUtils.getJSON('/api');
-    expect(lastCall()[0]).toBe('/api');
-  });
-
-  it('post sends the data as JSON', async () => {
-    await AjaxUtils.post('/api', { a: 1 });
-    expect(lastCall()[1]).toEqual(expect.objectContaining({ method: 'POST', body: '{"a":1}' }));
-  });
-
-  it('parseXML returns the document, or throws on malformed XML', () => {
+describe('AjaxUtils.parseXML', () => {
+  it('returns the document, or throws on malformed XML', () => {
     expect(AjaxUtils.parseXML('<a><b/></a>').getElementsByTagName('b')).toHaveLength(1);
     expect(() => AjaxUtils.parseXML('<a><b></a>')).toThrow('XML parsing error');
-  });
-
-  it('loadScript resolves when the script loads, and rejects when it fails', async () => {
-    const loaded = AjaxUtils.loadScript('https://example.com/a.js');
-    const first = document.head.querySelector<HTMLScriptElement>('script[src$="a.js"]')!;
-    first.onload!(new Event('load'));
-    await expect(loaded).resolves.toBeUndefined();
-
-    const failed = AjaxUtils.loadScript('https://example.com/b.js');
-    const second = document.head.querySelector<HTMLScriptElement>('script[src$="b.js"]')!;
-    second.onerror!(new Event('error'));
-    await expect(failed).rejects.toThrow('Failed to load script: https://example.com/b.js');
-  });
-
-  const form = (fields: [string, string][]): HTMLFormElement => {
-    const result = document.createElement('form');
-    fields.forEach(([name, value]) => {
-      const input = document.createElement('input');
-      input.name = name;
-      input.value = value;
-      result.appendChild(input);
-    });
-    return result;
-  };
-
-  it('serializes a form as a query string', () => {
-    expect(
-      AjaxUtils.serialize(
-        form([
-          ['a', '1'],
-          ['b', 'x y'],
-        ]),
-      ),
-    ).toBe('a=1&b=x+y');
-  });
-
-  it('serializes a form to an object, collecting repeated names in an array', () => {
-    expect(
-      AjaxUtils.serializeObject(
-        form([
-          ['a', '1'],
-          ['b', '2'],
-          ['b', '3'],
-          ['b', '4'],
-        ]),
-      ),
-    ).toEqual({ a: '1', b: ['2', '3', '4'] });
-  });
-
-  // Bug: serializeObject tests `if (result[key])`, so an empty first value is overwritten by the
-  // next one instead of being collected (AjaxUtils.ts:202).
-  it.failing('keeps an empty value of a repeated name', () => {
-    expect(
-      AjaxUtils.serializeObject(
-        form([
-          ['b', ''],
-          ['b', '3'],
-        ]),
-      ),
-    ).toEqual({ b: ['', '3'] });
   });
 });

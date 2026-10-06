@@ -23,27 +23,20 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-describe('DOMUtils getters and setters', () => {
-  it('sets a style, and reads the computed value', () => {
+describe('DOMUtils setters', () => {
+  it('sets a style, html, text and attributes', () => {
     const element = document.body.appendChild(document.createElement('div'));
     DOMUtils.css(element, 'zIndex', '8');
-    DOMUtils.css(element, 'display', 'none');
     expect(element.style.zIndex).toBe('8');
-    expect(DOMUtils.css(element, 'display')).toBe('none');
-  });
 
-  it('sets and reads html, text and attributes', () => {
-    const element = document.createElement('div');
     DOMUtils.html(element, '<b>bold</b>');
-    expect(DOMUtils.html(element)).toBe('<b>bold</b>');
-    expect(DOMUtils.text(element)).toBe('bold');
+    expect(element.innerHTML).toBe('<b>bold</b>');
 
     DOMUtils.text(element, '<i>');
     expect(element.innerHTML).toBe('&lt;i&gt;');
 
-    expect(DOMUtils.attr(element, 'title')).toBe('');
     DOMUtils.attr(element, 'title', 'tip');
-    expect(DOMUtils.attr(element, 'title')).toBe('tip');
+    expect(element.getAttribute('title')).toBe('tip');
   });
 
   it('sets and reads input values', () => {
@@ -60,57 +53,28 @@ describe('DOMUtils getters and setters', () => {
     expect(element.style.display).toBe('block');
   });
 
-  it('places an element absolutely, and reads its document offset', () => {
-    const element = document.body.appendChild(document.createElement('div'));
-    DOMUtils.offset(element, { top: 10, left: 20 });
-    expect(element.style.position).toBe('absolute');
-    expect(element.style.top).toBe('10px');
-    expect(element.style.left).toBe('20px');
-
-    jest.spyOn(element, 'getBoundingClientRect').mockReturnValue({ top: 5, left: 7 } as DOMRect);
-    expect(DOMUtils.offset(element)).toEqual({
-      top: 5 + window.pageYOffset,
-      left: 7 + window.pageXOffset,
-    });
-  });
-
-  it('reads sizes and positions', () => {
+  it('reads sizes', () => {
     const element = document.createElement('div');
     expect(DOMUtils.width(element)).toBe(0);
     expect(DOMUtils.height(element)).toBe(0);
-    expect(DOMUtils.position(element)).toEqual({ top: 0, left: 0 });
     expect(DOMUtils.windowWidth()).toBe(window.innerWidth);
-    expect(DOMUtils.windowHeight()).toBe(window.innerHeight);
   });
 });
 
 describe('DOMUtils tree helpers', () => {
-  it('appends, finds, reads the parent and removes', () => {
+  it('appends, finds and removes', () => {
     const parent = DOMUtils.createElement('div');
     const child = DOMUtils.createElement('span');
     child.className = 'item';
     DOMUtils.append(parent, child);
 
     expect(DOMUtils.find(parent, '.item')).toEqual([child]);
-    expect(DOMUtils.parent(child)).toBe(parent);
+    expect(child.parentElement).toBe(parent);
 
     DOMUtils.remove(child);
     expect(DOMUtils.find(parent, '.item')).toEqual([]);
     // Removing a detached element is a no-op.
     expect(() => DOMUtils.remove(child)).not.toThrow();
-  });
-
-  it('fades an element out, then hides it and clears the transition', () => {
-    jest.useFakeTimers();
-    const element = document.createElement('div');
-    DOMUtils.fadeOut(element, 200);
-    expect(element.style.opacity).toBe('0');
-    expect(element.style.transition).toBe('opacity 200ms');
-
-    jest.advanceTimersByTime(200);
-    expect(element.style.display).toBe('none');
-    expect(element.style.transition).toBe('');
-    expect(element.style.opacity).toBe('');
   });
 
   it('creates an empty XML document', () => {

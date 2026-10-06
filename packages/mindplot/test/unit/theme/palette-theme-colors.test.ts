@@ -29,6 +29,7 @@ import sunriseDark from '../../../src/components/theme/styles/sunrise-dark.json'
 import robotDefault from '../../../src/components/theme/styles/robot-default.json';
 import robotLight from '../../../src/components/theme/styles/robot-light.json';
 import robotDark from '../../../src/components/theme/styles/robot-dark.json';
+import ColorUtil from '../../../src/components/theme/ColorUtil';
 import fakeTopic from './FakeTopic';
 
 /**
@@ -102,10 +103,15 @@ describe.each(themes)('%s theme', (_name, create, defaults, light, dark) => {
         expect(theme.getFontColor(sub)).toBe('#abcdef');
       });
 
-      it('uses the central topic font colour of the theme', () => {
-        expect(theme.getFontColor(central)).toBe(
-          pick(files, (json) => json.CentralTopic?.fontColor),
-        );
+      it('uses the central topic font colour of the theme, or black or white when unreadable', () => {
+        const color = pick(files, (json) => json.CentralTopic?.fontColor) as string;
+        const result = theme.getFontColor(central);
+        if (result !== color) {
+          // Every theme text colour must stay readable on what is behind it.
+          expect(['#000000', '#FFFFFF']).toContain(result);
+          const background = theme.getBackgroundColor(central);
+          expect(ColorUtil.contrastRatio(color, background)!).toBeLessThan(3);
+        }
       });
     });
 

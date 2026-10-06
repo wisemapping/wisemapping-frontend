@@ -55,9 +55,15 @@ const fakeIcon = (iconRect: DOMRect) => {
   return { icon: icon as unknown as LinkIcon, fire };
 };
 
-const topic = {} as Topic;
 let host: HTMLElement;
 let shadowRoot: ShadowRoot;
+
+/** A topic of a designer whose canvas container is `container`. */
+const topicIn = (container: HTMLElement) =>
+  ({ getDesigner: () => ({ getContainer: () => container }) }) as unknown as Topic;
+
+// A topic of the map in the web component: its canvas container is in the shadow root.
+let topic: Topic;
 
 const tooltip = () => shadowRoot.getElementById('mindplot-svg-tooltip')!;
 
@@ -78,6 +84,7 @@ beforeEach(() => {
   host.getBoundingClientRect = () => rect(0, 0, 400, 300);
   shadowRoot = host.attachShadow({ mode: 'open' });
   document.body.appendChild(host);
+  topic = topicIn(shadowRoot.appendChild(document.createElement('div')));
 });
 
 afterEach(() => {
@@ -138,16 +145,38 @@ describe('WidgetBuilder tooltip timing', () => {
     expect(shadowRoot.querySelectorAll('#mindplot-svg-tooltip')).toHaveLength(1);
   });
 
-  it('warns and does nothing without the web component', () => {
-    document.body.innerHTML = '';
+  it('warns and does nothing for a map outside a web component', () => {
     const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
     const { icon } = fakeIcon(rect(0, 0, 10, 10));
+    const outside = topicIn(document.body.appendChild(document.createElement('div')));
     new TestWidgetBuilder().createTooltipForLink(
-      topic,
+      outside,
       new LinkModel({ url: 'https://a.b' }),
       icon,
     );
-    expect(warn).toHaveBeenCalledWith('mindmap-comp element or shadowRoot not found');
+    expect(warn).toHaveBeenCalledWith(
+      'The map of the topic is not in a web component: it has no tooltips',
+    );
+    expect(shadowRoot.getElementById('mindplot-svg-tooltip')).toBeNull();
+  });
+
+  it('gives each web component its own tooltip', () => {
+    const otherHost = document.body.appendChild(document.createElement('div'));
+    const otherRoot = otherHost.attachShadow({ mode: 'open' });
+    const other = topicIn(otherRoot.appendChild(document.createElement('div')));
+    const builder = new TestWidgetBuilder();
+    builder.createTooltipForLink(
+      topic,
+      new LinkModel({ url: 'https://a.b' }),
+      fakeIcon(rect(0, 0, 10, 10)).icon,
+    );
+    builder.createTooltipForLink(
+      other,
+      new LinkModel({ url: 'https://c.d' }),
+      fakeIcon(rect(0, 0, 10, 10)).icon,
+    );
+    expect(shadowRoot.getElementById('mindplot-svg-tooltip')).not.toBeNull();
+    expect(otherRoot.getElementById('mindplot-svg-tooltip')).not.toBeNull();
   });
 });
 
@@ -196,9 +225,9 @@ describe('WidgetBuilder events and container size', () => {
 
   it('measures the web component, or else the window', () => {
     const builder = new TestWidgetBuilder();
-    expect(builder.getContainerSize()).toEqual({ width: 400, height: 300 });
-    document.body.innerHTML = '';
-    expect(builder.getContainerSize()).toEqual({
+    expect(builder.getContainerSize(topic)).toEqual({ width: 400, height: 300 });
+    const outside = topicIn(document.body.appendChild(document.createElement('div')));
+    expect(builder.getContainerSize(outside)).toEqual({
       width: window.innerWidth,
       height: window.innerHeight,
     });

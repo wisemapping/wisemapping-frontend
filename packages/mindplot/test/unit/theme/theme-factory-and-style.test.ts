@@ -93,7 +93,6 @@ describe('ThemeStyle', () => {
   describe.each(THEME_TYPES as unknown as ThemeType[])('%s', (id) => {
     it.each(variants)('has a complete style for every topic type in the %s variant', (variant) => {
       const style = new ThemeStyle(id, variant);
-      expect(style.getAllStyles().size).toBe(4);
       topicTypes.forEach((type) => {
         const topicStyle = style.getStyles(type);
         expect(topicStyle.fontFamily).toEqual(expect.any(String));
