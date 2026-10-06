@@ -815,6 +815,20 @@
       "value": "🔍 Buscando en títulos y descripciones"
     }
   ],
+  "admin.maps.spam-label": [
+    {
+      "type": 0,
+      "value": "Spam ("
+    },
+    {
+      "type": 1,
+      "value": "type"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
   "admin.maps.spam-tooltip": [
     {
       "type": 0,
@@ -829,6 +843,12 @@
     {
       "type": 0,
       "value": "Marcado como spam"
+    }
+  ],
+  "admin.maps.spam-type-unknown": [
+    {
+      "type": 0,
+      "value": "Desconocido"
     }
   ],
   "admin.maps.suspend-user": [

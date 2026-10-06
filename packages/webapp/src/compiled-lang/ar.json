@@ -819,6 +819,20 @@
       "value": "🔍 البحث في العناوين والأوصاف"
     }
   ],
+  "admin.maps.spam-label": [
+    {
+      "type": 0,
+      "value": "غير مرغوب فيه ("
+    },
+    {
+      "type": 1,
+      "value": "type"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
   "admin.maps.spam-tooltip": [
     {
       "type": 0,
@@ -833,6 +847,12 @@
     {
       "type": 0,
       "value": "مميزة كمحتوى غير مرغوب فيه"
+    }
+  ],
+  "admin.maps.spam-type-unknown": [
+    {
+      "type": 0,
+      "value": "غير معروف"
     }
   ],
   "admin.maps.suspend-user": [

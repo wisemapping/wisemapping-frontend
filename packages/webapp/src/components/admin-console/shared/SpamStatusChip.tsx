@@ -97,7 +97,18 @@ const SpamStatusChip = ({
           <Chip
             label={
               spam
-                ? `Spam (${spamType || 'Unknown'})`
+                ? intl.formatMessage(
+                    { id: 'admin.maps.spam-label', defaultMessage: 'Spam ({type})' },
+                    {
+                      // The type is the detector's code (LINKS...), shown as is.
+                      type:
+                        spamType ||
+                        intl.formatMessage({
+                          id: 'admin.maps.spam-type-unknown',
+                          defaultMessage: 'Unknown',
+                        }),
+                    },
+                  )
                 : intl.formatMessage({
                     id: 'admin.status-clean',
                     defaultMessage: 'Clean',

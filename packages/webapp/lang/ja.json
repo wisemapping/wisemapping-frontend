@@ -941,6 +941,12 @@
   "admin.maps.spam-tooltip-no-date": {
     "defaultMessage": "スパムとしてマーク済み"
   },
+  "admin.maps.spam-label": {
+    "defaultMessage": "スパム（{type}）"
+  },
+  "admin.maps.spam-type-unknown": {
+    "defaultMessage": "不明"
+  },
   "admin.maps.suspend-user": {
     "defaultMessage": "ユーザーアカウントを停止"
   },

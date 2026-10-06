@@ -803,6 +803,12 @@
   "admin.maps.spam-tooltip-no-date": {
     "defaultMessage": "مميزة كمحتوى غير مرغوب فيه"
   },
+  "admin.maps.spam-label": {
+    "defaultMessage": "غير مرغوب فيه ({type})"
+  },
+  "admin.maps.spam-type-unknown": {
+    "defaultMessage": "غير معروف"
+  },
   "admin.maps.suspend-user": {
     "defaultMessage": "تعليق حساب المستخدم"
   },

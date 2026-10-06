@@ -941,6 +941,12 @@
   "admin.maps.spam-tooltip-no-date": {
     "defaultMessage": "已标记为垃圾内容"
   },
+  "admin.maps.spam-label": {
+    "defaultMessage": "垃圾内容（{type}）"
+  },
+  "admin.maps.spam-type-unknown": {
+    "defaultMessage": "未知"
+  },
   "admin.maps.suspend-user": {
     "defaultMessage": "暂停用户账号"
   },

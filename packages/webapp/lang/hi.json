@@ -941,6 +941,12 @@
   "admin.maps.spam-tooltip-no-date": {
     "defaultMessage": "स्पैम के रूप में चिह्नित"
   },
+  "admin.maps.spam-label": {
+    "defaultMessage": "स्पैम ({type})"
+  },
+  "admin.maps.spam-type-unknown": {
+    "defaultMessage": "अज्ञात"
+  },
   "admin.maps.suspend-user": {
     "defaultMessage": "उपयोगकर्ता खाता निलंबित करें"
   },

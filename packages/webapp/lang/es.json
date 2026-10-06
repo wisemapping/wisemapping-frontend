@@ -941,6 +941,12 @@
   "admin.maps.spam-tooltip-no-date": {
     "defaultMessage": "Marcado como spam"
   },
+  "admin.maps.spam-label": {
+    "defaultMessage": "Spam ({type})"
+  },
+  "admin.maps.spam-type-unknown": {
+    "defaultMessage": "Desconocido"
+  },
   "admin.maps.suspend-user": {
     "defaultMessage": "Suspender cuenta de usuario"
   },

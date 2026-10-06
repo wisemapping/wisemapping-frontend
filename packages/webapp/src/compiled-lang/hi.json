@@ -819,6 +819,20 @@
       "value": "🔍 शीर्षकों और विवरणों में खोजा जा रहा है"
     }
   ],
+  "admin.maps.spam-label": [
+    {
+      "type": 0,
+      "value": "स्पैम ("
+    },
+    {
+      "type": 1,
+      "value": "type"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
   "admin.maps.spam-tooltip": [
     {
       "type": 1,
@@ -833,6 +847,12 @@
     {
       "type": 0,
       "value": "स्पैम के रूप में चिह्नित"
+    }
+  ],
+  "admin.maps.spam-type-unknown": [
+    {
+      "type": 0,
+      "value": "अज्ञात"
     }
   ],
   "admin.maps.suspend-user": [

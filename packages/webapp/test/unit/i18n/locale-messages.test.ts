@@ -46,6 +46,7 @@ const SAME_AS_ENGLISH: Record<string, string[]> = {
   'admin.maps.filter.spam': ['de', 'es', 'fr', 'it', 'pt'],
   'admin.maps.table.actions': ['fr'],
   'admin.maps.table.description': ['fr'],
+  'admin.maps.spam-label': ['de', 'es', 'fr', 'it', 'pt'],
   'admin.maps.table.spam': ['de', 'es', 'fr', 'it', 'pt'],
   'admin.maps.table.status': ['de', 'pt'],
   'admin.menu.system': ['de'],

@@ -819,6 +819,20 @@
       "value": "🔍 在标题和描述中搜索"
     }
   ],
+  "admin.maps.spam-label": [
+    {
+      "type": 0,
+      "value": "垃圾内容（"
+    },
+    {
+      "type": 1,
+      "value": "type"
+    },
+    {
+      "type": 0,
+      "value": "）"
+    }
+  ],
   "admin.maps.spam-tooltip": [
     {
       "type": 0,
@@ -837,6 +851,12 @@
     {
       "type": 0,
       "value": "已标记为垃圾内容"
+    }
+  ],
+  "admin.maps.spam-type-unknown": [
+    {
+      "type": 0,
+      "value": "未知"
     }
   ],
   "admin.maps.suspend-user": [
