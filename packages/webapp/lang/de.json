@@ -81,10 +81,10 @@
     "defaultMessage": "Teilen"
   },
   "changepwd.confirm-password": {
-    "defaultMessage": "Kennwort bestätigen"
+    "defaultMessage": "Passwort bestätigen"
   },
   "changepwd.description": {
-    "defaultMessage": "Bitte gebe das neue Passwort für dein Konto ein."
+    "defaultMessage": "Bitte gib das neue Passwort für dein Konto ein."
   },
   "changepwd.password": {
     "defaultMessage": "Passwort"
@@ -102,7 +102,7 @@
     "defaultMessage": "Das Passwort darf nicht leer sein."
   },
   "changepwd.title": {
-    "defaultMessage": "Kennwort ändern"
+    "defaultMessage": "Passwort ändern"
   },
   "common.wait": {
     "defaultMessage": "Bitte warten ..."
@@ -111,7 +111,7 @@
     "defaultMessage": "Erstellen"
   },
   "create.description": {
-    "defaultMessage": "Bitte gebe den Namen und die Beschreibung der neuen Mindmap ein."
+    "defaultMessage": "Bitte gib den Namen und die Beschreibung der neuen Mindmap ein."
   },
   "create.title": {
     "defaultMessage": "Erstelle eine neue Mindmap."
@@ -306,13 +306,13 @@
     "defaultMessage": "Anmelden"
   },
   "login.signup": {
-    "defaultMessage": "Anmeldung"
+    "defaultMessage": "Registrieren"
   },
   "login.title": {
     "defaultMessage": "Herzlich willkommen"
   },
   "login.shared-map-notice": {
-    "defaultMessage": "Eine Mindmap wurde mit Ihnen geteilt. Bitte melden Sie sich an, um darauf zuzugreifen. Noch kein Konto? Registrieren Sie sich kostenlos oder nutzen Sie Ihr Google/Facebook-Konto."
+    "defaultMessage": "Eine Mindmap wurde mit dir geteilt. Bitte melde dich an, um darauf zuzugreifen. Noch kein Konto? Registriere dich kostenlos oder nutze dein Google- oder Facebook-Konto."
   },
   "map.creator": {
     "defaultMessage": "Ersteller"
@@ -345,7 +345,7 @@
     "defaultMessage": "ChatGPT-gestützter Mindmap-Copilot"
   },
   "maps.copilot-dialog.description": {
-    "defaultMessage": "Der KI-Copilot mit ChatGPT-Unterstützung ist ein Brainstorming-Assistent, der Ihre Eingaben in strukturierte Mindmaps verwandelt. Wir öffnen ihn in einem neuen Tab, damit Sie Ideen ausbauen, Themen entwickeln und das Beste nach WiseMapping zurückbringen können."
+    "defaultMessage": "Der KI-Copilot mit ChatGPT-Unterstützung ist ein Brainstorming-Assistent, der deine Eingaben in strukturierte Mindmaps verwandelt. Wir öffnen ihn in einem neuen Tab, damit du Ideen ausbauen, Themen entwickeln und das Beste nach WiseMapping zurückbringen kannst."
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Copilot öffnen"
@@ -363,7 +363,7 @@
     "defaultMessage": "Geändert"
   },
   "maps.modified-by": {
-    "defaultMessage": "Angepasst von"
+    "defaultMessage": "Geändert von"
   },
   "maps.modified-by-desc": {
     "defaultMessage": "Geändert von {by} am {on}"
@@ -375,7 +375,7 @@
     "defaultMessage": "Eigene"
   },
   "maps.nav-public": {
-    "defaultMessage": "Freigegeben"
+    "defaultMessage": "Öffentlich"
   },
   "maps.nav-shared": {
     "defaultMessage": "Geteilt"
@@ -405,7 +405,7 @@
     "defaultMessage": "Konto"
   },
   "menu.change-password": {
-    "defaultMessage": "Kennwort ändern"
+    "defaultMessage": "Passwort ändern"
   },
   "menu.signout": {
     "defaultMessage": "Abmelden"
@@ -417,7 +417,7 @@
     "defaultMessage": "In die Zwischenablage kopiert!"
   },
   "publish.description": {
-    "defaultMessage": "Mache deine Map öffentlich. Jeder mit dem Link kann sie ansehen."
+    "defaultMessage": "Mache deine Mindmap öffentlich. Jeder mit dem Link kann sie ansehen."
   },
   "publish.embedded": {
     "defaultMessage": "Eingebettet"
@@ -462,7 +462,7 @@
     "defaultMessage": "Mitglied werden"
   },
   "rename.description": {
-    "defaultMessage": "Bitte gebe den Namen und die Beschreibung der Mindmap ein."
+    "defaultMessage": "Bitte gib den Namen und die Beschreibung der Mindmap ein."
   },
   "rename.title": {
     "defaultMessage": "Umbenennen"
@@ -477,7 +477,7 @@
     "defaultMessage": "Betrachter"
   },
   "share.add-button": {
-    "defaultMessage": "Geteilt"
+    "defaultMessage": "Teilen"
   },
   "share.adding-button": {
     "defaultMessage": "Wird geteilt..."
@@ -492,7 +492,7 @@
     "defaultMessage": "Bearbeiter entfernen"
   },
   "share.delete-description": {
-    "defaultMessage": "Füge Mitarbeiter hinzu. Sie erhalten sofortigen E-Mail-Zugriff zum gemeinsamen Bearbeiten."
+    "defaultMessage": "Füge Mitarbeiter hinzu. Diese erhalten sofort per E-Mail Zugriff und können gemeinsam mit dir bearbeiten."
   },
   "share.delete-title": {
     "defaultMessage": "Teile deine Mindmap"
@@ -531,10 +531,10 @@
     "defaultMessage": "Spenden"
   },
   "registration.google.button": {
-    "defaultMessage": "Melde dich bei Google an"
+    "defaultMessage": "Mit Google registrieren"
   },
   "login.google.button": {
-    "defaultMessage": "Anmeldung mit Google"
+    "defaultMessage": "Mit Google anmelden"
   },
   "registration.division": {
     "defaultMessage": "oder"
@@ -576,13 +576,13 @@
     "defaultMessage": "Hell"
   },
   "theme.toggle": {
-    "defaultMessage": "Design Wechseln"
+    "defaultMessage": "Design wechseln"
   },
   "admin.delete-user": {
     "defaultMessage": "Benutzer löschen"
   },
   "common.maps-list": {
-    "defaultMessage": "Kartenliste"
+    "defaultMessage": "Mindmap-Liste"
   },
   "common.na": {
     "defaultMessage": "k. A."
@@ -618,7 +618,7 @@
     "defaultMessage": "XML anzeigen"
   },
   "export.img-center": {
-    "defaultMessage": "Zentrieren und zoomen um anzupassen"
+    "defaultMessage": "Zentrieren und zoomen, um anzupassen"
   },
   "registration.facebook.button": {
     "defaultMessage": "Mit Facebook registrieren"
@@ -783,7 +783,7 @@
     "defaultMessage": "Gesperrt am: {date}"
   },
   "label.maps-count": {
-    "defaultMessage": "{count} Karten"
+    "defaultMessage": "{count} Mindmaps"
   },
   "admin.delete": {
     "defaultMessage": "Löschen"
@@ -1134,7 +1134,7 @@
     "defaultMessage": "Wir sind auf ein Problem gestoßen."
   },
   "error.contact-support": {
-    "defaultMessage": "Benötigen Sie Hilfe? Kontaktieren Sie uns unter {support}"
+    "defaultMessage": "Brauchst du Hilfe? Kontaktiere uns unter {support}"
   },
   "error.generic-message": {
     "defaultMessage": "Bitte versuche es später erneut oder wende dich an den Support, wenn das Problem weiterhin besteht."
@@ -1155,10 +1155,10 @@
     "defaultMessage": "Diese Mindmap ist nicht für die öffentliche Anzeige verfügbar."
   },
   "error.map-unavailable-message": {
-    "defaultMessage": "Diese Mindmap ist nicht für die öffentliche Anzeige verfügbar, da sie unsere Website-Richtlinien verletzt. Wenn Sie weitere Hilfe benötigen, kontaktieren Sie support@wisemapping.com."
+    "defaultMessage": "Diese Mindmap ist nicht für die öffentliche Anzeige verfügbar, da sie unsere Website-Richtlinien verletzt. Wenn du weitere Hilfe benötigst, wende dich an support@wisemapping.com."
   },
   "error.map-title-required": {
-    "defaultMessage": "Der Kartentitel ist erforderlich und darf nicht leer sein"
+    "defaultMessage": "Der Mindmap-Titel ist erforderlich und darf nicht leer sein"
   },
   "accountinfo.personal-details": {
     "defaultMessage": "Persönliche Details"
@@ -1173,40 +1173,40 @@
     "defaultMessage": "Kontoeinstellungen"
   },
   "account.delete-warning-description": {
-    "defaultMessage": "Sobald Sie Ihr Konto löschen, gibt es kein Zurück. Bitte seien Sie sicher."
+    "defaultMessage": "Sobald du dein Konto löschst, gibt es kein Zurück. Bitte sei dir sicher."
   },
   "account.delete-warning-consequences": {
     "defaultMessage": "Dies wird dauerhaft löschen:"
   },
   "account.delete-warning-mindmaps": {
-    "defaultMessage": "Alle Ihre Mindmaps und deren Inhalt"
+    "defaultMessage": "Alle deine Mindmaps und deren Inhalt"
   },
   "account.delete-warning-data": {
-    "defaultMessage": "Alle Ihre persönlichen Daten und Kontoinformationen"
+    "defaultMessage": "Alle deine persönlichen Daten und Kontoinformationen"
   },
   "account.delete-warning-collaborations": {
     "defaultMessage": "Alle geteilten Mindmaps und Zusammenarbeiten"
   },
   "account.delete-warning-history": {
-    "defaultMessage": "Alle Kontohistorie und Aktivitätsprotokolle"
+    "defaultMessage": "Die gesamte Kontohistorie und alle Aktivitätsprotokolle"
   },
   "account.delete-confirmation-title": {
-    "defaultMessage": "Sind Sie absolut sicher?"
+    "defaultMessage": "Bist du dir absolut sicher?"
   },
   "account.delete-confirmation-warning": {
-    "defaultMessage": "Diese Aktion kann nicht rückgängig gemacht werden. Dies wird Ihr Konto dauerhaft löschen und alle Daten von unseren Servern entfernen."
+    "defaultMessage": "Diese Aktion kann nicht rückgängig gemacht werden. Dein Konto wird dauerhaft gelöscht und alle Daten werden von unseren Servern entfernt."
   },
   "account.delete-confirmation-instruction": {
-    "defaultMessage": "Bitte geben Sie {challengePhrase} zur Bestätigung ein:"
+    "defaultMessage": "Bitte gib {challengePhrase} zur Bestätigung ein:"
   },
   "account.delete-confirmation-label": {
-    "defaultMessage": "Geben Sie „{challengePhrase}“ zur Bestätigung ein"
+    "defaultMessage": "Gib „{challengePhrase}“ zur Bestätigung ein"
   },
   "account.delete-challenge": {
     "defaultMessage": "MEIN KONTO LÖSCHEN"
   },
   "account.delete-challenge-error": {
-    "defaultMessage": "Bitte geben Sie „{challengePhrase}“ ein, um die Löschung des Kontos zu bestätigen."
+    "defaultMessage": "Bitte gib „{challengePhrase}“ ein, um die Löschung des Kontos zu bestätigen."
   },
   "account.delete-confirm": {
     "defaultMessage": "Konto löschen"

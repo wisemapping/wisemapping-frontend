@@ -1,18 +1,18 @@
 {
   "editor.try-welcome": {
-    "defaultMessage": "Dieser Ausgabebereich zeigt einige der Mindmap-Editor-Funktionen!"
+    "defaultMessage": "Dieser Bereich zeigt einige Funktionen des Mindmap-Editors!"
   },
   "editor.try-welcome-description": {
-    "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
+    "defaultMessage": "Registriere dich, um kostenlos unbegrenzt viele Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
   },
   "editor.try-welcome-mobile": {
     "defaultMessage": "Diese Edition zeigt einige der Mindmap-Funktionen!"
   },
   "editor.try-welcome-description-mobile": {
-    "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen. Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
+    "defaultMessage": "Registriere dich, um kostenlos unbegrenzt viele Mindmaps zu erstellen, zu teilen und zu veröffentlichen. Auf Mobilgeräten ist das Bearbeiten von Mindmaps nur eingeschränkt möglich. Verwende einen Desktop-Browser für alle Editorfunktionen."
   },
   "editor.edit-description-mobile": {
-    "defaultMessage": "Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
+    "defaultMessage": "Auf Mobilgeräten ist das Bearbeiten von Mindmaps nur eingeschränkt möglich. Verwende einen Desktop-Browser für alle Editorfunktionen."
   },
   "action.accept": {
     "defaultMessage": "Akzeptieren"
@@ -21,7 +21,7 @@
     "defaultMessage": "Zurück zur Mindmap-Liste"
   },
   "appbar.button-signup": {
-    "defaultMessage": "Anmelden"
+    "defaultMessage": "Registrieren"
   },
   "appbar.shared-button": {
     "defaultMessage": "Teilen"
@@ -51,7 +51,7 @@
     "defaultMessage": "Teilen mit anderen"
   },
   "appbar.tooltip-signup": {
-    "defaultMessage": "Anmelden"
+    "defaultMessage": "Registrieren"
   },
   "appbar.tooltip-starred": {
     "defaultMessage": "Favoriten"
@@ -174,7 +174,7 @@
     "defaultMessage": "Pfeil nach links wechselt zum übergeordneten Thema, Pfeil nach rechts zu einem Kindthema, nach oben und unten zwischen Geschwisterthemen."
   },
   "shortcut-help-pane.diagram-caption": {
-    "defaultMessage": "In der linken Hälfte der Karte tauschen ← und → ihre Rollen."
+    "defaultMessage": "In der linken Hälfte der Mindmap tauschen ← und → ihre Rollen."
   },
   "shortcut-help-pane.diagram-child": {
     "defaultMessage": "Kind"
@@ -228,7 +228,7 @@
     "defaultMessage": "Thementext überschreiben"
   },
   "shortcut-help-pane.overwrite-edit-topic-key": {
-    "defaultMessage": "Ausgewähltes Thema durch tippen überschreiben"
+    "defaultMessage": "Ausgewähltes Thema durch Tippen überschreiben"
   },
   "action.delete": {
     "defaultMessage": "Löschen"
@@ -258,7 +258,7 @@
     "defaultMessage": "Rastergröße"
   },
   "canvas-style.grid-size-xs": {
-    "defaultMessage": "Sehr Klein"
+    "defaultMessage": "Sehr klein"
   },
   "canvas-style.grid-size-s": {
     "defaultMessage": "Klein"
@@ -270,7 +270,7 @@
     "defaultMessage": "Groß"
   },
   "canvas-style.grid-size-xl": {
-    "defaultMessage": "Sehr Groß"
+    "defaultMessage": "Sehr groß"
   },
   "canvas-style.grid-color": {
     "defaultMessage": "Rasterfarbe"
@@ -282,10 +282,10 @@
     "defaultMessage": "Hell"
   },
   "rich-text-editor.insert-link": {
-    "defaultMessage": "Link Einfügen"
+    "defaultMessage": "Link einfügen"
   },
   "rich-text-editor.insert-icon": {
-    "defaultMessage": "Symbol Einfügen"
+    "defaultMessage": "Symbol einfügen"
   },
   "rich-text-editor.bold": {
     "defaultMessage": "Fett"
@@ -498,7 +498,7 @@
     "defaultMessage": "{remaining} übrig"
   },
   "note.character.limit.warning": {
-    "defaultMessage": "(Grenze erreicht)"
+    "defaultMessage": "(Limit fast erreicht)"
   },
   "theme-editor.accept": {
     "defaultMessage": "Thema anwenden"
@@ -507,7 +507,7 @@
     "defaultMessage": "Abbrechen"
   },
   "theme-editor.description": {
-    "defaultMessage": "Ein Thema definiert den visuellen Stil Ihrer Mindmap, einschließlich Farben, Schriftarten und Gesamterscheinung. Wählen Sie ein Thema, das am besten zu Ihrem Inhalt und Publikum passt."
+    "defaultMessage": "Ein Thema definiert den visuellen Stil deiner Mindmap, einschließlich Farben, Schriftarten und Gesamterscheinung. Wähle ein Thema, das am besten zu deinem Inhalt und Publikum passt."
   },
   "theme-editor.title": {
     "defaultMessage": "Thema wählen"
@@ -729,7 +729,7 @@
     "defaultMessage": "Link zum Thema kopieren"
   },
   "shortcut-help-pane.find-in-map": {
-    "defaultMessage": "Thema in der Map suchen"
+    "defaultMessage": "Thema in der Mindmap suchen"
   },
   "shortcut-help-pane.pan-canvas": {
     "defaultMessage": "Zeichenfläche verschieben"
@@ -744,7 +744,7 @@
     "defaultMessage": "Mit dem Mausrad vergrößern/verkleinern"
   },
   "visualization-toolbar.tooltip-find-in-map": {
-    "defaultMessage": "In der Map suchen"
+    "defaultMessage": "In der Mindmap suchen"
   },
   "find-in-map.placeholder": {
     "defaultMessage": "Thema suchen..."

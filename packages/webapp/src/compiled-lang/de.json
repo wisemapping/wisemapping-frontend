@@ -8,7 +8,7 @@
   "account.delete-challenge-error": [
     {
       "type": 0,
-      "value": "Bitte geben Sie „"
+      "value": "Bitte gib „"
     },
     {
       "type": 1,
@@ -28,7 +28,7 @@
   "account.delete-confirmation-instruction": [
     {
       "type": 0,
-      "value": "Bitte geben Sie "
+      "value": "Bitte gib "
     },
     {
       "type": 1,
@@ -42,7 +42,7 @@
   "account.delete-confirmation-label": [
     {
       "type": 0,
-      "value": "Geben Sie „"
+      "value": "Gib „"
     },
     {
       "type": 1,
@@ -56,13 +56,13 @@
   "account.delete-confirmation-title": [
     {
       "type": 0,
-      "value": "Sind Sie absolut sicher?"
+      "value": "Bist du dir absolut sicher?"
     }
   ],
   "account.delete-confirmation-warning": [
     {
       "type": 0,
-      "value": "Diese Aktion kann nicht rückgängig gemacht werden. Dies wird Ihr Konto dauerhaft löschen und alle Daten von unseren Servern entfernen."
+      "value": "Diese Aktion kann nicht rückgängig gemacht werden. Dein Konto wird dauerhaft gelöscht und alle Daten werden von unseren Servern entfernt."
     }
   ],
   "account.delete-warning-collaborations": [
@@ -80,25 +80,25 @@
   "account.delete-warning-data": [
     {
       "type": 0,
-      "value": "Alle Ihre persönlichen Daten und Kontoinformationen"
+      "value": "Alle deine persönlichen Daten und Kontoinformationen"
     }
   ],
   "account.delete-warning-description": [
     {
       "type": 0,
-      "value": "Sobald Sie Ihr Konto löschen, gibt es kein Zurück. Bitte seien Sie sicher."
+      "value": "Sobald du dein Konto löschst, gibt es kein Zurück. Bitte sei dir sicher."
     }
   ],
   "account.delete-warning-history": [
     {
       "type": 0,
-      "value": "Alle Kontohistorie und Aktivitätsprotokolle"
+      "value": "Die gesamte Kontohistorie und alle Aktivitätsprotokolle"
     }
   ],
   "account.delete-warning-mindmaps": [
     {
       "type": 0,
-      "value": "Alle Ihre Mindmaps und deren Inhalt"
+      "value": "Alle deine Mindmaps und deren Inhalt"
     }
   ],
   "account.delete-warning-title": [
@@ -1554,13 +1554,13 @@
   "changepwd.confirm-password": [
     {
       "type": 0,
-      "value": "Kennwort bestätigen"
+      "value": "Passwort bestätigen"
     }
   ],
   "changepwd.description": [
     {
       "type": 0,
-      "value": "Bitte gebe das neue Passwort für dein Konto ein."
+      "value": "Bitte gib das neue Passwort für dein Konto ein."
     }
   ],
   "changepwd.password": [
@@ -1596,7 +1596,7 @@
   "changepwd.title": [
     {
       "type": 0,
-      "value": "Kennwort ändern"
+      "value": "Passwort ändern"
     }
   ],
   "common.allow-email-notifications": [
@@ -1686,7 +1686,7 @@
   "common.maps-list": [
     {
       "type": 0,
-      "value": "Kartenliste"
+      "value": "Mindmap-Liste"
     }
   ],
   "common.na": [
@@ -1786,7 +1786,7 @@
   "create.description": [
     {
       "type": 0,
-      "value": "Bitte gebe den Namen und die Beschreibung der neuen Mindmap ein."
+      "value": "Bitte gib den Namen und die Beschreibung der neuen Mindmap ein."
     }
   ],
   "create.title": [
@@ -1820,7 +1820,7 @@
   "error.contact-support": [
     {
       "type": 0,
-      "value": "Benötigen Sie Hilfe? Kontaktieren Sie uns unter "
+      "value": "Brauchst du Hilfe? Kontaktiere uns unter "
     },
     {
       "type": 1,
@@ -1866,13 +1866,13 @@
   "error.map-title-required": [
     {
       "type": 0,
-      "value": "Der Kartentitel ist erforderlich und darf nicht leer sein"
+      "value": "Der Mindmap-Titel ist erforderlich und darf nicht leer sein"
     }
   ],
   "error.map-unavailable-message": [
     {
       "type": 0,
-      "value": "Diese Mindmap ist nicht für die öffentliche Anzeige verfügbar, da sie unsere Website-Richtlinien verletzt. Wenn Sie weitere Hilfe benötigen, kontaktieren Sie support@wisemapping.com."
+      "value": "Diese Mindmap ist nicht für die öffentliche Anzeige verfügbar, da sie unsere Website-Richtlinien verletzt. Wenn du weitere Hilfe benötigst, wende dich an support@wisemapping.com."
     }
   ],
   "error.map-unavailable-title": [
@@ -1950,7 +1950,7 @@
   "export.img-center": [
     {
       "type": 0,
-      "value": "Zentrieren und zoomen um anzupassen"
+      "value": "Zentrieren und zoomen, um anzupassen"
     }
   ],
   "export.title": [
@@ -2302,7 +2302,7 @@
     },
     {
       "type": 0,
-      "value": " Karten"
+      "value": " Mindmaps"
     }
   ],
   "label.title": [
@@ -2368,7 +2368,7 @@
   "login.google.button": [
     {
       "type": 0,
-      "value": "Anmeldung mit Google"
+      "value": "Mit Google anmelden"
     }
   ],
   "login.oauth-error": [
@@ -2404,7 +2404,7 @@
   "login.shared-map-notice": [
     {
       "type": 0,
-      "value": "Eine Mindmap wurde mit Ihnen geteilt. Bitte melden Sie sich an, um darauf zuzugreifen. Noch kein Konto? Registrieren Sie sich kostenlos oder nutzen Sie Ihr Google/Facebook-Konto."
+      "value": "Eine Mindmap wurde mit dir geteilt. Bitte melde dich an, um darauf zuzugreifen. Noch kein Konto? Registriere dich kostenlos oder nutze dein Google- oder Facebook-Konto."
     }
   ],
   "login.signin": [
@@ -2416,7 +2416,7 @@
   "login.signup": [
     {
       "type": 0,
-      "value": "Anmeldung"
+      "value": "Registrieren"
     }
   ],
   "login.title": [
@@ -2518,7 +2518,7 @@
   "maps.copilot-dialog.description": [
     {
       "type": 0,
-      "value": "Der KI-Copilot mit ChatGPT-Unterstützung ist ein Brainstorming-Assistent, der Ihre Eingaben in strukturierte Mindmaps verwandelt. Wir öffnen ihn in einem neuen Tab, damit Sie Ideen ausbauen, Themen entwickeln und das Beste nach WiseMapping zurückbringen können."
+      "value": "Der KI-Copilot mit ChatGPT-Unterstützung ist ein Brainstorming-Assistent, der deine Eingaben in strukturierte Mindmaps verwandelt. Wir öffnen ihn in einem neuen Tab, damit du Ideen ausbauen, Themen entwickeln und das Beste nach WiseMapping zurückbringen kannst."
     }
   ],
   "maps.copilot-dialog.title": [
@@ -2560,7 +2560,7 @@
   "maps.modified-by": [
     {
       "type": 0,
-      "value": "Angepasst von"
+      "value": "Geändert von"
     }
   ],
   "maps.modified-by-desc": [
@@ -2596,7 +2596,7 @@
   "maps.nav-public": [
     {
       "type": 0,
-      "value": "Freigegeben"
+      "value": "Öffentlich"
     }
   ],
   "maps.nav-shared": [
@@ -2678,7 +2678,7 @@
   "menu.change-password": [
     {
       "type": 0,
-      "value": "Kennwort ändern"
+      "value": "Passwort ändern"
     }
   ],
   "menu.signout": [
@@ -2702,7 +2702,7 @@
   "publish.description": [
     {
       "type": 0,
-      "value": "Mache deine Map öffentlich. Jeder mit dem Link kann sie ansehen."
+      "value": "Mache deine Mindmap öffentlich. Jeder mit dem Link kann sie ansehen."
     }
   ],
   "publish.embedded": [
@@ -2830,7 +2830,7 @@
   "registration.google.button": [
     {
       "type": 0,
-      "value": "Melde dich bei Google an"
+      "value": "Mit Google registrieren"
     }
   ],
   "registration.lastname": [
@@ -2924,7 +2924,7 @@
   "rename.description": [
     {
       "type": 0,
-      "value": "Bitte gebe den Namen und die Beschreibung der Mindmap ein."
+      "value": "Bitte gib den Namen und die Beschreibung der Mindmap ein."
     }
   ],
   "rename.title": [
@@ -3020,7 +3020,7 @@
   "share.add-button": [
     {
       "type": 0,
-      "value": "Geteilt"
+      "value": "Teilen"
     }
   ],
   "share.add-message": [
@@ -3050,7 +3050,7 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Füge Mitarbeiter hinzu. Sie erhalten sofortigen E-Mail-Zugriff zum gemeinsamen Bearbeiten."
+      "value": "Füge Mitarbeiter hinzu. Diese erhalten sofort per E-Mail Zugriff und können gemeinsam mit dir bearbeiten."
     }
   ],
   "share.delete-title": [
@@ -3098,7 +3098,7 @@
   "theme.toggle": [
     {
       "type": 0,
-      "value": "Design Wechseln"
+      "value": "Design wechseln"
     }
   ],
   "validation.title-required": [
