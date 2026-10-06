@@ -183,6 +183,55 @@ describe('Selection work', () => {
     expect(reads).toBeLessThan(10 * TOPICS);
   });
 
+  it('a click on the background after select-all deselects in one pass, with one designer event', async () => {
+    const { designer } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    designer.selectAll();
+    const fired = countEvents(designer);
+    const focusReads = countCalls(NodeGraph.prototype, 'isOnFocus');
+
+    designer.onObjectFocusEvent(undefined, new MouseEvent('click'));
+    const reads = focusReads.count;
+
+    expect(designer.getModel().filterSelectedTopics()).toHaveLength(0);
+    expect(designer.getModel().filterSelectedRelationships()).toHaveLength(0);
+    // Each topic still reports its own deselection, as before.
+    expect(fired.topicUnselected).toBe(TOPICS);
+    expect(fired.onblur).toBe(1);
+    expect(fired.onfocus).toBe(0);
+    // Before: 257,500: each topic unselected counted the selection. Now a few per topic.
+    expect(reads).toBeLessThan(10 * TOPICS);
+  });
+
+  it('a click on a topic after select-all keeps only that topic, firing no designer event', async () => {
+    const { designer, topic } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
+    designer.selectAll();
+    const fired = countEvents(designer);
+    const focusReads = countCalls(NodeGraph.prototype, 'isOnFocus');
+
+    designer.onObjectFocusEvent(topic(3), new MouseEvent('mousedown'));
+    const reads = focusReads.count;
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(3)]);
+    expect(designer.getModel().filterSelectedRelationships()).toHaveLength(0);
+    expect(fired.topicUnselected).toBe(TOPICS - 1);
+    // The selection never became empty: no 'onblur', as before.
+    expect(fired).toMatchObject({ onblur: 0, onfocus: 0, topicSelected: 0 });
+    // Before: 256,998. Now a few per topic.
+    expect(reads).toBeLessThan(10 * TOPICS);
+  });
+
+  it('a Ctrl or Cmd click keeps the selection', async () => {
+    const { designer } = await buildDesigner(buildMediumMap({ topics: 50 }));
+    designer.selectAll();
+    const fired = countEvents(designer);
+
+    designer.onObjectFocusEvent(undefined, new MouseEvent('click', { ctrlKey: true }));
+    designer.onObjectFocusEvent(undefined, new MouseEvent('click', { metaKey: true }));
+
+    expect(designer.getModel().countSelectedTopics()).toBe(50);
+    expect(fired).toEqual({ onfocus: 0, onblur: 0, topicSelected: 0, topicUnselected: 0 });
+  });
+
   it('selecting or unselecting one topic does not scan the topics', async () => {
     const { designer, topic } = await buildDesigner(buildMediumMap({ topics: TOPICS }));
     const fired = countEvents(designer);

@@ -134,14 +134,25 @@ const buildDesigner = (topics: FakeTopic[]) => {
       findTopicByModel: (model: object) => topics.find((t) => t.getModel() === model),
       filterSelectedTopics: () => topics.filter((t) => t.isOnFocus()),
       countSelectedTopics: () => topics.filter((t) => t.isOnFocus()).length,
+      filterSelectedRelationships: () => [],
     }),
     getSelectionShadows: () => shadows,
     getScreenManager: () => ({}) as ScreenManager,
     getContainer: () => container,
+    fireEvent: () => undefined,
     onObjectFocusEvent(currentObject?: Topic, event?: MouseEvent) {
       Designer.prototype.onObjectFocusEvent.call(this, currentObject, event);
     },
   };
+  // onObjectFocusEvent unselects the other topics through Designer's private batch.
+  Object.assign(designer, {
+    _selectionBatch: null,
+    ensureNodeVisible: () => undefined,
+    _setFocusOfAll(focus: boolean, except?: Topic) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (Designer.prototype as any)._setFocusOfAll.call(this, focus, except);
+    },
+  });
   // The topics were built by this designer.
   topics.forEach((topic) => {
     topic.designer = designer as unknown as Designer;

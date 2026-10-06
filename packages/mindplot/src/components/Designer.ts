@@ -450,16 +450,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     // Close node editors ..
     this.closeNodeEditors();
 
-    const model = this.getModel();
-    const objects = model.getEntities();
-    objects.forEach((object) => {
-      // Disable all nodes on focus but not the current if Ctrl key isn't being pressed
-      if (event == null || (!event.ctrlKey && !event.metaKey)) {
-        if (object.isOnFocus() && object !== currentObject) {
-          object.setOnFocus(false);
-        }
-      }
-    });
+    // Disable all nodes on focus but not the current if Ctrl key isn't being pressed
+    if (event == null || (!event.ctrlKey && !event.metaKey)) {
+      this._setFocusOfAll(false, currentObject);
+    }
   }
 
   /** Closes the text editor, saving it: there is one per designer, whatever its topic. */
@@ -478,11 +472,13 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   }
 
   /**
-   * Sets the focus of every entity in one pass. Each entity still fires its own events, and
-   * each topic its 'topicSelected' or 'topicUnselected' on the LayoutEventBus; the designer fires
-   * 'onfocus' or 'onblur' once, and pans to the last topic selected once, at the end.
+   * Sets the focus of every entity but `except` in one pass. Each entity still fires its own
+   * events, and each topic its 'topicSelected' or 'topicUnselected' on the LayoutEventBus; the
+   * designer pans to the last topic selected once, at the end, and fires at most one event, as the
+   * handlers of each entity would: 'onfocus' if one was selected, 'onblur' if the selection became
+   * empty.
    */
-  private _setFocusOfAll(focus: boolean): void {
+  private _setFocusOfAll(focus: boolean, except?: Topic): void {
     const batch: { panTo?: Topic } = {};
     let changed = false;
     this._selectionBatch = batch;
@@ -490,6 +486,7 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       this.getModel()
         .getEntities()
         .forEach((object) => {
+          if (object === except) return;
           changed = changed || object.isOnFocus() !== focus;
           object.setOnFocus(focus);
         });
@@ -503,10 +500,12 @@ class Designer extends EventDispispatcher<DesignerEvents> {
     if (changed) {
       const model = this.getModel();
       const empty = isSelectionEmpty(
-        model.filterSelectedTopics().length,
+        model.countSelectedTopics(),
         model.filterSelectedRelationships().length,
       );
-      this.fireEvent(empty ? 'onblur' : 'onfocus');
+      if (focus || empty) {
+        this.fireEvent(empty ? 'onblur' : 'onfocus');
+      }
     }
   }
 
