@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import { Designer } from '..';
+import type Designer from './Designer';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
 import PositionType from './PositionType';

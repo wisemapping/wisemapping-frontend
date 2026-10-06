@@ -19,7 +19,7 @@ import { CurvedLine, Arrow } from '@wisemapping/web2d';
 import Relationship from './Relationship';
 import Shape from './util/Shape';
 import Canvas from './Canvas';
-import { Designer } from '..';
+import type Designer from './Designer';
 import Topic from './Topic';
 import PositionType from './PositionType';
 

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import { Mindmap } from '../..';
+import type Mindmap from '../model/Mindmap';
 import NodeModel from '../model/NodeModel';
 import { sideOf } from '../util/side';
 import ModelCodeName from './ModelCodeName';

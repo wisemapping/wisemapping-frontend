@@ -21,7 +21,7 @@ import KeyboardManager from './util/KeyboardManager';
 import { sideOf } from './util/side';
 import getCollapsedAncestorIds from './util/topicVisibility';
 import Keyboard from './Keyboard';
-import { Designer } from '..';
+import type Designer from './Designer';
 import Topic from './Topic';
 import { TopicMove } from './util/topicReorder';
 import { $msg } from './Messages';

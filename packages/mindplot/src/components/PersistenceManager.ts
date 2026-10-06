@@ -17,7 +17,7 @@
  */
 import { $assert } from './util/assert';
 import { $msg } from './Messages';
-import { Mindmap } from '..';
+import type Mindmap from './model/Mindmap';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
 export type PersistenceError = {

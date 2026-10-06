@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import xmlFormatter from 'xml-formatter';
-import { Mindmap } from '../..';
+import type Mindmap from '../model/Mindmap';
 import INodeModel, { TopicShapeType } from '../model/INodeModel';
 import RelationshipModel from '../model/RelationshipModel';
 import FeatureModel from '../model/FeatureModel';

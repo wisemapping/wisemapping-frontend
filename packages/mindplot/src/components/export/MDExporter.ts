@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Mindmap } from '../..';
+import type Mindmap from '../model/Mindmap';
 import INodeModel from '../model/INodeModel';
 import NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
