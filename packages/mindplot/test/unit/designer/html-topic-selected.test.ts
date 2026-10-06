@@ -153,6 +153,10 @@ const buildDesigner = (topics: FakeTopic[]) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (Designer.prototype as any)._setFocusOfAll.call(this, focus, except);
     },
+    _fireSelectionEvent() {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (Designer.prototype as any)._fireSelectionEvent.call(this);
+    },
   });
   // The topics were built by this designer.
   topics.forEach((topic) => {

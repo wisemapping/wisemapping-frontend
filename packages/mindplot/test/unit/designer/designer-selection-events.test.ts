@@ -108,6 +108,30 @@ describe('Designer selection events on a click', () => {
     expect(events[events.length - 1]).toBe('onfocus:1');
   });
 
+  it('a Ctrl or Cmd click that unselects one topic of a multi-selection reports the rest', async () => {
+    const { designer, events, mouseDown, topic } = await open();
+    mouseDown(1);
+    mouseDown(3, { ctrlKey: true });
+    mouseDown(4, { ctrlKey: true });
+    events.splice(0);
+
+    mouseDown(3, { ctrlKey: true });
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(1), topic(4)]);
+    // Before: no event, so the editor kept showing three topics selected.
+    expect(events).toEqual(['onfocus:2']);
+  });
+
+  it('a Ctrl or Cmd click that unselects the last selected topic reports an empty selection', async () => {
+    const { events, mouseDown } = await open();
+    mouseDown(1);
+    events.splice(0);
+
+    mouseDown(1, { ctrlKey: true });
+
+    expect(events).toEqual(['onblur:0']);
+  });
+
   it('selecting all and deselecting all still fire one event each', async () => {
     const { designer, events } = await open();
 

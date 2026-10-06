@@ -242,7 +242,10 @@ describe('Selection work', () => {
     topic(3).setOnFocus(true);
     topic(3).setOnFocus(false);
 
-    expect(fired.onfocus).toBe(1);
+    // One per change: the central topic, selected when the map loads, stays selected, so
+    // unselecting topic 3 is an 'onfocus' too. It used to fire nothing, which left the editor
+    // counting two topics (BL5-244).
+    expect(fired.onfocus).toBe(2);
     // Before: 1,005: the designer's handlers counted the selected topics by reading every topic.
     expect(focusReads.count).toBeLessThan(TOPICS / 5);
   });
@@ -263,7 +266,9 @@ describe('Selection work', () => {
     relationship.setOnFocus(true);
     relationship.setOnFocus(false);
 
-    expect(fired.onfocus).toBe(2);
+    // One per change, as above: each unselection leaves the central topic selected (it used to
+    // fire nothing, so 2).
+    expect(fired.onfocus).toBe(4);
     expect(designer.getModel().countSelectedRelationships()).toBe(0);
     // Before: 1,002: the designer's handlers listed the selected relationships by reading each one.
     expect(focusReads.count).toBeLessThan(RELATIONSHIPS / 5);

@@ -154,6 +154,14 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
     expect(fired).not.toContain('onblur');
   });
 
+  it("fires 'onfocus' when a topic is unselected and others are still selected", () => {
+    // A Ctrl or Cmd click that unselects one topic of several: before, no event at all, so the
+    // editor kept the count of the selection before the click.
+    setSelection(2, 0);
+    handlers.ontblur!();
+    expect(fired).toEqual(['onfocus']);
+  });
+
   it("does not fire 'onblur' while a relationship is still selected", () => {
     setSelection(0, 1);
     handlers.ontblur!();
@@ -178,15 +186,20 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
     expect(fired).not.toContain('onfocus');
   });
 
-  it('never fires both events for the same selection', () => {
+  it('fires the one event of the selection each change leaves, never both', () => {
+    // Each handler reports the selection as it is now. Before, 'ontblur' reported only an empty
+    // selection and 'ontfocus' only a non-empty one, so an unselection that left something
+    // selected fired nothing.
     for (let topics = 0; topics <= 3; topics++) {
       for (let rels = 0; rels <= 3; rels++) {
-        fired = [];
+        const expected = topics + rels === 0 ? 'onblur' : 'onfocus';
         setSelection(topics, rels);
+        fired = [];
         handlers.ontblur!();
+        expect(fired).toEqual([expected]);
+        fired = [];
         handlers.ontfocus!();
-        expect(fired).toHaveLength(1);
-        expect(fired[0]).toBe(topics + rels === 0 ? 'onblur' : 'onfocus');
+        expect(fired).toEqual([expected]);
       }
     }
   });

@@ -416,31 +416,13 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       }
     }
 
-    topic.addEvent('ontblur', () => {
-      if (me._selectionBatch) return;
-      const topicCount = me.getModel().countSelectedTopics();
-      const relationshipCount = me.getModel().countSelectedRelationships();
+    // HTMLTopicSelected handles its own hiding via ontblur event
+    // Shadow will be kept but hidden - only disposed on topicRemoved
+    topic.addEvent('ontblur', () => me._onSelectionChange());
 
-      if (isSelectionEmpty(topicCount, relationshipCount)) {
-        me.fireEvent('onblur');
-      }
-
-      // HTMLTopicSelected handles its own hiding via ontblur event
-      // Shadow will be kept but hidden - only disposed on topicRemoved
-    });
-
-    topic.addEvent('ontfocus', () => {
-      if (me._selectionBatch) return;
-      const topicCount = me.getModel().countSelectedTopics();
-      const relationshipCount = me.getModel().countSelectedRelationships();
-
-      if (!isSelectionEmpty(topicCount, relationshipCount)) {
-        me.fireEvent('onfocus');
-      }
-
-      // HTMLTopicSelected creation is now handled via LayoutEventBus 'topicSelected' event
-      // which fires from Topic.setOnFocus() and includes the topic model/ID
-    });
+    // HTMLTopicSelected creation is now handled via LayoutEventBus 'topicSelected' event
+    // which fires from Topic.setOnFocus() and includes the topic model/ID
+    topic.addEvent('ontfocus', () => me._onSelectionChange());
 
     return topic;
   }
@@ -496,15 +478,28 @@ class Designer extends EventDispispatcher<DesignerEvents> {
       this.ensureNodeVisible(batch.panTo);
     }
     if (changed) {
-      const model = this.getModel();
-      const empty = isSelectionEmpty(
-        model.countSelectedTopics(),
-        model.countSelectedRelationships(),
-      );
-      // A click on a topic deselects the others but keeps it: the selection changed without
-      // becoming empty, which the editor only learns from an 'onfocus'.
-      this.fireEvent(empty ? 'onblur' : 'onfocus');
+      this._fireSelectionEvent();
     }
+  }
+
+  /**
+   * Tells the editor that an entity was selected or unselected, unless a batch is running: the
+   * batch tells it once, at its end.
+   */
+  private _onSelectionChange(): void {
+    if (this._selectionBatch) return;
+    this._fireSelectionEvent();
+  }
+
+  /**
+   * Fires 'onblur' if the selection is empty, 'onfocus' otherwise: the editor reads the selection
+   * again on either. A change that leaves something selected, such as a Ctrl or Cmd click that
+   * unselects one topic of several, or a click that keeps one topic of several, is an 'onfocus'.
+   */
+  private _fireSelectionEvent(): void {
+    const model = this.getModel();
+    const empty = isSelectionEmpty(model.countSelectedTopics(), model.countSelectedRelationships());
+    this.fireEvent(empty ? 'onblur' : 'onfocus');
   }
 
   setZoom(zoom: number): void {
@@ -1555,25 +1550,8 @@ class Designer extends EventDispispatcher<DesignerEvents> {
 
     // Build relationship line (sourceTopic and targetTopic are guaranteed non-null by asserts above)
     const result = new Relationship(sourceTopic, targetTopic, model);
-    result.addEvent('ontblur', () => {
-      if (this._selectionBatch) return;
-      const topicCount = this.getModel().countSelectedTopics();
-      const relationshipCount = this.getModel().countSelectedRelationships();
-
-      if (isSelectionEmpty(topicCount, relationshipCount)) {
-        this.fireEvent('onblur');
-      }
-    });
-
-    result.addEvent('ontfocus', () => {
-      if (this._selectionBatch) return;
-      const topicCount = this.getModel().countSelectedTopics();
-      const relationshipCount = this.getModel().countSelectedRelationships();
-
-      if (!isSelectionEmpty(topicCount, relationshipCount)) {
-        this.fireEvent('onfocus');
-      }
-    });
+    result.addEvent('ontblur', () => this._onSelectionChange());
+    result.addEvent('ontfocus', () => this._onSelectionChange());
 
     // Append it to the workspace ...
     dmodel.addRelationship(result);
