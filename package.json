@@ -54,7 +54,11 @@
     "packages/webapp/{eslint.config.mjs,vite.config.mts,.storybook/*.mjs}": [
       "sh -c 'cd packages/webapp && eslint \"$@\"' eslint"
     ],
-    "packages/{web2d,webapp}/{cypress/**/*,cypress.config}.ts": [
+    "packages/webapp/{cypress/**/*,cypress.config}.ts": [
+      "sh -c 'cd packages/webapp && eslint \"$@\"' eslint",
+      "prettier --check"
+    ],
+    "packages/web2d/{cypress/**/*,cypress.config}.ts": [
       "prettier --check"
     ],
     "packages/*/{.storybook,storybook}/**/*.{ts,tsx}": [

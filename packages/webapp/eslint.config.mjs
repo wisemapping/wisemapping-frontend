@@ -89,6 +89,14 @@ export default defineConfig([
     },
   },
   {
+    // Chai property assertions (`expect(x).to.be.null`) are expressions that assert when read.
+    files: ['cypress/e2e/**/*.cy.ts'],
+
+    rules: {
+      '@typescript-eslint/no-unused-expressions': 'off',
+    },
+  },
+  {
     // The Jest environment and the CommonJS module mocks run in Node, not through the bundler.
     files: ['test/**/*.js'],
 
