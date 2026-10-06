@@ -176,11 +176,6 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       savedRangeRef.current = selection.getRangeAt(0).cloneRange();
-      console.log(
-        'Cursor position saved:',
-        savedRangeRef.current.startOffset,
-        savedRangeRef.current.endOffset,
-      );
     }
     setIconPickerAnchor(event.currentTarget);
   }, []);
@@ -202,16 +197,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           if (savedRangeRef.current) {
             selection.removeAllRanges();
             selection.addRange(savedRangeRef.current);
-            console.log(
-              'Cursor position restored:',
-              savedRangeRef.current.startOffset,
-              savedRangeRef.current.endOffset,
-            );
           }
 
           // Use document.execCommand for better compatibility with contentEditable
           const success = document.execCommand('insertText', false, emoji.emoji + ' ');
-          console.log('insertText success:', success);
 
           if (!success) {
             // Fallback to manual insertion
@@ -224,7 +213,6 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               range.setEndAfter(textNode);
               selection.removeAllRanges();
               selection.addRange(range);
-              console.log('Manual insertion used');
             }
           }
 

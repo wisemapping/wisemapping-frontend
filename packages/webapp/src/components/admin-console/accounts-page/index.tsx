@@ -249,7 +249,6 @@ const AccountManagement = (): ReactElement => {
         filterSuspended: filterSuspended === 'all' ? undefined : filterSuspended === 'suspended',
         filterAuthType: filterAuthType !== 'all' ? filterAuthType : undefined,
       };
-      console.log('Users Query triggered with params:', params);
       return client.getAdminUsers(params);
     },
     retry: 1,

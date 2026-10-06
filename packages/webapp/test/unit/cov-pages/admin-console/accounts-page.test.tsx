@@ -87,11 +87,12 @@ describe('AccountManagement', () => {
     jest
       .spyOn(AppConfig, 'getAdminClient')
       .mockReturnValue(client as unknown as AdminClientInterface);
-    // The page logs every query it sends.
     jest.spyOn(console, 'log').mockImplementation(() => undefined);
   });
 
   afterEach(() => {
+    // The page sends its queries without debug output.
+    expect(console.log).not.toHaveBeenCalled();
     jest.useRealTimers();
   });
 

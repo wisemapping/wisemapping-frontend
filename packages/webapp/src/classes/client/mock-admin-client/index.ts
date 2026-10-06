@@ -27,6 +27,7 @@ import {
   SystemHealth,
 } from '../admin-client';
 import { AuthenticationType } from '..';
+import { appLogger as log } from '../../../utils/logger';
 
 class MockAdminClient implements AdminClientInterface {
   private adminUsers: AdminUser[] = [
@@ -429,7 +430,7 @@ class MockAdminClient implements AdminClientInterface {
 
   // Admin-specific methods with pagination
   getAdminUsers(params?: AdminUsersParams): Promise<AdminUsersResponse> {
-    console.log('MockAdminClient: Returning paginated admin users', params);
+    log.debug('MockAdminClient: Returning paginated admin users', params);
 
     let filteredUsers = [...this.adminUsers];
 
@@ -492,7 +493,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   getAdminUser(userId: number): Promise<AdminUser> {
-    console.log(`MockAdminClient: Getting admin user ${userId}`);
+    log.debug(`MockAdminClient: Getting admin user ${userId}`);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
@@ -506,7 +507,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   updateAdminUser(userId: number, userData: Partial<AdminUser>): Promise<AdminUser> {
-    console.log('MockAdminClient: Updating user', userId, userData);
+    log.debug('MockAdminClient: Updating user', userId, userData);
 
     const userIndex = this.adminUsers.findIndex((user) => user.id === userId);
     if (userIndex === -1) {
@@ -526,7 +527,7 @@ class MockAdminClient implements AdminClientInterface {
   createAdminUser(
     userData: Omit<AdminUser, 'id' | 'fullName'> & { password: string },
   ): Promise<AdminUser> {
-    console.log('MockAdminClient: Creating user', userData);
+    log.debug('MockAdminClient: Creating user', userData);
 
     const newUser: AdminUser = {
       id: Math.max(...this.adminUsers.map((u) => u.id)) + 1,
@@ -542,7 +543,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   deleteAdminUser(userId: number): Promise<void> {
-    console.log('MockAdminClient: Deleting user', userId);
+    log.debug('MockAdminClient: Deleting user', userId);
 
     const userIndex = this.adminUsers.findIndex((user) => user.id === userId);
     if (userIndex === -1) {
@@ -555,7 +556,7 @@ class MockAdminClient implements AdminClientInterface {
 
   // Maps management methods
   getAdminMaps(params?: AdminMapsParams): Promise<AdminMapsResponse> {
-    console.log('MockAdminClient: Returning paginated admin maps', params);
+    log.debug('MockAdminClient: Returning paginated admin maps', params);
 
     let filteredMaps = [...this.adminMaps];
 
@@ -614,7 +615,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   getUserMaps(userId: number): Promise<AdminMap[]> {
-    console.log('MockAdminClient: Getting user maps for user', userId);
+    log.debug('MockAdminClient: Getting user maps for user', userId);
 
     // Find the user to get their email/name
     const user = this.adminUsers.find((u) => u.id === userId);
@@ -631,7 +632,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   updateAdminMap(mapId: number, mapData: Partial<AdminMap>): Promise<AdminMap> {
-    console.log('MockAdminClient: Updating map', mapId, mapData);
+    log.debug('MockAdminClient: Updating map', mapId, mapData);
 
     const mapIndex = this.adminMaps.findIndex((map) => map.id === mapId);
     if (mapIndex === -1) {
@@ -643,7 +644,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   updateMapSpamStatus(mapId: number, spamData: { spam: boolean }): Promise<AdminMap> {
-    console.log('MockAdminClient: Updating map spam status', mapId, spamData);
+    log.debug('MockAdminClient: Updating map spam status', mapId, spamData);
 
     const mapIndex = this.adminMaps.findIndex((map) => map.id === mapId);
     if (mapIndex === -1) {
@@ -671,7 +672,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   deleteAdminMap(mapId: number): Promise<void> {
-    console.log('MockAdminClient: Deleting map', mapId);
+    log.debug('MockAdminClient: Deleting map', mapId);
     const mapIndex = this.adminMaps.findIndex((map) => map.id === mapId);
     if (mapIndex === -1) {
       return Promise.reject(new Error('Map not found'));
@@ -682,7 +683,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   getAdminMapXml(mapId: number): Promise<string> {
-    console.log('MockAdminClient: Getting map XML', mapId);
+    log.debug('MockAdminClient: Getting map XML', mapId);
     const map = this.adminMaps.find((map) => map.id === mapId);
     if (!map) {
       return Promise.reject(new Error('Map not found'));
@@ -720,7 +721,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   getSystemInfo(): Promise<SystemInfo> {
-    console.log('MockAdminClient: Getting system info');
+    log.debug('MockAdminClient: Getting system info');
     return Promise.resolve({
       application: {
         name: 'WiseMapping API (Mock)',
@@ -751,7 +752,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   getSystemHealth(): Promise<SystemHealth> {
-    console.log('MockAdminClient: Getting system health');
+    log.debug('MockAdminClient: Getting system health');
     return Promise.resolve({
       database: 'UP',
       memory: 'UP',
@@ -763,7 +764,7 @@ class MockAdminClient implements AdminClientInterface {
     userId: number,
     suspensionData: { suspended: boolean; suspensionReason?: string },
   ): Promise<AdminUser> {
-    console.log(`MockAdminClient: Updating suspension for user ${userId}`, suspensionData);
+    log.debug(`MockAdminClient: Updating suspension for user ${userId}`, suspensionData);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
@@ -793,7 +794,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   suspendAdminUser(userId: number): Promise<AdminUser> {
-    console.log(`MockAdminClient: Suspending user ${userId}`);
+    log.debug(`MockAdminClient: Suspending user ${userId}`);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
@@ -808,7 +809,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   unsuspendAdminUser(userId: number): Promise<AdminUser> {
-    console.log(`MockAdminClient: Unsuspending user ${userId}`);
+    log.debug(`MockAdminClient: Unsuspending user ${userId}`);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
@@ -823,7 +824,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   activateAdminUser(userId: number): Promise<void> {
-    console.log(`MockAdminClient: Activating user ${userId}`);
+    log.debug(`MockAdminClient: Activating user ${userId}`);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
@@ -838,7 +839,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   changeUserPassword(userId: number, _password: string): Promise<void> {
-    console.log(`MockAdminClient: Changing password for user ${userId}`);
+    log.debug(`MockAdminClient: Changing password for user ${userId}`);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const user = this.adminUsers.find((u) => u.id === userId);
@@ -852,7 +853,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   getUserByFacebookId(facebookId: string): Promise<AdminUser> {
-    console.log(`MockAdminClient: Getting user by Facebook ID ${facebookId}`);
+    log.debug(`MockAdminClient: Getting user by Facebook ID ${facebookId}`);
     const user = this.adminUsers.find(
       (adminUser) =>
         adminUser.authenticationType === AuthenticationType.FACEBOOK_OAUTH2 &&
@@ -867,7 +868,7 @@ class MockAdminClient implements AdminClientInterface {
   }
 
   removeFacebookAccount(userId: number): Promise<void> {
-    console.log(`MockAdminClient: Removing Facebook account for user ${userId}`);
+    log.debug(`MockAdminClient: Removing Facebook account for user ${userId}`);
     const user = this.adminUsers.find((adminUser) => adminUser.id === userId);
 
     if (!user) {

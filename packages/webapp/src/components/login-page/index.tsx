@@ -39,6 +39,7 @@ import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
 import { useTheme } from '../../contexts/ThemeContext';
 import { trackPageView } from '../../utils/analytics';
+import { appLogger as log } from '../../utils/logger';
 import { getCanonicalUrl, getAlternateLanguageUrls } from '../../utils/seo-locale';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -88,7 +89,7 @@ const LoginPage = (): React.ReactElement => {
   // Generic OAuth handler
   const handleOAuthLogin = (authUrl: string | undefined, providerName: string): void => {
     if (!authUrl) {
-      console.log(`${providerName} OAuth URL is not configured.`);
+      log.warn(`${providerName} OAuth URL is not configured.`);
       return;
     }
 

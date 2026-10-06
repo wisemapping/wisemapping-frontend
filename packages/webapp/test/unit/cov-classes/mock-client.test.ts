@@ -18,6 +18,7 @@
 
 import MockClient from '../../../src/classes/client/mock-client';
 import JwtTokenConfig from '../../../src/classes/jwt-token-config';
+import { appLogger } from '../../../src/utils/logger';
 
 let client: MockClient;
 
@@ -34,6 +35,15 @@ afterAll(() => {
 });
 
 describe('MockClient maps', () => {
+  it('traces its calls through the app logger, not straight to the console', async () => {
+    const debug = jest.spyOn(appLogger, 'debug').mockImplementation(() => undefined);
+    await client.fetchAllMaps();
+    await client.fetchLabels();
+
+    expect(console.log).not.toHaveBeenCalled();
+    expect(debug).toHaveBeenCalledWith('Fetching  maps from server');
+  });
+
   it('lists the seeded maps with every role', async () => {
     const maps = await client.fetchAllMaps();
 

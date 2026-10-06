@@ -40,11 +40,12 @@ beforeEach(() => {
     configurable: true,
     writable: true,
   });
-  // The editor logs cursor bookkeeping; keep the test output readable.
   jest.spyOn(console, 'log').mockImplementation(() => undefined);
 });
 
 afterEach(() => {
+  // The editor leaves no debug output (cursor bookkeeping, insertText result) behind.
+  expect(console.log).not.toHaveBeenCalled();
   jest.restoreAllMocks();
   delete (document as unknown as { execCommand?: ExecCommand }).execCommand;
 });

@@ -26,6 +26,7 @@ jest.mock('../../../../src/utils/analytics', () => ({ trackPageView: jest.fn() }
 import LoginPage from '../../../../src/components/login-page';
 import Client from '../../../../src/classes/client';
 import { trackPageView } from '../../../../src/utils/analytics';
+import { appLogger } from '../../../../src/utils/logger';
 import { initAppConfig, installMatchMedia, renderPage, useConfig } from '../helpers';
 import { resetRouter, setLocation } from '../router-mock';
 
@@ -164,7 +165,7 @@ describe('LoginPage', () => {
       facebookOauth2Enabled: true,
       facebookOauth2Url: 'https://facebook.example.com/auth',
     });
-    const log = jest.spyOn(console, 'log').mockImplementation(() => undefined);
+    const log = jest.spyOn(appLogger, 'warn').mockImplementation(() => undefined);
     setup('/c/login?redirect=%2Fc%2Fmaps%2F3');
 
     fireEvent.click(await screen.findByRole('button', { name: 'Sign in with Google' }));
@@ -176,7 +177,7 @@ describe('LoginPage', () => {
 
   test('a provider without a URL is reported and not navigated to', async () => {
     useConfig({ googleOauth2Enabled: true, googleOauth2Url: undefined });
-    const log = jest.spyOn(console, 'log').mockImplementation(() => undefined);
+    const log = jest.spyOn(appLogger, 'warn').mockImplementation(() => undefined);
     setup();
 
     fireEvent.click(await screen.findByRole('button', { name: 'Sign in with Google' }));
