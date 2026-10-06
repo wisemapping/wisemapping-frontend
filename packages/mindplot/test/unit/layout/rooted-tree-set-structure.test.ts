@@ -120,6 +120,7 @@ describe('RootedTreeSet structure', () => {
     expect(set.getChildren(set.find(1))).toEqual([]);
     expect(set.find(3, false)).toBeNull();
     expect(set.find(4, false)).toBeNull();
+    expect(set.validateTreeConsistency()).toEqual([]);
 
     // The ids can be used again.
     set.add(node(4));
@@ -164,10 +165,7 @@ describe('RootedTreeSet structure', () => {
 });
 
 describe('RootedTreeSet consistency check', () => {
-  // Bug: Node never initializes _parent (layout/Node.ts:34 only declares it), so a node that was
-  // never connected has an undefined parent, and the check, which compares with null
-  // (RootedTreeSet.ts:457), reports "Root node N has non-null parent" for every such root.
-  it.failing('passes on a consistent tree', () => {
+  it('passes on a consistent tree', () => {
     const set = build();
     const log = jest.spyOn(console, 'log').mockImplementation(() => undefined);
     expect(set.validateTreeConsistency()).toEqual([]);
@@ -219,7 +217,7 @@ describe('RootedTreeSet consistency check', () => {
     set.logTreeConsistency();
     expect(error).toHaveBeenCalledWith('[RootedTreeSet] Tree consistency validation failed:');
     expect(() => set.logTreeConsistency(true)).toThrow(
-      /Tree consistency validation failed: \d+ errors found/,
+      'Tree consistency validation failed: 1 errors found',
     );
   });
 });

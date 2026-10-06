@@ -45,7 +45,8 @@ const unset = <V>(): PropertyState<V> => ({
 class Node {
   private _id: number;
 
-  _parent!: Node | null;
+  // Set by RootedTreeSet when the node is connected; a node starts as a root.
+  _parent: Node | null = null;
 
   private _sorter: ChildrenSorterStrategy;
 
