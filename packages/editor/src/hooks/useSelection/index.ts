@@ -55,8 +55,9 @@ const read = (model: Model | undefined): SelectionSnapshot => {
 
     const designerModel = model.getDesignerModel();
     return {
-      topicCount: designerModel?.filterSelectedTopics().length ?? 0,
-      relationshipCount: designerModel?.filterSelectedRelationships().length ?? 0,
+      // Counted, not listed: the designer model keeps the selection, so counting needs no scan.
+      topicCount: designerModel?.countSelectedTopics() ?? 0,
+      relationshipCount: designerModel?.countSelectedRelationships() ?? 0,
       isMapLoaded,
     };
   } catch {

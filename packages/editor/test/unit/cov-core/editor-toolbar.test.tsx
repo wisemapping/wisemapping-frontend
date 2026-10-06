@@ -79,6 +79,8 @@ const createModel = (
     selectedRelationship: () => (state.relationships ? relationship : null),
     filterSelectedTopics: () => Array.from({ length: state.topics }, () => topic),
     filterSelectedRelationships: () => Array.from({ length: state.relationships }, () => ({})),
+    countSelectedTopics: () => state.topics,
+    countSelectedRelationships: () => state.relationships,
   };
   const designer = {
     getModel: () => designerModel,

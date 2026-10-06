@@ -31,8 +31,16 @@ const createModel = () => {
   const model = {
     isMapLoadded: () => state.loaded,
     getDesignerModel: () => ({
-      filterSelectedTopics: () => new Array(state.topics).fill(null),
-      filterSelectedRelationships: () => new Array(state.relationships).fill(null),
+      countSelectedTopics: () => state.topics,
+      countSelectedRelationships: () => state.relationships,
+      // The hook runs on every selection event: listing the selection there reads every topic
+      // or relationship of the map, only to count them.
+      filterSelectedTopics: () => {
+        throw new Error('useSelection must count the selected topics, not list them');
+      },
+      filterSelectedRelationships: () => {
+        throw new Error('useSelection must count the selected relationships, not list them');
+      },
     }),
     getDesigner: () => ({
       addEvent: (event: string, callback: () => void) => {
