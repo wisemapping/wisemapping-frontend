@@ -42,8 +42,8 @@ export default class VersionNumber {
     // Missing or non numeric tokens count as 0, so "1.0" and "1.0.0" are the same version.
     const length = Math.max(ownTokinizer.length, otherTokinizer.length);
     for (let i = 0; i < length; i++) {
-      const ownNumber = parseInt(ownTokinizer[i], 10) || 0;
-      const otherNumber = parseInt(otherTokinizer[i], 10) || 0;
+      const ownNumber = parseInt(ownTokinizer[i] ?? '', 10) || 0;
+      const otherNumber = parseInt(otherTokinizer[i] ?? '', 10) || 0;
 
       if (ownNumber > otherNumber) {
         return 1;

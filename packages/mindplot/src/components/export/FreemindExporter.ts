@@ -234,7 +234,8 @@ class FreemindExporter extends Exporter {
       '<html><head></head><body></body></html>',
       'application/xml',
     );
-    const body = richconentDocument.getElementsByTagName('body')[0];
+    // The document parsed above always has a body.
+    const body = richconentDocument.getElementsByTagName('body')[0]!;
 
     // Rich text is kept as markup. Plain text is added as text, so it is escaped.
     const markup = isHtml

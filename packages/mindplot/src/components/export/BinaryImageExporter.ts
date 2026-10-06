@@ -42,7 +42,7 @@ class BinaryImageExporter extends Exporter {
     adjustToFit = true,
     backgroundColor = 'white',
   ) {
-    super(imgFormat.split('/')[0], imgFormat);
+    super(imgFormat.split('/')[0]!, imgFormat); // split always returns at least one item
     this.svgElement = svgElement;
     this.adjustToFit = adjustToFit;
     this.width = width;
