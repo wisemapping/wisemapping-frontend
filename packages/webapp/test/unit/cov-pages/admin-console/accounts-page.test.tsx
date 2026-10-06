@@ -245,6 +245,83 @@ describe('AccountManagement', () => {
     await waitFor(() => expect(lastParams()?.search).toBe(BURST_TEXT), { timeout: 2000 });
   });
 
+  describe('while a search loads', () => {
+    const searchBox = () => screen.getByPlaceholderText('Search users...') as HTMLInputElement;
+
+    const typeAndWait = async (term: string) => {
+      fireEvent.change(searchBox(), { target: { value: term } });
+      await act(async () => {
+        await jest.advanceTimersByTimeAsync(500);
+      });
+    };
+
+    test('the search box stays enabled and focused, and shows the load in an adornment', async () => {
+      setup();
+      await waitForRows();
+      let release = (): void => undefined;
+      client.getAdminUsers.mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            release = () => resolve(page([dbUser]));
+          }),
+      );
+      jest.useFakeTimers();
+      searchBox().focus();
+
+      await typeAndWait('ad');
+      expect(lastParams()?.search).toBe('ad');
+
+      // The box is not disabled by its own search: the user keeps typing.
+      expect(searchBox().disabled).toBe(false);
+      expect(document.activeElement).toBe(searchBox());
+      expect(
+        within(searchBox().parentElement as HTMLElement).getByRole('progressbar'),
+      ).toBeTruthy();
+
+      await typeAndWait('ada');
+      expect(searchBox().value).toBe('ada');
+      expect(lastParams()?.search).toBe('ada');
+
+      await act(async () => {
+        release();
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(
+        within(searchBox().parentElement as HTMLElement).queryByRole('progressbar'),
+      ).toBeNull();
+      expect(document.activeElement).toBe(searchBox());
+    });
+
+    test('a late response to an older search does not replace the newer results', async () => {
+      setup();
+      await waitForRows();
+      const respond = new Map<string, (items: unknown[]) => void>();
+      client.getAdminUsers.mockImplementation(
+        (params: { search?: string }) =>
+          new Promise((resolve) => {
+            respond.set(params.search ?? '', (items) => resolve(page(items)));
+          }),
+      );
+      jest.useFakeTimers();
+
+      await typeAndWait('old');
+      await typeAndWait('new');
+
+      await act(async () => {
+        respond.get('new')!([googleUser]);
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(screen.getByText(/<google@example\.com>/)).toBeTruthy();
+
+      await act(async () => {
+        respond.get('old')!([ldapUser]);
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(screen.getByText(/<google@example\.com>/)).toBeTruthy();
+      expect(screen.queryByText(/<ldap@example\.com>/)).toBeNull();
+    });
+  });
+
   test('the pagination requests the chosen page', async () => {
     setup({ totalPages: 3 });
     await waitForRows();

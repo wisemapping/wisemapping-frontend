@@ -170,6 +170,10 @@ const getSearchType = (term: string): 'id' | 'email' | 'text' | null => {
  * re-renders only this field, not the page and its filter selects (in development a re-rendered
  * MUI FormControl updates itself from an effect, and characters typed in one burst, as Cypress
  * types them, add up to React's nested-update limit).
+ *
+ * It stays enabled while its search loads, so the user can keep typing (a disabled field loses
+ * the focus): the load shows as a spinner at its end. Each search term is its own query, so a late
+ * response to an older term never replaces the results of a newer one.
  */
 const MapSearchField = React.memo(function MapSearchField({
   onSearch,
@@ -199,7 +203,6 @@ const MapSearchField = React.memo(function MapSearchField({
       })}
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
-      disabled={isFetching}
       helperText={
         searchType === 'id'
           ? intl.formatMessage({

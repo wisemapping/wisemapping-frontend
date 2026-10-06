@@ -188,6 +188,83 @@ describe('MapsManagement', () => {
     await waitFor(() => expect(lastParams()?.search).toBe(BURST_TEXT), { timeout: 2000 });
   });
 
+  describe('while a search loads', () => {
+    const searchBox = () => screen.getByPlaceholderText(/Search maps/) as HTMLInputElement;
+
+    const typeAndWait = async (term: string) => {
+      fireEvent.change(searchBox(), { target: { value: term } });
+      await act(async () => {
+        await jest.advanceTimersByTimeAsync(500);
+      });
+    };
+
+    test('the search box stays enabled and focused, and shows the load in an adornment', async () => {
+      setup();
+      await waitForRows();
+      let release = (): void => undefined;
+      client.getAdminMaps.mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            release = () => resolve(page([plainMap]));
+          }),
+      );
+      jest.useFakeTimers();
+      searchBox().focus();
+
+      await typeAndWait('ad');
+      expect(lastParams()?.search).toBe('ad');
+
+      // The box is not disabled by its own search: the user keeps typing.
+      expect(searchBox().disabled).toBe(false);
+      expect(document.activeElement).toBe(searchBox());
+      expect(
+        within(searchBox().parentElement as HTMLElement).getByRole('progressbar'),
+      ).toBeTruthy();
+
+      await typeAndWait('ada');
+      expect(searchBox().value).toBe('ada');
+      expect(lastParams()?.search).toBe('ada');
+
+      await act(async () => {
+        release();
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(
+        within(searchBox().parentElement as HTMLElement).queryByRole('progressbar'),
+      ).toBeNull();
+      expect(document.activeElement).toBe(searchBox());
+    });
+
+    test('a late response to an older search does not replace the newer results', async () => {
+      setup();
+      await waitForRows();
+      const respond = new Map<string, (items: unknown[]) => void>();
+      client.getAdminMaps.mockImplementation(
+        (params: { search?: string }) =>
+          new Promise((resolve) => {
+            respond.set(params.search ?? '', (items) => resolve(page(items)));
+          }),
+      );
+      jest.useFakeTimers();
+
+      await typeAndWait('old');
+      await typeAndWait('new');
+
+      await act(async () => {
+        respond.get('new')!([busyMap]);
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(screen.getByText('Busy map')).toBeTruthy();
+
+      await act(async () => {
+        respond.get('old')!([plainMap]);
+        await jest.advanceTimersByTimeAsync(10);
+      });
+      expect(screen.getByText('Busy map')).toBeTruthy();
+      expect(screen.queryByText('Plain map')).toBeNull();
+    });
+  });
+
   test('the filters are sent to the server', async () => {
     setup();
     await waitForRows();
