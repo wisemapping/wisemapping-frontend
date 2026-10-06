@@ -2534,7 +2534,7 @@
   "maps.copilot-dialog.description": [
     {
       "type": 0,
-      "value": "Mind Map Copilot 是由 ChatGPT 驱动的头脑风暴助手，可将您的提示转换成结构化的思维导图。我们会在新标签页中打开它，帮助您拓展想法、生成主题，并把最佳成果带回 WiseMapping。"
+      "value": "AI 副驾驶是由 ChatGPT 驱动的头脑风暴助手，可将您的提示转换成结构化的思维导图。我们会在新标签页中打开它，帮助您拓展想法、生成主题，并把最佳成果带回 WiseMapping。"
     }
   ],
   "maps.copilot-dialog.title": [

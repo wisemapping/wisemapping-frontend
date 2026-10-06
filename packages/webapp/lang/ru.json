@@ -84,7 +84,7 @@
     "defaultMessage": "Подтвердить пароль"
   },
   "changepwd.description": {
-    "defaultMessage": "Укажите новый пароль вашей учетной записи."
+    "defaultMessage": "Укажите новый пароль для вашего аккаунта."
   },
   "changepwd.password": {
     "defaultMessage": "Пароль"
@@ -318,7 +318,7 @@
     "defaultMessage": "Добро пожаловать!"
   },
   "login.shared-map-notice": {
-    "defaultMessage": "С вами поделились ментальной картой. Пожалуйста, войдите в систему, чтобы получить доступ. Нет аккаунта? Зарегистрируйтесь бесплатно или используйте свой аккаунт Google/Facebook."
+    "defaultMessage": "С вами поделились майнд-картой. Пожалуйста, войдите в систему, чтобы получить доступ. Нет аккаунта? Зарегистрируйтесь бесплатно или используйте свой аккаунт Google/Facebook."
   },
   "map.creator": {
     "defaultMessage": "Создатель"
@@ -330,7 +330,7 @@
     "defaultMessage": "Последнее изменение"
   },
   "map.more-actions": {
-    "defaultMessage": "Больше... "
+    "defaultMessage": "Другие действия"
   },
   "map.name": {
     "defaultMessage": "Имя"
@@ -348,10 +348,10 @@
     "defaultMessage": "Запустить майнд-карту с ИИ Копилотом"
   },
   "maps.copilot-dialog.title": {
-    "defaultMessage": "Майндмэп-копилот на базе ChatGPT"
+    "defaultMessage": "Копилот майнд-карт на базе ChatGPT"
   },
   "maps.copilot-dialog.description": {
-    "defaultMessage": "Mind Map Copilot — это помощник для мозгового штурма на базе ChatGPT, который превращает ваши запросы в структурированные майнд-карты. Мы откроем его в новой вкладке, чтобы вы могли развивать идеи, генерировать темы и вернуть лучшее в WiseMapping."
+    "defaultMessage": "ИИ Копилот — это помощник для мозгового штурма на базе ChatGPT, который превращает ваши запросы в структурированные майнд-карты. Мы откроем его в новой вкладке, чтобы вы могли развивать идеи, генерировать темы и вернуть лучшее в WiseMapping."
   },
   "maps.copilot-dialog.continue": {
     "defaultMessage": "Открыть Копилот"
@@ -531,7 +531,7 @@
     "defaultMessage": "Отделка ..."
   },
   "registration.callback.confirm.description": {
-    "defaultMessage": "Учетная запись c таким же адресом электронной почты была ранее зарегистрирована. Вы хотите связать свою учетную запись {provider} с этой учетной записью WiseMapping?"
+    "defaultMessage": "Аккаунт с таким же адресом электронной почты уже зарегистрирован. Хотите связать свой аккаунт {provider} с этим аккаунтом WiseMapping?"
   },
   "registration.callback.waiting.description": {
     "defaultMessage": "Подождите, пока мы подтвердим вашу личность"
@@ -540,7 +540,7 @@
     "defaultMessage": "Вернуться на страницу авторизации"
   },
   "registration.callback.sync": {
-    "defaultMessage": "Синхронизировать учетную запись"
+    "defaultMessage": "Синхронизировать аккаунт"
   },
   "forgot.oauth.message": {
     "defaultMessage": "Вам не нужен пароль, пожалуйста, войдите с помощью Facebook или Google"

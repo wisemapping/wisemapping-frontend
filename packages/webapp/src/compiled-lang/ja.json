@@ -2530,7 +2530,7 @@
   "maps.copilot-dialog.description": [
     {
       "type": 0,
-      "value": "Mind Map Copilot は、あなたのプロンプトを構造化されたマインドマップに変換する ChatGPT 搭載のブレーンストーミング支援ツールです。新しいタブで開きますので、アイデアを膨らませ、トピックを生成し、ベストな内容を WiseMapping に持ち帰ってください。"
+      "value": "AIコパイロットは、あなたのプロンプトを構造化されたマインドマップに変換する ChatGPT 搭載のブレーンストーミング支援ツールです。新しいタブで開きますので、アイデアを膨らませ、トピックを生成し、ベストな内容を WiseMapping に持ち帰ってください。"
     }
   ],
   "maps.copilot-dialog.title": [

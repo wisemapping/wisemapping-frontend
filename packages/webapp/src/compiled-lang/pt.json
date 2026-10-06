@@ -2534,13 +2534,13 @@
   "maps.copilot-dialog.description": [
     {
       "type": 0,
-      "value": "Mind Map Copilot é um assistente de brainstorming alimentado pelo ChatGPT que transforma seus prompts em mapas mentais estruturados. Vamos abri-lo em uma nova aba para que você possa ampliar ideias, gerar tópicos e trazer o melhor de volta para o WiseMapping."
+      "value": "O Copiloto IA é um assistente de brainstorming alimentado pelo ChatGPT que transforma seus prompts em mapas mentais estruturados. Vamos abri-lo em uma nova aba para que você possa ampliar ideias, gerar tópicos e trazer o melhor de volta para o WiseMapping."
     }
   ],
   "maps.copilot-dialog.title": [
     {
       "type": 0,
-      "value": "Copiloto de Mindmap com tecnologia ChatGPT"
+      "value": "Copiloto de mapas mentais com tecnologia ChatGPT"
     }
   ],
   "maps.copilot-tooltip": [
