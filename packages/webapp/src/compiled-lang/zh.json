@@ -1086,7 +1086,7 @@
   "admin.status-clean": [
     {
       "type": 0,
-      "value": "清除"
+      "value": "正常"
     }
   ],
   "admin.status-not-activated": [

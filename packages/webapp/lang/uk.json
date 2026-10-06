@@ -603,7 +603,7 @@
     "defaultMessage": "Н/Д"
   },
   "admin.status-clean": {
-    "defaultMessage": "Очистити"
+    "defaultMessage": "Не спам"
   },
   "admin.status-not-activated": {
     "defaultMessage": "Не активовано"

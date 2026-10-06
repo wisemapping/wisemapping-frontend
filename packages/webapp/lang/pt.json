@@ -597,7 +597,7 @@
     "defaultMessage": "N/D"
   },
   "admin.status-clean": {
-    "defaultMessage": "Limpar"
+    "defaultMessage": "Sem spam"
   },
   "admin.status-not-activated": {
     "defaultMessage": "Não ativado"

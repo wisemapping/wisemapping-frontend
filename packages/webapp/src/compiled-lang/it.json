@@ -1078,7 +1078,7 @@
   "admin.status-clean": [
     {
       "type": 0,
-      "value": "Pulisci"
+      "value": "Non spam"
     }
   ],
   "admin.status-not-activated": [
