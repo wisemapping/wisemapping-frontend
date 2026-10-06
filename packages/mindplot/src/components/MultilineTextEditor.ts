@@ -297,10 +297,8 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
     const text = textOverwrite || modelText || '';
     this.setText(text);
 
-    // Set the element focus and select the current text ...
-    const textAreaElem = this.getTextareaElem();
-    this.positionCursor(textAreaElem, textOverwrite === undefined);
-    textAreaElem.focus();
+    // Focus the element and select the current text: positionCursor does both ...
+    this.positionCursor(this.getTextareaElem(), textOverwrite === undefined);
   }
 
   private setStyle(fontStyle: FontStyle) {
@@ -320,7 +318,9 @@ class EditorComponent extends EventDispatcher<EditorEvents> {
     }
 
     const cssStyle: Record<string, string> = {
-      'font-size': `${fontStyle.size}px`,
+      // A text without a size: the empty value removes the property rather than writing
+      // "undefinedpx", so that the editor inherits one.
+      'font-size': fontStyle.size === undefined ? '' : `${fontStyle.size}px`,
       'font-family': fontStyle.fontFamily,
       'font-style': fontStyle.style,
       'font-weight': fontStyle.weight,

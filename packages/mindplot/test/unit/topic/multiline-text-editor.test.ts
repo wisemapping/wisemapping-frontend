@@ -221,3 +221,65 @@ describe('MultilineTextEditor position', () => {
     expect(container.style.left).toBe('40px');
   });
 });
+
+// BL5-248: show() focused the textarea a second time right after positionCursor had focused it
+// and placed the selection; and a font style without a size was written as "undefinedpx".
+describe('MultilineTextEditor show', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('focuses the textarea once, with the text selected', () => {
+    const { child } = buildDesignerTopics();
+    topics = [child];
+    const focus = jest.spyOn(HTMLTextAreaElement.prototype, 'focus');
+
+    openEditor(child);
+
+    // Before: 2, the second one a no-op on the element already focused.
+    expect(focus).toHaveBeenCalledTimes(1);
+    expect(document.activeElement).toBe(textarea());
+    expect([textarea().selectionStart, textarea().selectionEnd]).toEqual([
+      0,
+      textarea().value.length,
+    ]);
+  });
+
+  it('puts the cursor at the end of a text that overwrites the topic one', () => {
+    const { child } = buildDesignerTopics();
+    topics = [child];
+
+    openEditor(child, 'x');
+
+    expect(document.activeElement).toBe(textarea());
+    expect([textarea().selectionStart, textarea().selectionEnd]).toEqual([1, 1]);
+  });
+
+  it('writes the font size of the text, in pixels', () => {
+    const { child } = buildDesignerTopics();
+    topics = [child];
+    jest.spyOn(child.getOrBuildTextShape(), 'getHtmlFontSize').mockReturnValue('13.3');
+
+    openEditor(child);
+
+    expect(textarea().style.getPropertyValue('font-size')).toBe('13.3px');
+  });
+
+  it('writes no font size when the text has none, rather than "undefinedpx"', () => {
+    const { child } = buildDesignerTopics();
+    topics = [child];
+    jest
+      .spyOn(child.getOrBuildTextShape(), 'getHtmlFontSize')
+      .mockReturnValue(undefined as unknown as string);
+    const setProperty = jest.spyOn(CSSStyleDeclaration.prototype, 'setProperty');
+
+    openEditor(child);
+
+    const fontSizes = setProperty.mock.calls
+      .filter(([property]) => property === 'font-size')
+      .map(([, value]) => value);
+    expect(fontSizes.length).toBeGreaterThan(0);
+    expect(fontSizes).not.toContain('undefinedpx');
+    expect(textarea().style.getPropertyValue('font-size')).toBe('');
+  });
+});
