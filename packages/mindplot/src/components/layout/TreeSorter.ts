@@ -58,7 +58,8 @@ class TreeSorter extends AbstractBasicSorter {
       .filter((child) => child !== node)
       .sort((a, b) => (a.getOrder() ?? 0) - (b.getOrder() ?? 0));
 
-    if (parentChildren.length === 0) {
+    const firstChild = parentChildren[0];
+    if (!firstChild) {
       const result = {
         x: parent.getPosition().x,
         y: parent.getPosition().y + parent.getSize().height + TreeSorter.INTERNODE_VERTICAL_PADDING,
@@ -68,31 +69,29 @@ class TreeSorter extends AbstractBasicSorter {
 
     // Find position in order based on X coordinate
     let order = 0;
-    for (let i = 0; i < parentChildren.length; i++) {
-      const child = parentChildren[i];
+    parentChildren.forEach((child, i) => {
       if (position.x > child.getPosition().x) {
         order = i + 1;
       }
-    }
+    });
 
     // Calculate Y position (all children at same level)
     const yPos =
       parent.getPosition().y + parent.getSize().height + TreeSorter.INTERNODE_VERTICAL_PADDING;
 
     // Calculate X position - between siblings or at edges
+    // order is in [0, parentChildren.length]: no child before it, no child after it, or both.
+    const prevChild = parentChildren[order - 1];
+    const nextChild = parentChildren[order];
     let xPos: number;
-    if (order === 0 && parentChildren.length > 0) {
+    if (!prevChild) {
       // Before first child: half a gap left of it, as between two children
-      const firstChild = parentChildren[0];
       xPos = firstChild.getPosition().x - this._halfSiblingGapX(parentChildren, 0);
-    } else if (order >= parentChildren.length) {
+    } else if (!nextChild) {
       // After last child: half a gap right of it
-      const index = parentChildren.length - 1;
-      xPos = parentChildren[index].getPosition().x + this._halfSiblingGapX(parentChildren, index);
+      xPos = prevChild.getPosition().x + this._halfSiblingGapX(parentChildren, order - 1);
     } else {
       // Between two children
-      const prevChild = parentChildren[order - 1];
-      const nextChild = parentChildren[order];
       xPos = (prevChild.getPosition().x + nextChild.getPosition().x) / 2;
     }
 
@@ -105,7 +104,8 @@ class TreeSorter extends AbstractBasicSorter {
    * the gap the layout leaves between two leaves of its width.
    */
   private _halfSiblingGapX(children: Node[], index: number): number {
-    const child = children[index];
+    // In range: every caller passes the index of a child it already holds.
+    const child = children[index]!;
     const neighbour = children[index === 0 ? 1 : index - 1];
     const gap = neighbour
       ? Math.abs(neighbour.getPosition().x - child.getPosition().x)
@@ -167,10 +167,11 @@ class TreeSorter extends AbstractBasicSorter {
     }
 
     // Shift all elements after insertion point
-    for (let i = order; i < children.length; i++) {
-      const node = children[i];
-      node.setOrder(i + 1);
-    }
+    children.forEach((node, i) => {
+      if (i >= order) {
+        node.setOrder(i + 1);
+      }
+    });
     child.setOrder(order);
   }
 
@@ -186,13 +187,12 @@ class TreeSorter extends AbstractBasicSorter {
     // Shift all nodes after the removed node
     const nodeOrder = node.getOrder();
     if (nodeOrder !== undefined) {
-      for (let i = nodeOrder + 1; i < children.length; i++) {
-        const child = children[i];
+      children.slice(nodeOrder + 1).forEach((child) => {
         const childOrder = child.getOrder();
         if (childOrder !== undefined) {
           child.setOrder(childOrder - 1);
         }
-      }
+      });
     }
     node.setOrder(0);
   }
@@ -218,9 +218,7 @@ class TreeSorter extends AbstractBasicSorter {
     let xOffset = -totalWidth / 2;
 
     const result = new Map<number, PositionType>();
-    for (let i = 0; i < childrenWidths.length; i++) {
-      const childData = childrenWidths[i];
-
+    childrenWidths.forEach((childData) => {
       // X offset: position horizontally
       xOffset += childData.width / 2;
 
@@ -232,7 +230,7 @@ class TreeSorter extends AbstractBasicSorter {
 
       // Move to next position
       xOffset += childData.width / 2;
-    }
+    });
 
     return result;
   }
@@ -285,9 +283,9 @@ class TreeSorter extends AbstractBasicSorter {
     // Check that all orders are consistent
     const children = this._getSortedChildren(treeSet, node);
 
-    for (let i = 0; i < children.length; i++) {
-      $assert(children[i].getOrder() === i, 'missing order elements');
-    }
+    children.forEach((child, i) => {
+      $assert(child.getOrder() === i, 'missing order elements');
+    });
   }
 
   getChildDirection(_treeSet: RootedTreeSet, _child: Node): 1 | -1 {

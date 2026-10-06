@@ -68,7 +68,9 @@ class BalancedSorter extends AbstractBasicSorter {
     );
 
     // No children?
-    if (children.length === 0) {
+    const first = children[0];
+    const last = children[children.length - 1];
+    if (!first || !last) {
       return {
         order,
         position: {
@@ -87,7 +89,6 @@ class BalancedSorter extends AbstractBasicSorter {
 
     // Try to fit within ...
     let result: SorterPrediction | null = null;
-    const last = children[children.length - 1];
     const newestPosition = position || { x: last.getPosition().x, y: last.getPosition().y + 1 };
     children.forEach((child, index) => {
       const cpos = child.getPosition();
@@ -95,8 +96,9 @@ class BalancedSorter extends AbstractBasicSorter {
         // After the last child: half a gap below it when dragging, as between two children. A new
         // child (no position) still goes where the next child would sit.
         let yOffset: number;
-        if (child !== last) {
-          yOffset = (children[index + 1].getPosition().y - child.getPosition().y) / 2;
+        const next = children[index + 1];
+        if (next) {
+          yOffset = (next.getPosition().y - child.getPosition().y) / 2;
         } else if (position) {
           yOffset = this._halfSiblingGap(children, index);
         } else {
@@ -115,7 +117,6 @@ class BalancedSorter extends AbstractBasicSorter {
     // Position wasn't below any node, so it must be inserted above. On the side
     // computed above (against the root, not the origin), which `children` are from.
     if (!result) {
-      const first = children[0];
       result = {
         order,
         position: {
@@ -141,8 +142,7 @@ class BalancedSorter extends AbstractBasicSorter {
     // Shift all the elements by two, so side is the same.
     // In case of balanced sorter, order don't need to be continuous...
     let max = 0;
-    for (let i = 0; i < children.length; i++) {
-      const node = children[i];
+    children.forEach((node) => {
       const nodeOrder = node.getOrder();
       if (nodeOrder !== undefined) {
         max = Math.max(max, nodeOrder);
@@ -151,7 +151,7 @@ class BalancedSorter extends AbstractBasicSorter {
           node.setOrder(nodeOrder + 2);
         }
       }
-    }
+    });
 
     const newOrder = order > max + 1 ? max + 2 : order;
     child.setOrder(newOrder);
@@ -211,29 +211,29 @@ class BalancedSorter extends AbstractBasicSorter {
 
     // Calculate the offsets ...
     const result = new Map<number, PositionType>();
-    for (let i = 0; i < heights.length; i++) {
-      const direction = heights[i].order % 2 ? -1 : 1;
+    heights.forEach((height) => {
+      const direction = height.order % 2 ? -1 : 1;
 
       if (direction > 0) {
-        psum -= heights[i].height;
+        psum -= height.height;
         ysum = psum;
       } else {
-        nsum -= heights[i].height;
+        nsum -= height.height;
         ysum = nsum;
       }
 
-      const yOffset = ysum + heights[i].height / 2;
+      const yOffset = ysum + height.height / 2;
       const xOffset =
         direction *
         (node.getSize().width / 2 +
-          heights[i].width / 2 +
+          height.width / 2 +
           +BalancedSorter.INTERNODE_HORIZONTAL_PADDING);
 
       $assert(!Number.isNaN(xOffset), 'xOffset can not be null');
       $assert(!Number.isNaN(yOffset), 'yOffset can not be null');
 
-      result.set(heights[i].id, { x: xOffset, y: yOffset });
-    }
+      result.set(height.id, { x: xOffset, y: yOffset });
+    });
     return result;
   }
 
@@ -243,14 +243,14 @@ class BalancedSorter extends AbstractBasicSorter {
     // All odd ordered nodes (left side) should be "continuous" by themselves: 1, 3, 5 ...
     [0, 1].forEach((side) => {
       const children = this._getChildrenForOrder(node, treeSet, side);
-      for (let i = 0; i < children.length; i++) {
+      children.forEach((child, i) => {
         const order = 2 * i + side;
-        const childOrder = children[i].getOrder() ?? 0;
+        const childOrder = child.getOrder() ?? 0;
         $assert(
           childOrder === order,
-          `Missing order elements. Missing order: ${order}. Parent:${node.getId()},Node:${children[i].getId()}`,
+          `Missing order elements. Missing order: ${order}. Parent:${node.getId()},Node:${child.getId()}`,
         );
-      }
+      });
     });
   }
 

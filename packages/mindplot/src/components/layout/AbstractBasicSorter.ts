@@ -96,7 +96,8 @@ abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
    * child counts the gap the layout leaves between two leaves of its height.
    */
   protected _halfSiblingGap(children: Node[], index: number): number {
-    const child = children[index];
+    // In range: every caller passes the index of a child it already holds.
+    const child = children[index]!;
     const neighbour = children[index === 0 ? 1 : index - 1];
     const gap = neighbour
       ? Math.abs(neighbour.getPosition().y - child.getPosition().y)
