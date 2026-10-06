@@ -19,7 +19,8 @@
 /// <reference types="cypress" />
 
 describe('Maps Page – Rename Map', () => {
-  const getMapRow = (title: string) => cy.contains('tbody tr a', new RegExp(`^${title}$`)).closest('tr');
+  const getMapRow = (title: string) =>
+    cy.contains('tbody tr a', new RegExp(`^${title}$`)).closest('tr');
 
   beforeEach(() => {
     cy.visit('/c/maps');

@@ -171,19 +171,7 @@ export default abstract class AppI18n {
 }
 
 export type LocaleCode =
-  | 'en'
-  | 'es'
-  | 'fr'
-  | 'de'
-  | 'ru'
-  | 'uk'
-  | 'zh'
-  | 'zh-CN'
-  | 'ja'
-  | 'pt'
-  | 'it'
-  | 'hi'
-  | 'ar';
+  'en' | 'es' | 'fr' | 'de' | 'ru' | 'uk' | 'zh' | 'zh-CN' | 'ja' | 'pt' | 'it' | 'hi' | 'ar';
 
 export const Locales = {
   EN: new Locale('en', 'English', enMessages),

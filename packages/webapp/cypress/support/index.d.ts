@@ -1,21 +1,20 @@
 /// <reference types="cypress" />
 
 declare namespace Cypress {
-    interface Chainable {
-        /**
-         * Custom command to access the editor web component shadow root.
-         */
-        getMindplotShadowRoot(): Chainable<JQuery<HTMLElement>>;
+  interface Chainable {
+    /**
+     * Custom command to access the editor web component shadow root.
+     */
+    getMindplotShadowRoot(): Chainable<JQuery<HTMLElement>>;
 
-        /**
-         * Custom command to wait for the editor to be fully loaded.
-         */
-        waitForEditorLoaded(): Chainable<void>;
+    /**
+     * Custom command to wait for the editor to be fully loaded.
+     */
+    waitForEditorLoaded(): Chainable<void>;
 
-        /**
-         * Custom command to wait for the page to be fully loaded.
-         */
-        waitForPageLoaded(): Chainable<void>;
-
-    }
+    /**
+     * Custom command to wait for the page to be fully loaded.
+     */
+    waitForPageLoaded(): Chainable<void>;
+  }
 }

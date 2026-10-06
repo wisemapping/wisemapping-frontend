@@ -19,7 +19,8 @@
 /// <reference types="cypress" />
 
 describe('Maps Page – Export Dialog', () => {
-  const getMapRow = (title: string) => cy.contains('tbody tr a', new RegExp(`^${title}$`)).closest('tr');
+  const getMapRow = (title: string) =>
+    cy.contains('tbody tr a', new RegExp(`^${title}$`)).closest('tr');
 
   beforeEach(() => {
     cy.visit('/c/maps');
