@@ -24,6 +24,7 @@ import type {
 } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import { hasShortcutModifier } from './util/platform';
+import { markObjectTouch } from './util/objectTouch';
 
 import type { NodeOption } from './NodeGraph';
 import NodeGraph from './NodeGraph';
@@ -747,6 +748,10 @@ abstract class Topic extends NodeGraph {
       eventDispatcher?.process('clicknode', me);
       mouseEvent.stopPropagation();
     });
+    // A tap selects through the mousedown the browser emulates for it, which the handler above
+    // keeps from the canvas. The touch itself still reaches it, to pan on a swipe, but its release
+    // must not be a click on the background ...
+    elem.addEvent('touchstart', markObjectTouch);
   }
 
   setOnFocus(focus: boolean) {

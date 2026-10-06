@@ -23,6 +23,7 @@ import type {
   ElementPeer,
 } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
+import { isObjectTouch } from './util/objectTouch';
 import type ScreenManager from './ScreenManager';
 import type SizeType from './SizeType';
 import type CanvasElement from './CanvasElement';
@@ -447,6 +448,10 @@ class Canvas {
           const mouseDownPosition = screenManager.getClientPosition(originalEvent as MouseEvent);
           const originalCoordOrigin = workspace.getCoordOrigin();
 
+          // A tap on a topic or a relationship selects it through the mousedown the browser
+          // emulates after the touch: its release is no click on the background.
+          const isObjectTap = event.type === 'touchstart' && isObjectTouch(event);
+
           let wasDragged = false;
           this._mouseMoveListener = (mouseMoveEvent: Event) => {
             const currentMousePosition = screenManager.getClientPosition(
@@ -504,7 +509,7 @@ class Canvas {
 
             mWorkspace.enableWorkspaceEvents(true);
 
-            if (isRelease && !wasDragged) {
+            if (isRelease && !wasDragged && !isObjectTap) {
               screenManager.fireEvent('click');
             }
           };

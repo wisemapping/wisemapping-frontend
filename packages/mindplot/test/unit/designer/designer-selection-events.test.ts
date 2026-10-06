@@ -364,3 +364,105 @@ describe('Designer selection events on the keyboard', () => {
     expect(events).toEqual(['onfocus:1']);
   });
 });
+
+describe('Designer selection on a tap', () => {
+  /*
+   * A tap sends touchstart and touchend, then the mouse events the browser emulates for it:
+   * mousedown, mouseup and click, all on the element the finger touched. The canvas pans on a
+   * touch, and its release, with no move, is a click on the background.
+   */
+  type Point = { clientX: number; clientY: number };
+  const touchEvent = (type: string, touches: Point[], changedTouches: Point[]): Event => {
+    const event = new Event(type, { bubbles: true, cancelable: true });
+    Object.defineProperty(event, 'touches', { value: touches });
+    Object.defineProperty(event, 'changedTouches', { value: changedTouches });
+    return event;
+  };
+
+  const tapOn = (target: Element) => {
+    const point = { clientX: 10, clientY: 10 };
+    target.dispatchEvent(touchEvent('touchstart', [point], [point]));
+    target.dispatchEvent(touchEvent('touchend', [], [point]));
+    ['mousedown', 'mouseup', 'click'].forEach((type) =>
+      target.dispatchEvent(new MouseEvent(type, { bubbles: true, cancelable: true, ...point })),
+    );
+  };
+
+  const lineOf = (relationship: Relationship): SVGElement =>
+    (relationship.getLine() as unknown as { peer: { _native: SVGElement } }).peer._native;
+
+  it('a tap on a topic selects it alone, with one event', async () => {
+    const { designer, events, mouseDown, topic } = await open();
+    mouseDown(1);
+    document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    events.splice(0);
+
+    tapOn(groupOf(topic(3)));
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(3)]);
+    // Before: 'onblur:0', from the background click the canvas sent on the release, then
+    // 'onfocus:1' from the emulated mousedown.
+    expect(events).toEqual(['onfocus:1']);
+  });
+
+  it('a tap on the only selected topic fires nothing', async () => {
+    const { events, topic } = await open();
+    tapOn(groupOf(topic(3)));
+    events.splice(0);
+
+    tapOn(groupOf(topic(3)));
+
+    // Before: 'onblur:0', then 'onfocus:1'.
+    expect(events).toEqual([]);
+  });
+
+  it('a tap on a relationship selects it alone, with one event', async () => {
+    const { designer, events, mouseDown } = await open();
+    const relationship = designer.getModel().getRelationships()[0]!;
+    mouseDown(1);
+    document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    events.splice(0);
+
+    tapOn(lineOf(relationship));
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([]);
+    expect(designer.getModel().filterSelectedRelationships()).toEqual([relationship]);
+    // Before: 'onblur:0', then 'onfocus:0'.
+    expect(events).toEqual(['onfocus:0']);
+  });
+
+  it('a tap on the background still unselects everything, once', async () => {
+    const { designer, events, mouseDown } = await open();
+    mouseDown(1);
+    document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    events.splice(0);
+
+    tapOn(designer.getContainer());
+
+    expect(designer.getModel().filterSelectedTopics()).toEqual([]);
+    expect(events).toEqual(['onblur:0']);
+  });
+
+  it('a swipe that starts on a topic still pans the canvas', async () => {
+    const { designer, topic } = await open();
+    const canvas = designer.getWorkSpace();
+    const before = canvas.getCoordOrigin();
+    const group = groupOf(topic(3));
+    const click = jest.fn();
+    canvas.getScreenManager().addEvent('click', click);
+
+    group.dispatchEvent(
+      touchEvent('touchstart', [{ clientX: 10, clientY: 10 }], [{ clientX: 10, clientY: 10 }]),
+    );
+    group.dispatchEvent(
+      touchEvent('touchmove', [{ clientX: 40, clientY: 30 }], [{ clientX: 40, clientY: 30 }]),
+    );
+    group.dispatchEvent(touchEvent('touchend', [], [{ clientX: 40, clientY: 30 }]));
+
+    const after = canvas.getCoordOrigin();
+    expect(after.x).not.toBe(before.x);
+    expect(after.y).not.toBe(before.y);
+    expect(click).not.toHaveBeenCalled();
+    expect(canvas.isWorkspaceEventsEnabled()).toBe(true);
+  });
+});

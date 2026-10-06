@@ -26,6 +26,7 @@ import type PositionType from './PositionType';
 import type Topic from './Topic';
 import Shape from './util/Shape';
 import { hasShortcutModifier } from './util/platform';
+import { markObjectTouch } from './util/objectTouch';
 import RelationshipSnap from './RelationshipSnap';
 import type Canvas from './Canvas';
 
@@ -305,6 +306,9 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
       this._focusShape.addEvent('mousedown', this._onFocusHandler);
       this._line.addEvent('click', this._onClickHandler);
       this._focusShape.addEvent('click', this._onClickHandler);
+      // A tap selects through its emulated mousedown: its release is no click on the background.
+      this._line.addEvent('touchstart', markObjectTouch);
+      this._focusShape.addEvent('touchstart', markObjectTouch);
     }
     this._isInWorkspace = true;
 
@@ -337,6 +341,8 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     this._focusShape.removeEvent('mousedown', this._onFocusHandler);
     this._line.removeEvent('click', this._onClickHandler);
     this._focusShape.removeEvent('click', this._onClickHandler);
+    this._line.removeEvent('touchstart', markObjectTouch);
+    this._focusShape.removeEvent('touchstart', markObjectTouch);
     this._isInWorkspace = false;
 
     // Remove all relationship components from workspace
