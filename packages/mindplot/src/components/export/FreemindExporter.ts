@@ -92,7 +92,7 @@ class FreemindExporter extends Exporter {
     return xmlDoc.getElementsByTagName('parsererror').length > 0;
   }
 
-  extension(): string {
+  override extension(): string {
     return 'mm';
   }
 

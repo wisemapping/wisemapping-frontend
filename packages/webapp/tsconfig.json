@@ -30,6 +30,7 @@
       "../web2d/src"
     ],
     "noImplicitAny": true,
+    "noImplicitOverride": true,
     "strictNullChecks": true,
     "jsxImportSource": "@emotion/react",
     "paths": {

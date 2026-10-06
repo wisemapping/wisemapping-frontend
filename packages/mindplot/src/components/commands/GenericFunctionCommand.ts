@@ -74,7 +74,7 @@ class GenericFunctionCommand<T> extends Command {
     }
   }
 
-  mergeWith(previous: Command): boolean {
+  override mergeWith(previous: Command): boolean {
     if (!(previous instanceof GenericFunctionCommand) || !this._applied || !previous._applied) {
       return false;
     }

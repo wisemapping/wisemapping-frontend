@@ -33,7 +33,7 @@ class EmojiIconModel extends FeatureModel {
     this.setAttribute('id', iconType);
   }
 
-  applyAttribute(key: string, value: unknown): void {
+  override applyAttribute(key: string, value: unknown): void {
     if (key === 'id') {
       this.setIconType(value as string);
     } else {

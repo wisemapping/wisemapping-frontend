@@ -141,7 +141,7 @@ class SvgImageIcon extends ImageIcon {
     return result;
   }
 
-  remove() {
+  override remove() {
     const actionDispatcher = this._topic.getActionDispatcher();
     const featureId = this._featureModel.getId();
     const topicId = this._topicId;

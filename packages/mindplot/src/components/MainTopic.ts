@@ -64,7 +64,7 @@ class MainTopic extends Topic {
     return group;
   }
 
-  disconnect(canvas: Canvas) {
+  override disconnect(canvas: Canvas) {
     super.disconnect(canvas);
 
     const innerShape = this.getInnerShape();

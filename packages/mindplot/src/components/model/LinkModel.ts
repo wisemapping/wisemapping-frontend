@@ -64,7 +64,7 @@ class LinkModel extends FeatureModel {
     this.setAttribute('urlType', urlType);
   }
 
-  applyAttribute(key: string, value: unknown): void {
+  override applyAttribute(key: string, value: unknown): void {
     if (key === 'url') {
       this.setUrl(value as string);
     } else if (key === 'urlType') {

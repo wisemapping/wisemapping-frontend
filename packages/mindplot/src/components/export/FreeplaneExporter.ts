@@ -37,15 +37,15 @@ class FreeplaneExporter extends FreemindExporter {
   };
 
   // mmx is only the id of the format: Freeplane maps are .mm files, as FreeMind ones.
-  extension(): string {
+  override extension(): string {
     return 'mm';
   }
 
-  protected getVersionNumber(): string {
+  protected override getVersionNumber(): string {
     return FreeplaneExporter.VERSION;
   }
 
-  protected setTopicPropertiesToNode(args: {
+  protected override setTopicPropertiesToNode(args: {
     freemindNode: FreemindNode;
     mindmapTopic: INodeModel;
     isRoot: boolean;
@@ -58,7 +58,7 @@ class FreeplaneExporter extends FreemindExporter {
   }
 
   // Rich text is kept as html, with its plain text as TEXT. Freeplane keeps line breaks in TEXT.
-  protected addTextNode(freemindNode: FreemindNode, mindmapTopic: INodeModel): void {
+  protected override addTextNode(freemindNode: FreemindNode, mindmapTopic: INodeModel): void {
     const text = mindmapTopic.getText();
     if (!text) {
       return;
@@ -74,7 +74,10 @@ class FreeplaneExporter extends FreemindExporter {
     }
   }
 
-  protected shapeToStyle(shape: TopicShapeType | undefined, isRoot: boolean): string | undefined {
+  protected override shapeToStyle(
+    shape: TopicShapeType | undefined,
+    isRoot: boolean,
+  ): string | undefined {
     switch (shape) {
       case undefined:
         return isRoot ? undefined : 'fork';
@@ -96,7 +99,7 @@ class FreeplaneExporter extends FreemindExporter {
    * Emoji without a builtin icon are written as Freeplane emoji icons (emoji-<code points>), which
    * Freeplane names without the emoji variation selector.
    */
-  protected iconBuiltin(feature: FeatureModel): string | null {
+  protected override iconBuiltin(feature: FeatureModel): string | null {
     const builtin = super.iconBuiltin(feature);
     if (builtin || !feature.isOfType('eicon')) {
       return builtin;
@@ -108,7 +111,7 @@ class FreeplaneExporter extends FreemindExporter {
     return codePoints.length > 0 ? `emoji-${codePoints.join('-')}` : null;
   }
 
-  protected buildArrowlink(
+  protected override buildArrowlink(
     relationship: RelationshipModel,
     destNode: FreemindNode,
   ): FreemindArrowlink {

@@ -47,11 +47,15 @@ svgPrototype.getComputedTextLength = () => 60;
  * it when a topic is rendered, and there is no web component to show them in.
  */
 export class StubWidgetManager extends WidgetBuilder {
-  createTooltipForLink(_topic: Topic, _linkModel: LinkModel, _linkIcon: LinkIcon): void {
+  override createTooltipForLink(_topic: Topic, _linkModel: LinkModel, _linkIcon: LinkIcon): void {
     // No tooltips in tests.
   }
 
-  configureTooltipForNode(_topic: Topic, _noteModel: NoteModel, _noteIcon: NoteIcon): void {
+  override configureTooltipForNode(
+    _topic: Topic,
+    _noteModel: NoteModel,
+    _noteIcon: NoteIcon,
+  ): void {
     // No tooltips in tests.
   }
 

@@ -337,7 +337,7 @@ class SymmetricSorter extends AbstractBasicSorter {
     return 'Symmetric Sorter';
   }
 
-  getVerticalPadding() {
+  override getVerticalPadding() {
     return SymmetricSorter.INTERNODE_VERTICAL_PADDING;
   }
 

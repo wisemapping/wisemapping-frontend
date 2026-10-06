@@ -38,7 +38,7 @@ class RecordingCommand extends Command {
     this.log.push(`undo ${this.name}`);
   }
 
-  mergeWith(): boolean {
+  override mergeWith(): boolean {
     return this.merges;
   }
 }

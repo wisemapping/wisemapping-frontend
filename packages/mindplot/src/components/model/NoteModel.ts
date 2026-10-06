@@ -76,7 +76,7 @@ class NoteModel extends FeatureModel {
     }
   }
 
-  applyAttribute(key: string, value: unknown): void {
+  override applyAttribute(key: string, value: unknown): void {
     if (key === 'text') {
       this.setText(value as string);
     } else if (key === 'contentType') {

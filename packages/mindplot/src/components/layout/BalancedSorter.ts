@@ -258,7 +258,7 @@ class BalancedSorter extends AbstractBasicSorter {
     return (child.getOrder() ?? 0) % 2 === 0 ? 1 : -1;
   }
 
-  getOrderAfter(order: number): number {
+  override getOrderAfter(order: number): number {
     // The order parity is the side, so the next slot on the same side is two away.
     return order + 2;
   }
@@ -294,7 +294,7 @@ class BalancedSorter extends AbstractBasicSorter {
     );
   }
 
-  getVerticalPadding(): number {
+  override getVerticalPadding(): number {
     return BalancedSorter.INTERNODE_VERTICAL_PADDING;
   }
 }

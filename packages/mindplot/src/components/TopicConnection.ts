@@ -294,7 +294,7 @@ class TopicConnection extends BaseConnectionLine {
     }
   }
 
-  setStroke(color: string, style: StrokeStyle, opacity: number): void {
+  override setStroke(color: string, style: StrokeStyle, opacity: number): void {
     this._line.setStroke(1, style, color, opacity);
     this._color = color;
   }
@@ -303,7 +303,7 @@ class TopicConnection extends BaseConnectionLine {
     return this._color;
   }
 
-  addToWorkspace(workspace: Canvas): void {
+  override addToWorkspace(workspace: Canvas): void {
     super.addToWorkspace(workspace);
     // Ensure connection lines are rendered below topics
     this._line.moveToBack();

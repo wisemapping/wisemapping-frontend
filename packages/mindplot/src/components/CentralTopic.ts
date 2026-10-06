@@ -25,7 +25,7 @@ class CentralTopic extends Topic {
     // Ignore ..
   }
 
-  registerEvents(): void {
+  override registerEvents(): void {
     super.registerEvents();
 
     // This disable the drag of the central topic.
@@ -54,7 +54,7 @@ class CentralTopic extends Topic {
     return this.getPosition();
   }
 
-  setCursor(type: string): void {
+  override setCursor(type: string): void {
     super.setCursor(type === 'move' ? 'default' : type);
   }
 
@@ -64,7 +64,7 @@ class CentralTopic extends Topic {
     this.setPosition(zeroPoint);
   }
 
-  getShrinkConnector(): null {
+  override getShrinkConnector(): null {
     return null;
   }
 

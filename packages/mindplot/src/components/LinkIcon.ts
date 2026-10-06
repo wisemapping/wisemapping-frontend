@@ -69,7 +69,7 @@ class LinkIcon extends ImageIcon {
     return this._linksModel;
   }
 
-  remove() {
+  override remove() {
     const actionDispatcher = this._topic.getActionDispatcher();
     const featureId = this._linksModel.getId();
     actionDispatcher.removeFeatureFromTopic(this._topic.getId(), featureId);

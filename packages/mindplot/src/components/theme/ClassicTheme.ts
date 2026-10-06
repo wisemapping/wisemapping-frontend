@@ -44,7 +44,7 @@ class ClassicTheme extends DefaultTheme {
     super(themeStyle, variant);
   }
 
-  getBackgroundColor(topic: Topic): string {
+  override getBackgroundColor(topic: Topic): string {
     const model = topic.getModel();
     let result = model.getBackgroundColor();
 

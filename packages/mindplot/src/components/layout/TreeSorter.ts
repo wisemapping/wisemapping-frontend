@@ -241,13 +241,13 @@ class TreeSorter extends AbstractBasicSorter {
    * Siblings sit side by side in the tree, so a branch is measured by its width: the sum of the
    * widths of its children, or its own if wider. Its height does not move its siblings.
    */
-  computeBranchExtents(treeSet: RootedTreeSet, node: Node): Map<number, number> {
+  override computeBranchExtents(treeSet: RootedTreeSet, node: Node): Map<number, number> {
     const result = new Map<number, number>();
     this._computeChildrenWidth(treeSet, node, result);
     return result;
   }
 
-  getBranchExtentKey(): string {
+  override getBranchExtentKey(): string {
     return `width:${TreeSorter.INTERNODE_HORIZONTAL_PADDING}`;
   }
 
@@ -300,7 +300,7 @@ class TreeSorter extends AbstractBasicSorter {
     return 'Tree Sorter';
   }
 
-  getVerticalPadding(): number {
+  override getVerticalPadding(): number {
     return TreeSorter.INTERNODE_VERTICAL_PADDING;
   }
 }

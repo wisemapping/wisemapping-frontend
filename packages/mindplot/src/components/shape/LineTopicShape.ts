@@ -42,7 +42,7 @@ class LineTopicShape extends DefaultTopicShape<StraightLine> {
     // Overwrite behaviour ...
   }
 
-  setFill() {
+  override setFill() {
     // Overwrite behaviour ...
   }
 }

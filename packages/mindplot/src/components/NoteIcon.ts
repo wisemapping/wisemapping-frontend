@@ -69,7 +69,7 @@ class NoteIcon extends ImageIcon {
     return this._noteModel;
   }
 
-  remove() {
+  override remove() {
     const actionDispatcher = this._topic.getActionDispatcher();
     const featureId = this._noteModel.getId();
     actionDispatcher.removeFeatureFromTopic(this._topic.getId(), featureId);

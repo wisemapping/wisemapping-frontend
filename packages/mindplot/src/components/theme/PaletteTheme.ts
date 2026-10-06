@@ -31,7 +31,7 @@ class PaletteTheme extends DefaultTheme {
     super(new ThemeStyle(themeName, variant), variant);
   }
 
-  getConnectionColor(topic: Topic): string {
+  override getConnectionColor(topic: Topic): string {
     let result: string | null = null;
 
     // Color of the node is the connection is the color of the parent ...
@@ -47,7 +47,7 @@ class PaletteTheme extends DefaultTheme {
     return result;
   }
 
-  getBorderColor(topic: Topic): string {
+  override getBorderColor(topic: Topic): string {
     const model = topic.getModel();
     let result = model.getBorderColor();
 
@@ -60,7 +60,7 @@ class PaletteTheme extends DefaultTheme {
     return result;
   }
 
-  getBackgroundColor(topic: Topic): string {
+  override getBackgroundColor(topic: Topic): string {
     const result = topic.getModel().getBackgroundColor();
 
     // If topic has a custom background color, always use it

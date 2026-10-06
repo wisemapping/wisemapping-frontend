@@ -43,7 +43,7 @@ class RobotTheme extends PaletteTheme {
   }
 
   // Unlike the other palette themes, a fill picked on an ancestor is inherited.
-  getBackgroundColor(topic: Topic): string {
+  override getBackgroundColor(topic: Topic): string {
     const model = topic.getModel();
     let result = model.getBackgroundColor();
 

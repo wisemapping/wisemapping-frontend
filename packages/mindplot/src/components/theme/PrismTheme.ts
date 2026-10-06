@@ -28,7 +28,7 @@ class PrismTheme extends DefaultTheme {
     super(themeStyle, variant);
   }
 
-  getConnectionColor(topic: Topic): string {
+  override getConnectionColor(topic: Topic): string {
     let result: string | null = null;
 
     // Color of the node is the connection is the color of the parent ...
@@ -55,7 +55,7 @@ class PrismTheme extends DefaultTheme {
     return result;
   }
 
-  getBorderColor(topic: Topic): string {
+  override getBorderColor(topic: Topic): string {
     const model = topic.getModel();
     // A color picked by the user (on the topic or an ancestor) is used as is ...
     let result = model.getBorderColor() || (this.resolve('borderColor', topic, false) as string);

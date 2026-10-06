@@ -1116,7 +1116,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  setSize(size: SizeType, force?: boolean): void {
+  override setSize(size: SizeType, force?: boolean): void {
     // A failed measurement (NaN or infinite) would be seen as a change on every redraw
     // (NaN !== NaN): keep the previous size instead.
     const isMeasured = Number.isFinite(size.width) && Number.isFinite(size.height);
@@ -1310,7 +1310,7 @@ abstract class Topic extends NodeGraph {
     this.redraw(this.getThemeVariant(), false);
   }
 
-  createDragNode(layoutManager: LayoutManager): DragTopic {
+  override createDragNode(layoutManager: LayoutManager): DragTopic {
     const result = super.createDragNode(layoutManager);
 
     // Is the node already connected ?

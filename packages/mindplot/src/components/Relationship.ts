@@ -145,7 +145,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     };
   }
 
-  setStroke(color: string, style: LineStrokeStyle, _opacity: number): void {
+  override setStroke(color: string, style: LineStrokeStyle, _opacity: number): void {
     this._line.setStroke(2, style, color);
     this._startArrow?.setStrokeColor(color);
     this._endArrow?.setStrokeColor(color);
@@ -266,7 +266,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     this._endArrow.setControlPoint(controlPoints[1]);
   }
 
-  addToWorkspace(workspace: Canvas): void {
+  override addToWorkspace(workspace: Canvas): void {
     this.updatePositions();
 
     // Add focus shape for event handling (invisible but present)
@@ -304,7 +304,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     this.redraw();
   }
 
-  removeFromWorkspace(workspace: Canvas): void {
+  override removeFromWorkspace(workspace: Canvas): void {
     workspace.removeChild(this._controlPointsController);
 
     this._line.removeEvent('click', this._onFocusHandler);
@@ -624,7 +624,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     return this._isInWorkspace;
   }
 
-  setVisibility(value: boolean, fade = 0) {
+  override setVisibility(value: boolean, fade = 0) {
     super.setVisibility(value, fade);
 
     // If visibility change, remove the on focus.
@@ -638,7 +638,7 @@ class Relationship extends BaseConnectionLine<CurvedLine> {
     this._focusShape.setVisibility(value);
   }
 
-  setOpacity(opacity: number): void {
+  override setOpacity(opacity: number): void {
     super.setOpacity(opacity);
     this._endArrow.setOpacity(opacity);
     this._startArrow.setOpacity(opacity);

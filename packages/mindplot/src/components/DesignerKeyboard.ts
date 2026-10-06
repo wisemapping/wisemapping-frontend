@@ -84,7 +84,7 @@ class DesignerKeyboard extends Keyboard {
     this._registerEvents(designer);
   }
 
-  addShortcut(shortcuts: string[] | string, callback: EventCallback): void {
+  override addShortcut(shortcuts: string[] | string, callback: EventCallback): void {
     super.addShortcut(shortcuts, () => {
       // The shortcuts live in a page-wide registry: a disposed keyboard must not drive its designer.
       if (this._disposed || DesignerKeyboard.isDisabled()) {

@@ -69,11 +69,11 @@ class BootstrapPersistenceManager extends PersistenceManager {
     this.wrappedManager.unlockMap(mapId);
   }
 
-  addErrorHandler(callback: PersistenceErrorCallback): void {
+  override addErrorHandler(callback: PersistenceErrorCallback): void {
     this.wrappedManager.addErrorHandler(callback);
   }
 
-  removeErrorHandler(callback?: PersistenceErrorCallback): void {
+  override removeErrorHandler(callback?: PersistenceErrorCallback): void {
     this.wrappedManager.removeErrorHandler(callback);
   }
 }
