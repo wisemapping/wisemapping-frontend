@@ -240,7 +240,7 @@
     "defaultMessage": "لا توجد تغييرات متاحة"
   },
   "import.button": {
-    "defaultMessage": "إنشاء"
+    "defaultMessage": "استيراد"
   },
   "import.description": {
     "defaultMessage": "يمكنك استيراد خرائط WiseMapping وFreeMind وFreeplane وXMind وMindManager وOPML إلى قائمة خرائطك. اختر الملف الذي تريد استيراده."

@@ -993,7 +993,7 @@
     "defaultMessage": "There is no changes available"
   },
   "import.button": {
-    "defaultMessage": "Create"
+    "defaultMessage": "Import"
   },
   "import.description": {
     "defaultMessage": "You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import."

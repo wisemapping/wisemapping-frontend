@@ -240,7 +240,7 @@
     "defaultMessage": "利用可能な変更はありません"
   },
   "import.button": {
-    "defaultMessage": "作成"
+    "defaultMessage": "インポート"
   },
   "import.description": {
     "defaultMessage": "WiseMapping、FreeMind、Freeplane、XMind、MindManager、OPMLのマップをマップリストにインポートできます。インポートするファイルを選択してください。"

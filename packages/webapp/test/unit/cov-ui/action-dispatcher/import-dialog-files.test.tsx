@@ -52,7 +52,7 @@ const nameInput = (): HTMLInputElement =>
   screen.getByRole('textbox', { name: /Name/ }) as HTMLInputElement;
 
 const submit = (): void => {
-  fireEvent.submit(screen.getByRole('button', { name: 'Create' }).closest('form')!);
+  fireEvent.submit(screen.getByRole('button', { name: 'Import' }).closest('form')!);
 };
 
 describe('ImportDialog files', () => {

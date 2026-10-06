@@ -228,7 +228,7 @@
     "defaultMessage": "Il n'y a pas de modifications disponibles"
   },
   "import.button": {
-    "defaultMessage": "Créer"
+    "defaultMessage": "Importer"
   },
   "import.description": {
     "defaultMessage": "Vous pouvez importer des cartes WiseMapping, FreeMind, Freeplane, XMind, MindManager et OPML dans votre liste de cartes. Sélectionnez le fichier que vous souhaitez importer."

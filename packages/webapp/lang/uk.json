@@ -240,7 +240,7 @@
     "defaultMessage": "Немає доступних змін"
   },
   "import.button": {
-    "defaultMessage": "Створити"
+    "defaultMessage": "Імпорт"
   },
   "import.description": {
     "defaultMessage": "Ви можете імпортувати карти WiseMapping, FreeMind, Freeplane, XMind, MindManager та OPML до вашого списку карт. Виберіть файл, який хочете імпортувати."

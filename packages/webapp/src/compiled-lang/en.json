@@ -2136,7 +2136,7 @@
   "import.button": [
     {
       "type": 0,
-      "value": "Create"
+      "value": "Import"
     }
   ],
   "import.description": [

@@ -227,7 +227,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
           defaultMessage:
             'You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import.',
         })}
-        submitButton={intl.formatMessage({ id: 'import.button', defaultMessage: 'Create' })}
+        submitButton={intl.formatMessage({ id: 'import.button', defaultMessage: 'Import' })}
       >
         {errorFile.error && (
           <Alert severity="error">

@@ -240,7 +240,7 @@
     "defaultMessage": "没有可用的更改"
   },
   "import.button": {
-    "defaultMessage": "创建"
+    "defaultMessage": "导入"
   },
   "import.description": {
     "defaultMessage": "您可以将WiseMapping、FreeMind、Freeplane、XMind、MindManager和OPML思维导图导入到您的思维导图列表中。选择您要导入的文件。"
