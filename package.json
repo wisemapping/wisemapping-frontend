@@ -49,7 +49,7 @@
       "prettier --check"
     ],
     "packages/web2d/{storybook/**/*,cypress/**/*,cypress.config}.ts": [
-      "prettier --write"
+      "prettier --check"
     ],
     "**/*.{js,jsx}": [
       "prettier --check"
