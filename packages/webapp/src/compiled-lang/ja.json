@@ -116,7 +116,7 @@
   "accountinfo.button": [
     {
       "type": 0,
-      "value": "受け入れる"
+      "value": "変更を保存"
     }
   ],
   "accountinfo.deleteaccount": [
@@ -2088,13 +2088,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "パスワードをリセットできるメールをお送りしました。数分以内に受信されるはずです。"
+      "value": "パスワード再設定用のリンクをメールでお送りしました。リンクの有効期限は1時間です。リンクを使用するまで、現在のパスワードは変更されません。"
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "一時パスワードが送信されました。"
+      "value": "メールをご確認ください。"
     }
   ],
   "forgot.title": [
@@ -2142,7 +2142,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "WiseMappingとFreemindのマップをマップリストにインポートできます。インポートするファイルを選択してください。"
+      "value": "WiseMapping、FreeMind、Freeplane、XMind、MindManager、OPMLのマップをマップリストにインポートできます。インポートするファイルを選択してください。"
     }
   ],
   "import.error-file": [
@@ -2602,7 +2602,7 @@
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "所有"
+      "value": "マイマップ"
     }
   ],
   "maps.nav-public": [
@@ -2714,7 +2714,7 @@
   "publish.description": [
     {
       "type": 0,
-      "value": "マップを公開することで、インターネット上のすべての人に表示されます。"
+      "value": "マップを公開します。リンクを知っている人は誰でも閲覧できます。"
     }
   ],
   "publish.embedded": [
@@ -2726,7 +2726,7 @@
   "publish.embedded-msg": [
     {
       "type": 0,
-      "value": "このコードスニペットをコピーして、ブログやページに埋め込みます："
+      "value": "コードをクリックするとクリップボードにコピーされます："
     }
   ],
   "publish.public-url": [
@@ -2738,7 +2738,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "以下のリンクをコピーして貼り付け、同僚とマップを共有します："
+      "value": "リンクをクリックするとクリップボードにコピーされます："
     }
   ],
   "publish.title": [

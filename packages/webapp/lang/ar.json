@@ -3,7 +3,7 @@
     "defaultMessage": "بمتابعتك، فإنك توافق على <termsLink>شروط الخدمة</termsLink> و<privacyLink>سياسة الخصوصية</privacyLink>."
   },
   "accountinfo.button": {
-    "defaultMessage": "موافق"
+    "defaultMessage": "حفظ التغييرات"
   },
   "accountinfo.deleteaccount": {
     "defaultMessage": "حذف الحساب"

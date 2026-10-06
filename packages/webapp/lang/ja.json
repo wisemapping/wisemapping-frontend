@@ -3,7 +3,7 @@
     "defaultMessage": "続行すると、<termsLink>利用規約</termsLink>および<privacyLink>プライバシーポリシー</privacyLink>に同意したものとみなされます。"
   },
   "accountinfo.button": {
-    "defaultMessage": "受け入れる"
+    "defaultMessage": "変更を保存"
   },
   "accountinfo.deleteaccount": {
     "defaultMessage": "アカウントを削除"
@@ -216,10 +216,10 @@
     "defaultMessage": "復旧リンクを送信"
   },
   "forgot.success.desc": {
-    "defaultMessage": "パスワードをリセットできるメールをお送りしました。数分以内に受信されるはずです。"
+    "defaultMessage": "パスワード再設定用のリンクをメールでお送りしました。リンクの有効期限は1時間です。リンクを使用するまで、現在のパスワードは変更されません。"
   },
   "forgot.success.title": {
-    "defaultMessage": "一時パスワードが送信されました。"
+    "defaultMessage": "メールをご確認ください。"
   },
   "forgot.title": {
     "defaultMessage": "パスワードをリセット"
@@ -243,7 +243,7 @@
     "defaultMessage": "作成"
   },
   "import.description": {
-    "defaultMessage": "WiseMappingとFreemindのマップをマップリストにインポートできます。インポートするファイルを選択してください。"
+    "defaultMessage": "WiseMapping、FreeMind、Freeplane、XMind、MindManager、OPMLのマップをマップリストにインポートできます。インポートするファイルを選択してください。"
   },
   "import.error-file": {
     "defaultMessage": "インポートエラー {error}"
@@ -426,7 +426,7 @@
     "defaultMessage": "すべて"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "所有"
+    "defaultMessage": "マイマップ"
   },
   "maps.nav-public": {
     "defaultMessage": "公開"
@@ -471,19 +471,19 @@
     "defaultMessage": "クリップボードにコピーしました！"
   },
   "publish.description": {
-    "defaultMessage": "マップを公開することで、インターネット上のすべての人に表示されます。"
+    "defaultMessage": "マップを公開します。リンクを知っている人は誰でも閲覧できます。"
   },
   "publish.embedded": {
     "defaultMessage": "埋め込み"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "このコードスニペットをコピーして、ブログやページに埋め込みます："
+    "defaultMessage": "コードをクリックするとクリップボードにコピーされます："
   },
   "publish.public-url": {
     "defaultMessage": "公開URL"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "以下のリンクをコピーして貼り付け、同僚とマップを共有します："
+    "defaultMessage": "リンクをクリックするとクリップボードにコピーされます："
   },
   "publish.title": {
     "defaultMessage": "公開"

@@ -116,7 +116,7 @@
   "accountinfo.button": [
     {
       "type": 0,
-      "value": "Aceptar"
+      "value": "Guardar cambios"
     }
   ],
   "accountinfo.deleteaccount": [
@@ -2088,13 +2088,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Te hemos enviado un correo electrónico que te permitirá restablecer tu contraseña. Deberías recibirlo en los próximos minutos."
+      "value": "Te hemos enviado un enlace para restablecer tu contraseña. El enlace caduca en 1 hora. Tu contraseña actual no cambia hasta que uses el enlace."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Tu contraseña temporal ha sido enviada."
+      "value": "Revisa tu correo electrónico."
     }
   ],
   "forgot.title": [

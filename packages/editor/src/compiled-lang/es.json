@@ -994,7 +994,7 @@
   "shortcut-help-pane.copy-and-text": [
     {
       "type": 0,
-      "value": "Copiar y pegar tópicos"
+      "value": "Copiar y pegar tópicos/Copiar la imagen del mapa mental al portapapeles."
     }
   ],
   "shortcut-help-pane.delete-topic": [
@@ -1072,7 +1072,7 @@
   "shortcut-help-pane.edit-topic-key": [
     {
       "type": 0,
-      "value": "Empezar a escribir"
+      "value": "F2 o doble clic"
     }
   ],
   "shortcut-help-pane.expand-by-level": [

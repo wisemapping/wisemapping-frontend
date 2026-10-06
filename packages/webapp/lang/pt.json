@@ -3,7 +3,7 @@
     "defaultMessage": "Ao continuar, você concorda com os nossos <termsLink>Termos de Serviço</termsLink> e a nossa <privacyLink>Política de Privacidade</privacyLink>."
   },
   "accountinfo.button": {
-    "defaultMessage": "Aceitar"
+    "defaultMessage": "Salvar alterações"
   },
   "accountinfo.deleteaccount": {
     "defaultMessage": "Excluir conta"
@@ -216,10 +216,10 @@
     "defaultMessage": "Enviar link de recuperação"
   },
   "forgot.success.desc": {
-    "defaultMessage": "Enviamos um e-mail que permitirá redefinir sua senha. Você deve recebê-lo nos próximos minutos."
+    "defaultMessage": "Enviamos um link de redefinição de senha para o seu e-mail. O link expira em 1 hora. Sua senha atual permanece inalterada até que você use o link."
   },
   "forgot.success.title": {
-    "defaultMessage": "Sua senha temporária foi enviada."
+    "defaultMessage": "Verifique seu e-mail."
   },
   "forgot.title": {
     "defaultMessage": "Redefinir sua senha"
@@ -426,7 +426,7 @@
     "defaultMessage": "Todos"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "Próprios"
+    "defaultMessage": "Meus mapas"
   },
   "maps.nav-public": {
     "defaultMessage": "Públicos"
@@ -471,7 +471,7 @@
     "defaultMessage": "Copiado para a área de transferência!"
   },
   "publish.description": {
-    "defaultMessage": "Ao publicar o mapa, você o torna visível para todos na Internet."
+    "defaultMessage": "Torne seu mapa público. Qualquer pessoa com o link pode visualizá-lo."
   },
   "publish.embedded": {
     "defaultMessage": "Incorporado"

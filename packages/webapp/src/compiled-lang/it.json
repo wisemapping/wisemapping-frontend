@@ -116,7 +116,7 @@
   "accountinfo.button": [
     {
       "type": 0,
-      "value": "Accetta"
+      "value": "Salva modifiche"
     }
   ],
   "accountinfo.deleteaccount": [
@@ -2088,13 +2088,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Ti abbiamo inviato un'email che ti permetterà di reimpostare la tua password. Dovresti riceverla nei prossimi minuti."
+      "value": "Ti abbiamo inviato via email un link per reimpostare la password. Il link scade tra 1 ora. La tua password attuale resta invariata finché non usi il link."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "La tua password temporanea è stata inviata."
+      "value": "Controlla la tua email."
     }
   ],
   "forgot.title": [
@@ -2602,7 +2602,7 @@
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "Possedute"
+      "value": "Le mie mappe"
     }
   ],
   "maps.nav-public": [
@@ -2714,7 +2714,7 @@
   "publish.description": [
     {
       "type": 0,
-      "value": "Pubblicando la mappa la rendi visibile a tutti su Internet."
+      "value": "Rendi pubblica la tua mappa. Chiunque abbia il link può vederla."
     }
   ],
   "publish.embedded": [
@@ -2726,7 +2726,7 @@
   "publish.embedded-msg": [
     {
       "type": 0,
-      "value": "Copia questo frammento di codice per incorporarlo nel tuo blog o pagina:"
+      "value": "Fai clic sul codice per copiarlo negli appunti:"
     }
   ],
   "publish.public-url": [
@@ -2738,7 +2738,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "Copia e incolla il link sottostante per condividere la tua mappa con i colleghi:"
+      "value": "Fai clic sul link per copiarlo negli appunti:"
     }
   ],
   "publish.title": [

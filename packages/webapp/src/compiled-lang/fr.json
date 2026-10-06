@@ -116,7 +116,7 @@
   "accountinfo.button": [
     {
       "type": 0,
-      "value": "J'accepte"
+      "value": "Enregistrer les modifications"
     }
   ],
   "accountinfo.deleteaccount": [
@@ -2088,13 +2088,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Nous vous avons envoyé un e-mail qui vous permettra de réinitialiser votre mot de passe. Vous devriez le recevoir dans les prochaines minutes."
+      "value": "Nous vous avons envoyé un lien de réinitialisation du mot de passe par e-mail. Le lien expire dans 1 heure. Votre mot de passe actuel reste inchangé tant que vous n'utilisez pas le lien."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Votre mot de passe temporaire a été envoyé."
+      "value": "Vérifiez votre boîte e-mail."
     }
   ],
   "forgot.title": [

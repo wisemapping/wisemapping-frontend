@@ -3,7 +3,7 @@
     "defaultMessage": "En continuant, vous acceptez nos <termsLink>Conditions d'utilisation</termsLink> et notre <privacyLink>Politique de confidentialité</privacyLink>."
   },
   "accountinfo.button": {
-    "defaultMessage": "J'accepte"
+    "defaultMessage": "Enregistrer les modifications"
   },
   "accountinfo.email": {
     "defaultMessage": "E-mail"
@@ -204,10 +204,10 @@
     "defaultMessage": "Envoyer le lien de récupération"
   },
   "forgot.success.desc": {
-    "defaultMessage": "Nous vous avons envoyé un e-mail qui vous permettra de réinitialiser votre mot de passe. Vous devriez le recevoir dans les prochaines minutes."
+    "defaultMessage": "Nous vous avons envoyé un lien de réinitialisation du mot de passe par e-mail. Le lien expire dans 1 heure. Votre mot de passe actuel reste inchangé tant que vous n'utilisez pas le lien."
   },
   "forgot.success.title": {
-    "defaultMessage": "Votre mot de passe temporaire a été envoyé."
+    "defaultMessage": "Vérifiez votre boîte e-mail."
   },
   "forgot.title": {
     "defaultMessage": "Réinitialisez votre mot de passe"

@@ -3,7 +3,7 @@
     "defaultMessage": "Al continuar, aceptas nuestros <termsLink>Términos de Uso</termsLink> y <privacyLink>Política de Privacidad</privacyLink>."
   },
   "accountinfo.button": {
-    "defaultMessage": "Aceptar"
+    "defaultMessage": "Guardar cambios"
   },
   "accountinfo.email": {
     "defaultMessage": "Correo electrónico"
@@ -207,10 +207,10 @@
     "defaultMessage": "Enviar enlace de recuperación"
   },
   "forgot.success.desc": {
-    "defaultMessage": "Te hemos enviado un correo electrónico que te permitirá restablecer tu contraseña. Deberías recibirlo en los próximos minutos."
+    "defaultMessage": "Te hemos enviado un enlace para restablecer tu contraseña. El enlace caduca en 1 hora. Tu contraseña actual no cambia hasta que uses el enlace."
   },
   "forgot.success.title": {
-    "defaultMessage": "Tu contraseña temporal ha sido enviada."
+    "defaultMessage": "Revisa tu correo electrónico."
   },
   "forgot.title": {
     "defaultMessage": "Restablece tu contraseña"

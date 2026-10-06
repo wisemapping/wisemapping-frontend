@@ -3,7 +3,7 @@
     "defaultMessage": "继续即表示您同意我们的<termsLink>服务条款</termsLink>和<privacyLink>隐私政策</privacyLink>。"
   },
   "accountinfo.button": {
-    "defaultMessage": "接受"
+    "defaultMessage": "保存更改"
   },
   "accountinfo.deleteaccount": {
     "defaultMessage": "删除账户"
@@ -216,10 +216,10 @@
     "defaultMessage": "发送恢复链接"
   },
   "forgot.success.desc": {
-    "defaultMessage": "我们已向您发送一封电子邮件，允许您重置密码。您应该在接下来的几分钟内收到它。"
+    "defaultMessage": "我们已将密码重置链接发送到您的电子邮箱。该链接将在 1 小时后失效。在您使用该链接之前，当前密码保持不变。"
   },
   "forgot.success.title": {
-    "defaultMessage": "您的临时密码已发送。"
+    "defaultMessage": "请查收您的电子邮件。"
   },
   "forgot.title": {
     "defaultMessage": "重置您的密码"
@@ -426,7 +426,7 @@
     "defaultMessage": "全部"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "拥有的"
+    "defaultMessage": "我的思维导图"
   },
   "maps.nav-public": {
     "defaultMessage": "公开"
@@ -471,19 +471,19 @@
     "defaultMessage": "已复制到剪贴板！"
   },
   "publish.description": {
-    "defaultMessage": "通过发布地图，您使其对互联网上的每个人都可见。"
+    "defaultMessage": "公开您的思维导图。任何拥有链接的人都可以查看。"
   },
   "publish.embedded": {
     "defaultMessage": "嵌入"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "复制此代码片段以嵌入到您的博客或页面中："
+    "defaultMessage": "点击下方代码将其复制到剪贴板："
   },
   "publish.public-url": {
     "defaultMessage": "公开URL"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "复制并粘贴下面的链接与同事分享您的地图："
+    "defaultMessage": "点击下方链接将其复制到剪贴板："
   },
   "publish.title": {
     "defaultMessage": "发布"

@@ -3,7 +3,7 @@
     "defaultMessage": "Продовжуючи, ви погоджуєтеся з нашими <termsLink>Умовами використання</termsLink> та <privacyLink>Політикою конфіденційності</privacyLink>."
   },
   "accountinfo.button": {
-    "defaultMessage": "Прийняти"
+    "defaultMessage": "Зберегти зміни"
   },
   "accountinfo.deleteaccount": {
     "defaultMessage": "Видалити акаунт"
@@ -216,10 +216,10 @@
     "defaultMessage": "Надіслати посилання для відновлення"
   },
   "forgot.success.desc": {
-    "defaultMessage": "Ми надіслали вам електронний лист, який дозволить скинути ваш пароль. Ви повинні отримати його в найближчі хвилини."
+    "defaultMessage": "Ми надіслали посилання для скидання пароля на вашу пошту. Посилання дійсне 1 годину. Поточний пароль не зміниться, доки ви не скористаєтеся посиланням."
   },
   "forgot.success.title": {
-    "defaultMessage": "Ваш тимчасовий пароль було надіслано."
+    "defaultMessage": "Перевірте пошту."
   },
   "forgot.title": {
     "defaultMessage": "Скинути ваш пароль"
@@ -429,7 +429,7 @@
     "defaultMessage": "Всі"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "Мої"
+    "defaultMessage": "Мої карти"
   },
   "maps.nav-public": {
     "defaultMessage": "Публічні"
@@ -474,19 +474,19 @@
     "defaultMessage": "Скопійовано в буфер обміну!"
   },
   "publish.description": {
-    "defaultMessage": "Опублікувавши карту, ви робите її видимою для всіх в Інтернеті."
+    "defaultMessage": "Зробіть карту публічною. Її зможе переглядати будь-хто, хто має посилання."
   },
   "publish.embedded": {
     "defaultMessage": "Вбудована"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "Скопіюйте цей фрагмент коду для вбудовування у ваш блог або сторінку:"
+    "defaultMessage": "Натисніть на код, щоб скопіювати його в буфер обміну:"
   },
   "publish.public-url": {
     "defaultMessage": "Публічне посилання"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "Скопіюйте та вставте посилання нижче, щоб поділитися вашою картою з колегами:"
+    "defaultMessage": "Натисніть на посилання, щоб скопіювати його в буфер обміну:"
   },
   "publish.title": {
     "defaultMessage": "Опублікувати"

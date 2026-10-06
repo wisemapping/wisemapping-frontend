@@ -3,7 +3,7 @@
     "defaultMessage": "Continuando, accetti i nostri <termsLink>Termini di servizio</termsLink> e la nostra <privacyLink>Informativa sulla privacy</privacyLink>."
   },
   "accountinfo.button": {
-    "defaultMessage": "Accetta"
+    "defaultMessage": "Salva modifiche"
   },
   "accountinfo.deleteaccount": {
     "defaultMessage": "Elimina Account"
@@ -216,10 +216,10 @@
     "defaultMessage": "Invia link di recupero"
   },
   "forgot.success.desc": {
-    "defaultMessage": "Ti abbiamo inviato un'email che ti permetterà di reimpostare la tua password. Dovresti riceverla nei prossimi minuti."
+    "defaultMessage": "Ti abbiamo inviato via email un link per reimpostare la password. Il link scade tra 1 ora. La tua password attuale resta invariata finché non usi il link."
   },
   "forgot.success.title": {
-    "defaultMessage": "La tua password temporanea è stata inviata."
+    "defaultMessage": "Controlla la tua email."
   },
   "forgot.title": {
     "defaultMessage": "Reimposta la tua password"
@@ -426,7 +426,7 @@
     "defaultMessage": "Tutte"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "Possedute"
+    "defaultMessage": "Le mie mappe"
   },
   "maps.nav-public": {
     "defaultMessage": "Pubbliche"
@@ -471,19 +471,19 @@
     "defaultMessage": "Copiato negli appunti!"
   },
   "publish.description": {
-    "defaultMessage": "Pubblicando la mappa la rendi visibile a tutti su Internet."
+    "defaultMessage": "Rendi pubblica la tua mappa. Chiunque abbia il link può vederla."
   },
   "publish.embedded": {
     "defaultMessage": "Incorporato"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "Copia questo frammento di codice per incorporarlo nel tuo blog o pagina:"
+    "defaultMessage": "Fai clic sul codice per copiarlo negli appunti:"
   },
   "publish.public-url": {
     "defaultMessage": "URL Pubblico"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "Copia e incolla il link sottostante per condividere la tua mappa con i colleghi:"
+    "defaultMessage": "Fai clic sul link per copiarlo negli appunti:"
   },
   "publish.title": {
     "defaultMessage": "Pubblica"

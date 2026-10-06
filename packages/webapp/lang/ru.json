@@ -201,10 +201,10 @@
     "defaultMessage": "Отправить"
   },
   "forgot.success.desc": {
-    "defaultMessage": "Мы отправили e-mail с инструкциями по восстановлению пароля. Вы должны получить его в течение пары минут."
+    "defaultMessage": "Мы отправили ссылку для сброса пароля на вашу почту. Ссылка действительна 1 час. Текущий пароль не изменится, пока вы не воспользуетесь ссылкой."
   },
   "forgot.success.title": {
-    "defaultMessage": "Ваш временный пароль отправлен."
+    "defaultMessage": "Проверьте почту."
   },
   "forgot.title": {
     "defaultMessage": "Установить новый пароль"
@@ -378,7 +378,7 @@
     "defaultMessage": "Все"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "Созданные мной"
+    "defaultMessage": "Мои карты"
   },
   "maps.nav-public": {
     "defaultMessage": "Публичные"
@@ -423,19 +423,19 @@
     "defaultMessage": "Скопировано в буфер обмена!"
   },
   "publish.description": {
-    "defaultMessage": "После публикация карта станет видима для любого, у кого есть ссылка."
+    "defaultMessage": "Сделайте карту публичной. Её сможет просматривать любой, у кого есть ссылка."
   },
   "publish.embedded": {
     "defaultMessage": "Встроить"
   },
   "publish.embedded-msg": {
-    "defaultMessage": "Скопируйте этот код, чтобы встроить майнд-карту в ваш сайт:"
+    "defaultMessage": "Нажмите на код, чтобы скопировать его в буфер обмена:"
   },
   "publish.public-url": {
     "defaultMessage": "Публичный URL"
   },
   "publish.public-url-msg": {
-    "defaultMessage": "Скопируйте ссылку, чтобы поделиться с коллегами доступом к карте:"
+    "defaultMessage": "Нажмите на ссылку, чтобы скопировать её в буфер обмена:"
   },
   "publish.title": {
     "defaultMessage": "Опубликовать"
@@ -483,7 +483,7 @@
     "defaultMessage": "Читатель"
   },
   "share.add-button": {
-    "defaultMessage": "Добавить"
+    "defaultMessage": "Поделиться"
   },
   "share.adding-button": {
     "defaultMessage": "Отправка..."

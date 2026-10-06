@@ -3,7 +3,7 @@
     "defaultMessage": "Indem du fortfährst, stimmst du unseren <termsLink>Nutzungsbedingungen</termsLink> und unserer <privacyLink>Datenschutzrichtlinie</privacyLink> zu."
   },
   "accountinfo.button": {
-    "defaultMessage": "Akzeptieren"
+    "defaultMessage": "Änderungen speichern"
   },
   "accountinfo.email": {
     "defaultMessage": "E-Mail"
@@ -201,10 +201,10 @@
     "defaultMessage": "Wiederherstellungslink senden"
   },
   "forgot.success.desc": {
-    "defaultMessage": "Wir haben dir eine E-Mail gesendet, mit der du dein Passwort zurücksetzen kannst. Du solltest sie in den nächsten Minuten erhalten."
+    "defaultMessage": "Wir haben dir einen Link zum Zurücksetzen des Passworts per E-Mail gesendet. Der Link ist 1 Stunde lang gültig. Dein aktuelles Passwort bleibt unverändert, bis du den Link verwendest."
   },
   "forgot.success.title": {
-    "defaultMessage": "Dein temporäres Passwort wurde gesendet."
+    "defaultMessage": "Prüfe dein E-Mail-Postfach."
   },
   "forgot.title": {
     "defaultMessage": "Setze dein Passwort zurück"
@@ -378,7 +378,7 @@
     "defaultMessage": "Alle"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "Eigene"
+    "defaultMessage": "Meine Mindmaps"
   },
   "maps.nav-public": {
     "defaultMessage": "Öffentlich"

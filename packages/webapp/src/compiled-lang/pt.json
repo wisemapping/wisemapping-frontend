@@ -116,7 +116,7 @@
   "accountinfo.button": [
     {
       "type": 0,
-      "value": "Aceitar"
+      "value": "Salvar alterações"
     }
   ],
   "accountinfo.deleteaccount": [
@@ -2092,13 +2092,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Enviamos um e-mail que permitirá redefinir sua senha. Você deve recebê-lo nos próximos minutos."
+      "value": "Enviamos um link de redefinição de senha para o seu e-mail. O link expira em 1 hora. Sua senha atual permanece inalterada até que você use o link."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Sua senha temporária foi enviada."
+      "value": "Verifique seu e-mail."
     }
   ],
   "forgot.title": [
@@ -2606,7 +2606,7 @@
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "Próprios"
+      "value": "Meus mapas"
     }
   ],
   "maps.nav-public": [
@@ -2718,7 +2718,7 @@
   "publish.description": [
     {
       "type": 0,
-      "value": "Ao publicar o mapa, você o torna visível para todos na Internet."
+      "value": "Torne seu mapa público. Qualquer pessoa com o link pode visualizá-lo."
     }
   ],
   "publish.embedded": [
