@@ -288,11 +288,11 @@ class FreeplaneImporter extends Importer {
    * selector, which is added back to a single character that is text by default (❤ is ❤️).
    */
   private static emojiOf(builtin: string): string | undefined {
-    const match = /^emoji-([0-9A-F]+(?:-[0-9A-F]+)*)$/i.exec(builtin);
-    if (!match) {
+    const sequence = /^emoji-([0-9A-F]+(?:-[0-9A-F]+)*)$/i.exec(builtin)?.[1];
+    if (!sequence) {
       return undefined;
     }
-    const codePoints = match[1].split('-').map((hex) => parseInt(hex, 16));
+    const codePoints = sequence.split('-').map((hex) => parseInt(hex, 16));
     if (codePoints.some((codePoint) => codePoint > 0x10ffff)) {
       return undefined;
     }

@@ -339,7 +339,7 @@ class XMindImporter extends Importer {
     if (!sheet) {
       // Try to find sheet by tag name (works with namespaces)
       const sheets = doc.getElementsByTagName('sheet');
-      sheet = sheets.length > 0 ? sheets[0] : null;
+      sheet = sheets.item(0);
     }
 
     let rootTopic = sheet?.querySelector('topic');
@@ -530,18 +530,18 @@ class XMindImporter extends Importer {
       throw new Error(`Failed to unzip XMind archive: ${(error as Error).message}`);
     }
 
-    const entries = Object.keys(files);
+    const entries = Object.entries(files);
 
-    const jsonEntry = entries.find((entry) => entry.endsWith('content.json'));
+    const jsonEntry = entries.find(([name]) => name.endsWith('content.json'));
     if (jsonEntry) {
-      const jsonContent = decodeUtf8(files[jsonEntry]);
+      const jsonContent = decodeUtf8(jsonEntry[1]);
       const sheet = this.parseJsonSheet(jsonContent);
       return { kind: 'json', sheet };
     }
 
-    const xmlEntry = entries.find((entry) => entry.endsWith('content.xml'));
+    const xmlEntry = entries.find(([name]) => name.endsWith('content.xml'));
     if (xmlEntry) {
-      const xmlContent = decodeUtf8(files[xmlEntry]);
+      const xmlContent = decodeUtf8(xmlEntry[1]);
       return { kind: 'xml', xml: xmlContent };
     }
 
@@ -581,7 +581,8 @@ class XMindImporter extends Importer {
       return sheetWithRoot;
     }
 
-    return sheets.length > 0 && sheets[0].rootTopic ? sheets[0] : null;
+    const [first] = sheets;
+    return first?.rootTopic ? first : null;
   }
 
   private convertXMindColor(xmindColor: string): string {
@@ -758,7 +759,7 @@ class XMindImporter extends Importer {
     let relationshipsElement = sheet.querySelector('relationships');
     if (!relationshipsElement) {
       const relationships = sheet.getElementsByTagName('relationships');
-      relationshipsElement = relationships.length > 0 ? relationships[0] : null;
+      relationshipsElement = relationships.item(0);
     }
 
     if (!relationshipsElement) return;

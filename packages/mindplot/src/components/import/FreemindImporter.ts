@@ -144,22 +144,22 @@ export default class FreemindImporter extends Importer {
         // Set control points if available
         const endinclination = arrowlink.ENDINCLINATION;
         if (endinclination) {
-          const inclination: Array<string> = endinclination.split(';');
-          if (inclination.length >= 2) {
+          const [x, y] = endinclination.split(';');
+          if (x !== undefined && y !== undefined) {
             relationship.setDestCtrlPoint({
-              x: parseFloat(inclination[0]),
-              y: parseFloat(inclination[1]),
+              x: parseFloat(x),
+              y: parseFloat(y),
             });
           }
         }
 
         const startinclination = arrowlink.STARTINCLINATION;
         if (startinclination) {
-          const inclination: Array<string> = startinclination.split(';');
-          if (inclination.length >= 2) {
+          const [x, y] = startinclination.split(';');
+          if (x !== undefined && y !== undefined) {
             relationship.setSrcCtrlPoint({
-              x: parseFloat(inclination[0]),
-              y: parseFloat(inclination[1]),
+              x: parseFloat(x),
+              y: parseFloat(y),
             });
           }
         }

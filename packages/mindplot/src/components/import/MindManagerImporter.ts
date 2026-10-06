@@ -380,9 +380,9 @@ class MindManagerImporter extends Importer {
     if (!value) {
       return undefined;
     }
-    const argb = /^([0-9a-f]{2})([0-9a-f]{6})$/i.exec(value);
-    if (argb) {
-      return argb[1] === '00' ? undefined : `#${argb[2].toLowerCase()}`;
+    const [, alpha, rgb] = /^([0-9a-f]{2})([0-9a-f]{6})$/i.exec(value) ?? [];
+    if (rgb !== undefined) {
+      return alpha === '00' ? undefined : `#${rgb.toLowerCase()}`;
     }
     return value;
   }
@@ -409,11 +409,11 @@ class MindManagerImporter extends Importer {
 
     const isDocument = (name: string): boolean => name.toLowerCase() === 'document.xml';
     const files = unzipSync(bytes, { filter: (file) => isDocument(file.name) });
-    const entry = Object.keys(files).find(isDocument);
+    const entry = Object.entries(files).find(([name]) => isDocument(name));
     if (!entry) {
       throw new Error('The MindManager archive does not contain Document.xml');
     }
-    return decodeUtf8(files[entry]);
+    return decodeUtf8(entry[1]);
   }
 
   private parseMindManagerXML(doc: Document): MindManagerTopic {
@@ -454,7 +454,7 @@ class MindManagerImporter extends Importer {
       .map((group) => ({ group, level: Number(group.getAttribute('Level')) }))
       .filter(({ level }) => Number.isInteger(level) && level <= depth - 1)
       .sort((a, b) => b.level - a.level);
-    return levels.length > 0 ? levels[0].group : null;
+    return levels[0]?.group ?? null;
   }
 
   /**
@@ -555,14 +555,8 @@ class MindManagerImporter extends Importer {
     if (element) return element;
 
     // If not found, search all elements by tag name
-    const allElements = parent.getElementsByTagName('*');
-    for (let i = 0; i < allElements.length; i++) {
-      const el = allElements[i];
-      if (el.localName === tagName || el.tagName === tagName) {
-        return el;
-      }
-    }
-    return null;
+    const allElements = Array.from(parent.getElementsByTagName('*'));
+    return allElements.find((el) => el.localName === tagName || el.tagName === tagName) ?? null;
   }
 
   // Only direct children: a descendant search would pick up the data of nested topics.
