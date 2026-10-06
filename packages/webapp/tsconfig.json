@@ -1,17 +1,8 @@
 {
-  "include": [
-    "src/**/*",
-    "test/**/*"
-  ],
+  "include": ["src/**/*", "test/**/*"],
   "compilerOptions": {
     "jsx": "react-jsx",
-    "types": [
-      "vite/client",
-      "jest",
-      "node",
-      "react",
-      "react-dom"
-    ],
+    "types": ["vite/client", "jest", "node", "react", "react-dom"],
     "outDir": "./dist/",
     "rootDir": "..",
     "sourceMap": true,
@@ -23,39 +14,20 @@
     "esModuleInterop": true,
     "declaration": true,
     "skipLibCheck": true,
-    "rootDirs": [
-      "src",
-      "../editor/src",
-      "../mindplot/src",
-      "../web2d/src"
-    ],
+    "rootDirs": ["src", "../editor/src", "../mindplot/src", "../web2d/src"],
     "noImplicitAny": true,
     "noImplicitOverride": true,
     "strictNullChecks": true,
     "jsxImportSource": "@emotion/react",
     "paths": {
-      "@wisemapping/editor": [
-        "../editor/src/index.ts"
-      ],
-      "@wisemapping/editor/*": [
-        "../editor/src/*"
-      ],
-      "@wisemapping/mindplot": [
-        "../mindplot/src/index.ts"
-      ],
-      "@wisemapping/mindplot/*": [
-        "../mindplot/src/*"
-      ],
-      "@wisemapping/web2d": [
-        "../web2d/src/index.ts"
-      ],
-      "@wisemapping/web2d/*": [
-        "../web2d/src/*"
-      ]
+      "@wisemapping/editor": ["../editor/src/index.ts"],
+      "@wisemapping/editor/*": ["../editor/src/*"],
+      "@wisemapping/mindplot": ["../mindplot/src/index.ts"],
+      "@wisemapping/mindplot/*": ["../mindplot/src/*"],
+      "@wisemapping/web2d": ["../web2d/src/index.ts"],
+      "@wisemapping/web2d/*": ["../web2d/src/*"]
     },
     "resolveJsonModule": true
   },
-  "exclude": [
-    "./node_modules","./dist"
-  ]
+  "exclude": ["./node_modules", "./dist"]
 }

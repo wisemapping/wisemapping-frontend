@@ -4,8 +4,13 @@ dist
 lang
 coverage
 *.json
-# ... but these are formatted, and lint-staged checks them.
-!packages/mindplot/tsconfig.json
+# ... but the hand-written config files are formatted, and lint-staged checks them: the root
+# ones, those of each package root (package.json, tsconfigs, babel, webapp config.*.json) and the
+# tsconfigs of the cypress and storybook folders. Data files (icons, colours) stay ignored.
+!/*.json
+!packages/*/*.json
+!packages/*/cypress/tsconfig.json
+!packages/*/storybook/tsconfig.json
 !packages/mindplot/src/components/theme/styles/*.json
 # Test fixtures and goldens: tests compare against their exact bytes, so formatting them breaks the tests.
 packages/*/test/**/expected/

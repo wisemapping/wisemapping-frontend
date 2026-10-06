@@ -1,6 +1,6 @@
 {
-    "compilerOptions": {
-        "sourceMap": false,
-        "ignoreDeprecations": "6.0"
-    }
+  "compilerOptions": {
+    "sourceMap": false,
+    "ignoreDeprecations": "6.0"
+  }
 }
