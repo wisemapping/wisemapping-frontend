@@ -30,7 +30,7 @@ const originalFetch = global.fetch;
 beforeEach(() => {
   localStorage.clear();
   fetchMock = jest.fn(async () => ok(MAP_XML));
-  global.fetch = fetchMock as unknown as typeof fetch;
+  global.fetch = fetchMock;
 });
 
 afterEach(() => {

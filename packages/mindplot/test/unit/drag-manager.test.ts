@@ -476,7 +476,7 @@ describe('DragManager without listeners', () => {
     try {
       draggable.pressMouse(10, 10);
       container.dispatchEvent(mouseEvent('mousemove', 40, 40));
-      const dragTopic = appended.find((e) => e instanceof DragTopic) as DragTopic | undefined;
+      const dragTopic = appended.find((e): e is DragTopic => e instanceof DragTopic);
       expect(dragTopic?.isInWorkspace()).toBe(true);
 
       container.dispatchEvent(mouseEvent('mouseup', 40, 40));

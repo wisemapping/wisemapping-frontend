@@ -61,7 +61,7 @@ describe('Designer drag handlers', () => {
     expect(addedSpy).toHaveBeenCalledWith(false);
 
     const dragTopic = { applyChanges: jest.fn(), isCancelled: () => false };
-    listeners.enddragging({} as MouseEvent, dragTopic);
+    listeners.enddragging({}, dragTopic);
     expect(addedSpy).toHaveBeenCalledWith(true);
 
     expect(deletedSpy).not.toHaveBeenCalled();

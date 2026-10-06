@@ -87,7 +87,7 @@ describe("Designer 'onfocus'/'onblur' wiring", () => {
     jest.spyOn(designer.getModel(), 'countSelectedTopics').mockReturnValue(topicCount);
     jest.spyOn(designer.getModel(), 'filterSelectedTopics').mockReturnValue(
       // The handlers count the topics; the list matches the count, should one read it.
-      new Array(topicCount).fill(null) as unknown as Topic[],
+      new Array(topicCount).fill(null),
     );
     jest
       .spyOn(designer.getModel(), 'filterSelectedRelationships')

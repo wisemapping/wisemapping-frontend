@@ -18,7 +18,6 @@
 import LocalStorageManager from '../../../src/components/LocalStorageManager';
 import MockPersistenceManager from '../../../src/components/MockPersistenceManager';
 import PersistenceManager from '../../../src/components/PersistenceManager';
-import type Mindmap from '../../../src/components/model/Mindmap';
 
 const MAP_XML = '<map version="tango"><topic central="true" text="Central" id="1"/></map>';
 const BROKEN_XML = '<html><body>Bad <b>gateway</body></html>';
@@ -79,7 +78,7 @@ describe('LocalStorageManager', () => {
       status: 200,
       statusText: 'OK',
       text: () => Promise.resolve(BROKEN_XML),
-    }) as unknown as typeof fetch;
+    });
     const manager = new LocalStorageManager('/maps/{id}', true, undefined, true);
 
     await expect(manager.loadMapDom('1')).rejects.toThrow(/XML/);
@@ -91,7 +90,7 @@ describe('LocalStorageManager', () => {
       status: 200,
       statusText: 'OK',
       text: () => Promise.resolve(MAP_XML),
-    }) as unknown as typeof fetch;
+    });
     const manager = new LocalStorageManager('/maps/{id}', true, undefined, true);
 
     const doc = await manager.loadMapDom('1');
@@ -143,14 +142,14 @@ describe('PersistenceManager.save', () => {
   });
 
   it('does not crash when the save fails and no events were given (B-SETTLE)', () => {
-    const mindmap = PersistenceManager.loadFromDom('1', buildDoc()) as Mindmap;
+    const mindmap = PersistenceManager.loadFromDom('1', buildDoc());
     const manager = new FailingManager();
 
     expect(() => manager.save(mindmap, {}, false)).not.toThrow();
   });
 
   it('reports a failed save through events.onError', () => {
-    const mindmap = PersistenceManager.loadFromDom('1', buildDoc()) as Mindmap;
+    const mindmap = PersistenceManager.loadFromDom('1', buildDoc());
     const manager = new FailingManager();
     const events = buildEvents();
 

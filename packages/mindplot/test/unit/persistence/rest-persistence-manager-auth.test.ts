@@ -24,7 +24,7 @@ describe('RESTPersistenceManager authorization', () => {
 
   beforeEach(() => {
     fetchMock = jest.fn(async () => ({ ok: true, status: 200, text: async () => '' }));
-    global.fetch = fetchMock as unknown as typeof fetch;
+    global.fetch = fetchMock;
   });
 
   afterEach(() => {

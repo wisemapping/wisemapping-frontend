@@ -49,7 +49,7 @@ const partsOf = (relationship: Relationship, label: string): Map<Element, string
     PARTS.map((name) => {
       const field = fields[`_${name}`]!;
       const element = field.getElementClass ? field.getElementClass() : field;
-      return [element!.getNode(), `${label} ${name}`];
+      return [element.getNode(), `${label} ${name}`];
     }),
   );
 };

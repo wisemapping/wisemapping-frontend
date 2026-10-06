@@ -87,11 +87,11 @@ describe('Canvas drag (pan) events', () => {
       if (!listeners.has(type)) {
         listeners.set(type, new Set());
       }
-      listeners.get(type)!.add(listener!);
+      listeners.get(type)!.add(listener);
       originalAdd(type, listener, options);
     });
     jest.spyOn(container, 'removeEventListener').mockImplementation((type, listener, options?) => {
-      listeners.get(type)?.delete(listener!);
+      listeners.get(type)?.delete(listener);
       originalRemove(type, listener, options);
     });
 

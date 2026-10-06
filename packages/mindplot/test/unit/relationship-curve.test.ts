@@ -266,7 +266,7 @@ describe('Relationship custom curve when a topic moves (BL4-29)', () => {
           ? relationship!.isSrcControlPointCustom()
           : relationship!.isDestControlPointCustom(),
       ).toBe(true);
-      const handleBefore = handles(relationship!)[pivot]!;
+      const handleBefore = handles(relationship!)[pivot];
 
       const before = topic(5).getPosition();
       const delta = { x: 300, y: 200 };
@@ -275,9 +275,9 @@ describe('Relationship custom curve when a topic moves (BL4-29)', () => {
       relationship!.redraw();
 
       // The custom handle moves with its topic: the curve keeps its shape ...
-      const handle = handles(relationship!)[pivot]!;
+      const handle = handles(relationship!)[pivot];
       expectPoint(handle, { x: handleBefore.x + delta.x, y: handleBefore.y + delta.y });
-      expectPoint(relationship!.getLine().getControlPoints()[pivot]!, { x: 110, y: -116 });
+      expectPoint(relationship!.getLine().getControlPoints()[pivot], { x: 110, y: -116 });
 
       // ... and it is where the saved map puts it.
       const saved = save();
@@ -285,8 +285,8 @@ describe('Relationship custom curve when a topic moves (BL4-29)', () => {
         pivot === PivotType.Start ? 'srcCtrlPoint="110,-116"' : 'destCtrlPoint="110,-116"',
       );
       const reloaded = relationshipOf((await buildDesigner(saved)).designer);
-      expectPoint(handles(reloaded!)[pivot]!, handle);
-      expectPoint(reloaded!.getLine().getControlPoints()[pivot]!, { x: 110, y: -116 });
+      expectPoint(handles(reloaded!)[pivot], handle);
+      expectPoint(reloaded!.getLine().getControlPoints()[pivot], { x: 110, y: -116 });
     },
   );
 });
@@ -314,7 +314,7 @@ describe('Relationship control point handle follows the cursor (BL4-30)', () => 
     const cursor = designer.getScreenManager().getWorkspaceMousePosition(move);
 
     // The curve is drawn with its handle under the cursor, where the dot is centred (BL5-100) ...
-    expectPoint(handles(relationship!)[type]!, cursor);
+    expectPoint(handles(relationship!)[type], cursor);
     expectPoint(pivot._dot.getPosition(), cursor);
 
     document.dispatchEvent(new MouseEvent('mouseup', { clientX: x, clientY: y }));
@@ -388,7 +388,7 @@ describe('Relationship control point release (BL5-99, BL5-41)', () => {
       const dragged = dragAndRelease(relationship!, type, x, y);
 
       expectPoint(endOf(relationship!, type), dragged.end);
-      expectPoint(handles(relationship!)[type]!, dragged.handle);
+      expectPoint(handles(relationship!)[type], dragged.handle);
     },
   );
 
@@ -404,11 +404,11 @@ describe('Relationship control point release (BL5-99, BL5-41)', () => {
 
       designer.undo();
       expectPoint(endOf(relationship!, type), first.end);
-      expectPoint(handles(relationship!)[type]!, first.handle);
+      expectPoint(handles(relationship!)[type], first.handle);
 
       designer.redo();
       expectPoint(endOf(relationship!, type), second.end);
-      expectPoint(handles(relationship!)[type]!, second.handle);
+      expectPoint(handles(relationship!)[type], second.handle);
     },
   );
 

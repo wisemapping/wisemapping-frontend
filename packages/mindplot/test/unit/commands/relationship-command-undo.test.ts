@@ -47,8 +47,8 @@ describe('GenericRelationshipFunctionCommand undo/redo', () => {
 
     designer.undo();
     designer.undo();
-    expect(liveRelationship()!.getModel().getStrokeColor()).toBeUndefined();
-    expect(liveRelationship()!.getModel().getEndArrow()).toBe(true);
+    expect(liveRelationship().getModel().getStrokeColor()).toBeUndefined();
+    expect(liveRelationship().getModel().getEndArrow()).toBe(true);
     expect(save()).toEqual(before);
 
     designer.redo();

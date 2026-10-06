@@ -65,7 +65,7 @@ const connectionNode = (topic: Topic): SVGElement => {
   if (!line) {
     throw new Error(`Topic ${topic.getId()} has no connection`);
   }
-  return line.getElementClass().getNode() as SVGElement;
+  return line.getElementClass().getNode();
 };
 
 /** Every point of the SVG line between a topic and its parent. */

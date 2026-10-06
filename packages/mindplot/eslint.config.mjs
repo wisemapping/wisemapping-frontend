@@ -134,8 +134,8 @@ export default defineConfig([
         },
     },
     {
-        // Type-aware rules, for src only: they need the TypeScript program.
-        files: ["src/**/*.ts"],
+        // Type-aware rules: they need the TypeScript program.
+        files: ["src/**/*.ts", "test/**/*.ts"],
         languageOptions: {
             parserOptions: {
                 projectService: true,

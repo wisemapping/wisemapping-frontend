@@ -71,7 +71,7 @@ describe('RESTPersistenceManager', () => {
           pending.push({ resolve, reject });
         }),
     );
-    global.fetch = fetchMock as unknown as typeof fetch;
+    global.fetch = fetchMock;
 
     // Keep the JSON payload readable from the test.
     OriginalBlob = global.Blob;

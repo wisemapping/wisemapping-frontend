@@ -73,7 +73,7 @@ const EXPECTED = 'ul(li[one]ul(li[one.a site]ol(li[deep])) li[two])';
 // The text of the note of topic 2 in an imported WiseMapping map.
 const importedNote = (xml: string): string => {
   const doc = new DOMParser().parseFromString(xml, 'text/xml');
-  return doc.querySelector('topic[id="2"] > note')!.textContent!;
+  return doc.querySelector('topic[id="2"] > note')!.textContent;
 };
 
 describe('Notes with nested lists', () => {

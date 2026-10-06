@@ -101,8 +101,7 @@ const press = (map: Fake[], central: Fake, from: Fake, direction: Direction): st
     getActionDispatcher: () => ({ shrinkBranch: () => undefined }),
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const keyboard = Object.create(DesignerKeyboard.prototype) as any;
+  const keyboard = Object.create(DesignerKeyboard.prototype);
   keyboard._moveSelection(designer, direction);
   return landed;
 };

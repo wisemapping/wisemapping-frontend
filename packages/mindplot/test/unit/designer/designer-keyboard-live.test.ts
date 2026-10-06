@@ -205,7 +205,7 @@ describe('DesignerKeyboard shortcuts', () => {
   ] as const)('%s %j calls Designer.%s', async (key, modifiers, method) => {
     const harness = await open();
     select(harness, 3);
-    const spy = jest.spyOn(harness.designer, method).mockImplementation(() => undefined as never);
+    const spy = jest.spyOn(harness.designer, method).mockImplementation(() => undefined);
     press(key, modifiers);
     expect(spy).toHaveBeenCalledTimes(1);
   });

@@ -39,10 +39,7 @@ const REAL_FILES = [
 const readArchive = (name: string): ArrayBuffer => {
   const buffer = fs.readFileSync(path.resolve(__dirname, `./input/mindmanager/real/${name}.mmap`));
   // The webapp reads .mmap files with FileReader.readAsArrayBuffer.
-  return buffer.buffer.slice(
-    buffer.byteOffset,
-    buffer.byteOffset + buffer.byteLength,
-  ) as ArrayBuffer;
+  return buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
 };
 
 const importReal = async (name: string): Promise<Mindmap> => {

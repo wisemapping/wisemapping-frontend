@@ -64,7 +64,7 @@ describe('XMindImporter inputs', () => {
   it('reads XML given as text or as bytes', async () => {
     expect(childTexts(await importMap(XML))).toEqual(['A']);
     expect(childTexts(await importMap(strToU8(XML)))).toEqual(['A']);
-    expect(childTexts(await importMap(strToU8(XML).buffer as ArrayBuffer))).toEqual(['A']);
+    expect(childTexts(await importMap(strToU8(XML).buffer))).toEqual(['A']);
   });
 
   it('reads JSON given as a sheet, a list of sheets or an object with sheets', async () => {
