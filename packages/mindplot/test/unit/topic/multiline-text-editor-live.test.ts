@@ -116,24 +116,20 @@ describe('MultilineTextEditor on a live designer', () => {
   );
 
   it('replaces the selected text with the line break', async () => {
-    const harness = await open();
-    harness.topic(3).showTextEditor('');
+    (await open()).topic(3).showTextEditor('');
     type('Head-Tail');
     textarea()!.setSelectionRange(4, 5);
     keydown({ code: 'Enter', key: 'Enter', ctrlKey: true });
     expect(textarea()!.value).toBe('Head\nTail');
-    void harness;
   });
 
   it('sizes the editor to the longest line', async () => {
-    const harness = await open();
-    harness.topic(3).showTextEditor('');
+    (await open()).topic(3).showTextEditor('');
     type('a\nlonger line\nb');
     const element = textarea()!;
     expect(element.getAttribute('rows')).toBe('3');
     expect(element.getAttribute('cols')).toBe('11');
     expect(container()!.style.width).toBe('13em');
-    void harness;
   });
 
   it('keeps its keys, clicks and touches from reaching the page', async () => {

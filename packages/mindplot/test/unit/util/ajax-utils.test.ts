@@ -52,13 +52,11 @@ describe('AjaxUtils.ajax', () => {
     expect(init.body).toBeUndefined();
   });
 
-  it('sends an object as JSON on POST, PUT and PATCH', async () => {
-    for (const method of ['POST', 'PUT', 'PATCH'] as const) {
-      await AjaxUtils.ajax({ url: '/api', method, data: { a: 1 } });
-      const [, init] = lastCall();
-      expect(init.body).toBe('{"a":1}');
-      expect(headersOf(init)['Content-Type']).toBe('application/json');
-    }
+  it.each(['POST', 'PUT', 'PATCH'] as const)('sends an object as JSON on %s', async (method) => {
+    await AjaxUtils.ajax({ url: '/api', method, data: { a: 1 } });
+    const [, init] = lastCall();
+    expect(init.body).toBe('{"a":1}');
+    expect(headersOf(init)['Content-Type']).toBe('application/json');
   });
 
   it('form-encodes an object when asked to', async () => {
