@@ -120,9 +120,9 @@ export class AjaxUtils {
     const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
 
     // Check for parsing errors
-    const parseError = xmlDoc.getElementsByTagName('parsererror');
-    if (parseError.length > 0) {
-      throw new Error(`XML parsing error: ${parseError[0].textContent}`);
+    const parseError = xmlDoc.getElementsByTagName('parsererror').item(0);
+    if (parseError) {
+      throw new Error(`XML parsing error: ${parseError.textContent}`);
     }
 
     return xmlDoc;
