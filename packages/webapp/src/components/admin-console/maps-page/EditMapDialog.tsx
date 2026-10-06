@@ -31,7 +31,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import MemoTextField from '../shared/MemoTextField';
-import { MAP_DESCRIPTION_MAX_LENGTH } from '../../../classes/client';
+import { MAP_DESCRIPTION_MAX_LENGTH, MAP_TITLE_MAX_LENGTH } from '../../../classes/client';
 
 export interface MapFormData {
   title: string;
@@ -42,6 +42,7 @@ export interface MapFormData {
 
 // Shared, so that the memoised fields keep the same props from one key to the next.
 const fieldSx = { mb: 2 };
+const titleSlotProps = { htmlInput: { maxLength: MAP_TITLE_MAX_LENGTH } };
 const descriptionSlotProps = { htmlInput: { maxLength: MAP_DESCRIPTION_MAX_LENGTH } };
 
 type EditMapDialogProps = {
@@ -174,6 +175,7 @@ const EditMapDialog = ({
           onChange={handleTitleChange}
           error={!!formErrors.title}
           helperText={formErrors.title}
+          slotProps={titleSlotProps}
           sx={fieldSx}
         />
 

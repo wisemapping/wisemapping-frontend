@@ -92,7 +92,8 @@ export type BasicMapInfo = {
 
 /**
  * The longest map title the backend can store: the `mindmap.title` column is a VARCHAR(255) in
- * every schema. The create, rename, duplicate and import dialogs all limit the name to it.
+ * every schema. The create, rename, duplicate and import dialogs, and the admin console's edit map
+ * dialog, all limit the name to it.
  */
 export const MAP_TITLE_MAX_LENGTH = 255;
 

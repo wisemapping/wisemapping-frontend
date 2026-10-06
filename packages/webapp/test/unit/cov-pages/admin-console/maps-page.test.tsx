@@ -21,7 +21,7 @@ import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 
 import MapsManagement from '../../../../src/components/admin-console/maps-page';
 import AppConfig from '../../../../src/classes/app-config';
-import { MAP_DESCRIPTION_MAX_LENGTH } from '../../../../src/classes/client';
+import { MAP_DESCRIPTION_MAX_LENGTH, MAP_TITLE_MAX_LENGTH } from '../../../../src/classes/client';
 import type { AdminClientInterface } from '../../../../src/classes/client/admin-client';
 import { renderWithWrapper } from '../providers';
 import { BURST_TEXT, typeInBurst } from '../../burst-typing';
@@ -352,6 +352,16 @@ describe('MapsManagement', () => {
         }),
       );
       await dialogClosed();
+    });
+
+    test('the title takes as many characters as the backend stores', async () => {
+      setup();
+      await waitForRows();
+
+      fireEvent.click(within(rowOf('Plain map')).getByRole('button', { name: 'Edit' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Edit Map' });
+      const title = within(dialog).getByLabelText('Title') as HTMLInputElement;
+      expect(title.maxLength).toBe(MAP_TITLE_MAX_LENGTH);
     });
 
     test('the description takes as many characters as the backend accepts', async () => {
