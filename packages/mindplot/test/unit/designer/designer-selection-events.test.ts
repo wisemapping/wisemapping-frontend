@@ -210,6 +210,31 @@ describe('Designer selection on a click with a modifier', () => {
     expect(events).toEqual(['onfocus:1']);
   });
 
+  it('a right click selects the topic alone, with one event, and does not drag it', async () => {
+    onPlatform('Win32');
+    const { designer, events, mouseDown, topic } = await open();
+    mouseDown(1);
+    document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    events.splice(0);
+
+    mouseDown(3, { button: 2 });
+
+    // Selected, as most editors do, so that a context action applies to it ...
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(3)]);
+    expect(events).toEqual(['onfocus:1']);
+    // ... but no drag waits for a move: the canvas still takes the next press.
+    expect(designer.getWorkSpace().isWorkspaceEventsEnabled()).toBe(true);
+  });
+
+  it('a Ctrl click on a Mac does not drag the topic', async () => {
+    onPlatform('MacIntel');
+    const { designer, mouseDown } = await open();
+
+    mouseDown(3, { ctrlKey: true });
+
+    expect(designer.getWorkSpace().isWorkspaceEventsEnabled()).toBe(true);
+  });
+
   it('a click with the Windows key elsewhere is a plain click: it selects that topic alone', async () => {
     onPlatform('Win32');
     const { designer, mouseDown, topic } = await open();

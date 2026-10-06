@@ -15,7 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import isMacPlatform, { hasShortcutModifier } from '../../../src/components/util/platform';
+import isMacPlatform, {
+  hasShortcutModifier,
+  isContextMenuPress,
+} from '../../../src/components/util/platform';
 
 const define = (prop: string, value: unknown): void => {
   Object.defineProperty(window.navigator, prop, { value, configurable: true });
@@ -80,5 +83,27 @@ describe('hasShortcutModifier', () => {
     define('userAgentData', undefined);
     define('platform', platform);
     expect(hasShortcutModifier(modifiers)).toBe(expected);
+  });
+});
+
+describe('isContextMenuPress', () => {
+  afterEach(() => {
+    define('platform', 'MacIntel');
+    define('userAgentData', undefined);
+  });
+
+  it.each([
+    ['Win32', { button: 2, ctrlKey: false }, true],
+    ['Win32', { button: 0, ctrlKey: true }, false],
+    ['Win32', { button: 0, ctrlKey: false }, false],
+    ['Win32', { button: 1, ctrlKey: false }, false],
+    ['MacIntel', { button: 2, ctrlKey: false }, true],
+    ['MacIntel', { button: 0, ctrlKey: true }, true],
+    ['MacIntel', { button: 0, ctrlKey: false }, false],
+    ['MacIntel', { button: 1, ctrlKey: true }, false],
+  ])('on %p, %o is %p', (platform, press, expected) => {
+    define('userAgentData', undefined);
+    define('platform', platform);
+    expect(isContextMenuPress(press)).toBe(expected);
   });
 });

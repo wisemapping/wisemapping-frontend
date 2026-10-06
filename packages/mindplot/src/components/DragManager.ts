@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
+import { isContextMenuPress } from './util/platform';
 import type DragPivot from './DragPivot';
 import DragTopic from './DragTopic';
 import type EventBusDispatcher from './layout/EventBusDispatcher';
@@ -84,6 +85,14 @@ class DragManager {
     const dragManager = this;
     const me = this;
     const mouseDownListener = function mouseDownListener(event: Event) {
+      // Only the main button drags a topic. The right click (a Ctrl press on a Mac) opens the
+      // context menu, and the other buttons scroll or navigate: they may select the topic, which
+      // the topic itself does, but no drag must wait for their next move. A plain Event, with no
+      // button, is a press of the main button, as a MouseEvent defaults to ...
+      const button = (event as MouseEvent).button ?? 0;
+      if (button !== 0 || isContextMenuPress(event as MouseEvent)) {
+        return;
+      }
       if (workspace.isWorkspaceEventsEnabled()) {
         // Disable double drag...
         workspace.enableWorkspaceEvents(false);

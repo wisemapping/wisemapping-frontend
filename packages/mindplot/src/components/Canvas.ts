@@ -24,7 +24,7 @@ import type {
 } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import { isObjectTouch } from './util/objectTouch';
-import isMacPlatform from './util/platform';
+import { isContextMenuPress } from './util/platform';
 import type ScreenManager from './ScreenManager';
 import type SizeType from './SizeType';
 import type CanvasElement from './CanvasElement';
@@ -446,9 +446,8 @@ class Canvas {
           // menu or navigate, and must not move the map or lose the selection.
           let isPrimaryPress = true;
           if (event.type === 'mousedown') {
-            const { button, ctrlKey } = event as MouseEvent;
-            const isMacRightClick = button === 0 && ctrlKey && isMacPlatform();
-            if ((button !== 0 && button !== 1) || isMacRightClick) {
+            const button = (event as MouseEvent).button ?? 0;
+            if ((button !== 0 && button !== 1) || isContextMenuPress(event as MouseEvent)) {
               return;
             }
             isPrimaryPress = button === 0;
