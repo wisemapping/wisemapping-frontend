@@ -59,7 +59,6 @@ describe('XMindImporter (XML format) reads only the topic own data', () => {
                   <title>Child</title>
                   <marker-refs><marker-ref marker-id="people"/></marker-refs>
                   <notes><plain>Child note</plain></notes>
-                  <markers><marker marker-id="child-marker"/></markers>
                 </topic>
               </topics>
             </children>
@@ -88,7 +87,6 @@ describe('XMindImporter (XML format) reads only the topic own data', () => {
     expect(ownChildren(child, 'eicon')).toHaveLength(1);
     expect(ownChildren(child, 'note')).toHaveLength(1);
     expect(ownChildren(child, 'note')[0]!.textContent).toContain('Child note');
-    expect(ownChildren(child, 'note')[0]!.textContent).toContain('child-marker');
   });
 
   test('a topic without title does not take the title of a child', async () => {

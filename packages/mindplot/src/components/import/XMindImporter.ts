@@ -934,15 +934,6 @@ class XMindImporter extends Importer {
       }
     }
 
-    // Handle XMind markers (middle)
-    const markersElement = XMindImporter.childElement(xmlTopic, 'markers');
-    const markers = markersElement ? XMindImporter.childElements(markersElement, 'marker') : [];
-    if (markers.length > 0) {
-      const markerTexts = markers.map((marker) => marker.getAttribute('marker-id') || 'unknown');
-      const formattedMarkers = markerTexts.map((marker) => `🔖 ${marker}`).join(', ');
-      parts.push(formattedMarkers);
-    }
-
     // Note: XMind XML format doesn't have labels, only JSON format does
     // Labels would be added at the bottom if present
 

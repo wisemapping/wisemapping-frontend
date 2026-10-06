@@ -179,6 +179,31 @@ describe('XMindImporter (XML format) content', () => {
     expect(branches[1]!.getPosition()).toEqual({ x: 120, y: -80 });
     expect(mindmap.getRelationships()).toHaveLength(1);
   });
+
+  // XMind 8 writes the markers of a topic as <marker-refs><marker-ref marker-id>. <marker> elements
+  // only exist in the marker sheet of the archive (markers/markerSheet.xml), never in a topic.
+  test('imports marker-refs as icons and ignores a <markers> element (BL5-252)', async () => {
+    const xmind = `<?xml version="1.0" encoding="UTF-8"?>
+<xmap-content xmlns="urn:xmind:xmap:xmlns:content:2.0" version="2.0">
+  <sheet id="sheet1">
+    <topic id="root">
+      <title>Root</title>
+      <notes><plain>The note</plain></notes>
+      <marker-refs>
+        <marker-ref marker-id="priority-1"/>
+        <marker-ref marker-id="task-done"/>
+      </marker-refs>
+      <markers><marker marker-id="priority-2"/></markers>
+    </topic>
+  </sheet>
+</xmap-content>`;
+
+    const root = findByText(loadMindmap(await new XMindImporter(xmind).import('test')), 'Root');
+
+    expect(noteOf(root)).toBe('The note');
+    expect(iconsOf(root)).toEqual(['🔴']);
+    expect(root.findFeatureByType('icon').map((icon) => icon.getIconType())).toEqual(['task_100']);
+  });
 });
 
 describe('XMindImporter central topic and links (JSON format)', () => {

@@ -7,82 +7,82 @@
         <topics type="attached">
           <topic id="topic2">
             <title>Priority Icons</title>
-            <markers>
-              <marker marker-id="priority-1"/>
-            </markers>
+            <marker-refs>
+              <marker-ref marker-id="priority-1"/>
+            </marker-refs>
             <children>
               <topics type="attached">
                 <topic id="topic3">
                   <title>Priority 2</title>
-                  <markers>
-                    <marker marker-id="priority-2"/>
-                  </markers>
+                  <marker-refs>
+                    <marker-ref marker-id="priority-2"/>
+                  </marker-refs>
                 </topic>
                 <topic id="topic4">
                   <title>Priority 3</title>
-                  <markers>
-                    <marker marker-id="priority-3"/>
-                  </markers>
+                  <marker-refs>
+                    <marker-ref marker-id="priority-3"/>
+                  </marker-refs>
                 </topic>
               </topics>
             </children>
           </topic>
           <topic id="topic5">
             <title>Star Rating</title>
-            <markers>
-              <marker marker-id="star"/>
-            </markers>
+            <marker-refs>
+              <marker-ref marker-id="star-yellow"/>
+            </marker-refs>
           </topic>
           <topic id="topic6">
             <title>Task Management</title>
-            <markers>
-              <marker marker-id="task-done"/>
-            </markers>
+            <marker-refs>
+              <marker-ref marker-id="task-done"/>
+            </marker-refs>
             <children>
               <topics type="attached">
                 <topic id="topic7">
                   <title>In Progress</title>
-                  <markers>
-                    <marker marker-id="task-start"/>
-                  </markers>
+                  <marker-refs>
+                    <marker-ref marker-id="task-start"/>
+                  </marker-refs>
                 </topic>
               </topics>
             </children>
           </topic>
           <topic id="topic8">
             <title>Emotions</title>
-            <markers>
-              <marker marker-id="smile"/>
-            </markers>
+            <marker-refs>
+              <marker-ref marker-id="smiley-smile"/>
+            </marker-refs>
             <children>
               <topics type="attached">
                 <topic id="topic9">
                   <title>Happy</title>
-                  <markers>
-                    <marker marker-id="happy"/>
-                  </markers>
+                  <marker-refs>
+                    <marker-ref marker-id="smiley-laugh"/>
+                  </marker-refs>
                 </topic>
                 <topic id="topic10">
                   <title>Thinking</title>
-                  <markers>
-                    <marker marker-id="thinking"/>
-                  </markers>
+                  <marker-refs>
+                    <marker-ref marker-id="other-lightbulb"/>
+                  </marker-refs>
                 </topic>
               </topics>
             </children>
           </topic>
           <topic id="topic11">
             <title>Technology</title>
-            <markers>
-              <marker marker-id="computer"/>
-            </markers>
+            <marker-refs>
+              <marker-ref marker-id="symbol-code"/>
+            </marker-refs>
             <children>
               <topics type="attached">
                 <topic id="topic12">
                   <title>Mobile</title>
-                  <markers>
-                    <marker marker-id="phone-mobile"/>
-                  </markers>
+                  <marker-refs>
+                    <marker-ref marker-id="other-phone2"/>
+                  </marker-refs>
                 </topic>
               </topics>
             </children>

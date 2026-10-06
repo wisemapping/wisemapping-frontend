@@ -43,7 +43,7 @@ XMind markers are imported with two tables of `XMindImporter.ts`, keyed by the m
 
 All 158 marker ids are mapped but `c_symbol_apostrophe`, which has no emoji: it, and any id that is not an XMind marker, imports as a light bulb (💡).
 
-In the XML format, `<markers><marker marker-id>` elements of a topic, which XMind does not write (its markers are `<marker-refs>`), are only added to the note as `🔖 marker-id`.
+In the XML format, the markers of a topic are its `<marker-refs><marker-ref marker-id>` elements. `<marker>` elements only exist in the marker sheet of the archive (`markers/markerSheet.xml`), which is not read.
 
 ## 📝 Note Content Strategy
 
