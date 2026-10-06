@@ -431,6 +431,22 @@ describe('Designer selection on a tap', () => {
     expect(events).toEqual(['onfocus:0']);
   });
 
+  it('a tap on a control point of the selected relationship keeps it selected', async () => {
+    const { designer, events } = await open();
+    const relationship = designer.getModel().getRelationships()[0]!;
+    tapOn(lineOf(relationship));
+    events.splice(0);
+    const dot = designer.getContainer().querySelector('[test-id^="relctl:"]')!;
+    expect(dot).not.toBeNull();
+
+    tapOn(dot);
+
+    expect(relationship.isOnFocus()).toBe(true);
+    // Before: 'onblur:0', from the background click the canvas sent on the release, which also
+    // hid the control points.
+    expect(events).toEqual([]);
+  });
+
   it('a tap on the background still unselects everything, once', async () => {
     const { designer, events, mouseDown } = await open();
     mouseDown(1);
