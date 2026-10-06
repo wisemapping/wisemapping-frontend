@@ -27,12 +27,9 @@ class DesignerUndoManager {
 
   private _redoQueue: Command[];
 
-  private _baseId: number;
-
   constructor() {
     this._undoQueue = [];
     this._redoQueue = [];
-    this._baseId = 0;
   }
 
   enqueue(command: Command): void {
@@ -87,28 +84,6 @@ class DesignerUndoManager {
 
   buildEvent(): ModelUpdateEvent {
     return { undoSteps: this._undoQueue.length, redoSteps: this._redoQueue.length };
-  }
-
-  markAsChangeBase(): void {
-    const undoLength = this._undoQueue.length;
-    if (undoLength > 0) {
-      const command = this._undoQueue[undoLength - 1];
-      this._baseId = command.getId();
-    } else {
-      this._baseId = 0;
-    }
-  }
-
-  hasBeenChanged(): boolean {
-    let result = true;
-    const undoLength = this._undoQueue.length;
-    if (undoLength === 0 && this._baseId === 0) {
-      result = false;
-    } else if (undoLength > 0) {
-      const command = this._undoQueue[undoLength - 1];
-      result = this._baseId !== command.getId();
-    }
-    return result;
   }
 }
 

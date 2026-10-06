@@ -124,48 +124,4 @@ describe('DesignerUndoManager', () => {
     manager.enqueue(color);
     expect(manager.buildEvent().undoSteps).toBe(2);
   });
-
-  describe('change tracking', () => {
-    it('reports no change on a new manager, and a change once a command is enqueued', () => {
-      const manager = new DesignerUndoManager();
-      expect(manager.hasBeenChanged()).toBe(false);
-
-      manager.enqueue(new RecordingCommand('a', []));
-      expect(manager.hasBeenChanged()).toBe(true);
-    });
-
-    it('reports no change at the marked base, and a change on either side of it', () => {
-      const manager = new DesignerUndoManager();
-      manager.enqueue(new RecordingCommand('a', []));
-      manager.enqueue(new RecordingCommand('b', []));
-      manager.markAsChangeBase();
-      expect(manager.hasBeenChanged()).toBe(false);
-
-      manager.execUndo(context);
-      expect(manager.hasBeenChanged()).toBe(true);
-      manager.execRedo(context);
-      expect(manager.hasBeenChanged()).toBe(false);
-
-      manager.enqueue(new RecordingCommand('c', []));
-      expect(manager.hasBeenChanged()).toBe(true);
-    });
-
-    it('treats an empty queue as the base when marked empty', () => {
-      const manager = new DesignerUndoManager();
-      manager.markAsChangeBase();
-      manager.enqueue(new RecordingCommand('a', []));
-      expect(manager.hasBeenChanged()).toBe(true);
-
-      manager.execUndo(context);
-      expect(manager.hasBeenChanged()).toBe(false);
-    });
-
-    it('reports a change after undoing everything past a non-empty base', () => {
-      const manager = new DesignerUndoManager();
-      manager.enqueue(new RecordingCommand('a', []));
-      manager.markAsChangeBase();
-      manager.execUndo(context);
-      expect(manager.hasBeenChanged()).toBe(true);
-    });
-  });
 });
