@@ -17,11 +17,14 @@
  */
 import cloneDeep from 'lodash/cloneDeep';
 import { $assert } from '../util/assert';
-import INodeModel, { NodeModelType, NodePropKey, NodeProps } from './INodeModel';
+import type { NodeModelType, NodePropKey, NodeProps } from './INodeModel';
+import INodeModel from './INodeModel';
 import FeatureModelFactory from './FeatureModelFactory';
-import FeatureModel, { FeatureAttributes } from './FeatureModel';
-import Mindmap from './Mindmap';
-import FeatureType, { type FeatureByType } from './FeatureType';
+import type { FeatureAttributes } from './FeatureModel';
+import type FeatureModel from './FeatureModel';
+import type Mindmap from './Mindmap';
+import type FeatureType from './FeatureType';
+import { type FeatureByType } from './FeatureType';
 
 class NodeModel extends INodeModel {
   private _properties: Partial<NodeProps>;

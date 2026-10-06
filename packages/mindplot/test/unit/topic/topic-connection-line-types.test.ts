@@ -15,10 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { CurvedLine } from '@wisemapping/web2d';
+import type { CurvedLine } from '@wisemapping/web2d';
 import { LineType } from '../../../src/components/ConnectionLine';
-import TopicConnection from '../../../src/components/TopicConnection';
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type TopicConnection from '../../../src/components/TopicConnection';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

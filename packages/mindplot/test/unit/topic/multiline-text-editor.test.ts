@@ -16,9 +16,10 @@
  *   limitations under the License.
  */
 
-import ActionDispatcher, { CommandDispatcher } from '../../../src/components/ActionDispatcher';
+import type { CommandDispatcher } from '../../../src/components/ActionDispatcher';
+import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import MultitTextEditor from '../../../src/components/MultilineTextEditor';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 import type Designer from '../../../src/components/Designer';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import { buildTopics, stubSvgMeasurement } from './Helper';

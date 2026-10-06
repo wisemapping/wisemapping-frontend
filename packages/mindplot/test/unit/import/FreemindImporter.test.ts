@@ -22,7 +22,7 @@ import { describe, expect, test } from '@jest/globals';
 import FreemindImporter from '../../../src/components/import/FreemindImporter';
 import ImportError from '../../../src/components/import/ImportError';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
-import Mindmap from '../../../src/components/model/Mindmap';
+import type Mindmap from '../../../src/components/model/Mindmap';
 
 const importMap = async (mm: string): Promise<Document> => {
   const xml = await new FreemindImporter(mm).import('test', '');

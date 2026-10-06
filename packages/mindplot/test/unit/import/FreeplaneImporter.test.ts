@@ -19,9 +19,9 @@
 import { describe, expect, test } from '@jest/globals';
 import FreeplaneImporter from '../../../src/components/import/FreeplaneImporter';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
-import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
-import NoteModel from '../../../src/components/model/NoteModel';
+import type Mindmap from '../../../src/components/model/Mindmap';
+import type NodeModel from '../../../src/components/model/NodeModel';
+import type NoteModel from '../../../src/components/model/NoteModel';
 import ContentType from '../../../src/components/ContentType';
 
 const loadMindmap = (xml: string): Mindmap => {

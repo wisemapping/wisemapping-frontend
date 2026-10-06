@@ -17,8 +17,8 @@
  */
 import { $assert } from '../util/assert';
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import FeatureModel from '../model/FeatureModel';
+import type CommandContext from '../CommandContext';
+import type FeatureModel from '../model/FeatureModel';
 
 class RemoveFeatureFromTopicCommand extends Command {
   private _topicId: number;

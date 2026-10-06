@@ -24,8 +24,8 @@
  */
 import { buildDesigner } from './commands/designer-harness';
 import Relationship from '../../src/components/Relationship';
-import Topic from '../../src/components/Topic';
-import PositionType from '../../src/components/PositionType';
+import type Topic from '../../src/components/Topic';
+import type PositionType from '../../src/components/PositionType';
 import { PivotType } from '../../src/components/RelationshipControlPoints';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({

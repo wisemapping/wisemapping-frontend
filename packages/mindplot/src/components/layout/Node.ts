@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import PositionType from '../PositionType';
-import SizeType from '../SizeType';
-import ChildrenSorterStrategy from './ChildrenSorterStrategy';
+import type PositionType from '../PositionType';
+import type SizeType from '../SizeType';
+import type ChildrenSorterStrategy from './ChildrenSorterStrategy';
 
 /** The properties of a layout node, by key. Position and size are always set (constructor). */
 type NodeProps = {

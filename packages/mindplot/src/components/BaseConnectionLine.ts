@@ -18,7 +18,7 @@
 
 import { CurvedLine, PolyLine, HeartbeatLine, NeuronLine } from '@wisemapping/web2d';
 import type { Line, StrokeStyle } from '@wisemapping/web2d';
-import Canvas from './Canvas';
+import type Canvas from './Canvas';
 
 /**
  * The values are persisted (a topic's connStyle="N"), so each one is pinned: reordering the

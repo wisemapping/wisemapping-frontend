@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import NodeModel from '../../model/NodeModel';
+import type NodeModel from '../../model/NodeModel';
 
 /** The attributes of a FreeMind or Freeplane <font> element. */
 export type FreemindFontAttributes = {

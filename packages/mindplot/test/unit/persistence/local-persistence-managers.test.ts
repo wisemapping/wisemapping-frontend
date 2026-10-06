@@ -18,7 +18,7 @@
 import LocalStorageManager from '../../../src/components/LocalStorageManager';
 import MockPersistenceManager from '../../../src/components/MockPersistenceManager';
 import PersistenceManager from '../../../src/components/PersistenceManager';
-import Mindmap from '../../../src/components/model/Mindmap';
+import type Mindmap from '../../../src/components/model/Mindmap';
 
 const MAP_XML = '<map version="tango"><topic central="true" text="Central" id="1"/></map>';
 const BROKEN_XML = '<html><body>Bad <b>gateway</body></html>';

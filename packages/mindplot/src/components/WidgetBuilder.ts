@@ -19,11 +19,11 @@
 import debounce from 'lodash/debounce';
 import type { ElementClass, ElementPeer } from '@wisemapping/web2d';
 import DOMUtils from './util/DOMUtils';
-import LinkIcon from './LinkIcon';
-import LinkModel from './model/LinkModel';
-import NoteModel from './model/NoteModel';
-import NoteIcon from './NoteIcon';
-import Topic from './Topic';
+import type LinkIcon from './LinkIcon';
+import type LinkModel from './model/LinkModel';
+import type NoteModel from './model/NoteModel';
+import type NoteIcon from './NoteIcon';
+import type Topic from './Topic';
 import { $msg } from './Messages';
 import ContentType from './ContentType';
 import HtmlSanitizer from './security/HtmlSanitizer';

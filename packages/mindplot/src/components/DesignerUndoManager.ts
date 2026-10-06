@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import Command from './Command';
-import CommandContext from './CommandContext';
+import type Command from './Command';
+import type CommandContext from './CommandContext';
 
 /** The 'modelUpdate' payload: how many steps can be undone and redone. */
 export type ModelUpdateEvent = { undoSteps: number; redoSteps: number };

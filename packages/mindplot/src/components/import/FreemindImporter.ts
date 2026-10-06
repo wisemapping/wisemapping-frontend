@@ -21,24 +21,24 @@ import Importer from './Importer';
 import ImportError from './ImportError';
 import Mindmap from '../model/Mindmap';
 import RelationshipModel from '../model/RelationshipModel';
-import NodeModel from '../model/NodeModel';
+import type NodeModel from '../model/NodeModel';
 import FreemindConstant from '../export/freemind/FreemindConstant';
-import {
+import type {
   FreemindArrowlink,
   FreemindElement,
   FreemindMap,
   FreemindNode,
   FreemindRichcontent,
-  unknownFreemindElement,
 } from '../export/freemind/FreemindModel';
+import { unknownFreemindElement } from '../export/freemind/FreemindModel';
 import { loadFreemindMap } from '../export/freemind/FreemindXml';
 import VersionNumber from '../export/freemind/importer/VersionNumber';
 import FreemindIconConverter from './FreemindIconConverter';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
-import FeatureModel from '../model/FeatureModel';
+import type FeatureModel from '../model/FeatureModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
-import { TopicShapeType } from '../model/INodeModel';
+import type { TopicShapeType } from '../model/INodeModel';
 import ContentType from '../ContentType';
 import HtmlSanitizer from '../security/HtmlSanitizer';
 import SecureXmlParser from '../security/SecureXmlParser';

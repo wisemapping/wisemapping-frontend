@@ -15,11 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Canvas from '../../../src/components/Canvas';
+import type Canvas from '../../../src/components/Canvas';
 import CentralTopic from '../../../src/components/CentralTopic';
 import MainTopic from '../../../src/components/MainTopic';
 import Mindmap from '../../../src/components/model/Mindmap';
-import { NodeOption } from '../../../src/components/NodeGraph';
+import type { NodeOption } from '../../../src/components/NodeGraph';
 
 /** Text width reported by the stubbed getBBox. It is fractional on purpose. */
 export const TEXT_WIDTH = 40.5;

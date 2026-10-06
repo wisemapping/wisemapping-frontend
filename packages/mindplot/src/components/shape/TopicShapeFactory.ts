@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 
-import { TopicShapeType } from '../model/INodeModel';
-import Topic from '../Topic';
+import type { TopicShapeType } from '../model/INodeModel';
+import type Topic from '../Topic';
 import LineTopicShape from './LineTopicShape';
 import NoneTopicShape from './NoneTopicShape';
 import RectTopicShape from './RectTopicShape';
-import TopicShape from './TopicShape';
+import type TopicShape from './TopicShape';
 
 class TopicShapeFactory {
   static create(value: TopicShapeType, topic: Topic): TopicShape {

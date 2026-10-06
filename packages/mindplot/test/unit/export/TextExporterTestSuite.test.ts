@@ -19,7 +19,7 @@
 import path from 'path';
 import fs from 'fs';
 import { test } from '@jest/globals'; // Workaround for cypress conflict
-import Mindmap from '../../../src/components/model/Mindmap';
+import type Mindmap from '../../../src/components/model/Mindmap';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import TextExporterFactory from '../../../src/components/export/TextExporterFactory';
 import { parseXMLFile, setupBlob, exporterAssert } from './Helper';

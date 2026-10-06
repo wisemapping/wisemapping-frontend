@@ -22,7 +22,7 @@ import FreeplaneImporter from './FreeplaneImporter';
 import XMindImporter from './XMindImporter';
 import MindManagerImporter from './MindManagerImporter';
 import OPMLImporter from './OPMLImporter';
-import Importer from './Importer';
+import type Importer from './Importer';
 import { decodeUtf8 } from './support/Utf8Decoder';
 
 export default class TextImporterFactory {

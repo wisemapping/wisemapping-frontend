@@ -16,11 +16,10 @@
  *   limitations under the License.
  */
 
-import ActionDispatcher, {
-  ActionDispatcherCommands,
-} from '../../../src/components/ActionDispatcher';
-import PositionType from '../../../src/components/PositionType';
-import Topic from '../../../src/components/Topic';
+import type { ActionDispatcherCommands } from '../../../src/components/ActionDispatcher';
+import ActionDispatcher from '../../../src/components/ActionDispatcher';
+import type PositionType from '../../../src/components/PositionType';
+import type Topic from '../../../src/components/Topic';
 import { buildDesigner } from './designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({

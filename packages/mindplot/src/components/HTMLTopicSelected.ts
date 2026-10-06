@@ -16,16 +16,16 @@
  *   limitations under the License.
  */
 
-import ScreenManager from './ScreenManager';
-import Topic from './Topic';
-import Designer from './Designer';
+import type ScreenManager from './ScreenManager';
+import type Topic from './Topic';
+import type Designer from './Designer';
 import ColorUtil from './theme/ColorUtil';
 import type { ThemeVariant } from './theme/Theme';
 import type { OrientationType } from './layout/LayoutType';
 import { $msg } from './Messages';
-import { LayoutEventPayloads } from './layout/LayoutEventBus';
-import { LayoutEventBusType } from './LayoutEventBusType';
-import NodeModel from './model/NodeModel';
+import type { LayoutEventPayloads } from './layout/LayoutEventBus';
+import type { LayoutEventBusType } from './LayoutEventBusType';
+import type NodeModel from './model/NodeModel';
 
 /**
  * Stacking layer for the canvas affordances appended straight to the container

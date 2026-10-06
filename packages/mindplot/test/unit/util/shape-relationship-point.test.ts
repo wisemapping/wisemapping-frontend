@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 import Shape from '../../../src/components/util/Shape';
 
 /**

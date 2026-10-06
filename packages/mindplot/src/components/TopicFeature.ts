@@ -20,11 +20,11 @@ import EmojiCharIcon from './EmojiCharIcon';
 import SvgImageIcon from './SvgImageIcon';
 import LinkIcon from './LinkIcon';
 import NoteIcon from './NoteIcon';
-import FeatureModel from './model/FeatureModel';
+import type FeatureModel from './model/FeatureModel';
 import type FeatureType from './model/FeatureType';
 import type { FeatureByType } from './model/FeatureType';
-import Topic from './Topic';
-import Icon from './Icon';
+import type Topic from './Topic';
+import type Icon from './Icon';
 
 type IconBuilder<T extends FeatureType> = (
   topic: Topic,

@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import DesignerModel from './DesignerModel';
-import DragTopic from './DragTopic';
-import SizeType from './SizeType';
-import Topic from './Topic';
-import Canvas from './Canvas';
-import PositionType from './PositionType';
+import type DesignerModel from './DesignerModel';
+import type DragTopic from './DragTopic';
+import type SizeType from './SizeType';
+import type Topic from './Topic';
+import type Canvas from './Canvas';
+import type PositionType from './PositionType';
 import { sideOf } from './util/side';
 
 /** A topic a drag may connect to, with its place in the topic list, and a border along an axis. */

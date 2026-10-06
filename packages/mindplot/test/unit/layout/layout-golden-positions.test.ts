@@ -27,8 +27,8 @@ import fs from 'fs';
 import path from 'path';
 import { describe, expect, it } from '@jest/globals';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
-import ChangeEvent from '../../../src/components/layout/ChangeEvent';
-import SizeType from '../../../src/components/SizeType';
+import type ChangeEvent from '../../../src/components/layout/ChangeEvent';
+import type SizeType from '../../../src/components/SizeType';
 
 type TreeNode = { id: number; text: string; shrink: boolean; children: TreeNode[] };
 

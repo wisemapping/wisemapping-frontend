@@ -20,10 +20,10 @@ import { Group } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
 import ImageIcon from './ImageIcon';
-import SizeType from './SizeType';
-import FeatureModel from './model/FeatureModel';
-import Icon from './Icon';
-import PositionType from './PositionType';
+import type SizeType from './SizeType';
+import type FeatureModel from './model/FeatureModel';
+import type Icon from './Icon';
+import type PositionType from './PositionType';
 import type Designer from './Designer';
 
 const ORDER_BY_TYPE = new Map<string, number>();

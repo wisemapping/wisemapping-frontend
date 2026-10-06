@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import type Mindmap from '../model/Mindmap';
-import Exporter from './Exporter';
+import type Exporter from './Exporter';
 import MDExporter from './MDExporter';
 import TxtExporter from './TxtExporter';
 import WiseXMLExporter from './WiseXMLExporter';

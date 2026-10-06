@@ -15,10 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Ellipse, Group } from '@wisemapping/web2d';
+import type { Group } from '@wisemapping/web2d';
+import { Ellipse } from '@wisemapping/web2d';
 
 import TopicConfig from './TopicConfig';
-import Topic from './Topic';
+import type Topic from './Topic';
 import ColorUtil from './theme/ColorUtil';
 
 class ShirinkConnector {

@@ -17,7 +17,7 @@
  */
 
 import DefaultTheme from './DefaultTheme';
-import { ThemeVariant } from './Theme';
+import type { ThemeVariant } from './Theme';
 import { ThemeStyle } from './ThemeStyle';
 
 class AuroraTheme extends DefaultTheme {

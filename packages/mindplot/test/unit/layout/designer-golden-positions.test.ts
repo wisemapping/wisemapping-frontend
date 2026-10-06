@@ -30,7 +30,8 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
 import fs from 'fs';
 import path from 'path';
 import { describe, expect, it } from '@jest/globals';
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 
 const load = (file: string): Promise<Harness> =>
   buildDesigner(fs.readFileSync(path.resolve(__dirname, '../export/input', file), 'utf8'));

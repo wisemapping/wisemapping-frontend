@@ -16,11 +16,11 @@
  *   limitations under the License.
  */
 
-import { LineType } from '../ConnectionLine';
-import { FontStyleType } from '../FontStyleType';
-import { FontWeightType } from '../FontWeightType';
-import { TopicShapeType } from '../model/INodeModel';
-import Topic from '../Topic';
+import type { LineType } from '../ConnectionLine';
+import type { FontStyleType } from '../FontStyleType';
+import type { FontWeightType } from '../FontWeightType';
+import type { TopicShapeType } from '../model/INodeModel';
+import type Topic from '../Topic';
 
 export type TopicType = 'CentralTopic' | 'MainTopic' | 'SubTopic' | 'IsolatedTopic';
 export type ThemeVariant = 'light' | 'dark';

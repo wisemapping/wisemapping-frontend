@@ -16,7 +16,8 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureModel, { FeatureAttributes } from './FeatureModel';
+import type { FeatureAttributes } from './FeatureModel';
+import FeatureModel from './FeatureModel';
 import ContentType from '../ContentType';
 
 const CONTENT_TYPES: readonly string[] = Object.values(ContentType);

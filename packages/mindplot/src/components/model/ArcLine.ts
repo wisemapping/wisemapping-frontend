@@ -17,7 +17,7 @@
  */
 
 import { ArcLine as ArcLine2d } from '@wisemapping/web2d';
-import Topic from '../Topic';
+import type Topic from '../Topic';
 
 class ArcLine extends ArcLine2d {
   private _targetTopic: Topic;

@@ -15,37 +15,48 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Text, Group, ElementClass, ElementPeer, Rect } from '@wisemapping/web2d';
-import type { StrokeStyle, FontWeightType as TextWeight } from '@wisemapping/web2d';
+import { Text, Group, Rect } from '@wisemapping/web2d';
+import type {
+  StrokeStyle,
+  FontWeightType as TextWeight,
+  ElementClass,
+  ElementPeer,
+} from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import isMacPlatform from './util/platform';
 
-import NodeGraph, { NodeOption } from './NodeGraph';
+import type { NodeOption } from './NodeGraph';
+import NodeGraph from './NodeGraph';
 import TopicFeatureFactory from './TopicFeature';
-import TopicConnection, { LineType } from './TopicConnection';
+import type { LineType } from './TopicConnection';
+import TopicConnection from './TopicConnection';
 import IconGroup from './IconGroup';
 import ImageEmojiFeature from './ImageEmojiFeature';
-import ImageSVGFeature, { GalleryIconShape } from './ImageSVGFeature';
+import type { GalleryIconShape } from './ImageSVGFeature';
+import ImageSVGFeature from './ImageSVGFeature';
 import ShirinkConnector from './ShrinkConnector';
-import ActionDispatcher, { CommandDispatcher } from './ActionDispatcher';
+import type { CommandDispatcher } from './ActionDispatcher';
+import ActionDispatcher from './ActionDispatcher';
 
 import type TopicEventDispatcher from './TopicEventDispatcher';
-import { TopicShapeType } from './model/INodeModel';
-import NodeModel from './model/NodeModel';
-import Relationship from './Relationship';
-import Canvas from './Canvas';
-import LayoutManager from './layout/LayoutManager';
-import SizeType from './SizeType';
-import FeatureModel from './model/FeatureModel';
-import PositionType from './PositionType';
-import Icon from './Icon';
-import { FontStyleType } from './FontStyleType';
-import { FontWeightType, toTextWeight } from './FontWeightType';
-import DragTopic from './DragTopic';
+import type { TopicShapeType } from './model/INodeModel';
+import type NodeModel from './model/NodeModel';
+import type Relationship from './Relationship';
+import type Canvas from './Canvas';
+import type LayoutManager from './layout/LayoutManager';
+import type SizeType from './SizeType';
+import type FeatureModel from './model/FeatureModel';
+import type PositionType from './PositionType';
+import type Icon from './Icon';
+import type { FontStyleType } from './FontStyleType';
+import type { FontWeightType } from './FontWeightType';
+import { toTextWeight } from './FontWeightType';
+import type DragTopic from './DragTopic';
 import ThemeFactory from './theme/ThemeFactory';
 import ThemeResolutionCache from './theme/ThemeResolutionCache';
-import Theme, { ThemeVariant } from './theme/Theme';
-import TopicShape from './shape/TopicShape';
+import type { ThemeVariant } from './theme/Theme';
+import type Theme from './theme/Theme';
+import type TopicShape from './shape/TopicShape';
 import TopicShapeFactory from './shape/TopicShapeFactory';
 import type { OrientationType } from './layout/LayoutType';
 

@@ -19,7 +19,8 @@
 import DesignerKeyboard from '../../../src/components/DesignerKeyboard';
 import { $msg } from '../../../src/components/Messages';
 import ToolbarNotifier from '../../../src/components/model/ToolbarNotifier';
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

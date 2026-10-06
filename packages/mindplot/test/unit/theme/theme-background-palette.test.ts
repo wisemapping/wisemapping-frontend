@@ -17,7 +17,7 @@
  */
 import ClassicTheme from '../../../src/components/theme/ClassicTheme';
 import RobotTheme from '../../../src/components/theme/RobotTheme';
-import { ThemeVariant } from '../../../src/components/theme/Theme';
+import type { ThemeVariant } from '../../../src/components/theme/Theme';
 import classicLight from '../../../src/components/theme/styles/classic-light.json';
 import robotDark from '../../../src/components/theme/styles/robot-dark.json';
 import robotLight from '../../../src/components/theme/styles/robot-light.json';

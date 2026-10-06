@@ -18,14 +18,14 @@
 
 import { SAMPLE_MAP, buildDesigner as buildHarness } from '../commands/designer-harness';
 import buildDesigner from '../../../src/components/DesignerBuilder';
-import Designer from '../../../src/components/Designer';
+import type Designer from '../../../src/components/Designer';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
-import DragManager from '../../../src/components/DragManager';
-import DragTopic from '../../../src/components/DragTopic';
-import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
-import LayoutManager from '../../../src/components/layout/LayoutManager';
-import PersistenceManager from '../../../src/components/PersistenceManager';
-import WidgetBuilder from '../../../src/components/WidgetBuilder';
+import type DragManager from '../../../src/components/DragManager';
+import type DragTopic from '../../../src/components/DragTopic';
+import type EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
+import type LayoutManager from '../../../src/components/layout/LayoutManager';
+import type PersistenceManager from '../../../src/components/PersistenceManager';
+import type WidgetBuilder from '../../../src/components/WidgetBuilder';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({

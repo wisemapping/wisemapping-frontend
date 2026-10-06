@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import PaletteTheme from './PaletteTheme';
-import { ThemeVariant } from './Theme';
+import type { ThemeVariant } from './Theme';
 
 class OceanTheme extends PaletteTheme {
   constructor(variant: ThemeVariant) {

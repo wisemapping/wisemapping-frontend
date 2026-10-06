@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import PositionType from '../../PositionType';
+import type PositionType from '../../PositionType';
 
 /**
  * The initial position of the topic at the given index among the main topics on its side, 1 for

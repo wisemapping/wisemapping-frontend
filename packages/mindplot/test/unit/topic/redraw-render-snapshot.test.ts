@@ -22,7 +22,8 @@
  * setters, cached theme resolution, coalesced editor layout) must leave every
  * position, size, colour and SVG element exactly as it was.
  */
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import { buildMediumMap, renderSnapshot, stubTextMeasurement } from './RenderFixture';
 

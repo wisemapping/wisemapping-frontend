@@ -16,11 +16,11 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import DragPivot from './DragPivot';
+import type DragPivot from './DragPivot';
 import DragTopic from './DragTopic';
-import EventBusDispatcher from './layout/EventBusDispatcher';
-import Topic from './Topic';
-import Canvas from './Canvas';
+import type EventBusDispatcher from './layout/EventBusDispatcher';
+import type Topic from './Topic';
+import type Canvas from './Canvas';
 
 type DragEventType = 'startdragging' | 'dragging' | 'enddragging';
 

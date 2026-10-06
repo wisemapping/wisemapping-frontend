@@ -18,7 +18,7 @@
 
 import SvgIconModel from '../../../src/components/model/SvgIconModel';
 import NoteModel from '../../../src/components/model/NoteModel';
-import FeatureType from '../../../src/components/model/FeatureType';
+import type FeatureType from '../../../src/components/model/FeatureType';
 import { buildDesigner } from './designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({

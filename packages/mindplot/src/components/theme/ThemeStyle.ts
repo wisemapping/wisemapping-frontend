@@ -17,10 +17,10 @@
  */
 
 import { LineType } from '../ConnectionLine';
-import { FontStyleType } from '../FontStyleType';
-import { FontWeightType } from '../FontWeightType';
-import { TopicShapeType } from '../model/INodeModel';
-import { TopicType, ThemeVariant } from './Theme';
+import type { FontStyleType } from '../FontStyleType';
+import type { FontWeightType } from '../FontWeightType';
+import type { TopicShapeType } from '../model/INodeModel';
+import type { TopicType, ThemeVariant } from './Theme';
 import type { BackgroundPatternType } from '../model/CanvasStyleType';
 import { isMsgKey, type MsgKey } from '../lang/en';
 import {

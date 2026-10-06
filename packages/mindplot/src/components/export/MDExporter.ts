@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import type Mindmap from '../model/Mindmap';
-import INodeModel from '../model/INodeModel';
-import NoteModel from '../model/NoteModel';
+import type INodeModel from '../model/INodeModel';
+import type NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
 import ContentType from '../ContentType';
 import { $assert } from '../util/assert';

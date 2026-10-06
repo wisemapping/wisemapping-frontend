@@ -16,7 +16,8 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureModel, { FeatureAttributes } from './FeatureModel';
+import type { FeatureAttributes } from './FeatureModel';
+import FeatureModel from './FeatureModel';
 
 class LinkModel extends FeatureModel {
   private static readonly ALLOWED_PROTOCOLS = new Set(['http:', 'https:', 'mailto:']);

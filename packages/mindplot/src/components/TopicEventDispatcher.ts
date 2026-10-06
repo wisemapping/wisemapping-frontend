@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import EventDispispatcher from './EventDispatcher';
-import Topic from './Topic';
+import type Topic from './Topic';
 import MultitTextEditor from './MultilineTextEditor';
 import type NodeModel from './model/NodeModel';
 import type Designer from './Designer';

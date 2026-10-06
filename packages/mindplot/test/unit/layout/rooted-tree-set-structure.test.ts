@@ -16,7 +16,8 @@
  *   limitations under the License.
  */
 import Node from '../../../src/components/layout/Node';
-import RootedTreeSet, { RaphaelPaper } from '../../../src/components/layout/RootedTreeSet';
+import type { RaphaelPaper } from '../../../src/components/layout/RootedTreeSet';
+import RootedTreeSet from '../../../src/components/layout/RootedTreeSet';
 import SymmetricSorter from '../../../src/components/layout/SymmetricSorter';
 
 const SIZE = { width: 80, height: 20 };

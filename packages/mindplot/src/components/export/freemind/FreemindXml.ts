@@ -18,15 +18,12 @@
 
 import { $assert } from '../../util/assert';
 import { createDocument } from '../../util/DOMUtils';
+import type { Attributes, FreemindElement, FreemindMap, FreemindNode } from './FreemindModel';
 import {
   ARROWLINK_ATTRIBUTES,
-  Attributes,
   CLOUD_ATTRIBUTES,
   EDGE_ATTRIBUTES,
   FONT_ATTRIBUTES,
-  FreemindElement,
-  FreemindMap,
-  FreemindNode,
   ICON_ATTRIBUTES,
   NODE_ATTRIBUTES,
   unknownFreemindElement,

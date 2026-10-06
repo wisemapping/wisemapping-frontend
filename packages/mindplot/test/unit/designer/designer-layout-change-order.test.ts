@@ -18,9 +18,9 @@
 
 import { buildDesigner } from '../commands/designer-harness';
 import ChangeEvent from '../../../src/components/layout/ChangeEvent';
-import LayoutManager from '../../../src/components/layout/LayoutManager';
-import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
-import Designer from '../../../src/components/Designer';
+import type LayoutManager from '../../../src/components/layout/LayoutManager';
+import type EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
+import type Designer from '../../../src/components/Designer';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

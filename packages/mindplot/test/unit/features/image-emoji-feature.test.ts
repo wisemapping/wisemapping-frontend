@@ -17,7 +17,7 @@
  */
 import { Group, Text } from '@wisemapping/web2d';
 import ImageEmojiFeature from '../../../src/components/ImageEmojiFeature';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 import ElementDeleteWidget from '../../../src/components/ElementDeleteWidget';
 
 /**

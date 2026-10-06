@@ -21,8 +21,8 @@ import { strToU8, zipSync } from 'fflate';
 import MindManagerImporter from '../../../src/components/import/MindManagerImporter';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
-import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type Mindmap from '../../../src/components/model/Mindmap';
+import type NodeModel from '../../../src/components/model/NodeModel';
 import { StrokeStyle } from '../../../src/components/model/RelationshipModel';
 import ContentType from '../../../src/components/ContentType';
 

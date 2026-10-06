@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 import Designer from '../../src/components/Designer';
-import { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
+import type { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
 import Topic from '../../src/components/Topic';
-import WidgetBuilder from '../../src/components/WidgetBuilder';
+import type WidgetBuilder from '../../src/components/WidgetBuilder';
 import NodeModel from '../../src/components/model/NodeModel';
 import Mindmap from '../../src/components/model/Mindmap';
 

@@ -17,7 +17,7 @@
  */
 import { $assert } from '../util/assert';
 import Command from '../Command';
-import CommandContext from '../CommandContext';
+import type CommandContext from '../CommandContext';
 import type { FeatureAttributes } from '../model/FeatureModel';
 
 class ChangeFeatureToTopicCommand extends Command {

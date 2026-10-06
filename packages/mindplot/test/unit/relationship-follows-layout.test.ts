@@ -20,9 +20,10 @@
  * When the layout moves a topic, the relationships attached to it follow (BL5-40, BL5-86):
  * their ends are where a fresh redraw puts them.
  */
-import { buildDesigner, Harness } from './commands/designer-harness';
-import Relationship from '../../src/components/Relationship';
-import Topic from '../../src/components/Topic';
+import type { Harness } from './commands/designer-harness';
+import { buildDesigner } from './commands/designer-harness';
+import type Relationship from '../../src/components/Relationship';
+import type Topic from '../../src/components/Topic';
 import { stubTextMeasurement } from './topic/RenderFixture';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({

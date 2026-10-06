@@ -16,17 +16,17 @@
  *   limitations under the License.
  */
 
-import { Group } from '@wisemapping/web2d';
-import Canvas from '../../../src/components/Canvas';
-import DesignerModel from '../../../src/components/DesignerModel';
+import type { Group } from '@wisemapping/web2d';
+import type Canvas from '../../../src/components/Canvas';
+import type DesignerModel from '../../../src/components/DesignerModel';
 import DragConnector from '../../../src/components/DragConnector';
-import DragPivot from '../../../src/components/DragPivot';
+import type DragPivot from '../../../src/components/DragPivot';
 import DragTopic from '../../../src/components/DragTopic';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 import TopicConfig from '../../../src/components/TopicConfig';
 import TopicConnection from '../../../src/components/TopicConnection';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
-import NodeGraph from '../../../src/components/NodeGraph';
+import type NodeGraph from '../../../src/components/NodeGraph';
 import { sideOf } from '../../../src/components/util/side';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({

@@ -15,10 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import resolveTopicMove, {
-  orderedSiblings,
-  TopicMove,
-} from '../../../src/components/util/topicReorder';
+import type { TopicMove } from '../../../src/components/util/topicReorder';
+import resolveTopicMove, { orderedSiblings } from '../../../src/components/util/topicReorder';
 import type Topic from '../../../src/components/Topic';
 import type { LayoutType } from '../../../src/components/layout/LayoutType';
 import LayoutManager from '../../../src/components/layout/LayoutManager';

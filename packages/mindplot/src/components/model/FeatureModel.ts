@@ -16,7 +16,8 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import FeatureType, { type FeatureByType } from './FeatureType';
+import type FeatureType from './FeatureType';
+import { type FeatureByType } from './FeatureType';
 
 /** Feature attributes as stored in the map XML: attribute name to value. */
 export type FeatureAttributes = Record<string, string>;

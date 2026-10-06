@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import ThemeType from '../model/ThemeType';
+import type CommandContext from '../CommandContext';
+import type ThemeType from '../model/ThemeType';
 
 class ChangeThemeCommand extends Command {
   private _newTheme: ThemeType;

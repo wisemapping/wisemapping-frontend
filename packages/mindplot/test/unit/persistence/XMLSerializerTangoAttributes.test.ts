@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import INodeModel from '../../../src/components/model/INodeModel';
-import Mindmap from '../../../src/components/model/Mindmap';
+import type Mindmap from '../../../src/components/model/Mindmap';
 import XMLSerializerTango from '../../../src/components/persistence/XMLSerializerTango';
 
 const load = (xml: string): Mindmap => {

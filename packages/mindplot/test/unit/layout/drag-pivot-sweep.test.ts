@@ -24,7 +24,7 @@
  */
 import { describe, expect, it } from '@jest/globals';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
-import PositionType from '../../../src/components/PositionType';
+import type PositionType from '../../../src/components/PositionType';
 
 type Prediction = { order: number; position: PositionType };
 

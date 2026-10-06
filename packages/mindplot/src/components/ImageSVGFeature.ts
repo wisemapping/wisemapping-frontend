@@ -21,13 +21,14 @@
  * It provides functionality to set, get, and render Material UI icons on topics.
  */
 
-import { Text, Group, Image } from '@wisemapping/web2d';
+import type { Group } from '@wisemapping/web2d';
+import { Text, Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
-import { Removable } from './Icon';
-import SizeType from './SizeType';
-import PositionType from './PositionType';
-import Topic from './Topic';
+import type { Removable } from './Icon';
+import type SizeType from './SizeType';
+import type PositionType from './PositionType';
+import type Topic from './Topic';
 import ThemeFactory from './theme/ThemeFactory';
 import ImageEmojiFeature from './ImageEmojiFeature';
 import { BRAND_ICON_PATHS, MATERIAL_ICON_CODEPOINTS } from './GalleryIconData';

@@ -17,9 +17,9 @@
  */
 
 import { buildDesigner } from '../commands/designer-harness';
-import Designer from '../../../src/components/Designer';
-import PositionType from '../../../src/components/PositionType';
-import ScreenManager from '../../../src/components/ScreenManager';
+import type Designer from '../../../src/components/Designer';
+import type PositionType from '../../../src/components/PositionType';
+import type ScreenManager from '../../../src/components/ScreenManager';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

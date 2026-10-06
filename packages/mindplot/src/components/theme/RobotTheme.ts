@@ -32,9 +32,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Topic from '../Topic';
+import type Topic from '../Topic';
 import PaletteTheme from './PaletteTheme';
-import { ThemeVariant } from './Theme';
+import type { ThemeVariant } from './Theme';
 import pickByOrder from './pickByOrder';
 
 class RobotTheme extends PaletteTheme {

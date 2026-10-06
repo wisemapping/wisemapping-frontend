@@ -15,11 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Group, Image } from '@wisemapping/web2d';
-import IconGroup from './IconGroup';
-import FeatureModel from './model/FeatureModel';
-import PositionType from './PositionType';
-import SizeType from './SizeType';
+import type { Group, Image } from '@wisemapping/web2d';
+import type IconGroup from './IconGroup';
+import type FeatureModel from './model/FeatureModel';
+import type PositionType from './PositionType';
+import type SizeType from './SizeType';
 
 /**
  * Something on a topic the ElementDeleteWidget can offer to remove: an icon of the topic's

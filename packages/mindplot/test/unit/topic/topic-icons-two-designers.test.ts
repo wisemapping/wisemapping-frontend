@@ -15,8 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import WidgetBuilder from '../../../src/components/WidgetBuilder';
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type WidgetBuilder from '../../../src/components/WidgetBuilder';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

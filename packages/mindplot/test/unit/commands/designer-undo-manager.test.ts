@@ -17,7 +17,7 @@
  */
 
 import Command from '../../../src/components/Command';
-import CommandContext from '../../../src/components/CommandContext';
+import type CommandContext from '../../../src/components/CommandContext';
 import DesignerUndoManager from '../../../src/components/DesignerUndoManager';
 
 /** Records the order in which it is executed and undone. */

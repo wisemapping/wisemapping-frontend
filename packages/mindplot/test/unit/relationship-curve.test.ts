@@ -18,8 +18,8 @@
 
 import { CurvedLine } from '@wisemapping/web2d';
 import { buildDesigner, SAMPLE_MAP } from './commands/designer-harness';
-import Relationship from '../../src/components/Relationship';
-import PositionType from '../../src/components/PositionType';
+import type Relationship from '../../src/components/Relationship';
+import type PositionType from '../../src/components/PositionType';
 import Shape from '../../src/components/util/Shape';
 import ActionDispatcher from '../../src/components/ActionDispatcher';
 import { PivotType } from '../../src/components/RelationshipControlPoints';

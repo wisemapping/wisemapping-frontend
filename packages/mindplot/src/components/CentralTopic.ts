@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 import Topic from './Topic';
 import Shape from './util/Shape';
 

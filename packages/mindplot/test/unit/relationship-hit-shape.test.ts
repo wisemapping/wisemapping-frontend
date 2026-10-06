@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 
-import Relationship from '../../src/components/Relationship';
-import Topic from '../../src/components/Topic';
+import type Relationship from '../../src/components/Relationship';
+import type Topic from '../../src/components/Topic';
 import { buildDesigner } from './commands/designer-harness';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({

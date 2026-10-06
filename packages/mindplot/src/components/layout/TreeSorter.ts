@@ -18,9 +18,9 @@
 import { $assert } from '../util/assert';
 import AbstractBasicSorter from './AbstractBasicSorter';
 import type { SorterPrediction } from './ChildrenSorterStrategy';
-import RootedTreeSet from './RootedTreeSet';
-import Node from './Node';
-import PositionType from '../PositionType';
+import type RootedTreeSet from './RootedTreeSet';
+import type Node from './Node';
+import type PositionType from '../PositionType';
 
 class TreeSorter extends AbstractBasicSorter {
   private static INTERNODE_VERTICAL_PADDING = 70; // Increased spacing between parent and child (5x the original 14)

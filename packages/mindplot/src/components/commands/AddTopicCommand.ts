@@ -17,9 +17,9 @@
  */
 import { $assert } from '../util/assert';
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import NodeModel from '../model/NodeModel';
-import Topic from '../Topic';
+import type CommandContext from '../CommandContext';
+import type NodeModel from '../model/NodeModel';
+import type Topic from '../Topic';
 
 class AddTopicCommand extends Command {
   private _models: NodeModel[];

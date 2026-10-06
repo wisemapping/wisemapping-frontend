@@ -20,8 +20,8 @@ import { describe, expect, test } from '@jest/globals';
 import { strToU8, zipSync } from 'fflate';
 import XMindImporter from '../../../src/components/import/XMindImporter';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
-import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type Mindmap from '../../../src/components/model/Mindmap';
+import type NodeModel from '../../../src/components/model/NodeModel';
 
 const loadMindmap = (xml: string): Mindmap => {
   const doc = new DOMParser().parseFromString(xml, 'text/xml');

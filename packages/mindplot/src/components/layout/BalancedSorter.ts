@@ -16,11 +16,11 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import PositionType from '../PositionType';
+import type PositionType from '../PositionType';
 import AbstractBasicSorter from './AbstractBasicSorter';
 import type { SorterPrediction } from './ChildrenSorterStrategy';
-import Node from './Node';
-import RootedTreeSet from './RootedTreeSet';
+import type Node from './Node';
+import type RootedTreeSet from './RootedTreeSet';
 import { sideOf } from '../util/side';
 
 class BalancedSorter extends AbstractBasicSorter {

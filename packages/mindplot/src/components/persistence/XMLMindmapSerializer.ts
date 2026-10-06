@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import Mindmap from '../model/Mindmap';
+import type Mindmap from '../model/Mindmap';
 
 interface XMLMindmapSerializer {
   toXML(mindmap: Mindmap): Document;

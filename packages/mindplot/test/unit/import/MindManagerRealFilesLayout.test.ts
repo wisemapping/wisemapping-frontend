@@ -25,9 +25,10 @@ jest.mock('../../../src/components/export/PDFExporter', () => ({
 import fs from 'fs';
 import path from 'path';
 import { describe, expect, it } from '@jest/globals';
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 import { LineType } from '../../../src/components/TopicConnection';
 
 /*

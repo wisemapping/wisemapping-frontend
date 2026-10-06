@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { LineType } from '../../../src/components/ConnectionLine';
-import { FontStyleType } from '../../../src/components/FontStyleType';
-import { TopicShapeType } from '../../../src/components/model/INodeModel';
+import type { LineType } from '../../../src/components/ConnectionLine';
+import type { FontStyleType } from '../../../src/components/FontStyleType';
+import type { TopicShapeType } from '../../../src/components/model/INodeModel';
 import { THEME_TYPES } from '../../../src/components/model/ThemeType';
 import {
   isFontStyleType,
@@ -25,8 +25,8 @@ import {
   isTopicShapeType,
 } from '../../../src/components/persistence/TopicAttributeTypes';
 import ClassicTheme from '../../../src/components/theme/ClassicTheme';
-import { TopicType } from '../../../src/components/theme/Theme';
-import Topic from '../../../src/components/Topic';
+import type { TopicType } from '../../../src/components/theme/Theme';
+import type Topic from '../../../src/components/Topic';
 import { ThemeStyle } from '../../../src/components/theme/ThemeStyle';
 import fakeTopic from './FakeTopic';
 

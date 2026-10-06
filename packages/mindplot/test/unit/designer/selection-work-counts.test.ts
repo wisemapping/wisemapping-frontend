@@ -19,7 +19,7 @@
 import { buildDesigner } from '../commands/designer-harness';
 import { buildMediumMap, useTextSizedBoxes } from './medium-map';
 import Canvas from '../../../src/components/Canvas';
-import Designer from '../../../src/components/Designer';
+import type Designer from '../../../src/components/Designer';
 import HTMLTopicSelected from '../../../src/components/HTMLTopicSelected';
 import NodeGraph from '../../../src/components/NodeGraph';
 import Topic from '../../../src/components/Topic';

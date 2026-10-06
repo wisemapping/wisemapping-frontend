@@ -16,8 +16,9 @@
  *   limitations under the License.
  */
 
-import MultitTextEditor from '../../../src/components/MultilineTextEditor';
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type MultitTextEditor from '../../../src/components/MultilineTextEditor';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

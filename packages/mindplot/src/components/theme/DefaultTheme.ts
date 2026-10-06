@@ -16,17 +16,17 @@
  *   limitations under the License.
  */
 
-import { LineType } from '../ConnectionLine';
-import { FontStyleType } from '../FontStyleType';
-import { FontWeightType } from '../FontWeightType';
-import { TopicShapeType } from '../model/INodeModel';
-import NodeModel from '../model/NodeModel';
+import type { LineType } from '../ConnectionLine';
+import type { FontStyleType } from '../FontStyleType';
+import type { FontWeightType } from '../FontWeightType';
+import type { TopicShapeType } from '../model/INodeModel';
+import type NodeModel from '../model/NodeModel';
 import ColorUtil from './ColorUtil';
-import Topic from '../Topic';
-import Theme, { TopicType, ThemeVariant } from './Theme';
+import type Topic from '../Topic';
+import type { TopicType, ThemeVariant } from './Theme';
+import type Theme from './Theme';
 import { $msg } from '../Messages';
-import { ThemeStyle } from './ThemeStyle';
-import type { TopicStyleType } from './ThemeStyle';
+import type { ThemeStyle, TopicStyleType } from './ThemeStyle';
 import type { BackgroundPatternType } from '../model/CanvasStyleType';
 import ThemeResolutionCache from './ThemeResolutionCache';
 import pickByOrder from './pickByOrder';

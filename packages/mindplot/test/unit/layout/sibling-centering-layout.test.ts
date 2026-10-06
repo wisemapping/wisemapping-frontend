@@ -17,7 +17,7 @@
  */
 
 import { buildDesigner } from '../commands/designer-harness';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 import { LineType } from '../../../src/components/BaseConnectionLine';
 import { STRAIGHT_TOLERANCE_PX } from '../../../src/components/TopicConnection';
 

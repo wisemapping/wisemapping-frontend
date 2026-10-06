@@ -18,8 +18,8 @@ import { $assert } from '../util/assert';
 import ModelCodeName from './ModelCodeName';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
-import NodeModel from '../model/NodeModel';
-import XMLMindmapSerializer from './XMLMindmapSerializer';
+import type NodeModel from '../model/NodeModel';
+import type XMLMindmapSerializer from './XMLMindmapSerializer';
 import emojiToIconMap from './iconToEmoji.json';
 import { isFontStyleType, isFontWeightType, isTopicShapeType } from './TopicAttributeTypes';
 

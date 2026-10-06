@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import type Mindmap from '../model/Mindmap';
-import INodeModel from '../model/INodeModel';
+import type INodeModel from '../model/INodeModel';
 import Exporter from './Exporter';
 import ContentType from '../ContentType';
 

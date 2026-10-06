@@ -16,11 +16,12 @@
  *   limitations under the License.
  */
 
-import { CurvedLine, Group } from '@wisemapping/web2d';
-import Canvas from '../../src/components/Canvas';
+import type { CurvedLine } from '@wisemapping/web2d';
+import { Group } from '@wisemapping/web2d';
+import type Canvas from '../../src/components/Canvas';
 import DragPivot from '../../src/components/DragPivot';
-import PositionType from '../../src/components/PositionType';
-import Topic from '../../src/components/Topic';
+import type PositionType from '../../src/components/PositionType';
+import type Topic from '../../src/components/Topic';
 import { STRAIGHT_TOLERANCE_PX } from '../../src/components/TopicConnection';
 
 /**

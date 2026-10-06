@@ -17,7 +17,7 @@
  */
 import ContentType from '../../../src/components/ContentType';
 import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type NodeModel from '../../../src/components/model/NodeModel';
 
 /**
  * central (0)

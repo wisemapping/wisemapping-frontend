@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import RESTPersistenceManager from '../../../src/components/RestPersistenceManager';
-import { PersistenceError } from '../../../src/components/PersistenceManager';
+import type { PersistenceError } from '../../../src/components/PersistenceManager';
 
 type FakeResponse = {
   ok: boolean;

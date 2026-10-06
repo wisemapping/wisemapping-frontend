@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globals';
-import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type Mindmap from '../../../src/components/model/Mindmap';
+import type NodeModel from '../../../src/components/model/NodeModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import { StrokeStyle } from '../../../src/components/model/RelationshipModel';

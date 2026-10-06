@@ -19,8 +19,8 @@
 import { Group, Rect, StraightLine } from '@wisemapping/web2d';
 import debounce from 'lodash/debounce';
 import { $assert } from './util/assert';
-import { Removable } from './Icon';
-import PositionType from './PositionType';
+import type { Removable } from './Icon';
+import type PositionType from './PositionType';
 import type Designer from './Designer';
 
 class ElementDeleteWidget {

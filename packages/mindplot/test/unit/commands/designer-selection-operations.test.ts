@@ -17,11 +17,12 @@
  */
 
 import { LineType } from '../../../src/components/ConnectionLine';
-import Designer from '../../../src/components/Designer';
+import type Designer from '../../../src/components/Designer';
 import { $msg } from '../../../src/components/Messages';
 import ToolbarNotifier from '../../../src/components/model/ToolbarNotifier';
 import { StrokeStyle } from '../../../src/components/model/RelationshipModel';
-import { buildDesigner, Harness, SAMPLE_MAP } from './designer-harness';
+import type { Harness } from './designer-harness';
+import { buildDesigner, SAMPLE_MAP } from './designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

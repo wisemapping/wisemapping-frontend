@@ -16,9 +16,10 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import INodeModel, { NodeModelType as NodeType } from './INodeModel';
-import NodeModel from './NodeModel';
-import RelationshipModel from './RelationshipModel';
+import type { NodeModelType as NodeType } from './INodeModel';
+import type INodeModel from './INodeModel';
+import type NodeModel from './NodeModel';
+import type RelationshipModel from './RelationshipModel';
 
 abstract class IMindmap {
   /** The first branch, undefined while the map has none (an empty map, before it is loaded). */

@@ -20,7 +20,7 @@ import { describe, expect, test } from '@jest/globals';
 import FreeplaneImporter from '../../../src/components/import/FreeplaneImporter';
 import MindManagerImporter from '../../../src/components/import/MindManagerImporter';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
-import Mindmap from '../../../src/components/model/Mindmap';
+import type Mindmap from '../../../src/components/model/Mindmap';
 import { StrokeStyle } from '../../../src/components/model/RelationshipModel';
 
 // Dash styles are a stroke style. Relationships are always drawn thin curved.

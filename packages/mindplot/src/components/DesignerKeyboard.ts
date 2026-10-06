@@ -22,8 +22,8 @@ import { sideOf } from './util/side';
 import getCollapsedAncestorIds from './util/topicVisibility';
 import Keyboard from './Keyboard';
 import type Designer from './Designer';
-import Topic from './Topic';
-import { TopicMove } from './util/topicReorder';
+import type Topic from './Topic';
+import type { TopicMove } from './util/topicReorder';
 import { $msg } from './Messages';
 import { $notify } from './model/ToolbarNotifier';
 

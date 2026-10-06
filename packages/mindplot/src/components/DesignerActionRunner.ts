@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import ActionDispatcher from './ActionDispatcher';
-import Command from './Command';
-import CommandContext from './CommandContext';
+import type ActionDispatcher from './ActionDispatcher';
+import type Command from './Command';
+import type CommandContext from './CommandContext';
 import DesignerUndoManager from './DesignerUndoManager';
 
 class DesignerActionRunner {

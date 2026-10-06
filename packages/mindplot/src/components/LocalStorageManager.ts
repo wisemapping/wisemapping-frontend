@@ -15,7 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import PersistenceManager, { SaveEvents } from './PersistenceManager';
+import type { SaveEvents } from './PersistenceManager';
+import PersistenceManager from './PersistenceManager';
 import { AjaxUtils } from './util/AjaxUtils';
 
 class LocalStorageManager extends PersistenceManager {

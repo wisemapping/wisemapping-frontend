@@ -15,10 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import LinkIcon from '../../src/components/LinkIcon';
+import type LinkIcon from '../../src/components/LinkIcon';
 import LinkModel from '../../src/components/model/LinkModel';
-import Topic from '../../src/components/Topic';
-import WidgetBuilder, { WidgetEventType } from '../../src/components/WidgetBuilder';
+import type Topic from '../../src/components/Topic';
+import type { WidgetEventType } from '../../src/components/WidgetBuilder';
+import WidgetBuilder from '../../src/components/WidgetBuilder';
 
 class TestWidgetBuilder extends WidgetBuilder {
   buildEditorForLink(): React.ReactElement {

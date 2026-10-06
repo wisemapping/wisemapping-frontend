@@ -16,9 +16,10 @@
  *   limitations under the License.
  */
 
-import { Ellipse } from '@wisemapping/web2d';
-import ActionDispatcher, { CommandDispatcher } from '../../src/components/ActionDispatcher';
-import Canvas from '../../src/components/Canvas';
+import type { Ellipse } from '@wisemapping/web2d';
+import type { CommandDispatcher } from '../../src/components/ActionDispatcher';
+import ActionDispatcher from '../../src/components/ActionDispatcher';
+import type Canvas from '../../src/components/Canvas';
 import Relationship from '../../src/components/Relationship';
 import RelationshipControlPoints, {
   PivotType,

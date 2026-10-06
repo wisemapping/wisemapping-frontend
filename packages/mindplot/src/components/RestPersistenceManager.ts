@@ -18,12 +18,8 @@
 import { $assert } from './util/assert';
 import { $msg } from './Messages';
 import { AjaxUtils } from './util/AjaxUtils';
-import PersistenceManager, {
-  PersistenceError,
-  SaveEvents,
-  SaveOptions,
-  ServerError,
-} from './PersistenceManager';
+import type { PersistenceError, SaveEvents, SaveOptions, ServerError } from './PersistenceManager';
+import PersistenceManager from './PersistenceManager';
 
 type PendingSave = {
   mapId: string;

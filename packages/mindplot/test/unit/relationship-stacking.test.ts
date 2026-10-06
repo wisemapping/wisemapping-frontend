@@ -22,8 +22,9 @@
  * in (BL5-145). The stacking is now set once, when a relationship is added: below the topics and
  * the relationships already there, with the line on top of its arrows and its focus parts.
  */
-import { buildDesigner, Harness, SAMPLE_MAP } from './commands/designer-harness';
-import Relationship from '../../src/components/Relationship';
+import type { Harness } from './commands/designer-harness';
+import { buildDesigner, SAMPLE_MAP } from './commands/designer-harness';
+import type Relationship from '../../src/components/Relationship';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,

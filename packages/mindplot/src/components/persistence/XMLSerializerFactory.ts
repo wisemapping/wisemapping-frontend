@@ -20,8 +20,8 @@ import Beta2PelaMigrator from './Beta2PelaMigrator';
 import Pela2TangoMigrator from './Pela2TangoMigrator';
 import XMLSerializerBeta from './XMLSerializerBeta';
 import XMLSerializerTango from './XMLSerializerTango';
-import Mindmap from '../model/Mindmap';
-import XMLMindmapSerializer from './XMLMindmapSerializer';
+import type Mindmap from '../model/Mindmap';
+import type XMLMindmapSerializer from './XMLMindmapSerializer';
 
 type SerializerConstructor = new () => XMLMindmapSerializer;
 

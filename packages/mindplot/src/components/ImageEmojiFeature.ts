@@ -16,15 +16,15 @@
  *   limitations under the License.
  */
 
-import { Text, Group } from '@wisemapping/web2d';
-import type { Image } from '@wisemapping/web2d';
+import { Text } from '@wisemapping/web2d';
+import type { Image, Group } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import ElementDeleteWidget from './ElementDeleteWidget';
-import { Removable } from './Icon';
-import IconGroup from './IconGroup';
-import SizeType from './SizeType';
-import PositionType from './PositionType';
-import Topic from './Topic';
+import type { Removable } from './Icon';
+import type IconGroup from './IconGroup';
+import type SizeType from './SizeType';
+import type PositionType from './PositionType';
+import type Topic from './Topic';
 import ThemeFactory from './theme/ThemeFactory';
 
 class ImageEmojiFeature {

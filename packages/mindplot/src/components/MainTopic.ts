@@ -20,8 +20,8 @@ import { $assert } from './util/assert';
 
 import Topic from './Topic';
 import Shape from './util/Shape';
-import Canvas from './Canvas';
-import PositionType from './PositionType';
+import type Canvas from './Canvas';
+import type PositionType from './PositionType';
 import TopicShapeFactory from './shape/TopicShapeFactory';
 
 class MainTopic extends Topic {

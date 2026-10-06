@@ -23,11 +23,13 @@
  */
 import { describe, expect, it } from '@jest/globals';
 import ColorUtil from '../../../src/components/theme/ColorUtil';
-import Theme, { ThemeVariant } from '../../../src/components/theme/Theme';
+import type { ThemeVariant } from '../../../src/components/theme/Theme';
+import type Theme from '../../../src/components/theme/Theme';
 import ThemeFactory from '../../../src/components/theme/ThemeFactory';
 import { THEME_TYPES } from '../../../src/components/model/ThemeType';
-import Topic from '../../../src/components/Topic';
-import { FakeModelProps, themedFakeTopic } from './FakeTopic';
+import type Topic from '../../../src/components/Topic';
+import type { FakeModelProps } from './FakeTopic';
+import { themedFakeTopic } from './FakeTopic';
 
 const MIN_CONTRAST = 3;
 

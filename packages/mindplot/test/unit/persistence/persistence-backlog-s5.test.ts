@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
-import NoteModel from '../../../src/components/model/NoteModel';
+import type NodeModel from '../../../src/components/model/NodeModel';
+import type NoteModel from '../../../src/components/model/NoteModel';
 import FeatureModel from '../../../src/components/model/FeatureModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
 import XMLSerializerBeta from '../../../src/components/persistence/XMLSerializerBeta';
-import XMLMindmapSerializer from '../../../src/components/persistence/XMLMindmapSerializer';
+import type XMLMindmapSerializer from '../../../src/components/persistence/XMLMindmapSerializer';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import PersistenceManager from '../../../src/components/PersistenceManager';
 

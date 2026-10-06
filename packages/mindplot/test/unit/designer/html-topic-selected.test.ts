@@ -17,7 +17,7 @@
  */
 import Designer from '../../../src/components/Designer';
 import HTMLTopicSelected from '../../../src/components/HTMLTopicSelected';
-import ScreenManager from '../../../src/components/ScreenManager';
+import type ScreenManager from '../../../src/components/ScreenManager';
 import Topic from '../../../src/components/Topic';
 import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
 import type NodeModel from '../../../src/components/model/NodeModel';

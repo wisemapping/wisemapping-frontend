@@ -17,14 +17,15 @@
  */
 import { $assert } from '../util/assert';
 import EventDispispatcher from '../EventDispatcher';
-import RootedTreeSet, { RaphaelPaper } from './RootedTreeSet';
+import type { RaphaelPaper } from './RootedTreeSet';
+import RootedTreeSet from './RootedTreeSet';
 import OriginalLayout from './OriginalLayout';
 import TreeLayout from './TreeLayout';
 import ChangeEvent from './ChangeEvent';
-import SizeType from '../SizeType';
-import Node from './Node';
-import PositionType from '../PositionType';
-import LayoutEventType from './LayoutEventType';
+import type SizeType from '../SizeType';
+import type Node from './Node';
+import type PositionType from '../PositionType';
+import type LayoutEventType from './LayoutEventType';
 import type { SorterPrediction } from './ChildrenSorterStrategy';
 
 import type { LayoutType, OrientationType } from './LayoutType';

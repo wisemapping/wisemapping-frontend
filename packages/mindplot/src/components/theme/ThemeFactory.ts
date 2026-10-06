@@ -16,14 +16,15 @@
  *   limitations under the License.
  */
 
-import NodeModel from '../model/NodeModel';
-import ThemeType from '../model/ThemeType';
+import type NodeModel from '../model/NodeModel';
+import type ThemeType from '../model/ThemeType';
 import ClassicTheme from './ClassicTheme';
 import PrismTheme from './PrismTheme';
 import SunriseTheme from './SunriseTheme';
 import OceanTheme from './OceanTheme';
 import RobotTheme from './RobotTheme';
-import Theme, { ThemeVariant } from './Theme';
+import type { ThemeVariant } from './Theme';
+import type Theme from './Theme';
 import AuroraTheme from './AuroraTheme';
 import RetroTheme from './RetroTheme';
 

@@ -17,10 +17,10 @@
  */
 import Designer from '../../src/components/Designer';
 import MindplotWebComponent from '../../src/components/MindplotWebComponent';
-import PersistenceManager from '../../src/components/PersistenceManager';
-import WidgetBuilder from '../../src/components/WidgetBuilder';
+import type PersistenceManager from '../../src/components/PersistenceManager';
+import type WidgetBuilder from '../../src/components/WidgetBuilder';
 import buildDesigner from '../../src/components/DesignerBuilder';
-import { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
+import type { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
 import LocalStorageManager from '../../src/components/LocalStorageManager';
 
 jest.mock('../../src/components/DesignerBuilder', () => ({

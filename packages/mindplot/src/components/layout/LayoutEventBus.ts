@@ -15,8 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import EventDispatcher, { EventArgs, EventHandler } from '../EventDispatcher';
-import { LayoutEventBusType, LayoutEvents } from '../LayoutEventBusType';
+import type { EventArgs, EventHandler } from '../EventDispatcher';
+import EventDispatcher from '../EventDispatcher';
+import type { LayoutEventBusType, LayoutEvents } from '../LayoutEventBusType';
 
 /** The payload of each event. Topics send their model, not themselves. */
 export type LayoutEventPayloads = LayoutEvents;

@@ -15,16 +15,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Arrow, CurvedLine } from '@wisemapping/web2d';
-import type { Line, StrokeStyle as LineStrokeStyle } from '@wisemapping/web2d';
+import { Arrow } from '@wisemapping/web2d';
+import type { Line, StrokeStyle as LineStrokeStyle, CurvedLine } from '@wisemapping/web2d';
 import BaseConnectionLine, { LineType } from './BaseConnectionLine';
 import ArcLine from './model/ArcLine';
 import RelationshipControlPoints, { PivotType } from './RelationshipControlPoints';
-import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
-import PositionType from './PositionType';
-import Topic from './Topic';
+import type RelationshipModel from './model/RelationshipModel';
+import { StrokeStyle } from './model/RelationshipModel';
+import type PositionType from './PositionType';
+import type Topic from './Topic';
 import Shape from './util/Shape';
-import Canvas from './Canvas';
+import type Canvas from './Canvas';
 
 /** The relationship's own events: it fires them, with itself as detail, on a focus change. */
 export type RelationshipEventMap = { ontfocus: Relationship; ontblur: Relationship };

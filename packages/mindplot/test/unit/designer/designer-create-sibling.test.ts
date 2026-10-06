@@ -21,7 +21,7 @@ import Designer from '../../../src/components/Designer';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import type { LayoutType } from '../../../src/components/layout/LayoutType';
 import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type NodeModel from '../../../src/components/model/NodeModel';
 import type Topic from '../../../src/components/Topic';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({

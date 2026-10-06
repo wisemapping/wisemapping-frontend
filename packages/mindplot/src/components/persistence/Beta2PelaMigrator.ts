@@ -17,10 +17,10 @@
  */
 import { $assert } from '../util/assert';
 import type Mindmap from '../model/Mindmap';
-import NodeModel from '../model/NodeModel';
+import type NodeModel from '../model/NodeModel';
 import { sideOf } from '../util/side';
 import ModelCodeName from './ModelCodeName';
-import XMLMindmapSerializer from './XMLMindmapSerializer';
+import type XMLMindmapSerializer from './XMLMindmapSerializer';
 import XMLSerializerPela from './XMLSerializerTango';
 
 class Beta2PelaMigrator implements XMLMindmapSerializer {

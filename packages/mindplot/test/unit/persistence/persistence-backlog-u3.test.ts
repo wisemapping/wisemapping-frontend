@@ -15,10 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type Mindmap from '../../../src/components/model/Mindmap';
+import type NodeModel from '../../../src/components/model/NodeModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
-import FeatureType from '../../../src/components/model/FeatureType';
+import type FeatureType from '../../../src/components/model/FeatureType';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import { LineType } from '../../../src/components/ConnectionLine';
 

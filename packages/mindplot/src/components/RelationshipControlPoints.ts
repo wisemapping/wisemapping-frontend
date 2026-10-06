@@ -17,8 +17,8 @@
  */
 // eslint-disable-next-line max-classes-per-file
 import { Ellipse, StraightLine } from '@wisemapping/web2d';
-import Canvas from './Canvas';
-import PositionType from './PositionType';
+import type Canvas from './Canvas';
+import type PositionType from './PositionType';
 import Relationship from './Relationship';
 
 /** Which end of a relationship a control point belongs to. */

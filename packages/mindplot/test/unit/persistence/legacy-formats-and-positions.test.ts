@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type NodeModel from '../../../src/components/model/NodeModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
 import XMLSerializerTango from '../../../src/components/persistence/XMLSerializerTango';
 import XMLSerializerBeta from '../../../src/components/persistence/XMLSerializerBeta';

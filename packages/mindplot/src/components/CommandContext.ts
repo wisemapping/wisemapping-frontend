@@ -17,11 +17,11 @@
  */
 import { $assert } from './util/assert';
 import type Designer from './Designer';
-import NodeModel from './model/NodeModel';
-import RelationshipModel from './model/RelationshipModel';
-import PositionType from './PositionType';
-import Relationship from './Relationship';
-import Topic from './Topic';
+import type NodeModel from './model/NodeModel';
+import type RelationshipModel from './model/RelationshipModel';
+import type PositionType from './PositionType';
+import type Relationship from './Relationship';
+import type Topic from './Topic';
 
 class CommandContext {
   private _designer: Designer;

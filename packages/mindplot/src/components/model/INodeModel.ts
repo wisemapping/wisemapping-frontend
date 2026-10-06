@@ -16,13 +16,13 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import { LineType } from '../ConnectionLine';
-import PositionType from '../PositionType';
-import { FontWeightType } from '../FontWeightType';
-import { FontStyleType } from '../FontStyleType';
-import FeatureModel from './FeatureModel';
-import Mindmap from './Mindmap';
-import SizeType from '../SizeType';
+import type { LineType } from '../ConnectionLine';
+import type PositionType from '../PositionType';
+import type { FontWeightType } from '../FontWeightType';
+import type { FontStyleType } from '../FontStyleType';
+import type FeatureModel from './FeatureModel';
+import type Mindmap from './Mindmap';
+import type SizeType from '../SizeType';
 import ContentType from '../ContentType';
 
 export type NodeModelType = 'CentralTopic' | 'MainTopic';

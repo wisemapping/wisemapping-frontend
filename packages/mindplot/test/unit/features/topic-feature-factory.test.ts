@@ -15,12 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import TopicFeatureFactory, { IconBuilders } from '../../../src/components/TopicFeature';
-import FeatureModel from '../../../src/components/model/FeatureModel';
+import type { IconBuilders } from '../../../src/components/TopicFeature';
+import TopicFeatureFactory from '../../../src/components/TopicFeature';
+import type FeatureModel from '../../../src/components/model/FeatureModel';
 import FeatureModelFactory from '../../../src/components/model/FeatureModelFactory';
-import FeatureType from '../../../src/components/model/FeatureType';
-import Topic from '../../../src/components/Topic';
-import Icon from '../../../src/components/Icon';
+import type FeatureType from '../../../src/components/model/FeatureType';
+import type Topic from '../../../src/components/Topic';
+import type Icon from '../../../src/components/Icon';
 
 // Each icon class records what it was built with. A function declaration: jest.mock is hoisted.
 function mockIconClass(name: string) {

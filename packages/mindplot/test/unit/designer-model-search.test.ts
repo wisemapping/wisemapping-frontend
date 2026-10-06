@@ -18,7 +18,7 @@
 
 import { expect, describe, it } from '@jest/globals';
 import DesignerModel from '../../src/components/DesignerModel';
-import Topic from '../../src/components/Topic';
+import type Topic from '../../src/components/Topic';
 
 /**
  * `plainText` is what the model stores; `renderedText` is what the theme puts

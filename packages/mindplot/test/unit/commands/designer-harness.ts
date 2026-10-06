@@ -24,12 +24,12 @@
  * per file), as the other designer tests do.
  */
 import Designer from '../../../src/components/Designer';
-import LinkIcon from '../../../src/components/LinkIcon';
-import NoteIcon from '../../../src/components/NoteIcon';
-import Topic from '../../../src/components/Topic';
+import type LinkIcon from '../../../src/components/LinkIcon';
+import type NoteIcon from '../../../src/components/NoteIcon';
+import type Topic from '../../../src/components/Topic';
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
-import LinkModel from '../../../src/components/model/LinkModel';
-import NoteModel from '../../../src/components/model/NoteModel';
+import type LinkModel from '../../../src/components/model/LinkModel';
+import type NoteModel from '../../../src/components/model/NoteModel';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
 // jsdom does not lay out SVG text, so give every element a fixed box.

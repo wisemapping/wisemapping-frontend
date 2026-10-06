@@ -18,10 +18,10 @@
 import { CurvedLine, Arrow } from '@wisemapping/web2d';
 import Relationship from './Relationship';
 import Shape from './util/Shape';
-import Canvas from './Canvas';
+import type Canvas from './Canvas';
 import type Designer from './Designer';
-import Topic from './Topic';
-import PositionType from './PositionType';
+import type Topic from './Topic';
+import type PositionType from './PositionType';
 
 class RelationshipPivot {
   private _canvas: Canvas;

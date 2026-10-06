@@ -20,8 +20,10 @@ import { $assert } from '../util/assert';
 import SvgIconModel from './SvgIconModel';
 import LinkModel from './LinkModel';
 import NoteModel from './NoteModel';
-import FeatureModel, { FeatureAttributes } from './FeatureModel';
-import FeatureType, { type FeatureByType } from './FeatureType';
+import type { FeatureAttributes } from './FeatureModel';
+import type FeatureModel from './FeatureModel';
+import type FeatureType from './FeatureType';
+import { type FeatureByType } from './FeatureType';
 import EmojiIconModel from './EmojiIconModel';
 
 interface NodeById {

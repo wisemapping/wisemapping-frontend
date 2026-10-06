@@ -18,9 +18,10 @@
 import ClassicTheme from '../../../src/components/theme/ClassicTheme';
 import ColorUtil from '../../../src/components/theme/ColorUtil';
 import PrismTheme from '../../../src/components/theme/PrismTheme';
-import { ThemeVariant } from '../../../src/components/theme/Theme';
-import Topic from '../../../src/components/Topic';
-import fakeTopic, { FakeModelProps } from './FakeTopic';
+import type { ThemeVariant } from '../../../src/components/theme/Theme';
+import type Topic from '../../../src/components/Topic';
+import type { FakeModelProps } from './FakeTopic';
+import fakeTopic from './FakeTopic';
 
 const BLACK = '#000000';
 const WHITE = '#FFFFFF';
@@ -95,7 +96,9 @@ describe('theme text colour contrast', () => {
 
     // welcome-prism: "5 min tutorial video ?" has a light fill picked by the user, saved as rgb().
     it('turns white text black on a light rgb() fill the user picked', () => {
-      expect(prism('light').getFontColor(main({ backgroundColor: 'rgb(224,229,239)' }))).toBe(BLACK);
+      expect(prism('light').getFontColor(main({ backgroundColor: 'rgb(224,229,239)' }))).toBe(
+        BLACK,
+      );
     });
 
     it('measures against the canvas colour the map sets', () => {

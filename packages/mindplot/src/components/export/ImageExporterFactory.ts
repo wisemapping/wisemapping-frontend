@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import BinaryImageExporter from './BinaryImageExporter';
-import Exporter from './Exporter';
+import type Exporter from './Exporter';
 import SVGExporter from './SVGExporter';
 import PDFExporter from './PDFExporter';
 

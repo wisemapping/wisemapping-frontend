@@ -21,11 +21,12 @@
  * their commands through ActionDispatcher.getInstance(): the dispatcher of the last designer
  * built. With two designers on the page, an edit in the first changed the second's map (BL5-144).
  */
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 import NoteIcon from '../../../src/components/NoteIcon';
 import LinkIcon from '../../../src/components/LinkIcon';
 import ShrinkConnector from '../../../src/components/ShrinkConnector';
-import WidgetBuilder from '../../../src/components/WidgetBuilder';
+import type WidgetBuilder from '../../../src/components/WidgetBuilder';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

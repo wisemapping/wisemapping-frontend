@@ -16,12 +16,13 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import Designer from './Designer';
+import type Designer from './Designer';
 import buildDesigner from './DesignerBuilder';
 import DesignerOptionsBuilder from './DesignerOptionsBuilder';
-import EditorRenderMode from './EditorRenderMode';
-import PersistenceManager, { SaveOptions } from './PersistenceManager';
-import WidgetBuilder from './WidgetBuilder';
+import type EditorRenderMode from './EditorRenderMode';
+import type { SaveOptions } from './PersistenceManager';
+import type PersistenceManager from './PersistenceManager';
+import type WidgetBuilder from './WidgetBuilder';
 import mindplotStyles from './styles/mindplot-styles';
 import { $notify } from './model/ToolbarNotifier';
 import { $msg } from './Messages';

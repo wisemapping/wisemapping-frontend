@@ -21,7 +21,7 @@ import type { FontStyle } from '@wisemapping/web2d';
 import DOMUtils from './util/DOMUtils';
 import EventManager from './util/EventManager';
 import EventDispatcher from './EventDispatcher';
-import Topic from './Topic';
+import type Topic from './Topic';
 
 /** 'input' sends the DOM event and the new text. */
 type EditorEvents = { input: [Event, string] };

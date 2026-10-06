@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Topic from '../Topic';
+import type Topic from '../Topic';
 import DefaultTheme from './DefaultTheme';
-import { ThemeVariant } from './Theme';
+import type { ThemeVariant } from './Theme';
 import { ThemeStyle } from './ThemeStyle';
 import pickByOrder from './pickByOrder';
 

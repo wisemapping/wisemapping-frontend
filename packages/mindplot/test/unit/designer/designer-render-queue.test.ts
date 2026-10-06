@@ -20,7 +20,7 @@ import { createHash } from 'crypto';
 import { buildDesigner } from '../commands/designer-harness';
 import { buildMediumMap, useTextSizedBoxes } from './medium-map';
 import Canvas from '../../../src/components/Canvas';
-import Designer from '../../../src/components/Designer';
+import type Designer from '../../../src/components/Designer';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

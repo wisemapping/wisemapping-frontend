@@ -17,7 +17,7 @@
  */
 
 import { buildDesigner } from './commands/designer-harness';
-import Relationship from '../../src/components/Relationship';
+import type Relationship from '../../src/components/Relationship';
 import { StrokeStyle } from '../../src/components/model/RelationshipModel';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({

@@ -17,12 +17,13 @@
  */
 import { $assert } from '../util/assert';
 import IMindmap from './IMindmap';
-import INodeModel, { NodeModelType } from './INodeModel';
+import type { NodeModelType } from './INodeModel';
+import INodeModel from './INodeModel';
 import NodeModel from './NodeModel';
 import RelationshipModel from './RelationshipModel';
 import ModelCodeName from '../persistence/ModelCodeName';
-import ThemeType from './ThemeType';
-import { CanvasStyleType } from './CanvasStyleType';
+import type ThemeType from './ThemeType';
+import type { CanvasStyleType } from './CanvasStyleType';
 import type { LayoutType } from '../layout/LayoutType';
 
 class Mindmap extends IMindmap {

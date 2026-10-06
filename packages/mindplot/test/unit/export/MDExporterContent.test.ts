@@ -17,7 +17,7 @@
  */
 import { describe, expect, it } from '@jest/globals';
 import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type NodeModel from '../../../src/components/model/NodeModel';
 import LinkModel from '../../../src/components/model/LinkModel';
 import NoteModel from '../../../src/components/model/NoteModel';
 import ContentType from '../../../src/components/ContentType';

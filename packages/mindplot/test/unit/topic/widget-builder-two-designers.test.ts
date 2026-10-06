@@ -15,13 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
 import LinkModel from '../../../src/components/model/LinkModel';
 import NoteModel from '../../../src/components/model/NoteModel';
-import LinkIcon from '../../../src/components/LinkIcon';
-import NoteIcon from '../../../src/components/NoteIcon';
-import Topic from '../../../src/components/Topic';
+import type LinkIcon from '../../../src/components/LinkIcon';
+import type NoteIcon from '../../../src/components/NoteIcon';
+import type Topic from '../../../src/components/Topic';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

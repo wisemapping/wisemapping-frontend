@@ -15,12 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import PositionType from '../PositionType';
-import INodeModel from '../model/INodeModel';
-import SizeType from '../SizeType';
-import LayoutEventBus from './LayoutEventBus';
-import LayoutManager from './LayoutManager';
-import { LayoutEventBusType, LayoutEvents } from '../LayoutEventBusType';
+import type PositionType from '../PositionType';
+import type INodeModel from '../model/INodeModel';
+import type SizeType from '../SizeType';
+import type LayoutEventBus from './LayoutEventBus';
+import type LayoutManager from './LayoutManager';
+import type { LayoutEventBusType, LayoutEvents } from '../LayoutEventBusType';
 
 class EventBusDispatcher {
   private _layoutManager: LayoutManager | null;

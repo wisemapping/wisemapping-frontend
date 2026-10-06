@@ -17,7 +17,7 @@
  */
 import { afterEach, describe, expect, jest, test } from '@jest/globals';
 import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type NodeModel from '../../../src/components/model/NodeModel';
 
 const createTopic = (): NodeModel => new Mindmap('map').createNode('MainTopic');
 

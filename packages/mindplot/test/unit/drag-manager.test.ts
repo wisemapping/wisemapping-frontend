@@ -17,16 +17,17 @@
  */
 
 import { Group } from '@wisemapping/web2d';
-import ActionDispatcher, { CommandDispatcher } from '../../src/components/ActionDispatcher';
-import Canvas from '../../src/components/Canvas';
+import type { CommandDispatcher } from '../../src/components/ActionDispatcher';
+import ActionDispatcher from '../../src/components/ActionDispatcher';
+import type Canvas from '../../src/components/Canvas';
 import DragManager from '../../src/components/DragManager';
 import DragPivot from '../../src/components/DragPivot';
 import DragTopic from '../../src/components/DragTopic';
-import EventBusDispatcher from '../../src/components/layout/EventBusDispatcher';
-import LayoutManager from '../../src/components/layout/LayoutManager';
-import NodeGraph from '../../src/components/NodeGraph';
+import type EventBusDispatcher from '../../src/components/layout/EventBusDispatcher';
+import type LayoutManager from '../../src/components/layout/LayoutManager';
+import type NodeGraph from '../../src/components/NodeGraph';
 import ScreenManager from '../../src/components/ScreenManager';
-import Topic from '../../src/components/Topic';
+import type Topic from '../../src/components/Topic';
 
 jest.mock('../../src/components/export/PDFExporter', () => ({
   __esModule: true,

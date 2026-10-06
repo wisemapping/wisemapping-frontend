@@ -15,12 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import INodeModel, { TopicShapeType } from '../model/INodeModel';
-import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
-import FeatureModel from '../model/FeatureModel';
+import type { TopicShapeType } from '../model/INodeModel';
+import type INodeModel from '../model/INodeModel';
+import type RelationshipModel from '../model/RelationshipModel';
+import { StrokeStyle } from '../model/RelationshipModel';
+import type FeatureModel from '../model/FeatureModel';
 import ContentType from '../ContentType';
 import FreemindExporter from './FreemindExporter';
-import { FreemindArrowlink, FreemindNode } from './freemind/FreemindModel';
+import type { FreemindArrowlink, FreemindNode } from './freemind/FreemindModel';
 
 /**
  * Freeplane maps (.mm). Freeplane reads the FreeMind format, so the FreeMind exporter writes the

@@ -71,7 +71,7 @@ import Importer from './Importer';
 import ImportError from './ImportError';
 import SecureXmlParser from '../security/SecureXmlParser';
 import Mindmap from '../model/Mindmap';
-import NodeModel from '../model/NodeModel';
+import type NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import { decodeUtf8, tryDecodeUtf8 } from './support/Utf8Decoder';
@@ -85,7 +85,7 @@ import {
   PRIORITY_EMOJIS,
 } from './support/IconEmoji';
 import { alternatingSidePosition } from './support/MainTopicPosition';
-import PositionType from '../PositionType';
+import type PositionType from '../PositionType';
 
 // XMind data structures
 interface XMindTopic {

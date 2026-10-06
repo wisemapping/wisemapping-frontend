@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { Rect } from '@wisemapping/web2d';
-import SizeType from '../SizeType';
+import type SizeType from '../SizeType';
 import DefaultTopicShape from './DefaultShape';
 
 class RectTopicShape extends DefaultTopicShape<Rect> {

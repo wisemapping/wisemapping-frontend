@@ -18,11 +18,11 @@
 import flatten from 'lodash/flatten';
 import { $assert } from '../util/assert';
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import NodeModel from '../model/NodeModel';
-import RelationshipModel from '../model/RelationshipModel';
-import Relationship from '../Relationship';
-import Topic from '../Topic';
+import type CommandContext from '../CommandContext';
+import type NodeModel from '../model/NodeModel';
+import type RelationshipModel from '../model/RelationshipModel';
+import type Relationship from '../Relationship';
+import type Topic from '../Topic';
 
 class DeleteCommand extends Command {
   private _relIds: number[];

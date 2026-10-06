@@ -23,13 +23,13 @@ import {
   isWithinStraightTolerance,
 } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 
-import SizeType from './SizeType';
-import Topic from './Topic';
+import type SizeType from './SizeType';
+import type Topic from './Topic';
 import Shape from './util/Shape';
-import Canvas from './Canvas';
-import CanvasElement from './CanvasElement';
+import type Canvas from './Canvas';
+import type CanvasElement from './CanvasElement';
 
 class DragPivot implements CanvasElement {
   private _position: PositionType;

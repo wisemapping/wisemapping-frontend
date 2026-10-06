@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import PositionType from '../PositionType';
+import type PositionType from '../PositionType';
 
 /** A relationship's stroke: persisted as its strokeStyle attribute, so the values are fixed. */
 export const StrokeStyle = {

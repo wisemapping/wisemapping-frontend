@@ -16,7 +16,8 @@
  *   limitations under the License.
  */
 
-import ActionDispatcher, { CommandDispatcher } from '../../../src/components/ActionDispatcher';
+import type { CommandDispatcher } from '../../../src/components/ActionDispatcher';
+import ActionDispatcher from '../../../src/components/ActionDispatcher';
 import { buildTopics, stubSvgMeasurement } from './Helper';
 
 type DispatcherMock = {

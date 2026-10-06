@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { LineType } from '../../../src/components/ConnectionLine';
-import Topic from '../../../src/components/Topic';
-import Theme from '../../../src/components/theme/Theme';
+import type { LineType } from '../../../src/components/ConnectionLine';
+import type Topic from '../../../src/components/Topic';
+import type Theme from '../../../src/components/theme/Theme';
 
 export type FakeModelProps = {
   borderColor?: string;

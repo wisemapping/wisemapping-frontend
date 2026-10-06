@@ -16,8 +16,9 @@
  *   limitations under the License.
  */
 
-import Topic from '../../../src/components/Topic';
-import { buildDesigner, Harness, SAMPLE_MAP } from '../commands/designer-harness';
+import type Topic from '../../../src/components/Topic';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner, SAMPLE_MAP } from '../commands/designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

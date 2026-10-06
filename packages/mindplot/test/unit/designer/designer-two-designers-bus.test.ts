@@ -21,10 +21,11 @@
  * ran the layout handlers of every designer on the page, and a web font load made each designer
  * lay out the others (BL5-163).
  */
-import { buildDesigner, Harness } from '../commands/designer-harness';
-import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
-import LayoutManager from '../../../src/components/layout/LayoutManager';
-import Designer from '../../../src/components/Designer';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
+import type EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
+import type LayoutManager from '../../../src/components/layout/LayoutManager';
+import type Designer from '../../../src/components/Designer';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

@@ -18,9 +18,9 @@
 import { $assert } from '../util/assert';
 import AbstractBasicSorter from './AbstractBasicSorter';
 import type { SorterPrediction } from './ChildrenSorterStrategy';
-import RootedTreeSet from './RootedTreeSet';
-import Node from './Node';
-import PositionType from '../PositionType';
+import type RootedTreeSet from './RootedTreeSet';
+import type Node from './Node';
+import type PositionType from '../PositionType';
 import { sideOf } from '../util/side';
 
 class SymmetricSorter extends AbstractBasicSorter {

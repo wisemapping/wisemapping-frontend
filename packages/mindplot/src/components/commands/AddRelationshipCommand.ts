@@ -17,8 +17,8 @@
  */
 import { $assert } from '../util/assert';
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import RelationshipModel from '../model/RelationshipModel';
+import type CommandContext from '../CommandContext';
+import type RelationshipModel from '../model/RelationshipModel';
 
 class AddRelationshipCommand extends Command {
   private _model: RelationshipModel;

@@ -20,12 +20,13 @@ import { $assert } from '../util/assert';
 import { createDocument } from '../util/DOMUtils';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
-import NodeModel from '../model/NodeModel';
+import type NodeModel from '../model/NodeModel';
 import INodeModel from '../model/INodeModel';
-import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
-import XMLMindmapSerializer from './XMLMindmapSerializer';
+import type RelationshipModel from '../model/RelationshipModel';
+import { StrokeStyle } from '../model/RelationshipModel';
+import type XMLMindmapSerializer from './XMLMindmapSerializer';
 import ModelCodeName from './ModelCodeName';
-import FeatureModel from '../model/FeatureModel';
+import type FeatureModel from '../model/FeatureModel';
 import { legacyIconEmoji } from '../import/support/LegacyIconMap';
 import {
   isBackgroundPatternType,
@@ -37,7 +38,7 @@ import {
   isThemeType,
   isTopicShapeType,
 } from './TopicAttributeTypes';
-import { CanvasStyleType } from '../model/CanvasStyleType';
+import type { CanvasStyleType } from '../model/CanvasStyleType';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';

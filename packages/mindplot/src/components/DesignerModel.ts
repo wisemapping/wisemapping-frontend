@@ -16,11 +16,11 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import CentralTopic from './CentralTopic';
-import { DesignerOptions } from './DesignerOptionsBuilder';
-import Relationship from './Relationship';
-import Topic from './Topic';
-import NodeModel from './model/NodeModel';
+import type CentralTopic from './CentralTopic';
+import type { DesignerOptions } from './DesignerOptionsBuilder';
+import type Relationship from './Relationship';
+import type Topic from './Topic';
+import type NodeModel from './model/NodeModel';
 import { $notify } from './model/ToolbarNotifier';
 
 class DesignerModel {

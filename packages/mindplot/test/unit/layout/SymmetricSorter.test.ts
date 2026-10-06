@@ -20,9 +20,8 @@ import LayoutManager from '../../../src/components/layout/LayoutManager';
 import SymmetricSorter from '../../../src/components/layout/SymmetricSorter';
 import BalancedSorter from '../../../src/components/layout/BalancedSorter';
 import TreeSorter from '../../../src/components/layout/TreeSorter';
-import ChildrenSorterStrategy, {
-  SorterPrediction,
-} from '../../../src/components/layout/ChildrenSorterStrategy';
+import type { SorterPrediction } from '../../../src/components/layout/ChildrenSorterStrategy';
+import type ChildrenSorterStrategy from '../../../src/components/layout/ChildrenSorterStrategy';
 
 const ROOT_NODE_SIZE = { width: 140, height: 90 };
 const NODE_SIZE = { width: 80, height: 60 };

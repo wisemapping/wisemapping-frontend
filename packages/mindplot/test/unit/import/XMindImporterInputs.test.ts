@@ -17,7 +17,7 @@
  */
 import { strToU8, zipSync } from 'fflate';
 import XMindImporter from '../../../src/components/import/XMindImporter';
-import Mindmap from '../../../src/components/model/Mindmap';
+import type Mindmap from '../../../src/components/model/Mindmap';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 
 /** The ways an XMind file reaches the importer: XML, JSON, a ZIP, as text or as bytes. */

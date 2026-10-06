@@ -17,9 +17,9 @@
  */
 import Command from '../Command';
 import { PivotType } from '../RelationshipControlPoints';
-import PositionType from '../PositionType';
-import RelationshipModel from '../model/RelationshipModel';
-import CommandContext from '../CommandContext';
+import type PositionType from '../PositionType';
+import type RelationshipModel from '../model/RelationshipModel';
+import type CommandContext from '../CommandContext';
 
 class MoveControlPointCommand extends Command {
   private _ctrIndex: PivotType;

@@ -20,7 +20,7 @@
  * Builds medium-sized Tango maps, the same on every run, for the map-load tests: they compare
  * the layout of a whole map and count the work a load does.
  */
-import Designer from '../../../src/components/Designer';
+import type Designer from '../../../src/components/Designer';
 
 /* eslint-disable no-bitwise -- mulberry32 is integer bit mixing */
 /** A small seeded generator (mulberry32), so the generated map never changes. */

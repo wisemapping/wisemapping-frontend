@@ -21,8 +21,8 @@ import XMindImporter from '../../../src/components/import/XMindImporter';
 import FreeplaneImporter from '../../../src/components/import/FreeplaneImporter';
 import MindManagerImporter from '../../../src/components/import/MindManagerImporter';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
-import Mindmap from '../../../src/components/model/Mindmap';
-import NodeModel from '../../../src/components/model/NodeModel';
+import type Mindmap from '../../../src/components/model/Mindmap';
+import type NodeModel from '../../../src/components/model/NodeModel';
 
 // Values that come from the imported file, or from the user, must be escaped in the WiseMapping XML.
 

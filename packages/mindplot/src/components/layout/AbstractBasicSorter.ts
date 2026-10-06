@@ -15,10 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import PositionType from '../PositionType';
+import type PositionType from '../PositionType';
 import ChildrenSorterStrategy from './ChildrenSorterStrategy';
-import Node from './Node';
-import RootedTreeSet from './RootedTreeSet';
+import type Node from './Node';
+import type RootedTreeSet from './RootedTreeSet';
 import { sideOf } from '../util/side';
 
 abstract class AbstractBasicSorter extends ChildrenSorterStrategy {

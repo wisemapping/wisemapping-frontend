@@ -16,7 +16,8 @@
  *   limitations under the License.
  */
 import HTMLTopicSelected from '../../../src/components/HTMLTopicSelected';
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

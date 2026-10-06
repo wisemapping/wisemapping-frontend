@@ -17,7 +17,7 @@
  */
 import { Group, Text } from '@wisemapping/web2d';
 import ImageSVGFeature from '../../../src/components/ImageSVGFeature';
-import Topic from '../../../src/components/Topic';
+import type Topic from '../../../src/components/Topic';
 import ElementDeleteWidget from '../../../src/components/ElementDeleteWidget';
 
 /**

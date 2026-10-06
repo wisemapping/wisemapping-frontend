@@ -18,11 +18,13 @@
 
 import { Image, Text } from '@wisemapping/web2d';
 import ElementDeleteWidget from '../../../src/components/ElementDeleteWidget';
-import ImageEmojiFeature from '../../../src/components/ImageEmojiFeature';
-import ImageSVGFeature, { brandIconHref } from '../../../src/components/ImageSVGFeature';
-import Topic from '../../../src/components/Topic';
+import type ImageEmojiFeature from '../../../src/components/ImageEmojiFeature';
+import type ImageSVGFeature from '../../../src/components/ImageSVGFeature';
+import { brandIconHref } from '../../../src/components/ImageSVGFeature';
+import type Topic from '../../../src/components/Topic';
 import { BRAND_ICON_PATHS } from '../../../src/components/GalleryIconData';
-import { buildDesigner, Harness, SAMPLE_MAP } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner, SAMPLE_MAP } from '../commands/designer-harness';
 
 jest.mock('../../../src/components/export/PDFExporter', () => ({
   __esModule: true,

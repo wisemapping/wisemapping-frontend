@@ -18,7 +18,7 @@
 
 import DragTopic from '../../../src/components/DragTopic';
 import MainTopic from '../../../src/components/MainTopic';
-import LayoutManager from '../../../src/components/layout/LayoutManager';
+import type LayoutManager from '../../../src/components/layout/LayoutManager';
 import { buildTopics, stubSvgMeasurement } from './Helper';
 import { buildDesigner } from '../commands/designer-harness';
 import type DragManager from '../../../src/components/DragManager';

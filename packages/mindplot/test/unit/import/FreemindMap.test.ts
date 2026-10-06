@@ -17,10 +17,8 @@
  */
 
 import { describe, expect, jest, test } from '@jest/globals';
-import {
-  createFreemindNode,
-  FreemindElement,
-} from '../../../src/components/export/freemind/FreemindModel';
+import type { FreemindElement } from '../../../src/components/export/freemind/FreemindModel';
+import { createFreemindNode } from '../../../src/components/export/freemind/FreemindModel';
 import {
   freemindMapToXml,
   loadFreemindMap,

@@ -15,13 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Image } from '@wisemapping/web2d';
+import type { Image } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 
 import ImageIcon from './ImageIcon';
 import iconFamily from './model/SvgIconFamily.json';
-import Topic from './Topic';
-import SvgIconModel from './model/SvgIconModel';
+import type Topic from './Topic';
+import type SvgIconModel from './model/SvgIconModel';
 import { mapIconNameToAsset } from './IconMapping';
 import images from './SvgIconAssets';
 

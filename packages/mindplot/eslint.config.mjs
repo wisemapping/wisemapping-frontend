@@ -114,6 +114,11 @@ export default defineConfig([
             "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
             "@typescript-eslint/no-this-alias": "off",
             "@typescript-eslint/no-non-null-assertion": "off",
+            // Type-only imports are erased, so they cannot create runtime import cycles.
+            "@typescript-eslint/consistent-type-imports": ["error", {
+                prefer: "type-imports",
+                fixStyle: "separate-type-imports",
+            }],
 
             "import/extensions": ["error", "ignorePackages", {
                 js: "never",

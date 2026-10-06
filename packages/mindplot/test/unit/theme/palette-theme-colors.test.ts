@@ -19,7 +19,7 @@ import { describe, expect, it } from '@jest/globals';
 import OceanTheme from '../../../src/components/theme/OceanTheme';
 import SunriseTheme from '../../../src/components/theme/SunriseTheme';
 import RobotTheme from '../../../src/components/theme/RobotTheme';
-import { ThemeVariant } from '../../../src/components/theme/Theme';
+import type { ThemeVariant } from '../../../src/components/theme/Theme';
 import oceanDefault from '../../../src/components/theme/styles/ocean-default.json';
 import oceanLight from '../../../src/components/theme/styles/ocean-light.json';
 import oceanDark from '../../../src/components/theme/styles/ocean-dark.json';

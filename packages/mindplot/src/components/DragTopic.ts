@@ -15,15 +15,15 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { ElementClass, ElementPeer, Group } from '@wisemapping/web2d';
+import type { ElementClass, ElementPeer, Group } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 
 import DragPivot from './DragPivot';
-import LayoutManager from './layout/LayoutManager';
-import NodeGraph from './NodeGraph';
-import PositionType from './PositionType';
-import Topic from './Topic';
-import Canvas from './Canvas';
+import type LayoutManager from './layout/LayoutManager';
+import type NodeGraph from './NodeGraph';
+import type PositionType from './PositionType';
+import type Topic from './Topic';
+import type Canvas from './Canvas';
 import { sideOf } from './util/side';
 
 class DragTopic {

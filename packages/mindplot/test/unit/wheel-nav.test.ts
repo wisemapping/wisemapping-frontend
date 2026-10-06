@@ -17,9 +17,9 @@
  */
 
 import Designer from '../../src/components/Designer';
-import { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
+import type { DesignerOptions } from '../../src/components/DesignerOptionsBuilder';
 import DesignerKeyboard from '../../src/components/DesignerKeyboard';
-import WidgetBuilder from '../../src/components/WidgetBuilder';
+import type WidgetBuilder from '../../src/components/WidgetBuilder';
 
 const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 

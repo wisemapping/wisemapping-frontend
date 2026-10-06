@@ -25,12 +25,12 @@ import {
 } from '@wisemapping/web2d';
 import type { Line, StrokeStyle } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
-import PositionType from './PositionType';
-import Topic from './Topic';
+import type PositionType from './PositionType';
+import type Topic from './Topic';
 import TopicConfig from './TopicConfig';
 import ArcLine from './model/ArcLine';
 import BaseConnectionLine, { LineType } from './BaseConnectionLine';
-import Canvas from './Canvas';
+import type Canvas from './Canvas';
 import { sideOf } from './util/side';
 
 export { LineType };

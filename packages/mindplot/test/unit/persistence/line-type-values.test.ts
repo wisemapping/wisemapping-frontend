@@ -17,7 +17,7 @@
  */
 import { describe, expect, it } from '@jest/globals';
 import { LineType } from '../../../src/components/ConnectionLine';
-import Mindmap from '../../../src/components/model/Mindmap';
+import type Mindmap from '../../../src/components/model/Mindmap';
 import XMLSerializerTango from '../../../src/components/persistence/XMLSerializerTango';
 
 // A topic's connection style is saved as connStyle="N", the LineType value. Saved maps carry

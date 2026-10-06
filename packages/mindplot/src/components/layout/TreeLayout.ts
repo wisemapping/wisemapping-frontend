@@ -19,9 +19,9 @@ import { $assert } from '../util/assert';
 import Node from './Node';
 import TreeSorter from './TreeSorter';
 import LayoutPass from './LayoutPass';
-import RootedTreeSet from './RootedTreeSet';
-import SizeType from '../SizeType';
-import PositionType from '../PositionType';
+import type RootedTreeSet from './RootedTreeSet';
+import type SizeType from '../SizeType';
+import type PositionType from '../PositionType';
 import type { OrientationType } from './LayoutType';
 
 class TreeLayout {

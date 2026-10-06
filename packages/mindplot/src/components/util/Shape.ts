@@ -17,9 +17,9 @@
  */
 import { $assert } from './assert';
 import TopicConfig from '../TopicConfig';
-import PositionType from '../PositionType';
-import SizeType from '../SizeType';
-import Topic from '../Topic';
+import type PositionType from '../PositionType';
+import type SizeType from '../SizeType';
+import type Topic from '../Topic';
 
 class Shape {
   static isAtRight(sourcePoint: PositionType, targetPoint: PositionType): boolean {

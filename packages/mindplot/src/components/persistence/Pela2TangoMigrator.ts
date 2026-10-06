@@ -18,9 +18,9 @@
 import { $assert } from '../util/assert';
 import XMLSerializer from './XMLSerializerTango';
 import ModelCodeName from './ModelCodeName';
-import XMLMindmapSerializer from './XMLMindmapSerializer';
-import Mindmap from '../model/Mindmap';
-import NodeModel from '../model/NodeModel';
+import type XMLMindmapSerializer from './XMLMindmapSerializer';
+import type Mindmap from '../model/Mindmap';
+import type NodeModel from '../model/NodeModel';
 
 class Pela2TangoMigrator implements XMLMindmapSerializer {
   private _pelaSerializer: XMLMindmapSerializer;

@@ -18,7 +18,7 @@
 import { afterEach, describe, expect, it, jest } from '@jest/globals';
 import ThemeFactory from '../../../src/components/theme/ThemeFactory';
 import ClassicTheme from '../../../src/components/theme/ClassicTheme';
-import ThemeType from '../../../src/components/model/ThemeType';
+import type ThemeType from '../../../src/components/model/ThemeType';
 
 // A map's XML can carry any theme id (XMLSerializerTango only casts it), so an
 // unknown one must not prevent the map from rendering.

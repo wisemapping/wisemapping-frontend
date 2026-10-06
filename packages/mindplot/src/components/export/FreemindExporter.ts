@@ -17,22 +17,23 @@
  */
 import xmlFormatter from 'xml-formatter';
 import type Mindmap from '../model/Mindmap';
-import INodeModel, { TopicShapeType } from '../model/INodeModel';
-import RelationshipModel from '../model/RelationshipModel';
-import FeatureModel from '../model/FeatureModel';
+import type { TopicShapeType } from '../model/INodeModel';
+import type INodeModel from '../model/INodeModel';
+import type RelationshipModel from '../model/RelationshipModel';
+import type FeatureModel from '../model/FeatureModel';
 import ContentType from '../ContentType';
-import PositionNodeType from '../PositionType';
+import type PositionNodeType from '../PositionType';
 import Exporter from './Exporter';
 import FreemindConstant from './freemind/FreemindConstant';
-import VersionNumber from './freemind/importer/VersionNumber';
-import {
-  createFreemindNode,
+import type VersionNumber from './freemind/importer/VersionNumber';
+import type {
   FreemindArrowlink,
   FreemindFont,
   FreemindMap,
   FreemindNode,
   FreemindRichcontent,
 } from './freemind/FreemindModel';
+import { createFreemindNode } from './freemind/FreemindModel';
 import { freemindMapToXml } from './freemind/FreemindXml';
 import FreemindIconConverter from '../import/FreemindIconConverter';
 

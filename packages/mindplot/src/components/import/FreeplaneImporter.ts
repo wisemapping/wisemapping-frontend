@@ -19,7 +19,7 @@ import Importer from './Importer';
 import ImportError from './ImportError';
 import SecureXmlParser from '../security/SecureXmlParser';
 import Mindmap from '../model/Mindmap';
-import NodeModel from '../model/NodeModel';
+import type NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import { StrokeStyle } from '../model/RelationshipModel';
@@ -32,8 +32,9 @@ import { applyFreemindFont } from './support/FreemindFont';
 import TopicIdSequence from './support/TopicIdSequence';
 import { NAMED_ICON_EMOJIS, ownEntry } from './support/IconEmoji';
 import { alternatingSidePosition } from './support/MainTopicPosition';
-import FreemindIconConverter, { WiseIcon } from './FreemindIconConverter';
-import { TopicShapeType } from '../model/INodeModel';
+import type { WiseIcon } from './FreemindIconConverter';
+import FreemindIconConverter from './FreemindIconConverter';
+import type { TopicShapeType } from '../model/INodeModel';
 
 // Freeplane icon names and the WiseMapping emoji icons they map to.
 const FREEPLANE_ICON_EMOJIS: Readonly<Record<string, string>> = {

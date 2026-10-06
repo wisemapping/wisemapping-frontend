@@ -15,14 +15,19 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Workspace as Workspace2D, ElementClass, ElementPeer } from '@wisemapping/web2d';
-import type { CustomEventMap, ElementEventListener } from '@wisemapping/web2d';
+import { Workspace as Workspace2D } from '@wisemapping/web2d';
+import type {
+  CustomEventMap,
+  ElementEventListener,
+  ElementClass,
+  ElementPeer,
+} from '@wisemapping/web2d';
 import { $assert } from './util/assert';
-import ScreenManager from './ScreenManager';
-import SizeType from './SizeType';
-import CanvasElement from './CanvasElement';
+import type ScreenManager from './ScreenManager';
+import type SizeType from './SizeType';
+import type CanvasElement from './CanvasElement';
 import LayoutEventBus from './layout/LayoutEventBus';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 
 const DEFAULT_VISIBILITY_PADDING = 80;
 

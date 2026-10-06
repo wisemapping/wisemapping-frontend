@@ -19,9 +19,9 @@ import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals
 import WidgetBuilder from '../../../src/components/WidgetBuilder';
 import LinkModel from '../../../src/components/model/LinkModel';
 import NoteModel from '../../../src/components/model/NoteModel';
-import LinkIcon from '../../../src/components/LinkIcon';
-import NoteIcon from '../../../src/components/NoteIcon';
-import Topic from '../../../src/components/Topic';
+import type LinkIcon from '../../../src/components/LinkIcon';
+import type NoteIcon from '../../../src/components/NoteIcon';
+import type Topic from '../../../src/components/Topic';
 import ContentType from '../../../src/components/ContentType';
 import { IMG_ONERROR_PAYLOAD, installLiveParseProbe, installXssHook } from './LiveParseProbe';
 

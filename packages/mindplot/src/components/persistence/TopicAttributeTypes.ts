@@ -16,11 +16,16 @@
  *   limitations under the License.
  */
 import { LineType } from '../ConnectionLine';
-import { FONT_WEIGHT_TYPES, FontWeightType } from '../FontWeightType';
-import { FONT_STYLE_TYPES, FontStyleType } from '../FontStyleType';
-import { TOPIC_SHAPE_TYPES, TopicShapeType } from '../model/INodeModel';
-import ThemeType, { THEME_TYPES } from '../model/ThemeType';
-import { BACKGROUND_PATTERN_TYPES, BackgroundPatternType } from '../model/CanvasStyleType';
+import type { FontWeightType } from '../FontWeightType';
+import { FONT_WEIGHT_TYPES } from '../FontWeightType';
+import type { FontStyleType } from '../FontStyleType';
+import { FONT_STYLE_TYPES } from '../FontStyleType';
+import type { TopicShapeType } from '../model/INodeModel';
+import { TOPIC_SHAPE_TYPES } from '../model/INodeModel';
+import type ThemeType from '../model/ThemeType';
+import { THEME_TYPES } from '../model/ThemeType';
+import type { BackgroundPatternType } from '../model/CanvasStyleType';
+import { BACKGROUND_PATTERN_TYPES } from '../model/CanvasStyleType';
 import { StrokeStyle } from '../model/RelationshipModel';
 import { LAYOUT_ORIENTATION, type LayoutType } from '../layout/LayoutType';
 

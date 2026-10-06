@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 import MindplotWebComponent from '../../src/components/MindplotWebComponent';
-import Designer from '../../src/components/Designer';
-import PersistenceManager from '../../src/components/PersistenceManager';
-import Topic from '../../src/components/Topic';
+import type Designer from '../../src/components/Designer';
+import type PersistenceManager from '../../src/components/PersistenceManager';
+import type Topic from '../../src/components/Topic';
 import XMLSerializerFactory from '../../src/components/persistence/XMLSerializerFactory';
 import { SAMPLE_MAP, StubWidgetManager } from './commands/designer-harness';
 

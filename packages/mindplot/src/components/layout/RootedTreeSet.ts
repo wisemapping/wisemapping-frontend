@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import { $assert } from '../util/assert';
-import PositionType from '../PositionType';
-import Node from './Node';
+import type PositionType from '../PositionType';
+import type Node from './Node';
 
 /** The subset of a Raphael.js element used by plot(). */
 type RaphaelElement = {

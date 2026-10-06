@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from './util/assert';
-import CommandContext from './CommandContext';
+import type CommandContext from './CommandContext';
 import type { CanvasStyleType } from './model/CanvasStyleType';
 import type { PivotType } from './RelationshipControlPoints';
 import EventDispispatcher from './EventDispatcher';

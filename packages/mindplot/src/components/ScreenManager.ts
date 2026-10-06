@@ -18,7 +18,7 @@
 import type { Workspace as Workspace2D } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import EventManager from './util/EventManager';
-import PositionType from './PositionType';
+import type PositionType from './PositionType';
 
 class ScreenManager {
   private _divContainer: HTMLDivElement;

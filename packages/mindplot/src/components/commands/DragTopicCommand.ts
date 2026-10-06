@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 import Command from '../Command';
-import CommandContext from '../CommandContext';
-import PositionType from '../PositionType';
-import Topic from '../Topic';
+import type CommandContext from '../CommandContext';
+import type PositionType from '../PositionType';
+import type Topic from '../Topic';
 
 class DragTopicCommand extends Command {
   private _topicsId: number;

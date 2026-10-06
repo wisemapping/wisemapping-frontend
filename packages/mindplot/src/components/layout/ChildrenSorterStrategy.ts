@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import RootedTreeSet from './RootedTreeSet';
-import Node from './Node';
-import PositionType from '../PositionType';
+import type RootedTreeSet from './RootedTreeSet';
+import type Node from './Node';
+import type PositionType from '../PositionType';
 
 /** Where a new or dragged child of a parent goes: its order among the siblings and its position. */
 export type SorterPrediction = { order: number; position: Readonly<PositionType> };

@@ -16,7 +16,8 @@
  *   limitations under the License.
  */
 import LocalStorageManager from '../../../src/components/LocalStorageManager';
-import PersistenceManager, { PersistenceError } from '../../../src/components/PersistenceManager';
+import type { PersistenceError } from '../../../src/components/PersistenceManager';
+import type PersistenceManager from '../../../src/components/PersistenceManager';
 
 const MAP_XML = '<map version="tango"><topic central="true" text="Central" id="1"/></map>';
 const STORED_XML = '<map version="tango"><topic central="true" text="Stored" id="1"/></map>';

@@ -16,11 +16,12 @@
  *   limitations under the License.
  */
 
-import { buildDesigner, Harness } from '../commands/designer-harness';
+import type { Harness } from '../commands/designer-harness';
+import { buildDesigner } from '../commands/designer-harness';
 import { buildMediumMap, useTextSizedBoxes } from './medium-map';
-import Designer from '../../../src/components/Designer';
+import type Designer from '../../../src/components/Designer';
 import NodeGraph from '../../../src/components/NodeGraph';
-import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
+import type EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import Node from '../../../src/components/layout/Node';
 
