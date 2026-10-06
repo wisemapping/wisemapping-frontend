@@ -1060,6 +1060,10 @@ class Designer extends EventDispispatcher<DesignerEvents> {
   }
 
   loadMap(mindmap: Mindmap): Promise<void> {
+    // A late caller (a React effect after unmount) can reach a disposed designer: ignore it.
+    if (this._disposed) {
+      return Promise.resolve();
+    }
     this._mindmap = mindmap;
 
     // Update background style...
@@ -1260,6 +1264,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * This should be called when the Designer is created to sync with editor theme
    */
   initializeThemeVariant(editorThemeMode: 'light' | 'dark'): void {
+    if (this._disposed) {
+      return;
+    }
     const variant = editorThemeMode === 'dark' ? 'dark' : 'light';
     this._themeVariant = variant;
 
@@ -1284,6 +1291,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * ```
    */
   setThemeVariant(variant: ThemeVariant): void {
+    if (this._disposed) {
+      return;
+    }
     if (this._themeVariant !== variant) {
       this._themeVariant = variant;
 
@@ -1383,6 +1393,9 @@ class Designer extends EventDispispatcher<DesignerEvents> {
    * @internal
    */
   applyCanvasStyle(): void {
+    if (this._disposed) {
+      return;
+    }
     const mindmap = this.getMindmap();
     const customStyle = mindmap.getCanvasStyle();
 

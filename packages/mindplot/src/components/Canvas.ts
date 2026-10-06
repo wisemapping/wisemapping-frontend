@@ -404,8 +404,9 @@ class Canvas {
   }
 
   setBackgroundStyle(css: string): void {
-    const elem = this.getSVGElement().parentElement!.parentElement!;
-    elem.setAttribute('style', css);
+    // A canvas that already left the page (disposed) has no container to style.
+    const elem = this.getSVGElement().parentElement?.parentElement;
+    elem?.setAttribute('style', css);
   }
 
   private _registerDragEvents() {
