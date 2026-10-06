@@ -79,6 +79,11 @@ class ResolvingTheme extends ClassicTheme {
   ownFontColor(topic: Topic): string | undefined {
     return this.resolve('fontColor', topic, false);
   }
+
+  // BL5-203: a model sets a single colour, where the theme may set a palette.
+  ownConnectionColor(topic: Topic): string | undefined {
+    return this.resolve('connectionColor', topic, false);
+  }
 }
 
 describe('DefaultTheme.resolve is typed by key (BL5-186)', () => {
@@ -91,5 +96,8 @@ describe('DefaultTheme.resolve is typed by key (BL5-186)', () => {
     expect(theme.fontStyle(main)).toBe('italic');
     expect(theme.connectionStyle(main)).toBe(theme.getConnectionType(main));
     expect(theme.ownFontColor(main)).toBeUndefined();
+    expect(theme.ownConnectionColor(fakeTopic({ connectionColor: '#123456' }, central))).toBe(
+      '#123456',
+    );
   });
 });

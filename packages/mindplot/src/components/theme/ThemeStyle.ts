@@ -54,7 +54,6 @@ import retroDark from './styles/retro-dark.json';
 
 export type TopicStyleType = {
   borderColor: string | string[];
-  borderStyle: string;
   backgroundColor: string | string[];
   connectionColor: string | string[];
   connectionStyle: LineType;
@@ -79,7 +78,6 @@ export type CanvasStyleType = {
 
 type JsonTopicStyleType = {
   borderColor?: string | string[];
-  borderStyle?: string;
   backgroundColor?: string | string[];
   connectionColor?: string | string[];
   connectionStyle?: string;
@@ -158,7 +156,7 @@ export class ThemeStyle {
 
     // Merge topic styles: default -> light -> variant
     const mergedLight = this.mergeStyles(defaultStyles, lightStyles);
-    const topicStyles = this.mergeStylesFromMap(mergedLight, variantStyles);
+    const topicStyles = this.mergeStylesFromMap(themeName, mergedLight, variantStyles);
 
     // Merge canvas styles: default -> light -> variant
     const canvasStyle = this.mergeCanvasStyles(defaultStyles, lightStyles, variantStyles);
@@ -237,8 +235,8 @@ export class ThemeStyle {
   private mergeStyles(
     defaultStyles: JsonThemeStyles,
     variantStyles: JsonThemeStyles,
-  ): Map<TopicType, TopicStyleType> {
-    const result = new Map<TopicType, TopicStyleType>();
+  ): Map<TopicType, Partial<TopicStyleType>> {
+    const result = new Map<TopicType, Partial<TopicStyleType>>();
 
     // Process each topic type
     const topicTypes: TopicType[] = ['CentralTopic', 'MainTopic', 'SubTopic', 'IsolatedTopic'];
@@ -255,10 +253,10 @@ export class ThemeStyle {
       const defaultConverted = this.convertJsonToTopicStyle(defaultStyle);
       const variantConverted = variantStyle ? this.convertJsonToTopicStyle(variantStyle) : {};
 
-      const mergedStyle: TopicStyleType = {
+      const mergedStyle: Partial<TopicStyleType> = {
         ...defaultConverted,
         ...variantConverted,
-      } as TopicStyleType;
+      };
 
       result.set(topicType, mergedStyle);
     });
@@ -270,7 +268,8 @@ export class ThemeStyle {
    * Merge Map styles with variant-specific overrides
    */
   private mergeStylesFromMap(
-    baseStyles: Map<TopicType, TopicStyleType>,
+    themeName: string,
+    baseStyles: Map<TopicType, Partial<TopicStyleType>>,
     variantStyles: JsonThemeStyles,
   ): Map<TopicType, TopicStyleType> {
     const result = new Map<TopicType, TopicStyleType>();
@@ -289,12 +288,12 @@ export class ThemeStyle {
       // Merge base with variant overrides
       const variantConverted = variantStyle ? this.convertJsonToTopicStyle(variantStyle) : {};
 
-      const mergedStyle: TopicStyleType = {
+      const mergedStyle: Partial<TopicStyleType> = {
         ...baseStyle,
         ...variantConverted,
       };
 
-      result.set(topicType, mergedStyle);
+      result.set(topicType, ThemeStyle.complete(mergedStyle, themeName, topicType));
     });
 
     return result;
@@ -362,7 +361,6 @@ export class ThemeStyle {
     const result: Partial<TopicStyleType> = {};
 
     if (jsonStyle.borderColor !== undefined) result.borderColor = jsonStyle.borderColor;
-    if (jsonStyle.borderStyle !== undefined) result.borderStyle = jsonStyle.borderStyle;
     if (jsonStyle.backgroundColor !== undefined) result.backgroundColor = jsonStyle.backgroundColor;
     if (jsonStyle.connectionColor !== undefined) result.connectionColor = jsonStyle.connectionColor;
     if (jsonStyle.connectionStyle !== undefined) {
@@ -377,8 +375,8 @@ export class ThemeStyle {
       result.fontWeight = ThemeStyle.checked(jsonStyle.fontWeight, isFontWeightType, 'font weight');
     }
     if (jsonStyle.fontColor !== undefined) result.fontColor = jsonStyle.fontColor;
-    if (jsonStyle.msgKey !== undefined && isMsgKey(jsonStyle.msgKey)) {
-      result.msgKey = jsonStyle.msgKey;
+    if (jsonStyle.msgKey !== undefined) {
+      result.msgKey = ThemeStyle.checked(jsonStyle.msgKey, isMsgKey, 'message key');
     }
     if (jsonStyle.shapeType !== undefined) {
       result.shapeType = ThemeStyle.checked(jsonStyle.shapeType, isTopicShapeType, 'shape type');
@@ -391,6 +389,39 @@ export class ThemeStyle {
     }
 
     return result;
+  }
+
+  /**
+   * The merged style of a topic type, which must set every key: a theme whose JSON files leave
+   * one out fails to load, naming the theme, the topic type and the key.
+   */
+  private static complete(
+    style: Partial<TopicStyleType>,
+    themeName: string,
+    topicType: TopicType,
+  ): TopicStyleType {
+    const get = <K extends keyof TopicStyleType>(key: K): TopicStyleType[K] => {
+      const value = style[key];
+      if (value === undefined) {
+        throw new Error(`Theme '${themeName}' sets no ${key} for ${topicType}`);
+      }
+      return value;
+    };
+    return {
+      borderColor: get('borderColor'),
+      backgroundColor: get('backgroundColor'),
+      connectionColor: get('connectionColor'),
+      connectionStyle: get('connectionStyle'),
+      fontFamily: get('fontFamily'),
+      fontSize: get('fontSize'),
+      fontStyle: get('fontStyle'),
+      fontWeight: get('fontWeight'),
+      fontColor: get('fontColor'),
+      msgKey: get('msgKey'),
+      shapeType: get('shapeType'),
+      outerBackgroundColor: get('outerBackgroundColor'),
+      outerBorderColor: get('outerBorderColor'),
+    };
   }
 
   /** A value of a theme's JSON, checked against its type: like an unknown connection style, it throws. */

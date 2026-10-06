@@ -29,17 +29,17 @@ class PrismTheme extends DefaultTheme {
   }
 
   override getConnectionColor(topic: Topic): string {
-    let result: string | null = null;
+    let result: string | undefined;
 
     // Color of the node is the connection is the color of the parent ...
     const parent = topic.getParent();
     if (parent && !parent.isCentralTopic()) {
-      result = this.resolve('connectionColor', parent, false) as string;
+      result = this.resolve('connectionColor', parent, false);
     }
 
     // A color picked by the user (on the topic or an ancestor) is used as is ...
     if (!result) {
-      result = this.resolve('connectionColor', topic, false) as string;
+      result = this.resolve('connectionColor', topic, false);
     }
 
     if (!result) {
@@ -58,7 +58,7 @@ class PrismTheme extends DefaultTheme {
   override getBorderColor(topic: Topic): string {
     const model = topic.getModel();
     // A color picked by the user (on the topic or an ancestor) is used as is ...
-    let result = model.getBorderColor() || (this.resolve('borderColor', topic, false) as string);
+    let result = model.getBorderColor() || this.resolve('borderColor', topic, false);
 
     // If border color has not been defined, use the theme border color ...
     if (!result) {

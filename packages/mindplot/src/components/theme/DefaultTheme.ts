@@ -47,8 +47,18 @@ type ModelStyleKey =
   | 'fontSize'
   | 'fontStyle';
 
+/** The value of each style a model sets: a single colour where the theme may set a palette. */
+type ModelStyleType = Omit<
+  Pick<TopicStyleType, ModelStyleKey>,
+  'borderColor' | 'backgroundColor' | 'connectionColor'
+> & {
+  borderColor: string;
+  backgroundColor: string;
+  connectionColor: string;
+};
+
 const keyToModel: {
-  [K in ModelStyleKey]: (model: NodeModel) => TopicStyleType[K] | undefined;
+  [K in ModelStyleKey]: (model: NodeModel) => ModelStyleType[K] | undefined;
 } = {
   borderColor: (m) => m.getBorderColor(),
   backgroundColor: (m) => m.getBackgroundColor(),
@@ -112,24 +122,24 @@ class DefaultTheme implements Theme {
 
   /**
    * The style of the topic: set on its model or the closest ancestor's, else the theme default
-   * for its kind of topic (unless resolveDefault is false, when it may be undefined).
+   * for its kind of topic (unless resolveDefault is false, when it is the model value or undefined).
    */
   protected resolve<K extends ModelStyleKey>(key: K, topic: Topic): TopicStyleType[K];
 
   protected resolve<K extends ModelStyleKey>(
     key: K,
     topic: Topic,
-    resolveDefault: boolean,
-  ): TopicStyleType[K] | undefined;
+    resolveDefault: false,
+  ): ModelStyleType[K] | undefined;
 
   protected resolve<K extends ModelStyleKey>(
     key: K,
     topic: Topic,
     resolveDefault = true,
-  ): TopicStyleType[K] | undefined {
+  ): ModelStyleType[K] | TopicStyleType[K] | undefined {
     // Search parent value. It only reads the models, so during a redraw pass it is
     // found once per topic and key, and a descendant stops at its parent's value ...
-    const recurviveModelStrategy = (t: Topic): TopicStyleType[K] | undefined =>
+    const recurviveModelStrategy = (t: Topic): ModelStyleType[K] | undefined =>
       ThemeResolutionCache.memo(t, `model:${key}`, () => {
         const model = t.getModel();
         let result = keyToModel[key](model);
@@ -142,7 +152,7 @@ class DefaultTheme implements Theme {
       });
 
     // Can be found in the model or parent  ?
-    let result = recurviveModelStrategy(topic);
+    let result: ModelStyleType[K] | TopicStyleType[K] | undefined = recurviveModelStrategy(topic);
     if (isUnset(result) && resolveDefault) {
       result = this.getStyles(topic)[key];
     }
