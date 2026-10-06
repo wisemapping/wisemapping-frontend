@@ -113,7 +113,8 @@ export default defineConfig([
             "@typescript-eslint/no-explicit-any": "error",
             "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
             "@typescript-eslint/no-this-alias": "off",
-            "@typescript-eslint/no-non-null-assertion": "off",
+            // Warn, to stop new `!`: prefer a check, a default or a typed lookup.
+            "@typescript-eslint/no-non-null-assertion": "warn",
             // Type-only imports are erased, so they cannot create runtime import cycles.
             "@typescript-eslint/consistent-type-imports": ["error", {
                 prefer: "type-imports",
@@ -152,6 +153,8 @@ export default defineConfig([
             "max-classes-per-file": "off",
             // The security tests feed javascript: URLs to the sanitizers on purpose.
             "no-script-url": "off",
+            // Tests index fixtures they build themselves: a wrong index fails the test anyway.
+            "@typescript-eslint/no-non-null-assertion": "off",
         },
     }
 ]);
