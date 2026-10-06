@@ -24,6 +24,7 @@ import type {
 } from '@wisemapping/web2d';
 import { $assert } from './util/assert';
 import { isObjectTouch } from './util/objectTouch';
+import isMacPlatform from './util/platform';
 import type ScreenManager from './ScreenManager';
 import type SizeType from './SizeType';
 import type CanvasElement from './CanvasElement';
@@ -439,6 +440,20 @@ class Canvas {
             }
           }
 
+          // The left button pans, and its release with no move is a click on the background. The
+          // middle button pans too, but its release is no click. The right button, a Ctrl press
+          // on a Mac (its right click) and the back and forward buttons do neither: they open a
+          // menu or navigate, and must not move the map or lose the selection.
+          let isPrimaryPress = true;
+          if (event.type === 'mousedown') {
+            const { button, ctrlKey } = event as MouseEvent;
+            const isMacRightClick = button === 0 && ctrlKey && isMacPlatform();
+            if ((button !== 0 && button !== 1) || isMacRightClick) {
+              return;
+            }
+            isPrimaryPress = button === 0;
+          }
+
           mWorkspace.enableWorkspaceEvents(false);
 
           const originalEvent = event;
@@ -509,7 +524,7 @@ class Canvas {
 
             mWorkspace.enableWorkspaceEvents(true);
 
-            if (isRelease && !wasDragged && !isObjectTap) {
+            if (isRelease && !wasDragged && !isObjectTap && isPrimaryPress) {
               // With the modifiers of the press: a Ctrl or Cmd click keeps the selection.
               screenManager.fireEvent('click', originalEvent as UIEvent);
             }

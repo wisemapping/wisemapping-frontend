@@ -530,14 +530,26 @@ describe('Designer selection on a click on the background with a modifier', () =
     expect(events).toEqual([]);
   });
 
-  it('a Ctrl click on the background on a Mac is a plain click: it unselects everything', async () => {
+  it('a Ctrl click on the background on a Mac, its right click, keeps the selection', async () => {
     onPlatform('MacIntel');
-    const { designer, events } = await selectTwo();
+    const { designer, events, topic } = await selectTwo();
 
     clickOnBackground(designer, { ctrlKey: true });
 
-    expect(designer.getModel().filterSelectedTopics()).toEqual([]);
-    expect(events).toEqual(['onblur:0']);
+    // It opens the context menu: the canvas neither pans nor clicks the background (BL5-273).
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(1), topic(3)]);
+    expect(events).toEqual([]);
+  });
+
+  it('a right click on the background keeps the selection', async () => {
+    onPlatform('Win32');
+    const { designer, events, topic } = await selectTwo();
+
+    clickOnBackground(designer, { button: 2 });
+
+    // Before: everything was unselected, as on a left click.
+    expect(designer.getModel().filterSelectedTopics()).toEqual([topic(1), topic(3)]);
+    expect(events).toEqual([]);
   });
 
   it('a plain click on the background unselects everything', async () => {
