@@ -249,8 +249,8 @@ const XMIND_ICON_EMOJIS: Readonly<Record<string, string>> = {
   // Household items
   bed: '🛏️',
   couch: '🛋️',
-  chair: 'emoji-1f6c0',
-  table: 'emoji-1f5d4',
+  chair: '🪑',
+  table: '🍽️', // no table emoji: a place setting
   lamp: '💡',
   candle: '🕯️',
   mirror: '🪞',
@@ -270,7 +270,7 @@ const XMIND_ICON_EMOJIS: Readonly<Record<string, string>> = {
   gloves: '🧤',
   coat: '🧥',
   socks: '🧦',
-  hat: 'emoji-1f9e2',
+  hat: '🧢',
   'top-hat': '🎩',
   'military-helmet': '🪖',
 
@@ -278,12 +278,12 @@ const XMIND_ICON_EMOJIS: Readonly<Record<string, string>> = {
   hourglass: '⏳',
   stopwatch: '⏱️',
   'alarm-clock': '⏰',
-  timer: 'emoji-23f2',
+  timer: '⏲️',
   'magnifying-glass': '🔍',
   compass: '🧭',
   globe: '🌍',
   'world-map': '🗺️',
-  pennant: 'emoji-1f3f1',
+  pennant: '🚩',
 };
 
 class XMindImporter extends Importer {

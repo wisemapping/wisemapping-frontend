@@ -302,7 +302,7 @@ describe('XMind Icon Mapping Tests', () => {
       // Count how many icons are successfully mapped (not default)
       const mappedIcons = testIcons.filter((icon) => {
         const result = mapIcon(icon);
-        return result !== 'emoji-1f4a1'; // Not the default lightbulb
+        return result !== '💡'; // Not the default lightbulb
       });
 
       // Should have mapped at least 80% of test icons
@@ -312,6 +312,24 @@ describe('XMind Icon Mapping Tests', () => {
       console.log(
         `Icon mapping coverage: ${coveragePercentage.toFixed(1)}% (${mappedIcons.length}/${testIcons.length} icons mapped)`,
       );
+    });
+  });
+
+  describe('Household and accessory icons', () => {
+    test('map to the emoji of the object, not to emoji-<code point> strings', () => {
+      const mapIcon = (importer as unknown as IconMapper).mapXMindIconToEmojiIcon.bind(importer);
+
+      // They mapped to 'emoji-1f6c0' (a bath), 'emoji-1f5d4' (a desktop window),
+      // 'emoji-1f9e2', 'emoji-23f2' and 'emoji-1f3f1' (a white pennant, not an emoji): strings
+      // that are not emoji, so the topics showed no icon.
+      expect(mapIcon('chair')).toBe('🪑');
+      expect(mapIcon('table')).toBe('🍽️');
+      expect(mapIcon('hat')).toBe('🧢');
+      expect(mapIcon('timer')).toBe('⏲️');
+      expect(mapIcon('pennant')).toBe('🚩');
+      ['chair', 'table', 'hat', 'timer', 'pennant'].forEach((icon) => {
+        expect(mapIcon(icon)).toMatch(/^\p{Extended_Pictographic}\uFE0F?$/u);
+      });
     });
   });
 });

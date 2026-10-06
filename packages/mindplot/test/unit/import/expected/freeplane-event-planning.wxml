@@ -3,11 +3,11 @@
         <topic position="200,0" order="0" text="Pre-Event Planning" shape="line" id="2">
             <eicon id="1️⃣"/>
             <topic position="200,0" order="0" text="Venue Selection" shape="line" id="3">
-                <eicon id="📍"/>
+                <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Research and book appropriate venue</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Budget Planning" shape="line" id="4">
-                <eicon id="💰"/>
+                <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Create detailed budget and cost estimates</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Guest Management" shape="line" id="5">
@@ -45,11 +45,11 @@
                 <note contentType="html"><![CDATA[<p>Venue cleanup and equipment return</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Feedback Collection" shape="line" id="14">
-                <eicon id="💬"/>
+                <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Collect attendee feedback and surveys</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Thank You Notes" shape="line" id="15">
-                <eicon id="❤️"/>
+                <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Send thank you notes to attendees and vendors</p>]]></note>
             </topic>
             <topic position="-300,75" order="3" text="Event Report" shape="line" id="16">
@@ -64,7 +64,7 @@
                 <note contentType="html"><![CDATA[<p>Promote event on social media platforms</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Email Campaigns" shape="line" id="19">
-                <eicon id="📧"/>
+                <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Email marketing and invitation campaigns</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Press Release" shape="line" id="20">

@@ -58,8 +58,8 @@ export const PRIORITY_EMOJIS: Readonly<Record<string, string>> = {
 };
 
 /**
- * Icons named after what they show (smile, arrow-up, coffee...) and their emoji: the names that
- * XMind and Freeplane maps share. Lower case, words separated by hyphens.
+ * Icons named after what they show (smile, arrow-up, coffee...) and their emoji, for the XMind
+ * importer. Lower case, words separated by hyphens.
  */
 export const NAMED_ICON_EMOJIS: Readonly<Record<string, string>> = {
   // Flag and star icons

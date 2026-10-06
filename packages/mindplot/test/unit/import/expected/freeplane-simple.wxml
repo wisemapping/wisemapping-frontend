@@ -8,7 +8,7 @@
             <note contentType="html"><![CDATA[<p>This is a note for Child 2</p>]]></note>
         </topic>
         <topic position="300,75" order="2" text="Child 3" shape="line" id="6">
-            <eicon id="🔴"/>
+            <eicon id="💡"/>
             <topic position="200,0" order="0" text="Subchild" shape="line" id="7"/>
         </topic>
     </topic>

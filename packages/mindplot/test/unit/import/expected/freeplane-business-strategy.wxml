@@ -18,7 +18,7 @@
         <topic position="-200,0" order="1" text="Strategic Objectives" shape="line" id="6">
             <eicon id="2️⃣"/>
             <topic position="200,0" order="0" text="Revenue Growth" shape="line" id="7">
-                <eicon id="💰"/>
+                <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Achieve sustainable revenue growth targets</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Market Expansion" shape="line" id="8">
@@ -48,11 +48,11 @@
         <topic position="-300,75" order="3" text="Risk Management" shape="line" id="14">
             <eicon id="4️⃣"/>
             <topic position="200,0" order="0" text="Risk Assessment" shape="line" id="15">
-                <eicon id="⚠️"/>
+                <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Identify and assess potential risks</p>]]></note>
             </topic>
             <topic position="-200,0" order="1" text="Mitigation Strategies" shape="line" id="16">
-                <eicon id="🛡️"/>
+                <eicon id="💡"/>
                 <note contentType="html"><![CDATA[<p>Develop risk mitigation strategies</p>]]></note>
             </topic>
             <topic position="300,75" order="2" text="Contingency Planning" shape="line" id="17">
